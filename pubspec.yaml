@@ -1,0 +1,42 @@
+name: gc_wizard
+description: GC Wizard
+version: 0.5.1+10
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  sqflite: any
+  path: any
+  path_provider: any
+  flutter_map: any
+  flutter_localizations:
+    sdk: flutter
+  provider: any
+  intl: any
+  prefs: any
+  diacritic: ^0.1.1
+  base32: any
+  mask_text_input_formatter: ^1.0.6
+  url_launcher: ^5.4.2
+  package_info: ^0.4.0+16
+  math_expressions: ^2.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: any
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/i18n/
+    - assets/logo/
+    - assets/coordinates/
+
+flutter_icons:
+  image_path: "assets/logo/circle_border_1024.png"
+  android: true
+  ios: true

@@ -1,0 +1,275 @@
+TODO: Translate
+
+1) Wir wollen die Nullstellen einer reellen Funktion f(z) ausrechnen mit
+z = (x,y) = (Längengrad von z, Breitengrad von z). Auf diese Situation
+hatten wir ja schon einige deiner Probleme zurückgeführt, z.B. für den
+Schnitt von 2 Kreisen (Mittelpunkte m1,m2, Radien r1,r2) können wir f(z)
+= (dist(z,m1)-r1)^2 + (dist(z,m2)-r2)^2 setzen. Hier ist dist die
+Distanz im Ellipsoiden.
+2) Betrachten wir einen einfachen Ausschnitt A des Ellipsoiden, nämlich
+die Menge aller Punkte auf dem Ellipsoiden mit Längengrad zwischen L1
+und L2 und Breitengrad zwischen B1 und B2 (also die Menge A = {(l,b) |
+L1 <= l <= L2, B1 <= b <= B2 }). Dann müssen wir obere und untere
+Schranken für f auf A berechnen können, also Werte f1(A)=f1(L1,L2,B1,B2)
+und f2(A)=f2(L1,L2,B1,B2) sodass f1(A) <= f(z) <= f2(A) für alle z in A
+gilt.
+
+zu 2) Das ist für die meisten (natürlichen) Funktionen f einfach. Ein
+Standardansatz, um solche Schranken zu berechnen, ist
+Intervallarithmetik (http://de.wikipedia.org/wiki/Intervallarithmetik).
+Zunächst weißt du, dass der Längengrad z_L von z in A im Intervall
+[L1,L2] liegt, und der Breitengrad z_B in [B1,B2]. Intervallarithmetik
+erlaubt dir nun, ein Intervall I mit f(A) subset I zu finden, indem du f
+in einfache Grundoperationen zerlegst...
+
+Der Algorithmus sieht dann wie folgt aus. Du startest mit dem kompletten
+Ellipsoiden, also A = {[l,b] | -pi < l < pi, -pi < b < pi} (oder so...).
+Jetzt berechnest du die obere und untere Schranke für f auf A, sodass
+f(z) in [f1(A), f2(A)] für all z in A. Ist 0 nicht in [f1(A),f2(A)],
+dann hat f keine Nullstelle, du kannst also abbrechen. Wenn nicht, dann
+zerteilst du A in 4 gleich große Teile, wie bei einem Quadtree, und
+rekurrierst auf die 4 Teile.
+
+Bei den meisten Teilen wird 0 nicht im zugehörigen Intervall sein,
+sodass du sie gleich wegwerfen kannst. Und um die Nullstellen von f
+herum findest du Abschnitte, die immer kleiner werden, und näher an die
+Nullstelle rücken. Das machst du dann, bis die "Auflösung" genau genug
+ist...
+
+---------------------
+
+Ich schreib dir vielleicht einfach mal Pseudocode von meinem Vorschlag
+auf. Das Beispiel ist nach wie vor die Schnittpunkte zweier Kreise zu
+bestimmen, wobei M1,M2 die Mittelpunkte und r1,r2 die Radien. Dazu
+hatten wir ja die Funktion
+f(Z) = (dist(Z,M1) - r1)^2 + (dist(Z,M2) - r2)^2.
+
+Jetzt brauchen wir erst einmal eine Intervallvariante von f, die eine
+Zelle [l1,l2]x[b1,b2] auf dem Ellipsoiden abbildet auf eine obere und
+untere Schranke für f in der Zelle:
+
+// untere und obere Schranke für f in der Zelle [l1,l2]x[b1,b2]:
+f_interval([l1,l2]x[b1,b2]) =
+  plus_interval(
+    square_interval(
+      plus_interval(
+        dist_interval([l1,l2]x[b1,b2], m1),
+        [-r1,-r1]
+      )
+    ),
+    square_interval(
+      plus_interval(
+        dist_interval([l1,l2]x[b1,b2], m2),
+        [-r2,-r2]
+      )
+    )
+  )
+
+// wenn x in [a,b] ist und y in [c,d], dann ist x+y in [a+c,b+d]:
+plus_interval([a,b], [c,d]) = [a+c, b+d]
+
+// wenn x in [a,b] ist, dann ist x^2 in:
+square_interval([a,b]) =
+  if a <= 0 <= b: return [0, max(a^2,b^2)]
+  else: return [min(a^2,b^2), max(a^2, b^2)]
+
+// Distanz von einem Punkt in der Zelle [l1,l2]x[b1,b2] zum Punkt P:
+dist_interval([l1,l2]x[b1,b2], P):
+  M := ( (l1+l2)/2, (b1+b2)/2 )   // Mittelpunkt der Zelle
+  E1 := (l1, b1); E2 := (l2,b1);
+  E3 := (l1, b2); E4 := (l2,b2);  // Eckpunkte der Zelle
+  r := max( dist(M,E1), ..., dist(M,E4) )  //Radius der Zelle
+  // ich nehme an, dass dist(Z,M) <= r gilt für all Z in der Zelle
+  return [dist(M,P) - r, dist(M,P) + r]
+  // nach Dreiecksungleichung ist die Distanz von Z zu P für jedes Z in
+der Zelle: dist(Z,P) >= dist(M,P) - dist(M,Z) >= dist(M,P) - r und
+dist(Z,P) <= dist(M,P) + dist(M,Z) <= dist(M,P) + r
+
+Das zusammen liefert jetzt f_interval, eine Intervallversion von f, die
+obere und untere Schranken an f gibt, siehe oben.
+
+Der eigentliche Algorithmus läuft jetzt wie folgt:
+
+// bestimmt die Nullstellen von f in der Zelle [l1,l2]x[b1,b2]:
+bestimmme_Nullstellen([l1,l2]x[b1,b2]) =
+  if l2-l1 < eps and b2-b1 < eps: // wenn Auflösung gut genug
+    print ( (l1+l2)/2, (b1+b2)/2 )
+  // sonst: Auflösung zu klein, mache weiter:
+  else if 0 in f_interval([l1,l2]x[b1,b2]):
+    ml := (l1+l2)/2; mb := (b1+b2)/2;
+    bestimme_Nullstellen( [l1,ml]x[b1,mb] )
+    bestimme_Nullstellen( [l1,ml]x[mb,b2] )
+    bestimme_Nullstellen( [ml,l2]x[b1,mb] )
+    bestimme_Nullstellen( [ml,l2]x[mb,b2] )
+  // else: keine Nullstellen in der Zelle vorhanden
+
+bestimmme_Nullstellen([-pi,pi]x[-pi,pi])
+// die rekursive Funktion wird mit dem gesamten Ellipsoiden als Argument
+aufgerufen
+
+Das kannst du erst mal ausprobieren. Das wird viele Zell-Mittelpunkte
+printen, für viele Zellen in der Nähe von Nullstellen von f. Die muss
+man dann vermutlich noch sinnvoll zusammenfassen. Sowas wie: Falls wir
+einen Punkt P printen wollen, aber bereits einen Punkt in Distanz <=
+100*eps von P geprintet haben, dann lassen wir das besser...
+
+Der gleiche Ansatz sollte auch für deine anderen Probleme klappen.
+
+--------------------------------------------
+
+Es stimmt leider nicht, dass die weiteste Entfernung eines
+Mittelpunktes einer Zelle zu einem anderen Punkt in der Zelle immer in
+den Eckpunkten angenommen wird. Die Zelle, die den gesamten Ellipsoiden
+überdeckt, ist ein Gegenbeispiel. Hier sind die Eckpunkt die Pole und
+der Mittelpunkt liegt auf dem Äquator. Dann ist der am weitesten
+entfernte Punkt aber der gegenüberliegende auf dem Äquator. Das kann man
+aber reparieren: Es ist klar, dass der Radius irgendwo auf dem Rand der
+Zelle angenommen wird. Jetzt nimmst du dir die 4 Mittelpunkte der Ränder
+der Zelle und ihre Distanzen zu den Eckpunkten. Man kann argumentieren,
+dass entlang eines Längen- oder Breitengrades die Distanz nur zunimmt
+(sofern man höchstens einen Winkel pi abläuft) - ich hoffe diese
+Behauptung ist korrekt. Deswegen ist die Distanz von einem Punkt P zu
+einem Rand [l1,l1]x[b1,b2] die Distanz zum Mittelpunkt des Randes
+dist(P,(l1,(b1+b2)/2)) +/- die Distanz vom Mittelpunkt zu einem Eckpunkt
+dist((l1,(b1+b2)/2)), (l1,b1)). Konkret sieht das wie folgt aus:
+
+dist_interval([l1,l2]x[b1,b2], P):
+  E11 := (l1,b1); E12 := (l1,b2);  // Eckpunkte der Zelle
+  E21 := (l2,b1); E22 := (l2,b2);
+  M1* := (l1, (b1+b2)/2);         // Mittelpunkte der Ränder
+  M2* := (l2, (b1+b2)/2);
+  M*1 := ((l1+l2)/2, b1);
+  M*2 := ((l1+l2)/2, b2);
+  d1* := max(dist(M1*, E11), dist(M1*, E12))
+    // weiteste Entfernung zu M1* auf dem Rand
+  d2* := max(dist(M2*, E21), dist(M2*, E22))
+  d*1 := max(dist(M*1, E11), dist(M*1, E21))
+  d*2 := max(dist(M*2, E12), dist(M*2, E22))
+  lower := min( dist(P, M1*) - d1*, dist(P, M2*) - d2*,
+                dist(P, M*1) - d*1, dist(P, M*2) - d*2 )
+  upper := min( dist(P, M1*) + d1*, dist(P, M2*) + d2*,
+                dist(P, M*1) + d*1, dist(P, M*2) + d*2 )
+  if P in [l1,l2]x[b1,b2]: lower = 0
+    // die Distanz wird nur dann auf dem Rand angenommen
+    // wenn P nicht in der Zelle ist. Den Fall P in der Zelle
+    // muss man auf diese Weise gesondert betrachten
+  return [lower,upper]
+    // wahrscheinlich solltest du das berechnete Intervall noch
+    // ein bisschen größer machen, um den Approximationsfehler der
+    // Distanzberechnung dist(.,.) mit einzubeziehen...
+
+- Ich habe dir die allgemeine Methode dargelegt (am Beispiel der
+Sschnittpunkt zweier Kreise) wie man von einer Funktion f auf obere und
+untere Schranken kommt. Im Speziellen muss man nicht immer alle Schritte
+der Übersetzung von Hand ausführen. Zum Beispiel kann man den Test "0 in
+f_interval([l1,l2]x[b1,b2])" , den ich dir in bestimme_Nulllstellen
+angegeben habe, abkürzen zu:
+"r1 in dist_interval([l1,l2]x[b1,b2], M1)  and  r2 in
+dist_interval([l1,l2]x[b1,b2],M2)"
+Das macht genau das gleiche.
+
+- Ich habe ja schon gesagt, dass der Algorithmus viele Zellmittelpunkte
+ausgeben wird, die alle in der Nähe von Nullstellen von f liegen. Das
+kann man konkret wie folgt umgehen. Man wählt sich zwei Auflösungen
+eps,delta>0, eps << delta, vielleicht eps=10^-7, delta=10^-4. Einen
+Punkt Z auf dem Ellipsoiden kann man nun runden, indem man seinen
+Längen- und Breitengrad auf das nähste Vielfache von delta rundet, ich
+nenne das mal runde(Z,delta). Zudem brauchen wir noch eine Funktion
+rundungsmoeglichkeiten(Z,delta), die die 4 Punkte zurückgibt, die
+entstehen, wenn man den Längen-/Breitengrad jeweils auf- oder abrundet
+auf ein Vielfaches von delta. Dann ändern wir den Algorithmus wie folgt ab:
+
+    Nullstellen := emptyset
+
+    bestimmme_Nullstellen([l1,l2]x[b1,b2]) =
+      if l2-l1 < eps and b2-b1 < eps: // wenn Auflösung gut genug
+        Z = ((l1+l2)/2, (b1+b2)/2)
+        if the intersection of rundungsmoeglichkeiten(Z) and Nullstellen
+is empty:
+          Nullstellen.add(runde(Z))
+          // wir fügen Z nur hinzu, wenn noch kein Punkt in der
+          // Nähe als Nullstelle bestimmt wurde
+      // sonst: Auflösung zu klein, mache weiter:
+      else if 0 in f_interval([l1,l2]x[b1,b2]):
+        ml := (l1+l2)/2; mb := (b1+b2)/2;
+        bestimme_Nullstellen( [l1,ml]x[b1,mb] )
+        bestimme_Nullstellen( [l1,ml]x[mb,b2] )
+        bestimme_Nullstellen( [ml,l2]x[b1,mb] )
+        bestimme_Nullstellen( [ml,l2]x[mb,b2] )
+      // else: keine Nullstellen in der Zelle vorhanden
+
+- Dieser Algorithmus wird bei einem Fall langsam werden: Wenn M1 der
+Nordpol und M2 der Südpol ist und r1=r2 der Abstand zum Äquator. Das
+Resultat ist dann, korrekterweise, alle Punkte entlang des Äquators. Um
+eine feine Auflösung eps zu erreichen, muss man dann aber ~1/eps viele
+Zellen angucken (in allen anderen Fällen sind es viel weniger!), daher
+wird das langsam sein. Das könnte man vielleicht wie folgt umgehen. Du
+machst keine Tiefensuche, also Rekursion bis die Auflösung klein genug
+ist, sondern eine Breitensuche, also du hast eine Queue von
+abzuarbeitenden Zellen. In jedem Schritt nimmst du eine Zelle aus der
+Queue und wertest f_interval auf der Zelle aus. Wenn 0 nicht in
+f_interval, dann kannst du die Zelle ignorieren und mit der nächsten
+weitermachen. Wenn nicht, dann splittest du die Zelle und hängst die 4
+neu enstandenen ans Ende der Queue. Auf diese Weise sind alle Zellen in
+der Queue in (ungefähr) der gleichen Auflösung. Jetzt kann man halt
+statt als Abbruchkriterium die (gemeinsame) Auflösung zu nehmen, die
+Anzahl bisher betrachteter Zellen nehmen, z.B. du willst insgesamt
+höchstens 10000 Zellen betrachten, danach splittest du nicht mehr weiter
+auf. Damit beschränkst du die Laufzeit, auch auf degenerierten
+Instanzen. Im Beispiel mit dem Äquator wird dann die Genauigkeit etwas
+geringer, als in nichtdegenerierten Instanzen, aber das ist vermutlich
+okay.
+
+-----------------------------------------------------------------------
+
+Wir wollen ja als erstes den Abstand dist(M1,E11) (oder dist(M1,E12))
+berechnen. Beide Punkte haben die gleiche longitude, der kürzeste Weg
+zwischen ihnen verläuft also entlang der Punkte mit exakt der gleichen
+longitude. Das ist eine Ellipse. Analog zur Umfangsberechnung von einer
+Ellipse (http://de.wikipedia.org/wiki/Ellipse#Umfang) kann man jetzt den
+Abstand zweier Punkte (lat1,lon1), (lat2,lon2) mit lon1=lon2, und
+lat1<=lat2, beides in rad, angeben als:
+
+a * integral_{lat1}^{lat2} sqrt( 1 - (eps * cos(t))^2) dt
+
+Dabei ist a die Länge der großen Halbachse und eps die numerische
+Exzentrizität. Weil eps klein ist, kann man das einfach abschätzen als
+
+<= a * integral_{lat1}^{lat2} 1 dt
+= a * (lat2 - lat1)
+
+Das liefert eine obere Schranke für die Distanz von M1 nach E11. Für die
+Distanz von M1 nach E12 liefert das exakt die gleiche Schranke. Der
+Fehler, den man dabei macht, ist höchstens ein Faktor sqrt(1-eps^2), das
+ist unter 1%, also für grobe Abschätzungen völlig in Ordnung. Wie
+gesagt, lat1 und lat2 müssen in rad angegeben sein. Dann bekommt man die
+einfache Schranke a*|lat1-lat2|.
+
+Für die Distanz dist(M,M1) ist die Situation leicht anders: Nun haben
+beide Punkte die gleiche latitude, aber der kürzeste Weg wird nicht
+entlang der Punkte mit gleicher latitude verlaufen. Allerdings bekommen
+wir eine obere Schranke für den Abstand, wenn wir die Länge des Weges
+von M nach M1 bestimmen, der ständig die gleiche latitude behält.
+Sei also M1=(lat1,lon1), M=(lat2,lon2) mit lat1=lat2 und lat1,lon1,lon2
+wieder in rad angegeben. Sei K der Kreis, der aus allen Punkten mit
+latitude lat1 besteht. Wir wollen den Abstant von M1 zu M innerhalb von
+K bestimmen, das liefert eine obere Schranke für die Distanz von M1 zu M
+im Ellipsoiden. Der Fehler dieser Abschätzung geht sogar gegen 0, wenn
+die Größe der Zelle schrumpft.
+Weil K ein Kreis ist, ist das eine einfache Aufgabe: Die Distanz von M1
+nach M innerhalb von K ist einfach radius(K)*d_rad(lon1,lon2), hier ist
+d_rad(lon1,lon2) := min(|lon1-lon2|,2Pi-|lon1-lon2|) der Winkelabstand
+zweier Winkel in rad.
+Es bleibt nur noch, den Radius von K zu bestimmen. Das sollte
+radius(K) = N_lat1 * cos(lat1)
+sein mit
+N_lat1 = a / sqrt( 1 - eps^2 sin^2(lat1))
+und eps wieder die numerische Exzentrizität (siehe
+http://de.wikipedia.org/wiki/Erdellipsoid#Umrechnung_in_geozentrische_Kartesische_Koordinaten).
+Das liefert also wiederum eine einigermaßen einfache Formel um eine
+obere Schranke an die Distanz dist(M1,M) zu berechnen, welche mit
+schrumpfender Zellgröße ziemlich gut wird.
+
+Insgesamt kannst du also die bisherigen 4 Distanzberechnungen durch eine
+Distanzberechnung und 2 Abschätzungen ersetzen, ohne große
+Genauigkeitseinbußen zu bekommen...
