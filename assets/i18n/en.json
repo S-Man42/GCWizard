@@ -389,7 +389,5 @@
   "enigma_reflector" : "Reflector (UKW)",
   "enigma_rotors" : "Rotors: Name | Offset (Inner) | Setting (Outer)",
   "enigma_numberrotors" : "Count",
-  "enigma_input" : "Input",
-
-  "trithemius_title" : "Trithemius Cipher"
+  "enigma_input" : "Input"
 }
