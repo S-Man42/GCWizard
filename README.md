@@ -35,17 +35,17 @@ Of course, if you like to code test-driven, please do the next step first :)
 
 ```dart
 encryptIncreasedN(int number) {
-  if (i == null)
+  if (number == null)
     return null;
   
-  return i + 1;
+  return number + 1;
 }
 
 decryptIncreasedN(int number) {
-  if (i == null)
+  if (number == null)
     return null;
 
-  return i - 1;
+  return number - 1;
 }
 ```
 
@@ -166,6 +166,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/logic/tools/crypto/increased_n.dart';
 
 class IncreasedN extends StatefulWidget {
   @override
