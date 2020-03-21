@@ -391,5 +391,7 @@
   "enigma_reflector" : "Umkehrwalze (UKW)",
   "enigma_rotors" : "Walzen: Name | Ringst. (Innen) | Walzenst. (Außen)",
   "enigma_numberrotors" : "Anzahl",
-  "enigma_input" : "Eingabe"
+  "enigma_input" : "Eingabe",
+
+  "trithemius_title" : "Trithemius Chiffre"
 }

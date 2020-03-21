@@ -45,6 +45,7 @@ import 'package:gc_wizard/widgets/tools/crypto/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto/rotation/rotation_general.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
+import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/date_and_time/weekday.dart';
@@ -115,6 +116,7 @@ class Registry {
       GCWToolWidget(tool: ESelection(), toolName: i18n(context, 'e_selection_title'), searchStrings: SEARCHSTRING_E),
       GCWToolWidget(tool: Enigma(), toolName: i18n(context, 'enigma_title'), searchStrings: 'enigma rotors walzen'),
       GCWToolWidget(tool: KennysCode(), toolName: i18n(context, 'kennyscode_title'), searchStrings: 'they killed kenny sie haben kenny getötet kennys kenny\'s code southpark'),
+      GCWToolWidget(tool: Trithemius(), toolName: i18n(context, 'trithemius_title'), searchStrings: SEACHSTRING_ROTATION + 'trithemius'),
 
       //Pi Selection
       GCWToolWidget(tool: PiNthDecimal(), toolName: i18n(context, 'irrationalnumbers_nthdecimal_title'), searchStrings: SEARCHSTRING_PI + 'positions positionen'),
