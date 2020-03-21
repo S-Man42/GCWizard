@@ -27,6 +27,7 @@ import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
+import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
@@ -103,6 +104,7 @@ class _MainScreenState extends State<MainScreen> {
           className(ESelection()),
           className(Enigma()),
           className(KennysCode()),
+          className(Trithemius())
         ].contains(className(element.tool));
       }).toList();
 
