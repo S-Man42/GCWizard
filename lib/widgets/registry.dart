@@ -85,13 +85,14 @@ class Registry {
   static final SEARCHSTRING_PI = 'pi circle kreis 3,1415926535 3.1415926535 decimal digit nachkommastelle ';
   static final SEARCHSTRING_PHI = 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 decimal digit nachkommastelle ';
   static final SEARCHSTRING_E = 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 decimal digit nachkommastelle ';
+  static final SEARCHSTRING_VIGENERE = SEACHSTRING_ROTATION + 'vigenere ';
 
   static initialize(BuildContext context) {
     toolList = [
       //MainSelection
       GCWToolWidget(tool: RotationSelection(), toolName: i18n(context, 'rotation_selection_title'), searchStrings: SEACHSTRING_ROTATION),
       GCWToolWidget(tool: Caesar(), toolName: i18n(context, 'caesar_title'), searchStrings: SEACHSTRING_ROTATION + 'caesar cäsar'),
-      GCWToolWidget(tool: Vigenere(), toolName: i18n(context, 'vigenere_title'), searchStrings: SEACHSTRING_ROTATION + 'vigenere'),
+      GCWToolWidget(tool: Vigenere(), toolName: i18n(context, 'vigenere_title'), searchStrings: SEARCHSTRING_VIGENERE + 'autokey'),
       GCWToolWidget(tool: CoordsSelection(), toolName: i18n(context, 'coords_selection_title'), searchStrings: SEARCHSTRING_COORDINATES),
       GCWToolWidget(tool: Substitution(), toolName: i18n(context, 'substitution_title'), searchStrings: 'substitution ersetzen alphabet change austauschen change switch'),
       GCWToolWidget(tool: Atbash(), toolName: i18n(context, 'atbash_title'), searchStrings: 'atbash atbasch hebrew hebräisches umkehren umkehrungen reverse rückwärts'),
@@ -116,7 +117,7 @@ class Registry {
       GCWToolWidget(tool: ESelection(), toolName: i18n(context, 'e_selection_title'), searchStrings: SEARCHSTRING_E),
       GCWToolWidget(tool: Enigma(), toolName: i18n(context, 'enigma_title'), searchStrings: 'enigma rotors walzen'),
       GCWToolWidget(tool: KennysCode(), toolName: i18n(context, 'kennyscode_title'), searchStrings: 'they killed kenny sie haben kenny getötet kennys kenny\'s code southpark'),
-      GCWToolWidget(tool: Trithemius(), toolName: i18n(context, 'trithemius_title'), searchStrings: SEACHSTRING_ROTATION + 'trithemius'),
+      GCWToolWidget(tool: Trithemius(), toolName: i18n(context, 'trithemius_title'), searchStrings: SEARCHSTRING_VIGENERE + 'trithemius'),
 
       //Pi Selection
       GCWToolWidget(tool: PiNthDecimal(), toolName: i18n(context, 'irrationalnumbers_nthdecimal_title'), searchStrings: SEARCHSTRING_PI + 'positions positionen'),
