@@ -38,7 +38,7 @@ String _encrypt (
     return '';
 
   if (substitutionKey == null)
-    substitutionKey == '';
+    substitutionKey = '';
 
   var adfgvxMode = mode.toString().split('.')[1]; //mode.toString() == _ADFGVX.ADFGX
   alphabet = createPolybiosAlphabet(adfgvxMode.length, firstLetters: substitutionKey, mode: polybiosMode, fillAlphabet: alphabet);
@@ -172,7 +172,7 @@ String _decrypt (
     transposed = input;
 
   if (substitutionKey == null)
-    substitutionKey == '';
+    substitutionKey = '';
 
   var adfgvxMode = mode.toString().split('.')[1]; //mode.toString() == _ADFGVX.ADFGX
   alphabet = createPolybiosAlphabet(adfgvxMode.length, firstLetters: substitutionKey, mode: polybiosMode, fillAlphabet: alphabet);
