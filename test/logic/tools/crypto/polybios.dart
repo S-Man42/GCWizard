@@ -2,6 +2,33 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/crypto/polybios.dart';
 
 void main() {
+  group("Polybios.createPolybiosAlphabet:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'gridDimension' : null, 'firstLetters': null, 'mode': null, 'fillAlphabet': null, 'expectedOutput' : null},
+      {'gridDimension' : 5, 'firstLetters': null, 'mode': PolybiosMode.AZ09, 'fillAlphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : 'ABCDEFGHIKLMNOPQRSTUVWXYZ'},
+      {'gridDimension' : 5, 'firstLetters': '', 'mode': PolybiosMode.AZ09, 'fillAlphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : 'ABCDEFGHIKLMNOPQRSTUVWXYZ'},
+
+      {'gridDimension' : 5, 'firstLetters': 'XYZ', 'mode': PolybiosMode.AZ09, 'fillAlphabet': null, 'expectedOutput' : 'XYZABCDEFGHIKLMNOPQRSTUVW'},
+      {'gridDimension' : 5, 'firstLetters': 'XYZ', 'mode': PolybiosMode.custom, 'fillAlphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : 'XYZABCDEFGHIKLMNOPQRSTUVW'},
+      {'gridDimension' : 5, 'firstLetters': 'XYZ', 'mode': PolybiosMode.custom, 'fillAlphabet': 'QWERTZUIOPASDFGHKLYXCVBNM', 'expectedOutput' : 'XYZQWERTUIOPASDFGHKLCVBNM'},
+      {'gridDimension' : 5, 'firstLetters': null, 'mode': PolybiosMode.custom, 'fillAlphabet': 'QWERTZUIOPASDFGHKLYXCVBNM', 'expectedOutput' : 'QWERTZUIOPASDFGHKLYXCVBNM'},
+      {'gridDimension' : 6, 'firstLetters': 'XYZ', 'mode': PolybiosMode.AZ09, 'fillAlphabet': null, 'expectedOutput' : 'XYZABCDEFGHIJKLMNOPQRSTUVW0123456789'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test(
+          'gridDimension: ${elem['gridDimension']}, firstLetters: ${elem['firstLetters']}, mode: ${elem['mode']}, fillAlphabet: ${elem['fillAlphabet']}', () {
+        String _actual = createPolybiosAlphabet(
+            elem['gridDimension'],
+            firstLetters: elem['firstLetters'],
+            mode: elem['mode'],
+            fillAlphabet: elem['fillAlphabet']
+        );
+        expect(_actual == null ? null : _actual, elem['expectedOutput']);
+      });
+    });
+  });
+
   group("Polybios.encodePolybios:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'key': null, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : null},
