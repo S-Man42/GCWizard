@@ -35,6 +35,7 @@ import 'package:gc_wizard/widgets/tools/crypto/atbasch.dart';
 import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto/enigma.dart';
+import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kennys_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
@@ -118,6 +119,7 @@ class Registry {
       GCWToolWidget(tool: Enigma(), toolName: i18n(context, 'enigma_title'), searchStrings: 'enigma rotors walzen'),
       GCWToolWidget(tool: KennysCode(), toolName: i18n(context, 'kennyscode_title'), searchStrings: 'they killed kenny sie haben kenny getötet kennys kenny\'s code southpark'),
       GCWToolWidget(tool: Trithemius(), toolName: i18n(context, 'trithemius_title'), searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'),
+      GCWToolWidget(tool: Gronsfeld(), toolName: i18n(context, 'gronsfeld_title'), searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'),
 
       //Pi Selection
       GCWToolWidget(tool: PiNthDecimal(), toolName: i18n(context, 'irrationalnumbers_nthdecimal_title'), searchStrings: SEARCHSTRING_PI + 'positions positionen'),

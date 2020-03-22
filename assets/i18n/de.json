@@ -393,5 +393,7 @@
   "enigma_numberrotors" : "Anzahl",
   "enigma_input" : "Eingabe",
 
-  "trithemius_title" : "Trithemius Chiffre"
+  "trithemius_title" : "Trithemius Chiffre",
+
+  "gronsfeld_title" : "Gronsfeld Chiffre"
 }
