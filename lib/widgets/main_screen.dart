@@ -23,6 +23,7 @@ import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kennys_code.dart';
+import 'package:gc_wizard/widgets/tools/crypto/lemon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
@@ -104,7 +105,8 @@ class _MainScreenState extends State<MainScreen> {
           className(ESelection()),
           className(Enigma()),
           className(KennysCode()),
-          className(Trithemius())
+          className(Trithemius()),
+          className(Lemon())
         ].contains(className(element.tool));
       }).toList();
 

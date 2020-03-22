@@ -60,6 +60,10 @@ String removeNonLetters(String text) {
   return text.replaceAll(RegExp(r'[^A-Za-z]'), '');
 }
 
+String removeNonAlphaNum(String text) {
+  return text.replaceAll(RegExp(r'[^A-Za-z0-9]'), '');
+}
+
 String insertCharacter(String text, int index, String character) {
   if (text == null || character == null)
     return text;

@@ -393,5 +393,10 @@
   "enigma_numberrotors" : "Anzahl",
   "enigma_input" : "Eingabe",
 
-  "trithemius_title" : "Trithemius Chiffre"
+  "trithemius_title" : "Trithemius Chiffre",
+
+  "lemon_title" : "Lemon Chiffre",
+  "lemon_mode" : "Richtung",
+  "lemon_clockwise" : "UZS",
+  "lemon_counter_clockwise" : "geg. UZS"
 }

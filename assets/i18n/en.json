@@ -391,5 +391,10 @@
   "enigma_numberrotors" : "Count",
   "enigma_input" : "Input",
 
-  "trithemius_title" : "Trithemius Cipher"
+  "trithemius_title" : "Trithemius Cipher",
+
+  "lemon_title" : "Lemon Cipher",
+  "lemon_mode" : "Direction",
+  "lemon_clockwise" : "CW",
+  "lemon_counter_clockwise" : "CCW"
 }
