@@ -82,12 +82,12 @@ class BrainfkState extends State<Brainfk> {
   _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       try {
-        return widget.interpret(_currentText, input: _currentInput) ?? interpretBrainfk(_currentText, input: _currentInput);
+        return widget.interpret == null ? interpretBrainfk(_currentText, input: _currentInput) : widget.interpret(_currentText, input: _currentInput);
       } on FormatException catch(e) {
         return printErrorMessage(context, e.message);
       }
     } else {
-      return widget.generate(_currentText) ?? generateBrainfk(_currentText);
+      return widget.generate == null ? generateBrainfk(_currentText) : widget.generate(_currentText);
     }
   }
 }
