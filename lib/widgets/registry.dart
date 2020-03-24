@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
@@ -15,6 +17,7 @@ import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
@@ -45,6 +48,7 @@ import 'package:gc_wizard/widgets/tools/crypto/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto/rotation/rotation_general.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
+import 'package:gc_wizard/widgets/tools/crypto/symbol_table.dart';
 import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/date_and_time/day_calculator.dart';
@@ -72,7 +76,7 @@ import 'package:gc_wizard/widgets/tools/math_and_physics/primes/primes_nthprime.
 import 'package:gc_wizard/widgets/tools/math_and_physics/primes/primes_primeindex.dart';
 
 class Registry {
-  static List<GCWToolWidget> toolList;
+  static List<GCWToolWidget> toolList = [];
 
   static final SEARCHSTRING_SETTINGS = 'settings einstellungen preferences ';
 
@@ -86,6 +90,7 @@ class Registry {
   static final SEARCHSTRING_PHI = 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 decimal digit nachkommastelle ';
   static final SEARCHSTRING_E = 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 decimal digit nachkommastelle ';
   static final SEARCHSTRING_VIGENERE = SEACHSTRING_ROTATION + 'vigenere ';
+  static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters ';
 
   static initialize(BuildContext context) {
     toolList = [
@@ -118,6 +123,7 @@ class Registry {
       GCWToolWidget(tool: Enigma(), toolName: i18n(context, 'enigma_title'), searchStrings: 'enigma rotors walzen'),
       GCWToolWidget(tool: KennysCode(), toolName: i18n(context, 'kennyscode_title'), searchStrings: 'they killed kenny sie haben kenny getötet kennys kenny\'s code southpark'),
       GCWToolWidget(tool: Trithemius(), toolName: i18n(context, 'trithemius_title'), searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'),
+      GCWToolWidget(tool: SymbolTableSelection(), toolName: i18n(context, 'symboltables_title'), searchStrings: SEARCHSTRING_SYMBOLTABLES),
 
       //Pi Selection
       GCWToolWidget(tool: PiNthDecimal(), toolName: i18n(context, 'irrationalnumbers_nthdecimal_title'), searchStrings: SEARCHSTRING_PI + 'positions positionen'),
@@ -157,10 +163,10 @@ class Registry {
 
       //RotationSelection
       GCWToolWidget(tool: Rot13(), toolName: i18n(context, 'rotation_rot13_title'), searchStrings: SEACHSTRING_ROTATION + 'rot13 rot-13'),
-      GCWToolWidget(tool: Rot5(), toolName:  i18n(context, 'rotation_rot5_title'), searchStrings: SEACHSTRING_ROTATION + 'rot5 rot-5'),
-      GCWToolWidget(tool: Rot18(), toolName:  i18n(context, 'rotation_rot18_title'), searchStrings: SEACHSTRING_ROTATION + 'rot18 rot-18'),
-      GCWToolWidget(tool: Rot47(), toolName:  i18n(context, 'rotation_rot47_title'), searchStrings: SEACHSTRING_ROTATION + 'rot47 rot-47'),
-      GCWToolWidget(tool: RotationGeneral(), toolName:  i18n(context, 'rotation_rotation_title'), searchStrings: SEACHSTRING_ROTATION),
+      GCWToolWidget(tool: Rot5(), toolName: i18n(context, 'rotation_rot5_title'), searchStrings: SEACHSTRING_ROTATION + 'rot5 rot-5'),
+      GCWToolWidget(tool: Rot18(), toolName: i18n(context, 'rotation_rot18_title'), searchStrings: SEACHSTRING_ROTATION + 'rot18 rot-18'),
+      GCWToolWidget(tool: Rot47(), toolName: i18n(context, 'rotation_rot47_title'), searchStrings: SEACHSTRING_ROTATION + 'rot47 rot-47'),
+      GCWToolWidget(tool: RotationGeneral(), toolName: i18n(context, 'rotation_rotation_title'), searchStrings: SEACHSTRING_ROTATION),
 
       //CoordsSelection
       GCWToolWidget(tool: WaypointProjection(), toolName: i18n(context, 'coords_waypointprojection_title'), iconPath: 'assets/coordinates/icon_waypoint_projection.png', searchStrings: SEARCHSTRING_COORDINATES + 'winkel angles waypointprojections bearings wegpunktprojektionen wegpunktpeilungen directions richtungen'),
@@ -178,6 +184,12 @@ class Registry {
       GCWToolWidget(tool: Resection(), toolName: i18n(context, 'coords_resection_title'), iconPath: 'assets/coordinates/icon_resection.png', searchStrings: SEARCHSTRING_COORDINATES + 'resection 2 two zwei angles winkel directions richtungen bearings 3 three drei rückwärtseinschnitt rückwärtseinschneiden rückwärtsschnitt rückwärtsschneiden'),
       GCWToolWidget(tool: EquilateralTriangle(), toolName: i18n(context, 'coords_equilateraltriangle_title'), iconPath: 'assets/coordinates/icon_equilateral_triangle.png', searchStrings: SEARCHSTRING_COORDINATES + 'equilateral triangles gleichseitiges dreiecke'),
       GCWToolWidget(tool: EllipsoidTransform(), toolName: i18n(context, 'coords_ellipsoidtransform_title'), iconPath: 'assets/coordinates/icon_ellipsoid_transform.png', searchStrings: SEARCHSTRING_COORDINATES + 'rotationsellipsoids converter converting konverter konvertieren umwandeln bessel 1841 bessel krassowski krasowksi krasovsky krassovsky 1950 airy 1830 modified potsdam dhdn2001 dhdn1995 pulkowo mgi lv95 ed50 clarke 1866 osgb36 date datum wgs84'),
+
+      //Symbol Tables
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'puzzle',), toolName: i18n(context, 'symboltables_puzzle_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'puzzle_72.png',searchStrings: SEARCHSTRING_SYMBOLTABLES + 'puzzles puzzleteile jigsaw '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'murray',), toolName: i18n(context, 'symboltables_murray_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'murray_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'murray'),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'semaphore',), toolName: i18n(context, 'symboltables_semaphore_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'semaphore_81.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags semaphores winkeralphabet flaggenalphabet'),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'braille',), toolName: i18n(context, 'symboltables_braille_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'braille_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift braille '),
 
       //Main Menu
       GCWToolWidget(tool: GeneralSettings(), toolName: i18n(context, 'settings_general_title'), searchStrings: SEARCHSTRING_SETTINGS,),

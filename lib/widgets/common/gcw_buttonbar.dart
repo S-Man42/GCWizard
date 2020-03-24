@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 
-class GCWButtonBar extends StatefulWidget {
-  final List<GCWButton> children;
+class GCWToolBar extends StatefulWidget {
+  final List<Widget> children;
 
-  const GCWButtonBar({
+  const GCWToolBar({
     Key key,
     this.children,
   }) : super(key: key);
 
   @override
-  _GCWButtonBarState createState() => _GCWButtonBarState();
+  _GCWToolBarState createState() => _GCWToolBarState();
 }
 
-class _GCWButtonBarState extends State<GCWButtonBar> {
+class _GCWToolBarState extends State<GCWToolBar> {
 
   @override
   Widget build(BuildContext context) {

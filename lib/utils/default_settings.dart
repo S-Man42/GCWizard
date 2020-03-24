@@ -27,4 +27,12 @@ void initDefaultSettings() {
   if (Prefs.get('font_size') == null) {
     Prefs.setDouble('font_size', 16.0);
   }
+
+  if (Prefs.get('symbol_tables_countcolumns_portrait') == null) {
+    Prefs.setInt('symbol_tables_countcolumns_portrait', 6);
+  }
+
+  if (Prefs.get('symbol_tables_countcolumns_landscape') == null) {
+    Prefs.setInt('symbol_tables_countcolumns_landscape', 10);
+  }
 }

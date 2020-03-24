@@ -35,6 +35,7 @@ flutter:
     - assets/i18n/
     - assets/logo/
     - assets/coordinates/
+    - assets/symbol_tables/
 
 flutter_icons:
   image_path: "assets/logo/circle_border_1024.png"

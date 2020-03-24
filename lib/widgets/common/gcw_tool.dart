@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -10,6 +11,7 @@ class GCWToolWidget extends StatefulWidget {
   final autoScroll;
   final iconPath;
   final String searchStrings;
+  final Map<String, dynamic> options;
 
   var icon;
   var _id = '';
@@ -21,12 +23,19 @@ class GCWToolWidget extends StatefulWidget {
     this.toolName,
     this.autoScroll: true,
     this.iconPath,
-    this.searchStrings: ''
+    this.searchStrings: '',
+    this.options
   }) : super(key: key) {
     this._id = className(tool);
     this._isFavorite = Prefs.getStringList('favorites').contains('$_id');
-    if (iconPath != null)
-      this.icon = Image.asset(iconPath, width: defaultListIconSize);
+
+    if (iconPath != null) {
+      this.icon = Container(
+        child: Image.asset(iconPath, width: defaultListIconSize),
+        padding: EdgeInsets.all(2),
+        color: ThemeColors.iconBackground,
+      );
+    }
   }
 
   bool get isFavorite {
@@ -70,13 +79,13 @@ class _GCWToolWidgetState extends State<GCWToolWidget> {
       return widget.tool;
 
     return SingleChildScrollView(
-        child: Padding(
-          child: widget.tool,
-          padding: EdgeInsets.only(
-            left: 10,
-            right: 10
-          ),
-        )
+      child: Padding(
+        child: widget.tool,
+        padding: EdgeInsets.only(
+          left: 10,
+          right: 10
+        ),
+      )
     );
   }
 }

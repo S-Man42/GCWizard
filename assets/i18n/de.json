@@ -13,7 +13,8 @@
   "common_decrypt" : "Entschlüsseln",
   "common_alphabet" : "Alphabet",
   "common_custom" : "Eigenes",
-
+  "common_portrait" : "Hochformat",
+  "common_landscape" : "Querformat",
   "default_switch_title" : "Modus",
 
   "common_numeralbase_binary" : "Binär",
@@ -45,6 +46,7 @@
   "settings_coordinates_defaultrotationellipsoid" : "Standardellipsoid",
   "settings_coordinates_defaultrotationellipsoid_existing" : "Aus Liste",
   "settings_coordinates_defaultrotationellipsoid_user" : "Eigener",
+  "settings_general_symboltables" : "Symboltabellen (Anzahl Bilder pro Zeile)",
 
   "callforcontribution_1" : "GCWizard ist ein Tool von Geocachern für Geocacher.\n\n",
   "callforcontribution_2" : "Die Entwickler und alle Beitragenden haben ausschließlich in ihrer Freizeit daran entwickelt. Bei einer so umfangreichen App kommen schnell viele Wochen oder Monate Arbeit zusammen. Das ist eine für wenige Mitarbeiter nur sehr schwer zu bewältigende Aufgabe.\n\n",
@@ -392,6 +394,18 @@
   "enigma_rotors" : "Walzen: Name | Ringst. (Innen) | Walzenst. (Außen)",
   "enigma_numberrotors" : "Anzahl",
   "enigma_input" : "Eingabe",
+
+  "symboltables_title" : "Symboltabellen",
+  "symboltables_puzzle_title" : "Puzzle Code",
+  "symboltables_murray_title" : "Murray",
+  "symboltables_semaphore_title" : "Winkeralphabet (Semaphore)",
+  "symboltables_semaphore_cancel" : "ABBRUCH",
+  "symboltables_semaphore_correct" : "KORREKT",
+  "symboltables_semaphore_error_attention" : "FEHLER/ACHTUNG",
+  "symboltables_semaphore_letters_following" : "BUCHSTABEN FOLGEN",
+  "symboltables_semaphore_numerals_following" : "ZIFFERN FOLGEN",
+  "symboltables_semaphore_rest" : "PAUSE",
+  "symboltables_braille_title" : "Braille (Blindenschrift)",
 
   "trithemius_title" : "Trithemius Chiffre"
 }
