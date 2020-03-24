@@ -34,7 +34,7 @@ import 'package:gc_wizard/widgets/tools/crypto/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto/atbasch.dart';
 import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/caesar.dart';
-import 'package:gc_wizard/widgets/tools/crypto/enigma.dart';
+import 'package:gc_wizard/widgets/tools/crypto/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kennys_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
