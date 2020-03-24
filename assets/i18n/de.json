@@ -395,6 +395,10 @@
   "enigma_numberrotors" : "Anzahl",
   "enigma_input" : "Eingabe",
 
+  "trithemius_title" : "Trithemius Chiffre",
+
+  "gronsfeld_title" : "Gronsfeld Chiffre"
+
   "symboltables_title" : "Symboltabellen",
   "symboltables_puzzle_title" : "Puzzle Code",
   "symboltables_murray_title" : "Murray",
@@ -406,6 +410,4 @@
   "symboltables_semaphore_numerals_following" : "ZIFFERN FOLGEN",
   "symboltables_semaphore_rest" : "PAUSE",
   "symboltables_braille_title" : "Braille (Blindenschrift)",
-
-  "trithemius_title" : "Trithemius Chiffre"
 }
