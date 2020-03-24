@@ -391,5 +391,7 @@
   "enigma_numberrotors" : "Count",
   "enigma_input" : "Input",
 
-  "trithemius_title" : "Trithemius Cipher"
+  "trithemius_title" : "Trithemius Cipher",
+
+  "gronsfeld_title" : "Gronsfeld Cipher"
 }

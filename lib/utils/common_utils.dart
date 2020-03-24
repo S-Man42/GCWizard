@@ -1,8 +1,8 @@
 import 'dart:math';
-
+import 'package:gc_wizard/logic/tools/crypto/rotator.dart';
 import 'package:diacritic/diacritic.dart';
-
 import 'constants.dart';
+import 'alphabets.dart';
 
 List<int> textToIntList(String text, {bool allowNegativeValues: false}) {
   var regex = allowNegativeValues ? RegExp(r'[^\-0-9]') : RegExp(r'[^0-9]');
@@ -23,6 +23,31 @@ int extractIntegerFromText(String text) {
 
 String intListToString(List<int> list, {String delimiter: ''}) {
   return list.map((elem) => elem == null ? unknownElement : elem).join(delimiter).trim();
+}
+
+String digitsToAlpha(String input, {int aValue: 0, bool removeNonDigits: true}) {
+  if (input == null)
+    return input;
+  
+  if (aValue == null)
+    aValue = 0;
+
+  if (removeNonDigits == null)
+    removeNonDigits = false;
+  
+  final letters = Rotator().rotate(Rotator.defaultAlphabetAlpha, aValue);
+  
+  return input.split('').map((character) {
+    var value = alphabet_09[character];
+    
+    if (value == null)
+      if (removeNonDigits)
+        return '';
+      else
+        return character;
+
+    return letters[value];
+  }).join();
 }
 
 String normalizeUmlauts(String input) {
