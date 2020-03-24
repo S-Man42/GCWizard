@@ -25,9 +25,9 @@ String intListToString(List<int> list, {String delimiter: ''}) {
   return list.map((elem) => elem == null ? unknownElement : elem).join(delimiter).trim();
 }
 
-String digitsToAlpha(String text, {int aValue: 0, bool removeNonDigits: true}) {
-  if (text == null)
-    return text;
+String digitsToAlpha(String input, {int aValue: 0, bool removeNonDigits: true}) {
+  if (input == null)
+    return input;
   
   if (aValue == null)
     aValue = 0;
@@ -37,7 +37,7 @@ String digitsToAlpha(String text, {int aValue: 0, bool removeNonDigits: true}) {
   
   final letters = Rotator().rotate(Rotator.defaultAlphabetAlpha, aValue);
   
-  return text.split('').map((character) {
+  return input.split('').map((character) {
     var value = alphabet_09[character];
     
     if (value == null)
