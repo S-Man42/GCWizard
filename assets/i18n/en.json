@@ -396,7 +396,7 @@
 
   "trithemius_title" : "Trithemius Cipher",
 
-  "gronsfeld_title" : "Gronsfeld Cipher"
+  "gronsfeld_title" : "Gronsfeld Cipher",
 
   "symboltables_title" : "Symbol Tables",
   "symboltables_puzzle_title" : "Puzzle Code",
@@ -408,5 +408,5 @@
   "symboltables_semaphore_letters_following" : "LETTERS FOLLOWING",
   "symboltables_semaphore_numerals_following" : "NUMBERS FOLLOWING",
   "symboltables_semaphore_rest" : "REST",
-  "symboltables_braille_title" : "Braille (Tactile)",
+  "symboltables_braille_title" : "Braille (Tactile)"
 }
