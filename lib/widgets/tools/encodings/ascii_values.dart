@@ -51,6 +51,8 @@ class ASCIIValuesState extends State<ASCIIValues> {
           ) :
           GCWIntegerListTextField(
             controller: _controller,
+            min: 0,
+            max: 0xffff,
             onChanged: (text) {
               setState(() {
                 _currentInput = text;
