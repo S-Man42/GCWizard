@@ -4,12 +4,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
 final SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
@@ -29,6 +33,8 @@ class SymbolTableState extends State<SymbolTable> {
 
   var _imageFilePaths = SplayTreeMap<String, String>();
   var _currentMode = GCWSwitchPosition.right;
+
+  var _currentShowOverlayedSymbols = true;
 
   var _currentInput = '';
   var _inputController;
@@ -127,7 +133,16 @@ class SymbolTableState extends State<SymbolTable> {
           //Decryption
           : Column(
               children: <Widget>[
-                _buildButtonMatrix(countColumns),
+                GCWOnOffSwitch (
+                  value: _currentShowOverlayedSymbols,
+                  title: i18n(context, 'symboltables_showoverlay'),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentShowOverlayedSymbols = value;
+                    });
+                  },
+                ),
+                _buildDecryptionButtonMatrix(countColumns),
                 GCWDefaultOutput(
                   text: _output
                 )
@@ -183,11 +198,18 @@ class SymbolTableState extends State<SymbolTable> {
     );
   }
 
-  _getSpecialText(key) {
-    return i18n(context, 'symboltables_' + widget.symbolKey + '_' + key);
+  _getSpecialText(key, {showDelimiterOnSpecialText: true}) {
+    var specialText = i18n(context, 'symboltables_' + widget.symbolKey + '_' + key);
+    return showDelimiterOnSpecialText ? '<$specialText>' : specialText;
   }
 
-  _buildButtonMatrix(countColumns) {
+  _getSymbolText(imageIndex, {showDelimiterOnSpecialText: true}) {
+    var key = _imageFilePaths.keys.toList()[imageIndex];
+    var ascii = int.tryParse(key);
+    return ascii == null ? _getSpecialText(key, showDelimiterOnSpecialText: showDelimiterOnSpecialText) : String.fromCharCode(ascii);
+  }
+
+  _buildDecryptionButtonMatrix(countColumns) {
     var rows = <Widget>[];
     var countRows = (_imageFilePaths.length / countColumns).floor();
 
@@ -200,18 +222,43 @@ class SymbolTableState extends State<SymbolTable> {
 
         if (imageIndex < _imageFilePaths.length) {
           widget = InkWell(
-            child: Container(
-              child: Image.asset(
-                _imageFilePaths.values.toList()[imageIndex],
-              ),
-              color: ThemeColors.iconBackground,
-              padding: EdgeInsets.all(2),
+            child: Stack(
+              overflow: Overflow.clip,
+              children: <Widget>[
+                Container(
+                  child: Image.asset(
+                    _imageFilePaths.values.toList()[imageIndex],
+                  ),
+                  color: ThemeColors.iconBackground,
+                  padding: EdgeInsets.all(2),
+                ),
+                _currentShowOverlayedSymbols
+                  ? Opacity(
+                      child:  Container(
+                        child: Text(
+                          _getSymbolText(imageIndex, showDelimiterOnSpecialText: false),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: defaultFontSize()
+                          ),
+                        ),
+                        height: defaultFontSize() + 5,
+                        decoration: ShapeDecoration(
+                          color: ThemeColors.accent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius)),
+                          )
+                        ),
+                      ),
+                      opacity: 0.85
+                    )
+                  : Container()
+              ],
             ),
             onTap: () {
               setState(() {
-                var key = _imageFilePaths.keys.toList()[imageIndex];
-                var ascii = int.tryParse(key);
-                _output += ascii == null ? '<${_getSpecialText(key)}>' : String.fromCharCode(ascii);
+                _output += _getSymbolText(imageIndex);
               });
             },
           );

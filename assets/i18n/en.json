@@ -399,6 +399,7 @@
   "gronsfeld_title" : "Gronsfeld Cipher",
 
   "symboltables_title" : "Symbol Tables",
+  "symboltables_showoverlay" : "Overlays",
   "symboltables_puzzle_title" : "Puzzle Code",
   "symboltables_murray_title" : "Murray",
   "symboltables_semaphore_title" : "Semaphore",
