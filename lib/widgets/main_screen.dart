@@ -79,36 +79,36 @@ class _MainScreenState extends State<MainScreen> {
     final List<GCWToolWidget> _toolList =
       Registry.toolList.where((element) {
         return [
-          className(RotationSelection()),
+          className(ADFGVX()),
+          className(ASCIIValues()),
+          className(Atbash()),
+          className(Bacon()),
+          className(BaseSelection()),
+          className(BrainfkSelection()),
           className(Caesar()),
           className(CoordsSelection()),
-          className(LetterValues()),
-          className(ASCIIValues()),
-          className(Scrabble()),
-          className(Vigenere()),
-          className(Substitution()),
-          className(Atbash()),
-          className(BaseSelection()),
-          className(Skytale()),
-          className(Playfair()),
           className(DatesSelection()),
+          className(Enigma()),
+          className(ESelection()),
+          className(FormulaSolver()),
+          className(Gronsfeld()),
+          className(KennysCode()),
+          className(LetterValues()),
           className(Morse()),
           className(NumeralBases()),
-          className(Bacon()),
-          className(PrimesSelection()),
-          className(Polybios()),
-          className(ADFGVX()),
-          className(FormulaSolver()),
-          className(RomanNumbers()),
-          className(BrainfkSelection()),
-          className(PiSelection()),
           className(PhiSelection()),
-          className(ESelection()),
-          className(Enigma()),
-          className(KennysCode()),
-          className(Trithemius()),
-          className(Gronsfeld()),
+          className(PiSelection()),
+          className(Playfair()),
+          className(Polybios()),
+          className(PrimesSelection()),
+          className(RomanNumbers()),
+          className(RotationSelection()),
+          className(Scrabble()),
+          className(Skytale()),
+          className(Substitution()),
           className(SymbolTableSelection()),
+          className(Trithemius()),
+          className(Vigenere()),
         ].contains(className(element.tool));
       }).toList();
 
@@ -180,9 +180,9 @@ class _MainScreenState extends State<MainScreen> {
             Icons.search,
             color: ThemeColors.gray
           ),
-          hintText: i18n(context, 'search_hint')
+          hintText: i18n(context, 'common_common_search_hint')
         )
-      : Text(i18n(context, 'app_title'));
+      : Text(i18n(context, 'common_app_title'));
   }
 
   _buildIcon() {

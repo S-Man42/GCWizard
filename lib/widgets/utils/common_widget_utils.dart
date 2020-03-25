@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:prefs/prefs.dart';
 
@@ -15,7 +16,19 @@ String printErrorMessage(BuildContext context, String message) {
 }
 
 defaultFontSize() {
-  return Prefs.get('font_size');
+  var fontSize = Prefs.get('font_size');
+
+  if (fontSize < FONT_SIZE_MIN) {
+    Prefs.setDouble('font_size', FONT_SIZE_MIN.toDouble());
+    return FONT_SIZE_MIN;
+  }
+
+  if (fontSize > FONT_SIZE_MAX) {
+    Prefs.setDouble('font_size', FONT_SIZE_MAX.toDouble());
+    return FONT_SIZE_MAX;
+  }
+
+  return fontSize;
 }
 
 List<Widget> twoColumnMultiLineOutput(

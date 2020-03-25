@@ -6,7 +6,6 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -198,15 +197,14 @@ class SymbolTableState extends State<SymbolTable> {
     );
   }
 
-  _getSpecialText(key, {showDelimiterOnSpecialText: true}) {
-    var specialText = i18n(context, 'symboltables_' + widget.symbolKey + '_' + key);
-    return showDelimiterOnSpecialText ? '<$specialText>' : specialText;
+  _getSpecialText(key) {
+    return i18n(context, 'symboltables_' + widget.symbolKey + '_' + key);
   }
 
-  _getSymbolText(imageIndex, {showDelimiterOnSpecialText: true}) {
+  _getSymbolText(imageIndex) {
     var key = _imageFilePaths.keys.toList()[imageIndex];
     var ascii = int.tryParse(key);
-    return ascii == null ? _getSpecialText(key, showDelimiterOnSpecialText: showDelimiterOnSpecialText) : String.fromCharCode(ascii);
+    return ascii == null ? _getSpecialText(key) : String.fromCharCode(ascii);
   }
 
   _buildDecryptionButtonMatrix(countColumns) {
@@ -236,7 +234,7 @@ class SymbolTableState extends State<SymbolTable> {
                   ? Opacity(
                       child:  Container(
                         child: Text(
-                          _getSymbolText(imageIndex, showDelimiterOnSpecialText: false),
+                          _getSymbolText(imageIndex),
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,

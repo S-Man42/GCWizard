@@ -28,7 +28,7 @@ class GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
       children: <Widget>[
         Expanded(
           child: GCWText(
-            text: (widget.title ?? i18n(context, 'default_switch_title')) + ':'
+            text: (widget.title ?? i18n(context, 'common_switch_title')) + ':'
           ),
           flex: 1
         ),

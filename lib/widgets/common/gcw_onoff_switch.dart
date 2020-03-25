@@ -25,7 +25,7 @@ class GCWOnOffSwitchState extends State<GCWOnOffSwitch> {
       children: <Widget>[
         widget.notitle ? Container() : Expanded(
           child: GCWText(
-            text: (widget.title ?? i18n(context, 'default_switch_title')) + ':'
+            text: (widget.title ?? i18n(context, 'common_switch_title')) + ':'
           ),
           flex: 1
         ),

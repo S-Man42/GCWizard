@@ -34,7 +34,7 @@ buildMainMenu(BuildContext context) {
               left: 20
             ),
             child: Text(
-              i18n(context, 'app_title'),
+              i18n(context, 'common_app_title'),
               style: TextStyle(
                 color: ThemeColors.darkgrey,
                 fontSize: 22.0
