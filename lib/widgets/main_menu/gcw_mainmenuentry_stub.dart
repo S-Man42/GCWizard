@@ -42,7 +42,6 @@ class GCWMainMenuEntryStubState extends State<GCWMainMenuEntryStub> {
               width: 350,
               child: Container(
                 decoration: BoxDecoration(
-                  //color: ThemeColors.accent,
                   border: Border.all(
                       color: ThemeColors.accent,
                       width: 2

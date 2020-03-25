@@ -1,5 +1,5 @@
 import 'package:gc_wizard/logic/tools/crypto/polybios.dart';
-import 'package:gc_wizard/logic/tools/crypto/skytale.dart';
+import 'package:gc_wizard/logic/tools/crypto/transposition.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 enum _ADFGVXMode {ADFGX, ADFGVX}
@@ -58,7 +58,7 @@ String _encrypt (
 
   var matrix = createTranspositionMatrix(
     polybiosEncoded,
-    TranspositionMatrixFillMode.rowWise,
+    TranspositionMatrixFillMode.encryption,
     countColumns: transpositionKey.length
   );
 
