@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/integer_textinputformatter.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 
 import 'dart:math';
 
@@ -32,25 +33,38 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
 
   @override
   Widget build(BuildContext context) {
+    var allowNegativeValues = widget.min == null || widget.min < 0;
+    
     return GCWTextField(
         hintText: widget.hintText,
         onChanged: (text) {
           setState(() {
-            var _value = ['', '-'].contains(text) ? max<int>(widget.min ?? 0, 0) : int.tryParse(text);
+            
+            List<int> values = textToIntList(text, allowNegativeValues: allowNegativeValues);
+            int value = 0;
+            
+            if (values.length > 0) {
+              
+              value = values[0];
+  
+              if (widget.min != null && value < widget.min) {
+                value = widget.min;
+              }
 
-            if (widget.min != null && _value < widget.min)
-              _value = widget.min;
+              if (widget.max != null && value > widget.max) {
+                value = widget.max;
+              }
+            } else {
+              value = 0;
+            }
 
-            if (widget.max != null && _value > widget.max)
-              _value = widget.max;
-
-            widget.onChanged({'text': text, 'value': _value});
+            widget.onChanged({'text': text, 'value': value});
           });
         },
         controller: widget.controller,
         inputFormatters: [widget.textInputFormatter ?? IntegerTextInputFormatter(
-          min: widget.min,
-          max: widget.max
+          allowNegativeValues: allowNegativeValues,
+          allowNumberList: false
         )],
         keyboardType: TextInputType.numberWithOptions(
           signed: widget.min == null || widget.min < 0,

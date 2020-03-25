@@ -1,45 +1,36 @@
 import 'package:flutter/services.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 
 class IntegerTextInputFormatter extends TextInputFormatter {
+  bool allowNegativeValues;
   bool allowNumberList;
-  int min;
-  int max;
 
-  IntegerTextInputFormatter({this.allowNumberList: false, this.min, this.max});
+  IntegerTextInputFormatter({this.allowNegativeValues: false, this.allowNumberList: false});
 
   @override TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    if (allowNumberList) {
-      var regex = (min == null || min < 0) ? RegExp(r'[^\-0-9]') : RegExp(r'[^0-9]');
+    
+      final String newText = newValue.text ?? '';
+      final oldSelectionIndex = oldValue.selection.end ?? 0;
+      final newSelectionIndex = newValue.selection.end ?? 0;
 
-      newValue.text.split(regex).forEach((value) {
-        if (!_checkIntegerValue(newValue.text))
-          return oldValue;
-      });
+      String adaptedText = sanitizeIntegerString(newText, allowNegativeValues, allowNumberList);
 
-      return newValue;
-
-    } else {
-      return _checkIntegerValue(newValue.text) ? newValue : oldValue;
-    }
-  }
-
-  bool _checkIntegerValue(String value) {
-    if (min != null && min >= 0 && value == '-')
-      return false;
-
-    if (value == '' || value == '-')
-      return true;
-
-    var _newInt = int.tryParse(value);
-    if (_newInt == null)
-      return false;
-
-    if (min != null && _newInt < min)
-      return false;
-
-    if (max != null && _newInt > max)
-      return false;
-
-    return true;
+      int adaptedSelectionIndex;
+      
+      if (newSelectionIndex > adaptedText.length) {
+        adaptedSelectionIndex = adaptedText.length;
+      } else {
+        if (newSelectionIndex > oldSelectionIndex) {
+          if (adaptedText.length < newText.length ) {
+            adaptedSelectionIndex = oldSelectionIndex;
+          } else {
+            adaptedSelectionIndex = newSelectionIndex;
+          }
+        } else {
+          adaptedSelectionIndex = newSelectionIndex;
+        }
+      }
+      
+      return newValue.copyWith(text: adaptedText, selection: TextSelection.fromPosition(TextPosition(offset: adaptedSelectionIndex)));
   }
 }

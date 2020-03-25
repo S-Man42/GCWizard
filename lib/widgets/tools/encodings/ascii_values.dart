@@ -67,6 +67,11 @@ class ASCIIValuesState extends State<ASCIIValues> {
 
               if (_currentMode == GCWSwitchPosition.right) {
                 var text = _currentInput['text'];
+                /**
+                 * The call to textToIntList is needed for two reasons.
+                 * First, it converts the dynamic list to an integer list, which is needed later for intListToString.
+                 * Second, when switching modes to 'right', it parses the old string and prints out only valid numbers.
+                 */
                 _currentInput = {'text': text, 'values': textToIntList(text)};
               }
 

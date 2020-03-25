@@ -5,12 +5,12 @@ import 'constants.dart';
 import 'alphabets.dart';
 
 List<int> textToIntList(String text, {bool allowNegativeValues: false}) {
-  var regex = allowNegativeValues ? RegExp(r'[^\-0-9]') : RegExp(r'[^0-9]');
-
-  var list = text.split(regex);
-  list.removeWhere((value) => value == null || value == '');
-
-  return list.map((value) => value == '-' ? 0 : int.tryParse(value)).toList();
+  if ((text == null) || (allowNegativeValues == null))
+    return [];
+  
+  final regex = allowNegativeValues ? RegExp(r'-?\d+') : RegExp(r'\d+');
+  
+  return regex.allMatches(text).map((value) => int.tryParse(text.substring(value.start, value.end))).toList();
 }
 
 int extractIntegerFromText(String text) {
@@ -110,4 +110,29 @@ String insertSpaceEveryNthCharacter(String input, int n) {
   }
 
   return out.trim();
+}
+
+String sanitizeIntegerString(String input, bool allowNegativeValues, bool allowNumberList) {
+  
+  String adaptedText = input ?? '';
+  
+  if (allowNegativeValues) {
+    if (allowNumberList) {
+      adaptedText = adaptedText.replaceAll(new RegExp(r'[^\-\d ]'), ' ');
+      adaptedText = adaptedText.replaceAll(new RegExp(r'\s{2,}'), ' ');
+      adaptedText = adaptedText.replaceAllMapped(new RegExp(r'(\d)-'), (Match groups) => "${groups[1]} -");
+    } else {
+      adaptedText = adaptedText.replaceAll(new RegExp(r'[^\-\d]'), '');
+      adaptedText = adaptedText.replaceAllMapped(new RegExp(r'(\d)-'), (Match groups) => "${groups[1]}");
+    }
+  } else {
+    if (allowNumberList) {
+      adaptedText = adaptedText.replaceAll(new RegExp(r'[^\d ]'), ' ');
+      adaptedText = adaptedText.replaceAll(new RegExp(r'\s{2,}'), ' ');
+    } else {
+      adaptedText = adaptedText.replaceAll(new RegExp(r'\D'), '');
+    }
+  }
+  
+  return adaptedText;
 }

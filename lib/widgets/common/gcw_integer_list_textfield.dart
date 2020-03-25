@@ -34,15 +34,28 @@ class _GCWIntegerListTextFieldState extends State<GCWIntegerListTextField> {
         hintText: widget.hintText,
         onChanged: (text) {
           setState(() {
-            var list = textToIntList(text, allowNegativeValues: allowNegativeValues);
-            widget.onChanged({'text': text, 'values': list});
+            var values = textToIntList(text, allowNegativeValues: allowNegativeValues);
+
+            values = values.where((value) {
+              if (widget.min != null && value < widget.min) {
+                return false;
+              }
+  
+              if (widget.max != null && value > widget.max) {
+                return false;
+              }
+              
+              return true;
+            }).toList().cast<int>();
+            
+            widget.onChanged({'text': text, 'values': values});
           });
         },
         controller: widget.controller,
         inputFormatters: [widget.textInputFormatter ?? IntegerTextInputFormatter(
-            min: widget.min,
-            max: widget.max,
-            allowNumberList: true)],
+          allowNegativeValues: allowNegativeValues,
+          allowNumberList: true
+        )],
         keyboardType: TextInputType.numberWithOptions(
           signed: allowNegativeValues,
           decimal: false
