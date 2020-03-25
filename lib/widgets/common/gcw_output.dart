@@ -23,12 +23,12 @@ class _GCWOutputState extends State<GCWOutput> {
   @override
   Widget build(BuildContext context) {
     return Column (
-        children: <Widget>[
-          GCWTextDivider(
-            text: widget.title ?? i18n(context, 'common_output')
-          ),
-          widget.child
-        ]
+      children: <Widget>[
+        GCWTextDivider(
+          text: widget.title ?? i18n(context, 'common_output')
+        ),
+        widget.child
+      ]
     );
   }
 }

@@ -63,7 +63,7 @@ class MorseState extends State<Morse> {
     if (_currentMode == GCWSwitchPosition.left)
       return Container();
 
-    return GCWButtonBar(
+    return GCWToolBar(
       children: [
         GCWButton(
           text: i18n(context, 'morse_short'),

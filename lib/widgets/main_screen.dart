@@ -17,6 +17,7 @@ import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto/atbasch.dart';
 import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
@@ -105,6 +106,7 @@ class _MainScreenState extends State<MainScreen> {
           className(Scrabble()),
           className(Skytale()),
           className(Substitution()),
+          className(SymbolTableSelection()),
           className(Trithemius()),
           className(Vigenere()),
         ].contains(className(element.tool));

@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
@@ -46,6 +47,7 @@ import 'package:gc_wizard/widgets/tools/crypto/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto/rotation/rotation_general.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
+import 'package:gc_wizard/widgets/tools/crypto/symbol_table.dart';
 import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/date_and_time/day_calculator.dart';
@@ -77,15 +79,16 @@ class Registry {
 
   static final SEARCHSTRING_SETTINGS = 'settings einstellungen preferences ';
 
-  static final SEACHSTRING_ROTATION = 'rotations rotx rotn rot-x rotationen ';
-  static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
   static final SEARCHSTRING_BASE = 'base encode decode encoding decoding dekodierung dekodieren ';
-  static final SEARCHSTRING_DATES = 'dates datum tage days ';
-  static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
   static final SEARCHSTRING_BRAINFK = 'brainf**k esoterische esoteric ';
-  static final SEARCHSTRING_PI = 'pi circle kreis 3,1415926535 3.1415926535 decimal digit nachkommastelle ';
-  static final SEARCHSTRING_PHI = 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 decimal digit nachkommastelle ';
+  static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
+  static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_E = 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 decimal digit nachkommastelle ';
+  static final SEARCHSTRING_PHI = 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 decimal digit nachkommastelle ';
+  static final SEARCHSTRING_PI = 'pi circle kreis 3,1415926535 3.1415926535 decimal digit nachkommastelle ';
+  static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
+  static final SEACHSTRING_ROTATION = 'rotations rotx rotn rot-x rotationen ';
+  static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters ';
   static final SEARCHSTRING_VIGENERE = SEACHSTRING_ROTATION + 'vigenere ';
 
   static initialize(BuildContext context) {
@@ -118,6 +121,7 @@ class Registry {
       GCWToolWidget(tool: Scrabble(), toolName: i18n(context, 'scrabble_title'), searchStrings: 'scrabble deutsch englisch spanisch niederländisch französisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'),
       GCWToolWidget(tool: Skytale(), toolName: i18n(context, 'skytale_title'), searchStrings: 'scytale skytale stick stock stab transposition'),
       GCWToolWidget(tool: Substitution(), toolName: i18n(context, 'substitution_title'), searchStrings: 'substitution ersetzen alphabet change austauschen change switch'),
+      GCWToolWidget(tool: SymbolTableSelection(), toolName: i18n(context, 'symboltables_title'), searchStrings: SEARCHSTRING_SYMBOLTABLES),
       GCWToolWidget(tool: Trithemius(), toolName: i18n(context, 'trithemius_title'), searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'),
       GCWToolWidget(tool: Vigenere(), toolName: i18n(context, 'vigenere_title'), searchStrings: SEARCHSTRING_VIGENERE + 'autokey'),
 
@@ -182,6 +186,18 @@ class Registry {
       GCWToolWidget(tool: Rot18(), toolName:  i18n(context, 'rotation_rot18_title'), searchStrings: SEACHSTRING_ROTATION + 'rot18 rot-18'),
       GCWToolWidget(tool: Rot47(), toolName:  i18n(context, 'rotation_rot47_title'), searchStrings: SEACHSTRING_ROTATION + 'rot47 rot-47'),
       GCWToolWidget(tool: RotationGeneral(), toolName:  i18n(context, 'rotation_rotation_title'), searchStrings: SEACHSTRING_ROTATION),
+
+      //Symbol Tables
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'puzzle',), toolName: i18n(context, 'symboltables_puzzle_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'puzzle_72.png',searchStrings: SEARCHSTRING_SYMBOLTABLES + 'puzzles puzzleteile jigsaw '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'murray',), toolName: i18n(context, 'symboltables_murray_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'murray_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'murray'),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'semaphore',), toolName: i18n(context, 'symboltables_semaphore_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'semaphore_81.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags semaphores winkeralphabet flaggenalphabet'),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'braille',), toolName: i18n(context, 'symboltables_braille_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'braille_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift braille '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'romulan',), toolName: i18n(context, 'symboltables_romulan_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'romulan_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'star trek romulans romulaner romulanisch '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'pipeline',), toolName: i18n(context, 'symboltables_pipeline_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'pipeline_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + '3d pipes pipelines rohre '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'arcadian',), toolName: i18n(context, 'symboltables_arcadian_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'arcadian_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'skies of arcadia arcadian greek arkadischer arkadien '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'lorm',), toolName: i18n(context, 'symboltables_lorm_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'lorm_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift lormen deafblind taubstumm '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'finger',), toolName: i18n(context, 'symboltables_finger_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'finger_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fingers fingeralphabet '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'intergala',), toolName: i18n(context, 'symboltables_intergala_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'intergala_81.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'intergalactical galaxy galaxies intergalaktisch '),
     ];
   }
 }

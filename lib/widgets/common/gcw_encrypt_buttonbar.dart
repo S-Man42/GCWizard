@@ -21,7 +21,7 @@ class _GCWEncryptButtonBarState extends State<GCWEncryptButtonBar> {
 
   @override
   Widget build(BuildContext context) {
-    return GCWButtonBar(
+    return GCWToolBar(
       children: [
         GCWButton(
           text: i18n(context, 'common_encrypt'),

@@ -20,4 +20,6 @@ class ThemeColors {
   static const mapCalculatedPoint = Colors.green;
 
   static const oddRows = gray25;
+
+  static const iconBackground = Colors.white;
 }
