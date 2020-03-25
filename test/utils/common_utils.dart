@@ -112,4 +112,115 @@ void main() {
       });
     });
   });
+
+  group("CommonUtils.sanitizeIntegerString:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'allowNegativeValues': null, 'allowNumberList' : null, 'expectedOutput' : ''},
+      
+      {'input' : '', 'allowNegativeValues': null, 'allowNumberList' : null, 'expectedOutput' : ''},
+      {'input' : null, 'allowNegativeValues': true, 'allowNumberList' : null, 'expectedOutput' : ''},
+      {'input' : null, 'allowNegativeValues': null, 'allowNumberList' : true, 'expectedOutput' : ''},
+  
+      {'input' : '', 'allowNegativeValues': true, 'allowNumberList' : null, 'expectedOutput' : ''},
+      {'input' : '', 'allowNegativeValues': null, 'allowNumberList' : true, 'expectedOutput' : ''},
+      {'input' : null, 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : ''},
+  
+      {'input' : '', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : ''},
+  
+      /** negative values, list */
+      {'input' : '1', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : '1'},
+      {'input' : '123456789', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : '123456789'},
+      {'input' : '123 456 789', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : '123 456 789'},
+      {'input' : ' 123 456 789 ', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : ' 123 456 789 '},
+  
+      {'input' : '-1', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : '-1'},
+      {'input' : '-123456789', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : '-123456789'},
+      {'input' : '-123 -456 -789', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : '-123 -456 -789'},
+      {'input' : ' -123 -456 -789 ', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : ' -123 -456 -789 '},
+  
+      {'input' : 'a-b1c', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : ' - 1 '},
+      {'input' : 'a-b1c2%=()3456789', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : ' - 1 2 3456789'},
+      {'input' : '-12(3) -4a56 -78a9', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : '-12 3 -4 56 -78 9'},
+  
+      {'input' : '         123        456      789       ', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : ' 123 456 789 '},
+  
+      {'input' : ' 123-   456-   789-   ', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : ' 123 - 456 - 789 - '},
+      {'input' : ' ---123---   ---456---   ---789---   ', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : ' ---123 --- ---456 --- ---789 --- '},
+  
+      {'input' : '-1-2-3-4-5-6-7-8-9-', 'allowNegativeValues': true, 'allowNumberList' : true, 'expectedOutput' : '-1 -2 -3 -4 -5 -6 -7 -8 -9 -'},
+  
+      /** positive values, list */
+      {'input' : '1', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : '1'},
+      {'input' : '123456789', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : '123456789'},
+      {'input' : '123 456 789', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : '123 456 789'},
+      {'input' : ' 123 456 789 ', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : ' 123 456 789 '},
+  
+      {'input' : '-1', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : ' 1'},
+      {'input' : '-123456789', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : ' 123456789'},
+      {'input' : '-123 -456 -789', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : ' 123 456 789'},
+      {'input' : ' -123 -456 -789 ', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : ' 123 456 789 '},
+  
+      {'input' : 'a-b1c', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : ' 1 '},
+      {'input' : 'a-b1c2%=()3456789', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : ' 1 2 3456789'},
+      {'input' : '-12(3) -4a56 -78a9', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : ' 12 3 4 56 78 9'},
+  
+      {'input' : '         123        456      789       ', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : ' 123 456 789 '},
+  
+      {'input' : ' 123-   456-   789-   ', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : ' 123 456 789 '},
+      {'input' : ' ---123---   ---456---   ---789---   ', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : ' 123 456 789 '},
+  
+      {'input' : '-1-2-3-4-5-6-7-8-9-', 'allowNegativeValues': false, 'allowNumberList' : true, 'expectedOutput' : ' 1 2 3 4 5 6 7 8 9 '},
+  
+      /** negative values, single */
+      {'input' : '1', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '1'},
+      {'input' : '123456789', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+      {'input' : '123 456 789', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+      {'input' : ' 123 456 789 ', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+  
+      {'input' : '-1', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '-1'},
+      {'input' : '-123456789', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '-123456789'},
+      {'input' : '-123 -456 -789', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '-123456789'},
+      {'input' : ' -123 -456 -789 ', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '-123456789'},
+  
+      {'input' : 'a-b1c', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '-1'},
+      {'input' : 'a-b1c2%=()3456789', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '-123456789'},
+      {'input' : '-12(3) -4a56 -78a9', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '-123456789'},
+  
+      {'input' : '         123        456      789       ', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+  
+      {'input' : ' 123-   456-   789-   ', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+      {'input' : ' ---123---   ---456---   ---789---   ', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '-123456789'},
+  
+      {'input' : '-1-2-3-4-5-6-7-8-9-', 'allowNegativeValues': true, 'allowNumberList' : false, 'expectedOutput' : '-123456789'},
+  
+      /** positive values, single */
+      {'input' : '1', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '1'},
+      {'input' : '123456789', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+      {'input' : '123 456 789', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+      {'input' : ' 123 456 789 ', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+  
+      {'input' : '-1', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '1'},
+      {'input' : '-123456789', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+      {'input' : '-123 -456 -789', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+      {'input' : ' -123 -456 -789 ', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+  
+      {'input' : 'a-b1c', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '1'},
+      {'input' : 'a-b1c2%=()3456789', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+      {'input' : '-12(3) -4a56 -78a9', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+  
+      {'input' : '         123        456      789       ', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+  
+      {'input' : ' 123-   456-   789-   ', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+      {'input' : ' ---123---   ---456---   ---789---   ', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+  
+      {'input' : '-1-2-3-4-5-6-7-8-9-', 'allowNegativeValues': false, 'allowNumberList' : false, 'expectedOutput' : '123456789'},
+    ];
+  
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, allowNegativeValues: ${elem['allowNegativeValues']}, allowNumberList: ${elem['allowNumberList']}', () {
+        var _actual = sanitizeIntegerString(elem['input'], allowNegativeValues: elem['allowNegativeValues'], allowNumberList: elem['allowNumberList']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
 }

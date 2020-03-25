@@ -112,9 +112,11 @@ String insertSpaceEveryNthCharacter(String input, int n) {
   return out.trim();
 }
 
-String sanitizeIntegerString(String input, bool allowNegativeValues, bool allowNumberList) {
+String sanitizeIntegerString(String input, {bool allowNegativeValues: true, bool allowNumberList: true}) {
   
   String adaptedText = input ?? '';
+  allowNegativeValues ??= true;
+  allowNumberList ??= true;
   
   if (allowNegativeValues) {
     if (allowNumberList) {
@@ -123,7 +125,8 @@ String sanitizeIntegerString(String input, bool allowNegativeValues, bool allowN
       adaptedText = adaptedText.replaceAllMapped(new RegExp(r'(\d)-'), (Match groups) => "${groups[1]} -");
     } else {
       adaptedText = adaptedText.replaceAll(new RegExp(r'[^\-\d]'), '');
-      adaptedText = adaptedText.replaceAllMapped(new RegExp(r'(\d)-'), (Match groups) => "${groups[1]}");
+      adaptedText = adaptedText.replaceAll(new RegExp(r'-{2,}'), '-');
+      adaptedText = adaptedText.replaceAllMapped(new RegExp(r'(\d)-+'), (Match groups) => "${groups[1]}");
     }
   } else {
     if (allowNumberList) {
