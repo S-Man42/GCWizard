@@ -190,6 +190,12 @@ class Registry {
       GCWToolWidget(tool: SymbolTable(symbolKey: 'murray',), toolName: i18n(context, 'symboltables_murray_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'murray_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'murray'),
       GCWToolWidget(tool: SymbolTable(symbolKey: 'semaphore',), toolName: i18n(context, 'symboltables_semaphore_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'semaphore_81.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags semaphores winkeralphabet flaggenalphabet'),
       GCWToolWidget(tool: SymbolTable(symbolKey: 'braille',), toolName: i18n(context, 'symboltables_braille_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'braille_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift braille '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'romulan',), toolName: i18n(context, 'symboltables_romulan_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'romulan_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'star trek romulans romulaner romulanisch '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'pipeline',), toolName: i18n(context, 'symboltables_pipeline_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'pipeline_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + '3d pipes pipelines rohre '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'arcadian',), toolName: i18n(context, 'symboltables_arcadian_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'arcadian_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'skies of arcadia arcadian greek arkadischer arkadien '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'lorm',), toolName: i18n(context, 'symboltables_lorm_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'lorm_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift lormen deafblind taubstumm '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'finger',), toolName: i18n(context, 'symboltables_finger_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'finger_72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fingers fingeralphabet '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'intergala',), toolName: i18n(context, 'symboltables_intergala_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'intergala_81.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'intergalactical galaxy galaxies intergalaktisch '),
 
       //Main Menu
       GCWToolWidget(tool: GeneralSettings(), toolName: i18n(context, 'settings_general_title'), searchStrings: SEARCHSTRING_SETTINGS,),

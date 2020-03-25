@@ -400,8 +400,14 @@
 
   "symboltables_title" : "Symbol Tables",
   "symboltables_showoverlay" : "Overlays",
-  "symboltables_puzzle_title" : "Puzzle Code",
+  "symboltables_arcadian_title" : "Aracadian",
+  "symboltables_braille_title" : "Braille (Tactile)",
+  "symboltables_intergala_title" : "Intergalactic Code",
+  "symboltables_finger_title" : "Finger Alphabet",
+  "symboltables_lorm_title" : "Lorm Alphabet",
   "symboltables_murray_title" : "Murray",
+  "symboltables_pipeline_title" : "Pipeline 3D",
+  "symboltables_puzzle_title" : "Puzzle Code",
   "symboltables_semaphore_title" : "Semaphore",
   "symboltables_semaphore_cancel" : "CANCEL",
   "symboltables_semaphore_correct" : "CORRECT",
@@ -409,5 +415,5 @@
   "symboltables_semaphore_letters_following" : "LETTERS FOLLOWING",
   "symboltables_semaphore_numerals_following" : "NUMBERS FOLLOWING",
   "symboltables_semaphore_rest" : "REST",
-  "symboltables_braille_title" : "Braille (Tactile)"
+  "symboltables_romulan_title" : "Romulan"
 }
