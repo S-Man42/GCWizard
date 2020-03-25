@@ -112,4 +112,34 @@ void main() {
       });
     });
   });
+
+  group("createSubstitutionLookupMap.digitsToAlpha:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'originalMap' : null, 'originalCharacters': null, 'replaceCharacters' : null, 'expectedOutput' : {}},
+      {'originalMap' : {"A": "000"}, 'originalCharacters': null, 'replaceCharacters' : null, 'expectedOutput' : {}},
+      {'originalMap' : null, 'originalCharacters': ["0", "1"], 'replaceCharacters' : null, 'expectedOutput' : {}},
+      {'originalMap' : null, 'originalCharacters': null, 'replaceCharacters' : ["0", "1"], 'expectedOutput' : {}},
+      {'originalMap' : null, 'originalCharacters': ["0", "1"], 'replaceCharacters' : ["0", "1"], 'expectedOutput' : {}},
+      {'originalMap' : {"A": "000"}, 'originalCharacters': ["0", "1"], 'replaceCharacters' : null, 'expectedOutput' : {}},
+      {'originalMap' : {"A": "000"}, 'originalCharacters': null, 'replaceCharacters' : ["0", "1"], 'expectedOutput' : {}},
+  
+      {'originalMap' : {"A": "000"}, 'originalCharacters': ["0", "1"], 'replaceCharacters' : ["0", "1"], 'expectedOutput' : {"A": "000"}},
+      {'originalMap' : {"A": "000", "B": "111", "C": "101"}, 'originalCharacters': ["0", "1"], 'replaceCharacters' : ["0", "1"], 'expectedOutput' : {"A": "000", "B": "111", "C": "101"}},
+  
+      {'originalMap' : {"A": "000", "B": "111", "C": "101"}, 'originalCharacters': ["0", "1"], 'replaceCharacters' : ["1", "0"], 'expectedOutput' : {"A": "111", "B": "000", "C": "010"}},
+      {'originalMap' : {"A": "000", "B": "111", "C": "101"}, 'originalCharacters': ["0", "1"], 'replaceCharacters' : ["0", "+"], 'expectedOutput' : {"A": "000", "B": "+++", "C": "+0+"}},
+      {'originalMap' : {"A": "000", "B": "111", "C": "101"}, 'originalCharacters': ["+", "-"], 'replaceCharacters' : ["+", "-"], 'expectedOutput' : {"A": "000", "B": "111", "C": "101"}},
+      {'originalMap' : {"A": "000", "B": "111", "C": "101"}, 'originalCharacters': ["0", "1"], 'replaceCharacters' : ["0", "0"], 'expectedOutput' : {"A": "000", "B": "000", "C": "000"}},
+      {'originalMap' : {"A": "000", "B": "111", "C": "101"}, 'originalCharacters': ["0", "0"], 'replaceCharacters' : ["0", "0"], 'expectedOutput' : {"A": "000", "B": "111", "C": "101"}},
+  
+      {'originalMap' : {"A": "000"}, 'originalCharacters': ["", ""], 'replaceCharacters' : ["", ""], 'expectedOutput' : {"A": "000"}},
+    ];
+  
+    _inputsToExpected.forEach((elem) {
+      test('originalMap: ${elem['originalMap']}, originalCharacters: ${elem['originalCharacters']}, replaceCharacters: ${elem['replaceCharacters']}', () {
+        var _actual = createSubstitutedLookupMap(elem['originalMap'], elem['originalCharacters'], elem['replaceCharacters']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
 }

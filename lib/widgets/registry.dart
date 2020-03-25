@@ -48,6 +48,7 @@ import 'package:gc_wizard/widgets/tools/crypto/rotation/rotation_general.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto/symbol_table.dart';
+import 'package:gc_wizard/widgets/tools/crypto/tomtom_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/date_and_time/day_calculator.dart';
@@ -122,6 +123,7 @@ class Registry {
       GCWToolWidget(tool: Skytale(), toolName: i18n(context, 'skytale_title'), searchStrings: 'scytale skytale stick stock stab transposition'),
       GCWToolWidget(tool: Substitution(), toolName: i18n(context, 'substitution_title'), searchStrings: 'substitution ersetzen alphabet change austauschen change switch'),
       GCWToolWidget(tool: SymbolTableSelection(), toolName: i18n(context, 'symboltables_title'), searchStrings: SEARCHSTRING_SYMBOLTABLES),
+      GCWToolWidget(tool: TomTomCode(), toolName: i18n(context, 'tomtom_code_title'), searchStrings: 'tomtom tom a-tom-tom tom-tom atomtom'),
       GCWToolWidget(tool: Trithemius(), toolName: i18n(context, 'trithemius_title'), searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'),
       GCWToolWidget(tool: Vigenere(), toolName: i18n(context, 'vigenere_title'), searchStrings: SEARCHSTRING_VIGENERE + 'autokey'),
 

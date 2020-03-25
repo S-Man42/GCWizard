@@ -29,6 +29,7 @@ import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
+import 'package:gc_wizard/widgets/tools/crypto/tomtom_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ascii_values.dart';
@@ -107,6 +108,7 @@ class _MainScreenState extends State<MainScreen> {
           className(Skytale()),
           className(Substitution()),
           className(SymbolTableSelection()),
+          className(TomTomCode()),
           className(Trithemius()),
           className(Vigenere()),
         ].contains(className(element.tool));
