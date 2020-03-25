@@ -13,7 +13,7 @@ class IntegerTextInputFormatter extends TextInputFormatter {
       final oldSelectionIndex = oldValue.selection.end ?? 0;
       final newSelectionIndex = newValue.selection.end ?? 0;
 
-      String adaptedText = sanitizeIntegerString(newText, allowNegativeValues, allowNumberList);
+      String adaptedText = sanitizeIntegerString(newText, allowNegativeValues: allowNegativeValues, allowNumberList: allowNumberList);
 
       int adaptedSelectionIndex;
       
