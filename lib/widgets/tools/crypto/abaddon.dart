@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto/tomtom_code.dart';
+import 'package:gc_wizard/logic/tools/crypto/abaddon.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class TomTomCode extends StatefulWidget {
+class Abaddon extends StatefulWidget {
   @override
-  TomTomCodeState createState() => TomTomCodeState();
+  AbaddonState createState() => AbaddonState();
 }
 
-class TomTomCodeState extends State<TomTomCode> {
+class AbaddonState extends State<Abaddon> {
   var _inputController;
   var _aController;
   var _bController;
+  var _cController;
 
   var _currentInput = '';
-  var _currentA = '/';
-  var _currentB = '\\';
+  var _currentA = '¥';
+  var _currentB = 'µ';
+  var _currentC = 'þ';
 
   var _currentMode = GCWSwitchPosition.left;
 
@@ -29,6 +31,7 @@ class TomTomCodeState extends State<TomTomCode> {
     _inputController = TextEditingController(text: _currentInput);
     _aController = TextEditingController(text: _currentA);
     _bController = TextEditingController(text: _currentB);
+    _cController = TextEditingController(text: _currentC);
   }
 
   @override
@@ -36,6 +39,7 @@ class TomTomCodeState extends State<TomTomCode> {
     _inputController.dispose();
     _aController.dispose();
     _bController.dispose();
+    _cController.dispose();
 
     super.dispose();
   }
@@ -89,6 +93,22 @@ class TomTomCodeState extends State<TomTomCode> {
                 )
               ),
             ),
+            Expanded(
+              child: Container(
+                child: GCWTextField(
+                  controller: _cController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentC = text;
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(
+                  left: 6,
+                  right: 6
+                )
+              ),
+            ),
           ],
         ),
         GCWTwoOptionsSwitch(
@@ -109,10 +129,11 @@ class TomTomCodeState extends State<TomTomCode> {
   _buildOutput() {
     if (_currentInput.length == 0
       || _currentA.length == 0
-      || _currentB.length == 0)
+      || _currentB.length == 0
+      || _currentC.length == 0)
       return '';
 
-    var key = [_currentA, _currentB];
-    return _currentMode == GCWSwitchPosition.left ? encryptTomTomCode(_currentInput, key) : decryptTomTomCode(_currentInput, key);
+    var key = {YEN: _currentA, MY: _currentB, THORN: _currentC};
+    return _currentMode == GCWSwitchPosition.left ? encryptAbaddon(_currentInput, key) : decryptAbaddon(_currentInput, key);
   }
 }

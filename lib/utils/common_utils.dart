@@ -113,32 +113,3 @@ String insertSpaceEveryNthCharacter(String input, int n) {
 
   return out.trim();
 }
-
-/// Takes a lookup map of type (A -> B), the letter that can occur in B and the replaced letters in B.
-/// Returns the map with the replaced letters in B
-/// This is particularly useful for when B can only consist of a handful of characters, like in Morse, TomTom, Abaddon etc.
-/// Note: This method 'abuses' very high unicode values for the character swapping.
-Map<String, String> createSubstitutedLookupMap(Map<String, String> originalMap, List<String> originalCharacters, List<String> replaceCharacters) {
-  
-  Map<String, String> substitutions = {};
-  
-  if ((originalMap == null) || (originalCharacters == null) || (replaceCharacters == null) || (originalCharacters.length != replaceCharacters.length))
-    return substitutions;
-  
-  if (ListEquality().equals(originalCharacters, replaceCharacters))
-    return new Map<String, String>.from(originalMap);
-  
-  originalMap.forEach((key, value) {
-    // Map letters to distinct values first (an hope no one will ever enter them)
-    for (int letter = 0; letter < originalCharacters.length; letter++) {
-      value = value.replaceAll(RegExp(escapeRegex(originalCharacters[letter])), String.fromCharCode(0xffff - letter));
-    }
-    // Then map them back to their real values
-    for (int letter = 0; letter < originalCharacters.length; letter++) {
-      value = value.replaceAll(RegExp(escapeRegex(String.fromCharCode(0xffff - letter))), replaceCharacters[letter]);
-    }
-    substitutions.putIfAbsent(key, () => value);
-  });
-  
-  return substitutions;
-}

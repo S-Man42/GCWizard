@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto/abaddon_code.dart';
+import 'package:gc_wizard/logic/tools/crypto/tomtom.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class AbaddonCode extends StatefulWidget {
+class TomTomCode extends StatefulWidget {
   @override
-  AbaddonCodeState createState() => AbaddonCodeState();
+  TomTomCodeState createState() => TomTomCodeState();
 }
 
-class AbaddonCodeState extends State<AbaddonCode> {
+class TomTomCodeState extends State<TomTomCode> {
   var _inputController;
   var _aController;
   var _bController;
-  var _cController;
 
   var _currentInput = '';
-  var _currentA = '¥';
-  var _currentB = 'µ';
-  var _currentC = 'þ';
+  var _currentA = '/';
+  var _currentB = '\\';
 
   var _currentMode = GCWSwitchPosition.left;
 
@@ -31,7 +29,6 @@ class AbaddonCodeState extends State<AbaddonCode> {
     _inputController = TextEditingController(text: _currentInput);
     _aController = TextEditingController(text: _currentA);
     _bController = TextEditingController(text: _currentB);
-    _cController = TextEditingController(text: _currentC);
   }
 
   @override
@@ -39,7 +36,6 @@ class AbaddonCodeState extends State<AbaddonCode> {
     _inputController.dispose();
     _aController.dispose();
     _bController.dispose();
-    _cController.dispose();
 
     super.dispose();
   }
@@ -93,22 +89,6 @@ class AbaddonCodeState extends State<AbaddonCode> {
                 )
               ),
             ),
-            Expanded(
-              child: Container(
-                child: GCWTextField(
-                  controller: _cController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentC = text;
-                    });
-                  },
-                ),
-                padding: EdgeInsets.only(
-                  left: 6,
-                  right: 6
-                )
-              ),
-            ),
           ],
         ),
         GCWTwoOptionsSwitch(
@@ -129,11 +109,10 @@ class AbaddonCodeState extends State<AbaddonCode> {
   _buildOutput() {
     if (_currentInput.length == 0
       || _currentA.length == 0
-      || _currentB.length == 0
-      || _currentC.length == 0)
+      || _currentB.length == 0)
       return '';
 
-    var key = [_currentA, _currentB, _currentC];
-    return _currentMode == GCWSwitchPosition.left ? encryptAbaddonCode(_currentInput, key) : decryptAbaddonCode(_currentInput, key);
+    var key = {'/': _currentA, '\\': _currentB};
+    return _currentMode == GCWSwitchPosition.left ? encryptTomTom(_currentInput, key) : decryptTomTom(_currentInput, key);
   }
 }

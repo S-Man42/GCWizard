@@ -18,7 +18,7 @@ import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
-import 'package:gc_wizard/widgets/tools/crypto/abaddon_code.dart';
+import 'package:gc_wizard/widgets/tools/crypto/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto/atbasch.dart';
 import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
@@ -30,7 +30,7 @@ import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
-import 'package:gc_wizard/widgets/tools/crypto/tomtom_code.dart';
+import 'package:gc_wizard/widgets/tools/crypto/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ascii_values.dart';
@@ -81,7 +81,7 @@ class _MainScreenState extends State<MainScreen> {
     final List<GCWToolWidget> _toolList =
       Registry.toolList.where((element) {
         return [
-          className(AbaddonCode()),
+          className(Abaddon()),
           className(ADFGVX()),
           className(ASCIIValues()),
           className(Atbash()),
