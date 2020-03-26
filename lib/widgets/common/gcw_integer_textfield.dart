@@ -55,7 +55,13 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
                 value = widget.max;
               }
             } else {
-              value = 0;
+              if (widget.min != null) {
+                value = widget.min;
+              } else if (widget.max) {
+                value = widget.max;
+              } else {
+                value = 0;
+              }
             }
 
             widget.onChanged({'text': text, 'value': value});
