@@ -110,7 +110,7 @@ class _MainScreenState extends State<MainScreen> {
           className(Skytale()),
           className(Substitution()),
           className(SymbolTableSelection()),
-          className(TomTomCode()),
+          className(TomTom()),
           className(Trithemius()),
           className(Vigenere()),
         ].contains(className(element.tool));

@@ -6,12 +6,12 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class TomTomCode extends StatefulWidget {
+class TomTom extends StatefulWidget {
   @override
-  TomTomCodeState createState() => TomTomCodeState();
+  TomTomState createState() => TomTomState();
 }
 
-class TomTomCodeState extends State<TomTomCode> {
+class TomTomState extends State<TomTom> {
   var _inputController;
   var _aController;
   var _bController;
