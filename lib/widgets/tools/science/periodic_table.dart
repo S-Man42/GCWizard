@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science/periodic_table.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -272,19 +271,19 @@ class PeriodicTableState extends State<PeriodicTable> {
         break;
     }
 
-    var outputData = <String, dynamic>{};
+    var outputData = [[]];
 
     if (pte != null) {
       print('ZZZZZZ');
-      outputData = {
-        'periodictable_element_attribute_name' : i18n(context, pte.name),
-        'periodictable_element_attribute_chemicalsymbol' : pte.chemicalSymbol,
-        'periodictable_element_attribute_atomicnumber' : pte.atomicNumber,
-        'periodictable_element_attribute_meltingpoint' : pte.meltingPoint,
-      };
+      outputData = [
+        [i18n(context, 'periodictable_element_attribute_name'), i18n(context, pte.name)],
+        [i18n(context, 'periodictable_element_attribute_chemicalsymbol'), pte.chemicalSymbol],
+        [i18n(context, 'periodictable_element_attribute_atomicnumber'), pte.atomicNumber],
+        [i18n(context, 'periodictable_element_attribute_meltingpoint'),  pte.meltingPoint],
+      ];
     }
 
-    var rows = twoColumnMultiLineOutput(context, outputData);
+    var rows = columnedMultiLineOutput(outputData);
 
     rows.insert(0,
       GCWTextDivider(
