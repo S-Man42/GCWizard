@@ -18,6 +18,7 @@ import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
+import 'package:gc_wizard/widgets/tools/crypto/abaddon_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto/atbasch.dart';
 import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
@@ -80,6 +81,7 @@ class _MainScreenState extends State<MainScreen> {
     final List<GCWToolWidget> _toolList =
       Registry.toolList.where((element) {
         return [
+          className(AbaddonCode()),
           className(ADFGVX()),
           className(ASCIIValues()),
           className(Atbash()),

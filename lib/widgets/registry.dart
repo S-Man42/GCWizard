@@ -31,6 +31,7 @@ import 'package:gc_wizard/widgets/tools/coords/intersect_two_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersection.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
+import 'package:gc_wizard/widgets/tools/crypto/abaddon_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto/atbasch.dart';
 import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
@@ -95,6 +96,7 @@ class Registry {
   static initialize(BuildContext context) {
     toolList = [
       //MainSelection
+      GCWToolWidget(tool: AbaddonCode(), toolName: i18n(context, 'abaddon_code_title'), searchStrings: 'abaddon abbaddon abbadon ¥ yen renminbi µ mi þ thorn ternär gc11eky'),
       GCWToolWidget(tool: ADFGVX(), toolName: i18n(context, 'adfgvx_title'), searchStrings: 'adfgx adfgvx polybius polybios transposition substitution'),
       GCWToolWidget(tool: ASCIIValues(), toolName: i18n(context, 'asciivalues_title'), searchStrings: 'ascii utf8 utf-8 unicode american standard information interchange'),
       GCWToolWidget(tool: Atbash(), toolName: i18n(context, 'atbash_title'), searchStrings: 'atbash atbasch hebrew hebräisches umkehren umkehrungen reverse rückwärts'),
