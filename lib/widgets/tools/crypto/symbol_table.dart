@@ -202,6 +202,9 @@ class SymbolTableState extends State<SymbolTable> {
   }
 
   _getSymbolText(imageIndex) {
+    print(_imageFilePaths.keys);
+    print(imageIndex);
+
     var key = _imageFilePaths.keys.toList()[imageIndex];
     var ascii = int.tryParse(key);
     return ascii == null ? _getSpecialText(key) : String.fromCharCode(ascii);

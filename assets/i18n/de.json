@@ -376,6 +376,7 @@
   "settings_general_title" : "Allgemein",
   "settings_general_text" : "Schrifteinstellungen",
   "settings_general_text_size" : "Größe",
+  "settings_general_symboltables" : "Symboltabellen (Anzahl Bilder pro Zeile)",
   "settings_coordinates_title" : "Koordinaten",
   "settings_coordinates_defaultformat" : "Standardformat",
   "settings_coordinates_defaulthemispheres" : "Standardhemisphären",

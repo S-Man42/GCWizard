@@ -557,6 +557,7 @@
   "settings_general_title" : "General",
   "settings_general_text" : "Font Settings",
   "settings_general_text_size" : "Size",
+  "settings_general_symboltables" : "Symbol Tables (Number Images per Row)",
   "settings_coordinates_title" : "Coordinates",
   "settings_coordinates_defaultformat" : "Default Format",
   "settings_coordinates_defaulthemispheres" : "Default Hemispheres",
