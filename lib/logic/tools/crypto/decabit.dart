@@ -14,8 +14,9 @@ encryptDecabit(String input, Map<String, String> replaceCharacters, bool numeric
   var decabit;
   
   if (numericMode) {
-    decabit = normalizeUmlauts(input).split(RegExp(r'\D')).where((character) => AZToDecabitInt[character] != null)
-      .map((character) => substitution(character, AZToDecabitInt)).join(' ');
+    decabit = normalizeUmlauts(input).split(RegExp(r'\D')).where((character) => AZToDecabit[int.tryParse(character)] != null)
+      // Parse string and convert back to eliminate leading zeros
+      .map((character) => substitution(int.tryParse(character).toString(), AZToDecabitInt)).join(' ');
   } else {
     decabit = normalizeUmlauts(input).split('').where((character) => AZToDecabitStr[character] != null)
       .map((character) => substitution(character, AZToDecabitStr)).join(' ');
