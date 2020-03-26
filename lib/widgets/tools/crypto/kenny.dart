@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto/atbash.dart';
-import 'package:gc_wizard/logic/tools/crypto/kennys_code.dart';
+import 'package:gc_wizard/logic/tools/crypto/kenny.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class KennysCode extends StatefulWidget {
+class Kenny extends StatefulWidget {
   @override
-  KennysCodeState createState() => KennysCodeState();
+  KennyState createState() => KennyState();
 }
 
-class KennysCodeState extends State<KennysCode> {
+class KennyState extends State<Kenny> {
   var _inputController;
   var _mController;
   var _pController;

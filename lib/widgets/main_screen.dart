@@ -24,7 +24,7 @@ import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
-import 'package:gc_wizard/widgets/tools/crypto/kennys_code.dart';
+import 'package:gc_wizard/widgets/tools/crypto/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
@@ -92,7 +92,7 @@ class _MainScreenState extends State<MainScreen> {
           className(ESelection()),
           className(FormulaSolver()),
           className(Gronsfeld()),
-          className(KennysCode()),
+          className(Kenny()),
           className(LetterValues()),
           className(Morse()),
           className(NumeralBases()),

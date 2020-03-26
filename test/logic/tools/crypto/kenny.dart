@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto/kennys_code.dart';
+import 'package:gc_wizard/logic/tools/crypto/kenny.dart';
 
 void main() {
   group("KennysCode.encryptKenny:", () {
