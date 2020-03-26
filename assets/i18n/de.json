@@ -254,6 +254,9 @@
   "dates_weekday_saturday" : "Samstag",
   "dates_weekday_sunday" : "Sonntag",
 
+  "decabit_numeric_mode" : "Nummerisch",
+  "decabit_title" : "Decabit",
+
   "e_selection_title" : "e (e = 2,7182818...)",
 
   "enigma_title": "Enigma",

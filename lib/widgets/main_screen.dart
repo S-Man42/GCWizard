@@ -23,6 +23,7 @@ import 'package:gc_wizard/widgets/tools/crypto/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto/atbasch.dart';
 import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/caesar.dart';
+import 'package:gc_wizard/widgets/tools/crypto/decabit.dart';
 import 'package:gc_wizard/widgets/tools/crypto/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kennys_code.dart';
@@ -91,6 +92,7 @@ class _MainScreenState extends State<MainScreen> {
           className(Caesar()),
           className(CoordsSelection()),
           className(DatesSelection()),
+          className(Decabit()),
           className(Enigma()),
           className(ESelection()),
           className(FormulaSolver()),
