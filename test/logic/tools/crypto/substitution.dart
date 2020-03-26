@@ -9,6 +9,7 @@ void main() {
       {'input' : null, 'substitution': Map<String, String>(), 'caseSensitive': true, 'expectedOutput' : ''},
       {'input' : 'ABC', 'substitution': Map<String, String>(), 'caseSensitive': true, 'expectedOutput' : 'ABC'},
       {'input' : 'Abc123', 'substitution': Map<String, String>(), 'caseSensitive': true, 'expectedOutput' : 'Abc123'},
+      {'input' : 'ABC', 'substitution': {'': '1'}, 'caseSensitive': true, 'expectedOutput' : 'ABC'},
 
       {'input' : 'ABCDEF', 'substitution': {'A': '1', 'B':'2', 'F': '6'}, 'caseSensitive': true, 'expectedOutput' : '12CDE6'},
       {'input' : 'ABCDEF', 'substitution': {'A': '1', 'b':'2', 'f': '6'}, 'caseSensitive': true, 'expectedOutput' : '1BCDEF'},

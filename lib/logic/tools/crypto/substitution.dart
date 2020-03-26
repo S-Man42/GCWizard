@@ -4,7 +4,10 @@ String substitution(String input, Map<String, String> substitutions, {bool caseS
   if (input == null || input.length == 0)
     return '';
 
-  if (substitutions == null || substitutions.isEmpty)
+  if (substitutions == null)
+    return input;
+
+  if (substitutions.keys.where((key) => key.length != 0).isEmpty)
     return input;
 
   List<String> keys = [];
@@ -12,6 +15,9 @@ String substitution(String input, Map<String, String> substitutions, {bool caseS
   //Copy map to keep the original one
   var substCopy = {};
   substitutions.entries.forEach((entry) {
+    if (entry.key.length == 0)
+      return;
+
     if (caseSensitive) {
       substCopy.putIfAbsent(entry.key, () => entry.value);
     } else {

@@ -31,6 +31,7 @@ import 'package:gc_wizard/widgets/tools/coords/intersect_two_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersection.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
+import 'package:gc_wizard/widgets/tools/crypto/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto/atbasch.dart';
 import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
@@ -48,6 +49,7 @@ import 'package:gc_wizard/widgets/tools/crypto/rotation/rotation_general.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto/symbol_table.dart';
+import 'package:gc_wizard/widgets/tools/crypto/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/date_and_time/day_calculator.dart';
@@ -84,8 +86,8 @@ class Registry {
   static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_E = 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 decimal digit nachkommastelle ';
-  static final SEARCHSTRING_PHI = 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 decimal digit nachkommastelle ';
-  static final SEARCHSTRING_PI = 'pi circle kreis 3,1415926535 3.1415926535 decimal digit nachkommastelle ';
+  static final SEARCHSTRING_PHI = 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 decimal digit nachkommastelle ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
+  static final SEARCHSTRING_PI = 'pi circle kreis 3,1415926535 3.1415926535 decimal digit nachkommastelle ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
   static final SEACHSTRING_ROTATION = 'rotations rotx rotn rot-x rotationen ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters ';
@@ -94,6 +96,7 @@ class Registry {
   static initialize(BuildContext context) {
     toolList = [
       //MainSelection
+      GCWToolWidget(tool: Abaddon(), toolName: i18n(context, 'abaddon_title'), searchStrings: 'abaddon abbaddon abbadon yen renminbi mi thorn ternär gc11eky ' + [165, 181, 254].map((char) => String.fromCharCode(char)).join(' ')),
       GCWToolWidget(tool: ADFGVX(), toolName: i18n(context, 'adfgvx_title'), searchStrings: 'adfgx adfgvx polybius polybios transposition substitution'),
       GCWToolWidget(tool: ASCIIValues(), toolName: i18n(context, 'asciivalues_title'), searchStrings: 'ascii utf8 utf-8 unicode american standard information interchange'),
       GCWToolWidget(tool: Atbash(), toolName: i18n(context, 'atbash_title'), searchStrings: 'atbash atbasch hebrew hebräisches umkehren umkehrungen reverse rückwärts'),
@@ -122,6 +125,7 @@ class Registry {
       GCWToolWidget(tool: Skytale(), toolName: i18n(context, 'skytale_title'), searchStrings: 'scytale skytale stick stock stab transposition'),
       GCWToolWidget(tool: Substitution(), toolName: i18n(context, 'substitution_title'), searchStrings: 'substitution ersetzen alphabet change austauschen change switch'),
       GCWToolWidget(tool: SymbolTableSelection(), toolName: i18n(context, 'symboltables_title'), searchStrings: SEARCHSTRING_SYMBOLTABLES),
+      GCWToolWidget(tool: TomTom(), toolName: i18n(context, 'tomtom_title'), searchStrings: 'tomtom tom a-tom-tom tom-tom atomtom'),
       GCWToolWidget(tool: Trithemius(), toolName: i18n(context, 'trithemius_title'), searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'),
       GCWToolWidget(tool: Vigenere(), toolName: i18n(context, 'vigenere_title'), searchStrings: SEARCHSTRING_VIGENERE + 'autokey'),
 

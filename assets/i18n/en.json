@@ -1,4 +1,6 @@
 {
+  "abaddon_title" : "Abaddon Code",
+
   "about_version" : "Version",
   "about_maintainer" : "Maintainer & Developer",
   "about_contact_email" : "eMail",
@@ -414,6 +416,8 @@
   "symboltables_semaphore_numerals_following" : "NUMBERS FOLLOWING",
   "symboltables_semaphore_rest" : "REST",
   "symboltables_romulan_title" : "Romulan",
+
+  "tomtom_title" : "TomTom Code",
 
   "trithemius_title" : "Trithemius Cipher",
 

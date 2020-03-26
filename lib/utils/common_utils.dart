@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'package:collection/collection.dart';
+import 'package:quiver/pattern.dart';
 import 'package:gc_wizard/logic/tools/crypto/rotator.dart';
 import 'package:diacritic/diacritic.dart';
 import 'constants.dart';
