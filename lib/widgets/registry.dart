@@ -68,6 +68,7 @@ import 'package:gc_wizard/widgets/tools/science/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science/irrational_numbers/pi.dart';
 import 'package:gc_wizard/widgets/tools/science/numeralbases.dart';
+import 'package:gc_wizard/widgets/tools/science/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science/primes/primes_integerfactorization.dart';
 import 'package:gc_wizard/widgets/tools/science/primes/primes_isprime.dart';
 import 'package:gc_wizard/widgets/tools/science/primes/primes_nearestprime.dart';
@@ -111,6 +112,7 @@ class Registry {
       GCWToolWidget(tool: LetterValues(), toolName: i18n(context, 'lettervalues_title'), searchStrings: 'alphanumeric letter values checksums crosssums digits alternate products buchstabenwerte quersummen alphanumerisch produkt alternierend'),
       GCWToolWidget(tool: Morse(), toolName: i18n(context, 'morse_title'), searchStrings: 'samuel morse morsecode morsen translators translate übersetzen übersetzer punkte striche dots dashes'),
       GCWToolWidget(tool: NumeralBases(), toolName: i18n(context, 'numeralbases_title'), searchStrings: 'converter converting bases umwandler umwandeln konvertieren konverter numeral basis basen zahlensysteme binär binary decimal dezimal octal octenary oktal dual'),
+      GCWToolWidget(tool: PeriodicTable(), toolName: i18n(context, 'periodictable_title'), searchStrings: 'periodic tables of the elements periodensystem der elemente chemie chemistry'),
       GCWToolWidget(tool: PhiSelection(), toolName: i18n(context, 'phi_selection_title'), searchStrings: SEARCHSTRING_PHI),
       GCWToolWidget(tool: PiSelection(), toolName: i18n(context, 'pi_selection_title'), searchStrings: SEARCHSTRING_PI),
       GCWToolWidget(tool: Playfair(), toolName: i18n(context, 'playfair_title'), searchStrings: 'playfair transposition substitution'),
