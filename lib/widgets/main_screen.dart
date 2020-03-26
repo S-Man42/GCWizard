@@ -37,7 +37,7 @@ import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/numeralbases.dart';
+import 'package:gc_wizard/widgets/tools/science/numeralbases.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 

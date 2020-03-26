@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto/rotator.dart';
-import 'package:gc_wizard/logic/tools/math_and_physics/primes/primes.dart';
+import 'package:gc_wizard/logic/tools/science/primes/primes.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 
-class NthPrime extends StatefulWidget {
+class IsPrime extends StatefulWidget {
   @override
-  NthPrimeState createState() => NthPrimeState();
+  IsPrimeState createState() => IsPrimeState();
 }
 
-class NthPrimeState extends State<NthPrime> {
-  String _output = '2';
+class IsPrimeState extends State<IsPrime> {
+  String _output = '';
 
   @override
   void initState() {
@@ -24,11 +25,9 @@ class NthPrimeState extends State<NthPrime> {
       children: <Widget>[
         GCWIntegerSpinner(
           value: 1,
-          min: 1,
-          max: 78499,
           onChanged: (value) {
             setState(() {
-              _output = getNthPrime(value).toString();
+              _output = isPrime(BigInt.from(value)) ? i18n(context, 'primes_isprime_isprime') : i18n(context, 'primes_noprime');
             });
           },
         ),

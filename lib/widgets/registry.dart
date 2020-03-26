@@ -64,15 +64,15 @@ import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/irrational_numbers/e.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/irrational_numbers/phi.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/irrational_numbers/pi.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/numeralbases.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/primes/primes_integerfactorization.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/primes/primes_isprime.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/primes/primes_nearestprime.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/primes/primes_nthprime.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/primes/primes_primeindex.dart';
+import 'package:gc_wizard/widgets/tools/science/irrational_numbers/e.dart';
+import 'package:gc_wizard/widgets/tools/science/irrational_numbers/phi.dart';
+import 'package:gc_wizard/widgets/tools/science/irrational_numbers/pi.dart';
+import 'package:gc_wizard/widgets/tools/science/numeralbases.dart';
+import 'package:gc_wizard/widgets/tools/science/primes/primes_integerfactorization.dart';
+import 'package:gc_wizard/widgets/tools/science/primes/primes_isprime.dart';
+import 'package:gc_wizard/widgets/tools/science/primes/primes_nearestprime.dart';
+import 'package:gc_wizard/widgets/tools/science/primes/primes_nthprime.dart';
+import 'package:gc_wizard/widgets/tools/science/primes/primes_primeindex.dart';
 
 class Registry {
   static List<GCWToolWidget> toolList;
