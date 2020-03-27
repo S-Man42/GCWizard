@@ -1,5 +1,5 @@
 {
-  "abaddon_code_title" : "Abaddon Code",
+  "abaddon_title" : "Abaddon Code",
 
   "about_version" : "Version",
   "about_maintainer" : "Maintainer & Entwickler",
@@ -407,9 +407,19 @@
   "symboltables_finger_title" : "Fingeralphabet",
   "symboltables_finger_ch" : "CH",
   "symboltables_finger_sch" : "SCH",
-  "symboltables_lorm_title" : "Lormenalphabet",
+  "symboltables_flags_title" : "Flaggenalphabet",
+  "symboltables_freemason_title" : "Freimaurer",
+  "symboltables_freemason_v2_title" : "Freimaurer Variante",
+  "symboltables_hexahue_title" : "Hexahue",
+  "symboltables_lorm_title" : "Lormen",
+  "symboltables_lorm_ch" : "CH",
+  "symboltables_lorm_sch" : "SCH",
+  "symboltables_lorm_st" : "ST",
+  "symboltables_moon_title" : "Mondalphabet",
   "symboltables_murray_title" : "Murray",
+  "symboltables_nato_title" : "NATO Flaggen",
   "symboltables_pipeline_title" : "Pipeline 3D",
+  "symboltables_postnet_title" : "PostNet",
   "symboltables_puzzle_title" : "Puzzle Code",
   "symboltables_semaphore_title" : "Winkeralphabet (Semaphore)",
   "symboltables_semaphore_cancel" : "ABBRUCH",
@@ -420,7 +430,7 @@
   "symboltables_semaphore_rest" : "PAUSE",
   "symboltables_romulan_title" : "Romulanisch",
 
-  "tomtom_code_title" : "TomTom Code",
+  "tomtom_title" : "TomTom Code",
 
   "trithemius_title" : "Trithemius Chiffre",
 

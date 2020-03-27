@@ -118,7 +118,10 @@ class _MainScreenState extends State<MainScreen> {
         ].contains(className(element.tool));
       }).toList();
 
+    _toolList.forEach((tool) => print(tool.toolName.toString() + (tool.tool.toString())));
+
     _toolList.sort((a, b){
+      print(a.toolName);
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });
 
