@@ -58,8 +58,8 @@ class SymbolTableState extends State<SymbolTable> {
     final manifestContent = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
 
-    var pathKey = SYMBOLTABLES_ASSETPATH + widget.symbolKey + '_';
-    
+    var pathKey = SYMBOLTABLES_ASSETPATH + widget.symbolKey + '/';
+
     final imagePaths = manifestMap.keys
       .where((String key) => key.contains(pathKey))
       .toList();
@@ -99,8 +99,8 @@ class SymbolTableState extends State<SymbolTable> {
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get('symbol_tables_countcolumns_portrait')
-        : Prefs.get('symbol_tables_countcolumns_landscape');
+      ? Prefs.get('symbol_tables_countcolumns_portrait')
+      : Prefs.get('symbol_tables_countcolumns_landscape');
 
     return Column(
       children: <Widget>[
@@ -203,8 +203,14 @@ class SymbolTableState extends State<SymbolTable> {
 
   _getSymbolText(imageIndex) {
     var key = _imageFilePaths.keys.toList()[imageIndex];
-    var ascii = int.tryParse(key);
+
+    // split, if there are different symbols for same value. Then there should be named "10.png" and "10_.png" or "10_2.png" or something like that
+    var ascii = int.tryParse(key.split('_')[0]);
     return ascii == null ? _getSpecialText(key) : String.fromCharCode(ascii);
+  }
+  
+  _showSpaceSymbolInOverlay(text) {
+    return text == ' ' ? String.fromCharCode(9251) : text;
   }
 
   _buildDecryptionButtonMatrix(countColumns) {
@@ -234,7 +240,9 @@ class SymbolTableState extends State<SymbolTable> {
                   ? Opacity(
                       child:  Container(
                         child: Text(
-                          _getSymbolText(imageIndex),
+                          _showSpaceSymbolInOverlay(
+                            _getSymbolText(imageIndex)
+                          ),
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,

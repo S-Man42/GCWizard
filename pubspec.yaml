@@ -36,6 +36,23 @@ flutter:
     - assets/logo/
     - assets/coordinates/
     - assets/symbol_tables/
+    - assets/symbol_tables/arcadian/
+    - assets/symbol_tables/braille/
+    - assets/symbol_tables/finger/
+    - assets/symbol_tables/flags/
+    - assets/symbol_tables/freemason/
+    - assets/symbol_tables/freemason_v2/
+    - assets/symbol_tables/hexahue/
+    - assets/symbol_tables/intergala/
+    - assets/symbol_tables/lorm/
+    - assets/symbol_tables/moon/
+    - assets/symbol_tables/murray/
+    - assets/symbol_tables/nato/
+    - assets/symbol_tables/pipeline/
+    - assets/symbol_tables/postnet/
+    - assets/symbol_tables/puzzle/
+    - assets/symbol_tables/romulan/
+    - assets/symbol_tables/semaphore/
 
 flutter_icons:
   image_path: "assets/logo/circle_border_1024.png"

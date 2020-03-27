@@ -254,7 +254,7 @@
   "dates_weekday_saturday" : "Samstag",
   "dates_weekday_sunday" : "Sonntag",
 
-  "decabit_numeric_mode" : "Nummerisch",
+  "decabit_numeric_mode" : "Numerisch",
   "decabit_title" : "Decabit",
 
   "e_selection_title" : "e (e = 2,7182818...)",
@@ -401,7 +401,7 @@
 
   "symboltables_title" : "Symboltabellen",
   "symboltables_showoverlay" : "Overlays",
-  "symboltables_arcadian_title" : "Aracadian",
+  "symboltables_arcadian_title" : "Arcadian",
   "symboltables_braille_title" : "Braille (Blindenschrift)",
   "symboltables_intergala_title" : "Intergalaktischer Code",
   "symboltables_finger_title" : "Fingeralphabet",

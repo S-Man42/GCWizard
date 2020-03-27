@@ -287,7 +287,9 @@ class AboutState extends State<About> {
               Container(
                 child: GCWText(
                   align: Alignment.center,
-                  text: 'Andy \'Puma66\' (PR, Support)'
+                  textAlign: TextAlign.center,
+                  text: 'Andy \'Puma66\' (PR, Support)\n'
+                      'Dennis \'dennistreysa\' (Development)'
                 ),
                 padding: EdgeInsets.only(
                   top: 15,
@@ -298,12 +300,13 @@ class AboutState extends State<About> {
                 align: Alignment.center,
                 textAlign: TextAlign.center,
                 text:
-                  '\'Aeggsbaerde\' (MGT Tables)\n'
+                  '\'Aeggsbaerde\' (Symbol Tables)\n'
                   'Andreas E. (Test)\n'
                   'Michael D. (Test)\n'
                   'Palk \'geogedoens.de\' (Test, PR)\n'
-                  '\'radioscout\' (Test, MGT)\n'
+                  '\'radioscout\' (Test)\n'
                   '\'radlerandi\' (Test)\n'
+                  '\'Sechsfüssler\' (Symbol Tables)\n'
                   '\'tomcat06\' (Test)'
               ),
             ],
