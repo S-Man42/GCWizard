@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/logic/tools/science/periodic_table.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:intl/intl.dart';
 
 class PeriodicTable extends StatefulWidget {
   @override
@@ -31,8 +34,6 @@ class PeriodicTableState extends State<PeriodicTable> {
   List<int> _periods;
   List<String> _iupacGroupNames;
   List<String> _statesOfMatter;
-  List<bool> _isRadioactives;
-  List<bool> _isSynthetics;
 
   final _valueCategories = [
     PeriodicTableCategory.MASS,
@@ -67,25 +68,25 @@ class PeriodicTableState extends State<PeriodicTable> {
     super.initState();
 
     _categories = {
-      PeriodicTableCategory.ELEMENT_NAME: 'periodictable_category_elementname',
-      PeriodicTableCategory.CHEMICAL_SYMBOL: 'periodictable_category_chemicalsymbol',
-      PeriodicTableCategory.ATOMIC_NUMBER: 'periodictable_category_atomicnumber',
-      PeriodicTableCategory.IUPAC_GROUP: 'periodictable_category_iupacgroup',
-      PeriodicTableCategory.IUPAC_GROUP_NAME: 'periodictable_category_iupacgroupname',
-      PeriodicTableCategory.MAIN_GROUP: 'periodictable_category_maingroup',
-      PeriodicTableCategory.SUB_GROUP: 'periodictable_category_subgroup',
-      PeriodicTableCategory.PERIOD: 'periodictable_category_period',
-      PeriodicTableCategory.STATE_OF_MATTER: 'periodictable_category_stateofmatter',
+      PeriodicTableCategory.ELEMENT_NAME: 'periodictable_attribute_elementname',
+      PeriodicTableCategory.CHEMICAL_SYMBOL: 'periodictable_attribute_chemicalsymbol',
+      PeriodicTableCategory.ATOMIC_NUMBER: 'periodictable_attribute_atomicnumber',
+      PeriodicTableCategory.IUPAC_GROUP: 'periodictable_attribute_iupacgroup',
+      PeriodicTableCategory.IUPAC_GROUP_NAME: 'periodictable_attribute_iupacgroupname',
+      PeriodicTableCategory.MAIN_GROUP: 'periodictable_attribute_maingroup',
+      PeriodicTableCategory.SUB_GROUP: 'periodictable_attribute_subgroup',
+      PeriodicTableCategory.PERIOD: 'periodictable_attribute_period',
+      PeriodicTableCategory.STATE_OF_MATTER: 'periodictable_attribute_stateofmatter',
 
-      PeriodicTableCategory.MASS: 'periodictable_category_mass',
-      PeriodicTableCategory.MELTING_POINT: 'periodictable_category_meltingpoint',
-      PeriodicTableCategory.BOILING_POINT: 'periodictable_category_boilingpoint',
-      PeriodicTableCategory.ELECTRONEGATIVITY: 'periodictable_category_electronegativity',
-      PeriodicTableCategory.DENSITY: 'periodictable_category_density',
-      PeriodicTableCategory.IS_RADIOACTIVE: 'periodictable_category_isradioactive',
-      PeriodicTableCategory.HALF_LIFE: 'periodictable_category_halflife',
-      PeriodicTableCategory.MOST_COMMON_ISOTOP: 'periodictable_category_mostcommonisotop',
-      PeriodicTableCategory.IS_SYNTHETIC: 'periodictable_category_issynthetic',
+      PeriodicTableCategory.MASS: 'periodictable_attribute_mass',
+      PeriodicTableCategory.MELTING_POINT: 'periodictable_attribute_meltingpoint',
+      PeriodicTableCategory.BOILING_POINT: 'periodictable_attribute_boilingpoint',
+      PeriodicTableCategory.ELECTRONEGATIVITY: 'periodictable_attribute_electronegativity',
+      PeriodicTableCategory.DENSITY: 'periodictable_attribute_density',
+      PeriodicTableCategory.IS_RADIOACTIVE: 'periodictable_attribute_isradioactive',
+      PeriodicTableCategory.HALF_LIFE: 'periodictable_attribute_halflife',
+      PeriodicTableCategory.MOST_COMMON_ISOTOP: 'periodictable_attribute_mostcommonisotop',
+      PeriodicTableCategory.IS_SYNTHETIC: 'periodictable_attribute_issynthetic',
     };
 
     allPeriodicTableElements.forEach((element) {
@@ -112,17 +113,14 @@ class PeriodicTableState extends State<PeriodicTable> {
 
     _iupacGroupNames = allPeriodicTableElements
       .where((element) => element.iupacGroupName != null)
-      .map((element) => iupacGroupNameToString[element])
+      .map((element) => iupacGroupNameToString[element.iupacGroupName])
       .toSet().toList();
     _iupacGroupNames.sort();
 
     _statesOfMatter = allPeriodicTableElements
-      .map((element) => stateOfMatterToString[element])
+      .map((element) => stateOfMatterToString[element.stateOfMatter])
       .toSet().toList();
     _statesOfMatter.sort();
-
-    _isSynthetics = [true, false];
-    _isRadioactives = [true, false];
   }
 
   @override
@@ -135,7 +133,7 @@ class PeriodicTableState extends State<PeriodicTable> {
     return Column(
       children: <Widget>[
         GCWTextDivider(
-          text: 'Category'
+          text: i18n(context, 'periodictable_attribute')
         ),
         GCWDropDownButton(
           value: _currentCategory,
@@ -168,9 +166,9 @@ class PeriodicTableState extends State<PeriodicTable> {
         _sortableCategories.contains(_currentCategory)
           ? GCWTwoOptionsSwitch(
               value: _currentSortingOrder,
-              title: 'Sorting',
-              leftValue: 'Ascending',
-              rightValue: 'Descending',
+              title: i18n(context, 'common_sorting'),
+              leftValue: i18n(context, 'common_sorting_asc'),
+              rightValue: i18n(context, 'common_sorting_desc'),
               onChanged: (value) {
                 setState(() {
                   _currentSortingOrder = value;
@@ -187,22 +185,40 @@ class PeriodicTableState extends State<PeriodicTable> {
     var listItems = SplayTreeMap<dynamic, dynamic>();
 
     switch (category) {
-      case PeriodicTableCategory.ELEMENT_NAME: _elementNames.entries.forEach((entry) => listItems.putIfAbsent(i18n(context, entry.value), () => entry.key)); break;
-      case PeriodicTableCategory.CHEMICAL_SYMBOL: _chemicalSymbols.entries.forEach((entry) => listItems.putIfAbsent(entry.value, () => entry.key)); break;
-      case PeriodicTableCategory.ATOMIC_NUMBER: _atomicNumbers.entries.forEach((entry) => listItems.putIfAbsent(entry.value, () => entry.key)); break;
-      case PeriodicTableCategory.IUPAC_GROUP: _iupacGroups.forEach((entry) => listItems.putIfAbsent(entry, () => entry)); break;
-      case PeriodicTableCategory.IUPAC_GROUP_NAME: _iupacGroupNames.forEach((entry) => listItems.putIfAbsent(i18n(context, entry), () => iupacGroupNameToString.map((k, v) => MapEntry(v, k))[entry])); break;
-      case PeriodicTableCategory.MAIN_GROUP: _mainGroups.forEach((entry) => listItems.putIfAbsent(encodeRomanNumbers(entry), () => entry)); break;
-      case PeriodicTableCategory.SUB_GROUP: _subGroups.forEach((entry) => listItems.putIfAbsent(encodeRomanNumbers(entry), () => entry)); break;
-      case PeriodicTableCategory.PERIOD: _periods.forEach((entry) => listItems.putIfAbsent(entry, () => entry)); break;
-      case PeriodicTableCategory.STATE_OF_MATTER: _statesOfMatter.forEach((entry) => listItems.putIfAbsent(i18n(context, entry), () => stateOfMatterToString.map((k, v) => MapEntry(v, k))[entry])); break;
+      case PeriodicTableCategory.ELEMENT_NAME:
+        _elementNames.entries.forEach((entry) => listItems.putIfAbsent(i18n(context, entry.value), () => entry.key));
+        break;
+      case PeriodicTableCategory.CHEMICAL_SYMBOL:
+        _chemicalSymbols.entries.forEach((entry) => listItems.putIfAbsent(entry.value, () => entry.key));
+        break;
+      case PeriodicTableCategory.ATOMIC_NUMBER:
+        _atomicNumbers.entries.forEach((entry) => listItems.putIfAbsent(entry.value, () => entry.key));
+        break;
+      case PeriodicTableCategory.IUPAC_GROUP:
+        _iupacGroups.forEach((entry) => listItems.putIfAbsent(entry, () => entry));
+        break;
+      case PeriodicTableCategory.IUPAC_GROUP_NAME:
+        _iupacGroupNames.forEach((entry) => listItems.putIfAbsent(i18n(context, entry), () => iupacGroupNameToString.map((k, v) => MapEntry(v, k))[entry]));
+        break;
+      case PeriodicTableCategory.MAIN_GROUP:
+        _mainGroups.forEach((entry) => listItems.putIfAbsent(encodeRomanNumbers(entry), () => entry));
+        break;
+      case PeriodicTableCategory.SUB_GROUP:
+        _subGroups.forEach((entry) => listItems.putIfAbsent(encodeRomanNumbers(entry), () => entry));
+        break;
+      case PeriodicTableCategory.PERIOD:
+        _periods.forEach((entry) => listItems.putIfAbsent(entry, () => entry));
+        break;
+      case PeriodicTableCategory.STATE_OF_MATTER:
+        _statesOfMatter.forEach((entry) => listItems.putIfAbsent(i18n(context, entry), () => stateOfMatterToString.map((k, v) => MapEntry(v, k))[entry]));
+        break;
       case PeriodicTableCategory.IS_RADIOACTIVE:
-        listItems.putIfAbsent(i18n(context, 'periodictable_category_isradioactive_true'), () => true);
-        listItems.putIfAbsent(i18n(context, 'periodictable_category_isradioactive_false'), () => false);
+        listItems.putIfAbsent(i18n(context, 'periodictable_attribute_isradioactive_true'), () => true);
+        listItems.putIfAbsent(i18n(context, 'periodictable_attribute_isradioactive_false'), () => false);
         break;
       case PeriodicTableCategory.IS_SYNTHETIC:
-        listItems.putIfAbsent(i18n(context, 'periodictable_category_issynthetic_true'), () => true);
-        listItems.putIfAbsent(i18n(context, 'periodictable_category_issynthetic_false'), () => false);
+        listItems.putIfAbsent(i18n(context, 'periodictable_attribute_issynthetic_true'), () => true);
+        listItems.putIfAbsent(i18n(context, 'periodictable_attribute_issynthetic_false'), () => false);
         break;
       default: break;
     }
@@ -237,7 +253,6 @@ class PeriodicTableState extends State<PeriodicTable> {
         filteredList = allPeriodicTableElements.where((element) => element.period == _currentValueCategoryValue).toList();
         break;
       case PeriodicTableCategory.STATE_OF_MATTER:
-        print(_currentValueCategoryValue);
         filteredList = allPeriodicTableElements.where((element) => element.stateOfMatter == _currentValueCategoryValue).toList();
         break;
       case PeriodicTableCategory.IS_SYNTHETIC:
@@ -273,19 +288,19 @@ class PeriodicTableState extends State<PeriodicTable> {
         sortableList.sort((a, b) => a.mass.compareTo(b.mass) * sortOrder);
         break;
       case PeriodicTableCategory.MELTING_POINT:
-        sortableList = sortableList.where((element) => element.meltingPoint > -300).toList();
+        sortableList = sortableList.where((element) => element.meltingPoint > -double.infinity).toList();
         sortableList.sort((a, b) => a.meltingPoint.compareTo(b.meltingPoint) * sortOrder);
         break;
       case PeriodicTableCategory.BOILING_POINT:
-        sortableList = sortableList.where((element) => element.boilingPoint > -300).toList();
+        sortableList = sortableList.where((element) => element.boilingPoint > -double.infinity).toList();
         sortableList.sort((a, b) => a.boilingPoint.compareTo(b.boilingPoint) * sortOrder);
         break;
       case PeriodicTableCategory.ELECTRONEGATIVITY:
-        sortableList = sortableList.where((element) => element.electronegativity > 0).toList();
+        sortableList = sortableList.where((element) => element.electronegativity > -double.infinity && element.electronegativity < double.infinity).toList();
         sortableList.sort((a, b) => a.electronegativity.compareTo(b.electronegativity) * sortOrder);
         break;
       case PeriodicTableCategory.DENSITY:
-        sortableList = sortableList.where((element) => element.density > 0).toList();
+        sortableList = sortableList.where((element) => element.density > -double.infinity).toList();
         sortableList.sort((a, b) => a.density.compareTo(b.density) * sortOrder);
         break;
       case PeriodicTableCategory.HALF_LIFE:
@@ -308,10 +323,10 @@ class PeriodicTableState extends State<PeriodicTable> {
           relevantValue = element.mass;
           break;
         case PeriodicTableCategory.MELTING_POINT:
-          relevantValue = element.meltingPoint;
+          relevantValue = _temperatures(element.meltingPoint);
           break;
         case PeriodicTableCategory.BOILING_POINT:
-          relevantValue = element.boilingPoint;
+          relevantValue = _temperatures(element.boilingPoint);
           break;
         case PeriodicTableCategory.ELECTRONEGATIVITY:
           relevantValue = element.electronegativity;
@@ -337,23 +352,67 @@ class PeriodicTableState extends State<PeriodicTable> {
     .values.toList();
   }
 
+  _temperatures(double celsius) {
+    var format = NumberFormat('0.0');
+
+    return format.format(celsiusToKelvin(celsius)) + ' K\n'
+        + format.format(celsius) + ' °C\n'
+        + format.format(celsiusToFahrenheit(celsius)) + ' °F';
+  }
+
+  _buildElementOutputs() {
+    PeriodicTableElement pte = allPeriodicTableElements.firstWhere((
+        element) => element.atomicNumber == _currentValueCategoryValue);
+
+    return {'data' : [
+      [i18n(context, 'periodictable_attribute_elementname'), i18n(context, pte.name)],
+      [i18n(context, 'periodictable_attribute_chemicalsymbol'), pte.chemicalSymbol],
+      [i18n(context, 'periodictable_attribute_atomicnumber'), pte.atomicNumber],
+      [i18n(context, 'periodictable_attribute_iupacgroup'), pte.iupacGroup],
+
+      [i18n(context, 'periodictable_attribute_iupacgroupname'), pte.iupacGroupName == null ? '' : i18n(context, iupacGroupNameToString[pte.iupacGroupName])],
+
+      pte.mainGroup == null
+        ? [i18n(context, 'periodictable_attribute_subgroup'), encodeRomanNumbers(pte.subGroup)]
+        : [i18n(context, 'periodictable_attribute_maingroup'), encodeRomanNumbers(pte.mainGroup)],
+      [i18n(context, 'periodictable_attribute_period'), pte.period],
+
+      [i18n(context, 'periodictable_attribute_stateofmatter'), i18n(context, stateOfMatterToString[pte.stateOfMatter])],
+      [i18n(context, 'periodictable_attribute_meltingpoint'), pte.meltingPoint > -double.infinity ? _temperatures(pte.meltingPoint) : i18n(context, 'common_unknown')],
+      [i18n(context, 'periodictable_attribute_boilingpoint'), pte.boilingPoint > -double.infinity ? _temperatures(pte.boilingPoint) : i18n(context, 'common_unknown')],
+
+      [i18n(context, 'periodictable_attribute_density'), pte.density > -double.infinity ? pte.density : i18n(context, 'common_unknown')],
+      [i18n(context, 'periodictable_attribute_mass'), pte.mass],
+      [i18n(context, 'periodictable_attribute_electronegativity'), pte.electronegativity > -double.infinity
+          ? (pte.electronegativity < double.infinity ? pte.electronegativity : i18n(context, 'periodictable_attribute_electronegativity_none'))
+          : i18n(context, 'common_unknown')
+      ],
+
+      [i18n(context, 'periodictable_attribute_issynthetic_alternative'), pte.isSynthetic
+        ? i18n(context, 'periodictable_attribute_issynthetic_true')
+        : i18n(context, 'periodictable_attribute_issynthetic_false')],
+      [i18n(context, 'periodictable_attribute_isradioactive'), pte.isRadioactive
+        ? i18n(context, 'periodictable_attribute_isradioactive_true')
+        : i18n(context, 'periodictable_attribute_isradioactive_false')],
+      [i18n(context, 'periodictable_attribute_halflife'), pte.halfLife < double.infinity ? pte.formattedHalfLife : i18n(context, 'periodictable_attribute_halflife_stable')],
+      [i18n(context, 'periodictable_attribute_mostcommonisotop'), pte.mostCommonIsotop],
+    ], 'comments': pte.comments ?? []};
+  }
+
   Widget _buildOutput() {
     var outputData = [[]];
     var flexValues = <int>[];
+    var comments;
 
     switch (_currentCategory) {
       case PeriodicTableCategory.ELEMENT_NAME:
       case PeriodicTableCategory.ATOMIC_NUMBER:
       case PeriodicTableCategory.CHEMICAL_SYMBOL:
-        PeriodicTableElement pte = allPeriodicTableElements.firstWhere((element) => element.atomicNumber == _currentValueCategoryValue);
-
-        outputData = [
-          [i18n(context, 'periodictable_element_attribute_name'), i18n(context, pte.name)],
-          [i18n(context, 'periodictable_element_attribute_chemicalsymbol'), pte.chemicalSymbol],
-          [i18n(context, 'periodictable_element_attribute_atomicnumber'), pte.atomicNumber],
-          [i18n(context, 'periodictable_element_attribute_meltingpoint'),  pte.meltingPoint],
-        ];
-
+        var data = _buildElementOutputs();
+        outputData = data['data'];
+        comments = data['comments'].map((comment) {
+          return '- ' + i18n(context, comment);
+        }).join('\n');
         break;
       case PeriodicTableCategory.IUPAC_GROUP:
       case PeriodicTableCategory.IUPAC_GROUP_NAME:
@@ -385,6 +444,17 @@ class PeriodicTableState extends State<PeriodicTable> {
         text: i18n(context, 'common_output')
       )
     );
+
+    if (comments != null && comments.length > 0) {
+      rows.addAll([
+        GCWTextDivider(
+            text: i18n(context, 'periodictable_attribute_comments')
+        ),
+        GCWOutputText(
+            text: comments
+        )
+      ]);
+    }
 
     return Column(
       children: rows
