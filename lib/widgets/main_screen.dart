@@ -35,10 +35,12 @@ import 'package:gc_wizard/widgets/tools/crypto/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ascii_values.dart';
+import 'package:gc_wizard/widgets/tools/encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
+import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
 import 'package:gc_wizard/widgets/tools/science/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science/periodic_table.dart';
@@ -91,6 +93,7 @@ class _MainScreenState extends State<MainScreen> {
           className(BaseSelection()),
           className(BrainfkSelection()),
           className(Caesar()),
+          className(CCITT2()),
           className(CoordsSelection()),
           className(DatesSelection()),
           className(Decabit()),
@@ -117,13 +120,11 @@ class _MainScreenState extends State<MainScreen> {
           className(TomTom()),
           className(Trithemius()),
           className(Vigenere()),
+          className(Z22()),
         ].contains(className(element.tool));
       }).toList();
 
-    _toolList.forEach((tool) => print(tool.toolName.toString() + (tool.tool.toString())));
-
     _toolList.sort((a, b){
-      print(a.toolName);
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });
 

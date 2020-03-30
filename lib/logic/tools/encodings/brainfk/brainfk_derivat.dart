@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto/substitution.dart';
 import 'package:gc_wizard/logic/tools/encodings/brainfk/brainfk.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 
 class BrainfkDerivat {
   Map<String, String> substitutions;
@@ -52,6 +53,6 @@ class BrainfkDerivat {
       return '';
 
     var brainfk = generateBrainfk(text);
-    return substitution(brainfk, substitutions.map((k, v) => MapEntry(v, k)));
+    return substitution(brainfk, switchMapKeyValue(substitutions));
   }
 }

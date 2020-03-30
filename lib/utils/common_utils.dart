@@ -16,6 +16,15 @@ List<int> textToIntList(String text, {bool allowNegativeValues: false}) {
   return list.map((value) => value == '-' ? 0 : int.tryParse(value)).toList();
 }
 
+List<String> textToBinaryList(String text) {
+  if (text == null || text.length == 0)
+    return [];
+
+  final regex = RegExp(r'[01]+');
+
+  return regex.allMatches(text).map((value) => text.substring(value.start, value.end)).toList();
+}
+
 int extractIntegerFromText(String text) {
   var digits = text.replaceAll(RegExp(r'[^0-9]'), '');
   if (digits.length == 0)
@@ -144,4 +153,11 @@ double kelvinToFahrenheit(double kelvin) {
 
 double celsiusToFahrenheit(double celsius) {
   return kelvinToFahrenheit(celsiusToKelvin(celsius));
+}
+
+Map<U, T> switchMapKeyValue<T,U>(Map<T, U> map) {
+  if (map == null)
+    return null;
+
+  return map.map((k, v) => MapEntry(v, k));
 }

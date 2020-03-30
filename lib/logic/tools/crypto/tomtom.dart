@@ -26,9 +26,9 @@ decryptTomTom(String input, Map<String, String> replaceCharacters) {
     return '';
 
   if (replaceCharacters != null)
-    input = substitution(input, replaceCharacters.map((k, v) => MapEntry(v, k)));
+    input = substitution(input, switchMapKeyValue(replaceCharacters));
 
-  final tomTomToAZ = AZToTomTom.map((k, v) => MapEntry(v, k));
+  final tomTomToAZ = switchMapKeyValue(AZToTomTom);
 
   return input
       .split(RegExp(r'[^/\\]'))

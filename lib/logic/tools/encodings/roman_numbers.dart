@@ -1,4 +1,5 @@
 import 'package:gc_wizard/logic/tools/crypto/substitution.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 
 enum RomanNumberType {
   ONLY_ADDITION,
@@ -39,7 +40,7 @@ int decodeRomanNumbers(String input) {
   if (input.length == 0)
     return null;
 
-  var roman = substitution(input, _subtractionSubstitutions.map((k, v) => MapEntry(v, k)));
+  var roman = substitution(input, switchMapKeyValue(_subtractionSubstitutions));
   var out = 0;
   roman.split('').forEach((character) => out += _romanToNumber[character]);
 

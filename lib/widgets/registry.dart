@@ -62,10 +62,12 @@ import 'package:gc_wizard/widgets/tools/encodings/base/base64.dart';
 import 'package:gc_wizard/widgets/tools/encodings/base/base85.dart';
 import 'package:gc_wizard/widgets/tools/encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/encodings/brainfk/ook.dart';
+import 'package:gc_wizard/widgets/tools/encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
+import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
 import 'package:gc_wizard/widgets/tools/science/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science/irrational_numbers/phi.dart';
@@ -94,6 +96,7 @@ class Registry {
   static final SEACHSTRING_ROTATION = 'rotations rotx rotn rot-x rotationen ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
   static final SEARCHSTRING_VIGENERE = SEACHSTRING_ROTATION + 'vigenere ';
+  static final SEARCHSTRING_CCITT2 = 'ccitt2 emile baudot murray telex telegraph telegraf lochstreifen konrad zuse z22 purched paper ';
 
   static initialize(BuildContext context) {
     toolList = [
@@ -106,6 +109,7 @@ class Registry {
       GCWToolWidget(tool: BaseSelection(), toolName: i18n(context, 'base_selection_title'), searchStrings: SEARCHSTRING_BASE),
       GCWToolWidget(tool: BrainfkSelection(), toolName: i18n(context, 'brainfk_title'), searchStrings: SEARCHSTRING_BRAINFK),
       GCWToolWidget(tool: Caesar(), toolName: i18n(context, 'caesar_title'), searchStrings: SEACHSTRING_ROTATION + 'caesar cäsar'),
+      GCWToolWidget(tool: CCITT2(), toolName: i18n(context, 'ccitt2_title'), searchStrings: SEARCHSTRING_CCITT2),
       GCWToolWidget(tool: CoordsSelection(), toolName: i18n(context, 'coords_selection_title'), searchStrings: SEARCHSTRING_COORDINATES),
       GCWToolWidget(tool: DatesSelection(), toolName: i18n(context, 'dates_selection_title'), searchStrings: SEARCHSTRING_DATES),
       GCWToolWidget(tool: Decabit(), toolName: i18n(context, 'decabit_title'), searchStrings: 'decabit impulsraster zellweger plus minus rundsteuertechnik ripple control'),
@@ -132,6 +136,7 @@ class Registry {
       GCWToolWidget(tool: TomTom(), toolName: i18n(context, 'tomtom_title'), searchStrings: 'tomtom tom a-tom-tom tom-tom atomtom'),
       GCWToolWidget(tool: Trithemius(), toolName: i18n(context, 'trithemius_title'), searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'),
       GCWToolWidget(tool: Vigenere(), toolName: i18n(context, 'vigenere_title'), searchStrings: SEARCHSTRING_VIGENERE + 'autokey'),
+      GCWToolWidget(tool: Z22(), toolName: i18n(context, 'z22_title'), searchStrings: SEARCHSTRING_CCITT2),
 
       //BaseSelection
       GCWToolWidget(tool: Base16(), toolName: i18n(context, 'base_base16_title'), searchStrings: SEARCHSTRING_BASE + 'base16'),
@@ -142,10 +147,6 @@ class Registry {
       //Brainfk Selection
       GCWToolWidget(tool: Brainfk(), toolName: i18n(context, 'brainfk_title'), searchStrings: SEARCHSTRING_BRAINFK),
       GCWToolWidget(tool: Ook(), toolName: i18n(context, 'brainfk_ook_title'), searchStrings: SEARCHSTRING_BRAINFK + 'ook terry pratchett monkeys apes'),
-
-      //DatesSelection
-      GCWToolWidget(tool: DayCalculator(), toolName: i18n(context, 'dates_daycalculator_title'), searchStrings: SEARCHSTRING_DATES + 'tages rechner day calculator'),
-      GCWToolWidget(tool: Weekday(), toolName: i18n(context, 'dates_weekday_title'), searchStrings: 'weekdays wochentage'),
 
       //CoordsSelection
       GCWToolWidget(tool: WaypointProjection(), toolName: i18n(context, 'coords_waypointprojection_title'), iconPath: 'assets/coordinates/icon_waypoint_projection.png', searchStrings: SEARCHSTRING_COORDINATES + 'winkel angles waypointprojections bearings wegpunktprojektionen wegpunktpeilungen directions richtungen'),
@@ -163,6 +164,15 @@ class Registry {
       GCWToolWidget(tool: Resection(), toolName: i18n(context, 'coords_resection_title'), iconPath: 'assets/coordinates/icon_resection.png', searchStrings: SEARCHSTRING_COORDINATES + 'resection 2 two zwei angles winkel directions richtungen bearings 3 three drei rückwärtseinschnitt rückwärtseinschneiden rückwärtsschnitt rückwärtsschneiden'),
       GCWToolWidget(tool: EquilateralTriangle(), toolName: i18n(context, 'coords_equilateraltriangle_title'), iconPath: 'assets/coordinates/icon_equilateral_triangle.png', searchStrings: SEARCHSTRING_COORDINATES + 'equilateral triangles gleichseitiges dreiecke'),
       GCWToolWidget(tool: EllipsoidTransform(), toolName: i18n(context, 'coords_ellipsoidtransform_title'), iconPath: 'assets/coordinates/icon_ellipsoid_transform.png', searchStrings: SEARCHSTRING_COORDINATES + 'rotationsellipsoids converter converting konverter konvertieren umwandeln bessel 1841 bessel krassowski krasowksi krasovsky krassovsky 1950 airy 1830 modified potsdam dhdn2001 dhdn1995 pulkowo mgi lv95 ed50 clarke 1866 osgb36 date datum wgs84'),
+
+      //DatesSelection
+      GCWToolWidget(tool: DayCalculator(), toolName: i18n(context, 'dates_daycalculator_title'), searchStrings: SEARCHSTRING_DATES + 'tages rechner day calculator'),
+      GCWToolWidget(tool: Weekday(), toolName: i18n(context, 'dates_weekday_title'), searchStrings: 'weekdays wochentage'),
+
+      //E Selection
+      GCWToolWidget(tool: ENthDecimal(), toolName: i18n(context, 'irrationalnumbers_nthdecimal_title'), searchStrings: SEARCHSTRING_E + 'positions positionen'),
+      GCWToolWidget(tool: EDecimalRange(), toolName: i18n(context, 'irrationalnumbers_decimalrange_title'), searchStrings: SEARCHSTRING_E + 'ranges bereiche'),
+      GCWToolWidget(tool: ESearch(), toolName: i18n(context, 'irrationalnumbers_search_title'), searchStrings: SEARCHSTRING_E + 'occurrence vorkommen vorhanden contains containing enthält enthalten '),
 
       //Main Menu
       GCWToolWidget(tool: GeneralSettings(), toolName: i18n(context, 'settings_general_title'), searchStrings: SEARCHSTRING_SETTINGS,),
@@ -196,23 +206,23 @@ class Registry {
       GCWToolWidget(tool: RotationGeneral(), toolName:  i18n(context, 'rotation_rotation_title'), searchStrings: SEACHSTRING_ROTATION),
 
       //Symbol Tables
-      GCWToolWidget(tool: SymbolTable(symbolKey: 'puzzle',), toolName: i18n(context, 'symboltables_puzzle_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'puzzle/72.png',searchStrings: SEARCHSTRING_SYMBOLTABLES + 'puzzles puzzleteile jigsaw '),
-      GCWToolWidget(tool: SymbolTable(symbolKey: 'murray',), toolName: i18n(context, 'symboltables_murray_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'murray/72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'murray'),
-      GCWToolWidget(tool: SymbolTable(symbolKey: 'semaphore',), toolName: i18n(context, 'symboltables_semaphore_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'semaphore/81.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags semaphores winkeralphabet flaggenalphabet'),
-      GCWToolWidget(tool: SymbolTable(symbolKey: 'braille',), toolName: i18n(context, 'symboltables_braille_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'braille/72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift braille '),
-      GCWToolWidget(tool: SymbolTable(symbolKey: 'romulan',), toolName: i18n(context, 'symboltables_romulan_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'romulan/72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'star trek romulans romulaner romulanisch '),
-      GCWToolWidget(tool: SymbolTable(symbolKey: 'pipeline',), toolName: i18n(context, 'symboltables_pipeline_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'pipeline/72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + '3d pipes pipelines rohre '),
       GCWToolWidget(tool: SymbolTable(symbolKey: 'arcadian',), toolName: i18n(context, 'symboltables_arcadian_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'arcadian/72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'skies of arcadia arcadian greek arkadischer arkadien '),
-      GCWToolWidget(tool: SymbolTable(symbolKey: 'lorm',), toolName: i18n(context, 'symboltables_lorm_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'lorm/72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift lormen deafblind taubstumm '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'braille',), toolName: i18n(context, 'symboltables_braille_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'braille/72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift braille '),
       GCWToolWidget(tool: SymbolTable(symbolKey: 'finger',), toolName: i18n(context, 'symboltables_finger_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'finger/72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fingers fingeralphabet '),
-      GCWToolWidget(tool: SymbolTable(symbolKey: 'intergala',), toolName: i18n(context, 'symboltables_intergala_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'intergala/81.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'intergalactical galaxy galaxies intergalaktisch '),
       GCWToolWidget(tool: SymbolTable(symbolKey: 'flags',), toolName: i18n(context, 'symboltables_flags_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'flags/70.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen '),
       GCWToolWidget(tool: SymbolTable(symbolKey: 'freemason',), toolName: i18n(context, 'symboltables_freemason_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'freemason/81.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'freemasons freimaurer '),
       GCWToolWidget(tool: SymbolTable(symbolKey: 'freemason_v2',), toolName: i18n(context, 'symboltables_freemason_v2_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'freemason_v2/81.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'freemasons freimaurer '),
       GCWToolWidget(tool: SymbolTable(symbolKey: 'hexahue',), toolName: i18n(context, 'symboltables_hexahue_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'hexahue/81.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colours colors colorcodes colourcodes hexahue farben farbcodes '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'intergala',), toolName: i18n(context, 'symboltables_intergala_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'intergala/81.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'intergalactical galaxy galaxies intergalaktisch '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'lorm',), toolName: i18n(context, 'symboltables_lorm_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'lorm/72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift lormen deafblind taubstumm '),
       GCWToolWidget(tool: SymbolTable(symbolKey: 'moon',), toolName: i18n(context, 'symboltables_moon_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'moon/81.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'moonalphabet reliefs mondalphabet reliefe eyeless blinded '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'murray',), toolName: i18n(context, 'symboltables_murray_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'murray/72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'emile murray telex telegraph telegraf '),
       GCWToolWidget(tool: SymbolTable(symbolKey: 'nato',), toolName: i18n(context, 'symboltables_nato_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'nato/54.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen nato army armee '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'pipeline',), toolName: i18n(context, 'symboltables_pipeline_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'pipeline/72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + '3d pipes pipelines rohre '),
       GCWToolWidget(tool: SymbolTable(symbolKey: 'postnet',), toolName: i18n(context, 'symboltables_postnet_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'postnet/54.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'postnet planet united states postal service usps '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'puzzle',), toolName: i18n(context, 'symboltables_puzzle_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'puzzle/72.png',searchStrings: SEARCHSTRING_SYMBOLTABLES + 'puzzles puzzleteile jigsaw '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'romulan',), toolName: i18n(context, 'symboltables_romulan_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'romulan/72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'star trek romulans romulaner romulanisch '),
+      GCWToolWidget(tool: SymbolTable(symbolKey: 'semaphore',), toolName: i18n(context, 'symboltables_semaphore_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'semaphore/81.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags semaphores winkeralphabet flaggenalphabet'),
     ];
   }
 }
