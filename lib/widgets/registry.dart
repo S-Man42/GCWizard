@@ -146,10 +146,6 @@ class Registry {
       GCWToolWidget(tool: Brainfk(), toolName: i18n(context, 'brainfk_title'), searchStrings: SEARCHSTRING_BRAINFK),
       GCWToolWidget(tool: Ook(), toolName: i18n(context, 'brainfk_ook_title'), searchStrings: SEARCHSTRING_BRAINFK + 'ook terry pratchett monkeys apes'),
 
-      //DatesSelection
-      GCWToolWidget(tool: DayCalculator(), toolName: i18n(context, 'dates_daycalculator_title'), searchStrings: SEARCHSTRING_DATES + 'tages rechner day calculator'),
-      GCWToolWidget(tool: Weekday(), toolName: i18n(context, 'dates_weekday_title'), searchStrings: 'weekdays wochentage'),
-
       //CoordsSelection
       GCWToolWidget(tool: WaypointProjection(), toolName: i18n(context, 'coords_waypointprojection_title'), iconPath: 'assets/coordinates/icon_waypoint_projection.png', searchStrings: SEARCHSTRING_COORDINATES + 'winkel angles waypointprojections bearings wegpunktprojektionen wegpunktpeilungen directions richtungen'),
       GCWToolWidget(tool: DistanceBearing(), toolName: i18n(context, 'coords_distancebearing_title'), iconPath: 'assets/coordinates/icon_distance_and_bearing.png', searchStrings: SEARCHSTRING_COORDINATES + 'angles winkel bearings distances distanzen entfernungen abstand abstände directions richtungen'),
@@ -166,6 +162,15 @@ class Registry {
       GCWToolWidget(tool: Resection(), toolName: i18n(context, 'coords_resection_title'), iconPath: 'assets/coordinates/icon_resection.png', searchStrings: SEARCHSTRING_COORDINATES + 'resection 2 two zwei angles winkel directions richtungen bearings 3 three drei rückwärtseinschnitt rückwärtseinschneiden rückwärtsschnitt rückwärtsschneiden'),
       GCWToolWidget(tool: EquilateralTriangle(), toolName: i18n(context, 'coords_equilateraltriangle_title'), iconPath: 'assets/coordinates/icon_equilateral_triangle.png', searchStrings: SEARCHSTRING_COORDINATES + 'equilateral triangles gleichseitiges dreiecke'),
       GCWToolWidget(tool: EllipsoidTransform(), toolName: i18n(context, 'coords_ellipsoidtransform_title'), iconPath: 'assets/coordinates/icon_ellipsoid_transform.png', searchStrings: SEARCHSTRING_COORDINATES + 'rotationsellipsoids converter converting konverter konvertieren umwandeln bessel 1841 bessel krassowski krasowksi krasovsky krassovsky 1950 airy 1830 modified potsdam dhdn2001 dhdn1995 pulkowo mgi lv95 ed50 clarke 1866 osgb36 date datum wgs84'),
+
+      //DatesSelection
+      GCWToolWidget(tool: DayCalculator(), toolName: i18n(context, 'dates_daycalculator_title'), searchStrings: SEARCHSTRING_DATES + 'tages rechner day calculator'),
+      GCWToolWidget(tool: Weekday(), toolName: i18n(context, 'dates_weekday_title'), searchStrings: 'weekdays wochentage'),
+
+      //E Selection
+      GCWToolWidget(tool: ENthDecimal(), toolName: i18n(context, 'irrationalnumbers_nthdecimal_title'), searchStrings: SEARCHSTRING_E + 'positions positionen'),
+      GCWToolWidget(tool: EDecimalRange(), toolName: i18n(context, 'irrationalnumbers_decimalrange_title'), searchStrings: SEARCHSTRING_E + 'ranges bereiche'),
+      GCWToolWidget(tool: ESearch(), toolName: i18n(context, 'irrationalnumbers_search_title'), searchStrings: SEARCHSTRING_E + 'occurrence vorkommen vorhanden contains containing enthält enthalten '),
 
       //Main Menu
       GCWToolWidget(tool: GeneralSettings(), toolName: i18n(context, 'settings_general_title'), searchStrings: SEARCHSTRING_SETTINGS,),
