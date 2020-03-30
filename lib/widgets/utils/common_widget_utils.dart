@@ -31,33 +31,26 @@ defaultFontSize() {
   return fontSize;
 }
 
-List<Widget> twoColumnMultiLineOutput(
-    BuildContext context,
-    Map<String, dynamic> data,
-    {
-      flexLeft: 1,
-      flexRight: 1
-    }) {
+List<Widget> columnedMultiLineOutput(List<List<dynamic>> data, {List<int> flexValues = const []}) {
   var odd = true;
-  return data.entries.map((entry) {
+  return data.map((rowData) {
     Widget output;
+
+    var columns = rowData.asMap().map((index, column) {
+      return MapEntry(
+        index,
+        Expanded(
+          child: GCWText(
+              text: column.toString()
+          ),
+          flex: index < flexValues.length ? flexValues[index] : 1
+        )
+      );
+    }).values.toList();
 
     var row = Container(
       child: Row(
-        children: <Widget>[
-          Expanded(
-            child: GCWText(
-              text: i18n(context, entry.key)
-            ),
-            flex: flexLeft,
-          ),
-          Expanded(
-            child: GCWText(
-              text: entry.value.toString()
-            ),
-            flex: flexRight,
-          ),
-        ],
+        children: columns
       ),
       margin: EdgeInsets.only(
         top : 6,

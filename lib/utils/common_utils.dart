@@ -3,6 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:quiver/pattern.dart';
 import 'package:gc_wizard/logic/tools/crypto/rotator.dart';
 import 'package:diacritic/diacritic.dart';
+import 'package:intl/intl.dart';
 import 'constants.dart';
 import 'alphabets.dart';
 
@@ -112,6 +113,37 @@ String insertSpaceEveryNthCharacter(String input, int n) {
   }
 
   return out.trim();
+}
+
+String formatDaysToNearestUnit(double days) {
+  var format = NumberFormat('0.00');
+
+  if (days >= 365 * 1000000)
+    return format.format(days / (365 * 1000000)) + ' Mio. a';
+  if (days >= 365)
+    return format.format(days / 365) + ' a';
+  if (days >= 1)
+    return format.format(days) + ' d';
+  if (days >= 1 / 24)
+    return format.format(days / (1 / 24)) + ' h';
+  if (days >= 1 / 24 / 60)
+    return format.format(days / (1 / 24 / 60)) + ' min';
+  if (days >= 1 / 24 / 60 / 60)
+    return format.format(days / (1 / 24 / 60 / 60)) + ' s';
+
+  return format.format(days / (1 / 24 / 60 / 60 / 1000)) + ' ms';
+}
+
+double celsiusToKelvin(double celsius) {
+  return celsius + 273.15;
+}
+
+double kelvinToFahrenheit(double kelvin) {
+  return kelvin * 9 / 5 - 459.67;
+}
+
+double celsiusToFahrenheit(double celsius) {
+  return kelvinToFahrenheit(celsiusToKelvin(celsius));
 }
 
 Map<U, T> switchMapKeyValue<T,U>(Map<T, U> map) {

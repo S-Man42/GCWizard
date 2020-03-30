@@ -26,7 +26,7 @@ import 'package:gc_wizard/widgets/tools/crypto/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto/decabit.dart';
 import 'package:gc_wizard/widgets/tools/crypto/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
-import 'package:gc_wizard/widgets/tools/crypto/kennys_code.dart';
+import 'package:gc_wizard/widgets/tools/crypto/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
@@ -42,7 +42,8 @@ import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/numeralbases.dart';
+import 'package:gc_wizard/widgets/tools/science/numeralbases.dart';
+import 'package:gc_wizard/widgets/tools/science/periodic_table.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -100,10 +101,11 @@ class _MainScreenState extends State<MainScreen> {
           className(ESelection()),
           className(FormulaSolver()),
           className(Gronsfeld()),
-          className(KennysCode()),
+          className(Kenny()),
           className(LetterValues()),
           className(Morse()),
           className(NumeralBases()),
+          className(PeriodicTable()),
           className(PhiSelection()),
           className(PiSelection()),
           className(Playfair()),
@@ -122,10 +124,7 @@ class _MainScreenState extends State<MainScreen> {
         ].contains(className(element.tool));
       }).toList();
 
-    _toolList.forEach((tool) => print(tool.toolName.toString() + (tool.tool.toString())));
-
     _toolList.sort((a, b){
-      print(a.toolName);
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });
 

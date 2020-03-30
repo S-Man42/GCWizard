@@ -1,5 +1,5 @@
 import 'package:gc_wizard/logic/tools/crypto/substitution.dart';
-import 'package:gc_wizard/logic/tools/math_and_physics/numeral_bases.dart';
+import 'package:gc_wizard/logic/tools/science/numeral_bases.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
