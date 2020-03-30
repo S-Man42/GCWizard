@@ -71,6 +71,8 @@
   "callforcontribution_24" : "Kontakt\n\n",
   "callforcontribution_25" : "Lass GCWizard ein Community-Projekt werden!",
 
+  "ccitt2_title" : "CCITT2 (Baudot)",
+
   "changelog_0.5.1" : "[new] GitHub Veröffentlichung\n[fix] Über: eMail-Link (Danke, Andy)\n[fix] Suche: Umlaute\n[fix] Einige kleinere Fixes und Verbesserungen",
   "changelog_0.5.0" : "[new] Hauptmenü (Einstellungen, Über, Changelog, Mitarbeit)\n[new] Suche\n[new] Enigma\n[new] Brainf**k/Ook\n[new] Römische Zahlen\n[new] Kennys Code\n[new] Pi/Phi/e",
   "changelog_0.4.0" : "[new] Koordinaten: Rückwärtseinschnitt\n[new] Formelrechner\n[chg] Update Internes Framework\n[chg] Buchstabenwerte: Unbekanntes Zeichen = <?>",
@@ -435,5 +437,7 @@
   "trithemius_title" : "Trithemius Chiffre",
 
   "vigenere_title" : "Vigenère Chiffre",
-  "vigenere_autokey" : "Autokey"
+  "vigenere_autokey" : "Autokey",
+
+  "z22_title" : "Z22"
 }

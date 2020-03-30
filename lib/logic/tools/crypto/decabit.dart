@@ -34,7 +34,7 @@ decryptDecabit(String input, Map<String, String> replaceCharacters, bool numeric
     return '';
 
   if (replaceCharacters != null)
-    input = substitution(input, replaceCharacters.map((k, v) => MapEntry(v, k)));
+    input = substitution(input, switchMapKeyValue(replaceCharacters));
 
   input = input.replaceAll(RegExp(r'[^+\-]'), '');
   input = input.substring(0, input.length - (input.length % 10));

@@ -36,9 +36,9 @@ decryptAbaddon(String input, Map<String, String> replaceCharacters) {
     return '';
 
   if (replaceCharacters != null)
-    input = substitution(input, replaceCharacters.map((k, v) => MapEntry(v, k)));
+    input = substitution(input, switchMapKeyValue(replaceCharacters));
 
-  final abaddonToAZ = AZToAbaddon.map((k, v) => MapEntry(v, k));
+  final abaddonToAZ = switchMapKeyValue(AZToAbaddon);
   input = input.replaceAll(RegExp(r'[^' + YEN + MY + THORN + ']'), '');
 
   return RegExp(r'[' + YEN + MY + THORN + ']{3,3}').allMatches(input)

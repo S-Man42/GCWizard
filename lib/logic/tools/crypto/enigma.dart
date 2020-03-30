@@ -152,7 +152,7 @@ class EnigmaKey {
 
     // When A->B in plugboard, B->A has to be in there as well
     // Well if there's a record B which doesn't map to A, this is kept, although historical nonsense (cables connecting A and B work in both directions)
-    var inversePlugboard = Map<String,String>.from(plugboard.map((k, v) => MapEntry(v, k)));
+    var inversePlugboard = Map<String,String>.from(switchMapKeyValue(plugboard));
     inversePlugboard.forEach((k, v) => this.plugboard.putIfAbsent(k.toUpperCase(), () => v.toUpperCase()));
   }
 

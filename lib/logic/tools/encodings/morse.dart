@@ -1,3 +1,5 @@
+import 'package:gc_wizard/utils/common_utils.dart';
+
 final AZToMorse = {
   'A' : '.-', 'B' : '-...', 'C' : '-.-.', 'D' : '-..', 'E' : '.', 'F' : '..-.', 'G' : '--.', 'H' : '....', 'I' : '..', 'J' : '.---', 'K' : '-.-', 'L' : '.-..', 'M' : '--',
   'N' : '-.', 'O' : '---', 'P' : '.--.', 'Q' : '--.-', 'R' : '.-.', 'S' : '...', 'T' : '-', 'U' : '..-', 'V' : '...-', 'W' : '.--', 'X' : '-..-', 'Y' : '-.--', 'Z' : '--..',
@@ -16,7 +18,7 @@ final AZToMorse = {
 };
 
 // Å has same code as À, so À replaces Å in mapping; Å will not occur in this map
-final MorseToAZ = AZToMorse.map((k, v) => MapEntry(v, k));
+final MorseToAZ = switchMapKeyValue(AZToMorse);
 
 String encodeMorse(String input) {
   if (input == null || input == '')

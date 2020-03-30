@@ -113,3 +113,10 @@ String insertSpaceEveryNthCharacter(String input, int n) {
 
   return out.trim();
 }
+
+Map<U, T> switchMapKeyValue<T,U>(Map<T, U> map) {
+  if (map == null)
+    return null;
+
+  return map.map((k, v) => MapEntry(v, k));
+}

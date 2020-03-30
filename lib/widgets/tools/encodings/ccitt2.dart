@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/encodings/ccitt2.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -9,17 +10,16 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class ASCIIValues extends StatefulWidget {
+class CCITT2 extends StatefulWidget {
   @override
-  ASCIIValuesState createState() => ASCIIValuesState();
+  CCITT2State createState() => CCITT2State();
 }
 
-class ASCIIValuesState extends State<ASCIIValues> {
+class CCITT2State extends State<CCITT2> {
   var _controller;
 
   var _currentInput = defaultIntegerListText;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  bool _currentCrosstotalMode = true;
   
   String _output = '';
 
@@ -45,7 +45,6 @@ class ASCIIValuesState extends State<ASCIIValues> {
             onChanged: (text) {
               setState(() {
                 _currentInput = {'text': text, 'values' : []};
-                _calculateOutput();
               });
             },
           ) :
@@ -54,13 +53,10 @@ class ASCIIValuesState extends State<ASCIIValues> {
             onChanged: (text) {
               setState(() {
                 _currentInput = text;
-                _calculateOutput();
               });
             },
           ),
         GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'asciivalues_mode_left'),
-          rightValue: i18n(context, 'asciivalues_mode_right'),
           onChanged: (value) {
             setState(() {
               _currentMode = value;
@@ -69,35 +65,21 @@ class ASCIIValuesState extends State<ASCIIValues> {
                 var text = _currentInput['text'];
                 _currentInput = {'text': text, 'values': textToIntList(text)};
               }
-
-              _calculateOutput();
-            });
-          },
-        ),
-        GCWCrosstotalSwitch(
-          onChanged: (value) {
-            setState(() {
-              _currentCrosstotalMode = value;
-              _calculateOutput();
             });
           },
         ),
         GCWDefaultOutput(
-          text: _output
+          text: _buildOutput()
         ),
-        _currentCrosstotalMode ? GCWCrosstotalOutput(_currentInput['text'], _currentInput['values']) : Container()
       ],
     );
   }
 
-  _calculateOutput() {
-    String text = _currentInput['text'];
-
+  _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      _currentInput = {'text': text, 'values': text.codeUnits};
-      _output = intListToString(_currentInput['values'], delimiter: ', ');
+      return encodeCCITT2(_currentInput['text']);
     } else {
-      _output = String.fromCharCodes(_currentInput['values']);
+      return decodeCCITT2(_currentInput['values']);
     }
   }
 }

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/encodings/alphanum_values.dart';
 import 'package:gc_wizard/logic/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/logic/tools/encodings/scrabble_sets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/coords/gcw_crosstotal_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_crosstotal_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
@@ -80,9 +77,7 @@ class ScrabbleState extends State<Scrabble> {
             });
           },
         ),
-        GCWOnOffSwitch(
-          title: i18n(context, 'crosstotal_title'),
-          value: true,
+        GCWCrosstotalSwitch(
           onChanged: (value) {
             setState(() {
               _currentCrosstotalMode = value;

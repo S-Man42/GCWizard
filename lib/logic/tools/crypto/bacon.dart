@@ -1,3 +1,5 @@
+import 'package:gc_wizard/utils/common_utils.dart';
+
 const AZToBacon = {
   'A' : 'AAAAA', 'B' : 'AAAAB', 'C' : 'AAABA', 'D' : 'AAABB', 'E' : 'AABAA', 'F' : 'AABAB', 'G' : 'AABBA', 'H' : 'AABBB', 'J' : 'ABAAA', 'I' : 'ABAAA', 'K' : 'ABAAB', 'L' : 'ABABA', 'M' : 'ABABB',
   'N' : 'ABBAA', 'O' : 'ABBAB', 'P' : 'ABBBA', 'Q' : 'ABBBB', 'R' : 'BAAAA', 'S' : 'BAAAB', 'T' : 'BAABA', 'V' : 'BAABB', 'U' : 'BAABB', 'W' : 'BABAA', 'X' : 'BABAB', 'Y' : 'BABBA', 'Z' : 'BABBB',
@@ -5,7 +7,7 @@ const AZToBacon = {
 
 // I has same code as J, so I replaces J in mapping; J will not occur in this map
 // U has same code as V, so U replaces V in mapping; V will not occur in this map
-final BaconToAZ = AZToBacon.map((k, v) => MapEntry(v, k));
+final BaconToAZ = switchMapKeyValue(AZToBacon);
 
 String encodeBacon(String input) {
   if (input == null || input == '')
