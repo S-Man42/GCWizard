@@ -72,6 +72,7 @@
   "callforcontribution_25" : "Let GCWizard become a community project!",
 
   "ccitt2_title" : "CCITT2 (Baudot)",
+  "ccitt2_numeral_base" : "Coding",
 
   "changelog_0.5.1" : "[new] GitHub Release\n[fix] About: eMail link (Thanks, Andy)\n[fix] Search Engine: Umlauts\n[fix] Minor fixes and enhancements (layout, typos)",
   "changelog_0.5.0" : "[new] Main Menu (Settings, About, Changelog, Contribution)\n[new] Search Engine\n[new] Enigma\n[new] Brainf**k/Ook\n[new] Roman Numbers\n[new] Kenny's Code\n[new] Pi/Phi/e",

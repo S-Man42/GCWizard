@@ -96,7 +96,7 @@ class Registry {
   static final SEACHSTRING_ROTATION = 'rotations rotx rotn rot-x rotationen ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
   static final SEARCHSTRING_VIGENERE = SEACHSTRING_ROTATION + 'vigenere ';
-  static final SEARCHSTRING_CCITT2 = 'ccitt2 emile baudot murray telex telegraph telegraf ';
+  static final SEARCHSTRING_CCITT2 = 'ccitt2 emile baudot murray telex telegraph telegraf lochstreifen konrad zuse z22 purched paper ';
 
   static initialize(BuildContext context) {
     toolList = [
@@ -109,7 +109,7 @@ class Registry {
       GCWToolWidget(tool: BaseSelection(), toolName: i18n(context, 'base_selection_title'), searchStrings: SEARCHSTRING_BASE),
       GCWToolWidget(tool: BrainfkSelection(), toolName: i18n(context, 'brainfk_title'), searchStrings: SEARCHSTRING_BRAINFK),
       GCWToolWidget(tool: Caesar(), toolName: i18n(context, 'caesar_title'), searchStrings: SEACHSTRING_ROTATION + 'caesar cäsar'),
-      GCWToolWidget(tool: CCITT2(), toolName: i18n(context, 'ccitt2_title'), searchStrings: SEACHSTRING_ROTATION + 'caesar cäsar'),
+      GCWToolWidget(tool: CCITT2(), toolName: i18n(context, 'ccitt2_title'), searchStrings: SEARCHSTRING_CCITT2),
       GCWToolWidget(tool: CoordsSelection(), toolName: i18n(context, 'coords_selection_title'), searchStrings: SEARCHSTRING_COORDINATES),
       GCWToolWidget(tool: DatesSelection(), toolName: i18n(context, 'dates_selection_title'), searchStrings: SEARCHSTRING_DATES),
       GCWToolWidget(tool: Decabit(), toolName: i18n(context, 'decabit_title'), searchStrings: 'decabit impulsraster zellweger plus minus rundsteuertechnik ripple control'),
@@ -136,7 +136,7 @@ class Registry {
       GCWToolWidget(tool: TomTom(), toolName: i18n(context, 'tomtom_title'), searchStrings: 'tomtom tom a-tom-tom tom-tom atomtom'),
       GCWToolWidget(tool: Trithemius(), toolName: i18n(context, 'trithemius_title'), searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'),
       GCWToolWidget(tool: Vigenere(), toolName: i18n(context, 'vigenere_title'), searchStrings: SEARCHSTRING_VIGENERE + 'autokey'),
-      GCWToolWidget(tool: Z22(), toolName: i18n(context, 'z22_title'), searchStrings: SEARCHSTRING_CCITT2 + 'konrad zuse z22 '),
+      GCWToolWidget(tool: Z22(), toolName: i18n(context, 'z22_title'), searchStrings: SEARCHSTRING_CCITT2),
 
       //BaseSelection
       GCWToolWidget(tool: Base16(), toolName: i18n(context, 'base_base16_title'), searchStrings: SEARCHSTRING_BASE + 'base16'),

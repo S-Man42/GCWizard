@@ -144,4 +144,27 @@ void main() {
       });
     });
   });
+
+  group("CommonUtils.textToBinaryList:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text' : null, 'expectedOutput' : []},
+      {'text' : '', 'expectedOutput' : []},
+      {'text' : '234', 'expectedOutput' : []},
+      {'text' : 'ASD', 'expectedOutput' : []},
+
+      {'text' : '1', 'expectedOutput' : ['1']},
+      {'text' : '01', 'expectedOutput' : ['01']},
+      {'text' : '01 101', 'expectedOutput' : ['01', '101']},
+      {'text' : '01 101 0', 'expectedOutput' : ['01', '101', '0']},
+
+      {'text' : '1dasjk1123ssd12jd10ak', 'expectedOutput' : ['1', '11', '1', '10']},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['text']}', () {
+        var _actual = textToBinaryList(elem['text']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
 }

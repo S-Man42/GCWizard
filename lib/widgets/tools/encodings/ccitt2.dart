@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/encodings/ccitt2.dart';
+import 'package:gc_wizard/logic/tools/science/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -20,7 +21,8 @@ class CCITT2State extends State<CCITT2> {
 
   var _currentInput = defaultIntegerListText;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  
+  GCWSwitchPosition _currentOutputCoding = GCWSwitchPosition.left;
+
   String _output = '';
 
   @override
@@ -68,6 +70,18 @@ class CCITT2State extends State<CCITT2> {
             });
           },
         ),
+        GCWTwoOptionsSwitch(
+          title: i18n(context, 'ccitt2_numeral_base'),
+          leftValue: i18n(context, 'common_numeralbase_denary'),
+          rightValue: i18n(context, 'common_numeralbase_binary'),
+          value: _currentOutputCoding,
+          onChanged: (value) {
+            setState(() {
+              _currentOutputCoding = value;
+
+            });
+          },
+        ),
         GCWDefaultOutput(
           text: _buildOutput()
         ),
@@ -76,9 +90,26 @@ class CCITT2State extends State<CCITT2> {
   }
 
   _buildOutput() {
+    var output = '';
+
     if (_currentMode == GCWSwitchPosition.left) {
-      return encodeCCITT2(_currentInput['text']);
+      output = encodeCCITT2(_currentInput['text']);
+      if (_currentOutputCoding == GCWSwitchPosition.right) {
+        output = output.split(' ').map((value) {
+          var out = convertBase(value, 10, 2);
+          return out.padLeft(5, '0');
+        }).join(' ');
+      }
+      return output;
     } else {
+      if (_currentOutputCoding == GCWSwitchPosition.right) {
+        return decodeCCITT2(
+          textToBinaryList(_currentInput['text']).map((value) {
+            return int.tryParse(convertBase(value, 2, 10));
+          }).toList()
+        );
+      }
+
       return decodeCCITT2(_currentInput['values']);
     }
   }
