@@ -627,6 +627,9 @@
   "symboltables_semaphore_rest" : "PAUSE",
   "symboltables_romulan_title" : "Romulanisch",
 
+  "tapir_title" : "Tapir",
+  "tapir_onetimepad" : "OTP Schlüssel",
+
   "tomtom_title" : "TomTom Code",
 
   "trithemius_title" : "Trithemius Chiffre",

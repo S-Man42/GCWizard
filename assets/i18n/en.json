@@ -627,6 +627,9 @@
   "symboltables_semaphore_rest" : "REST",
   "symboltables_romulan_title" : "Romulan",
 
+  "tapir_title" : "Tapir",
+  "tapir_onetimepad" : "OTP Key",
+
   "tomtom_title" : "TomTom Code",
 
   "trithemius_title" : "Trithemius Cipher",

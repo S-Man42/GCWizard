@@ -22,7 +22,7 @@ String encodeCCITT2(String input) {
   var isLetterMode = true;
 
   List<int> out = [];
-  input.toUpperCase().split('').forEach((character) {
+  removeAccents(input.toUpperCase()).split('').forEach((character) {
     if (isLetterMode) {
       var code = AZToCCIT2[character];
       if (code != null)
