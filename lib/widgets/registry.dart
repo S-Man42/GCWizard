@@ -39,7 +39,7 @@ import 'package:gc_wizard/widgets/tools/crypto/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto/decabit.dart';
 import 'package:gc_wizard/widgets/tools/crypto/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
-import 'package:gc_wizard/widgets/tools/crypto/kennys_code.dart';
+import 'package:gc_wizard/widgets/tools/crypto/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto/rotation/rot13.dart';
@@ -67,15 +67,16 @@ import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/irrational_numbers/e.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/irrational_numbers/phi.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/irrational_numbers/pi.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/numeralbases.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/primes/primes_integerfactorization.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/primes/primes_isprime.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/primes/primes_nearestprime.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/primes/primes_nthprime.dart';
-import 'package:gc_wizard/widgets/tools/math_and_physics/primes/primes_primeindex.dart';
+import 'package:gc_wizard/widgets/tools/science/irrational_numbers/e.dart';
+import 'package:gc_wizard/widgets/tools/science/irrational_numbers/phi.dart';
+import 'package:gc_wizard/widgets/tools/science/irrational_numbers/pi.dart';
+import 'package:gc_wizard/widgets/tools/science/numeralbases.dart';
+import 'package:gc_wizard/widgets/tools/science/periodic_table.dart';
+import 'package:gc_wizard/widgets/tools/science/primes/primes_integerfactorization.dart';
+import 'package:gc_wizard/widgets/tools/science/primes/primes_isprime.dart';
+import 'package:gc_wizard/widgets/tools/science/primes/primes_nearestprime.dart';
+import 'package:gc_wizard/widgets/tools/science/primes/primes_nthprime.dart';
+import 'package:gc_wizard/widgets/tools/science/primes/primes_primeindex.dart';
 
 class Registry {
   static List<GCWToolWidget> toolList;
@@ -112,10 +113,11 @@ class Registry {
       GCWToolWidget(tool: Enigma(), toolName: i18n(context, 'enigma_title'), searchStrings: 'enigma rotors walzen'),
       GCWToolWidget(tool: FormulaSolver(), toolName: i18n(context, 'formulasolver_title'), searchStrings: 'formula solver'),
       GCWToolWidget(tool: Gronsfeld(), toolName: i18n(context, 'gronsfeld_title'), searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'),
-      GCWToolWidget(tool: KennysCode(), toolName: i18n(context, 'kennyscode_title'), searchStrings: 'they killed kenny sie haben kenny getötet kennys kenny\'s code southpark'),
+      GCWToolWidget(tool: Kenny(), toolName: i18n(context, 'kenny_title'), searchStrings: 'they killed kenny sie haben kenny getötet kennys kenny\'s code southpark'),
       GCWToolWidget(tool: LetterValues(), toolName: i18n(context, 'lettervalues_title'), searchStrings: 'alphanumeric letter values checksums crosssums digits alternate products buchstabenwerte quersummen alphanumerisch produkt alternierend'),
       GCWToolWidget(tool: Morse(), toolName: i18n(context, 'morse_title'), searchStrings: 'samuel morse morsecode morsen translators translate übersetzen übersetzer punkte striche dots dashes'),
       GCWToolWidget(tool: NumeralBases(), toolName: i18n(context, 'numeralbases_title'), searchStrings: 'converter converting bases umwandler umwandeln konvertieren konverter numeral basis basen zahlensysteme binär binary decimal dezimal octal octenary oktal dual'),
+      GCWToolWidget(tool: PeriodicTable(), toolName: i18n(context, 'periodictable_title'), searchStrings: 'periodic tables of the elements periodensystem der elemente chemie chemistry'),
       GCWToolWidget(tool: PhiSelection(), toolName: i18n(context, 'phi_selection_title'), searchStrings: SEARCHSTRING_PHI),
       GCWToolWidget(tool: PiSelection(), toolName: i18n(context, 'pi_selection_title'), searchStrings: SEARCHSTRING_PI),
       GCWToolWidget(tool: Playfair(), toolName: i18n(context, 'playfair_title'), searchStrings: 'playfair transposition substitution'),

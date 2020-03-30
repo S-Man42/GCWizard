@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto/rotator.dart';
-import 'package:gc_wizard/logic/tools/math_and_physics/irrational_numbers/irrational_numbers.dart';
-import 'package:gc_wizard/logic/tools/math_and_physics/primes/primes.dart';
+import 'package:gc_wizard/logic/tools/science/irrational_numbers/irrational_numbers.dart';
+import 'package:gc_wizard/logic/tools/science/primes/primes.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';

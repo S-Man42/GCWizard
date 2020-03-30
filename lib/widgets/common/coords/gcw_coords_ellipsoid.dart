@@ -171,14 +171,14 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
 
   Widget _buildOutput(BuildContext context) {
 
-    var ellipsoidData = {
-      'coords_ellipsoid_majoraxis': _currentEllipsoid.a,
-      'coords_ellipsoid_minoraxis': _currentEllipsoid.b,
-      'coords_ellipsoid_flattening': _currentEllipsoid.f,
-      'coords_ellipsoid_inverseflattening': _currentEllipsoid.invf,
-    };
+    var ellipsoidData = [
+      [i18n(context, 'coords_ellipsoid_majoraxis'), _currentEllipsoid.a],
+      [i18n(context, 'coords_ellipsoid_minoraxis'), _currentEllipsoid.b],
+      [i18n(context, 'coords_ellipsoid_flattening'), _currentEllipsoid.f],
+      [i18n(context, 'coords_ellipsoid_inverseflattening'), _currentEllipsoid.invf],
+    ];
 
-    var rows = twoColumnMultiLineOutput(context, ellipsoidData);
+    var rows = columnedMultiLineOutput(ellipsoidData);
 
     return Padding(
       child: Column(

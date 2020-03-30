@@ -86,14 +86,14 @@ class DayCalculatorState extends State<DayCalculator> {
     if (_currentCountEnd)
       difference += Duration(days: 1);
 
-    var outputData = {
-      'dates_daycalculator_days' : difference.inDays,
-      'dates_daycalculator_hours' : difference.inHours,
-      'dates_daycalculator_minutes' : difference.inMinutes,
-      'dates_daycalculator_seconds' : difference.inSeconds
-    };
+    var outputData = [
+      [i18n(context, 'dates_daycalculator_days'), difference.inDays],
+      [i18n(context, 'dates_daycalculator_hours'), difference.inHours],
+      [i18n(context, 'dates_daycalculator_minutes'), difference.inMinutes],
+      [i18n(context, 'dates_daycalculator_seconds'), difference.inSeconds]
+    ];
 
-    var rows = twoColumnMultiLineOutput(context, outputData);
+    var rows = columnedMultiLineOutput(outputData);
 
     rows.insert(0,
       GCWTextDivider(
