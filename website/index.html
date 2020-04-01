@@ -1,14 +1,80 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>GC Wizard</title>
-    <meta name="description" content="Website for GC Wizard">
-	<link rel="stylesheet" href="css/main.css">
-  </head>
-  <body> 
-	<br />
-	<br />
-    <center><img src="./img/logo/circle_border_1024.png" height="1000px"></center>
-  </body>
+	<head>
+		<meta charset="utf-8">
+		<title>GCWizard</title>
+		<meta name="description" content="GCWizard - The tool for Geocaching mysteries, geodetic calculations and cryptographic problems"> 
+	
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="css/theme.css">
+	</head>
+	<body>
+
+		<div class="container-fluid fixed-top py-3">
+			<div class="row collapse show no-gutters d-flex h-100 position-relative" id="header">
+				<div class="col-3 px-0 w-sidebar navbar-collapse collapse d-none d-md-flex">
+					<!-- spacer col -->
+				</div>
+				<div class="col px-2 px-md-0">
+					<!-- toggler -->
+					
+					<a data-toggle="collapse" href="#" data-target=".collapse" role="button" class="p-1">
+						<i class="fa fa-bars fa-lg"></i>
+					</a>
+					<span style="float:right;">
+						<a href="impressum.html">
+							Impressum
+						</a>
+					</span>
+			
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid px-0 h-100">
+			<div class="row vh-100 collapse show no-gutters d-flex h-100 position-relative">
+				<div class="col-3 p-0 vh-100 h-100 w-sidebar navbar-collapse collapse d-none d-md-flex sidebar">
+					<!-- fixed sidebar -->
+					<div class="position-fixed text-white h-100 w-sidebar pl-2">
+						<div id="navbar_content">
+					
+							<center>
+								<img src="img/logo/circle_border_1024.png" width="120px" />
+							</center>
+							
+							<center>
+								<h1>WebView for<br />GCWizard</h1>
+							</center>
+							<hr width="80%">
+							<p id="download_app">
+								The WebView of the app is currently in a <span class="accent">very experimental</span> state. Some unexpected behaviour (especially on smartphones) or layout bugs may appear, some features could be missing.<br/>
+								<br/>
+								For the full experience, please download the app from<br/>
+								<br />
+								<img src="img/google-play-brands.svg" width="20px"/>&nbsp;&nbsp;<i>Google PlayStore (Upcoming)</i><br/>
+								<img src="img/app-store-ios-brands.svg" width="20px" />&nbsp;&nbsp;<i>Apple Appstore (Upcoming)</i><br/>
+								<br />
+								or try the <a href="/app"><span class="accent">Raw WebView</span></a>
+							</p>
+							<hr width="80%">
+							<center>
+							<p id="social_media">
+								<a href="https://twitter.com/gc_wizard"><i class="fa fa-twitter"></i></a>&nbsp;&nbsp;&nbsp;
+								<a href="https://www.facebook.com/geocache.wizard"><i class="fa fa-facebook"></i></a>&nbsp;&nbsp;&nbsp;
+								<a href="https://github.com/S-Man42/GCWizard"><i class="fa fa-github"></i></a>
+							</p>
+							</center>						
+						</div>
+					</div>
+				</div>
+				<div class="col p-3">
+					<iframe src="/app"></iframe>
+				</div>
+			</div>
+		</div>    
+
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	</body>
 </html>
