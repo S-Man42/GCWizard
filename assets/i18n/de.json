@@ -74,6 +74,7 @@
   "ccitt2_title" : "CCITT2 (Baudot)",
   "ccitt2_numeral_base" : "Kodierung",
 
+  "changelog_0.6.0" : "[new] Release der Webseite gcwizard.net\n[new] Erste Symboltabellen (Danke, Aeggsbaerde)\n[new] Periodensystem der Elemente (PSE)\n[new] Decabit (Danke, Dennis)\n[new] Trithemius/Gronsfeld (Danke, Dennis)\n[new] CCITT/Baudot/Z22\n[new] Tapir\n[new] Abaddon/TomTom Code (Danke, Dennis)\n[chg] Einige Layoutverbesserungen",
   "changelog_0.5.1" : "[new] GitHub Veröffentlichung\n[fix] Über: eMail-Link (Danke, Andy)\n[fix] Suche: Umlaute\n[fix] Einige kleinere Fixes und Verbesserungen",
   "changelog_0.5.0" : "[new] Hauptmenü (Einstellungen, Über, Changelog, Mitarbeit)\n[new] Suche\n[new] Enigma\n[new] Brainf**k/Ook\n[new] Römische Zahlen\n[new] Kennys Code\n[new] Pi/Phi/e",
   "changelog_0.4.0" : "[new] Koordinaten: Rückwärtseinschnitt\n[new] Formelrechner\n[chg] Update Internes Framework\n[chg] Buchstabenwerte: Unbekanntes Zeichen = <?>",

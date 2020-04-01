@@ -75,3 +75,5 @@
 /android/key.properties
 /.flutter-plugins-dependencies
 /website/impressum.html
+/web
+/lib/generated_plugin_registrant.dart
