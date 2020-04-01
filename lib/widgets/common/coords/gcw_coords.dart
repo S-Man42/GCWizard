@@ -34,10 +34,7 @@ class GCWCoordsState extends State<GCWCoords> {
   @override
   void initState() {
     super.initState();
-    _currentValue = {
-      for (CoordinateFormat format in allCoordFormats)
-        format.key: defaultCoordinate
-    };
+    _currentValue = Map.fromIterable(allCoordFormats, key: (format) => format.key, value: (format) => defaultCoordinate);
   }
 
   @override

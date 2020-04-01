@@ -1,2 +1,6 @@
-Release Build command:
+Android Release Build command:
 flutter build appbundle --release --target-platform android-arm,android-arm64
+
+Web Build:
+flutter create .
+flutter build web

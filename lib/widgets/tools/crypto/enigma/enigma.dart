@@ -221,7 +221,10 @@ class EnigmaState extends State<Enigma> {
 
     var key = EnigmaKey(
       rotorConfigurations,
-      plugboard: {for (var digraph in _currentPlugboard.split(' ').where((digraph) => digraph.length == 2)) digraph[0] : digraph[1]}
+      plugboard: Map.fromIterable(_currentPlugboard.split(' ').where((digraph) => digraph.length == 2),
+        key: (digraph) => digraph[0],
+        value: (digraph) => digraph[1]
+      )
     );
 
     var results = calculateEnigmaWithMessageKey(_currentInput, key);
