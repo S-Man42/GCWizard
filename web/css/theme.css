@@ -6,12 +6,16 @@ body {
 	background-color: #33333d
 }
 
-a {
+a, .ui-widget-content a {
 	color: #FFFFFF;
 }
 
 p {
 	color: #FFFFFF
+}
+
+img#logo {
+	padding-top: 15px;
 }
 
 div#header {
@@ -32,6 +36,7 @@ span.accent {
 
 p#social_media {
 	font-size: 2em;
+	margin-bottom: 0px;
 }
 
 a:hover {
@@ -39,9 +44,9 @@ a:hover {
 }
 
 h1 {
-	font-size: 2em;
-	padding-top: 40px;
+	font-size: 1.7em;
 	padding-bottom: 10px;
+	font-weight: normal;
 }
 
 iframe {
@@ -51,40 +56,25 @@ iframe {
 	margin: auto;
 }
 
-body {
-   height: 100vh;
-   overflow-x: hidden;
-   padding-top: 55px;
-}
-
 hr {
 	border:solid #FFAB40 1px;
 }
 
-p#download_app {
-	padding-top: 30px;
-	padding-bottom: 30px;
+.ui-dialog-titlebar {
+	background-color: #FFAB40;
+	background-image: none;
+	color: #000;
 }
 
-/* set the sidebar width */
-.w-sidebar {
-    width: 300px;
-    max-width: 300px;
+.ui-widget-content {
+	background-color: #33333d;
+	color: #ffffff;
 }
 
-.row.collapse {
-    margin-left: -300px;
-    left: 0;
-    transition: margin-left .15s linear;
+.ui-dialog .ui-dialog-buttonpane { 
+    text-align: center;
 }
 
-.row.collapse.show {
-    margin-left: 0 !important;
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { 
+    float: none;
 }
-
-.row.collapsing {
-    margin-left: -300px;
-    left: -0.05%;
-    transition: all .15s linear;
-}
-
