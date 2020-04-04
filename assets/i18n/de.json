@@ -537,6 +537,8 @@
   "primes_primeindex_title" : "Wievielte Primzahl",
   "primes_integerfactorization_title" : "Primzahlzerlegung",
 
+  "reverse_title" : "Rückwärts",
+
   "romannumbers_title" : "Römische Zahlen",
   "romannumbers_subtractionrule" : "IIII → IV",
   "romannumbers_numberstoroman" : "123 → Römisch",

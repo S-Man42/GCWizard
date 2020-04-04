@@ -29,6 +29,7 @@ import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
+import 'package:gc_wizard/widgets/tools/crypto/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tapir.dart';
@@ -112,6 +113,7 @@ class _MainScreenState extends State<MainScreen> {
           className(Playfair()),
           className(Polybios()),
           className(PrimesSelection()),
+          className(Reverse()),
           className(RomanNumbers()),
           className(RotationSelection()),
           className(Scrabble()),
