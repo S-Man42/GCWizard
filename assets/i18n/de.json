@@ -597,7 +597,7 @@
   "substitution_current_substitutions" : "Erstellte Ersetzungen",
   "substitution_case_sensitive" : "Beachte Groß-/Kleinschreibung",
 
-  "symboltables_title" : "Symboltabellen",
+  "symboltables_selection_title" : "Symboltabellen",
   "symboltables_showoverlay" : "Overlays",
   "symboltables_arcadian_title" : "Arcadian",
   "symboltables_braille_title" : "Braille (Blindenschrift)",
@@ -630,6 +630,11 @@
 
   "tapir_title" : "Tapir",
   "tapir_onetimepad" : "OTP Schlüssel",
+
+  "vanity_selection_title" : "Telefontasten (Vanity)",
+  "vanity_numberforspace" : "Leerzeichen",
+  "vanity_singlenumbers_title" : "Vanity: Einzelne Ziffern",
+  "vanity_multiplenumbers_title" : "Vanity: Zifferngruppen",
 
   "tomtom_title" : "TomTom Code",
 

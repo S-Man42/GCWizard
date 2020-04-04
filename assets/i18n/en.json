@@ -597,7 +597,7 @@
   "substitution_current_substitutions" : "Created Replacements",
   "substitution_case_sensitive" : "Case sensitive",
 
-  "symboltables_title" : "Symbol Tables",
+  "symboltables_selection_title" : "Symbol Tables",
   "symboltables_showoverlay" : "Overlays",
   "symboltables_arcadian_title" : "Arcadian",
   "symboltables_braille_title" : "Braille (Tactile)",
@@ -630,6 +630,11 @@
 
   "tapir_title" : "Tapir",
   "tapir_onetimepad" : "OTP Key",
+
+  "vanity_selection_title" : "Phone Keys (Vanity)",
+  "vanity_numberforspace" : "Space",
+  "vanity_singlenumbers_title" : "Single Numbers",
+  "vanity_multiplenumbers_title" : "Multiple Numbers",
 
   "tomtom_title" : "TomTom Code",
 

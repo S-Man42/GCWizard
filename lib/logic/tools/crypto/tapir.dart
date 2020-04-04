@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 final AZToTapir = {
