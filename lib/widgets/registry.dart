@@ -16,6 +16,7 @@ import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
@@ -43,6 +44,7 @@ import 'package:gc_wizard/widgets/tools/crypto/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
+import 'package:gc_wizard/widgets/tools/crypto/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto/rotation/rot13.dart';
 import 'package:gc_wizard/widgets/tools/crypto/rotation/rot18.dart';
 import 'package:gc_wizard/widgets/tools/crypto/rotation/rot47.dart';
@@ -53,6 +55,7 @@ import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto/symbol_table.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tapir.dart';
+import 'package:gc_wizard/widgets/tools/crypto/vanity_singlenumbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
@@ -82,6 +85,7 @@ import 'package:gc_wizard/widgets/tools/science/primes/primes_isprime.dart';
 import 'package:gc_wizard/widgets/tools/science/primes/primes_nearestprime.dart';
 import 'package:gc_wizard/widgets/tools/science/primes/primes_nthprime.dart';
 import 'package:gc_wizard/widgets/tools/science/primes/primes_primeindex.dart';
+import 'file:///E:/workspace/GCWizard/lib/widgets/tools/crypto/vanity_multiplenumbers.dart';
 
 class Registry {
   static List<GCWToolWidget> toolList;
@@ -90,16 +94,17 @@ class Registry {
 
   static final SEARCHSTRING_BASE = 'base encode decode encoding decoding dekodierung dekodieren ';
   static final SEARCHSTRING_BRAINFK = 'brainf**k esoterische esoteric ';
+  static final SEARCHSTRING_CCITT2 = 'ccitt2 emile baudot murray telex telegraph telegraf lochstreifen konrad zuse z22 purched paper ';
   static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_E = 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 decimal digit nachkommastelle ';
   static final SEARCHSTRING_PHI = 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 decimal digit nachkommastelle ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PI = 'pi circle kreis 3,1415926535 3.1415926535 decimal digit nachkommastelle ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
-  static final SEACHSTRING_ROTATION = 'rotate rotieren verschieben shift rotations rotx rotn rot-x rotationen ';
+  static final SEARCHSTRING_ROTATION = 'rotate rotieren verschieben shift rotations rotx rotn rot-x rotationen ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
-  static final SEARCHSTRING_VIGENERE = SEACHSTRING_ROTATION + 'vigenere ';
-  static final SEARCHSTRING_CCITT2 = 'ccitt2 emile baudot murray telex telegraph telegraf lochstreifen konrad zuse z22 purched paper ';
+  static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
+  static final SEARCHSTRING_VIGENERE = SEARCHSTRING_ROTATION + 'vigenere ';
 
   static initialize(BuildContext context) {
     toolList = [
@@ -111,7 +116,7 @@ class Registry {
       GCWToolWidget(tool: Bacon(), toolName: i18n(context, 'bacon_title'), searchStrings: 'francis bacon binary binär dual'),
       GCWToolWidget(tool: BaseSelection(), toolName: i18n(context, 'base_selection_title'), searchStrings: SEARCHSTRING_BASE),
       GCWToolWidget(tool: BrainfkSelection(), toolName: i18n(context, 'brainfk_title'), searchStrings: SEARCHSTRING_BRAINFK),
-      GCWToolWidget(tool: Caesar(), toolName: i18n(context, 'caesar_title'), searchStrings: SEACHSTRING_ROTATION + 'caesar cäsar'),
+      GCWToolWidget(tool: Caesar(), toolName: i18n(context, 'caesar_title'), searchStrings: SEARCHSTRING_ROTATION + 'caesar cäsar'),
       GCWToolWidget(tool: CCITT2(), toolName: i18n(context, 'ccitt2_title'), searchStrings: SEARCHSTRING_CCITT2),
       GCWToolWidget(tool: CoordsSelection(), toolName: i18n(context, 'coords_selection_title'), searchStrings: SEARCHSTRING_COORDINATES),
       GCWToolWidget(tool: DatesSelection(), toolName: i18n(context, 'dates_selection_title'), searchStrings: SEARCHSTRING_DATES),
@@ -120,7 +125,7 @@ class Registry {
       GCWToolWidget(tool: Enigma(), toolName: i18n(context, 'enigma_title'), searchStrings: 'enigma rotors walzen'),
       GCWToolWidget(tool: FormulaSolver(), toolName: i18n(context, 'formulasolver_title'), searchStrings: 'formula solver'),
       GCWToolWidget(tool: Gronsfeld(), toolName: i18n(context, 'gronsfeld_title'), searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'),
-      GCWToolWidget(tool: Kamasutra(), toolName: i18n(context, 'kamasutra_title'), searchStrings: SEACHSTRING_ROTATION + 'kama-sutra kamasutra 44 vatsyayana mlecchita vikalpa '),
+      GCWToolWidget(tool: Kamasutra(), toolName: i18n(context, 'kamasutra_title'), searchStrings: SEARCHSTRING_ROTATION + 'kama-sutra kamasutra 44 vatsyayana mlecchita vikalpa '),
       GCWToolWidget(tool: Kenny(), toolName: i18n(context, 'kenny_title'), searchStrings: 'they killed kenny sie haben kenny getötet kennys kenny\'s code southpark'),
       GCWToolWidget(tool: LetterValues(), toolName: i18n(context, 'lettervalues_title'), searchStrings: 'alphanumeric letter values checksums crosssums digits alternate products buchstabenwerte quersummen alphanumerisch produkt alternierend'),
       GCWToolWidget(tool: Morse(), toolName: i18n(context, 'morse_title'), searchStrings: 'samuel morse morsecode morsen translators translate übersetzen übersetzer punkte striche dots dashes'),
@@ -131,16 +136,18 @@ class Registry {
       GCWToolWidget(tool: Playfair(), toolName: i18n(context, 'playfair_title'), searchStrings: 'playfair transposition substitution'),
       GCWToolWidget(tool: Polybios(), toolName: i18n(context, 'polybios_title'), searchStrings: 'polybios polybius transposition'),
       GCWToolWidget(tool: PrimesSelection(), toolName: i18n(context, 'primes_selection_title'), searchStrings: SEARCHSTRING_PRIMES),
+      GCWToolWidget(tool: Reverse(), toolName: i18n(context, 'reverse_title'), searchStrings: 'reversed backwards umkehren umgekehrt rückwärts inversed inverted invertieren invertierung invertiert inverse '),
       GCWToolWidget(tool: RomanNumbers(), toolName: i18n(context, 'romannumbers_title'), searchStrings: 'roman numbers römische zahlen'),
-      GCWToolWidget(tool: RotationSelection(), toolName: i18n(context, 'rotation_selection_title'), searchStrings: SEACHSTRING_ROTATION),
+      GCWToolWidget(tool: RotationSelection(), toolName: i18n(context, 'rotation_selection_title'), searchStrings: SEARCHSTRING_ROTATION),
       GCWToolWidget(tool: Scrabble(), toolName: i18n(context, 'scrabble_title'), searchStrings: 'scrabble deutsch englisch spanisch niederländisch französisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'),
       GCWToolWidget(tool: Skytale(), toolName: i18n(context, 'skytale_title'), searchStrings: 'scytale skytale stick stock stab transposition'),
       GCWToolWidget(tool: Substitution(), toolName: i18n(context, 'substitution_title'), searchStrings: 'substitution ersetzen alphabet change austauschen change switch'),
-      GCWToolWidget(tool: SymbolTableSelection(), toolName: i18n(context, 'symboltables_title'), searchStrings: SEARCHSTRING_SYMBOLTABLES),
+      GCWToolWidget(tool: SymbolTableSelection(), toolName: i18n(context, 'symboltables_selection_title'), searchStrings: SEARCHSTRING_SYMBOLTABLES),
       GCWToolWidget(tool: TapCode(), toolName: i18n(context, 'tapcode_title'), searchStrings: 'tapcode klopfcode klopfen'),
       GCWToolWidget(tool: Tapir(), toolName: i18n(context, 'tapir_title'), searchStrings: 'tapir ddr nva mfs stasi nationale volksarmee'),
       GCWToolWidget(tool: TomTom(), toolName: i18n(context, 'tomtom_title'), searchStrings: 'tomtom tom a-tom-tom tom-tom atomtom'),
       GCWToolWidget(tool: Trithemius(), toolName: i18n(context, 'trithemius_title'), searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'),
+      GCWToolWidget(tool: VanitySelection(), toolName: i18n(context, 'vanity_selection_title'), searchStrings: SEARCHSTRING_VANITY),
       GCWToolWidget(tool: Vigenere(), toolName: i18n(context, 'vigenere_title'), searchStrings: SEARCHSTRING_VIGENERE + 'autokey'),
       GCWToolWidget(tool: Z22(), toolName: i18n(context, 'z22_title'), searchStrings: SEARCHSTRING_CCITT2),
 
@@ -205,11 +212,11 @@ class Registry {
       GCWToolWidget(tool: IntegerFactorization(), toolName: i18n(context, 'primes_integerfactorization_title'), searchStrings: SEARCHSTRING_PRIMES + 'integer factorizations factors faktorisierung primfaktorzerlegungen faktoren'),
 
       //RotationSelection
-      GCWToolWidget(tool: Rot13(), toolName: i18n(context, 'rotation_rot13_title'), searchStrings: SEACHSTRING_ROTATION + 'rot13 rot-13'),
-      GCWToolWidget(tool: Rot5(), toolName:  i18n(context, 'rotation_rot5_title'), searchStrings: SEACHSTRING_ROTATION + 'rot5 rot-5'),
-      GCWToolWidget(tool: Rot18(), toolName:  i18n(context, 'rotation_rot18_title'), searchStrings: SEACHSTRING_ROTATION + 'rot18 rot-18'),
-      GCWToolWidget(tool: Rot47(), toolName:  i18n(context, 'rotation_rot47_title'), searchStrings: SEACHSTRING_ROTATION + 'rot47 rot-47'),
-      GCWToolWidget(tool: RotationGeneral(), toolName:  i18n(context, 'rotation_rotation_title'), searchStrings: SEACHSTRING_ROTATION),
+      GCWToolWidget(tool: Rot13(), toolName: i18n(context, 'rotation_rot13_title'), searchStrings: SEARCHSTRING_ROTATION + 'rot13 rot-13'),
+      GCWToolWidget(tool: Rot5(), toolName:  i18n(context, 'rotation_rot5_title'), searchStrings: SEARCHSTRING_ROTATION + 'rot5 rot-5'),
+      GCWToolWidget(tool: Rot18(), toolName:  i18n(context, 'rotation_rot18_title'), searchStrings: SEARCHSTRING_ROTATION + 'rot18 rot-18'),
+      GCWToolWidget(tool: Rot47(), toolName:  i18n(context, 'rotation_rot47_title'), searchStrings: SEARCHSTRING_ROTATION + 'rot47 rot-47'),
+      GCWToolWidget(tool: RotationGeneral(), toolName:  i18n(context, 'rotation_rotation_title'), searchStrings: SEARCHSTRING_ROTATION),
 
       //Symbol Tables
       GCWToolWidget(tool: SymbolTable(symbolKey: 'arcadian',), toolName: i18n(context, 'symboltables_arcadian_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'arcadian/72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'skies of arcadia arcadian greek arkadischer arkadien '),
@@ -229,6 +236,10 @@ class Registry {
       GCWToolWidget(tool: SymbolTable(symbolKey: 'puzzle',), toolName: i18n(context, 'symboltables_puzzle_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'puzzle/72.png',searchStrings: SEARCHSTRING_SYMBOLTABLES + 'puzzles puzzleteile jigsaw '),
       GCWToolWidget(tool: SymbolTable(symbolKey: 'romulan',), toolName: i18n(context, 'symboltables_romulan_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'romulan/72.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'star trek romulans romulaner romulanisch '),
       GCWToolWidget(tool: SymbolTable(symbolKey: 'semaphore',), toolName: i18n(context, 'symboltables_semaphore_title'), iconPath: SYMBOLTABLES_ASSETPATH + 'semaphore/81.png', searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags semaphores winkeralphabet flaggenalphabet'),
+
+      //VanitySelection
+      GCWToolWidget(tool: VanitySingleNumbers(), toolName:  i18n(context, 'vanity_singlenumbers_title'), searchStrings: SEARCHSTRING_VANITY),
+      GCWToolWidget(tool: VanityMultipleNumbers(), toolName:  i18n(context, 'vanity_multiplenumbers_title'), searchStrings: SEARCHSTRING_VANITY),
     ];
   }
 }

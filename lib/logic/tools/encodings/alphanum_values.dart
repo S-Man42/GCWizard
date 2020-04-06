@@ -20,7 +20,7 @@ class AlphabetValues {
   String valuesToText(List<int> values) {
     return values.map((value) {
       var character = alphabet_AZIndexes[value];
-      return character == null ? unknownElement : character;
+      return character == null ? UNKNOWN_ELEMENT : character;
     }).toList().join();
   }
 }

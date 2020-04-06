@@ -5,8 +5,6 @@ import 'package:gc_wizard/logic/tools/science/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_crosstotal_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_crosstotal_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -59,6 +57,7 @@ class CCITT2State extends State<CCITT2> {
             },
           ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

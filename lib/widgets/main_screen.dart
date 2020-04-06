@@ -18,6 +18,7 @@ import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto/atbash.dart';
@@ -30,6 +31,7 @@ import 'package:gc_wizard/widgets/tools/crypto/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
+import 'package:gc_wizard/widgets/tools/crypto/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tap_code.dart';
@@ -115,6 +117,7 @@ class _MainScreenState extends State<MainScreen> {
           className(Playfair()),
           className(Polybios()),
           className(PrimesSelection()),
+          className(Reverse()),
           className(RomanNumbers()),
           className(RotationSelection()),
           className(Scrabble()),
@@ -125,6 +128,7 @@ class _MainScreenState extends State<MainScreen> {
           className(Tapir()),
           className(TomTom()),
           className(Trithemius()),
+          className(VanitySelection()),
           className(Vigenere()),
           className(Z22()),
         ].contains(className(element.tool));

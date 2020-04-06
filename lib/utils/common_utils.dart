@@ -34,7 +34,7 @@ int extractIntegerFromText(String text) {
 }
 
 String intListToString(List<int> list, {String delimiter: ''}) {
-  return list.map((elem) => elem == null ? unknownElement : elem).join(delimiter).trim();
+  return list.map((elem) => elem == null ? UNKNOWN_ELEMENT : elem).join(delimiter).trim();
 }
 
 String digitsToAlpha(String input, {int aValue: 0, bool removeNonDigits: true}) {
