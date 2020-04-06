@@ -537,6 +537,8 @@
   "primes_primeindex_title" : "Prime Number Index (n)",
   "primes_integerfactorization_title" : "Integer Factorization",
 
+  "reverse_title" : "Reverse",
+
   "romannumbers_title" : "Roman Numbers",
   "romannumbers_subtractionrule" : "IIII → IV",
   "romannumbers_numberstoroman" : "123 → Roman",
