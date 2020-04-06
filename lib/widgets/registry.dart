@@ -39,6 +39,7 @@ import 'package:gc_wizard/widgets/tools/crypto/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto/decabit.dart';
 import 'package:gc_wizard/widgets/tools/crypto/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
+import 'package:gc_wizard/widgets/tools/crypto/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
@@ -94,7 +95,7 @@ class Registry {
   static final SEARCHSTRING_PHI = 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 decimal digit nachkommastelle ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PI = 'pi circle kreis 3,1415926535 3.1415926535 decimal digit nachkommastelle ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
-  static final SEACHSTRING_ROTATION = 'rotations rotx rotn rot-x rotationen ';
+  static final SEACHSTRING_ROTATION = 'rotate rotieren verschieben shift rotations rotx rotn rot-x rotationen ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
   static final SEARCHSTRING_VIGENERE = SEACHSTRING_ROTATION + 'vigenere ';
   static final SEARCHSTRING_CCITT2 = 'ccitt2 emile baudot murray telex telegraph telegraf lochstreifen konrad zuse z22 purched paper ';
@@ -118,6 +119,7 @@ class Registry {
       GCWToolWidget(tool: Enigma(), toolName: i18n(context, 'enigma_title'), searchStrings: 'enigma rotors walzen'),
       GCWToolWidget(tool: FormulaSolver(), toolName: i18n(context, 'formulasolver_title'), searchStrings: 'formula solver'),
       GCWToolWidget(tool: Gronsfeld(), toolName: i18n(context, 'gronsfeld_title'), searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'),
+      GCWToolWidget(tool: Kamasutra(), toolName: i18n(context, 'kamasutra_title'), searchStrings: SEACHSTRING_ROTATION + 'kama-sutra kamasutra 44 vatsyayana mlecchita vikalpa '),
       GCWToolWidget(tool: Kenny(), toolName: i18n(context, 'kenny_title'), searchStrings: 'they killed kenny sie haben kenny getötet kennys kenny\'s code southpark'),
       GCWToolWidget(tool: LetterValues(), toolName: i18n(context, 'lettervalues_title'), searchStrings: 'alphanumeric letter values checksums crosssums digits alternate products buchstabenwerte quersummen alphanumerisch produkt alternierend'),
       GCWToolWidget(tool: Morse(), toolName: i18n(context, 'morse_title'), searchStrings: 'samuel morse morsecode morsen translators translate übersetzen übersetzer punkte striche dots dashes'),
