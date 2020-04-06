@@ -129,7 +129,7 @@ class Registry {
       GCWToolWidget(tool: Playfair(), toolName: i18n(context, 'playfair_title'), searchStrings: 'playfair transposition substitution'),
       GCWToolWidget(tool: Polybios(), toolName: i18n(context, 'polybios_title'), searchStrings: 'polybios polybius transposition'),
       GCWToolWidget(tool: PrimesSelection(), toolName: i18n(context, 'primes_selection_title'), searchStrings: SEARCHSTRING_PRIMES),
-      GCWToolWidget(tool: Reverse(), toolName: i18n(context, 'reverse_title'), searchStrings: 'reverse backwards umkehren umgekehrt rückwärts'),
+      GCWToolWidget(tool: Reverse(), toolName: i18n(context, 'reverse_title'), searchStrings: 'reversed backwards umkehren umgekehrt rückwärts inversed inverted invertieren invertierung invertiert inverse '),
       GCWToolWidget(tool: RomanNumbers(), toolName: i18n(context, 'romannumbers_title'), searchStrings: 'roman numbers römische zahlen'),
       GCWToolWidget(tool: RotationSelection(), toolName: i18n(context, 'rotation_selection_title'), searchStrings: SEACHSTRING_ROTATION),
       GCWToolWidget(tool: Scrabble(), toolName: i18n(context, 'scrabble_title'), searchStrings: 'scrabble deutsch englisch spanisch niederländisch französisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'),
