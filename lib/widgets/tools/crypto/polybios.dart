@@ -102,12 +102,12 @@ class PolybiosState extends State<Polybios> {
         GCWEncryptButtonBar(
           onPressedEncode: () {
             setState(() {
-              _currentOutput = encodePolybios(_currentInput, _currentKey, mode: _currentPolybiosMode, alphabet: _currentAlphabet);
+              _currentOutput = encryptPolybios(_currentInput, _currentKey, mode: _currentPolybiosMode, alphabet: _currentAlphabet);
             });
           },
           onPressedDecode: () {
             setState(() {
-              _currentOutput = decodePolybios(_currentInput, _currentKey, mode: _currentPolybiosMode, alphabet: _currentAlphabet);
+              _currentOutput = decryptPolybios(_currentInput, _currentKey, mode: _currentPolybiosMode, alphabet: _currentAlphabet);
             });
           },
         ),

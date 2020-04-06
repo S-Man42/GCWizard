@@ -522,8 +522,8 @@
 
   "playfair_title" : "Playfair",
   "playfair_mode" : "Modus",
-  "playfair_mode_jtoi" : "J = I",
-  "playfair_mode_wtovv" : "W = VV",
+  "playfair_mode_jtoi" : "J → I",
+  "playfair_mode_wtovv" : "W → VV",
 
   "polybios_title" : "Polybios Chiffre",
   "polybios_mode_az09" : "A-Z 0-9",
@@ -629,6 +629,10 @@
   "symboltables_semaphore_numerals_following" : "ZIFFERN FOLGEN",
   "symboltables_semaphore_rest" : "PAUSE",
   "symboltables_romulan_title" : "Romulanisch",
+
+  "tapcode_title": "Klopfcode",
+  "tapcode_mode_jtoi": "J → I",
+  "tapcode_mode_ctok": "C → K",
 
   "tapir_title" : "Tapir",
   "tapir_onetimepad" : "OTP Schlüssel",

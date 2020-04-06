@@ -630,6 +630,10 @@
   "symboltables_semaphore_rest" : "REST",
   "symboltables_romulan_title" : "Romulan",
 
+  "tapcode_title": "Tap Code",
+  "tapcode_mode_jtoi": "J → I",
+  "tapcode_mode_ctok": "C → K",
+
   "tapir_title" : "Tapir",
   "tapir_onetimepad" : "OTP Key",
 

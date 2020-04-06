@@ -98,7 +98,7 @@ String polybiosGridCharacterByCoordinate(Map<String, List<int>> grid, int row, i
       .key;
 }
 
-PolybiosOutput encodePolybios (String input, String key, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
+PolybiosOutput encryptPolybios (String input, String key, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
   if (input == null || key == null)
     return null; //TODO Exception
 
@@ -136,7 +136,7 @@ PolybiosOutput encodePolybios (String input, String key, {PolybiosMode mode: Pol
   return PolybiosOutput(output, polybiosGridToString(grid, key));
 }
 
-PolybiosOutput decodePolybios (String input, String key, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
+PolybiosOutput decryptPolybios (String input, String key, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
   if (input == null || key == null)
     return null; //TODO Exception
 
