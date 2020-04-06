@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta content="IE=Edge" http-equiv="X-UA-Compatible">
+	<meta name="description" content="GC Wizard - The tool for Geocaching mysteries, geodetic calculations and cryptographic problems">
+
+	<!-- iOS meta tags & icons -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="GC Wizard">
+	<link rel="apple-touch-icon" href="icons/circle_border_192.png">
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
+
+	<title>GC Wizard</title>
+	<link rel="manifest" href="manifest.json">
+	
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="css/theme.css">
+	
+	<style>
+		.ui-dialog-titlebar {
+			background-color: #FFAB40;
+			background-image: none;
+			color: #000;
+		}
+		
+		.ui-widget-content {
+			background-color: #33333d;
+			color: #ffffff;
+		}
+	</style>
+	
+	<script>
+		$( function() {
+			$( "#dialog" ).dialog({
+				resizable: false,
+				height: "auto",
+				width: 400,
+				modal: true,
+				buttons: [{
+					text: 'I understand!',
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}]
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="dialog" title="It's only a PREVIEW!">
+		<center>
+			<img id="logo" src="img/logo/circle_border_1024.png" width="100px" />
+		</center>
+		
+		<center>
+			<h1>Preview for GC Wizard</h1>
+		</center>
+		<hr width="80%">
+		<p id="download_app">
+			The web view of the app is currently in a <span class="accent">very experimental</span> preview state. Some unexpected behaviour or layout bugs may appear, some features may not work (especially on smartphones).<br/>
+			<br/>
+			For the full experience, please download the app from<br/>
+			<br />
+			<img src="img/google-play-brands.svg" width="20px"/>&nbsp;&nbsp;&nbsp;<i>Google PlayStore (Upcoming)</i><br/>
+			<img src="img/app-store-ios-brands.svg" width="20px" />&nbsp;&nbsp;&nbsp;<i>Apple Appstore (Upcoming)</i><br/>
+		</p>
+		<hr width="80%">
+		<center>
+		<p id="social_media">
+			<a href="https://twitter.com/gc_wizard"><i class="fa fa-twitter"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="https://www.facebook.com/geocache.wizard"><i class="fa fa-facebook"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="https://github.com/S-Man42/GCWizard"><i class="fa fa-github"></i></a>
+		</p>
+		</center>						
+	</div>
+	
+	<!-- This script installs service_worker.js to provide PWA functionality to
+			 application. For more information, see:
+			 https://developers.google.com/web/fundamentals/primers/service-workers -->
+	<script>
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', function () {
+				navigator.serviceWorker.register('flutter_service_worker.js');
+			});
+		}
+	</script>
+	<script src="main.dart.js" type="application/javascript"></script>
+</body>
+</html>

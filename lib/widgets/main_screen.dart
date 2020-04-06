@@ -18,6 +18,7 @@ import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto/atbasch.dart';
@@ -121,6 +122,7 @@ class _MainScreenState extends State<MainScreen> {
           className(Tapir()),
           className(TomTom()),
           className(Trithemius()),
+          className(VanitySelection()),
           className(Vigenere()),
           className(Z22()),
         ].contains(className(element.tool));

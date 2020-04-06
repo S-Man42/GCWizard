@@ -12,4 +12,4 @@ const Map<String, dynamic> defaultDoubleText = {'text': '', 'value': 0.0};
 
 enum CryptMode {encrypt, decrypt}
 
-const unknownElement = '<?>';
+const UNKNOWN_ELEMENT = '<?>';
