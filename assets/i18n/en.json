@@ -305,6 +305,8 @@
   "irrationalnumbers_decimalrange_title" : "Range",
   "irrationalnumbers_search_title" : "Search Occurrence",
 
+  "kamasutra_title" : "Kamasutra",
+
   "kenny_title" : "Kenny's Code",
 
   "lettervalues_title" : "Letter Values",
@@ -629,6 +631,10 @@
   "symboltables_semaphore_numerals_following" : "NUMBERS FOLLOWING",
   "symboltables_semaphore_rest" : "REST",
   "symboltables_romulan_title" : "Romulan",
+
+  "tapcode_title": "Tap Code",
+  "tapcode_mode_jtoi": "J → I",
+  "tapcode_mode_ctok": "C → K",
 
   "tapir_title" : "Tapir",
   "tapir_onetimepad" : "OTP Key",

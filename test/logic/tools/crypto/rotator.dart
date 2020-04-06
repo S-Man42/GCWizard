@@ -47,9 +47,9 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('alphabet: ${elem['alphabet']}, input: ${elem['input']}, key: ${elem['key']}, removeUnknownCharacters: ${elem['removeUnknownCharacters']}, ignoreCase: ${elem['ignoreCase']}', () {
-        var _rotator = Rotator(elem['alphabet']);
+        var _rotator = Rotator(alphabet: elem['alphabet']);
 
-        var _actual = _rotator.rotate(elem['input'], elem['key'], elem['removeUnknownCharacters'], elem['ignoreCase']);
+        var _actual = _rotator.rotate(elem['input'], elem['key'], removeUnknownCharacters: elem['removeUnknownCharacters'], ignoreCase: elem['ignoreCase']);
         expect(_actual, elem['expectedOutput']);
       });
     });

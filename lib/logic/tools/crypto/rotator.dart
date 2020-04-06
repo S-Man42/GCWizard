@@ -4,25 +4,25 @@ class Rotator {
 
   String alphabet;
 
-  Rotator([String alphabet = defaultAlphabetAlpha]) {
+  Rotator({String alphabet = defaultAlphabetAlpha}) {
     this.alphabet = alphabet == null ? '' : alphabet;
   }
 
-  String rotate(String input, int key, [bool removeUnknownChars = false, ignoreCase = true]) {
+  String rotate(String input, int key, {bool removeUnknownCharacters = false, ignoreCase = true}) {
     if (input == null)
       input = '';
 
     if (key == null)
       key = 0;
 
-    if (removeUnknownChars == null)
-      removeUnknownChars = false;
+    if (removeUnknownCharacters == null)
+      removeUnknownCharacters = false;
 
     if (ignoreCase == null)
       ignoreCase = false;
 
     if (ignoreCase) {
-      return _rotateIgnoreCase(input, key, removeUnknownChars);
+      return _rotateIgnoreCase(input, key, removeUnknownCharacters);
     }
 
     var alphabetLength = alphabet.length;
@@ -35,7 +35,7 @@ class Rotator {
         return alphabet[newIndex];
       }
 
-      return removeUnknownChars ? '' : char;
+      return removeUnknownCharacters ? '' : char;
     }).join();
   }
 
@@ -79,7 +79,7 @@ class Rotator {
 
   String rot47(String input) {
     this.alphabet = '!"#\$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
-    return rotate(input, 47, false, false);
+    return rotate(input, 47, removeUnknownCharacters: false, ignoreCase: false);
   }
 }
 

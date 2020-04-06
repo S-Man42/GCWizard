@@ -29,7 +29,7 @@ void main() {
     });
   });
 
-  group("Polybios.encodePolybios:", () {
+  group("Polybios.encryptPolybios:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'key': null, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : null},
       {'input' : '', 'key': '', 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : null},
@@ -71,13 +71,13 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}', () {
-        PolybiosOutput _actual = encodePolybios(elem['input'], elem['key'], mode: elem['mode'], alphabet: elem['alphabet']);
+        PolybiosOutput _actual = encryptPolybios(elem['input'], elem['key'], mode: elem['mode'], alphabet: elem['alphabet']);
         expect(_actual == null ? null : _actual.output, elem['expectedOutput']);
       });
     });
   });
 
-  group("Polybios.decodePolybios:", () {
+  group("Polybios.decryptPolybios:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'key': null, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : null},
       {'input' : '', 'key': '', 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : null},
@@ -118,7 +118,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, mode: ${elem['mode']}, alphabet: ${elem['alphabet']}', () {
-        PolybiosOutput _actual = decodePolybios(elem['input'], elem['key'], mode: elem['mode'], alphabet: elem['alphabet']);
+        PolybiosOutput _actual = decryptPolybios(elem['input'], elem['key'], mode: elem['mode'], alphabet: elem['alphabet']);
         expect(_actual == null ? null : _actual.output, elem['expectedOutput']);
       });
     });
