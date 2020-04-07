@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'file:///E:/workspace/GCWizard/lib/logic/tools/crypto/tap_code.dart';
+import 'package:gc_wizard/logic/tools/crypto/tap_code.dart';
 
 void main() {
   group("TapCode.encryptTapCode:", () {

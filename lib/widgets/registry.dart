@@ -55,6 +55,7 @@ import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto/symbol_table.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tapir.dart';
+import 'package:gc_wizard/widgets/tools/crypto/vanity_multiplenumbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vanity_singlenumbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
@@ -85,7 +86,6 @@ import 'package:gc_wizard/widgets/tools/science/primes/primes_isprime.dart';
 import 'package:gc_wizard/widgets/tools/science/primes/primes_nearestprime.dart';
 import 'package:gc_wizard/widgets/tools/science/primes/primes_nthprime.dart';
 import 'package:gc_wizard/widgets/tools/science/primes/primes_primeindex.dart';
-import 'file:///E:/workspace/GCWizard/lib/widgets/tools/crypto/vanity_multiplenumbers.dart';
 
 class Registry {
   static List<GCWToolWidget> toolList;
