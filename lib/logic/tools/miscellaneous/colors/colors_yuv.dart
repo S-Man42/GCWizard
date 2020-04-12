@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_rgb.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 
 //source: https://en.wikipedia.org/wiki/YUV#Conversion_to/from_RGB
 class YUV {
@@ -8,6 +9,7 @@ class YUV {
   double u; //chrominance: blue projection
   double v; //chrominance: red projection
 
+  //values for standard ITU-R BT.601; //TODO: standard BT.709
   static final double _U_MAX = 0.436;
   static final double _V_MAX = 0.615;
 
@@ -53,6 +55,7 @@ class YPbPr {
   double p_b; //chrominance: blue projection
   double p_r; //chrominance: red projection
 
+  //values for standard ITU-R BT.601; //TODO: standard BT.709, BT.2020, SMPTE 240M, JPEG
   static final double _K_R = 0.299;
   static final double _K_B = 0.114;
   static final double _K_G = 1.0 - _K_R - _K_B;
@@ -95,10 +98,6 @@ class YCbCr {
   double c_b; //chrominance: blue projection
   double c_r; //chrominance: red projection
 
-  static final double _K_R = 0.299;
-  static final double _K_B = 0.114;
-  static final double _K_G = 1.0 - _K_R - _K_B;
-
   YCbCr(double y, double p_b, double p_r) {
     this.y = min(235.0, max(16.0, y));
     this.c_b = min(240.0, max(16.0, p_b));
@@ -135,9 +134,47 @@ class YCbCr {
   }
 }
 
-main() {
-  RGB rgb = RGB(123, 230, 12);
-  var ycc = YCbCr.fromRGB(rgb);
-  print(ycc);
-  print(ycc.toRGB());
+//source: https://de.wikipedia.org/wiki/YIQ-Farbmodell
+class YIQ {
+  double y; //luminance/luma;
+  double i; //cyan orange balance
+  double q; //magenta green balance
+
+  static final double _I_MAX = 0.5957;
+  static final double _Q_MAX = 0.5226;
+
+  YIQ(double y, double i, double q) {
+    this.y = min(1.0, max(0.0, y));
+    this.i = min(_I_MAX, max(-_I_MAX, i));
+    this.q = min(_Q_MAX, max(-_Q_MAX, q));
+  }
+
+  YUV toYUV() {
+    double yuv_y = y;
+    double u = -i * sin(degreesToRadian(33.0)) + q * cos(degreesToRadian(33.0));
+    double v = i * cos(degreesToRadian(33.0)) + q * sin(degreesToRadian(33.0));
+
+    return YUV(yuv_y, u, v);
+  }
+
+  RGB toRGB() {
+    return toYUV().toRGB();
+  }
+
+  static YIQ fromYUV(YUV yuv) {
+    double y = yuv.y;
+    double i = -yuv.u * sin(degreesToRadian(33.0)) + yuv.v * cos(degreesToRadian(33.0));
+    double q = yuv.u * cos(degreesToRadian(33.0)) + yuv.v * sin(degreesToRadian(33.0));
+
+    return YIQ(y, i, q);
+  }
+
+  static YIQ fromRGB(RGB rgb) {
+    return fromYUV(YUV.fromRGB(rgb));
+  }
+
+  @override
+  String toString() {
+    return 'YIQ($y, $i, $q)';
+  }
 }
