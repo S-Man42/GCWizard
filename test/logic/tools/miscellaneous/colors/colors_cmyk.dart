@@ -1,6 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_cmyk.dart';
-import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_hue.dart';
 import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_rgb.dart';
 
 void main() {

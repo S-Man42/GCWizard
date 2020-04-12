@@ -15,22 +15,6 @@ class CMYK {
     this.key = min(1.0, max(0.0, key));
   }
 
-  double get cyanPercentage {
-    return cyan * 100.0;
-  }
-
-  double get magentaPercentage {
-    return magenta * 100.0;
-  }
-
-  double get yellowPercentage {
-    return yellow * 100.0;
-  }
-
-  double get keyPercentage {
-    return key * 100.0;
-  }
-
   //source: https://github.com/GNOME/gimp/blob/mainline/libgimpcolor/gimpcolorspace.c
   RGB toRGB() {
     double c = 1.0;
@@ -48,9 +32,9 @@ class CMYK {
 
   //source: https://github.com/GNOME/gimp/blob/mainline/libgimpcolor/gimpcolorspace.c
   static CMYK fromRGB(RGB rgb, {double key: 1.0}) {
-    double c = 1.0 - rgb.redPercentage / 100.0;
-    double m = 1.0 - rgb.greenPercentage / 100.0;
-    double y = 1.0 - rgb.bluePercentage / 100.0;
+    double c = 1.0 - rgb.redPercentage;
+    double m = 1.0 - rgb.greenPercentage;
+    double y = 1.0 - rgb.bluePercentage;
 
     double k = 1.0;
 
@@ -92,14 +76,6 @@ class CMY {
     this.yellow = min(1.0, max(0.0, yellow));
   }
 
-  double get cyanPercentage {
-    return cyan * 100.0;
-  }
-
-  double get magentaPercentage {
-    return magenta * 100.0;
-  }
-
   RGB toRGB() {
     double red = (1.0 - cyan) * 255.0;
     double green = (1.0 - magenta) * 255.0;
@@ -109,15 +85,11 @@ class CMY {
   }
 
   static CMY fromRGB(RGB rgb) {
-    double cyan = 1.0 - rgb.redPercentage / 100.0;
-    double magenta = 1.0 - rgb.greenPercentage / 100.0;
-    double yellow = 1.0 - rgb.bluePercentage / 100.0;
+    double cyan = 1.0 - rgb.redPercentage;
+    double magenta = 1.0 - rgb.greenPercentage;
+    double yellow = 1.0 - rgb.bluePercentage;
 
     return CMY(cyan, magenta, yellow);
-  }
-
-  double get yellowPercentage {
-    return yellow * 100.0;
   }
 
   @override

@@ -8,9 +8,9 @@ enum _HueType {HSV, HSL, HSI}
 //source: https://www.vocal.com/video/rgb-and-hsvhsihsl-color-space-conversion/
 
 _fromRGB(RGB rgb, _HueType type) {
-  var red = rgb.redPercentage / 100;
-  var green = rgb.greenPercentage / 100;
-  var blue = rgb.bluePercentage / 100;
+  var red = rgb.redPercentage;
+  var green = rgb.greenPercentage;
+  var blue = rgb.bluePercentage;
 
   var chroma_max = max(max(red, green), blue);
   var chroma_min = min(min(red, green), blue);
@@ -149,14 +149,6 @@ class HSL {
     this.lightness = min(1.0, max(0.0, lightness));
   }
 
-  double get saturationPercentage {
-    return saturation * 100.0;
-  }
-
-  double get lightnessPercentage {
-    return lightness * 100.0;
-  }
-
   RGB toRGB() {
     return _toRGB(hue, saturation, lightness, _HueType.HSL);
   }
@@ -181,14 +173,6 @@ class HSI {
     this.hue = min(360.0, max(0.0, hue));
     this.saturation = min(1.0, max(0.0, saturation));
     this.intensity = min(1.0, max(0.0, intensity));
-  }
-
-  double get saturationPercentage {
-    return saturation * 100.0;
-  }
-
-  double get intensityPercentage {
-    return intensity * 100.0;
   }
 
   //TODO: Although every source I found has the same formulas, the precision lacks a little bit; finding a better approach!

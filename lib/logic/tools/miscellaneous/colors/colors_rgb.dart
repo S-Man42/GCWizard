@@ -12,7 +12,7 @@ class RGB {
   }
 
   double _percentage(double value) {
-    return 100.0 * value / 255.0;
+    return value / 255.0;
   }
 
   double get redPercentage {
