@@ -10,8 +10,8 @@ class YUV {
   double v; //chrominance: red projection
 
   //values for standard ITU-R BT.601; //TODO: standard BT.709
-  static final double _U_MAX = 0.436;
-  static final double _V_MAX = 0.615;
+  static final double U_MAX = 0.436;
+  static final double V_MAX = 0.615;
 
   static final double _W_R = 0.299;
   static final double _W_B = 0.114;
@@ -19,14 +19,14 @@ class YUV {
 
   YUV(double y, double u, double v) {
     this.y = min(1.0, max(0.0, y));
-    this.u = min(_U_MAX, max(-_U_MAX, u));
-    this.v = min(_V_MAX, max(-_V_MAX, v));
+    this.u = min(U_MAX, max(-U_MAX, u));
+    this.v = min(V_MAX, max(-V_MAX, v));
   }
 
   RGB toRGB() {
-    double red = y + v * ((1.0 - _W_R) / _V_MAX);
-    double green = y - u * (_W_B * (1.0 - _W_B) / (_U_MAX * _W_G)) - v * (_W_R * (1.0 - _W_R) / (_V_MAX * _W_G));
-    double blue = y + u * ((1.0 - _W_B) / _U_MAX);
+    double red = y + v * ((1.0 - _W_R) / V_MAX);
+    double green = y - u * (_W_B * (1.0 - _W_B) / (U_MAX * _W_G)) - v * (_W_R * (1.0 - _W_R) / (V_MAX * _W_G));
+    double blue = y + u * ((1.0 - _W_B) / U_MAX);
 
     return RGB(red * 255.0, green * 255.0, blue * 255.0);
   }
@@ -37,8 +37,8 @@ class YUV {
     double blue = rgb.bluePercentage;
 
     double y = _W_R * red + _W_G * green + _W_B * blue;
-    double u = _U_MAX * ((blue - y) / (1.0 - _W_B));
-    double v = _V_MAX * ((red - y) / (1.0 - _W_R));
+    double u = U_MAX * ((blue - y) / (1.0 - _W_B));
+    double v = V_MAX * ((red - y) / (1.0 - _W_R));
 
     return YUV(y, u, v);
   }
@@ -140,13 +140,13 @@ class YIQ {
   double i; //cyan orange balance
   double q; //magenta green balance
 
-  static final double _I_MAX = 0.5957;
-  static final double _Q_MAX = 0.5226;
+  static final double I_MAX = 0.5957;
+  static final double Q_MAX = 0.5226;
 
   YIQ(double y, double i, double q) {
     this.y = min(1.0, max(0.0, y));
-    this.i = min(_I_MAX, max(-_I_MAX, i));
-    this.q = min(_Q_MAX, max(-_Q_MAX, q));
+    this.i = min(I_MAX, max(-I_MAX, i));
+    this.q = min(Q_MAX, max(-Q_MAX, q));
   }
 
   YUV toYUV() {

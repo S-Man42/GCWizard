@@ -115,7 +115,7 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
                     Expanded(
                       child: GCWDoubleTextField(
                         controller: _firstUserValueController,
-                        allowNegativeValues: false,
+                        min: 0.0,
                         onChanged: (ret) {
                           setState(() {
                             _firstUserValue = ret;
@@ -150,7 +150,7 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
                     Expanded(
                       child: GCWDoubleTextField(
                         controller: _secondUserValueController,
-                        allowNegativeValues: false,
+                        min: 0.0,
                         onChanged: (ret) {
                           setState(() {
                             _secondUserValue = ret;

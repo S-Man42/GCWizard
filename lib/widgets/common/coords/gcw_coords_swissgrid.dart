@@ -43,9 +43,7 @@ class GCWCoordsSwissGridState extends State<GCWCoordsSwissGrid> {
         children: <Widget>[
           GCWDoubleTextField(
             hintText: i18n(context, 'coords_formatconverter_swissgrid_easting'),
-            textInputFormatter: DoubleTextInputFormatter(
-              allowNegativeValues: false
-            ),
+            min: 0.0,
             controller: _EastingController,
             onChanged: (ret) {
               setState(() {
@@ -56,9 +54,7 @@ class GCWCoordsSwissGridState extends State<GCWCoordsSwissGrid> {
           ),
           GCWDoubleTextField(
               hintText: i18n(context, 'coords_formatconverter_swissgrid_northing'),
-              textInputFormatter: DoubleTextInputFormatter(
-                  allowNegativeValues: false
-              ),
+              min: 0.0,
               controller: _NorthingController,
               onChanged: (ret) {
                 setState(() {

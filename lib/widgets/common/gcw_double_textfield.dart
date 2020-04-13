@@ -5,17 +5,23 @@ import 'package:gc_wizard/widgets/utils/textinputformatter/double_textinputforma
 class GCWDoubleTextField extends StatefulWidget {
   final TextEditingController controller;
   final Function onChanged;
-  final allowNegativeValues;
   final textInputFormatter;
   final hintText;
+  final min;
+  final max;
+  final FocusNode focusNode;
+  final numberDecimalDigits;
 
   const GCWDoubleTextField({
     Key key,
     this.onChanged,
     this.controller,
-    this.allowNegativeValues,
     this.textInputFormatter,
-    this.hintText
+    this.hintText,
+    this.min,
+    this.max,
+    this.focusNode,
+    this.numberDecimalDigits
   }) : super(key: key);
 
   @override
@@ -23,6 +29,18 @@ class GCWDoubleTextField extends StatefulWidget {
 }
 
 class _GCWDoubleTextFieldState extends State<GCWDoubleTextField> {
+  var _doubleInputFormatter;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _doubleInputFormatter = DoubleTextInputFormatter(
+      min: widget.min,
+      max: widget.max,
+      numberDecimalDigits: widget.numberDecimalDigits
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +58,17 @@ class _GCWDoubleTextFieldState extends State<GCWDoubleTextField> {
               _value = double.tryParse(text);
             }
 
+            if (widget.min != null && _value < widget.min)
+              _value = widget.min;
+
+            if (widget.max != null && _value > widget.max)
+              _value = widget.max;
+
             widget.onChanged({'text': text, 'value': _value});
           });
         },
         controller: widget.controller,
-        inputFormatters: [widget.textInputFormatter ?? DoubleTextInputFormatter(allowNegativeValues: widget.allowNegativeValues ?? true)],
+        inputFormatters: [widget.textInputFormatter ?? _doubleInputFormatter],
         keyboardType: TextInputType.numberWithOptions(
           signed: true,
           decimal: true

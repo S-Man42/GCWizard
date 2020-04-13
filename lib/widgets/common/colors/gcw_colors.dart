@@ -66,10 +66,10 @@ class GCWColorsState extends State<GCWColors> {
       ],
     );
 
-    var _currentWidget = _coordsWidgets
-      .firstWhere((entry) => entry['coordFormat'].key == widget.colorFormat ?? _currentCoordsFormat)['widget'];
-
-    _widget.children.add(_currentWidget);
+//    var _currentWidget = _coordsWidgets
+//      .firstWhere((entry) => entry['coordFormat'].key == widget.colorFormat ?? _currentCoordsFormat)['widget'];
+//
+//    _widget.children.add(_currentWidget);
 
     return _widget;
   }

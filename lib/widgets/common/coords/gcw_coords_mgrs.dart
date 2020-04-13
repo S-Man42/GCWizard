@@ -127,9 +127,7 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
           ),
           GCWDoubleTextField(
             hintText: i18n(context, 'coords_formatconverter_mgrs_easting'),
-            textInputFormatter: DoubleTextInputFormatter(
-              allowNegativeValues: false
-            ),
+            min: 0.0,
             controller: _EastingController,
             onChanged: (ret) {
               setState(() {
@@ -140,9 +138,7 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
           ),
           GCWDoubleTextField(
               hintText: i18n(context, 'coords_formatconverter_mgrs_northing'),
-              textInputFormatter: DoubleTextInputFormatter(
-                  allowNegativeValues: false
-              ),
+              min: 0.0,
               controller: _NorthingController,
               onChanged: (ret) {
                 setState(() {

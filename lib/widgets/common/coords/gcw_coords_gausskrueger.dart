@@ -44,9 +44,7 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
         children: <Widget>[
           GCWDoubleTextField(
             hintText: i18n(context, 'coords_formatconverter_gausskrueger_easting'),
-            textInputFormatter: DoubleTextInputFormatter(
-              allowNegativeValues: false
-            ),
+            min: 0.0,
             controller: _EastingController,
             onChanged: (ret) {
               setState(() {
@@ -57,9 +55,7 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
           ),
           GCWDoubleTextField(
             hintText: i18n(context, 'coords_formatconverter_gausskrueger_northing'),
-            textInputFormatter: DoubleTextInputFormatter(
-                allowNegativeValues: false
-            ),
+            min: 0.0,
             controller: _NorthingController,
             onChanged: (ret) {
               setState(() {

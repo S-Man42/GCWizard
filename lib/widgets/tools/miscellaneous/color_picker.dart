@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_circle_color_picker/flutter_circle_color_picker.dart';
+import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 
 class ColorPicker extends StatefulWidget {
   @override
@@ -20,6 +23,15 @@ class ColorPickerState extends State<ColorPicker> {
             setState(() {
               _currentColor = color;
             });
+          },
+        ),
+        GCWDoubleSpinner(
+          min: 3.534,
+          max: 10.56,
+          value: 4.0,
+          numberDecimalDigits: 3,
+          onChanged: (bla) {
+            print(bla);
           },
         ),
        TextField(
