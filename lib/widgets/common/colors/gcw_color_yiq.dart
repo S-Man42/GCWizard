@@ -3,27 +3,27 @@ import 'package:gc_wizard/logic/tools/miscellaneous/colors.dart';
 import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_yuv.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 
-class GCWColorYUV extends StatefulWidget {
+class GCWColorYIQ extends StatefulWidget {
   final Function onChanged;
-  final YUV color;
+  final YIQ color;
 
-  const GCWColorYUV({Key key, this.onChanged, this.color}) : super(key: key);
+  const GCWColorYIQ({Key key, this.onChanged, this.color}) : super(key: key);
 
   @override
-  _GCWColorYUVState createState() => _GCWColorYUVState();
+  _GCWColorYIQState createState() => _GCWColorYIQState();
 }
 
-class _GCWColorYUVState extends State<GCWColorYUV> {
+class _GCWColorYIQState extends State<GCWColorYIQ> {
   double _currentY = 50.0;
-  double _currentU = 0.0;
-  double _currentV = 0.0;
+  double _currentI = 0.0;
+  double _currentQ = 0.0;
 
   @override
   Widget build(BuildContext context) {
     if (widget.color != null) {
       _currentY = widget.color.y * 100.0;
-      _currentU = widget.color.u * 100.0;
-      _currentV = widget.color.v * 100.0;
+      _currentI = widget.color.i * 100.0;
+      _currentQ = widget.color.q * 100.0;
     }
 
     return Column(
@@ -40,24 +40,24 @@ class _GCWColorYUVState extends State<GCWColorYUV> {
           },
         ),
         GCWDoubleSpinner(
-          title: 'U',
-          min: -YUV.U_MAX * 100.0,
-          max: YUV.U_MAX * 100.0,
-          value: _currentU,
+          title: 'I',
+          min: -YIQ.I_MAX * 100.0,
+          max: -YIQ.I_MAX * 100.0,
+          value: _currentI,
           numberDecimalDigits: COLOR_DOUBLE_PRECISION,
           onChanged: (value) {
-            _currentU = value;
+            _currentI = value;
             _emitOnChange();
           },
         ),
         GCWDoubleSpinner(
-          title: 'V',
-          min: -YUV.V_MAX * 100.0,
-          max: YUV.V_MAX * 100.0,
-          value: _currentV,
+          title: 'Q',
+          min: -YIQ.Q_MAX * 100.0,
+          max: YIQ.Q_MAX * 100.0,
+          value: _currentQ,
           numberDecimalDigits: COLOR_DOUBLE_PRECISION,
           onChanged: (value) {
-            _currentV = value;
+            _currentQ = value;
             _emitOnChange();
           },
         ),
@@ -66,6 +66,6 @@ class _GCWColorYUVState extends State<GCWColorYUV> {
   }
 
   _emitOnChange() {
-    widget.onChanged(YUV(_currentY / 100.0, _currentU / 100.0, _currentV / 100.0));
+    widget.onChanged(YUV(_currentY / 100.0, _currentI / 100.0, _currentQ / 100.0));
   }
 }

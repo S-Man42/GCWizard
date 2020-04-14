@@ -1,63 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/miscellaneous/colors.dart';
-import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_hue.dart';
+import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_cmyk.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 
-class GCWColorHSV extends StatefulWidget {
+class GCWColorCMY extends StatefulWidget {
   final Function onChanged;
-  final HSV color;
+  final CMY color;
 
-  const GCWColorHSV({Key key, this.onChanged, this.color}) : super(key: key);
+  const GCWColorCMY({Key key, this.onChanged, this.color}) : super(key: key);
 
   @override
-  _GCWColorHSVState createState() => _GCWColorHSVState();
+  _GCWColorCMYState createState() => _GCWColorCMYState();
 }
 
-class _GCWColorHSVState extends State<GCWColorHSV> {
-  double _currentHue = 0.0;
-  double _currentSaturation = 0.0;
-  double _currentValue = 50.0;
+class _GCWColorCMYState extends State<GCWColorCMY> {
+  double _currentCyan = 50.0;
+  double _currentMagenta = 50.0;
+  double _currentYellow = 50.0;
 
   @override
   Widget build(BuildContext context) {
     if (widget.color != null) {
-      _currentHue = widget.color.hue;
-      _currentSaturation = widget.color.saturation * 100.0;
-      _currentValue = widget.color.value * 100.0;
+      _currentCyan = widget.color.cyan * 100.0;
+      _currentMagenta = widget.color.magenta * 100.0;
+      _currentYellow = widget.color.yellow * 100.0;
     }
 
     return Column(
       children: [
         GCWDoubleSpinner(
-          title: 'Hue',
+          title: 'Cyan',
           min: 0.0,
-          max: 360.0,
-          value: _currentHue,
+          max: 100.0,
+          value: _currentCyan,
           numberDecimalDigits: COLOR_DOUBLE_PRECISION,
           onChanged: (value) {
-            _currentHue = value;
+            _currentCyan = value;
             _emitOnChange();
           },
         ),
         GCWDoubleSpinner(
-          title: 'Saturation',
+          title: 'Magenta',
           min: 0.0,
           max: 100.0,
-          value: _currentSaturation,
+          value: _currentMagenta,
           numberDecimalDigits: COLOR_DOUBLE_PRECISION,
           onChanged: (value) {
-            _currentSaturation = value;
+            _currentMagenta = value;
             _emitOnChange();
           },
         ),
         GCWDoubleSpinner(
-          title: 'Value',
+          title: 'Yellow',
           min: 0.0,
           max: 100.0,
-          value: _currentValue,
+          value: _currentYellow,
           numberDecimalDigits: COLOR_DOUBLE_PRECISION,
           onChanged: (value) {
-            _currentValue = value;
+            _currentYellow = value;
             _emitOnChange();
           },
         ),
@@ -66,6 +66,6 @@ class _GCWColorHSVState extends State<GCWColorHSV> {
   }
 
   _emitOnChange() {
-    widget.onChanged(HSV(_currentHue, _currentSaturation / 100.0, _currentValue / 100.0));
+    widget.onChanged(CMY(_currentCyan / 100.0, _currentMagenta / 100.0, _currentYellow / 100.0));
   }
 }

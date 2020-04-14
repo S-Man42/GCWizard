@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/miscellaneous/colors.dart';
 import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_rgb.dart';
-import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 
 class GCWColorRGB extends StatefulWidget {
   final Function onChanged;

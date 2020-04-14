@@ -3,27 +3,27 @@ import 'package:gc_wizard/logic/tools/miscellaneous/colors.dart';
 import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_yuv.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 
-class GCWColorYUV extends StatefulWidget {
+class GCWColorYPbPr extends StatefulWidget {
   final Function onChanged;
-  final YUV color;
+  final YPbPr color;
 
-  const GCWColorYUV({Key key, this.onChanged, this.color}) : super(key: key);
+  const GCWColorYPbPr({Key key, this.onChanged, this.color}) : super(key: key);
 
   @override
-  _GCWColorYUVState createState() => _GCWColorYUVState();
+  _GCWColorYPbPrState createState() => _GCWColorYPbPrState();
 }
 
-class _GCWColorYUVState extends State<GCWColorYUV> {
+class _GCWColorYPbPrState extends State<GCWColorYPbPr> {
   double _currentY = 50.0;
-  double _currentU = 0.0;
-  double _currentV = 0.0;
+  double _currentPb = 0.0;
+  double _currentPr = 0.0;
 
   @override
   Widget build(BuildContext context) {
     if (widget.color != null) {
       _currentY = widget.color.y * 100.0;
-      _currentU = widget.color.u * 100.0;
-      _currentV = widget.color.v * 100.0;
+      _currentPb = widget.color.p_b * 100.0;
+      _currentPr = widget.color.p_r * 100.0;
     }
 
     return Column(
@@ -40,24 +40,24 @@ class _GCWColorYUVState extends State<GCWColorYUV> {
           },
         ),
         GCWDoubleSpinner(
-          title: 'U',
-          min: -YUV.U_MAX * 100.0,
-          max: YUV.U_MAX * 100.0,
-          value: _currentU,
+          title: 'Pb',
+          min: -0.5 * 100.0,
+          max: 0.5 * 100.0,
+          value: _currentPb,
           numberDecimalDigits: COLOR_DOUBLE_PRECISION,
           onChanged: (value) {
-            _currentU = value;
+            _currentPb = value;
             _emitOnChange();
           },
         ),
         GCWDoubleSpinner(
-          title: 'V',
-          min: -YUV.V_MAX * 100.0,
-          max: YUV.V_MAX * 100.0,
-          value: _currentV,
+          title: 'Pr',
+          min: -0.5 * 100.0,
+          max: 0.5 * 100.0,
+          value: _currentPr,
           numberDecimalDigits: COLOR_DOUBLE_PRECISION,
           onChanged: (value) {
-            _currentV = value;
+            _currentPr = value;
             _emitOnChange();
           },
         ),
@@ -66,6 +66,6 @@ class _GCWColorYUVState extends State<GCWColorYUV> {
   }
 
   _emitOnChange() {
-    widget.onChanged(YUV(_currentY / 100.0, _currentU / 100.0, _currentV / 100.0));
+    widget.onChanged(YPbPr(_currentY / 100.0, _currentPb / 100.0, _currentPr / 100.0));
   }
 }

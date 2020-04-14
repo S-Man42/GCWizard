@@ -1,4 +1,7 @@
+import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_cmyk.dart';
+import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_hue.dart';
 import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_rgb.dart';
+import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_yuv.dart';
 
 const keyColorsRGB = 'colors_rgb';
 const keyColorsHex = 'colors_hex';
@@ -39,4 +42,28 @@ final List<ColorSpace> allColorSpaces = [
 
 ColorSpace getColorSpaceByKey(String key) {
   return allColorSpaces.firstWhere((colorSpace) => colorSpace.key == key);
+}
+
+convertColorSpace(dynamic color, String oldColorSpace, String newColorSpace) {
+  if (newColorSpace == oldColorSpace) {
+    return color;
+  }
+
+  if (oldColorSpace != keyColorsRGB) {
+    color = color.toRGB();
+  }
+
+  switch (newColorSpace) {
+    case keyColorsRGB: return color;
+    case keyColorsHex: return HexCode.fromRGB(color);
+    case keyColorsHSV: return HSV.fromRGB(color);
+    case keyColorsHSL: return HSL.fromRGB(color);
+    case keyColorsHSI: return HSI.fromRGB(color);
+    case keyColorsCMYK: return CMYK.fromRGB(color);
+    case keyColorsCMY: return CMY.fromRGB(color);
+    case keyColorsYUV: return YUV.fromRGB(color);
+    case keyColorsYPbPr: return YPbPr.fromRGB(color);
+    case keyColorsYCbCr: return YCbCr.fromRGB(color);
+    case keyColorsYIQ: return YIQ.fromRGB(color);
+  }
 }

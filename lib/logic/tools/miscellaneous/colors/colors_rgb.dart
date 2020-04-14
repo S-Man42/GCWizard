@@ -38,6 +38,11 @@ class HexCode {
 
   HexCode(String hexCode) {
     hexCode = hexCode.toUpperCase().replaceAll(RegExp(r'[^0-9A-F]'), '');
+
+    if (hexCode.length == 3) { //shorthex
+      hexCode = hexCode.split('').map((character) => character * 2).join();
+    }
+
     if (hexCode.length < 6)
       hexCode = hexCode.padRight(6, '0');
     if (hexCode.length > 6)

@@ -3,27 +3,27 @@ import 'package:gc_wizard/logic/tools/miscellaneous/colors.dart';
 import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_hue.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 
-class GCWColorHSV extends StatefulWidget {
+class GCWColorHSL extends StatefulWidget {
   final Function onChanged;
-  final HSV color;
+  final HSL color;
 
-  const GCWColorHSV({Key key, this.onChanged, this.color}) : super(key: key);
+  const GCWColorHSL({Key key, this.onChanged, this.color}) : super(key: key);
 
   @override
-  _GCWColorHSVState createState() => _GCWColorHSVState();
+  _GCWColorHSLState createState() => _GCWColorHSLState();
 }
 
-class _GCWColorHSVState extends State<GCWColorHSV> {
+class _GCWColorHSLState extends State<GCWColorHSL> {
   double _currentHue = 0.0;
   double _currentSaturation = 0.0;
-  double _currentValue = 50.0;
+  double _currentLightness = 50.0;
 
   @override
   Widget build(BuildContext context) {
     if (widget.color != null) {
       _currentHue = widget.color.hue;
       _currentSaturation = widget.color.saturation * 100.0;
-      _currentValue = widget.color.value * 100.0;
+      _currentLightness = widget.color.lightness * 100.0;
     }
 
     return Column(
@@ -51,13 +51,13 @@ class _GCWColorHSVState extends State<GCWColorHSV> {
           },
         ),
         GCWDoubleSpinner(
-          title: 'Value',
+          title: 'Lightness',
           min: 0.0,
           max: 100.0,
-          value: _currentValue,
+          value: _currentLightness,
           numberDecimalDigits: COLOR_DOUBLE_PRECISION,
           onChanged: (value) {
-            _currentValue = value;
+            _currentLightness = value;
             _emitOnChange();
           },
         ),
@@ -66,6 +66,6 @@ class _GCWColorHSVState extends State<GCWColorHSV> {
   }
 
   _emitOnChange() {
-    widget.onChanged(HSV(_currentHue, _currentSaturation / 100.0, _currentValue / 100.0));
+    widget.onChanged(HSL(_currentHue, _currentSaturation / 100.0, _currentLightness / 100.0));
   }
 }
