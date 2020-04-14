@@ -1,26 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_dec.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_deg.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_dms.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_gausskrueger.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_geohash.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_maidenhead.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_mercator.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_mgrs.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_swissgrid.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_utm.dart';
-import 'package:gc_wizard/widgets/common/coords/utils.dart';
+import 'package:gc_wizard/logic/tools/miscellaneous/colors.dart';
+import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_hue.dart';
+import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_yuv.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/colors/gcw_color_hsv.dart';
+import 'package:gc_wizard/widgets/common/colors/gcw_color_rgb.dart';
+import 'package:gc_wizard/widgets/common/colors/gcw_color_yuv.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWColors extends StatefulWidget {
   final Function onChanged;
-  final String colorFormat;
+  final dynamic color;
   final String text;
 
-  const GCWColors({Key key, this.text, this.onChanged, this.colorFormat}) : super(key: key);
+  const GCWColors({Key key, this.text, this.onChanged, this.color}) : super(key: key);
 
   @override
   GCWColorsState createState() => GCWColorsState();
@@ -28,56 +21,105 @@ class GCWColors extends StatefulWidget {
 
 class GCWColorsState extends State<GCWColors> {
 
-  String _currentCoordsFormat = defaultCoordFormat();
-  Map<String, LatLng> _currentValue;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentValue = Map.fromIterable(allCoordFormats, key: (format) => format.key, value: (format) => defaultCoordinate);
-  }
+  String _currentColorSpace = defaultColorSpace;
+  dynamic _currentColor = defaultColor;
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> _currentColor = [
-
+    List<Map<String, dynamic>> _colorWidgets = [
+      {
+        'colorSpace': getColorSpaceByKey(keyColorsRGB),
+        'widget': GCWColorRGB(
+          color: _currentColorSpace == keyColorsRGB ? _currentColor : null,
+          onChanged: (newValue) {
+            setState(() {
+              _currentColor = newValue;
+              _setCurrentValueAndEmitOnChange();
+            });
+          },
+        ),
+      },
+      {
+        'colorSpace': getColorSpaceByKey(keyColorsHSV),
+        'widget': GCWColorHSV(
+          color: _currentColorSpace == keyColorsHSV ? _currentColor : null,
+          onChanged: (newValue) {
+            setState(() {
+              _currentColor = newValue;
+              _setCurrentValueAndEmitOnChange();
+            });
+          },
+        ),
+      },
+      {
+        'colorSpace': getColorSpaceByKey(keyColorsYUV),
+        'widget': GCWColorYUV(
+          color: _currentColorSpace == keyColorsYUV ? _currentColor : null,
+          onChanged: (newValue) {
+            setState(() {
+              _currentColor = newValue;
+              _setCurrentValueAndEmitOnChange();
+            });
+          },
+        ),
+      },
     ];
 
-    List<CoordinateFormat> _onlyCoordinateFormats = _currentColor
-      .map((entry) => entry['coordFormat'] as CoordinateFormat)
-      .toList();
+    List<ColorSpace> _onlyColorSpaces = _colorWidgets.map((entry) => entry['colorSpace'] as ColorSpace).toList();
 
     Column _widget = Column(
       children: <Widget>[
         GCWTextDivider(
           text: widget.text
         ),
-        GCWCoordsDropDownButton(
-          value: widget.colorFormat ?? _currentCoordsFormat,
-          itemList: _onlyCoordinateFormats,
-          onChanged: (newValue){
+        GCWDropDownButton(
+          value: _currentColorSpace,
+          onChanged: (newValue) {
             setState(() {
-              _currentCoordsFormat = newValue;
+              _convertColorSpace(newValue);
+              _currentColorSpace = newValue;
+
               _setCurrentValueAndEmitOnChange();
-              FocusScope.of(context).requestFocus(new FocusNode()); //Release focus from previous edited field
             });
           },
+          items: _onlyColorSpaces.map((colorSpace) {
+            return DropdownMenuItem(
+              value: colorSpace.key,
+              child: Text(colorSpace.name),
+            );
+          }).toList(),
         ),
       ],
     );
 
-//    var _currentWidget = _coordsWidgets
-//      .firstWhere((entry) => entry['coordFormat'].key == widget.colorFormat ?? _currentCoordsFormat)['widget'];
-//
-//    _widget.children.add(_currentWidget);
+    var _currentWidget = _colorWidgets
+      .firstWhere((entry) => entry['colorSpace'].key == _currentColorSpace)['widget'];
+
+    _widget.children.add(_currentWidget);
 
     return _widget;
   }
 
+  _convertColorSpace(newColorSpace) {
+    if (newColorSpace == _currentColorSpace) {
+      return;
+    }
+
+    if (_currentColorSpace != keyColorsRGB) {
+      _currentColor = _currentColor.toRGB();
+    }
+
+    switch (newColorSpace) {
+      case keyColorsRGB: break;
+      case keyColorsHSV: _currentColor = HSV.fromRGB(_currentColor); break;
+      case keyColorsYUV: _currentColor = YUV.fromRGB(_currentColor); break;
+    }
+  }
+
   _setCurrentValueAndEmitOnChange() {
     widget.onChanged({
-      'coordsFormat': _currentCoordsFormat,
-      'value': _currentValue[_currentCoordsFormat]
+      'colorSpace': _currentColorSpace,
+      'color': _currentColor
     });
   }
 }

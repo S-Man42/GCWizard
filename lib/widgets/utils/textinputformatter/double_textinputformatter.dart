@@ -31,7 +31,6 @@ class DoubleTextInputFormatter extends TextInputFormatter {
       return oldValue;
     }
 
-    print(_exp.pattern);
     return _checkBounds(value) ? newValue : oldValue;
   }
 
@@ -89,8 +88,6 @@ class DoubleTextInputFormatter extends TextInputFormatter {
 
     _truncateDigits(min, numberCurrentDecimals);
 
-    print(_newDouble);
-    print(_truncateDigits(min, numberCurrentDecimals));
     if (min != null && _newDouble < _truncateDigits(min, numberCurrentDecimals))
       return false;
 
@@ -101,7 +98,6 @@ class DoubleTextInputFormatter extends TextInputFormatter {
   }
 
   _truncateDigits(double value, numberDigits) {
-    var split = value.toString().split('.');
-    return double.parse(split[0] + '.' + split[1].substring(0, math.min(numberDigits, split[1].length)));
+    return double.parse(value.toStringAsFixed(numberDecimalDigits));
   }
 }

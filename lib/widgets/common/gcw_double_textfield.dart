@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/double_textinputformatter.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class GCWDoubleTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -45,34 +46,35 @@ class _GCWDoubleTextFieldState extends State<GCWDoubleTextField> {
   @override
   Widget build(BuildContext context) {
     return GCWTextField(
-        hintText: widget.hintText,
-        onChanged: (text) {
-          setState(() {
-            var _value;
+      focusNode: widget.focusNode,
+      hintText: widget.hintText,
+      onChanged: (text) {
+        setState(() {
+          var _value;
 
-            text = text.replaceFirst(',', '.');
+          text = text.replaceFirst(',', '.');
 
-            if (['', '-', '.'].contains(text)) {
-              _value = 0.0;
-            } else {
-              _value = double.tryParse(text);
-            }
+          if (['', '-', '.'].contains(text)) {
+            _value = 0.0;
+          } else {
+            _value = double.tryParse(text);
+          }
 
-            if (widget.min != null && _value < widget.min)
-              _value = widget.min;
+          if (widget.min != null && _value < widget.min)
+            _value = widget.min;
 
-            if (widget.max != null && _value > widget.max)
-              _value = widget.max;
+          if (widget.max != null && _value > widget.max)
+            _value = widget.max;
 
-            widget.onChanged({'text': text, 'value': _value});
-          });
-        },
-        controller: widget.controller,
-        inputFormatters: [widget.textInputFormatter ?? _doubleInputFormatter],
-        keyboardType: TextInputType.numberWithOptions(
-          signed: true,
-          decimal: true
-        ),
-      );
+          widget.onChanged({'text': text, 'value': _value});
+        });
+      },
+      controller: widget.controller,
+      inputFormatters: [widget.textInputFormatter ?? _doubleInputFormatter],
+      keyboardType: TextInputType.numberWithOptions(
+        signed: true,
+        decimal: true
+      ),
+    );
   }
 }

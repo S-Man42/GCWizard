@@ -4,7 +4,6 @@ import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/double_textinputformatter.dart';
 import 'package:latlong/latlong.dart';
 
 class GCWCoordsGaussKrueger extends StatefulWidget {

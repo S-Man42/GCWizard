@@ -13,12 +13,9 @@ class GCWDoubleSpinner extends StatefulWidget {
   final value;
   final min;
   final max;
-  final controller;
   final numberDecimalDigits;
   final SpinnerLayout layout;
   final focusNode;
-
-  var _numberFormat;
 
   GCWDoubleSpinner({
     Key key,
@@ -28,50 +25,47 @@ class GCWDoubleSpinner extends StatefulWidget {
     this.min,
     this.max,
     this.numberDecimalDigits: 2,
-    this.controller,
     this.layout: SpinnerLayout.horizontal,
     this.focusNode
-  }) : super(key: key) {
-    var formatString = '0';
-    if (numberDecimalDigits > 0)
-      formatString += '.' + '0' * numberDecimalDigits;
-
-    _numberFormat = NumberFormat(formatString);
-  }
+  }) : super(key: key);
 
   @override
   GCWDoubleSpinnerState createState() => GCWDoubleSpinnerState();
 }
 
 class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
-  var _controller;
+  TextEditingController _controller;
 
   var _currentValue = 0.0;
+  var _numberFormat;
 
   @override
   void initState() {
     super.initState();
 
-    if (widget.controller != null) {
-      _controller = widget.controller;
-    } else {
-      print(widget.value);
-      if (widget.value != null)
-        _currentValue = widget.value;
+    _currentValue = widget.value;
 
-      _controller = TextEditingController(text: widget._numberFormat.format(_currentValue));
-    }
+    var formatString = '0';
+    if (widget.numberDecimalDigits > 0)
+      formatString += '.' + '#' * widget.numberDecimalDigits;
+    _numberFormat = NumberFormat(formatString);
+
+    _controller = TextEditingController(text: _numberFormat.format(_currentValue));
   }
 
   @override
   void dispose() {
-    if (widget.controller == null)
-      _controller.dispose();
+    _controller.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.value != null) {
+      _currentValue = widget.value;
+    }
+
     return _buildSpinner();
   }
 
@@ -79,7 +73,7 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
     setState(() {
       if (widget.min == null || _currentValue > widget.min) {
         var newValue = _currentValue;
-        if (newValue.floor() == newValue) {
+        if ((newValue.floor() - newValue).abs() <= 10e-10) {
           newValue--;
         } else {
           newValue = newValue.floor().toDouble();
@@ -96,7 +90,7 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
     setState(() {
       if (widget.max == null || _currentValue < widget.max) {
         var newValue = _currentValue;
-        if (newValue.ceil() == newValue) {
+        if ((newValue.ceil() - newValue).abs() <= 10e-10) {
           newValue++;
         } else {
           newValue = newValue.ceil().toDouble();
@@ -124,10 +118,12 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
       focusNode: widget.focusNode,
       min: widget.min,
       max: widget.max,
+      numberDecimalDigits: widget.numberDecimalDigits,
       controller: _controller,
       onChanged: (ret) {
         setState(() {
           _currentValue = ret['value'];
+
           _setCurrentValueAndEmitOnChange();
         });
       }
@@ -144,12 +140,12 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
               children: <Widget>[
                 Container(
                   child: GCWIconButton(
-                      iconData: Icons.remove,
-                      onPressed: _decreaseValue
+                    iconData: Icons.remove,
+                    onPressed: _decreaseValue
                   ),
                   margin: const EdgeInsets.only(
-                      left: 10.0,
-                      right: 10.0
+                    left: 10.0,
+                    right: 10.0
                   ),
                 ),
                 Expanded(
@@ -157,8 +153,8 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
                 ),
                 Container(
                   child: GCWIconButton(
-                      iconData: Icons.add,
-                      onPressed: _increaseValue
+                    iconData: Icons.add,
+                    onPressed: _increaseValue
                   ),
                   margin: const EdgeInsets.only(
                       left: 10.0,
@@ -199,7 +195,7 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
 
   _setCurrentValueAndEmitOnChange({setTextFieldText: false}) {
     if (setTextFieldText)
-      _controller.text = widget._numberFormat.format(_currentValue);
+      _controller.text = _numberFormat.format(_currentValue);
 
     widget.onChanged(_currentValue);
   }

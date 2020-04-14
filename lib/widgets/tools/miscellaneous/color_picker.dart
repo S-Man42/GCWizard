@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_circle_color_picker/flutter_circle_color_picker.dart';
-import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
+import 'package:gc_wizard/logic/tools/miscellaneous/colors.dart';
+import 'package:gc_wizard/widgets/common/colors/gcw_color_rgb.dart';
+import 'package:gc_wizard/widgets/common/colors/gcw_colors.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 
 class ColorPicker extends StatefulWidget {
   @override
@@ -10,36 +11,34 @@ class ColorPicker extends StatefulWidget {
 }
 
 class ColorPickerState extends State<ColorPicker> {
-  Color _currentColor = Colors.red;
+  dynamic _currentColor = defaultColor;
+
+  String _output = '';
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        CircleColorPicker(
-          initialColor: _currentColor,
-          strokeWidth: 6,
-          onChanged: (Color color) {
+//        CircleColorPicker(
+//          initialColor: _currentColor,
+//          strokeWidth: 6,
+//          onChanged: (Color color) {
+//            setState(() {
+//              _currentColor = color;
+//            });
+//          },
+//        ),
+        GCWColors(
+          color: _currentColor,
+          onChanged: (result) {
             setState(() {
-              _currentColor = color;
+              _currentColor = result['color'];
+              _output = result.toString();
             });
           },
         ),
-        GCWDoubleSpinner(
-          min: 3.534,
-          max: 10.56,
-          value: 4.0,
-          numberDecimalDigits: 3,
-          onChanged: (bla) {
-            print(bla);
-          },
-        ),
-       TextField(
-          onChanged: (text) {
-            setState(() {
-              _currentColor = Colors.yellow;
-            });
-          },
+        GCWDefaultOutput(
+          text: _output
         )
       ],
     );
