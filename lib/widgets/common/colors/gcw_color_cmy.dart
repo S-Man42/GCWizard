@@ -29,7 +29,7 @@ class _GCWColorCMYState extends State<GCWColorCMY> {
     return Column(
       children: [
         GCWDoubleSpinner(
-          title: 'Cyan',
+          title: 'C',
           min: 0.0,
           max: 100.0,
           value: _currentCyan,
@@ -40,7 +40,7 @@ class _GCWColorCMYState extends State<GCWColorCMY> {
           },
         ),
         GCWDoubleSpinner(
-          title: 'Magenta',
+          title: 'M',
           min: 0.0,
           max: 100.0,
           value: _currentMagenta,
@@ -51,7 +51,7 @@ class _GCWColorCMYState extends State<GCWColorCMY> {
           },
         ),
         GCWDoubleSpinner(
-          title: 'Yellow',
+          title: 'Y',
           min: 0.0,
           max: 100.0,
           value: _currentYellow,

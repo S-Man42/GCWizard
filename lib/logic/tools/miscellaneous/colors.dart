@@ -3,17 +3,17 @@ import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_hue.dart';
 import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_rgb.dart';
 import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_yuv.dart';
 
-const keyColorsRGB = 'colors_rgb';
-const keyColorsHex = 'colors_hex';
-const keyColorsHSV = 'colors_hsv';
-const keyColorsHSL = 'colors_hsl';
-const keyColorsHSI = 'colors_hsi';
-const keyColorsCMYK = 'colors_cmyk';
-const keyColorsCMY = 'colors_cmy';
-const keyColorsYUV = 'colors_yuv';
-const keyColorsYPbPr = 'colors_ypbpr';
-const keyColorsYCbCr = 'colors_ycbcr';
-const keyColorsYIQ = 'colors_yiq';
+const keyColorSpaceRGB = 'colors_rgb';
+const keyColorSpaceHex = 'colors_hex';
+const keyColorSpaceHSV = 'colors_hsv';
+const keyColorSpaceHSL = 'colors_hsl';
+const keyColorSpaceHSI = 'colors_hsi';
+const keyColorSpaceCMYK = 'colors_cmyk';
+const keyColorSpaceCMY = 'colors_cmy';
+const keyColorSpaceYUV = 'colors_yuv';
+const keyColorSpaceYPbPr = 'colors_ypbpr';
+const keyColorSpaceYCbCr = 'colors_ycbcr';
+const keyColorSpaceYIQ = 'colors_yiq';
 
 class ColorSpace {
   final key;
@@ -22,22 +22,22 @@ class ColorSpace {
   ColorSpace(this.key, this.name);
 }
 
-final String defaultColorSpace = keyColorsRGB;
+final String defaultColorSpace = keyColorSpaceRGB;
 final RGB defaultColor = RGB(128.0, 128.0, 128.0);
 final int COLOR_DOUBLE_PRECISION = 5;
 
 final List<ColorSpace> allColorSpaces = [
-  ColorSpace(keyColorsRGB, 'colors_format_rgb'),
-  ColorSpace(keyColorsHex, 'colors_format_hex'),
-  ColorSpace(keyColorsHSV, 'colors_format_hsv'),
-  ColorSpace(keyColorsHSL, 'colors_format_hsl'),
-  ColorSpace(keyColorsHSI, 'colors_format_hsi'),
-  ColorSpace(keyColorsCMYK, 'colors_format_cmyk'),
-  ColorSpace(keyColorsCMY, 'colors_format_cmy'),
-  ColorSpace(keyColorsYUV, 'colors_format_yuv'),
-  ColorSpace(keyColorsYPbPr, 'colors_format_ypbpr'),
-  ColorSpace(keyColorsYCbCr, 'colors_format_ycbcr'),
-  ColorSpace(keyColorsYIQ, 'colors_format_yiq'),
+  ColorSpace(keyColorSpaceRGB, 'colors_colorspace_rgb_title'),
+  ColorSpace(keyColorSpaceHex, 'colors_colorspace_hex_title'),
+  ColorSpace(keyColorSpaceHSV, 'colors_colorspace_hsv_title'),
+  ColorSpace(keyColorSpaceHSL, 'colors_colorspace_hsl_title'),
+  ColorSpace(keyColorSpaceHSI, 'colors_colorspace_hsi_title'),
+  ColorSpace(keyColorSpaceCMYK, 'colors_colorspace_cmyk_title'),
+  ColorSpace(keyColorSpaceCMY, 'colors_colorspace_cmy_title'),
+  ColorSpace(keyColorSpaceYUV, 'colors_colorspace_yuv_title'),
+  ColorSpace(keyColorSpaceYPbPr, 'colors_colorspace_ypbpr_title'),
+  ColorSpace(keyColorSpaceYCbCr, 'colors_colorspace_ycbcr_title'),
+  ColorSpace(keyColorSpaceYIQ, 'colors_colorspace_yiq_title'),
 ];
 
 ColorSpace getColorSpaceByKey(String key) {
@@ -49,21 +49,21 @@ convertColorSpace(dynamic color, String oldColorSpace, String newColorSpace) {
     return color;
   }
 
-  if (oldColorSpace != keyColorsRGB) {
+  if (oldColorSpace != keyColorSpaceRGB) {
     color = color.toRGB();
   }
 
   switch (newColorSpace) {
-    case keyColorsRGB: return color;
-    case keyColorsHex: return HexCode.fromRGB(color);
-    case keyColorsHSV: return HSV.fromRGB(color);
-    case keyColorsHSL: return HSL.fromRGB(color);
-    case keyColorsHSI: return HSI.fromRGB(color);
-    case keyColorsCMYK: return CMYK.fromRGB(color);
-    case keyColorsCMY: return CMY.fromRGB(color);
-    case keyColorsYUV: return YUV.fromRGB(color);
-    case keyColorsYPbPr: return YPbPr.fromRGB(color);
-    case keyColorsYCbCr: return YCbCr.fromRGB(color);
-    case keyColorsYIQ: return YIQ.fromRGB(color);
+    case keyColorSpaceRGB: return color;
+    case keyColorSpaceHex: return HexCode.fromRGB(color);
+    case keyColorSpaceHSV: return HSV.fromRGB(color);
+    case keyColorSpaceHSL: return HSL.fromRGB(color);
+    case keyColorSpaceHSI: return HSI.fromRGB(color);
+    case keyColorSpaceCMYK: return CMYK.fromRGB(color);
+    case keyColorSpaceCMY: return CMY.fromRGB(color);
+    case keyColorSpaceYUV: return YUV.fromRGB(color);
+    case keyColorSpaceYPbPr: return YPbPr.fromRGB(color);
+    case keyColorSpaceYCbCr: return YCbCr.fromRGB(color);
+    case keyColorSpaceYIQ: return YIQ.fromRGB(color);
   }
 }

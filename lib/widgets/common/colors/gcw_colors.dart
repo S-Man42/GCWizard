@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/miscellaneous/colors.dart';
 import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_cmyk.dart';
 import 'package:gc_wizard/logic/tools/miscellaneous/colors/colors_hue.dart';
@@ -39,9 +40,9 @@ class GCWColorsState extends State<GCWColors> {
 
     List<Map<String, dynamic>> _colorWidgets = [
       {
-        'colorSpace': getColorSpaceByKey(keyColorsRGB),
+        'colorSpace': getColorSpaceByKey(keyColorSpaceRGB),
         'widget': GCWColorRGB(
-          color: _currentColorSpace == keyColorsRGB ? _currentColor : null,
+          color: _currentColorSpace == keyColorSpaceRGB ? _currentColor : null,
           onChanged: (newValue) {
             setState(() {
               _currentColor = newValue;
@@ -51,9 +52,9 @@ class GCWColorsState extends State<GCWColors> {
         ),
       },
       {
-        'colorSpace': getColorSpaceByKey(keyColorsHex),
+        'colorSpace': getColorSpaceByKey(keyColorSpaceHex),
         'widget': GCWColorHexCode(
-          color: _currentColorSpace == keyColorsHex ? _currentColor : null,
+          color: _currentColorSpace == keyColorSpaceHex ? _currentColor : null,
           onChanged: (newValue) {
             setState(() {
               _currentColor = newValue;
@@ -63,9 +64,9 @@ class GCWColorsState extends State<GCWColors> {
         ),
       },
       {
-        'colorSpace': getColorSpaceByKey(keyColorsHSV),
+        'colorSpace': getColorSpaceByKey(keyColorSpaceHSV),
         'widget': GCWColorHSV(
-          color: _currentColorSpace == keyColorsHSV ? _currentColor : null,
+          color: _currentColorSpace == keyColorSpaceHSV ? _currentColor : null,
           onChanged: (newValue) {
             setState(() {
               _currentColor = newValue;
@@ -75,9 +76,9 @@ class GCWColorsState extends State<GCWColors> {
         ),
       },
       {
-        'colorSpace': getColorSpaceByKey(keyColorsHSL),
+        'colorSpace': getColorSpaceByKey(keyColorSpaceHSL),
         'widget': GCWColorHSL(
-          color: _currentColorSpace == keyColorsHSL ? _currentColor : null,
+          color: _currentColorSpace == keyColorSpaceHSL ? _currentColor : null,
           onChanged: (newValue) {
             setState(() {
               _currentColor = newValue;
@@ -87,9 +88,9 @@ class GCWColorsState extends State<GCWColors> {
         ),
       },
       {
-        'colorSpace': getColorSpaceByKey(keyColorsHSI),
+        'colorSpace': getColorSpaceByKey(keyColorSpaceHSI),
         'widget': GCWColorHSI(
-          color: _currentColorSpace == keyColorsHSI ? _currentColor : null,
+          color: _currentColorSpace == keyColorSpaceHSI ? _currentColor : null,
           onChanged: (newValue) {
             setState(() {
               _currentColor = newValue;
@@ -99,9 +100,9 @@ class GCWColorsState extends State<GCWColors> {
         ),
       },
       {
-        'colorSpace': getColorSpaceByKey(keyColorsCMYK),
+        'colorSpace': getColorSpaceByKey(keyColorSpaceCMYK),
         'widget': GCWColorCMYK(
-          color: _currentColorSpace == keyColorsCMYK ? _currentColor : null,
+          color: _currentColorSpace == keyColorSpaceCMYK ? _currentColor : null,
           onChanged: (newValue) {
             setState(() {
               _currentColor = newValue;
@@ -111,9 +112,9 @@ class GCWColorsState extends State<GCWColors> {
         ),
       },
       {
-        'colorSpace': getColorSpaceByKey(keyColorsCMY),
+        'colorSpace': getColorSpaceByKey(keyColorSpaceCMY),
         'widget': GCWColorCMY(
-          color: _currentColorSpace == keyColorsCMY ? _currentColor : null,
+          color: _currentColorSpace == keyColorSpaceCMY ? _currentColor : null,
           onChanged: (newValue) {
             setState(() {
               _currentColor = newValue;
@@ -123,9 +124,9 @@ class GCWColorsState extends State<GCWColors> {
         ),
       },
       {
-        'colorSpace': getColorSpaceByKey(keyColorsYUV),
+        'colorSpace': getColorSpaceByKey(keyColorSpaceYUV),
         'widget': GCWColorYUV(
-          color: _currentColorSpace == keyColorsYUV ? _currentColor : null,
+          color: _currentColorSpace == keyColorSpaceYUV ? _currentColor : null,
           onChanged: (newValue) {
             setState(() {
               _currentColor = newValue;
@@ -135,9 +136,9 @@ class GCWColorsState extends State<GCWColors> {
         ),
       },
       {
-        'colorSpace': getColorSpaceByKey(keyColorsYPbPr),
+        'colorSpace': getColorSpaceByKey(keyColorSpaceYPbPr),
         'widget': GCWColorYPbPr(
-          color: _currentColorSpace == keyColorsYPbPr ? _currentColor : null,
+          color: _currentColorSpace == keyColorSpaceYPbPr ? _currentColor : null,
           onChanged: (newValue) {
             setState(() {
               _currentColor = newValue;
@@ -147,9 +148,9 @@ class GCWColorsState extends State<GCWColors> {
         ),
       },
       {
-        'colorSpace': getColorSpaceByKey(keyColorsYCbCr),
+        'colorSpace': getColorSpaceByKey(keyColorSpaceYCbCr),
         'widget': GCWColorYCbCr(
-          color: _currentColorSpace == keyColorsYCbCr ? _currentColor : null,
+          color: _currentColorSpace == keyColorSpaceYCbCr ? _currentColor : null,
           onChanged: (newValue) {
             setState(() {
               _currentColor = newValue;
@@ -159,9 +160,9 @@ class GCWColorsState extends State<GCWColors> {
         ),
       },
       {
-        'colorSpace': getColorSpaceByKey(keyColorsYIQ),
+        'colorSpace': getColorSpaceByKey(keyColorSpaceYIQ),
         'widget': GCWColorYIQ(
-          color: _currentColorSpace == keyColorsYIQ ? _currentColor : null,
+          color: _currentColorSpace == keyColorSpaceYIQ ? _currentColor : null,
           onChanged: (newValue) {
             setState(() {
               _currentColor = newValue;
@@ -189,7 +190,7 @@ class GCWColorsState extends State<GCWColors> {
           items: _onlyColorSpaces.map((colorSpace) {
             return DropdownMenuItem(
               value: colorSpace.key,
-              child: Text(colorSpace.name),
+              child: Text(i18n(context, colorSpace.name)),
             );
           }).toList(),
         ),

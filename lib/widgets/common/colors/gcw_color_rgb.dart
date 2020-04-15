@@ -29,7 +29,7 @@ class _GCWColorRGBState extends State<GCWColorRGB> {
     return Column(
       children: [
         GCWDoubleSpinner(
-          title: 'Red',
+          title: 'R',
           min: 0.0,
           max: 255.0,
           value: _currentRed,
@@ -40,7 +40,7 @@ class _GCWColorRGBState extends State<GCWColorRGB> {
           },
         ),
         GCWDoubleSpinner(
-          title: 'Green',
+          title: 'G',
           min: 0.0,
           max: 255.0,
           value: _currentGreen,
@@ -51,7 +51,7 @@ class _GCWColorRGBState extends State<GCWColorRGB> {
           },
         ),
         GCWDoubleSpinner(
-          title: 'Blue',
+          title: 'B',
           min: 0.0,
           max: 255.0,
           value: _currentBlue,

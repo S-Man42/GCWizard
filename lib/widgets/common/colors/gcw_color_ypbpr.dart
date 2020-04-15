@@ -22,8 +22,8 @@ class _GCWColorYPbPrState extends State<GCWColorYPbPr> {
   Widget build(BuildContext context) {
     if (widget.color != null) {
       _currentY = widget.color.y * 100.0;
-      _currentPb = widget.color.p_b * 100.0;
-      _currentPr = widget.color.p_r * 100.0;
+      _currentPb = widget.color.pb * 100.0;
+      _currentPr = widget.color.pr * 100.0;
     }
 
     return Column(

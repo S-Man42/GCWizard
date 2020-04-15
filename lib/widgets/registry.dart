@@ -119,7 +119,7 @@ class Registry {
       GCWToolWidget(tool: BrainfkSelection(), toolName: i18n(context, 'brainfk_title'), searchStrings: SEARCHSTRING_BRAINFK),
       GCWToolWidget(tool: Caesar(), toolName: i18n(context, 'caesar_title'), searchStrings: SEARCHSTRING_ROTATION + 'caesar cäsar'),
       GCWToolWidget(tool: CCITT2(), toolName: i18n(context, 'ccitt2_title'), searchStrings: SEARCHSTRING_CCITT2),
-      GCWToolWidget(tool: ColorPicker(), toolName: 'Colors', searchStrings: 'colors farben rgb hex hsl hsv'),
+      GCWToolWidget(tool: ColorPicker(), toolName: i18n(context, 'colors_title'), searchStrings: 'colors pal ntsc farben rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode picker red green blue yellow black key magenta orange cyan luminanz hellwert farbwert helligkeit sättigung luminance chrominanz chrominance saturation lightness hue cmyk luma chroma'),
       GCWToolWidget(tool: CoordsSelection(), toolName: i18n(context, 'coords_selection_title'), searchStrings: SEARCHSTRING_COORDINATES),
       GCWToolWidget(tool: DatesSelection(), toolName: i18n(context, 'dates_selection_title'), searchStrings: SEARCHSTRING_DATES),
       GCWToolWidget(tool: Decabit(), toolName: i18n(context, 'decabit_title'), searchStrings: 'decabit impulsraster zellweger plus minus rundsteuertechnik ripple control'),
