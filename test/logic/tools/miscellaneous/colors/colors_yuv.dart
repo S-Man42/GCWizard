@@ -37,8 +37,8 @@ void main() {
       test('input: ${elem['input']}', () {
         var yCbCr = YCbCr.fromRGB(elem['input']);
         expect((yCbCr.y - elem['expectedOutput'].y).abs() < 1e-5, true);
-        expect((yCbCr.c_b - elem['expectedOutput'].c_b).abs() < 1e-5, true);
-        expect((yCbCr.c_r - elem['expectedOutput'].c_r).abs() < 1e-5, true);
+        expect((yCbCr.cb - elem['expectedOutput'].cb).abs() < 1e-5, true);
+        expect((yCbCr.cr - elem['expectedOutput'].cr).abs() < 1e-5, true);
 
         var rgb = yCbCr.toRGB();
         expect((rgb.red - elem['input'].red).abs() < 1e-5, true);

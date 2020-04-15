@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:sqflite/utils/utils.dart';
+
 class RGB {
   double red;
   double green;
@@ -35,6 +37,17 @@ class RGB {
 
 class HexCode {
   String hexCode;
+
+  bool get isShortHex {
+    return hexCode[0] == hexCode[1] && hexCode[2] == hexCode[3] && hexCode[4] == hexCode[5];
+  }
+
+  String get shortHexCode {
+    if (isShortHex)
+      return '#' + hexCode[0] + hexCode[2] + hexCode[4];
+
+    return null;
+  }
 
   HexCode(String hexCode) {
     hexCode = hexCode.toUpperCase().replaceAll(RegExp(r'[^0-9A-F]'), '');

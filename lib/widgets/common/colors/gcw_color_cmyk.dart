@@ -31,7 +31,7 @@ class _GCWColorCMYKState extends State<GCWColorCMYK> {
     return Column(
       children: [
         GCWDoubleSpinner(
-          title: 'Cyan',
+          title: 'C',
           min: 0.0,
           max: 100.0,
           value: _currentCyan,
@@ -42,7 +42,7 @@ class _GCWColorCMYKState extends State<GCWColorCMYK> {
           },
         ),
         GCWDoubleSpinner(
-          title: 'Magenta',
+          title: 'M',
           min: 0.0,
           max: 100.0,
           value: _currentMagenta,
@@ -53,7 +53,7 @@ class _GCWColorCMYKState extends State<GCWColorCMYK> {
           },
         ),
         GCWDoubleSpinner(
-          title: 'Yellow',
+          title: 'Y',
           min: 0.0,
           max: 100.0,
           value: _currentYellow,
@@ -64,7 +64,7 @@ class _GCWColorCMYKState extends State<GCWColorCMYK> {
           },
         ),
         GCWDoubleSpinner(
-          title: 'Key',
+          title: 'K',
           min: 0.0,
           max: 100.0,
           value: _currentKey,

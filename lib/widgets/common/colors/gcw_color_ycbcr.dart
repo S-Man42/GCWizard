@@ -22,8 +22,8 @@ class _GCWColorYCbCrState extends State<GCWColorYCbCr> {
   Widget build(BuildContext context) {
     if (widget.color != null) {
       _currentY = widget.color.y;
-      _currentCb = widget.color.c_b;
-      _currentCr = widget.color.c_r;
+      _currentCb = widget.color.cb;
+      _currentCr = widget.color.cr;
     }
 
     return Column(

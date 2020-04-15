@@ -52,8 +52,8 @@ class YUV {
 //source https://en.wikipedia.org/wiki/YCbCr#ITU-R_BT.601_conversion
 class YPbPr {
   double y; //luminance/luma;
-  double p_b; //chrominance: blue projection
-  double p_r; //chrominance: red projection
+  double pb; //chrominance: blue projection
+  double pr; //chrominance: red projection
 
   //values for standard ITU-R BT.601; //TODO: standard BT.709, BT.2020, SMPTE 240M, JPEG
   static final double _K_R = 0.299;
@@ -62,14 +62,14 @@ class YPbPr {
 
   YPbPr(double y, double p_b, double p_r) {
     this.y = min(1.0, max(0.0, y));
-    this.p_b = min(0.5, max(-0.5, p_b));
-    this.p_r = min(0.5, max(-0.5, p_r));
+    this.pb = min(0.5, max(-0.5, p_b));
+    this.pr = min(0.5, max(-0.5, p_r));
   }
 
   RGB toRGB() {
-    double red = y + p_r * (2.0 - 2.0 * _K_R);
-    double green = y - p_b * (_K_B / _K_G * (2.0 - 2.0 * _K_B)) - p_r * (_K_R / _K_G * (2.0 - 2.0 * _K_R));
-    double blue = y + p_b * (2.0 - 2.0 * _K_B);
+    double red = y + pr * (2.0 - 2.0 * _K_R);
+    double green = y - pb * (_K_B / _K_G * (2.0 - 2.0 * _K_B)) - pr * (_K_R / _K_G * (2.0 - 2.0 * _K_R));
+    double blue = y + pb * (2.0 - 2.0 * _K_B);
 
     return RGB(red * 255.0, green * 255.0, blue * 255.0);
   }
@@ -88,26 +88,26 @@ class YPbPr {
 
   @override
   String toString() {
-    return 'YPbPr($y, $p_b, $p_r)';
+    return 'YPbPr($y, $pb, $pr)';
   }
 }
 
 //source https://en.wikipedia.org/wiki/YCbCr#ITU-R_BT.601_conversion
 class YCbCr {
   double y; //luminance/luma;
-  double c_b; //chrominance: blue projection
-  double c_r; //chrominance: red projection
+  double cb; //chrominance: blue projection
+  double cr; //chrominance: red projection
 
   YCbCr(double y, double p_b, double p_r) {
     this.y = min(235.0, max(16.0, y));
-    this.c_b = min(240.0, max(16.0, p_b));
-    this.c_r = min(240.0, max(16.0, p_r));
+    this.cb = min(240.0, max(16.0, p_b));
+    this.cr = min(240.0, max(16.0, p_r));
   }
 
   YPbPr toYPbPr() {
     double y_pbpr = (y - 16.0) / 219.0;
-    double p_b = (c_b - 128.0) / 224.0;
-    double p_r = (c_r - 128.0) / 224.0;
+    double p_b = (cb - 128.0) / 224.0;
+    double p_r = (cr - 128.0) / 224.0;
 
     return YPbPr(y_pbpr, p_b, p_r);
   }
@@ -118,8 +118,8 @@ class YCbCr {
 
   static YCbCr fromYPbPr(YPbPr yPbPr) {
     double y = 16.0 + 219.0 * yPbPr.y;
-    double c_b = 128.0 + 224.0 * yPbPr.p_b;
-    double c_r = 128.0 + 224.0 * yPbPr.p_r;
+    double c_b = 128.0 + 224.0 * yPbPr.pb;
+    double c_r = 128.0 + 224.0 * yPbPr.pr;
 
     return YCbCr(y, c_b, c_r);
   }
@@ -130,7 +130,7 @@ class YCbCr {
 
   @override
   String toString() {
-    return 'YCbCr($y, $c_b, $c_r)';
+    return 'YCbCr($y, $cb, $cr)';
   }
 }
 

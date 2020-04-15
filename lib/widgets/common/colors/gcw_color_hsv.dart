@@ -29,7 +29,7 @@ class _GCWColorHSVState extends State<GCWColorHSV> {
     return Column(
       children: [
         GCWDoubleSpinner(
-          title: 'Hue',
+          title: 'H',
           min: 0.0,
           max: 360.0,
           value: _currentHue,
@@ -40,7 +40,7 @@ class _GCWColorHSVState extends State<GCWColorHSV> {
           },
         ),
         GCWDoubleSpinner(
-          title: 'Saturation',
+          title: 'S',
           min: 0.0,
           max: 100.0,
           value: _currentSaturation,
@@ -51,7 +51,7 @@ class _GCWColorHSVState extends State<GCWColorHSV> {
           },
         ),
         GCWDoubleSpinner(
-          title: 'Value',
+          title: 'V',
           min: 0.0,
           max: 100.0,
           value: _currentValue,
