@@ -5,11 +5,11 @@ import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/units/lengths.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_output.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_map_geometries.dart';
-import 'package:gc_wizard/widgets/common/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class DistanceBearing extends StatefulWidget {
   @override

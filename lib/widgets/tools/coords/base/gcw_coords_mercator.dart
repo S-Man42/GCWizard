@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/widgets/common/coords/utils.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/double_textinputformatter.dart';
 import 'package:latlong/latlong.dart';
 
-class GCWCoordsSwissGrid extends StatefulWidget {
+class GCWCoordsMercator extends StatefulWidget {
   final Function onChanged;
 
-  const GCWCoordsSwissGrid({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsMercator({Key key, this.onChanged}) : super(key: key);
 
   @override
-  GCWCoordsSwissGridState createState() => GCWCoordsSwissGridState();
+  GCWCoordsMercatorState createState() => GCWCoordsMercatorState();
 }
 
-class GCWCoordsSwissGridState extends State<GCWCoordsSwissGrid> {
+class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
   var _EastingController;
   var _NorthingController;
 
@@ -72,9 +72,9 @@ class GCWCoordsSwissGridState extends State<GCWCoordsSwissGrid> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    var swissGrid = SwissGrid(_currentEasting['value'], _currentNorthing['value']);
+    var mercator = Mercator(_currentEasting['value'], _currentNorthing['value']);
 
-    LatLng coords = swissGridToLatLon(swissGrid, defaultEllipsoid());
+    LatLng coords = mercatorToLatLon(mercator, defaultEllipsoid());
     widget.onChanged(coords);
   }
 }

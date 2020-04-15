@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_dec.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_deg.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_dms.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_gausskrueger.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_geohash.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_maidenhead.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_mercator.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_mgrs.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_swissgrid.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_utm.dart';
-import 'package:gc_wizard/widgets/common/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_deg.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dms.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_gausskrueger.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geohash.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_maidenhead.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mercator.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mgrs.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:latlong/latlong.dart';
 
 class GCWCoords extends StatefulWidget {

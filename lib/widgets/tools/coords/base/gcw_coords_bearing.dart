@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_mapview.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/double_bearing_textinputformatter.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWBearing extends StatefulWidget {
   final Function onChanged;

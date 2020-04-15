@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/theme/colors.dart';
-import 'package:gc_wizard/widgets/common/coords/utils.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:latlong/latlong.dart';
 
 class MapPoint {
