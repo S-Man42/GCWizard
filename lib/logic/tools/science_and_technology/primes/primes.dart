@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
-import 'package:gc_wizard/logic/tools/science/primes/primes_list.dart';
-import 'package:gc_wizard/logic/tools/science/primes/probably_prime.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/primes/primes_list.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/primes/probably_prime.dart';
 
 
 bool isPrime(BigInt x) {

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/crypto/rotator.dart';
-import 'package:gc_wizard/logic/tools/science/primes/primes.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/primes/primes.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 
 class NthPrime extends StatefulWidget {
   @override

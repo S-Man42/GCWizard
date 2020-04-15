@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/encodings/roman_numbers.dart';
-import 'package:gc_wizard/logic/tools/science/periodic_table.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';

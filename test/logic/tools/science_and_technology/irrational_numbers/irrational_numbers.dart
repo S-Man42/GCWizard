@@ -1,6 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/science/irrational_numbers/irrational_numbers.dart';
-import 'package:gc_wizard/logic/tools/science/irrational_numbers/pi.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/irrational_numbers/irrational_numbers.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/irrational_numbers/pi.dart';
 
 void main() {
   group("IrrationalNumberCalculator.decimalAt:", () {
