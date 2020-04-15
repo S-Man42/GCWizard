@@ -3,7 +3,7 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
-import 'package:gc_wizard/widgets/tools/science/irrational_numbers/e.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class ESelection extends GCWSelection {

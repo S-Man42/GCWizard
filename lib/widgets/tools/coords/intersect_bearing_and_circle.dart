@@ -8,14 +8,14 @@ import 'package:gc_wizard/logic/tools/coords/intersect_geodetic_and_circle.dart'
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/colors.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_bearing.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_output.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_map_geometries.dart';
-import 'package:gc_wizard/widgets/common/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_bearing.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class IntersectGeodeticAndCircle extends StatefulWidget {
   @override

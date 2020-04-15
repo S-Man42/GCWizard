@@ -3,10 +3,10 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_ellipsoid.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_sign_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/coords/utils.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_ellipsoid.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:prefs/prefs.dart';
 
