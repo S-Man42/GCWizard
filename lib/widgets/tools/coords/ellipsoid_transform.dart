@@ -4,13 +4,13 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/ellipsoid_transform.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_output.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/common/coords/gcw_map_geometries.dart';
-import 'package:gc_wizard/widgets/common/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class EllipsoidTransform extends StatefulWidget {
   @override
