@@ -15,6 +15,7 @@ class Favorites {
         break;
       case FavoriteChangeStatus.remove:
         toolList.remove(_tool);
+        break;
     }
 
     _sortList();
