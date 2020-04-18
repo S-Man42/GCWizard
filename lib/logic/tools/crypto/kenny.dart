@@ -66,5 +66,5 @@ decryptKenny(String input, List<String> replaceCharacters) {
     }
   }
 
-  return output + input;
+  return (output + input).toUpperCase();
 }
