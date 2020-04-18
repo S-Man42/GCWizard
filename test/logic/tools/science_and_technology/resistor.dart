@@ -20,6 +20,7 @@ void main() {
       {'colors' : [ResistorBandColor.BLACK, ResistorBandColor.BLACK, ResistorBandColor.ORANGE, ResistorBandColor.ORANGE], 'expectedOutput' : ResistorValue(0.0, null)},
       {'colors' : [ResistorBandColor.WHITE, ResistorBandColor.BLACK, ResistorBandColor.ORANGE, ResistorBandColor.ORANGE], 'expectedOutput' : ResistorValue(90000.0, null)},
       {'colors' : [ResistorBandColor.BLUE, ResistorBandColor.BLACK, ResistorBandColor.PINK], 'expectedOutput' : ResistorValue(0.060, 0.2)},
+      {'colors' : [ResistorBandColor.GREEN, ResistorBandColor.BLUE, ResistorBandColor.BLACK, ResistorBandColor.BLACK, ResistorBandColor.BROWN], 'expectedOutput' : ResistorValue(560, 0.01)},
     ];
 
     _inputsToExpected.forEach((elem) {
