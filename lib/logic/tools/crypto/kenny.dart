@@ -39,32 +39,42 @@ decryptKenny(String input, List<String> replaceCharacters) {
   if (replaceCharacters == null || replaceCharacters.length < 3)
     return '';
 
+  var replaceToCharacters = [String.fromCharCode(0), String.fromCharCode(1), String.fromCharCode(2)];
+
   Map<String, String> substitutions = {};
+  Map<String, String> integerSubstitutions = {};
   for (int i = 0; i <= 2; i++) {
-    substitutions.putIfAbsent(replaceCharacters[i], () => i.toString());
+    substitutions.putIfAbsent(replaceCharacters[i], () => replaceToCharacters[i]);
+    integerSubstitutions.putIfAbsent(replaceToCharacters[i], () => i.toString());
   }
 
   input = substitution(input, substitutions);
 
   var output = '';
-  while (input.length >= 3) {
+  while (input.length > 0) {
     var chunk = '';
     while (chunk.length < 3 && input.length > 0) {
       var character = input[0];
-      if ('012'.contains(character)) {
+      if (replaceToCharacters.contains(character)) {
         chunk += character;
       } else {
-        output += character;
+        output += chunk + character;
+        chunk = '';
       }
+
       input = input.substring(1);
     }
 
     if (chunk.length == 3) {
-      var index = int.tryParse(convertBase(chunk, 3, 10));
-      if (index < 26)
+      var index = int.tryParse(convertBase(substitution(chunk, integerSubstitutions), 3, 10));
+      if (index < 26) {
         output += alphabet_AZIndexes[index + 1];
+        continue;
+      }
     }
+
+    output += chunk;
   }
 
-  return (output + input).toUpperCase();
+  return substitution(output + input, switchMapKeyValue(substitutions)).toUpperCase();
 }
