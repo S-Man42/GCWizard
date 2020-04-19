@@ -3,7 +3,6 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
@@ -43,6 +42,7 @@ class RomanNumbersState extends State<RomanNumbers> {
         _currentMode == GCWSwitchPosition.left
           ? GCWIntegerTextField(
               controller: _controller,
+              max: 100000,
               onChanged: (text) {
                 setState(() {
                   _currentInput = text;
