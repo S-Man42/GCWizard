@@ -61,6 +61,10 @@ class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownBu
       value: _currentValue,
       items: _colorValues.entries
         .map((colorValue) {
+          var textStyle = TextStyle(
+            color: _colorAttributes[colorValue.key].textColor
+          );
+
           return DropdownMenuItem(
             value: colorValue.key,
             child: Row(
@@ -69,11 +73,23 @@ class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownBu
                   child: Container(
                     padding: EdgeInsets.all(5.0),
                     color: _colorAttributes[colorValue.key].backgroundColor,
-                    child: Text(
-                      i18n(context, _colorAttributes[colorValue.key].name) + ': ${_formatValue(colorValue.value)}',
-                      style: TextStyle(
-                        color: _colorAttributes[colorValue.key].textColor
-                      )
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            i18n(context, _colorAttributes[colorValue.key].name) + ':',
+                            style: textStyle
+                          ),
+                          flex: 1
+                        ),
+                        Expanded(
+                          child: Text(
+                            _formatValue(colorValue.value),
+                            style: textStyle
+                          ),
+                          flex: 2
+                        )
+                      ],
                     )
                   )
                 )

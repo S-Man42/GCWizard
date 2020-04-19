@@ -323,7 +323,7 @@ formatResistorTolerancedValueInterval(List<double> valueInterval) {
 
 formatResistorTolerance(double tolerance) {
   var formatter = NumberFormat('0.0#');
-  return String.fromCharCode(177) + formatter.format(tolerance * 100) + ' %';
+  return String.fromCharCode(177) +  ' ' + formatter.format(tolerance * 100) + ' %';
 }
 
 formatResistorTemperatureCoefficient(double temperatureCoefficient) {
