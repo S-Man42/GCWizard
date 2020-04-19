@@ -137,7 +137,7 @@ class Registry {
       GCWToolWidget(tool: Playfair(), toolName: i18n(context, 'playfair_title'), searchStrings: 'playfair transposition substitution'),
       GCWToolWidget(tool: Polybios(), toolName: i18n(context, 'polybios_title'), searchStrings: 'polybios polybius transposition'),
       GCWToolWidget(tool: PrimesSelection(), toolName: i18n(context, 'primes_selection_title'), searchStrings: SEARCHSTRING_PRIMES),
-      GCWToolWidget(tool: Resistor(), toolName: 'resistor_title', searchStrings: SEARCHSTRING_PRIMES),
+      GCWToolWidget(tool: Resistor(), toolName: i18n(context, 'resistor_colorcode_title'), searchStrings: 'resistors colorcodes widerstand widerstände farben farbcodes colors'),
       GCWToolWidget(tool: Reverse(), toolName: i18n(context, 'reverse_title'), searchStrings: 'reversed backwards umkehren umgekehrt rückwärts inversed inverted invertieren invertierung invertiert inverse '),
       GCWToolWidget(tool: RomanNumbers(), toolName: i18n(context, 'romannumbers_title'), searchStrings: 'roman numbers römische zahlen'),
       GCWToolWidget(tool: RotationSelection(), toolName: i18n(context, 'rotation_selection_title'), searchStrings: SEARCHSTRING_ROTATION),

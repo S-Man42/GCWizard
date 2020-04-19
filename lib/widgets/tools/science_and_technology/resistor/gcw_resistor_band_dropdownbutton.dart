@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/resistor.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 
@@ -69,7 +70,7 @@ class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownBu
                     padding: EdgeInsets.all(5.0),
                     color: _colorAttributes[colorValue.key].backgroundColor,
                     child: Text(
-                      _colorAttributes[colorValue.key].name + ' (${colorValue.value})',
+                      i18n(context, _colorAttributes[colorValue.key].name) + ': ${_formatValue(colorValue.value)}',
                       style: TextStyle(
                         color: _colorAttributes[colorValue.key].textColor
                       )
@@ -92,6 +93,21 @@ class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownBu
 
   _setCurrentValueAndEmitOnChange() {
     widget.onChanged(_currentValue);
+  }
+
+  _formatValue(value) {
+    switch(widget.type) {
+      case ResistorBandType.FIRST:
+      case ResistorBandType.SECOND:
+      case ResistorBandType.THIRD:
+        return formatResistorValue(value);
+      case ResistorBandType.MULTIPLIER:
+        return formatResistorMultiplier(value);
+      case ResistorBandType.TOLERANCE:
+        return formatResistorTolerance(value);
+      case ResistorBandType.TEMPERATURE_COEFFICIENT:
+        return formatResistorTemperatureCoefficient(value);
+    }
   }
 }
 

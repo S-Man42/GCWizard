@@ -33,7 +33,7 @@ defaultFontSize() {
 
 List<Widget> columnedMultiLineOutput(List<List<dynamic>> data, {List<int> flexValues = const []}) {
   var odd = true;
-  return data.map((rowData) {
+  return data.where((row) => row != null).map((rowData) {
     Widget output;
 
     var columns = rowData.asMap().map((index, column) {

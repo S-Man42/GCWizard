@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 enum ResistorBandType {FIRST, SECOND, THIRD, MULTIPLIER, TOLERANCE, TEMPERATURE_COEFFICIENT}
 
 // source: https://en.wikipedia.org/wiki/Electronic_color_code#cite_note-IEC_60062_2016ECC-7
@@ -306,4 +308,33 @@ ResistorValue getResistorValue(List<ResistorBandColor> colors) {
     case 6: return _getFiveOrSixBandResistorValue(6, colors);
     default: return null;
   }
+}
+
+formatResistorValue(double value) {
+  var formatter = NumberFormat('0.0##');
+  return formatter.format(value) + ' ' + String.fromCharCode(937);
+}
+
+formatResistorTolerancedValueInterval(List<double> valueInterval) {
+  var formatter = NumberFormat('0.0######');
+  return formatter.format(valueInterval[0]) + ' ' + String.fromCharCode(937)
+      + ' - ' + formatter.format(valueInterval[1]) + ' ' + String.fromCharCode(937);
+}
+
+formatResistorTolerance(double tolerance) {
+  var formatter = NumberFormat('0.0#');
+  return String.fromCharCode(177) + formatter.format(tolerance * 100) + ' %';
+}
+
+formatResistorTemperatureCoefficient(double temperatureCoefficient) {
+  return temperatureCoefficient.floor().toString() + ' ' + String.fromCharCode(215) + ' 10^(-6) K^(-1)';
+}
+
+formatResistorMultiplier(double multiplier) {
+  var value = multiplier.toStringAsExponential();
+  value = value.replaceFirst('1e+', '10^');
+  value = value.replaceFirstMapped(RegExp(r'1e(.*)'), (Match m) => '10^(${m[1]})');
+
+  var formatter = NumberFormat('###,###,###,##0.####');
+  return String.fromCharCode(215) + ' ' + value + ' = ${formatter.format(multiplier).replaceAll(',', ' ')}';
 }

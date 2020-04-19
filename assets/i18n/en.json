@@ -105,6 +105,20 @@
   "common_sorting_asc" : "Ascending",
   "common_sorting_desc" : "Descending",
 
+  "common_color_black" : "Black",
+  "common_color_blue" : "Blue",
+  "common_color_brown" : "Brown",
+  "common_color_gold" : "Gold",
+  "common_color_green" : "Green",
+  "common_color_grey" : "Grey",
+  "common_color_orange" : "Orange",
+  "common_color_pink" : "Pink",
+  "common_color_red" : "Red",
+  "common_color_silver" : "Silver",
+  "common_color_violet" : "Violet",
+  "common_color_white" : "White",
+  "common_color_yellow" : "Yellow",
+
   "common_numeralbase_binary" : "Binary",
   "common_numeralbase_ternary" : "Ternary",
   "common_numeralbase_quaternary" : "Quaternary",
@@ -538,6 +552,12 @@
   "primes_nearestprime_title" : "Nearest Prime",
   "primes_primeindex_title" : "Prime Number Index (n)",
   "primes_integerfactorization_title" : "Integer Factorization",
+
+  "resistor_colorcode_title" : "Resistor Color Code",
+  "resistor_colorcode_numberbands" : "Number bands",
+  "resistor_value" : "Value",
+  "resistor_value_range" : "Value Range",
+  "resistor_temperaturecoefficient" : "Temp. Coefficient",
 
   "reverse_title" : "Reverse",
 
