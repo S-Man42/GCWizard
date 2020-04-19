@@ -63,18 +63,23 @@ class ResistorState extends State<Resistor> {
 
     return Column(
       children: <Widget>[
-        GCWIntegerSpinner(
-          title: i18n(context, 'resistor_colorcode_numberbands'),
-          min: 3,
-          max: 6,
-          value: _currentNumberBands,
-          onChanged: (value) {
-            setState(() {
-              _currentNumberBands = value;
+        Container(
+          child: GCWIntegerSpinner(
+            title: i18n(context, 'resistor_colorcode_numberbands'),
+            min: 3,
+            max: 6,
+            value: _currentNumberBands,
+            onChanged: (value) {
+              setState(() {
+                _currentNumberBands = value;
 
-              _changed = !_changed;
-            });
-          },
+                _changed = !_changed;
+              });
+            },
+          ),
+          padding: EdgeInsets.only(
+            bottom: 10.0
+          ),
         ),
         [3,4].contains(_currentNumberBands) ? _resistorBandDropDownButton_fourBands_first : Container(),
         [3,4].contains(_currentNumberBands) ? _resistorBandDropDownButton_fourBands_second : Container(),
