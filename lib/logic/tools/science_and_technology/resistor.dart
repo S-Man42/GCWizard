@@ -313,12 +313,12 @@ ResistorValue getResistorValue(List<ResistorBandColor> colors) {
 }
 
 formatResistorValue(double value) {
-  var formatter = NumberFormat('0.###');
+  var formatter = NumberFormat('0.####');
   return formatter.format(value) + ' ' + String.fromCharCode(937);
 }
 
 formatResistorTolerancedValueInterval(List<double> valueInterval) {
-  var formatter = NumberFormat('0.#######');
+  var formatter = NumberFormat('0.############');
   return formatter.format(valueInterval[0]) + ' ' + String.fromCharCode(937)
       + ' - ' + formatter.format(valueInterval[1]) + ' ' + String.fromCharCode(937);
 }

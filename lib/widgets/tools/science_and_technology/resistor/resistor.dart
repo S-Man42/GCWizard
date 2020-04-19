@@ -257,7 +257,7 @@ class ResistorState extends State<Resistor> {
           [i18n(context, 'resistor_temperaturecoefficient'), formatResistorTemperatureCoefficient(resistorValue.temperatureCoefficient)] : null
       ];
 
-      rows = columnedMultiLineOutput(outputs);
+      rows = columnedMultiLineOutput(outputs, flexValues: [2,3]);
     }
 
     rows.insert(0,
