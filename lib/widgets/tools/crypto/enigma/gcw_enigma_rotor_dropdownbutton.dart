@@ -3,12 +3,12 @@ import 'package:gc_wizard/logic/tools/crypto/enigma.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_abc_dropdownbutton.dart';
 
-class GCWEnigmaRotor extends StatefulWidget {
+class GCWEnigmaRotorDropDownButton extends StatefulWidget {
   final Function onChanged;
   final EnigmaRotorType type;
   final position;
 
-  const GCWEnigmaRotor({
+  const GCWEnigmaRotorDropDownButton({
     Key key,
     this.position,
     this.type: EnigmaRotorType.STANDARD,
@@ -16,10 +16,10 @@ class GCWEnigmaRotor extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  GCWEnigmaRotorState createState() => GCWEnigmaRotorState();
+  GCWEnigmaRotorDropDownButtonState createState() => GCWEnigmaRotorDropDownButtonState();
 }
 
-class GCWEnigmaRotorState extends State<GCWEnigmaRotor> {
+class GCWEnigmaRotorDropDownButtonState extends State<GCWEnigmaRotorDropDownButton> {
   var _currentRotor;
   var _currentOffset = 1;
   var _currentSetting = 1;

@@ -49,6 +49,7 @@ import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -117,6 +118,7 @@ class _MainScreenState extends State<MainScreen> {
           className(Playfair()),
           className(Polybios()),
           className(PrimesSelection()),
+          className(Resistor()),
           className(Reverse()),
           className(RomanNumbers()),
           className(RotationSelection()),
