@@ -1,3 +1,5 @@
+import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:intl/intl.dart';
 
 enum ResistorBandType {FIRST, SECOND, THIRD, MULTIPLIER, TOLERANCE, TEMPERATURE_COEFFICIENT}
@@ -311,29 +313,28 @@ ResistorValue getResistorValue(List<ResistorBandColor> colors) {
 }
 
 formatResistorValue(double value) {
-  var formatter = NumberFormat('0.0##');
+  var formatter = NumberFormat('0.###');
   return formatter.format(value) + ' ' + String.fromCharCode(937);
 }
 
 formatResistorTolerancedValueInterval(List<double> valueInterval) {
-  var formatter = NumberFormat('0.0######');
+  var formatter = NumberFormat('0.#######');
   return formatter.format(valueInterval[0]) + ' ' + String.fromCharCode(937)
       + ' - ' + formatter.format(valueInterval[1]) + ' ' + String.fromCharCode(937);
 }
 
 formatResistorTolerance(double tolerance) {
-  var formatter = NumberFormat('0.0#');
+  var formatter = NumberFormat('0.##');
   return String.fromCharCode(177) +  ' ' + formatter.format(tolerance * 100) + ' %';
 }
 
 formatResistorTemperatureCoefficient(double temperatureCoefficient) {
-  return temperatureCoefficient.floor().toString() + ' ' + String.fromCharCode(215) + ' 10^(-6) K^(-1)';
+  return temperatureCoefficient.floor().toString() + ' ' + String.fromCharCode(215) + ' 10${stringToSuperscript('-6')} K${stringToSuperscript('-1')}';
 }
 
 formatResistorMultiplier(double multiplier) {
-  var value = multiplier.toStringAsExponential();
-  value = value.replaceFirst('1e+', '10^');
-  value = value.replaceFirstMapped(RegExp(r'1e(.*)'), (Match m) => '10^(${m[1]})');
+  var valueExponential = multiplier.toStringAsExponential().split('e');
+  var value = '10' + stringToSuperscript(valueExponential[1].replaceFirst('+', ''));
 
   var formatter = NumberFormat('###,###,###,##0.####');
   return String.fromCharCode(215) + ' ' + value + ' = ${formatter.format(multiplier).replaceAll(',', ' ')}';

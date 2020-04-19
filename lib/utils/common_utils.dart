@@ -1,11 +1,11 @@
 import 'dart:math';
-import 'package:collection/collection.dart';
-import 'package:quiver/pattern.dart';
-import 'package:gc_wizard/logic/tools/crypto/rotator.dart';
+
 import 'package:diacritic/diacritic.dart';
+import 'package:gc_wizard/logic/tools/crypto/rotator.dart';
 import 'package:intl/intl.dart';
-import 'constants.dart';
+
 import 'alphabets.dart';
+import 'constants.dart';
 
 List<int> textToIntList(String text, {bool allowNegativeValues: false}) {
   var regex = allowNegativeValues ? RegExp(r'[^\-0-9]') : RegExp(r'[^0-9]');
@@ -160,4 +160,11 @@ Map<U, T> switchMapKeyValue<T,U>(Map<T, U> map) {
     return null;
 
   return map.map((k, v) => MapEntry(v, k));
+}
+
+String stringToSuperscript(String text) {
+  return text.split('').map((character) {
+    var superscript = superscriptCharacters[character];
+    return superscript ?? text;
+  }).join();
 }

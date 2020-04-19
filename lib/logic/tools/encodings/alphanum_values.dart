@@ -1,6 +1,5 @@
 import 'package:gc_wizard/utils/alphabets.dart';
-
-import '../../../utils/constants.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 class AlphabetValues {
   final Map<String, int> alphabet;
