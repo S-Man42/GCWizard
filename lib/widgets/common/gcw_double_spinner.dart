@@ -1,70 +1,86 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:intl/intl.dart';
 
-class GCWIntegerSpinner extends StatefulWidget {
+class GCWDoubleSpinner extends StatefulWidget {
   final Function onChanged;
   final title;
   final value;
   final min;
   final max;
-  final controller;
+  final numberDecimalDigits;
   final SpinnerLayout layout;
   final focusNode;
 
-  const GCWIntegerSpinner({
+  GCWDoubleSpinner({
     Key key,
     this.onChanged,
     this.title,
-    this.value: 0,
+    this.value,
     this.min,
     this.max,
-    this.controller,
+    this.numberDecimalDigits: 2,
     this.layout: SpinnerLayout.horizontal,
     this.focusNode
   }) : super(key: key);
 
   @override
-  GCWIntegerSpinnerState createState() => GCWIntegerSpinnerState();
+  GCWDoubleSpinnerState createState() => GCWDoubleSpinnerState();
 }
 
-class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
-  var _controller;
-  var _currentValue = 0;
+class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
+  TextEditingController _controller;
+
+  var _currentValue = 0.0;
+  var _numberFormat;
 
   @override
   void initState() {
     super.initState();
 
-    if (widget.controller != null) {
-      _controller = widget.controller;
-    } else {
-      if (widget.value != null)
-        _currentValue = widget.value;
+    _currentValue = widget.value;
 
-      _controller = TextEditingController(text: _currentValue.toString());
-    }
+    var formatString = '0';
+    if (widget.numberDecimalDigits > 0)
+      formatString += '.' + '#' * widget.numberDecimalDigits;
+    _numberFormat = NumberFormat(formatString);
+
+    _controller = TextEditingController(text: _numberFormat.format(_currentValue));
   }
 
   @override
   void dispose() {
-    if (widget.controller == null)
-      _controller.dispose();
+    _controller.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.value != null) {
+      _currentValue = widget.value;
+    }
+
     return _buildSpinner();
   }
 
   _decreaseValue() {
     setState(() {
-      if (widget.min == null || _currentValue > widget.min)
-        _currentValue--;
+      if (widget.min == null || _currentValue > widget.min) {
+        var newValue = _currentValue;
+        if ((newValue.floor() - newValue).abs() <= 10e-10) {
+          newValue--;
+        } else {
+          newValue = newValue.floor().toDouble();
+        }
+
+        _currentValue = max(widget.min, newValue);
+      }
 
       _setCurrentValueAndEmitOnChange(setTextFieldText: true);
     });
@@ -72,8 +88,16 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _increaseValue() {
     setState(() {
-      if (widget.max == null || _currentValue < widget.max)
-        _currentValue++;
+      if (widget.max == null || _currentValue < widget.max) {
+        var newValue = _currentValue;
+        if ((newValue.ceil() - newValue).abs() <= 10e-10) {
+          newValue++;
+        } else {
+          newValue = newValue.ceil().toDouble();
+        }
+
+        _currentValue = min(widget.max, newValue);
+      }
 
       _setCurrentValueAndEmitOnChange(setTextFieldText: true);
     });
@@ -90,14 +114,16 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   }
 
   Widget _buildTextField() {
-    return GCWIntegerTextField(
+    return GCWDoubleTextField(
       focusNode: widget.focusNode,
       min: widget.min,
       max: widget.max,
+      numberDecimalDigits: widget.numberDecimalDigits,
       controller: _controller,
       onChanged: (ret) {
         setState(() {
           _currentValue = ret['value'];
+
           _setCurrentValueAndEmitOnChange();
         });
       }
@@ -114,12 +140,12 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
               children: <Widget>[
                 Container(
                   child: GCWIconButton(
-                      iconData: Icons.remove,
-                      onPressed: _decreaseValue
+                    iconData: Icons.remove,
+                    onPressed: _decreaseValue
                   ),
                   margin: const EdgeInsets.only(
-                      left: 10.0,
-                      right: 10.0
+                    left: 10.0,
+                    right: 10.0
                   ),
                 ),
                 Expanded(
@@ -127,8 +153,8 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
                 ),
                 Container(
                   child: GCWIconButton(
-                      iconData: Icons.add,
-                      onPressed: _increaseValue
+                    iconData: Icons.add,
+                    onPressed: _increaseValue
                   ),
                   margin: const EdgeInsets.only(
                       left: 10.0,
@@ -169,7 +195,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _setCurrentValueAndEmitOnChange({setTextFieldText: false}) {
     if (setTextFieldText)
-      _controller.text = _currentValue.toString();
+      _controller.text = _numberFormat.format(_currentValue);
 
     widget.onChanged(_currentValue);
   }

@@ -161,3 +161,7 @@ Map<U, T> switchMapKeyValue<T,U>(Map<T, U> map) {
 
   return map.map((k, v) => MapEntry(v, k));
 }
+
+double degreesToRadian(double degrees) {
+  return degrees * pi / 180.0;
+}

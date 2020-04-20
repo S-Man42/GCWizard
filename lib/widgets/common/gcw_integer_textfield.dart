@@ -29,6 +29,17 @@ class GCWIntegerTextField extends StatefulWidget {
 }
 
 class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
+  var _integerInputFormatter;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _integerInputFormatter = IntegerTextInputFormatter(
+      min: widget.min,
+      max: widget.max
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +59,7 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
           });
         },
         controller: widget.controller,
-        inputFormatters: [widget.textInputFormatter ?? IntegerTextInputFormatter(
-          min: widget.min,
-          max: widget.max
-        )],
+        inputFormatters: [widget.textInputFormatter ?? _integerInputFormatter],
         keyboardType: TextInputType.numberWithOptions(
           signed: widget.min == null || widget.min < 0,
           decimal: false

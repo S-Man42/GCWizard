@@ -4,7 +4,6 @@ import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/double_textinputformatter.dart';
 import 'package:latlong/latlong.dart';
 
 class GCWCoordsMercator extends StatefulWidget {
@@ -43,9 +42,7 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
         children: <Widget>[
           GCWDoubleTextField(
             hintText: i18n(context, 'coords_formatconverter_swissgrid_easting'),
-            textInputFormatter: DoubleTextInputFormatter(
-              allowNegativeValues: false
-            ),
+            min: 0.0,
             controller: _EastingController,
             onChanged: (ret) {
               setState(() {
@@ -56,9 +53,7 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
           ),
           GCWDoubleTextField(
               hintText: i18n(context, 'coords_formatconverter_swissgrid_northing'),
-              textInputFormatter: DoubleTextInputFormatter(
-                  allowNegativeValues: false
-              ),
+              min: 0.0,
               controller: _NorthingController,
               onChanged: (ret) {
                 setState(() {
