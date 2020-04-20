@@ -7,7 +7,6 @@ import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_utm_lonzone_textinputformatter.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/double_textinputformatter.dart';
 import 'package:latlong/latlong.dart';
 
 class GCWCoordsUTM extends StatefulWidget {
@@ -82,9 +81,7 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
           ),
           GCWDoubleTextField(
             hintText: i18n(context, 'coords_formatconverter_utm_easting'),
-            textInputFormatter: DoubleTextInputFormatter(
-              allowNegativeValues: false
-            ),
+            min: 0.0,
             controller: _EastingController,
             onChanged: (ret) {
               setState(() {
@@ -95,9 +92,7 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
           ),
           GCWDoubleTextField(
               hintText: i18n(context, 'coords_formatconverter_utm_northing'),
-              textInputFormatter: DoubleTextInputFormatter(
-                  allowNegativeValues: false
-              ),
+              min: 0.0,
               controller: _NorthingController,
               onChanged: (ret) {
                 setState(() {

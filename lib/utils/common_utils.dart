@@ -168,3 +168,7 @@ String stringToSuperscript(String text) {
     return superscript ?? text;
   }).join();
 }
+
+double degreesToRadian(double degrees) {
+  return degrees * pi / 180.0;
+}

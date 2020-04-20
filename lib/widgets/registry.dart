@@ -55,10 +55,10 @@ import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto/symbol_table.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tapir.dart';
-import 'package:gc_wizard/widgets/tools/crypto/vanity_multiplenumbers.dart';
-import 'package:gc_wizard/widgets/tools/crypto/vanity_singlenumbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
+import 'package:gc_wizard/widgets/tools/crypto/vanity_multiplenumbers.dart';
+import 'package:gc_wizard/widgets/tools/crypto/vanity_singlenumbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/date_and_time/weekday.dart';
@@ -76,6 +76,7 @@ import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/color_picker.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
@@ -119,6 +120,7 @@ class Registry {
       GCWToolWidget(tool: BrainfkSelection(), toolName: i18n(context, 'brainfk_title'), searchStrings: SEARCHSTRING_BRAINFK),
       GCWToolWidget(tool: Caesar(), toolName: i18n(context, 'caesar_title'), searchStrings: SEARCHSTRING_ROTATION + 'caesar cäsar'),
       GCWToolWidget(tool: CCITT2(), toolName: i18n(context, 'ccitt2_title'), searchStrings: SEARCHSTRING_CCITT2),
+      GCWToolWidget(tool: ColorPicker(), toolName: i18n(context, 'colors_title'), searchStrings: 'colors pal ntsc farben rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode picker red green blue yellow black key magenta orange cyan luminanz hellwert farbwert helligkeit sättigung luminance chrominanz chrominance saturation lightness hue cmyk luma chroma'),
       GCWToolWidget(tool: CoordsSelection(), toolName: i18n(context, 'coords_selection_title'), searchStrings: SEARCHSTRING_COORDINATES),
       GCWToolWidget(tool: DatesSelection(), toolName: i18n(context, 'dates_selection_title'), searchStrings: SEARCHSTRING_DATES),
       GCWToolWidget(tool: Decabit(), toolName: i18n(context, 'decabit_title'), searchStrings: 'decabit impulsraster zellweger plus minus rundsteuertechnik ripple control'),

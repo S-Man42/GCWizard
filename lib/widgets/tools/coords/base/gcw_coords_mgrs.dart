@@ -7,7 +7,6 @@ import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_utm_lonzone_textinputformatter.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/double_textinputformatter.dart';
 import 'package:latlong/latlong.dart';
 
 class GCWCoordsMGRS extends StatefulWidget {
@@ -127,9 +126,7 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
           ),
           GCWDoubleTextField(
             hintText: i18n(context, 'coords_formatconverter_mgrs_easting'),
-            textInputFormatter: DoubleTextInputFormatter(
-              allowNegativeValues: false
-            ),
+            min: 0.0,
             controller: _EastingController,
             onChanged: (ret) {
               setState(() {
@@ -140,9 +137,7 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
           ),
           GCWDoubleTextField(
               hintText: i18n(context, 'coords_formatconverter_mgrs_northing'),
-              textInputFormatter: DoubleTextInputFormatter(
-                  allowNegativeValues: false
-              ),
+              min: 0.0,
               controller: _NorthingController,
               onChanged: (ret) {
                 setState(() {

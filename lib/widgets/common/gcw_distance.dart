@@ -42,7 +42,7 @@ class _GCWDistanceState extends State<GCWDistance> {
           flex: 3,
           child: GCWDoubleTextField(
             hintText: widget.hintText ?? i18n(context, 'common_distance_hint'),
-            allowNegativeValues: false,
+            min: 0.0,
             controller: _controller,
             onChanged: (ret) {
               setState(() {
