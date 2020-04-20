@@ -47,6 +47,7 @@ import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/color_picker.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -100,6 +101,7 @@ class _MainScreenState extends State<MainScreen> {
           className(Caesar()),
           className(CCITT2()),
           className(CoordsSelection()),
+          className(ColorPicker()),
           className(DatesSelection()),
           className(Decabit()),
           className(Enigma()),
