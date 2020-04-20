@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
 import 'package:prefs/prefs.dart';
 
 class GeneralSettings extends StatefulWidget {
@@ -26,6 +26,9 @@ class GeneralSettingsState extends State<GeneralSettings> {
           onChanged: (value) {
             setState(() {
               Prefs.setDouble('font_size', value.toDouble());
+
+              // source: https://hillel.dev/2018/08/15/flutter-how-to-rebuild-the-entire-app-to-change-the-theme-or-locale/
+              AppBuilder.of(context).rebuild();
             });
           },
         ),
