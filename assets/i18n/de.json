@@ -150,6 +150,9 @@
   "common_sorting" : "Sortierung",
   "common_sorting_asc" : "Aufsteigend",
   "common_sorting_desc" : "Absteigend",
+  "common_tabs_categories" : "Kategorien",
+  "common_tabs_all" : "Alle",
+  "common_tabs_favorites" : "Favoriten",
 
   "common_numeralbase_binary" : "Binär",
   "common_numeralbase_ternary" : "Ternär",
@@ -288,6 +291,8 @@
   "crosstotal_crossproduct" : "Querprodukt",
   "crosstotal_crossproduct_iterated" : "Querprodukt iteriert",
   "crosstotal_crossprocut_alternated" : "Querprodukt alterniert",
+
+  "cryptography_selection_title" : "Verschlüsselungen und Codes",
 
   "dates_selection_title" : "Datums- und Zeitfunktionen",
   "dates_daycalculator_title" : "Anzahl Tage",
@@ -599,6 +604,8 @@
   "rotation_rot47_title" : "ROT47",
   "rotation_rotation_title" : "Rotation",
 
+  "scienceandtechnology_selection_title" : "Wissenschaft und Technik",
+
   "scrabble_title" : "Scrabble",
   "scrabble_mode" : "Buchstaben...",
   "scrabble_mode_values" : "Werte",
@@ -628,7 +635,11 @@
   "settings_general_title" : "Allgemein",
   "settings_general_text" : "Schrifteinstellungen",
   "settings_general_text_size" : "Größe",
-  "settings_general_symboltables" : "Symboltabellen (Anzahl Bilder pro Zeile)",
+  "settings_general_symboltables" : "Symboltabellen",
+  "settings_general_symboltables_countcolumns" : "Anzahl Bilder pro Zeile",
+  "settings_general_defaulttab" : "Standard-Tab",
+  "settings_general_defaulttab_uselasttab" : "Zeige zuletzte benutzten Tab",
+  "settings_general_defaulttab_usedefaulttab" : "Zeige Standard-Tab",
   "settings_coordinates_title" : "Koordinaten",
   "settings_coordinates_defaultformat" : "Standardformat",
   "settings_coordinates_defaulthemispheres" : "Standardhemisphären",
