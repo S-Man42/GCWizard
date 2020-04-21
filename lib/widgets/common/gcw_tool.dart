@@ -5,9 +5,12 @@ import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
+enum ToolCategory {CRYPTOGRAPHY, COORDINATES, FORMULA_SOLVER, SCIENCE_AND_TECHNOLOGY, SYMBOL_TABLES}
+
 class GCWToolWidget extends StatefulWidget {
   final Widget tool;
   final String toolName;
+  final ToolCategory category;
   final autoScroll;
   final iconPath;
   final String searchStrings;
@@ -21,6 +24,7 @@ class GCWToolWidget extends StatefulWidget {
     Key key,
     this.tool,
     this.toolName,
+    this.category,
     this.autoScroll: true,
     this.iconPath,
     this.searchStrings: '',

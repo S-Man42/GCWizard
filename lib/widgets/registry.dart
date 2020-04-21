@@ -9,12 +9,14 @@ import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
@@ -37,7 +39,6 @@ import 'package:gc_wizard/widgets/tools/crypto/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/caesar.dart';
-import 'package:gc_wizard/widgets/tools/crypto/decabit.dart';
 import 'package:gc_wizard/widgets/tools/crypto/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kamasutra.dart';
@@ -60,8 +61,6 @@ import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vanity_multiplenumbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vanity_singlenumbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
-import 'package:gc_wizard/widgets/tools/date_and_time/day_calculator.dart';
-import 'package:gc_wizard/widgets/tools/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/encodings/base/base32.dart';
@@ -77,6 +76,9 @@ import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/color_picker.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
@@ -110,48 +112,50 @@ class Registry {
   static initialize(BuildContext context) {
     toolList = [
       //MainSelection
-      GCWToolWidget(tool: Abaddon(), toolName: i18n(context, 'abaddon_title'), searchStrings: 'abaddon abbaddon abbadon yen renminbi mi thorn ternär gc11eky ' + [165, 181, 254].map((char) => String.fromCharCode(char)).join(' ')),
-      GCWToolWidget(tool: ADFGVX(), toolName: i18n(context, 'adfgvx_title'), searchStrings: 'adfgx adfgvx polybius polybios transposition substitution'),
-      GCWToolWidget(tool: ASCIIValues(), toolName: i18n(context, 'asciivalues_title'), searchStrings: 'ascii utf8 utf-8 unicode american standard information interchange'),
-      GCWToolWidget(tool: Atbash(), toolName: i18n(context, 'atbash_title'), searchStrings: 'atbash atbasch hebrew hebräisches umkehren umkehrungen reverse rückwärts'),
-      GCWToolWidget(tool: Bacon(), toolName: i18n(context, 'bacon_title'), searchStrings: 'francis bacon binary binär dual'),
-      GCWToolWidget(tool: BaseSelection(), toolName: i18n(context, 'base_selection_title'), searchStrings: SEARCHSTRING_BASE),
-      GCWToolWidget(tool: BrainfkSelection(), toolName: i18n(context, 'brainfk_title'), searchStrings: SEARCHSTRING_BRAINFK),
-      GCWToolWidget(tool: Caesar(), toolName: i18n(context, 'caesar_title'), searchStrings: SEARCHSTRING_ROTATION + 'caesar cäsar'),
-      GCWToolWidget(tool: CCITT2(), toolName: i18n(context, 'ccitt2_title'), searchStrings: SEARCHSTRING_CCITT2),
-      GCWToolWidget(tool: ColorPicker(), toolName: i18n(context, 'colors_title'), searchStrings: 'colors pal ntsc farben rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode picker red green blue yellow black key magenta orange cyan luminanz hellwert farbwert helligkeit sättigung luminance chrominanz chrominance saturation lightness hue cmyk luma chroma'),
+      GCWToolWidget(tool: Abaddon(), toolName: i18n(context, 'abaddon_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'abaddon abbaddon abbadon yen renminbi mi thorn ternär gc11eky ' + [165, 181, 254].map((char) => String.fromCharCode(char)).join(' ')),
+      GCWToolWidget(tool: ADFGVX(), toolName: i18n(context, 'adfgvx_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'adfgx adfgvx polybius polybios transposition substitution'),
+      GCWToolWidget(tool: ASCIIValues(), toolName: i18n(context, 'asciivalues_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'ascii utf8 utf-8 unicode american standard information interchange'),
+      GCWToolWidget(tool: Atbash(), toolName: i18n(context, 'atbash_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'atbash atbasch hebrew hebräisches umkehren umkehrungen reverse rückwärts'),
+      GCWToolWidget(tool: Bacon(), toolName: i18n(context, 'bacon_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'francis bacon binary binär dual'),
+      GCWToolWidget(tool: BaseSelection(), toolName: i18n(context, 'base_selection_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: SEARCHSTRING_BASE),
+      GCWToolWidget(tool: BrainfkSelection(), toolName: i18n(context, 'brainfk_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: SEARCHSTRING_BRAINFK),
+      GCWToolWidget(tool: Caesar(), toolName: i18n(context, 'caesar_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: SEARCHSTRING_ROTATION + 'caesar cäsar'),
+      GCWToolWidget(tool: CCITT2(), toolName: i18n(context, 'ccitt2_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: SEARCHSTRING_CCITT2),
+      GCWToolWidget(tool: ColorPicker(), toolName: i18n(context, 'colors_title'), category: ToolCategory.SCIENCE_AND_TECHNOLOGY, searchStrings: 'colors pal ntsc farben rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode picker red green blue yellow black key magenta orange cyan luminanz hellwert farbwert helligkeit sättigung luminance chrominanz chrominance saturation lightness hue cmyk luma chroma'),
       GCWToolWidget(tool: CoordsSelection(), toolName: i18n(context, 'coords_selection_title'), searchStrings: SEARCHSTRING_COORDINATES),
-      GCWToolWidget(tool: DatesSelection(), toolName: i18n(context, 'dates_selection_title'), searchStrings: SEARCHSTRING_DATES),
-      GCWToolWidget(tool: Decabit(), toolName: i18n(context, 'decabit_title'), searchStrings: 'decabit impulsraster zellweger plus minus rundsteuertechnik ripple control'),
-      GCWToolWidget(tool: ESelection(), toolName: i18n(context, 'e_selection_title'), searchStrings: SEARCHSTRING_E),
-      GCWToolWidget(tool: Enigma(), toolName: i18n(context, 'enigma_title'), searchStrings: 'enigma rotors walzen'),
+      GCWToolWidget(tool: CryptographySelection(), toolName: i18n(context, 'cryptography_selection_title'), searchStrings: 'cryptography verschlüsselung entschlüsselung verschlüsseln entschlüsseln codes encoding decoding encode decode encryption encrypt decrypt decryption kryptographie kryptografie'),
+      GCWToolWidget(tool: DatesSelection(), toolName: i18n(context, 'dates_selection_title'), category: ToolCategory.SCIENCE_AND_TECHNOLOGY, searchStrings: SEARCHSTRING_DATES),
+      GCWToolWidget(tool: Decabit(), toolName: i18n(context, 'decabit_title'), category: ToolCategory.SCIENCE_AND_TECHNOLOGY, searchStrings: 'decabit impulsraster zellweger plus minus rundsteuertechnik ripple control'),
+      GCWToolWidget(tool: ESelection(), toolName: i18n(context, 'e_selection_title'), category: ToolCategory.SCIENCE_AND_TECHNOLOGY, searchStrings: SEARCHSTRING_E),
+      GCWToolWidget(tool: Enigma(), toolName: i18n(context, 'enigma_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'enigma rotors walzen'),
       GCWToolWidget(tool: FormulaSolver(), toolName: i18n(context, 'formulasolver_title'), searchStrings: 'formula solver'),
-      GCWToolWidget(tool: Gronsfeld(), toolName: i18n(context, 'gronsfeld_title'), searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'),
-      GCWToolWidget(tool: Kamasutra(), toolName: i18n(context, 'kamasutra_title'), searchStrings: SEARCHSTRING_ROTATION + 'kama-sutra kamasutra 44 vatsyayana mlecchita vikalpa '),
-      GCWToolWidget(tool: Kenny(), toolName: i18n(context, 'kenny_title'), searchStrings: 'they killed kenny sie haben kenny getötet kennys kenny\'s code southpark'),
-      GCWToolWidget(tool: LetterValues(), toolName: i18n(context, 'lettervalues_title'), searchStrings: 'alphanumeric letter values checksums crosssums digits alternate products buchstabenwerte quersummen alphanumerisch produkt alternierend'),
-      GCWToolWidget(tool: Morse(), toolName: i18n(context, 'morse_title'), searchStrings: 'samuel morse morsecode morsen translators translate übersetzen übersetzer punkte striche dots dashes'),
-      GCWToolWidget(tool: NumeralBases(), toolName: i18n(context, 'numeralbases_title'), searchStrings: 'converter converting bases umwandler umwandeln konvertieren konverter numeral basis basen zahlensysteme binär binary decimal dezimal octal octenary oktal dual'),
-      GCWToolWidget(tool: PeriodicTable(), toolName: i18n(context, 'periodictable_title'), searchStrings: 'periodic tables of the elements periodensystem der elemente chemie chemistry'),
-      GCWToolWidget(tool: PhiSelection(), toolName: i18n(context, 'phi_selection_title'), searchStrings: SEARCHSTRING_PHI),
-      GCWToolWidget(tool: PiSelection(), toolName: i18n(context, 'pi_selection_title'), searchStrings: SEARCHSTRING_PI),
-      GCWToolWidget(tool: Playfair(), toolName: i18n(context, 'playfair_title'), searchStrings: 'playfair transposition substitution'),
-      GCWToolWidget(tool: Polybios(), toolName: i18n(context, 'polybios_title'), searchStrings: 'polybios polybius transposition'),
-      GCWToolWidget(tool: PrimesSelection(), toolName: i18n(context, 'primes_selection_title'), searchStrings: SEARCHSTRING_PRIMES),
-      GCWToolWidget(tool: Reverse(), toolName: i18n(context, 'reverse_title'), searchStrings: 'reversed backwards umkehren umgekehrt rückwärts inversed inverted invertieren invertierung invertiert inverse '),
-      GCWToolWidget(tool: RomanNumbers(), toolName: i18n(context, 'romannumbers_title'), searchStrings: 'roman numbers römische zahlen'),
-      GCWToolWidget(tool: RotationSelection(), toolName: i18n(context, 'rotation_selection_title'), searchStrings: SEARCHSTRING_ROTATION),
-      GCWToolWidget(tool: Scrabble(), toolName: i18n(context, 'scrabble_title'), searchStrings: 'scrabble deutsch englisch spanisch niederländisch französisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'),
-      GCWToolWidget(tool: Skytale(), toolName: i18n(context, 'skytale_title'), searchStrings: 'scytale skytale stick stock stab transposition'),
-      GCWToolWidget(tool: Substitution(), toolName: i18n(context, 'substitution_title'), searchStrings: 'substitution ersetzen alphabet change austauschen change switch'),
+      GCWToolWidget(tool: Gronsfeld(), toolName: i18n(context, 'gronsfeld_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'),
+      GCWToolWidget(tool: Kamasutra(), toolName: i18n(context, 'kamasutra_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: SEARCHSTRING_ROTATION + 'kama-sutra kamasutra 44 vatsyayana mlecchita vikalpa '),
+      GCWToolWidget(tool: Kenny(), toolName: i18n(context, 'kenny_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'they killed kenny sie haben kenny getötet kennys kenny\'s code southpark'),
+      GCWToolWidget(tool: LetterValues(), toolName: i18n(context, 'lettervalues_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'alphanumeric letter values checksums crosssums digits alternate products buchstabenwerte quersummen alphanumerisch produkt alternierend'),
+      GCWToolWidget(tool: Morse(), toolName: i18n(context, 'morse_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'samuel morse morsecode morsen translators translate übersetzen übersetzer punkte striche dots dashes'),
+      GCWToolWidget(tool: NumeralBases(), toolName: i18n(context, 'numeralbases_title'), category: ToolCategory.SCIENCE_AND_TECHNOLOGY, searchStrings: 'converter converting bases umwandler umwandeln konvertieren konverter numeral basis basen zahlensysteme binär binary decimal dezimal octal octenary oktal dual'),
+      GCWToolWidget(tool: PeriodicTable(), toolName: i18n(context, 'periodictable_title'), category: ToolCategory.SCIENCE_AND_TECHNOLOGY, searchStrings: 'periodic tables of the elements periodensystem der elemente chemie chemistry'),
+      GCWToolWidget(tool: PhiSelection(), toolName: i18n(context, 'phi_selection_title'), category: ToolCategory.SCIENCE_AND_TECHNOLOGY, searchStrings: SEARCHSTRING_PHI),
+      GCWToolWidget(tool: PiSelection(), toolName: i18n(context, 'pi_selection_title'), category: ToolCategory.SCIENCE_AND_TECHNOLOGY, searchStrings: SEARCHSTRING_PI),
+      GCWToolWidget(tool: Playfair(), toolName: i18n(context, 'playfair_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'playfair transposition substitution'),
+      GCWToolWidget(tool: Polybios(), toolName: i18n(context, 'polybios_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'polybios polybius transposition'),
+      GCWToolWidget(tool: PrimesSelection(), toolName: i18n(context, 'primes_selection_title'), category: ToolCategory.SCIENCE_AND_TECHNOLOGY, searchStrings: SEARCHSTRING_PRIMES),
+      GCWToolWidget(tool: Reverse(), toolName: i18n(context, 'reverse_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'reversed backwards umkehren umgekehrt rückwärts inversed inverted invertieren invertierung invertiert inverse '),
+      GCWToolWidget(tool: RomanNumbers(), toolName: i18n(context, 'romannumbers_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'roman numbers römische zahlen'),
+      GCWToolWidget(tool: RotationSelection(), toolName: i18n(context, 'rotation_selection_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: SEARCHSTRING_ROTATION),
+      GCWToolWidget(tool: ScienceAndTechnologySelection(), toolName: i18n(context, 'scienceandtechnology_selection_title'), searchStrings: 'science technology naturwissenschaften technologien technik maths mathematics mathematik physics physik chemistry chemie '),
+      GCWToolWidget(tool: Scrabble(), toolName: i18n(context, 'scrabble_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'scrabble deutsch englisch spanisch niederländisch französisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'),
+      GCWToolWidget(tool: Skytale(), toolName: i18n(context, 'skytale_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'scytale skytale stick stock stab transposition'),
+      GCWToolWidget(tool: Substitution(), toolName: i18n(context, 'substitution_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'substitution ersetzen alphabet change austauschen change switch'),
       GCWToolWidget(tool: SymbolTableSelection(), toolName: i18n(context, 'symboltables_selection_title'), searchStrings: SEARCHSTRING_SYMBOLTABLES),
-      GCWToolWidget(tool: TapCode(), toolName: i18n(context, 'tapcode_title'), searchStrings: 'tapcode klopfcode klopfen'),
-      GCWToolWidget(tool: Tapir(), toolName: i18n(context, 'tapir_title'), searchStrings: 'tapir ddr nva mfs stasi nationale volksarmee'),
-      GCWToolWidget(tool: TomTom(), toolName: i18n(context, 'tomtom_title'), searchStrings: 'tomtom tom a-tom-tom tom-tom atomtom'),
-      GCWToolWidget(tool: Trithemius(), toolName: i18n(context, 'trithemius_title'), searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'),
-      GCWToolWidget(tool: VanitySelection(), toolName: i18n(context, 'vanity_selection_title'), searchStrings: SEARCHSTRING_VANITY),
-      GCWToolWidget(tool: Vigenere(), toolName: i18n(context, 'vigenere_title'), searchStrings: SEARCHSTRING_VIGENERE + 'autokey'),
-      GCWToolWidget(tool: Z22(), toolName: i18n(context, 'z22_title'), searchStrings: SEARCHSTRING_CCITT2),
+      GCWToolWidget(tool: TapCode(), toolName: i18n(context, 'tapcode_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'tapcode klopfcode klopfen'),
+      GCWToolWidget(tool: Tapir(), toolName: i18n(context, 'tapir_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'tapir ddr nva mfs stasi nationale volksarmee'),
+      GCWToolWidget(tool: TomTom(), toolName: i18n(context, 'tomtom_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: 'tomtom tom a-tom-tom tom-tom atomtom'),
+      GCWToolWidget(tool: Trithemius(), toolName: i18n(context, 'trithemius_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'),
+      GCWToolWidget(tool: VanitySelection(), toolName: i18n(context, 'vanity_selection_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: SEARCHSTRING_VANITY),
+      GCWToolWidget(tool: Vigenere(), toolName: i18n(context, 'vigenere_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: SEARCHSTRING_VIGENERE + 'autokey'),
+      GCWToolWidget(tool: Z22(), toolName: i18n(context, 'z22_title'), category: ToolCategory.CRYPTOGRAPHY, searchStrings: SEARCHSTRING_CCITT2),
 
       //BaseSelection
       GCWToolWidget(tool: Base16(), toolName: i18n(context, 'base_base16_title'), searchStrings: SEARCHSTRING_BASE + 'base16'),
