@@ -5,9 +5,10 @@ class GCWText extends StatefulWidget {
   final String text;
   final Alignment align;
   final TextAlign textAlign;
+  final TextStyle style;
 
   const GCWText({
-    Key key, this.text, this.align: Alignment.centerLeft, this.textAlign}) : super(key: key);
+    Key key, this.text, this.align: Alignment.centerLeft, this.textAlign, this.style}) : super(key: key);
 
   @override
   _GCWTextState createState() => _GCWTextState();
@@ -22,7 +23,7 @@ class _GCWTextState extends State<GCWText> {
       child: SelectableText(
         widget.text,
         textAlign: widget.textAlign,
-        style: gcwTextStyle()
+        style: widget.style ?? gcwTextStyle()
       )
     );
   }

@@ -47,4 +47,12 @@ void initDefaultSettings() {
   if (Prefs.get('tabs_last_viewed_tab') == null) {
     Prefs.setInt('tabs_last_viewed_tab', 0);
   }
+
+  if (Prefs.get('toollist_show_descriptions') == null) {
+    Prefs.setBool('toollist_show_descriptions', true);
+  }
+
+  if (Prefs.get('toollist_show_examples') == null) {
+    Prefs.setBool('toollist_show_examples', true);
+  }
 }

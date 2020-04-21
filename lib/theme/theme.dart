@@ -5,14 +5,14 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 final FONT_SIZE_MIN = 10;
 final FONT_SIZE_MAX = 30;
 
-gcwTextStyle() {
+TextStyle gcwTextStyle() {
  return TextStyle(
      fontSize: defaultFontSize(),
      fontFamily: 'Roboto Condensed'
  );
 }
 
-gcwMonotypeTextStyle() {
+TextStyle gcwMonotypeTextStyle() {
   return TextStyle(
     fontSize: defaultFontSize(),
     fontFamily: 'Courier',
@@ -20,7 +20,7 @@ gcwMonotypeTextStyle() {
   );
 }
 
-gcwHyperlinkTextStyle() {
+TextStyle gcwHyperlinkTextStyle() {
   return TextStyle(
     color: ThemeColors.accent,
     decoration: TextDecoration.underline

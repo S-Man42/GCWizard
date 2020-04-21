@@ -45,7 +45,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_centerthreepoint_coorda'),
+          text: i18n(context, 'coords_centerthreepoints_coorda'),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -55,7 +55,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_centerthreepoint_coordb'),
+          text: i18n(context, 'coords_centerthreepoints_coordb'),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {
@@ -65,7 +65,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_centerthreepoint_coordc'),
+          text: i18n(context, 'coords_centerthreepoints_coordc'),
           coordsFormat: _currentCoordsFormat3,
           onChanged: (ret) {
             setState(() {
