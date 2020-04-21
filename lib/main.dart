@@ -5,7 +5,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/default_settings.dart';
-import 'package:gc_wizard/widgets/main_screen.dart';
+import 'package:gc_wizard/widgets/main_view.dart';
 import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
 import 'package:prefs/prefs.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +46,7 @@ class App extends StatelessWidget {
                   GlobalWidgetsLocalizations.delegate,
                 ],
                 theme: buildTheme(),
-                home: MainScreen(),
+                home: MainView(),
               );
             }
           );

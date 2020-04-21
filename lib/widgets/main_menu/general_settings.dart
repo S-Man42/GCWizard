@@ -41,6 +41,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
           text: i18n(context, 'settings_general_defaulttab')
         ),
         GCWTwoOptionsSwitch(
+          title: i18n(context, 'settings_general_defaulttab_atstart'),
           value: Prefs.getBool('tabs_use_default_tab') ? GCWSwitchPosition.right : GCWSwitchPosition.left,
           leftValue: i18n(context, 'settings_general_defaulttab_uselasttab'),
           rightValue: i18n(context, 'settings_general_defaulttab_usedefaulttab'),

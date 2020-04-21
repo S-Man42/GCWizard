@@ -55,12 +55,12 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.da
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
-class MainScreen extends StatefulWidget {
+class MainView extends StatefulWidget {
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _MainViewState createState() => _MainViewState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainViewState extends State<MainView> {
   var _isSearching = false;
   final _searchController = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -171,16 +171,13 @@ class _MainScreenState extends State<MainScreen> {
             },
             tabs: [
               Tab(
-                icon: Icon(Icons.filter_none),
-                text: 'Categories',
+                icon: Icon(Icons.category)
               ),
               Tab(
-                icon: Icon(Icons.list),
-                text: 'All'
+                icon: Icon(Icons.list)
               ),
               Tab(
-                icon: Icon(Icons.star),
-                text: 'Favorites'
+                icon: Icon(Icons.star)
               ),
             ],
           ),

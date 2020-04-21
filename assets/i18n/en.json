@@ -638,6 +638,7 @@
   "settings_general_symboltables" : "Symbol Tables",
   "settings_general_symboltables_countcolumns" : "Number Images per Row",
   "settings_general_defaulttab" : "Default Tab",
+  "settings_general_defaulttab_atstart" : "At Start",
   "settings_general_defaulttab_uselasttab" : "Show last used tab",
   "settings_general_defaulttab_usedefaulttab" : "Show default tab",
   "settings_coordinates_title" : "Coordinates",
