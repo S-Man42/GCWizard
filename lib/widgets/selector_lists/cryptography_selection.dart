@@ -9,6 +9,9 @@ class CryptographySelection extends GCWSelection {
   Widget build(BuildContext context) {
 
     final List<GCWToolWidget> _toolList = Registry.toolList.where((element) => element.category == ToolCategory.CRYPTOGRAPHY).toList();
+    _toolList.sort((a, b){
+      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+    });
 
     return Container(
       child: GCWToolList(

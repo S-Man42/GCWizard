@@ -96,7 +96,7 @@
   "callforcontribution_25" : "Lass GCWizard ein Community-Projekt werden!",
 
   "ccitt2_title" : "CCITT2 (Baudot)",
-  "ccitt2_description" : "Binäres Lochkartencode (Baudot-Murray-Code)",
+  "ccitt2_description" : "Binärer Lochkartencode (Baudot-Murray-Code)",
   "ccitt2_example" : "ABC → 00011 11001 01110",
   "ccitt2_numeral_base" : "Kodierung",
 
