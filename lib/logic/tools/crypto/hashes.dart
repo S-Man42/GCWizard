@@ -21,8 +21,8 @@ import 'package:pointycastle/export.dart';
 // Wrapper for PointyCastle library
 
 String _digest(Digest digest, String data) {
-  if (data == null || data.length == 0)
-    return '';
+  if (data == null)
+    data = '';
 
   Uint8List dataToDigest = utf8.encode(data);
   return digest.process(dataToDigest).map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
@@ -140,10 +140,10 @@ String keccak_512Digest(String data) {
   return _digest(SHA3Digest(512), data);
 }
 
-String tigerDigest(String data) {
+String tiger_192Digest(String data) {
   return _digest(TigerDigest(), data);
 }
 
-String whirlpoolDigest(String data) {
+String whirlpool_512Digest(String data) {
   return _digest(WhirlpoolDigest(), data);
 }

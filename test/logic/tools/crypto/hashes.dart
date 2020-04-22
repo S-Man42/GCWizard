@@ -31,7 +31,7 @@ void main() {
     test('input: ABC, Keccak-288}', () {expect(keccak_288Digest('ABC'), 'c5c7a3dd87e9a340b960e8fedf3c7741ef767c043a18116ca0a7f9e0ef5ade4aec84c2c4');});
     test('input: ABC, Keccak-384}', () {expect(keccak_384Digest('ABC'), 'a786995442b0677bdcde1f0187c971518a79c65b2726ed9ba0098d6227560c768258db19d9a7e2842d80dc3e50a8a630');});
     test('input: ABC, Keccak-512}', () {expect(keccak_512Digest('ABC'), '49a28c786e950ae7a361416c198873a40fdfd374653e396abc2c9d779c13bd786accd1d0e40374222827d6ddabc2032b698edc48e192175352340afb48e40af4');});
-    test('input: ABC, Tiger 192}', () {expect(tigerDigest('ABC'), 'c7188daee93509ecce198de5a43c8db47210db7e8d8bb8dd');});
-    test('input: ABC, Whirlpool 512}', () {expect(whirlpoolDigest('ABC'), 'd6e73067f0c7f37151c283c95ff41eb4e69fbade1c8e1437a40809b2acc0b9ab0a22690e853ffe7b4a804d7238f48a4984c2e5d745ccc223420b0af5bb3dc3ed');});
+    test('input: ABC, Tiger 192}', () {expect(tiger_192Digest('ABC'), 'c7188daee93509ecce198de5a43c8db47210db7e8d8bb8dd');});
+    test('input: ABC, Whirlpool 512}', () {expect(whirlpool_512Digest('ABC'), 'd6e73067f0c7f37151c283c95ff41eb4e69fbade1c8e1437a40809b2acc0b9ab0a22690e853ffe7b4a804d7238f48a4984c2e5d745ccc223420b0af5bb3dc3ed');});
   });
 }

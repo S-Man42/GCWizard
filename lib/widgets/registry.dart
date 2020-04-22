@@ -12,6 +12,7 @@ import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
@@ -41,6 +42,7 @@ import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
+import 'package:gc_wizard/widgets/tools/crypto/hashes.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
@@ -100,9 +102,17 @@ class Registry {
   static final SEARCHSTRING_CCITT2 = 'ccitt2 emile baudot murray telex telegraph telegraf lochstreifen konrad zuse z22 purched paper ';
   static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
-  static final SEARCHSTRING_E = 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 decimal digit nachkommastelle ';
-  static final SEARCHSTRING_PHI = 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 decimal digit nachkommastelle ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
-  static final SEARCHSTRING_PI = 'pi circle kreis 3,1415926535 3.1415926535 decimal digit nachkommastelle ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
+  static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 decimal digit nachkommastelle ';
+  static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschlüsselungen ';
+  static final SEARCHSTRING_HASHES_BLAKE2B = SEARCHSTRING_HASHES_SHA3 + 'blake2b ';
+  static final SEARCHSTRING_HASHES_KECCAK = SEARCHSTRING_HASHES_SHA3 + 'keccak ';
+  static final SEARCHSTRING_HASHES_RIPEMD = SEARCHSTRING_HASHES_SHA3 + 'ripemd ripe-md ';
+  static final SEARCHSTRING_HASHES_SHA = SEARCHSTRING_HASHES + 'sha secure hash algorithm ';
+  static final SEARCHSTRING_HASHES_SHA2 = SEARCHSTRING_HASHES_SHA + 'sha2 sha-2 ';
+  static final SEARCHSTRING_HASHES_SHA3 = SEARCHSTRING_HASHES_SHA + 'sha3 sha-3 ';
+  static final SEARCHSTRING_IRRATIONALNUMBERS = 'irrational number irrationale zahlen ';
+  static final SEARCHSTRING_PHI = SEARCHSTRING_IRRATIONALNUMBERS + 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 decimal digit nachkommastelle ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
+  static final SEARCHSTRING_PI = SEARCHSTRING_IRRATIONALNUMBERS + 'pi circle kreis 3,1415926535 3.1415926535 decimal digit nachkommastelle ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
   static final SEARCHSTRING_ROTATION = 'rotate rotieren verschieben shift rotations rotx rotn rot-x rotationen ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
@@ -216,6 +226,12 @@ class Registry {
         i18nPrefix: 'gronsfeld',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'
+      ),
+      GCWToolWidget(
+        tool: HashSelection(),
+        i18nPrefix: 'hashes_selection',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_HASHES
       ),
       GCWToolWidget(
         tool: Kamasutra(),
@@ -527,6 +543,158 @@ class Registry {
         searchStrings: SEARCHSTRING_E + 'occurrence vorkommen vorhanden contains containing enthält enthalten '
       ),
 
+      //Hash Selection *****************************************************************************************
+      GCWToolWidget(
+        tool: MD5(),
+        i18nPrefix: 'hashes_md5',
+        searchStrings: SEARCHSTRING_HASHES + 'md5 md-5'
+      ),
+      GCWToolWidget(
+        tool: SHA1(),
+        i18nPrefix: 'hashes_sha1',
+        searchStrings: SEARCHSTRING_HASHES_SHA + 'sha1 sha-1 160bits'
+      ),
+      GCWToolWidget(
+        tool: SHA224(),
+        i18nPrefix: 'hashes_sha224',
+        searchStrings: SEARCHSTRING_HASHES_SHA2 + 'sha224 sha-224 sha2-224 224bits'
+      ),
+      GCWToolWidget(
+        tool: SHA256(),
+        i18nPrefix: 'hashes_sha256',
+        searchStrings: SEARCHSTRING_HASHES_SHA2 + 'sha256 sha-256 sha2-256 256bits'
+      ),
+      GCWToolWidget(
+        tool: SHA384(),
+        i18nPrefix: 'hashes_sha384',
+        searchStrings: SEARCHSTRING_HASHES_SHA2 + 'sha384 sha-384 sha2-384 384bits'
+      ),
+      GCWToolWidget(
+        tool: SHA512(),
+        i18nPrefix: 'hashes_sha512',
+        searchStrings: SEARCHSTRING_HASHES_SHA2 + 'sha512 sha-512 sha2-512 512bits'
+      ),
+      GCWToolWidget(
+        tool: SHA512_224(),
+        i18nPrefix: 'hashes_sha512.224',
+        searchStrings: SEARCHSTRING_HASHES_SHA2 + 'sha512t sha-512t sha2-512t 224bits sha512/224 sha-512/224 sha2-512/224'
+      ),
+      GCWToolWidget(
+        tool: SHA512_256(),
+        i18nPrefix: 'hashes_sha512.256',
+        searchStrings: SEARCHSTRING_HASHES_SHA2 + 'sha512t sha-512t sha2-512t 256bits sha512/256 sha-512/256 sha2-512/256'
+      ),
+      GCWToolWidget(
+        tool: SHA3_224(),
+        i18nPrefix: 'hashes_sha3.224',
+        searchStrings: SEARCHSTRING_HASHES_SHA3 + 'sha3-224 224bits'
+      ),
+      GCWToolWidget(
+        tool: SHA3_256(),
+        i18nPrefix: 'hashes_sha3.256',
+        searchStrings: SEARCHSTRING_HASHES_SHA3 + 'sha3-256 256bits'
+      ),
+      GCWToolWidget(
+        tool: SHA3_384(),
+        i18nPrefix: 'hashes_sha3.384',
+        searchStrings: SEARCHSTRING_HASHES_SHA3 + 'sha3-384 384bits'
+      ),
+      GCWToolWidget(
+        tool: SHA3_512(),
+        i18nPrefix: 'hashes_sha3.512',
+        searchStrings: SEARCHSTRING_HASHES_SHA3 + 'sha3-512 512bits'
+      ),
+      GCWToolWidget(
+        tool: Keccak_224(),
+        i18nPrefix: 'hashes_keccak224',
+        searchStrings: SEARCHSTRING_HASHES_KECCAK + 'keccak-224 keccak224 224bits'
+      ),
+      GCWToolWidget(
+        tool: Keccak_256(),
+        i18nPrefix: 'hashes_keccak256',
+        searchStrings: SEARCHSTRING_HASHES_KECCAK + 'keccak-256 keccak256 256bits'
+      ),
+      GCWToolWidget(
+        tool: Keccak_288(),
+        i18nPrefix: 'hashes_keccak288',
+        searchStrings: SEARCHSTRING_HASHES_KECCAK + 'keccak-288 keccak288 288bits'
+      ),
+      GCWToolWidget(
+        tool: Keccak_384(),
+        i18nPrefix: 'hashes_keccak384',
+        searchStrings: SEARCHSTRING_HASHES_KECCAK + 'keccak-384 keccak384 384bits'
+      ),
+      GCWToolWidget(
+        tool: Keccak_512(),
+        i18nPrefix: 'hashes_keccak512',
+        searchStrings: SEARCHSTRING_HASHES_KECCAK + 'keccak-512 keccak512 512bits'
+      ),
+      GCWToolWidget(
+        tool: RIPEMD_128(),
+        i18nPrefix: 'hashes_ripemd128',
+        searchStrings: SEARCHSTRING_HASHES_RIPEMD + '128bits'
+      ),
+      GCWToolWidget(
+        tool: RIPEMD_160(),
+        i18nPrefix: 'hashes_ripemd160',
+        searchStrings: SEARCHSTRING_HASHES_RIPEMD + '160bits'
+      ),
+      GCWToolWidget(
+        tool: RIPEMD_256(),
+        i18nPrefix: 'hashes_ripemd256',
+        searchStrings: SEARCHSTRING_HASHES_RIPEMD + '256bits'
+      ),
+      GCWToolWidget(
+        tool: RIPEMD_320(),
+        i18nPrefix: 'hashes_ripemd320',
+        searchStrings: SEARCHSTRING_HASHES_RIPEMD + '320bits'
+      ),
+      GCWToolWidget(
+        tool: MD2(),
+        i18nPrefix: 'hashes_md2',
+        searchStrings: SEARCHSTRING_HASHES + 'md2 md-2'
+      ),
+      GCWToolWidget(
+        tool: MD4(),
+        i18nPrefix: 'hashes_md4',
+        searchStrings: SEARCHSTRING_HASHES + 'md4 md-4'
+      ),
+      GCWToolWidget(
+        tool: Tiger_192(),
+        i18nPrefix: 'hashes_tiger192',
+        searchStrings: SEARCHSTRING_HASHES + 'tiger192 tiger-192'
+      ),
+      GCWToolWidget(
+        tool: Whirlpool_512(),
+        i18nPrefix: 'hashes_whirlpool512',
+        searchStrings: SEARCHSTRING_HASHES + 'whirlpool512 whirlpool-512'
+      ),
+      GCWToolWidget(
+        tool: BLAKE2b_160(),
+        i18nPrefix: 'hashes_blake2b160',
+        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '160bits'
+      ),
+      GCWToolWidget(
+        tool: BLAKE2b_224(),
+        i18nPrefix: 'hashes_blake2b224',
+        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '224bits'
+      ),
+      GCWToolWidget(
+        tool: BLAKE2b_224(),
+        i18nPrefix: 'hashes_blake2b256',
+        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '256bits'
+      ),
+      GCWToolWidget(
+        tool: BLAKE2b_224(),
+        i18nPrefix: 'hashes_blake2b384',
+        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '384bits'
+      ),
+      GCWToolWidget(
+        tool: BLAKE2b_224(),
+        i18nPrefix: 'hashes_blake2b512',
+        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '512bits'
+      ),
+
       //Main Menu **********************************************************************************************
       GCWToolWidget(
         tool: GeneralSettings(),
@@ -753,7 +921,7 @@ class Registry {
       ),
       GCWToolWidget(
         tool: VanityMultipleNumbers(),
-        i18nPrefix: 'vanity_multinumbers',
+        i18nPrefix: 'vanity_multiplenumbers',
         searchStrings: SEARCHSTRING_VANITY
       ),
     ].map((toolWidget) {
