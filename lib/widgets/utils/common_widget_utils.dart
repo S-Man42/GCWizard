@@ -73,3 +73,60 @@ List<Widget> columnedMultiLineOutput(List<List<dynamic>> data, {List<int> flexVa
     return output;
   }).toList();
 }
+
+showDeleteAlertDialog(BuildContext context, String deleteableText, Function onOKPressed) {
+  TextStyle textStyle = TextStyle(
+      fontFamily: gcwTextStyle().fontFamily,
+      fontSize: defaultFontSize(),
+      color: ThemeColors.darkgrey
+  );
+
+  TextStyle boldTextStyle = TextStyle(
+      fontFamily: textStyle.fontFamily,
+      fontSize: textStyle.fontSize,
+      color: textStyle.color,
+      fontWeight: FontWeight.bold
+  );
+
+  Widget continueButton = FlatButton(
+    child: Text(
+      i18n(context, 'common_ok'),
+      style: boldTextStyle,
+    ),
+    onPressed: () {
+      Navigator.of(context).pop();
+      onOKPressed();
+    }
+  );
+
+  Widget cancelButton = FlatButton(
+    child: Text(
+      i18n(context, 'common_cancel'),
+      style: boldTextStyle,
+    ),
+    onPressed:  () {
+      Navigator.of(context).pop();
+    },
+  );
+
+  AlertDialog alert = AlertDialog(
+      title: Text(i18n(context, 'deletealert_title')),
+      content: Text(i18n(context, 'deletealert_text', parameters: [deleteableText])),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+      backgroundColor: ThemeColors.accent,
+      titleTextStyle: boldTextStyle,
+      contentTextStyle: textStyle
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}

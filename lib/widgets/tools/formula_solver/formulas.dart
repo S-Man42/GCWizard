@@ -11,6 +11,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/values.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
 class Formulas extends StatefulWidget {
@@ -221,7 +222,9 @@ class FormulasState extends State<Formulas> {
             GCWIconButton(
               iconData: Icons.remove,
               onPressed: () {
-                _removeFormula(formula).whenComplete(() => setState(() {}));
+                showDeleteAlertDialog(context, formula.formula, () {
+                  _removeFormula(formula).whenComplete(() => setState(() {}));
+                },);
               },
             )
           ],

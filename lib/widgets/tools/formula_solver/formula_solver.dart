@@ -3,12 +3,14 @@ import 'package:gc_wizard/database/formula_solver/database_provider.dart';
 import 'package:gc_wizard/database/formula_solver/model.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formulas.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
 class FormulaSolver extends StatefulWidget {
@@ -192,7 +194,9 @@ class FormulaSolverState extends State<FormulaSolver> {
             GCWIconButton(
               iconData: Icons.remove,
               onPressed: () {
-                _removeGroup(group).whenComplete(() => setState(() {}));
+                showDeleteAlertDialog(context, group.name, () {
+                  _removeGroup(group).whenComplete(() => setState(() {}));
+                },);
               },
             )
           ],
