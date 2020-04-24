@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -53,10 +52,18 @@ class _GCWToolListState extends State<GCWToolList> {
         icon: tool.isFavorite ?? false ? Icon(Icons.star) : Icon(Icons.star_border),
         color: ThemeColors.gray,
         onPressed: () {
-          setState(() {
-            tool.isFavorite = !tool.isFavorite;
-            Favorites.update(tool, tool.isFavorite ? FavoriteChangeStatus.add : FavoriteChangeStatus.remove);
-          });
+          if (tool.isFavorite) {
+            showDeleteAlertDialog(context, tool.toolName, () {
+              tool.isFavorite = false;
+              Favorites.update(tool, FavoriteChangeStatus.remove);
+              setState(() {});
+            });
+          } else {
+            setState(() {
+              tool.isFavorite = true;
+              Favorites.update(tool, FavoriteChangeStatus.add);
+            });
+          }
         },
       ),
     );

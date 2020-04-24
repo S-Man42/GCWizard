@@ -7,8 +7,8 @@ final FONT_SIZE_MAX = 30;
 
 TextStyle gcwTextStyle() {
  return TextStyle(
-     fontSize: defaultFontSize(),
-     fontFamily: 'Roboto Condensed'
+   fontSize: defaultFontSize(),
+   fontFamily: 'Roboto Condensed'
  );
 }
 
