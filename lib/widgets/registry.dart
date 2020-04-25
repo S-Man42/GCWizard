@@ -820,105 +820,135 @@ class Registry {
 
       //Symbol Tables **********************************************************************************************
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'arcadian',),
+        tool: SymbolTable(symbolKey: 'arcadian'),
         i18nPrefix: 'symboltables_arcadian',
         iconPath: SYMBOLTABLES_ASSETPATH + 'arcadian/72.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'skies of arcadia arcadian greek arkadischer arkadien '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'braille',),
+        tool: SymbolTable(symbolKey: 'braille'),
         i18nPrefix: 'symboltables_braille',
         iconPath: SYMBOLTABLES_ASSETPATH + 'braille/72.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift braille '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'finger',),
+        tool: SymbolTable(symbolKey: 'chappe'),
+        i18nPrefix: 'symboltables_chappe',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'chappe/72.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'optical telegraph visual visueller optischer telegraf claude chappe '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'finger'),
         i18nPrefix: 'symboltables_finger',
         iconPath: SYMBOLTABLES_ASSETPATH + 'finger/72.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fingers fingeralphabet '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'flags',),
+        tool: SymbolTable(symbolKey: 'flags'),
         i18nPrefix: 'symboltables_flags',
         iconPath: SYMBOLTABLES_ASSETPATH + 'flags/70.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'freemason',),
+        tool: SymbolTable(symbolKey: 'freemason'),
         i18nPrefix: 'symboltables_freemason',
         iconPath: SYMBOLTABLES_ASSETPATH + 'freemason/81.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'freemasons freimaurer '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'freemason_v2',),
+        tool: SymbolTable(symbolKey: 'freemason_v2'),
         i18nPrefix: 'symboltables_freemason_v2',
         iconPath: SYMBOLTABLES_ASSETPATH + 'freemason_v2/81.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'freemasons freimaurer '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'hexahue',),
-        i18nPrefix: 'symboltables_hexahue',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'hexahue/81.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colours colors colorcodes colourcodes hexahue farben farbcodes '
+        tool: SymbolTable(symbolKey: 'glagolitic'),
+        i18nPrefix: 'symboltables_glagolitic',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'glagolitic/66.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'glagolitic glagolitisch glagoliza glagolitsa slawische slavic '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'intergalactic',),
+        tool: SymbolTable(symbolKey: 'hexahue'),
+        i18nPrefix: 'symboltables_hexahue',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hexahue/81.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colours colors colorcodes colourcodes hexahue farben farbcodes pixel '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'intergalactic'),
         i18nPrefix: 'symboltables_intergalactic',
         iconPath: SYMBOLTABLES_ASSETPATH + 'intergalactic/81.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'intergalactical galaxy galaxies intergalaktisch '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'lorm',),
+        tool: SymbolTable(symbolKey: 'lorm'),
         i18nPrefix: 'symboltables_lorm',
         iconPath: SYMBOLTABLES_ASSETPATH + 'lorm/72.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift lormen deafblind taubstumm '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift lormen deafblind deaf-blind taub-stumme taubstumme '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'moon',),
+        tool: SymbolTable(symbolKey: 'moon'),
         i18nPrefix: 'symboltables_moon',
         iconPath: SYMBOLTABLES_ASSETPATH + 'moon/81.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'william moonalphabet reliefs mondalphabet reliefe eyeless blinded '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'murray',),
+        tool: SymbolTable(symbolKey: 'murray'),
         i18nPrefix: 'symboltables_murray',
         iconPath: SYMBOLTABLES_ASSETPATH + 'murray/72.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'george murray telex shuttertelegraph klappentelegraph klappentelegraf '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'nato',),
+        tool: SymbolTable(symbolKey: 'nato'),
         i18nPrefix: 'symboltables_nato',
         iconPath: SYMBOLTABLES_ASSETPATH + 'nato/54.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen nato army armee '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'pipeline',),
+        tool: SymbolTable(symbolKey: 'pipeline'),
         i18nPrefix: 'symboltables_pipeline',
         iconPath: SYMBOLTABLES_ASSETPATH + 'pipeline/72.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + '3d pipes pipelines rohre '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'postnet',),
+        tool: SymbolTable(symbolKey: 'pixel'),
+        i18nPrefix: 'symboltables_pixel',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'pixel/74.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'pixel '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'postnet'),
         i18nPrefix: 'symboltables_postnet',
         iconPath: SYMBOLTABLES_ASSETPATH + 'postnet/54.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'postnet planet united states postal service usps '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'puzzle',),
+        tool: SymbolTable(symbolKey: 'puzzle'),
         i18nPrefix: 'symboltables_puzzle',
         iconPath: SYMBOLTABLES_ASSETPATH + 'puzzle/72.png',searchStrings: SEARCHSTRING_SYMBOLTABLES + 'puzzles puzzleteile jigsaw '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'romulan',),
+        tool: SymbolTable(symbolKey: 'romulan'),
         i18nPrefix: 'symboltables_romulan',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'romulan/72.png',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'romulan/57.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'star trek romulans romulaner romulanisch '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'semaphore',),
+        tool: SymbolTable(symbolKey: 'semaphore'),
         i18nPrefix: 'symboltables_semaphore',
         iconPath: SYMBOLTABLES_ASSETPATH + 'semaphore/81.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags semaphores winkeralphabet flaggenalphabet'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'sign'),
+        i18nPrefix: 'symboltables_sign',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'sign/75.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sign language zeichensprache gebärdensprache taubstumme taub-stumme deafblind deaf-blind'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'visitor'),
+        i18nPrefix: 'symboltables_visitor',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'visitor/57.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'visitor die besucher v aliens außerirdische '
       ),
 
       //VanitySelection **********************************************************************************************
