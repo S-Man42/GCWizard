@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/encodings/ccitt2.dart';
+import 'package:gc_wizard/logic/tools/encodings/ccitt1.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -9,12 +9,12 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class CCITT2 extends StatefulWidget {
+class CCITT1 extends StatefulWidget {
   @override
-  CCITT2State createState() => CCITT2State();
+  CCITT1State createState() => CCITT1State();
 }
 
-class CCITT2State extends State<CCITT2> {
+class CCITT1State extends State<CCITT1> {
   var _controller;
 
   var _currentInput = defaultIntegerListText;
@@ -90,7 +90,7 @@ class CCITT2State extends State<CCITT2> {
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.left) {
-      output = encodeCCITT2(_currentInput['text']);
+      output = encodeCCITT1(_currentInput['text']);
       if (_currentOutputCoding == GCWSwitchPosition.right) {
         output = output.split(' ').map((value) {
           var out = convertBase(value, 10, 2);
@@ -100,14 +100,14 @@ class CCITT2State extends State<CCITT2> {
       return output;
     } else {
       if (_currentOutputCoding == GCWSwitchPosition.right) {
-        return decodeCCITT2(
+        return decodeCCITT1(
           textToBinaryList(_currentInput['text']).map((value) {
             return int.tryParse(convertBase(value, 2, 10));
           }).toList()
         );
       }
 
-      return decodeCCITT2(_currentInput['values']);
+      return decodeCCITT1(_currentInput['values']);
     }
   }
 }

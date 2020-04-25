@@ -36,7 +36,7 @@ void main() {
     });
   });
 
-  group("CCITT2.encodeCCITT2:", () {
+  group("CCITT2.decodeCCITT2:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : <int>[], 'expectedOutput' : ''},
