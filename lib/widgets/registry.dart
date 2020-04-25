@@ -70,6 +70,7 @@ import 'package:gc_wizard/widgets/tools/encodings/base/base64.dart';
 import 'package:gc_wizard/widgets/tools/encodings/base/base85.dart';
 import 'package:gc_wizard/widgets/tools/encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/encodings/brainfk/ook.dart';
+import 'package:gc_wizard/widgets/tools/encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
@@ -99,10 +100,11 @@ class Registry {
 
   static final SEARCHSTRING_BASE = 'base encode decode encoding decoding dekodierung dekodieren ';
   static final SEARCHSTRING_BRAINFK = 'brainf**k esoterische esoteric ';
-  static final SEARCHSTRING_CCITT2 = 'ccitt2 emile baudot murray telex telegraph telegraf lochstreifen konrad zuse z22 purched paper ';
+  static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
+  static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen konrad zuse z-22 z22 purched paper baudot-murray-code ';
   static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
-  static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 decimal digit nachkommastelle ';
+  static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
   static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschlüsselungen ';
   static final SEARCHSTRING_HASHES_BLAKE2B = SEARCHSTRING_HASHES_SHA3 + 'blake2b ';
   static final SEARCHSTRING_HASHES_KECCAK = SEARCHSTRING_HASHES_SHA3 + 'keccak ';
@@ -110,9 +112,9 @@ class Registry {
   static final SEARCHSTRING_HASHES_SHA = SEARCHSTRING_HASHES + 'sha secure hash algorithm ';
   static final SEARCHSTRING_HASHES_SHA2 = SEARCHSTRING_HASHES_SHA + 'sha2 sha-2 ';
   static final SEARCHSTRING_HASHES_SHA3 = SEARCHSTRING_HASHES_SHA + 'sha3 sha-3 ';
-  static final SEARCHSTRING_IRRATIONALNUMBERS = 'irrational number irrationale zahlen ';
-  static final SEARCHSTRING_PHI = SEARCHSTRING_IRRATIONALNUMBERS + 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 decimal digit nachkommastelle ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
-  static final SEARCHSTRING_PI = SEARCHSTRING_IRRATIONALNUMBERS + 'pi circle kreis 3,1415926535 3.1415926535 decimal digit nachkommastelle ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
+  static final SEARCHSTRING_IRRATIONALNUMBERS = 'irrational number irrationale zahlen fraction decimal digit nachkommastelle ';
+  static final SEARCHSTRING_PHI = SEARCHSTRING_IRRATIONALNUMBERS + 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
+  static final SEARCHSTRING_PI = SEARCHSTRING_IRRATIONALNUMBERS + 'pi circle kreis 3,1415926535 3.1415926535 ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
   static final SEARCHSTRING_ROTATION = 'rotate rotieren verschieben shift rotations rotx rotn rot-x rotationen ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
@@ -169,6 +171,12 @@ class Registry {
         i18nPrefix: 'caesar',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_ROTATION + 'caesar cäsar'
+      ),
+      GCWToolWidget(
+        tool: CCITT1(),
+        i18nPrefix: 'ccitt1',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_CCITT + 'ccitt1 ccitt-1 baudot-code '
       ),
       GCWToolWidget(
         tool: CCITT2(),
@@ -875,7 +883,7 @@ class Registry {
         tool: SymbolTable(symbolKey: 'murray',),
         i18nPrefix: 'symboltables_murray',
         iconPath: SYMBOLTABLES_ASSETPATH + 'murray/72.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'emile murray telex telegraph telegraf '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'george murray telex shuttertelegraph klappentelegraph klappentelegraf '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'nato',),

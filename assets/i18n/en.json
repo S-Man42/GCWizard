@@ -95,8 +95,13 @@
   "callforcontribution_24" : "Contact\n\n",
   "callforcontribution_25" : "Let GCWizard become a community project!",
 
-  "ccitt2_title" : "CCITT2",
-  "ccitt2_description" : "Binary Punched Tape Encoding (Baudot-Murray-Code)",
+  "ccitt1_title" : "CCITT-1",
+  "ccitt1_description" : "Baudot Code",
+  "ccitt1_example" : "ABC → 00100 01001 01101",
+  "ccitt1_numeral_base" : "Coding",
+
+  "ccitt2_title" : "CCITT-2",
+  "ccitt2_description" : "Baudot Murray Code; Binary Punched Tape Encoding ",
   "ccitt2_example" : "ABC → 00011 11001 01110",
   "ccitt2_numeral_base" : "Coding",
 
@@ -879,8 +884,8 @@
   "symboltables_moon_title" : "Moon Alphabet (Tactile)",
   "symboltables_moon_description" : "Tactile alphabet for blind people",
   "symboltables_moon_example" : "",
-  "symboltables_murray_title" : "Murray",
-  "symboltables_murray_description" : "",
+  "symboltables_murray_title" : "Shutter Telegraph",
+  "symboltables_murray_description" : "Invented by George Murray",
   "symboltables_murray_example" : "",
   "symboltables_nato_title" : "NATO Flags",
   "symboltables_nato_description" : "",

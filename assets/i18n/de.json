@@ -95,8 +95,13 @@
   "callforcontribution_24" : "Kontakt\n\n",
   "callforcontribution_25" : "Lass GCWizard ein Community-Projekt werden!",
 
-  "ccitt2_title" : "CCITT2 (Baudot)",
-  "ccitt2_description" : "Binärer Lochkartencode (Baudot-Murray-Code)",
+  "ccitt1_title" : "CCITT-1",
+  "ccitt1_description" : "Baudot-Code",
+  "ccitt1_example" : "ABC → 00100 01001 01101",
+  "ccitt1_numeral_base" : "Coding",
+
+  "ccitt2_title" : "CCITT-2",
+  "ccitt2_description" : "Baudot-Murray-Code; Binärer Lochkartencode",
   "ccitt2_example" : "ABC → 00011 11001 01110",
   "ccitt2_numeral_base" : "Kodierung",
 
@@ -879,8 +884,8 @@
   "symboltables_moon_title" : "Moonalphabet",
   "symboltables_moon_description" : "Reliefalphabet für Blinde",
   "symboltables_moon_example" : "",
-  "symboltables_murray_title" : "Murray",
-  "symboltables_murray_description" : "",
+  "symboltables_murray_title" : "Klappentelegraph",
+  "symboltables_murray_description" : "erfunden von George Murray",
   "symboltables_murray_example" : "",
   "symboltables_nato_title" : "NATO Flaggen",
   "symboltables_nato_description" : "",
