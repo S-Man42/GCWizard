@@ -5,6 +5,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/favorites.dart';
+import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
@@ -57,12 +58,17 @@ class _GCWToolListState extends State<GCWToolList> {
             showDeleteAlertDialog(context, tool.toolName, () {
               tool.isFavorite = false;
               Favorites.update(tool, FavoriteChangeStatus.remove);
-              setState(() {});
+
+              setState(() {
+                AppBuilder.of(context).rebuild();
+              });
             });
           } else {
             setState(() {
               tool.isFavorite = true;
               Favorites.update(tool, FavoriteChangeStatus.add);
+
+              AppBuilder.of(context).rebuild();
             });
           }
         },
