@@ -72,6 +72,7 @@ import 'package:gc_wizard/widgets/tools/encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt2.dart';
+import 'package:gc_wizard/widgets/tools/encodings/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
@@ -184,6 +185,12 @@ class Registry {
         i18nPrefix: 'ccitt2',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_CCITT2
+      ),
+      GCWToolWidget(
+        tool: ChickenLanguage(),
+        i18nPrefix: 'chicken_language',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'chicken language huehnersprache hühnersprache huhn spielsprache game languages'
       ),
       GCWToolWidget(
         tool: ColorPicker(),

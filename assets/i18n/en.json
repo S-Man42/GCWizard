@@ -117,6 +117,11 @@
   "changelog_0.0.4" : "[fix] Calculation of hours/minutes/seconds in 'Count Days'",
   "changelog_0.0.1" : "[new] Google PlayStore Initialisation",
 
+  "chicken_language_title" : "Chicken language",
+  "chicken_language_description" : "",
+  "chicken_language_example" : "chicken → chihidefickehedefen",
+  "chicken_language_numeral_base" : "Coding",
+
   "colors_title" : "Colors",
   "colors_description" : "Color Picker and Color Space Converter",
   "colors_example" : "",

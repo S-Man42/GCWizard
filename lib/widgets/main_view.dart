@@ -43,6 +43,7 @@ import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt2.dart';
+import 'package:gc_wizard/widgets/tools/encodings/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
@@ -107,6 +108,7 @@ class _MainViewState extends State<MainView> {
           className(Caesar()),
           className(CCITT1()),
           className(CCITT2()),
+          className(ChickenLanguage()),
           className(CoordsSelection()),
           className(ColorPicker()),
           className(DatesSelection()),
