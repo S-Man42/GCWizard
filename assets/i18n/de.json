@@ -98,7 +98,7 @@
   "ccitt1_title" : "CCITT-1",
   "ccitt1_description" : "Baudot-Code",
   "ccitt1_example" : "ABC → 00100 01001 01101",
-  "ccitt1_numeral_base" : "Coding",
+  "ccitt1_numeral_base" : "Kodierung",
 
   "ccitt2_title" : "CCITT-2",
   "ccitt2_description" : "Baudot-Murray-Code; Binärer Lochkartencode",
@@ -116,6 +116,11 @@
   "changelog_0.3.0" : "[new] Aussagekräftige Versionsnummers\n[new] Primzahlen\n[new] Zahlensysteme\n[new] Morse\n[new] Playfair\n[new] ADFG(V)X\n[new] Bacon\n[chg] Datum- und Koordinateneingaben: Workflow\n[chg] Verschiedene Layout- und Architekturänderungen\n[fix] Rechtschreibung",
   "changelog_0.0.4" : "[fix] Berechnung von Stunden/Minuten/Sekunden in 'Anzahl Tage'",
   "changelog_0.0.1" : "[new] Google PlayStore Initialisierung",
+
+  "chicken_language_title" : "Hühnersprache",
+  "chicken_language_description" : "",
+  "chicken_language_example" : "Huhn → huhudefuhn",
+  "chicken_language_numeral_base" : "Kodierung",
 
   "colors_title" : "Farben",
   "colors_description" : "Farbwähler und Farbraum-Konvertierer",
