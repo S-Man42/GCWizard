@@ -33,6 +33,7 @@ class GCWColorsState extends State<GCWColors> {
   @override
   Widget build(BuildContext context) {
     _currentColorSpace = widget.colorSpace ?? defaultColorSpace;
+    _currentColor = widget.color ?? defaultColor;
 
     List<Map<String, dynamic>> _colorWidgets = [
       {

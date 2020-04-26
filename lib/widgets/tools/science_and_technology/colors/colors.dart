@@ -7,6 +7,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.d
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_yuv.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_colors.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/hsv_color_picker.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
 
@@ -17,23 +18,39 @@ class ColorPicker extends StatefulWidget {
 
 class ColorPickerState extends State<ColorPicker> {
   dynamic _currentColor = defaultColor;
+  HSVColor _currentColorPickerColor;
   String _currentColorSpace = keyColorSpaceRGB;
 
   final NumberFormat _numberFormat = NumberFormat('0.' + '#' * COLOR_DOUBLE_PRECISION);
 
   @override
+  void initState() {
+    super.initState();
+
+    _setColorPickerColor(_currentColor);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-//        CircleColorPicker(
-//          initialColor: _currentColor,
-//          strokeWidth: 6,
-//          onChanged: (Color color) {
-//            setState(() {
-//              _currentColor = color;
-//            });
-//          },
-//        ),
+        Container(
+          child: HSVPicker(
+            color: _currentColorPickerColor,
+            onChanged: (color) {
+              setState(() {
+                _currentColorPickerColor = color;
+
+                HSV hsv = HSV(color.hue, color.saturation, color.value);
+                _currentColor = convertColorSpace(hsv, keyColorSpaceHSV, _currentColorSpace);
+              });
+            },
+          ),
+          padding: EdgeInsets.only(
+            bottom: 20.0
+          ),
+        ),
+
         GCWColors(
           color: _currentColor,
           colorSpace: _currentColorSpace,
@@ -41,6 +58,9 @@ class ColorPickerState extends State<ColorPicker> {
             setState(() {
               _currentColorSpace = result['colorSpace'];
               _currentColor = result['color'];
+
+              HSV colorPickerColor = convertColorSpace(_currentColor, _currentColorSpace, keyColorSpaceHSV);
+              _currentColorPickerColor = HSVColor.fromAHSV(1.0, colorPickerColor.hue, colorPickerColor.saturation, colorPickerColor.value);
             });
           },
         ),
@@ -194,12 +214,17 @@ class ColorPickerState extends State<ColorPicker> {
 
     rows.insert(0,
       GCWTextDivider(
-          text: i18n(context, 'common_output')
+        text: i18n(context, 'common_output')
       )
     );
 
     return Column(
       children: rows
     );
+  }
+
+  _setColorPickerColor(RGB rgbColor) {
+    var color = Color.fromARGB(255, rgbColor.red.round(), rgbColor.green.round(), rgbColor.blue.round());
+    _currentColorPickerColor = HSVColor.fromColor(color);
   }
 }

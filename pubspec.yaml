@@ -23,7 +23,6 @@ dependencies:
   url_launcher: ^5.4.2
   package_info: ^0.4.0+16
   math_expressions: ^2.0.0
-  flutter_circle_color_picker: ^0.1.1
   pointycastle: ^1.0.2
 
 dev_dependencies:
