@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gc_wizard/logic/tools/encodings/chicken_language.dart';
+import 'package:gc_wizard/logic/tools/crypto/chicken_language.dart';
 
 void main() {
-  group('chicken_language.encode:', () {
+  group('chicken_language.encodeChickenLanguage:', () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
@@ -36,7 +36,7 @@ void main() {
     });
   });
 
-  group('chicken_language.decode:', () {
+  group('chicken_language.decodeChickenLanguage:', () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
@@ -59,6 +59,9 @@ void main() {
       {'expectedOutput' : 'ei', 'input' : 'eiheidefei'},
       {'expectedOutput' : 'eu', 'input' : 'euheudefeu'},
       {'expectedOutput' : 'ie', 'input' : 'iehiedefie'},
+      {'expectedOutput' : 'ahedefa', 'input' : 'ahedefa'},
+      {'expectedOutput' : 'auhadefa', 'input' : 'auhadefa'},
+      {'expectedOutput' : 'au', 'input' : 'ahadefau'},
     ];
 
     _inputsToExpected.forEach((elem) {
