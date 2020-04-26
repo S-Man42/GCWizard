@@ -21,6 +21,7 @@ class _GCWColorRGBState extends State<GCWColorRGB> {
   @override
   Widget build(BuildContext context) {
     if (widget.color != null) {
+      print(widget.color);
       _currentRed = widget.color.red;
       _currentGreen = widget.color.green;
       _currentBlue = widget.color.blue;

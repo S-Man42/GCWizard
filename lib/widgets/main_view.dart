@@ -49,7 +49,7 @@ import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/color_picker.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';

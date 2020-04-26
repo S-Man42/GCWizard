@@ -36,6 +36,8 @@ class GCWDoubleSpinner extends StatefulWidget {
 class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
   TextEditingController _controller;
 
+  bool _externalChange = true;
+
   var _currentValue = 0.0;
   var _numberFormat;
 
@@ -64,7 +66,12 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
   Widget build(BuildContext context) {
     if (widget.value != null) {
       _currentValue = widget.value;
+
+      if (_externalChange)
+        _controller.text = _numberFormat.format(_currentValue);
     }
+
+    _externalChange = true;
 
     return _buildSpinner();
   }
@@ -122,6 +129,8 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
       controller: _controller,
       onChanged: (ret) {
         setState(() {
+          _externalChange = false;
+
           _currentValue = ret['value'];
 
           _setCurrentValueAndEmitOnChange();
