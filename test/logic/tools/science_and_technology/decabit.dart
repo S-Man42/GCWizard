@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto/decabit.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/decabit.dart';
 
 void main() {
   group("Decabit.encryptDecabit:", () {

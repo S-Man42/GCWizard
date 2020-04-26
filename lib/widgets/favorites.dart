@@ -23,7 +23,7 @@ class Favorites {
 
   static void _sortList() {
     toolList.sort((a, b) {
-      return a.toolName.compareTo(b.toolName);
+      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });
   }
 

@@ -43,7 +43,7 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_centertwopoint_coorda'),
+          text: i18n(context, 'coords_centertwopoints_coorda'),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -53,7 +53,7 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_centertwopoint_coordb'),
+          text: i18n(context, 'coords_centertwopoints_coordb'),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {

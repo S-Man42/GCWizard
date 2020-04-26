@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/favorites.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
+import 'package:prefs/prefs.dart';
 
 class GCWToolList extends StatefulWidget {
   final toolList;
@@ -40,6 +44,7 @@ class _GCWToolListState extends State<GCWToolList> {
         tool.toolName,
         style: TextStyle(fontSize: defaultFontSize()),
       ),
+      subtitle: _buildSubtitle(context, tool),
       onTap: () {
         _navigateToSubPage(context);
       },
@@ -48,12 +53,73 @@ class _GCWToolListState extends State<GCWToolList> {
         icon: tool.isFavorite ?? false ? Icon(Icons.star) : Icon(Icons.star_border),
         color: ThemeColors.gray,
         onPressed: () {
-          setState(() {
-            tool.isFavorite = !tool.isFavorite;
-            Favorites.update(tool, tool.isFavorite ? FavoriteChangeStatus.add : FavoriteChangeStatus.remove);
-          });
+          if (tool.isFavorite) {
+            showDeleteAlertDialog(context, tool.toolName, () {
+              tool.isFavorite = false;
+              Favorites.update(tool, FavoriteChangeStatus.remove);
+              setState(() {});
+            });
+          } else {
+            setState(() {
+              tool.isFavorite = true;
+              Favorites.update(tool, FavoriteChangeStatus.add);
+            });
+          }
         },
       ),
     );
+  }
+
+  _buildSubtitle(BuildContext context, GCWToolWidget tool) {
+    var fontStyle = TextStyle(
+      fontFamily: gcwTextStyle().fontFamily,
+      fontSize: defaultFontSize() - 2
+    );
+
+    var descriptionText;
+    if (Prefs.getBool('toollist_show_descriptions') && tool.description != null && tool.description.length > 0) {
+      descriptionText = IgnorePointer(
+        child: GCWText(
+          text: tool.description,
+          style: fontStyle,
+        )
+      );
+    }
+
+    var exampleText;
+    if (Prefs.getBool('toollist_show_examples') && tool.example != null && tool.example.length > 0) {
+      exampleText = IgnorePointer(
+        child: GCWText(
+          text: tool.example,
+          style: fontStyle
+        )
+      );
+    }
+
+    var content;
+    if (exampleText != null && descriptionText != null) {
+      content = Column(
+        children: [
+          descriptionText,
+          Container(
+            child: exampleText,
+            padding: EdgeInsets.only(
+              top: 10.0
+            )
+          )
+        ],
+      );
+    } else if (exampleText != null) {
+      content = exampleText;
+    } else if (descriptionText != null) {
+      content = descriptionText;
+    }
+
+    return (exampleText ?? descriptionText) != null ? Container(
+      child: content,
+      padding: EdgeInsets.only(
+        left: 10.0
+      ),
+    ) : null;
   }
 }

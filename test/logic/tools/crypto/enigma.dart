@@ -69,6 +69,22 @@ void main() {
           {'text': 'CONGRATULATIONYOUHAVEDECRYPTSUCCESSFULTHEENIGMAGEOCOINBYFERANDERIPLEASEVISITMISSIONENIGMAINSWITZERLAND', 'rotorSettingAfter': [12, 8, 6, 0]},
         ]
       },
+      { //Without Entry Rotor
+        'input' : 'SJDSF TTVWB ZXPDU MYUCR NPLNO QDURZ LAVGX OGURQ IORHN RDKMA IKVUV CXBSH DELVX IIEHC RMJPQ WJIAN TPWNK DRGPB BEKPS PDCZB NTFKU WBY',
+        'key' : EnigmaKey(
+            [
+              EnigmaRotorConfiguration(EnigmaRotor('III, Enigma I \'Wehrmacht\'', 'BDFHJLCPRTXVZNYEIWGAKMUSQO', turnovers: 'V'), offset: 'E', setting: 'C'),
+              EnigmaRotorConfiguration(EnigmaRotor('VI, M3 + M4 \'Wehrmacht\'', 'JPGVOUMFYQBENHZRDKASXLICTW', turnovers: 'ZM'), offset: 'U', setting: 'G'),
+              EnigmaRotorConfiguration(EnigmaRotor('I, Enigma I \'Wehrmacht\'', 'EKMFLGDQVZNTOWYHXUSPAIBRCJ', turnovers: 'Q'), offset: 'F', setting: 'E'),
+              EnigmaRotorConfiguration(EnigmaRotor('UKW C, M3 + M4 \'Wehrmacht\'', 'FVPJIAOYEDRZXWGCTKUQSBNMHL', type: EnigmaRotorType.REFLECTOR)),
+            ],
+            plugboard: {'w':'S', 'R':'F', 'Z': 'H', 'B': 'U', 'D': 'C', 'G': 'N', 'J': 'M', 'A': 'E'}
+        ),
+        'expectedOutput' : [
+          {'text': 'GEOGEOCTYQLIZYHXOTOLWEEDTPQXCDHNCUHZBNXEOXTCVWUOIVZMIOSTPTLJAPYOKVYSXSQBIRGEGKHOOYPJZZUWGRWZHMEXRLPYOENEPDZG', 'rotorSettingAfter': [6, 10, 4, 0]},
+          {'text': 'CONGRATULATIONYOUHAVEDECRYPTSUCCESSFULTHEENIGMAGEOCOINBYFERANDERIPLEASEVISITMISSIONENIGMAINSWITZERLAND', 'rotorSettingAfter': [12, 8, 6, 0]},
+        ]
+      },
       {
         'input' : 'CONGRATULATIONYOUHAVEDECRYPTSUCCESSFULTHEENIGMAGEOCOINBYFERANDERIPLEASEVISITMISSIONENIGMAINSWITZERLAND',
         'key' : EnigmaKey(

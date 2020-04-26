@@ -21,8 +21,6 @@ class CCITT2State extends State<CCITT2> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentOutputCoding = GCWSwitchPosition.left;
 
-  String _output = '';
-
   @override
   void initState() {
     super.initState();

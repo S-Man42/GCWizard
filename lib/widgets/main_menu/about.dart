@@ -302,12 +302,19 @@ class AboutState extends State<About> {
                 text:
                   '\'Aeggsbaerde\' (Symbol Tables)\n'
                   'Andreas E. (Test)\n'
+                  'Daniel W. (Test)\n'
+                  'Frank \'Wizardland\' (podKst.de) (Test, PR)\n'
+                  '\'Geo-Link\' (Hardware)\n'
+                  'Jannes (Test)\n'
+                  '\'Klumpenkukuk\' (Test)\n'
                   'Michael D. (Test)\n'
                   'Palk \'geogedoens.de\' (Test, PR)\n'
+                  '\'Pamakaru\' (Test)\n'
                   '\'radioscout\' (Test)\n'
                   '\'radlerandi\' (Test)\n'
                   '\'Sechsfüssler\' (Symbol Tables)\n'
-                  '\'tomcat06\' (Test)'
+                  '\'tomcat06\' (Test)\n'
+                  'Udo J. (Test)'
               ),
             ],
           ),

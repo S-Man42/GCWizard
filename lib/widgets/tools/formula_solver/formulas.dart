@@ -2,23 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/database/formula_solver/database_provider.dart';
 import 'package:gc_wizard/database/formula_solver/model.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/encodings/alphanum_values.dart';
-import 'package:gc_wizard/logic/tools/crypto/substitution.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
 import 'package:gc_wizard/theme/colors.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_crosstotal_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/values.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
@@ -230,7 +222,9 @@ class FormulasState extends State<Formulas> {
             GCWIconButton(
               iconData: Icons.remove,
               onPressed: () {
-                _removeFormula(formula).whenComplete(() => setState(() {}));
+                showDeleteAlertDialog(context, formula.formula, () {
+                  _removeFormula(formula).whenComplete(() => setState(() {}));
+                },);
               },
             )
           ],

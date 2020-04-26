@@ -11,12 +11,14 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto/abaddon.dart';
@@ -24,7 +26,6 @@ import 'package:gc_wizard/widgets/tools/crypto/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/caesar.dart';
-import 'package:gc_wizard/widgets/tools/crypto/decabit.dart';
 import 'package:gc_wizard/widgets/tools/crypto/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kamasutra.dart';
@@ -40,6 +41,7 @@ import 'package:gc_wizard/widgets/tools/crypto/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ascii_values.dart';
+import 'package:gc_wizard/widgets/tools/encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
@@ -48,18 +50,19 @@ import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/color_picker.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
-class MainScreen extends StatefulWidget {
+class MainView extends StatefulWidget {
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _MainViewState createState() => _MainViewState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainViewState extends State<MainView> {
   var _isSearching = false;
   final _searchController = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -81,6 +84,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void dispose() {
     Prefs.dispose();
+    _searchController.dispose();
+
     super.dispose();
   }
 
@@ -100,6 +105,7 @@ class _MainScreenState extends State<MainScreen> {
           className(BaseSelection()),
           className(BrainfkSelection()),
           className(Caesar()),
+          className(CCITT1()),
           className(CCITT2()),
           className(CoordsSelection()),
           className(ColorPicker()),
@@ -142,18 +148,40 @@ class _MainScreenState extends State<MainScreen> {
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });
 
+    final List<GCWToolWidget> _categoryList =
+    Registry.toolList.where((element) {
+      return [
+        className(CoordsSelection()),
+        className(CryptographySelection()),
+        className(FormulaSolver()),
+        className(ScienceAndTechnologySelection()),
+        className(SymbolTableSelection()),
+      ].contains(className(element.tool));
+    }).toList();
+
+    _categoryList.sort((a, b){
+      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+    });
+
     return DefaultTabController(
-      length: 2,
+      length: 3,
+      initialIndex: Prefs.getBool('tabs_use_default_tab') ? Prefs.get('tabs_default_tab') : Prefs.get('tabs_last_viewed_tab'),
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
           bottom: TabBar(
+            onTap: (value) {
+              Prefs.setInt('tabs_last_viewed_tab', value);
+            },
             tabs: [
+              Tab(
+                icon: Icon(Icons.category)
+              ),
               Tab(
                 icon: Icon(Icons.list)
               ),
               Tab(
-                icon: Icon(Icons.star),
+                icon: Icon(Icons.star)
               ),
             ],
           ),
@@ -166,6 +194,11 @@ class _MainScreenState extends State<MainScreen> {
         drawer: buildMainMenu(context),
         body: TabBarView(
           children: [
+            GCWToolList(
+              toolList: _isSearching && _searchText.length > 0
+                ? _getSearchedList(Registry.toolList)
+                : _categoryList
+            ),
             GCWToolList(
               toolList: _isSearching && _searchText.length > 0
                 ? _getSearchedList(Registry.toolList)

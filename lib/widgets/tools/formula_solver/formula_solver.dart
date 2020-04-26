@@ -6,6 +6,7 @@ import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formulas.dart';
@@ -192,7 +193,9 @@ class FormulaSolverState extends State<FormulaSolver> {
             GCWIconButton(
               iconData: Icons.remove,
               onPressed: () {
-                _removeGroup(group).whenComplete(() => setState(() {}));
+                showDeleteAlertDialog(context, group.name, () {
+                  _removeGroup(group).whenComplete(() => setState(() {}));
+                },);
               },
             )
           ],

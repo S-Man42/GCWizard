@@ -167,6 +167,7 @@ class EnigmaKey {
 }
 
 _normalizeInput(String input) {
+  input = input.replaceAll(' ', '');
   input = normalizeUmlauts(input).toUpperCase();
   input = input.replaceAll(RegExp(r'[\W_]'), 'X');
   return input;
@@ -291,7 +292,7 @@ List<Map<String, dynamic>> calculateEnigmaWithMessageKey(String input, EnigmaKey
       configuration.setting = pattern[i++];
     });
 
-    output.add(calculateEnigma(input.substring(numberRotors * 2), key));
+    output.add(calculateEnigma(input.replaceAll(' ', '').substring(numberRotors * 2), key));
   }
 
   return output;

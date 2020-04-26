@@ -28,11 +28,31 @@ void initDefaultSettings() {
     Prefs.setInt('log_keep_entries_in_days', 5);
   }
 
-  if (Prefs.get('symbol_tables_countcolumns_portrait') == null) {
-    Prefs.setInt('symbol_tables_countcolumns_portrait', 6);
+  if (Prefs.get('symboltables_countcolumns_portrait') == null) {
+    Prefs.setInt('symboltables_countcolumns_portrait', 6);
   }
 
-  if (Prefs.get('symbol_tables_countcolumns_landscape') == null) {
-    Prefs.setInt('symbol_tables_countcolumns_landscape', 10);
+  if (Prefs.get('symboltables_countcolumns_landscape') == null) {
+    Prefs.setInt('symboltables_countcolumns_landscape', 10);
+  }
+
+  if (Prefs.get('tabs_use_default_tab') == null) {
+    Prefs.setBool('tabs_use_default_tab', false);
+  }
+
+  if (Prefs.get('tabs_default_tab') == null) {
+    Prefs.setInt('tabs_default_tab', 0);
+  }
+
+  if (Prefs.get('tabs_last_viewed_tab') == null) {
+    Prefs.setInt('tabs_last_viewed_tab', 0);
+  }
+
+  if (Prefs.get('toollist_show_descriptions') == null) {
+    Prefs.setBool('toollist_show_descriptions', true);
+  }
+
+  if (Prefs.get('toollist_show_examples') == null) {
+    Prefs.setBool('toollist_show_examples', true);
   }
 }

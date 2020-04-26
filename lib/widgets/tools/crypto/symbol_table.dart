@@ -99,8 +99,8 @@ class SymbolTableState extends State<SymbolTable> {
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait
-      ? Prefs.get('symbol_tables_countcolumns_portrait')
-      : Prefs.get('symbol_tables_countcolumns_landscape');
+      ? Prefs.get('symboltables_countcolumns_portrait')
+      : Prefs.get('symboltables_countcolumns_landscape');
 
     return Column(
       children: <Widget>[
