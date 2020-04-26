@@ -193,6 +193,20 @@
   "common_tabs_favorites" : "Favoriten",
   "common_unknown" : "Unbekannt",
 
+  "common_color_black" : "Schwarz",
+  "common_color_blue" : "Blau",
+  "common_color_brown" : "Braun",
+  "common_color_gold" : "Gold",
+  "common_color_green" : "Grün",
+  "common_color_grey" : "Grau",
+  "common_color_orange" : "Orange",
+  "common_color_pink" : "Pink",
+  "common_color_red" : "Rot",
+  "common_color_silver" : "Silber",
+  "common_color_violet" : "Violett",
+  "common_color_white" : "Weiß",
+  "common_color_yellow" : "Gelb",
+
   "common_numeralbase_binary" : "Binär",
   "common_numeralbase_ternary" : "Ternär",
   "common_numeralbase_quaternary" : "Quaternär",
@@ -751,6 +765,12 @@
   "primes_integerfactorization_title" : "Primzahlzerlegung",
   "primes_integerfactorization_description" : "Primfaktorzerlegung einer Zahl",
   "primes_integerfactorization_example" : "42 = 2 × 3 × 7",
+
+  "resistor_colorcode_title" : "Widerstandsfarbcode",
+  "resistor_colorcode_numberbands" : "Anzahl Ringe",
+  "resistor_value" : "Wert",
+  "resistor_value_range" : "Wertebereich",
+  "resistor_temperaturecoefficient" : "Temp. Koeffizient",
 
   "reverse_title" : "Rückwärts",
   "reverse_description" : "Gibt die Eingabe rückwärts aus",

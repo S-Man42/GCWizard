@@ -92,6 +92,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isp
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nearestprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nthprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor.dart';
 
 class Registry {
   static List<GCWToolWidget> toolList;
@@ -306,6 +307,12 @@ class Registry {
         i18nPrefix: 'primes_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_PRIMES
+      ),
+      GCWToolWidget(
+        tool: Resistor(),
+        i18nPrefix: 'resistor_colorcode',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'resistors colorcodes widerstand widerstände farben farbcodes colors resistance ohm '
       ),
       GCWToolWidget(
         tool: Reverse(),

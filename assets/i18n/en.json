@@ -193,6 +193,20 @@
   "common_tabs_favorites" : "Favorites",
   "common_unknown" : "Unknown",
 
+  "common_color_black" : "Black",
+  "common_color_blue" : "Blue",
+  "common_color_brown" : "Brown",
+  "common_color_gold" : "Gold",
+  "common_color_green" : "Green",
+  "common_color_grey" : "Grey",
+  "common_color_orange" : "Orange",
+  "common_color_pink" : "Pink",
+  "common_color_red" : "Red",
+  "common_color_silver" : "Silver",
+  "common_color_violet" : "Violet",
+  "common_color_white" : "White",
+  "common_color_yellow" : "Yellow",
+
   "common_numeralbase_binary" : "Binary",
   "common_numeralbase_ternary" : "Ternary",
   "common_numeralbase_quaternary" : "Quaternary",
@@ -751,6 +765,12 @@
   "primes_integerfactorization_title" : "Integer Factorization",
   "primes_integerfactorization_description" : "Returns the prime factorization of a number",
   "primes_integerfactorization_example" : "42 = 2 × 3 × 7",
+
+  "resistor_colorcode_title" : "Resistor Color Code",
+  "resistor_colorcode_numberbands" : "Number bands",
+  "resistor_value" : "Value",
+  "resistor_value_range" : "Value Range",
+  "resistor_temperaturecoefficient" : "Temp. Coefficient",
 
   "reverse_title" : "Reverse",
   "reverse_description" : "Input backwards",

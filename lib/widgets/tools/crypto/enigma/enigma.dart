@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/tools/crypto/enigma/gcw_enigma_rotor.dart';
+import 'package:gc_wizard/widgets/tools/crypto/enigma/gcw_enigma_rotor_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlyspaceandletters_textinputformatter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -32,7 +32,7 @@ class EnigmaState extends State<Enigma> {
   var _isTextChange = false;
 
   var _currentNumberRotors = 3;
-  List<GCWEnigmaRotor> _currentRotors = [];
+  List<GCWEnigmaRotorDropDownButton> _currentRotors = [];
   List<EnigmaRotorConfiguration> _currentRotorsConfigurations = [];
 
   var _plugboardMaskFormatter = MaskTextInputFormatter(
@@ -92,7 +92,7 @@ class EnigmaState extends State<Enigma> {
             ),
             Expanded(
               child: _currentReflectorMode
-                ? GCWEnigmaRotor(
+                ? GCWEnigmaRotorDropDownButton(
                     type: EnigmaRotorType.REFLECTOR,
                     onChanged: (value) {
                       setState(() {
@@ -139,7 +139,7 @@ class EnigmaState extends State<Enigma> {
             ),
             Expanded(
               child: _currentEntryRotorMode
-                ? GCWEnigmaRotor(
+                ? GCWEnigmaRotorDropDownButton(
                     type: EnigmaRotorType.ENTRY_ROTOR,
                     onChanged: (value) {
                       setState(() {
@@ -173,7 +173,7 @@ class EnigmaState extends State<Enigma> {
 
   _buildRotors() {
     while (_currentRotors.length < _currentNumberRotors) {
-      _currentRotors.add(GCWEnigmaRotor(
+      _currentRotors.add(GCWEnigmaRotorDropDownButton(
         position: _currentRotors.length,
         onChanged: (value) {
           setState(() {

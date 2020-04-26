@@ -53,6 +53,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/color_pick
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -125,6 +126,7 @@ class _MainViewState extends State<MainView> {
           className(Playfair()),
           className(Polybios()),
           className(PrimesSelection()),
+          className(Resistor()),
           className(Reverse()),
           className(RomanNumbers()),
           className(RotationSelection()),
