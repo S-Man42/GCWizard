@@ -313,6 +313,7 @@ class AboutState extends State<About> {
                   '\'radioscout\' (Test)\n'
                   '\'radlerandi\' (Test)\n'
                   '\'Sechsfüssler\' (Symbol Tables)\n'
+                  '\'Stormi - Aaarrr - 2061\' (Test)\n'
                   '\'tomcat06\' (Test)\n'
                   'Udo J. (Test)'
               ),
