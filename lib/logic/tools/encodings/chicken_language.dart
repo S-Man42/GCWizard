@@ -1,4 +1,3 @@
-
 final AZToChicken = {
   'a' : 'ahadefa', 'e' : 'ehedefe', 'i' : 'ihidefi', 'o' : 'ohodefo', 'u' : 'uhudefu',
   String.fromCharCode(228) : String.fromCharCode(228) + 'h' + String.fromCharCode(228) + 'def' + String.fromCharCode(228), // ä
@@ -11,7 +10,7 @@ String encodeChickenLanguage(String input) {
   if (input == null || input.length == 0)
     return '';
 
-  String out = '';
+  var out = '';
   var stored = '0';
 
   input.toLowerCase().split('').forEach((character) {
