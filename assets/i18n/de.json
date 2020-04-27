@@ -118,9 +118,8 @@
   "changelog_0.0.1" : "[new] Google PlayStore Initialisierung",
 
   "chickenlanguage_title" : "Hühnersprache",
-  "chickenlanguage_description" : "",
+  "chickenlanguage_description" : "Spielsprache, Geheimsprache",
   "chickenlanguage_example" : "Huhn → huhudefuhn",
-  "chickenlanguage_numeral_base" : "Kodierung",
 
   "colors_title" : "Farben",
   "colors_description" : "Farbwähler und Farbraum-Konvertierer",
@@ -781,6 +780,10 @@
   "resistor_value_range" : "Wertebereich",
   "resistor_temperaturecoefficient" : "Temp. Koeffizient",
 
+  "robberlanguage_title" : "Räubersprache",
+  "robberlanguage_description" : "Spielsprache, Geheimsprache",
+  "robberlanguage_example" : "Räuber → roräuboberor",
+
   "reverse_title" : "Rückwärts",
   "reverse_description" : "Gibt die Eingabe rückwärts aus",
   "reverse_example" : "ABCdef → fedCBA",
@@ -870,9 +873,8 @@
   "skytale_countcolumns" : "Spalten",
 
   "spoonlanguage_title" : "Löffelsprache",
-  "spoonlanguage_description" : "",
+  "spoonlanguage_description" : "Spielsprache, Geheimsprache",
   "spoonlanguage_example" : "Löffel → lölewöffelewel",
-  "spoonlanguage_numeral_base" : "Kodierung",
 
   "substitution_title" : "Ersetzen",
   "substitution_description" : "Ersetze Buchstaben und Buchstabengruppen mit beliebigen anderen",

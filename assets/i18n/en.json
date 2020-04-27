@@ -118,9 +118,8 @@
   "changelog_0.0.1" : "[new] Google PlayStore Initialisation",
 
   "chickenlanguage_title" : "Chicken language",
-  "chickenlanguage_description" : "",
+  "chickenlanguage_description" : "Game Language, Secret Language",
   "chickenlanguage_example" : "code → cohodefodehedefe",
-  "chickenlanguage_numeral_base" : "Coding",
 
   "colors_title" : "Colors",
   "colors_description" : "Color Picker and Color Space Converter",
@@ -785,6 +784,10 @@
   "reverse_description" : "Input backwards",
   "reverse_example" : "ABCdef → fedCBA",
 
+  "robberlanguage_title" : "Robber language",
+  "robberlanguage_description" : "Game Language, Secret Language",
+  "robberlanguage_example" : "Robber → rorobobboberor",
+
   "romannumbers_title" : "Roman Numbers",
   "romannumbers_description" : "Roman numbers with and without subtraction rule",
   "romannumbers_example" : "42 → XLII",
@@ -870,9 +873,8 @@
   "skytale_countcolumns" : "Columns",
 
   "spoonlanguage_title" : "Spoon Language",
-  "spoonlanguage_description" : "",
+  "spoonlanguage_description" : "Game Language, Secret Language",
   "spoonlanguage_example" : "Spoon → spolewoolewon",
-  "spoonlanguage_numeral_base" : "Coding",
 
   "substitution_title" : "Substitution",
   "substitution_description" : "Replaces any character or group of character with another",

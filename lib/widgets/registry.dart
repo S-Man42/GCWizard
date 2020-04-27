@@ -50,6 +50,7 @@ import 'package:gc_wizard/widgets/tools/crypto/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto/reverse.dart';
+import 'package:gc_wizard/widgets/tools/crypto/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto/rotation/rot13.dart';
 import 'package:gc_wizard/widgets/tools/crypto/rotation/rot18.dart';
 import 'package:gc_wizard/widgets/tools/crypto/rotation/rot47.dart';
@@ -335,6 +336,12 @@ class Registry {
         i18nPrefix: 'reverse',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'reversed backwards umkehren umgekehrt rückwärts inversed inverted invertieren invertierung invertiert inverse '
+      ),
+      GCWToolWidget(
+        tool: RobberLanguage(),
+        i18nPrefix: 'robberlanguage',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'robberlanguage räubersprache raeubersprache rotwelsch astrid lindgren'
       ),
       GCWToolWidget(
         tool: RomanNumbers(),

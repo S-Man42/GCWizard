@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/logic/tools/crypto/spoon_language.dart';
 
 void main() {
-  group('chicken_language.encryptChickenLanguage:', () {
+  group('spoon_language.encryptSpoonLanguage:', () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
@@ -35,7 +35,7 @@ void main() {
     });
   });
 
-  group('chicken_language.decryptChickenLanguage:', () {
+  group('spoon_language.decryptSpoonLanguage:', () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
