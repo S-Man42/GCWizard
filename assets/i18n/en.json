@@ -105,7 +105,7 @@
   "ccitt2_example" : "ABC → 00011 11001 01110",
   "ccitt2_numeral_base" : "Coding",
 
-  "changelog_0.7.0" : "[new] Categories Tab (#40; Thanks, Frank)\n[new] Tool Descriptions and Examples (#48)\n[new] Warning when deleting Favorite or Formula (#44; Thanks, Andy)\n[new] Resistor Color Code\n[new] Color Picker/Color Space Converter\n[new] CCITT-1 (Baudot Code)\n[new] More Symbol Tables (Thanks, Aeggsbaerde)\n[new] Reverse\n[new] Vanity Code\n[new] Tap Code\n[new] Kamasutra\n[new] Hashes\n[fix] CCITT-2 Description (#52, Thanks, Klumpenkukuk)\n[fix] Kenny (#53, 55; Thanks, Michael)\n[fix] Samsung Keyboard Bug (#61; Thanks, Jannes)\n[fix] Roman numbers (#62; Thanks, Daniel)\n[fix] Font Size Change",
+  "changelog_0.7.0" : "[new] Categories Tab (#40; Thanks, Frank)\n[new] Tool Descriptions and Examples (#48)\n[new] Warning when deleting Favorite or Formula (#44; Thanks, Andy)\n[new] Resistor Color Code\n[new] Color Picker/Color Space Converter\n[new] Chicken/Robber/Spoon Language (#10; Thanks, Jannes)\n[new] Pig Latin\n[new] CCITT-1 (Baudot Code)\n[new] More Symbol Tables (Thanks, Aeggsbaerde)\n[new] Reverse\n[new] Vanity Code\n[new] Tap Code\n[new] Kamasutra\n[new] Hashes\n[fix] CCITT-2 Description (#52, Thanks, Klumpenkukuk)\n[fix] Kenny (#53, 55; Thanks, Michael)\n[fix] Samsung Keyboard Bug (#61; Thanks, Jannes)\n[fix] Roman numbers (#62; Thanks, Daniel)\n[fix] Font Size Change",
   "changelog_0.6.2" : "[fix] iOS: Initial language (#35, #41)",
   "changelog_0.6.1" : "[fix] iOS: Input number lists",
   "changelog_0.6.0" : "[new] Website Release gcwizard.net\n[new] First Symbol Tables (Thanks, Aeggsbaerde)\n[new] Periodic Table of the Elements\n[new] Decabit (Thanks, Dennis)\n[new] Trithemius/Gronsfeld (Thanks, Dennis)\n[new] CCITT/Baudot/Z22\n[new] Tapir\n[new] Abaddon/TomTom Code (Thanks, Dennis)\n[chg] Several layout enhancements",
@@ -117,10 +117,10 @@
   "changelog_0.0.4" : "[fix] Calculation of hours/minutes/seconds in 'Count Days'",
   "changelog_0.0.1" : "[new] Google PlayStore Initialisation",
 
-  "chicken_language_title" : "Chicken language",
-  "chicken_language_description" : "",
-  "chicken_language_example" : "code → cohodefodehedefe",
-  "chicken_language_numeral_base" : "Coding",
+  "chickenlanguage_title" : "Chicken language",
+  "chickenlanguage_description" : "",
+  "chickenlanguage_example" : "code → cohodefodehedefe",
+  "chickenlanguage_numeral_base" : "Coding",
 
   "colors_title" : "Colors",
   "colors_description" : "Color Picker and Color Space Converter",
@@ -735,6 +735,10 @@
   "pi_selection_title" : "Pi (π = 3.1415926...)",
   "pi_selection_description" : "Mathematical constant: Circle Number",
   "pi_selection_example" : "",
+
+  "piglatin_title" : "Pig Latin",
+  "piglatin_description" : "Game Language, Secret Language",
+  "piglatin_example" : "Pig Latin → Ig-pay Atin-lay",
 
   "playfair_title" : "Playfair",
   "playfair_description" : "",

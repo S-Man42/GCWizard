@@ -46,6 +46,7 @@ import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto/hashes.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kenny.dart';
+import 'package:gc_wizard/widgets/tools/crypto/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto/reverse.dart';
@@ -107,6 +108,7 @@ class Registry {
   static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
+  static final SEARCHSTRING_GAMELANGUAGE = 'spielsprachen game languages secret languages geheimsprachen ';
   static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschlüsselungen ';
   static final SEARCHSTRING_HASHES_BLAKE2B = SEARCHSTRING_HASHES_SHA3 + 'blake2b ';
   static final SEARCHSTRING_HASHES_KECCAK = SEARCHSTRING_HASHES_SHA3 + 'keccak ';
@@ -188,9 +190,9 @@ class Registry {
       ),
       GCWToolWidget(
         tool: ChickenLanguage(),
-        i18nPrefix: 'chicken_language',
+        i18nPrefix: 'chickenlanguage',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'chickenlanguage hühnersprache huhn spielsprachen game languages'
+        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'chickenlanguage hühnersprache huhn'
       ),
       GCWToolWidget(
         tool: ColorPicker(),
@@ -296,6 +298,12 @@ class Registry {
         i18nPrefix: 'pi_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_PI
+      ),
+      GCWToolWidget(
+        tool: PigLatin(),
+        i18nPrefix: 'piglatin',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'piglatin schweinesprache schweinchensprache ay '
       ),
       GCWToolWidget(
         tool: Playfair(),
