@@ -865,6 +865,11 @@
   "skytale_stripwidth" : "Bandbreite",
   "skytale_countcolumns" : "Spalten",
 
+  "spoonlanguage_title" : "Löffelsprache",
+  "spoonlanguage_description" : "",
+  "spoonlanguage_example" : "Löffel → lölewöffelewel",
+  "spoonlanguage_numeral_base" : "Kodierung",
+
   "substitution_title" : "Ersetzen",
   "substitution_description" : "Ersetze Buchstaben und Buchstabengruppen mit beliebigen anderen",
   "substitution_example" : "ABCBA with (A → a, B → 01) → a01C01a",

@@ -55,6 +55,7 @@ import 'package:gc_wizard/widgets/tools/crypto/rotation/rot47.dart';
 import 'package:gc_wizard/widgets/tools/crypto/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto/rotation/rotation_general.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
+import 'package:gc_wizard/widgets/tools/crypto/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto/symbol_table.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tap_code.dart';
@@ -107,6 +108,7 @@ class Registry {
   static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
+  static final SEARCHSTRING_GAMELANGUAGE ='spielsprache geheimsprache secret game language ';
   static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschlüsselungen ';
   static final SEARCHSTRING_HASHES_BLAKE2B = SEARCHSTRING_HASHES_SHA3 + 'blake2b ';
   static final SEARCHSTRING_HASHES_KECCAK = SEARCHSTRING_HASHES_SHA3 + 'keccak ';
@@ -190,7 +192,7 @@ class Registry {
         tool: ChickenLanguage(),
         i18nPrefix: 'chicken_language',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'chickenlanguage hühnersprache huhn spielsprachen game languages'
+        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'chickenlanguage hühnersprache huenersprache huhn'
       ),
       GCWToolWidget(
         tool: ColorPicker(),
@@ -355,6 +357,12 @@ class Registry {
         i18nPrefix: 'skytale',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'scytale skytale stick stock stab transposition'
+      ),
+      GCWToolWidget(
+        tool: SpoonLanguage(),
+        i18nPrefix: 'spoonlanguage',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'spoonlanguage löffelsprache loeffel'
       ),
       GCWToolWidget(
         tool: Substitution(),

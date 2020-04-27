@@ -865,6 +865,11 @@
   "skytale_stripwidth" : "Strip Width",
   "skytale_countcolumns" : "Columns",
 
+  "spoonlanguage_title" : "Spoon Language",
+  "spoonlanguage_description" : "",
+  "spoonlanguage_example" : "Spoon → spolewoolewon",
+  "spoonlanguage_numeral_base" : "Coding",
+
   "substitution_title" : "Substitution",
   "substitution_description" : "Replaces any character or group of character with another",
   "substitution_example" : "ABCBA with (A → a, B → 01) → a01C01a",

@@ -35,6 +35,7 @@ import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
+import 'package:gc_wizard/widgets/tools/crypto/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tapir.dart';
@@ -134,6 +135,7 @@ class _MainViewState extends State<MainView> {
           className(RotationSelection()),
           className(Scrabble()),
           className(Skytale()),
+          className(SpoonLanguage()),
           className(Substitution()),
           className(SymbolTableSelection()),
           className(TapCode()),
