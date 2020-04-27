@@ -26,14 +26,18 @@ import 'package:gc_wizard/widgets/tools/crypto/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/caesar.dart';
+import 'package:gc_wizard/widgets/tools/crypto/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kenny.dart';
+import 'package:gc_wizard/widgets/tools/crypto/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto/reverse.dart';
+import 'package:gc_wizard/widgets/tools/crypto/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
+import 'package:gc_wizard/widgets/tools/crypto/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto/tapir.dart';
@@ -107,6 +111,7 @@ class _MainViewState extends State<MainView> {
           className(Caesar()),
           className(CCITT1()),
           className(CCITT2()),
+          className(ChickenLanguage()),
           className(CoordsSelection()),
           className(ColorPicker()),
           className(DatesSelection()),
@@ -123,15 +128,18 @@ class _MainViewState extends State<MainView> {
           className(PeriodicTable()),
           className(PhiSelection()),
           className(PiSelection()),
+          className(PigLatin()),
           className(Playfair()),
           className(Polybios()),
           className(PrimesSelection()),
           className(Resistor()),
           className(Reverse()),
+          className(RobberLanguage()),
           className(RomanNumbers()),
           className(RotationSelection()),
           className(Scrabble()),
           className(Skytale()),
+          className(SpoonLanguage()),
           className(Substitution()),
           className(SymbolTableSelection()),
           className(TapCode()),

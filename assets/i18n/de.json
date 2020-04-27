@@ -98,14 +98,14 @@
   "ccitt1_title" : "CCITT-1",
   "ccitt1_description" : "Baudot-Code",
   "ccitt1_example" : "ABC → 00100 01001 01101",
-  "ccitt1_numeral_base" : "Coding",
+  "ccitt1_numeral_base" : "Kodierung",
 
   "ccitt2_title" : "CCITT-2",
   "ccitt2_description" : "Baudot-Murray-Code; Binärer Lochkartencode",
   "ccitt2_example" : "ABC → 00011 11001 01110",
   "ccitt2_numeral_base" : "Kodierung",
 
-  "changelog_0.7.0" : "[new] Kategorie-Tab (#40; Danke, Frank)\n[new] Tool-Beschreibungen und Beispiele (#48)\n[new] Warnung bei Löschen von Favorit oder Formel (#44; Danke, Andy)\n[new] Widerstandsfarbcode\n[new] Farbwähler/Farbraum-Konvertierer\n[new] CCITT-1 (Baudot-Code)\n[new] Mehr Symboltabellen (Danke, Aeggsbaerde)\n[new] Rückwärts\n[new] Vanity-Code\n[new] Klopfcode\n[new] Kamasutra\n[new] Hashes\n[fix] CCITT-2-Beschreibung (#52, Danke, Klumpenkukuk)\n[fix] Kenny (#53, 55; Danke, Michael)\n[fix] Samsung-Tastatur-Bug (#61; Danke, Jannes)\n[fix] Römische Zahlen (#62; Danke, Daniel)\n[fix] Schriftgröße ändern",
+  "changelog_0.7.0" : "[new] Kategorie-Tab (#40; Danke, Frank)\n[new] Tool-Beschreibungen und Beispiele (#48)\n[new] Warnung bei Löschen von Favorit oder Formel (#44; Danke, Andy)\n[new] Widerstandsfarbcode\n[new] Farbwähler/Farbraum-Konvertierer\n[new] Hühner-/Räuber-/Löffelsprache (#10; Danke, 'capoaira')\n[new] Pig Latin\n[new] CCITT-1 (Baudot-Code)\n[new] Mehr Symboltabellen (Danke, Aeggsbaerde)\n[new] Rückwärts\n[new] Vanity-Code\n[new] Klopfcode\n[new] Kamasutra\n[new] Hashes\n[fix] CCITT-2-Beschreibung (#52, Danke, Klumpenkukuk)\n[fix] Kenny (#53, 55; Danke, Michael)\n[fix] Samsung-Tastatur-Bug (#61; Danke, 'capoaira')\n[fix] Römische Zahlen (#62; Danke, Daniel)\n[fix] Schriftgröße ändern",
   "changelog_0.6.2" : "[fix] iOS: Initiale Sprache (#35, #41)",
   "changelog_0.6.1" : "[fix] iOS: Eingabe von Zahlenlisten",
   "changelog_0.6.0" : "[new] Release der Webseite gcwizard.net\n[new] Erste Symboltabellen (Danke, Aeggsbaerde)\n[new] Periodensystem der Elemente (PSE)\n[new] Decabit (Danke, Dennis)\n[new] Trithemius/Gronsfeld (Danke, Dennis)\n[new] CCITT/Baudot/Z22\n[new] Tapir\n[new] Abaddon/TomTom Code (Danke, Dennis)\n[chg] Einige Layoutverbesserungen",
@@ -116,6 +116,10 @@
   "changelog_0.3.0" : "[new] Aussagekräftige Versionsnummers\n[new] Primzahlen\n[new] Zahlensysteme\n[new] Morse\n[new] Playfair\n[new] ADFG(V)X\n[new] Bacon\n[chg] Datum- und Koordinateneingaben: Workflow\n[chg] Verschiedene Layout- und Architekturänderungen\n[fix] Rechtschreibung",
   "changelog_0.0.4" : "[fix] Berechnung von Stunden/Minuten/Sekunden in 'Anzahl Tage'",
   "changelog_0.0.1" : "[new] Google PlayStore Initialisierung",
+
+  "chickenlanguage_title" : "Hühnersprache",
+  "chickenlanguage_description" : "Spielsprache, Geheimsprache",
+  "chickenlanguage_example" : "Huhn → huhudefuhn",
 
   "colors_title" : "Farben",
   "colors_description" : "Farbwähler und Farbraum-Konvertierer",
@@ -731,6 +735,10 @@
   "pi_selection_description" : "Mathematische Konstante: Kreiszahl",
   "pi_selection_example" : "",
 
+  "piglatin_title" : "Pig Latin",
+  "piglatin_description" : "Spielsprache, Geheimsprache",
+  "piglatin_example" : "Pig Latin → Ig-pay Atin-lay",
+
   "playfair_title" : "Playfair",
   "playfair_description" : "",
   "playfair_example" : "AM EF KP RC PQ CW CB",
@@ -771,6 +779,10 @@
   "resistor_value" : "Wert",
   "resistor_value_range" : "Wertebereich",
   "resistor_temperaturecoefficient" : "Temp. Koeffizient",
+
+  "robberlanguage_title" : "Räubersprache",
+  "robberlanguage_description" : "Spielsprache, Geheimsprache",
+  "robberlanguage_example" : "Räuber → roräuboberor",
 
   "reverse_title" : "Rückwärts",
   "reverse_description" : "Gibt die Eingabe rückwärts aus",
@@ -859,6 +871,10 @@
   "skytale_perimeter" : "Umfang",
   "skytale_stripwidth" : "Bandbreite",
   "skytale_countcolumns" : "Spalten",
+
+  "spoonlanguage_title" : "Löffelsprache",
+  "spoonlanguage_description" : "Spielsprache, Geheimsprache",
+  "spoonlanguage_example" : "Löffel → lölewöffelewel",
 
   "substitution_title" : "Ersetzen",
   "substitution_description" : "Ersetze Buchstaben und Buchstabengruppen mit beliebigen anderen",

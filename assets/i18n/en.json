@@ -105,7 +105,7 @@
   "ccitt2_example" : "ABC → 00011 11001 01110",
   "ccitt2_numeral_base" : "Coding",
 
-  "changelog_0.7.0" : "[new] Categories Tab (#40; Thanks, Frank)\n[new] Tool Descriptions and Examples (#48)\n[new] Warning when deleting Favorite or Formula (#44; Thanks, Andy)\n[new] Resistor Color Code\n[new] Color Picker/Color Space Converter\n[new] CCITT-1 (Baudot Code)\n[new] More Symbol Tables (Thanks, Aeggsbaerde)\n[new] Reverse\n[new] Vanity Code\n[new] Tap Code\n[new] Kamasutra\n[new] Hashes\n[fix] CCITT-2 Description (#52, Thanks, Klumpenkukuk)\n[fix] Kenny (#53, 55; Thanks, Michael)\n[fix] Samsung Keyboard Bug (#61; Thanks, Jannes)\n[fix] Roman numbers (#62; Thanks, Daniel)\n[fix] Font Size Change",
+  "changelog_0.7.0" : "[new] Categories Tab (#40; Thanks, Frank)\n[new] Tool Descriptions and Examples (#48)\n[new] Warning when deleting Favorite or Formula (#44; Thanks, Andy)\n[new] Resistor Color Code\n[new] Color Picker/Color Space Converter\n[new] Chicken/Robber/Spoon Language (#10; Thanks, 'capoaira',)\n[new] Pig Latin\n[new] CCITT-1 (Baudot Code)\n[new] More Symbol Tables (Thanks, Aeggsbaerde)\n[new] Reverse\n[new] Vanity Code\n[new] Tap Code\n[new] Kamasutra\n[new] Hashes\n[fix] CCITT-2 Description (#52, Thanks, Klumpenkukuk)\n[fix] Kenny (#53, 55; Thanks, Michael)\n[fix] Samsung Keyboard Bug (#61; Thanks, 'capoaira')\n[fix] Roman numbers (#62; Thanks, Daniel)\n[fix] Font Size Change",
   "changelog_0.6.2" : "[fix] iOS: Initial language (#35, #41)",
   "changelog_0.6.1" : "[fix] iOS: Input number lists",
   "changelog_0.6.0" : "[new] Website Release gcwizard.net\n[new] First Symbol Tables (Thanks, Aeggsbaerde)\n[new] Periodic Table of the Elements\n[new] Decabit (Thanks, Dennis)\n[new] Trithemius/Gronsfeld (Thanks, Dennis)\n[new] CCITT/Baudot/Z22\n[new] Tapir\n[new] Abaddon/TomTom Code (Thanks, Dennis)\n[chg] Several layout enhancements",
@@ -116,6 +116,10 @@
   "changelog_0.3.0" : "[new] Meaningful version numbers\n[new] Prime Numbers\n[new] Numeral Bases\n[new] Morse\n[new] Playfair\n[new] ADFG(V)X\n[new] Bacon\n[chg] Date and Coordinates Input Workflow\n[chg] Different Layout and Architecture Changes\n[fix] Typos",
   "changelog_0.0.4" : "[fix] Calculation of hours/minutes/seconds in 'Count Days'",
   "changelog_0.0.1" : "[new] Google PlayStore Initialisation",
+
+  "chickenlanguage_title" : "Chicken language",
+  "chickenlanguage_description" : "Game Language, Secret Language",
+  "chickenlanguage_example" : "code → cohodefodehedefe",
 
   "colors_title" : "Colors",
   "colors_description" : "Color Picker and Color Space Converter",
@@ -731,6 +735,10 @@
   "pi_selection_description" : "Mathematical constant: Circle Number",
   "pi_selection_example" : "",
 
+  "piglatin_title" : "Pig Latin",
+  "piglatin_description" : "Game Language, Secret Language",
+  "piglatin_example" : "Pig Latin → Ig-pay Atin-lay",
+
   "playfair_title" : "Playfair",
   "playfair_description" : "",
   "playfair_example" : "AM EF KP RC PQ CW CB",
@@ -775,6 +783,10 @@
   "reverse_title" : "Reverse",
   "reverse_description" : "Input backwards",
   "reverse_example" : "ABCdef → fedCBA",
+
+  "robberlanguage_title" : "Robber language",
+  "robberlanguage_description" : "Game Language, Secret Language",
+  "robberlanguage_example" : "Robber → rorobobboberor",
 
   "romannumbers_title" : "Roman Numbers",
   "romannumbers_description" : "Roman numbers with and without subtraction rule",
@@ -859,6 +871,10 @@
   "skytale_perimeter" : "Perimeter",
   "skytale_stripwidth" : "Strip Width",
   "skytale_countcolumns" : "Columns",
+
+  "spoonlanguage_title" : "Spoon Language",
+  "spoonlanguage_description" : "Game Language, Secret Language",
+  "spoonlanguage_example" : "Spoon → spolewoolewon",
 
   "substitution_title" : "Substitution",
   "substitution_description" : "Replaces any character or group of character with another",
