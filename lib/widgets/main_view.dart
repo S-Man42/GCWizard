@@ -31,6 +31,7 @@ import 'package:gc_wizard/widgets/tools/crypto/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto/kenny.dart';
+import 'package:gc_wizard/widgets/tools/crypto/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto/reverse.dart';
@@ -126,6 +127,7 @@ class _MainViewState extends State<MainView> {
           className(PeriodicTable()),
           className(PhiSelection()),
           className(PiSelection()),
+          className(PigLatin()),
           className(Playfair()),
           className(Polybios()),
           className(PrimesSelection()),

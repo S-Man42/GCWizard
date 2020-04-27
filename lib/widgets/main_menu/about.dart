@@ -305,7 +305,7 @@ class AboutState extends State<About> {
                   'Daniel W. (Test)\n'
                   'Frank \'Wizardland\' (podKst.de) (Test, PR)\n'
                   '\'Geo-Link\' (Hardware)\n'
-                  'Jannes (Test)\n'
+                  'Jannes (Development, Test)\n'
                   '\'Klumpenkukuk\' (Test)\n'
                   'Michael D. (Test)\n'
                   'Palk \'geogedoens.de\' (Test, PR)\n'
