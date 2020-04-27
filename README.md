@@ -278,10 +278,15 @@ class IncreasedNState extends State<IncreasedN> {
 		</ol>
 	</li>
 	<li>
-		<b>Register the widget</b>: All widgets are registered centrally. The file is <tt>/widgets/registry.dart</tt>. This wraps your layout with a real page widget, adds a title and even the keywords for the search engine:
+		<b>Register the widget</b>: All widgets are registered centrally. The file is <tt>/widgets/registry.dart</tt>. This wraps your layout with a real page widget, adds a keyword for the language files (which will be mapped to title, description and example, see below), the category, where the tool fits (usually <tt>CRYPTOGRAPHY</tt> for codes or <tt>SCIENCE_AND_TECHNOLOGY<tt/> for some scientific formula stuff) and even the keywords for the search engine:
   
 ```dart
-GCWToolWidget(tool: IncreasedN(), toolName: i18n(context, 'increasedn_title'), searchStrings: 'increasedn'),
+GCWToolWidget(
+  tool: IncreasedN(), 
+  i18nPrefix: 'increasedn'), 
+  category: ToolCategory.CRYPTOGRAPHY,
+  searchStrings: 'increasedn')
+),
 ```
 
 Notice, that the toolname is a call of the <tt>i18n()</tt> method. This is for internationalization. It maps the given keyword (<tt>increasedn_title</tt> in this case) to the real output in all available languages. 
@@ -295,14 +300,18 @@ className(IncreasedN()),
     
 </li>
 	<li>
-		<b>Internationalize</b>: In the directory <tt>/assets/i18n/</tt> you can find all language files. These are key/value JSON files, each for every supported language. You already used a localization key for the title in the registry. This needs to be transferred to a real text. So, please add all used keys (maybe you used some directly in your widget as well) and put the text in the specific language:
+		<b>Internationalize</b>: In the directory <tt>/assets/i18n/</tt> you can find all language files. These are key/value JSON files, each for every supported language. You already used a localization key in the registry, which is mapped here to the title, the description and an example (title is neccessary, others are optional but recommended). This needs to be transferred to a real text. So, please add all used keys (maybe you used some directly in your widget as well) and put the text in the specific language:
 
 ```
 en.json:
  "increasedn_title" : "Increased N",
+ "increasedn_description" : "Increases an integer value by 1",
+ "increasedn_example" : "41 → 42",
 
 de.json:
  "increasedn_title" : "Inkrementiertes N",
+ "increasedn_description" : "Erhöht eine Ganzzahl um 1",
+ "increasedn_example" : "41 → 42",
 ```
     
 </li>
