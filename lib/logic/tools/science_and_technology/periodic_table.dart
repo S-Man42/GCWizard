@@ -130,6 +130,10 @@ class PeriodicTableElement {
     return formatDaysToNearestUnit(this.halfLife);
   }
 
+  get formattedDensity {
+    return (this.density < 0.1) ? this.density.toStringAsExponential() : this.density.toString();
+  }
+
   @override
   String toString() {
     return 'name: $name ($chemicalSymbol, $atomicNumber)';

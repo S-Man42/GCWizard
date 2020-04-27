@@ -332,7 +332,7 @@ class PeriodicTableState extends State<PeriodicTable> {
           relevantValue = element.electronegativity;
           break;
         case PeriodicTableCategory.DENSITY:
-          relevantValue = element.density;
+          relevantValue = element.formattedDensity;
           break;
         case PeriodicTableCategory.HALF_LIFE:
           relevantValue = element.formattedHalfLife;
@@ -381,7 +381,7 @@ class PeriodicTableState extends State<PeriodicTable> {
       [i18n(context, 'periodictable_attribute_meltingpoint'), pte.meltingPoint > -double.infinity ? _temperatures(pte.meltingPoint) : i18n(context, 'common_unknown')],
       [i18n(context, 'periodictable_attribute_boilingpoint'), pte.boilingPoint > -double.infinity ? _temperatures(pte.boilingPoint) : i18n(context, 'common_unknown')],
 
-      [i18n(context, 'periodictable_attribute_density'), pte.density > -double.infinity ? pte.density : i18n(context, 'common_unknown')],
+      [i18n(context, 'periodictable_attribute_density'), pte.density > -double.infinity ? pte.formattedDensity : i18n(context, 'common_unknown')],
       [i18n(context, 'periodictable_attribute_mass'), pte.mass],
       [i18n(context, 'periodictable_attribute_electronegativity'), pte.electronegativity > -double.infinity
           ? (pte.electronegativity < double.infinity ? pte.electronegativity : i18n(context, 'periodictable_attribute_electronegativity_none'))

@@ -165,7 +165,7 @@ Map<U, T> switchMapKeyValue<T,U>(Map<T, U> map) {
 String stringToSuperscript(String text) {
   return text.split('').map((character) {
     var superscript = superscriptCharacters[character];
-    return superscript ?? text;
+    return superscript ?? character;
   }).join();
 }
 

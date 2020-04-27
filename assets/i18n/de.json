@@ -714,7 +714,7 @@
   "periodictable_attribute_boilingpoint" : "Siedepunkt",
   "periodictable_attribute_electronegativity" : "Elektronegativität",
   "periodictable_attribute_electronegativity_none" : "Keine",
-  "periodictable_attribute_density" : "Dichte",
+  "periodictable_attribute_density" : "Dichte (ᵍ/cm³)",
   "periodictable_attribute_issynthetic" : "Natürlich/Synthetisch",
   "periodictable_attribute_issynthetic_alternative" : "Natürliches Vorkommen",
   "periodictable_attribute_issynthetic_true" : "Synthetisch",
