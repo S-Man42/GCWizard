@@ -111,7 +111,7 @@ class Registry {
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
   static final SEARCHSTRING_GAMELANGUAGE = 'spielsprachen game languages secret languages geheimsprachen ';
-  static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschlüsselungen ';
+  static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschluesselungen ';
   static final SEARCHSTRING_HASHES_BLAKE2B = SEARCHSTRING_HASHES_SHA3 + 'blake2b ';
   static final SEARCHSTRING_HASHES_KECCAK = SEARCHSTRING_HASHES_SHA3 + 'keccak ';
   static final SEARCHSTRING_HASHES_RIPEMD = SEARCHSTRING_HASHES_SHA3 + 'ripemd ripe-md ';
@@ -134,7 +134,7 @@ class Registry {
         tool: Abaddon(),
         i18nPrefix: 'abaddon',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'abaddon abbaddon abbadon yen renminbi mi thorn ternär gc11eky ' + [165, 181, 254].map((char) => String.fromCharCode(char)).join(' ')
+        searchStrings: 'abaddon abbaddon abbadon yen renminbi mi thorn ternaer gc11eky ' + [165, 181, 254].map((char) => String.fromCharCode(char)).join(' ')
       ),
       GCWToolWidget(
         tool: ADFGVX(),
@@ -152,13 +152,13 @@ class Registry {
         tool: Atbash(),
         i18nPrefix: 'atbash',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'atbash atbasch hebrew hebräisches umkehren umkehrungen reverse rückwärts'
+        searchStrings: 'atbash atbasch hebrew hebraeisches umkehren umkehrungen reverse rueckwaerts'
       ),
       GCWToolWidget(
         tool: Bacon(),
         i18nPrefix: 'bacon',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'francis bacon binary binär dual'
+        searchStrings: 'francis bacon binary binaer dual'
       ),
       GCWToolWidget(
         tool: BaseSelection(),
@@ -176,7 +176,7 @@ class Registry {
         tool: Caesar(),
         i18nPrefix: 'caesar',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_ROTATION + 'caesar cäsar'
+        searchStrings: SEARCHSTRING_ROTATION + 'caesar'
       ),
       GCWToolWidget(
         tool: CCITT1(),
@@ -194,13 +194,13 @@ class Registry {
         tool: ChickenLanguage(),
         i18nPrefix: 'chickenlanguage',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'chickenlanguage hühnersprache huenersprache huhn'
+        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'chickenlanguage huehnersprache huenersprache huhn'
       ),
       GCWToolWidget(
         tool: ColorPicker(),
         i18nPrefix: 'colors',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'colors pal ntsc farben rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode picker red green blue yellow black key magenta orange cyan luminanz hellwert farbwert helligkeit sättigung luminance chrominanz chrominance saturation lightness hue cmyk luma chroma'
+        searchStrings: 'colors pal ntsc farben rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode picker red green blue yellow black key magenta orange cyan luminanz hellwert farbwert helligkeit saettigung luminance chrominanz chrominance saturation lightness hue cmyk luma chroma'
       ),
       GCWToolWidget(
         tool: CoordsSelection(),
@@ -210,7 +210,7 @@ class Registry {
       GCWToolWidget(
         tool: CryptographySelection(),
         i18nPrefix: 'cryptography_selection',
-        searchStrings: 'cryptography verschlüsselung entschlüsselung verschlüsseln entschlüsseln codes encoding decoding encode decode encryption encrypt decrypt decryption kryptographie kryptografie'
+        searchStrings: 'cryptography verschluesselung entschluesselung verschluesseln entschluesseln codes encoding decoding encode decode encryption encrypt decrypt decryption kryptographie kryptografie'
       ),
       GCWToolWidget(
         tool: DatesSelection(),
@@ -263,7 +263,7 @@ class Registry {
         tool: Kenny(),
         i18nPrefix: 'kenny',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'they killed kenny sie haben kenny getötet kennys kenny\'s code southpark'
+        searchStrings: 'they killed kenny sie haben kenny getoetet kennys kenny\'s code southpark'
       ),
       GCWToolWidget(
         tool: LetterValues(),
@@ -275,13 +275,13 @@ class Registry {
         tool: Morse(),
         i18nPrefix: 'morse',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'samuel morse morsecode morsen translators translate übersetzen übersetzer punkte striche dots dashes'
+        searchStrings: 'samuel morse morsecode morsen translators translate uebersetzen uebersetzer punkte striche dots dashes'
       ),
       GCWToolWidget(
         tool: NumeralBases(),
         i18nPrefix: 'numeralbases',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'converter converting bases umwandler umwandeln konvertieren konverter numeral basis basen zahlensysteme binär binary decimal dezimal octal octenary oktal dual'
+        searchStrings: 'converter converting bases umwandler umwandeln konvertieren konverter numeral basis basen zahlensysteme binaer binary decimal dezimal octal octenary oktal dual'
       ),
       GCWToolWidget(
         tool: PeriodicTable(),
@@ -329,25 +329,25 @@ class Registry {
         tool: Resistor(),
         i18nPrefix: 'resistor_colorcode',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'resistors colorcodes widerstand widerstände farben farbcodes colors resistance ohm '
+        searchStrings: 'resistors colorcodes widerstand widerstaende farben farbcodes colors resistance ohm '
       ),
       GCWToolWidget(
         tool: Reverse(),
         i18nPrefix: 'reverse',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'reversed backwards umkehren umgekehrt rückwärts inversed inverted invertieren invertierung invertiert inverse '
+        searchStrings: 'reversed backwards umkehren umgekehrt rueckwaerts inversed inverted invertieren invertierung invertiert inverse '
       ),
       GCWToolWidget(
         tool: RobberLanguage(),
         i18nPrefix: 'robberlanguage',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'robberlanguage räubersprache raeubersprache rotwelsch astrid lindgren'
+        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'robberlanguage raeubersprache rotwelsch astrid lindgren rovarspraket'
       ),
       GCWToolWidget(
         tool: RomanNumbers(),
         i18nPrefix: 'romannumbers',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'roman numbers römische zahlen'
+        searchStrings: 'roman numbers roemische zahlen'
       ),
       GCWToolWidget(
         tool: RotationSelection(),
@@ -364,7 +364,7 @@ class Registry {
         tool: Scrabble(),
         i18nPrefix: 'scrabble',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'scrabble deutsch englisch spanisch niederländisch französisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'
+        searchStrings: 'scrabble deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'
       ),
       GCWToolWidget(
         tool: Skytale(),
@@ -376,7 +376,7 @@ class Registry {
         tool: SpoonLanguage(),
         i18nPrefix: 'spoonlanguage',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'spoonlanguage löffelsprache loeffel'
+        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'spoonlanguage loeffelsprache'
       ),
       GCWToolWidget(
         tool: Substitution(),
@@ -477,13 +477,13 @@ class Registry {
         tool: DistanceBearing(),
         i18nPrefix: 'coords_distancebearing',
         iconPath: 'assets/coordinates/icon_distance_and_bearing.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'angles winkel bearings distances distanzen entfernungen abstand abstände directions richtungen'
+        searchStrings: SEARCHSTRING_COORDINATES + 'angles winkel bearings distances distanzen entfernungen abstand abstaende directions richtungen'
       ),
       GCWToolWidget(
         tool: FormatConverter(),
         i18nPrefix: 'coords_formatconverter',
         iconPath: 'assets/coordinates/icon_format_converter.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'converter converting konverter konvertieren umwandeln maidenhead geo-hash geohash qth swissgrid swiss grid mercator gauss kruger krüger gauß mgrs utm dec deg dms 1903 ch1903+'
+        searchStrings: SEARCHSTRING_COORDINATES + 'converter converting konverter konvertieren umwandeln maidenhead geo-hash geohash qth swissgrid swiss grid mercator gauss kruger krueger gauue mgrs utm dec deg dms 1903 ch1903+'
       ),
       GCWToolWidget(
         tool: CenterTwoPoints(),
@@ -519,31 +519,31 @@ class Registry {
         tool: IntersectGeodeticAndCircle(),
         i18nPrefix: 'coords_intersectbearingcircle',
         iconPath: 'assets/coordinates/icon_intersect_bearing_and_circle.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'bearings angles distances circles arcs intersection distanzen entfernungen abstand abstände winkel kreisbogen kreise'
+        searchStrings: SEARCHSTRING_COORDINATES + 'bearings angles distances circles arcs intersection distanzen entfernungen abstand abstaende winkel kreisbogen kreise'
       ),
       GCWToolWidget(
         tool: IntersectTwoCircles(),
         i18nPrefix: 'coords_intersecttwocircles',
         iconPath: 'assets/coordinates/icon_intersect_two_circles.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'multilateration bilateration distances intersection distanzen entfernungen abstand abstände two zwei 2 circles kreise'
+        searchStrings: SEARCHSTRING_COORDINATES + 'multilateration bilateration distances intersection distanzen entfernungen abstand abstaende two zwei 2 circles kreise'
       ),
       GCWToolWidget(
         tool: IntersectThreeCircles(),
         i18nPrefix: 'coords_intersectthreecircles',
         iconPath: 'assets/coordinates/icon_intersect_three_circles.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'multilateration trilateration distances intersection distanzen entfernungen abstand abstände drei three 3 circles kreise'
+        searchStrings: SEARCHSTRING_COORDINATES + 'multilateration trilateration distances intersection distanzen entfernungen abstand abstaende drei three 3 circles kreise'
       ),
       GCWToolWidget(
         tool: Intersection(),
         i18nPrefix: 'coords_intersection',
         iconPath: 'assets/coordinates/icon_intersection.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'intersection 2 angles bearings directions richtungen vorwärtseinschnitt vorwärtseinschneiden vorwärtsschnitt vorwärtsschneiden'
+        searchStrings: SEARCHSTRING_COORDINATES + 'intersection 2 angles bearings directions richtungen vorwaertseinschnitt vorwaertseinschneiden vorwaertsschnitt vorwaertsschneiden'
       ),
       GCWToolWidget(
           tool: Resection(),
         i18nPrefix: 'coords_resection',
         iconPath: 'assets/coordinates/icon_resection.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'resection 2 two zwei angles winkel directions richtungen bearings 3 three drei rückwärtseinschnitt rückwärtseinschneiden rückwärtsschnitt rückwärtsschneiden'
+        searchStrings: SEARCHSTRING_COORDINATES + 'resection 2 two zwei angles winkel directions richtungen bearings 3 three drei rueckwaertseinschnitt rueckwaertseinschneiden rueckwaertsschnitt rueckwaertsschneiden'
       ),
       GCWToolWidget(
         tool: EquilateralTriangle(),
@@ -584,7 +584,7 @@ class Registry {
       GCWToolWidget(
         tool: ESearch(),
         i18nPrefix: 'irrationalnumbers_search',
-        searchStrings: SEARCHSTRING_E + 'occurrence vorkommen vorhanden contains containing enthält enthalten '
+        searchStrings: SEARCHSTRING_E + 'occurrence vorkommen vorhanden contains containing enthaelt enthalten '
       ),
 
       //Hash Selection *****************************************************************************************
@@ -753,12 +753,12 @@ class Registry {
       GCWToolWidget(
         tool: Changelog(),
         i18nPrefix: 'mainmenu_changelog',
-        searchStrings: 'changelog änderungen',
+        searchStrings: 'changelog aenderungen',
       ),
       GCWToolWidget(
         tool: About(),
         i18nPrefix: 'mainmenu_about',
-        searchStrings: 'about über gcwizard',
+        searchStrings: 'about ueber gcwizard',
       ),
       GCWToolWidget(
         tool: CallForContribution(),
@@ -780,7 +780,7 @@ class Registry {
       GCWToolWidget(
         tool: PhiSearch(),
         i18nPrefix: 'irrationalnumbers_search',
-        searchStrings: SEARCHSTRING_PHI + 'occurrence vorkommen vorhanden contains containing enthält enthalten '
+        searchStrings: SEARCHSTRING_PHI + 'occurrence vorkommen vorhanden contains containing enthaelt enthalten '
       ),
 
       //Pi Selection **********************************************************************************************
@@ -797,7 +797,7 @@ class Registry {
       GCWToolWidget(
         tool: PiSearch(),
         i18nPrefix: 'irrationalnumbers_search',
-        searchStrings: SEARCHSTRING_PI + 'occurrence vorkommen vorhanden contains containing enthält enthalten '
+        searchStrings: SEARCHSTRING_PI + 'occurrence vorkommen vorhanden contains containing enthaelt enthalten '
       ),
 
       //PrimesSelection **********************************************************************************************
@@ -809,12 +809,12 @@ class Registry {
       GCWToolWidget(
         tool: IsPrime(),
         i18nPrefix: 'primes_isprime',
-        searchStrings: SEARCHSTRING_PRIMES + 'tests is überprüfungen ist'
+        searchStrings: SEARCHSTRING_PRIMES + 'tests is ueberpruefungen ist'
       ),
       GCWToolWidget(
         tool: NearestPrime(),
         i18nPrefix: 'primes_nearestprime',
-        searchStrings: SEARCHSTRING_PRIMES + 'next successor follower nächsten nachfolger nähester closest'
+        searchStrings: SEARCHSTRING_PRIMES + 'next successor follower naechsten nachfolger naehester closest'
       ),
       GCWToolWidget(
         tool: PrimeIndex(),
@@ -978,13 +978,13 @@ class Registry {
         tool: SymbolTable(symbolKey: 'sign'),
         i18nPrefix: 'symboltables_sign',
         iconPath: SYMBOLTABLES_ASSETPATH + 'sign/75.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sign language zeichensprache gebärdensprache taubstumme taub-stumme deafblind deaf-blind'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sign language zeichensprache gebaerdensprache taubstumme taub-stumme deafblind deaf-blind'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'visitor'),
         i18nPrefix: 'symboltables_visitor',
         iconPath: SYMBOLTABLES_ASSETPATH + 'visitor/57.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'visitor die besucher v aliens außerirdische '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'visitor die besucher v aliens ausserirdische '
       ),
 
       //VanitySelection **********************************************************************************************
