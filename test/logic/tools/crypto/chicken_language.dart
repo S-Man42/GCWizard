@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/logic/tools/crypto/chicken_language.dart';
 
 void main() {
-  group('chicken_language.encodeChickenLanguage:', () {
+  group('chicken_language.encryptChickenLanguage:', () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
@@ -30,13 +30,13 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeChickenLanguage(elem['input']);
+        var _actual = encryptChickenLanguage(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
-  group('chicken_language.decodeChickenLanguage:', () {
+  group('chicken_language.decryptChickenLanguage:', () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
 
@@ -66,7 +66,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeChickenLanguage(elem['input']);
+        var _actual = decryptChickenLanguage(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });

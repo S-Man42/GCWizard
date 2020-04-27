@@ -1,6 +1,6 @@
 import 'package:gc_wizard/logic/tools/crypto/substitution.dart';
 
-String encodeChickenLanguage(String input) {
+String encryptChickenLanguage(String input) {
   if (input == null || input.length == 0)
   return '';
 
@@ -13,7 +13,7 @@ String encodeChickenLanguage(String input) {
   ).toLowerCase();
 }
 
-String decodeChickenLanguage(String input) {
+String decryptChickenLanguage(String input) {
   if (input == null || input.length == 0)
     return '';
 

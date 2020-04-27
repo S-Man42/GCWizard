@@ -43,8 +43,8 @@ class ChickenLanguageState extends State<ChickenLanguage> {
       return '';
 
     var out = _currentMode == GCWSwitchPosition.left
-      ? encodeChickenLanguage(_currentInput)
-      : decodeChickenLanguage(_currentInput);
+      ? encryptChickenLanguage(_currentInput)
+      : decryptChickenLanguage(_currentInput);
 
     return out;
   }
