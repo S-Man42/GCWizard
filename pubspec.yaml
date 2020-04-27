@@ -1,5 +1,5 @@
 name: gc_wizard
-description: GC Wizard
+description: GC Wizard Gold
 version: 0.7.0+19
 
 environment:
@@ -61,6 +61,6 @@ flutter:
     - assets/symbol_tables/visitor/
 
 flutter_icons:
-  image_path: "assets/logo/circle_border_1024.png"
+  image_path: "assets/logo/circle_border_1024_gold.png"
   android: true
   ios: true

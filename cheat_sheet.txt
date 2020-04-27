@@ -8,3 +8,14 @@ flutter build web
 Icons:
 Android: android/app/src/main/res/mipmap-*/ic_launcher.png
 iOS: ios/Runner/Assets.xcassets/AppIcon.appiconset/
+
+Gold Version:
+Copy icons from icondirectory/icons_gold into main icon directory
+Change package name to gc_wizard_gold
+Android:
+    1. Android Manifest
+    2. build.gradle -> defaultConfig
+    3. MainActivity.kt
+    4. Directory of MainActivity.kt
+iOS:
+
