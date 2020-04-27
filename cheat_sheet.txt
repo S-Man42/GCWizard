@@ -4,3 +4,7 @@ flutter build appbundle --release --target-platform android-arm,android-arm64
 Web Build:
 flutter create .
 flutter build web
+
+Icons:
+Android: android/app/src/main/res/mipmap-*/ic_launcher.png
+iOS: ios/Runner/Assets.xcassets/AppIcon.appiconset/
