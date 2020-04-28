@@ -305,7 +305,7 @@ class AboutState extends State<About> {
                   'Daniel W. (Test)\n'
                   'Frank \'Wizardland\' (podKst.de) (Test, PR)\n'
                   'Franz K. (Test)\n'
-                  '\'Geo-Link\' (Hardware)\n'
+                  '\'Geo-Link\' (Hardware & Fun)\n'
                   '\'capoaira\' (Development, Test)\n'
                   '\'Klumpenkukuk\' (Test)\n'
                   'Michael D. (Test)\n'
@@ -314,9 +314,11 @@ class AboutState extends State<About> {
                   '\'radioscout\' (Test)\n'
                   '\'radlerandi\' (Test)\n'
                   '\'Sechsfüssler\' (Symbol Tables)\n'
-                  '\'Stormi - Aaarrr - 2061\' (Test)\n'
+                  '\'Filu - Aye, Käppn! - 43\'\n'
+                  ' & \'Stormi - Aaarrh - 2061\' (Test, Food & Fun)\n'
                   '\'tomcat06\' (Test)\n'
-                  'Udo J. (Test)'
+                  'Udo J. (Test)\n'
+                  '\'wollpirat\' (Food & Tea & more)\n'
               ),
             ],
           ),
