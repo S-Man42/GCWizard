@@ -3,10 +3,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/encodings/morse.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class Morse extends StatefulWidget {
@@ -110,13 +112,23 @@ class MorseState extends State<Morse> {
   Widget _buildOutput(BuildContext context) {
     var output = '';
 
-    if (_currentMode == GCWSwitchPosition.left)
+    var textStyle = gcwTextStyle();
+    if (_currentMode == GCWSwitchPosition.left) {
       output = encodeMorse(_currentInput);
-    else
+      textStyle = TextStyle(
+        fontSize: textStyle.fontSize + 15,
+        fontFamily: textStyle.fontFamily,
+        fontWeight: FontWeight.bold
+      );
+    } else
       output = decodeMorse(_currentInput);
 
-    return GCWDefaultOutput(
-      text: output
+
+    return GCWOutput(
+      child: GCWText(
+        text: output,
+        style: textStyle
+      ),
     );
 
   }
