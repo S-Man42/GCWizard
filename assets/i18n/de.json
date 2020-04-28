@@ -30,7 +30,7 @@
 
   "atbash_title" : "Atbasch",
   "atbash_description" : "",
-  "atbash_example" : "A → Z, B → Y, C → X",
+  "atbash_example" : "ABC → ZYX",
 
   "bacon_title" : "Bacon Chiffre",
   "bacon_description" : "Buchstaben zu Fünfergruppen aus A, B",
@@ -67,7 +67,7 @@
 
   "caesar_title" : "Caesar Chiffre",
   "caesar_description" : "Verschiebt Buchstaben im Alphabet um 13 Stellen (ROT-13)",
-  "caesar_example" : "A → N, B → O, C → P, ...",
+  "caesar_example" : "ABC → NOP",
 
   "callforcontribution_1" : "GCWizard ist ein Tool von Geocachern für Geocacher.\n\n",
   "callforcontribution_2" : "Die Entwickler und alle Beitragenden haben ausschließlich in ihrer Freizeit daran entwickelt. Bei einer so umfangreichen App kommen schnell viele Wochen oder Monate Arbeit zusammen. Das ist eine für wenige Mitarbeiter nur sehr schwer zu bewältigende Aufgabe.\n\n",
@@ -506,7 +506,7 @@
 
   "kamasutra_title" : "Kamasutra",
   "kamasutra_description" : "Standard: ROT-13; Modifiziert mit eigenem Alphabet: Rotation um die Hälfte der Alphabetlänge",
-  "kamasutra_example" : "A → N, B → O, C → P, ...",
+  "kamasutra_example" : "ABC → NOP",
 
   "kenny_title" : "Kennys Code",
   "kenny_description" : "Buchstaben zu einer Dreiergruppe aus m, p, f; inspiriert durch 'South Park'",
@@ -800,13 +800,13 @@
   "rotation_selection_example" : "",
   "rotation_rot13_title" : "ROT-13",
   "rotation_rot13_description" : "Verschiebt Buchstaben um 13 Stellen (halbes Alphabet)",
-  "rotation_rot13_example" : "A → N, B → O, C → P, ...",
+  "rotation_rot13_example" : "ABC → NOP",
   "rotation_rot5_title" : "ROT-5",
   "rotation_rot5_description" : "Verschiebt Ziffern um 5 Stellen",
-  "rotation_rot5_example" : "0 → 5, 1 → 6, 2 → 7, ...",
+  "rotation_rot5_example" : "012 → 567",
   "rotation_rot18_title" : "ROT-18",
   "rotation_rot18_description" : "Verschiebt Buchstaben um 13, Ziffern um 5 Stellen (Kombination von ROT-13 und ROT-5)",
-  "rotation_rot18_example" : "A → N, B → O, ..., 0 → 5, 1 → 6, ...",
+  "rotation_rot18_example" : "ABC → NOP, 012 → 567",
   "rotation_rot47_title" : "ROT-47",
   "rotation_rot47_description" : "Verschiebt Zeichen um 47 Stellen über alle ASCII Zeichen von 33 bis 126 (inkl. A-Z, a-z, 0-9 und einige Sonderzeichen)",
   "rotation_rot47_example" : "A → p, L → {, a → 2, ) → W, ... ",

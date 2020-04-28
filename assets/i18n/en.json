@@ -30,7 +30,7 @@
 
   "atbash_title" : "Atbash",
   "atbash_description" : "",
-  "atbash_example" : "A → Z, B → Y, C → X",
+  "atbash_example" : "ABC → ZYX",
 
   "bacon_title" : "Bacon Cipher",
   "bacon_description" : "Letters to five-element groups of A and B",
@@ -67,7 +67,7 @@
 
   "caesar_title" : "Caesar Cipher",
   "caesar_description" : "Shifts letters on standard alphabet by 13 p(ROT-13)",
-  "caesar_example" : "A → N, B → O, C → P, ...",
+  "caesar_example" : "ABC → NOP",
 
   "callforcontribution_1" : "GCWizard is a tool from Geocachers for Geocachers.\n\n",
   "callforcontribution_2" : "The developers and contributers created it completely during their free time. But such a huge app needs many months of hard work. This is a very hard job for just a few workers.\n\n",
@@ -506,7 +506,7 @@
 
   "kamasutra_title" : "Kamasutra",
   "kamasutra_description" : "Default: ROT-13; Customized with own alphabet: rotation by half of alphabet length",
-  "kamasutra_example" : "A → N, B → O, C → P, ...",
+  "kamasutra_example" : "ABC → NOP",
 
   "kenny_title" : "Kenny's Code",
   "kenny_description" : "One letter to a three-element group of m, p, f; inspired by 'South Park'",
@@ -800,13 +800,13 @@
   "rotation_selection_example" : "",
   "rotation_rot13_title" : "ROT-13",
   "rotation_rot13_description" : "Shifts letters by 13 (half of the alphabet)",
-  "rotation_rot13_example" : "A → N, B → O, C → P, ...",
+  "rotation_rot13_example" : "ABC → NOP",
   "rotation_rot5_title" : "ROT-5",
   "rotation_rot5_description" : "Shifts numbers by 5",
-  "rotation_rot5_example" : "0 → 5, 1 → 6, 2 → 7, ...",
+  "rotation_rot5_example" : "012 → 567",
   "rotation_rot18_title" : "ROT-18",
   "rotation_rot18_description" : "Shifts letters by 13 and numbers by 5 (combination of ROT-13 and ROT-5)",
-  "rotation_rot18_example" : "A → N, B → O, ..., 0 → 5, 1 → 6, ...",
+  "rotation_rot18_example" : "ABC → NOP, 012 → 567",
   "rotation_rot47_title" : "ROT-47",
   "rotation_rot47_description" : "Shifts characters by 47 over all ASCII characters from 33 to 126 (including A-Z, a-z, 0-9 and some special characters)",
   "rotation_rot47_example" : "A → p, L → {, a → 2, ) → W, ... ",
