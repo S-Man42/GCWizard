@@ -774,19 +774,22 @@
   "primes_integerfactorization_description" : "Primfaktorzerlegung einer Zahl",
   "primes_integerfactorization_example" : "42 = 2 × 3 × 7",
 
-  "resistor_colorcode_title" : "Widerstandsfarbcode",
-  "resistor_colorcode_numberbands" : "Anzahl Ringe",
+  "resistor_selection_title" : "Widerstand",
+  "resistor_selection_description" : "Elektrischer Widerstand",
+  "resistor_colorcodecalculator_title" : "Widerstandsrechner",
+  "resistor_colorcodecalculator_numberbands" : "Anzahl Ringe",
+  "resistor_eia96_title" : "EIA-96 Codes",
   "resistor_value" : "Wert",
   "resistor_value_range" : "Wertebereich",
   "resistor_temperaturecoefficient" : "Temp. Koeffizient",
 
-  "robberlanguage_title" : "Räubersprache",
-  "robberlanguage_description" : "Spielsprache, Geheimsprache",
-  "robberlanguage_example" : "Räuber → roräuboberor",
-
   "reverse_title" : "Rückwärts",
   "reverse_description" : "Gibt die Eingabe rückwärts aus",
   "reverse_example" : "ABCdef → fedCBA",
+
+  "robberlanguage_title" : "Räubersprache",
+  "robberlanguage_description" : "Spielsprache, Geheimsprache",
+  "robberlanguage_example" : "Räuber → roräuboberor",
 
   "romannumbers_title" : "Römische Zahlen",
   "romannumbers_description" : "Römische Zahlen mit und ohne Subtraktionsregel",
@@ -946,6 +949,7 @@
   "symboltables_puzzle_title" : "Puzzle Code",
   "symboltables_puzzle_description" : "",
   "symboltables_puzzle_example" : "",
+  "symboltables_resistor_title" : "Widerstandsfarbcode",
   "symboltables_romulan_title" : "Romulanisch",
   "symboltables_romulan_description" : "Textsymbole der Romulaner aus 'Star Trek'",
   "symboltables_romulan_example" : "",

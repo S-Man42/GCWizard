@@ -37,4 +37,25 @@ void main() {
       });
     });
   });
+
+  group("Resistor.eia96:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'code' : null, 'expectedOutput' : 0.0},
+
+      {'code' : 1, 'expectedOutput' : 100.0},
+      {'code' : 42, 'expectedOutput' : 267.0},
+      {'code' : 96, 'expectedOutput' : 976.0},
+
+      {'code' : 1, 'multiplicator': null, 'expectedOutput' : 100.0},
+      {'code' : 42, 'multiplicator': 'Y', 'expectedOutput' : 2.67},
+      {'code' : 96, 'multiplicator': 'F', 'expectedOutput' : 97600000.0},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('code: ${elem['code']}, multiplicator: ${elem['multiplicator']}', () {
+        var _actual = eia96(elem['code'], multiplicator: elem['multiplicator']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
 }

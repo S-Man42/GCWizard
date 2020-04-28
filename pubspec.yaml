@@ -55,6 +55,7 @@ flutter:
     - assets/symbol_tables/pixel/
     - assets/symbol_tables/postnet/
     - assets/symbol_tables/puzzle/
+    - assets/symbol_tables/resistor/
     - assets/symbol_tables/romulan/
     - assets/symbol_tables/semaphore/
     - assets/symbol_tables/sign/

@@ -16,6 +16,7 @@ import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
@@ -96,7 +97,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isp
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nearestprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nthprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
 
 class Registry {
   static List<GCWToolWidget> toolList;
@@ -122,6 +124,8 @@ class Registry {
   static final SEARCHSTRING_PHI = SEARCHSTRING_IRRATIONALNUMBERS + 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PI = SEARCHSTRING_IRRATIONALNUMBERS + 'pi circle kreis 3,1415926535 3.1415926535 ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
+  static final SEARCHSTRING_RESISTOR = 'resistors widerstand widerstaende resistance ohm ';
+  static final SEARCHSTRING_RESISTOR_COLORCODE = SEARCHSTRING_RESISTOR + 'colorcodes farben farbcodes colors ';
   static final SEARCHSTRING_ROTATION = 'rotate rotieren verschieben shift rotations rotx rotn rot-x rotationen ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
   static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
@@ -326,10 +330,10 @@ class Registry {
         searchStrings: SEARCHSTRING_PRIMES
       ),
       GCWToolWidget(
-        tool: Resistor(),
-        i18nPrefix: 'resistor_colorcode',
+        tool: ResistorSelection(),
+        i18nPrefix: 'resistor_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'resistors colorcodes widerstand widerstaende farben farbcodes colors resistance ohm '
+        searchStrings: SEARCHSTRING_RESISTOR
       ),
       GCWToolWidget(
         tool: Reverse(),
@@ -827,6 +831,18 @@ class Registry {
         searchStrings: SEARCHSTRING_PRIMES + 'integer factorizations factors faktorisierung primfaktorzerlegungen faktoren'
       ),
 
+      //ResistorSelection **********************************************************************************************
+      GCWToolWidget(
+        tool: ResistorColorCodeCalculator(),
+        i18nPrefix: 'resistor_colorcodecalculator',
+        searchStrings: SEARCHSTRING_RESISTOR_COLORCODE
+      ),
+      GCWToolWidget(
+          tool: ResistorEIA96(),
+          i18nPrefix: 'resistor_eia96',
+          searchStrings: SEARCHSTRING_RESISTOR + 'eia96 eia-96'
+      ),
+
       //RotationSelection **********************************************************************************************
       GCWToolWidget(
         tool: Rot13(),
@@ -960,7 +976,14 @@ class Registry {
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'puzzle'),
         i18nPrefix: 'symboltables_puzzle',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'puzzle/72.png',searchStrings: SEARCHSTRING_SYMBOLTABLES + 'puzzles puzzleteile jigsaw '
+        iconPath: SYMBOLTABLES_ASSETPATH + 'puzzle/72.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'puzzles puzzleteile jigsaw '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'resistor'),
+        i18nPrefix: 'symboltables_resistor',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'resistor/49.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_RESISTOR_COLORCODE
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'romulan'),
