@@ -16,9 +16,11 @@ class LetterValues extends StatefulWidget {
 }
 
 class LetterValuesState extends State<LetterValues> {
-  var _controller;
+  var _encodeController;
+  var _decodeController;
 
-  var _currentInput = defaultIntegerListText;
+  var _currentEncodeInput = '';
+  var _currentDecodeInput = defaultIntegerListText;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   bool _currentCrosstotalMode = true;
   
@@ -27,12 +29,16 @@ class LetterValuesState extends State<LetterValues> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: _currentInput['text']);
+
+    _encodeController = TextEditingController(text: _currentEncodeInput);
+    _decodeController = TextEditingController(text: _currentDecodeInput['text']);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _encodeController.dispose();
+    _decodeController.dispose();
+
     super.dispose();
   }
 
@@ -40,38 +46,29 @@ class LetterValuesState extends State<LetterValues> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        _currentMode == GCWSwitchPosition.left ?
-          GCWTextField(
-            controller: _controller,
-            onChanged: (text) {
-              setState(() {
-                _currentInput = {'text': text, 'values' : []};
-                _calculateOutput();
-              });
-            },
-          ) :
-          GCWIntegerListTextField(
-            controller: _controller,
-            onChanged: (text) {
-              setState(() {
-                _currentInput = text;
-                _calculateOutput();
-              });
-            },
-          ),
+        _currentMode == GCWSwitchPosition.left
+          ? GCWTextField(
+              controller: _encodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentEncodeInput = text;
+                });
+              },
+            )
+          : GCWIntegerListTextField(
+              controller: _decodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentDecodeInput = text;
+                });
+              },
+            ),
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'lettervalues_mode_left'),
           rightValue: i18n(context, 'lettervalues_mode_right'),
           onChanged: (value) {
             setState(() {
               _currentMode = value;
-
-              if (_currentMode == GCWSwitchPosition.right) {
-                var text = _currentInput['text'];
-                _currentInput = {'text': text, 'values': textToIntList(text)};
-              }
-
-              _calculateOutput();
             });
           },
         ),
@@ -79,26 +76,34 @@ class LetterValuesState extends State<LetterValues> {
           onChanged: (value) {
             setState(() {
               _currentCrosstotalMode = value;
-              _calculateOutput();
             });
           },
         ),
         GCWDefaultOutput(
-          text: _output
+          text: _calculateOutput()
         ),
-        _currentCrosstotalMode ? GCWCrosstotalOutput(_currentInput['text'], _currentInput['values']) : Container()
+        _buildCrossTotals()
       ],
     );
   }
 
-  _calculateOutput() {
-    var text = _currentInput['text'];
+  _buildCrossTotals() {
+    if (!_currentCrosstotalMode)
+      return Container();
 
     if (_currentMode == GCWSwitchPosition.left) {
-      _currentInput = {'text': text, 'values': AlphabetValues().textToValues(text, keepNumbers: true)};
-      _output = intListToString(_currentInput['values'], delimiter: ' | ');
+      return GCWCrosstotalOutput(_currentEncodeInput, AlphabetValues().textToValues(_currentEncodeInput, keepNumbers: true));
     } else {
-      _output = AlphabetValues().valuesToText(_currentInput['values']);
+      var text = AlphabetValues().valuesToText(List<int>.from(_currentDecodeInput['values']));
+      return GCWCrosstotalOutput(text, _currentDecodeInput['values']);
+    }
+  }
+
+  _calculateOutput() {
+    if (_currentMode == GCWSwitchPosition.left) {
+      return intListToString(AlphabetValues().textToValues(_currentEncodeInput, keepNumbers: true), delimiter: ' | ');
+    } else {
+      return AlphabetValues().valuesToText(List<int>.from(_currentDecodeInput['values']));
     }
   }
 }

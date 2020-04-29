@@ -225,49 +225,48 @@ class SymbolTableState extends State<SymbolTable> {
         var imageIndex = i * countColumns + j;
 
         if (imageIndex < _imageFilePaths.length) {
-          widget = InkWell(
-            child: Stack(
-              overflow: Overflow.clip,
-              children: <Widget>[
-                Container(
+          widget = Stack(
+            overflow: Overflow.clip,
+            children: <Widget>[
+              Container(
+                child: InkWell(
                   child: Image.asset(
                     _imageFilePaths.values.toList()[imageIndex],
                   ),
-                  color: ThemeColors.iconBackground,
-                  padding: EdgeInsets.all(2),
+                  onTap: () {setState(() {
+                      _output += _getSymbolText(imageIndex);
+                    });
+                  }
                 ),
-                _currentShowOverlayedSymbols
-                  ? Opacity(
-                      child:  Container(
-                        child: Text(
-                          _showSpaceSymbolInOverlay(
-                            _getSymbolText(imageIndex)
-                          ),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: defaultFontSize()
-                          ),
+                color: ThemeColors.iconBackground,
+                padding: EdgeInsets.all(2),
+              ),
+              _currentShowOverlayedSymbols
+                ? Opacity(
+                    child:  Container(
+                      child: Text(
+                        _showSpaceSymbolInOverlay(
+                          _getSymbolText(imageIndex)
                         ),
-                        height: defaultFontSize() + 5,
-                        decoration: ShapeDecoration(
-                          color: ThemeColors.accent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius)),
-                          )
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: defaultFontSize()
                         ),
                       ),
-                      opacity: 0.85
-                    )
-                  : Container()
+                      height: defaultFontSize() + 5,
+                      decoration: ShapeDecoration(
+                        color: ThemeColors.accent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius)),
+                        )
+                      ),
+                    ),
+                    opacity: 0.85
+                  )
+                : Container()
               ],
-            ),
-            onTap: () {
-              setState(() {
-                _output += _getSymbolText(imageIndex);
-              });
-            },
-          );
+            );
         } else {
           widget = Container();
         }

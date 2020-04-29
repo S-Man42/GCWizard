@@ -15,21 +15,27 @@ class CCITT2 extends StatefulWidget {
 }
 
 class CCITT2State extends State<CCITT2> {
-  var _controller;
+  var _encodeController;
+  var _decodeController;
 
-  var _currentInput = defaultIntegerListText;
+  var _currentEncodeInput = '';
+  var _currentDecodeInput = defaultIntegerListText;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentOutputCoding = GCWSwitchPosition.left;
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: _currentInput['text']);
+
+    _encodeController = TextEditingController(text: _currentEncodeInput);
+    _decodeController = TextEditingController(text: _currentDecodeInput['text']);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _encodeController.dispose();
+    _decodeController.dispose();
+
     super.dispose();
   }
 
@@ -37,33 +43,28 @@ class CCITT2State extends State<CCITT2> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        _currentMode == GCWSwitchPosition.left ?
-          GCWTextField(
-            controller: _controller,
-            onChanged: (text) {
-              setState(() {
-                _currentInput = {'text': text, 'values' : []};
-              });
-            },
-          ) :
-          GCWIntegerListTextField(
-            controller: _controller,
-            onChanged: (text) {
-              setState(() {
-                _currentInput = text;
-              });
-            },
-          ),
+        _currentMode == GCWSwitchPosition.left
+          ? GCWTextField(
+              controller: _encodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentEncodeInput = text;
+                });
+              },
+            )
+          : GCWIntegerListTextField(
+              controller: _decodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentDecodeInput = text;
+                });
+              },
+            ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
-
-              if (_currentMode == GCWSwitchPosition.right) {
-                var text = _currentInput['text'];
-                _currentInput = {'text': text, 'values': textToIntList(text)};
-              }
             });
           },
         ),
@@ -90,7 +91,7 @@ class CCITT2State extends State<CCITT2> {
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.left) {
-      output = encodeCCITT2(_currentInput['text']);
+      output = encodeCCITT2(_currentEncodeInput);
       if (_currentOutputCoding == GCWSwitchPosition.right) {
         output = output.split(' ').map((value) {
           var out = convertBase(value, 10, 2);
@@ -101,13 +102,13 @@ class CCITT2State extends State<CCITT2> {
     } else {
       if (_currentOutputCoding == GCWSwitchPosition.right) {
         return decodeCCITT2(
-          textToBinaryList(_currentInput['text']).map((value) {
+          textToBinaryList(_currentDecodeInput['text']).map((value) {
             return int.tryParse(convertBase(value, 2, 10));
           }).toList()
         );
       }
 
-      return decodeCCITT2(_currentInput['values']);
+      return decodeCCITT2(List<int>.from(_currentDecodeInput['values']));
     }
   }
 }

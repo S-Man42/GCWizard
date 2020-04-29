@@ -15,9 +15,11 @@ class ASCIIValues extends StatefulWidget {
 }
 
 class ASCIIValuesState extends State<ASCIIValues> {
-  var _controller;
+  var _encodeController;
+  var _decodeController;
 
-  var _currentInput = defaultIntegerListText;
+  var _currentEncodeInput = '';
+  var _currentDecodeInput = defaultIntegerListText;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   bool _currentCrosstotalMode = true;
   
@@ -26,12 +28,16 @@ class ASCIIValuesState extends State<ASCIIValues> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: _currentInput['text']);
+
+    _encodeController = TextEditingController(text: _currentEncodeInput);
+    _decodeController = TextEditingController(text: _currentDecodeInput['text']);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _encodeController.dispose();
+    _decodeController.dispose();
+
     super.dispose();
   }
 
@@ -39,38 +45,29 @@ class ASCIIValuesState extends State<ASCIIValues> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        _currentMode == GCWSwitchPosition.left ?
-          GCWTextField(
-            controller: _controller,
-            onChanged: (text) {
-              setState(() {
-                _currentInput = {'text': text, 'values' : []};
-                _calculateOutput();
-              });
-            },
-          ) :
-          GCWIntegerListTextField(
-            controller: _controller,
-            onChanged: (text) {
-              setState(() {
-                _currentInput = text;
-                _calculateOutput();
-              });
-            },
-          ),
+        _currentMode == GCWSwitchPosition.left
+          ? GCWTextField(
+              controller: _encodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentEncodeInput = text;
+                });
+              },
+            )
+          : GCWIntegerListTextField(
+              controller: _decodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentDecodeInput = text;
+                });
+              },
+            ),
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'asciivalues_mode_left'),
           rightValue: i18n(context, 'asciivalues_mode_right'),
           onChanged: (value) {
             setState(() {
               _currentMode = value;
-
-              if (_currentMode == GCWSwitchPosition.right) {
-                var text = _currentInput['text'];
-                _currentInput = {'text': text, 'values': textToIntList(text)};
-              }
-
-              _calculateOutput();
             });
           },
         ),
@@ -78,26 +75,34 @@ class ASCIIValuesState extends State<ASCIIValues> {
           onChanged: (value) {
             setState(() {
               _currentCrosstotalMode = value;
-              _calculateOutput();
             });
           },
         ),
         GCWDefaultOutput(
-          text: _output
+          text: _calculateOutput()
         ),
-        _currentCrosstotalMode ? GCWCrosstotalOutput(_currentInput['text'], _currentInput['values']) : Container()
+        _buildCrossTotals()
       ],
     );
   }
 
-  _calculateOutput() {
-    String text = _currentInput['text'];
+  _buildCrossTotals() {
+    if (!_currentCrosstotalMode)
+      return Container();
 
     if (_currentMode == GCWSwitchPosition.left) {
-      _currentInput = {'text': text, 'values': text.codeUnits};
-      _output = intListToString(_currentInput['values'], delimiter: ', ');
+      return GCWCrosstotalOutput(_currentEncodeInput, _currentEncodeInput.codeUnits);
     } else {
-      _output = String.fromCharCodes(_currentInput['values']);
+      var text = String.fromCharCodes(List<int>.from(_currentDecodeInput['values']));
+      return GCWCrosstotalOutput(text, _currentDecodeInput['values']);
+    }
+  }
+
+  _calculateOutput() {
+    if (_currentMode == GCWSwitchPosition.left) {
+      return intListToString(_currentEncodeInput.codeUnits, delimiter: ', ');
+    } else {
+      return String.fromCharCodes(List<int>.from(_currentDecodeInput['values']));
     }
   }
 }
