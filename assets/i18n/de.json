@@ -105,7 +105,7 @@
   "ccitt2_example" : "ABC → 00011 11001 01110",
   "ccitt2_numeral_base" : "Kodierung",
 
-  "changelog_0.7.1" : "[new] Widerstände: EIA-96 codes (#67)\n[new] Widerstände: Symboltabelle (Danke, Franz)\n[chg] Verhalten der Zahlenspinner (Danke, Martin)\n[chg] Morse-Lesbarkeit (Danke, 'tomcat06')",
+  "changelog_0.7.1" : "[new] Widerstände: EIA-96 codes (#67)\n[new] Widerstände: Symboltabelle (Danke, Franz)\n[chg] Verhalten der Zahlenspinner (Danke, Martin)\n[chg] Morse-Lesbarkeit (Danke, 'tomcat06')\n[fix] Encodings: Sauberer Wechsel zwischen Encode/Decode",
   "changelog_0.7.0" : "[new] Kategorie-Tab (#40; Danke, Frank)\n[new] Tool-Beschreibungen und Beispiele (#48)\n[new] Warnung bei Löschen von Favorit oder Formel (#44; Danke, Andy)\n[new] Widerstandsfarbcode\n[new] Farbwähler/Farbraum-Konvertierer\n[new] Hühner-/Räuber-/Löffelsprache (#10; Danke, 'capoaira')\n[new] Pig Latin\n[new] CCITT-1 (Baudot-Code)\n[new] Mehr Symboltabellen (Danke, Aeggsbaerde)\n[new] Rückwärts\n[new] Vanity-Code\n[new] Klopfcode\n[new] Kamasutra\n[new] Hashes\n[fix] CCITT-2-Beschreibung (#52, Danke, Klumpenkukuk)\n[fix] Kenny (#53, 55; Danke, Michael)\n[fix] Samsung-Tastatur-Bug (#61; Danke, 'capoaira')\n[fix] Römische Zahlen (#62; Danke, Daniel)\n[fix] Schriftgröße ändern",
   "changelog_0.6.2" : "[fix] iOS: Initiale Sprache (#35, #41)",
   "changelog_0.6.1" : "[fix] iOS: Eingabe von Zahlenlisten",
