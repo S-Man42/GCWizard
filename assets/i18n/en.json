@@ -365,7 +365,7 @@
   "crosstotal_sum_alternated_back" : "Sum alternated (backward)",
   "crosstotal_sum_alternated_forward" : "Sum alternated (forward)",
   "crosstotal_crosssum" : "Cross Sum",
-  "crosstotal_crosssum_iterated" : "Cross Sum iterated",
+  "crosstotal_crosssum_iterated" : "Cross Sum iterated (Digital root)",
   "crosstotal_crosssum_alternated_back" : "Cross Sum alternated (backward)",
   "crosstotal_crosssum_alternated_forward" : "Cross Sum alternated (forward)",
   "crosstotal_sum_crosssum" : "Cross Sum of Sum",
