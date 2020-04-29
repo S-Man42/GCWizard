@@ -566,7 +566,7 @@ class Registry {
       GCWToolWidget(
         tool: DayCalculator(),
         i18nPrefix: 'dates_daycalculator',
-        searchStrings: SEARCHSTRING_DATES + 'tages rechner day calculator'
+        searchStrings: SEARCHSTRING_DATES + 'tagesrechner tagerechner day calculator'
       ),
       GCWToolWidget(
         tool: Weekday(),

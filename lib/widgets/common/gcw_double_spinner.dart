@@ -87,6 +87,8 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
         }
 
         _currentValue = max(widget.min, newValue);
+      } else if (_currentValue == widget.min && widget.max != null) {
+        _currentValue = widget.max;
       }
 
       _setCurrentValueAndEmitOnChange(setTextFieldText: true);
@@ -104,6 +106,8 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
         }
 
         _currentValue = min(widget.max, newValue);
+      } else if (_currentValue == widget.max && widget.min != null) {
+        _currentValue = widget.min;
       }
 
       _setCurrentValueAndEmitOnChange(setTextFieldText: true);
