@@ -951,6 +951,7 @@
   "symboltables_puzzle_description" : "",
   "symboltables_puzzle_example" : "",
   "symboltables_resistor_title" : "Widerstandsfarbcode",
+  "symboltables_resistor_description" : "Werte der Einerringe",
   "symboltables_romulan_title" : "Romulanisch",
   "symboltables_romulan_description" : "Textsymbole der Romulaner aus 'Star Trek'",
   "symboltables_romulan_example" : "",

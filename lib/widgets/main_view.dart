@@ -17,6 +17,7 @@ import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
@@ -57,7 +58,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -132,7 +132,7 @@ class _MainViewState extends State<MainView> {
           className(Playfair()),
           className(Polybios()),
           className(PrimesSelection()),
-          className(ResistorColorCodeCalculator()),
+          className(ResistorSelection()),
           className(Reverse()),
           className(RobberLanguage()),
           className(RomanNumbers()),

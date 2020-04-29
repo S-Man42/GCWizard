@@ -951,6 +951,7 @@
   "symboltables_puzzle_description" : "",
   "symboltables_puzzle_example" : "",
   "symboltables_resistor_title" : "Resistor Color Code",
+  "symboltables_resistor_description" : "Values of the one-digit bands",
   "symboltables_romulan_title" : "Romulan",
   "symboltables_romulan_description" : "Text symbols of the Romulans from 'Star Trek'",
   "symboltables_romulan_example" : "",
