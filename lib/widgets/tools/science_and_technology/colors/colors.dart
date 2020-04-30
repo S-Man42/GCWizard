@@ -7,7 +7,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.d
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_yuv.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_colors.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/hsv_color_picker.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/hsv_picker.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
 
