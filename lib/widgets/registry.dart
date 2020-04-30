@@ -285,7 +285,7 @@ class Registry {
         tool: NumeralBases(),
         i18nPrefix: 'numeralbases',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'converter converting bases umwandler umwandeln konvertieren konverter numeral basis basen zahlensysteme binaer binary decimal dezimal octal octenary oktal dual'
+        searchStrings: 'radix numeral systems basis basen zahlensysteme binaer binary decimal dezimal octal octenary oktal dual'
       ),
       GCWToolWidget(
         tool: PeriodicTable(),

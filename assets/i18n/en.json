@@ -27,6 +27,7 @@
   "asciivalues_example" : "6 → 54, A → 65, a → 97, ä → 228",
   "asciivalues_mode_left" : "A-Z → ASCII",
   "asciivalues_mode_right" : "ASCII → A-Z",
+  "asciivalues_numeralbase" : "Coding",
 
   "atbash_title" : "Atbash",
   "atbash_description" : "",
@@ -98,12 +99,12 @@
   "ccitt1_title" : "CCITT-1",
   "ccitt1_description" : "Baudot Code",
   "ccitt1_example" : "ABC → 00100 01001 01101",
-  "ccitt1_numeral_base" : "Coding",
+  "ccitt1_numeralbase" : "Coding",
 
   "ccitt2_title" : "CCITT-2",
   "ccitt2_description" : "Baudot Murray Code; Binary Punched Tape Encoding ",
   "ccitt2_example" : "ABC → 00011 11001 01110",
-  "ccitt2_numeral_base" : "Coding",
+  "ccitt2_numeralbase" : "Coding",
 
   "changelog_0.7.1" : "[new] Resistors: EIA-96 codes (#67)\n[new] Resistors: Symbol Table (Thanks, Franz)\n[chg] Behaviour of Number Spinner Inputs (Thanks, Martin)\n[chg] Morse Readability (Thanks, 'tomcat06')\n[fix] Encodings: Cleaner switch between encode/decode",
   "changelog_0.7.0" : "[new] Categories Tab (#40; Thanks, Frank)\n[new] Tool Descriptions and Examples (#48)\n[new] Warning when deleting Favorite or Formula (#44; Thanks, Andy)\n[new] Resistor Color Code\n[new] Color Picker/Color Space Converter\n[new] Chicken/Robber/Spoon Language (#10; Thanks, 'capoaira')\n[new] Pig Latin\n[new] CCITT-1 (Baudot Code)\n[new] More Symbol Tables (Thanks, Aeggsbaerde)\n[new] Reverse\n[new] Vanity Code\n[new] Tap Code\n[new] Kamasutra\n[new] Hashes\n[fix] CCITT-2 Description (#52, Thanks, Klumpenkukuk)\n[fix] Kenny (#53, 55; Thanks, Michael)\n[fix] Samsung Keyboard Bug (#61; Thanks, 'capoaira')\n[fix] Roman numbers (#62; Thanks, Daniel)\n[fix] Font Size Change",
@@ -532,8 +533,8 @@
   "morse_next_letter" : "Next",
   "morse_next_word" : "Next Word",
 
-  "numeralbases_title" : "Numeral Bases",
-  "numeralbases_description" : "Converts numbers between different numeral bases (e.g. decimal to binary)",
+  "numeralbases_title" : "Numeral Systems (Radix)",
+  "numeralbases_description" : "Converts numbers between different radix (e.g. decimal to binary)",
   "numeralbases_example" : "42 → 101010",
   "numeralbases_from" : "From",
   "numeralbases_to" : "To",

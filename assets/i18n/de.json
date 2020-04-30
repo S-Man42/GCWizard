@@ -27,6 +27,7 @@
   "asciivalues_mode_right" : "ASCII → A-Z",
   "asciivalues_description" : "ASCII und UTF-8/Unicode Zeichencodes",
   "asciivalues_example" : "6 → 54, A → 65, a → 97, ä → 228",
+  "asciivalues_numeralbase" : "Kodierung",
 
   "atbash_title" : "Atbasch",
   "atbash_description" : "",
@@ -98,12 +99,12 @@
   "ccitt1_title" : "CCITT-1",
   "ccitt1_description" : "Baudot-Code",
   "ccitt1_example" : "ABC → 00100 01001 01101",
-  "ccitt1_numeral_base" : "Kodierung",
+  "ccitt1_numeralbase" : "Kodierung",
 
   "ccitt2_title" : "CCITT-2",
   "ccitt2_description" : "Baudot-Murray-Code; Binärer Lochkartencode",
   "ccitt2_example" : "ABC → 00011 11001 01110",
-  "ccitt2_numeral_base" : "Kodierung",
+  "ccitt2_numeralbase" : "Kodierung",
 
   "changelog_0.7.1" : "[new] Widerstände: EIA-96 codes (#67)\n[new] Widerstände: Symboltabelle (Danke, Franz)\n[chg] Verhalten der Zahlenspinner (Danke, Martin)\n[chg] Morse-Lesbarkeit (Danke, 'tomcat06')\n[fix] Encodings: Sauberer Wechsel zwischen Encode/Decode",
   "changelog_0.7.0" : "[new] Kategorie-Tab (#40; Danke, Frank)\n[new] Tool-Beschreibungen und Beispiele (#48)\n[new] Warnung bei Löschen von Favorit oder Formel (#44; Danke, Andy)\n[new] Widerstandsfarbcode\n[new] Farbwähler/Farbraum-Konvertierer\n[new] Hühner-/Räuber-/Löffelsprache (#10; Danke, 'capoaira')\n[new] Pig Latin\n[new] CCITT-1 (Baudot-Code)\n[new] Mehr Symboltabellen (Danke, Aeggsbaerde)\n[new] Rückwärts\n[new] Vanity-Code\n[new] Klopfcode\n[new] Kamasutra\n[new] Hashes\n[fix] CCITT-2-Beschreibung (#52, Danke, Klumpenkukuk)\n[fix] Kenny (#53, 55; Danke, Michael)\n[fix] Samsung-Tastatur-Bug (#61; Danke, 'capoaira')\n[fix] Römische Zahlen (#62; Danke, Daniel)\n[fix] Schriftgröße ändern",

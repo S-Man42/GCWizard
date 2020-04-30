@@ -21,7 +21,7 @@ class CCITT1State extends State<CCITT1> {
   var _currentEncodeInput = '';
   var _currentDecodeInput = defaultIntegerListText;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  GCWSwitchPosition _currentOutputCoding = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentRadix = GCWSwitchPosition.left;
 
   @override
   void initState() {
@@ -69,13 +69,13 @@ class CCITT1State extends State<CCITT1> {
           },
         ),
         GCWTwoOptionsSwitch(
-          title: i18n(context, 'ccitt2_numeral_base'),
+          title: i18n(context, 'ccitt1_numeralbase'),
           leftValue: i18n(context, 'common_numeralbase_denary'),
           rightValue: i18n(context, 'common_numeralbase_binary'),
-          value: _currentOutputCoding,
+          value: _currentRadix,
           onChanged: (value) {
             setState(() {
-              _currentOutputCoding = value;
+              _currentRadix = value;
 
             });
           },
@@ -92,7 +92,7 @@ class CCITT1State extends State<CCITT1> {
 
     if (_currentMode == GCWSwitchPosition.left) {
       output = encodeCCITT1(_currentEncodeInput);
-      if (_currentOutputCoding == GCWSwitchPosition.right) {
+      if (_currentRadix == GCWSwitchPosition.right) {
         output = output.split(' ').map((value) {
           var out = convertBase(value, 10, 2);
           return out.padLeft(5, '0');
@@ -100,7 +100,7 @@ class CCITT1State extends State<CCITT1> {
       }
       return output;
     } else {
-      if (_currentOutputCoding == GCWSwitchPosition.right) {
+      if (_currentRadix == GCWSwitchPosition.right) {
         return decodeCCITT1(
           textToBinaryList(_currentDecodeInput['text']).map((value) {
             return int.tryParse(convertBase(value, 2, 10));

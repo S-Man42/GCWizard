@@ -24,7 +24,7 @@ class ASCIIValuesState extends State<ASCIIValues> {
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   var _currentModeLeft = 'A-Z → ASCII';
   var _currentModeRight = 'ASCII → A-Z';
-  GCWSwitchPosition _currentOutputMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentRadix = GCWSwitchPosition.left;
   bool _currentCrosstotalMode = true;
 
   @override
@@ -65,8 +65,8 @@ class ASCIIValuesState extends State<ASCIIValues> {
               },
             ),
         GCWTwoOptionsSwitch(
-          leftValue: _currentModeLeft,
-          rightValue: _currentModeRight,
+          leftValue: i18n(context, 'asciivalues_mode_left'),
+          rightValue: i18n(context, 'asciivalues_mode_right'),
           onChanged: (value) {
             setState(() {
               _currentMode = value;
@@ -74,18 +74,12 @@ class ASCIIValuesState extends State<ASCIIValues> {
           },
         ),
         GCWTwoOptionsSwitch(
-          leftValue: 'ASCII',
+          title: i18n(context, 'asciivalues_numeralbase'),
+          leftValue: i18n(context, 'common_numeralbase_denary'),
           rightValue: i18n(context, 'common_numeralbase_binary'),
           onChanged: (value) {
             setState(() {
-              _currentOutputMode = value;
-              if (_currentOutputMode == GCWSwitchPosition.left) {
-                _currentModeLeft = 'A-Z → ASCII';
-                _currentModeRight = 'ASCII → A-Z';
-              } else {
-                _currentModeLeft = 'A-Z → ' + i18n(context, 'common_numeralbase_binary');
-                _currentModeRight = i18n(context, 'common_numeralbase_binary') + ' → A-Z';
-              }
+              _currentRadix = value;
             });
           },
         ),
@@ -104,11 +98,17 @@ class ASCIIValuesState extends State<ASCIIValues> {
     );
   }
 
-  _sanitizeDecodeInput() {
-    final MAX_UTF16 = 1112064;
+  List<int> _sanitizeDecodeInput({bool isBinary: false}) {
+    final int MAX_UTF16 = 1112064;
 
-    var list = List<int>.from(_currentDecodeInput['values']);
-    return list.where((value) => value < MAX_UTF16);
+    List<int> list = List<int>.from(_currentDecodeInput['values']);
+    if (isBinary) {
+      list = textToBinaryList(_currentDecodeInput['text']).map((value) {
+        return int.tryParse(convertBase(value, 2, 10));
+      }).toList();
+    }
+
+    return list.where((value) => value != null && value < MAX_UTF16).toList();
   }
 
   _buildCrossTotals() {
@@ -118,25 +118,28 @@ class ASCIIValuesState extends State<ASCIIValues> {
     if (_currentMode == GCWSwitchPosition.left) {
       return GCWCrosstotalOutput(_currentEncodeInput, _currentEncodeInput.codeUnits);
     } else {
-      var text = String.fromCharCodes(_sanitizeDecodeInput());
-      return GCWCrosstotalOutput(text, _currentDecodeInput['values']);
+      var isBinary = _currentRadix == GCWSwitchPosition.right;
+      var sanitizedValues = _sanitizeDecodeInput(isBinary: isBinary);
+
+      var text = String.fromCharCodes(sanitizedValues);
+      return GCWCrosstotalOutput(text, sanitizedValues);
     }
   }
 
   _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      if (_currentOutputMode == GCWSwitchPosition.left) {
+      if (_currentRadix == GCWSwitchPosition.left) {
         return intListToString(_currentEncodeInput.codeUnits, delimiter: ', ');
       } else {
         var out = [];
         _currentEncodeInput.codeUnits.forEach((ascii) {
           out.add(ascii.toRadixString(2).padLeft(8, '0'));
         });
-        return out.join(' ');
+        return out.join(', ');
       }
     } else {
-      if (_currentOutputMode == GCWSwitchPosition.left) {
-        return String.fromCharCodes(List<int>.from(_currentDecodeInput['values']));
+      if (_currentRadix == GCWSwitchPosition.left) {
+        return String.fromCharCodes(_sanitizeDecodeInput());
       } else {
         var out = textToBinaryList(_currentDecodeInput['text']).map((value) {
           return int.tryParse(convertBase(value, 2, 10));
