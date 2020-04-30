@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -15,23 +16,28 @@ class ASCIIValues extends StatefulWidget {
 }
 
 class ASCIIValuesState extends State<ASCIIValues> {
-  var _controller;
+  var _encodeController;
+  var _decodeController;
 
-  var _currentInput = defaultIntegerListText;
+  var _currentEncodeInput = '';
+  var _currentDecodeInput = defaultIntegerListText;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentRadix = GCWSwitchPosition.left;
   bool _currentCrosstotalMode = true;
-  
-  String _output = '';
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: _currentInput['text']);
+
+    _encodeController = TextEditingController(text: _currentEncodeInput);
+    _decodeController = TextEditingController(text: _currentDecodeInput['text']);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _encodeController.dispose();
+    _decodeController.dispose();
+
     super.dispose();
   }
 
@@ -39,38 +45,39 @@ class ASCIIValuesState extends State<ASCIIValues> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        _currentMode == GCWSwitchPosition.left ?
-          GCWTextField(
-            controller: _controller,
-            onChanged: (text) {
-              setState(() {
-                _currentInput = {'text': text, 'values' : []};
-                _calculateOutput();
-              });
-            },
-          ) :
-          GCWIntegerListTextField(
-            controller: _controller,
-            onChanged: (text) {
-              setState(() {
-                _currentInput = text;
-                _calculateOutput();
-              });
-            },
-          ),
+        _currentMode == GCWSwitchPosition.left
+          ? GCWTextField(
+              controller: _encodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentEncodeInput = text;
+                });
+              },
+            )
+          : GCWIntegerListTextField(
+              controller: _decodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentDecodeInput = text;
+                });
+              },
+            ),
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'asciivalues_mode_left'),
           rightValue: i18n(context, 'asciivalues_mode_right'),
           onChanged: (value) {
             setState(() {
               _currentMode = value;
-
-              if (_currentMode == GCWSwitchPosition.right) {
-                var text = _currentInput['text'];
-                _currentInput = {'text': text, 'values': textToIntList(text)};
-              }
-
-              _calculateOutput();
+            });
+          },
+        ),
+        GCWTwoOptionsSwitch(
+          title: i18n(context, 'asciivalues_numeralbase'),
+          leftValue: i18n(context, 'common_numeralbase_denary'),
+          rightValue: i18n(context, 'common_numeralbase_binary'),
+          onChanged: (value) {
+            setState(() {
+              _currentRadix = value;
             });
           },
         ),
@@ -78,26 +85,65 @@ class ASCIIValuesState extends State<ASCIIValues> {
           onChanged: (value) {
             setState(() {
               _currentCrosstotalMode = value;
-              _calculateOutput();
             });
           },
         ),
         GCWDefaultOutput(
-          text: _output
+          text: _calculateOutput()
         ),
-        _currentCrosstotalMode ? GCWCrosstotalOutput(_currentInput['text'], _currentInput['values']) : Container()
+        _buildCrossTotals()
       ],
     );
   }
 
-  _calculateOutput() {
-    String text = _currentInput['text'];
+  List<int> _sanitizeDecodeInput({bool isBinary: false}) {
+    final int MAX_UTF16 = 1112064;
+
+    List<int> list = List<int>.from(_currentDecodeInput['values']);
+    if (isBinary) {
+      list = textToBinaryList(_currentDecodeInput['text']).map((value) {
+        return int.tryParse(convertBase(value, 2, 10));
+      }).toList();
+    }
+
+    return list.where((value) => value != null && value < MAX_UTF16).toList();
+  }
+
+  _buildCrossTotals() {
+    if (!_currentCrosstotalMode)
+      return Container();
 
     if (_currentMode == GCWSwitchPosition.left) {
-      _currentInput = {'text': text, 'values': text.codeUnits};
-      _output = intListToString(_currentInput['values'], delimiter: ', ');
+      return GCWCrosstotalOutput(_currentEncodeInput, _currentEncodeInput.codeUnits);
     } else {
-      _output = String.fromCharCodes(_currentInput['values']);
+      var isBinary = _currentRadix == GCWSwitchPosition.right;
+      var sanitizedValues = _sanitizeDecodeInput(isBinary: isBinary);
+
+      var text = String.fromCharCodes(sanitizedValues);
+      return GCWCrosstotalOutput(text, sanitizedValues);
+    }
+  }
+
+  _calculateOutput() {
+    if (_currentMode == GCWSwitchPosition.left) {
+      if (_currentRadix == GCWSwitchPosition.left) {
+        return intListToString(_currentEncodeInput.codeUnits, delimiter: ', ');
+      } else {
+        var out = [];
+        _currentEncodeInput.codeUnits.forEach((ascii) {
+          out.add(ascii.toRadixString(2).padLeft(8, '0'));
+        });
+        return out.join(', ');
+      }
+    } else {
+      if (_currentRadix == GCWSwitchPosition.left) {
+        return String.fromCharCodes(_sanitizeDecodeInput());
+      } else {
+        var out = textToBinaryList(_currentDecodeInput['text']).map((value) {
+          return int.tryParse(convertBase(value, 2, 10));
+        }).toList();
+        return String.fromCharCodes(out);
+      }
     }
   }
 }

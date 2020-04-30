@@ -34,7 +34,7 @@ String encodeMorse(String input) {
         var morse = AZToMorse[character];
         return morse != null ? morse : '';
       })
-      .join(' ');
+      .join(String.fromCharCode(8195)); // using wide space
 }
 
 String decodeMorse(String input) {

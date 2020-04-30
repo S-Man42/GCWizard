@@ -27,10 +27,11 @@
   "asciivalues_mode_right" : "ASCII → A-Z",
   "asciivalues_description" : "ASCII und UTF-8/Unicode Zeichencodes",
   "asciivalues_example" : "6 → 54, A → 65, a → 97, ä → 228",
+  "asciivalues_numeralbase" : "Kodierung",
 
   "atbash_title" : "Atbasch",
   "atbash_description" : "",
-  "atbash_example" : "A → Z, B → Y, C → X",
+  "atbash_example" : "ABC → ZYX",
 
   "bacon_title" : "Bacon Chiffre",
   "bacon_description" : "Buchstaben zu Fünfergruppen aus A, B",
@@ -67,7 +68,7 @@
 
   "caesar_title" : "Caesar Chiffre",
   "caesar_description" : "Verschiebt Buchstaben im Alphabet um 13 Stellen (ROT-13)",
-  "caesar_example" : "A → N, B → O, C → P, ...",
+  "caesar_example" : "ABC → NOP",
 
   "callforcontribution_1" : "GCWizard ist ein Tool von Geocachern für Geocacher.\n\n",
   "callforcontribution_2" : "Die Entwickler und alle Beitragenden haben ausschließlich in ihrer Freizeit daran entwickelt. Bei einer so umfangreichen App kommen schnell viele Wochen oder Monate Arbeit zusammen. Das ist eine für wenige Mitarbeiter nur sehr schwer zu bewältigende Aufgabe.\n\n",
@@ -98,13 +99,14 @@
   "ccitt1_title" : "CCITT-1",
   "ccitt1_description" : "Baudot-Code",
   "ccitt1_example" : "ABC → 00100 01001 01101",
-  "ccitt1_numeral_base" : "Kodierung",
+  "ccitt1_numeralbase" : "Kodierung",
 
   "ccitt2_title" : "CCITT-2",
   "ccitt2_description" : "Baudot-Murray-Code; Binärer Lochkartencode",
   "ccitt2_example" : "ABC → 00011 11001 01110",
-  "ccitt2_numeral_base" : "Kodierung",
+  "ccitt2_numeralbase" : "Kodierung",
 
+  "changelog_0.7.1" : "[new] Widerstände: EIA-96 codes (#67)\n[new] Widerstände: Symboltabelle (Danke, Franz)\n[new] ASCII: Option für binäre Ein-/Ausgabe (Danke, 'capoaira')[chg] Verhalten der Zahlenspinner (Danke, Martin)\n[chg] Morse-Lesbarkeit (Danke, 'tomcat06')\n[fix] Encodings: Sauberer Wechsel zwischen Encode/Decode\n[fix] ASCII Decode Eingabe (Thanks, 'capoaira')",
   "changelog_0.7.0" : "[new] Kategorie-Tab (#40; Danke, Frank)\n[new] Tool-Beschreibungen und Beispiele (#48)\n[new] Warnung bei Löschen von Favorit oder Formel (#44; Danke, Andy)\n[new] Widerstandsfarbcode\n[new] Farbwähler/Farbraum-Konvertierer\n[new] Hühner-/Räuber-/Löffelsprache (#10; Danke, 'capoaira')\n[new] Pig Latin\n[new] CCITT-1 (Baudot-Code)\n[new] Mehr Symboltabellen (Danke, Aeggsbaerde)\n[new] Rückwärts\n[new] Vanity-Code\n[new] Klopfcode\n[new] Kamasutra\n[new] Hashes\n[fix] CCITT-2-Beschreibung (#52, Danke, Klumpenkukuk)\n[fix] Kenny (#53, 55; Danke, Michael)\n[fix] Samsung-Tastatur-Bug (#61; Danke, 'capoaira')\n[fix] Römische Zahlen (#62; Danke, Daniel)\n[fix] Schriftgröße ändern",
   "changelog_0.6.2" : "[fix] iOS: Initiale Sprache (#35, #41)",
   "changelog_0.6.1" : "[fix] iOS: Eingabe von Zahlenlisten",
@@ -506,7 +508,7 @@
 
   "kamasutra_title" : "Kamasutra",
   "kamasutra_description" : "Standard: ROT-13; Modifiziert mit eigenem Alphabet: Rotation um die Hälfte der Alphabetlänge",
-  "kamasutra_example" : "A → N, B → O, C → P, ...",
+  "kamasutra_example" : "ABC → NOP",
 
   "kenny_title" : "Kennys Code",
   "kenny_description" : "Buchstaben zu einer Dreiergruppe aus m, p, f; inspiriert durch 'South Park'",
@@ -774,19 +776,22 @@
   "primes_integerfactorization_description" : "Primfaktorzerlegung einer Zahl",
   "primes_integerfactorization_example" : "42 = 2 × 3 × 7",
 
-  "resistor_colorcode_title" : "Widerstandsfarbcode",
-  "resistor_colorcode_numberbands" : "Anzahl Ringe",
+  "resistor_selection_title" : "Widerstand",
+  "resistor_selection_description" : "Elektrischer Widerstand",
+  "resistor_colorcodecalculator_title" : "Widerstandsrechner",
+  "resistor_colorcodecalculator_numberbands" : "Anzahl Ringe",
+  "resistor_eia96_title" : "EIA-96 Codes",
   "resistor_value" : "Wert",
   "resistor_value_range" : "Wertebereich",
   "resistor_temperaturecoefficient" : "Temp. Koeffizient",
 
-  "robberlanguage_title" : "Räubersprache",
-  "robberlanguage_description" : "Spielsprache, Geheimsprache",
-  "robberlanguage_example" : "Räuber → roräuboberor",
-
   "reverse_title" : "Rückwärts",
   "reverse_description" : "Gibt die Eingabe rückwärts aus",
   "reverse_example" : "ABCdef → fedCBA",
+
+  "robberlanguage_title" : "Räubersprache",
+  "robberlanguage_description" : "Spielsprache, Geheimsprache",
+  "robberlanguage_example" : "Räuber → roräuboberor",
 
   "romannumbers_title" : "Römische Zahlen",
   "romannumbers_description" : "Römische Zahlen mit und ohne Subtraktionsregel",
@@ -800,13 +805,13 @@
   "rotation_selection_example" : "",
   "rotation_rot13_title" : "ROT-13",
   "rotation_rot13_description" : "Verschiebt Buchstaben um 13 Stellen (halbes Alphabet)",
-  "rotation_rot13_example" : "A → N, B → O, C → P, ...",
+  "rotation_rot13_example" : "ABC → NOP",
   "rotation_rot5_title" : "ROT-5",
   "rotation_rot5_description" : "Verschiebt Ziffern um 5 Stellen",
-  "rotation_rot5_example" : "0 → 5, 1 → 6, 2 → 7, ...",
+  "rotation_rot5_example" : "012 → 567",
   "rotation_rot18_title" : "ROT-18",
   "rotation_rot18_description" : "Verschiebt Buchstaben um 13, Ziffern um 5 Stellen (Kombination von ROT-13 und ROT-5)",
-  "rotation_rot18_example" : "A → N, B → O, ..., 0 → 5, 1 → 6, ...",
+  "rotation_rot18_example" : "ABC → NOP, 012 → 567",
   "rotation_rot47_title" : "ROT-47",
   "rotation_rot47_description" : "Verschiebt Zeichen um 47 Stellen über alle ASCII Zeichen von 33 bis 126 (inkl. A-Z, a-z, 0-9 und einige Sonderzeichen)",
   "rotation_rot47_example" : "A → p, L → {, a → 2, ) → W, ... ",
@@ -946,6 +951,8 @@
   "symboltables_puzzle_title" : "Puzzle Code",
   "symboltables_puzzle_description" : "",
   "symboltables_puzzle_example" : "",
+  "symboltables_resistor_title" : "Widerstandsfarbcode",
+  "symboltables_resistor_description" : "Werte der Einerringe",
   "symboltables_romulan_title" : "Romulanisch",
   "symboltables_romulan_description" : "Textsymbole der Romulaner aus 'Star Trek'",
   "symboltables_romulan_example" : "",
