@@ -150,7 +150,7 @@ class Registry {
         tool: ASCIIValues(),
         i18nPrefix: 'asciivalues',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'ascii utf8 utf-8 unicode american standard information interchange'
+        searchStrings: 'ascii utf8 utf-8 unicode american standard information interchange binary code binärcode'
       ),
       GCWToolWidget(
         tool: Atbash(),
