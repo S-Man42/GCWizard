@@ -28,7 +28,6 @@ class MorseState extends State<Morse> {
   void initState() {
     super.initState();
 
-
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput);
   }
