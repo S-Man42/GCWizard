@@ -22,8 +22,6 @@ class ASCIIValuesState extends State<ASCIIValues> {
   var _currentEncodeInput = '';
   var _currentDecodeInput = defaultIntegerListText;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  var _currentModeLeft = 'A-Z → ASCII';
-  var _currentModeRight = 'ASCII → A-Z';
   GCWSwitchPosition _currentRadix = GCWSwitchPosition.left;
   bool _currentCrosstotalMode = true;
 
