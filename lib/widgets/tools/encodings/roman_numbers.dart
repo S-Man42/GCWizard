@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/encodings/roman_numbers.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -15,9 +14,11 @@ class RomanNumbers extends StatefulWidget {
 }
 
 class RomanNumbersState extends State<RomanNumbers> {
-  var _controller;
+  var _encodeController;
+  var _decodeController;
 
-  var _currentInput = defaultIntegerText;
+  var _currentEncodeInput = defaultIntegerText;
+  var _currentDecodeInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   RomanNumberType _currentRomanNumbersTypeMode = RomanNumberType.USE_SUBTRACTION_RULE;
 
@@ -26,12 +27,16 @@ class RomanNumbersState extends State<RomanNumbers> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: _currentInput['text']);
+
+    _encodeController = TextEditingController(text: _currentEncodeInput['text']);
+    _decodeController = TextEditingController(text: _currentDecodeInput);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _encodeController.dispose();
+    _decodeController.dispose();
+
     super.dispose();
   }
 
@@ -41,20 +46,20 @@ class RomanNumbersState extends State<RomanNumbers> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
           ? GCWIntegerTextField(
-              controller: _controller,
+              controller: _encodeController,
               max: 100000,
               onChanged: (text) {
                 setState(() {
-                  _currentInput = text;
+                  _currentEncodeInput = text;
                   _calculateOutput();
                 });
               },
             )
           : GCWTextField(
-              controller: _controller,
+              controller: _decodeController,
               onChanged: (text) {
                 setState(() {
-                  _currentInput = {'text': text, 'value' : null};
+                  _currentDecodeInput = text;
                   _calculateOutput();
                 });
               },
@@ -66,14 +71,6 @@ class RomanNumbersState extends State<RomanNumbers> {
           onChanged: (value) {
             setState(() {
               _currentMode = value;
-
-              if (_currentMode == GCWSwitchPosition.left) {
-                var value = extractIntegerFromText(_currentInput['text']);
-                var text = value == null ? '' : value.toString();
-                _currentInput = {'text': text, 'value': value};
-                _controller.text = text;
-              }
-
               _calculateOutput();
             });
           },
@@ -98,12 +95,10 @@ class RomanNumbersState extends State<RomanNumbers> {
   }
 
   _calculateOutput() {
-    String text = _currentInput['text'];
-
     if (_currentMode == GCWSwitchPosition.left) {
-      _output = encodeRomanNumbers(_currentInput['value'], type: _currentRomanNumbersTypeMode) ?? '';
+      _output = encodeRomanNumbers(_currentEncodeInput['value'], type: _currentRomanNumbersTypeMode) ?? '';
     } else {
-      var value = decodeRomanNumbers(_currentInput['text']);
+      var value = decodeRomanNumbers(_currentDecodeInput);
       _output = value == null ? '' : value.toString();
     }
   }

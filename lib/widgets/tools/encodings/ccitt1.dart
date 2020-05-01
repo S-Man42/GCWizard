@@ -15,21 +15,27 @@ class CCITT1 extends StatefulWidget {
 }
 
 class CCITT1State extends State<CCITT1> {
-  var _controller;
+  var _encodeController;
+  var _decodeController;
 
-  var _currentInput = defaultIntegerListText;
+  var _currentEncodeInput = '';
+  var _currentDecodeInput = defaultIntegerListText;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  GCWSwitchPosition _currentOutputCoding = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentRadix = GCWSwitchPosition.left;
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: _currentInput['text']);
+
+    _encodeController = TextEditingController(text: _currentEncodeInput);
+    _decodeController = TextEditingController(text: _currentDecodeInput['text']);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _encodeController.dispose();
+    _decodeController.dispose();
+
     super.dispose();
   }
 
@@ -37,61 +43,56 @@ class CCITT1State extends State<CCITT1> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        _currentMode == GCWSwitchPosition.left ?
-          GCWTextField(
-            controller: _controller,
-            onChanged: (text) {
-              setState(() {
-                _currentInput = {'text': text, 'values' : []};
-              });
-            },
-          ) :
-          GCWIntegerListTextField(
-            controller: _controller,
-            onChanged: (text) {
-              setState(() {
-                _currentInput = text;
-              });
-            },
-          ),
+        _currentMode == GCWSwitchPosition.left
+          ? GCWTextField(
+              controller: _encodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentEncodeInput = text;
+                });
+              },
+            )
+          : GCWIntegerListTextField(
+              controller: _decodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentDecodeInput = text;
+                });
+              },
+            ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
-
-              if (_currentMode == GCWSwitchPosition.right) {
-                var text = _currentInput['text'];
-                _currentInput = {'text': text, 'values': textToIntList(text)};
-              }
             });
           },
         ),
         GCWTwoOptionsSwitch(
-          title: i18n(context, 'ccitt2_numeral_base'),
+          title: i18n(context, 'ccitt1_numeralbase'),
           leftValue: i18n(context, 'common_numeralbase_denary'),
           rightValue: i18n(context, 'common_numeralbase_binary'),
-          value: _currentOutputCoding,
+          value: _currentRadix,
           onChanged: (value) {
             setState(() {
-              _currentOutputCoding = value;
+              _currentRadix = value;
 
             });
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          text: _calculateOutput()
         ),
       ],
     );
   }
 
-  _buildOutput() {
+  _calculateOutput() {
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.left) {
-      output = encodeCCITT1(_currentInput['text']);
-      if (_currentOutputCoding == GCWSwitchPosition.right) {
+      output = encodeCCITT1(_currentEncodeInput);
+      if (_currentRadix == GCWSwitchPosition.right) {
         output = output.split(' ').map((value) {
           var out = convertBase(value, 10, 2);
           return out.padLeft(5, '0');
@@ -99,15 +100,15 @@ class CCITT1State extends State<CCITT1> {
       }
       return output;
     } else {
-      if (_currentOutputCoding == GCWSwitchPosition.right) {
+      if (_currentRadix == GCWSwitchPosition.right) {
         return decodeCCITT1(
-          textToBinaryList(_currentInput['text']).map((value) {
+          textToBinaryList(_currentDecodeInput['text']).map((value) {
             return int.tryParse(convertBase(value, 2, 10));
           }).toList()
         );
       }
 
-      return decodeCCITT1(_currentInput['values']);
+      return decodeCCITT1(List<int>.from(_currentDecodeInput['values']));
     }
   }
 }

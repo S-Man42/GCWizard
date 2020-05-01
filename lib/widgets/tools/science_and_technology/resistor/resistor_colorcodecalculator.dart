@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/resistor.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/gcw_resistor_band_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:intl/intl.dart';
 
-class Resistor extends StatefulWidget {
+class ResistorColorCodeCalculator extends StatefulWidget {
   @override
-  ResistorState createState() => ResistorState();
+  ResistorColorCodeCalculatorState createState() => ResistorColorCodeCalculatorState();
 }
 
 // TODO:
@@ -26,7 +22,7 @@ class Resistor extends StatefulWidget {
 // hasn't rebuild all dropdownbuttons but only added/removed one from the end of the list.
 // So it was not possible to completely remove all dropdowns and their internal states and add all new
 // which kept an old state somewhere internally - no matter what I tried.
-class ResistorState extends State<Resistor> {
+class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator> {
   var _currentNumberBands = 3;
   var _changed = false;
 
@@ -65,7 +61,7 @@ class ResistorState extends State<Resistor> {
       children: <Widget>[
         Container(
           child: GCWIntegerSpinner(
-            title: i18n(context, 'resistor_colorcode_numberbands'),
+            title: i18n(context, 'resistor_colorcodecalculator_numberbands'),
             min: 3,
             max: 6,
             value: _currentNumberBands,

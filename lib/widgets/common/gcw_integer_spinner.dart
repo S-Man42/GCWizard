@@ -63,8 +63,11 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _decreaseValue() {
     setState(() {
-      if (widget.min == null || _currentValue > widget.min)
+      if (widget.min == null || _currentValue > widget.min) {
         _currentValue--;
+      } else if (_currentValue == widget.min && widget.max != null) {
+        _currentValue = widget.max;
+      }
 
       _setCurrentValueAndEmitOnChange(setTextFieldText: true);
     });
@@ -72,8 +75,11 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _increaseValue() {
     setState(() {
-      if (widget.max == null || _currentValue < widget.max)
+      if (widget.max == null || _currentValue < widget.max) {
         _currentValue++;
+      } else if (_currentValue == widget.max && widget.min != null) {
+        _currentValue = widget.min;
+      }
 
       _setCurrentValueAndEmitOnChange(setTextFieldText: true);
     });
