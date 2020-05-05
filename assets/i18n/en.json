@@ -421,6 +421,10 @@
   "deletealert_title" : "Really remove?",
   "deletealert_text" : "Do you really want to remove '%s1'?",
 
+  "duckSpeak_title": "Duck Speak",
+  "duckSpeak_description" : "A fun language made up of 'nak' sounds",
+  "duckSpeak_example" : "Duck → Nak? Nak? Naknaknak nak? Naknak Nanananak Naknak nanak",
+
   "e_selection_title" : "e (e = 2.7182818...)",
   "e_selection_description" : "Mathematical constant: Euler's Number",
   "e_selection_example" : "",
