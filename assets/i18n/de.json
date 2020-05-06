@@ -421,9 +421,9 @@
   "deletealert_title" : "Wirklich löschen?",
   "deletealert_text" : "Möchtest du wirklich '%s1' löschen?",
 
-  "duckSpeak_title": "Entensprache",
-  "duckSpeak_description" : "Eine Spaß-Sprache die aus 'Nak'-Lauten besteht",
-  "duckSpeak_example" : "Ente → Nak? nak? Naknak nak. Naknaknak Nak? Naknak nak?",
+  "duckspeak_title": "Entensprache",
+  "duckspeak_description" : "Eine Spaß-Sprache die aus 'Nak'-Lauten besteht",
+  "duckspeak_example" : "Ente → Nak? nak? Naknak nak. Naknaknak Nak? Naknak nak?",
 
   "e_selection_title" : "e (e = 2,7182818...)",
   "e_selection_description" : "Mathematische Konstante: Eulers Zahl",

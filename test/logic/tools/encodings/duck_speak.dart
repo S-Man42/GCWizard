@@ -30,6 +30,9 @@ void main() {
       {'expectedOutput' : 'N53°', 'input' : 'Nak? nak. Nanananak nak? Nanananak Nanananak nanak Nak'},
       {'expectedOutput' : 'äöü', 'input' : 'nak. Nak? naknaknak Naknak naknaknak naknak'},
       {'expectedOutput' : '123', 'input' : 'Nanananak Nanak Nanananak Nananak Nanananak Nanananak'},
+      {'expectedOutput' : '23', 'input' : 'NanananakNanak Nanananak Nanananak Nananak Nanananak Nanananak'},
+      {'expectedOutput' : '23', 'input' : 'Nak Nanaknaknaknak Nanananak Nananak Nanananak Nanananak'},
+      {'expectedOutput' : '', 'input' : 'keinnaklaut'},
     ];
 
     _inputsToExpected.forEach((elem) {

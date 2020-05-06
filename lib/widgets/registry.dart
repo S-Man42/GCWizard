@@ -231,9 +231,9 @@ class Registry {
       ),
       GCWToolWidget(
         tool: DuckSpeak(),
-        i18nPrefix: 'duckSpeak',
+        i18nPrefix: 'duckspeak',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'entensprache duck speak nak entisch'
+        searchStrings: 'entensprache duck speak nak entisch duckish'
       ),
       GCWToolWidget(
         tool: ESelection(),
