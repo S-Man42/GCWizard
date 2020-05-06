@@ -935,7 +935,7 @@ class Registry {
         tool: SymbolTable(symbolKey: 'lorm'),
         i18nPrefix: 'symboltables_lorm',
         iconPath: SYMBOLTABLES_ASSETPATH + 'lorm/72.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift lormen deafblind deaf-blind taub-stumme taubstumme '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift lormen deafmute deaf-mute deafblind deaf-blind taub-stumme taubstumme gehoerlose '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'moon'),
@@ -1001,7 +1001,7 @@ class Registry {
         tool: SymbolTable(symbolKey: 'sign'),
         i18nPrefix: 'symboltables_sign',
         iconPath: SYMBOLTABLES_ASSETPATH + 'sign/75.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sign language zeichensprache gebaerdensprache taubstumme taub-stumme deafblind deaf-blind'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sign language zeichensprache gebaerdensprache taubstumme taub-stumme deafblind deaf-blind gehoerlose deaf-mute deafmute'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'visitor'),

@@ -749,7 +749,7 @@
   "playfair_mode_wtovv" : "W → VV",
 
   "polybios_title" : "Polybios Chiffre",
-  "polybios_description" : "Verschlüsselung basierend auch einem Quadrat",
+  "polybios_description" : "Verschlüsselung basierend auf einem Quadrat",
   "polybios_example" : "ABCXYZ → 11 12 13 53 54 55",
   "polybios_mode_az09" : "A-Z 0-9",
   "polybios_mode_za90" : "Z-A 9-0",
@@ -926,7 +926,7 @@
   "symboltables_intergalactic_description" : "",
   "symboltables_intergalactic_example" : "",
   "symboltables_lorm_title" : "Lormen",
-  "symboltables_lorm_description" : "Hand- und Fingerbasiertes Alphabet für Taubstumme",
+  "symboltables_lorm_description" : "Hand- und Fingerbasiertes Alphabet für Gehörlose",
   "symboltables_lorm_example" : "",
   "symboltables_lorm_ch" : "CH",
   "symboltables_lorm_sch" : "SCH",
@@ -966,7 +966,7 @@
   "symboltables_semaphore_numerals_following" : "ZIFFERN FOLGEN",
   "symboltables_semaphore_rest" : "PAUSE",
   "symboltables_sign_title" : "Gebärden",
-  "symboltables_sign_description" : "Finger- und Handsymbole für Taubstumme",
+  "symboltables_sign_description" : "Finger- und Handsymbole für Gehörlose",
   "symboltables_visitor_title" : "Visitor",
   "symboltables_visitor_description" : "Alienschrift aus der Serie 'V - Die Besucher'",
   "symboltables_visitor_ar" : "AR",
@@ -1012,7 +1012,7 @@
 
   "vigenere_title" : "Vigenère Chiffre",
   "vigenere_description" : "Verschiebt Buchstaben um den Buchstabenwert des Schlüssels",
-  "vigenere_example" : "ABC with key DEF → DFH",
+  "vigenere_example" : "ABC mit Schlüssel DEF → DFH",
   "vigenere_autokey" : "Autokey",
 
   "z22_title" : "Z22",
