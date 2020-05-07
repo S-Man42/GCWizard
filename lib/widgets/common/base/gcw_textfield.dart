@@ -49,22 +49,25 @@ class _GCWTextFieldState extends State<GCWTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      autocorrect: false,
-      decoration: InputDecoration(
-        prefixIcon: widget.icon,
-        hintText: widget.hintText ?? i18n(context, 'common_hinttext_default')
-      ),
-      onChanged: widget.onChanged,
-      controller: widget.controller,
-      autovalidate: true,
-      validator: widget.validate,
-      inputFormatters: widget.inputFormatters,
-      keyboardType: widget.keyboardType,
-      maxLines: null,
-      focusNode: widget.focusNode,
-      autofocus: widget.autofocus ?? false,
-      style: TextStyle(fontSize: defaultFontSize())
+    return Container(
+      height: 39,
+      child: TextFormField(
+        autocorrect: false,
+        decoration: InputDecoration(
+            prefixIcon: widget.icon,
+            hintText: widget.hintText ?? i18n(context, 'common_hinttext_default')
+        ),
+        onChanged: widget.onChanged,
+        controller: widget.controller,
+        autovalidate: true,
+        validator: widget.validate,
+        inputFormatters: widget.inputFormatters,
+        keyboardType: widget.keyboardType,
+        maxLines: null,
+        focusNode: widget.focusNode,
+        autofocus: widget.autofocus ?? false,
+        style: TextStyle(fontSize: defaultFontSize())
+      )
     );
   }
 }

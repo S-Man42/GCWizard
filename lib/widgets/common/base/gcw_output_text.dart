@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 
 class GCWOutputText extends StatefulWidget {
   final String text;
@@ -16,13 +18,28 @@ class _GCWOutputTextState extends State<GCWOutputText> {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-        alignment: Alignment.centerLeft,
-        child: SelectableText(
-          widget.text,
-          textAlign: TextAlign.left,
-          style: widget.isMonotype ? gcwMonotypeTextStyle() : gcwTextStyle(),
-        )
+    return Row(
+      children: [
+        Expanded(
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: SelectableText(
+              widget.text,
+              textAlign: TextAlign.left,
+              style: widget.isMonotype ? gcwMonotypeTextStyle() : gcwTextStyle(),
+            )
+          ),
+        ),
+        widget.text != null && widget.text.length > 0
+          ? GCWIconButton(
+              size: IconButtonSize.SMALL,
+              iconData: Icons.content_copy,
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: widget.text));
+              },
+            )
+          : Container()
+      ],
     );
   }
 }

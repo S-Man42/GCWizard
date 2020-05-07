@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
@@ -230,8 +231,10 @@ class GCWCoordsState extends State<GCWCoords> {
       children: <Widget>[
         GCWTextDivider(
           text: widget.text,
-          trailing: GCWIconButton(
+          bottom: 0.0,
+          trailingButton: GCWIconButton(
             iconData: Icons.content_paste,
+            size: IconButtonSize.SMALL,
             onPressed: () {
               Clipboard.getData('text/plain').then((data) {
                 setState(() {
@@ -239,7 +242,7 @@ class GCWCoordsState extends State<GCWCoords> {
                 });
               });
             },
-          ),
+          )
         ),
         GCWCoordsDropDownButton(
           value: widget.coordsFormat ?? _currentCoordsFormat,
