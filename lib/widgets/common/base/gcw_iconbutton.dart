@@ -16,9 +16,9 @@ class GCWIconButton extends StatelessWidget {
     var isNormalSize = this.size == IconButtonSize.NORMAL;
 
     return Container(
-      width: isNormalSize ? 50 : 35,
+      width: isNormalSize ? 40 : 35,
       child: ButtonTheme(
-        height: isNormalSize ? 39.0 : 30,
+        height: isNormalSize ? 38.0 : 30,
         child: OutlineButton(
           padding: EdgeInsets.zero,
           child: Icon(

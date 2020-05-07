@@ -454,6 +454,10 @@
   "formulasolver_values_key" : "Name",
   "formulasolver_values_value" : "Wert",
   "formulasolver_values_currentvalues" : "Erstellte Variablen",
+  "formulasolver_formulas_editformula" : "Formel bearbeiten",
+  "formulasolver_formulas_removeformula" : "Formel löschen",
+  "formulasolver_formulas_copyformula" : "Formel kopieren",
+  "formulasolver_formulas_copyresult" : "Ergebnis kopieren",
 
   "gronsfeld_title" : "Gronsfeld Chiffre",
   "gronsfeld_description" : "Spezialfall der Vigenère-Verschlüsselung mit Zahlen als Schlüssel",
