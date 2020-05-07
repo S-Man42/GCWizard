@@ -331,13 +331,13 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
     int _minutes = ['', '-'].contains(_currentLatMinutes) ? 0 : int.parse(_currentLatMinutes);
     int _seconds = (['', '-'].contains(_currentLatSeconds) ? 0 : int.parse(_currentLatSeconds));
     double _secondsD = double.parse('$_seconds.$_currentLatMilliSeconds');
-    DMS _currentLat = DMS(_currentLatSign * _degrees, _minutes, _secondsD);
+    DMS _currentLat = DMS(_currentLatSign, _degrees, _minutes, _secondsD);
 
     _degrees = ['', '-'].contains(_currentLonDegrees) ? 0 : int.parse(_currentLonDegrees);
     _minutes = ['', '-'].contains(_currentLonMinutes) ? 0 : int.parse(_currentLonMinutes);
     _seconds = (['', '-'].contains(_currentLonSeconds) ? 0 : int.parse(_currentLonSeconds));
     _secondsD = double.parse('$_seconds.$_currentLonMilliSeconds');
-    DMS _currentLon = DMS(_currentLonSign * _degrees, _minutes, _secondsD);
+    DMS _currentLon = DMS(_currentLonSign, _degrees, _minutes, _secondsD);
 
     widget.onChanged(LatLng(latDMSToDEC(_currentLat), lonDMSToDEC(_currentLon)));
   }

@@ -19,14 +19,11 @@ double latDMSToDEC(DMS coord) {
 }
 
 double DEGToDEC(DEG coord) {
-  var _sign = coord.degrees < 0.0 ? -1.0 : 1.0;
-  return _sign * (coord.degrees.abs() + coord.minutes / 60.0);
+  return coord.sign * (coord.degrees.abs() + coord.minutes / 60.0);
 }
 
 double DMSToDEC(DMS coord) {
-  var _sign = coord.degrees < 0.0 ? -1.0 : 1.0;
-
-  return _sign * (coord.degrees.abs() + coord.minutes / 60.0 + coord.seconds / 60.0 / 60.0);
+  return coord.sign * (coord.degrees.abs() + coord.minutes / 60.0 + coord.seconds / 60.0 / 60.0);
 }
 
 double normalizeLat(double lat) {

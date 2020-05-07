@@ -265,12 +265,12 @@ class GCWCoordsDEGState extends State<GCWCoordsDEG> {
     int _degrees = ['', '-'].contains(_currentLatDegrees) ? 0 : int.parse(_currentLatDegrees);
     int _minutes = ['', '-'].contains(_currentLatMinutes) ? 0 : int.parse(_currentLatMinutes);
     double _minutesD = double.parse('$_minutes.$_currentLatMilliMinutes');
-    DEG _currentLat = DEG(_currentLatSign * _degrees, _minutesD);
+    DEG _currentLat = DEG(_currentLatSign, _degrees, _minutesD);
 
     _degrees = ['', '-'].contains(_currentLonDegrees) ? 0 : int.parse(_currentLonDegrees);
     _minutes = ['', '-'].contains(_currentLonMinutes) ? 0 : int.parse(_currentLonMinutes);
     _minutesD = double.parse('$_minutes.$_currentLonMilliMinutes');
-    DEG _currentLon = DEG(_currentLonSign * _degrees, _minutesD);
+    DEG _currentLon = DEG(_currentLonSign, _degrees, _minutesD);
 
     widget.onChanged(LatLng(latDEGToDEC(_currentLat), lonDEGToDEC(_currentLon)));
   }
