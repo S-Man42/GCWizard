@@ -122,7 +122,6 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
       onChanged: (color) {
         setState(() {
           _currentResistorColor_fourBands_multiplier = color;
-          print(_currentResistorColor_fourBands_multiplier);
         });
       },
     );

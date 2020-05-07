@@ -28,7 +28,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
           text: widget.text
         ),
         Visibility (
-          visible: widget.text != '',
+          visible: widget.text != null && widget.text != '',
           child: GCWButton (
             text: i18n(context, 'coords_show_on_map'),
             onPressed: () {

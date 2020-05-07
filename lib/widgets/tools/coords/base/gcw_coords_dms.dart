@@ -12,8 +12,9 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsDMS extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsDMS({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsDMS({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsDMSState createState() => GCWCoordsDMSState();
@@ -92,6 +93,33 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.coordinates != null) {
+      var lat = formattedDMS(widget.coordinates.latitude, true, precision: 10);
+      var lon = formattedDMS(widget.coordinates.longitude, false, precision: 10);
+
+      _currentLatDegrees = lat['degrees'];
+      _currentLatMinutes = lat['minutes'];
+      _currentLatSeconds = lat['seconds'].split('.')[0];
+      _currentLatMilliSeconds = lat['seconds'].split('.')[1];
+      _currentLatSign = lat['sign']['value'];
+
+      _currentLonDegrees = lon['degrees'];
+      _currentLonMinutes = lon['minutes'];
+      _currentLonSeconds = lon['seconds'].split('.')[0];
+      _currentLonMilliSeconds = lon['seconds'].split('.')[1];
+      _currentLonSign = lon['sign']['value'];
+
+      _LatDegreesController = TextEditingController(text: _currentLatDegrees);
+      _LatMinutesController = TextEditingController(text: _currentLatMinutes);
+      _LatSecondsController = TextEditingController(text: _currentLatSeconds);
+      _LatMilliSecondsController = TextEditingController(text: _currentLatMilliSeconds);
+
+      _LonDegreesController = TextEditingController(text: _currentLonDegrees);
+      _LonMinutesController = TextEditingController(text: _currentLonMinutes);
+      _LonSecondsController = TextEditingController(text: _currentLonSeconds);
+      _LonMilliSecondsController = TextEditingController(text: _currentLonMilliSeconds);
+    }
+
     return Column (    
       children: <Widget>[
         Row(

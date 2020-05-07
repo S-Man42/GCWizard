@@ -5,8 +5,9 @@ import 'package:gc_wizard/widgets/common/base/gcw_padding_container.dart';
 
 class GCWTextDivider extends StatefulWidget {
   final String text;
+  final Widget trailing;
 
-  const GCWTextDivider({Key key, this.text: ''}) : super(key: key);
+  const GCWTextDivider({Key key, this.text: '', this.trailing}) : super(key: key);
 
   @override
   _GCWTextDividerState createState() => _GCWTextDividerState();
@@ -23,7 +24,8 @@ class _GCWTextDividerState extends State<GCWTextDivider> {
         ),
         Expanded(
           child: GCWDivider()
-        )
+        ),
+        widget.trailing ?? Container()
       ])
     );
   }
