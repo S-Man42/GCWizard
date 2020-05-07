@@ -77,6 +77,7 @@ import 'package:gc_wizard/widgets/tools/encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt2.dart';
+import 'package:gc_wizard/widgets/tools/encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
@@ -227,6 +228,12 @@ class Registry {
         i18nPrefix: 'decabit',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'decabit impulsraster zellweger plus minus rundsteuertechnik ripple control'
+      ),
+      GCWToolWidget(
+        tool: DuckSpeak(),
+        i18nPrefix: 'duckspeak',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'entensprache duck speak nak entisch duckish'
       ),
       GCWToolWidget(
         tool: ESelection(),

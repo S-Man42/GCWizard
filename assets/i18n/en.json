@@ -119,7 +119,7 @@
   "changelog_0.0.4" : "[fix] Calculation of hours/minutes/seconds in 'Count Days'",
   "changelog_0.0.1" : "[new] Google PlayStore Initialisation",
 
-  "chickenlanguage_title" : "Chicken language",
+  "chickenlanguage_title" : "Chicken Language",
   "chickenlanguage_description" : "Game Language, Secret Language",
   "chickenlanguage_example" : "code → cohodefodehedefe",
 
@@ -420,6 +420,10 @@
 
   "deletealert_title" : "Really remove?",
   "deletealert_text" : "Do you really want to remove '%s1'?",
+
+  "duckspeak_title": "Duck Speak",
+  "duckspeak_description" : "A fun language made up of 'nak' sounds",
+  "duckspeak_example" : "Duck → Nak? Nak? Naknaknak nak? Naknak Nanananak Naknak nanak",
 
   "e_selection_title" : "e (e = 2.7182818...)",
   "e_selection_description" : "Mathematical constant: Euler's Number",
@@ -789,7 +793,7 @@
   "reverse_description" : "Input backwards",
   "reverse_example" : "ABCdef → fedCBA",
 
-  "robberlanguage_title" : "Robber language",
+  "robberlanguage_title" : "Robber Language",
   "robberlanguage_description" : "Game Language, Secret Language",
   "robberlanguage_example" : "Robber → rorobobboberor",
 
