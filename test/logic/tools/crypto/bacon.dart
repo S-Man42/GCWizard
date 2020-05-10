@@ -37,6 +37,10 @@ void main() {
       {'expectedOutput' : 'AZ', 'input' : 'zAAAaa BABBB2'},
       {'expectedOutput' : 'UU', 'input' : 'BAABBBAABB'},
       {'expectedOutput' : 'II', 'input' : 'ABAAAABAAA'},
+      {'expectedOutput' : '', 'input' : 'BBBBB'},
+      {'expectedOutput' : '', 'input' : 'BBBA'},
+      {'expectedOutput' : '', 'input' : 'BBBBBbbbbbBBBA'},
+      {'expectedOutput' : '', 'input' : 'BBBBB bbbbb BBBA'},
     ];
 
     _inputsToExpected.forEach((elem) {

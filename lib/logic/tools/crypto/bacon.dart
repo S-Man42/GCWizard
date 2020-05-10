@@ -33,7 +33,7 @@ String decodeBacon(String input) {
   var out = '';
   int i = 0;
   while (i < input.length) {
-    out += BaconToAZ[input.substring(i, i + 5)];
+    out += BaconToAZ[input.substring(i, i + 5)] ?? '';
     i += 5;
   }
 
