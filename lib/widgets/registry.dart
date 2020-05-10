@@ -83,6 +83,7 @@ import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
@@ -169,6 +170,12 @@ class Registry {
         i18nPrefix: 'base_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_BASE
+      ),
+      GCWToolWidget(
+        tool: Binary(),
+        i18nPrefix: 'binary',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'binary numbers binaerzahlen dezimalzahlen decimal dual'
       ),
       GCWToolWidget(
         tool: BrainfkSelection(),
