@@ -187,9 +187,12 @@ class FormulasState extends State<Formulas> {
                                 Icons.priority_high,
                                 color: ThemeColors.accent,
                               ),
-                          GCWText (
-                            text: calculated['state'] == STATE_OK ? calculated['result'] : i18n(context, 'formulasolver_formulas_notcomputable')
-                          ),
+                          Flexible(
+                            child:
+                              GCWText (
+                                text: calculated['result']
+                              ),
+                          )
                         ],
                       )
 
@@ -275,12 +278,9 @@ class FormulasState extends State<Formulas> {
                   ),
                   PopupMenuItem(
                     value: 4,
-                    enabled: calculated['state'] == STATE_OK,
                     child: _buildPopupItem(
                       Icons.content_copy,
                       'formulasolver_formulas_copyresult',
-                      disableable: true,
-                      state: calculated['state']
                     )
                   ),
                 ],
@@ -308,7 +308,7 @@ class FormulasState extends State<Formulas> {
     if (rows.length > 0) {
       rows.insert(0,
         GCWTextDivider(
-            text: i18n(context, 'formulasolver_formulas_currentformulas')
+          text: i18n(context, 'formulasolver_formulas_currentformulas')
         )
       );
     }
@@ -318,11 +318,8 @@ class FormulasState extends State<Formulas> {
     );
   }
 
-  _buildPopupItem(IconData icon, String i18nKey, {disableable: false, state: STATE_OK}) {
+  _buildPopupItem(IconData icon, String i18nKey) {
     var color = Colors.black;
-    if (disableable && state == STATE_ERROR) {
-      color = ThemeData().disabledColor;
-    }
 
     return  Row(
       children: [

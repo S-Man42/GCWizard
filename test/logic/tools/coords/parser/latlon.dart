@@ -6,7 +6,7 @@ void main() {
   final List<Map<String, dynamic>> _inputsToExpectedDEC = [
     {'text': '52.12312 N 20.12312 E', 'expectedOutput': LatLng(52.12312, 20.12312)},
     {'text': '52.12312 S 20.12312 W', 'expectedOutput': LatLng(-52.12312, -20.12312)},
-    {'text': '000.12312 S 000.12312 W', 'expectedOutput': LatLng(-0.12312, -0.12312)},
+    {'text': '00.12312 S 000.12312 W', 'expectedOutput': LatLng(-0.12312, -0.12312)},
     {'text': '52.12312 N, 20.12312 E', 'expectedOutput': LatLng(52.12312, 20.12312)},
     {'text': '52.12312 S, 20.12312 W', 'expectedOutput': LatLng(-52.12312, -20.12312)},
     {'text': '52. 12312 N, 20 .12312 E', 'expectedOutput': LatLng(52.12312, 20.12312)},

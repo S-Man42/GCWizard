@@ -33,15 +33,18 @@ class FormulaParser {
   final parser = Parser();
 
   dynamic _evaluateFormula(String formula, Map<String, String> values) {
-    Expression expression = parser.parse(
-      substitution(formula, values, caseSensitive: false).toLowerCase()
-    );
+    var substitutedFormula = substitution(formula, values, caseSensitive: false);
 
-    var result = expression.evaluate(EvaluationType.REAL, _context);
-    if (result == null)
-      throw Exception();
+    try {
+      Expression expression = parser.parse(substitutedFormula.toLowerCase());
+      var result = expression.evaluate(EvaluationType.REAL, _context);
+      if (result == null)
+        throw Exception();
 
-    return result.floor() == result ? result.floor() : result;
+      return result.floor() == result ? result.floor() : result;
+    } catch (e) {
+      throw FormatException(substitutedFormula);
+    }
   }
 
   Map<String, String> parse(String formula, Map<String, String> values) {
@@ -56,26 +59,35 @@ class FormulaParser {
     if (values == null)
       values = <String, String>{};
 
-    try {
-      RegExp regExp = new RegExp(r'\[.+?\]');
-      var matches = regExp.allMatches(formula.trim());
+    RegExp regExp = new RegExp(r'\[.+?\]');
+    var matches = regExp.allMatches(formula.trim());
 
-      if (matches.length > 0) {
-        Map<String, String> substitutions = {};
+    bool hasError = false;
+    if (matches.length > 0) {
+      Map<String, String> substitutions = {};
+
 
         matches.forEach((match) {
           var matchString = match.group(0);
           var content = matchString.substring(1, matchString.length - 1);
-          var result = _evaluateFormula(content, values);
+
+          var result;
+          try {
+            result = _evaluateFormula(content, values);
+          } catch(e) {
+            hasError = true;
+            result = '[' + e.message + ']';
+          }
           substitutions.putIfAbsent(matchString, () => result.toString());
         });
 
-        return {'state' : STATE_OK, 'result': substitution(formula, substitutions)};
-      } else {
-        return {'state' : STATE_OK, 'result': _evaluateFormula(formula, values).toString()};
+      return {'state' : hasError ? STATE_ERROR : STATE_OK, 'result': substitution(formula, substitutions)};
+    } else {
+      try {
+        return {'state' : hasError ? STATE_ERROR : STATE_OK, 'result': _evaluateFormula(formula, values).toString()};
+      } catch(e) {
+        return {'state' : STATE_ERROR, 'result': e.message};
       }
-    } catch(Exception) {
-      return {'state' : STATE_ERROR, 'result': formula};
     }
   }
 }
