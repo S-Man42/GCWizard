@@ -10,7 +10,7 @@ final PATTERN_LON_SIGN_WITH_SPACE = '(?:[^\\d]+?$PATTERN_LON_SIGN)?';
 final PATTERN_LAT_DEGREE_INT = '(\\d{1,2})';
 final PATTERN_LON_DEGREE_INT = '(\\d{1,3})';
 final PATTERN_SECONDS_MINUTES = '([0-5]?[0-9])';
-final PATTERN_DECIMAL = '(?:[\\.,](\\d*))?';
+final PATTERN_DECIMAL = '(?:\\s*?[\\.,]\\s*?(\\d+))?';
 
 int _sign(String match) {
   if (match == null)

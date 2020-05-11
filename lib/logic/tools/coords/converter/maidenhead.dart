@@ -53,8 +53,6 @@ String latLonToMaidenhead (LatLng coord) {
     lon -= intlon * 20.0;
     intlat = (lat / 10.0).floor();
     lat -= intlat * 10.0;
-    print(intlon);
-    print(intlat);
     out += alphabet_AZIndexes[intlon + 1];
     out += alphabet_AZIndexes[intlat + 1];
   }
