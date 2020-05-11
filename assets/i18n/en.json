@@ -413,6 +413,13 @@
   "dates_weekday_saturday" : "Saturday",
   "dates_weekday_sunday" : "Sunday",
 
+  "deadfish_title" : "Deadfish",
+  "deadfish_description" : "The deadfish is a programming language",
+  "deadfish_example" : "fish →  iissiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiioiiioiiiiiiiiiiodddddddddddo",
+
+  "deadfish_mode_left" : "Original (IDSO)",
+  "deadfish_mode_right" : "XKCD variant",
+
   "decabit_title" : "Decabit",
   "decabit_description" : "Binary code for power industry",
   "decabit_example" : "ABC → ++-+++---- ++++--+--- +--++++---",

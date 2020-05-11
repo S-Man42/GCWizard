@@ -77,6 +77,7 @@ import 'package:gc_wizard/widgets/tools/encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt2.dart';
+import 'package:gc_wizard/widgets/tools/encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
@@ -221,6 +222,12 @@ class Registry {
         i18nPrefix: 'dates_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_DATES
+      ),
+      GCWToolWidget(
+        tool: Deadfish(),
+        i18nPrefix: 'deadfish',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'deadfish programming language programmiersprache'
       ),
       GCWToolWidget(
         tool: Decabit(),
