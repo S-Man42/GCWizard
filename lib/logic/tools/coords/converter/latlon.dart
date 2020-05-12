@@ -46,19 +46,19 @@ double DMSToDEC(DMS coord) {
 }
 
 double normalizeLat(double lat) {
-  if (lat > 90)
-    return 180 - lat;
-  if (lat < -90)
-    return -180 + -lat;
+  if (lat > 90.0)
+    return normalizeLat(180.0 - lat);
+  if (lat < -90.0)
+    return normalizeLat(-180.0 + -lat);
 
   return lat;
 }
 
 double normalizeLon(double lon) {
-  if (lon > 180)
-    return lon - 360;
-  if (lon < -180)
-    return 360 + lon;
+  if (lon > 180.0)
+    return normalizeLon(lon - 360.0);
+  if (lon < -180.0)
+    return normalizeLon(360.0 + lon);
 
   return lon;
 }

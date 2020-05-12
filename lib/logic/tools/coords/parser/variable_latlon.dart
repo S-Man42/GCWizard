@@ -127,12 +127,14 @@ List<Map<String, dynamic>> parseVariableLatLon(String coordinate, Map<String, St
   }
 
   var expandedTexts = _expandText(textToExpand, substitutions);
+  print(expandedTexts);
 
   var formulaParser = FormulaParser();
   var coords = <Map<String, dynamic>>[];
 
   for (Map<String, dynamic> expandedText in expandedTexts) {
     var evaluatedFormula = formulaParser.parse(expandedText['text'], {});
+    print(evaluatedFormula);
 
     if (withProjection) {
       var evaluatedTexts = evaluatedFormula['result'].split(String.fromCharCode(1));
@@ -152,6 +154,8 @@ List<Map<String, dynamic>> parseVariableLatLon(String coordinate, Map<String, St
       coords.add({'coordinate': projected, 'variables': expandedText['variables']});
     } else {
       var parsedCoords = parseLatLon(evaluatedFormula['result']);
+      print(parsedCoords);
+
       if (parsedCoords != null) {
         coords.add({'coordinate': parsedCoords, 'variables': expandedText['variables']});
       }

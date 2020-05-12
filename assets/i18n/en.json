@@ -363,6 +363,7 @@
   "coords_ellipsoid_majoraxis" : "Major Axis a",
   "coords_ellipsoid_minoraxis" : "Minor Axis b",
   "coords_variablecoordinate_title" : "Variable Coordinate",
+  "coords_variablecoordinate_description" : "Interpolates variables and calculates possible coordinates",
   "coords_variablecoordinate_projection" : "Projection",
   "coords_variablecoordinate_variables" : "Variables",
   "coords_variablecoordinate_variable" : "Variable",

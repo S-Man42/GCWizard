@@ -363,6 +363,7 @@
   "coords_ellipsoid_majoraxis" : "Gr. Halbachse a",
   "coords_ellipsoid_minoraxis" : "Kl. Halbachse b",
   "coords_variablecoordinate_title" : "Variable Koordinate",
+  "coords_variablecoordinate_description" : "Interpoliert Variablen und errechnet mögliche Koordinaten",
   "coords_variablecoordinate_projection" : "Peilung",
   "coords_variablecoordinate_variables" : "Variablen",
   "coords_variablecoordinate_variable" : "Variable",
