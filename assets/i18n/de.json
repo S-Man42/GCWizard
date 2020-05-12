@@ -54,7 +54,7 @@
   "base85_example" : "<~<+oue+DGm>FD,5.@;^.1AT@~>",
 
   "brainfk_title" : "Brainf**k",
-  "brainfk_description" : "Programmiersprache aus 8 Zeichen; inkl. Derivat 'Ook'",
+  "brainfk_description" : "Esoterische Programmiersprache aus 8 Zeichen; inkl. Derivat 'Ook'",
   "brainfk_example" : ">++++++++[<++++++++>-]<++.",
   "brainfk_interpret" : "Interpreter",
   "brainfk_generate" : "Generator",
@@ -414,10 +414,10 @@
   "dates_weekday_sunday" : "Sonntag",
 
   "deadfish_title" : "Deadfish",
-  "deadfish_description" : "Der Deadfish ist eine Programmiersprache",
-  "deadfish_example" : "fish → iisiiiisiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiioiiioiiiiiiiiiiodddddddddddo",
-  "deadfish_mode_left" : "Original (IDSO)",
-  "deadfish_mode_right" : "XKCD Variante",
+  "deadfish_description" : "Esoterische Programmiersprache mit 4 Zeichen (IDSO oder XKCD)",
+  "deadfish_example" : "A →  iisiiiisio",
+  "deadfish_mode_left" : "IDSO",
+  "deadfish_mode_right" : "XKCD",
 
   "decabit_title" : "Decabit",
   "decabit_description" : "Binärer Code in der Energiewirtschaft",
