@@ -17,6 +17,7 @@ import 'package:gc_wizard/widgets/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_two_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersection.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
+import 'package:gc_wizard/widgets/tools/coords/variable_coordinate.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
@@ -30,6 +31,7 @@ class CoordsSelection extends GCWSelection {
           className(WaypointProjection()),
           className(DistanceBearing()),
           className(FormatConverter()),
+          className(VariableCoordinate()),
           className(CenterTwoPoints()),
           className(CenterThreePoints()),
           className(CrossBearing()),

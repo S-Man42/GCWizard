@@ -32,7 +32,7 @@ class CrossBearingState extends State<CrossBearing> {
   var _currentBearing2 = {'text': '','value': 0.0};
 
   var _currentOutputFormat = defaultCoordFormat();
-  var _currentOutput = '';
+  List<String> _currentOutput = [];
   var _currentMapPoints;
 
   @override
@@ -99,7 +99,7 @@ class CrossBearingState extends State<CrossBearing> {
           },
         ),
         GCWCoordsOutput(
-          text: _currentOutput,
+          outputs: _currentOutput,
           points: _currentMapPoints,
           geodetics: [
             MapGeodetic(
@@ -110,9 +110,9 @@ class CrossBearingState extends State<CrossBearing> {
               start: _getStartLine2(),
               end: _getEndLine2(),
               color: HSLColor
-                  .fromColor(ThemeColors.mapPolyline)
-                  .withLightness(HSLColor.fromColor(ThemeColors.mapPolyline).lightness - 0.3)
-                  .toColor()
+                .fromColor(ThemeColors.mapPolyline)
+                .withLightness(HSLColor.fromColor(ThemeColors.mapPolyline).lightness - 0.3)
+                .toColor()
             ),
           ],
         ),
@@ -163,25 +163,31 @@ class CrossBearingState extends State<CrossBearing> {
 
     _currentMapPoints = [
       MapPoint(
-          point: _currentCoords1,
+        point: _currentCoords1,
+        markerText: i18n(context, "coords_crossbearing_coord1"),
+        coordinateFormat: _currentCoordsFormat1
       ),
       MapPoint(
-          point: _currentCoords2,
+        point: _currentCoords2,
+        markerText: i18n(context, "coords_crossbearing_coord2"),
+        coordinateFormat: _currentCoordsFormat2
       )
     ];
 
     if (_currentIntersection == null) {
-      _currentOutput = i18n(context, "coords_intersect_nointersection");
+      _currentOutput = [i18n(context, "coords_intersect_nointersection")];
       return;
     }
 
     _currentMapPoints.add(
       MapPoint(
         point: _currentIntersection,
-        color: ThemeColors.mapCalculatedPoint
+        color: ThemeColors.mapCalculatedPoint,
+        markerText: i18n(context, "coords_common_intersection"),
+        coordinateFormat: _currentOutputFormat
       )
     );
 
-    _currentOutput = formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid());
+    _currentOutput = [formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid())];
   }
 }

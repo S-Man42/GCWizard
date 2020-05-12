@@ -22,7 +22,7 @@ class EllipsoidTransformState extends State<EllipsoidTransform> {
   var _currentCoordsFormat = defaultCoordFormat();
 
   var _currentOutputFormat = keyCoordsDEG;
-  var _currentOutput = '';
+  List<String> _currentOutput = [];
 
   var _currentFromDate = transformableDates[0];
   var _currentToDate = transformableDates[1];
@@ -96,7 +96,7 @@ class EllipsoidTransformState extends State<EllipsoidTransform> {
           },
         ),
         GCWCoordsOutput(
-          text: _currentOutput,
+          outputs: _currentOutput,
           points: [
             MapPoint(
               point: _currentCoords,
@@ -118,6 +118,6 @@ class EllipsoidTransformState extends State<EllipsoidTransform> {
       newCoords = ellipsoidTransformLatLng(newCoords, _currentToDate['transformationIndex'], true, false);
     }
     
-    _currentOutput = formatCoordOutput(newCoords, _currentOutputFormat, _currentToDate['ellipsoid']);
+    _currentOutput = [formatCoordOutput(newCoords, _currentOutputFormat, _currentToDate['ellipsoid'])];
   }
 }

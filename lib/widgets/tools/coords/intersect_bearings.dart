@@ -32,7 +32,7 @@ class IntersectBearingsState extends State<IntersectBearings> {
   var _currentBearing2 = {'text': '','value': 0.0};
 
   var _currentOutputFormat = defaultCoordFormat();
-  var _currentOutput = '';
+  List<String> _currentOutput = [];
   var _currentMapPoints;
 
   @override
@@ -50,7 +50,7 @@ class IntersectBearingsState extends State<IntersectBearings> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, "coords_intersectbearings_coord1"),
+          text: i18n(context, 'coords_intersectbearings_coord1'),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -67,7 +67,7 @@ class IntersectBearingsState extends State<IntersectBearings> {
           },
         ),
         GCWCoords(
-          text: i18n(context, "coords_intersectbearings_coord2"),
+          text: i18n(context, 'coords_intersectbearings_coord2'),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {
@@ -99,7 +99,7 @@ class IntersectBearingsState extends State<IntersectBearings> {
           },
         ),
         GCWCoordsOutput(
-          text: _currentOutput,
+          outputs: _currentOutput,
           points: _currentMapPoints,
           geodetics: [
             MapGeodetic(
@@ -149,25 +149,31 @@ class IntersectBearingsState extends State<IntersectBearings> {
 
     _currentMapPoints = [
       MapPoint(
-          point: _currentCoords1,
+        point: _currentCoords1,
+        markerText: i18n(context, 'coords_intersectbearings_coord1'),
+        coordinateFormat: _currentCoordsFormat1
       ),
       MapPoint(
-          point: _currentCoords2,
+        point: _currentCoords2,
+        markerText: i18n(context, 'coords_intersectbearings_coord2'),
+        coordinateFormat: _currentCoordsFormat2
       )
     ];
 
     if (_currentIntersection == null) {
-      _currentOutput = i18n(context, "coords_intersect_nointersection");
+      _currentOutput = [i18n(context, 'coords_intersect_nointersection')];
       return;
     }
 
     _currentMapPoints.add(
       MapPoint(
         point: _currentIntersection,
-        color: ThemeColors.mapCalculatedPoint
+        color: ThemeColors.mapCalculatedPoint,
+        markerText: i18n(context, 'coords_common_intersection'),
+        coordinateFormat: _currentOutputFormat
       )
     );
 
-    _currentOutput = formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid());
+    _currentOutput = [formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid())];
   }
 }

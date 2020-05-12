@@ -27,7 +27,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
   var _currentCoordsFormat = defaultCoordFormat();
 
   var _currentOutputFormat = defaultCoordFormat();
-  var _currentOutput = '';
+  List<String> _currentOutput = <String>[];
 
   @override
   Widget build(BuildContext context) {
@@ -73,16 +73,18 @@ class WaypointProjectionState extends State<WaypointProjection> {
           },
         ),
         GCWCoordsOutput(
-          text: _currentOutput,
+          outputs: _currentOutput,
           points: [
             MapPoint(
               point: _currentCoords,
-              markerText: i18n(context, 'coords_waypointprojection_start')
+              markerText: i18n(context, 'coords_waypointprojection_start'),
+              coordinateFormat: _currentCoordsFormat
             ),
             MapPoint(
               point: _currentValue,
               color: ThemeColors.mapCalculatedPoint,
-              markerText: i18n(context, 'coords_waypointprojection_end')
+              markerText: i18n(context, 'coords_waypointprojection_end'),
+              coordinateFormat: _currentOutputFormat
             )
           ],
           geodetics: [
@@ -98,6 +100,6 @@ class WaypointProjectionState extends State<WaypointProjection> {
 
   _calculateOutput() {
     _currentValue = projection(_currentCoords, _currentBearing['value'], _currentDistance, defaultEllipsoid());
-    _currentOutput = formatCoordOutput(_currentValue, _currentOutputFormat, defaultEllipsoid());
+    _currentOutput = [formatCoordOutput(_currentValue, _currentOutputFormat, defaultEllipsoid())];
   }
 }

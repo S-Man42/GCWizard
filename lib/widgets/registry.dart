@@ -35,6 +35,7 @@ import 'package:gc_wizard/widgets/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_two_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersection.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
+import 'package:gc_wizard/widgets/tools/coords/variable_coordinate.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto/adfgvx.dart';
@@ -114,6 +115,7 @@ class Registry {
   static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
+  static final SEARCHSTRING_FORMULASOLVER = 'formula solver formelrechner ';
   static final SEARCHSTRING_GAMELANGUAGE = 'spielsprachen game languages secret languages geheimsprachen ';
   static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschluesselungen ';
   static final SEARCHSTRING_HASHES_BLAKE2B = SEARCHSTRING_HASHES_SHA3 + 'blake2b ';
@@ -257,7 +259,7 @@ class Registry {
       GCWToolWidget(
         tool: FormulaSolver(),
         i18nPrefix: 'formulasolver',
-        searchStrings: 'formula solver'
+        searchStrings: SEARCHSTRING_FORMULASOLVER
       ),
       GCWToolWidget(
         tool: Gronsfeld(),
@@ -502,6 +504,12 @@ class Registry {
         i18nPrefix: 'coords_formatconverter',
         iconPath: 'assets/coordinates/icon_format_converter.png',
         searchStrings: SEARCHSTRING_COORDINATES + 'converter converting konverter konvertieren umwandeln maidenhead geo-hash geohash qth swissgrid swiss grid mercator gauss kruger krueger gauue mgrs utm dec deg dms 1903 ch1903+'
+      ),
+      GCWToolWidget(
+        tool: VariableCoordinate(),
+        i18nPrefix: 'coords_variablecoordinate',
+        iconPath: 'assets/coordinates/icon_variable_coordinate.png',
+        searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_FORMULASOLVER + 'variable waypoints flex '
       ),
       GCWToolWidget(
         tool: CenterTwoPoints(),

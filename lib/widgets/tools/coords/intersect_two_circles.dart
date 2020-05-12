@@ -29,7 +29,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
   var _currentRadius2 = 0.0;
 
   var _currentOutputFormat = defaultCoordFormat();
-  var _currentOutput = '';
+  List<String> _currentOutput = [];
   var _currentMapPoints;
 
   @override
@@ -97,7 +97,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
           },
         ),
         GCWCoordsOutput(
-          text: _currentOutput,
+          outputs: _currentOutput,
           points: _currentMapPoints,
           circles: [
             MapCircle(
@@ -130,17 +130,19 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
 
     _currentMapPoints = [
       MapPoint(
-          point: _currentCoords1,
-          markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint1')
+        point: _currentCoords1,
+        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint1'),
+        coordinateFormat: _currentCoordsFormat1
       ),
       MapPoint(
-          point: _currentCoords2,
-          markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint2')
+        point: _currentCoords2,
+        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint2'),
+        coordinateFormat: _currentCoordsFormat1
       )
     ];
 
     if (_currentIntersections.isEmpty) {
-      _currentOutput = i18n(context, "coords_intersect_nointersection");
+      _currentOutput = [i18n(context, "coords_intersect_nointersection")];
       return;
     }
 
@@ -148,14 +150,15 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
       _currentIntersections
         .map((intersection) => MapPoint(
           point: intersection,
-          color: ThemeColors.mapCalculatedPoint
+          color: ThemeColors.mapCalculatedPoint,
+          markerText: i18n(context, 'coords_common_intersection'),
+          coordinateFormat: _currentOutputFormat
         ))
         .toList()
     );
 
     _currentOutput = _currentIntersections
-        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
-        .toList()
-        .join('\n\n');
+      .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
+      .toList();
   }
 }

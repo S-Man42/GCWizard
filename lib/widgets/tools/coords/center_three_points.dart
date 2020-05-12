@@ -33,7 +33,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
 
   var _currentOutputFormat = defaultCoordFormat();
   var _currentOutputUnit = defaultLength;
-  var _currentOutput = '';
+  List<String> _currentOutput = [];
 
   @override
   void initState() {
@@ -91,20 +91,28 @@ class CenterThreePointsState extends State<CenterThreePoints> {
           },
         ),
         GCWCoordsOutput(
-          text: _currentOutput,
+          outputs: _currentOutput,
           points: [
             MapPoint(
               point: _currentCoords1,
+              markerText: i18n(context, 'coords_centerthreepoints_coorda'),
+              coordinateFormat: _currentCoordsFormat1
             ),
             MapPoint(
               point: _currentCoords2,
+              markerText: i18n(context, 'coords_centerthreepoints_coordb'),
+              coordinateFormat: _currentCoordsFormat2
             ),
             MapPoint(
               point: _currentCoords3,
+              markerText: i18n(context, 'coords_centerthreepoints_coordc'),
+              coordinateFormat: _currentCoordsFormat3
             ),
             MapPoint(
               point: _currentCenter,
-              color: ThemeColors.mapCalculatedPoint
+              color: ThemeColors.mapCalculatedPoint,
+              markerText: i18n(context, 'coords_common_centerpoint'),
+              coordinateFormat: _currentOutputFormat
             )
           ],
           geodetics: [
@@ -116,17 +124,17 @@ class CenterThreePointsState extends State<CenterThreePoints> {
                 start: _currentCoords2,
                 end: _currentCenter,
                 color: HSLColor
-                    .fromColor(ThemeColors.mapPolyline)
-                    .withLightness(HSLColor.fromColor(ThemeColors.mapPolyline).lightness - 0.3)
-                    .toColor()
+                  .fromColor(ThemeColors.mapPolyline)
+                  .withLightness(HSLColor.fromColor(ThemeColors.mapPolyline).lightness - 0.3)
+                  .toColor()
             ),
             MapGeodetic(
                 start: _currentCoords3,
                 end: _currentCenter,
                 color: HSLColor
-                    .fromColor(ThemeColors.mapPolyline)
-                    .withLightness(HSLColor.fromColor(ThemeColors.mapPolyline).lightness + 0.2)
-                    .toColor()
+                  .fromColor(ThemeColors.mapPolyline)
+                  .withLightness(HSLColor.fromColor(ThemeColors.mapPolyline).lightness + 0.2)
+                  .toColor()
             ),
           ],
           circles: [
@@ -147,8 +155,8 @@ class CenterThreePointsState extends State<CenterThreePoints> {
     _currentDistance = _result[0]['distance'];
 
     _currentOutput = _result.map((coord) {
-      return '${formatCoordOutput(coord['centerPoint'], _currentOutputFormat, defaultEllipsoid())}\n'
-             '${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentDistance / _currentOutputUnit.inMeters)} ${_currentOutputUnit.unit}';
-    }).join('\n\n');
+      return '${formatCoordOutput(coord['centerPoint'], _currentOutputFormat, defaultEllipsoid())}';
+    }).toList();
+    _currentOutput.add('${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentDistance / _currentOutputUnit.inMeters)} ${_currentOutputUnit.unit}');
   }
 }

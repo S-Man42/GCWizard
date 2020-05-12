@@ -51,7 +51,6 @@ class BinaryState extends State<Binary> {
           onChanged: (value) {
             setState(() {
               _currentMode = value;
-              print(_currentMode);
             });
           },
         ),

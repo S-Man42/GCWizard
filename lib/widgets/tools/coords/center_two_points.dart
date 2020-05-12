@@ -31,7 +31,7 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
 
   var _currentOutputFormat = defaultCoordFormat();
   var _currentOutputUnit = defaultLength;
-  var _currentOutput = '';
+  List<String> _currentOutput = [];
 
   @override
   void initState() {
@@ -79,17 +79,23 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
           },
         ),
         GCWCoordsOutput(
-          text: _currentOutput,
+          outputs: _currentOutput,
           points: [
             MapPoint(
               point: _currentCoords1,
+              markerText: i18n(context, 'coords_centertwopoints_coorda'),
+              coordinateFormat: _currentCoordsFormat1
             ),
             MapPoint(
               point: _currentCoords2,
+              markerText: i18n(context, 'coords_centertwopoints_coordb'),
+              coordinateFormat: _currentCoordsFormat2
             ),
             MapPoint(
               point: _currentCenter,
-              color: ThemeColors.mapCalculatedPoint
+              color: ThemeColors.mapCalculatedPoint,
+              markerText: i18n(context, 'coords_common_centerpoint'),
+              coordinateFormat: _currentOutputFormat
             ),
           ],
           geodetics: [
@@ -113,8 +119,8 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
     var _result = centerPointTwoPoints(_currentCoords1, _currentCoords2, defaultEllipsoid());
     _currentCenter = _result['centerPoint'];
     _currentDistance = _result['distance'];
-    _currentOutput =
-        '${formatCoordOutput(_currentCenter, _currentOutputFormat, defaultEllipsoid())}\n'
-        '${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentDistance / _currentOutputUnit.inMeters)} ${_currentOutputUnit.unit}';
+
+    _currentOutput.add('${formatCoordOutput(_currentCenter, _currentOutputFormat, defaultEllipsoid())}');
+    _currentOutput.add('${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentDistance / _currentOutputUnit.inMeters)} ${_currentOutputUnit.unit}');
   }
 }

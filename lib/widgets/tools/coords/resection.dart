@@ -37,7 +37,7 @@ class ResectionState extends State<Resection> {
   var _currentCoords3 = defaultCoordinate;
 
   var _currentOutputFormat = defaultCoordFormat();
-  var _currentOutput = '';
+  List<String> _currentOutput = [];
   var _currentMapPoints;
   List<MapGeodetic> _currentMapGeodetics = [];
 
@@ -116,7 +116,7 @@ class ResectionState extends State<Resection> {
           },
         ),
         GCWCoordsOutput(
-          text: _currentOutput,
+          outputs: _currentOutput,
           points: _currentMapPoints,
           geodetics: _currentMapGeodetics
         ),
@@ -131,18 +131,24 @@ class ResectionState extends State<Resection> {
 
     _currentMapPoints = [
       MapPoint(
-          point: _currentCoords1
+        point: _currentCoords1,
+        markerText: i18n(context, 'coords_resection_coorda'),
+        coordinateFormat: _currentCoordsFormat1
       ),
       MapPoint(
-          point: _currentCoords2
+        point: _currentCoords2,
+        markerText: i18n(context, 'coords_resection_coordb'),
+        coordinateFormat: _currentCoordsFormat2
       ),
       MapPoint(
-          point: _currentCoords3
+        point: _currentCoords3,
+        markerText: i18n(context, 'coords_resection_coordc'),
+        coordinateFormat: _currentCoordsFormat3
       ),
     ];
 
     if (_currentIntersections[0] == null && _currentIntersections[1] == null) {
-      _currentOutput = i18n(context, "coords_intersect_nointersection");
+      _currentOutput = [i18n(context, "coords_intersect_nointersection")];
       return;
     }
 
@@ -157,8 +163,10 @@ class ResectionState extends State<Resection> {
 
     _currentMapPoints.addAll(
       _currentIntersections.map((intersection) => MapPoint(
-          point: intersection,
-          color: ThemeColors.mapCalculatedPoint
+        point: intersection,
+        color: ThemeColors.mapCalculatedPoint,
+        markerText: i18n(context, 'coords_common_intersection'),
+        coordinateFormat: _currentOutputFormat
       ))
       .toList()
     );
@@ -168,24 +176,23 @@ class ResectionState extends State<Resection> {
       _currentMapGeodetics.addAll(
         [
           MapGeodetic(
-              start: intersection,
-              end: _currentCoords1
+            start: intersection,
+            end: _currentCoords1
           ),
           MapGeodetic(
-              start: intersection,
-              end: _currentCoords2
+            start: intersection,
+            end: _currentCoords2
           ),
           MapGeodetic(
-              start: intersection,
-              end: _currentCoords3
+            start: intersection,
+            end: _currentCoords3
           ),
         ]
       );
     });
 
     _currentOutput = _currentIntersections
-        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
-        .toList()
-        .join('\n\n');
+      .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
+      .toList();
   }
 }
