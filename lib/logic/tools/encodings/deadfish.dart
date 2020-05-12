@@ -30,6 +30,7 @@ String encodeDeadfish(text) {
     }
     out += 'o';
   });
+
   return out;
 }
 
@@ -47,5 +48,6 @@ String decodeDeadfish(text) {
       case 'o': ascii.add(memory); break;
     }
   });
+
   return String.fromCharCodes(ascii).replaceAll('\x00', '');
 }
