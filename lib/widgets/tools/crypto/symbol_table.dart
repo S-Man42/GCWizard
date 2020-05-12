@@ -171,7 +171,7 @@ class SymbolTableState extends State<SymbolTable> {
 
           widget = Container(
             child: Image.asset(imagePath),
-            color: ThemeColors.iconBackground,
+            color: ThemeColors.symbolTableIconBackground,
             padding: EdgeInsets.all(2),
           );
 
@@ -233,7 +233,7 @@ class SymbolTableState extends State<SymbolTable> {
                   child: Image.asset(
                     _imageFilePaths.values.toList()[imageIndex],
                   ),
-                  color: ThemeColors.iconBackground,
+                  color: ThemeColors.symbolTableIconBackground,
                   padding: EdgeInsets.all(2),
                 ),
                 _currentShowOverlayedSymbols

@@ -129,12 +129,12 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
               children: <Widget>[
                 Container(
                   child: GCWIconButton(
-                      iconData: Icons.remove,
-                      onPressed: _decreaseValue
+                    iconData: Icons.remove,
+                    onPressed: _decreaseValue
                   ),
                   margin: const EdgeInsets.only(
-                      left: 10.0,
-                      right: 10.0
+                    left: 10.0,
+                    right: 10.0
                   ),
                 ),
                 Expanded(
@@ -142,12 +142,12 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
                 ),
                 Container(
                   child: GCWIconButton(
-                      iconData: Icons.add,
-                      onPressed: _increaseValue
+                    iconData: Icons.add,
+                    onPressed: _increaseValue
                   ),
                   margin: const EdgeInsets.only(
-                      left: 10.0,
-                      right: 10.0
+                    left: 10.0,
+                    right: 10.0
                   ),
                 )
               ],

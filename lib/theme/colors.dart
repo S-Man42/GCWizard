@@ -11,6 +11,7 @@ class ThemeColors {
   static const cardBackground = Color(0x03FEFEFE);
   static const accent = Colors.orangeAccent;
   static const focused = Colors.greenAccent;
+  static const iconColor = Colors.white;
 
   static const hintText = gray25;
 
@@ -21,5 +22,5 @@ class ThemeColors {
 
   static const oddRows = gray25;
 
-  static const iconBackground = Colors.white;
+  static const symbolTableIconBackground = Colors.white;
 }

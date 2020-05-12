@@ -54,7 +54,7 @@
   "base85_example" : "<~<+oue+DGm>FD,5.@;^.1AT@~>",
 
   "brainfk_title" : "Brainf**k",
-  "brainfk_description" : "Programming language with 8 characters, incl. its derivat 'Ook'",
+  "brainfk_description" : "Esoteric Programming language with 8 characters, incl. its derivat 'Ook'",
   "brainfk_example" : ">++++++++[<++++++++>-]<++.",
   "brainfk_interpret" : "Interpreter",
   "brainfk_generate" : "Generator",
@@ -427,6 +427,12 @@
   "dates_weekday_saturday" : "Saturday",
   "dates_weekday_sunday" : "Sunday",
 
+  "deadfish_title" : "Deadfish",
+  "deadfish_description" : "Esoteric Programming language with 4 characters (IDSO or XKCD)",
+  "deadfish_example" : "A →  iisiiiisio",
+  "deadfish_mode_left" : "IDSO",
+  "deadfish_mode_right" : "XKCD",
+
   "decabit_title" : "Decabit",
   "decabit_description" : "Binary code for power industry",
   "decabit_example" : "ABC → ++-+++---- ++++--+--- +--++++---",
@@ -557,8 +563,8 @@
   "morse_next_word" : "Next Word",
 
   "numeralbases_title" : "Numeral Systems (Radix)",
-  "numeralbases_description" : "Converts numbers between different radix (e.g. binary to decimal)",
-  "numeralbases_example" : "101010 → 42",
+  "numeralbases_description" : "Converts numbers between different radix (e.g. hexadecimal or binary to decimal)",
+  "numeralbases_example" : "101010 → 42, 2A → 42",
   "numeralbases_from" : "From",
   "numeralbases_to" : "To",
 

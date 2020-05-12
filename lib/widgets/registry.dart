@@ -78,6 +78,7 @@ import 'package:gc_wizard/widgets/tools/encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt2.dart';
+import 'package:gc_wizard/widgets/tools/encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
@@ -109,12 +110,13 @@ class Registry {
   static final SEARCHSTRING_SETTINGS = 'settings einstellungen preferences ';
 
   static final SEARCHSTRING_BASE = 'base encode decode encoding decoding dekodierung dekodieren ';
-  static final SEARCHSTRING_BRAINFK = 'brainf**k esoterische esoteric ';
+  static final SEARCHSTRING_BRAINFK = SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'brainf**k ';
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
   static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen konrad zuse z-22 z22 purched paper baudot-murray-code ';
   static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
+  static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterische programmiersprache esoteric programming language ';
   static final SEARCHSTRING_FORMULASOLVER = 'formula solver formelrechner ';
   static final SEARCHSTRING_GAMELANGUAGE = 'spielsprachen game languages secret languages geheimsprachen ';
   static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschluesselungen ';
@@ -233,6 +235,12 @@ class Registry {
         searchStrings: SEARCHSTRING_DATES
       ),
       GCWToolWidget(
+        tool: Deadfish(),
+        i18nPrefix: 'deadfish',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd '
+      ),
+      GCWToolWidget(
         tool: Decabit(),
         i18nPrefix: 'decabit',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -301,7 +309,7 @@ class Registry {
         tool: NumeralBases(),
         i18nPrefix: 'numeralbases',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'radix numeral systems basis basen zahlensysteme binaer binary decimal dezimal octal octenary oktal dual'
+        searchStrings: 'radix numeral systems basis basen zahlensysteme binaer binary decimal dezimal octal octenary oktal dual hexadecimal hexadezimal'
       ),
       GCWToolWidget(
         tool: PeriodicTable(),

@@ -17,7 +17,6 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
-import 'package:latlong/latlong.dart';
 
 class VariableCoordinate extends StatefulWidget {
   @override

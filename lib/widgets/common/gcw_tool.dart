@@ -43,7 +43,7 @@ class GCWToolWidget extends StatefulWidget {
       this.icon = Container(
         child: Image.asset(iconPath, width: defaultListIconSize),
         padding: EdgeInsets.all(2),
-        color: ThemeColors.iconBackground,
+        color: ThemeColors.symbolTableIconBackground,
       );
     }
   }
