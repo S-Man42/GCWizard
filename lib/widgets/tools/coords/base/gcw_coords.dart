@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_deg.dart';
@@ -31,6 +35,8 @@ class GCWCoordsState extends State<GCWCoords> {
   String _currentCoordsFormat = defaultCoordFormat();
   Map<String, LatLng> _currentValue;
 
+  LatLng _pastedCoords;
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +49,7 @@ class GCWCoordsState extends State<GCWCoords> {
       {
         'coordFormat': getCoordFormatByKey(keyCoordsDEC),
         'widget': GCWCoordsDEC(
+          coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
               _currentValue[keyCoordsDEC] = newValue;
@@ -54,6 +61,7 @@ class GCWCoordsState extends State<GCWCoords> {
       {
         'coordFormat': getCoordFormatByKey(keyCoordsDEG),
         'widget': GCWCoordsDEG(
+          coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
               _currentValue[keyCoordsDEG] = newValue;
@@ -65,6 +73,7 @@ class GCWCoordsState extends State<GCWCoords> {
       {
         'coordFormat': getCoordFormatByKey(keyCoordsDMS),
         'widget': GCWCoordsDMS(
+          coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
               _currentValue[keyCoordsDMS] = newValue;
@@ -216,10 +225,24 @@ class GCWCoordsState extends State<GCWCoords> {
       .map((entry) => entry['coordFormat'] as CoordinateFormat)
       .toList();
 
+    _pastedCoords = null;
+
     Column _widget = Column(
       children: <Widget>[
         GCWTextDivider(
-          text: widget.text
+          text: widget.text,
+          bottom: 0.0,
+          trailingButton: GCWIconButton(
+            iconData: Icons.content_paste,
+            size: IconButtonSize.SMALL,
+            onPressed: () {
+              Clipboard.getData('text/plain').then((data) {
+                setState(() {
+                  _parseClipboardAndSetCoords(data.text);
+                });
+              });
+            },
+          )
         ),
         GCWCoordsDropDownButton(
           value: widget.coordsFormat ?? _currentCoordsFormat,
@@ -248,5 +271,24 @@ class GCWCoordsState extends State<GCWCoords> {
       'coordsFormat': _currentCoordsFormat,
       'value': _currentValue[_currentCoordsFormat]
     });
+  }
+
+  _parseClipboardAndSetCoords(text) {
+    _pastedCoords = parseLatLon(text);
+
+    if (_pastedCoords == null)
+      return;
+
+    switch(_currentCoordsFormat) {
+      case keyCoordsDEC:
+      case keyCoordsDEG:
+      case keyCoordsDMS:
+        break;
+      default:
+        _currentCoordsFormat = keyCoordsDEG;
+    }
+
+    _currentValue[_currentCoordsFormat] = _pastedCoords;
+    _setCurrentValueAndEmitOnChange();
   }
 }

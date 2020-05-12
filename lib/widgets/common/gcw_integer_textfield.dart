@@ -44,27 +44,27 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
   @override
   Widget build(BuildContext context) {
     return GCWTextField(
-        hintText: widget.hintText,
-        onChanged: (text) {
-          setState(() {
-            var _value = ['', '-'].contains(text) ? max<int>(widget.min ?? 0, 0) : int.tryParse(text);
+      hintText: widget.hintText,
+      onChanged: (text) {
+        setState(() {
+          var _value = ['', '-'].contains(text) ? max<int>(widget.min ?? 0, 0) : int.tryParse(text);
 
-            if (widget.min != null && _value < widget.min)
-              _value = widget.min;
+          if (widget.min != null && _value < widget.min)
+            _value = widget.min;
 
-            if (widget.max != null && _value > widget.max)
-              _value = widget.max;
+          if (widget.max != null && _value > widget.max)
+            _value = widget.max;
 
-            widget.onChanged({'text': text, 'value': _value});
-          });
-        },
-        controller: widget.controller,
-        inputFormatters: [widget.textInputFormatter ?? _integerInputFormatter],
-        keyboardType: TextInputType.numberWithOptions(
-          signed: widget.min == null || widget.min < 0,
-          decimal: false
-        ),
-        focusNode: widget.focusNode,
-      );
+          widget.onChanged({'text': text, 'value': _value});
+        });
+      },
+      controller: widget.controller,
+      inputFormatters: [widget.textInputFormatter ?? _integerInputFormatter],
+      keyboardType: TextInputType.numberWithOptions(
+        signed: widget.min == null || widget.min < 0,
+        decimal: false
+      ),
+      focusNode: widget.focusNode,
+    );
   }
 }

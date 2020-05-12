@@ -43,21 +43,21 @@ List<CoordinateFormat> allCoordFormats = [
 
 final defaultCoordinate = LatLng(0.0, 0.0);
 
-//DEC is always treated as double, so a special class is not necessary
-
 class DEG {
+  int sign;
   int degrees;
   double minutes;
 
-  DEG(this.degrees, this.minutes);
+  DEG(this.sign, this.degrees, this.minutes);
 }
 
 class DMS {
+  int sign;
   int degrees;
   int minutes;
   double seconds;
 
-  DMS(this.degrees, this.minutes, this.seconds);
+  DMS(this.sign, this.degrees, this.minutes, this.seconds);
 }
 
 enum HemisphereLatitude {North, South}

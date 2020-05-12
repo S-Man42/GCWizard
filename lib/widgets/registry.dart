@@ -78,12 +78,14 @@ import 'package:gc_wizard/widgets/tools/encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/encodings/deadfish.dart';
+import 'package:gc_wizard/widgets/tools/encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
@@ -173,6 +175,12 @@ class Registry {
         searchStrings: SEARCHSTRING_BASE
       ),
       GCWToolWidget(
+        tool: Binary(),
+        i18nPrefix: 'binary',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'binary numbers binaerzahlen dezimalzahlen decimal dual'
+      ),
+      GCWToolWidget(
         tool: BrainfkSelection(),
         i18nPrefix: 'brainfk',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -237,6 +245,12 @@ class Registry {
         searchStrings: 'decabit impulsraster zellweger plus minus rundsteuertechnik ripple control'
       ),
       GCWToolWidget(
+        tool: DuckSpeak(),
+        i18nPrefix: 'duckspeak',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'entensprache duck speak nak entisch duckish'
+      ),
+      GCWToolWidget(
         tool: ESelection(),
         i18nPrefix: 'e_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -293,7 +307,7 @@ class Registry {
         tool: NumeralBases(),
         i18nPrefix: 'numeralbases',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'radix numeral systems basis basen zahlensysteme binaer binary decimal dezimal octal octenary oktal dual'
+        searchStrings: 'radix numeral systems basis basen zahlensysteme binaer binary decimal dezimal octal octenary oktal dual hexadecimal hexadezimal'
       ),
       GCWToolWidget(
         tool: PeriodicTable(),
@@ -943,7 +957,7 @@ class Registry {
         tool: SymbolTable(symbolKey: 'lorm'),
         i18nPrefix: 'symboltables_lorm',
         iconPath: SYMBOLTABLES_ASSETPATH + 'lorm/72.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift lormen deafblind deaf-blind taub-stumme taubstumme '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift lormen deafmute deaf-mute deafblind hearing loss deaf-blind taub-stumme taubstumme gehoerlose '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'moon'),
@@ -1009,7 +1023,7 @@ class Registry {
         tool: SymbolTable(symbolKey: 'sign'),
         i18nPrefix: 'symboltables_sign',
         iconPath: SYMBOLTABLES_ASSETPATH + 'sign/75.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sign language zeichensprache gebaerdensprache taubstumme taub-stumme deafblind deaf-blind'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sign language zeichensprache gebaerdensprache hearing loss taubstumme taub-stumme deafblind deaf-blind gehoerlose deaf-mute deafmute'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'visitor'),

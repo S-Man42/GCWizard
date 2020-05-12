@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -33,6 +34,7 @@ class GCWTextField extends StatefulWidget {
 }
 
 class _GCWTextFieldState extends State<GCWTextField> {
+  TextEditingController _controller;
 
   @override
   void initState() {
@@ -45,26 +47,48 @@ class _GCWTextFieldState extends State<GCWTextField> {
         }
       });
     }
+
+    _controller = widget.controller ?? TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      autocorrect: false,
-      decoration: InputDecoration(
-        prefixIcon: widget.icon,
-        hintText: widget.hintText ?? i18n(context, 'common_hinttext_default')
-      ),
-      onChanged: widget.onChanged,
-      controller: widget.controller,
-      autovalidate: true,
-      validator: widget.validate,
-      inputFormatters: widget.inputFormatters,
-      keyboardType: widget.keyboardType,
-      maxLines: null,
-      focusNode: widget.focusNode,
-      autofocus: widget.autofocus ?? false,
-      style: TextStyle(fontSize: defaultFontSize())
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return IntrinsicHeight(
+          child: TextFormField(
+            autocorrect: false,
+            decoration: InputDecoration(
+              prefixIcon: widget.icon,
+              isDense: true,
+              suffixIcon: constraints.maxWidth > 100
+                ? IconButton(
+                    icon: Icon(
+                      Icons.clear,
+                      color: ThemeColors.iconColor,
+                    ),
+                    onPressed: () {
+                      _controller.clear();
+
+                      if (widget.onChanged != null)
+                        widget.onChanged('');
+                    },
+                  )
+                : null
+            ),
+            onChanged: widget.onChanged,
+            controller: _controller,
+            autovalidate: true,
+            validator: widget.validate,
+            inputFormatters: widget.inputFormatters,
+            keyboardType: widget.keyboardType,
+            maxLines: null,
+            focusNode: widget.focusNode,
+            autofocus: widget.autofocus ?? false,
+            style: TextStyle(fontSize: defaultFontSize())
+          )
+        );
+      }
     );
   }
 }

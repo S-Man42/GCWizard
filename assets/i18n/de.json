@@ -53,6 +53,10 @@
   "base85_description" : "",
   "base85_example" : "<~<+oue+DGm>FD,5.@;^.1AT@~>",
 
+  "binary_title" : "Binärzahlen",
+  "binary_description" : "Wandelt Binärzahlen in Dezimalzahlen um",
+  "binary_example" : "101010 → 42",
+
   "brainfk_title" : "Brainf**k",
   "brainfk_description" : "Esoterische Programmiersprache aus 8 Zeichen; inkl. Derivat 'Ook'",
   "brainfk_example" : ">++++++++[<++++++++>-]<++.",
@@ -166,7 +170,7 @@
   "colors_colorspace_ycbcr_y" : "Y (Luminanz)",
   "colors_colorspace_ycbcr_cb" : "Cb (Blau)",
   "colors_colorspace_ycbcr_cr" : "Cr (Rot)",
-  "colors_colorspace_yiq_title" : "YUV",
+  "colors_colorspace_yiq_title" : "YIQ",
   "colors_colorspace_yiq_y" : "Y (Luminanz)",
   "colors_colorspace_yiq_i" : "I (Cyan/Orange)",
   "colors_colorspace_yiq_q" : "Q (Mag./Grün)",
@@ -427,6 +431,10 @@
   "deletealert_title" : "Wirklich löschen?",
   "deletealert_text" : "Möchtest du wirklich '%s1' löschen?",
 
+  "duckspeak_title": "Entensprache",
+  "duckspeak_description" : "Eine Spaß-Sprache die aus 'Nak'-Lauten besteht",
+  "duckspeak_example" : "Ente → Nak? nak? Naknak nak. Naknaknak Nak? Naknak nak?",
+
   "e_selection_title" : "e (e = 2,7182818...)",
   "e_selection_description" : "Mathematische Konstante: Eulers Zahl",
   "e_selection_example" : "",
@@ -460,6 +468,10 @@
   "formulasolver_values_key" : "Name",
   "formulasolver_values_value" : "Wert",
   "formulasolver_values_currentvalues" : "Erstellte Variablen",
+  "formulasolver_formulas_editformula" : "Formel bearbeiten",
+  "formulasolver_formulas_removeformula" : "Formel löschen",
+  "formulasolver_formulas_copyformula" : "Formel kopieren",
+  "formulasolver_formulas_copyresult" : "Ergebnis kopieren",
 
   "gronsfeld_title" : "Gronsfeld Chiffre",
   "gronsfeld_description" : "Spezialfall der Vigenère-Verschlüsselung mit Zahlen als Schlüssel",
@@ -496,7 +508,7 @@
   "hashes_sha3.512_title" : "SHA3-224 (512 Bit)",
   "hashes_tiger192_title" : "Tiger (192 Bit)",
   "hashes_whirlpool512_title" : "Whirlpool (512 Bit)",
-  
+
   "irrationalnumbers_error_indextoosmall" : "Index zu klein",
   "irrationalnumbers_error_indextoobig" : "Index zu groß",
   "irrationalnumbers_decimalrange_start" : "Startindex",
@@ -540,8 +552,8 @@
   "morse_next_word" : "Pause",
 
   "numeralbases_title" : "Zahlensysteme",
-  "numeralbases_description" : "Konvertiert Zahlen zwischen verschiedenen Zahlensystemen (z.B. dezimal zu binär)",
-  "numeralbases_example" : "42 → 101010",
+  "numeralbases_description" : "Konvertiert Zahlen zwischen verschiedenen Zahlensystemen (z.B. binär oder hexadezimal zu dezimal)",
+  "numeralbases_example" : "101010 → 42, 2A → 42",
   "numeralbases_from" : "Von",
   "numeralbases_to" : "Nach",
 
@@ -755,7 +767,7 @@
   "playfair_mode_wtovv" : "W → VV",
 
   "polybios_title" : "Polybios Chiffre",
-  "polybios_description" : "Verschlüsselung basierend auch einem Quadrat",
+  "polybios_description" : "Verschlüsselung basierend auf einem Quadrat",
   "polybios_example" : "ABCXYZ → 11 12 13 53 54 55",
   "polybios_mode_az09" : "A-Z 0-9",
   "polybios_mode_za90" : "Z-A 9-0",
@@ -932,7 +944,7 @@
   "symboltables_intergalactic_description" : "",
   "symboltables_intergalactic_example" : "",
   "symboltables_lorm_title" : "Lormen",
-  "symboltables_lorm_description" : "Hand- und Fingerbasiertes Alphabet für Taubstumme",
+  "symboltables_lorm_description" : "Hand- und Fingerbasiertes Alphabet für Gehörlose",
   "symboltables_lorm_example" : "",
   "symboltables_lorm_ch" : "CH",
   "symboltables_lorm_sch" : "SCH",
@@ -972,7 +984,7 @@
   "symboltables_semaphore_numerals_following" : "ZIFFERN FOLGEN",
   "symboltables_semaphore_rest" : "PAUSE",
   "symboltables_sign_title" : "Gebärden",
-  "symboltables_sign_description" : "Finger- und Handsymbole für Taubstumme",
+  "symboltables_sign_description" : "Finger- und Handsymbole für Gehörlose",
   "symboltables_visitor_title" : "Visitor",
   "symboltables_visitor_description" : "Alienschrift aus der Serie 'V - Die Besucher'",
   "symboltables_visitor_ar" : "AR",
@@ -1018,7 +1030,7 @@
 
   "vigenere_title" : "Vigenère Chiffre",
   "vigenere_description" : "Verschiebt Buchstaben um den Buchstabenwert des Schlüssels",
-  "vigenere_example" : "ABC with key DEF → DFH",
+  "vigenere_example" : "ABC mit Schlüssel DEF → DFH",
   "vigenere_autokey" : "Autokey",
 
   "z22_title" : "Z22",
