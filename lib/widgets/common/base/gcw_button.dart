@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_padding_container.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class GCWButton extends StatefulWidget {
@@ -16,7 +15,11 @@ class _GCWButtonState extends State<GCWButton> {
 
   @override
   Widget build(BuildContext context) {
-    return GCWPaddingContainer(
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 25.0,
+        bottom: 10.0
+      ),
       child:RaisedButton(
         onPressed: widget.onPressed,
         child: Text(
@@ -24,6 +27,6 @@ class _GCWButtonState extends State<GCWButton> {
           style: TextStyle(fontSize: defaultFontSize()),
         ),
       ),
-     );
+    );
   }
 }

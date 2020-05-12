@@ -53,7 +53,8 @@ class _GCWTextFieldState extends State<GCWTextField> {
       autocorrect: false,
       decoration: InputDecoration(
         prefixIcon: widget.icon,
-        hintText: widget.hintText ?? i18n(context, 'common_hinttext_default')
+        isDense: true,
+        hintText: widget.hintText ?? i18n(context, 'common_hinttext_default'),
       ),
       onChanged: widget.onChanged,
       controller: widget.controller,
