@@ -53,6 +53,10 @@
   "base85_description" : "",
   "base85_example" : "<~<+oue+DGm>FD,5.@;^.1AT@~>",
 
+  "binary_title" : "Binärzahlen",
+  "binary_description" : "Wandelt Binärzahlen in Dezimalzahlen um",
+  "binary_example" : "101010 → 42",
+
   "brainfk_title" : "Brainf**k",
   "brainfk_description" : "Programmiersprache aus 8 Zeichen; inkl. Derivat 'Ook'",
   "brainfk_example" : ">++++++++[<++++++++>-]<++.",
@@ -421,6 +425,10 @@
   "deletealert_title" : "Wirklich löschen?",
   "deletealert_text" : "Möchtest du wirklich '%s1' löschen?",
 
+  "duckspeak_title": "Entensprache",
+  "duckspeak_description" : "Eine Spaß-Sprache die aus 'Nak'-Lauten besteht",
+  "duckspeak_example" : "Ente → Nak? nak? Naknak nak. Naknaknak Nak? Naknak nak?",
+
   "e_selection_title" : "e (e = 2,7182818...)",
   "e_selection_description" : "Mathematische Konstante: Eulers Zahl",
   "e_selection_example" : "",
@@ -538,8 +546,8 @@
   "morse_next_word" : "Pause",
 
   "numeralbases_title" : "Zahlensysteme",
-  "numeralbases_description" : "Konvertiert Zahlen zwischen verschiedenen Zahlensystemen (z.B. dezimal zu binär)",
-  "numeralbases_example" : "42 → 101010",
+  "numeralbases_description" : "Konvertiert Zahlen zwischen verschiedenen Zahlensystemen (z.B. binär zu dezimal)",
+  "numeralbases_example" : "101010 → 42",
   "numeralbases_from" : "Von",
   "numeralbases_to" : "Nach",
 

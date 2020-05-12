@@ -15,8 +15,8 @@ class NumeralBasesState extends State<NumeralBases> {
   var _controller;
 
   String _currentInput = '';
-  int _currentFromKey = 10;
-  int _currentToKey = 2;
+  int _currentFromKey = 2;
+  int _currentToKey = 10;
   String _output = '';
 
   @override
@@ -50,6 +50,7 @@ class NumeralBasesState extends State<NumeralBases> {
           text: i18n(context, 'numeralbases_from')
         ),
         GCWNumeralBaseSpinner(
+          value: _currentFromKey,
           onChanged: (value) {
             setState(() {
               _currentFromKey = value;

@@ -66,6 +66,10 @@
   "brainfk_error_loopnotopened" : "Loop not opened",
   "brainfk_ook_title" : "Ook",
 
+  "binary_title" : "Binary Numbers",
+  "binary_description" : "Convert binary numbers into decimal numbers",
+  "binary_example" : "101010 → 42",
+
   "caesar_title" : "Caesar Cipher",
   "caesar_description" : "Shifts letters on standard alphabet by 13 p(ROT-13)",
   "caesar_example" : "ABC → NOP",
@@ -119,7 +123,7 @@
   "changelog_0.0.4" : "[fix] Calculation of hours/minutes/seconds in 'Count Days'",
   "changelog_0.0.1" : "[new] Google PlayStore Initialisation",
 
-  "chickenlanguage_title" : "Chicken language",
+  "chickenlanguage_title" : "Chicken Language",
   "chickenlanguage_description" : "Game Language, Secret Language",
   "chickenlanguage_example" : "code → cohodefodehedefe",
 
@@ -421,6 +425,10 @@
   "deletealert_title" : "Really remove?",
   "deletealert_text" : "Do you really want to remove '%s1'?",
 
+  "duckspeak_title": "Duck Speak",
+  "duckspeak_description" : "A fun language made up of 'nak' sounds",
+  "duckspeak_example" : "Duck → Nak? Nak? Naknaknak nak? Naknak Nanananak Naknak nanak",
+
   "e_selection_title" : "e (e = 2.7182818...)",
   "e_selection_description" : "Mathematical constant: Euler's Number",
   "e_selection_example" : "",
@@ -539,8 +547,8 @@
   "morse_next_word" : "Next Word",
 
   "numeralbases_title" : "Numeral Systems (Radix)",
-  "numeralbases_description" : "Converts numbers between different radix (e.g. decimal to binary)",
-  "numeralbases_example" : "42 → 101010",
+  "numeralbases_description" : "Converts numbers between different radix (e.g. binary to decimal)",
+  "numeralbases_example" : "101010 → 42",
   "numeralbases_from" : "From",
   "numeralbases_to" : "To",
 
@@ -794,7 +802,7 @@
   "reverse_description" : "Input backwards",
   "reverse_example" : "ABCdef → fedCBA",
 
-  "robberlanguage_title" : "Robber language",
+  "robberlanguage_title" : "Robber Language",
   "robberlanguage_description" : "Game Language, Secret Language",
   "robberlanguage_example" : "Robber → rorobobboberor",
 

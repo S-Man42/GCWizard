@@ -77,12 +77,14 @@ import 'package:gc_wizard/widgets/tools/encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt2.dart';
+import 'package:gc_wizard/widgets/tools/encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
@@ -171,6 +173,12 @@ class Registry {
         searchStrings: SEARCHSTRING_BASE
       ),
       GCWToolWidget(
+        tool: Binary(),
+        i18nPrefix: 'binary',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'binary numbers binaerzahlen dezimalzahlen decimal dual'
+      ),
+      GCWToolWidget(
         tool: BrainfkSelection(),
         i18nPrefix: 'brainfk',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -227,6 +235,12 @@ class Registry {
         i18nPrefix: 'decabit',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'decabit impulsraster zellweger plus minus rundsteuertechnik ripple control'
+      ),
+      GCWToolWidget(
+        tool: DuckSpeak(),
+        i18nPrefix: 'duckspeak',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'entensprache duck speak nak entisch duckish'
       ),
       GCWToolWidget(
         tool: ESelection(),
