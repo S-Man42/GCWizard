@@ -23,8 +23,6 @@ class LetterValuesState extends State<LetterValues> {
   var _currentDecodeInput = defaultIntegerListText;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   bool _currentCrosstotalMode = true;
-  
-  String _output = '';
 
   @override
   void initState() {

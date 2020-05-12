@@ -299,7 +299,7 @@ class Registry {
         tool: NumeralBases(),
         i18nPrefix: 'numeralbases',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'radix numeral systems basis basen zahlensysteme binaer binary decimal dezimal octal octenary oktal dual'
+        searchStrings: 'radix numeral systems basis basen zahlensysteme binaer binary decimal dezimal octal octenary oktal dual hexadecimal hexadezimal'
       ),
       GCWToolWidget(
         tool: PeriodicTable(),

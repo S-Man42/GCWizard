@@ -502,7 +502,7 @@
   "hashes_sha3.512_title" : "SHA3-224 (512 Bit)",
   "hashes_tiger192_title" : "Tiger (192 Bit)",
   "hashes_whirlpool512_title" : "Whirlpool (512 Bit)",
-  
+
   "irrationalnumbers_error_indextoosmall" : "Index zu klein",
   "irrationalnumbers_error_indextoobig" : "Index zu groß",
   "irrationalnumbers_decimalrange_start" : "Startindex",
@@ -546,8 +546,8 @@
   "morse_next_word" : "Pause",
 
   "numeralbases_title" : "Zahlensysteme",
-  "numeralbases_description" : "Konvertiert Zahlen zwischen verschiedenen Zahlensystemen (z.B. binär zu dezimal)",
-  "numeralbases_example" : "101010 → 42",
+  "numeralbases_description" : "Konvertiert Zahlen zwischen verschiedenen Zahlensystemen (z.B. binär oder hexadezimal zu dezimal)",
+  "numeralbases_example" : "101010 → 42, 2A → 42",
   "numeralbases_from" : "Von",
   "numeralbases_to" : "Nach",
 
