@@ -58,7 +58,7 @@
   "binary_example" : "101010 → 42",
 
   "brainfk_title" : "Brainf**k",
-  "brainfk_description" : "Programmiersprache aus 8 Zeichen; inkl. Derivat 'Ook'",
+  "brainfk_description" : "Esoterische Programmiersprache aus 8 Zeichen; inkl. Derivat 'Ook'",
   "brainfk_example" : ">++++++++[<++++++++>-]<++.",
   "brainfk_interpret" : "Interpreter",
   "brainfk_generate" : "Generator",
@@ -416,6 +416,12 @@
   "dates_weekday_friday" : "Freitag",
   "dates_weekday_saturday" : "Samstag",
   "dates_weekday_sunday" : "Sonntag",
+
+  "deadfish_title" : "Deadfish",
+  "deadfish_description" : "Esoterische Programmiersprache mit 4 Zeichen (IDSO oder XKCD)",
+  "deadfish_example" : "A →  iisiiiisio",
+  "deadfish_mode_left" : "IDSO",
+  "deadfish_mode_right" : "XKCD",
 
   "decabit_title" : "Decabit",
   "decabit_description" : "Binärer Code in der Energiewirtschaft",

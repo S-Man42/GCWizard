@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:gc_wizard/logic/tools/crypto/substitution.dart';
-
 final ERROR_BRAINFK_POINTERTOOSMALL = 'brainfk_error_pointertoosmall';
 final ERROR_BRAINFK_LOOPNOTCLOSED = 'brainfk_error_loopnotclosed';
 final ERROR_BRAINFK_LOOPNOTOPENED = 'brainfk_error_loopnotopened';

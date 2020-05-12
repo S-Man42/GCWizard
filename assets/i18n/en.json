@@ -54,7 +54,7 @@
   "base85_example" : "<~<+oue+DGm>FD,5.@;^.1AT@~>",
 
   "brainfk_title" : "Brainf**k",
-  "brainfk_description" : "Programming language with 8 characters, incl. its derivat 'Ook'",
+  "brainfk_description" : "Esoteric Programming language with 8 characters, incl. its derivat 'Ook'",
   "brainfk_example" : ">++++++++[<++++++++>-]<++.",
   "brainfk_interpret" : "Interpreter",
   "brainfk_generate" : "Generator",
@@ -416,6 +416,12 @@
   "dates_weekday_friday" : "Friday",
   "dates_weekday_saturday" : "Saturday",
   "dates_weekday_sunday" : "Sunday",
+
+  "deadfish_title" : "Deadfish",
+  "deadfish_description" : "Esoteric Programming language with 4 characters (IDSO or XKCD)",
+  "deadfish_example" : "A →  iisiiiisio",
+  "deadfish_mode_left" : "IDSO",
+  "deadfish_mode_right" : "XKCD",
 
   "decabit_title" : "Decabit",
   "decabit_description" : "Binary code for power industry",
