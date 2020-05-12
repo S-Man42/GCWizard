@@ -86,7 +86,7 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
           newValue = newValue.floor().toDouble();
         }
 
-        _currentValue = max(widget.min, newValue);
+        _currentValue = widget.min == null ? newValue : max(widget.min, newValue);
       } else if (_currentValue == widget.min && widget.max != null) {
         _currentValue = widget.max;
       }
@@ -105,7 +105,7 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
           newValue = newValue.ceil().toDouble();
         }
 
-        _currentValue = min(widget.max, newValue);
+        _currentValue = widget.max == null ? newValue : min(widget.max, newValue);
       } else if (_currentValue == widget.max && widget.min != null) {
         _currentValue = widget.min;
       }
