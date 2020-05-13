@@ -69,9 +69,16 @@ class _GCWTextFieldState extends State<GCWTextField> {
                       Icons.clear,
                       color: ThemeColors.iconColor,
                     ),
-                    padding: EdgeInsets.only(right: 5),
+                    padding: EdgeInsets.only(
+                      right: 5,
+                      top: 5,
+                      bottom: 5
+                    ),
                   ),
                   onTap: () {
+                    if (widget.controller != null)
+                      widget.controller.clear();
+
                     _controller.clear();
 
                     if (widget.onChanged != null)
@@ -81,7 +88,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
               : null
           ),
           onChanged: widget.onChanged,
-          controller: _controller,
+          controller: widget.controller ?? _controller,
           autovalidate: true,
           validator: widget.validate,
           inputFormatters: widget.inputFormatters,
