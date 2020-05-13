@@ -304,6 +304,14 @@ class SymbolTableState extends State<SymbolTable> {
                   _output = _output.substring(0, _output.length - 1) ;
               });
             },
+          ),
+          GCWIconButton(
+            iconData: Icons.clear,
+            onPressed: () {
+              setState(() {
+                _output = '';
+              });
+            },
           )
         ]
       )
