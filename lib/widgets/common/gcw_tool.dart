@@ -36,7 +36,7 @@ class GCWToolWidget extends StatefulWidget {
     this.searchStrings: '',
     this.options
   }) : super(key: key) {
-    this._id = className(tool) + '_' + i18nPrefix;
+    this._id = className(tool) + '_' + (i18nPrefix ?? '');
     this._isFavorite = Prefs.getStringList('favorites').contains('$_id');
 
     if (iconPath != null) {
