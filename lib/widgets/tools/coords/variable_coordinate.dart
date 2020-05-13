@@ -304,8 +304,10 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     });
 
     if (coords.length == 0) {
-      _currentOutput = [i18n(context, 'coords_variablecoordinate_nooutputs')];
-      _currentMapPoints = [];
+      setState(() {
+        _currentOutput = [i18n(context, 'coords_variablecoordinate_nooutputs')];
+        _currentMapPoints = [];
+      });
       return;
     }
 
