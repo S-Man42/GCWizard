@@ -58,13 +58,20 @@ class _GCWTextFieldState extends State<GCWTextField> {
           decoration: InputDecoration(
             prefixIcon: widget.icon,
             isDense: true,
+            suffixIconConstraints: BoxConstraints(
+              minWidth: 2,
+              minHeight: 2,
+            ),
             suffixIcon: constraints.maxWidth > 100
-              ? IconButton(
-                  icon: Icon(
-                    Icons.clear,
-                    color: ThemeColors.iconColor,
+              ? InkWell(
+                  child: Container(
+                    child: Icon(
+                      Icons.clear,
+                      color: ThemeColors.iconColor,
+                    ),
+                    padding: EdgeInsets.only(right: 5),
                   ),
-                  onPressed: () {
+                  onTap: () {
                     _controller.clear();
 
                     if (widget.onChanged != null)
