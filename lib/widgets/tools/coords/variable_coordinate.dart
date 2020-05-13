@@ -312,7 +312,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     }
 
     if (coords.length > MAX_COUNT_COORDINATES) {
-      showAlertDialog(context, i18n(context, 'coords_variablecoordinate_alert_title'), i18n(context, 'coords_variablecoordinate_alert_text', parameters: coords.length.toString()), () {
+      showAlertDialog(context, i18n(context, 'coords_variablecoordinate_alert_title'), i18n(context, 'coords_variablecoordinate_alert_text', parameters: [coords.length]), () {
         setState(() {
           _buildOutput(coords);
         });
