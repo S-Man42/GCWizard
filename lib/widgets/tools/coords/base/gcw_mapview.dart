@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -31,6 +32,7 @@ class GCWMapView extends StatefulWidget {
 
 class GCWMapViewState extends State<GCWMapView> {
   final PopupController _popupLayerController = PopupController();
+  final MapController _mapController = MapController();
 
   //////////////////////////////////////////////////////////////////////////////
   // from: https://stackoverflow.com/a/58958668/3984221
@@ -126,33 +128,47 @@ class GCWMapViewState extends State<GCWMapView> {
     List<Polyline> _circlePolylines = _addCircles();
     _polylines.addAll(_circlePolylines);
 
-    return FlutterMap(
-      options: MapOptions(
-        center: computeCentroid(widget.points.map((_point) => _point.point).toList()),
-        zoom: _getBoundsZoomLevel().toDouble(),
-        minZoom: 1.0,
-        maxZoom: 18.0,
-        plugins: [PopupMarkerPlugin()],
-        onTap: (_) => _popupLayerController.hidePopup()
+    return Listener(
+      onPointerSignal: handleSignal,
+      child: FlutterMap(
+        mapController: _mapController,
+        options: MapOptions(
+            center: computeCentroid(widget.points.map((_point) => _point.point).toList()),
+            zoom: _getBoundsZoomLevel().toDouble(),
+            minZoom: 1.0,
+            maxZoom: 18.0,
+            plugins: [PopupMarkerPlugin()],
+            onTap: (_) => _popupLayerController.hidePopup()
+        ),
+        layers: [
+          TileLayerOptions(
+              urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              subdomains: ['a', 'b', 'c'],
+              tileProvider: CachedNetworkTileProvider()
+          ),
+          MarkerLayerOptions(
+              markers: _markers
+          ),
+          PolylineLayerOptions(
+              polylines: _polylines
+          ),
+          PopupMarkerLayerOptions(
+              markers: _markers,
+              popupSnap: PopupSnap.top,
+              popupController: _popupLayerController,
+              popupBuilder: (BuildContext _, Marker marker) => _buildPopups(marker)
+          ),
+        ],
       ),
-      layers: [
-        TileLayerOptions(
-          urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-          subdomains: ['a', 'b', 'c']),
-        MarkerLayerOptions(
-          markers: _markers
-        ),
-        PolylineLayerOptions(
-          polylines: _polylines
-        ),
-        PopupMarkerLayerOptions(
-          markers: _markers,
-          popupSnap: PopupSnap.top,
-          popupController: _popupLayerController,
-          popupBuilder: (BuildContext _, Marker marker) => _buildPopups(marker)
-        ),
-      ],
     );
+  }
+
+  // handle mouse wheel on web
+  void handleSignal(e) {
+    if (e is PointerScrollEvent) {
+      var delta = e.scrollDelta.direction;
+      _mapController.move(_mapController.center, _mapController.zoom + (delta > 0 ? -0.2 : 0.2));
+    }
   }
 
   _buildPopupCoordinateText(MapPoint point) {
