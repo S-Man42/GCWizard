@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'package:gc_wizard/logic/tools/coords/converter/latlon.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/logic/tools/crypto/substitution.dart';
@@ -113,6 +115,20 @@ _sanitizeForFormula(String formula) {
   return '[$formula]';
 }
 
+List<LatLng> _parseCoordText(String text) {
+  var parsedCoord = parseLatLon(text);
+  if (parsedCoord == null)
+    return null;
+
+  var out = [parsedCoord['coordinate'] as LatLng];
+
+  if (parsedCoord['format'] == keyCoordsDEG) {
+    out.add(parseDEG(text, leftPadMilliMinutes: true));
+  }
+
+  return out;
+}
+
 List<Map<String, dynamic>> parseVariableLatLon(String coordinate, Map<String, String> substitutions, {Map<String, dynamic> projectionData = const {}}) {
   var textToExpand = _sanitizeForFormula(coordinate);
 
@@ -137,7 +153,7 @@ List<Map<String, dynamic>> parseVariableLatLon(String coordinate, Map<String, St
     if (withProjection) {
       var evaluatedTexts = evaluatedFormula['result'].split(String.fromCharCode(1));
 
-      var parsedCoord = parseLatLon(evaluatedTexts[0]);
+      var parsedCoord = _parseCoordText(evaluatedTexts[0]);
       if (parsedCoord == null)
         continue;
 
@@ -147,15 +163,30 @@ List<Map<String, dynamic>> parseVariableLatLon(String coordinate, Map<String, St
       if (parsedBearing == null || parsedDistance == null)
         continue;
 
-      var projected = projection(parsedCoord, parsedBearing, parsedDistance * projectionData['lengthUnitInMeters'], projectionData['ellipsoid']);
+      var currentResult = {'variables': expandedText['variables']};
+      parsedCoord.asMap().forEach((index, coordinate) {
+        var key = 'coordinate';
+        if (index == 1)
+          key = 'leftPadDEGCoordinate';
 
-      coords.add({'coordinate': projected, 'variables': expandedText['variables']});
+        var projected = projection(coordinate, parsedBearing, parsedDistance * projectionData['lengthUnitInMeters'], projectionData['ellipsoid']);
+        currentResult.putIfAbsent(key, () => projected);
+      });
+
+      coords.add(currentResult);
     } else {
-      var parsedCoords = parseLatLon(evaluatedFormula['result']);
+      var parsedCoord = _parseCoordText(evaluatedFormula['result']);
+      if (parsedCoord == null)
+        continue;
 
-      if (parsedCoords != null) {
-        coords.add({'coordinate': parsedCoords, 'variables': expandedText['variables']});
-      }
+      var currentResult = {'variables': expandedText['variables']};
+      parsedCoord.asMap().forEach((index, coordinate) {
+        var key = 'coordinate';
+        if (index == 1)
+          key = 'leftPadDEGCoordinate';
+
+        currentResult.putIfAbsent(key, () => coordinate);
+      });
     }
   }
 

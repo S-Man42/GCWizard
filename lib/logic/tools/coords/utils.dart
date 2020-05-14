@@ -27,9 +27,9 @@ String formatCoordOutput(LatLng _coords, String _outputFormat, Ellipsoid ells) {
   var _formatted;
 
   switch (_outputFormat) {
-    case keyCoordsDEC: _formatted = decToString(_coords); break;
-    case keyCoordsDEG: _formatted = decToDegString(_coords); break;
-    case keyCoordsDMS: _formatted = decToDMSString(_coords); break;
+    case keyCoordsDEC: _formatted = DEC.from(_coords).format(); break;
+    case keyCoordsDEG: _formatted = DEG.from(_coords).format(); break;
+    case keyCoordsDMS: _formatted = DMS.from(_coords).format(); break;
     case keyCoordsUTM: return decToUTMString(_coords, ells);
     case keyCoordsMGRS: return decToMGRSString(_coords, ells);
     case keyCoordsSwissGrid: return decToSwissGridString(_coords, ells);
@@ -42,8 +42,12 @@ String formatCoordOutput(LatLng _coords, String _outputFormat, Ellipsoid ells) {
     case keyCoordsMaidenhead: return decToMaidenheadString(_coords);
     case keyCoordsMercator: return decToMercatorString(_coords, ells);
     case keyCoordsGeohash: return decToGeohashString(_coords, 14);
-    default: _formatted = decToString(_coords);
+    default: _formatted = DEC.from(_coords).format();
   }
 
   return '${_formatted['latitude']}\n${_formatted['longitude']}';
+}
+
+int coordinateSign(double value) {
+  return value == 0 ? 1 : value.sign.floor();
 }

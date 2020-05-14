@@ -12,6 +12,7 @@ import 'package:gc_wizard/widgets/common/gcw_lengths_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
@@ -24,6 +25,9 @@ class VariableCoordinate extends StatefulWidget {
 }
 
 class VariableCoordinateState extends State<VariableCoordinate> {
+  Widget _output;
+  GCWSwitchPosition _currentCoordMode = GCWSwitchPosition.left;
+
   final MAX_COUNT_COORDINATES = 100;
 
   Length _currentLengthUnit = defaultLength;
@@ -116,11 +120,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
             _calculateOutput(context);
           },
         ),
-        GCWCoordsOutput(
-          mapButtonTop: true,
-          outputs: _currentOutput,
-          points: _currentMapPoints
-        ),
+        _output ?? Container()
       ],
     );
   }
@@ -296,6 +296,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   _calculateOutput(BuildContext context) {
+    _currentCoordMode = GCWSwitchPosition.left;
+
     var coords = parseVariableLatLon(_currentInput, _currentSubstitutions, projectionData: {
       'bearing': _currentBearingInput.length == 0 ? '0' : _currentBearingInput,
       'distance': _currentDistanceInput.length == 0 ? '0' : _currentDistanceInput,
@@ -330,18 +332,52 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   _buildOutput(List<Map<String, dynamic>> coords) {
+    var leftPaddedCoords = coords
+      .where((coord) => coord['leftPadDEGCoordinate'] != null)
+      .map((coord) {
+        return {'coordinate': coord['leftPadDEGCoordinate'], 'variables': coord['variables']};
+      })
+      .toList();
 
-    _currentOutput = coords.map((coord) {
+    var hasLeftPaddedCoords = leftPaddedCoords.length > 0;
+
+    _currentOutput = (_currentCoordMode == GCWSwitchPosition.left ? coords : leftPaddedCoords).map((coord) {
       return formatCoordOutput(coord['coordinate'], _currentOutputFormat, defaultEllipsoid())
         + '\n' + _formatVariables(coord['variables']);
     }).toList();
 
-    _currentMapPoints = coords.map((coord) {
+    _currentMapPoints = (_currentCoordMode == GCWSwitchPosition.left ? coords : leftPaddedCoords).map((coord) {
       return MapPoint(
         point: coord['coordinate'],
         markerText: _formatVariables(coord['variables']),
         coordinateFormat: _currentOutputFormat
       );
     }).toList();
+
+    _output = Column(
+      children: [
+        hasLeftPaddedCoords
+          ? GCWTwoOptionsSwitch(
+              title: i18n(context, 'coords_variablecoordinate_decleftpad'),
+              leftValue: i18n(context, 'coords_variablecoordinate_decleftpad_left'),
+              rightValue: i18n(context, 'coords_variablecoordinate_decleftpad_right'),
+              value: _currentCoordMode,
+              onChanged: (value) {
+                setState(() {
+                  print('A');
+                  _currentCoordMode = value;
+                  _buildOutput(coords);
+                  print(_currentCoordMode);
+                });
+              },
+            )
+          : Container(),
+        GCWCoordsOutput(
+          mapButtonTop: true,
+          outputs: _currentOutput,
+          points: _currentMapPoints
+        )
+      ]
+    );
   }
 }

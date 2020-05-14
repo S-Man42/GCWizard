@@ -372,9 +372,12 @@
   "coords_variablecoordinate_variables" : "Variables",
   "coords_variablecoordinate_variable" : "Variable",
   "coords_variablecoordinate_possiblevalues" : "Possible Values",
-  "coords_variablecoordinate_nooutputs" : "No coordinates calculated!\n\nReasons may be:\n-invalid/unparseable coordinate format\n-missing variables\n- negative result in a subformula",
+  "coords_variablecoordinate_nooutputs" : "No coordinates calculated!\n\nReasons may be:\n-invalid/unparseable coordinate format\n-missing variables\n- negative or decimal result in a subformula",
   "coords_variablecoordinate_alert_title" : "Warning: Many coordinates!",
   "coords_variablecoordinate_alert_text" : "You generated %s1 coordinates.\n\nDo you want to see them?\n\nThis might slow down you device dramatically.",
+  "coords_variablecoordinate_decleftpad" : "Decimal Places",
+  "coords_variablecoordinate_decleftpad_left" : "fill right\n52° 10.900",
+  "coords_variablecoordinate_decleftpad_right" : "fill left\n52° 10.009",
 
   "crosstotal_title" : "Show Sums",
   "crosstotal_output" : "Sums, Cross Sums, Products",

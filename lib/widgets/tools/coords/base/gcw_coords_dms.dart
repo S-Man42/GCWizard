@@ -94,8 +94,9 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var lat = formattedDMS(widget.coordinates.latitude, true, precision: 10);
-      var lon = formattedDMS(widget.coordinates.longitude, false, precision: 10);
+      var dms = DMS.from(widget.coordinates);
+      var lat = dms.latitude.formatParts(10);
+      var lon = dms.longitude.formatParts(10);
 
       _currentLatDegrees = lat['degrees'];
       _currentLatMinutes = lat['minutes'];
@@ -359,14 +360,14 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
     int _minutes = ['', '-'].contains(_currentLatMinutes) ? 0 : int.parse(_currentLatMinutes);
     int _seconds = (['', '-'].contains(_currentLatSeconds) ? 0 : int.parse(_currentLatSeconds));
     double _secondsD = double.parse('$_seconds.$_currentLatMilliSeconds');
-    DMS _currentLat = DMS(_currentLatSign, _degrees, _minutes, _secondsD);
+    var _currentLat = DMSLatitude(_currentLatSign, _degrees, _minutes, _secondsD);
 
     _degrees = ['', '-'].contains(_currentLonDegrees) ? 0 : int.parse(_currentLonDegrees);
     _minutes = ['', '-'].contains(_currentLonMinutes) ? 0 : int.parse(_currentLonMinutes);
     _seconds = (['', '-'].contains(_currentLonSeconds) ? 0 : int.parse(_currentLonSeconds));
     _secondsD = double.parse('$_seconds.$_currentLonMilliSeconds');
-    DMS _currentLon = DMS(_currentLonSign, _degrees, _minutes, _secondsD);
+    var _currentLon = DMSLongitude(_currentLonSign, _degrees, _minutes, _secondsD);
 
-    widget.onChanged(LatLng(latDMSToDEC(_currentLat), lonDMSToDEC(_currentLon)));
+    widget.onChanged(DMS(_currentLat, _currentLon).toLatLng());
   }
 }
