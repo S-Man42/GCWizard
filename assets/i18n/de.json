@@ -1051,6 +1051,14 @@
   "vigenere_example" : "ABC mit Schlüssel DEF → DFH",
   "vigenere_autokey" : "Autokey",
 
+  "windchill_title": "Windchill",
+  "windchill_description" : "",
+  "windchill_example": "",
+  "windchill_temperature" : "Temperatur",
+  "windchill_windspeed" : "Windgeschwindigkeit",
+  "windchill_metric" : "metrisch",
+  "windchill_imperial" : "imperial",
+
   "z22_title" : "Z22",
   "z22_description" : "Anwendung des CCITT-2-Codes",
   "z22_example" : "ABC → 00011 11001 01110"

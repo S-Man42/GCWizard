@@ -103,6 +103,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nth
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 
 class Registry {
   static List<GCWToolWidget> toolList;
@@ -452,6 +453,12 @@ class Registry {
         i18nPrefix: 'vigenere',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_VIGENERE + 'autokey'
+      ),
+      GCWToolWidget(
+        tool: Windchill(),
+        i18nPrefix: 'windchill',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'windchill temperatur temperature windgeschwindigkeit wind speed'
       ),
       GCWToolWidget(
         tool: Z22(),
