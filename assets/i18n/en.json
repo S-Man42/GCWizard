@@ -1053,7 +1053,7 @@
   "vigenere_autokey" : "Autokey",
 
   "windchill_title": "Windchill",
-  "windchill_description" : "",
+  "windchill_description" : "Apparent Temperature",
   "windchill_example" : "",
   "windchill_temperature" : "Temperature",
   "windchill_windspeed" : "Wind Speed",

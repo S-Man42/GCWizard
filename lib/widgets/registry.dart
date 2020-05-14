@@ -458,7 +458,7 @@ class Registry {
         tool: Windchill(),
         i18nPrefix: 'windchill',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'windchill temperatur temperature windgeschwindigkeit wind speed'
+        searchStrings: 'windchill gefuehlte temperatur apparent temperature windgeschwindigkeit wind speed'
       ),
       GCWToolWidget(
         tool: Z22(),
