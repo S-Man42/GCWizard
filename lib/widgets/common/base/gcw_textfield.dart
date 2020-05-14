@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:prefs/prefs.dart';
 
 class GCWTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -56,42 +54,49 @@ class _GCWTextFieldState extends State<GCWTextField> {
     return LayoutBuilder(
       builder: (context, constraints) {
         return TextFormField(
-            autocorrect: false,
-            decoration: InputDecoration(
-              prefixIcon: widget.icon,
-              isDense: true,
-              suffixIconConstraints: BoxConstraints(
-                minWidth: 2,
-                minHeight: 2,
-              ),
-              suffixIcon: constraints.maxWidth > 100
-                ? InkWell(
-                    child: Container(
-                      child: Icon(
-                        Icons.clear,
-                        color: ThemeColors.iconColor,
-                      ),
-                      padding: EdgeInsets.only(right: 5),
-                    ),
-                    onTap: () {
-                      _controller.clear();
-
-                      if (widget.onChanged != null)
-                        widget.onChanged('');
-                    },
-                  )
-                : null
+          autocorrect: false,
+          decoration: InputDecoration(
+            prefixIcon: widget.icon,
+            isDense: true,
+            suffixIconConstraints: BoxConstraints(
+              minWidth: 2,
+              minHeight: 2,
             ),
-            onChanged: widget.onChanged,
-            controller: _controller,
-            autovalidate: true,
-            validator: widget.validate,
-            inputFormatters: widget.inputFormatters,
-            keyboardType: widget.keyboardType,
-            maxLines: null,
-            focusNode: widget.focusNode,
-            autofocus: widget.autofocus ?? false,
-            style: TextStyle(fontSize: defaultFontSize())
+            suffixIcon: constraints.maxWidth > 100
+              ? InkWell(
+                  child: Container(
+                    child: Icon(
+                      Icons.clear,
+                      color: ThemeColors.iconColor,
+                    ),
+                    padding: EdgeInsets.only(
+                      right: 5,
+                      top: 5,
+                      bottom: 5
+                    ),
+                  ),
+                  onTap: () {
+                    if (widget.controller != null)
+                      widget.controller.clear();
+
+                    _controller.clear();
+
+                    if (widget.onChanged != null)
+                      widget.onChanged('');
+                  },
+                )
+              : null
+          ),
+          onChanged: widget.onChanged,
+          controller: widget.controller ?? _controller,
+          autovalidate: true,
+          validator: widget.validate,
+          inputFormatters: widget.inputFormatters,
+          keyboardType: widget.keyboardType,
+          maxLines: null,
+          focusNode: widget.focusNode,
+          autofocus: widget.autofocus ?? false,
+          style: TextStyle(fontSize: defaultFontSize())
         );
       }
     );

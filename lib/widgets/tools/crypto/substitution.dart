@@ -165,6 +165,9 @@ class SubstitutionState extends State<Substitution> {
             )
           ],
         ),
+        margin: EdgeInsets.only(
+          left: 10
+        ),
       );
 
       if (odd) {

@@ -36,7 +36,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
 
   var _currentOutputFormat = defaultCoordFormat();
   var _currentOutputUnit = defaultLength;
-  var _currentOutput = '';
+  List<String> _currentOutput = [];
   var _currentMapPoints;
 
   @override
@@ -124,7 +124,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
           },
         ),
         GCWCoordsOutput(
-          text: _currentOutput,
+          outputs: _currentOutput,
           points: _currentMapPoints,
           circles: [
             MapCircle(
@@ -172,21 +172,24 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
 
     _currentMapPoints = [
       MapPoint(
-          point: _currentCoords1,
-          markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint1')
+        point: _currentCoords1,
+        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint1'),
+        coordinateFormat: _currentCoordsFormat1
       ),
       MapPoint(
-          point: _currentCoords2,
-          markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint2')
+        point: _currentCoords2,
+        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint2'),
+        coordinateFormat: _currentCoordsFormat2
       ),
       MapPoint(
-          point: _currentCoords3,
-          markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint3')
+        point: _currentCoords3,
+        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint3'),
+        coordinateFormat: _currentCoordsFormat3
       )
     ];
 
     if (_currentIntersections.isEmpty) {
-      _currentOutput = i18n(context, "coords_intersect_nointersection");
+      _currentOutput = [i18n(context, "coords_intersect_nointersection")];
       return;
     }
 
@@ -194,18 +197,19 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
       _currentIntersections
         .map((intersection) => MapPoint(
           point: intersection.coords,
-          color: ThemeColors.mapCalculatedPoint
+          color: ThemeColors.mapCalculatedPoint,
+          markerText: i18n(context, 'coords_common_intersection'),
+          coordinateFormat: _currentOutputFormat
         ))
         .toList()
     );
 
     _currentOutput = _currentIntersections
-        .map((intersection) {
-          return '${formatCoordOutput(intersection.coords, _currentOutputFormat, defaultEllipsoid())} '
-              '(${i18n(context, "coords_intersectthreecircles_marker_accuracy")}: '
-                  '${doubleFormat.format(intersection.accuracy / _currentOutputUnit.inMeters)} ${_currentOutputUnit.unit})';
-        })
-        .toList()
-        .join('\n\n');
+      .map((intersection) {
+        return '${formatCoordOutput(intersection.coords, _currentOutputFormat, defaultEllipsoid())} '
+          '(${i18n(context, "coords_intersectthreecircles_marker_accuracy")}: '
+              '${doubleFormat.format(intersection.accuracy / _currentOutputUnit.inMeters)} ${_currentOutputUnit.unit})';
+      })
+      .toList();
   }
 }

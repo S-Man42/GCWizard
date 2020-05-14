@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/latlon.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
@@ -67,11 +69,11 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
     if (widget.coordinates != null) {
       _currentLatDegrees = widget.coordinates.latitude.abs().floor().toString();
       _currentLatMilliDegrees = widget.coordinates.latitude.toString().split('.')[1];
-      _currentLatSign = sign(widget.coordinates.latitude);
+      _currentLatSign = coordinateSign(widget.coordinates.latitude);
 
       _currentLonDegrees = widget.coordinates.longitude.abs().floor().toString();
       _currentLonMilliDegrees = widget.coordinates.longitude.toString().split('.')[1];
-      _currentLonSign = sign(widget.coordinates.longitude);
+      _currentLonSign = coordinateSign(widget.coordinates.longitude);
 
       _LatDegreesController = TextEditingController(text: _currentLatDegrees);
       _LatMilliDegreesController = TextEditingController(text: _currentLatMilliDegrees);
@@ -221,6 +223,6 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
     _degreesD = double.parse('$_degrees.$_currentLonMilliDegrees');
     double _currentLon = _currentLonSign * _degreesD;
 
-    widget.onChanged(LatLng(normalizeLat(_currentLat), normalizeLon(_currentLon)));
+    widget.onChanged(DEC(_currentLat, _currentLon).toLatLng());
   }
 }

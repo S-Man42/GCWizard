@@ -8,8 +8,9 @@ class GCWIconButton extends StatelessWidget {
   final IconData iconData;
   final Image image;
   final IconButtonSize size;
+  final Color color;
 
-  const GCWIconButton({Key key, this.onPressed, this.iconData, this.image, this.size: IconButtonSize.NORMAL}) : super(key: key);
+  const GCWIconButton({Key key, this.onPressed, this.iconData, this.image, this.size: IconButtonSize.NORMAL, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,8 @@ class GCWIconButton extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: Icon(
             this.iconData,
-            size: isNormalSize ? null : 20
+            size: isNormalSize ? null : 20,
+            color: this.color ?? Colors.white
           ) ?? this.image,
           onPressed: this.onPressed,
           borderSide: BorderSide(color: Theme.of(context).accentColor),

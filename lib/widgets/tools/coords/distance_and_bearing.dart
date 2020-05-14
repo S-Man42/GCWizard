@@ -24,7 +24,7 @@ class DistanceBearingState extends State<DistanceBearing> {
   var _currentCoordsFormat2 = defaultCoordFormat();
 
   DistanceBearingData _currentValue = DistanceBearingData();
-  var _currentOutput = '';
+  List<String> _currentOutput = [];
 
   @override
   void initState() {
@@ -63,15 +63,17 @@ class DistanceBearingState extends State<DistanceBearing> {
           },
         ),
         GCWCoordsOutput(
-          text: _currentOutput,
+          outputs: _currentOutput,
           points: [
             MapPoint(
               point: _currentCoords1,
-              markerText: 'A'
+              markerText: i18n(context, 'coords_distancebearing_coorda'),
+              coordinateFormat: _currentCoordsFormat1
             ),
             MapPoint(
-                point: _currentCoords2,
-                markerText: 'B'
+              point: _currentCoords2,
+              markerText: i18n(context, 'coords_distancebearing_coordb'),
+              coordinateFormat: _currentCoordsFormat2
             ),
           ],
           geodetics: [
@@ -92,8 +94,8 @@ class DistanceBearingState extends State<DistanceBearing> {
       return '\t\t${doubleFormat.format(_currentValue.distance / length.inMeters)} ${length.unit}';
     }).join('\n');
 
-    _currentOutput = '${i18n(context, 'coords_distancebearing_distance')}:\n$_forAllLenghtUnits\n\n'
-        '${i18n(context, 'coords_distancebearing_bearingatob')}: ${doubleFormat.format(_currentValue.bearingAToB)}°\n'
-        '${i18n(context, 'coords_distancebearing_bearingbtoa')}: ${doubleFormat.format(_currentValue.bearingBToA)}°';
+    _currentOutput.add('${i18n(context, 'coords_distancebearing_distance')}:\n$_forAllLenghtUnits');
+    _currentOutput.add('${i18n(context, 'coords_distancebearing_bearingatob')}: ${doubleFormat.format(_currentValue.bearingAToB)}°');
+    _currentOutput.add('${i18n(context, 'coords_distancebearing_bearingbtoa')}: ${doubleFormat.format(_currentValue.bearingBToA)}°');
   }
 }

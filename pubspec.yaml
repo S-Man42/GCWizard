@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 0.8.0+26
+version: 0.8.0+27
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -12,6 +12,7 @@ dependencies:
   path: any
   path_provider: any
   flutter_map: any
+  flutter_map_marker_popup: ^0.1.4
   flutter_localizations:
     sdk: flutter
   provider: any

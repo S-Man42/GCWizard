@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lat_textinputformatter.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lon_textinputformatter.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/integer_minutesseconds_textinputformatter.dart';
@@ -82,8 +81,9 @@ class GCWCoordsDEGState extends State<GCWCoordsDEG> {
   Widget build(BuildContext context) {
 
     if (widget.coordinates != null) {
-      var lat = formattedDEG(widget.coordinates.latitude, true, precision: 10);
-      var lon = formattedDEG(widget.coordinates.longitude, false, precision: 10);
+      var deg = DEG.from(widget.coordinates);
+      var lat = deg.latitude.formatParts(10);
+      var lon = deg.longitude.formatParts(10);
 
       _currentLatDegrees = lat['degrees'];
       _currentLatMinutes = lat['minutes'].split('.')[0];
@@ -290,13 +290,13 @@ class GCWCoordsDEGState extends State<GCWCoordsDEG> {
     int _degrees = ['', '-'].contains(_currentLatDegrees) ? 0 : int.parse(_currentLatDegrees);
     int _minutes = ['', '-'].contains(_currentLatMinutes) ? 0 : int.parse(_currentLatMinutes);
     double _minutesD = double.parse('$_minutes.$_currentLatMilliMinutes');
-    DEG _currentLat = DEG(_currentLatSign, _degrees, _minutesD);
+    var _currentLat = DEGLatitude(_currentLatSign, _degrees, _minutesD);
 
     _degrees = ['', '-'].contains(_currentLonDegrees) ? 0 : int.parse(_currentLonDegrees);
     _minutes = ['', '-'].contains(_currentLonMinutes) ? 0 : int.parse(_currentLonMinutes);
     _minutesD = double.parse('$_minutes.$_currentLonMilliMinutes');
-    DEG _currentLon = DEG(_currentLonSign, _degrees, _minutesD);
+    var _currentLon = DEGLongitude(_currentLonSign, _degrees, _minutesD);
 
-    widget.onChanged(LatLng(latDEGToDEC(_currentLat), lonDEGToDEC(_currentLon)));
+    widget.onChanged(DEG(_currentLat, _currentLon).toLatLng());
   }
 }

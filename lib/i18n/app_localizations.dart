@@ -75,7 +75,7 @@ class _AppLocalizationsDelegate
  * %s2 -> parameter 2 (list index 1),
  * ...
  */
-String i18n(BuildContext context, String key, {parameters: const []}) {
+String i18n(BuildContext context, String key, {List<dynamic> parameters: const []}) {
   Map<String, String> map = {};
   for (int i = parameters.length; i >= 1; i--) {
     map.putIfAbsent('%s' + i.toString(), () => parameters[i - 1].toString());

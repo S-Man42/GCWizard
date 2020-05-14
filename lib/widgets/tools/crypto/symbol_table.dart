@@ -163,7 +163,12 @@ class SymbolTableState extends State<SymbolTable> {
         var imageIndex = i * countColumns + j;
 
         if (imageIndex < _currentInput.length) {
-          var imagePath = _imageFilePaths[_currentInput.toUpperCase().codeUnitAt(imageIndex).toString()];
+          var imagePath = _imageFilePaths[_currentInput.codeUnitAt(imageIndex).toString()];
+
+          //try uppercase
+          if (imagePath == null) {
+            imagePath = _imageFilePaths[_currentInput.toUpperCase().codeUnitAt(imageIndex).toString()];
+          }
 
           if (imagePath == null) {
             imagePath = _SYMBOL_NOT_FOUND_PATH;

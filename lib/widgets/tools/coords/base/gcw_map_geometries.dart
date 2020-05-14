@@ -11,11 +11,13 @@ class MapPoint {
   final LatLng point;
   final String markerText;
   final Color color;
+  final String coordinateFormat;
 
   const MapPoint({
     @required this.point,
     this.markerText,
-    this.color: ThemeColors.mapPoint
+    this.color: ThemeColors.mapPoint,
+    this.coordinateFormat
   });
 }
 

@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'package:gc_wizard/logic/tools/coords/converter/latlon.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/logic/tools/crypto/substitution.dart';
@@ -66,15 +68,15 @@ void generateCartesianVariables(Map<String, List<int>> lists, List<Map<String, S
   }
 }
 
-Set<String> _expandText(String text, Map<String, String> substitutions) {
+List<Map<String, dynamic>> _expandText(String text, Map<String, String> substitutions) {
   var expandedList = SplayTreeSet<String>();
 
   if (text == null || text.length == 0)
-    return expandedList;
+    return [];
 
   if (substitutions == null || substitutions.length == 0) {
     expandedList.add(text);
-    return expandedList;
+    return [];
   }
 
   Map<String, List<int>> expandedSubstitutions = {};
@@ -86,11 +88,16 @@ Set<String> _expandText(String text, Map<String, String> substitutions) {
   List<Map<String, String>> variableCombinations = [];
   generateCartesianVariables(expandedSubstitutions, variableCombinations, 0, {});
 
+  List<Map<String, dynamic>> output = [];
+
   variableCombinations.forEach((combination) {
-    expandedList.add(substitution(text, combination));
+    var substituted = substitution(text, combination, caseSensitive: false);
+    if (expandedList.add(substituted)) {
+      output.add({'text': substituted, 'variables': combination});
+    }
   });
 
-  return expandedList;
+  return output;
 }
 
 _sanitizeVariableDoubleText(String text) {
@@ -100,32 +107,53 @@ _sanitizeVariableDoubleText(String text) {
   return text.replaceAll(',', '.').replaceAll(RegExp(r'[^0-9\.\[\]]'), '');
 }
 
-List<LatLng> parseVariableLatLon(String coordinate, Map<String, String> substitutions, {Map<String, dynamic> projectionData = const {}}) {
-  var textToExpand = coordinate;
+_sanitizeForFormula(String formula) {
+  RegExp regExp = new RegExp(r'\[.+?\]');
+  if (regExp.hasMatch(formula))
+    return formula;
+
+  return '[$formula]';
+}
+
+List<LatLng> _parseCoordText(String text) {
+  var parsedCoord = parseLatLon(text);
+  if (parsedCoord == null)
+    return null;
+
+  var out = [parsedCoord['coordinate'] as LatLng];
+
+  if (parsedCoord['format'] == keyCoordsDEG) {
+    out.add(parseDEG(text, leftPadMilliMinutes: true));
+  }
+
+  return out;
+}
+
+List<Map<String, dynamic>> parseVariableLatLon(String coordinate, Map<String, String> substitutions, {Map<String, dynamic> projectionData = const {}}) {
+  var textToExpand = _sanitizeForFormula(coordinate);
 
   var withProjection = false;
   if (projectionData != null) {
-    if (projectionData['bearing'] != null && projectionData['distance'] != null) {
+    if (projectionData['bearing'] != null && projectionData['bearing'].length > 0
+        && projectionData['distance'] != null && projectionData['distance'].length > 0) {
       withProjection = true;
-      textToExpand += String.fromCharCode(1) + projectionData['bearing'];
-      textToExpand += String.fromCharCode(1) + projectionData['distance'];
+      textToExpand += String.fromCharCode(1) + _sanitizeForFormula(projectionData['bearing']);
+      textToExpand += String.fromCharCode(1) + _sanitizeForFormula(projectionData['distance']);
     }
   }
 
   var expandedTexts = _expandText(textToExpand, substitutions);
 
   var formulaParser = FormulaParser();
-  var coords = <LatLng>[];
+  var coords = <Map<String, dynamic>>[];
 
-  for (String expandedText in expandedTexts) {
-    var evaluatedFormula = formulaParser.parse(expandedText, {});
-    if (evaluatedFormula['state'] == STATE_ERROR)
-      continue;
+  for (Map<String, dynamic> expandedText in expandedTexts) {
+    var evaluatedFormula = formulaParser.parse(expandedText['text'], {});
 
     if (withProjection) {
       var evaluatedTexts = evaluatedFormula['result'].split(String.fromCharCode(1));
 
-      var parsedCoord = parseLatLon(evaluatedTexts[0]);
+      var parsedCoord = _parseCoordText(evaluatedTexts[0]);
       if (parsedCoord == null)
         continue;
 
@@ -135,12 +163,30 @@ List<LatLng> parseVariableLatLon(String coordinate, Map<String, String> substitu
       if (parsedBearing == null || parsedDistance == null)
         continue;
 
-      coords.add(projection(parsedCoord, parsedBearing, parsedDistance, projectionData['ellipsoid']));
+      var currentResult = {'variables': expandedText['variables']};
+      parsedCoord.asMap().forEach((index, coordinate) {
+        var key = 'coordinate';
+        if (index == 1)
+          key = 'leftPadDEGCoordinate';
+
+        var projected = projection(coordinate, parsedBearing, parsedDistance * projectionData['lengthUnitInMeters'], projectionData['ellipsoid']);
+        currentResult.putIfAbsent(key, () => projected);
+      });
+
+      coords.add(currentResult);
     } else {
-      var parsedCoords = parseLatLon(evaluatedFormula['result']);
-      if (parsedCoords != null) {
-        coords.add(parsedCoords);
-      }
+      var parsedCoord = _parseCoordText(evaluatedFormula['result']);
+      if (parsedCoord == null)
+        continue;
+
+      var currentResult = {'variables': expandedText['variables']};
+      parsedCoord.asMap().forEach((index, coordinate) {
+        var key = 'coordinate';
+        if (index == 1)
+          key = 'leftPadDEGCoordinate';
+
+        currentResult.putIfAbsent(key, () => coordinate);
+      });
     }
   }
 

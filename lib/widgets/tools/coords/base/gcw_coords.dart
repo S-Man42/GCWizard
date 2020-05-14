@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
@@ -274,8 +273,11 @@ class GCWCoordsState extends State<GCWCoords> {
   }
 
   _parseClipboardAndSetCoords(text) {
-    _pastedCoords = parseLatLon(text);
+    var pasted = parseLatLon(text);
+    if (pasted == null)
+      return;
 
+    _pastedCoords = pasted['coordinate'];
     if (_pastedCoords == null)
       return;
 
