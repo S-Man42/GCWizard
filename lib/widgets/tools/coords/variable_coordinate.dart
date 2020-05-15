@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
@@ -305,14 +307,6 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       'ellipsoid': defaultEllipsoid()
     });
 
-    if (coords.length == 0) {
-      setState(() {
-        _currentOutput = [i18n(context, 'coords_variablecoordinate_nooutputs')];
-        _currentMapPoints = [];
-      });
-      return;
-    }
-
     if (coords.length > MAX_COUNT_COORDINATES) {
       showAlertDialog(context, i18n(context, 'coords_variablecoordinate_alert_title'), i18n(context, 'coords_variablecoordinate_alert_text', parameters: [coords.length]), () {
         setState(() {
@@ -354,6 +348,10 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       );
     }).toList();
 
+    if (_currentOutput.length == 0) {
+      _currentOutput = [i18n(context, 'coords_variablecoordinate_nooutputs')];
+    }
+
     _output = Column(
       children: [
         hasLeftPaddedCoords
@@ -364,10 +362,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
               value: _currentCoordMode,
               onChanged: (value) {
                 setState(() {
-                  print('A');
                   _currentCoordMode = value;
                   _buildOutput(coords);
-                  print(_currentCoordMode);
                 });
               },
             )

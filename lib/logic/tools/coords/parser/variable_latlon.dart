@@ -116,9 +116,13 @@ _sanitizeForFormula(String formula) {
 }
 
 List<LatLng> _parseCoordText(String text) {
+  print(text);
+
   var parsedCoord = parseLatLon(text);
   if (parsedCoord == null)
     return null;
+
+  print(parsedCoord);
 
   var out = [parsedCoord['coordinate'] as LatLng];
 

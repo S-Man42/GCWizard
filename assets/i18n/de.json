@@ -372,7 +372,7 @@
   "coords_variablecoordinate_variables" : "Variablen",
   "coords_variablecoordinate_variable" : "Variable",
   "coords_variablecoordinate_possiblevalues" : "Mögliche Werte",
-  "coords_variablecoordinate_nooutputs" : "Keine Koordinaten berechnet!\n\nMögliche Gründe:\n-invalides/nicht berechenbares Koordinatenformat\n-fehlende Variablen\n- negatives oder dezimales Ergebnis in einer Unterformel",
+  "coords_variablecoordinate_nooutputs" : "Keine Koordinaten berechnet!\n\nMögliche Gründe:\n- invalides/nicht berechenbares Koordinatenformat\n- Unterformeln müssen in [ ] eingebettet sein\n- fehlende Variablen\n- negatives oder dezimales Ergebnis in einer Unterformel",
   "coords_variablecoordinate_alert_title" : "Warnung: Sehr viele Koordinaten!",
   "coords_variablecoordinate_alert_text" : "Du hast %s1 Koordinaten generiert.\n\nWillst du sie alle sehen?\n\nDas könnte dein Gerät drastisch verlangsamen.",
   "coords_variablecoordinate_decleftpad" : "Kommastellen",
