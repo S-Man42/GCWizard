@@ -94,6 +94,7 @@ class DistanceBearingState extends State<DistanceBearing> {
       return '\t\t${doubleFormat.format(_currentValue.distance / length.inMeters)} ${length.unit}';
     }).join('\n');
 
+    _currentOutput = [];
     _currentOutput.add('${i18n(context, 'coords_distancebearing_distance')}:\n$_forAllLenghtUnits');
     _currentOutput.add('${i18n(context, 'coords_distancebearing_bearingatob')}: ${doubleFormat.format(_currentValue.bearingAToB)}°');
     _currentOutput.add('${i18n(context, 'coords_distancebearing_bearingbtoa')}: ${doubleFormat.format(_currentValue.bearingBToA)}°');

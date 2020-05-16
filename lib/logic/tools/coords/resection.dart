@@ -45,9 +45,9 @@ class _ResectionCalculator extends IntervalCalculator {
 
   @override
   bool checkCell(CoordinateCell cell, Map<String, dynamic> parameters) {
-    Interval bearingFrom1 = cell.bearingFrom(parameters['coord1']);
-    Interval bearingFrom2 = cell.bearingFrom(parameters['coord2']);
-    Interval bearingFrom3 = cell.bearingFrom(parameters['coord3']);
+    Interval bearingFrom1 = cell.bearingTo(parameters['coord1']);
+    Interval bearingFrom2 = cell.bearingTo(parameters['coord2']);
+    Interval bearingFrom3 = cell.bearingTo(parameters['coord3']);
 
     // If at least two out of three points are in the current cell, then it is possible to find a bearing
     // to the third point in any case.

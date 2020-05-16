@@ -21,9 +21,11 @@ class WaypointProjection extends StatefulWidget {
 class WaypointProjectionState extends State<WaypointProjection> {
   var _currentCoords = defaultCoordinate;
   var _currentDistance = 0.0;
-  var _currentBearing = {'text': '','value': 0.0};
+  var _currentBearing = {'text': '','value': 0.0, 'reverse': false};
 
-  var _currentValue = defaultCoordinate;
+  var _currentValues = [defaultCoordinate];
+  var _currentMapPoints = <MapPoint>[];
+  var _currentGeodetics = <MapGeodetic>[];
   var _currentCoordsFormat = defaultCoordFormat();
 
   var _currentOutputFormat = defaultCoordFormat();
@@ -74,32 +76,70 @@ class WaypointProjectionState extends State<WaypointProjection> {
         ),
         GCWCoordsOutput(
           outputs: _currentOutput,
-          points: [
-            MapPoint(
-              point: _currentCoords,
-              markerText: i18n(context, 'coords_waypointprojection_start'),
-              coordinateFormat: _currentCoordsFormat
-            ),
-            MapPoint(
-              point: _currentValue,
-              color: ThemeColors.mapCalculatedPoint,
-              markerText: i18n(context, 'coords_waypointprojection_end'),
-              coordinateFormat: _currentOutputFormat
-            )
-          ],
-          geodetics: [
-            MapGeodetic(
-              start: _currentCoords,
-              end: _currentValue
-            )
-          ],
+          points: _currentMapPoints,
+          geodetics: _currentGeodetics,
         ),
       ],
     );
   }
 
   _calculateOutput() {
-    _currentValue = projection(_currentCoords, _currentBearing['value'], _currentDistance, defaultEllipsoid());
-    _currentOutput = [formatCoordOutput(_currentValue, _currentOutputFormat, defaultEllipsoid())];
+    if (_currentBearing['reverse']) {
+      _currentValues = reverseProjection(_currentCoords, _currentBearing['value'], _currentDistance, defaultEllipsoid());
+      if (_currentValues == null || _currentValues.length == 0) {
+        _currentOutput = [i18n(context, 'coords_waypointprojection_reverse_nocoordinatefound')];
+        return;
+      }
+
+      _currentMapPoints = [
+        MapPoint(
+          point: _currentCoords,
+          markerText: i18n(context, 'coords_waypointprojection_end'),
+          coordinateFormat: _currentCoordsFormat
+        )
+      ];
+
+      _currentValues.forEach((projection) {
+        _currentMapPoints.add(
+          MapPoint(
+            point: projection,
+            markerText: i18n(context, 'coords_waypointprojection_start'),
+            coordinateFormat: _currentOutputFormat
+          )
+        );
+
+        _currentGeodetics.add(
+          MapGeodetic(
+            start: projection,
+            end: _currentCoords
+          )
+        );
+      });
+    } else {
+      _currentValues = [projection(_currentCoords, _currentBearing['value'], _currentDistance, defaultEllipsoid())];
+
+      _currentMapPoints = [
+        MapPoint(
+          point: _currentCoords,
+          markerText: i18n(context, 'coords_waypointprojection_start'),
+          coordinateFormat: _currentCoordsFormat
+        ),
+        MapPoint(
+          point: _currentValues[0],
+          color: ThemeColors.mapCalculatedPoint,
+          markerText: i18n(context, 'coords_waypointprojection_end'),
+          coordinateFormat: _currentOutputFormat
+        )
+      ];
+
+      _currentGeodetics = [MapGeodetic(
+        start: _currentCoords,
+        end: _currentValues[0]
+      )];
+    }
+
+    _currentOutput = _currentValues.map((projection) {
+      return formatCoordOutput(projection, _currentOutputFormat, defaultEllipsoid());
+    }).toList();
   }
 }

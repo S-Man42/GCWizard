@@ -1,8 +1,8 @@
 import 'dart:math';
 
+import 'package:gc_wizard/logic/tools/coords/centerpoint.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
-import 'package:gc_wizard/logic/tools/coords/centerpoint.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong/latlong.dart';

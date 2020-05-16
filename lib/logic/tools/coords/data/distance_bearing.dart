@@ -46,4 +46,9 @@ class DistanceBearingData {
   get bearingBToAInRadian {
     return degToRadian(_bearingBToA);
   }
+
+  @override
+  String toString() {
+    return 'distance: $distance, bearingAToB: $bearingAToB, bearingBToA: $bearingBToA';
+  }
 }

@@ -162,8 +162,6 @@ LatLng parseDEC(String text) {
 
   RegExp regex = RegExp(PATTERN_DEC, caseSensitive: false);
 
-  print(PATTERN_DEC);
-
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
 

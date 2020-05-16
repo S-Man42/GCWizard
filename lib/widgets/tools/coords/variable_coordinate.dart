@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
@@ -47,6 +45,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   var _currentToInput = '';
   var _currentBearingInput = '';
   var _currentDistanceInput = '';
+
+  var _currentReverseBearing = false;
 
   Map<String, String> _currentSubstitutions = {};
 
@@ -208,7 +208,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
             Row(
               children: <Widget>[
                 Expanded(
-                  flex: 3,
+                  flex: 9,
                   child: GCWTextField(
                     hintText: i18n(context, 'common_bearing_hint'),
                     controller: _bearingController,
@@ -220,9 +220,27 @@ class VariableCoordinateState extends State<VariableCoordinate> {
                 Expanded(
                   flex: 1,
                   child: GCWText(
-                      text: '°'
+                    text: '°'
                   ),
                 ),
+                Expanded(
+                  flex: 4,
+                  child: GCWText(
+                    text: i18n(context, 'coords_variablecoordinate_reverse') + ':',
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: GCWOnOffSwitch(
+                    value: _currentReverseBearing,
+                    notitle: true,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentReverseBearing = value;
+                      });
+                    },
+                  )
+                )
               ]
             )
           ],
@@ -301,13 +319,14 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     _currentCoordMode = GCWSwitchPosition.left;
 
     var coords = parseVariableLatLon(_currentInput, _currentSubstitutions, projectionData: {
-      'bearing': _currentBearingInput.length == 0 ? '0' : _currentBearingInput,
-      'distance': _currentDistanceInput.length == 0 ? '0' : _currentDistanceInput,
+      'bearing': _currentProjectionMode == false || _currentBearingInput.length == 0 ? '0' : _currentBearingInput,
+      'distance': _currentProjectionMode == false || _currentDistanceInput.length == 0 ? '0' : _currentDistanceInput,
+      'reverseBearing': _currentReverseBearing,
       'lengthUnitInMeters': _currentLengthUnit.inMeters,
       'ellipsoid': defaultEllipsoid()
     });
 
-    if (coords.length > MAX_COUNT_COORDINATES) {
+    if (coords['coordinates'].length > MAX_COUNT_COORDINATES) {
       showAlertDialog(context, i18n(context, 'coords_variablecoordinate_alert_title'), i18n(context, 'coords_variablecoordinate_alert_text', parameters: [coords.length]), () {
         setState(() {
           _buildOutput(coords);
@@ -325,28 +344,24 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     return variables.entries.map((variable) => variable.key.toUpperCase() + ': ' + variable.value.toString()).join(', ');
   }
 
-  _buildOutput(List<Map<String, dynamic>> coords) {
-    var leftPaddedCoords = coords
-      .where((coord) => coord['leftPadDEGCoordinate'] != null)
-      .map((coord) {
-        return {'coordinate': coord['leftPadDEGCoordinate'], 'variables': coord['variables']};
-      })
-      .toList();
+  _buildOutput(Map<String, dynamic> coords) {
+    var normalCoords = coords['coordinates'];
+    var leftPaddedCoords = coords['leftPadCoordinates'];
 
     var hasLeftPaddedCoords = leftPaddedCoords.length > 0;
 
-    _currentOutput = (_currentCoordMode == GCWSwitchPosition.left ? coords : leftPaddedCoords).map((coord) {
+    _currentOutput = List<String>.from((_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
       return formatCoordOutput(coord['coordinate'], _currentOutputFormat, defaultEllipsoid())
         + '\n' + _formatVariables(coord['variables']);
-    }).toList();
+    }));
 
-    _currentMapPoints = (_currentCoordMode == GCWSwitchPosition.left ? coords : leftPaddedCoords).map((coord) {
+    _currentMapPoints = List<MapPoint>.from((_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
       return MapPoint(
         point: coord['coordinate'],
         markerText: _formatVariables(coord['variables']),
         coordinateFormat: _currentOutputFormat
       );
-    }).toList();
+    }));
 
     if (_currentOutput.length == 0) {
       _currentOutput = [i18n(context, 'coords_variablecoordinate_nooutputs')];
