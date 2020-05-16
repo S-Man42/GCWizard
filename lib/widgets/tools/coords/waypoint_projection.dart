@@ -94,7 +94,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
       _currentMapPoints = [
         MapPoint(
           point: _currentCoords,
-          markerText: i18n(context, 'coords_waypointprojection_end'),
+          markerText: i18n(context, 'coords_waypointprojection_start'),
           coordinateFormat: _currentCoordsFormat
         )
       ];
@@ -103,7 +103,8 @@ class WaypointProjectionState extends State<WaypointProjection> {
         _currentMapPoints.add(
           MapPoint(
             point: projection,
-            markerText: i18n(context, 'coords_waypointprojection_start'),
+            color: ThemeColors.mapCalculatedPoint,
+            markerText: i18n(context, 'coords_waypointprojection_end'),
             coordinateFormat: _currentOutputFormat
           )
         );
