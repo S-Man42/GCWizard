@@ -26,6 +26,12 @@
   "adfgvx_description" : "Deutscher Militärcode aus dem 1. Weltkrieg",
   "adfgvx_example" : "XXFXD FGAFF XAFX",
 
+  "alphabetvalues_title" : "Buchstabenwerte",
+  "alphabetvalues_description" : "Buchstaben zu ihrer Position im Alphabet",
+  "alphabetvalues_example" : "A → 1, B → 2, C → 3, ...",
+  "alphabetvalues_mode_left" : "A-Z → 1-26",
+  "alphabetvalues_mode_right" : "1-26 → A-Z",
+
   "asciivalues_title" : "ASCII und Unicode (UTF-8)",
   "asciivalues_mode_left" : "A-Z → ASCII",
   "asciivalues_mode_right" : "ASCII → A-Z",
@@ -549,12 +555,6 @@
   "kenny_title" : "Kennys Code",
   "kenny_description" : "Buchstaben zu einer Dreiergruppe aus m, p, f; inspiriert durch 'South Park'",
   "kenny_example" : "pmpmffpmfpmf",
-
-  "lettervalues_title" : "Buchstabenwerte",
-  "lettervalues_description" : "Buchstaben zu ihrer Position im Alphabet",
-  "lettervalues_example" : "A → 1, B → 2, C → 3, ...",
-  "lettervalues_mode_left" : "A-Z → 1-26",
-  "lettervalues_mode_right" : "1-26 → A-Z",
 
   "mainmenu_about_title" : "Über",
   "mainmenu_settings_title" : "Einstellungen",

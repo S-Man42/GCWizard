@@ -26,6 +26,12 @@
   "adfgvx_key_substitution" : "Substitution Key",
   "adfgvx_key_transposition" : "Transposition Key",
 
+  "alphabetvalues_title" : "Alphabet Values",
+  "alphabetvalues_description" : "Letter to their position in the alphabet",
+  "alphabetvalues_example" : "A → 1, B → 2, C → 3, ...",
+  "alphabetvalues_mode_left" : "A-Z → 1-26",
+  "alphabetvalues_mode_right" : "1-26 → A-Z",
+
   "asciivalues_title" : "ASCII and Unicode (UTF-8)",
   "asciivalues_description" : "ASCII and UTF-8/Unicode character codes",
   "asciivalues_example" : "6 → 54, A → 65, a → 97, ä → 228",
@@ -550,12 +556,6 @@
   "kenny_title" : "Kenny's Code",
   "kenny_description" : "One letter to a three-element group of m, p, f; inspired by 'South Park'",
   "kenny_example" : "pmpmffpmfpmf",
-
-  "lettervalues_title" : "Letter Values",
-  "lettervalues_description" : "Letter to their position in the alphabet",
-  "lettervalues_example" : "A → 1, B → 2, C → 3, ...",
-  "lettervalues_mode_left" : "A-Z → 1-26",
-  "lettervalues_mode_right" : "1-26 → A-Z",
 
   "mainmenu_about_title" : "About",
   "mainmenu_settings_title" : "Settings",

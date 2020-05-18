@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:math';
 
 import 'package:diacritic/diacritic.dart';
@@ -155,11 +156,15 @@ double celsiusToFahrenheit(double celsius) {
   return kelvinToFahrenheit(celsiusToKelvin(celsius));
 }
 
-Map<U, T> switchMapKeyValue<T,U>(Map<T, U> map) {
+Map<U, T> switchMapKeyValue<T,U>(Map<T, U> map, {keepFirstOccurence: false}) {
   if (map == null)
     return null;
 
-  return map.map((k, v) => MapEntry(v, k));
+  var newMap = map;
+  if (keepFirstOccurence)
+    newMap = LinkedHashMap.fromEntries(map.entries.toList().reversed);
+
+  return newMap.map((k, v) => MapEntry(v, k));
 }
 
 String stringToSuperscript(String text) {

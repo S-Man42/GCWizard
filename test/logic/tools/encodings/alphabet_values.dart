@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/encodings/alphanum_values.dart';
+import 'package:gc_wizard/logic/tools/encodings/alphabet_values.dart';
 
 void main() {
   /********** AlphabetValues ****************/

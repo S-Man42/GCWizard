@@ -80,7 +80,7 @@ import 'package:gc_wizard/widgets/tools/encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/encodings/duck_speak.dart';
-import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
+import 'package:gc_wizard/widgets/tools/encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
@@ -152,6 +152,12 @@ class Registry {
         i18nPrefix: 'adfgvx',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'adfgx adfgvx polybius polybios transposition substitution'
+      ),
+      GCWToolWidget(
+        tool: AlphabetValues(),
+        i18nPrefix: 'alphabetvalues',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'alphabet russian russisch kyrillisch cyrillic greek griechisch spanish spanisch deutsch german polish polnisch alphanumeric letter values checksums crosssums digits alternate products buchstabenwerte quersummen alphanumerisch produkt alternierend'
       ),
       GCWToolWidget(
         tool: ASCIIValues(),
@@ -293,12 +299,6 @@ class Registry {
         i18nPrefix: 'kenny',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'they killed kenny sie haben kenny getoetet kennys kenny\'s code southpark'
-      ),
-      GCWToolWidget(
-        tool: LetterValues(),
-        i18nPrefix: 'lettervalues',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'alphanumeric letter values checksums crosssums digits alternate products buchstabenwerte quersummen alphanumerisch produkt alternierend'
       ),
       GCWToolWidget(
         tool: Morse(),

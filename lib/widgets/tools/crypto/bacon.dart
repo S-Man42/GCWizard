@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto/bacon.dart';
-import 'package:gc_wizard/logic/tools/encodings/alphanum_values.dart';
+import 'package:gc_wizard/logic/tools/encodings/alphabet_values.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';

@@ -50,7 +50,7 @@ import 'package:gc_wizard/widgets/tools/encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/encodings/duck_speak.dart';
-import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
+import 'package:gc_wizard/widgets/tools/encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
@@ -129,7 +129,7 @@ class _MainViewState extends State<MainView> {
           className(Gronsfeld()),
           className(Kamasutra()),
           className(Kenny()),
-          className(LetterValues()),
+          className(AlphabetValues()),
           className(Morse()),
           className(NumeralBases()),
           className(PeriodicTable()),

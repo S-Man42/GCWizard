@@ -25,8 +25,8 @@ class _GCWDropDownButtonState extends State<GCWDropDownButton> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
-      margin: EdgeInsets.all(2.0),
       height: 40,
+      margin: EdgeInsets.symmetric(vertical: 2.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(roundedBorderRadius),
         border: Border.all(
