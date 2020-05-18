@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/utils/units/lengths.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_alertdialog.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -327,7 +327,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     });
 
     if (coords['coordinates'].length > MAX_COUNT_COORDINATES) {
-      showAlertDialog(context, i18n(context, 'coords_variablecoordinate_alert_title'), i18n(context, 'coords_variablecoordinate_alert_text', parameters: [coords.length]), () {
+      showGCWAlertDialog(context, i18n(context, 'coords_variablecoordinate_alert_title'), i18n(context, 'coords_variablecoordinate_alert_text', parameters: [coords.length]), () {
         setState(() {
           _buildOutput(coords);
         });

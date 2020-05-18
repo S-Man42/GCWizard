@@ -5,6 +5,8 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 final FONT_SIZE_MIN = 10;
 final FONT_SIZE_MAX = 30;
 
+final DEFAULT_MARGIN = 2.0;
+
 TextStyle gcwTextStyle() {
  return TextStyle(
    fontSize: defaultFontSize(),

@@ -167,11 +167,10 @@ final Alphabet alphabetGerman1 = Alphabet(
   {
     'A' : '1', 'B' : '2', 'C' : '3', 'D' : '4', 'E' : '5', 'F' : '6', 'G' : '7', 'H' : '8', 'I' : '9', 'J' : '10', 'K' : '11', 'L' : '12', 'M' : '13',
     'N' : '14', 'O' : '15', 'P' : '16', 'Q' : '17', 'R' : '18', 'S' : '19', 'T' : '20', 'U' : '21', 'V' : '22', 'W' : '23', 'X' : '24', 'Y' : '25', 'Z' : '26',
-    String.fromCharCode(196) : '27', // Ä,
-    String.fromCharCode(214) : '28', // Ö,
-    String.fromCharCode(220) : '29', // Ü,
-    String.fromCharCode(223) : '30', // ß,
-    String.fromCharCode(7838) : '30', // ẞ
+    String.fromCharCode(196) : '27', // Ä
+    String.fromCharCode(214) : '28', // Ö
+    String.fromCharCode(220) : '29', // Ü
+    String.fromCharCode(223) : '30', // ß
   }
 );
 
@@ -180,11 +179,10 @@ final Alphabet alphabetGerman2 = Alphabet(
   {
     'A' : '1', 'B' : '2', 'C' : '3', 'D' : '4', 'E' : '5', 'F' : '6', 'G' : '7', 'H' : '8', 'I' : '9', 'J' : '10', 'K' : '11', 'L' : '12', 'M' : '13',
     'N' : '14', 'O' : '15', 'P' : '16', 'Q' : '17', 'R' : '18', 'S' : '19', 'T' : '20', 'U' : '21', 'V' : '22', 'W' : '23', 'X' : '24', 'Y' : '25', 'Z' : '26',
-    String.fromCharCode(196) : '1,5', // Ä,
-    String.fromCharCode(214) : '15,5', // Ö,
-    String.fromCharCode(220) : '21,5', // Ü,
-    String.fromCharCode(223) : '19,19', // ß,
-    String.fromCharCode(7838) : '19,19', // ẞ
+    String.fromCharCode(196) : '1,5', // Ä
+    String.fromCharCode(214) : '15,5', // Ö
+    String.fromCharCode(220) : '21,5', // Ü
+    String.fromCharCode(223) : '19,19', // ß
   }
 );
 
@@ -193,11 +191,10 @@ final Alphabet alphabetGerman3 = Alphabet(
   {
       'A' : '1', 'B' : '2', 'C' : '3', 'D' : '4', 'E' : '5', 'F' : '6', 'G' : '7', 'H' : '8', 'I' : '9', 'J' : '10', 'K' : '11', 'L' : '12', 'M' : '13',
       'N' : '14', 'O' : '15', 'P' : '16', 'Q' : '17', 'R' : '18', 'S' : '19', 'T' : '20', 'U' : '21', 'V' : '22', 'W' : '23', 'X' : '24', 'Y' : '25', 'Z' : '26',
-      String.fromCharCode(196) : '6', // Ä,
-      String.fromCharCode(214) : '20', // Ö,
-      String.fromCharCode(220) : '26', // Ü,
-      String.fromCharCode(223) : '38', // ß,
-      String.fromCharCode(7838) : '38', // ẞ
+      String.fromCharCode(196) : '6', // Ä
+      String.fromCharCode(214) : '20', // Ö
+      String.fromCharCode(220) : '26', // Ü
+      String.fromCharCode(223) : '38', // ß
   }
 );
 
