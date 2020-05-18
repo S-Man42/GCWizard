@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:gc_wizard/logic/tools/coords/converter/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
@@ -115,21 +114,21 @@ _sanitizeForFormula(String formula) {
   return '[$formula]';
 }
 
-List<LatLng> _parseCoordText(String text) {
+Map<String, LatLng> _parseCoordText(String text) {
   var parsedCoord = parseLatLon(text);
   if (parsedCoord == null)
     return null;
 
-  var out = [parsedCoord['coordinate'] as LatLng];
+  var out = <String, LatLng>{'coordinate': parsedCoord['coordinate']};
 
   if (parsedCoord['format'] == keyCoordsDEG) {
-    out.add(parseDEG(text, leftPadMilliMinutes: true));
+    out.putIfAbsent('leftPadCoordinate', () => parseDEG(text, leftPadMilliMinutes: true));
   }
 
   return out;
 }
 
-List<Map<String, dynamic>> parseVariableLatLon(String coordinate, Map<String, String> substitutions, {Map<String, dynamic> projectionData = const {}}) {
+Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> substitutions, {Map<String, dynamic> projectionData = const {}}) {
   var textToExpand = _sanitizeForFormula(coordinate);
 
   var withProjection = false;
@@ -146,6 +145,7 @@ List<Map<String, dynamic>> parseVariableLatLon(String coordinate, Map<String, St
 
   var formulaParser = FormulaParser();
   var coords = <Map<String, dynamic>>[];
+  var leftPadCoords = <Map<String, dynamic>>[];
 
   for (Map<String, dynamic> expandedText in expandedTexts) {
     var evaluatedFormula = formulaParser.parse(expandedText['text'], {});
@@ -163,32 +163,47 @@ List<Map<String, dynamic>> parseVariableLatLon(String coordinate, Map<String, St
       if (parsedBearing == null || parsedDistance == null)
         continue;
 
-      var currentResult = {'variables': expandedText['variables']};
-      parsedCoord.asMap().forEach((index, coordinate) {
-        var key = 'coordinate';
-        if (index == 1)
-          key = 'leftPadDEGCoordinate';
+      parsedCoord.entries.forEach((entry) {
 
-        var projected = projection(coordinate, parsedBearing, parsedDistance * projectionData['lengthUnitInMeters'], projectionData['ellipsoid']);
-        currentResult.putIfAbsent(key, () => projected);
+        if (projectionData['reverseBearing']) {
+
+          var revProjected = reverseProjection(entry.value, parsedBearing, parsedDistance * projectionData['lengthUnitInMeters'], projectionData['ellipsoid']);
+          if (revProjected == null || revProjected.length == 0)
+            return;
+
+          var projected = revProjected.map((projection) {
+            return {'variables': expandedText['variables'], 'coordinate': projection};
+          }).toList();
+
+          if (entry.key == 'coordinate')
+            coords.addAll(projected);
+          else
+            leftPadCoords.addAll(projected);
+
+        } else {
+          var projected = {
+            'coordinate' : projection(entry.value, parsedBearing, parsedDistance * projectionData['lengthUnitInMeters'], projectionData['ellipsoid']),
+            'variables' : expandedText['variables']
+          };
+
+          if (entry.key == 'coordinate')
+            coords.add(projected);
+          else
+            leftPadCoords.add(projected);
+        }
       });
 
-      coords.add(currentResult);
     } else {
       var parsedCoord = _parseCoordText(evaluatedFormula['result']);
       if (parsedCoord == null)
         continue;
 
-      var currentResult = {'variables': expandedText['variables']};
-      parsedCoord.asMap().forEach((index, coordinate) {
-        var key = 'coordinate';
-        if (index == 1)
-          key = 'leftPadDEGCoordinate';
-
-        currentResult.putIfAbsent(key, () => coordinate);
-      });
+      coords.add({'variables': expandedText['variables'], 'coordinate': parsedCoord['coordinate']});
+      if (parsedCoord['leftPadCoordinate'] != 0) {
+        leftPadCoords.add({'variables': expandedText['variables'], 'coordinate': parsedCoord['leftPadCoordinate']});
+      }
     }
   }
 
-  return coords;
+  return {'coordinates' : coords, 'leftPadCoordinates': leftPadCoords};
 }

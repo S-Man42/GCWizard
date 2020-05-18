@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/intervals/coordinate_cell.dart';
 import 'package:latlong/latlong.dart';
 
 void main() {
-  group("CoordinateCell.bearingFrom_[-10,10],[-10,10]:", () {
+  group("CoordinateCell.bearingTo_[-10,10],[-10,10]:", () {
     CoordinateCell cell = CoordinateCell(
         latInterval: Interval(a: degToRadian(-10.0), b: degToRadian(10.0)),
         lonInterval: Interval(a: degToRadian(-10.0), b: degToRadian(10.0)),
@@ -68,7 +68,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('point: ${elem['point']}', () {
-        var _actualDouble = cell.bearingFrom(elem['point']);
+        var _actualDouble = cell.bearingTo(elem['point']);
         var _actual = [
           _actualDouble.a.floor(),
           _actualDouble.b.floor()

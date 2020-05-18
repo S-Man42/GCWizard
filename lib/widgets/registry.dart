@@ -506,7 +506,7 @@ class Registry {
         tool: WaypointProjection(),
         i18nPrefix: 'coords_waypointprojection',
         iconPath: 'assets/coordinates/icon_waypoint_projection.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'winkel angles waypointprojections bearings wegpunktprojektionen wegpunktpeilungen directions richtungen'
+        searchStrings: SEARCHSTRING_COORDINATES + 'winkel angles waypointprojections bearings wegpunktprojektionen wegpunktpeilungen directions richtungen reverse projections rueckwaertspeilung'
       ),
       GCWToolWidget(
         tool: DistanceBearing(),

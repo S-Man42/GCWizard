@@ -1,93 +1,125 @@
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:latlong/latlong.dart';
 
-final PATTERN_NO_NUMBERS = '[^\\.,\\d]+?';
-final PATTERN_NOTHING_OR_NO_NUMBERS = '[^\\.,\\d]*?';
-final PATTERN_LAT_SIGN = '([NS\+\-])';
-final PATTERN_LON_SIGN = '([EWO\+\-])';
-final PATTERN_LON_SIGN_WITH_SPACE = '(?:[^\\d]+?$PATTERN_LON_SIGN)?';
-final PATTERN_LAT_DEGREE_INT = '(\\d{1,2})';
-final PATTERN_LON_DEGREE_INT = '(\\d{1,3})';
-final PATTERN_SECONDS_MINUTES = '([0-5]?[0-9])';
-final PATTERN_DECIMAL = '(?:\\s*?[\\.,]\\s*?(\\d+))?';
+final PATTERN_NO_NUMBERS = r'\s+?';
+final PATTERN_NOTHING_OR_NO_NUMBERS = r'\s*?';
+final PATTERN_LAT_SIGN = r'([NS][A-Za-zÄÖÜäöü]*?|[\+\-])';
+final PATTERN_LON_SIGN = r'([EWO][A-Za-zÄÖÜäöü]*?|[\+\-])';
+final PATTERN_LON_SIGN_WITH_SPACE = '(?:\\s+?$PATTERN_LON_SIGN)?';
+final PATTERN_LAT_DEGREE_INT = r'(\d{1,2})[\s°]+?';
+final PATTERN_LON_DEGREE_INT = r'(\d{1,3})[\s°]+?';
+final PATTERN_SECONDS_MINUTES = '([0-5]?[0-9])[\\s\']+?';
+final PATTERN_DECIMAL = r'(?:\s*?[\.,]\s*?(\d+))?' + '[\\s\'°"]+?';
+
+final _LETTER = '[A-ZÄÖÜ]';
 
 final PATTERN_DEC_TRAILINGSIGN =
-    '\\s*'
-  + PATTERN_LAT_DEGREE_INT
-  + PATTERN_DECIMAL
-  + PATTERN_NOTHING_OR_NO_NUMBERS + PATTERN_LAT_SIGN
-  + '[^\\d]*?'
-  + PATTERN_LON_DEGREE_INT
-  + PATTERN_DECIMAL
-  + PATTERN_NOTHING_OR_NO_NUMBERS + PATTERN_LON_SIGN;
+    '^\\s*?'
+    '(\\d{1,2})\\s*?'                      //lat degrees
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat millidegrees
+    '[\\s°]?\\s*?'                         //lat degrees symbol
+    '([NS]$_LETTER*?|[\\+\\-])\\s*?'       //lat sign
+
+    '[,\\s]\\s*?'                          //delimiter lat lon
+
+    '(\\d{1,3})\\s*?'                      //lon degrees
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon millidegrees
+    '[\\s°]?\\s*?'                         //lon degree symbol
+    '([EWO]$_LETTER*?|[\\+\\-])'           //lon sign;
+    '\\s*?\$';
 
 final PATTERN_DEC =
-    '\\s*'
-  + PATTERN_LAT_SIGN + '?.*?'
-  + PATTERN_LAT_DEGREE_INT
-  + PATTERN_DECIMAL
+    '^\\s*?'
+    '([NS]$_LETTER*?|[\\+\\-])?\\s*?'      //lat sign
+    '(\\d{1,2})\\s*?'                      //lat degrees
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat millidegrees
+    '[\\s°]?\\s*?'                         //lat degree symbol
 
-  + PATTERN_LON_SIGN_WITH_SPACE + '.*?'
-  + PATTERN_LON_DEGREE_INT
-  + PATTERN_DECIMAL;
+    '\\s*?[,\\s]\\s*?'                     //delimiter lat lon
+
+    '([EWO]$_LETTER*?|[\\+\\-])?\\s*?'     //lon sign
+    '(\\d{1,3})\\s*?'                      //lon degrees
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon millidegrees
+    '[\\s°]?'                             //lon degree symbol
+    '\\s*?\$';
 
 final PATTERN_DEG_TRAILINGSIGN =
-    '\\s*'
-  + PATTERN_LAT_DEGREE_INT + PATTERN_NO_NUMBERS
-  + PATTERN_SECONDS_MINUTES
-  + PATTERN_DECIMAL
-  + PATTERN_NOTHING_OR_NO_NUMBERS + PATTERN_LAT_SIGN
-  + '[^\\d]*?'
-  + PATTERN_LON_DEGREE_INT + PATTERN_NO_NUMBERS
-  + PATTERN_SECONDS_MINUTES
-  + PATTERN_DECIMAL
-  + PATTERN_NOTHING_OR_NO_NUMBERS + PATTERN_LON_SIGN;
+    '^\\s*?'
+    '(\\d{1,2})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
+    '([0-5]?\\d)\\s*?'                     //lat minutes
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat milliminutes
+    '[\\s\']?\\s*?'                        //lat minute symbol
+    '([NS]$_LETTER*?|[\\+\\-])\\s*?'       //lat sign
+
+    '[,\\s]\\s*?'                          //delimiter lat lon
+
+    '(\\d{1,3})\\s*?[\\s°]\\s*?'           //lon degrees + symbol
+    '([0-5]?\\d)\\s*?'                     //lon minutes
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon milliminutes
+    '[\\s\']?\\s*?'                        //lon minutes symbol
+    '([EWO]$_LETTER*?|[\\+\\-])'          //lon sign;
+    '\\s*?\$';
 
 final PATTERN_DEG =
-    '\\s*'
-  + PATTERN_LAT_SIGN + '?.*?'
-  + PATTERN_LAT_DEGREE_INT + PATTERN_NO_NUMBERS
-  + PATTERN_SECONDS_MINUTES
-  + PATTERN_DECIMAL
+    '^\\s*?'
+    '([NS]$_LETTER*?|[\\+\\-])?\\s*?'      //lat sign
+    '(\\d{1,2})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
+    '([0-5]?\\d)\\s*?'                     //lat minutes
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat milliminutes
+    '[\\s\']?\\s*?'                        //lat minute symbol
 
-  + PATTERN_LON_SIGN_WITH_SPACE + '.*?'
-  + PATTERN_LON_DEGREE_INT + PATTERN_NO_NUMBERS
-  + PATTERN_SECONDS_MINUTES
-  + PATTERN_DECIMAL;
+    '\\s*?[,\\s]\\s*?'                     //delimiter lat lon
+
+    '([EWO]$_LETTER*?|[\\+\\-])?\\s*?'     //lon sign
+    '(\\d{1,3})\\s*?[\\s°]\\s*?'           //lon degrees + symbol
+    '([0-5]?\\d)\\s*?'                     //lon minutes
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon milliminutes
+    '[\\s\']?'                            //lon minutes symbol
+    '\\s*?\$';
 
 final PATTERN_DMS_TRAILINGSIGN =
-    '\\s*'
-  + PATTERN_LAT_DEGREE_INT + PATTERN_NO_NUMBERS
-  + PATTERN_SECONDS_MINUTES + PATTERN_NO_NUMBERS
-  + PATTERN_SECONDS_MINUTES
-  + PATTERN_DECIMAL
-  + PATTERN_NOTHING_OR_NO_NUMBERS + PATTERN_LAT_SIGN
-  + '[^\\d]*?'
-  + PATTERN_LON_DEGREE_INT + PATTERN_NO_NUMBERS
-  + PATTERN_SECONDS_MINUTES + PATTERN_NO_NUMBERS
-  + PATTERN_SECONDS_MINUTES
-  + PATTERN_DECIMAL
-  + PATTERN_NOTHING_OR_NO_NUMBERS + PATTERN_LON_SIGN;
+    '^\\s*?'
+    '(\\d{1,2})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
+    '([0-5]?\\d)\\s*?[\\s\']\\s*?'         //lat minutes + symbol
+    '([0-5]?\\d)\\s*?'                     //lat seconds
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat milliseconds
+    '[\\s"]?\\s*?'                         //lat seconds symbol
+    '([NS]$_LETTER*?|[\\+\\-])\\s*?'       //lat sign
+
+    '[,\\s]\\s*?'                          //delimiter lat lon
+
+    '(\\d{1,3})\\s*?[\\s°]\\s*?'           //lon degrees + symbol
+    '([0-5]?\\d)\\s*?[\\s\']\\s*?'         //lon minutes + symbol
+    '([0-5]?\\d)\\s*?'                     //lon seconds
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon milliseconds
+    '[\\s"]?\\s*?'                         //lon seconds symbol
+    '([EWO]$_LETTER*?|[\\+\\-])'          //lon sign;
+    '\\s*?\$';
 
 final PATTERN_DMS =
-    '\\s*'
-  + PATTERN_LAT_SIGN + '?.*?'
-  + PATTERN_LAT_DEGREE_INT + PATTERN_NO_NUMBERS
-  + PATTERN_SECONDS_MINUTES + PATTERN_NO_NUMBERS
-  + PATTERN_SECONDS_MINUTES
-  + PATTERN_DECIMAL
+    '^\\s*?'
+    '([NS]$_LETTER*?|[\\+\\-])?\\s*?'      //lat sign
+    '(\\d{1,2})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
+    '([0-5]?\\d)\\s*?[\\s\']\\s*?'         //lat minutes + symbol
+    '([0-5]?\\d)\\s*?'                     //lat seconds
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat milliseconds
+    '[\\s"]?\\s*?'                         //lat seconds symbol
 
-  + PATTERN_LON_SIGN_WITH_SPACE + '.*?'
-  + PATTERN_LON_DEGREE_INT + PATTERN_NO_NUMBERS
-  + PATTERN_SECONDS_MINUTES + PATTERN_NO_NUMBERS
-  + PATTERN_SECONDS_MINUTES
-  + PATTERN_DECIMAL;
+    '\\s*?[,\\s]\\s*?'                     //delimiter lat lon
+
+    '([EWO]$_LETTER*?|[\\+\\-])?\\s*?'     //lon sign
+    '(\\d{1,3})\\s*?[\\s°]\\s*?'           //lon degrees + symbol
+    '([0-5]?\\d)\\s*?[\\s\']\\s*?'         //lon minutes + symbol
+    '([0-5]?\\d)\\s*?'                     //lon seconds
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon milliseconds
+    '[\\s"]?'                             //lon seconds symbol
+    '\\s*?\$';
 
 int _sign(String match) {
   if (match == null)
     return 1;
 
-  if (match.contains(RegExp(r'[SW-]', caseSensitive: false))) {
+  if (match[0].contains(RegExp(r'[SW-]', caseSensitive: false))) {
     return -1;
   }
 
@@ -129,6 +161,7 @@ LatLng parseDEC(String text) {
     return parsedTrailingSigns;
 
   RegExp regex = RegExp(PATTERN_DEC, caseSensitive: false);
+
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
 
@@ -167,6 +200,7 @@ double _leftPadDEGMilliMinutes(String minutes, String milliMinutes) {
 LatLng _parseDEGTrailingSigns(String text, leftPadMilliMinutes) {
 
   RegExp regex = RegExp(PATTERN_DEG_TRAILINGSIGN, caseSensitive: false);
+
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
 
