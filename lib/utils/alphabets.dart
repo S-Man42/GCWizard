@@ -150,21 +150,27 @@ final subscriptCharacters = {
     ')' : '\u208E',
 };
 
+enum AlphabetType {STANDARD, CUSTOM}
+
 class Alphabet {
   final String key;
+  final String name;
+  final AlphabetType type;
   final Map<String, String> alphabet;
 
-  const Alphabet([this.key, this.alphabet]);
+  const Alphabet({this.key, this.alphabet, this.name, this.type: AlphabetType.CUSTOM});
 }
 
 final Alphabet alphabetAZ = Alphabet(
-  'alphabet_name_az',
-  alphabet_AZ.map((key, value) => MapEntry(key, value.toString()))
+  key: 'alphabet_name_az',
+  type: AlphabetType.STANDARD,
+  alphabet: alphabet_AZ.map((key, value) => MapEntry(key, value.toString()))
 );
 
 final Alphabet alphabetGerman1 = Alphabet(
-  'alphabet_name_german1',
-  {
+  key: 'alphabet_name_german1',
+    type: AlphabetType.STANDARD,
+  alphabet: {
     'A' : '1', 'B' : '2', 'C' : '3', 'D' : '4', 'E' : '5', 'F' : '6', 'G' : '7', 'H' : '8', 'I' : '9', 'J' : '10', 'K' : '11', 'L' : '12', 'M' : '13',
     'N' : '14', 'O' : '15', 'P' : '16', 'Q' : '17', 'R' : '18', 'S' : '19', 'T' : '20', 'U' : '21', 'V' : '22', 'W' : '23', 'X' : '24', 'Y' : '25', 'Z' : '26',
     String.fromCharCode(196) : '27', // Ä
@@ -175,8 +181,9 @@ final Alphabet alphabetGerman1 = Alphabet(
 );
 
 final Alphabet alphabetGerman2 = Alphabet(
-  'alphabet_name_german2',
-  {
+  key: 'alphabet_name_german2',
+  type: AlphabetType.STANDARD,
+  alphabet: {
     'A' : '1', 'B' : '2', 'C' : '3', 'D' : '4', 'E' : '5', 'F' : '6', 'G' : '7', 'H' : '8', 'I' : '9', 'J' : '10', 'K' : '11', 'L' : '12', 'M' : '13',
     'N' : '14', 'O' : '15', 'P' : '16', 'Q' : '17', 'R' : '18', 'S' : '19', 'T' : '20', 'U' : '21', 'V' : '22', 'W' : '23', 'X' : '24', 'Y' : '25', 'Z' : '26',
     String.fromCharCode(196) : '1,5', // Ä
@@ -187,8 +194,9 @@ final Alphabet alphabetGerman2 = Alphabet(
 );
 
 final Alphabet alphabetGerman3 = Alphabet(
-  'alphabet_name_german3',
-  {
+  key: 'alphabet_name_german3',
+  type: AlphabetType.STANDARD,
+  alphabet: {
       'A' : '1', 'B' : '2', 'C' : '3', 'D' : '4', 'E' : '5', 'F' : '6', 'G' : '7', 'H' : '8', 'I' : '9', 'J' : '10', 'K' : '11', 'L' : '12', 'M' : '13',
       'N' : '14', 'O' : '15', 'P' : '16', 'Q' : '17', 'R' : '18', 'S' : '19', 'T' : '20', 'U' : '21', 'V' : '22', 'W' : '23', 'X' : '24', 'Y' : '25', 'Z' : '26',
       String.fromCharCode(196) : '6', // Ä
@@ -199,8 +207,9 @@ final Alphabet alphabetGerman3 = Alphabet(
 );
 
 final Alphabet alphabetSpanish1 = Alphabet(
-  'alphabet_name_spanish1',
-  {
+  key: 'alphabet_name_spanish1',
+  type: AlphabetType.STANDARD,
+  alphabet: {
     'A' : '1', 'B' : '2', 'C' : '3', 'CH' : '4', 'D' : '5', 'E' : '6', 'F' : '7', 'G' : '8', 'H' : '9', 'I' : '10', 'J' : '11', 'K' : '12', 'L' : '13',
     'LL' : '14', 'M' : '15', 'N' : '16',
     String.fromCharCode(209) : '17', // Ñ,
@@ -209,8 +218,9 @@ final Alphabet alphabetSpanish1 = Alphabet(
 );
 
 final Alphabet alphabetSpanish2 = Alphabet(
-  'alphabet_name_spanish2',
-  {
+  key: 'alphabet_name_spanish2',
+  type: AlphabetType.STANDARD,
+  alphabet: {
     'A' : '1', 'B' : '2', 'C' : '3', 'D' : '4', 'E' : '5', 'F' : '6', 'G' : '7', 'H' : '8', 'I' : '9', 'J' : '10', 'K' : '11', 'L' : '12', 'M' : '13', 'N' : '14',
     String.fromCharCode(209) : '15', // Ñ,
     'O' : '16', 'P' : '17', 'Q' : '18', 'R' : '19', 'S' : '20', 'T' : '21', 'U' : '22', 'V' : '23', 'W' : '24', 'X' : '25', 'Y' : '26', 'Z' : '27'
@@ -218,8 +228,9 @@ final Alphabet alphabetSpanish2 = Alphabet(
 );
 
 final Alphabet alphabetPolish1 = Alphabet(
-  'alphabet_name_polish1',
-  {
+  key: 'alphabet_name_polish1',
+  type: AlphabetType.STANDARD,
+  alphabet: {
     'A' : '1',
     String.fromCharCode(260) : '2', // Ą
     'B' : '3', 'C' : '4',
@@ -241,8 +252,9 @@ final Alphabet alphabetPolish1 = Alphabet(
 );
 
 final Alphabet alphabetGreek1 = Alphabet(
-  'alphabet_name_greek1',
-  {
+  key: 'alphabet_name_greek1',
+  type: AlphabetType.STANDARD,
+  alphabet: {
     String.fromCharCode(913) : '1', // Α
     String.fromCharCode(914) : '2', // Β
     String.fromCharCode(915) : '3', // Γ
@@ -271,8 +283,9 @@ final Alphabet alphabetGreek1 = Alphabet(
 );
 
 final Alphabet alphabetRussian1 = Alphabet(
-  'alphabet_name_russian1',
-  {
+  key: 'alphabet_name_russian1',
+  type: AlphabetType.STANDARD,
+  alphabet: {
     String.fromCharCode(1040) : '1', // А
     String.fromCharCode(1041) : '2', // Б
     String.fromCharCode(1042) : '3', // В

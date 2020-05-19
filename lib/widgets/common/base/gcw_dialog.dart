@@ -17,13 +17,13 @@ TextStyle _boldTextStyle = TextStyle(
   fontWeight: FontWeight.bold
 );
 
-showGCWDialog(BuildContext context, String title, String text, List<GCWDialogButton> buttons, {cancelButton: true}) {
+showGCWDialog(BuildContext context, String title, Widget child, List<GCWDialogButton> buttons, {cancelButton: true}) {
   if (cancelButton)
     buttons.insert(0, _cancelButton);
 
   AlertDialog dialog = AlertDialog(
     title: Text(title),
-    content: Text(text),
+    content: child,
     actions: buttons,
     backgroundColor: ThemeColors.accent,
     titleTextStyle: _boldTextStyle,
@@ -45,7 +45,7 @@ showGCWAlertDialog(BuildContext context, String title, String text, Function onO
     onPressed: onOKPressed
   );
 
-  showGCWDialog(context, title, text, [_okButton]);
+  showGCWDialog(context, title, Text(text), [_okButton]);
 }
 
 class GCWDialogButton extends StatefulWidget {

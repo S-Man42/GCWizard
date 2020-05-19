@@ -77,17 +77,12 @@ class _GCWToolListState extends State<GCWToolList> {
   }
 
   _buildSubtitle(BuildContext context, GCWToolWidget tool) {
-    var fontStyle = TextStyle(
-      fontFamily: gcwTextStyle().fontFamily,
-      fontSize: defaultFontSize() - 2
-    );
-
     var descriptionText;
     if (Prefs.getBool('toollist_show_descriptions') && tool.description != null && tool.description.length > 0) {
       descriptionText = IgnorePointer(
         child: GCWText(
           text: tool.description,
-          style: fontStyle,
+          style: gcwDescriptionTextStyle(),
         )
       );
     }
@@ -97,7 +92,7 @@ class _GCWToolListState extends State<GCWToolList> {
       exampleText = IgnorePointer(
         child: GCWText(
           text: tool.example,
-          style: fontStyle
+          style: gcwDescriptionTextStyle()
         )
       );
     }

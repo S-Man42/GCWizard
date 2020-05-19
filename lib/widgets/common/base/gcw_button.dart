@@ -24,6 +24,7 @@ class _GCWButtonState extends State<GCWButton> {
         onPressed: widget.onPressed,
         child: Text(
           widget.text,
+          textAlign: TextAlign.center,
           style: TextStyle(fontSize: defaultFontSize()),
         ),
       ),

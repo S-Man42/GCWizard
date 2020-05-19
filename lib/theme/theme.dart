@@ -29,6 +29,13 @@ TextStyle gcwHyperlinkTextStyle() {
   );
 }
 
+TextStyle gcwDescriptionTextStyle() {
+  return TextStyle(
+    fontSize: defaultFontSize() - 2,
+    fontFamily: gcwTextStyle().fontFamily
+  );
+}
+
 const roundedBorderRadius = 4.0;
 
 ThemeData buildTheme() {

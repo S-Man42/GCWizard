@@ -14,6 +14,7 @@ class GCWTextField extends StatefulWidget {
   final FocusNode focusNode;
   final autofocus;
   final icon;
+  final filled;
 
   const GCWTextField({
     Key key,
@@ -25,7 +26,8 @@ class GCWTextField extends StatefulWidget {
     this.hintText,
     this.focusNode,
     this.autofocus,
-    this.icon
+    this.icon,
+    this.filled: false
   }) : super(key: key);
 
   @override
@@ -59,6 +61,8 @@ class _GCWTextFieldState extends State<GCWTextField> {
           return TextFormField(
             autocorrect: false,
             decoration: InputDecoration(
+              fillColor: widget.filled ? ThemeColors.darkgrey : null,
+              filled: widget.filled,
               prefixIcon: widget.icon,
               isDense: true,
               suffixIconConstraints: BoxConstraints(

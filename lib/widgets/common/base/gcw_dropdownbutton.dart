@@ -8,12 +8,14 @@ class GCWDropDownButton extends StatefulWidget {
   final Function onChanged;
   final items;
   final value;
+  final DropdownButtonBuilder selectedItemBuilder;
 
   const GCWDropDownButton({
     Key key,
     this.value,
     this.items,
     this.onChanged,
+    this.selectedItemBuilder
   }) : super(key: key);
 
   @override
@@ -44,6 +46,7 @@ class _GCWDropDownButtonState extends State<GCWDropDownButton> {
           items: widget.items,
           onChanged: widget.onChanged,
           style: TextStyle(fontSize: defaultFontSize()),
+          selectedItemBuilder: widget.selectedItemBuilder,
         )
       )
     );

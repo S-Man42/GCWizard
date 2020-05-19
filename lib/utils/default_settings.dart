@@ -1,8 +1,17 @@
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:prefs/prefs.dart';
 
 void initDefaultSettings() {
+  if (Prefs.get('alphabetvalues_custom_alphabets') == null) {
+    Prefs.setStringList('alphabetvalues_custom_alphabets', []);
+  }
+
+  if (Prefs.get('alphabetvalues_default_alphabet') == null) {
+    Prefs.setString('alphabetvalues_default_alphabet', alphabetAZ.key);
+  }
+
   if (Prefs.get('coord_default_ellipsoid_type') == null) {
     Prefs.setString('coord_default_ellipsoid_type', EllipsoidType.STANDARD.toString());
     Prefs.setString('coord_default_ellipsoid_name', ELLIPSOID_NAME_WGS84);

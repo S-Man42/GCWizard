@@ -390,6 +390,7 @@
 
   "crosstotal_title" : "Zeige Summen",
   "crosstotal_output" : "Summen, Quersummen, Produkte",
+  "crosstotal_notdefined" : "Nicht definiert",
   "crosstotal_count_characters" : "Anzahl Zeichen",
   "crosstotal_count_letters" : "Anzahl Buchstaben",
   "crosstotal_count_digits" : "Anzahl Ziffern",
@@ -412,7 +413,7 @@
   "crosstotal_product_crosssum_alternated_forward" : "Quersumme alter. (vorw.) des Produkts",
   "crosstotal_crossproduct" : "Querprodukt",
   "crosstotal_crossproduct_iterated" : "Querprodukt iteriert",
-  "crosstotal_crossprocut_alternated" : "Querprodukt alterniert",
+  "crosstotal_crossproduct_alternated" : "Querprodukt alterniert",
 
   "cryptography_selection_title" : "Verschlüsselungen und Codes",
   "cryptography_selection_description" : "Kryptografie- und Encoding-Tools",
