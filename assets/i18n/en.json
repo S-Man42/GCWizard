@@ -766,6 +766,12 @@
   "periodictable_attribute_mostcommonisotop" : "Most Common Isotop",
   "periodictable_attribute_comments" : "Comments",
 
+  "permutation_title" : "Permutation",
+  "permutation_description" : "All changes in the order of the letters of a word",
+  "permutation_example" : "ABC → ABC BAC CBA BCA ACB CAB",
+  "permutation_avoiddouble" : "Avoid Double",
+  "permutation_count" : "Count",
+
   "phi_selection_title" : "Phi (Φ = 1.6180339...)",
   "phi_selection_description" : "Mathematical constant: Golden Ratio",
   "phi_selection_example" : "",
