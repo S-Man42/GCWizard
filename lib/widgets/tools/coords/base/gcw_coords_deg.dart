@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
@@ -123,20 +124,23 @@ class GCWCoordsDEGState extends State<GCWCoordsDEG> {
             ),
             Expanded(
               flex: 6,
-              child: GCWIntegerTextField(
-                hintText: 'DD',
-                textInputFormatter: CoordsIntegerDegreesLatTextInputFormatter(allowNegativeValues: false),
-                controller: _LatDegreesController,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentLatDegrees = ret['text'];
-                    _setCurrentValueAndEmitOnChange();
+              child: Container(
+                child: GCWIntegerTextField(
+                  hintText: 'DD',
+                  textInputFormatter: CoordsIntegerDegreesLatTextInputFormatter(allowNegativeValues: false),
+                  controller: _LatDegreesController,
+                  onChanged: (ret) {
+                    setState(() {
+                      _currentLatDegrees = ret['text'];
+                      _setCurrentValueAndEmitOnChange();
 
-                    if (_currentLatDegrees.length == 2)
-                      FocusScope.of(context).requestFocus(_latMinutesFocusNode);
-                  });
-                }
-              ),
+                      if (_currentLatDegrees.length == 2)
+                        FocusScope.of(context).requestFocus(_latMinutesFocusNode);
+                    });
+                  }
+                ),
+                padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+              )
             ),
             Expanded(
               flex: 1,
@@ -211,20 +215,23 @@ class GCWCoordsDEGState extends State<GCWCoordsDEG> {
             ),
             Expanded(
               flex: 6,
-              child: GCWIntegerTextField(
-                hintText: 'DD',
-                textInputFormatter: CoordsIntegerDegreesLonTextInputFormatter(),
-                controller: _LonDegreesController,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentLonDegrees = ret['text'];
-                    _setCurrentValueAndEmitOnChange();
+              child: Container(
+                child: GCWIntegerTextField(
+                  hintText: 'DD',
+                  textInputFormatter: CoordsIntegerDegreesLonTextInputFormatter(),
+                  controller: _LonDegreesController,
+                  onChanged: (ret) {
+                    setState(() {
+                      _currentLonDegrees = ret['text'];
+                      _setCurrentValueAndEmitOnChange();
 
-                    if (_currentLonDegrees.length == 3)
-                      FocusScope.of(context).requestFocus(_lonMinutesFocusNode);
-                  });
-                }
-              ),
+                      if (_currentLonDegrees.length == 3)
+                        FocusScope.of(context).requestFocus(_lonMinutesFocusNode);
+                    });
+                  }
+                ),
+                padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+              )
             ),
             Expanded(
               flex: 1,

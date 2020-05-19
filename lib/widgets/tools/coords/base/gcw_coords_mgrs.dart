@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_utm_lonzone_textinputformatter.dart';
 import 'package:latlong/latlong.dart';
 
@@ -55,72 +56,84 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
           Row(
             children: <Widget>[
               Expanded(
-                child: GCWIntegerTextField(
-                  hintText: i18n(context, 'coords_formatconverter_mgrs_lonzone'),
-                  textInputFormatter: CoordsIntegerUTMLonZoneTextInputFormatter(),
-                  controller: _LonZoneController,
-                  onChanged: (ret) {
-                    setState(() {
-                      _currentLonZone = ret;
-                   //   _setCurrentValueAndEmitOnChange();
-                    });
-                  }
-                ),
+                child: Container(
+                  child: GCWIntegerTextField(
+                    hintText: i18n(context, 'coords_formatconverter_mgrs_lonzone'),
+                    textInputFormatter: CoordsIntegerUTMLonZoneTextInputFormatter(),
+                    controller: _LonZoneController,
+                    onChanged: (ret) {
+                      setState(() {
+                        _currentLonZone = ret;
+                        //   _setCurrentValueAndEmitOnChange();
+                      });
+                    }
+                  ),
+                  padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                )
               ),
               Expanded(
-                child: GCWDropDownButton(
-                  value: _currentLatZone,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _currentLatZone = newValue;
-                     // _setCurrentValueAndEmitOnChange();
-                    });
-                  },
-                  items: digraphLettersEast.split('').map((char) {
-                    return DropdownMenuItem(
-                      value: char,
-                      child: Text(char),
-                    );
-                  }).toList(),
-                ),
+                child: Container(
+                  child: GCWDropDownButton(
+                    value: _currentLatZone,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _currentLatZone = newValue;
+                        // _setCurrentValueAndEmitOnChange();
+                      });
+                    },
+                    items: digraphLettersEast.split('').map((char) {
+                      return DropdownMenuItem(
+                        value: char,
+                        child: Text(char),
+                      );
+                    }).toList(),
+                  ),
+                  padding: EdgeInsets.only(left: DEFAULT_MARGIN)
+                )
               ),
             ],
           ),
           Row(
             children: <Widget>[
               Expanded(
-                child: GCWDropDownButton(
-                  value: _currentDigraphEasting,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _currentDigraphEasting = newValue;
-                     // _setCurrentValueAndEmitOnChange();
-                    });
-                  },
-                  items: digraphLettersEast.split('').map((char) {
-                    return DropdownMenuItem(
-                      value: char,
-                      child: Text(char),
-                    );
-                  }).toList(),
-                ),
+                child: Container(
+                  child: GCWDropDownButton(
+                    value: _currentDigraphEasting,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _currentDigraphEasting = newValue;
+                        // _setCurrentValueAndEmitOnChange();
+                      });
+                    },
+                    items: digraphLettersEast.split('').map((char) {
+                      return DropdownMenuItem(
+                        value: char,
+                        child: Text(char),
+                      );
+                    }).toList(),
+                  ),
+                  padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                )
               ),
               Expanded(
-                child: GCWDropDownButton(
-                  value: _currentDigraphNorthing,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _currentDigraphNorthing = newValue;
-                      //_setCurrentValueAndEmitOnChange();
-                    });
-                  },
-                  items: digraphLettersNorth.split('').map((char) {
-                    return DropdownMenuItem(
-                      value: char,
-                      child: Text(char),
-                    );
-                  }).toList(),
-                ),
+                child: Container(
+                  child: GCWDropDownButton(
+                    value: _currentDigraphNorthing,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _currentDigraphNorthing = newValue;
+                        //_setCurrentValueAndEmitOnChange();
+                      });
+                    },
+                    items: digraphLettersNorth.split('').map((char) {
+                      return DropdownMenuItem(
+                        value: char,
+                        child: Text(char),
+                      );
+                    }).toList(),
+                  ),
+                  padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+                )
               )
             ],
           ),

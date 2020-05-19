@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lat_textinputformatter.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lon_textinputformatter.dart';
 import 'package:latlong/latlong.dart';
@@ -101,20 +101,23 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
               ),
               Expanded(
                 flex: 6,
-                child: GCWIntegerTextField(
-                  hintText: 'DD',
-                  textInputFormatter: CoordsIntegerDegreesLatTextInputFormatter(allowNegativeValues: false),
-                  controller: _LatDegreesController,
-                  onChanged: (ret) {
-                    setState(() {
-                      _currentLatDegrees = ret['text'];
-                      _setCurrentValueAndEmitOnChange();
+                child: Container(
+                  child: GCWIntegerTextField(
+                    hintText: 'DD',
+                    textInputFormatter: CoordsIntegerDegreesLatTextInputFormatter(allowNegativeValues: false),
+                    controller: _LatDegreesController,
+                    onChanged: (ret) {
+                      setState(() {
+                        _currentLatDegrees = ret['text'];
+                        _setCurrentValueAndEmitOnChange();
 
-                      if (_currentLatDegrees.length == 2)
-                        FocusScope.of(context).requestFocus(_latMilliDegreesFocusNode);
-                    });
-                  }
-                ),
+                        if (_currentLatDegrees.length == 2)
+                          FocusScope.of(context).requestFocus(_latMilliDegreesFocusNode);
+                      });
+                    }
+                  ),
+                  padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+                )
               ),
               Expanded(
                 flex: 1,
@@ -164,20 +167,23 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
               ),
               Expanded(
                 flex: 6,
-                child: GCWIntegerTextField(
-                  hintText: 'DD',
-                  textInputFormatter: CoordsIntegerDegreesLonTextInputFormatter(allowNegativeValues: false),
-                  controller: _LonDegreesController,
-                  onChanged: (ret) {
-                    setState(() {
-                      _currentLonDegrees = ret['text'];
-                      _setCurrentValueAndEmitOnChange();
+                child: Container(
+                  child: GCWIntegerTextField(
+                    hintText: 'DD',
+                    textInputFormatter: CoordsIntegerDegreesLonTextInputFormatter(allowNegativeValues: false),
+                    controller: _LonDegreesController,
+                    onChanged: (ret) {
+                      setState(() {
+                        _currentLonDegrees = ret['text'];
+                        _setCurrentValueAndEmitOnChange();
 
-                      if (_currentLonDegrees.length == 3)
-                        FocusScope.of(context).requestFocus(_lonMilliDegreesFocusNode);
-                    });
-                  }
-                ),
+                        if (_currentLonDegrees.length == 3)
+                          FocusScope.of(context).requestFocus(_lonMilliDegreesFocusNode);
+                      });
+                    }
+                  ),
+                  padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+                )
               ),
               Expanded(
                 flex: 1,

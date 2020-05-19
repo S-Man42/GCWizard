@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
@@ -156,9 +157,8 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
                     iconData: Icons.remove,
                     onPressed: _decreaseValue
                   ),
-                  margin: const EdgeInsets.only(
-                    left: 10.0,
-                    right: 10.0
+                  margin: EdgeInsets.only(
+                    right: 2 * DEFAULT_MARGIN
                   ),
                 ),
                 Expanded(
@@ -169,9 +169,8 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
                     iconData: Icons.add,
                     onPressed: _increaseValue
                   ),
-                  margin: const EdgeInsets.only(
-                      left: 10.0,
-                      right: 10.0
+                  margin: EdgeInsets.only(
+                    left: 2 * DEFAULT_MARGIN
                   ),
                 )
               ],

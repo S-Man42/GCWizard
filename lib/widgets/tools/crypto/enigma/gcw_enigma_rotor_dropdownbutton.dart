@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto/enigma.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_abc_dropdownbutton.dart';
 
@@ -46,50 +47,59 @@ class GCWEnigmaRotorDropDownButtonState extends State<GCWEnigmaRotorDropDownButt
     return Row(
       children: <Widget>[
         Expanded(
-          child: GCWDropDownButton(
-            value: _currentRotor,
-            items: allEnigmaRotors
-              .where((rotor) => rotor.type == widget.type)
-              .map((rotor) {
+          child: Container(
+            child: GCWDropDownButton(
+              value: _currentRotor,
+              items: allEnigmaRotors
+                  .where((rotor) => rotor.type == widget.type)
+                  .map((rotor) {
                 return DropdownMenuItem(
                   value: rotor.name,
                   child: Text('${rotor.name}'),
                 );
               })
-              .toList(),
-            onChanged: (value) {
-              setState(() {
-                _currentRotor = value;
-                _setCurrentValueAndEmitOnChange();
-              });
-            },
+                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  _currentRotor = value;
+                  _setCurrentValueAndEmitOnChange();
+                });
+              },
+            ),
+            padding: EdgeInsets.only(right: DEFAULT_MARGIN)
           ),
           flex: 2
         ),
         widget.type == EnigmaRotorType.STANDARD
           ? Expanded(
-              child: GCWABCDropDownButton(
-                value: _currentOffset,
-                onChanged: (value) {
-                  setState(() {
-                    _currentOffset = value;
-                    _setCurrentValueAndEmitOnChange();
-                  });
-                },
+              child: Container(
+                child: GCWABCDropDownButton(
+                  value: _currentOffset,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentOffset = value;
+                      _setCurrentValueAndEmitOnChange();
+                    });
+                  },
+                ),
+                padding: EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
               ),
               flex: 1
             )
           : Container(),
         widget.type == EnigmaRotorType.STANDARD
           ? Expanded(
-              child: GCWABCDropDownButton(
-                value: _currentSetting,
-                onChanged: (value) {
-                  setState(() {
-                    _currentSetting = value;
-                    _setCurrentValueAndEmitOnChange();
-                  });
-                },
+              child: Container(
+                child: GCWABCDropDownButton(
+                  value: _currentSetting,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentSetting = value;
+                      _setCurrentValueAndEmitOnChange();
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(left: DEFAULT_MARGIN),
               ),
               flex: 1
             )

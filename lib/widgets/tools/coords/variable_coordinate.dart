@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/units/lengths.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -186,12 +187,15 @@ class VariableCoordinateState extends State<VariableCoordinate> {
               children: <Widget>[
                 Expanded(
                   flex: 3,
-                  child: GCWTextField(
-                    hintText: i18n(context, 'common_distance_hint'),
-                    controller: _distanceController,
-                    onChanged: (text) {
-                      _currentDistanceInput = text;
-                    },
+                  child: Container(
+                    child: GCWTextField(
+                      hintText: i18n(context, 'common_distance_hint'),
+                      controller: _distanceController,
+                      onChanged: (text) {
+                        _currentDistanceInput = text;
+                      },
+                    ),
+                    padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
                   )
                 ),
                 Expanded(
