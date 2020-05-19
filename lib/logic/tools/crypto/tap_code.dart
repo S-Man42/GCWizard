@@ -33,11 +33,11 @@ String encryptTapCode(String input, {TapCodeMode mode: TapCodeMode.JToI}) {
       break;
   }
 
-  return encryptPolybios(input, TAPCODE_KEY, mode: PolybiosMode.custom, alphabet: _generateAlphabet(mode)).output;
+  return encryptPolybios(input, TAPCODE_KEY, mode: PolybiosMode.CUSTOM, alphabet: _generateAlphabet(mode)).output;
 }
 
 String decryptTapCode(String input, {mode: TapCodeMode.JToI}) {
-  var output = decryptPolybios(input, TAPCODE_KEY, mode: PolybiosMode.custom, alphabet: _generateAlphabet(mode));
+  var output = decryptPolybios(input, TAPCODE_KEY, mode: PolybiosMode.CUSTOM, alphabet: _generateAlphabet(mode));
   if (output == null)
     return '';
 

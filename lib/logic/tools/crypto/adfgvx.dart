@@ -45,7 +45,7 @@ String _encrypt (
   if (alphabet == null)
     return null; // TODO: Exception
 
-  PolybiosOutput polybiosOutput = encryptPolybios(input, adfgvxMode, mode: PolybiosMode.custom, alphabet: alphabet);
+  PolybiosOutput polybiosOutput = encryptPolybios(input, adfgvxMode, mode: PolybiosMode.CUSTOM, alphabet: alphabet);
 
   if (polybiosOutput == null)
     return null;
@@ -179,7 +179,7 @@ String _decrypt (
   if (alphabet == null)
     return null; // TODO: Exception
 
-  PolybiosOutput polybiosOutput = decryptPolybios(transposed, adfgvxMode, mode: PolybiosMode.custom, alphabet: alphabet);
+  PolybiosOutput polybiosOutput = decryptPolybios(transposed, adfgvxMode, mode: PolybiosMode.CUSTOM, alphabet: alphabet);
 
   if (polybiosOutput == null)
     return null;

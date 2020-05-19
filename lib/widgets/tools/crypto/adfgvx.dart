@@ -53,7 +53,7 @@ class ADFGVXState extends State<ADFGVX> {
     var polybiosModeItems = {
       PolybiosMode.AZ09 : i18n(context, 'polybios_mode_az09'),
       PolybiosMode.ZA90 : i18n(context, 'polybios_mode_za90'),
-      PolybiosMode.custom : i18n(context, 'common_custom'),
+      PolybiosMode.CUSTOM : i18n(context, 'common_custom'),
     };
 
     return Column(
@@ -113,7 +113,7 @@ class ADFGVXState extends State<ADFGVX> {
             );
           }).toList(),
         ),
-        _currentPolybiosMode == PolybiosMode.custom ? GCWTextField(
+        _currentPolybiosMode == PolybiosMode.CUSTOM ? GCWTextField(
           hintText: i18n(context, 'common_alphabet'),
           controller: _alphabetController,
           onChanged: (text) {

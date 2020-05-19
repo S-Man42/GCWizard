@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:gc_wizard/utils/alphabets.dart';
 
-enum PolybiosMode{AZ09, ZA90, custom}
+enum PolybiosMode{AZ09, ZA90, CUSTOM}
 
 class PolybiosOutput {
   final String output;
@@ -14,6 +14,9 @@ class PolybiosOutput {
 String _sanitizeAlphabet(String alphabet) {
   if (alphabet == null || alphabet == '')
     return '';
+
+  alphabet += alphabet_AZ.keys.join();
+  alphabet += alphabet_09.keys.join();
 
   alphabet = alphabet.toUpperCase().replaceAll(' ', '');
 

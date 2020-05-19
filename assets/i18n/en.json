@@ -539,7 +539,6 @@
   "formulasolver_formulas_removeformula" : "Remove Formula",
   "formulasolver_formulas_copyformula" : "Copy Formula",
   "formulasolver_formulas_copyresult" : "Copy Result",
-
   "formulasolver_values_newvalue" : "Add Variable",
   "formulasolver_values_key" : "Name",
   "formulasolver_values_value" : "Value",
