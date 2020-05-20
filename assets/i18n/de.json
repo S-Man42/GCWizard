@@ -182,7 +182,7 @@
 
   "colors_title" : "Farben",
   "colors_description" : "Farbwähler und Farbraum-Konvertierer",
-  "colors_example" : "",
+  "colors_outputcolorspace" : "Ausgabe-Farbraum",
   "colors_colorspace_rgb_title" : "RGB",
   "colors_colorspace_rgb_red" : "R (Rot)",
   "colors_colorspace_rgb_green" : "G (Grün)",

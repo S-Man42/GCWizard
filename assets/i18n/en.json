@@ -182,7 +182,7 @@
 
   "colors_title" : "Colors",
   "colors_description" : "Color Picker and Color Space Converter",
-  "colors_example" : "",
+  "colors_outputcolorspace" : "Output Color Space",
   "colors_colorspace_rgb_title" : "RGB",
   "colors_colorspace_rgb_red" : "R (Red)",
   "colors_colorspace_rgb_green" : "G (Green)",
