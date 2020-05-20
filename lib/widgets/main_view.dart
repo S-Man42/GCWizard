@@ -53,14 +53,12 @@ import 'package:gc_wizard/widgets/tools/encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
-import 'file:///E:/workspace/GCWizard/lib/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/crosssum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
@@ -123,7 +121,6 @@ class _MainViewState extends State<MainView> {
           className(CoordsSelection()),
           className(ColorPicker()),
           className(CombinatoricsSelection()),
-          className(CrossSum()),
           className(DatesSelection()),
           className(Deadfish()),
           className(Decabit()),
@@ -138,7 +135,6 @@ class _MainViewState extends State<MainView> {
           className(Morse()),
           className(NumeralBases()),
           className(PeriodicTable()),
-          className(Permutation()),
           className(PhiSelection()),
           className(PiSelection()),
           className(PigLatin()),

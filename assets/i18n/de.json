@@ -445,9 +445,15 @@
   "coords_variablecoordinate_decleftpad_right" : "links auffüllen\n52° 10.009",
   "coords_variablecoordinate_reverse" : "Rückwärts",
 
+  "crosssum_selection_title" : "Quersumme",
+  "crosssum_selection_description" : "Quersummen einer ganzen Zahl",
   "crosssum_crosssum_title" : "Quersumme",
   "crosssum_crosssum_description" : "Quersummen einer ganzen Zahl (inkl. iteriert, alternierend)",
   "crosssum_crosssum_example" : "42 → 6",
+  "crosssum_range_title" : "Quersumme in Bereich",
+  "crosssum_range_description" : "Findet alle Zahlen in einem Bereich mit einer bestimmten Quersumme",
+  "crosssum_range_expected" : "Erwartete Quersumme",
+  "crosssum_range_range" : "Bereichssuche (Start, Ende)",
 
   "crosstotal_title" : "Zeige Summen",
   "crosstotal_output" : "Summen, Quersummen, Produkte",

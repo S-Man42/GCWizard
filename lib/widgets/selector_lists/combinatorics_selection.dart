@@ -5,9 +5,8 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-
-import 'file:///E:/workspace/GCWizard/lib/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 
 class CombinatoricsSelection extends GCWSelection {
   @override

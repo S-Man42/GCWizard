@@ -10,6 +10,7 @@ import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/crosssum_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
@@ -92,7 +93,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/crosssum.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
@@ -123,6 +125,7 @@ class Registry {
   static final SEARCHSTRING_COMBINATORICS_COMBINATION = SEARCHSTRING_COMBINATORICS + 'combinations kombinationen untergruppen subgroups ';
   static final SEARCHSTRING_COMBINATORICS_PERMUTATION = SEARCHSTRING_COMBINATORICS + 'permutationen permutations anordnungen reihenfolgen arrangements orders ';
   static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
+  static final SEARCHSTRING_CROSSSUMS = 'crosssums digits alternated crosstotals iterated iteriert products quersummen produkte alternierend alterniert iterierend ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
   static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterische programmiersprache esoteric programming language ';
@@ -243,11 +246,12 @@ class Registry {
         tool: CoordsSelection(),
         i18nPrefix: 'coords_selection',
         searchStrings: SEARCHSTRING_COORDINATES
-      ),GCWToolWidget(
-        tool: CrossSum(),
-        i18nPrefix: 'crosssum_crosssum',
+      ),
+      GCWToolWidget(
+        tool: CrossSumSelection(),
+        i18nPrefix: 'crosssum_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'crosssums digits alternated crosstotals iterated iteriert products quersummen produkte alternierend alterniert iterierend'
+        searchStrings: SEARCHSTRING_COORDINATES
       ),
       GCWToolWidget(
         tool: CryptographySelection(),
@@ -524,19 +528,16 @@ class Registry {
       GCWToolWidget(
         tool: Combination(),
         i18nPrefix: 'combinatorics_combination',
-        category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_COMBINATORICS_COMBINATION
       ),
       GCWToolWidget(
         tool: Permutation(),
         i18nPrefix: 'combinatorics_permutation',
-        category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_COMBINATORICS_PERMUTATION
       ),
       GCWToolWidget(
         tool: CombinationPermutation(),
         i18nPrefix: 'combinatorics_combinationpermutation',
-        category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_COMBINATORICS_PERMUTATION + SEARCHSTRING_COMBINATORICS
       ),
 
@@ -636,6 +637,19 @@ class Registry {
         i18nPrefix: 'coords_ellipsoidtransform',
         iconPath: 'assets/coordinates/icon_ellipsoid_transform.png',
         searchStrings: SEARCHSTRING_COORDINATES + 'rotationsellipsoids converter converting konverter konvertieren umwandeln bessel 1841 bessel krassowski krasowksi krasovsky krassovsky 1950 airy 1830 modified potsdam dhdn2001 dhdn1995 pulkowo mgi lv95 ed50 clarke 1866 osgb36 date datum wgs84'
+      ),
+
+      //CrossSumSelection *******************************************************************************************
+
+      GCWToolWidget(
+        tool: CrossSum(),
+        i18nPrefix: 'crosssum_crosssum',
+        searchStrings: SEARCHSTRING_CROSSSUMS
+      ),
+      GCWToolWidget(
+        tool: CrossSumRange(),
+        i18nPrefix: 'crosssum_range',
+        searchStrings: SEARCHSTRING_CROSSSUMS
       ),
 
       //DatesSelection **********************************************************************************************
