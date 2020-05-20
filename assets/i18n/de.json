@@ -327,7 +327,7 @@
   "coords_intersect_nointersection" : "Kein Schnittpunkt gefunden",
   "coords_intersectcircles_marker_centerpoint1" : "1",
   "coords_intersectcircles_marker_centerpoint2" : "2",
-  "coords_intersectcircles_marker_centerpoint2" : "3",
+  "coords_intersectcircles_marker_centerpoint3" : "3",
   "coords_intersectbearingcircle_title" : "Schnittpunkte von Linie und Kreis",
   "coords_intersectbearingcircle_description" : "Berechnet 2 Schnittpunkte einer Linie und eines Kreises (definiert durch Peilung von einem Punkt und einen Mittelpunkt und Radius)",
   "coords_intersectbearingcircle_example" : "",
@@ -811,6 +811,12 @@
   "periodictable_attribute_halflife_stable" : "Stabil",
   "periodictable_attribute_mostcommonisotop" : "Häufigstes Isotop",
   "periodictable_attribute_comments" : "Anmerkungen",
+
+  "permutation_title" : "Permutation",
+  "permutation_description" : "Alle Änderungen der Reihenfolge der Buchstaben eines Wortes",
+  "permutation_example" : "ABC → ABC BAC CBA BCA ACB CAB",
+  "permutation_avoiddouble" : "Vermeide Doppelte",
+  "permutation_count" : "Anzahl",
 
   "phi_selection_title" : "Phi (Φ = 1,6180339...)",
   "phi_selection_description" : "Mathematische Konstante: Goldener Schnitt",

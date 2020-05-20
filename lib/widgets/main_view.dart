@@ -52,6 +52,7 @@ import 'package:gc_wizard/widgets/tools/encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/encodings/permutation.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
@@ -133,6 +134,7 @@ class _MainViewState extends State<MainView> {
           className(Morse()),
           className(NumeralBases()),
           className(PeriodicTable()),
+          className(Permutation()),
           className(PhiSelection()),
           className(PiSelection()),
           className(PigLatin()),

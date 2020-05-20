@@ -82,6 +82,7 @@ import 'package:gc_wizard/widgets/tools/encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/encodings/permutation.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
@@ -317,6 +318,12 @@ class Registry {
         i18nPrefix: 'periodictable',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'periodic tables of the elements periodensystem der elemente chemie chemistry'
+      ),
+      GCWToolWidget(
+        tool: Permutation(),
+        i18nPrefix: 'permutation',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'permutation'
       ),
       GCWToolWidget(
         tool: PhiSelection(),
