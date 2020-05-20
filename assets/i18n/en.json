@@ -237,7 +237,7 @@
   "combinatorics_permutation_title" : "Permutation",
   "combinatorics_permutation_description" : "All arrangements of characters",
   "combinatorics_permutation_example" : "ABC → ABC BAC CBA BCA ACB CAB",
-  "combinatorics_combinationpermutation_title" : "Permuted Combination",
+  "combinatorics_combinationpermutation_title" : "Permuted Combinations",
   "combinatorics_combinationpermutation_description" : "All subgroups and arrangements of characters",
   "combinatorics_combinationpermutation_example" : "ABC → A B C AB AC BA BC CA CB ABC ACB BAC BCA CAB CBA",
 
