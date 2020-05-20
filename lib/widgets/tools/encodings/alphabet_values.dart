@@ -9,8 +9,8 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -725,10 +725,16 @@ class AlphabetValuesState extends State<AlphabetValues> {
     var alphabet = _getFinalAlphabet();
 
     if (_currentMode == GCWSwitchPosition.left) {
-      return GCWCrosstotalOutput(_currentEncodeInput, logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true));
+      return GCWCrosstotalOutput(
+        text: _currentEncodeInput,
+        values: logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true)
+      );
     } else {
       var text = logic.AlphabetValues(alphabet: alphabet).valuesToText(List<int>.from(_currentDecodeInput['values']));
-      return GCWCrosstotalOutput(text, _currentDecodeInput['values']);
+      return GCWCrosstotalOutput(
+        text: text,
+        values: _currentDecodeInput['values']
+      );
     }
   }
 

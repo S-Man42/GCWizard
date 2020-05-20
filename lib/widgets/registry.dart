@@ -92,6 +92,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/crosssum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
@@ -242,6 +243,11 @@ class Registry {
         tool: CoordsSelection(),
         i18nPrefix: 'coords_selection',
         searchStrings: SEARCHSTRING_COORDINATES
+      ),GCWToolWidget(
+        tool: CrossSum(),
+        i18nPrefix: 'crosssum_crosssum',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'crosssums digits alternated crosstotals iterated iteriert products quersummen produkte alternierend alterniert iterierend'
       ),
       GCWToolWidget(
         tool: CryptographySelection(),

@@ -5,8 +5,8 @@ import 'package:gc_wizard/logic/tools/encodings/scrabble_sets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_crosstotal_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_crosstotal_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_crosstotal_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
@@ -88,7 +88,10 @@ class ScrabbleState extends State<Scrabble> {
         GCWDefaultOutput(
           text: _output
         ),
-        _currentCrosstotalMode ? GCWCrosstotalOutput(_currentInput, _currentValues) : Container()
+        _currentCrosstotalMode ? GCWCrosstotalOutput(
+          text: _currentInput,
+          values: _currentValues
+        ) : Container()
       ],
     );
   }

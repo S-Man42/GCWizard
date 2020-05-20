@@ -114,13 +114,19 @@ class ASCIIValuesState extends State<ASCIIValues> {
       return Container();
 
     if (_currentMode == GCWSwitchPosition.left) {
-      return GCWCrosstotalOutput(_currentEncodeInput, _currentEncodeInput.codeUnits);
+      return GCWCrosstotalOutput(
+        text: _currentEncodeInput,
+        values: _currentEncodeInput.codeUnits
+      );
     } else {
       var isBinary = _currentRadix == GCWSwitchPosition.right;
       var sanitizedValues = _sanitizeDecodeInput(isBinary: isBinary);
 
       var text = String.fromCharCodes(sanitizedValues);
-      return GCWCrosstotalOutput(text, sanitizedValues);
+      return GCWCrosstotalOutput(
+        text: text,
+        values: sanitizedValues
+      );
     }
   }
 
