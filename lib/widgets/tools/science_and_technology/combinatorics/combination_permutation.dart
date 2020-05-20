@@ -1,18 +1,23 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-class Permutation extends StatefulWidget {
+class CombinationPermutation extends StatefulWidget {
   @override
-  PermutationState createState() => PermutationState();
+  CombinationPermutationState createState() => CombinationPermutationState();
 }
 
-class PermutationState extends State<Permutation> {
+class CombinationPermutationState extends State<CombinationPermutation> {
   var _currentInput = '';
   bool _currentShowDuplicates = false;
 
@@ -21,7 +26,7 @@ class PermutationState extends State<Permutation> {
     return Column(
       children: <Widget>[
         GCWTextField(
-          maxLength: PERMUTATION_MAX_LENGTH,
+          maxLength: PERMUTATION_MAX_LENGTH - 1,
           onChanged: (text) {
             setState(() {
               _currentInput = text;
@@ -49,19 +54,22 @@ class PermutationState extends State<Permutation> {
       );
     }
 
-    List out = generatePermutations(_currentInput, avoidDuplicates: !_currentShowDuplicates);
+    List<String> combinations = generateCombinations(_currentInput, avoidDuplicates: !_currentShowDuplicates);
 
-    return GCWOutput(
-      child: Column(
-        children: <Widget>[
-          GCWOutputText(
-            text: '${i18n(context, 'common_count')}: ${out.length}'
-          ),
-          GCWOutputText(
-            text: out.join(' ')
-          )
-        ],
-      ),
+    List<List<dynamic>> outputData = combinations
+        .map((combination) => [combination, generatePermutations(combination, avoidDuplicates: !_currentShowDuplicates).join(' ')])
+        .toList();
+
+    var rows = columnedMultiLineOutput(outputData, flexValues: [1, 3]);
+
+    rows.insert(0,
+      GCWTextDivider(
+         text: i18n(context, 'common_output')
+      )
+    );
+
+    return Column(
+      children: rows
     );
   }
 }

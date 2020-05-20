@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/combinatorics/permutation.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 
-class Permutation extends StatefulWidget {
+class Combination extends StatefulWidget {
   @override
-  PermutationState createState() => PermutationState();
+  CombinationState createState() => CombinationState();
 }
 
-class PermutationState extends State<Permutation> {
+class CombinationState extends State<Combination> {
   var _currentInput = '';
   bool _currentShowDuplicates = false;
 
@@ -21,7 +21,7 @@ class PermutationState extends State<Permutation> {
     return Column(
       children: <Widget>[
         GCWTextField(
-          maxLength: PERMUTATION_MAX_LENGTH,
+          maxLength: COMBINATION_MAX_LENGTH,
           onChanged: (text) {
             setState(() {
               _currentInput = text;
@@ -49,7 +49,7 @@ class PermutationState extends State<Permutation> {
       );
     }
 
-    List out = generatePermutations(_currentInput, avoidDuplicates: !_currentShowDuplicates);
+    List out = generateCombinations(_currentInput, avoidDuplicates: !_currentShowDuplicates);
 
     return GCWOutput(
       child: Column(
