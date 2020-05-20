@@ -15,6 +15,7 @@ class GCWTextField extends StatefulWidget {
   final autofocus;
   final icon;
   final filled;
+  final maxLength;
 
   const GCWTextField({
     Key key,
@@ -27,7 +28,8 @@ class GCWTextField extends StatefulWidget {
     this.focusNode,
     this.autofocus,
     this.icon,
-    this.filled: false
+    this.filled: false,
+    this.maxLength
   }) : super(key: key);
 
   @override
@@ -103,7 +105,8 @@ class _GCWTextFieldState extends State<GCWTextField> {
             maxLines: null,
             focusNode: widget.focusNode,
             autofocus: widget.autofocus ?? false,
-            style: TextStyle(fontSize: defaultFontSize())
+            style: TextStyle(fontSize: defaultFontSize()),
+            maxLength: widget.maxLength,
           );
         }
       )

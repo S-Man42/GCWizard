@@ -10,6 +10,7 @@ import 'package:gc_wizard/widgets/main_menu.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
@@ -52,7 +53,7 @@ import 'package:gc_wizard/widgets/tools/encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
-import 'package:gc_wizard/widgets/tools/encodings/permutation.dart';
+import 'file:///E:/workspace/GCWizard/lib/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
@@ -120,6 +121,7 @@ class _MainViewState extends State<MainView> {
           className(ChickenLanguage()),
           className(CoordsSelection()),
           className(ColorPicker()),
+          className(CombinatoricsSelection()),
           className(DatesSelection()),
           className(Deadfish()),
           className(Decabit()),

@@ -8,6 +8,7 @@ import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
@@ -82,13 +83,13 @@ import 'package:gc_wizard/widgets/tools/encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
-import 'package:gc_wizard/widgets/tools/encodings/permutation.dart';
 import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
@@ -115,6 +116,7 @@ class Registry {
   static final SEARCHSTRING_BRAINFK = SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'brainf**k ';
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
   static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen konrad zuse z-22 z22 purched paper baudot-murray-code ';
+  static final SEARCHSTRING_COMBINATORICS = 'mathematics mathematik kombinatorik combinatorics ';
   static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
@@ -227,6 +229,12 @@ class Registry {
         searchStrings: 'colors pal ntsc farben rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode picker red green blue yellow black key magenta orange cyan luminanz hellwert farbwert helligkeit saettigung luminance chrominanz chrominance saturation lightness hue cmyk luma chroma'
       ),
       GCWToolWidget(
+        tool: CombinatoricsSelection(),
+        i18nPrefix: 'combinatorics_selection',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: SEARCHSTRING_COMBINATORICS
+      ),
+      GCWToolWidget(
         tool: CoordsSelection(),
         i18nPrefix: 'coords_selection',
         searchStrings: SEARCHSTRING_COORDINATES
@@ -318,12 +326,6 @@ class Registry {
         i18nPrefix: 'periodictable',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'periodic tables of the elements periodensystem der elemente chemie chemistry'
-      ),
-      GCWToolWidget(
-        tool: Permutation(),
-        i18nPrefix: 'permutation',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'permutation'
       ),
       GCWToolWidget(
         tool: PhiSelection(),
@@ -506,6 +508,14 @@ class Registry {
         tool: Ook(),
         i18nPrefix: 'brainfk_ook',
         searchStrings: SEARCHSTRING_BRAINFK + 'ook terry pratchett monkeys apes'
+      ),
+
+      //CombinatoricsSelection ***************************************************************************************
+      GCWToolWidget(
+        tool: Permutation(),
+        i18nPrefix: 'permutation',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_COMBINATORICS + 'permutationen permutations anordnungen reihenfolgen arrangements orders '
       ),
 
       //CoordsSelection **********************************************************************************************

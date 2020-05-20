@@ -228,6 +228,9 @@
   "colors_colorspace_yiq_i" : "I (Cyan/Orange)",
   "colors_colorspace_yiq_q" : "Q (Mag./Grün)",
 
+  "combinatorics_selection_title" : "Kombinatorik",
+  "combinatorics_selection_description" : "Permutation und Kombination",
+
   "common_alphabet" : "Alphabet",
   "common_app_title" : "GC Wizard",
   "common_cancel" : "Abbrechen",
@@ -813,9 +816,9 @@
   "periodictable_attribute_comments" : "Anmerkungen",
 
   "permutation_title" : "Permutation",
-  "permutation_description" : "Alle Änderungen der Reihenfolge der Buchstaben eines Wortes",
+  "permutation_description" : "Alle Anordnungen von Zeichen",
   "permutation_example" : "ABC → ABC BAC CBA BCA ACB CAB",
-  "permutation_avoiddouble" : "Vermeide Doppelte",
+  "permutation_showduplicates" : "Zeige Duplikate",
   "permutation_count" : "Anzahl",
 
   "phi_selection_title" : "Phi (Φ = 1,6180339...)",
