@@ -890,6 +890,9 @@
 
   "railfence_title" : "Railfence/Zig-Zag",
   "railfence_description" : "Cipher written diagonally on rails of an imaginary fence (transposition)",
+  "railfence_key" : "Key",
+  "railfence_optionalpassword" : "Optional Password",
+  "railfence_offset" : "Offset",
 
   "resistor_selection_title" : "Resistor",
   "resistor_selection_description" : "Electrical Resistor",

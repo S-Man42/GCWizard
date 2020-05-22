@@ -890,6 +890,9 @@
 
   "railfence_title" : "Jägerzaun/Lattenzaun",
   "railfence_description" : "Chiffre, bei der der Text diagonal über Latten eines imaginären Zauns geschrieben wird",
+  "railfence_key" : "Schlüssel",
+  "railfence_optionalpassword" : "Optionales Passwort",
+  "railfence_offset" : "Verschiebung",
 
   "resistor_selection_title" : "Widerstand",
   "resistor_selection_description" : "Elektrischer Widerstand",
