@@ -2,7 +2,7 @@ import 'dart:collection';
 import 'dart:math';
 
 import 'package:diacritic/diacritic.dart';
-import 'package:gc_wizard/logic/tools/crypto/rotator.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/rotator.dart';
 import 'package:intl/intl.dart';
 
 import 'alphabets.dart';

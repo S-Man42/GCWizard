@@ -50,13 +50,13 @@ decryptIncreasedN(int number) {
 ```
 
 #### Create tests for business logic:
-1. Tests are located in the `/test/` directory. Its structure follows the main structure. So, your test should be located into `/test/logic/tools/crypto/increased_n.dart`.
+1. Tests are located in the `/test/` directory. Its structure follows the main structure. So, your test should be located into `/test/logic/tools/crypto_and_encodings/increased_n.dart`.
 1. **Test structure**: There are test groups. Every group is for testing a specific method. Usually there are two groups, one for encryption and one for decryption. Every group gets a list of input values, combined with the specific expected output.  Every list entry is a key/pair map, which should mirror the parameter names and their values. Afterwards this list will be iterated. For every list entry the relevant function will be called. Please add some well-thought test cases, some crazy values and, of course, the typical cases `null` and, if relevant, empty strings or lists.
 2. **Write and run tests**
 
 ```dart
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gc_wizard/logic/tools/crypto/increased_n.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/increased_n.dart';
 
 void main() {
   group('IncreasedN.encrypt:', () {
@@ -102,7 +102,7 @@ void main() {
 #### Create frontend (widget)
 <ol>
 	<li>
-		Widgets are located in <tt>/lib/widgets/</tt>, The sub directory, again, follows the structure of the logic directory. So, your widget should be located into <tt>/lib/widgets/tools/crypto/increased_n.dart</tt>
+		Widgets are located in <tt>/lib/widgets/</tt>, The sub directory, again, follows the structure of the logic directory. So, your widget should be located into <tt>/lib/widgets/tools/crypto_and_encodings/increased_n.dart</tt>
 	</li>  
 	<li>
 		The widget structure supports you by encapsuling the boiler plate code for the simple widget creation, the navigation to the widget, the scrolling, the title and so on. You simply have to write a layout for inputs and outputs. All widgets are of type <tt>StatefulWidget</tt>, their state management (if you like, their whole frontend logic) is in their <tt>State</tt> class. The most important one is the <tt>build()</tt> method in the state class, which will be called by the framework to build your frontend.<br/>
@@ -166,7 +166,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/logic/tools/crypto/increased_n.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/increased_n.dart';
 
 class IncreasedN extends StatefulWidget {
   @override

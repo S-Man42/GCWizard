@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
-import 'package:gc_wizard/logic/tools/crypto/substitution.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
 import 'package:latlong/latlong.dart';
 

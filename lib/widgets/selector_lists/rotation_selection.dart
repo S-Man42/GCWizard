@@ -3,11 +3,11 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
-import 'package:gc_wizard/widgets/tools/crypto/rotation/rot13.dart';
-import 'package:gc_wizard/widgets/tools/crypto/rotation/rot18.dart';
-import 'package:gc_wizard/widgets/tools/crypto/rotation/rot47.dart';
-import 'package:gc_wizard/widgets/tools/crypto/rotation/rot5.dart';
-import 'package:gc_wizard/widgets/tools/crypto/rotation/rotation_general.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot13.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot18.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot5.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_general.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class RotationSelection extends GCWSelection {

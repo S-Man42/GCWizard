@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
-import 'package:gc_wizard/logic/tools/crypto/substitution.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 
 //from: https://medium.com/flutter-community/flutter-internationalization-the-easy-way-using-provider-and-json-c47caa4212b2
 class AppLocalizations {

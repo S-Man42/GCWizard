@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/logic/tools/crypto/substitution.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 const STATE_OK = 'ok';
