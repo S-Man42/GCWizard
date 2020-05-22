@@ -43,25 +43,25 @@ class _GCWCrosstotalOutputState extends State<GCWCrosstotalOutput> {
 
       [i18n(context, 'crosstotal_sum_crosssum'), sumCrossSum(values)],
       [i18n(context, 'crosstotal_sum_crosssum_iterated'), sumCrossSumIterated(values)],
-      [i18n(context, 'crosstotal_sum_crosssum_alternated_back'), sumCrossSumAlternatedBackward(values) ?? i18n(context, 'crosstotal_notdefined')],
-      [i18n(context, 'crosstotal_sum_crosssum_alternated_forward'), sumCrossSumAlternatedForward(values) ?? i18n(context, 'crosstotal_notdefined')],
+      [i18n(context, 'crosstotal_sum_crosssum_alternated_back'), sumCrossSumAlternatedBackward(values) ?? i18n(context, 'common_notdefined')],
+      [i18n(context, 'crosstotal_sum_crosssum_alternated_forward'), sumCrossSumAlternatedForward(values) ?? i18n(context, 'common_notdefined')],
 
       [i18n(context, 'crosstotal_crosssum'), crossSum(values)],
       [i18n(context, 'crosstotal_crosssum_iterated'), crossSumIterated(values)],
-      [i18n(context, 'crosstotal_crosssum_alternated_back'), crossSumAlternatedBackward(values) ?? i18n(context, 'crosstotal_notdefined')],
-      [i18n(context, 'crosstotal_crosssum_alternated_forward'), crossSumAlternatedForward(values) ?? i18n(context, 'crosstotal_notdefined')],
+      [i18n(context, 'crosstotal_crosssum_alternated_back'), crossSumAlternatedBackward(values) ?? i18n(context, 'common_notdefined')],
+      [i18n(context, 'crosstotal_crosssum_alternated_forward'), crossSumAlternatedForward(values) ?? i18n(context, 'common_notdefined')],
 
       widget.suppressSums ? null : [i18n(context,  'crosstotal_product'), product(values)],
       widget.suppressSums ? null : [i18n(context,  'crosstotal_product_alternated'), productAlternated(values)],
 
       [i18n(context, 'crosstotal_product_crosssum'), productCrossSum(values)],
       [i18n(context, 'crosstotal_product_crosssum_iterated'), productCrossSumIterated(values)],
-      [i18n(context, 'crosstotal_product_crosssum_alternated_back'), productCrossSumAlternatedBackward(values) ?? i18n(context, 'crosstotal_notdefined')],
-      [i18n(context, 'crosstotal_product_crosssum_alternated_forward'), productCrossSumAlternatedForward(values) ?? i18n(context, 'crosstotal_notdefined')],
+      [i18n(context, 'crosstotal_product_crosssum_alternated_back'), productCrossSumAlternatedBackward(values) ?? i18n(context, 'common_notdefined')],
+      [i18n(context, 'crosstotal_product_crosssum_alternated_forward'), productCrossSumAlternatedForward(values) ?? i18n(context, 'common_notdefined')],
 
       [i18n(context, 'crosstotal_crossproduct'), crossProduct(values)],
       [i18n(context, 'crosstotal_crossproduct_iterated'), crossProductIterated(values)],
-      [i18n(context, 'crosstotal_crossproduct_alternated'), crossProductAlternated(values) ?? i18n(context, 'crosstotal_notdefined')],
+      [i18n(context, 'crosstotal_crossproduct_alternated'), crossProductAlternated(values) ?? i18n(context, 'common_notdefined')],
     ];
 
     return Column(

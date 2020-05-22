@@ -255,6 +255,7 @@
   "common_hinttext_default" : "Enter value",
   "common_key" : "Key",
   "common_landscape" : "Landscape",
+  "common_notdefined" : "Not defined",
   "common_ok" : "OK",
   "common_output" : "Output",
   "common_portrait" : "Portrait",
@@ -457,7 +458,6 @@
 
   "crosstotal_title" : "Show Sums",
   "crosstotal_output" : "Sums, Cross Sums, Products",
-  "crosstotal_notdefined" : "Not defined",
   "crosstotal_count_characters" : "Count Characters",
   "crosstotal_count_letters" : "Count Letters",
   "crosstotal_count_digits" : "Count Digits",

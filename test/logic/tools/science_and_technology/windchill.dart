@@ -18,7 +18,7 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('temperature: ${elem['temperature']}, windspeed: ${elem['windspeed']}', () {
+      test('temperature: ${elem['temperature']}, windspeed: ${elem['windspeed']}, isMetric: ${elem['isMetric']}', () {
         var _actual = calcWindchill(elem['temperature'], elem['windspeed'], elem['isMetric']);
         expect(_actual, elem['expectedOutput']);
       });

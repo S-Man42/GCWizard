@@ -4,44 +4,50 @@ const _alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy
 
 //TODO: Refactoring - Still bad style because of bad original Java Code
 
-String _sanitizeInput(String input, int startBase) {
+String _sanitizeInput(String input, int startBase, String alphabet) {
   input = input.replaceAll(',', '.');
-  
+
   if (input.startsWith('.'))
     input = '0' + input;
-  
+
   if (input.endsWith('.'))
     input += '0';
-  
-  if (startBase < _alphabet.indexOf('a')) {
+
+  if (startBase.abs() < alphabet.indexOf('a')) {
     input = input.toUpperCase();
   }
-  
-  return input;
-} 
 
-String convertBase(String input, int startBase, int targetBase) {
+  return input;
+}
+
+String convertBase(String input, int startBase, int destinationBase, {String alphabet}) {
   if (input == null || input == '')
     return '';
   
-  if (startBase == targetBase)
-    return input;  
-  
-  if (!RegExp(r'-?[a-zA-Z0-9]+([.,][a-zA-Z0-9]*)?').hasMatch(input))
+  if (startBase == destinationBase)
+    return input;
+
+  var usedAlphabet = alphabet ?? _alphabet;
+
+  if (startBase.abs() > usedAlphabet.length || destinationBase.abs() > usedAlphabet.length) {
+    return ''; //TODO: Exception
+  }
+
+  if (!RegExp('-?[$usedAlphabet]+([.,][$usedAlphabet]*)?').hasMatch(input))
     return ''; //TODO: Exception
 
-  if (startBase.abs() < 2 || startBase.abs() > 62 || targetBase.abs() < 2 || targetBase.abs() > 62) {
+  if (startBase.abs() < 2 || startBase.abs() > 62 || destinationBase.abs() < 2 || destinationBase.abs() > 62) {
     return ''; //TODO: Exception
   }
 
   if (startBase < 0 && input.startsWith('-'))  {
-    return ''; //TODO: Exception("illegal type of conversion");
+    throw FormatException('Negative Values on negative bases are not defined');
   }
 
-  input = _sanitizeInput(input, startBase);
+  input = _sanitizeInput(input, startBase, usedAlphabet);
 
   var illegalCharacter = input.split('').firstWhere(
-    (character) => character != '.' && _alphabet.indexOf(character) >= startBase.abs(),
+    (character) => character != '.' && usedAlphabet.indexOf(character) >= startBase.abs(),
     orElse: () => null
   );
 
@@ -50,13 +56,13 @@ String convertBase(String input, int startBase, int targetBase) {
 
   var number = input.split('.');
 
-  if (number.length == 2 && (targetBase < 0 || startBase < 0)) {
-    var d = _negaDoubleToDec(number[0], number[1], startBase);
-    var output = _decToNegaDouble(d, targetBase);
+  if (number.length == 2 && (destinationBase < 0 || startBase < 0)) {
+    var d = _negaDoubleToDec(number[0], number[1], startBase, usedAlphabet);
+    var output = _decToNegaDouble(d, destinationBase, usedAlphabet);
 
     return output;
   } else {
-    var intPart = _intDecToBase(_intBaseToDec(number[0], startBase), targetBase);
+    var intPart = _intDecToBase(_intBaseToDec(number[0], startBase, usedAlphabet), destinationBase, usedAlphabet);
     var realPart = '';
 
     if (number.length == 2) {
@@ -64,14 +70,14 @@ String convertBase(String input, int startBase, int targetBase) {
         intPart = '-' + intPart;
       }
 
-      realPart = '.' + _doubleDecToBase(_doubleBaseToDec(number[1], startBase), targetBase);
+      realPart = '.' + _doubleDecToBase(_doubleBaseToDec(number[1], startBase, usedAlphabet), destinationBase, usedAlphabet);
     }
 
     return intPart + realPart;
   }
 }
 
-double _negaDoubleToDec(String intPart, String floatPart, int base) {
+double _negaDoubleToDec(String intPart, String floatPart, int base, String alphabet) {
   if (base == 10) {
     return double.tryParse(intPart + "." + floatPart);
   }
@@ -87,7 +93,7 @@ double _negaDoubleToDec(String intPart, String floatPart, int base) {
   String num = intPart + floatPart;
 
   for (int i = intPart.length - 1; i >= floatPart.length * -1; i--) {
-    output += _alphabet.indexOf(num[0]) *  pow(base, i);
+    output += alphabet.indexOf(num[0]) *  pow(base, i);
 
     if (num.length > 1) {
       num = num.substring(1);
@@ -99,7 +105,7 @@ double _negaDoubleToDec(String intPart, String floatPart, int base) {
   return output * sign;
 }
 
-String _decToNegaDouble(double num, int base) {
+String _decToNegaDouble(double num, int base, String alphabet) {
   String numString = num.toString();
 
   if (base == 10) {
@@ -152,17 +158,17 @@ String _decToNegaDouble(double num, int base) {
       a = a + BigInt.one;
     }
 
-    output += _alphabet[a.abs().toInt()];
+    output += alphabet[a.abs().toInt()];
     ++count;
   }
 
   number = output.split('.');
-  output = _intDecToBase(BigInt.tryParse(number[0]), base) + '.' + number[1];
+  output = _intDecToBase(BigInt.tryParse(number[0]), base, alphabet) + '.' + number[1];
 
   return output;
 }
 
-BigInt _intBaseToDec(String num, int base) {
+BigInt _intBaseToDec(String num, int base, String alphabet) {
   if (base == 10) {
     return BigInt.tryParse(num);
   }
@@ -178,7 +184,7 @@ BigInt _intBaseToDec(String num, int base) {
   int j = 0;
 
   while (num.length > 0) {
-    i += BigInt.from(_alphabet.indexOf(num[num.length - 1])) * BigInt.from(base).pow(j);
+    i += BigInt.from(alphabet.indexOf(num[num.length - 1])) * BigInt.from(base).pow(j);
     j++;
     num = num.substring(0, num.length - 1);
   }
@@ -199,9 +205,9 @@ BigInt _bigIntMod (BigInt x, BigInt y) {
   }
 }
 
-String _intDecToBase(BigInt num, int base) {
+String _intDecToBase(BigInt num, int base, String alphabet) {
   if (num == BigInt.zero) {
-    return _alphabet[0];
+    return alphabet[0];
   }
 
   if ((base == 10) && (num > BigInt.zero)) {
@@ -227,13 +233,13 @@ String _intDecToBase(BigInt num, int base) {
       r += base.abs();
     }
 
-    out = _alphabet[r] + out;
+    out = alphabet[r] + out;
   }
 
   return sign + out;
 }
 
-double _doubleBaseToDec(String num, int base) {
+double _doubleBaseToDec(String num, int base, String alphabet) {
   if (base == 10) {
     return double.tryParse('0.' + num);
   }
@@ -242,7 +248,7 @@ double _doubleBaseToDec(String num, int base) {
   int j = -1;
 
   while (num.length > 0) {
-    i += _alphabet.indexOf(num[0]) *  pow(base, j);
+    i += alphabet.indexOf(num[0]) *  pow(base, j);
     j--;
 
     if (num.length > 1) {
@@ -255,7 +261,7 @@ double _doubleBaseToDec(String num, int base) {
   return i;
 }
 
-String _doubleDecToBase(double num, int base) {
+String _doubleDecToBase(double num, int base, String alphabet) {
   if ((base == 10) || (num == 0)) {
     return num.toString().substring(2);
   }
@@ -265,7 +271,7 @@ String _doubleDecToBase(double num, int base) {
 
   while ((i < 50) && (num.abs() > 0)) {
     num *= base;
-    out += _alphabet[num.abs().floor()];
+    out += alphabet[num.abs().floor()];
     num -= num.floor();
     i++;
   }

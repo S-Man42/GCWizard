@@ -255,6 +255,7 @@
   "common_hinttext_default" : "Wert eingeben",
   "common_key" : "Schlüssel",
   "common_landscape" : "Querformat",
+  "common_notdefined" : "Nicht definiert",
   "common_ok" : "OK",
   "common_output" : "Ausgabe",
   "common_portrait" : "Hochformat",
@@ -457,7 +458,6 @@
 
   "crosstotal_title" : "Zeige Summen",
   "crosstotal_output" : "Summen, Quersummen, Produkte",
-  "crosstotal_notdefined" : "Nicht definiert",
   "crosstotal_count_characters" : "Anzahl Zeichen",
   "crosstotal_count_letters" : "Anzahl Buchstaben",
   "crosstotal_count_digits" : "Anzahl Ziffern",
