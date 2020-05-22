@@ -67,6 +67,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers.dart';
@@ -383,6 +384,12 @@ class Registry {
         i18nPrefix: 'primes_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_PRIMES
+      ),
+      GCWToolWidget(
+        tool: RailFence(),
+        i18nPrefix: 'railfence',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'railfence lattenzaun jaegerzaun zigzag redefence zig-zag palisadenzaun gartenzaun transposition'
       ),
       GCWToolWidget(
         tool: ResistorSelection(),

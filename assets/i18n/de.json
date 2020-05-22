@@ -888,6 +888,9 @@
   "primes_integerfactorization_description" : "Primfaktorzerlegung einer Zahl",
   "primes_integerfactorization_example" : "42 = 2 × 3 × 7",
 
+  "railfence_title" : "Jägerzaun/Lattenzaun",
+  "railfence_description" : "Chiffre, bei der der Text diagonal über Latten eines imaginären Zauns geschrieben wird",
+
   "resistor_selection_title" : "Widerstand",
   "resistor_selection_description" : "Elektrischer Widerstand",
   "resistor_colorcodecalculator_title" : "Widerstandsrechner",

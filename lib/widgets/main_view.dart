@@ -44,6 +44,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers.dart';
@@ -109,6 +110,7 @@ class _MainViewState extends State<MainView> {
         return [
           className(Abaddon()),
           className(ADFGVX()),
+          className(AlphabetValues()),
           className(ASCIIValues()),
           className(Atbash()),
           className(Bacon()),
@@ -133,7 +135,6 @@ class _MainViewState extends State<MainView> {
           className(Gronsfeld()),
           className(Kamasutra()),
           className(Kenny()),
-          className(AlphabetValues()),
           className(Morse()),
           className(NumeralBases()),
           className(PeriodicTable()),
@@ -143,6 +144,7 @@ class _MainViewState extends State<MainView> {
           className(Playfair()),
           className(Polybios()),
           className(PrimesSelection()),
+          className(RailFence()),
           className(ResistorSelection()),
           className(Reverse()),
           className(RobberLanguage()),

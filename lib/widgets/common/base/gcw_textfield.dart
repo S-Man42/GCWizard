@@ -63,10 +63,12 @@ class _GCWTextFieldState extends State<GCWTextField> {
           return TextFormField(
             autocorrect: false,
             decoration: InputDecoration(
+              hintText: widget.hintText,
               fillColor: widget.filled ? ThemeColors.darkgrey : null,
               filled: widget.filled,
               prefixIcon: widget.icon,
               isDense: true,
+              counterText: "",
               suffixIconConstraints: BoxConstraints(
                 minWidth: 2,
                 minHeight: 2,
@@ -79,9 +81,9 @@ class _GCWTextFieldState extends State<GCWTextField> {
                         color: ThemeColors.iconColor,
                       ),
                       padding: EdgeInsets.only(
-                          right: 5,
-                          top: 5,
-                          bottom: 5
+                        right: 5,
+                        top: 5,
+                        bottom: 5
                       ),
                     ),
                     onTap: () {

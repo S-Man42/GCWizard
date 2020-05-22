@@ -96,9 +96,9 @@ Map<String, List<int>> createPolybiosGrid(String input, int dimension) {
 
 String polybiosGridCharacterByCoordinate(Map<String, List<int>> grid, int row, int column) {
   return grid
-      .entries
-      .firstWhere((entry) => entry.value[0] == row && entry.value[1] == column)
-      .key;
+    .entries
+    .firstWhere((entry) => entry.value[0] == row && entry.value[1] == column)
+    .key;
 }
 
 PolybiosOutput encryptPolybios (String input, String key, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {

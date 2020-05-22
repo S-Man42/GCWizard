@@ -888,6 +888,9 @@
   "primes_integerfactorization_description" : "Returns the prime factorization of a number",
   "primes_integerfactorization_example" : "42 = 2 × 3 × 7",
 
+  "railfence_title" : "Railfence/Zig-Zag",
+  "railfence_description" : "Cipher written diagonally on rails of an imaginary fence (transposition)",
+
   "resistor_selection_title" : "Resistor",
   "resistor_selection_description" : "Electrical Resistor",
   "resistor_colorcodecalculator_title" : "Resistor Color Calculator",
@@ -1075,7 +1078,7 @@
   "symboltables_semaphore_correct" : "CORRECT",
   "symboltables_semaphore_error_attention" : "ERROR/ATTENTION",
   "symboltables_semaphore_letters_following" : "LETTERS FOLLOWING",
-  "symboltables_semaphore_numerals_following" : "NUMBERS FOLLOWING",
+  "symboltables_semaphore_numerals_following" : "DIGITS FOLLOWING",
   "symboltables_semaphore_rest" : "REST",
   "symboltables_sign_title" : "Sign language",
   "symboltables_sign_description" : "Finger and hand signs for the deaf people",
