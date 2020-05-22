@@ -568,6 +568,11 @@
   "formulasolver_values_value" : "Value",
   "formulasolver_values_currentvalues" : "Created Variables",
 
+  "gccode_title" : "GC Code",
+  "gccode_decription" : "Converts the GC Code of a Geocache into its internal ID (Base31)",
+  "gccode_example" : "GCK25B → 156997",
+  "gccode_novalidgcode" : "No valid GC Code",
+
   "gronsfeld_title" : "Gronsfeld Cipher",
   "gronsfeld_description" : "Special case of Vigenère encryption with numbers as key",
 

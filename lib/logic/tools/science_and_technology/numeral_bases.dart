@@ -46,10 +46,12 @@ String convertBase(String input, int startBase, int destinationBase, {String alp
 
   input = _sanitizeInput(input, startBase, usedAlphabet);
 
-  var illegalCharacter = input.split('').firstWhere(
-    (character) => character != '.' && usedAlphabet.indexOf(character) >= startBase.abs(),
-    orElse: () => null
-  );
+  var illegalCharacter = input
+    .split('')
+    .firstWhere(
+      (character) => character != '.' && usedAlphabet.indexOf(character) >= startBase.abs(),
+      orElse: () => null
+    );
 
   if (illegalCharacter != null)
     return ''; //TODO: Exception

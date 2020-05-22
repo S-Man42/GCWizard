@@ -18,6 +18,7 @@ void main() {
       {'input' : '10000', 'startBase' : 10, 'destinationBase' : 16, 'expectedOutput' : '2710'},
       {'input' : '2710', 'startBase' : 16, 'destinationBase' : 10, 'expectedOutput' : '10000'},
       {'input' : '10000', 'startBase' : 16, 'destinationBase' : 16, 'expectedOutput' : '10000'},
+      {'input' : 'z', 'startBase' : 62, 'destinationBase' : 10, 'expectedOutput' : '61'},
 
       {'input' : '42', 'startBase' : 10, 'destinationBase' : 2, 'expectedOutput' : '101010'},
       {'input' : '42', 'startBase' : 10, 'destinationBase' : 3, 'expectedOutput' : '1120'},

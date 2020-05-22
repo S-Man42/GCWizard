@@ -58,6 +58,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.da
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
@@ -298,6 +299,12 @@ class Registry {
         tool: FormulaSolver(),
         i18nPrefix: 'formulasolver',
         searchStrings: SEARCHSTRING_FORMULASOLVER
+      ),
+      GCWToolWidget(
+        tool: GCCode(),
+        i18nPrefix: 'gccode',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'geocaching geocache code gccode gc-code base31 hexadecimal hexadezimal'
       ),
       GCWToolWidget(
         tool: Gronsfeld(),
