@@ -651,6 +651,13 @@
   "numeralbases_from" : "Von",
   "numeralbases_to" : "Nach",
 
+  "onetimepad_title" : "One-Time Pad",
+  "onetimepad_description" : "Einmalschlüssel: Addiere Schlüsselwort zu Text",
+  "onetimepad_example" : "ABC + ABC → BDF",
+  "onetimepad_key" : "Schlüssel",
+  "onetimepad_input" : "Eingabe",
+  "onetimepad_keyoffset" : "A",
+
   "periodictable_title" : "Periodensystem der Elemente",
   "periodictable_description" : "Zeigt Eigenschaften chemischer Elemente; sortiert sie nach bestimmten Kriterien",
   "periodictable_example" : "",

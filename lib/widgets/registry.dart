@@ -64,6 +64,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
@@ -342,6 +343,12 @@ class Registry {
         i18nPrefix: 'numeralbases',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'radix numeral systems basis basen zahlensysteme binaer binary decimal dezimal octal octenary oktal dual hexadecimal hexadezimal'
+      ),
+      GCWToolWidget(
+        tool: OneTimePad(),
+        i18nPrefix: 'onetimepad',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'onetimepad einmalschluessel one-time-pad otp'
       ),
       GCWToolWidget(
         tool: PeriodicTable(),

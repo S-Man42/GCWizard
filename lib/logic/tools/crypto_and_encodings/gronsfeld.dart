@@ -7,7 +7,7 @@ String encryptGronsfeld(String input, String key, bool autoKey, {int aValue = 0}
   
   key = digitsToAlpha(key);
   
-  return vigenereEncrypt(input, key, autoKey, aValue: aValue);
+  return encryptVigenere(input, key, autoKey, aValue: aValue);
 }
 
 String decryptGronsfeld(String input, String key, bool autoKey, {int aValue: 0}) {
@@ -16,5 +16,5 @@ String decryptGronsfeld(String input, String key, bool autoKey, {int aValue: 0})
   
   key = digitsToAlpha(key);
   
-  return vigenereDecrypt(input, key, autoKey, aValue: aValue);
+  return decryptVigenere(input, key, autoKey, aValue: aValue);
 }

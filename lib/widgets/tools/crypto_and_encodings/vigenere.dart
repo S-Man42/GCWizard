@@ -92,9 +92,9 @@ class VigenereState extends State<Vigenere> {
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.left) {
-      output = vigenereEncrypt(_currentInput, _currentKey, _currentAutokey, aValue: _currentAValue);
+      output = encryptVigenere(_currentInput, _currentKey, _currentAutokey, aValue: _currentAValue);
     } else {
-      output = vigenereDecrypt(_currentInput, _currentKey, _currentAutokey, aValue: _currentAValue);
+      output = decryptVigenere(_currentInput, _currentKey, _currentAutokey, aValue: _currentAValue);
     }
 
     return GCWDefaultOutput(

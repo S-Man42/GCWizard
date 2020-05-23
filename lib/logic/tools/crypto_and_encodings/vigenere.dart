@@ -1,7 +1,7 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/rotator.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
-String vigenereEncrypt(String input, String key, bool autoKey, {int aValue = 0}) {
+String encryptVigenere(String input, String key, bool autoKey, {int aValue = 0}) {
   if (input == null || input.length == 0)
     return '';
 
@@ -41,7 +41,7 @@ String vigenereEncrypt(String input, String key, bool autoKey, {int aValue = 0})
   return output;
 }
 
-String vigenereDecrypt(String input, String key, bool autoKey, {int aValue: 0}) {
+String decryptVigenere(String input, String key, bool autoKey, {int aValue: 0}) {
   if (input == null || input.length == 0)
     return '';
 

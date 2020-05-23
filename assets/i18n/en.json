@@ -651,6 +651,13 @@
   "numeralbases_from" : "From",
   "numeralbases_to" : "To",
 
+  "onetimepad_title" : "One-Time Pad",
+  "onetimepad_description" : "Adding keyword to input text",
+  "onetimepad_example" : "ABC + ABC → BDF",
+  "onetimepad_key" : "Keyword",
+  "onetimepad_input" : "Input",
+  "onetimepad_keyoffset" : "A",
+
   "periodictable_title" : "Periodic Table of the Elements",
   "periodictable_description" : "Shows data to chemical elements, sort them by categories",
   "periodictable_example" : "",

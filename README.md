@@ -278,7 +278,7 @@ class IncreasedNState extends State<IncreasedN> {
 		</ol>
 	</li>
 	<li>
-		<b>Register the widget</b>: All widgets are registered centrally. The file is <tt>/widgets/registry.dart</tt>. This wraps your layout with a real page widget, adds a keyword for the language files (which will be mapped to title, description and example, see below), the category, where the tool fits (usually <tt>CRYPTOGRAPHY</tt> for codes or <tt>SCIENCE_AND_TECHNOLOGY</tt> for some scientific formula stuff) and even the keywords for the search engine:
+		<b>Register the widget</b>: All widgets are registered centrally. The file is <tt>/widgets/registry.dart</tt>. This wraps your layout with a real page widget, adds a keyword for the language files (which will be mapped to title, description and example, see below), the category, where the tool fits (usually <tt>CRYPTOGRAPHY</tt> for codes or <tt>SCIENCE_AND_TECHNOLOGY</tt> for some scientific formula stuff) and even the keywords for the search engine (without umlauts or diacritics):
   
 ```dart
 GCWToolWidget(

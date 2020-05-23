@@ -47,7 +47,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = vigenereEncrypt(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue']);
+        var _actual = encryptVigenere(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -98,7 +98,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
-        var _actual = vigenereDecrypt(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue']);
+        var _actual = decryptVigenere(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue']);
         expect(_actual, elem['expectedOutput']);
       });
     });
