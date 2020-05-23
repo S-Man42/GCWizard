@@ -283,9 +283,9 @@ class IncreasedNState extends State<IncreasedN> {
 ```dart
 GCWToolWidget(
   tool: IncreasedN(), 
-  i18nPrefix: 'increasedn'), 
+  i18nPrefix: 'increasedn', 
   category: ToolCategory.CRYPTOGRAPHY,
-  searchStrings: 'increasedn')
+  searchStrings: 'increasedn'
 ),
 ```
 
