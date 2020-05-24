@@ -125,8 +125,8 @@ class ResectionState extends State<Resection> {
   }
 
   _calculateOutput() {
-    _currentMapPoints = [];
-    _currentMapGeodetics = [];
+    _currentMapPoints = <MapPoint>[];
+    _currentMapGeodetics = <MapGeodetic>[];
 
     if (_currentCoords1 == _currentCoords2
       || _currentCoords2 == _currentCoords3

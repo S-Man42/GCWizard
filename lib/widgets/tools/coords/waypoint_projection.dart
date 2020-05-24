@@ -99,7 +99,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
         )
       ];
 
-      _currentGeodetics = [];
+      _currentGeodetics = <MapGeodetic>[];
 
       _currentValues.forEach((projection) {
         _currentMapPoints.add(
