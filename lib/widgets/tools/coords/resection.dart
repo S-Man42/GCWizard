@@ -125,6 +125,16 @@ class ResectionState extends State<Resection> {
   }
 
   _calculateOutput() {
+    _currentMapPoints = [];
+    _currentMapGeodetics = [];
+
+    if (_currentCoords1 == _currentCoords2
+      || _currentCoords2 == _currentCoords3
+      || _currentCoords1 == _currentCoords3) {
+      _currentOutput = [i18n(context, "coords_intersect_nointersection")];
+      return;
+    }
+
     var ells = defaultEllipsoid();
 
     _currentIntersections = resection(_currentCoords1, _currentAngle12['value'], _currentCoords2, _currentAngle23['value'], _currentCoords3, ells);
@@ -171,7 +181,6 @@ class ResectionState extends State<Resection> {
       .toList()
     );
 
-    _currentMapGeodetics = [];
     _currentIntersections.forEach((intersection) {
       _currentMapGeodetics.addAll(
         [
