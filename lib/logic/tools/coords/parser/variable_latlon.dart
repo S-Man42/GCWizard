@@ -89,8 +89,17 @@ List<Map<String, dynamic>> _expandText(String text, Map<String, String> substitu
 
   List<Map<String, dynamic>> output = [];
 
+  RegExp regExp = new RegExp(r'\[.+?\]');
+  var matches = regExp.allMatches(text.trim());
+
   variableCombinations.forEach((combination) {
-    var substituted = substitution(text, combination, caseSensitive: false);
+    var substituted = text;
+
+    matches.forEach((match) {
+      var content = substitution(match.group(0), combination, caseSensitive: false);
+      substituted = substituted.replaceAll(match.group(0), content);
+    });
+
     if (expandedList.add(substituted)) {
       output.add({'text': substituted, 'variables': combination});
     }
@@ -149,6 +158,7 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
 
   for (Map<String, dynamic> expandedText in expandedTexts) {
     var evaluatedFormula = formulaParser.parse(expandedText['text'], {});
+    evaluatedFormula['result'] = evaluatedFormula['result'].replaceAll(RegExp(r'[\[\]]'), '');
 
     if (withProjection) {
       var evaluatedTexts = evaluatedFormula['result'].split(String.fromCharCode(1));
@@ -165,7 +175,7 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
 
       parsedCoord.entries.forEach((entry) {
 
-        if (projectionData['reverseBearing']) {
+        if (projectionData['reverseBearing'] != null && projectionData['reverseBearing']) {
 
           var revProjected = reverseProjection(entry.value, parsedBearing, parsedDistance * projectionData['lengthUnitInMeters'], projectionData['ellipsoid']);
           if (revProjected == null || revProjected.length == 0)
