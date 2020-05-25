@@ -5,6 +5,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
@@ -138,13 +139,9 @@ class MorseState extends State<Morse> {
     } else
       output = decodeMorse(_currentDecodeInput);
 
-
-    return GCWOutput(
-      child: GCWText(
-        text: output,
-        style: textStyle
-      ),
+    return GCWOutputText(
+      text: output,
+      style: textStyle
     );
-
   }
 }
