@@ -10,6 +10,7 @@ import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
@@ -32,6 +33,8 @@ class GCWMapView extends StatefulWidget {
 class GCWMapViewState extends State<GCWMapView> {
   final PopupController _popupLayerController = PopupController();
   final MapController _mapController = MapController();
+
+  var _currentLayer = false;
 
   //////////////////////////////////////////////////////////////////////////////
   // from: https://stackoverflow.com/a/58958668/3984221
@@ -127,38 +130,64 @@ class GCWMapViewState extends State<GCWMapView> {
     List<Polyline> _circlePolylines = _addCircles();
     _polylines.addAll(_circlePolylines);
 
+    var tiles = _currentLayer ? TileLayerOptions(
+        urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        subdomains: ['a', 'b', 'c'],
+        tileProvider: CachedNetworkTileProvider()
+    ) :
+    TileLayerOptions(
+        urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
+        additionalOptions: {
+          'accessToken': ''
+        },
+        tileProvider: CachedNetworkTileProvider()
+    );
+
     return Listener(
       onPointerSignal: handleSignal,
-      child: FlutterMap(
-        mapController: _mapController,
-        options: MapOptions(
-            center: computeCentroid(widget.points.map((_point) => _point.point).toList()),
-            zoom: _getBoundsZoomLevel().toDouble(),
-            minZoom: 1.0,
-            maxZoom: 18.0,
-            plugins: [PopupMarkerPlugin()],
-            onTap: (_) => _popupLayerController.hidePopup()
-        ),
-        layers: [
-          TileLayerOptions(
-              urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-              subdomains: ['a', 'b', 'c'],
-              tileProvider: CachedNetworkTileProvider()
+      child: Stack(
+        children: [
+          FlutterMap(
+            mapController: _mapController,
+            options: MapOptions(
+                center: computeCentroid(widget.points.map((_point) => _point.point).toList()),
+                zoom: _getBoundsZoomLevel().toDouble(),
+                minZoom: 1.0,
+                maxZoom: 18.0,
+                plugins: [PopupMarkerPlugin()],
+                onTap: (_) => _popupLayerController.hidePopup()
+            ),
+            layers: [
+              tiles,
+              PolylineLayerOptions(
+                  polylines: _polylines
+              ),
+              MarkerLayerOptions(
+                  markers: _markers
+              ),
+              PopupMarkerLayerOptions(
+                  markers: _markers,
+                  popupSnap: PopupSnap.top,
+                  popupController: _popupLayerController,
+                  popupBuilder: (BuildContext _, Marker marker) => _buildPopups(marker)
+              ),
+            ],
           ),
-          MarkerLayerOptions(
-              markers: _markers
-          ),
-          PolylineLayerOptions(
-              polylines: _polylines
-          ),
-          PopupMarkerLayerOptions(
-              markers: _markers,
-              popupSnap: PopupSnap.top,
-              popupController: _popupLayerController,
-              popupBuilder: (BuildContext _, Marker marker) => _buildPopups(marker)
-          ),
+
+          Positioned(
+            top: 15.0,
+            right: 15.0,
+            child: GCWIconButton(
+              iconData: Icons.style,
+              onPressed: () {
+                setState(() {
+                  _currentLayer = !_currentLayer;
+                });
+              }
+            )
+          )
         ],
-      ),
+      )
     );
   }
 
