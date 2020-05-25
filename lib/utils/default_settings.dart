@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
@@ -16,8 +18,19 @@ void initDefaultSettings() {
     Prefs.setInt('clipboard_max_items', 10);
   }
 
-  if (Prefs.get('clipboard_items') == null) {
+  if (Prefs.get('clipboard_keep_entries_in_days') == null) {
+    Prefs.setInt('clipboard_keep_entries_in_days', 7);
+  }
+
+  var clipboardData = Prefs.getStringList('clipboard_items');
+  if (clipboardData == null) {
     Prefs.setStringList('clipboard_items', []);
+  } else {
+    clipboardData.removeWhere((item) {
+      var created = DateTime.fromMillisecondsSinceEpoch(int.tryParse(jsonDecode(item)['created']));
+      return created.isBefore(DateTime.now().subtract(Duration(days: Prefs.get('clipboard_keep_entries_in_days'))));
+    });
+    Prefs.setStringList('clipboard_items', clipboardData);
   }
 
   if (Prefs.get('coord_default_ellipsoid_type') == null) {

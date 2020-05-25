@@ -118,15 +118,3 @@ String decryptRailFence(String input, int key, {int offset, String password}) {
 
   return out.replaceAll('\x01', '');
 }
-
-main() {
-  print(encryptRailFence('DIESISTEINEGEHEIMEBOTSCHAFT', 4)); //DTEBAISEGHEOHFEIIEEMTCTSNIS
-  print(encryptRailFence('DIESISTEINEGEHEIMEBOTSCHAFT', 4, offset: 4));
-  print(encryptRailFence('DIESISTEINEGEHEIMEBOTSCHAFT', 4, password: 'KLAR'));
-  print(encryptRailFence('DIESISTEINEGEHEIMEBOTSCHAFT', 4, offset: 2, password: 'KLAR'));
-  print('           ');
-  print(decryptRailFence('DTEBAISEGHEOHFEIIEEMTCTSNIS', 4));
-  print(decryptRailFence('IEMCSSNGIESHDETIEEBTATIEHOF', 4, offset: 2));
-  print(decryptRailFence('ISEGHEOHFEIIEEMTCTDTEBASNIS', 4, password: 'KLAR'));
-  print(decryptRailFence('SSNGIESHDETIEEBTATIEMCIEHOF', 4, offset: 2, password: 'KLAR'));
-}

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
 class GCWOutputText extends StatefulWidget {
@@ -39,14 +42,9 @@ class _GCWOutputTextState extends State<GCWOutputText> {
               iconData: Icons.content_copy,
               onPressed: () {
                 Clipboard.setData(ClipboardData(text: widget.text));
+                insertIntoGCWClipboard(widget.text);
 
-                var gcwClipboard = Prefs.getStringList('clipboard_items');
-
-                gcwClipboard.insert(0, widget.text);
-                while (gcwClipboard.length > Prefs.get('clipboard_max_items'))
-                  gcwClipboard.removeLast();
-
-                Prefs.setStringList('clipboard_items', gcwClipboard);
+                showToast(i18n(context, 'common_clipboard_copied'));
               },
             )
           : Container()

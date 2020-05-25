@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/colors.dart';
@@ -77,11 +79,13 @@ List<Widget> columnedMultiLineOutput(List<List<dynamic>> data, {List<int> flexVa
 insertIntoGCWClipboard(String text) {
   var gcwClipboard = Prefs.getStringList('clipboard_items');
 
-  if (gcwClipboard.contains(text)) {
-    gcwClipboard.remove(text);
-    gcwClipboard.insert(0, text);
+  var existingText = gcwClipboard.firstWhere((item) => jsonDecode(item)['text'] == text, orElse: () => null);
+
+  if (existingText != null) {
+    gcwClipboard.remove(existingText);
+    gcwClipboard.insert(0, jsonEncode({'text': jsonDecode(existingText)['text'], 'created': DateTime.now().millisecondsSinceEpoch.toString()}));
   } else {
-    gcwClipboard.insert(0, text);
+    gcwClipboard.insert(0, jsonEncode({'text': text, 'created': DateTime.now().millisecondsSinceEpoch.toString()}));
     while (gcwClipboard.length > Prefs.get('clipboard_max_items'))
       gcwClipboard.removeLast();
   }
