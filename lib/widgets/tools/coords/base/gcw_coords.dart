@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_deg.dart';
@@ -16,6 +20,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mgrs.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:latlong/latlong.dart';
 
 class GCWCoords extends StatefulWidget {
@@ -231,17 +236,9 @@ class GCWCoordsState extends State<GCWCoords> {
         GCWTextDivider(
           text: widget.text,
           bottom: 0.0,
-          trailingButton: GCWIconButton(
-            iconData: Icons.content_paste,
-            size: IconButtonSize.SMALL,
-            onPressed: () {
-              Clipboard.getData('text/plain').then((data) {
-                setState(() {
-                  _parseClipboardAndSetCoords(data.text);
-                });
-              });
-            },
-          )
+          trailingButton: GCWPasteButton(
+            onSelected: _parseClipboardAndSetCoords
+          ),
         ),
         GCWCoordsDropDownButton(
           value: widget.coordsFormat ?? _currentCoordsFormat,
@@ -273,11 +270,13 @@ class GCWCoordsState extends State<GCWCoords> {
   }
 
   _parseClipboardAndSetCoords(text) {
-    var pasted = parseLatLon(text);
-    if (pasted == null)
+    var parsed = parseLatLon(text);
+    if (parsed == null) {
+      showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
       return;
+    }
 
-    _pastedCoords = pasted['coordinate'];
+    _pastedCoords = parsed['coordinate'];
     if (_pastedCoords == null)
       return;
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:prefs/prefs.dart';
 
 class GCWOutputText extends StatefulWidget {
   final String text;
@@ -38,6 +39,14 @@ class _GCWOutputTextState extends State<GCWOutputText> {
               iconData: Icons.content_copy,
               onPressed: () {
                 Clipboard.setData(ClipboardData(text: widget.text));
+
+                var gcwClipboard = Prefs.getStringList('clipboard_items');
+
+                gcwClipboard.insert(0, widget.text);
+                while (gcwClipboard.length > Prefs.get('clipboard_max_items'))
+                  gcwClipboard.removeLast();
+
+                Prefs.setStringList('clipboard_items', gcwClipboard);
               },
             )
           : Container()

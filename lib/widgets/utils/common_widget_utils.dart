@@ -73,3 +73,18 @@ List<Widget> columnedMultiLineOutput(List<List<dynamic>> data, {List<int> flexVa
     return output;
   }).toList();
 }
+
+insertIntoGCWClipboard(String text) {
+  var gcwClipboard = Prefs.getStringList('clipboard_items');
+
+  if (gcwClipboard.contains(text)) {
+    gcwClipboard.remove(text);
+    gcwClipboard.insert(0, text);
+  } else {
+    gcwClipboard.insert(0, text);
+    while (gcwClipboard.length > Prefs.get('clipboard_max_items'))
+      gcwClipboard.removeLast();
+  }
+
+  Prefs.setStringList('clipboard_items', gcwClipboard);
+}

@@ -5,7 +5,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 
 class GCWTextDivider extends StatefulWidget {
   final String text;
-  final GCWIconButton trailingButton;
+  final Widget trailingButton;
   final bottom;
 
   const GCWTextDivider({Key key, this.text: '', this.trailingButton, this.bottom}) : super(key: key);

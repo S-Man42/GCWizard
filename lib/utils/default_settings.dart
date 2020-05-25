@@ -12,6 +12,14 @@ void initDefaultSettings() {
     Prefs.setString('alphabetvalues_default_alphabet', alphabetAZ.key);
   }
 
+  if (Prefs.get('clipboard_max_items') == null) {
+    Prefs.setInt('clipboard_max_items', 10);
+  }
+
+  if (Prefs.get('clipboard_items') == null) {
+    Prefs.setStringList('clipboard_items', []);
+  }
+
   if (Prefs.get('coord_default_ellipsoid_type') == null) {
     Prefs.setString('coord_default_ellipsoid_type', EllipsoidType.STANDARD.toString());
     Prefs.setString('coord_default_ellipsoid_name', ELLIPSOID_NAME_WGS84);

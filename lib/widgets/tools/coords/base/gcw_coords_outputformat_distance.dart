@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/units/lengths.dart';
 import 'package:gc_wizard/widgets/common/gcw_lengths_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -35,31 +36,34 @@ class GCWCoordsOutputFormatDistanceState
           children: <Widget>[
             Expanded (
               flex: 3,
-              child: GCWCoordsDropDownButton(
-                value: widget.coordFormat ?? _currentCoordFormat,
-                itemList: allCoordFormats.map((coordFormat) {
-                  if (coordFormat.name == null)
-                    coordFormat = getCoordFormatByKey(coordFormat.key, context: context);
-                  return coordFormat;
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _currentCoordFormat = value;
-                    _setCurrentValueAndEmitOnChange();
-                  });
-                },
-              ),
+              child: Container(
+                child: GCWCoordsDropDownButton(
+                  value: widget.coordFormat ?? _currentCoordFormat,
+                  itemList: allCoordFormats.map((coordFormat) {
+                    if (coordFormat.name == null)
+                      coordFormat = getCoordFormatByKey(coordFormat.key, context: context);
+                    return coordFormat;
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentCoordFormat = value;
+                      _setCurrentValueAndEmitOnChange();
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN)
+              )
             ),
             Expanded(
               flex: 1,
               child: GCWLengthsDropDownButton(
-                  value: _currentLengthUnit,
-                  onChanged: (Length value) {
-                    setState(() {
-                      _currentLengthUnit = value;
-                      _setCurrentValueAndEmitOnChange();
-                    });
-                  }
+                value: _currentLengthUnit,
+                onChanged: (Length value) {
+                  setState(() {
+                    _currentLengthUnit = value;
+                    _setCurrentValueAndEmitOnChange();
+                  });
+                }
               )
             )
           ],

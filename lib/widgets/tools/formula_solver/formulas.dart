@@ -147,6 +147,8 @@ class FormulasState extends State<Formulas> {
   }
 
   _buildGroupList(BuildContext context) {
+    final double _BUTTON_SIZE = 40;
+
     var odd = true;
     var rows = _currentFormulas.map((formula) {
       var calculated = formulaParser.parse(formula.formula, _currentValues);
@@ -215,8 +217,8 @@ class FormulasState extends State<Formulas> {
               )
               : Container(),
             Container(
-              width: 40,
-              height: 40,
+              width: _BUTTON_SIZE,
+              height: _BUTTON_SIZE,
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(roundedBorderRadius),
@@ -227,6 +229,7 @@ class FormulasState extends State<Formulas> {
                 ),
               ),
               child: PopupMenuButton(
+                offset: Offset(0, _BUTTON_SIZE),
                 icon: Icon(Icons.settings, color: Colors.white),
                 color: ThemeColors.accent,
                 shape: RoundedRectangleBorder(
