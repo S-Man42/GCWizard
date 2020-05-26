@@ -38,6 +38,7 @@ flutter:
     - assets/i18n/
     - assets/logo/
     - assets/coordinates/
+    - assets/tokens/
     - assets/symbol_tables/
     - assets/symbol_tables/arcadian/
     - assets/symbol_tables/braille/

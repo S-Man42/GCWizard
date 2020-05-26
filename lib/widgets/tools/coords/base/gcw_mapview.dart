@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
@@ -15,8 +16,11 @@ import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:latlong/latlong.dart';
+
+enum _LayerType {OPENSTREETMAP_MAPNIK, MAPBOX_SATELLITE}
 
 class GCWMapView extends StatefulWidget {
   final List<MapPoint> points;
@@ -32,9 +36,10 @@ class GCWMapView extends StatefulWidget {
 
 class GCWMapViewState extends State<GCWMapView> {
   final PopupController _popupLayerController = PopupController();
-  final MapController _mapController = MapController();
+  final MapController _mapController = MapControllerImpl();
 
-  var _currentLayer = false;
+  _LayerType _currentLayer = _LayerType.OPENSTREETMAP_MAPNIK;
+  var _mapBoxToken = null;
 
   //////////////////////////////////////////////////////////////////////////////
   // from: https://stackoverflow.com/a/58958668/3984221
@@ -95,6 +100,10 @@ class GCWMapViewState extends State<GCWMapView> {
 
   //////////////////////////////////////////////////////////////////////////////
 
+  Future<String> _loadToken(String tokenName) async {
+    return await rootBundle.loadString('assets/tokens/$tokenName');
+  }
+  
   @override
   void initState() {
     super.initState();
@@ -130,18 +139,41 @@ class GCWMapViewState extends State<GCWMapView> {
     List<Polyline> _circlePolylines = _addCircles();
     _polylines.addAll(_circlePolylines);
 
-    var tiles = _currentLayer ? TileLayerOptions(
+    var layers = <LayerOptions>[
+      TileLayerOptions(
         urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         subdomains: ['a', 'b', 'c'],
-        tileProvider: CachedNetworkTileProvider()
-    ) :
-    TileLayerOptions(
-        urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
-        additionalOptions: {
-          'accessToken': ''
-        },
-        tileProvider: CachedNetworkTileProvider()
-    );
+        tileProvider: CachedNetworkTileProvider(),
+        opacity: _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? 1.0 : 0.0
+      )
+    ];
+
+    if (_mapBoxToken != null && _mapBoxToken != '')
+      layers.add(
+        TileLayerOptions(
+          urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
+          additionalOptions: {
+            'accessToken': _mapBoxToken
+          },
+          tileProvider: CachedNetworkTileProvider(),
+          opacity: _currentLayer == _LayerType.MAPBOX_SATELLITE ? 1.0 : 0.0
+        )
+      );
+
+    layers.addAll([
+      PolylineLayerOptions(
+          polylines: _polylines
+      ),
+      MarkerLayerOptions(
+          markers: _markers
+      ),
+      PopupMarkerLayerOptions(
+          markers: _markers,
+          popupSnap: PopupSnap.top,
+          popupController: _popupLayerController,
+          popupBuilder: (BuildContext _, Marker marker) => _buildPopups(marker)
+      ),
+    ]);
 
     return Listener(
       onPointerSignal: handleSignal,
@@ -157,32 +189,26 @@ class GCWMapViewState extends State<GCWMapView> {
                 plugins: [PopupMarkerPlugin()],
                 onTap: (_) => _popupLayerController.hidePopup()
             ),
-            layers: [
-              tiles,
-              PolylineLayerOptions(
-                  polylines: _polylines
-              ),
-              MarkerLayerOptions(
-                  markers: _markers
-              ),
-              PopupMarkerLayerOptions(
-                  markers: _markers,
-                  popupSnap: PopupSnap.top,
-                  popupController: _popupLayerController,
-                  popupBuilder: (BuildContext _, Marker marker) => _buildPopups(marker)
-              ),
-            ],
+            layers: layers,
           ),
 
           Positioned(
             top: 15.0,
             right: 15.0,
             child: GCWIconButton(
-              iconData: Icons.style,
+              iconData: Icons.layers,
               onPressed: () {
-                setState(() {
-                  _currentLayer = !_currentLayer;
-                });
+                _currentLayer = _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? _LayerType.MAPBOX_SATELLITE : _LayerType.OPENSTREETMAP_MAPNIK;
+
+                if (_currentLayer == _LayerType.MAPBOX_SATELLITE && (_mapBoxToken == null || _mapBoxToken == '')) {
+                  _loadToken('mapbox').then((token) {
+                    setState(() {
+                      _mapBoxToken = token;
+                    });
+                  });
+                } else {
+                  setState(() {});
+                }
               }
             )
           )
@@ -215,11 +241,6 @@ class GCWMapViewState extends State<GCWMapView> {
   }
 
   _buildPopups(Marker marker) {
-    var textStyle = TextStyle(
-      fontFamily: gcwTextStyle().fontFamily,
-      fontSize: defaultFontSize(),
-      color: ThemeColors.darkgrey
-    );
 
     return Container(
       width: 250,

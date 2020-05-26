@@ -77,3 +77,4 @@
 /lib/generated_plugin_registrant.dart
 web
 /pubspec.lock
+/assets/tokens/mapbox
