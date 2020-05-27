@@ -347,6 +347,7 @@ class AboutState extends State<About> {
                           'Dennis \'dennistreysa\' (Code)',
                           '\'Geo-Link\' (Hardware)',
                           'Karl B. (Coords)',
+                          'Michael D. (Symbol Tables)',
                           '\'moenk\' (GK Coords)',
                           'Udo J. (Code)',
                           '\'wollpirat\' (Food, Tea & more)'
@@ -376,7 +377,6 @@ class AboutState extends State<About> {
                           '\'Klumpenkukuk\'',
                           '\'lupusmaximus\'',
                           'Martin Sch.',
-                          'Michael D.',
                           'Palk \'geogedoens.de\'',
                           '\'Pamakaru\'',
                           'Paweł B.',

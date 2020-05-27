@@ -41,6 +41,7 @@ flutter:
     - assets/tokens/
     - assets/symbol_tables/
     - assets/symbol_tables/arcadian/
+    - assets/symbol_tables/birds_on_a_wire/
     - assets/symbol_tables/braille/
     - assets/symbol_tables/chappe/
     - assets/symbol_tables/finger/
@@ -50,10 +51,12 @@ flutter:
     - assets/symbol_tables/glagolitic/
     - assets/symbol_tables/hexahue/
     - assets/symbol_tables/intergalactic/
+    - assets/symbol_tables/klingon/
     - assets/symbol_tables/lorm/
     - assets/symbol_tables/moon/
     - assets/symbol_tables/murray/
     - assets/symbol_tables/nato/
+    - assets/symbol_tables/ogham/
     - assets/symbol_tables/pipeline/
     - assets/symbol_tables/pixel/
     - assets/symbol_tables/postnet/
@@ -62,6 +65,7 @@ flutter:
     - assets/symbol_tables/romulan/
     - assets/symbol_tables/semaphore/
     - assets/symbol_tables/sign/
+    - assets/symbol_tables/spintype/
     - assets/symbol_tables/visitor/
 
 flutter_icons:

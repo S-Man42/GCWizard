@@ -989,6 +989,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'skies of arcadia arcadian greek arkadischer arkadien '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'birds_on_a_wire'),
+        i18nPrefix: 'symboltables_birds_on_a_wire',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'birds_on_a_wire/80.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'birds on a wire vögel auf der leine strippe kabel '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'braille'),
         i18nPrefix: 'symboltables_braille',
         iconPath: SYMBOLTABLES_ASSETPATH + 'braille/72.png',
@@ -1043,6 +1049,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'intergalactical galaxy galaxies intergalaktisch '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'klingon'),
+        i18nPrefix: 'symboltables_klingon',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'klingon/57.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'star trek klingonisch klingonen klingons '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'lorm'),
         i18nPrefix: 'symboltables_lorm',
         iconPath: SYMBOLTABLES_ASSETPATH + 'lorm/72.png',
@@ -1065,6 +1077,12 @@ class Registry {
         i18nPrefix: 'symboltables_nato',
         iconPath: SYMBOLTABLES_ASSETPATH + 'nato/54.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen nato army armee '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'ogham'),
+        i18nPrefix: 'symboltables_ogham',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'ogham/82.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'ogham ogam runes early irish altirisch irland ireland runen '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'pipeline'),
@@ -1107,6 +1125,12 @@ class Registry {
         i18nPrefix: 'symboltables_semaphore',
         iconPath: SYMBOLTABLES_ASSETPATH + 'semaphore/81.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags semaphores winkeralphabet flaggenalphabet'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'spintype'),
+        i18nPrefix: 'symboltables_spintype',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'spintype/71.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'spintype boxes kästchen kasten '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'sign'),
