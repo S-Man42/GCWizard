@@ -21,8 +21,8 @@ final ABOUT_LICENSE = 'GNU General Public License v3.0';
 final ABOUT_LICENSE_URL = 'https://www.gnu.org/licenses/gpl-3.0.en.html';
 final ABOUT_GITHUB = 'github.com/S-Man42/GCWizard';
 final ABOUT_GITHUB_URL = 'https://github.com/S-Man42/GCWizard';
-final ABOUT_PRIVACYPOLICY = 'gcwizard.net/privacy_policy.html';
-final ABOUT_PRIVACYPOLICY_URL = 'https://gcwizard.net/privacy_policy.html';
+final ABOUT_PRIVACYPOLICY = 'legal.gcwizard.net/privacy_policy.html';
+final ABOUT_PRIVACYPOLICY_URL = 'https://legal.gcwizard.net/privacy_policy.html';
 
 class About extends StatefulWidget {
   @override
@@ -368,19 +368,23 @@ class AboutState extends State<About> {
                       text:
                         [
                           'Andreas E.',
+                          '\'Headbanger-Berlin\'',
+                          '\'Filu - Aye, Käppn! - 43\' & \'Stormi - Aaarrh - 2061\'',
                           'Frank \'Wizardland\' (podKst.de)',
                           'Franz K.',
+                          'Johannes C.',
                           '\'Klumpenkukuk\'',
                           '\'lupusmaximus\'',
                           'Martin Sch.',
                           'Michael D.',
                           'Palk \'geogedoens.de\'',
                           '\'Pamakaru\'',
+                          'Paweł B.',
                           '\'radioscout\'',
                           '\'radlerandi\'',
                           '\'Sechsfüssler\'',
-                          '\'Filu - Aye, Käppn! - 43\' & \'Stormi - Aaarrh - 2061\'',
-                          '\'tomcat06\''
+                          'Stefan J.',
+                          '\'tomcat06\'',
                         ].join(', ')
                     )
                   ],
