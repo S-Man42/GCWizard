@@ -17,7 +17,7 @@ class GCWBearing extends StatefulWidget {
 
 class _GCWBearingState extends State<GCWBearing> {
   var _bearingController;
-  var _currentBearing = {'text': '','value': 0.0, 'reverse': false};
+  var _currentBearing = {'text': '','value': 0.0};
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _GCWBearingState extends State<GCWBearing> {
     return Row(
       children: <Widget>[
         Expanded(
-          flex: 9,
+          flex: 33,
           child: GCWDoubleTextField(
             hintText: widget.hintText ?? i18n(context, 'common_bearing_hint'),
             controller: _bearingController,
@@ -53,27 +53,9 @@ class _GCWBearingState extends State<GCWBearing> {
         Expanded(
           flex: 1,
           child: GCWText(
-              text: '°'
+            text: '°'
           ),
         ),
-        Expanded(
-          flex: 4,
-          child: GCWText(
-              text: i18n(context, 'coords_waypointprojection_reverse') + ':',
-          ),
-        ),
-        Expanded(
-          flex: 3,
-          child: GCWOnOffSwitch(
-            value: _currentBearing['reverse'],
-            notitle: true,
-            onChanged: (value) {
-              setState(() {
-                _currentBearing['reverse'] = value;
-              });
-            },
-          )
-        )
       ]
     );
   }

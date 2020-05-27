@@ -16,7 +16,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:latlong/latlong.dart';
 
@@ -162,16 +161,16 @@ class GCWMapViewState extends State<GCWMapView> {
 
     layers.addAll([
       PolylineLayerOptions(
-          polylines: _polylines
+        polylines: _polylines
       ),
       MarkerLayerOptions(
-          markers: _markers
+        markers: _markers
       ),
       PopupMarkerLayerOptions(
-          markers: _markers,
-          popupSnap: PopupSnap.top,
-          popupController: _popupLayerController,
-          popupBuilder: (BuildContext _, Marker marker) => _buildPopups(marker)
+        markers: _markers,
+        popupSnap: PopupSnap.top,
+        popupController: _popupLayerController,
+        popupBuilder: (BuildContext _, Marker marker) => _buildPopups(marker)
       ),
     ]);
 
@@ -182,12 +181,12 @@ class GCWMapViewState extends State<GCWMapView> {
           FlutterMap(
             mapController: _mapController,
             options: MapOptions(
-                center: computeCentroid(widget.points.map((_point) => _point.point).toList()),
-                zoom: _getBoundsZoomLevel().toDouble(),
-                minZoom: 1.0,
-                maxZoom: 18.0,
-                plugins: [PopupMarkerPlugin()],
-                onTap: (_) => _popupLayerController.hidePopup()
+              center: computeCentroid(widget.points.map((_point) => _point.point).toList()),
+              zoom: _getBoundsZoomLevel().toDouble(),
+              minZoom: 1.0,
+              maxZoom: 18.0,
+              plugins: [PopupMarkerPlugin()],
+              onTap: (_) => _popupLayerController.hidePopup()
             ),
             layers: layers,
           ),
