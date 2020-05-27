@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -23,8 +24,8 @@ class GCWIntegerSpinner extends StatefulWidget {
     this.onChanged,
     this.title,
     this.value: 0,
-    this.min: -9223372036854775808,
-    this.max: 9223372036854775807,
+    this.min: -9007199254740991,
+    this.max: 9007199254740992,
     this.controller,
     this.layout: SpinnerLayout.horizontal,
     this.focusNode,
