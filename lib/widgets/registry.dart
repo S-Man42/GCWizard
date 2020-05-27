@@ -1031,6 +1031,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'freemasons freimaurer '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'futurama'),
+        i18nPrefix: 'symboltables_futurama',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'futurama/79.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'futurama matt groening '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'glagolitic'),
         i18nPrefix: 'symboltables_glagolitic',
         iconPath: SYMBOLTABLES_ASSETPATH + 'glagolitic/66.png',
@@ -1051,7 +1057,7 @@ class Registry {
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'klingon'),
         i18nPrefix: 'symboltables_klingon',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'klingon/57.png',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'klingon/106.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'star trek klingonisch klingonen klingons '
       ),
       GCWToolWidget(

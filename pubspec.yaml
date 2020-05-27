@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 0.8.0+30
+version: 0.8.0+31
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -48,6 +48,7 @@ flutter:
     - assets/symbol_tables/flags/
     - assets/symbol_tables/freemason/
     - assets/symbol_tables/freemason_v2/
+    - assets/symbol_tables/futurama/
     - assets/symbol_tables/glagolitic/
     - assets/symbol_tables/hexahue/
     - assets/symbol_tables/intergalactic/

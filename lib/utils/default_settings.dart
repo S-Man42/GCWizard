@@ -27,8 +27,12 @@ void initDefaultSettings() {
     Prefs.setStringList('clipboard_items', []);
   } else {
     clipboardData.removeWhere((item) {
-      var created = DateTime.fromMillisecondsSinceEpoch(int.tryParse(jsonDecode(item)['created']));
-      return created.isBefore(DateTime.now().subtract(Duration(days: Prefs.get('clipboard_keep_entries_in_days'))));
+      try {
+        var created = DateTime.fromMillisecondsSinceEpoch(int.tryParse(jsonDecode(item)['created']));
+        return created.isBefore(DateTime.now().subtract(Duration(days: Prefs.get('clipboard_keep_entries_in_days'))));
+      } catch(e) {
+        return true;
+      }
     });
     Prefs.setStringList('clipboard_items', clipboardData);
   }
