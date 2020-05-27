@@ -17,6 +17,8 @@ const keyCoordsGaussKrueger5 = 'coords_gausskrueger_gk5';
 const keyCoordsMaidenhead = 'coords_maidenhead';
 const keyCoordsMercator = 'coords_mercator';
 const keyCoordsGeohash = 'coords_geohash';
+const keyCoordsOpenLocationCode = 'coords_openlocationcode';
+const keyCoordsReverseWhereIGoWaldmeister = 'coords_reversewhereigo_waldmeister';
 
 class CoordinateFormat {
   final key;
@@ -41,6 +43,8 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsMaidenhead, 'Maidenhead Locator (QTH)'),
   CoordinateFormat(keyCoordsMercator, 'Mercator'),
   CoordinateFormat(keyCoordsGeohash, 'Geohash'),
+  CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)'),
+  CoordinateFormat(keyCoordsReverseWhereIGoWaldmeister, 'Reverse WhereIGo (Waldmeister)'),
 ];
 
 final defaultCoordinate = LatLng(0.0, 0.0);

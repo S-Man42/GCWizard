@@ -34,7 +34,7 @@ MGRS latLonToMGRS(LatLng coord, Ellipsoid ells) {
   return MGRS(_utm.zone, _digraph, _easting, _northing);
 }
 
-String decToMGRSString(LatLng coord, Ellipsoid ells) {
+String latLonToMGRSString(LatLng coord, Ellipsoid ells) {
   MGRS mgrs = latLonToMGRS(coord, ells);
   return '${mgrs.utmZone.lonZone} ${mgrs.utmZone.latZone} ${mgrs.digraph} ${doubleFormat.format(mgrs.easting)} ${doubleFormat.format(mgrs.northing)}';
 }

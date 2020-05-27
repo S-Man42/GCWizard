@@ -99,7 +99,3 @@ String latLonToMaidenhead (LatLng coord) {
 
   return out;
 }
-
-String decToMaidenheadString(LatLng coords) {
-  return latLonToMaidenhead(coords);
-}

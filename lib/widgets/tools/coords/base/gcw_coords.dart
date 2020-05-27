@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -17,10 +14,11 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geohash.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_maidenhead.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mercator.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mgrs.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_openlocationcode.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewhereigo_waldmeister.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:latlong/latlong.dart';
 
 class GCWCoords extends StatefulWidget {
@@ -218,6 +216,28 @@ class GCWCoordsState extends State<GCWCoords> {
           onChanged: (newValue) {
             setState(() {
               _currentValue[keyCoordsGeohash] = newValue;
+              _setCurrentValueAndEmitOnChange();
+            });
+          },
+        ),
+      },
+      {
+        'coordFormat': getCoordFormatByKey(keyCoordsOpenLocationCode),
+        'widget': GCWCoordsOpenLocationCode(
+          onChanged: (newValue) {
+            setState(() {
+              _currentValue[keyCoordsOpenLocationCode] = newValue;
+              _setCurrentValueAndEmitOnChange();
+            });
+          },
+        ),
+      },
+      {
+        'coordFormat': getCoordFormatByKey(keyCoordsReverseWhereIGoWaldmeister),
+        'widget': GCWCoordsReverseWhereIGoWaldmeister(
+          onChanged: (newValue) {
+            setState(() {
+              _currentValue[keyCoordsReverseWhereIGoWaldmeister] = newValue;
               _setCurrentValueAndEmitOnChange();
             });
           },

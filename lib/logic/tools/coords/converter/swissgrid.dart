@@ -120,7 +120,7 @@ LatLng swissGridToLatLon (SwissGrid coord, Ellipsoid ells) {
   return newCoord;
 }
 
-String decToSwissGridPlusString(LatLng coord, Ellipsoid ells) {
+String latLonToSwissGridPlusString(LatLng coord, Ellipsoid ells) {
   SwissGrid swissGrid = latLonToSwissGridPlus(coord, ells);
 
   return 'Y: ${swissGrid.easting}\nX: ${swissGrid.northing}';
