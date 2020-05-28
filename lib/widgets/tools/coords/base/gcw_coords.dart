@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_deg.dart';
@@ -10,6 +14,8 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geohash.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_maidenhead.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mercator.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mgrs.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_openlocationcode.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewhereigo_waldmeister.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
@@ -31,6 +37,8 @@ class GCWCoordsState extends State<GCWCoords> {
   String _currentCoordsFormat = defaultCoordFormat();
   Map<String, LatLng> _currentValue;
 
+  LatLng _pastedCoords;
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +51,7 @@ class GCWCoordsState extends State<GCWCoords> {
       {
         'coordFormat': getCoordFormatByKey(keyCoordsDEC),
         'widget': GCWCoordsDEC(
+          coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
               _currentValue[keyCoordsDEC] = newValue;
@@ -54,6 +63,7 @@ class GCWCoordsState extends State<GCWCoords> {
       {
         'coordFormat': getCoordFormatByKey(keyCoordsDEG),
         'widget': GCWCoordsDEG(
+          coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
               _currentValue[keyCoordsDEG] = newValue;
@@ -65,6 +75,7 @@ class GCWCoordsState extends State<GCWCoords> {
       {
         'coordFormat': getCoordFormatByKey(keyCoordsDMS),
         'widget': GCWCoordsDMS(
+          coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
               _currentValue[keyCoordsDMS] = newValue;
@@ -210,16 +221,44 @@ class GCWCoordsState extends State<GCWCoords> {
           },
         ),
       },
+      {
+        'coordFormat': getCoordFormatByKey(keyCoordsOpenLocationCode),
+        'widget': GCWCoordsOpenLocationCode(
+          onChanged: (newValue) {
+            setState(() {
+              _currentValue[keyCoordsOpenLocationCode] = newValue;
+              _setCurrentValueAndEmitOnChange();
+            });
+          },
+        ),
+      },
+      {
+        'coordFormat': getCoordFormatByKey(keyCoordsReverseWhereIGoWaldmeister),
+        'widget': GCWCoordsReverseWhereIGoWaldmeister(
+          onChanged: (newValue) {
+            setState(() {
+              _currentValue[keyCoordsReverseWhereIGoWaldmeister] = newValue;
+              _setCurrentValueAndEmitOnChange();
+            });
+          },
+        ),
+      },
     ];
 
     List<CoordinateFormat> _onlyCoordinateFormats = _coordsWidgets
       .map((entry) => entry['coordFormat'] as CoordinateFormat)
       .toList();
 
+    _pastedCoords = null;
+
     Column _widget = Column(
       children: <Widget>[
         GCWTextDivider(
-          text: widget.text
+          text: widget.text,
+          bottom: 0.0,
+          trailingButton: GCWPasteButton(
+            onSelected: _parseClipboardAndSetCoords
+          ),
         ),
         GCWCoordsDropDownButton(
           value: widget.coordsFormat ?? _currentCoordsFormat,
@@ -248,5 +287,29 @@ class GCWCoordsState extends State<GCWCoords> {
       'coordsFormat': _currentCoordsFormat,
       'value': _currentValue[_currentCoordsFormat]
     });
+  }
+
+  _parseClipboardAndSetCoords(text) {
+    var parsed = parseLatLon(text);
+    if (parsed == null) {
+      showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
+      return;
+    }
+
+    _pastedCoords = parsed['coordinate'];
+    if (_pastedCoords == null)
+      return;
+
+    switch(_currentCoordsFormat) {
+      case keyCoordsDEC:
+      case keyCoordsDEG:
+      case keyCoordsDMS:
+        break;
+      default:
+        _currentCoordsFormat = keyCoordsDEG;
+    }
+
+    _currentValue[_currentCoordsFormat] = _pastedCoords;
+    _setCurrentValueAndEmitOnChange();
   }
 }

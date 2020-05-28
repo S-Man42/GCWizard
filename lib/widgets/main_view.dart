@@ -10,6 +10,7 @@ import 'package:gc_wizard/widgets/main_menu.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
@@ -22,42 +23,49 @@ import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
-import 'package:gc_wizard/widgets/tools/crypto/abaddon.dart';
-import 'package:gc_wizard/widgets/tools/crypto/adfgvx.dart';
-import 'package:gc_wizard/widgets/tools/crypto/atbash.dart';
-import 'package:gc_wizard/widgets/tools/crypto/bacon.dart';
-import 'package:gc_wizard/widgets/tools/crypto/caesar.dart';
-import 'package:gc_wizard/widgets/tools/crypto/chicken_language.dart';
-import 'package:gc_wizard/widgets/tools/crypto/enigma/enigma.dart';
-import 'package:gc_wizard/widgets/tools/crypto/gronsfeld.dart';
-import 'package:gc_wizard/widgets/tools/crypto/kamasutra.dart';
-import 'package:gc_wizard/widgets/tools/crypto/kenny.dart';
-import 'package:gc_wizard/widgets/tools/crypto/pig_latin.dart';
-import 'package:gc_wizard/widgets/tools/crypto/playfair.dart';
-import 'package:gc_wizard/widgets/tools/crypto/polybios.dart';
-import 'package:gc_wizard/widgets/tools/crypto/reverse.dart';
-import 'package:gc_wizard/widgets/tools/crypto/robber_language.dart';
-import 'package:gc_wizard/widgets/tools/crypto/skytale.dart';
-import 'package:gc_wizard/widgets/tools/crypto/spoon_language.dart';
-import 'package:gc_wizard/widgets/tools/crypto/substitution.dart';
-import 'package:gc_wizard/widgets/tools/crypto/tap_code.dart';
-import 'package:gc_wizard/widgets/tools/crypto/tapir.dart';
-import 'package:gc_wizard/widgets/tools/crypto/tomtom.dart';
-import 'package:gc_wizard/widgets/tools/crypto/trithemius.dart';
-import 'package:gc_wizard/widgets/tools/crypto/vigenere.dart';
-import 'package:gc_wizard/widgets/tools/encodings/ascii_values.dart';
-import 'package:gc_wizard/widgets/tools/encodings/ccitt1.dart';
-import 'package:gc_wizard/widgets/tools/encodings/ccitt2.dart';
-import 'package:gc_wizard/widgets/tools/encodings/letter_values.dart';
-import 'package:gc_wizard/widgets/tools/encodings/morse.dart';
-import 'package:gc_wizard/widgets/tools/encodings/roman_numbers.dart';
-import 'package:gc_wizard/widgets/tools/encodings/scrabble.dart';
-import 'package:gc_wizard/widgets/tools/encodings/z22.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pig_latin.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/robber_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/scrabble.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -103,10 +111,12 @@ class _MainViewState extends State<MainView> {
         return [
           className(Abaddon()),
           className(ADFGVX()),
+          className(AlphabetValues()),
           className(ASCIIValues()),
           className(Atbash()),
           className(Bacon()),
           className(BaseSelection()),
+          className(Binary()),
           className(BrainfkSelection()),
           className(Caesar()),
           className(CCITT1()),
@@ -114,17 +124,21 @@ class _MainViewState extends State<MainView> {
           className(ChickenLanguage()),
           className(CoordsSelection()),
           className(ColorPicker()),
+          className(CombinatoricsSelection()),
           className(DatesSelection()),
+          className(Deadfish()),
           className(Decabit()),
+          className(DuckSpeak()),
           className(Enigma()),
           className(ESelection()),
           className(FormulaSolver()),
+          className(GCCode()),
           className(Gronsfeld()),
           className(Kamasutra()),
           className(Kenny()),
-          className(LetterValues()),
           className(Morse()),
           className(NumeralBases()),
+          className(OneTimePad()),
           className(PeriodicTable()),
           className(PhiSelection()),
           className(PiSelection()),
@@ -132,6 +146,7 @@ class _MainViewState extends State<MainView> {
           className(Playfair()),
           className(Polybios()),
           className(PrimesSelection()),
+          className(RailFence()),
           className(ResistorSelection()),
           className(Reverse()),
           className(RobberLanguage()),
@@ -148,6 +163,7 @@ class _MainViewState extends State<MainView> {
           className(Trithemius()),
           className(VanitySelection()),
           className(Vigenere()),
+          className(Windchill()),
           className(Z22()),
         ].contains(className(element.tool));
       }).toList();

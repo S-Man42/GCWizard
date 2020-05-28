@@ -125,6 +125,31 @@ class GeneralSettingsState extends State<GeneralSettings> {
               Prefs.setInt('symboltables_countcolumns_landscape', value);
             });
           },
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'settings_general_clipboard')
+        ),
+        GCWIntegerSpinner(
+          title: i18n(context, 'settings_general_clipboard_maxitems'),
+          value: Prefs.getInt('clipboard_max_items'),
+          min: 1,
+          max: 100,
+          onChanged: (value) {
+            setState(() {
+              Prefs.setInt('clipboard_max_items', value);
+            });
+          },
+        ),
+        GCWIntegerSpinner(
+          title: i18n(context, 'settings_general_clipboard_keep.entries.in.days'),
+          value: Prefs.getInt('clipboard_keep_entries_in_days'),
+          min: 1,
+          max: 1000,
+          onChanged: (value) {
+            setState(() {
+              Prefs.setInt('clipboard_keep_entries_in_days', value);
+            });
+          },
         )
       ],
     );

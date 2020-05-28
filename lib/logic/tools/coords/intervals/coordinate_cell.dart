@@ -45,9 +45,21 @@ class CoordinateCell {
     return max(widthTop, widthBottom);
   }
 
-  //upper approximated bound for max radius (greatest distance between center point of cell to the edges/corners: Half height + half width)
+  //upper approximated bound for max radius (maximum distance from cell center(half width, half height) to corners or center of edges)
   double get approxMaxRadius {
-    return maxHeight  / 2.0 + maxWidth / 2.0;
+
+    var distances = [];
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.a)), ellipsoid).distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.b)), ellipsoid).distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.b), radianToDeg(lonInterval.a)), ellipsoid).distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.b)), ellipsoid).distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg((latInterval.a + latInterval.b) / 2), radianToDeg(lonInterval.a)), ellipsoid).distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg((latInterval.a + latInterval.b) / 2), radianToDeg(lonInterval.b)), ellipsoid).distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.a), radianToDeg((lonInterval.a + lonInterval.b) / 2)), ellipsoid).distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.b), radianToDeg((lonInterval.a + lonInterval.b) / 2)), ellipsoid).distance);
+    distances.sort();
+
+    return distances[distances.length - 1];
   }
 
   //Calculates an approx. upper bound of the distance from point P to any point within the cell
@@ -58,7 +70,6 @@ class CoordinateCell {
     //distance from point P to the cell center
     double distanceToCellCenter = distanceBearing(point, cellCenter, ellipsoid).distance;
 
-    //return Intervall: All points from lower bound to upper bound
     return Interval(a: distanceToCellCenter - approxMaxRadius, b: distanceToCellCenter + approxMaxRadius);
   }
 
@@ -68,7 +79,7 @@ class CoordinateCell {
   // Important: The range from 350° to 10° != range from 10° to 350°.
   // Ranges are not normalized, so the range [350, 10] in fact will be [350, 370]
   // If P is in the cell, than the resulting range is [0, 360]
-  Interval bearingFrom(LatLng point) {
+  Interval bearingTo(LatLng point) {
     //if point is in cell
     if (point.latitudeInRad > latInterval.a && point.latitudeInRad < latInterval.b
         && point.longitudeInRad > lonInterval.a && point.longitudeInRad < lonInterval.b)

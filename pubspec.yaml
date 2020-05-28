@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 0.7.1+22
+version: 0.8.0+33
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -12,6 +12,7 @@ dependencies:
   path: any
   path_provider: any
   flutter_map: any
+  flutter_map_marker_popup: ^0.1.4
   flutter_localizations:
     sdk: flutter
   provider: any
@@ -24,6 +25,7 @@ dependencies:
   package_info: ^0.4.0+16
   math_expressions: ^2.0.0
   pointycastle: ^1.0.2
+  fluttertoast: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -36,21 +38,26 @@ flutter:
     - assets/i18n/
     - assets/logo/
     - assets/coordinates/
+    - assets/tokens/
     - assets/symbol_tables/
     - assets/symbol_tables/arcadian/
+    - assets/symbol_tables/birds_on_a_wire/
     - assets/symbol_tables/braille/
     - assets/symbol_tables/chappe/
     - assets/symbol_tables/finger/
     - assets/symbol_tables/flags/
     - assets/symbol_tables/freemason/
     - assets/symbol_tables/freemason_v2/
+    - assets/symbol_tables/futurama/
     - assets/symbol_tables/glagolitic/
     - assets/symbol_tables/hexahue/
     - assets/symbol_tables/intergalactic/
+    - assets/symbol_tables/klingon/
     - assets/symbol_tables/lorm/
     - assets/symbol_tables/moon/
     - assets/symbol_tables/murray/
     - assets/symbol_tables/nato/
+    - assets/symbol_tables/ogham/
     - assets/symbol_tables/pipeline/
     - assets/symbol_tables/pixel/
     - assets/symbol_tables/postnet/
@@ -59,6 +66,7 @@ flutter:
     - assets/symbol_tables/romulan/
     - assets/symbol_tables/semaphore/
     - assets/symbol_tables/sign/
+    - assets/symbol_tables/spintype/
     - assets/symbol_tables/visitor/
 
 flutter_icons:

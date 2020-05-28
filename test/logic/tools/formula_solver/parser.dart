@@ -29,13 +29,13 @@ void main() {
       {'formula' : '[A] + [B]', 'values': values, 'expectedOutput' : {'state': 'ok', 'result': '3 + 20'}},
       {'formula' : 'AB + C', 'values': values, 'expectedOutput' : {'state': 'ok', 'result': '420'}},
       {'formula' : '(AB) + C', 'values': values, 'expectedOutput' : {'state': 'ok', 'result': '420'}},
-      {'formula' : 'A(B + C)', 'values': values, 'expectedOutput' : {'state': 'error', 'result': 'A(B + C)'}},
+      {'formula' : 'A(B + C)', 'values': values, 'expectedOutput' : {'state': 'error', 'result': '3(20 + 100)'}},
       {'formula' : '[A][(B + C)]', 'values': values, 'expectedOutput' : {'state': 'ok', 'result': '3120'}},
       {'formula' : 'A*(B + C)', 'values': values, 'expectedOutput' : {'state': 'ok', 'result': '360'}},
       {'formula' : '[]', 'values': values, 'expectedOutput' : {'state': 'error', 'result': '[]'}},
       {'formula' : '()', 'values': values, 'expectedOutput' : {'state': 'error', 'result': '()'}},
       {'formula' : '?!', 'values': values, 'expectedOutput' : {'state': 'error', 'result': '?!'}},
-      {'formula' : 'A []', 'values': values, 'expectedOutput' : {'state': 'error', 'result': 'A []'}},
+      {'formula' : 'A []', 'values': values, 'expectedOutput' : {'state': 'error', 'result': '3 []'}},
       {'formula' : 'N []', 'values': values, 'expectedOutput' : {'state': 'error', 'result': 'N []'}},
       {'formula' : 'N', 'values': values, 'expectedOutput' : {'state': 'error', 'result': 'N'}},
       {'formula' : 'E', 'values': values, 'expectedOutput' : {'state': 'ok', 'result': pi.toString()}},
@@ -49,7 +49,7 @@ void main() {
       {'formula' : 'N 52 [QR].[S+T*U*2] E 12 [V*W].[XY + Z]', 'values': values, 'expectedOutput' : {'state': 'ok', 'result': 'N 52 10.680 E 12 36.354'}},
 
       //Trim empty space
-      {'formula' : 'sin(0) ', 'values': values, 'expectedOutput' : {'state': 'error', 'result': 'sin(0)'}}, //Not working because S in Values and so the s of sin will be replaced
+      {'formula' : 'sin(0) ', 'values': values, 'expectedOutput' : {'state': 'error', 'result': '200IN(0)'}}, //Not working because S in Values and so the s of sin will be replaced
       {'formula' : 'sin(0) ', 'values': <String, String>{}, 'expectedOutput' : {'state': 'ok', 'result': '0'}}, //Not working because S in Values and so the s of sin will be replaced
 
       //math library testing

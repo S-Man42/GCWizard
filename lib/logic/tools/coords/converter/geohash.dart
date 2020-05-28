@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:latlong/latlong.dart';
 
 List<Map<String, String>> _alphabet = [
@@ -131,8 +129,4 @@ double _getCoordFromBinary(String binary, double lowerBound, double upperBound) 
   });
 
   return coord;
-}
-
-String decToGeohashString(LatLng coords, int geohashLength) {
-  return latLonToGeohash(coords, geohashLength);
 }

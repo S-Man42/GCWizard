@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
@@ -66,16 +67,19 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
                 ),
               ),
               Expanded(
-                child: GCWCoordsSignDropDownButton(
-                  itemList: ['N','S'],
-                  value: _currentHemisphere,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentHemisphere = value;
-                      _setCurrentValueAndEmitOnChange();
-                    });
-                  }
-                ),
+                child: Container(
+                  child: GCWCoordsSignDropDownButton(
+                    itemList: ['N','S'],
+                    value: _currentHemisphere,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentHemisphere = value;
+                        _setCurrentValueAndEmitOnChange();
+                      });
+                    }
+                  ),
+                  padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+                )
               ),
             ],
           ),

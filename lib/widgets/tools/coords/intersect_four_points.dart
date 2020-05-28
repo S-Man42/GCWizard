@@ -32,7 +32,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
 
   var _currentMapPoints;
   var _currentOutputFormat = defaultCoordFormat();
-  var _currentOutput = '';
+  List<String> _currentOutput = [];
 
   @override
   void initState() {
@@ -99,7 +99,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
           },
         ),
         GCWCoordsOutput(
-          text: _currentOutput,
+          outputs: _currentOutput,
           points: _currentMapPoints,
           geodetics: [
             MapGeodetic(
@@ -126,30 +126,40 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
     _currentMapPoints = _currentMapPoints = [
       MapPoint(
         point: _currentCoords11,
+        markerText: i18n(context, 'coords_intersectfourpoints_coord11'),
+        coordinateFormat: _currentCoordsFormat11
       ),
       MapPoint(
         point: _currentCoords12,
+        markerText: i18n(context, 'coords_intersectfourpoints_coord12'),
+        coordinateFormat: _currentCoordsFormat12
       ),
       MapPoint(
         point: _currentCoords21,
+        markerText: i18n(context, 'coords_intersectfourpoints_coord21'),
+        coordinateFormat: _currentCoordsFormat21
       ),
       MapPoint(
         point: _currentCoords22,
+        markerText: i18n(context, 'coords_intersectfourpoints_coord22'),
+        coordinateFormat: _currentCoordsFormat22
       )
     ];
 
     if (_currentIntersection == null) {
-      _currentOutput = i18n(context, "coords_intersect_nointersection");
+      _currentOutput = [i18n(context, 'coords_intersect_nointersection')];
       return;
     }
 
     _currentMapPoints.add(
       MapPoint(
         point: _currentIntersection,
-        color: ThemeColors.mapCalculatedPoint
+        color: ThemeColors.mapCalculatedPoint,
+        markerText: i18n(context, 'coords_common_intersection'),
+        coordinateFormat: _currentOutputFormat
       )
     );
 
-    _currentOutput = formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid());
+    _currentOutput = [formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid())];
   }
 }

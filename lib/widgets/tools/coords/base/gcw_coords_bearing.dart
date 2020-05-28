@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/double_bearing_textinputformatter.dart';
 
 class GCWBearing extends StatefulWidget {
@@ -35,14 +36,15 @@ class _GCWBearingState extends State<GCWBearing> {
     return Row(
       children: <Widget>[
         Expanded(
-          flex: 3,
+          flex: 33,
           child: GCWDoubleTextField(
             hintText: widget.hintText ?? i18n(context, 'common_bearing_hint'),
             controller: _bearingController,
             textInputFormatter: DoubleBearingTextInputFormatter(),
             onChanged: (ret) {
               setState(() {
-                _currentBearing = ret;
+                _currentBearing['value'] = ret['value'];
+                _currentBearing['text'] = ret['text'];
                 widget.onChanged(_currentBearing);
               });
             },
@@ -51,7 +53,7 @@ class _GCWBearingState extends State<GCWBearing> {
         Expanded(
           flex: 1,
           child: GCWText(
-              text: '°'
+            text: '°'
           ),
         ),
       ]

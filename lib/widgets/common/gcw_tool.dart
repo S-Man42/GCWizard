@@ -36,14 +36,14 @@ class GCWToolWidget extends StatefulWidget {
     this.searchStrings: '',
     this.options
   }) : super(key: key) {
-    this._id = className(tool);
+    this._id = className(tool) + '_' + (i18nPrefix ?? '');
     this._isFavorite = Prefs.getStringList('favorites').contains('$_id');
 
     if (iconPath != null) {
       this.icon = Container(
         child: Image.asset(iconPath, width: defaultListIconSize),
         padding: EdgeInsets.all(2),
-        color: ThemeColors.iconBackground,
+        color: ThemeColors.symbolTableIconBackground,
       );
     }
   }

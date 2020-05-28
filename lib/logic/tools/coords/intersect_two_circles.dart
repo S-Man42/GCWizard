@@ -5,7 +5,7 @@ import 'package:latlong/latlong.dart';
 
 class _IntersectTwoCirclesCalculator extends IntervalCalculator {
 
-  _IntersectTwoCirclesCalculator(Map<String, dynamic> parameters, Ellipsoid ells) : super(parameters, ells);
+  _IntersectTwoCirclesCalculator(Map<String, dynamic> parameters, Ellipsoid ellipsoid) : super(parameters, ellipsoid);
 
   @override
   bool checkCell(CoordinateCell cell, Map<String, dynamic> parameters) {
@@ -19,6 +19,6 @@ class _IntersectTwoCirclesCalculator extends IntervalCalculator {
   }
 }
 
-List<LatLng> intersectTwoCircles(LatLng coord1, double radius1, LatLng coord2, double radius2, Ellipsoid ells) {
-  return _IntersectTwoCirclesCalculator({'coord1': coord1, 'radius1': radius1, 'coord2': coord2, 'radius2': radius2}, ells).check();
+List<LatLng> intersectTwoCircles(LatLng coord1, double radius1, LatLng coord2, double radius2, Ellipsoid ellipsoid) {
+  return _IntersectTwoCirclesCalculator({'coord1': coord1, 'radius1': radius1, 'coord2': coord2, 'radius2': radius2}, ellipsoid).check();
 }

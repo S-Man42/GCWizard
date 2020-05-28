@@ -21,7 +21,7 @@ Mercator latLonToMercator (LatLng coord, Ellipsoid ells) {
   return Mercator(y, x);
 }
 
-String decToMercatorString(LatLng coord, Ellipsoid ells) {
+String latLonToMercatorString(LatLng coord, Ellipsoid ells) {
   Mercator mercator = latLonToMercator(coord, ells);
 
   return 'Y: ${mercator.easting}\nX: ${mercator.northing}';

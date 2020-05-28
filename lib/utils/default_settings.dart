@@ -1,8 +1,42 @@
+import 'dart:convert';
+
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:prefs/prefs.dart';
 
 void initDefaultSettings() {
+  if (Prefs.get('alphabetvalues_custom_alphabets') == null) {
+    Prefs.setStringList('alphabetvalues_custom_alphabets', []);
+  }
+
+  if (Prefs.get('alphabetvalues_default_alphabet') == null) {
+    Prefs.setString('alphabetvalues_default_alphabet', alphabetAZ.key);
+  }
+
+  if (Prefs.get('clipboard_max_items') == null) {
+    Prefs.setInt('clipboard_max_items', 10);
+  }
+
+  if (Prefs.get('clipboard_keep_entries_in_days') == null) {
+    Prefs.setInt('clipboard_keep_entries_in_days', 7);
+  }
+
+  var clipboardData = Prefs.getStringList('clipboard_items');
+  if (clipboardData == null) {
+    Prefs.setStringList('clipboard_items', []);
+  } else {
+    clipboardData.removeWhere((item) {
+      try {
+        var created = DateTime.fromMillisecondsSinceEpoch(int.tryParse(jsonDecode(item)['created']));
+        return created.isBefore(DateTime.now().subtract(Duration(days: Prefs.get('clipboard_keep_entries_in_days'))));
+      } catch(e) {
+        return true;
+      }
+    });
+    Prefs.setStringList('clipboard_items', clipboardData);
+  }
+
   if (Prefs.get('coord_default_ellipsoid_type') == null) {
     Prefs.setString('coord_default_ellipsoid_type', EllipsoidType.STANDARD.toString());
     Prefs.setString('coord_default_ellipsoid_name', ELLIPSOID_NAME_WGS84);

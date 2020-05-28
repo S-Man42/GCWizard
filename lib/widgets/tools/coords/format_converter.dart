@@ -20,7 +20,7 @@ class FormatConverterState extends State<FormatConverter> {
   var _currentCoordsFormat = defaultCoordFormat();
 
   var _currentOutputFormat = keyCoordsDEC;
-  var _currentOutput = '';
+  List<String> _currentOutput = [];
 
   @override
   void initState() {
@@ -57,10 +57,11 @@ class FormatConverterState extends State<FormatConverter> {
           },
         ),
         GCWCoordsOutput(
-          text: _currentOutput,
+          outputs: _currentOutput,
           points: [
             MapPoint(
               point: _currentCoords,
+              coordinateFormat: _currentOutputFormat
             ),
           ],
         ),
@@ -69,6 +70,6 @@ class FormatConverterState extends State<FormatConverter> {
   }
 
   _calculateOutput(BuildContext context) {
-    _currentOutput = formatCoordOutput(_currentCoords, _currentOutputFormat, defaultEllipsoid());
+    _currentOutput = [formatCoordOutput(_currentCoords, _currentOutputFormat, defaultEllipsoid())];
   }
 }

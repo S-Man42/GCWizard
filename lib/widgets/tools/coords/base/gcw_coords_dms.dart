@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
@@ -12,8 +13,9 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsDMS extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsDMS({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsDMS({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsDMSState createState() => GCWCoordsDMSState();
@@ -92,6 +94,34 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.coordinates != null) {
+      var dms = DMS.from(widget.coordinates);
+      var lat = dms.latitude.formatParts(10);
+      var lon = dms.longitude.formatParts(10);
+
+      _currentLatDegrees = lat['degrees'];
+      _currentLatMinutes = lat['minutes'];
+      _currentLatSeconds = lat['seconds'].split('.')[0];
+      _currentLatMilliSeconds = lat['seconds'].split('.')[1];
+      _currentLatSign = lat['sign']['value'];
+
+      _currentLonDegrees = lon['degrees'];
+      _currentLonMinutes = lon['minutes'];
+      _currentLonSeconds = lon['seconds'].split('.')[0];
+      _currentLonMilliSeconds = lon['seconds'].split('.')[1];
+      _currentLonSign = lon['sign']['value'];
+
+      _LatDegreesController = TextEditingController(text: _currentLatDegrees);
+      _LatMinutesController = TextEditingController(text: _currentLatMinutes);
+      _LatSecondsController = TextEditingController(text: _currentLatSeconds);
+      _LatMilliSecondsController = TextEditingController(text: _currentLatMilliSeconds);
+
+      _LonDegreesController = TextEditingController(text: _currentLonDegrees);
+      _LonMinutesController = TextEditingController(text: _currentLonMinutes);
+      _LonSecondsController = TextEditingController(text: _currentLonSeconds);
+      _LonMilliSecondsController = TextEditingController(text: _currentLonMilliSeconds);
+    }
+
     return Column (    
       children: <Widget>[
         Row(
@@ -111,20 +141,23 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
             ),
             Expanded(
               flex: 6,
-              child: GCWIntegerTextField(
-                hintText: 'DD',
-                textInputFormatter: CoordsIntegerDegreesLatTextInputFormatter(),
-                controller: _LatDegreesController,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentLatDegrees = ret['text'];
-                    _setCurrentValueAndEmitOnChange();
+              child: Container(
+                child: GCWIntegerTextField(
+                  hintText: 'DD',
+                  textInputFormatter: CoordsIntegerDegreesLatTextInputFormatter(),
+                  controller: _LatDegreesController,
+                  onChanged: (ret) {
+                    setState(() {
+                      _currentLatDegrees = ret['text'];
+                      _setCurrentValueAndEmitOnChange();
 
-                    if (_currentLatDegrees.length == 2)
-                      FocusScope.of(context).requestFocus(_latMinutesFocusNode);
-                  });
-                }
-              ),
+                      if (_currentLatDegrees.length == 2)
+                        FocusScope.of(context).requestFocus(_latMinutesFocusNode);
+                    });
+                  }
+                ),
+                padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+              )
             ),
             Expanded(
               flex: 1,
@@ -224,20 +257,23 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
             ),
             Expanded(
               flex: 6,
-              child: GCWIntegerTextField(
-                hintText: 'DD',
-                textInputFormatter: CoordsIntegerDegreesLonTextInputFormatter(),
-                controller: _LonDegreesController,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentLonDegrees = ret['text'];
-                    _setCurrentValueAndEmitOnChange();
+              child: Container(
+                child: GCWIntegerTextField(
+                  hintText: 'DD',
+                  textInputFormatter: CoordsIntegerDegreesLonTextInputFormatter(),
+                  controller: _LonDegreesController,
+                  onChanged: (ret) {
+                    setState(() {
+                      _currentLonDegrees = ret['text'];
+                      _setCurrentValueAndEmitOnChange();
 
-                    if (_currentLonDegrees.length == 3)
-                      FocusScope.of(context).requestFocus(_lonMinutesFocusNode);
-                  });
-                }
-              ),
+                      if (_currentLonDegrees.length == 3)
+                        FocusScope.of(context).requestFocus(_lonMinutesFocusNode);
+                    });
+                  }
+                ),
+                padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+              )
             ),
             Expanded(
               flex: 1,
@@ -331,14 +367,14 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
     int _minutes = ['', '-'].contains(_currentLatMinutes) ? 0 : int.parse(_currentLatMinutes);
     int _seconds = (['', '-'].contains(_currentLatSeconds) ? 0 : int.parse(_currentLatSeconds));
     double _secondsD = double.parse('$_seconds.$_currentLatMilliSeconds');
-    DMS _currentLat = DMS(_currentLatSign * _degrees, _minutes, _secondsD);
+    var _currentLat = DMSLatitude(_currentLatSign, _degrees, _minutes, _secondsD);
 
     _degrees = ['', '-'].contains(_currentLonDegrees) ? 0 : int.parse(_currentLonDegrees);
     _minutes = ['', '-'].contains(_currentLonMinutes) ? 0 : int.parse(_currentLonMinutes);
     _seconds = (['', '-'].contains(_currentLonSeconds) ? 0 : int.parse(_currentLonSeconds));
     _secondsD = double.parse('$_seconds.$_currentLonMilliSeconds');
-    DMS _currentLon = DMS(_currentLonSign * _degrees, _minutes, _secondsD);
+    var _currentLon = DMSLongitude(_currentLonSign, _degrees, _minutes, _secondsD);
 
-    widget.onChanged(LatLng(latDMSToDEC(_currentLat), lonDMSToDEC(_currentLon)));
+    widget.onChanged(DMS(_currentLat, _currentLon).toLatLng());
   }
 }

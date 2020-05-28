@@ -13,14 +13,14 @@ LatLng maidenheadToLatLon (String maidenhead) {
 
   for (int i = 0; i < maidenhead.length; i += 2) {
     if (res == 1) {
-      lon = (alphabet_AZ[maidenhead[0]] * 20).toDouble();
-      lat = (alphabet_AZ[maidenhead[1]] * 10).toDouble();
+      lon = ((alphabet_AZ[maidenhead[0]] - 1) * 20).toDouble();
+      lat = ((alphabet_AZ[maidenhead[1]] - 1) * 10).toDouble();
       res = 2;
     } else if (res % 2 == 1)  {
       reslon /= 24;
       reslat /= 24;
-      lon += alphabet_AZ[maidenhead[i]].toDouble() * reslon;
-      lat += alphabet_AZ[maidenhead[i + 1]].toDouble() * reslat;
+      lon += (alphabet_AZ[maidenhead[i]] - 1).toDouble() * reslon;
+      lat += (alphabet_AZ[maidenhead[i + 1]] - 1).toDouble() * reslat;
       ++res;
     } else {
       reslon /= 10;
@@ -38,8 +38,8 @@ LatLng maidenheadToLatLon (String maidenhead) {
 }
 
 String latLonToMaidenhead (LatLng coord) {
-  var lon = coord.longitude + 180;
-  var lat = coord.latitude + 90;
+  var lon = coord.longitude + 180.0;
+  var lat = coord.latitude + 90.0;
 
   int resolution = 8;
 
@@ -49,17 +49,17 @@ String latLonToMaidenhead (LatLng coord) {
   int intlat;
 
   if (resolution >= 1) {
-    intlon = (lon / 20).floor();
-    lon -= intlon * 20;
-    intlat = (lat / 10).floor();
-    lat -= intlat * 10;
-    out += alphabet_AZIndexes[intlon];
-    out += alphabet_AZIndexes[intlat];
+    intlon = (lon / 20.0).floor();
+    lon -= intlon * 20.0;
+    intlat = (lat / 10.0).floor();
+    lat -= intlat * 10.0;
+    out += alphabet_AZIndexes[intlon + 1];
+    out += alphabet_AZIndexes[intlat + 1];
   }
 
-  if (resolution >= 2) {
-    intlon = (lon / 2).floor();
-    lon -= intlon * 2;
+  if (resolution >= 2.0) {
+    intlon = (lon / 2.0).floor();
+    lon -= intlon * 2.0;
     intlat = (lat).floor();
     lat -= intlat;
 
@@ -68,25 +68,23 @@ String latLonToMaidenhead (LatLng coord) {
   }
 
   int i = 3;
-  double reslon = 2;
-  double reslat = 1;
+  double reslon = 2.0;
+  double reslat = 1.0;
 
   while (i <= resolution) {
-    if (i % 2 == 1)
-    {
-      reslon /= 24;
-      reslat /= 24;
+    if (i % 2 == 1)  {
+      reslon /= 24.0;
+      reslat /= 24.0;
       intlon = (lon / reslon).floor();
       lon -= intlon * reslon;
       intlat = (lat / reslat).floor();
       lat -= intlat * reslat;
 
-      out += alphabet_AZIndexes[intlon];
-      out += alphabet_AZIndexes[intlat];
-    } else
-    {
-      reslon /= 10;
-      reslat /= 10;
+      out += alphabet_AZIndexes[intlon + 1];
+      out += alphabet_AZIndexes[intlat + 1];
+    } else {
+      reslon /= 10.0;
+      reslat /= 10.0;
       intlon = (lon / reslon).floor();
       lon -= intlon * reslon;
       intlat = (lat / reslat).floor();
@@ -100,8 +98,4 @@ String latLonToMaidenhead (LatLng coord) {
   }
 
   return out;
-}
-
-String decToMaidenheadString(LatLng coords) {
-  return latLonToMaidenhead(coords);
 }

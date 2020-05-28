@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/database/formula_solver/database_provider.dart';
 import 'package:gc_wizard/database/formula_solver/model.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
 import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -145,6 +147,8 @@ class FormulasState extends State<Formulas> {
   }
 
   _buildGroupList(BuildContext context) {
+    final double _BUTTON_SIZE = 40;
+
     var odd = true;
     var rows = _currentFormulas.map((formula) {
       var calculated = formulaParser.parse(formula.formula, _currentValues);
@@ -159,7 +163,6 @@ class FormulasState extends State<Formulas> {
                 ? Padding (
                     child: GCWTextField(
                       controller: _editFormulaController,
-                      autofocus: true,
                       onChanged: (text) {
                         setState(() {
                           _currentEditedFormula = text;
@@ -186,9 +189,12 @@ class FormulasState extends State<Formulas> {
                                 Icons.priority_high,
                                 color: ThemeColors.accent,
                               ),
-                          GCWText (
-                            text: calculated['state'] == STATE_OK ? calculated['result'] : i18n(context, 'formulasolver_formulas_notcomputable')
-                          ),
+                          Flexible(
+                            child:
+                              GCWText (
+                                text: calculated['result']
+                              ),
+                          )
                         ],
                       )
 
@@ -198,43 +204,99 @@ class FormulasState extends State<Formulas> {
             ),
             _currentEditId == formula.id
               ? GCWIconButton(
-                  iconData: Icons.check,
-                  onPressed: () {
-                    formula.formula = _currentEditedFormula;
-                    _updateFormula(formula).whenComplete(() {
-                      setState(() {
-                        _currentEditId = null;
-                        _editFormulaController.clear();
-                      });
-                    });
-                  },
-                )
-              : GCWIconButton(
-                iconData: Icons.edit,
+                iconData: Icons.check,
                 onPressed: () {
-                  setState(() {
-                    _currentEditId = formula.id;
-                    _currentEditedFormula = formula.formula;
-                    _editFormulaController.text = formula.formula;
+                  formula.formula = _currentEditedFormula;
+                  _updateFormula(formula).whenComplete(() {
+                    setState(() {
+                      _currentEditId = null;
+                      _editFormulaController.clear();
+                    });
                   });
                 },
+              )
+              : Container(),
+            Container(
+              width: _BUTTON_SIZE,
+              height: _BUTTON_SIZE,
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(roundedBorderRadius),
+                  side:  BorderSide(
+                    width: 1,
+                    color: ThemeColors.accent,
+                  ),
+                ),
               ),
-            GCWIconButton(
-              iconData: Icons.remove,
-              onPressed: () {
-                showDeleteAlertDialog(context, formula.formula, () {
-                  _removeFormula(formula).whenComplete(() => setState(() {}));
-                },);
-              },
-            )
+              child: PopupMenuButton(
+                offset: Offset(0, _BUTTON_SIZE),
+                icon: Icon(Icons.settings, color: Colors.white),
+                color: ThemeColors.accent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(roundedBorderRadius),
+                ),
+                onSelected: (value) {
+                  switch (value) {
+                    case 1:
+                      setState(() {
+                        _currentEditId = formula.id;
+                        _currentEditedFormula = formula.formula;
+                        _editFormulaController.text = formula.formula;
+                      });
+                      break;
+                    case 2:
+                      showDeleteAlertDialog(context, formula.formula, () {
+                        _removeFormula(formula).whenComplete(() => setState(() {}));
+                      },);
+                      break;
+                    case 3:
+                      Clipboard.setData(ClipboardData(text: formula.formula));
+                      break;
+                    case 4:
+                      Clipboard.setData(ClipboardData(text: calculated['result']));
+                      break;
+                  }
+                },
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: 1,
+                    child: _buildPopupItem(
+                      Icons.edit,
+                      'formulasolver_formulas_editformula'
+                    )
+                  ),
+                  PopupMenuItem(
+                    value: 2,
+                    child: _buildPopupItem(
+                      Icons.delete,
+                      'formulasolver_formulas_removeformula'
+                    )
+                  ),
+                  PopupMenuItem(
+                    value: 3,
+                    child: _buildPopupItem(
+                      Icons.content_copy,
+                      'formulasolver_formulas_copyformula'
+                    )
+                  ),
+                  PopupMenuItem(
+                    value: 4,
+                    child: _buildPopupItem(
+                      Icons.content_copy,
+                      'formulasolver_formulas_copyresult',
+                    )
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       );
 
       if (odd) {
         output = Container(
-            color: ThemeColors.oddRows,
-            child: row
+          color: ThemeColors.oddRows,
+          child: row
         );
       } else {
         output = Container(
@@ -249,13 +311,34 @@ class FormulasState extends State<Formulas> {
     if (rows.length > 0) {
       rows.insert(0,
         GCWTextDivider(
-            text: i18n(context, 'formulasolver_formulas_currentformulas')
+          text: i18n(context, 'formulasolver_formulas_currentformulas')
         )
       );
     }
 
     return Column(
         children: rows
+    );
+  }
+
+  _buildPopupItem(IconData icon, String i18nKey) {
+    var color = Colors.black;
+
+    return  Row(
+      children: [
+        Container(
+          child: Icon(icon, color: color),
+          padding: EdgeInsets.only(
+            right: 10
+          ),
+        ),
+        Text(
+          i18n(context, i18nKey),
+          style: TextStyle(
+            color: color
+          )
+        )
+      ],
     );
   }
 }

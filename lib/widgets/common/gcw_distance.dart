@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/units/lengths.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_lengths_dropdownbutton.dart';
@@ -40,16 +41,19 @@ class _GCWDistanceState extends State<GCWDistance> {
       children: <Widget>[
         Expanded(
           flex: 3,
-          child: GCWDoubleTextField(
-            hintText: widget.hintText ?? i18n(context, 'common_distance_hint'),
-            min: 0.0,
-            controller: _controller,
-            onChanged: (ret) {
-              setState(() {
-                _currentInput = ret;
-                _setCurrentValueAndEmitOnChange();
-              });
-            },
+          child: Container(
+            child: GCWDoubleTextField(
+              hintText: widget.hintText ?? i18n(context, 'common_distance_hint'),
+              min: 0.0,
+              controller: _controller,
+              onChanged: (ret) {
+                setState(() {
+                  _currentInput = ret;
+                  _setCurrentValueAndEmitOnChange();
+                });
+              },
+            ),
+            padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN)
           )
         ),
         Expanded(

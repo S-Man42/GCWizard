@@ -21,6 +21,8 @@ final ABOUT_LICENSE = 'GNU General Public License v3.0';
 final ABOUT_LICENSE_URL = 'https://www.gnu.org/licenses/gpl-3.0.en.html';
 final ABOUT_GITHUB = 'github.com/S-Man42/GCWizard';
 final ABOUT_GITHUB_URL = 'https://github.com/S-Man42/GCWizard';
+final ABOUT_PRIVACYPOLICY = 'legal.gcwizard.net/privacy_policy.html';
+final ABOUT_PRIVACYPOLICY_URL = 'https://legal.gcwizard.net/privacy_policy.html';
 
 class About extends StatefulWidget {
   @override
@@ -268,6 +270,35 @@ class AboutState extends State<About> {
         ),
         GCWDivider(),
         Container(
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: GCWText(
+                    text: i18n(context, 'about_privacypolicy')
+                ),
+                flex: 2
+              ),
+              Expanded(
+                child: InkWell(
+                  child: Text(
+                    ABOUT_PRIVACYPOLICY,
+                    style: gcwHyperlinkTextStyle(),
+                  ),
+                  onTap: () {
+                    launch(ABOUT_PRIVACYPOLICY_URL);
+                  },
+                ),
+                flex: 3
+              )
+            ]
+          ),
+          padding: EdgeInsets.only(
+              top: 15,
+              bottom: 10
+          )
+        ),
+        GCWDivider(),
+        Container(
           child: Column(
             children: <Widget>[
               Text(
@@ -277,51 +308,88 @@ class AboutState extends State<About> {
               Container(
                 child: GCWText(
                   align: Alignment.center,
-                  text: 'Daniel \'Eisbehr\' K. (Maintainer GCC)'
+                  text: 'Daniel \'Eisbehr\' K. (Maintainer GCC)\n'
                 ),
                 padding: EdgeInsets.only(
                   top: 15,
                   bottom: 10
                 )
               ),
-              Container(
-                child: GCWText(
-                  align: Alignment.center,
-                  textAlign: TextAlign.center,
-                  text: 'Andy \'Puma66\' (PR, Support)\n'
-                      'Dennis \'dennistreysa\' (Development)'
-                ),
-                padding: EdgeInsets.only(
-                  top: 15,
-                  bottom: 25
-                )
-              ),
-              GCWText(
-                align: Alignment.center,
+              RichText(
                 textAlign: TextAlign.center,
-                text:
-                  '\'Aeggsbaerde\' (Symbol Tables)\n'
-                  'Andreas E. (Test)\n'
-                  'Frank \'Wizardland\' (podKst.de) (Test, PR)\n'
-                  'Franz K. (Test)\n'
-                  '\'Geo-Link\' (Hardware & Fun)\n'
-                  '\'capoaira\' (Development, Test)\n'
-                  'Karl B. (Coords)\n'
-                  '\'Klumpenkukuk\' (Test)\n'
-                  '\'lupusmaximus\' (Test)\n'
-                  'Martin Sch. (Test)\n'
-                  'Michael D. (Test)\n'
-                  '\'moenk\' (GK Coords)\n'
-                  'Palk \'geogedoens.de\' (Test, PR)\n'
-                  '\'Pamakaru\' (Test)\n'
-                  '\'radioscout\' (Test)\n'
-                  '\'radlerandi\' (Test)\n'
-                  '\'Sechsfüssler\' (Symbol Tables)\n'
-                  '\'Filu - Aye, Käppn! - 43\'\n'
-                  ' & \'Stormi - Aaarrh - 2061\' (Test, Food & Fun)\n'
-                  '\'tomcat06\' (Test)\n'
-                  'Udo J. (Test)\n'
-                  '\'wollpirat\' (Food & Tea & more)\n'
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: i18n(context, 'about_specialsupport') + '\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                    TextSpan(
+                      text: 'Andy \'Puma66\''
+                        + '\n'
+                    )
+                  ],
+                  style: TextStyle(fontSize: defaultFontSize())
+                ),
+              ),
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: i18n(context, 'about_contributors') + '\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                    TextSpan(
+                      text:
+                        [
+                          '\'Aeggsbaerde\' (Symbol Tables)',
+                          '\'capoaira\' (Code)',
+                          'Dennis \'dennistreysa\' (Code)',
+                          '\'Geo-Link\' (Hardware)',
+                          'Karl B. (Coords)',
+                          'Michael D. (Symbol Tables)',
+                          '\'moenk\' (GK Coords)',
+                          'Udo J. (Code)',
+                          '\'wollpirat\' (Food, Tea & more)'
+                        ].join('\n') + '\n'
+                    )
+                  ],
+                  style: TextStyle(fontSize: defaultFontSize())
+                ),
+              ),
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: i18n(context, 'about_testers') + '\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                    TextSpan(
+                      text:
+                        [
+                          'Andreas E.',
+                          '\'Headbanger-Berlin\'',
+                          '\'Filu - Aye, Käppn! - 43\' & \'Stormi - Aaarrh - 2061\'',
+                          'Frank \'Wizardland\' (podKst.de)',
+                          'Franz K.',
+                          'Johannes C.',
+                          '\'Klumpenkukuk\'',
+                          '\'lupusmaximus\'',
+                          'Martin Sch.',
+                          'Palk \'geogedoens.de\'',
+                          '\'Pamakaru\'',
+                          'Paweł B.',
+                          '\'radioscout\'',
+                          '\'radlerandi\'',
+                          '\'Sechsfüssler\'',
+                          'Stefan J.',
+                          '\'tomcat06\'',
+                        ].join(', ')
+                    )
+                  ],
+                  style: TextStyle(fontSize: defaultFontSize())
+                ),
               ),
             ],
           ),

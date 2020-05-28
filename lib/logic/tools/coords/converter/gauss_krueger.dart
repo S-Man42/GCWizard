@@ -119,7 +119,7 @@ LatLng gaussKruegerToLatLon (GaussKrueger gaussKrueger, Ellipsoid ells) {
   return coord;
 }
 
-String decToGaussKruegerString(LatLng coords, int gaussKruegerCode, Ellipsoid ells) {
+String latLonToGaussKruegerString(LatLng coords, int gaussKruegerCode, Ellipsoid ells) {
   var gaussKrueger = latLonToGaussKrueger(coords, gaussKruegerCode, ells);
 
   return 'R: ${gaussKrueger.easting}\nH: ${gaussKrueger.northing}';

@@ -5,7 +5,10 @@ import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/utils/units/lengths.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_lengths_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
@@ -23,8 +26,10 @@ class DistanceBearingState extends State<DistanceBearing> {
   var _currentCoordsFormat1 = defaultCoordFormat();
   var _currentCoordsFormat2 = defaultCoordFormat();
 
+  var _currentOutputUnit = defaultLength;
+
   DistanceBearingData _currentValue = DistanceBearingData();
-  var _currentOutput = '';
+  List<String> _currentOutput = [];
 
   @override
   void initState() {
@@ -55,6 +60,17 @@ class DistanceBearingState extends State<DistanceBearing> {
             });
           },
         ),
+        GCWTextDivider(
+          text: i18n(context, 'coords_distancebearing_outputunit'),
+        ),
+        GCWLengthsDropDownButton(
+          value: _currentOutputUnit,
+          onChanged: (Length value) {
+            setState(() {
+              _currentOutputUnit = value;
+            });
+          }
+        ),
         GCWSubmitFlatButton(
           onPressed: () {
             setState(() {
@@ -63,15 +79,17 @@ class DistanceBearingState extends State<DistanceBearing> {
           },
         ),
         GCWCoordsOutput(
-          text: _currentOutput,
+          outputs: _currentOutput,
           points: [
             MapPoint(
               point: _currentCoords1,
-              markerText: 'A'
+              markerText: i18n(context, 'coords_distancebearing_coorda'),
+              coordinateFormat: _currentCoordsFormat1
             ),
             MapPoint(
-                point: _currentCoords2,
-                markerText: 'B'
+              point: _currentCoords2,
+              markerText: i18n(context, 'coords_distancebearing_coordb'),
+              coordinateFormat: _currentCoordsFormat2
             ),
           ],
           geodetics: [
@@ -88,12 +106,9 @@ class DistanceBearingState extends State<DistanceBearing> {
   _calculateOutput(BuildContext context) {
     _currentValue = distanceBearing(_currentCoords1, _currentCoords2, defaultEllipsoid());
 
-    var _forAllLenghtUnits = allLengths.map((length) {
-      return '\t\t${doubleFormat.format(_currentValue.distance / length.inMeters)} ${length.unit}';
-    }).join('\n');
-
-    _currentOutput = '${i18n(context, 'coords_distancebearing_distance')}:\n$_forAllLenghtUnits\n\n'
-        '${i18n(context, 'coords_distancebearing_bearingatob')}: ${doubleFormat.format(_currentValue.bearingAToB)}°\n'
-        '${i18n(context, 'coords_distancebearing_bearingbtoa')}: ${doubleFormat.format(_currentValue.bearingBToA)}°';
+    _currentOutput = [];
+    _currentOutput.add('${i18n(context, 'coords_distancebearing_distance')}: ${doubleFormat.format(_currentValue.distance / _currentOutputUnit.inMeters)} ${_currentOutputUnit.unit}');
+    _currentOutput.add('${i18n(context, 'coords_distancebearing_bearingatob')}: ${doubleFormat.format(_currentValue.bearingAToB)}°');
+    _currentOutput.add('${i18n(context, 'coords_distancebearing_bearingbtoa')}: ${doubleFormat.format(_currentValue.bearingBToA)}°');
   }
 }

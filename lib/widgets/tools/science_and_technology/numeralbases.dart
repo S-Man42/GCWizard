@@ -15,8 +15,8 @@ class NumeralBasesState extends State<NumeralBases> {
   var _controller;
 
   String _currentInput = '';
-  int _currentFromKey = 10;
-  int _currentToKey = 2;
+  int _currentFromKey = 2;
+  int _currentToKey = 10;
   String _output = '';
 
   @override
@@ -42,7 +42,6 @@ class NumeralBasesState extends State<NumeralBases> {
           onChanged: (text) {
             setState(() {
               _currentInput = text;
-              _calculateOutput();
             });
           },
         ),
@@ -50,10 +49,10 @@ class NumeralBasesState extends State<NumeralBases> {
           text: i18n(context, 'numeralbases_from')
         ),
         GCWNumeralBaseSpinner(
+          value: _currentFromKey,
           onChanged: (value) {
             setState(() {
               _currentFromKey = value;
-              _calculateOutput();
             });
           },
         ),GCWTextDivider(
@@ -64,18 +63,20 @@ class NumeralBasesState extends State<NumeralBases> {
           onChanged: (value) {
             setState(() {
               _currentToKey = value;
-              _calculateOutput();
             });
           },
         ),
         GCWDefaultOutput(
-            text: _output
+            text: _calculateOutput(context)
         )
       ],
     );
   }
 
-  _calculateOutput() {
-    _output = convertBase(_currentInput, _currentFromKey, _currentToKey);
+  _calculateOutput(BuildContext context) {
+    if (_currentInput.startsWith('-') && _currentFromKey < 0)
+      _output = i18n(context, 'common_notdefined');
+    else
+      _output = convertBase(_currentInput, _currentFromKey, _currentToKey);
   }
 }

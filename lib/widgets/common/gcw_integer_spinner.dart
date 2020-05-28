@@ -1,9 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class GCWIntegerSpinner extends StatefulWidget {
   final Function onChanged;
@@ -14,17 +17,19 @@ class GCWIntegerSpinner extends StatefulWidget {
   final controller;
   final SpinnerLayout layout;
   final focusNode;
+  final isBinary;
 
   const GCWIntegerSpinner({
     Key key,
     this.onChanged,
     this.title,
     this.value: 0,
-    this.min,
-    this.max,
+    this.min: -9007199254740991,
+    this.max: 9007199254740992,
     this.controller,
     this.layout: SpinnerLayout.horizontal,
-    this.focusNode
+    this.focusNode,
+    this.isBinary: false
   }) : super(key: key);
 
   @override
@@ -33,7 +38,12 @@ class GCWIntegerSpinner extends StatefulWidget {
 
 class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   var _controller;
-  var _currentValue = 0;
+  var _currentValue = 1;
+
+  var _binaryMaskFormatter = MaskTextInputFormatter(
+    mask: '#' * 10000,
+    filter: {"#": RegExp(r'[01]')}
+  );
 
   @override
   void initState() {
@@ -45,7 +55,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
       if (widget.value != null)
         _currentValue = widget.value;
 
-      _controller = TextEditingController(text: _currentValue.toString());
+      _controller = TextEditingController(text: widget.isBinary ? _currentValue.toRadixString(2) : _currentValue.toString());
     }
   }
 
@@ -100,10 +110,11 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
       focusNode: widget.focusNode,
       min: widget.min,
       max: widget.max,
+      textInputFormatter: widget.isBinary ? _binaryMaskFormatter : null,
       controller: _controller,
       onChanged: (ret) {
         setState(() {
-          _currentValue = ret['value'];
+          _currentValue = widget.isBinary ? int.tryParse(ret['value'].toString(), radix: 2) : ret['value'];
           _setCurrentValueAndEmitOnChange();
         });
       }
@@ -120,12 +131,11 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
               children: <Widget>[
                 Container(
                   child: GCWIconButton(
-                      iconData: Icons.remove,
-                      onPressed: _decreaseValue
+                    iconData: Icons.remove,
+                    onPressed: _decreaseValue
                   ),
-                  margin: const EdgeInsets.only(
-                      left: 10.0,
-                      right: 10.0
+                  margin: EdgeInsets.only(
+                    right: 2 * DEFAULT_MARGIN
                   ),
                 ),
                 Expanded(
@@ -133,12 +143,11 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
                 ),
                 Container(
                   child: GCWIconButton(
-                      iconData: Icons.add,
-                      onPressed: _increaseValue
+                    iconData: Icons.add,
+                    onPressed: _increaseValue
                   ),
-                  margin: const EdgeInsets.only(
-                      left: 10.0,
-                      right: 10.0
+                  margin: EdgeInsets.only(
+                    left: 2 * DEFAULT_MARGIN
                   ),
                 )
               ],
@@ -175,7 +184,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _setCurrentValueAndEmitOnChange({setTextFieldText: false}) {
     if (setTextFieldText)
-      _controller.text = _currentValue.toString();
+      _controller.text = widget.isBinary ? _currentValue.toRadixString(2) : _currentValue.toString();
 
     widget.onChanged(_currentValue);
   }

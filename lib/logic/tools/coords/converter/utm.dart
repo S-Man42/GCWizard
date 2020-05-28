@@ -131,7 +131,7 @@ UTMZone getZone(LatLng coord) {
   return UTMZone(lonZoneRegular, lonZone, latZone);
 }
 
-String decToUTMString(LatLng coord, Ellipsoid ells) {
+String latLonToUTMString(LatLng coord, Ellipsoid ells) {
   UTMREF utm = latLonToUTM(coord, ells);
   return '${utm.zone.lonZone} ${utm.hemisphere == HemisphereLatitude.North ? 'N' : 'S'} ${doubleFormat.format(utm.easting)} ${doubleFormat.format(utm.northing)}';
 }
