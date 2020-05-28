@@ -1055,7 +1055,7 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'intergalactical galaxy galaxies intergalaktisch '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'klingon'),
+        tool: SymbolTable(symbolKey: 'klingon', isCaseSensitive: true),
         i18nPrefix: 'symboltables_klingon',
         iconPath: SYMBOLTABLES_ASSETPATH + 'klingon/106.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'star trek klingonisch klingonen klingons '
@@ -1121,7 +1121,7 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_RESISTOR_COLORCODE
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'romulan'),
+        tool: SymbolTable(symbolKey: 'romulan', isCaseSensitive: true),
         i18nPrefix: 'symboltables_romulan',
         iconPath: SYMBOLTABLES_ASSETPATH + 'romulan/57.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'star trek romulans romulaner romulanisch '
