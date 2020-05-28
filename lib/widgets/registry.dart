@@ -992,7 +992,7 @@ class Registry {
         tool: SymbolTable(symbolKey: 'birds_on_a_wire'),
         i18nPrefix: 'symboltables_birds_on_a_wire',
         iconPath: SYMBOLTABLES_ASSETPATH + 'birds_on_a_wire/80.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'birds on a wire vögel auf der leine strippe kabel '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'birds on a wire voegel vogel auf der leine strippe kabel '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'braille'),
