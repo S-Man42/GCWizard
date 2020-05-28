@@ -465,9 +465,9 @@
 
   "crosstotal_title" : "Show Sums",
   "crosstotal_output" : "Sums, Cross Sums, Products",
-  "crosstotal_count_characters" : "Count Characters",
-  "crosstotal_count_letters" : "Count Letters",
-  "crosstotal_count_digits" : "Count Digits",
+  "crosstotal_count_characters" : "Count Alphabet Characters",
+  "crosstotal_count_letters" : "Count Single Letters",
+  "crosstotal_count_digits" : "Count Single Digits",
   "crosstotal_sum" : "Sum",
   "crosstotal_sum_alternated_back" : "Sum alternated (backward)",
   "crosstotal_sum_alternated_forward" : "Sum alternated (forward)",

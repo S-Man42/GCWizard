@@ -1,5 +1,4 @@
 import 'package:diacritic/diacritic.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 
 List<int> validateAndSanitizeList(List<int> list) {
   if (list == null)
@@ -262,11 +261,11 @@ BigInt crossProduct(List<int> list) {
     .reduce((a, b) => a * b);
 }
 
-int countCharacters(String text) {
-  if (text == null)
+int countCharacters(List<int> list) {
+  if (list == null)
     return 0;
 
-  return text.length;
+  return list.length;
 }
 
 int countLetters(String text) {

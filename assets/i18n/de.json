@@ -465,9 +465,9 @@
 
   "crosstotal_title" : "Zeige Summen",
   "crosstotal_output" : "Summen, Quersummen, Produkte",
-  "crosstotal_count_characters" : "Anzahl Zeichen",
-  "crosstotal_count_letters" : "Anzahl Buchstaben",
-  "crosstotal_count_digits" : "Anzahl Ziffern",
+  "crosstotal_count_characters" : "Anzahl Zeichen des Alphabets",
+  "crosstotal_count_letters" : "Anzahl einzelner Buchstaben",
+  "crosstotal_count_digits" : "Anzahl einzelner Ziffern",
   "crosstotal_sum" : "Summe",
   "crosstotal_sum_alternated_back" : "Summe alternierend (rückwärts)",
   "crosstotal_sum_alternated_forward" : "Summe alternierend (vorwärts)",
