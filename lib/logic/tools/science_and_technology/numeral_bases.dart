@@ -23,15 +23,25 @@ String _sanitizeInput(String input, int startBase, String alphabet) {
 String convertBase(String input, int startBase, int destinationBase, {String alphabet}) {
   if (input == null || input == '')
     return '';
-  
-  if (startBase == destinationBase)
-    return input;
 
   var usedAlphabet = alphabet ?? _alphabet;
 
   if (startBase.abs() > usedAlphabet.length || destinationBase.abs() > usedAlphabet.length) {
     return ''; //TODO: Exception
   }
+
+  var illegalCharacter = input
+    .split('')
+    .firstWhere(
+        (character) => character != '.' && usedAlphabet.indexOf(character) >= startBase.abs(),
+    orElse: () => null
+  );
+
+  if (illegalCharacter != null)
+    return ''; //TODO: Exception
+
+  if (startBase == destinationBase)
+    return input;
 
   if (!RegExp('-?[$usedAlphabet]+([.,][$usedAlphabet]*)?').hasMatch(input))
     return ''; //TODO: Exception
@@ -45,16 +55,6 @@ String convertBase(String input, int startBase, int destinationBase, {String alp
   }
 
   input = _sanitizeInput(input, startBase, usedAlphabet);
-
-  var illegalCharacter = input
-    .split('')
-    .firstWhere(
-      (character) => character != '.' && usedAlphabet.indexOf(character) >= startBase.abs(),
-      orElse: () => null
-    );
-
-  if (illegalCharacter != null)
-    return ''; //TODO: Exception
 
   var number = input.split('.');
 

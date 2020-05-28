@@ -15,7 +15,7 @@ class NumeralBasesState extends State<NumeralBases> {
   var _controller;
 
   String _currentInput = '';
-  int _currentFromKey = 2;
+  int _currentFromKey = 16;
   int _currentToKey = 10;
   String _output = '';
 
@@ -78,5 +78,7 @@ class NumeralBasesState extends State<NumeralBases> {
       _output = i18n(context, 'common_notdefined');
     else
       _output = convertBase(_currentInput, _currentFromKey, _currentToKey);
+
+    return _output;
   }
 }
