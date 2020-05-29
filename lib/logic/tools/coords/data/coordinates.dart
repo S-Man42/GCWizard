@@ -369,4 +369,9 @@ class Mercator {
   double northing;
 
   Mercator(this.easting, this.northing);
+
+  @override
+  String toString() {
+    return 'Y: ${easting}\nX: ${northing}';
+  }
 }

@@ -177,3 +177,7 @@ String stringToSuperscript(String text) {
 double degreesToRadian(double degrees) {
   return degrees * pi / 180.0;
 }
+
+double radianToDegrees(double radian) {
+  return radian / pi * 180.0;
+}

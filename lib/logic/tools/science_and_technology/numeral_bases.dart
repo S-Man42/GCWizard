@@ -30,6 +30,9 @@ String convertBase(String input, int startBase, int destinationBase, {String alp
     return ''; //TODO: Exception
   }
 
+  if (startBase.abs() <= 36)
+    input = input.toUpperCase();
+
   var illegalCharacter = input
     .split('')
     .firstWhere(

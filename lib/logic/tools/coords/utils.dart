@@ -41,7 +41,7 @@ String formatCoordOutput(LatLng _coords, String _outputFormat, Ellipsoid ells) {
     case keyCoordsGaussKrueger4: return latLonToGaussKruegerString(_coords, 4, ells);
     case keyCoordsGaussKrueger5: return latLonToGaussKruegerString(_coords, 5, ells);
     case keyCoordsMaidenhead: return latLonToMaidenhead(_coords);
-    case keyCoordsMercator: return latLonToMercatorString(_coords, ells);
+    case keyCoordsMercator: return latLonToMercator(_coords, ells).toString();
     case keyCoordsGeohash: return latLonToGeohash(_coords, 14);
     case keyCoordsOpenLocationCode: return latLonToOpenLocationCode(_coords, codeLength: 14);
     case keyCoordsReverseWhereIGoWaldmeister: return latLonToWaldmeisterString(_coords);
