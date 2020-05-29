@@ -76,6 +76,7 @@ void main() {
     {'text': 'N 52°12. 312\' E 20°12. 312\'', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2052, 20.2052)}},
     {'text': 'N 52° 12.312 E 20° 12.312', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2052, 20.2052)}},
     {'text': 'N 052° 12.312 E 20° 12.312', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2052, 20.2052)}},
+    {'text': 'N 051° 39.688\' E 006° 27.336\'', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(51.66146666666667, 6.4556)}},
     {'text': 'N 152° 12.312 E 20° 12.312', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(27.79480000000001, -159.7948)}},
     {'text': 'Süd 52° 12.312 West20° 12.312', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(-52.2052, -20.2052)}},
     {'text': 'N 52 12.312 E 20 12.312', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2052, 20.2052)}},
