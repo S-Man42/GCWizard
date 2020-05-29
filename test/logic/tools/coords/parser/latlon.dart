@@ -66,6 +66,7 @@ void main() {
     {'text': '52 12.312S 20 12.312West', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(-52.2052, -20.2052)}},
     {'text': '52 12.312\'N 20°12.312\'East', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2052, 20.2052)}},
     {'text': '52 12.312\'S 20°12.312\'West', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(-52.2052, -20.2052)}},
+    {'text': '052 12.312\'S 20°12.312\'West', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(-52.2052, -20.2052)}},
     {'text': '52 12N, 20 12 East', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2, 20.2)}},
     {'text': '52 12 N 20 12 E', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2, 20.2)}},
     {'text': '52 06 S 20 6 W', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(-52.1, -20.1)}},
@@ -74,6 +75,8 @@ void main() {
     {'text': 'N 52°12.312\' E 20°12.312\'', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2052, 20.2052)}},
     {'text': 'N 52°12. 312\' E 20°12. 312\'', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2052, 20.2052)}},
     {'text': 'N 52° 12.312 E 20° 12.312', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2052, 20.2052)}},
+    {'text': 'N 052° 12.312 E 20° 12.312', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2052, 20.2052)}},
+    {'text': 'N 152° 12.312 E 20° 12.312', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(27.79480000000001, -159.7948)}},
     {'text': 'Süd 52° 12.312 West20° 12.312', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(-52.2052, -20.2052)}},
     {'text': 'N 52 12.312 E 20 12.312', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2052, 20.2052)}},
     {'text': '52 12.312 20 12.312', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2052, 20.2052)}},
@@ -90,6 +93,7 @@ void main() {
     {'text': '52 12 20 12', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2, 20.2)}},
     {'text': '52 6 20 06', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.1, 20.1)}},
     {'text': '-52 6 -20 06', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(-52.1, -20.1)}},
+    {'text': '-052 6 -20 06', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(-52.1, -20.1)}},
 
     {'text': 'N 12.312 E 20.123', 'expectedOutput': null},
     {'text': '12.312 20.123', 'expectedOutput': null},
@@ -111,6 +115,7 @@ void main() {
     {'text': '52°12\'30.15"North, 20°12\'30.15"O', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},
     {'text': '52°12\'30.15" North, 20°12\'30.15"O', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},
     {'text': '52°12\'30.15" Süden 20°12\'30.15" Westen', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(-52.208375, -20.208375)}},
+    {'text': '052°12\'30.15" Süden 20°12\'30.15" Westen', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(-52.208375, -20.208375)}},
 
     {'text': 'N 52° 12\' 30.15" E 20° 12\' 30.15"', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},
     {'text': 'N 52°12\'30.15" E 20°12\'30.15"', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},
@@ -128,6 +133,7 @@ void main() {
     {'text': '52 12 9 20 12 09', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.2025, 20.2025)}},
     {'text': '52 6 9 20 6 9', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.1025, 20.1025)}},
     {'text': '52 6 0 20 6 9.0', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.1, 20.1025)}},
+    {'text': '052 6 0 20 6 9.0', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.1, 20.1025)}},
 
     {'text': 'N 52 12 E 20 12', 'expectedOutput': null},
     {'text': '52 12 N 20 12 E', 'expectedOutput': null},
