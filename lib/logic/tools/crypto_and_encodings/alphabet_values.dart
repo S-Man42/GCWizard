@@ -14,8 +14,29 @@ class AlphabetValues {
     this.alphabet = alphabet;
   }
 
+  /*
+  Because of: https://github.com/S-Man42/GCWizard/issues/102;
+  WebVersion always generates SS for ß. That's because JavaScript's toUpperCase() does this.
+
+  To avoid behaviour differences between Dart and JavaScript, here is a toUpperCase() function
+  which makes everything upperCase except ß
+   */
+  _toUpperCase(String text) {
+    return text.split('').map((character) {
+      if (character != String.fromCharCode(223))
+        return character.toUpperCase();
+      else
+        return character;
+    }).join();
+  }
+
   List<int> textToValues(String text,{bool keepNumbers: false}) {
-    text = text.toUpperCase();
+    var output = <int>[];
+
+    if (text == null || text.length == 0)
+      return output;
+
+    text = _toUpperCase(text);
 
     var entries = alphabet.entries.toList();
 
@@ -31,8 +52,6 @@ class AlphabetValues {
     });
 
     var maxKeyLength = entries.first.key.length;
-
-    var output = <int>[];
 
     while (text.length > 0) {
       String value;
