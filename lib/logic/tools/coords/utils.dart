@@ -4,6 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
@@ -44,6 +45,7 @@ String formatCoordOutput(LatLng _coords, String _outputFormat, Ellipsoid ells) {
     case keyCoordsMercator: return latLonToMercator(_coords, ells).toString();
     case keyCoordsGeohash: return latLonToGeohash(_coords, 14);
     case keyCoordsOpenLocationCode: return latLonToOpenLocationCode(_coords, codeLength: 14);
+    case keyCoordsQuadtree: return latLonToQuadtree(_coords).join();
     case keyCoordsReverseWhereIGoWaldmeister: return latLonToWaldmeisterString(_coords);
     default: _formatted = DEC.from(_coords).format();
   }

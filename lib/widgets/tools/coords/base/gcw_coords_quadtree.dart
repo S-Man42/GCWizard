@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:latlong/latlong.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class GCWCoordsOpenLocationCode extends StatefulWidget {
+class GCWCoordsQuadtree extends StatefulWidget {
   final Function onChanged;
 
-  const GCWCoordsOpenLocationCode({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsQuadtree({Key key, this.onChanged}) : super(key: key);
 
   @override
-  GCWCoordsOpenLocationCodeState createState() => GCWCoordsOpenLocationCodeState();
+  GCWCoordsQuadtreeState createState() => GCWCoordsQuadtreeState();
 }
 
-class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
+class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
   var _controller;
   var _currentCoord = '';
 
   var _maskInputFormatter = MaskTextInputFormatter(
-    mask: '########+##########',
-    filter: {"#": RegExp(r'[23456789CFGHJMPQRVWXcfghjmpqrvwx]')}
+    mask: '#' * 100,
+    filter: {"#": RegExp(r'[0123]')}
   );
 
   @override
@@ -55,7 +56,7 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
 
   _setCurrentValueAndEmitOnChange() {
     try {
-      LatLng coords = openLocationCodeToLatLon(_currentCoord);
+      LatLng coords = quadtreeToLatLon(_currentCoord.split('').map((character) => int.tryParse(character)).toList());
       widget.onChanged(coords);
     } catch(e) {}
   }
