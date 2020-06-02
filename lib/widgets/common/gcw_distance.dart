@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/utils/units/lengths.dart';
+import 'package:gc_wizard/utils/units/length.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_lengths_dropdownbutton.dart';
 
@@ -77,7 +77,7 @@ class _GCWDistanceState extends State<GCWDistance> {
       _controller.text = _currentInput.toString();
 
     double _currentValue = _currentInput['value'];
-    var _meters = _currentValue * _currentLengthUnit.inMeters;
+    var _meters = _currentLengthUnit.toReference(_currentValue);
     widget.onChanged(_meters);
   }
 }

@@ -5,7 +5,7 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/utils/units/lengths.dart';
+import 'package:gc_wizard/utils/units/length.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat_distance.dart';
@@ -157,6 +157,6 @@ class CenterThreePointsState extends State<CenterThreePoints> {
     _currentOutput = _result.map((coord) {
       return '${formatCoordOutput(coord['centerPoint'], _currentOutputFormat, defaultEllipsoid())}';
     }).toList();
-    _currentOutput.add('${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentDistance / _currentOutputUnit.inMeters)} ${_currentOutputUnit.unit}');
+    _currentOutput.add('${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromReference(_currentDistance))} ${_currentOutputUnit.symbol}');
   }
 }

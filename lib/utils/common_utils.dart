@@ -144,18 +144,6 @@ String formatDaysToNearestUnit(double days) {
   return format.format(days / (1 / 24 / 60 / 60 / 1000)) + ' ms';
 }
 
-double celsiusToKelvin(double celsius) {
-  return celsius + 273.15;
-}
-
-double kelvinToFahrenheit(double kelvin) {
-  return kelvin * 9 / 5 - 459.67;
-}
-
-double celsiusToFahrenheit(double celsius) {
-  return kelvinToFahrenheit(celsiusToKelvin(celsius));
-}
-
 Map<U, T> switchMapKeyValue<T,U>(Map<T, U> map, {keepFirstOccurence: false}) {
   if (map == null)
     return null;

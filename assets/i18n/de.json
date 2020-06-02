@@ -1163,6 +1163,8 @@
   "windchill_windspeed" : "Windgeschwindigkeit",
   "windchill_metric" : "metrisch",
   "windchill_imperial" : "imperial",
+  "windchill_system" : "System",
+  "windchill_metricunit" : "v Einheit",
 
   "z22_title" : "Z22",
   "z22_description" : "Anwendung des CCITT-2-Codes",

@@ -50,13 +50,3 @@ LatLng quadtreeToLatLon(List<int> quadtree) {
   var lat = radianToDegrees(2 * atan(exp(latRadians)) - PI / 2);
   return LatLng(lat, lon);
 }
-
-main() {
-  var coord = LatLng(52.4209833333,013.28335);
-  print('Original: ' + coord.latitude.toString() + ', ' + coord.longitude.toString());
-  var tree = latLonToQuadtree(coord);
-  print('ToQuadTree: ' + tree.join());
-
-  var newCoord = quadtreeToLatLon(tree);
-  print('From QuadTree: ' + newCoord.latitude.toString() + ', ' + newCoord.longitude.toString());
-}

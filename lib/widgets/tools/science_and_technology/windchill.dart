@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/windchill.dart';
-import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
+import 'package:gc_wizard/utils/units/temperature.dart';
+import 'package:gc_wizard/utils/units/velocity.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:intl/intl.dart';
 
 class Windchill extends StatefulWidget {
   @override
@@ -39,31 +42,30 @@ class WindchillState extends State<Windchill> {
             });
           }
         ),
-        _isMetric
-          ? GCWTwoOptionsSwitch(
-            leftValue: 'km/h',
-            rightValue: 'm/s',
-            onChanged: (value) {
-              setState(() {
-                _currentSpeedUnit = value;
-                _currentWindSpeed = value == GCWSwitchPosition.left ? _currentWindSpeed * 3.6 : _currentWindSpeed / 3.6;
-              });
-            },
-          )
-          : Container(),
         GCWTwoOptionsSwitch(
-          title: 'System',
+          title: i18n(context, 'windchill_system'),
           leftValue: i18n(context, 'windchill_metric'),
           rightValue: i18n(context, 'windchill_imperial'),
+          value: _isMetric ? GCWSwitchPosition.left : GCWSwitchPosition.right,
           onChanged: (value) {
             setState(() {
               _isMetric = value == GCWSwitchPosition.left;
-              _currentTemperature  = _isMetric ? (_currentTemperature - 32) * 5/9 : _currentTemperature * 9/5 + 32;
-              double windSpeed = _currentSpeedUnit == GCWSwitchPosition.left ? _currentWindSpeed : _currentWindSpeed * 3.6;
-              _currentWindSpeed = value == GCWSwitchPosition.left ? windSpeed * 1.609 : windSpeed / 1.609;
             });
           },
         ),
+        _isMetric
+          ? GCWTwoOptionsSwitch(
+              title: i18n(context, 'windchill_metricunit'),
+              leftValue: VELOCITY_KMH,
+              rightValue: VELOCITY_MS,
+              value: _currentSpeedUnit,
+              onChanged: (value) {
+                setState(() {
+                  _currentSpeedUnit = value;
+                });
+              },
+            )
+          : Container(),
         GCWDefaultOutput(
           text: _buildOutput()
         )
@@ -72,7 +74,20 @@ class WindchillState extends State<Windchill> {
   }
 
   _buildOutput() {
-    double windSpeed = _currentSpeedUnit == GCWSwitchPosition.left ? _currentWindSpeed : _currentWindSpeed * 3.6;
-    return '${calcWindchill(_currentTemperature, windSpeed, _isMetric)} ${String.fromCharCode(176)}${_isMetric ? 'C' : 'F'}';
+    var windchill;
+    var temperature;
+
+    if (_isMetric) {
+      windchill = _currentSpeedUnit == GCWSwitchPosition.left
+        ? calcWindchillMetric(_currentTemperature, _currentWindSpeed)
+        : calcWindchillMetricMS(_currentTemperature, _currentWindSpeed);
+
+      temperature = TEMPERATURE_CELSIUS;
+    } else {
+      windchill = calcWindchillImperial(_currentTemperature, _currentWindSpeed);
+      temperature = TEMPERATURE_FAHRENHEIT;
+    }
+
+    return '${NumberFormat('#.###').format(windchill)} $temperature';
   }
 }

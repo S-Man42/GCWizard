@@ -1,11 +1,25 @@
 import 'dart:math';
 
-double calcWindchill(double t, double v, isMetric) {
-  if (t == null || v == null)
+import 'package:gc_wizard/utils/units/unit.dart';
+import 'package:gc_wizard/utils/units/velocity.dart';
+
+double calcWindchillMetricMS(double tempInCelsius, double vInMS) {
+  if (vInMS == null)
     return null;
 
-  var wct = isMetric
-    ? 13.12 + 0.6215 * t + (0.3965 * t - 11.37) * pow(v, 0.16)
-    : 35.74 + 0.6215 * t - (35.75 * pow(v, 0.16)) + 0.4275 * t * pow(v, 0.16);
-  return (wct * 1000).round() / 1000;
+  return calcWindchillMetric(tempInCelsius, getUnitBySymbol(velocities, VELOCITY_KMH).toReference(vInMS));
+}
+
+double calcWindchillMetric(double tempInCelsius, double vInKMH) {
+  if (tempInCelsius == null || vInKMH == null)
+    return null;
+
+  return 13.12 + 0.6215 * tempInCelsius + (0.3965 * tempInCelsius - 11.37) * pow(vInKMH, 0.16);
+}
+
+double calcWindchillImperial(double tempInFahrenheit, double vInMPH) {
+  if (tempInFahrenheit == null || vInMPH == null)
+    return null;
+
+  return 35.74 + 0.6215 * tempInFahrenheit - (35.75 * pow(vInMPH, 0.16)) + 0.4275 * tempInFahrenheit * pow(vInMPH, 0.16);
 }
