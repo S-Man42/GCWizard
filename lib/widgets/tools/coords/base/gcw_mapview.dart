@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/colors.dart';
@@ -18,8 +19,14 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:latlong/latlong.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 enum _LayerType {OPENSTREETMAP_MAPNIK, MAPBOX_SATELLITE}
+
+final OSM_TEXT = 'coords_mapview_osm';
+final OSM_URL = 'coords_mapview_osm_url';
+final MAPBOX_SATELLITE_TEXT = 'coords_mapview_mapbox_satellite';
+final MAPBOX_SATELLITE_URL = 'coords_mapview_mapbox_satellite_url';
 
 class GCWMapView extends StatefulWidget {
   final List<MapPoint> points;
@@ -147,7 +154,7 @@ class GCWMapViewState extends State<GCWMapView> {
       )
     ];
 
-    if (_mapBoxToken != null && _mapBoxToken != '')
+    if (_mapBoxToken != null && _mapBoxToken != '') {
       layers.add(
         TileLayerOptions(
           urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
@@ -158,6 +165,7 @@ class GCWMapViewState extends State<GCWMapView> {
           opacity: _currentLayer == _LayerType.MAPBOX_SATELLITE ? 1.0 : 0.0
         )
       );
+    }
 
     layers.addAll([
       PolylineLayerOptions(
@@ -210,6 +218,30 @@ class GCWMapViewState extends State<GCWMapView> {
                 }
               }
             )
+          ),
+
+          Positioned(
+            bottom: 5.0,
+            left: 5.0,
+            child: InkWell(
+              child: Opacity(
+                child: Container(
+                  color: Colors.white,
+                  child: Text(
+                    i18n(context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_TEXT : MAPBOX_SATELLITE_TEXT),
+                    style: TextStyle(
+                      color: ThemeColors.darkgrey,
+                      fontSize: defaultFontSize() - 4,
+                      decoration: TextDecoration.underline
+                    )
+                  )
+                ),
+                opacity: 0.7,
+              ),
+              onTap: () {
+                launch(i18n(context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_URL : MAPBOX_SATELLITE_URL));
+              },
+            ),
           )
         ],
       )
