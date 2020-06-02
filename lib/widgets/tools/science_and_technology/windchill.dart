@@ -12,8 +12,8 @@ class Windchill extends StatefulWidget {
 
 class WindchillState extends State<Windchill> {
   double _currentTemperature = 0.0;
-  double _currentWindSpeed = 5.0;
-  double _minWindSpeed = 5.0;
+  double _currentWindSpeed = 0.0;
+  GCWSwitchPosition _currentSpeedUnit = GCWSwitchPosition.left;
   var _isMetric = true;
 
   @override
@@ -32,22 +32,35 @@ class WindchillState extends State<Windchill> {
         GCWDoubleSpinner(
           title: i18n(context, 'windchill_windspeed'),
           value: _currentWindSpeed,
-          min: _minWindSpeed,
+          min: 0.0,
           onChanged: (value) {
             setState(() {
               _currentWindSpeed = value;
             });
           }
         ),
+        _isMetric
+          ? GCWTwoOptionsSwitch(
+            leftValue: 'km/h',
+            rightValue: 'm/s',
+            onChanged: (value) {
+              setState(() {
+                _currentSpeedUnit = value;
+                _currentWindSpeed = value == GCWSwitchPosition.left ? _currentWindSpeed * 3.6 : _currentWindSpeed / 3.6;
+              });
+            },
+          )
+          : Container(),
         GCWTwoOptionsSwitch(
           title: 'System',
           leftValue: i18n(context, 'windchill_metric'),
           rightValue: i18n(context, 'windchill_imperial'),
           onChanged: (value) {
             setState(() {
-              _isMetric = value == GCWSwitchPosition.left ? true : false;
-              _minWindSpeed = value == GCWSwitchPosition.left ? 5.0 : 3.0;
-              _currentWindSpeed = value == GCWSwitchPosition.left && _currentWindSpeed < 5.0 ? 5.0 : _currentWindSpeed;
+              _isMetric = value == GCWSwitchPosition.left;
+              _currentTemperature  = _isMetric ? (_currentTemperature - 32) * 5/9 : _currentTemperature * 9/5 + 32;
+              double windSpeed = _currentSpeedUnit == GCWSwitchPosition.left ? _currentWindSpeed : _currentWindSpeed * 3.6;
+              _currentWindSpeed = value == GCWSwitchPosition.left ? windSpeed * 1.609 : windSpeed / 1.609;
             });
           },
         ),
@@ -59,6 +72,7 @@ class WindchillState extends State<Windchill> {
   }
 
   _buildOutput() {
-    return '${calcWindchill(_currentTemperature, _currentWindSpeed, _isMetric)} ${String.fromCharCode(176)}${_isMetric ? 'C' : 'F'}';
+    double windSpeed = _currentSpeedUnit == GCWSwitchPosition.left ? _currentWindSpeed : _currentWindSpeed * 3.6;
+    return '${calcWindchill(_currentTemperature, windSpeed, _isMetric)} ${String.fromCharCode(176)}${_isMetric ? 'C' : 'F'}';
   }
 }
