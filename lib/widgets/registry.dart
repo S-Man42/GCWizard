@@ -983,16 +983,46 @@ class Registry {
 
       //Symbol Tables **********************************************************************************************
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'alchemy'),
+        i18nPrefix: 'symboltables_alchemy',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'alchemy/mercury.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'alchemy alchemie elements elemente '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'antiker'),
+        i18nPrefix: 'symboltables_antiker',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'antiker/72.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'antiker stargate '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'arcadian'),
         i18nPrefix: 'symboltables_arcadian',
         iconPath: SYMBOLTABLES_ASSETPATH + 'arcadian/72.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'skies of arcadia arcadian greek arkadischer arkadien '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'ath'),
+        i18nPrefix: 'symboltables_ath',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'ath/66.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'ath baronh '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'aurebesh'),
+        i18nPrefix: 'symboltables_aurebesh',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'aurebesh/78.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'aurebesh starwars wookies clonewars outerrim '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'birds_on_a_wire'),
         i18nPrefix: 'symboltables_birds_on_a_wire',
         iconPath: SYMBOLTABLES_ASSETPATH + 'birds_on_a_wire/80.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'birds on a wire voegel vogel auf der leine strippe kabel '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'birdsonawire voegel vogel auf der leine strippe kabel birds-on-a-wire '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'blox'),
+        i18nPrefix: 'symboltables_blox',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'blox/71.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blox semitic semitische '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'braille'),
@@ -1007,6 +1037,48 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'optical telegraph visual visueller optischer telegraf claude chappe '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'chappe_v2'),
+        i18nPrefix: 'symboltables_chappe_v2',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'chappe_v2/72.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'optical telegraph visual visueller optischer telegraf claude chappe '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'color_code'),
+        i18nPrefix: 'symboltables_color_code',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'color_code/68.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colorcode rgb farbcode farben colors red green blue rot gruen blau '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'color_honey'),
+        i18nPrefix: 'symboltables_color_honey',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'color_honey/72.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colorhoney color-honey farbcode farben colors six bees honeycombs bienenwaben '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'color_tokki'),
+        i18nPrefix: 'symboltables_color_tokki',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'color_tokki/72.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colortokki color-tokki farbcode woven carpet webteppich gewebter farben colors six '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'daedric'),
+        i18nPrefix: 'symboltables_daedric',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'daedric/72.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'daedric theelderscrolls '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'dagger'),
+        i18nPrefix: 'symboltables_dagger',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'dagger/85.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dagger degen dolche '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'dragon_runes'),
+        i18nPrefix: 'symboltables_dragon_runes',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'dragon_runes/71.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dragonrunes drachenrunen dragonlords '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'finger'),
         i18nPrefix: 'symboltables_finger',
         iconPath: SYMBOLTABLES_ASSETPATH + 'finger/72.png',
@@ -1015,8 +1087,20 @@ class Registry {
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'flags'),
         i18nPrefix: 'symboltables_flags',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'flags/70.png',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'flags/71.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'flags_german_kriegsmarine'),
+        i18nPrefix: 'symboltables_flags_german_kriegsmarine',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'flags_german_kriegsmarine/70.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen deutsche kriegsmarine german warnavy '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'fonic'),
+        i18nPrefix: 'symboltables_fonic',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'fonic/86.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fonic talesoftheabyss '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'freemason'),
@@ -1037,16 +1121,46 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'futurama matt groening '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'gargish'),
+        i18nPrefix: 'symboltables_gargish',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'gargish/gl.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'gargish gargisch ultimaonline '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'genreich'),
+        i18nPrefix: 'symboltables_genreich',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'genreich/79.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'genreich genrich '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'glagolitic'),
         i18nPrefix: 'symboltables_glagolitic',
         iconPath: SYMBOLTABLES_ASSETPATH + 'glagolitic/66.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'glagolitic glagolitisch glagoliza glagolitsa slawische slavic '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'gnommish'),
+        i18nPrefix: 'symboltables_gnommish',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'gnommish/83.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'gnommish gnomisch eoincolfer artemisfowl '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'hexahue'),
         i18nPrefix: 'symboltables_hexahue',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hexahue/81.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colours colors colorcodes colourcodes hexahue farben farbcodes pixel '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hvd'),
+        i18nPrefix: 'symboltables_hvd',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hvd/81.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hvd '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hymmnos', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_hymmnos',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hymmnos/74.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hymmnos artonelico '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'intergalactic'),
@@ -1058,13 +1172,55 @@ class Registry {
         tool: SymbolTable(symbolKey: 'klingon', isCaseSensitive: true),
         i18nPrefix: 'symboltables_klingon',
         iconPath: SYMBOLTABLES_ASSETPATH + 'klingon/106.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'star trek klingonisch klingonen klingons '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klingonisch klingonen klingons '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'krypton'),
+        i18nPrefix: 'symboltables_krypton',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'krypton/81.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'kryptonisch superman kryptonite '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'lorm'),
         i18nPrefix: 'symboltables_lorm',
         iconPath: SYMBOLTABLES_ASSETPATH + 'lorm/72.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift lormen deafmute deaf-mute deafblind hearing loss deaf-blind taub-stumme taubstumme gehoerlose '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'magicode'),
+        i18nPrefix: 'symboltables_magicode',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'magicode/76.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'magicode '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'marain'),
+        i18nPrefix: 'symboltables_marain',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'marain/oo.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'marain iain banks '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'marain_v2'),
+        i18nPrefix: 'symboltables_marain_v2',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'marain_v2/72.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'marain iain banks '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'matoran'),
+        i18nPrefix: 'symboltables_matoran',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'matoran/82.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'matoran lego bionicles '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'maze'),
+        i18nPrefix: 'symboltables_maze',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'maze/55.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'maze labyrinth irrgarten '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'minimoys'),
+        i18nPrefix: 'symboltables_minimoys',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'minimoys/72.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'minimoys arthur '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'moon'),
@@ -1115,6 +1271,18 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'puzzles puzzleteile jigsaw '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'quadoo'),
+        i18nPrefix: 'symboltables_quadoo',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'quadoo/57.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'quadoo blindenschrift tactiles reliefschrift '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'reality'),
+        i18nPrefix: 'symboltables_reality',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'reality/75.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'reality realitaet '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'resistor'),
         i18nPrefix: 'symboltables_resistor',
         iconPath: SYMBOLTABLES_ASSETPATH + 'resistor/49.png',
@@ -1124,7 +1292,13 @@ class Registry {
         tool: SymbolTable(symbolKey: 'romulan', isCaseSensitive: true),
         i18nPrefix: 'symboltables_romulan',
         iconPath: SYMBOLTABLES_ASSETPATH + 'romulan/57.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'star trek romulans romulaner romulanisch '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek romulans romulaner romulanisch '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'runes'),
+        i18nPrefix: 'symboltables_runes',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'runes/70.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'runes runen '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'semaphore'),
@@ -1133,22 +1307,64 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags semaphores winkeralphabet flaggenalphabet'
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'spintype'),
-        i18nPrefix: 'symboltables_spintype',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'spintype/71.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'spintype boxes kästchen kasten '
-      ),
-      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'sign'),
         i18nPrefix: 'symboltables_sign',
         iconPath: SYMBOLTABLES_ASSETPATH + 'sign/75.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sign language zeichensprache gebaerdensprache hearing loss taubstumme taub-stumme deafblind deaf-blind gehoerlose deaf-mute deafmute'
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'space_invaders', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_space_invaders',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'space_invaders/67.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'space invaders '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'spintype'),
+        i18nPrefix: 'symboltables_spintype',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'spintype/71.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'spintype boxes kaestchen kasten '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'sunuz'),
+        i18nPrefix: 'symboltables_sunuz',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'sunuz/77.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sunuz tekumel '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'templers'),
+        i18nPrefix: 'symboltables_templers',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'templers/87.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'templers tempelritter templeknights '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'tenctonese', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_tenctonese',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'tenctonese/75.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tenctonese aliennation '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'utopian'),
+        i18nPrefix: 'symboltables_utopian',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'utopian/76.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'utopian utopisch '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'visitor'),
         i18nPrefix: 'symboltables_visitor',
         iconPath: SYMBOLTABLES_ASSETPATH + 'visitor/57.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'visitor die besucher v aliens ausserirdische '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'yan_koryani'),
+        i18nPrefix: 'symboltables_yan_koryani',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'yan_koryani/85.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'yankoryani tekumel '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'zentradi'),
+        i18nPrefix: 'symboltables_zentradi',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'zentradi/70.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'zentradi zentraedi robotech macross '
       ),
 
       //VanitySelection **********************************************************************************************
