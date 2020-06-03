@@ -342,7 +342,7 @@ class AboutState extends State<About> {
                     TextSpan(
                       text:
                         [
-                          '\'Aeggsbaerde\' (Symbol Tables)',
+                          '\'\xc4ggsb\xe4rde\' (Symbol Tables)',
                           '\'capoaira\' (Code)',
                           'Dennis \'dennistreysa\' (Code)',
                           '\'Geo-Link\' (Hardware)',
