@@ -77,7 +77,7 @@ class _GCWDistanceState extends State<GCWDistance> {
       _controller.text = _currentInput.toString();
 
     double _currentValue = _currentInput['value'];
-    var _meters = _currentLengthUnit.toReference(_currentValue);
+    var _meters = _currentLengthUnit.toMeter(_currentValue);
     widget.onChanged(_meters);
   }
 }

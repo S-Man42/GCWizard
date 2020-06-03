@@ -1,26 +1,56 @@
 import 'package:gc_wizard/utils/units/unit.dart';
 
-final LENGTH_M = 'm';
-final LENGTH_KM = 'km';
-final LENGTH_MI = 'mi';
-final LENGTH_NM = 'nm';
-final LENGTH_FT = 'ft';
-
 class Length extends Unit {
-  Length(
+  Function toMeter;
+  Function fromMeter;
+
+  Length({
     String name,
     String symbol,
-    bool isReference,
-    double inMeters
-  ): super(name, symbol, isReference, (e) => e * inMeters, (e) => e / inMeters);
+    bool isReference: false,
+    double inMeters: 1.0,
+  }): super(name, symbol, isReference, (e) => e * inMeters, (e) => e / inMeters) {
+    toMeter = this.toReference;
+    fromMeter = this.fromReference;
+  }
 }
 
+final LENGTH_M = Length(
+  name: 'unit_length_m_name',
+  symbol: 'm',
+  isReference: true
+);
+
+final LENGTH_KM = Length(
+  name: 'unit_length_km_name',
+  symbol: 'km',
+  inMeters: 1000.0
+);
+
+final LENGTH_MI = Length(
+  name: 'unit_length_mi_name',
+  symbol: 'mi',
+  inMeters: 1609.344
+);
+
+final LENGTH_NM = Length(
+  name: 'unit_length_nm_name',
+  symbol: 'nm',
+  inMeters: 1852.0
+);
+
+final LENGTH_FT = Length(
+  name: 'unit_length_ft_name',
+  symbol: 'ft',
+  inMeters: 0.3048
+);
+
 final List<Unit> lengths = [
-  Length('unit_length_m_name', LENGTH_M, true, 1.0),
-  Length('unit_length_km_name', LENGTH_KM, false, 1000.0),
-  Length('unit_length_mi_name', LENGTH_MI, false, 1609.344),
-  Length('unit_length_nm_name', LENGTH_NM, false, 1852.0),
-  Length('unit_length_ft_name', LENGTH_FT, false, 0.3048),
+  LENGTH_M,
+  LENGTH_KM,
+  LENGTH_MI,
+  LENGTH_NM,
+  LENGTH_FT
 ];
 
-final defaultLength = getReferenceUnit(lengths) as Length;
+final defaultLength = LENGTH_M;

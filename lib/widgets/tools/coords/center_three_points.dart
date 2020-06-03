@@ -157,6 +157,6 @@ class CenterThreePointsState extends State<CenterThreePoints> {
     _currentOutput = _result.map((coord) {
       return '${formatCoordOutput(coord['centerPoint'], _currentOutputFormat, defaultEllipsoid())}';
     }).toList();
-    _currentOutput.add('${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromReference(_currentDistance))} ${_currentOutputUnit.symbol}');
+    _currentOutput.add('${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentDistance))} ${_currentOutputUnit.symbol}');
   }
 }

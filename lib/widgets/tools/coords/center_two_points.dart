@@ -122,6 +122,6 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
 
     _currentOutput = [];
     _currentOutput.add('${formatCoordOutput(_currentCenter, _currentOutputFormat, defaultEllipsoid())}');
-    _currentOutput.add('${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromReference(_currentDistance))} ${_currentOutputUnit.symbol}');
+    _currentOutput.add('${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentDistance))} ${_currentOutputUnit.symbol}');
   }
 }

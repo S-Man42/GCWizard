@@ -202,7 +202,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
       .map((intersection) {
         return '${formatCoordOutput(intersection.coords, _currentOutputFormat, defaultEllipsoid())} '
           '(${i18n(context, "coords_intersectthreecircles_marker_accuracy")}: '
-              '${doubleFormat.format(_currentOutputUnit.fromReference(intersection.accuracy))} ${_currentOutputUnit.symbol})';
+              '${doubleFormat.format(_currentOutputUnit.fromMeter(intersection.accuracy))} ${_currentOutputUnit.symbol})';
 
       })
       .toList();

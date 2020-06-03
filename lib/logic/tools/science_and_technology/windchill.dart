@@ -1,13 +1,12 @@
 import 'dart:math';
 
-import 'package:gc_wizard/utils/units/unit.dart';
 import 'package:gc_wizard/utils/units/velocity.dart';
 
 double calcWindchillMetricMS(double tempInCelsius, double vInMS) {
   if (vInMS == null)
     return null;
 
-  return calcWindchillMetric(tempInCelsius, getUnitBySymbol(velocities, VELOCITY_KMH).toReference(vInMS));
+  return calcWindchillMetric(tempInCelsius, VELOCITY_KMH.fromMS(vInMS));
 }
 
 double calcWindchillMetric(double tempInCelsius, double vInKMH) {

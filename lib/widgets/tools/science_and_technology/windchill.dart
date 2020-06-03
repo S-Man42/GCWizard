@@ -56,8 +56,8 @@ class WindchillState extends State<Windchill> {
         _isMetric
           ? GCWTwoOptionsSwitch(
               title: i18n(context, 'windchill_metricunit'),
-              leftValue: VELOCITY_KMH,
-              rightValue: VELOCITY_MS,
+              leftValue: VELOCITY_KMH.symbol,
+              rightValue: VELOCITY_MS.symbol,
               value: _currentSpeedUnit,
               onChanged: (value) {
                 setState(() {
@@ -88,6 +88,6 @@ class WindchillState extends State<Windchill> {
       temperature = TEMPERATURE_FAHRENHEIT;
     }
 
-    return '${NumberFormat('#.###').format(windchill)} $temperature';
+    return '${NumberFormat('#.###').format(windchill)} ${temperature.symbol}';
   }
 }

@@ -353,16 +353,14 @@ class PeriodicTableState extends State<PeriodicTable> {
     .values.toList();
   }
 
-  _temperatures(double celsius) {
+  _temperatures(double tempInCelsius) {
     var format = NumberFormat('0.0');
-    var celsiusUnit = getUnitBySymbol(temperatures, TEMPERATURE_CELSIUS);
-    var kelvin = celsiusUnit.toReference(celsius);
-    var fahrenheitUnit = getUnitBySymbol(temperatures, TEMPERATURE_FAHRENHEIT);
-    var fahrenheit = fahrenheitUnit.fromReference(kelvin);
 
-    return format.format(kelvin) + ' ' + defaultTemperature.symbol + '\n'
-        + format.format(celsius) + ' ' + celsiusUnit.symbol + '\n'
-        + format.format(fahrenheit) + ' ' + fahrenheitUnit.symbol + '\n';
+    var kelvin = TEMPERATURE_CELSIUS.toKelvin(tempInCelsius);
+
+    return format.format(kelvin) + ' ' + TEMPERATURE_KELVIN.symbol + '\n'
+      + format.format(tempInCelsius) + ' ' + TEMPERATURE_CELSIUS.symbol + '\n'
+      + format.format(TEMPERATURE_FAHRENHEIT.fromKelvin(kelvin)) + ' ' + TEMPERATURE_FAHRENHEIT.symbol;
   }
 
   _buildElementOutputs() {

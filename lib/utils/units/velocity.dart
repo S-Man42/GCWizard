@@ -1,22 +1,42 @@
 import 'package:gc_wizard/utils/units/unit.dart';
 
-final VELOCITY_MS = 'm/s';
-final VELOCITY_KMH = 'km/h';
-final VELOCITY_MPH = 'mph';
-
 class Velocity extends Unit {
-  Velocity(
+  Function toMS;
+  Function fromMS;
+
+  Velocity({
     String name,
     String symbol,
-    bool isReference,
+    bool isReference: false,
     double inMS
-  ): super(name, symbol, isReference, (e) => e * inMS, (e) => e / inMS);
+  }): super(name, symbol, isReference, (e) => e * inMS, (e) => e / inMS) {
+    toMS = this.toReference;
+    fromMS = this.fromReference;
+  }
 }
 
+final VELOCITY_MS = Velocity(
+  name: 'unit_velocity_ms_name',
+  symbol: 'm/s',
+  isReference: true
+);
+
+final VELOCITY_KMH = Velocity(
+  name: 'unit_velocity_kmh_name',
+  symbol: 'km/h',
+  inMS: 1.0 / 3.6
+);
+
+final VELOCITY_MPH = Velocity(
+  name: 'unit_velocity_mph_name',
+  symbol: 'mph',
+  inMS: 1.0 / (1.609344 * 3.6)
+);
+
 final List<Unit> velocities = [
-  Velocity('unit_velocity_ms_name', VELOCITY_MS, true, 1.0),
-  Velocity('unit_velocity_kmh_name', VELOCITY_KMH, false, 3.6),
-  Velocity('unit_velocity_mph_name', VELOCITY_MPH, false, 1.609344 * 3.6)
+  VELOCITY_MS,
+  VELOCITY_KMH,
+  VELOCITY_MPH
 ];
 
-final defaultVelocity = getReferenceUnit(velocities) as Velocity;
+final defaultVelocity = VELOCITY_MS;

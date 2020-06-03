@@ -107,7 +107,7 @@ class DistanceBearingState extends State<DistanceBearing> {
     _currentValue = distanceBearing(_currentCoords1, _currentCoords2, defaultEllipsoid());
 
     _currentOutput = [];
-    _currentOutput.add('${i18n(context, 'coords_distancebearing_distance')}: ${doubleFormat.format(_currentOutputUnit.fromReference(_currentValue.distance))} ${_currentOutputUnit.symbol}');
+    _currentOutput.add('${i18n(context, 'coords_distancebearing_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentValue.distance))} ${_currentOutputUnit.symbol}');
     _currentOutput.add('${i18n(context, 'coords_distancebearing_bearingatob')}: ${doubleFormat.format(_currentValue.bearingAToB)}°');
     _currentOutput.add('${i18n(context, 'coords_distancebearing_bearingbtoa')}: ${doubleFormat.format(_currentValue.bearingBToA)}°');
   }

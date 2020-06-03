@@ -1,7 +1,7 @@
 abstract class Unit{
-  String name;
-  String symbol;
-  bool isReferenceUnit;
+  final String name;
+  final String symbol;
+  final bool isReferenceUnit;
   Function toReference;
   Function fromReference;
 
