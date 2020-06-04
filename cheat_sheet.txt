@@ -10,9 +10,9 @@ Android: android/app/src/main/res/mipmap-*/ic_launcher.png
 iOS: ios/Runner/Assets.xcassets/AppIcon.appiconset/
 
 Gold Version:
-- Copy icons from icondirectory/icons_gold into main icon directory
-- Android (change package name):
-    1. in file: android/app/main/AndroidManifest.xml
+- Copy icons android/app/src/main/res/icons_gold into main icon directory
+- Android (change package name to gc_wizard_gold):
+    1. in file: android/app/src/main/AndroidManifest.xml
     2. in file: android/app/build.gradle -> defaultConfig
     3. path and in file: android/app/src/main/kotlin/de/sman42/gc_wizard/MainActivity.kt
 - iOS:
