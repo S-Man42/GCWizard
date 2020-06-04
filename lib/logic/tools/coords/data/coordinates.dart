@@ -18,6 +18,7 @@ const keyCoordsMaidenhead = 'coords_maidenhead';
 const keyCoordsMercator = 'coords_mercator';
 const keyCoordsGeohash = 'coords_geohash';
 const keyCoordsOpenLocationCode = 'coords_openlocationcode';
+const keyCoordsQuadtree = 'coords_quadtree';
 const keyCoordsReverseWhereIGoWaldmeister = 'coords_reversewhereigo_waldmeister';
 
 class CoordinateFormat {
@@ -44,6 +45,7 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsMercator, 'Mercator'),
   CoordinateFormat(keyCoordsGeohash, 'Geohash'),
   CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)'),
+  CoordinateFormat(keyCoordsQuadtree, 'Quadtree'),
   CoordinateFormat(keyCoordsReverseWhereIGoWaldmeister, 'Reverse WhereIGo (Waldmeister)'),
 ];
 
@@ -369,4 +371,9 @@ class Mercator {
   double northing;
 
   Mercator(this.easting, this.northing);
+
+  @override
+  String toString() {
+    return 'Y: ${easting}\nX: ${northing}';
+  }
 }

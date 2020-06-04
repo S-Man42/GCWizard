@@ -43,7 +43,7 @@ void main() {
 
   group("AlphabetValues.textToValuesAlphabets:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'text' : 'ABCCHDEFGHIJKLLLMNÑOPQRSTUVWXYZ', 'alphabet': alphabetSpanish1.alphabet, 'expectedOutput' : [1,2,3,4,5,6,7,8,9,10,11,12,14,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29]},
+      {'text' : 'ABCCHDEFGHIJKLLLMNÑOPQRSTUVWXYZß', 'alphabet': alphabetSpanish1.alphabet, 'expectedOutput' : [1,2,3,4,5,6,7,8,9,10,11,12,14,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,null]},
       {'text' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß', 'alphabet': alphabetGerman2.alphabet, 'expectedOutput' : [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,1,5,15,5,21,5,19,19]},
     ];
 

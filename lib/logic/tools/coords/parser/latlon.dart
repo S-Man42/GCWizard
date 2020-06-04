@@ -15,7 +15,7 @@ final _LETTER = '[A-ZÄÖÜ]';
 
 final PATTERN_DEC_TRAILINGSIGN =
     '^\\s*?'
-    '(\\d{1,2})\\s*?'                      //lat degrees
+    '(\\d{1,3})\\s*?'                      //lat degrees
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat millidegrees
     '[\\s°]?\\s*?'                         //lat degrees symbol
     '([NS]$_LETTER*?|[\\+\\-])\\s*?'       //lat sign
@@ -31,7 +31,7 @@ final PATTERN_DEC_TRAILINGSIGN =
 final PATTERN_DEC =
     '^\\s*?'
     '([NS]$_LETTER*?|[\\+\\-])?\\s*?'      //lat sign
-    '(\\d{1,2})\\s*?'                      //lat degrees
+    '(\\d{1,3})\\s*?'                      //lat degrees
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat millidegrees
     '[\\s°]?\\s*?'                         //lat degree symbol
 
@@ -45,7 +45,7 @@ final PATTERN_DEC =
 
 final PATTERN_DEG_TRAILINGSIGN =
     '^\\s*?'
-    '(\\d{1,2})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
+    '(\\d{1,3})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
     '([0-5]?\\d)\\s*?'                     //lat minutes
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat milliminutes
     '[\\s\']?\\s*?'                        //lat minute symbol
@@ -63,7 +63,7 @@ final PATTERN_DEG_TRAILINGSIGN =
 final PATTERN_DEG =
     '^\\s*?'
     '([NS]$_LETTER*?|[\\+\\-])?\\s*?'      //lat sign
-    '(\\d{1,2})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
+    '(\\d{1,3})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
     '([0-5]?\\d)\\s*?'                     //lat minutes
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat milliminutes
     '[\\s\']?\\s*?'                        //lat minute symbol
@@ -79,7 +79,7 @@ final PATTERN_DEG =
 
 final PATTERN_DMS_TRAILINGSIGN =
     '^\\s*?'
-    '(\\d{1,2})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
+    '(\\d{1,3})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
     '([0-5]?\\d)\\s*?[\\s\']\\s*?'         //lat minutes + symbol
     '([0-5]?\\d)\\s*?'                     //lat seconds
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat milliseconds
@@ -99,7 +99,7 @@ final PATTERN_DMS_TRAILINGSIGN =
 final PATTERN_DMS =
     '^\\s*?'
     '([NS]$_LETTER*?|[\\+\\-])?\\s*?'      //lat sign
-    '(\\d{1,2})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
+    '(\\d{1,3})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
     '([0-5]?\\d)\\s*?[\\s\']\\s*?'         //lat minutes + symbol
     '([0-5]?\\d)\\s*?'                     //lat seconds
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat milliseconds

@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_maidenhead.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mercator.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mgrs.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_openlocationcode.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_quadtree.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewhereigo_waldmeister.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
@@ -227,6 +228,17 @@ class GCWCoordsState extends State<GCWCoords> {
           onChanged: (newValue) {
             setState(() {
               _currentValue[keyCoordsOpenLocationCode] = newValue;
+              _setCurrentValueAndEmitOnChange();
+            });
+          },
+        ),
+      },
+      {
+        'coordFormat': getCoordFormatByKey(keyCoordsQuadtree),
+        'widget': GCWCoordsQuadtree(
+          onChanged: (newValue) {
+            setState(() {
+              _currentValue[keyCoordsQuadtree] = newValue;
               _setCurrentValueAndEmitOnChange();
             });
           },

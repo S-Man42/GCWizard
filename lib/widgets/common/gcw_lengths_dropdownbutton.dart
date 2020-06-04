@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/utils/units/lengths.dart';
+import 'package:gc_wizard/utils/units/length.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 
 class GCWLengthsDropDownButton extends StatefulWidget {
@@ -25,10 +25,10 @@ class _GCWLengthsDropDownButtonState extends State<GCWLengthsDropDownButton> {
           widget.onChanged(newValue);
         });
       },
-      items: allLengths.map((length) {
+      items: lengths.map((length) {
         return DropdownMenuItem(
           value: length,
-          child: Text(length.unit),
+          child: Text(length.symbol),
         );
       }).toList(),
     );

@@ -177,7 +177,7 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
 
         if (projectionData['reverseBearing'] != null && projectionData['reverseBearing']) {
 
-          var revProjected = reverseProjection(entry.value, parsedBearing, parsedDistance * projectionData['lengthUnitInMeters'], projectionData['ellipsoid']);
+          var revProjected = reverseProjection(entry.value, parsedBearing, projectionData['lengthUnit'].toMeter(parsedDistance), projectionData['ellipsoid']);
           if (revProjected == null || revProjected.length == 0)
             return;
 
@@ -192,7 +192,7 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
 
         } else {
           var projected = {
-            'coordinate' : projection(entry.value, parsedBearing, parsedDistance * projectionData['lengthUnitInMeters'], projectionData['ellipsoid']),
+            'coordinate' : projection(entry.value, parsedBearing, projectionData['lengthUnit'].toMeter(parsedDistance), projectionData['ellipsoid']),
             'variables' : expandedText['variables']
           };
 

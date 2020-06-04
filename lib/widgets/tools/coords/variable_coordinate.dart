@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/utils/units/lengths.dart';
+import 'package:gc_wizard/utils/units/length.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -203,7 +203,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
                   child: GCWLengthsDropDownButton(
                     value: _currentLengthUnit,
                     onChanged: (Length value) {
-                      _currentLengthUnit = value;
+                      setState(() {
+                        _currentLengthUnit = value;
+                      });
                     }
                   )
                 )
@@ -326,7 +328,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       'bearing': _currentProjectionMode == false || _currentBearingInput.length == 0 ? '0' : _currentBearingInput,
       'distance': _currentProjectionMode == false || _currentDistanceInput.length == 0 ? '0' : _currentDistanceInput,
       'reverseBearing': _currentReverseBearing,
-      'lengthUnitInMeters': _currentLengthUnit.inMeters,
+      'lengthUnit': _currentLengthUnit,
       'ellipsoid': defaultEllipsoid()
     });
 

@@ -15,11 +15,18 @@ void main() {
       {'temperature' : -10.0, 'windspeed' : 5.0, 'isMetric' : false, 'expectedOutput' : -22.256},
       {'temperature' : 5.0, 'windspeed' : 5.0, 'isMetric' : true, 'expectedOutput' : 4.083},
       {'temperature' : 5.0, 'windspeed' : 5.0, 'isMetric' : false, 'expectedOutput' : -4.637},
+      {'temperature' : 5.0, 'windspeed' : 10.0, 'isMetric' : true, 'expectedOutput' : 2.658},
+      {'temperature' : 41.0, 'windspeed' : 6.22, 'isMetric' : false, 'expectedOutput' : 36.809},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('temperature: ${elem['temperature']}, windspeed: ${elem['windspeed']}, isMetric: ${elem['isMetric']}', () {
-        var _actual = calcWindchill(elem['temperature'], elem['windspeed'], elem['isMetric']);
+        var _actual;
+        if (elem['isMetric'])
+          _actual = calcWindchillMetric(elem['temperature'], elem['windspeed']);
+        else
+          _actual = calcWindchillImperial(elem['temperature'], elem['windspeed']);
+
         expect(_actual, elem['expectedOutput']);
       });
     });

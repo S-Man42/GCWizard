@@ -407,14 +407,14 @@ void main() {
 
   group("Crosstotals.countCharacters:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'text' : ' zIo120/k Da.ßÀö? ', 'expectedOutput' : 18},
-      {'text' : '', 'expectedOutput' : 0},
-      {'text' : null, 'expectedOutput' : 0},
+      {'list' : [-20, -10, -1, 891, 589, 1, 2, 336, 784], 'expectedOutput' : 9},
+      {'list' : '', 'expectedOutput' : 0},
+      {'list' : null, 'expectedOutput' : 0},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = countCharacters(elem['text']);
+        var _actual = countCharacters(elem['list']);
         expect(_actual, elem['expectedOutput']);
       });
     });

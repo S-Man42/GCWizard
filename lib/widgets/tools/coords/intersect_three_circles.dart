@@ -5,7 +5,7 @@ import 'package:gc_wizard/logic/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/utils/units/lengths.dart';
+import 'package:gc_wizard/utils/units/length.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
@@ -155,12 +155,6 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
     );
   }
 
-  _getCircleColorVariant() {
-    var _hsl = HSLColor.fromColor(ThemeColors.mapCircle);
-    _hsl.withLightness(_hsl.lightness - 0.1);
-    return _hsl.toColor();
-  }
-
   _calculateOutput() {
     _currentIntersections = intersectThreeCircles(
         _currentCoords1, _currentRadius1,
@@ -208,7 +202,8 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
       .map((intersection) {
         return '${formatCoordOutput(intersection.coords, _currentOutputFormat, defaultEllipsoid())} '
           '(${i18n(context, "coords_intersectthreecircles_marker_accuracy")}: '
-              '${doubleFormat.format(intersection.accuracy / _currentOutputUnit.inMeters)} ${_currentOutputUnit.unit})';
+              '${doubleFormat.format(_currentOutputUnit.fromMeter(intersection.accuracy))} ${_currentOutputUnit.symbol})';
+
       })
       .toList();
   }

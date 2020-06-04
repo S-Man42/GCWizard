@@ -1,8 +1,10 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -20,8 +22,9 @@ final _SYMBOL_NOT_FOUND_PATH = SYMBOLTABLES_ASSETPATH + '404.png';
 
 class SymbolTable extends StatefulWidget {
   final String symbolKey;
+  final bool isCaseSensitive;
 
-  const SymbolTable({Key key, this.symbolKey}) : super(key: key);
+  const SymbolTable({Key key, this.symbolKey, this.isCaseSensitive: false}) : super(key: key);
 
   @override
   SymbolTableState createState() => SymbolTableState();
@@ -37,6 +40,9 @@ class SymbolTableState extends State<SymbolTable> {
 
   var _currentInput = '';
   var _inputController;
+
+  var _alphabetMap = <String, Image>{};
+  var _maxSymbolTextLength = 0;
 
   @override
   void initState() {
@@ -125,7 +131,7 @@ class SymbolTableState extends State<SymbolTable> {
                   },
                 ),
                 GCWOutput(
-                  child: _buildEncryptionOutput(countColumns)
+                  child: _buildEncryptionOutput(countColumns, widget.isCaseSensitive)
                 ),
               ],
             )
@@ -141,7 +147,7 @@ class SymbolTableState extends State<SymbolTable> {
                     });
                   },
                 ),
-                _buildDecryptionButtonMatrix(countColumns),
+                _buildDecryptionButtonMatrix(countColumns, widget.isCaseSensitive),
                 GCWDefaultOutput(
                   text: _output
                 )
@@ -151,9 +157,45 @@ class SymbolTableState extends State<SymbolTable> {
     );
   }
 
-  _buildEncryptionOutput(countColumns) {
+  List<Image> _getImagePaths(bool isCaseSensitive) {
+    var _text = _currentInput;
+    var imagePaths = <Image>[];
+
+    while (_text.length > 0) {
+      var imagePath;
+      int i;
+      for (i = min(_maxSymbolTextLength, _text.length); i > 0; i--) {
+        var chunk = _text.substring(0, i);
+
+        if (isCaseSensitive) {
+          if (_alphabetMap.containsKey(chunk)) {
+            imagePath = _alphabetMap[chunk];
+            break;
+          }
+        } else {
+          if (_alphabetMap.containsKey(chunk.toUpperCase())) {
+            imagePath = _alphabetMap[chunk.toUpperCase()];
+            break;
+          }
+        }
+      }
+
+      imagePaths.add(imagePath);
+
+      if (imagePath == null)
+        _text = _text.substring(1, _text.length);
+      else
+        _text = _text.substring(i, _text.length);
+    }
+
+    return imagePaths;
+  }
+
+  _buildEncryptionOutput(countColumns, isCaseSensitive) {
     var rows = <Widget>[];
     var countRows = (_currentInput.length / countColumns).floor();
+
+    var images = _getImagePaths(isCaseSensitive);
 
     for (var i = 0; i <= countRows; i++) {
       var columns = <Widget>[];
@@ -162,20 +204,15 @@ class SymbolTableState extends State<SymbolTable> {
         var widget;
         var imageIndex = i * countColumns + j;
 
-        if (imageIndex < _currentInput.length) {
-          var imagePath = _imageFilePaths[_currentInput.codeUnitAt(imageIndex).toString()];
+        if (imageIndex < images.length) {
+          var image = images[imageIndex];
 
-          //try uppercase
-          if (imagePath == null) {
-            imagePath = _imageFilePaths[_currentInput.toUpperCase().codeUnitAt(imageIndex).toString()];
-          }
-
-          if (imagePath == null) {
-            imagePath = _SYMBOL_NOT_FOUND_PATH;
+          if (image == null) {
+            image = Image.asset(_SYMBOL_NOT_FOUND_PATH);
           }
 
           widget = Container(
-            child: Image.asset(imagePath),
+            child: image,
             color: ThemeColors.symbolTableIconBackground,
             padding: EdgeInsets.all(2),
           );
@@ -206,7 +243,7 @@ class SymbolTableState extends State<SymbolTable> {
     return i18n(context, 'symboltables_' + widget.symbolKey + '_' + key);
   }
 
-  _getSymbolText(imageIndex) {
+  String _getSymbolText(imageIndex) {
     var key = _imageFilePaths.keys.toList()[imageIndex];
 
     // split, if there are different symbols for same value. Then there should be named "10.png" and "10_.png" or "10_2.png" or something like that
@@ -218,7 +255,7 @@ class SymbolTableState extends State<SymbolTable> {
     return text == ' ' ? String.fromCharCode(9251) : text;
   }
 
-  _buildDecryptionButtonMatrix(countColumns) {
+  _buildDecryptionButtonMatrix(countColumns, isCaseSensitive) {
     var rows = <Widget>[];
     var countRows = (_imageFilePaths.length / countColumns).floor();
 
@@ -230,14 +267,25 @@ class SymbolTableState extends State<SymbolTable> {
         var imageIndex = i * countColumns + j;
 
         if (imageIndex < _imageFilePaths.length) {
+          var symbolText = _getSymbolText(imageIndex);
+          var image = Image.asset(
+            _imageFilePaths.values.toList()[imageIndex],
+          );
+
+          if (symbolText.length > _maxSymbolTextLength)
+            _maxSymbolTextLength = symbolText.length;
+
+          if (isCaseSensitive)
+            _alphabetMap.putIfAbsent(symbolText, () => image);
+          else
+            _alphabetMap.putIfAbsent(symbolText.toUpperCase(), () => image);
+
           widget = InkWell(
             child: Stack(
               overflow: Overflow.clip,
               children: <Widget>[
                 Container(
-                  child: Image.asset(
-                    _imageFilePaths.values.toList()[imageIndex],
-                  ),
+                  child: image,
                   color: ThemeColors.symbolTableIconBackground,
                   padding: EdgeInsets.all(2),
                 ),
@@ -245,9 +293,7 @@ class SymbolTableState extends State<SymbolTable> {
                   ? Opacity(
                       child:  Container(
                         child: Text(
-                          _showSpaceSymbolInOverlay(
-                            _getSymbolText(imageIndex)
-                          ),
+                          _showSpaceSymbolInOverlay(symbolText),
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -269,7 +315,7 @@ class SymbolTableState extends State<SymbolTable> {
             ),
             onTap: () {
               setState(() {
-                _output += _getSymbolText(imageIndex);
+                _output += symbolText;
               });
             },
           );

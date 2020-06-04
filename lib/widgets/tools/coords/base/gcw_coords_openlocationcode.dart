@@ -40,7 +40,6 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
     return Column (
       children: <Widget>[
         GCWTextField(
-          hintText: i18n(context, 'coords_formatconverter_openlocationcode'),
           controller: _controller,
           inputFormatters: [_maskInputFormatter],
           onChanged: (ret) {

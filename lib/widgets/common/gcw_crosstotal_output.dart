@@ -33,7 +33,7 @@ class _GCWCrosstotalOutputState extends State<GCWCrosstotalOutput> {
     List<int> values = List.from(widget.values);
 
     var crosstotalValues = [
-      widget.suppressSums ? null : [i18n(context, 'crosstotal_count_characters'), countCharacters(text)],
+      widget.suppressSums ? null : [i18n(context, 'crosstotal_count_characters'), countCharacters(values)],
       widget.suppressSums ? null : [i18n(context, 'crosstotal_count_letters'), countLetters(text)],
       widget.suppressSums ? null : [i18n(context, 'crosstotal_count_digits'), countDigits(text)],
 
