@@ -13,6 +13,8 @@ final ABOUT_EMAIL = 'geocache.wizard' + String.fromCharCode(64) + 'gmail.com';
 final ABOUT_EMAIL_URL = 'mailto:geocache.wizard' + String.fromCharCode(64) + 'gmail.com';
 final ABOUT_WEBSITE = 'gcwizard.net';
 final ABOUT_WEBSITE_URL = 'https://gcwizard.net/';
+final ABOUT_BLOG = 'blog.gcwizard.net';
+final ABOUT_BLOG_URL = 'https://blog.gcwizard.net/';
 final ABOUT_TWITTER = '@gc_wizard';
 final ABOUT_TWITTER_URL = 'https://twitter.com/gc_wizard';
 final ABOUT_FACEBOOK = '@geocache.wizard';
@@ -132,7 +134,7 @@ class AboutState extends State<About> {
             children: <Widget>[
               Expanded(
                 child: GCWText(
-                  text: i18n(context, 'about_contact_website')
+                  text: i18n(context, 'about_website')
                 ),
                 flex: 2
               ),
@@ -160,7 +162,35 @@ class AboutState extends State<About> {
             children: <Widget>[
               Expanded(
                 child: GCWText(
-                  text: i18n(context, 'about_contact_twitter')
+                    text: i18n(context, 'about_blog')
+                ),
+                flex: 2
+              ),
+              Expanded(
+                child: InkWell(
+                  child: Text(
+                    ABOUT_BLOG,
+                    style: gcwHyperlinkTextStyle(),
+                  ),
+                  onTap: () {
+                    launch(ABOUT_BLOG_URL);
+                  },
+                ),
+                flex: 3
+              )
+            ]
+          ),
+          padding: EdgeInsets.only(
+              top: 15,
+              bottom: 10
+          )
+        ),
+        Container(
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: GCWText(
+                  text: i18n(context, 'about_twitter')
                 ),
                 flex: 2
               ),
@@ -188,7 +218,7 @@ class AboutState extends State<About> {
             children: <Widget>[
               Expanded(
                 child: GCWText(
-                  text: i18n(context, 'about_contact_facebook')
+                  text: i18n(context, 'about_facebook')
                 ),
                 flex: 2
               ),

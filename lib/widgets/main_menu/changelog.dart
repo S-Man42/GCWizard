@@ -14,6 +14,7 @@ class ChangelogState extends State<Changelog> {
   @override
   Widget build(BuildContext context) {
     var changelogs = {
+      '0.8.1' : DateTime(2020, 6, 4),
       '0.8.0' : DateTime(2020, 5, 28),
       '0.7.1' : DateTime(2020, 4, 30),
       '0.7.0' : DateTime(2020, 4, 27),
