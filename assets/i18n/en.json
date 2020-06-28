@@ -81,6 +81,11 @@
   "asciivalues_mode_right" : "ASCII → A-Z",
   "asciivalues_numeralbase" : "Coding",
 
+  "astronomy_selection_title" : "Astronomy",
+  "astronomy_selection_description": "Sun Rise/Set, Moon Rise/Set, Easter, Seasons",
+  "astronomy_sunriseset_title": "Sun Rise/Set",
+  "astronomy_sunriseset_description": "Rise, Transit, Set, Twilights of a date",
+
   "atbash_title" : "Atbash",
   "atbash_example" : "ABC → ZYX",
 

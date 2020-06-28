@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/common/gcw_date_picker.dart';
+import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:intl/intl.dart';
 
 class DayCalculator extends StatefulWidget {
   @override
@@ -36,8 +33,9 @@ class DayCalculatorState extends State<DayCalculator> {
         GCWTextDivider(
           text: i18n(context, 'dates_daycalculator_startdate')
         ),
-        GCWDatePicker(
-          date: _currentStartDate,
+        GCWDateTimePicker(
+          type: DateTimePickerType.DATE_ONLY,
+          datetime: _currentStartDate,
           onChanged: (value) {
             setState(() {
               _currentStartDate = value;
@@ -47,8 +45,9 @@ class DayCalculatorState extends State<DayCalculator> {
         GCWTextDivider(
             text: i18n(context, 'dates_daycalculator_enddate')
         ),
-        GCWDatePicker(
-          date: _currentEndDate,
+        GCWDateTimePicker(
+          type: DateTimePickerType.DATE_ONLY,
+          datetime: _currentEndDate,
           onChanged: (value) {
             setState(() {
               _currentEndDate = value;
@@ -79,6 +78,9 @@ class DayCalculatorState extends State<DayCalculator> {
   }
 
   Widget _buildOutput() {
+    print(_currentStartDate);
+    print(_currentEndDate);
+
     Duration difference = _currentEndDate.difference(_currentStartDate);
 
     if (!_currentCountStart)

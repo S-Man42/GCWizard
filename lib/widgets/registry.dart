@@ -6,6 +6,7 @@ import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
+import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
@@ -91,6 +92,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vanity_singlenumber
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astonomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
@@ -120,6 +122,9 @@ class Registry {
 
   static final SEARCHSTRING_SETTINGS = 'settings einstellungen preferences ';
 
+  static final SEARCHSTRING_ASTRONOMY = 'astronomy astronomie stars sterne planets planeten astronomisches astronomical ';
+  static final SEARCHSTRING_ASTRONOMY_RISESET = 'rise set transit noon aufgang aufgaenge untergang untergaenge dawn dusk mittag culmination kulmination ';
+  static final SEARCHSTRING_ASTRONOMY_POSITION = 'declination position stand rektaszension zodiac astronomicalsign tierkreiszeichen sternzeichen azimuth altitude diameter durchmesser hoehe rightascension distance entfernung distanz juliandate julianischesdatum sternzeit siderealtime gmst lmst eclipticlongitude ekliptischelaenge ';
   static final SEARCHSTRING_BASE = 'base encode decode encoding decoding dekodierung dekodieren ';
   static final SEARCHSTRING_BRAINFK = SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'brainf**k ';
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
@@ -178,6 +183,12 @@ class Registry {
         i18nPrefix: 'asciivalues',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'ascii utf8 utf-8 unicode american standard information interchange binary code binärcode'
+      ),
+      GCWToolWidget(
+        tool: AstronomySelection(),
+        i18nPrefix: 'astronomy_selection',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: SEARCHSTRING_ASTRONOMY
       ),
       GCWToolWidget(
         tool: Atbash(),
@@ -511,7 +522,14 @@ class Registry {
         searchStrings: SEARCHSTRING_CCITT2
       ),
 
-      //BaseSelection **********************************************************************************************
+      //AstronomySelection  ********************************************************************************************
+      GCWToolWidget(
+        tool: SunRiseSet(),
+        i18nPrefix: 'astronomy_sunriseset',
+        searchStrings: SEARCHSTRING_ASTRONOMY + SEARCHSTRING_ASTRONOMY_RISESET + 'solar sun sonne twilight morning evening morgendaemmerung abenddaemmerung nautical astronomical civil zivile buergerliche astronomische nautische '
+      ),
+
+      //BaseSelection **************************************************************************************************
       GCWToolWidget(
         tool: Base16(),
         i18nPrefix: 'base_base16',
