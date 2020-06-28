@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -337,13 +338,10 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
   }
 
   _buildTimeZonesDropdownButton() {
-    var tzHours = (_currentTimezoneOffset / 60).floor();
-    var tzMinutes = _currentTimezoneOffset - tzHours;
-
     return Row(
       children: [
         Expanded(
-          child: Text('Timezone'),
+          child: GCWText(text: 'Timezone'),
           flex: 1
         ),
         Expanded(
@@ -360,6 +358,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
             onChanged: (value) {
               setState(() {
                 _currentTimezoneOffset = value;
+                _setCurrentValueAndEmitOnChange();
               });
             },
           ),
@@ -390,6 +389,11 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     var seconds = _currentSecond.floor();
     var milliseconds = ((_currentSecond - seconds) * 1000).round();
 
-    widget.onChanged(DateTime(_currentYear, _currentMonth, _currentDay, _currentHour, _currentMinute, seconds, milliseconds));
+    var output = {
+      'datetime': DateTime(_currentYear, _currentMonth, _currentDay, _currentHour, _currentMinute, seconds, milliseconds),
+      'timezone': Duration(minutes: _currentTimezoneOffset)
+    };
+
+    widget.onChanged(output);
   }
 }
