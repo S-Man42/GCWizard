@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -97,10 +96,6 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     super.initState();
 
     DateTime date = widget.datetime ?? DateTime.now();
-
-    print(date);
-    print(DateTime.now());
-    print(date.timeZoneName);
 
     if (widget.type != DateTimePickerType.TIME_ONLY) {
       _currentYear = date.year;

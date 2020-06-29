@@ -9,7 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/astonomy/utils.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/utils.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
@@ -29,7 +29,7 @@ class SunPositionState extends State<SunPosition> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'astronomy_location'),
+          text: i18n(context, 'common_location'),
           coordsFormat: _currentCoordsFormat,
           onChanged: (ret) {
             setState(() {

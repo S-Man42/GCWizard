@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/selector_lists/crosssum_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/easter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
@@ -92,10 +93,13 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vanity_singlenumber
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/astonomy/moon_position.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/astonomy/moon_rise_set.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/astonomy/sun_position.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/astonomy/sun_rise_set.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_date.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_years.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_position.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_rise_set.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_position.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
@@ -139,6 +143,7 @@ class Registry {
   static final SEARCHSTRING_CROSSSUMS = 'crosssums digits alternated crosstotals iterated iteriert products quersummen produkte alternierend alterniert iterierend ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
+  static final SEARCHSTRING_EASTER = 'eastersunday ostern ostersonntag ';
   static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterische programmiersprache esoteric programming language ';
   static final SEARCHSTRING_FORMULASOLVER = 'formula solver formelrechner ';
   static final SEARCHSTRING_GAMELANGUAGE = 'spielsprachen game languages secret languages geheimsprachen ';
@@ -546,6 +551,16 @@ class Registry {
         i18nPrefix: 'astronomy_moonposition',
         searchStrings: SEARCHSTRING_ASTRONOMY + SEARCHSTRING_ASTRONOMY_POSITION + 'lunar mond moon eclipticlatitude ekliptischebreite moonphase mondphase moonage mondalter mondzeichen moonsign illumination beleuchtung beleuchtet illuminated '
       ),
+      GCWToolWidget(
+        tool: EasterSelection(),
+        i18nPrefix: 'astronomy_easter_selection',
+        searchStrings: SEARCHSTRING_EASTER
+      ),
+      GCWToolWidget(
+        tool: Seasons(),
+        i18nPrefix: 'astronomy_seasons',
+        searchStrings: 'seasons jahreszeiten spring summer winter autumn fall herbst fruehling sommer aphelion perihelion sonnennaechster sonnenaehester sonnennahster sonnennahester sonnenfernster nearest closest farthest furthest ',
+      ),
 
       //BaseSelection **************************************************************************************************
       GCWToolWidget(
@@ -736,6 +751,18 @@ class Registry {
         tool: ESearch(),
         i18nPrefix: 'irrationalnumbers_search',
         searchStrings: SEARCHSTRING_E + 'occurrence vorkommen vorhanden contains containing enthaelt enthalten '
+      ),
+
+      //Easter Selection ***************************************************************************************
+      GCWToolWidget(
+        tool: EasterDate(),
+        i18nPrefix: 'astronomy_easter_easterdate',
+        searchStrings: SEARCHSTRING_EASTER,
+      ),
+      GCWToolWidget(
+        tool: EasterYears(),
+        i18nPrefix: 'astronomy_easter_easteryears',
+        searchStrings: SEARCHSTRING_EASTER,
       ),
 
       //Hash Selection *****************************************************************************************

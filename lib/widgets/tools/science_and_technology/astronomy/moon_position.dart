@@ -9,7 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/astonomy/utils.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/utils.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
@@ -29,7 +29,7 @@ class MoonPositionState extends State<MoonPosition> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'astronomy_location'),
+          text: i18n(context, 'common_location'),
           coordsFormat: _currentCoordsFormat,
           onChanged: (ret) {
             setState(() {
@@ -66,7 +66,7 @@ class MoonPositionState extends State<MoonPosition> {
       getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name'))
     );
 
-    var outputsSun = [
+    var outputsMoon = [
       [i18n(context, 'astronomy_position_eclipticlongitude'), format.format(moonPosition.eclipticLongitude) + '°'],
       [i18n(context, 'astronomy_position_eclipticlatitude'), format.format(moonPosition.eclipticLatitude) + '°'],
       [i18n(context, 'astronomy_position_rightascension'), formatHoursToHHmmss(moonPosition.rightAscension)],
@@ -82,7 +82,7 @@ class MoonPositionState extends State<MoonPosition> {
       [i18n(context, 'astronomy_position_astrologicalsign'), i18n(context, getAstrologicalSign(moonPosition.astrologicalSign))],
     ];
 
-    var rowsSunData = columnedMultiLineOutput(outputsSun);
+    var rowsSunData = columnedMultiLineOutput(outputsMoon);
 
     rowsSunData.insert(0,
       GCWTextDivider(

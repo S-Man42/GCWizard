@@ -144,11 +144,23 @@ String formatDaysToNearestUnit(double days) {
   return format.format(days / (1 / 24 / 60 / 60 / 1000)) + ' ms';
 }
 
-String formatHoursToHHmmss(double hours) {
+DateTime hoursToHHmmss(double hours) {
   var h = hours.floor();
   var minF = (hours - h) * 60;
   var min = minF.floor();
-  var sec = (minF - min) * 60;
+  var secF = (minF - min) * 60;
+  var sec = secF.floor();
+  var milliSec = ((secF - sec) * 1000).round();
+
+  return DateTime(0, 1, 1, h, min, sec, milliSec);
+}
+
+String formatHoursToHHmmss(double hours) {
+  var time = hoursToHHmmss(hours);
+
+  var h = time.hour;
+  var min = time.minute;
+  var sec = time.second + time.millisecond / 1000.0;
 
   var secondsStr = NumberFormat('00.000').format(sec);
   //Values like 59.999999999 may be rounded to 60.0. So in that case,

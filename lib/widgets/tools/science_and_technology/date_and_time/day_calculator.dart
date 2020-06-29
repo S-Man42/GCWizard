@@ -78,9 +78,6 @@ class DayCalculatorState extends State<DayCalculator> {
   }
 
   Widget _buildOutput() {
-    print(_currentStartDate);
-    print(_currentEndDate);
-
     Duration difference = _currentEndDate.difference(_currentStartDate);
 
     if (!_currentCountStart)
