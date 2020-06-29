@@ -92,6 +92,9 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vanity_singlenumber
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astonomy/moon_position.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astonomy/moon_rise_set.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astonomy/sun_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astonomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
@@ -124,7 +127,7 @@ class Registry {
 
   static final SEARCHSTRING_ASTRONOMY = 'astronomy astronomie stars sterne planets planeten astronomisches astronomical ';
   static final SEARCHSTRING_ASTRONOMY_RISESET = 'rise set transit noon aufgang aufgaenge untergang untergaenge dawn dusk mittag culmination kulmination ';
-  static final SEARCHSTRING_ASTRONOMY_POSITION = 'declination position stand rektaszension zodiac astronomicalsign tierkreiszeichen sternzeichen azimuth altitude diameter durchmesser hoehe rightascension distance entfernung distanz juliandate julianischesdatum sternzeit siderealtime gmst lmst eclipticlongitude ekliptischelaenge ';
+  static final SEARCHSTRING_ASTRONOMY_POSITION = 'declination position stand rektaszension zodiac astrology astrologischeszeichen astrologie astrologicalsign tierkreiszeichen sternzeichen azimuth altitude diameter durchmesser hoehe rightascension distance entfernung distanz observer beobachter juliandate julianischesdatum sternzeit siderealtime gmst lmst eclipticlongitude ekliptischelaenge ';
   static final SEARCHSTRING_BASE = 'base encode decode encoding decoding dekodierung dekodieren ';
   static final SEARCHSTRING_BRAINFK = SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'brainf**k ';
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
@@ -527,6 +530,21 @@ class Registry {
         tool: SunRiseSet(),
         i18nPrefix: 'astronomy_sunriseset',
         searchStrings: SEARCHSTRING_ASTRONOMY + SEARCHSTRING_ASTRONOMY_RISESET + 'solar sun sonne twilight morning evening morgendaemmerung abenddaemmerung nautical astronomical civil zivile buergerliche astronomische nautische '
+      ),
+      GCWToolWidget(
+        tool: SunPosition(),
+        i18nPrefix: 'astronomy_sunposition',
+        searchStrings: SEARCHSTRING_ASTRONOMY + SEARCHSTRING_ASTRONOMY_POSITION + 'solar sun sonne '
+      ),
+      GCWToolWidget(
+        tool: MoonRiseSet(),
+        i18nPrefix: 'astronomy_moonriseset',
+        searchStrings: SEARCHSTRING_ASTRONOMY + SEARCHSTRING_ASTRONOMY_RISESET + 'lunar mond moon '
+      ),
+      GCWToolWidget(
+        tool: MoonPosition(),
+        i18nPrefix: 'astronomy_moonposition',
+        searchStrings: SEARCHSTRING_ASTRONOMY + SEARCHSTRING_ASTRONOMY_POSITION + 'lunar mond moon eclipticlatitude ekliptischebreite moonphase mondphase moonage mondalter mondzeichen moonsign illumination beleuchtung beleuchtet illuminated '
       ),
 
       //BaseSelection **************************************************************************************************

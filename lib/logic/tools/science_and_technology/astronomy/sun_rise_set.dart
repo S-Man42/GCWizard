@@ -1,5 +1,5 @@
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/calsky/astronomy.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/astronomie_info/astronomy.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/julian_date.dart';
 import 'package:latlong/latlong.dart';
 
@@ -37,20 +37,3 @@ class SunRiseSet {
     set = riseSet.set;
   }
 }
-//
-//main() {
-//  JulianDate jd = JulianDate(DateTime(2020, 6, 27, 12, 38, 35), Duration(hours: 2));
-////  print(jd.julianDate);
-//
-//  var s = SunRiseSet(LatLng(50, 10), jd, Duration(hours: 2), getEllipsoidByName(ELLIPSOID_NAME_WGS84));
-//
-//  print(s.astronomicalMorning);
-//  print(s.nauticalMorning);
-//  print(s.civilMorning);
-//  print(s.rise);
-//  print(s.transit);
-//  print(s.set);
-//  print(s.civilEvening);
-//  print(s.nauticalEvening);
-//  print(s.astronomicalEvening);
-//}

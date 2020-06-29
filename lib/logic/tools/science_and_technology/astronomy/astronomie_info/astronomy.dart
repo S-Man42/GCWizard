@@ -68,59 +68,12 @@ double _mod2Pi(double x) {
   return _mod(x, 2.0 * pi);
 } 				// Modulo PI
 
-double round1000000(double x) { return((1000000.0 * x).round() / 1000000.0); }
-double round100000(double x) { return((100000.0 * x).round() / 100000.0); }
-double round10000(double x) { return((10000.0 * x).round() / 10000.0); }
-double round1000(double x) { return((1000.0 * x).round() / 1000.0); }
-double round100(double x) { return((100.0 * x).round() / 100.0); }
-double round10(double x) { return((10.0 * x).round() / 10.0); }
-
-/**
- * @param hh Decimal Time
- * @return   a <code>String</code> of decimal Time <code>HH:MM:SS</code>
- */
-String timeHHMMSS(double hh) {
-  Time reTime = Time(hh);
-
-  return reTime.hhmmssString;
-}
-
-/**
- * @param hh Decimal Time
- * @return   a <code>String</code> of decimal Time <code>HH:MM:SS = Decimal Time</code>
- */
-String timeHHMMSSdec(double hh) {
-  Time reTime = Time(hh);
-
-  return reTime.hhmmssStringdec;
-}
-
-/**
- * @param hh Decimal Time
- * @return   a <code>String</code> of decimal Time <code>HH:MM = Decimal Time</code>
- */
-String timeHHMMdec(double hh) {
-  Time reTime = Time(hh);
-
-  return reTime.hhmmStringdec;
-}
-
-/**
- * @param hh Decimal Time
- * @return   a <code>String</code> of decimal Time <code>HH:MM</code>
- */
-String timeHHMM(double hh) {
-  Time reTime = Time(hh);
-
-  return reTime.hhmmString;
-}
-
 /**
  * @param lon geographical longitude in degree
  * @return    the name <code>String</code> of a sign
  */
-AstrologicalSigns sign(double lon) {
-  var signs = AstrologicalSigns.values;
+AstrologicalSign sign(double lon) {
+  var signs = AstrologicalSign.values;
   
   return signs[(lon * _RAD / 30.0).floor()];
 }
@@ -435,7 +388,7 @@ Coor moonPosition(Coor sunCoor, double TDT, [Coor observer, double lmst = 0, boo
   else
     p = 2 * (moonCoor.moonAge / (90.0 * _DEG)).roundToDouble() + 1;
 
-  moonCoor.moonPhase = MoonPhases.values[p.floor() % 7];
+  moonCoor.moonPhase = MoonPhase.values[p.floor() % 7];
   moonCoor.sign = sign(moonCoor.lon);
 
   return moonCoor;
@@ -785,8 +738,8 @@ class Coor {
   double moonAge;
   double phase;
   
-  MoonPhases moonPhase;
-  AstrologicalSigns sign;
+  MoonPhase moonPhase;
+  AstrologicalSign sign;
 
   Coor();
 }

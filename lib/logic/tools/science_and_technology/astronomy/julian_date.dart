@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/calsky/astronomy.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/astronomie_info/astronomy.dart';
 
 class JulianDate {
   double julianDateUTCNoon;
