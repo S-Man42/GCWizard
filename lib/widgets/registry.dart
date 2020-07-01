@@ -6,6 +6,7 @@ import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
+import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
@@ -14,6 +15,7 @@ import 'package:gc_wizard/widgets/selector_lists/crosssum_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/easter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
@@ -91,6 +93,13 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vanity_singlenumber
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_date.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_years.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_position.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_rise_set.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_position.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
@@ -120,6 +129,9 @@ class Registry {
 
   static final SEARCHSTRING_SETTINGS = 'settings einstellungen preferences ';
 
+  static final SEARCHSTRING_ASTRONOMY = 'astronomy astronomie stars sterne planets planeten astronomisches astronomical ';
+  static final SEARCHSTRING_ASTRONOMY_RISESET = 'rise set transit noon aufgang aufgaenge untergang untergaenge dawn dusk mittag culmination kulmination ';
+  static final SEARCHSTRING_ASTRONOMY_POSITION = 'declination position stand rektaszension zodiac astrology astrologischeszeichen astrologie astrologicalsign tierkreiszeichen sternzeichen azimuth altitude diameter durchmesser hoehe rightascension distance entfernung distanz observer beobachter juliandate julianischesdatum sternzeit siderealtime gmst lmst eclipticlongitude ekliptischelaenge ';
   static final SEARCHSTRING_BASE = 'base encode decode encoding decoding dekodierung dekodieren ';
   static final SEARCHSTRING_BRAINFK = SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'brainf**k ';
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
@@ -131,6 +143,7 @@ class Registry {
   static final SEARCHSTRING_CROSSSUMS = 'crosssums digits alternated crosstotals iterated iteriert products quersummen produkte alternierend alterniert iterierend ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
+  static final SEARCHSTRING_EASTER = 'eastersunday ostern ostersonntag ';
   static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterische programmiersprache esoteric programming language ';
   static final SEARCHSTRING_FORMULASOLVER = 'formula solver formelrechner ';
   static final SEARCHSTRING_GAMELANGUAGE = 'spielsprachen game languages secret languages geheimsprachen ';
@@ -178,6 +191,12 @@ class Registry {
         i18nPrefix: 'asciivalues',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'ascii utf8 utf-8 unicode american standard information interchange binary code binärcode'
+      ),
+      GCWToolWidget(
+        tool: AstronomySelection(),
+        i18nPrefix: 'astronomy_selection',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: SEARCHSTRING_ASTRONOMY
       ),
       GCWToolWidget(
         tool: Atbash(),
@@ -511,7 +530,39 @@ class Registry {
         searchStrings: SEARCHSTRING_CCITT2
       ),
 
-      //BaseSelection **********************************************************************************************
+      //AstronomySelection  ********************************************************************************************
+      GCWToolWidget(
+        tool: SunRiseSet(),
+        i18nPrefix: 'astronomy_sunriseset',
+        searchStrings: SEARCHSTRING_ASTRONOMY + SEARCHSTRING_ASTRONOMY_RISESET + 'solar sun sonne twilight morning evening morgendaemmerung abenddaemmerung nautical astronomical civil zivile buergerliche astronomische nautische '
+      ),
+      GCWToolWidget(
+        tool: SunPosition(),
+        i18nPrefix: 'astronomy_sunposition',
+        searchStrings: SEARCHSTRING_ASTRONOMY + SEARCHSTRING_ASTRONOMY_POSITION + 'solar sun sonne '
+      ),
+      GCWToolWidget(
+        tool: MoonRiseSet(),
+        i18nPrefix: 'astronomy_moonriseset',
+        searchStrings: SEARCHSTRING_ASTRONOMY + SEARCHSTRING_ASTRONOMY_RISESET + 'lunar mond moon '
+      ),
+      GCWToolWidget(
+        tool: MoonPosition(),
+        i18nPrefix: 'astronomy_moonposition',
+        searchStrings: SEARCHSTRING_ASTRONOMY + SEARCHSTRING_ASTRONOMY_POSITION + 'lunar mond moon eclipticlatitude ekliptischebreite moonphase mondphase moonage mondalter mondzeichen moonsign illumination beleuchtung beleuchtet illuminated '
+      ),
+      GCWToolWidget(
+        tool: EasterSelection(),
+        i18nPrefix: 'astronomy_easter_selection',
+        searchStrings: SEARCHSTRING_EASTER
+      ),
+      GCWToolWidget(
+        tool: Seasons(),
+        i18nPrefix: 'astronomy_seasons',
+        searchStrings: 'seasons jahreszeiten spring summer winter autumn fall herbst fruehling sommer aphelion perihelion sonnennaechster sonnenaehester sonnennahster sonnennahester sonnenfernster nearest closest farthest furthest ',
+      ),
+
+      //BaseSelection **************************************************************************************************
       GCWToolWidget(
         tool: Base16(),
         i18nPrefix: 'base_base16',
@@ -700,6 +751,18 @@ class Registry {
         tool: ESearch(),
         i18nPrefix: 'irrationalnumbers_search',
         searchStrings: SEARCHSTRING_E + 'occurrence vorkommen vorhanden contains containing enthaelt enthalten '
+      ),
+
+      //Easter Selection ***************************************************************************************
+      GCWToolWidget(
+        tool: EasterDate(),
+        i18nPrefix: 'astronomy_easter_easterdate',
+        searchStrings: SEARCHSTRING_EASTER,
+      ),
+      GCWToolWidget(
+        tool: EasterYears(),
+        i18nPrefix: 'astronomy_easter_easteryears',
+        searchStrings: SEARCHSTRING_EASTER,
       ),
 
       //Hash Selection *****************************************************************************************

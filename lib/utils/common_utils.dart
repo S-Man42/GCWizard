@@ -144,6 +144,43 @@ String formatDaysToNearestUnit(double days) {
   return format.format(days / (1 / 24 / 60 / 60 / 1000)) + ' ms';
 }
 
+DateTime hoursToHHmmss(double hours) {
+  var h = hours.floor();
+  var minF = (hours - h) * 60;
+  var min = minF.floor();
+  var secF = (minF - min) * 60;
+  var sec = secF.floor();
+  var milliSec = ((secF - sec) * 1000).round();
+
+  return DateTime(0, 1, 1, h, min, sec, milliSec);
+}
+
+String formatHoursToHHmmss(double hours) {
+  var time = hoursToHHmmss(hours);
+
+  var h = time.hour;
+  var min = time.minute;
+  var sec = time.second + time.millisecond / 1000.0;
+
+  var secondsStr = NumberFormat('00.000').format(sec);
+  //Values like 59.999999999 may be rounded to 60.0. So in that case,
+  //the greater unit (minutes or degrees) has to be increased instead
+  if (secondsStr.startsWith('60')) {
+    secondsStr = '00.000';
+    min += 1;
+  }
+
+  var minutesStr = min.toString().padLeft(2, '0');
+  if (minutesStr.startsWith('60')) {
+    minutesStr = '00';
+    h += 1;
+  }
+
+  var hourStr = h.toString().padLeft(2, '0');
+
+  return '$hourStr:$minutesStr:$secondsStr';
+}
+
 Map<U, T> switchMapKeyValue<T,U>(Map<T, U> map, {keepFirstOccurence: false}) {
   if (map == null)
     return null;
