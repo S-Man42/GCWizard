@@ -122,6 +122,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nth
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 
 class Registry {
@@ -504,6 +505,12 @@ class Registry {
         i18nPrefix: 'trithemius',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'
+      ),
+      GCWToolWidget(
+        tool: UnitConverter(),
+        i18nPrefix: 'unitconverter',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'einheiten groessen units konvertieren umwandeln umrechnen converter switch konvertierer ',
       ),
       GCWToolWidget(
         tool: VanitySelection(),

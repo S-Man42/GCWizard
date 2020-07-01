@@ -8,53 +8,41 @@ class Time extends Unit {
     String name,
     String symbol,
     bool isReference: false,
-    double inMicroseconds
-  }): super(name, symbol, isReference, (e) => e * inMicroseconds, (e) => e / inMicroseconds) {
+    double inSeconds
+  }): super(name, symbol, isReference, (e) => e * inSeconds, (e) => e / inSeconds) {
     toMicroseconds = this.toReference;
     fromMicroseconds = this.fromReference;
   }
 }
 
 final TIME_WEEK = Time(
-    name: 'unit_time_week_name',
-    symbol: 'w',
-    inMicroseconds: 7.0 * 24.0 * 60.0 * 60.0 * 1000.0 * 1000.0
+  name: 'common_unit_time_w_name',
+  symbol: 'w',
+  inSeconds: 7.0 * 24.0 * 60.0 * 60.0
 );
 
 final TIME_DAY = Time(
-    name: 'unit_time_day_name',
-    symbol: 'd',
-    inMicroseconds: 24.0 * 60.0 * 60.0 * 1000.0 * 1000.0
+  name: 'common_unit_time_d_name',
+  symbol: 'd',
+  inSeconds: 24.0 * 60.0 * 60.0
 );
 
 final TIME_HOUR = Time(
-    name: 'unit_time_hour_name',
-    symbol: 'h',
-    inMicroseconds: 60.0 * 60.0 * 1000.0 * 1000.0
+  name: 'common_unit_time_h_name',
+  symbol: 'h',
+  inSeconds: 60.0 * 60.0
 );
 
 final TIME_MINUTE = Time(
-    name: 'unit_time_minute_name',
-    symbol: 'min',
-    inMicroseconds: 60.0 * 1000.0 * 1000.0
+  name: 'common_unit_time_min_name',
+  symbol: 'min',
+  inSeconds: 60.0
 );
 
 final TIME_SECOND = Time(
-    name: 'unit_time_second_name',
-    symbol: 's',
-    inMicroseconds: 1000.0 * 1000.0
-);
-
-final TIME_MILLISECOND = Time(
-    name: 'unit_time_millisecond_name',
-    symbol: 'ms',
-    inMicroseconds: 1000.0
-);
-
-final TIME_MICROSECOND = Time(
-    name: 'unit_time_microsecond_name',
-    symbol: '\xB5s',
-    isReference: true
+  name: 'common_unit_time_s_name',
+  symbol: 's',
+  isReference: true
 );
 
 final List<Unit> times = [
@@ -62,9 +50,7 @@ final List<Unit> times = [
   TIME_DAY,
   TIME_HOUR,
   TIME_MINUTE,
-  TIME_SECOND,
-  TIME_MILLISECOND,
-  TIME_MICROSECOND
+  TIME_SECOND
 ];
 
 final defaultTime = TIME_SECOND;

@@ -66,6 +66,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
@@ -163,6 +164,7 @@ class _MainViewState extends State<MainView> {
           className(Tapir()),
           className(TomTom()),
           className(Trithemius()),
+          className(UnitConverter()),
           className(VanitySelection()),
           className(Vigenere()),
           className(Windchill()),
