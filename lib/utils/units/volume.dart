@@ -76,20 +76,20 @@ final VOLUME_MILLIMETERPERSQUAREMETER = Volume (
 );
 
 final VOLUME_CUBICFOOT = Volume (
-  name: 'common_unit_volume_ft3_name',
-  symbol: 'ft\u00B3',
+  name: 'common_unit_volume_cuft_name',
+  symbol: 'cu ft',
   inCubicMeters: 0.3048 * 0.3048 * 0.3048
 );
 
 final VOLUME_CUBICINCH = Volume (
-  name: 'common_unit_volume_in3_name',
-  symbol: 'in\u00B3',
+  name: 'common_unit_volume_cuin_name',
+  symbol: 'cu in',
   inCubicMeters: 0.3048 * 0.3048 * 0.3048 / (12.0 * 12.0 * 12.0)
 );
 
 final VOLUME_CUBICYARD = Volume (
-  name: 'common_unit_volume_yd3_name',
-  symbol: 'yd\u00B3',
+  name: 'common_unit_volume_cuyd_name',
+  symbol: 'cu yd',
   inCubicMeters: 0.3048 * 0.3048 * 0.3048 * 27.0
 );
 
@@ -148,8 +148,8 @@ final VOLUME_IMPERIALPECK = Volume (
 );
 
 final VOLUME_IMPERIALBUSHEL = Volume (
-  name: 'common_unit_volume_impbushel_name',
-  symbol: 'imp.bushel',
+  name: 'common_unit_volume_impbu_name',
+  symbol: 'imp.bu',
   inCubicMeters: 0.001 * 4.54609 * 8.0
 );
 
@@ -250,14 +250,14 @@ final VOLUME_USPECK = Volume (
 );
 
 final VOLUME_USBUSHEL = Volume (
-  name: 'common_unit_volume_usbushel_name',
-  symbol: 'US.bushel',
+  name: 'common_unit_volume_usbu_name',
+  symbol: 'US.bu',
   inCubicMeters: 0.001 * 4.40488377086 * 8
 );
 
 final VOLUME_BATHTUB = Volume (
   name: 'common_unit_volume_bathtub_name',
-  symbol: 'BaTu ' + String.fromCharCode(128578),
+  symbol: null,
   inCubicMeters: 0.001 * 150.0
 );
 
@@ -305,4 +305,4 @@ final List<Unit> volumes = [
   VOLUME_BATHTUB
 ];
 
-final defaultArea = VOLUME_CUBICMETER;
+final defaultVolume = VOLUME_CUBICMETER;

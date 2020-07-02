@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/units/area.dart';
+import 'package:gc_wizard/utils/units/density.dart';
 import 'package:gc_wizard/utils/units/length.dart';
 import 'package:gc_wizard/utils/units/mass.dart';
 import 'package:gc_wizard/utils/units/temperature.dart';
@@ -28,6 +29,7 @@ class UnitConverterState extends State<UnitConverter> {
 
   var _categories = [
     {'key' : 'unitconverter_category_area', 'units' : areas, 'default_from_unit': AREA_SQUAREMETER, 'default_to_unit': AREA_SQUAREKILOMETER, 'suppress_prefixes': true},
+    {'key' : 'unitconverter_category_density', 'units' : densities, 'default_from_unit': DENSITY_KILOGRAMPERCUBICMETER, 'default_to_unit': DENSITY_GRAMPERLITER, 'suppress_prefixes': true},
     {'key' : 'unitconverter_category_length', 'units' : lengths, 'default_from_unit': LENGTH_M, 'default_to_unit': LENGTH_FT},
     {'key' : 'unitconverter_category_mass', 'units' : masses, 'default_from_unit': MASS_GRAM, 'default_to_unit': MASS_POUND},
     {'key' : 'unitconverter_category_temperature', 'units' : temperatures, 'default_from_unit': TEMPERATURE_CELSIUS, 'default_to_unit': TEMPERATURE_FAHRENHEIT},
@@ -153,7 +155,7 @@ class UnitConverterState extends State<UnitConverter> {
                   items: (_currentCategory['units'] as List<Unit>).map((unit) {
                     return DropdownMenuItem(
                       value: unit,
-                      child: Text(i18n(context, unit.name) + ' (${unit.symbol})'),
+                      child: Text(i18n(context, unit.name) + (unit.symbol == null ? '' : ' (${unit.symbol})')),
                     );
                   }).toList(),
                   onChanged: (value) {
@@ -209,7 +211,7 @@ class UnitConverterState extends State<UnitConverter> {
                   items: (_currentCategory['units'] as List<Unit>).map((unit) {
                     return DropdownMenuItem(
                       value: unit,
-                      child: Text(i18n(context, unit.name) + ' (${unit.symbol})'),
+                      child: Text(i18n(context, unit.name) + (unit.symbol == null ? '' : ' (${unit.symbol})')),
                     );
                   }).toList(),
                   onChanged: (value) {

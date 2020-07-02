@@ -101,13 +101,13 @@ final AREA_ACRE = Area (
 
 final AREA_SECTION = Area (
   name: 'common_unit_area_section_name',
-  symbol: 'section',
+  symbol: null,
   inSquareMeters: 1609.344 * 1609.344
 );
 
 final AREA_SOCCERFIELD = Area (
   name: 'common_unit_area_sofi_name',
-  symbol: 'SoFi ' + String.fromCharCode(128578),
+  symbol: null,
   inSquareMeters: 68.0 * 105.0
 );
 

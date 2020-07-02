@@ -49,8 +49,8 @@ final MASS_DRAM = Mass(
 
 final MASS_OUNCE = Mass(
   name: 'common_unit_mass_oz_name',
-  symbol: 'dr',
-  inGram: 453.59237 / 256.0
+  symbol: 'oz',
+  inGram: 453.59237 / 16.0
 );
 
 final MASS_POUND = Mass(
@@ -125,4 +125,4 @@ final List<Unit> masses = [
   MASS_PFUND
 ];
 
-final defaultLength = MASS_GRAM;
+final defaultMass = MASS_GRAM;
