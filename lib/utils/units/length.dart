@@ -53,6 +53,12 @@ final LENGTH_YD = Length(
   inMeters: 3 * 0.3048
 );
 
+final LENGTH_USSURVEYFT = Length(
+  name: 'common_unit_length_ussurveyft_name',
+  symbol: 'ft',
+  inMeters: 1200.0 / 3937.0
+);
+
 final LENGTH_LY = Length(
   name: 'common_unit_length_ly_name',
   symbol: 'ly',
@@ -77,6 +83,7 @@ final List<Unit> lengths = [
   LENGTH_IN,
   LENGTH_FT,
   LENGTH_YD,
+  LENGTH_USSURVEYFT,
   LENGTH_NM,
   LENGTH_LY,
   LENGTH_AU,

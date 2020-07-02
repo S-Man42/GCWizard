@@ -7,6 +7,7 @@ import 'package:gc_wizard/utils/units/temperature.dart';
 import 'package:gc_wizard/utils/units/time.dart';
 import 'package:gc_wizard/utils/units/unit.dart';
 import 'package:gc_wizard/utils/units/velocity.dart';
+import 'package:gc_wizard/utils/units/volume.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -30,6 +31,7 @@ class UnitConverterState extends State<UnitConverter> {
     {'key' : 'unitconverter_category_temperature', 'units' : temperatures, 'default_from_unit': TEMPERATURE_CELSIUS, 'default_to_unit': TEMPERATURE_FAHRENHEIT},
     {'key' : 'unitconverter_category_time', 'units' : times, 'default_from_unit': TIME_HOUR, 'default_to_unit': TIME_MINUTE},
     {'key' : 'unitconverter_category_velocity', 'units' : velocities, 'default_from_unit': VELOCITY_KMH, 'default_to_unit': VELOCITY_MS, 'suppress_prefixes': true},
+    {'key' : 'unitconverter_category_volume', 'units' : volumes, 'default_from_unit': VOLUME_CUBICMETER, 'default_to_unit': VOLUME_LITER, 'suppress_prefixes': true},
   ];
 
   var _prefixes = [

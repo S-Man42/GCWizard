@@ -87,15 +87,27 @@ final AREA_SQUAREYARD = Area (
   inSquareMeters: 0.3048 * 0.3048 * 9
 );
 
+final AREA_SQUAREMILE = Area (
+  name: 'common_unit_area_sqmi_name',
+  symbol: 'sq mi',
+  inSquareMeters: 1609.344 * 1609.344
+);
+
 final AREA_ACRE = Area (
   name: 'common_unit_area_ac_name',
   symbol: 'ac',
-  inSquareMeters: 43560 * 0.3048 * 0.3048
+  inSquareMeters: 43560.0 * 0.3048 * 0.3048
+);
+
+final AREA_SECTION = Area (
+  name: 'common_unit_area_section_name',
+  symbol: 'section',
+  inSquareMeters: 1609.344 * 1609.344
 );
 
 final AREA_SOCCERFIELD = Area (
   name: 'common_unit_area_sofi_name',
-  symbol: 'SoFi :)',
+  symbol: 'SoFi ' + String.fromCharCode(128578),
   inSquareMeters: 68.0 * 105.0
 );
 
@@ -107,12 +119,14 @@ final List<Unit> areas = [
   AREA_SQUAREINCH,
   AREA_SQUAREFOOT,
   AREA_SQUAREYARD,
+  AREA_SQUAREMILE,
   AREA_HECTARE,
   AREA_DECARE,
   AREA_ARE,
   AREA_DECIARE,
   AREA_CENTIARE,
   AREA_ACRE,
+  AREA_SECTION,
   AREA_SOCCERFIELD
 ];
 
