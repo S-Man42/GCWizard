@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/utils/units/angle.dart';
 import 'package:gc_wizard/utils/units/area.dart';
 import 'package:gc_wizard/utils/units/density.dart';
+import 'package:gc_wizard/utils/units/energy.dart';
+import 'package:gc_wizard/utils/units/force.dart';
 import 'package:gc_wizard/utils/units/length.dart';
 import 'package:gc_wizard/utils/units/mass.dart';
+import 'package:gc_wizard/utils/units/power.dart';
+import 'package:gc_wizard/utils/units/pressure.dart';
 import 'package:gc_wizard/utils/units/temperature.dart';
 import 'package:gc_wizard/utils/units/time.dart';
 import 'package:gc_wizard/utils/units/unit.dart';
@@ -28,10 +33,15 @@ class UnitConverterState extends State<UnitConverter> {
   Unit _currentToUnit;
 
   var _categories = [
+    {'key' : 'unitconverter_category_angle', 'units' : angles, 'default_from_unit': ANGLE_DEGREE, 'default_to_unit': ANGLE_RADIAN},
     {'key' : 'unitconverter_category_area', 'units' : areas, 'default_from_unit': AREA_SQUAREMETER, 'default_to_unit': AREA_SQUAREKILOMETER, 'suppress_prefixes': true},
     {'key' : 'unitconverter_category_density', 'units' : densities, 'default_from_unit': DENSITY_KILOGRAMPERCUBICMETER, 'default_to_unit': DENSITY_GRAMPERLITER, 'suppress_prefixes': true},
+    {'key' : 'unitconverter_category_energy', 'units' : energies, 'default_from_unit': ENERGY_JOULE, 'default_to_unit': ENERGY_CALORIE},
+    {'key' : 'unitconverter_category_force', 'units' : forces, 'default_from_unit': FORCE_NEWTON, 'default_to_unit': FORCE_POUND},
     {'key' : 'unitconverter_category_length', 'units' : lengths, 'default_from_unit': LENGTH_M, 'default_to_unit': LENGTH_FT},
     {'key' : 'unitconverter_category_mass', 'units' : masses, 'default_from_unit': MASS_GRAM, 'default_to_unit': MASS_POUND},
+    {'key' : 'unitconverter_category_power', 'units' : powers, 'default_from_unit': POWER_WATT, 'default_to_unit': POWER_METRICHORSEPOWER},
+    {'key' : 'unitconverter_category_pressure', 'units' : pressures, 'default_from_unit': PRESSURE_PASCAL, 'default_to_unit': PRESSURE_BAR},
     {'key' : 'unitconverter_category_temperature', 'units' : temperatures, 'default_from_unit': TEMPERATURE_CELSIUS, 'default_to_unit': TEMPERATURE_FAHRENHEIT},
     {'key' : 'unitconverter_category_time', 'units' : times, 'default_from_unit': TIME_HOUR, 'default_to_unit': TIME_MINUTE},
     {'key' : 'unitconverter_category_velocity', 'units' : velocities, 'default_from_unit': VELOCITY_KMH, 'default_to_unit': VELOCITY_MS, 'suppress_prefixes': true},

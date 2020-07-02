@@ -1,8 +1,8 @@
 import 'package:gc_wizard/utils/units/unit.dart';
 
 class Time extends Unit {
-  Function toMicroseconds;
-  Function fromMicroseconds;
+  Function toSeconds;
+  Function fromSeconds;
 
   Time({
     String name,
@@ -10,8 +10,8 @@ class Time extends Unit {
     bool isReference: false,
     double inSeconds
   }): super(name, symbol, isReference, (e) => e * inSeconds, (e) => e / inSeconds) {
-    toMicroseconds = this.toReference;
-    fromMicroseconds = this.fromReference;
+    toSeconds = this.toReference;
+    fromSeconds = this.fromReference;
   }
 }
 
