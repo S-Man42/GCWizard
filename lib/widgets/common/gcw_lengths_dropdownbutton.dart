@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/utils/units/length.dart';
+import 'package:gc_wizard/logic/units/length.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 
 class GCWLengthsDropDownButton extends StatefulWidget {

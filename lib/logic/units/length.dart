@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/utils/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit.dart';
 
 class Length extends Unit {
   Function toMeter;

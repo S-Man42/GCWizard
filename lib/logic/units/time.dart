@@ -1,4 +1,4 @@
-import 'package:gc_wizard/utils/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit.dart';
 
 class Time extends Unit {
   Function toSeconds;
