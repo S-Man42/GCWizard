@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/units/area.dart';
 import 'package:gc_wizard/utils/units/length.dart';
+import 'package:gc_wizard/utils/units/mass.dart';
 import 'package:gc_wizard/utils/units/temperature.dart';
 import 'package:gc_wizard/utils/units/time.dart';
 import 'package:gc_wizard/utils/units/unit.dart';
@@ -26,8 +27,9 @@ class UnitConverterState extends State<UnitConverter> {
   Unit _currentToUnit;
 
   var _categories = [
-    {'key' : 'unitconverter_category_length', 'units' : lengths, 'default_from_unit': LENGTH_M, 'default_to_unit': LENGTH_FT},
     {'key' : 'unitconverter_category_area', 'units' : areas, 'default_from_unit': AREA_SQUAREMETER, 'default_to_unit': AREA_SQUAREKILOMETER, 'suppress_prefixes': true},
+    {'key' : 'unitconverter_category_length', 'units' : lengths, 'default_from_unit': LENGTH_M, 'default_to_unit': LENGTH_FT},
+    {'key' : 'unitconverter_category_mass', 'units' : masses, 'default_from_unit': MASS_GRAM, 'default_to_unit': MASS_POUND},
     {'key' : 'unitconverter_category_temperature', 'units' : temperatures, 'default_from_unit': TEMPERATURE_CELSIUS, 'default_to_unit': TEMPERATURE_FAHRENHEIT},
     {'key' : 'unitconverter_category_time', 'units' : times, 'default_from_unit': TIME_HOUR, 'default_to_unit': TIME_MINUTE},
     {'key' : 'unitconverter_category_velocity', 'units' : velocities, 'default_from_unit': VELOCITY_KMH, 'default_to_unit': VELOCITY_MS, 'suppress_prefixes': true},
@@ -77,7 +79,7 @@ class UnitConverterState extends State<UnitConverter> {
       children: <Widget>[
         GCWDoubleSpinner(
           value: _currentValue,
-          numberDecimalDigits: 6,
+          numberDecimalDigits: 5,
           onChanged: (value) {
             setState(() {
               _currentValue = value;
@@ -230,7 +232,7 @@ class UnitConverterState extends State<UnitConverter> {
   }
 
   _buildOutput() {
-    return NumberFormat('0.' + '#' * 6).format(
+    return NumberFormat('0.' + '#' * 8).format(
       convert(_currentValue * _currentFromPrefix, _currentFromUnit, _currentToUnit) / _currentToPrefix
     );
   }
