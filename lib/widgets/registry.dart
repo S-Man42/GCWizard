@@ -100,6 +100,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_ri
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
@@ -216,6 +217,12 @@ class Registry {
         i18nPrefix: 'base_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_BASE
+      ),
+      GCWToolWidget(
+        tool: Beaufort(),
+        i18nPrefix: 'beaufort',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'beaufort wind force scale beaufort-skala windstaerke windspeed '
       ),
       GCWToolWidget(
         tool: Binary(),
@@ -510,7 +517,7 @@ class Registry {
         tool: UnitConverter(),
         i18nPrefix: 'unitconverter',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'einheiten groessen units konvertieren umwandeln umrechnen converter switch konvertierer ',
+        searchStrings: 'einheiten groessen units konvertieren umwandeln umrechnen converter switch konvertierer laengen lengths geschwindigkeiten speeds velocity velocities energies energy force kraft power leistung times uhrzeiten areas flaechen volumen volumes denisities density dichten watt newton meters inches zoll pounds pfund pferdestaerken horsepowers gallonen gallons barrels yoda soccerfields fussballfelder badewannen bathtubs atm psi bar pressures druecke druck angles winkel radiant degrees grad temperaturen temperatures celsius kelvin fahrenheit rankine reaumur masses gewichte massen kilogramm feinunze troyounce pints',
       ),
       GCWToolWidget(
         tool: VanitySelection(),

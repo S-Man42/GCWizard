@@ -171,6 +171,12 @@
   "base_base85_title" : "Base85 (ASCII85)",
   "base85_example" : "<~<+oue+DGm>FD,5.@;^.1AT@~>",
 
+  "beaufort_title" : "Wind Force (Beaufort)",
+  "beaufort_description" : "Converts wind speed into Beaufort value (Scale up to Bft. 17)",
+  "beaufort_example" : "42 kn → Bft. 9",
+  "beaufort_mode_left" : "To Beaufort",
+  "beaufort_mode_right" : "From Beaufort",
+
   "brainfk_title" : "Brainf**k",
   "brainfk_description" : "Esoteric Programming language with 8 characters, incl. its derivat 'Ook'",
   "brainfk_example" : ">++++++++[<++++++++>-]<++.",
@@ -669,8 +675,8 @@
   "coords_variablecoordinate_alert_title" : "Warning: Many coordinates!",
   "coords_variablecoordinate_alert_text" : "You generated %s1 coordinates.\n\nDo you want to see them?\n\nThis might slow down you device dramatically.",
   "coords_variablecoordinate_decleftpad" : "Decimal Places",
-  "coords_variablecoordinate_decleftpad_left" : "fill right\n52° 10.900",
-  "coords_variablecoordinate_decleftpad_right" : "fill left\n52° 10.009",
+  "coords_variablecoordinate_decleftpad_left" : "Pad right\nXX° XX.X00",
+  "coords_variablecoordinate_decleftpad_right" : "Pad left\nXX° XX.00X",
   "coords_variablecoordinate_reverse" : "Reverse",
 
   "crosssum_selection_title" : "Cross Sum/Digit Sum",
@@ -1510,7 +1516,7 @@
   "unitconverter_category_pressure" : "Pressure",
   "unitconverter_category_temperature" : "Temperature",
   "unitconverter_category_time" : "Time",
-  "unitconverter_category_velocity" : "Velocity",
+  "unitconverter_category_velocity" : "Velocity/Speed",
   "unitconverter_category_volume" : "Volume",
 
   "vanity_selection_title" : "Phone Keys (Vanity)",
