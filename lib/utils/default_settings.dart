@@ -58,6 +58,10 @@ void initDefaultSettings() {
     Prefs.setDouble('font_size', 16.0);
   }
 
+  if (Prefs.get('formulasolver_formulas') == null) {
+    Prefs.setStringList('formulasolver_formulas', []);
+  }
+
   if (Prefs.get('log_keep_entries_in_days') == null) {
     Prefs.setInt('log_keep_entries_in_days', 5);
   }

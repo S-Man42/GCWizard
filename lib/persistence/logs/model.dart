@@ -1,4 +1,4 @@
-import 'package:gc_wizard/database/logs/names.dart';
+import 'package:gc_wizard/persistence/logs/names.dart';
 
 class LogType {
   int id;

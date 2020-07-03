@@ -8,7 +8,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sqflite: any
   path: any
   path_provider: any
   flutter_map: any

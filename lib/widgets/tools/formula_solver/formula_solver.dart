@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/database/formula_solver/database_provider.dart';
-import 'package:gc_wizard/database/formula_solver/model.dart';
+import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
+import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -18,15 +18,11 @@ class FormulaSolver extends StatefulWidget {
 }
 
 class FormulaSolverState extends State<FormulaSolver> {
-  FormulaSolverDbProvider dbProvider = FormulaSolverDbProvider();
-  
   var _newGroupController;
   var _editGroupController;
   var _currentNewName = '';
   var _currentEditedName = '';
   var _currentEditId;
-
-  Map<int, int> formulaCountsPerGroup = {};
 
   @override
   void initState() {
@@ -34,12 +30,7 @@ class FormulaSolverState extends State<FormulaSolver> {
     _newGroupController = TextEditingController(text: _currentNewName);
     _editGroupController = TextEditingController(text: _currentEditedName);
 
-    dbProvider.getGroups().then((result) {
-      setState(() {
-        formulaGroups = result;
-        _getFormulaCounts();
-      });
-    });
+    refreshFormulas();
   }
 
   @override
@@ -91,35 +82,19 @@ class FormulaSolverState extends State<FormulaSolver> {
   _addNewGroup() async {
     if (_currentNewName.length > 0) {
       var newGroup = FormulaGroup(_currentNewName);
-      newGroup.id = await dbProvider.insertGroup(newGroup);
+      newGroup.id = insertGroup(newGroup);
 
-      formulaGroups.add(newGroup);
-      formulaCountsPerGroup.putIfAbsent(newGroup.id, () => 0);
       _newGroupController.clear();
       _currentNewName = '';
     }
   }
 
   _updateGroup(FormulaGroup group) async {
-    await dbProvider.updateGroup(group);
+    update();
   }
 
   _removeGroup(FormulaGroup group) async {
-    await dbProvider.deleteGroup(group);
-    formulaCountsPerGroup.remove(group.id);
-    formulaGroups.remove(group);
-  }
-
-  _getFormulaCounts() async {
-    formulaCountsPerGroup.clear();
-    dbProvider.getFormulas().then((result) {
-      setState(() {
-        result.forEach((formula) {
-          formulaCountsPerGroup.putIfAbsent(formula.group.id, () => 0);
-          formulaCountsPerGroup[formula.group.id]++;
-        });
-      });
-    });
+    deleteGroup(group.id);
   }
 
   _buildGroupList(BuildContext context) {
@@ -134,9 +109,7 @@ class FormulaSolverState extends State<FormulaSolver> {
       Future _navigateToSubPage(context) async {
         Navigator.push(context, NoAnimationMaterialPageRoute(
           builder: (context) => formulaTool)
-        ).whenComplete(() {
-          _getFormulaCounts();
-        });
+        );
       }
 
       Widget output;
@@ -162,7 +135,7 @@ class FormulaSolverState extends State<FormulaSolver> {
                   )
                 : IgnorePointer(
                     child: GCWText (
-                      text: '${group.name} (${formulaCountsPerGroup[group.id] ?? '?'})'
+                      text: '${group.name} (${group.formulas.length})'
                     )
                   ),
               flex: 1,

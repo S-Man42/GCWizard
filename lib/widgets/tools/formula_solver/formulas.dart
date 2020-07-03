@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/database/formula_solver/database_provider.dart';
-import 'package:gc_wizard/database/formula_solver/model.dart';
+import 'package:gc_wizard/persistence/formula_solver/database_provider.dart';
+import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
 import 'package:gc_wizard/theme/colors.dart';

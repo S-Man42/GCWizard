@@ -1,8 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/database/formula_solver/database_provider.dart';
-import 'package:gc_wizard/database/formula_solver/model.dart';
+import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
@@ -22,8 +21,6 @@ class FormulaValues extends StatefulWidget {
 }
 
 class FormulaValuesState extends State<FormulaValues> {
-  FormulaSolverDbProvider dbProvider = FormulaSolverDbProvider();
-
   var _newKeyController;
   var _newValueController;
   var _editKeyController;

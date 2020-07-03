@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:gc_wizard/database/formula_solver/database_provider.dart';
-import 'package:gc_wizard/database/logs/database_provider.dart';
+import 'package:gc_wizard/persistence/logs/database_provider.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -23,7 +22,6 @@ class DatabaseProvider {
 
   static final List<IDatabaseProvider> _providerRegistry = [
     LogsDbProvider(),
-    FormulaSolverDbProvider()
   ];
 
   Future<Database> get database async {

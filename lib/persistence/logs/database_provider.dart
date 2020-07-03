@@ -1,6 +1,6 @@
-import 'package:gc_wizard/database/common/database_provider.dart';
-import 'package:gc_wizard/database/logs/model.dart';
-import 'package:gc_wizard/database/logs/names.dart';
+import 'package:gc_wizard/persistence/common/database_provider.dart';
+import 'package:gc_wizard/persistence/logs/model.dart';
+import 'package:gc_wizard/persistence/logs/names.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
 import 'package:sqflite/sqflite.dart';
