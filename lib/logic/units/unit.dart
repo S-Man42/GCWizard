@@ -17,6 +17,10 @@ Unit getUnitBySymbol(List<Unit> units, String symbol) {
   return units.firstWhere((unit) => unit.symbol == symbol);
 }
 
+double convert(double value, Unit from, Unit to) {
+  return to.fromReference(from.toReference(value));
+}
+
 Unit getReferenceUnit(List<Unit> units) {
   return units.firstWhere((unit) => unit.isReferenceUnit == true);
 }
