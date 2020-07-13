@@ -107,6 +107,12 @@ final MASS_CARAT = Mass(
   inGram: 0.2
 );
 
+final MASS_ZENTNER = Mass(
+  name: 'common_unit_mass_ztr_name',
+  symbol: 'Ztr',
+  inGram: 50.0 * 1000.0
+);
+
 final List<Unit> masses = [
   MASS_GRAM,
   MASS_TON,
@@ -122,7 +128,8 @@ final List<Unit> masses = [
   MASS_USSHORTTON,
   MASS_TROYOUNCE,
   MASS_CARAT,
-  MASS_PFUND
+  MASS_PFUND,
+  MASS_ZENTNER
 ];
 
 final defaultMass = MASS_GRAM;

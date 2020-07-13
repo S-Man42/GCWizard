@@ -473,6 +473,7 @@
   "common_unit_mass_uston_name" : "US-Tonne (Short Ton)",
   "common_unit_mass_pfd_name" : "Deutsches Pfund",
   "common_unit_mass_ct_name" : "Karat",
+  "common_unit_mass_ztr_name" : "Zentner",
   "common_unit_power_w_name" : "Watt",
   "common_unit_power_hp_name" : "Horsepower",
   "common_unit_power_ps_name" : "Pferdestärke",
