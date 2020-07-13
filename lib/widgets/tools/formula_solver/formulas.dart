@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/persistence/formula_solver/database_provider.dart';
-import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
+import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
+import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
@@ -26,7 +26,6 @@ class Formulas extends StatefulWidget {
 }
 
 class FormulasState extends State<Formulas> {
-  FormulaSolverDbProvider dbProvider = FormulaSolverDbProvider();
   var formulaParser = FormulaParser();
 
   var _newFormulaController;
@@ -35,22 +34,13 @@ class FormulasState extends State<Formulas> {
   var _currentEditedFormula = '';
   var _currentEditId;
 
-  List<Formula> _currentFormulas = [];
-  Map<String, String> _currentValues = {};
-
   @override
   void initState() {
     super.initState();
     _newFormulaController = TextEditingController(text: _currentNewFormula);
     _editFormulaController = TextEditingController(text: _currentEditedFormula);
 
-    dbProvider.getFormulasByGroup(widget.group).then((result) {
-      setState(() {
-        _currentFormulas = result;
-      });
-    });
-
-    _getValues();
+    refreshFormulas();
   }
 
   @override
@@ -59,14 +49,6 @@ class FormulasState extends State<Formulas> {
     _editFormulaController.dispose();
 
     super.dispose();
-  }
-
-  _getValues() async {
-    dbProvider.getFormulaValuesByGroup(widget.group).then((result) {
-      setState(() {
-        result.forEach((value) => _currentValues[value.key] = value.value);
-      });
-    });
   }
 
   @override
@@ -78,9 +60,10 @@ class FormulasState extends State<Formulas> {
 
     Future _navigateToSubPage(context) async {
       Navigator.push(context, NoAnimationMaterialPageRoute(
-          builder: (context) => formulaTool)
-      ).whenComplete(() {
-        _getValues();
+        builder: (context) => formulaTool)
+      )
+      .whenComplete(() {
+        setState(() {});
       });
     }
 
@@ -128,30 +111,33 @@ class FormulasState extends State<Formulas> {
 
   _addNewFormula() async {
     if (_currentNewFormula.length > 0) {
-      var newFormula = Formula(_currentNewFormula, widget.group);
-      newFormula.id = await dbProvider.insertFormula(newFormula);
+      var newFormula = Formula(_currentNewFormula);
+      insertFormula(newFormula, widget.group);
 
-      _currentFormulas.add(newFormula);
       _newFormulaController.clear();
       _currentNewFormula = '';
     }
   }
 
-  _updateFormula(Formula formula) async {
-    await dbProvider.updateFormula(formula);
+  _updateFormula(Formula formula) {
+    updateFormula(formula, widget.group);
   }
 
-  _removeFormula(Formula formula) async {
-    await dbProvider.deleteFormula(formula);
-    _currentFormulas.remove(formula);
+  _removeFormula(Formula formula) {
+    deleteFormula(formula.id, widget.group);
   }
 
   _buildGroupList(BuildContext context) {
+    Map<String, String> values = {};
+    widget.group.values.forEach((value) {
+      values.putIfAbsent(value.key, () => value.value);
+    });
+
     final double _BUTTON_SIZE = 40;
 
     var odd = true;
-    var rows = _currentFormulas.map((formula) {
-      var calculated = formulaParser.parse(formula.formula, _currentValues);
+    var rows = widget.group.formulas.map((formula) {
+      var calculated = formulaParser.parse(formula.formula, values);
 
       Widget output;
 
@@ -207,11 +193,11 @@ class FormulasState extends State<Formulas> {
                 iconData: Icons.check,
                 onPressed: () {
                   formula.formula = _currentEditedFormula;
-                  _updateFormula(formula).whenComplete(() {
-                    setState(() {
-                      _currentEditId = null;
-                      _editFormulaController.clear();
-                    });
+                  _updateFormula(formula);
+
+                  setState(() {
+                    _currentEditId = null;
+                    _editFormulaController.clear();
                   });
                 },
               )
@@ -246,7 +232,9 @@ class FormulasState extends State<Formulas> {
                       break;
                     case 2:
                       showDeleteAlertDialog(context, formula.formula, () {
-                        _removeFormula(formula).whenComplete(() => setState(() {}));
+                        _removeFormula(formula);
+
+                        setState(() {});
                       },);
                       break;
                     case 3:

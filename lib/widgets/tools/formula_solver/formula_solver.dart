@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -69,7 +69,9 @@ class FormulaSolverState extends State<FormulaSolver> {
             GCWIconButton(
               iconData: Icons.add,
               onPressed: () {
-                _addNewGroup().whenComplete(() => setState(() {}));
+                _addNewGroup();
+                setState(() {
+                });
               },
             )
           ],
@@ -79,28 +81,27 @@ class FormulaSolverState extends State<FormulaSolver> {
     );
   }
 
-  _addNewGroup() async {
+  _addNewGroup() {
     if (_currentNewName.length > 0) {
-      var newGroup = FormulaGroup(_currentNewName);
-      newGroup.id = insertGroup(newGroup);
+      var group = FormulaGroup(_currentNewName);
+      insertGroup(group);
 
       _newGroupController.clear();
       _currentNewName = '';
     }
   }
 
-  _updateGroup(FormulaGroup group) async {
-    update();
+  _updateGroup() {
+    updateFormulaGroups();
   }
 
-  _removeGroup(FormulaGroup group) async {
+  _removeGroup(FormulaGroup group) {
     deleteGroup(group.id);
   }
 
   _buildGroupList(BuildContext context) {
     var odd = true;
     var rows = formulaGroups.map((group) {
-
       var formulaTool = GCWToolWidget(
         tool: Formulas(group: group),
         toolName: '${group.name} - ${i18n(context, 'formulasolver_formulas')}'
@@ -109,7 +110,9 @@ class FormulaSolverState extends State<FormulaSolver> {
       Future _navigateToSubPage(context) async {
         Navigator.push(context, NoAnimationMaterialPageRoute(
           builder: (context) => formulaTool)
-        );
+        ).whenComplete(() {
+          setState(() {});
+        });
       }
 
       Widget output;
@@ -145,11 +148,11 @@ class FormulaSolverState extends State<FormulaSolver> {
                 iconData: Icons.check,
                 onPressed: () {
                   group.name = _currentEditedName;
-                  _updateGroup(group).whenComplete(() {
-                    setState(() {
-                      _currentEditId = null;
-                      _editGroupController.clear();
-                    });
+                  _updateGroup();
+
+                  setState(() {
+                    _currentEditId = null;
+                    _editGroupController.clear();
                   });
                 },
               )
@@ -167,8 +170,9 @@ class FormulaSolverState extends State<FormulaSolver> {
               iconData: Icons.remove,
               onPressed: () {
                 showDeleteAlertDialog(context, group.name, () {
-                  _removeGroup(group).whenComplete(() => setState(() {}));
-                },);
+                  _removeGroup(group);
+                  setState(() {});
+                });
               },
             )
           ],

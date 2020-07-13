@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 List<FormulaGroup> formulaGroups = [];
 
 class FormulaGroup {
   int id;
   String name;
   List<Formula> formulas = [];
+  List<FormulaValue> values = [];
 
   FormulaGroup(
     this.name,
@@ -15,12 +18,15 @@ class FormulaGroup {
   Map<String, dynamic> toMap() => {
     'id': id,
     'name': name,
-    'formulas' : formulas.map((formula) => formula.toMap()).toList()
+    'formulas' : formulas.map((formula) => formula.toMap()).toList(),
+    'values' : values.map((value) => value.toMap()).toList(),
   };
 
-  static FormulaGroup fromJSON(String jsonData) {
-
-  }
+  FormulaGroup.fromJson(Map<String, dynamic> json):
+    name = json['name'],
+    id = json['id'],
+    formulas = List<Formula>.from(json['formulas'].map((formula) => Formula.fromJson(formula))),
+    values = List<FormulaValue>.from(json['values'].map((value) => FormulaValue.fromJson(value)));
 
   @override
   String toString() {
@@ -35,7 +41,6 @@ FormulaGroup getFormulaGroupById(int id) {
 class Formula {
   int id;
   String formula;
-  List<FormulaValue> values = [];
 
   Formula(
     this.formula,
@@ -47,8 +52,11 @@ class Formula {
   Map<String, dynamic> toMap() => {
     'id': id,
     'formula': formula,
-    'values' : values.map((value) => value.toMap()).toList(),
   };
+
+  Formula.fromJson(Map<String, dynamic> json):
+    id = json['id'],
+    formula = json['formula'];
 
   @override
   String toString() {
@@ -68,6 +76,11 @@ class FormulaValue {
       this.id,
     }
   );
+
+  FormulaValue.fromJson(Map<String, dynamic> json):
+    id = json['id'],
+    key = json['key'],
+    value = json['value'];
 
   Map<String, dynamic> toMap() => {
     'id': id,
