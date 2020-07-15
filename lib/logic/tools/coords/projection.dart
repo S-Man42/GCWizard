@@ -9,6 +9,9 @@ LatLng projection(LatLng coord, double bearing, double distance, Ellipsoid ellip
 }
 
 LatLng projectionRadian(LatLng coord, double bearing, double distance, Ellipsoid ellipsoid) {
+  if (distance == 0.0)
+    return coord;
+
   return projectionVincenty(coord, bearing, distance, ellipsoid);
 }
 

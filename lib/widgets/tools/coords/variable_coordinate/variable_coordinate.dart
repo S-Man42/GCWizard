@@ -436,13 +436,18 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       _substitutions.putIfAbsent(value.key, () => value.value);
     });
 
-    var coords = parseVariableLatLon(_currentInput, _substitutions, projectionData: {
-      'bearing': _currentProjectionMode == false || _currentBearingInput.length == 0 ? '0' : _currentBearingInput,
-      'distance': _currentProjectionMode == false || _currentDistanceInput.length == 0 ? '0' : _currentDistanceInput,
-      'reverseBearing': _currentReverseBearing,
-      'lengthUnit': _currentLengthUnit,
-      'ellipsoid': defaultEllipsoid()
-    });
+    Map<String, dynamic> projectionData;
+    if (_currentProjectionMode) {
+      projectionData = {
+        'bearing': _currentProjectionMode == false || _currentBearingInput.length == 0 ? '0' : _currentBearingInput,
+        'distance': _currentProjectionMode == false || _currentDistanceInput.length == 0 ? '0' : _currentDistanceInput,
+        'reverseBearing': _currentReverseBearing,
+        'lengthUnit': _currentLengthUnit,
+        'ellipsoid': defaultEllipsoid()
+      };
+    }
+
+    var coords = parseVariableLatLon(_currentInput, _substitutions, projectionData: projectionData);
 
     if (coords['coordinates'].length > MAX_COUNT_COORDINATES) {
       showGCWAlertDialog(context, i18n(context, 'coords_variablecoordinate_alert_title'), i18n(context, 'coords_variablecoordinate_alert_text', parameters: [coords.length]), () {

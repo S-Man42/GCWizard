@@ -4,6 +4,9 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
 import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
+import 'package:gc_wizard/persistence/utils.dart';
+import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart' as var_coords_provider;
+import 'package:gc_wizard/persistence/variable_coordinate/model.dart' as var_coords_model;
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
@@ -13,6 +16,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_values.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
@@ -125,6 +129,44 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
   _removeFormula(Formula formula) {
     deleteFormula(formula.id, widget.group);
+  }
+
+  _createVariableCoordinateName() {
+    var baseName = '[${i18n(context, 'formulasolver_title')}] ${widget.group.name}';
+
+    var existingNames = var_coords_model.formulas.map((f) => f.name).toList();
+
+    int i = 1;
+    var name = baseName;
+    while (existingNames.contains(name))
+      name = baseName + ' (${i++})';
+
+    return name;
+  }
+
+  var_coords_model.Formula _exportToVariableCoordinate(Formula formula) {
+    var_coords_provider.refreshFormulas();
+
+    var_coords_model.Formula varCoordsFormula = var_coords_model.Formula(_createVariableCoordinateName());
+    varCoordsFormula.formula = formula.formula;
+    var_coords_provider.insertFormula(varCoordsFormula);
+
+    for (var value in widget.group.values) {
+      var formulaValue = FormulaValue(value.key, value.value);
+      var_coords_provider.insertFormulaValue(formulaValue, varCoordsFormula);
+//      var_coords_provider.insertFormulaValue(value, varCoordsFormula);
+    }
+
+    return varCoordsFormula;
+  }
+
+  _openInVariableCoordinate(var_coords_model.Formula formula) {
+    Navigator.push(context, NoAnimationMaterialPageRoute(
+      builder: (context) => GCWToolWidget(
+        tool: VariableCoordinate(formula: formula),
+        toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}'
+      )
+    ));
   }
 
   _buildGroupList(BuildContext context) {
@@ -243,6 +285,10 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                     case 4:
                       Clipboard.setData(ClipboardData(text: calculated['result']));
                       break;
+                    case 5:
+                      var varCoordsFormula = _exportToVariableCoordinate(formula);
+                      _openInVariableCoordinate(varCoordsFormula);
+                      break;
                   }
                 },
                 itemBuilder: (context) => [
@@ -272,6 +318,13 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                     child: _buildPopupItem(
                       Icons.content_copy,
                       'formulasolver_formulas_copyresult',
+                    )
+                  ),
+                  PopupMenuItem(
+                    value: 5,
+                    child: _buildPopupItem(
+                      Icons.forward,
+                      'formulasolver_formulas_openinvarcoords',
                     )
                   ),
                 ],

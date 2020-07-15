@@ -13,6 +13,8 @@ final PATTERN_DECIMAL = r'(?:\s*?[\.,]\s*?(\d+))?' + '[\\s\'°"]+?';
 
 final _LETTER = '[A-ZÄÖÜ]';
 
+var regexEnd = '';
+
 final PATTERN_DEC_TRAILINGSIGN =
     '^\\s*?'
     '(\\d{1,3})\\s*?'                      //lat degrees
@@ -128,7 +130,7 @@ int _sign(String match) {
 
 LatLng _parseDECTrailingSigns(String text) {
 
-  RegExp regex = RegExp(PATTERN_DEC_TRAILINGSIGN, caseSensitive: false);
+  RegExp regex = RegExp(PATTERN_DEC_TRAILINGSIGN + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
 
@@ -160,7 +162,7 @@ LatLng parseDEC(String text) {
   if (parsedTrailingSigns != null)
     return parsedTrailingSigns;
 
-  RegExp regex = RegExp(PATTERN_DEC, caseSensitive: false);
+  RegExp regex = RegExp(PATTERN_DEC + regexEnd, caseSensitive: false);
 
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
@@ -199,7 +201,7 @@ double _leftPadDEGMilliMinutes(String minutes, String milliMinutes) {
 
 LatLng _parseDEGTrailingSigns(String text, leftPadMilliMinutes) {
 
-  RegExp regex = RegExp(PATTERN_DEG_TRAILINGSIGN, caseSensitive: false);
+  RegExp regex = RegExp(PATTERN_DEG_TRAILINGSIGN + regexEnd, caseSensitive: false);
 
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
@@ -241,7 +243,7 @@ LatLng parseDEG(String text, {leftPadMilliMinutes: false}) {
   if (parsedTrailingSigns != null)
     return parsedTrailingSigns;
 
-  RegExp regex = RegExp(PATTERN_DEG, caseSensitive: false);
+  RegExp regex = RegExp(PATTERN_DEG + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
 
@@ -279,7 +281,7 @@ LatLng parseDEG(String text, {leftPadMilliMinutes: false}) {
 
 LatLng _parseDMSTrailingSigns(String text) {
 
-  RegExp regex = RegExp(PATTERN_DMS_TRAILINGSIGN, caseSensitive: false);
+  RegExp regex = RegExp(PATTERN_DMS_TRAILINGSIGN + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
 
@@ -316,7 +318,7 @@ LatLng parseDMS(String text) {
   if (parsedTrailingSigns != null)
     return parsedTrailingSigns;
 
-  RegExp regex = RegExp(PATTERN_DMS, caseSensitive: false);
+  RegExp regex = RegExp(PATTERN_DMS + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
 
@@ -348,9 +350,13 @@ LatLng parseDMS(String text) {
   return null;
 }
 
-Map<String, dynamic> parseLatLon(String text) {
+//wholeString == false: The first match at the text begin is taken - for copy
+//wholeString == true: The whole text must be a valid coord - for var coords
+Map<String, dynamic> parseLatLon(String text, [wholeString = false]) {
   if (text == null || text.length == 0)
     return null;
+
+  regexEnd = wholeString ? '\$' : '';
 
   LatLng coord = parseDMS(text);
   if (coord != null)

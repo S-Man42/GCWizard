@@ -794,6 +794,7 @@
   "formulasolver_formulas_removeformula" : "Formel löschen",
   "formulasolver_formulas_copyformula" : "Formel kopieren",
   "formulasolver_formulas_copyresult" : "Ergebnis kopieren",
+  "formulasolver_formulas_openinvarcoords" : "In Variable Koordinate öffnen",
   "formulasolver_values_newvalue" : "Variable hinzufügen",
   "formulasolver_values_key" : "Name",
   "formulasolver_values_value" : "Wert",

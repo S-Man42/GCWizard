@@ -16,8 +16,6 @@ void refreshFormulas() {
       return Formula.fromJson(jsonDecode(formula));
     })
     .toList();
-
-  print(formulas);
 }
 
 _saveData() {
