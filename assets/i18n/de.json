@@ -679,6 +679,9 @@
   "coords_variablecoordinate_decleftpad_left" : "rechts auffüllen\nXX° XX.X00",
   "coords_variablecoordinate_decleftpad_right" : "links auffüllen\nXX° XX.00X",
   "coords_variablecoordinate_reverse" : "Rückwärts",
+  "coords_variablecoordinate_currentformulas" : "Erstellte Formeln",
+  "coords_variablecoordinate_newformula" : "Formel hinzufügen",
+  "coords_variablecoordinate_newformula_hint" : "Formelname eingeben",
 
   "crosssum_selection_title" : "Quersumme",
   "crosssum_selection_description" : "Quersummen einer ganzen Zahl",
