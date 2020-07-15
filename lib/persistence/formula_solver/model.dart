@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 List<FormulaGroup> formulaGroups = [];
 
 class FormulaGroup {
@@ -8,12 +6,7 @@ class FormulaGroup {
   List<Formula> formulas = [];
   List<FormulaValue> values = [];
 
-  FormulaGroup(
-    this.name,
-    {
-      this.id
-    }
-  );
+  FormulaGroup(this.name);
 
   Map<String, dynamic> toMap() => {
     'id': id,
@@ -34,20 +27,11 @@ class FormulaGroup {
   }
 }
 
-FormulaGroup getFormulaGroupById(int id) {
-  return formulaGroups.firstWhere((group) => group.id == id);
-}
-
 class Formula {
   int id;
   String formula;
 
-  Formula(
-    this.formula,
-    {
-      this.id,
-    }
-  );
+  Formula(this.formula);
 
   Map<String, dynamic> toMap() => {
     'id': id,
@@ -71,10 +55,7 @@ class FormulaValue {
 
   FormulaValue(
     this.key,
-    this.value,
-    {
-      this.id,
-    }
+    this.value
   );
 
   FormulaValue.fromJson(Map<String, dynamic> json):

@@ -13,19 +13,19 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/tools/formula_solver/values.dart';
+import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_values.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
-class Formulas extends StatefulWidget {
+class FormulaSolverFormulas extends StatefulWidget {
   final FormulaGroup group;
 
-  const Formulas({Key key, this.group}) : super(key: key);
+  const FormulaSolverFormulas({Key key, this.group}) : super(key: key);
 
   @override
-  FormulasState createState() => FormulasState();
+  FormulaSolverFormulasState createState() => FormulaSolverFormulasState();
 }
 
-class FormulasState extends State<Formulas> {
+class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   var formulaParser = FormulaParser();
 
   var _newFormulaController;
@@ -54,7 +54,7 @@ class FormulasState extends State<Formulas> {
   @override
   Widget build(BuildContext context) {
     var formulaTool = GCWToolWidget(
-      tool: FormulaValues(group: widget.group),
+      tool: FormulaSolverFormulaValues(group: widget.group),
       toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}'
     );
 

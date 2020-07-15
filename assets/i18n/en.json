@@ -679,6 +679,9 @@
   "coords_variablecoordinate_decleftpad_left" : "Pad right\nXX° XX.X00",
   "coords_variablecoordinate_decleftpad_right" : "Pad left\nXX° XX.00X",
   "coords_variablecoordinate_reverse" : "Reverse",
+  "coords_variablecoordinate_currentformulas" : "Created Formulas",
+  "coords_variablecoordinate_newformula" : "Add Formula",
+  "coords_variablecoordinate_newformula_hint" : "Enter Formula Name",
 
   "crosssum_selection_title" : "Cross Sum/Digit Sum",
   "crosssum_selection_description" : "Cross Sums of an Integer",

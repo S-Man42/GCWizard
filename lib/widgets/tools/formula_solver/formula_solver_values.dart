@@ -12,16 +12,16 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
-class FormulaValues extends StatefulWidget {
+class FormulaSolverFormulaValues extends StatefulWidget {
   final FormulaGroup group;
 
-  const FormulaValues({Key key, this.group}) : super(key: key);
+  const FormulaSolverFormulaValues({Key key, this.group}) : super(key: key);
 
   @override
-  FormulaValuesState createState() => FormulaValuesState();
+  FormulaSolverFormulaValuesState createState() => FormulaSolverFormulaValuesState();
 }
 
-class FormulaValuesState extends State<FormulaValues> {
+class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> {
   var _newKeyController;
   var _newValueController;
   var _editKeyController;

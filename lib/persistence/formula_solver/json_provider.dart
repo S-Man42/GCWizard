@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
+import 'package:gc_wizard/persistence/utils.dart';
 import 'package:prefs/prefs.dart';
 
 void refreshFormulas() {
@@ -11,25 +12,12 @@ void refreshFormulas() {
   formulaGroups = formulas
     .where((group) => group.length > 0)
     .map((group) {
-      var g = FormulaGroup.fromJson(jsonDecode(group));
-      return g;
+      return FormulaGroup.fromJson(jsonDecode(group));
     })
     .toList();
 }
 
-int _newID(List<int> existingIDs) {
-  if (existingIDs.length == 0)
-    return 1;
 
-  existingIDs.sort();
-
-  for (int i = 1; i <= existingIDs.length + 1; i++) {
-    if (!existingIDs.contains(i))
-      return i;
-  }
-
-  return null;
-}
 
 _saveData() {
   var jsonData = formulaGroups
@@ -40,17 +28,17 @@ _saveData() {
 }
 
 int insertGroup(FormulaGroup group) {
-  var newID = _newID(
+  var id = newID(
     formulaGroups
       .map((group) => group.id)
       .toList()
   );
-  group.id = newID;
+  group.id = id;
   formulaGroups.add(group);
 
   _saveData();
 
-  return newID;
+  return id;
 }
 
 void updateFormulaGroups() {
@@ -63,7 +51,7 @@ void deleteGroup(int groupId) {
   _saveData();
 }
 
-void _updateFormulaGroups(FormulaGroup group) {
+void _updateFormulaGroup(FormulaGroup group) {
   formulaGroups = formulaGroups.map((formulaGroup) {
     if (formulaGroup.id == group.id)
       return group;
@@ -73,18 +61,18 @@ void _updateFormulaGroups(FormulaGroup group) {
 }
 
 int insertFormula(Formula formula, FormulaGroup group) {
-  var newID = _newID(
+  var id = newID(
     group.formulas
       .map((formula) => formula.id)
       .toList()
   );
-  formula.id = newID;
+  formula.id = id;
   group.formulas.add(formula);
 
-  _updateFormulaGroups(group);
+  _updateFormulaGroup(group);
   _saveData();
 
-  return newID;
+  return id;
 }
 
 void updateFormula(Formula formula, FormulaGroup group) {
@@ -95,23 +83,23 @@ void updateFormula(Formula formula, FormulaGroup group) {
     return groupFormula;
   }).toList();
 
-  _updateFormulaGroups(group);
+  _updateFormulaGroup(group);
   _saveData();
 }
 
 int insertFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
-  var newID = _newID(
+  var id = newID(
     group.values
       .map((value) => value.id)
       .toList()
   );
-  formulaValue.id = newID;
+  formulaValue.id = id;
   group.values.add(formulaValue);
 
-  _updateFormulaGroups(group);
+  _updateFormulaGroup(group);
   _saveData();
 
-  return newID;
+  return id;
 }
 
 void updateFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
@@ -122,20 +110,20 @@ void updateFormulaValue(FormulaValue formulaValue, FormulaGroup group) {
     return value;
   }).toList();
 
-  _updateFormulaGroups(group);
+  _updateFormulaGroup(group);
   _saveData();
 }
 
 void deleteFormula(int formulaId, FormulaGroup group) {
   group.formulas.removeWhere((formula) => formula.id == formulaId);
 
-  _updateFormulaGroups(group);
+  _updateFormulaGroup(group);
   _saveData();
 }
 
 void deleteFormulaValue(int formulaValueId, FormulaGroup group) {
   group.values.removeWhere((value) => value.id == formulaValueId);
 
-  _updateFormulaGroups(group);
+  _updateFormulaGroup(group);
   _saveData();
 }
