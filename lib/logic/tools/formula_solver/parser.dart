@@ -59,8 +59,11 @@ class FormulaParser {
   }
 
   dynamic _evaluateFormula(String formula, Map<String, String> values) {
+    //replace constants and formula names
     var safedFormulaNames = _safeFunctionsAndConstants(formula);
+    //replace values
     var substitutedFormula = substitution(safedFormulaNames['formula'], values, caseSensitive: false);
+    //restore the formula names
     substitutedFormula = substitution(substitutedFormula, safedFormulaNames['map']);
 
     try {
