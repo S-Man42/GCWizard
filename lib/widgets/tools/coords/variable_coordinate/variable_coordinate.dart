@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart' as formula_base;
@@ -161,7 +162,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         GCWCoordsOutputFormat(
           coordFormat: _currentOutputFormat,
           onChanged: (value) {
-            _currentOutputFormat = value;
+            setState(() {
+              _currentOutputFormat = value;
+            });
           },
         ),
         GCWSubmitFlatButton(
@@ -484,7 +487,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
     _output = Column(
       children: [
-        hasLeftPaddedCoords
+        _currentOutputFormat == keyCoordsDEG && hasLeftPaddedCoords
           ? GCWTwoOptionsSwitch(
               title: i18n(context, 'coords_variablecoordinate_decleftpad'),
               leftValue: i18n(context, 'coords_variablecoordinate_decleftpad_left'),

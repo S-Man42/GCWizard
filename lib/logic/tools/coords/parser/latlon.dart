@@ -26,7 +26,7 @@ final PATTERN_DEC_TRAILINGSIGN =
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon millidegrees
     '[\\s°]?\\s*?'                         //lon degree symbol
     '([EWO]$_LETTER*?|[\\+\\-])'           //lon sign;
-    '\\s*?\$';
+    '\\s*?';
 
 final PATTERN_DEC =
     '^\\s*?'
@@ -41,7 +41,7 @@ final PATTERN_DEC =
     '(\\d{1,3})\\s*?'                      //lon degrees
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon millidegrees
     '[\\s°]?'                             //lon degree symbol
-    '\\s*?\$';
+    '\\s*?';
 
 final PATTERN_DEG_TRAILINGSIGN =
     '^\\s*?'
@@ -58,7 +58,7 @@ final PATTERN_DEG_TRAILINGSIGN =
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon milliminutes
     '[\\s\']?\\s*?'                        //lon minutes symbol
     '([EWO]$_LETTER*?|[\\+\\-])'          //lon sign;
-    '\\s*?\$';
+    '\\s*?';
 
 final PATTERN_DEG =
     '^\\s*?'
@@ -75,7 +75,7 @@ final PATTERN_DEG =
     '([0-5]?\\d)\\s*?'                     //lon minutes
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon milliminutes
     '[\\s\']?'                            //lon minutes symbol
-    '\\s*?\$';
+    '\\s*?';
 
 final PATTERN_DMS_TRAILINGSIGN =
     '^\\s*?'
@@ -94,7 +94,7 @@ final PATTERN_DMS_TRAILINGSIGN =
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon milliseconds
     '[\\s"]?\\s*?'                         //lon seconds symbol
     '([EWO]$_LETTER*?|[\\+\\-])'          //lon sign;
-    '\\s*?\$';
+    '\\s*?';
 
 final PATTERN_DMS =
     '^\\s*?'
@@ -113,7 +113,7 @@ final PATTERN_DMS =
     '([0-5]?\\d)\\s*?'                     //lon seconds
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon milliseconds
     '[\\s"]?'                             //lon seconds symbol
-    '\\s*?\$';
+    '\\s*?';
 
 int _sign(String match) {
   if (match == null)

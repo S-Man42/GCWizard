@@ -24,7 +24,6 @@ class _ReverseProjectionCalculator extends IntervalCalculator {
     Interval distanceToCoord = cell.distanceTo(parameters['coord']);
     Interval bearingToCoord = cell.bearingTo(parameters['coord']);
 
-
     var distance = parameters['distance'];
     var bearing = parameters['bearing'];
 

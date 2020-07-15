@@ -206,3 +206,13 @@ double degreesToRadian(double degrees) {
 double radianToDegrees(double radian) {
   return radian / pi * 180.0;
 }
+
+num modulo(num value, num modulator) {
+  if (modulator <= 0.0)
+    throw Exception("modulator must be positive");
+
+  while (value < 0.0)
+    value += modulator;
+
+  return value % modulator;
+}
