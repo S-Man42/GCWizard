@@ -46,7 +46,7 @@ class GCWTextExportState extends State<GCWTextExport> {
   Widget build(BuildContext context) {
     return Container(
       width: 300,
-      height: 300,
+      height: 320,
       child: Column(
         children: <Widget>[
           GCWTwoOptionsSwitch(
@@ -64,8 +64,7 @@ class GCWTextExportState extends State<GCWTextExport> {
             ? QrImage(
                 data: _currentExportText,
                 version: QrVersions.auto,
-                errorCorrectionLevel: QrErrorCorrectLevel.M,
-                size: 250,
+                errorCorrectionLevel: QrErrorCorrectLevel.L,
                 backgroundColor: Colors.white,
               )
             : Column(
