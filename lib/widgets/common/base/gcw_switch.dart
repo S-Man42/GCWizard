@@ -6,6 +6,8 @@ class GCWSwitch extends StatefulWidget {
   final value;
   final inactiveTrackColor;
   final inactiveThumbColor;
+  final activeThumbColor;
+  final activeTrackColor;
 
   const GCWSwitch({
     Key key,
@@ -13,7 +15,9 @@ class GCWSwitch extends StatefulWidget {
     this.text,
     this.onChanged,
     this.inactiveThumbColor,
-    this.inactiveTrackColor
+    this.inactiveTrackColor,
+    this.activeThumbColor,
+    this.activeTrackColor
   }) : super(key: key);
 
   @override
@@ -26,15 +30,17 @@ class _GCWSwitchState extends State<GCWSwitch> {
   @override
   Widget build(BuildContext context) {
     return Switch(
-        value: _currentValue ?? widget.value,
-        onChanged: (value) {
-          setState(() {
-            _currentValue = value;
-            widget.onChanged(_currentValue);
-          });
-        },
-        inactiveTrackColor: widget.inactiveTrackColor,
-        inactiveThumbColor: widget.inactiveThumbColor
+      value: _currentValue ?? widget.value,
+      onChanged: (value) {
+        setState(() {
+          _currentValue = value;
+          widget.onChanged(_currentValue);
+        });
+      },
+      activeColor: widget.activeThumbColor,
+      activeTrackColor: widget.activeTrackColor,
+      inactiveTrackColor: widget.inactiveTrackColor,
+      inactiveThumbColor: widget.inactiveThumbColor
     );
   }
 }

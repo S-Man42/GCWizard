@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 const STATE_OK = 'ok';
@@ -11,7 +12,6 @@ class FormulaParser {
   ContextModel _context;
 
   final Map<String, double> _constants = {
-    'e': e,
     'ln10': ln10,
     'ln2': ln2,
     'log2e': log2e,
@@ -21,6 +21,10 @@ class FormulaParser {
     'sqrt1_2': sqrt1_2,
     'sqrt2': sqrt2,
   };
+
+  final List<String> _functions = [
+    'sqrt', 'nrt', 'arcsin', 'arccos', 'arctan', 'sin', 'cos', 'tan', 'log', 'ln', 'abs', 'floor', 'sgn', 'e'
+  ];
 
   FormulaParser() {
     _context = ContextModel();
@@ -32,8 +36,35 @@ class FormulaParser {
 
   final parser = Parser();
 
+  // If, for example, the sin() function is used, but there's a variable i, you have to avoid
+  // replace the i from sin with the variable value
+  Map<String, dynamic> _safeFunctionsAndConstants(String formula) {
+    var list = _constants.keys
+      .where((constant) => constant != 'e') //special case: If you remove e, you could never use this as variable name
+      .toList();
+
+    list.addAll(_functions.map((functionName) => functionName + '\\s*\\(').toList());
+
+    Map<String, String> substitutions = {};
+    int j = 0;
+    for (int i = 0; i < list.length; i++) {
+      var matches = RegExp(list[i], caseSensitive: false).allMatches(formula);
+      for (Match m in matches) {
+        substitutions.putIfAbsent(m.group(0), () => '\x01${j++}\x01');
+      }
+      formula = substitution(formula, substitutions);
+    }
+
+    return {'formula': formula, 'map': switchMapKeyValue(substitutions)};
+  }
+
   dynamic _evaluateFormula(String formula, Map<String, String> values) {
-    var substitutedFormula = substitution(formula, values, caseSensitive: false);
+    //replace constants and formula names
+    var safedFormulaNames = _safeFunctionsAndConstants(formula);
+    //replace values
+    var substitutedFormula = substitution(safedFormulaNames['formula'], values, caseSensitive: false);
+    //restore the formula names
+    substitutedFormula = substitution(substitutedFormula, safedFormulaNames['map']);
 
     try {
       Expression expression = parser.parse(substitutedFormula.toLowerCase());
@@ -66,20 +97,19 @@ class FormulaParser {
     if (matches.length > 0) {
       Map<String, String> substitutions = {};
 
+      matches.forEach((match) {
+        var matchString = match.group(0);
+        var content = matchString.substring(1, matchString.length - 1);
 
-        matches.forEach((match) {
-          var matchString = match.group(0);
-          var content = matchString.substring(1, matchString.length - 1);
-
-          var result;
-          try {
-            result = _evaluateFormula(content, values);
-          } catch(e) {
-            hasError = true;
-            result = '[' + e.message + ']';
-          }
-          substitutions.putIfAbsent(matchString, () => result.toString());
-        });
+        var result;
+        try {
+          result = _evaluateFormula(content, values);
+        } catch(e) {
+          hasError = true;
+          result = '[' + e.message + ']';
+        }
+        substitutions.putIfAbsent(matchString, () => result.toString());
+      });
 
       return {'state' : hasError ? STATE_ERROR : STATE_OK, 'result': substitution(formula, substitutions)};
     } else {
