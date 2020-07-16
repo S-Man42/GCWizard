@@ -177,6 +177,8 @@ class TomTomState extends State<TomTom> {
           onPressed: () {
             setState(() {
               var cursorPosition = max<int>(_inputDecryptController.selection.end, 0);
+              if (cursorPosition == 0)
+                return;
 
               _currentInputDecrypt = _currentInputDecrypt.substring(0, cursorPosition - 1) + _currentInputDecrypt.substring(cursorPosition);
               _inputDecryptController.text = _currentInputDecrypt;
