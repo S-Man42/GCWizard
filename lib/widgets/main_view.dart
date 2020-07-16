@@ -60,7 +60,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
-import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
+import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
@@ -136,7 +136,7 @@ class _MainViewState extends State<MainView> {
           className(DuckSpeak()),
           className(Enigma()),
           className(ESelection()),
-          className(FormulaSolver()),
+          className(FormulaSolverFormulaGroups()),
           className(GCCode()),
           className(Gronsfeld()),
           className(Kamasutra()),
@@ -183,7 +183,7 @@ class _MainViewState extends State<MainView> {
       return [
         className(CoordsSelection()),
         className(CryptographySelection()),
-        className(FormulaSolver()),
+        className(FormulaSolverFormulaGroups()),
         className(ScienceAndTechnologySelection()),
         className(SymbolTableSelection()),
       ].contains(className(element.tool));

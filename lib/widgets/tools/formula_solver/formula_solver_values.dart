@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/database/formula_solver/database_provider.dart';
-import 'package:gc_wizard/database/formula_solver/model.dart';
+import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
+import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
@@ -12,18 +12,16 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
-class FormulaValues extends StatefulWidget {
+class FormulaSolverFormulaValues extends StatefulWidget {
   final FormulaGroup group;
 
-  const FormulaValues({Key key, this.group}) : super(key: key);
+  const FormulaSolverFormulaValues({Key key, this.group}) : super(key: key);
 
   @override
-  FormulaValuesState createState() => FormulaValuesState();
+  FormulaSolverFormulaValuesState createState() => FormulaSolverFormulaValuesState();
 }
 
-class FormulaValuesState extends State<FormulaValues> {
-  FormulaSolverDbProvider dbProvider = FormulaSolverDbProvider();
-
+class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> {
   var _newKeyController;
   var _newValueController;
   var _editKeyController;
@@ -34,8 +32,6 @@ class FormulaValuesState extends State<FormulaValues> {
   var _currentEditedValue = '';
   var _currentEditId;
 
-  List<FormulaValue> _currentValues = [];
-
   @override
   void initState() {
     super.initState();
@@ -44,13 +40,10 @@ class FormulaValuesState extends State<FormulaValues> {
     _editKeyController = TextEditingController(text: _currentEditedKey);
     _editValueController = TextEditingController(text: _currentEditedValue);
 
-    dbProvider.getFormulaValuesByGroup(widget.group).then((result) {
-      setState(() {
-        _currentValues = result;
-        _currentNewKey = _maxLetter();
-        _newKeyController.text = _currentNewKey;
-      });
-    });
+    refreshFormulas();
+
+    _currentNewKey = _maxLetter();
+    _newKeyController.text = _currentNewKey;
   }
 
   @override
@@ -65,7 +58,7 @@ class FormulaValuesState extends State<FormulaValues> {
 
   String _maxLetter() {
     int maxLetterIndex = 0;
-    _currentValues.forEach((value) {
+    widget.group.values.forEach((value) {
       if (value.key.length > 1)
         return;
 
@@ -84,7 +77,7 @@ class FormulaValuesState extends State<FormulaValues> {
     return Column(
       children: <Widget>[
         GCWTextDivider(
-            text: i18n(context, 'formulasolver_values_newvalue')
+          text: i18n(context, 'formulasolver_values_newvalue')
         ),
         Row(
           children: <Widget>[
@@ -122,10 +115,12 @@ class FormulaValuesState extends State<FormulaValues> {
             GCWIconButton(
               iconData: Icons.add,
               onPressed: () {
-                _addNewValue().whenComplete(() => setState(() {
+                _addNewValue();
+
+                setState(() {
                   _currentNewKey = _maxLetter();
                   _newKeyController.text = _currentNewKey;
-                }));
+                });
               },
             )
           ],
@@ -135,12 +130,11 @@ class FormulaValuesState extends State<FormulaValues> {
     );
   }
 
-  _addNewValue() async {
+  _addNewValue() {
     if (_currentNewKey.length > 0) {
-      var newValue = FormulaValue(_currentNewKey, _currentNewValue, widget.group);
-      newValue.id = await dbProvider.insertValue(newValue);
+      var newValue = FormulaValue(_currentNewKey, _currentNewValue);
+      insertFormulaValue(newValue, widget.group);
 
-      _currentValues.add(newValue);
       _newKeyController.clear();
       _newValueController.clear();
       _currentNewKey = '';
@@ -148,18 +142,17 @@ class FormulaValuesState extends State<FormulaValues> {
     }
   }
 
-  _updateValue(FormulaValue value) async {
-    await dbProvider.updateValue(value);
+  _updateValue(FormulaValue value) {
+    updateFormulaValue(value, widget.group);
   }
 
-  _removeValue(FormulaValue value) async {
-    await dbProvider.deleteValue(value);
-    _currentValues.remove(value);
+  _removeValue(FormulaValue value) {
+    deleteFormulaValue(value.id, widget.group);
   }
 
   _buildGroupList(BuildContext context) {
     var odd = true;
-    var rows = _currentValues.map((value) {
+    var rows = widget.group.values.map((value) {
       Widget output;
 
       var row = Container(
@@ -211,12 +204,12 @@ class FormulaValuesState extends State<FormulaValues> {
                 onPressed: () {
                   value.key = _currentEditedKey;
                   value.value = _currentEditedValue;
-                  _updateValue(value).whenComplete(() {
-                    setState(() {
-                      _currentEditId = null;
-                      _editKeyController.clear();
-                      _editValueController.clear();
-                    });
+                  _updateValue(value);
+
+                  setState(() {
+                    _currentEditId = null;
+                    _editKeyController.clear();
+                    _editValueController.clear();
                   });
                 },
               )
@@ -236,7 +229,9 @@ class FormulaValuesState extends State<FormulaValues> {
               iconData: Icons.remove,
               onPressed: () {
                 showDeleteAlertDialog(context, value.key, () {
-                  _removeValue(value).whenComplete(() => setState(() {}));
+                  _removeValue(value);
+
+                  setState(() {});
                 },);
               },
             )
@@ -268,7 +263,7 @@ class FormulaValuesState extends State<FormulaValues> {
     }
 
     return Column(
-        children: rows
+      children: rows
     );
   }
 }

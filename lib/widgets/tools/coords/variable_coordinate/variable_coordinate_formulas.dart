@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/database/formula_solver/database_provider.dart';
-import 'package:gc_wizard/database/formula_solver/model.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart';
+import 'package:gc_wizard/persistence/variable_coordinate/model.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -9,43 +9,34 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/tools/formula_solver/formulas.dart';
+import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
-class FormulaSolver extends StatefulWidget {
+class VariableCoordinateFormulas extends StatefulWidget {
   @override
-  FormulaSolverState createState() => FormulaSolverState();
+  VariableCoordinateFormulasState createState() => VariableCoordinateFormulasState();
 }
 
-class FormulaSolverState extends State<FormulaSolver> {
-  FormulaSolverDbProvider dbProvider = FormulaSolverDbProvider();
-  
-  var _newGroupController;
-  var _editGroupController;
+class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> {
+  var _newFormulaController;
+  var _editFormulaController;
   var _currentNewName = '';
   var _currentEditedName = '';
   var _currentEditId;
 
-  Map<int, int> formulaCountsPerGroup = {};
-
   @override
   void initState() {
     super.initState();
-    _newGroupController = TextEditingController(text: _currentNewName);
-    _editGroupController = TextEditingController(text: _currentEditedName);
+    _newFormulaController = TextEditingController(text: _currentNewName);
+    _editFormulaController = TextEditingController(text: _currentEditedName);
 
-    dbProvider.getGroups().then((result) {
-      setState(() {
-        formulaGroups = result;
-        _getFormulaCounts();
-      });
-    });
+    refreshFormulas();
   }
 
   @override
   void dispose() {
-    _newGroupController.dispose();
-    _editGroupController.dispose();
+    _newFormulaController.dispose();
+    _editFormulaController.dispose();
 
     super.dispose();
   }
@@ -55,15 +46,15 @@ class FormulaSolverState extends State<FormulaSolver> {
     return Column(
       children: <Widget>[
         GCWTextDivider(
-          text: i18n(context, 'formulasolver_groups_newgroup')
+          text: i18n(context, 'coords_variablecoordinate_newformula')
         ),
         Row(
           children: <Widget>[
             Expanded(
               child: Padding(
                 child: GCWTextField(
-                  hintText: i18n(context, 'formulasolver_groups_newgroup_hint'),
-                  controller: _newGroupController,
+                  hintText: i18n(context, 'coords_variablecoordinate_newformula_hint'),
+                  controller: _newFormulaController,
                   onChanged: (text) {
                     setState(() {
                       _currentNewName = text;
@@ -78,64 +69,49 @@ class FormulaSolverState extends State<FormulaSolver> {
             GCWIconButton(
               iconData: Icons.add,
               onPressed: () {
-                _addNewGroup().whenComplete(() => setState(() {}));
+                _addNewFormula();
+                setState(() {
+                });
               },
             )
           ],
         ),
-        _buildGroupList(context)
+        _buildFormulaList(context)
       ],
     );
   }
 
-  _addNewGroup() async {
+  _addNewFormula() {
     if (_currentNewName.length > 0) {
-      var newGroup = FormulaGroup(_currentNewName);
-      newGroup.id = await dbProvider.insertGroup(newGroup);
+      var formula = Formula(_currentNewName);
+      insertFormula(formula);
 
-      formulaGroups.add(newGroup);
-      formulaCountsPerGroup.putIfAbsent(newGroup.id, () => 0);
-      _newGroupController.clear();
+      _newFormulaController.clear();
       _currentNewName = '';
     }
   }
 
-  _updateGroup(FormulaGroup group) async {
-    await dbProvider.updateGroup(group);
+  _updateFormula() {
+    updateFormulas();
   }
 
-  _removeGroup(FormulaGroup group) async {
-    await dbProvider.deleteGroup(group);
-    formulaCountsPerGroup.remove(group.id);
-    formulaGroups.remove(group);
+  _removeFormula(Formula formula) {
+    deleteFormula(formula.id);
   }
 
-  _getFormulaCounts() async {
-    formulaCountsPerGroup.clear();
-    dbProvider.getFormulas().then((result) {
-      setState(() {
-        result.forEach((formula) {
-          formulaCountsPerGroup.putIfAbsent(formula.group.id, () => 0);
-          formulaCountsPerGroup[formula.group.id]++;
-        });
-      });
-    });
-  }
-
-  _buildGroupList(BuildContext context) {
+  _buildFormulaList(BuildContext context) {
     var odd = true;
-    var rows = formulaGroups.map((group) {
-
+    var rows = formulas.map((formula) {
       var formulaTool = GCWToolWidget(
-        tool: Formulas(group: group),
-        toolName: '${group.name} - ${i18n(context, 'formulasolver_formulas')}'
+        tool: VariableCoordinate(formula: formula),
+        toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}'
       );
 
       Future _navigateToSubPage(context) async {
         Navigator.push(context, NoAnimationMaterialPageRoute(
           builder: (context) => formulaTool)
         ).whenComplete(() {
-          _getFormulaCounts();
+          setState(() {});
         });
       }
 
@@ -145,10 +121,10 @@ class FormulaSolverState extends State<FormulaSolver> {
         child: Row (
           children: <Widget>[
             Expanded(
-              child: _currentEditId == group.id
+              child: _currentEditId == formula.id
                 ? Padding (
                     child: GCWTextField(
-                      controller: _editGroupController,
+                      controller: _editFormulaController,
                       autofocus: true,
                       onChanged: (text) {
                         setState(() {
@@ -162,21 +138,21 @@ class FormulaSolverState extends State<FormulaSolver> {
                   )
                 : IgnorePointer(
                     child: GCWText (
-                      text: '${group.name} (${formulaCountsPerGroup[group.id] ?? '?'})'
+                      text: '${formula.name}'
                     )
                   ),
               flex: 1,
             ),
-            _currentEditId == group.id
+            _currentEditId == formula.id
               ? GCWIconButton(
                 iconData: Icons.check,
                 onPressed: () {
-                  group.name = _currentEditedName;
-                  _updateGroup(group).whenComplete(() {
-                    setState(() {
-                      _currentEditId = null;
-                      _editGroupController.clear();
-                    });
+                  formula.name = _currentEditedName;
+                  _updateFormula();
+
+                  setState(() {
+                    _currentEditId = null;
+                    _editFormulaController.clear();
                   });
                 },
               )
@@ -184,18 +160,19 @@ class FormulaSolverState extends State<FormulaSolver> {
                 iconData: Icons.edit,
                 onPressed: () {
                   setState(() {
-                    _currentEditId = group.id;
-                    _currentEditedName = group.name;
-                    _editGroupController.text = group.name;
+                    _currentEditId = formula.id;
+                    _currentEditedName = formula.name;
+                    _editFormulaController.text = formula.name;
                   });
                 },
               ),
             GCWIconButton(
               iconData: Icons.remove,
               onPressed: () {
-                showDeleteAlertDialog(context, group.name, () {
-                  _removeGroup(group).whenComplete(() => setState(() {}));
-                },);
+                showDeleteAlertDialog(context, formula.name, () {
+                  _removeFormula(formula);
+                  setState(() {});
+                });
               },
             )
           ],
@@ -223,7 +200,7 @@ class FormulaSolverState extends State<FormulaSolver> {
     if (rows.length > 0) {
       rows.insert(0,
         GCWTextDivider(
-          text: i18n(context, 'formulasolver_groups_currentgroups')
+          text: i18n(context, 'coords_variablecoordinate_currentformulas')
         )
       );
     }

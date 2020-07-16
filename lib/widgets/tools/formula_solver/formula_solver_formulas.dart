@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/database/formula_solver/database_provider.dart';
-import 'package:gc_wizard/database/formula_solver/model.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
+import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
+import 'package:gc_wizard/persistence/formula_solver/model.dart';
+import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart' as var_coords_provider;
+import 'package:gc_wizard/persistence/variable_coordinate/model.dart' as var_coords_model;
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
@@ -13,20 +15,21 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/tools/formula_solver/values.dart';
+import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate.dart';
+import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_values.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
-class Formulas extends StatefulWidget {
+class FormulaSolverFormulas extends StatefulWidget {
   final FormulaGroup group;
 
-  const Formulas({Key key, this.group}) : super(key: key);
+  const FormulaSolverFormulas({Key key, this.group}) : super(key: key);
 
   @override
-  FormulasState createState() => FormulasState();
+  FormulaSolverFormulasState createState() => FormulaSolverFormulasState();
 }
 
-class FormulasState extends State<Formulas> {
-  FormulaSolverDbProvider dbProvider = FormulaSolverDbProvider();
+class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   var formulaParser = FormulaParser();
 
   var _newFormulaController;
@@ -35,22 +38,13 @@ class FormulasState extends State<Formulas> {
   var _currentEditedFormula = '';
   var _currentEditId;
 
-  List<Formula> _currentFormulas = [];
-  Map<String, String> _currentValues = {};
-
   @override
   void initState() {
     super.initState();
     _newFormulaController = TextEditingController(text: _currentNewFormula);
     _editFormulaController = TextEditingController(text: _currentEditedFormula);
 
-    dbProvider.getFormulasByGroup(widget.group).then((result) {
-      setState(() {
-        _currentFormulas = result;
-      });
-    });
-
-    _getValues();
+    refreshFormulas();
   }
 
   @override
@@ -61,26 +55,19 @@ class FormulasState extends State<Formulas> {
     super.dispose();
   }
 
-  _getValues() async {
-    dbProvider.getFormulaValuesByGroup(widget.group).then((result) {
-      setState(() {
-        result.forEach((value) => _currentValues[value.key] = value.value);
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     var formulaTool = GCWToolWidget(
-      tool: FormulaValues(group: widget.group),
+      tool: FormulaSolverFormulaValues(group: widget.group),
       toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}'
     );
 
     Future _navigateToSubPage(context) async {
       Navigator.push(context, NoAnimationMaterialPageRoute(
-          builder: (context) => formulaTool)
-      ).whenComplete(() {
-        _getValues();
+        builder: (context) => formulaTool)
+      )
+      .whenComplete(() {
+        setState(() {});
       });
     }
 
@@ -128,30 +115,68 @@ class FormulasState extends State<Formulas> {
 
   _addNewFormula() async {
     if (_currentNewFormula.length > 0) {
-      var newFormula = Formula(_currentNewFormula, widget.group);
-      newFormula.id = await dbProvider.insertFormula(newFormula);
+      var newFormula = Formula(_currentNewFormula);
+      insertFormula(newFormula, widget.group);
 
-      _currentFormulas.add(newFormula);
       _newFormulaController.clear();
       _currentNewFormula = '';
     }
   }
 
-  _updateFormula(Formula formula) async {
-    await dbProvider.updateFormula(formula);
+  _updateFormula(Formula formula) {
+    updateFormula(formula, widget.group);
   }
 
-  _removeFormula(Formula formula) async {
-    await dbProvider.deleteFormula(formula);
-    _currentFormulas.remove(formula);
+  _removeFormula(Formula formula) {
+    deleteFormula(formula.id, widget.group);
+  }
+
+  _createVariableCoordinateName() {
+    var baseName = '[${i18n(context, 'formulasolver_title')}] ${widget.group.name}';
+
+    var existingNames = var_coords_model.formulas.map((f) => f.name).toList();
+
+    int i = 1;
+    var name = baseName;
+    while (existingNames.contains(name))
+      name = baseName + ' (${i++})';
+
+    return name;
+  }
+
+  var_coords_model.Formula _exportToVariableCoordinate(Formula formula) {
+    var_coords_provider.refreshFormulas();
+
+    var_coords_model.Formula varCoordsFormula = var_coords_model.Formula(_createVariableCoordinateName());
+    varCoordsFormula.formula = formula.formula;
+    var_coords_provider.insertFormula(varCoordsFormula);
+
+    for (var value in widget.group.values) {
+      var formulaValue = FormulaValue(value.key, value.value);
+      var_coords_provider.insertFormulaValue(formulaValue, varCoordsFormula);
+    }
+
+    return varCoordsFormula;
+  }
+
+  _openInVariableCoordinate(var_coords_model.Formula formula) {
+    Navigator.push(context, NoAnimationMaterialPageRoute(
+      builder: (context) => GCWToolWidget(
+        tool: VariableCoordinate(formula: formula),
+        toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}'
+      )
+    ));
   }
 
   _buildGroupList(BuildContext context) {
-    final double _BUTTON_SIZE = 40;
+    Map<String, String> values = {};
+    widget.group.values.forEach((value) {
+      values.putIfAbsent(value.key, () => value.value);
+    });
 
     var odd = true;
-    var rows = _currentFormulas.map((formula) {
-      var calculated = formulaParser.parse(formula.formula, _currentValues);
+    var rows = widget.group.formulas.map((formula) {
+      var calculated = formulaParser.parse(formula.formula, values);
 
       Widget output;
 
@@ -207,18 +232,18 @@ class FormulasState extends State<Formulas> {
                 iconData: Icons.check,
                 onPressed: () {
                   formula.formula = _currentEditedFormula;
-                  _updateFormula(formula).whenComplete(() {
-                    setState(() {
-                      _currentEditId = null;
-                      _editFormulaController.clear();
-                    });
+                  _updateFormula(formula);
+
+                  setState(() {
+                    _currentEditId = null;
+                    _editFormulaController.clear();
                   });
                 },
               )
               : Container(),
             Container(
-              width: _BUTTON_SIZE,
-              height: _BUTTON_SIZE,
+              width: DEFAULT_POPUPBUTTON_SIZE,
+              height: DEFAULT_POPUPBUTTON_SIZE,
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(roundedBorderRadius),
@@ -229,7 +254,7 @@ class FormulasState extends State<Formulas> {
                 ),
               ),
               child: PopupMenuButton(
-                offset: Offset(0, _BUTTON_SIZE),
+                offset: Offset(0, DEFAULT_POPUPBUTTON_SIZE),
                 icon: Icon(Icons.settings, color: Colors.white),
                 color: ThemeColors.accent,
                 shape: RoundedRectangleBorder(
@@ -246,7 +271,9 @@ class FormulasState extends State<Formulas> {
                       break;
                     case 2:
                       showDeleteAlertDialog(context, formula.formula, () {
-                        _removeFormula(formula).whenComplete(() => setState(() {}));
+                        _removeFormula(formula);
+
+                        setState(() {});
                       },);
                       break;
                     case 3:
@@ -255,35 +282,51 @@ class FormulasState extends State<Formulas> {
                     case 4:
                       Clipboard.setData(ClipboardData(text: calculated['result']));
                       break;
+                    case 5:
+                      var varCoordsFormula = _exportToVariableCoordinate(formula);
+                      _openInVariableCoordinate(varCoordsFormula);
+                      break;
                   }
                 },
                 itemBuilder: (context) => [
                   PopupMenuItem(
                     value: 1,
-                    child: _buildPopupItem(
+                    child: buildPopupItem(
+                      context,
                       Icons.edit,
                       'formulasolver_formulas_editformula'
                     )
                   ),
                   PopupMenuItem(
                     value: 2,
-                    child: _buildPopupItem(
+                    child: buildPopupItem(
+                      context,
                       Icons.delete,
                       'formulasolver_formulas_removeformula'
                     )
                   ),
                   PopupMenuItem(
                     value: 3,
-                    child: _buildPopupItem(
+                    child: buildPopupItem(
+                      context,
                       Icons.content_copy,
                       'formulasolver_formulas_copyformula'
                     )
                   ),
                   PopupMenuItem(
                     value: 4,
-                    child: _buildPopupItem(
+                    child: buildPopupItem(
+                      context,
                       Icons.content_copy,
                       'formulasolver_formulas_copyresult',
+                    )
+                  ),
+                  PopupMenuItem(
+                    value: 5,
+                    child: buildPopupItem(
+                      context,
+                      Icons.forward,
+                      'formulasolver_formulas_openinvarcoords',
                     )
                   ),
                 ],
@@ -317,28 +360,7 @@ class FormulasState extends State<Formulas> {
     }
 
     return Column(
-        children: rows
-    );
-  }
-
-  _buildPopupItem(IconData icon, String i18nKey) {
-    var color = Colors.black;
-
-    return  Row(
-      children: [
-        Container(
-          child: Icon(icon, color: color),
-          padding: EdgeInsets.only(
-            right: 10
-          ),
-        ),
-        Text(
-          i18n(context, i18nKey),
-          style: TextStyle(
-            color: color
-          )
-        )
-      ],
+      children: rows
     );
   }
 }

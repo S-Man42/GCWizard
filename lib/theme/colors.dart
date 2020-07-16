@@ -23,4 +23,5 @@ class ThemeColors {
   static const oddRows = gray25;
 
   static const symbolTableIconBackground = Colors.white;
+  static const popupItemText = Colors.black;
 }
