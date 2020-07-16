@@ -7,9 +7,6 @@ final FONT_SIZE_MAX = 30;
 
 final DEFAULT_MARGIN = 2.0;
 
-final DEFAULT_LISTITEM_SIZE = 42.0;
-final DEFAULT_POPUPBUTTON_SIZE = 40.0;
-
 TextStyle gcwTextStyle() {
  return TextStyle(
    fontSize: defaultFontSize(),

@@ -8,7 +8,6 @@ import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/favorites.dart';
 import 'package:gc_wizard/widgets/main_menu.dart';
 import 'package:gc_wizard/widgets/registry.dart';
-import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
@@ -60,14 +59,12 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
-import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
+import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
@@ -116,11 +113,9 @@ class _MainViewState extends State<MainView> {
           className(ADFGVX()),
           className(AlphabetValues()),
           className(ASCIIValues()),
-          className(AstronomySelection()),
           className(Atbash()),
           className(Bacon()),
           className(BaseSelection()),
-          className(Beaufort()),
           className(Binary()),
           className(BrainfkSelection()),
           className(Caesar()),
@@ -136,7 +131,7 @@ class _MainViewState extends State<MainView> {
           className(DuckSpeak()),
           className(Enigma()),
           className(ESelection()),
-          className(FormulaSolverFormulaGroups()),
+          className(FormulaSolver()),
           className(GCCode()),
           className(Gronsfeld()),
           className(Kamasutra()),
@@ -166,7 +161,6 @@ class _MainViewState extends State<MainView> {
           className(Tapir()),
           className(TomTom()),
           className(Trithemius()),
-          className(UnitConverter()),
           className(VanitySelection()),
           className(Vigenere()),
           className(Windchill()),
@@ -183,7 +177,7 @@ class _MainViewState extends State<MainView> {
       return [
         className(CoordsSelection()),
         className(CryptographySelection()),
-        className(FormulaSolverFormulaGroups()),
+        className(FormulaSolver()),
         className(ScienceAndTechnologySelection()),
         className(SymbolTableSelection()),
       ].contains(className(element.tool));

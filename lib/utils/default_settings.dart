@@ -54,16 +54,12 @@ void initDefaultSettings() {
     Prefs.setString('coord_default_hemisphere_longitude', HemisphereLongitude.East.toString());
   }
 
-  if (Prefs.get('coord_variablecoordinate_formulas') == null) {
-    Prefs.setStringList('coord_variablecoordinate_formulas', []);
-  }
-
   if (Prefs.get('font_size') == null) {
     Prefs.setDouble('font_size', 16.0);
   }
 
-  if (Prefs.get('formulasolver_formulas') == null) {
-    Prefs.setStringList('formulasolver_formulas', []);
+  if (Prefs.get('log_keep_entries_in_days') == null) {
+    Prefs.setInt('log_keep_entries_in_days', 5);
   }
 
   if (Prefs.get('symboltables_countcolumns_portrait') == null) {

@@ -4,6 +4,8 @@ const double epsilon = 0.5e-15;
 const double doubleTolerance = 1.0e-9;
 final NumberFormat doubleFormat = NumberFormat('0.0###');
 
+const double defaultListIconSize = 42.0;
+
 const Map<String, dynamic> defaultIntegerText = {'text': '', 'value': 0};
 const Map<String, dynamic> defaultIntegerListText = {'text': '', 'values': []};
 const Map<String, dynamic> defaultDoubleText = {'text': '', 'value': 0.0};

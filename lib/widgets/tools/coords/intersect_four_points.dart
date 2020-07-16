@@ -37,13 +37,6 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
   @override
   void initState() {
     super.initState();
-
-    _currentMapPoints = [
-      MapPoint(point: _currentCoords11),
-      MapPoint(point: _currentCoords12),
-      MapPoint(point: _currentCoords21),
-      MapPoint(point: _currentCoords22),
-    ];
   }
 
   @override
@@ -130,7 +123,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
   _calculateOutput(BuildContext context) {
     _currentIntersection = intersectFourPoints(_currentCoords11, _currentCoords12, _currentCoords21, _currentCoords22, defaultEllipsoid());
 
-    _currentMapPoints = [
+    _currentMapPoints = _currentMapPoints = [
       MapPoint(
         point: _currentCoords11,
         markerText: i18n(context, 'coords_intersectfourpoints_coord11'),

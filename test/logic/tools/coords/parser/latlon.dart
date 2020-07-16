@@ -26,7 +26,6 @@ void main() {
     {'text': '52 s 20 w', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(-52, -20)}},
 
     {'text': 'N 52.12312 E 20.12312', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(52.12312, 20.12312)}},
-    {'text': 'N 52.12312° E 20.12312°', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(52.12312, 20.12312)}},
     {'text': 'N 52 .12312 E 20 .  12312', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(52.12312, 20.12312)}},
     {'text': 'N 00.12312 E 000.12312', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(0.12312, 0.12312)}},
     {'text': '52.12312 20.12312', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(52.12312, 20.12312)}},
@@ -47,14 +46,6 @@ void main() {
     {'text': ' south 52.2321 E101.12312', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(-52.2321, 101.12312)}},
     {'text': '92 Westen 0', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(88.0, 180.0)}},
     {'text': 'Süden 92 1', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(-88.0, -179.0)}},
-
-    {'text': '52.12312 N 20.12312 E', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(52.12312, 20.12312)}},
-    {'text': '52.12312Nord 20.12312East', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(52.12312, 20.12312)}},
-    {'text': '52 s 20 w', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(-52, -20)}},
-
-    {'text': 'N 52.12312° E 20.12312° SomeText', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(52.12312, 20.12312)}},
-    {'text': '-2.12312, 020.12312SomeMoreText', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(-2.12312, 20.12312)}},
-    {'text': '92 Westen 0\nA: 1', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(88.0, 180.0)}},
   ];
 
   final List<Map<String, dynamic>> _inputsToExpectedDEG = [
@@ -105,14 +96,6 @@ void main() {
     {'text': '-52 6 -20 06', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(-52.1, -20.1)}},
     {'text': '-052 6 -20 06', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(-52.1, -20.1)}},
 
-    {'text': '52 12.312S 20 12.312West SomeText', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(-52.2052, -20.2052)}},
-    {'text': '52° 12.312\' S 20° 12.312\' W SomeMoreText', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(-52.2052, -20.2052)}},
-    {'text': '52 12 N 20 12 E\nA: 1', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2, 20.2)}},
-
-    {'text': 'N52 12.312, E20 12.312, SomeText', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2052, 20.2052)}},
-    {'text': 'N52 12 E20 12\nA: 1, B: 2', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(52.2, 20.2)}},
-    {'text': '-52 6 -20 06SomeMoreText', 'expectedOutput': {'format': keyCoordsDEG, 'coordinate': LatLng(-52.1, -20.1)}},
-
     {'text': 'N 12.312 E 20.123', 'expectedOutput': null},
     {'text': '12.312 20.123', 'expectedOutput': null},
     {'text': '12.312 N 20.123 E', 'expectedOutput': null},
@@ -152,14 +135,6 @@ void main() {
     {'text': '52 6 9 20 6 9', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.1025, 20.1025)}},
     {'text': '52 6 0 20 6 9.0', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.1, 20.1025)}},
     {'text': '052 6 0 20 6 9.0', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.1, 20.1025)}},
-
-    {'text': '52 12 45 S, 20 12 45 W SomeText', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(-52.2125, -20.2125)}},
-    {'text': '52° 12\' 30.15" N 20° 12\' 30.15" E SomeMoreText', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},
-    {'text': '52°12\'30.15" Süden 20°12\'30.15" Westen\nA: 42', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(-52.208375, -20.208375)}},
-
-    {'text': 'N 52 12 30.15 E 20 12 30.15 SomeText', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},
-    {'text': 'North 52 12 30.15, East 20 12 30.15SomeText', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},
-    {'text': '52 6 0 20 6 9.0ABC', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.1, 20.1025)}},
 
     {'text': 'N 52 12 E 20 12', 'expectedOutput': null},
     {'text': '52 12 N 20 12 E', 'expectedOutput': null},
