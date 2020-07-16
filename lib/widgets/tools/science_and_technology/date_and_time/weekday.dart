@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
+import 'package:gc_wizard/widgets/common/gcw_date_picker.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
@@ -26,12 +26,11 @@ class WeekdayState extends State<Weekday> {
         GCWTextDivider(
           text: i18n(context, 'dates_weekday_date')
         ),
-        GCWDateTimePicker(
-          type: DateTimePickerType.DATE_ONLY,
-          datetime: _currentDate,
+        GCWDatePicker(
+          date: _currentDate,
           onChanged: (value) {
             setState(() {
-              _currentDate = value['datetime'];
+              _currentDate = value;
             });
           },
         ),

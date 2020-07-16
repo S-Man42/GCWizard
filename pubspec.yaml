@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 1.0.0+43
+version: 0.8.1+34
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -8,6 +8,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sqflite: any
   path: any
   path_provider: any
   flutter_map: any
@@ -25,7 +26,6 @@ dependencies:
   math_expressions: ^2.0.0
   pointycastle: ^1.0.2
   fluttertoast: ^4.0.0
-  qr_flutter: ^3.2.0
 
 dev_dependencies:
   flutter_test:

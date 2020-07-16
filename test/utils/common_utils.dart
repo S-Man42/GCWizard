@@ -166,66 +166,10 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('text: ${elem['text']}', () {
+      test('input: ${elem['text']}', () {
         var _actual = textToBinaryList(elem['text']);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
-
-  group("CommonUtils.modulo:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'value' : 0, 'modulator': 1, 'expectedOutput' : 0},
-      {'value' : -1, 'modulator': 1, 'expectedOutput' : 0},
-      {'value' : -2, 'modulator': 1, 'expectedOutput' : 0},
-      {'value' : 1, 'modulator': 1, 'expectedOutput' : 0},
-      {'value' : 2, 'modulator': 1, 'expectedOutput' : 0},
-
-      {'value' : 0, 'modulator': 2, 'expectedOutput' : 0},
-      {'value' : -1, 'modulator': 2, 'expectedOutput' : 1},
-      {'value' : -2, 'modulator': 2, 'expectedOutput' : 0},
-      {'value' : 1, 'modulator': 2, 'expectedOutput' : 1},
-      {'value' : 2, 'modulator': 2, 'expectedOutput' : 0},
-
-      {'value' : 0.0, 'modulator': 1, 'expectedOutput' : 0.0},
-      {'value' : -1.0, 'modulator': 1, 'expectedOutput' : 0.0},
-      {'value' : -2.0, 'modulator': 1, 'expectedOutput' : 0.0},
-      {'value' : 1.0, 'modulator': 1, 'expectedOutput' : 0.0},
-      {'value' : 2.0, 'modulator': 1, 'expectedOutput' : 0.0},
-
-      {'value' : 0.0, 'modulator': 2, 'expectedOutput' : 0.0},
-      {'value' : -1.0, 'modulator': 2, 'expectedOutput' : 1.0},
-      {'value' : -2.0, 'modulator': 2, 'expectedOutput' : 0.0},
-      {'value' : 1.0, 'modulator': 2, 'expectedOutput' : 1.0},
-      {'value' : 2.0, 'modulator': 2, 'expectedOutput' : 0.0},
-
-      {'value' : 0, 'modulator': 1.0, 'expectedOutput' : 0.0},
-      {'value' : -1, 'modulator': 1.0, 'expectedOutput' : 0.0},
-      {'value' : -2, 'modulator': 1.0, 'expectedOutput' : 0.0},
-      {'value' : 1, 'modulator': 1.0, 'expectedOutput' : 0.0},
-      {'value' : 2, 'modulator': 1.0, 'expectedOutput' : 0.0},
-
-      {'value' : 0, 'modulator': 2.0, 'expectedOutput' : 0.0},
-      {'value' : -1, 'modulator': 2.0, 'expectedOutput' : 1.0},
-      {'value' : -2, 'modulator': 2.0, 'expectedOutput' : 0.0},
-      {'value' : 1, 'modulator': 2.0, 'expectedOutput' : 1.0},
-      {'value' : 2, 'modulator': 2.0, 'expectedOutput' : 0.0},
-
-      {'value' : 0, 'modulator': 2.5, 'expectedOutput' : 0.0},
-      {'value' : -1, 'modulator': 2.5, 'expectedOutput' : 1.5},
-      {'value' : -2, 'modulator': 2.5, 'expectedOutput' : 0.5},
-      {'value' : 1, 'modulator': 2.5, 'expectedOutput' : 1.0},
-      {'value' : 2, 'modulator': 2.5, 'expectedOutput' : 2.0},
-      {'value' : 2.5, 'modulator': 2.5, 'expectedOutput' : 0.0},
-      {'value' : 2.6, 'modulator': 2.5, 'expectedOutput' : 0.10000000000000009},
-    ];
-
-    _inputsToExpected.forEach((elem) {
-      test('value: ${elem['value']}, modulator:  ${elem['modulator']}', () {
-        var _actual = modulo(elem['value'], elem['modulator']);
-        expect(_actual, elem['expectedOutput']);
-      });
-    });
-  });
-
 }

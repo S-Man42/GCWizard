@@ -9,9 +9,6 @@ LatLng projection(LatLng coord, double bearing, double distance, Ellipsoid ellip
 }
 
 LatLng projectionRadian(LatLng coord, double bearing, double distance, Ellipsoid ellipsoid) {
-  if (distance == 0.0)
-    return coord;
-
   return projectionVincenty(coord, bearing, distance, ellipsoid);
 }
 
@@ -26,6 +23,7 @@ class _ReverseProjectionCalculator extends IntervalCalculator {
   bool checkCell(CoordinateCell cell, Map<String, dynamic> parameters) {
     Interval distanceToCoord = cell.distanceTo(parameters['coord']);
     Interval bearingToCoord = cell.bearingTo(parameters['coord']);
+
 
     var distance = parameters['distance'];
     var bearing = parameters['bearing'];
