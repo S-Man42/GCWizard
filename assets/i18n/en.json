@@ -332,6 +332,7 @@
   "common_example" : "Example",
   "common_hinttext_default" : "Enter value",
   "common_import" : "Import",
+  "common_input" : "Input",
   "common_key" : "Key",
   "common_landscape" : "Landscape",
   "common_location": "Location",
