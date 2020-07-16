@@ -4,7 +4,6 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
 import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
-import 'package:gc_wizard/persistence/utils.dart';
 import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart' as var_coords_provider;
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart' as var_coords_model;
 import 'package:gc_wizard/theme/colors.dart';
@@ -18,6 +17,7 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_values.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
 class FormulaSolverFormulas extends StatefulWidget {
@@ -154,7 +154,6 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     for (var value in widget.group.values) {
       var formulaValue = FormulaValue(value.key, value.value);
       var_coords_provider.insertFormulaValue(formulaValue, varCoordsFormula);
-//      var_coords_provider.insertFormulaValue(value, varCoordsFormula);
     }
 
     return varCoordsFormula;
@@ -174,8 +173,6 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     widget.group.values.forEach((value) {
       values.putIfAbsent(value.key, () => value.value);
     });
-
-    final double _BUTTON_SIZE = 40;
 
     var odd = true;
     var rows = widget.group.formulas.map((formula) {
@@ -245,8 +242,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
               )
               : Container(),
             Container(
-              width: _BUTTON_SIZE,
-              height: _BUTTON_SIZE,
+              width: DEFAULT_POPUPBUTTON_SIZE,
+              height: DEFAULT_POPUPBUTTON_SIZE,
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(roundedBorderRadius),
@@ -257,7 +254,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                 ),
               ),
               child: PopupMenuButton(
-                offset: Offset(0, _BUTTON_SIZE),
+                offset: Offset(0, DEFAULT_POPUPBUTTON_SIZE),
                 icon: Icon(Icons.settings, color: Colors.white),
                 color: ThemeColors.accent,
                 shape: RoundedRectangleBorder(
@@ -294,35 +291,40 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                 itemBuilder: (context) => [
                   PopupMenuItem(
                     value: 1,
-                    child: _buildPopupItem(
+                    child: buildPopupItem(
+                      context,
                       Icons.edit,
                       'formulasolver_formulas_editformula'
                     )
                   ),
                   PopupMenuItem(
                     value: 2,
-                    child: _buildPopupItem(
+                    child: buildPopupItem(
+                      context,
                       Icons.delete,
                       'formulasolver_formulas_removeformula'
                     )
                   ),
                   PopupMenuItem(
                     value: 3,
-                    child: _buildPopupItem(
+                    child: buildPopupItem(
+                      context,
                       Icons.content_copy,
                       'formulasolver_formulas_copyformula'
                     )
                   ),
                   PopupMenuItem(
                     value: 4,
-                    child: _buildPopupItem(
+                    child: buildPopupItem(
+                      context,
                       Icons.content_copy,
                       'formulasolver_formulas_copyresult',
                     )
                   ),
                   PopupMenuItem(
                     value: 5,
-                    child: _buildPopupItem(
+                    child: buildPopupItem(
+                      context,
                       Icons.forward,
                       'formulasolver_formulas_openinvarcoords',
                     )
@@ -358,28 +360,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     }
 
     return Column(
-        children: rows
-    );
-  }
-
-  _buildPopupItem(IconData icon, String i18nKey) {
-    var color = Colors.black;
-
-    return  Row(
-      children: [
-        Container(
-          child: Icon(icon, color: color),
-          padding: EdgeInsets.only(
-            right: 10
-          ),
-        ),
-        Text(
-          i18n(context, i18nKey),
-          style: TextStyle(
-            color: color
-          )
-        )
-      ],
+      children: rows
     );
   }
 }

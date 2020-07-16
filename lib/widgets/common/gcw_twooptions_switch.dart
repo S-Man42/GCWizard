@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_switch.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
@@ -11,8 +12,9 @@ class GCWTwoOptionsSwitch extends StatefulWidget {
   final String leftValue;
   final String rightValue;
   final GCWSwitchPosition value;
+  final bool alternativeColor;
 
-  const GCWTwoOptionsSwitch({Key key, this.onChanged, this.title, this.leftValue, this.rightValue, this.value}) : super(key: key);
+  const GCWTwoOptionsSwitch({Key key, this.onChanged, this.title, this.leftValue, this.rightValue, this.value, this.alternativeColor: false}) : super(key: key);
 
   @override
   GCWTwoOptionsSwitchState createState() => GCWTwoOptionsSwitchState();
@@ -51,8 +53,10 @@ class GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
                       widget.onChanged(_currentValue);
                     });
                   },
-                  inactiveThumbColor: Theme.of(context).toggleableActiveColor,
-                  inactiveTrackColor: Theme.of(context).toggleableActiveColor.withOpacity(0.5),
+                  activeThumbColor: widget.alternativeColor ? ThemeColors.gray : null,
+                  activeTrackColor: widget.alternativeColor ? ThemeColors.darkgrey : null,
+                  inactiveThumbColor: widget.alternativeColor ? ThemeColors.gray : Theme.of(context).toggleableActiveColor,
+                  inactiveTrackColor: widget.alternativeColor ? ThemeColors.darkgrey : Theme.of(context).toggleableActiveColor.withOpacity(0.5),
                 ),
                 Expanded (
                   child: GCWText(

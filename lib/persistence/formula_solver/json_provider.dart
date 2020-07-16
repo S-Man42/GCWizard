@@ -17,8 +17,6 @@ void refreshFormulas() {
     .toList();
 }
 
-
-
 _saveData() {
   var jsonData = formulaGroups
     .map((group) => jsonEncode(group.toMap()))
@@ -28,6 +26,7 @@ _saveData() {
 }
 
 int insertGroup(FormulaGroup group) {
+  group.name = group.name ?? '';
   var id = newID(
     formulaGroups
       .map((group) => group.id)
