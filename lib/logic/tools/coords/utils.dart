@@ -10,6 +10,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:latlong/latlong.dart';
 
 double mod(double x, double y) {
@@ -55,4 +56,9 @@ String formatCoordOutput(LatLng _coords, String _outputFormat, Ellipsoid ells) {
 
 int coordinateSign(double value) {
   return value == 0 ? 1 : value.sign.floor();
+}
+
+bool coordEquals(LatLng coords1, LatLng coords2, {tolerance: 1e-10}) {
+  return doubleEquals(coords1.latitude, coords2.latitude)
+    && doubleEquals(coords1.longitude, coords2.longitude);
 }

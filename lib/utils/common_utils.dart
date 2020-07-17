@@ -216,3 +216,13 @@ num modulo(num value, num modulator) {
 
   return value % modulator;
 }
+
+bool doubleEquals(double a, double b, {double tolerance: 1e-10}) {
+  if (a == null && b == null)
+    return true;
+
+  if (a == null || b == null)
+    return false;
+
+  return (a - b).abs() < tolerance;
+}

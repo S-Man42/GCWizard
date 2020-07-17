@@ -228,4 +228,24 @@ void main() {
     });
   });
 
+  group("CommonUtils.doubleEquals:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'a' : null, 'b': null, 'tolerance': 1e-10, 'expectedOutput' : true},
+      {'a' : null, 'b': 1.0, 'tolerance': 1e-10, 'expectedOutput' : false},
+      {'a' : 1.0, 'b': null, 'tolerance': 1e-10, 'expectedOutput' : false},
+
+      {'a' : 1.0, 'b': 1.0, 'tolerance': 1e-10, 'expectedOutput' : true},
+      {'a' : 1.123, 'b': 1.123, 'tolerance': 1e-10, 'expectedOutput' : true},
+      {'a' : 52.1231554889286231, 'b': 52.1231554889286231, 'tolerance': 1e-10, 'expectedOutput' : true},
+      {'a' : 52.123, 'b': 52.132, 'tolerance': 1e-2, 'expectedOutput' : true},
+      {'a' : 52.123, 'b': 52.133, 'tolerance': 1e-2, 'expectedOutput' : false},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('a: ${elem['a']}, b: ${elem['b']}, tolerance: ${elem['tolerance']}', () {
+        var _actual = doubleEquals(elem['a'], elem['b'], tolerance: elem['tolerance']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
 }

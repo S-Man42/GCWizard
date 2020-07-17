@@ -1,6 +1,7 @@
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/intervals/coordinate_cell.dart';
 import 'package:gc_wizard/logic/tools/coords/intervals/interval_calculator.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:latlong/latlong.dart';
 
 class _ResectionCalculator extends IntervalCalculator {
@@ -83,6 +84,14 @@ class _ResectionCalculator extends IntervalCalculator {
 }
 
 List<LatLng> resection(LatLng coord1, double angle12, LatLng coord2, double angle23, LatLng coord3, Ellipsoid ells) {
+  var minDistance = 1e-7;
+
+  if (coordEquals(coord1, coord2, tolerance: minDistance)
+    || coordEquals(coord1, coord3, tolerance: minDistance)
+    || coordEquals(coord2, coord3, tolerance: minDistance)
+  )
+     return [];
+
   return _ResectionCalculator({
     'coord1': coord1,
     'angle12': angle12,
