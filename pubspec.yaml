@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 1.0.0+43
+version: 1.0.0+44
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -20,7 +20,7 @@ dependencies:
   diacritic: ^0.1.1
   base32: any
   mask_text_input_formatter: ^1.0.6
-  url_launcher: ^5.4.2
+  url_launcher: ^5.5.0
   package_info: ^0.4.0+16
   math_expressions: ^2.0.0
   pointycastle: ^1.0.2

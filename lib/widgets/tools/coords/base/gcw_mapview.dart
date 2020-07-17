@@ -171,7 +171,7 @@ class GCWMapViewState extends State<GCWMapView> {
         );
 
     var layers = <LayerOptions>[layer];
-    
+
     layers.addAll([
       PolylineLayerOptions(
         polylines: _polylines
