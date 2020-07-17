@@ -117,8 +117,25 @@ class GCWMapViewState extends State<GCWMapView> {
 
   @override
   Widget build(BuildContext context) {
+    //Marker Shadow
     List<Marker> _markers = widget.points.map((_point) {
+      return GCWMarker(
+        coordinateDescription: _buildPopupCoordinateDescription(_point),
+        coordinateText: _buildPopupCoordinateText(_point),
+        width: 28.3,
+        height: 28.3,
+        point: _point.point,
+        builder: (context) {
+          return Icon(
+            Icons.my_location,
+            size: 28.3,
+            color: Colors.white,
+          );
+        });
+    }).toList();
 
+    //colored Markers
+    _markers.addAll(widget.points.map((_point) {
       return GCWMarker(
         coordinateDescription: _buildPopupCoordinateDescription(_point),
         coordinateText: _buildPopupCoordinateText(_point),
@@ -126,20 +143,14 @@ class GCWMapViewState extends State<GCWMapView> {
         height: 25.0,
         point: _point.point,
         builder: (context) {
-          return Container(
-            child: Column (
-              children: <Widget> [
-                Icon(
-                  Icons.my_location,
-                  size: 25.0,
-                  color: _point.color,
-                ),
-                //Text(_point.markerText)
-              ]
-            ),
+          return Icon(
+            Icons.my_location,
+            size: 25.0,
+            color: _point.color,
           );
         });
-    }).toList();
+      }).toList()
+    );
 
     List<Polyline> _polylines = _addPolylines();
     List<Polyline> _circlePolylines = _addCircles();

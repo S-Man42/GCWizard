@@ -17,8 +17,8 @@ class ThemeColors {
 
   static const mapPolyline = Colors.red;
   static const mapCircle = Colors.blue;
-  static const mapPoint = Colors.black54;
-  static const mapCalculatedPoint = Colors.green;
+  static const mapPoint = Colors.black;
+  static const mapCalculatedPoint = Color.fromRGBO(6, 140, 0, 1.0);
 
   static const oddRows = gray25;
 
