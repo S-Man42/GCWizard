@@ -156,28 +156,22 @@ class GCWMapViewState extends State<GCWMapView> {
     List<Polyline> _circlePolylines = _addCircles();
     _polylines.addAll(_circlePolylines);
 
-    var layers = <LayerOptions>[
-      TileLayerOptions(
-        urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        subdomains: ['a', 'b', 'c'],
-        tileProvider: CachedNetworkTileProvider(),
-        opacity: _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? 1.0 : 0.0
-      )
-    ];
-
-    if (_mapBoxToken != null && _mapBoxToken != '') {
-      layers.add(
-        TileLayerOptions(
+    var layer = _currentLayer == _LayerType.MAPBOX_SATELLITE && _mapBoxToken != null && _mapBoxToken != ''
+      ? TileLayerOptions(
           urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
           additionalOptions: {
             'accessToken': _mapBoxToken
           },
-          tileProvider: CachedNetworkTileProvider(),
-          opacity: _currentLayer == _LayerType.MAPBOX_SATELLITE ? 1.0 : 0.0
+          tileProvider: CachedNetworkTileProvider()
         )
-      );
-    }
+      : TileLayerOptions(
+          urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          subdomains: ['a', 'b', 'c'],
+          tileProvider: CachedNetworkTileProvider()
+        );
 
+    var layers = <LayerOptions>[layer];
+    
     layers.addAll([
       PolylineLayerOptions(
         polylines: _polylines
