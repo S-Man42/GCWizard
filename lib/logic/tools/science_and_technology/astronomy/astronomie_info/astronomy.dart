@@ -671,36 +671,43 @@ RiseSet moonRise(double JD, double deltaT, double lon, double lat, double zone, 
 
         if (rise.rise < -zone) {
           if (risetemp.rise > -zone) 
-            rise.rise = 0.000000000; // there is no moonrise today
+            rise.rise = 0.0; // there is no moonrise today
           else 
             rise.rise = risetemp.rise;
         }
 
         if (rise.transit < -zone) {
           if (risetemp.transit > -zone) 
-            rise.transit = 0.000000000; // there is no moonset today
+            rise.transit = 0.0; // there is no moonset today
           else 
             rise.transit = risetemp.transit;
         }
 
         if (rise.set < -zone) {
           if (risetemp.set > -zone) 
-            rise.set = 0.000000000; // there is no moonset today
+            rise.set = 0.0; // there is no moonset today
           else 
             rise.set = risetemp.set;
         }
       }
     }
 
-    if (rise.rise != 0.000000000)
-      rise.rise = _mod(rise.rise + zone, 24.0);          // correct for time zone, if time is valid
+    if (rise.rise != 0.0)
+      rise.rise = _mod(rise.rise + zone, 24.0);         // correct for time zone, if time is valid
+    else
+      rise.rise = double.nan;
 
-    if (rise.transit != 0.000000000)
+    if (rise.transit != 0.0)
       rise.transit = _mod(rise.transit + zone, 24.0);    // correct for time zone, if time is valid
+    else
+      rise.transit = double.nan;
 
-    if (rise.set != 0.000000000)
+    if (rise.set != 0.0)
       rise.set = _mod(rise.set + zone, 24.0);             // correct for time zone, if time is valid
+    else
+      rise.set = double.nan;
   }
+
   return rise;
 }
 
