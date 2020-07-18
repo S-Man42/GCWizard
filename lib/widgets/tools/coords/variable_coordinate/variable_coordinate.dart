@@ -450,7 +450,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     var coords = parseVariableLatLon(_currentInput, _substitutions, projectionData: projectionData);
 
     if (coords['coordinates'].length > MAX_COUNT_COORDINATES) {
-      showGCWAlertDialog(context, i18n(context, 'coords_variablecoordinate_alert_title'), i18n(context, 'coords_variablecoordinate_alert_text', parameters: [coords.length]), () {
+      showGCWAlertDialog(context, i18n(context, 'coords_variablecoordinate_alert_title'), i18n(context, 'coords_variablecoordinate_alert_text', parameters: [coords['coordinates'].length]), () {
         setState(() {
           _buildOutput(coords);
         });
