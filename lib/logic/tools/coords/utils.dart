@@ -6,6 +6,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
@@ -50,6 +51,7 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
     case keyCoordsGaussKrueger: return latLonToGaussKruegerString(_coords, _getGKCode(), ells);
     case keyCoordsMaidenhead: return latLonToMaidenhead(_coords);
     case keyCoordsMercator: return latLonToMercator(_coords, ells).toString();
+    case keyCoordsSlippyMap: return latLonToSlippyMapString(_coords, double.tryParse(_outputFormat['subtype']));
     case keyCoordsGeohash: return latLonToGeohash(_coords, 14);
     case keyCoordsOpenLocationCode: return latLonToOpenLocationCode(_coords, codeLength: 14);
     case keyCoordsQuadtree: return latLonToQuadtree(_coords).join();

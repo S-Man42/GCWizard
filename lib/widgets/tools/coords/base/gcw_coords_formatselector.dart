@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:intl/intl.dart';
 
 class GCWCoordsFormatSelector extends StatefulWidget {
   final Function onChanged;
@@ -36,13 +38,14 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
     return Column(
       children: <Widget>[
         GCWDropDownButton(
-          value: _currentFormat,
+          value: widget.format['format'] ?? _currentFormat,
           onChanged: (newValue) {
             setState(() {
               _currentFormat = newValue;
 
               switch(_currentFormat) {
                 case keyCoordsGaussKrueger: _currentSubtype = keyCoordsGaussKruegerGK1; break;
+                case keyCoordsSlippyMap: _currentSubtype = '10'; break;
                 default: _currentSubtype = null;
               }
 
@@ -62,7 +65,7 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
   }
 
   _buildSubtype() {
-    switch (_currentFormat) {
+    switch (widget.format['format'] ?? _currentFormat) {
       case keyCoordsGaussKrueger:
         return GCWDropDownButton(
           value: _currentSubtype,
@@ -75,6 +78,19 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
           onChanged: (value) {
             setState(() {
               _currentSubtype = value;
+              _emitOnChange();
+            });
+          },
+        );
+      case keyCoordsSlippyMap:
+        return GCWDoubleSpinner(
+          min: 0.0,
+          max: 30.0,
+          title: i18n(context, 'coords_formatconverter_slippymap_zoom') + ' (Z)',
+          value: double.tryParse(_currentSubtype),
+          onChanged: (value) {
+            setState(() {
+              _currentSubtype = NumberFormat('0.00000').format(value);
               _emitOnChange();
             });
           },

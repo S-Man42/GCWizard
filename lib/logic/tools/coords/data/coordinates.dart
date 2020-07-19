@@ -17,6 +17,7 @@ const keyCoordsGaussKruegerGK4 = 'coords_gausskrueger_gk4';
 const keyCoordsGaussKruegerGK5 = 'coords_gausskrueger_gk5';
 const keyCoordsMaidenhead = 'coords_maidenhead';
 const keyCoordsMercator = 'coords_mercator';
+const keyCoordsSlippyMap = 'coords_slippymap';
 const keyCoordsGeohash = 'coords_geohash';
 const keyCoordsOpenLocationCode = 'coords_openlocationcode';
 const keyCoordsQuadtree = 'coords_quadtree';
@@ -47,6 +48,7 @@ List<CoordinateFormat> allCoordFormats = [
   ]),
   CoordinateFormat(keyCoordsMaidenhead, 'Maidenhead Locator (QTH)'),
   CoordinateFormat(keyCoordsMercator, 'Mercator'),
+  CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles'),
   CoordinateFormat(keyCoordsGeohash, 'Geohash'),
   CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)'),
   CoordinateFormat(keyCoordsQuadtree, 'Quadtree'),
@@ -383,5 +385,18 @@ class Mercator {
   @override
   String toString() {
     return 'Y: ${easting}\nX: ${northing}';
+  }
+}
+
+class SlippyMap {
+  double x;
+  double y;
+  double zoom;
+
+  SlippyMap(this.x, this.y, this.zoom);
+
+  @override
+  String toString() {
+    return 'X: ${x}\nY: ${y}\nZoom: ${zoom}';
   }
 }

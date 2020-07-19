@@ -17,6 +17,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mgrs.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_openlocationcode.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_quadtree.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewhereigo_waldmeister.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
@@ -158,6 +159,17 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsSlippyMap),
+        'widget': GCWCoordsSlippyMap(
+          zoom: _currentCoordsFormat['subtype'],
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
         'coordFormat': getCoordinateFormatByKey(keyCoordsGeohash),
         'widget': GCWCoordsGeohash(
           onChanged: (newValue) {
@@ -214,9 +226,12 @@ class GCWCoordsState extends State<GCWCoords> {
           format: _currentCoordsFormat,
           onChanged: (newValue){
             setState(() {
-              _currentCoordsFormat = newValue;
-              _setCurrentValueAndEmitOnChange();
+              if (_currentCoordsFormat != newValue) {
+                _currentCoordsFormat = newValue;
+                _currentValue = defaultCoordinate;
 
+                _setCurrentValueAndEmitOnChange();
+              }
               FocusScope.of(context).requestFocus(new FocusNode()); //Release focus from previous edited field
             });
           },

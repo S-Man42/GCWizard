@@ -11,6 +11,7 @@ Map<String, String> defaultCoordFormat() {
   if (subtype == null) {
     switch (format) {
       case keyCoordsGaussKrueger: subtype = keyCoordsGaussKruegerGK1; break;
+      case keyCoordsSlippyMap: subtype = '10'; break;
     }
   }
 
