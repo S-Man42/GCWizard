@@ -11,7 +11,7 @@ class MapPoint {
   final LatLng point;
   final String markerText;
   final Color color;
-  final String coordinateFormat;
+  final Map<String, String> coordinateFormat;
 
   const MapPoint({
     @required this.point,

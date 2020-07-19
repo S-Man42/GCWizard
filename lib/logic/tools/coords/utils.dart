@@ -26,10 +26,20 @@ double modLon(double x) {
   return x;
 }
 
-String formatCoordOutput(LatLng _coords, String _outputFormat, Ellipsoid ells) {
+String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Ellipsoid ells) {
+  int _getGKCode() {
+    switch (_outputFormat['subtype']) {
+      case keyCoordsGaussKruegerGK1: return 1;
+      case keyCoordsGaussKruegerGK2: return 2;
+      case keyCoordsGaussKruegerGK3: return 3;
+      case keyCoordsGaussKruegerGK4: return 4;
+      case keyCoordsGaussKruegerGK5: return 5;
+    }
+  }
+
   var _formatted;
 
-  switch (_outputFormat) {
+  switch (_outputFormat['format']) {
     case keyCoordsDEC: _formatted = DEC.from(_coords).format(); break;
     case keyCoordsDEG: _formatted = DEG.from(_coords).format(); break;
     case keyCoordsDMS: _formatted = DMS.from(_coords).format(); break;
@@ -37,11 +47,7 @@ String formatCoordOutput(LatLng _coords, String _outputFormat, Ellipsoid ells) {
     case keyCoordsMGRS: return latLonToMGRSString(_coords, ells);
     case keyCoordsSwissGrid: return decToSwissGridString(_coords, ells);
     case keyCoordsSwissGridPlus: return latLonToSwissGridPlusString(_coords, ells);
-    case keyCoordsGaussKrueger1: return latLonToGaussKruegerString(_coords, 1, ells);
-    case keyCoordsGaussKrueger2: return latLonToGaussKruegerString(_coords, 2, ells);
-    case keyCoordsGaussKrueger3: return latLonToGaussKruegerString(_coords, 3, ells);
-    case keyCoordsGaussKrueger4: return latLonToGaussKruegerString(_coords, 4, ells);
-    case keyCoordsGaussKrueger5: return latLonToGaussKruegerString(_coords, 5, ells);
+    case keyCoordsGaussKrueger: return latLonToGaussKruegerString(_coords, _getGKCode(), ells);
     case keyCoordsMaidenhead: return latLonToMaidenhead(_coords);
     case keyCoordsMercator: return latLonToMercator(_coords, ells).toString();
     case keyCoordsGeohash: return latLonToGeohash(_coords, 14);

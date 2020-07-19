@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_deg.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dms.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_gausskrueger.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geohash.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_maidenhead.dart';
@@ -24,7 +24,7 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoords extends StatefulWidget {
   final Function onChanged;
-  final String coordsFormat;
+  final Map<String, String> coordsFormat;
   final String text;
 
   const GCWCoords({Key key, this.text, this.onChanged, this.coordsFormat}) : super(key: key);
@@ -35,231 +35,169 @@ class GCWCoords extends StatefulWidget {
 
 class GCWCoordsState extends State<GCWCoords> {
 
-  String _currentCoordsFormat = defaultCoordFormat();
-  Map<String, LatLng> _currentValue;
+  Map<String, String> _currentCoordsFormat;
+  LatLng _currentValue;
 
   LatLng _pastedCoords;
+
+  var _currentWidget;
 
   @override
   void initState() {
     super.initState();
-    _currentValue = Map.fromIterable(allCoordFormats, key: (format) => format.key, value: (format) => defaultCoordinate);
+
+    _currentCoordsFormat = widget.coordsFormat ?? defaultCoordFormat();
+    _currentValue = defaultCoordinate;
   }
 
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> _coordsWidgets = [
       {
-        'coordFormat': getCoordFormatByKey(keyCoordsDEC),
+        'coordFormat': getCoordinateFormatByKey(keyCoordsDEC),
         'widget': GCWCoordsDEC(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
-              _currentValue[keyCoordsDEC] = newValue;
-              _setCurrentValueAndEmitOnChange();
+              _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
       },
       {
-        'coordFormat': getCoordFormatByKey(keyCoordsDEG),
+        'coordFormat': getCoordinateFormatByKey(keyCoordsDEG),
         'widget': GCWCoordsDEG(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
-              _currentValue[keyCoordsDEG] = newValue;
-              _setCurrentValueAndEmitOnChange();
+              _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
       },
       {
-        'coordFormat': getCoordFormatByKey(keyCoordsDMS),
+        'coordFormat': getCoordinateFormatByKey(keyCoordsDMS),
         'widget': GCWCoordsDMS(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
-              _currentValue[keyCoordsDMS] = newValue;
-              _setCurrentValueAndEmitOnChange();
+              _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
       },
       {
-       'coordFormat': getCoordFormatByKey(keyCoordsUTM),
+       'coordFormat': getCoordinateFormatByKey(keyCoordsUTM),
        'widget': GCWCoordsUTM(
          onChanged: (newValue) {
            setState(() {
-             _currentValue[keyCoordsUTM] = newValue;
-             _setCurrentValueAndEmitOnChange();
+             _setCurrentValueAndEmitOnChange(newValue);
            });
          },
        ),
       },
       {
-        'coordFormat': getCoordFormatByKey(keyCoordsMGRS),
+        'coordFormat': getCoordinateFormatByKey(keyCoordsMGRS),
         'widget': GCWCoordsMGRS(
           onChanged: (newValue) {
             setState(() {
-              _currentValue[keyCoordsMGRS] = newValue;
-              _setCurrentValueAndEmitOnChange();
+              _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
       },
       {
-        'coordFormat': getCoordFormatByKey(keyCoordsSwissGrid),
+        'coordFormat': getCoordinateFormatByKey(keyCoordsSwissGrid),
         'widget': GCWCoordsSwissGrid(
           onChanged: (newValue) {
             setState(() {
-              _currentValue[keyCoordsSwissGrid] = newValue;
-              _setCurrentValueAndEmitOnChange();
+              _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
       },
       {
-        'coordFormat': getCoordFormatByKey(keyCoordsSwissGridPlus),
+        'coordFormat': getCoordinateFormatByKey(keyCoordsSwissGridPlus),
         'widget': GCWCoordsSwissGrid(
           onChanged: (newValue) {
             setState(() {
-              _currentValue[keyCoordsSwissGridPlus] = newValue;
-              _setCurrentValueAndEmitOnChange();
+              _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
       },
       {
-        'coordFormat': getCoordFormatByKey(keyCoordsGaussKrueger1, context: context),
+        'coordFormat': getCoordinateFormatByKey(keyCoordsGaussKrueger),
         'widget': GCWCoordsGaussKrueger(
-          gaussKruegerCode: 1,
+          subtype: _currentCoordsFormat['subtype'],
           onChanged: (newValue) {
             setState(() {
-              _currentValue[keyCoordsGaussKrueger1] = newValue;
-              _setCurrentValueAndEmitOnChange();
+              _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
       },
       {
-        'coordFormat': getCoordFormatByKey(keyCoordsGaussKrueger2, context: context),
-        'widget': GCWCoordsGaussKrueger(
-          gaussKruegerCode: 2,
-          onChanged: (newValue) {
-            setState(() {
-              _currentValue[keyCoordsGaussKrueger2] = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-      {
-        'coordFormat': getCoordFormatByKey(keyCoordsGaussKrueger3, context: context),
-        'widget': GCWCoordsGaussKrueger(
-          gaussKruegerCode: 3,
-          onChanged: (newValue) {
-            setState(() {
-              _currentValue[keyCoordsGaussKrueger3] = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-      {
-        'coordFormat': getCoordFormatByKey(keyCoordsGaussKrueger4, context: context),
-        'widget': GCWCoordsGaussKrueger(
-          gaussKruegerCode: 4,
-          onChanged: (newValue) {
-            setState(() {
-              _currentValue[keyCoordsGaussKrueger4] = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-      {
-        'coordFormat': getCoordFormatByKey(keyCoordsGaussKrueger5, context: context),
-        'widget': GCWCoordsGaussKrueger(
-          gaussKruegerCode: 5,
-          onChanged: (newValue) {
-            setState(() {
-              _currentValue[keyCoordsGaussKrueger5] = newValue;
-              _setCurrentValueAndEmitOnChange();
-            });
-          },
-        ),
-      },
-      {
-        'coordFormat': getCoordFormatByKey(keyCoordsMaidenhead),
+        'coordFormat': getCoordinateFormatByKey(keyCoordsMaidenhead),
         'widget': GCWCoordsMaidenhead(
           onChanged: (newValue) {
             setState(() {
-              _currentValue[keyCoordsMaidenhead] = newValue;
-              _setCurrentValueAndEmitOnChange();
+              _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
       },
       {
-        'coordFormat': getCoordFormatByKey(keyCoordsMercator),
+        'coordFormat': getCoordinateFormatByKey(keyCoordsMercator),
         'widget': GCWCoordsMercator(
           onChanged: (newValue) {
             setState(() {
-              _currentValue[keyCoordsMercator] = newValue;
-              _setCurrentValueAndEmitOnChange();
+              _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
       },
       {
-        'coordFormat': getCoordFormatByKey(keyCoordsGeohash),
+        'coordFormat': getCoordinateFormatByKey(keyCoordsGeohash),
         'widget': GCWCoordsGeohash(
           onChanged: (newValue) {
             setState(() {
-              _currentValue[keyCoordsGeohash] = newValue;
-              _setCurrentValueAndEmitOnChange();
+              _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
       },
       {
-        'coordFormat': getCoordFormatByKey(keyCoordsOpenLocationCode),
+        'coordFormat': getCoordinateFormatByKey(keyCoordsOpenLocationCode),
         'widget': GCWCoordsOpenLocationCode(
           onChanged: (newValue) {
             setState(() {
-              _currentValue[keyCoordsOpenLocationCode] = newValue;
-              _setCurrentValueAndEmitOnChange();
+              _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
       },
       {
-        'coordFormat': getCoordFormatByKey(keyCoordsQuadtree),
+        'coordFormat': getCoordinateFormatByKey(keyCoordsQuadtree),
         'widget': GCWCoordsQuadtree(
           onChanged: (newValue) {
             setState(() {
-              _currentValue[keyCoordsQuadtree] = newValue;
-              _setCurrentValueAndEmitOnChange();
+              _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
       },
       {
-        'coordFormat': getCoordFormatByKey(keyCoordsReverseWhereIGoWaldmeister),
+        'coordFormat': getCoordinateFormatByKey(keyCoordsReverseWhereIGoWaldmeister),
         'widget': GCWCoordsReverseWhereIGoWaldmeister(
           onChanged: (newValue) {
             setState(() {
-              _currentValue[keyCoordsReverseWhereIGoWaldmeister] = newValue;
-              _setCurrentValueAndEmitOnChange();
+              _setCurrentValueAndEmitOnChange(newValue);
             });
           },
         ),
       },
     ];
-
-    List<CoordinateFormat> _onlyCoordinateFormats = _coordsWidgets
-      .map((entry) => entry['coordFormat'] as CoordinateFormat)
-      .toList();
 
     _pastedCoords = null;
 
@@ -272,13 +210,13 @@ class GCWCoordsState extends State<GCWCoords> {
             onSelected: _parseClipboardAndSetCoords
           ),
         ),
-        GCWCoordsDropDownButton(
-          value: widget.coordsFormat ?? _currentCoordsFormat,
-          itemList: _onlyCoordinateFormats,
+        GCWCoordsFormatSelector(
+          format: _currentCoordsFormat,
           onChanged: (newValue){
             setState(() {
               _currentCoordsFormat = newValue;
               _setCurrentValueAndEmitOnChange();
+
               FocusScope.of(context).requestFocus(new FocusNode()); //Release focus from previous edited field
             });
           },
@@ -286,18 +224,18 @@ class GCWCoordsState extends State<GCWCoords> {
       ],
     );
 
-    var _currentWidget = _coordsWidgets
-      .firstWhere((entry) => entry['coordFormat'].key == widget.coordsFormat ?? _currentCoordsFormat)['widget'];
+    _currentWidget = _coordsWidgets
+      .firstWhere((entry) => entry['coordFormat'].key == _currentCoordsFormat['format'])['widget'];
 
     _widget.children.add(_currentWidget);
 
     return _widget;
   }
 
-  _setCurrentValueAndEmitOnChange() {
+  _setCurrentValueAndEmitOnChange([LatLng newValue]) {
     widget.onChanged({
       'coordsFormat': _currentCoordsFormat,
-      'value': _currentValue[_currentCoordsFormat]
+      'value': newValue ?? _currentValue
     });
   }
 
@@ -312,16 +250,16 @@ class GCWCoordsState extends State<GCWCoords> {
     if (_pastedCoords == null)
       return;
 
-    switch(_currentCoordsFormat) {
+    switch(_currentCoordsFormat['format']) {
       case keyCoordsDEC:
       case keyCoordsDEG:
       case keyCoordsDMS:
         break;
       default:
-        _currentCoordsFormat = keyCoordsDEG;
+        _currentCoordsFormat = {'format': keyCoordsDEG};
     }
 
-    _currentValue[_currentCoordsFormat] = _pastedCoords;
+    _currentValue = _pastedCoords;
     _setCurrentValueAndEmitOnChange();
   }
 }

@@ -21,7 +21,7 @@ class EllipsoidTransformState extends State<EllipsoidTransform> {
   var _currentCoords = defaultCoordinate;
   var _currentCoordsFormat = defaultCoordFormat();
 
-  var _currentOutputFormat = keyCoordsDEG;
+  var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
 
   var _currentFromDate = transformableDates[0];

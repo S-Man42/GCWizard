@@ -5,7 +5,7 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/logic/units/length.dart';
 import 'package:gc_wizard/widgets/common/gcw_lengths_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class GCWCoordsOutputFormatDistance extends StatefulWidget {
@@ -19,8 +19,7 @@ class GCWCoordsOutputFormatDistance extends StatefulWidget {
       GCWCoordsOutputFormatDistanceState();
 }
 
-class GCWCoordsOutputFormatDistanceState
-    extends State<GCWCoordsOutputFormatDistance> {
+class GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDistance> {
   var _currentCoordFormat = defaultCoordFormat();
   Length _currentLengthUnit = defaultLength;
 
@@ -37,13 +36,8 @@ class GCWCoordsOutputFormatDistanceState
             Expanded (
               flex: 3,
               child: Container(
-                child: GCWCoordsDropDownButton(
-                  value: widget.coordFormat ?? _currentCoordFormat,
-                  itemList: allCoordFormats.map((coordFormat) {
-                    if (coordFormat.name == null)
-                      coordFormat = getCoordFormatByKey(coordFormat.key, context: context);
-                    return coordFormat;
-                  }).toList(),
+                child: GCWCoordsFormatSelector(
+                  format: widget.coordFormat ?? _currentCoordFormat,
                   onChanged: (value) {
                     setState(() {
                       _currentCoordFormat = value;

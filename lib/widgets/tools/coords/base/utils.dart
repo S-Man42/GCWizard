@@ -4,32 +4,17 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:prefs/prefs.dart';
 
-CoordinateFormat getCoordFormatByKey(String key, {BuildContext context: null}) {
-  CoordinateFormat coordFormat = allCoordFormats.firstWhere((coordFormat) => coordFormat.key == key);
+Map<String, String> defaultCoordFormat() {
+  var format = Prefs.get('coord_default_format');
+  var subtype = Prefs.get('coord_default_format_subtype');
 
-  switch (coordFormat.key) {
-    case keyCoordsGaussKrueger1:
-      coordFormat.name = i18n(context, 'coords_formatconverter_gausskrueger_gk1');
-      break;
-    case keyCoordsGaussKrueger2:
-      coordFormat.name = i18n(context, 'coords_formatconverter_gausskrueger_gk2');
-      break;
-    case keyCoordsGaussKrueger3:
-      coordFormat.name = i18n(context, 'coords_formatconverter_gausskrueger_gk3');
-      break;
-    case keyCoordsGaussKrueger4:
-      coordFormat.name = i18n(context, 'coords_formatconverter_gausskrueger_gk4');
-      break;
-    case keyCoordsGaussKrueger5:
-      coordFormat.name = i18n(context, 'coords_formatconverter_gausskrueger_gk5');
-      break;
+  if (subtype == null) {
+    switch (format) {
+      case keyCoordsGaussKrueger: subtype = keyCoordsGaussKruegerGK1; break;
+    }
   }
 
-  return coordFormat;
-}
-
-defaultCoordFormat() {
-  return Prefs.get('coord_default_format');
+  return {'format': format, 'subtype': subtype};
 }
 
 defaultHemiphereLatitude() {
