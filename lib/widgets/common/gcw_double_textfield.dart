@@ -50,7 +50,7 @@ class _GCWDoubleTextFieldState extends State<GCWDoubleTextField> {
       hintText: widget.hintText,
       onChanged: (text) {
         setState(() {
-          var _value;
+          double _value;
 
           text = text.replaceFirst(',', '.');
 
