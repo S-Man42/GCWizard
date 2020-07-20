@@ -397,6 +397,10 @@
   "common_numeralbase_vigesimal" : "Vigesimal",
   "common_numeralbase_sexagesimal" : "Sexagesimal",
 
+  "common_support_title" : "Do you want to support us?",
+  "common_support_text" : "You opened the GC Wizard %s1 times.\n\nThank you so much for using it!\n\n- Do like to support us with a coffee?\n- Do you want to contribute own content?",
+  "common_support_link" : "https://blog.gcwizard.net/support-and-contribute/",
+
   "common_unit_prefix_exa" : "Exa",
   "common_unit_prefix_peta" : "Peta",
   "common_unit_prefix_tera" : "Tera",

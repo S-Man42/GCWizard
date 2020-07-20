@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
@@ -71,6 +75,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.da
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MainView extends StatefulWidget {
   @override
@@ -84,6 +89,8 @@ class _MainViewState extends State<MainView> {
 
   var _searchText = '';
 
+  final _showSupportHintEveryN = 50;
+
   @override
   void initState() {
     super.initState();
@@ -93,6 +100,21 @@ class _MainViewState extends State<MainView> {
       setState(() {
         _searchText = _searchController.text.isEmpty ? '' : _searchController.text;
       });
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var countAppOpened = Prefs.getInt('app_count_opened');
+
+      if (countAppOpened == 10 || countAppOpened % _showSupportHintEveryN == 0) {
+        showGCWAlertDialog(
+          context,
+          i18n(context, 'common_support_title'),
+          i18n(context, 'common_support_text', parameters: [Prefs.getInt('app_count_opened')]),
+          () {
+            launch(i18n(context, 'common_support_link'));
+          },
+        );
+      }
     });
   }
 
@@ -269,7 +291,7 @@ class _MainViewState extends State<MainView> {
             Icons.search,
             color: ThemeColors.gray
           ),
-          hintText: i18n(context, 'common_common_search_hint')
+          hintText: i18n(context, 'common_search_hint')
         )
       : Text(i18n(context, 'common_app_title'));
   }

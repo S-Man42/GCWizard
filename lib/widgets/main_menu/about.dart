@@ -106,7 +106,7 @@ class AboutState extends State<About> {
             children: <Widget>[
               Expanded(
                 child: GCWText(
-                    text: i18n(context, 'about_contact_email')
+                  text: i18n(context, 'about_contact_email')
                 ),
                 flex: 2
               ),

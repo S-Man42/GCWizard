@@ -14,6 +14,12 @@ void initDefaultSettings() {
     Prefs.setString('alphabetvalues_default_alphabet', alphabetAZ.key);
   }
 
+  if (Prefs.get('app_count_opened') == null) {
+    Prefs.setInt('app_count_opened', 1);
+  } else {
+    Prefs.setInt('app_count_opened', Prefs.getInt('app_count_opened') + 1);
+  }
+
   if (Prefs.get('clipboard_max_items') == null) {
     Prefs.setInt('clipboard_max_items', 10);
   }
