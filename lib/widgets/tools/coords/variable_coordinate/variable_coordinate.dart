@@ -492,7 +492,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
     _output = Column(
       children: [
-        _currentOutputFormat == keyCoordsDEG && hasLeftPaddedCoords
+        _currentOutputFormat['format'] == keyCoordsDEG && hasLeftPaddedCoords
           ? GCWTwoOptionsSwitch(
               title: i18n(context, 'coords_variablecoordinate_decleftpad'),
               leftValue: i18n(context, 'coords_variablecoordinate_decleftpad_left'),
