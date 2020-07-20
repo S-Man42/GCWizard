@@ -37,18 +37,30 @@ decryptDecabit(String input, Map<String, String> replaceCharacters, bool numeric
     input = substitution(input, switchMapKeyValue(replaceCharacters));
 
   input = input.replaceAll(RegExp(r'[^+\-]'), '');
-  input = input.substring(0, input.length - (input.length % 10));
 
   var out = '';
   int i = 0;
-  while (i < input.length) {
+  while (i <= input.length - 10) {
+    var chunk = input.substring(i, i + 10);
+    var character;
+
     if (numericMode) {
-      out += DecabitToAZInt[input.substring(i, i + 10)] + ((i+10 < input.length) ? ' ' : '');
+      if (DecabitToAZInt[chunk] != null)
+        character = DecabitToAZInt[chunk] + ' ';
     } else {
-      out += DecabitToAZStr[input.substring(i, i + 10)];
+      if (DecabitToAZStr[chunk] != null)
+        character = DecabitToAZStr[chunk];
     }
-    i += 10;
+
+    if (character != null) {
+      out += character;
+      i += 10;
+    } else
+      i += 1;
   }
+
+  if (numericMode)
+    out = out.trim();
 
   return out;
 }
