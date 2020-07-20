@@ -55,7 +55,10 @@ flutter:
     - assets/symbol_tables/color_tokki/
     - assets/symbol_tables/daedric/
     - assets/symbol_tables/dagger/
+    - assets/symbol_tables/dancing_men/
     - assets/symbol_tables/dragon_runes/
+    - assets/symbol_tables/egyptian_numerals/
+    - assets/symbol_tables/fakoo/
     - assets/symbol_tables/finger/
     - assets/symbol_tables/flags/
     - assets/symbol_tables/flags_german_kriegsmarine/
@@ -68,7 +71,9 @@ flutter:
     - assets/symbol_tables/glagolitic/
     - assets/symbol_tables/gnommish/
     - assets/symbol_tables/hexahue/
+    - assets/symbol_tables/hieratic_numerals/
     - assets/symbol_tables/hvd/
+    - assets/symbol_tables/hylian_skyward_sword/
     - assets/symbol_tables/hymmnos/
     - assets/symbol_tables/intergalactic/
     - assets/symbol_tables/klingon/
@@ -84,6 +89,9 @@ flutter:
     - assets/symbol_tables/murray/
     - assets/symbol_tables/nato/
     - assets/symbol_tables/ogham/
+    - assets/symbol_tables/optical_fiber_fotag/
+    - assets/symbol_tables/optical_fiber_iec60304/
+    - assets/symbol_tables/optical_fiber_swisscom/
     - assets/symbol_tables/pipeline/
     - assets/symbol_tables/pixel/
     - assets/symbol_tables/postnet/
