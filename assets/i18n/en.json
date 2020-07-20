@@ -889,6 +889,8 @@
   "numeralbases_example" : "101010 → 42, 2A → 42",
   "numeralbases_from" : "From",
   "numeralbases_to" : "To",
+  "numeralbases_showfrequent" : "Most frequent",
+  "numeralbases_chooseoutput" : "Choose",
 
   "onetimepad_title" : "One-Time Pad",
   "onetimepad_description" : "Adding keyword to input text",

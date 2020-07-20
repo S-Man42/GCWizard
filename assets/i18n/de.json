@@ -889,6 +889,8 @@
   "numeralbases_example" : "101010 → 42, 2A → 42",
   "numeralbases_from" : "Von",
   "numeralbases_to" : "Nach",
+  "numeralbases_showfrequent" : "Zeige häufigste",
+  "numeralbases_chooseoutput" : "Wählen",
 
   "onetimepad_title" : "One-Time Pad",
   "onetimepad_description" : "Einmalschlüssel: Addiere Schlüsselwort zu Text",
