@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class GCWCoordsOutputFormat extends StatefulWidget {
-  final coordFormat;
+  final Map<String, String> coordFormat;
   final Function onChanged;
 
   const GCWCoordsOutputFormat({Key key, this.coordFormat, this.onChanged}) : super(key: key);
@@ -16,9 +15,8 @@ class GCWCoordsOutputFormat extends StatefulWidget {
       GCWCoordsOutputFormatState();
 }
 
-class GCWCoordsOutputFormatState
-    extends State<GCWCoordsOutputFormat> {
-  var _currentValue = defaultCoordFormat();
+class GCWCoordsOutputFormatState extends State<GCWCoordsOutputFormat> {
+  var _currentFormat = defaultCoordFormat();
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +25,12 @@ class GCWCoordsOutputFormatState
           GCWTextDivider(
             text: i18n(context, 'coords_output_format')
           ),
-          GCWCoordsDropDownButton(
-            value: widget.coordFormat ?? _currentValue,
-            itemList: allCoordFormats.map((coordFormat) {
-              if (coordFormat.name == null)
-                coordFormat = getCoordFormatByKey(coordFormat.key, context: context);
-              return coordFormat;
-            }).toList(),
+          GCWCoordsFormatSelector(
+            format: widget.coordFormat ?? _currentFormat,
             onChanged: (value) {
               setState(() {
-                _currentValue = value;
-                widget.onChanged(_currentValue);
+                _currentFormat = value;
+                widget.onChanged(_currentFormat);
               });
             },
           )

@@ -149,6 +149,7 @@ class Registry {
   static final SEARCHSTRING_RESISTOR_COLORCODE = SEARCHSTRING_RESISTOR + 'colorcodes farben farbcodes colors ';
   static final SEARCHSTRING_ROTATION = 'rotate rotieren verschieben shift rotations rotx rotn rot-x rotationen ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
+  static final SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER = 'lwl llk lichtwellenleiter lichtleitkabel opticalfiber glasfaserkabel ';
   static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
   static final SEARCHSTRING_VIGENERE = SEARCHSTRING_ROTATION + 'vigenere ';
 
@@ -1073,10 +1074,28 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dagger degen dolche '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'dancing_men'),
+        i18nPrefix: 'symboltables_dancing_men',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'dancing_men/73.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dancingmen tanzende strichmaennchen sherlockholmes matchstickman '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'dragon_runes'),
         i18nPrefix: 'symboltables_dragon_runes',
         iconPath: SYMBOLTABLES_ASSETPATH + 'dragon_runes/71.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dragonrunes drachenrunen dragonlords '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'egyptian_numerals'),
+        i18nPrefix: 'symboltables_egyptian_numerals',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'egyptian_numerals/hundred.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'altaegyptische eyptian numerals zahlen ziffern numbers hieroglyphs hieroglyphen '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'fakoo'),
+        i18nPrefix: 'symboltables_fakoo',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'fakoo/167.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fakoo alphabet blinde eyeless relief'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'finger'),
@@ -1151,10 +1170,22 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colours colors colorcodes colourcodes hexahue farben farbcodes pixel '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hieratic_numerals'),
+        i18nPrefix: 'symboltables_hieratic_numerals',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hieratic_numerals/eightthousand.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hieratic numbers numerals zahlen ziffern hieratische altaegyptische egyptian hieroglyphs hieroglyphen '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'hvd'),
         i18nPrefix: 'symboltables_hvd',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hvd/81.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hvd '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hylian_skyward_sword'),
+        i18nPrefix: 'symboltables_hylian_skyward_sword',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_skyward_sword/79.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hylianische skyward sword schwert zelda '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'hymmnos', isCaseSensitive: true),
@@ -1245,6 +1276,24 @@ class Registry {
         i18nPrefix: 'symboltables_ogham',
         iconPath: SYMBOLTABLES_ASSETPATH + 'ogham/82.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'ogham ogam runes early irish altirisch irland ireland runen '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'optical_fiber_fotag'),
+        i18nPrefix: 'symboltables_optical_fiber_fotag',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'optical_fiber_fotag/51.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER + 'fotag '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'optical_fiber_iec60304'),
+        i18nPrefix: 'symboltables_optical_fiber_iec60304',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'optical_fiber_iec60304/52.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER + 'iec 60304 din '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'optical_fiber_swisscom'),
+        i18nPrefix: 'symboltables_optical_fiber_swisscom',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'optical_fiber_swisscom/48.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER + 'swisscom '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'pipeline'),

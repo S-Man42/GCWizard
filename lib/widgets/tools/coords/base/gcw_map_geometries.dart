@@ -11,7 +11,7 @@ class MapPoint {
   final LatLng point;
   final String markerText;
   final Color color;
-  final String coordinateFormat;
+  final Map<String, String> coordinateFormat;
 
   const MapPoint({
     @required this.point,
@@ -45,7 +45,7 @@ class MapGeodetic {
     DistanceBearingData _distBear = distanceBearing(this.start, this.end, defaultEllipsoid());
 
     shape = [this.start];
-    const _stepLength = 10000.0;
+    const _stepLength = 5000.0;
 
     var _countSteps = (_distBear.distance / _stepLength).floor();
 

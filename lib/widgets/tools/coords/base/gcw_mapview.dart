@@ -117,8 +117,25 @@ class GCWMapViewState extends State<GCWMapView> {
 
   @override
   Widget build(BuildContext context) {
+    //Marker Shadow
     List<Marker> _markers = widget.points.map((_point) {
+      return GCWMarker(
+        coordinateDescription: _buildPopupCoordinateDescription(_point),
+        coordinateText: _buildPopupCoordinateText(_point),
+        width: 28.3,
+        height: 28.3,
+        point: _point.point,
+        builder: (context) {
+          return Icon(
+            Icons.my_location,
+            size: 28.3,
+            color: Colors.white,
+          );
+        });
+    }).toList();
 
+    //colored Markers
+    _markers.addAll(widget.points.map((_point) {
       return GCWMarker(
         coordinateDescription: _buildPopupCoordinateDescription(_point),
         coordinateText: _buildPopupCoordinateText(_point),
@@ -126,46 +143,34 @@ class GCWMapViewState extends State<GCWMapView> {
         height: 25.0,
         point: _point.point,
         builder: (context) {
-          return Container(
-            child: Column (
-              children: <Widget> [
-                Icon(
-                  Icons.my_location,
-                  size: 25.0,
-                  color: _point.color,
-                ),
-                //Text(_point.markerText)
-              ]
-            ),
+          return Icon(
+            Icons.my_location,
+            size: 25.0,
+            color: _point.color,
           );
         });
-    }).toList();
+      }).toList()
+    );
 
     List<Polyline> _polylines = _addPolylines();
     List<Polyline> _circlePolylines = _addCircles();
     _polylines.addAll(_circlePolylines);
 
-    var layers = <LayerOptions>[
-      TileLayerOptions(
-        urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        subdomains: ['a', 'b', 'c'],
-        tileProvider: CachedNetworkTileProvider(),
-        opacity: _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? 1.0 : 0.0
-      )
-    ];
-
-    if (_mapBoxToken != null && _mapBoxToken != '') {
-      layers.add(
-        TileLayerOptions(
+    var layer = _currentLayer == _LayerType.MAPBOX_SATELLITE && _mapBoxToken != null && _mapBoxToken != ''
+      ? TileLayerOptions(
           urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
           additionalOptions: {
             'accessToken': _mapBoxToken
           },
-          tileProvider: CachedNetworkTileProvider(),
-          opacity: _currentLayer == _LayerType.MAPBOX_SATELLITE ? 1.0 : 0.0
+          tileProvider: CachedNetworkTileProvider()
         )
-      );
-    }
+      : TileLayerOptions(
+          urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          subdomains: ['a', 'b', 'c'],
+          tileProvider: CachedNetworkTileProvider()
+        );
+
+    var layers = <LayerOptions>[layer];
 
     layers.addAll([
       PolylineLayerOptions(

@@ -5,9 +5,11 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class Morse extends StatefulWidget {
@@ -68,6 +70,9 @@ class MorseState extends State<Morse> {
                 });
               },
             ),
+        GCWTextDivider(
+          text: i18n(context, 'common_output')
+        ),
         _buildOutput(context)
       ],
     );
@@ -108,6 +113,20 @@ class MorseState extends State<Morse> {
           onPressed: () {
             setState(() {
               _addCharacter(' | ');
+            });
+          },
+        ),
+        GCWIconButton(
+          iconData: Icons.backspace,
+          onPressed: () {
+            setState(() {
+              var cursorPosition = max<int>(_decodeController.selection.end, 0);
+              if (cursorPosition == 0)
+                return;
+
+              _currentDecodeInput = _currentDecodeInput.substring(0, cursorPosition - 1) + _currentDecodeInput.substring(cursorPosition);
+              _decodeController.text = _currentDecodeInput;
+              _decodeController.selection = TextSelection.collapsed(offset: cursorPosition - 1);
             });
           },
         ),

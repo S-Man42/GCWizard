@@ -93,40 +93,6 @@ class GeneralSettingsState extends State<GeneralSettings> {
             )
           : Container(),
         GCWTextDivider(
-          text: i18n(context, 'settings_general_symboltables')
-        ),
-        Container(
-          child: GCWText(
-              text: i18n(context, 'settings_general_symboltables_countcolumns') + ':'
-          ),
-          padding: EdgeInsets.only(
-            top: 10.0,
-            bottom: 10.0
-          ),
-        ),
-        GCWIntegerSpinner(
-          title: i18n(context, 'common_portrait'),
-          value: Prefs.getInt('symboltables_countcolumns_portrait'),
-          min: 2,
-          max: 15,
-          onChanged: (value) {
-            setState(() {
-              Prefs.setInt('symboltables_countcolumns_portrait', value);
-            });
-          },
-        ),
-        GCWIntegerSpinner(
-          title: i18n(context, 'common_landscape'),
-          value: Prefs.getInt('symboltables_countcolumns_landscape'),
-          min: 2,
-          max: 30,
-          onChanged: (value) {
-            setState(() {
-              Prefs.setInt('symboltables_countcolumns_landscape', value);
-            });
-          },
-        ),
-        GCWTextDivider(
           text: i18n(context, 'settings_general_clipboard')
         ),
         GCWIntegerSpinner(

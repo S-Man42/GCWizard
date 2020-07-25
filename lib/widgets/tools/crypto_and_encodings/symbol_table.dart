@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -110,13 +109,22 @@ class SymbolTableState extends State<SymbolTable> {
 
     return Column(
       children: <Widget>[
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          },
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: GCWTwoOptionsSwitch(
+                value: _currentMode,
+                onChanged: (value) {
+                  setState(() {
+                    _currentMode = value;
+                  });
+                },
+              )
+            ),
+            Container(
+              width: 2 * 40.0,
+            )
+          ],
         ),
         _currentMode == GCWSwitchPosition.left
           //Encryption
@@ -138,14 +146,45 @@ class SymbolTableState extends State<SymbolTable> {
           //Decryption
           : Column(
               children: <Widget>[
-                GCWOnOffSwitch (
-                  value: _currentShowOverlayedSymbols,
-                  title: i18n(context, 'symboltables_showoverlay'),
-                  onChanged: (value) {
-                    setState(() {
-                      _currentShowOverlayedSymbols = value;
-                    });
-                  },
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: GCWOnOffSwitch (
+                        value: _currentShowOverlayedSymbols,
+                        title: i18n(context, 'symboltables_showoverlay'),
+                        onChanged: (value) {
+                          setState(() {
+                            _currentShowOverlayedSymbols = value;
+                          });
+                        },
+                      ),
+                      flex: 4
+                    ),
+                    GCWIconButton(
+                      iconData: Icons.zoom_in,
+                      onPressed: () {
+                        setState(() {
+                          int newCountColumn = max(countColumns - 1, 1);
+
+                          mediaQueryData.orientation == Orientation.portrait
+                            ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                            : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                        });
+                      },
+                    ),
+                    GCWIconButton(
+                      iconData: Icons.zoom_out,
+                      onPressed: () {
+                        setState(() {
+                          int newCountColumn = countColumns + 1;
+
+                          mediaQueryData.orientation == Orientation.portrait
+                            ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                            : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                        });
+                      },
+                    )
+                  ],
                 ),
                 _buildDecryptionButtonMatrix(countColumns, widget.isCaseSensitive),
                 GCWDefaultOutput(

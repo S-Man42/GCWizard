@@ -164,14 +164,15 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    if (_currentEasting.length < 5)
+    double easting = _currentEasting['value'];
+    if (easting < 10000.0)
       return;
 
-    if (_currentNorthing.length < 5)
+    double northing = _currentNorthing['value'];
+    if (northing < 10000.0)
       return;
 
     var _lonZone = _currentLonZone['value'];
-
     var zone = UTMZone(_lonZone, _lonZone, _currentLatZone);
     var mgrs = MGRS(zone, _currentDigraphEasting + _currentDigraphNorthing, _currentEasting['value'], _currentNorthing['value']);
 

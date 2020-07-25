@@ -106,7 +106,7 @@ class AboutState extends State<About> {
             children: <Widget>[
               Expanded(
                 child: GCWText(
-                    text: i18n(context, 'about_contact_email')
+                  text: i18n(context, 'about_contact_email')
                 ),
                 flex: 2
               ),
@@ -375,7 +375,7 @@ class AboutState extends State<About> {
                           '\'\xc4ggsb\xe4rde\' (Symbol Tables)',
                           '\'capoaira\' (Code)',
                           'Dennis \'dennistreysa\' (Code)',
-                          '\'Geo-Link\' (Hardware)',
+                          '\'Geo-Link\' (Hardware & Symbol Tables)',
                           'Karl B. (Coords)',
                           'Michael D. (Symbol Tables)',
                           '\'moenk\' (GK Coords)',
@@ -401,13 +401,16 @@ class AboutState extends State<About> {
                         [
                           'Andreas E.',
                           '\'Headbanger-Berlin\'',
+                          'Felix Z.',
                           '\'Filu - Aye, Käppn! - 43\' & \'Stormi - Aaarrh - 2061\'',
                           'Frank \'Wizardland\' (podKst.de)',
                           'Franz K.',
                           'Johannes C.',
                           '\'Klumpenkukuk\'',
                           '\'lupusmaximus\'',
+                          '\'mahoplus\'',
                           'Martin Sch.',
+                          '\'Schnatt\'',
                           'Palk \'geogedoens.de\'',
                           '\'Pamakaru\'',
                           'Paweł B.',
@@ -415,6 +418,7 @@ class AboutState extends State<About> {
                           '\'radlerandi\'',
                           '\'Sechsfüssler\'',
                           'Stefan J.',
+                          '\'tebarius\'',
                           '\'tomcat06\'',
                         ].join(', ')
                     )

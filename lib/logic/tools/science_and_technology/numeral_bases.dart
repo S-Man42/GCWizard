@@ -36,9 +36,9 @@ String convertBase(String input, int startBase, int destinationBase, {String alp
   var illegalCharacter = input
     .split('')
     .firstWhere(
-        (character) => character != '.' && usedAlphabet.indexOf(character) >= startBase.abs(),
-    orElse: () => null
-  );
+      (character) => character != '.' && usedAlphabet.indexOf(character) >= startBase.abs(),
+      orElse: () => null
+    );
 
   if (illegalCharacter != null)
     return ''; //TODO: Exception

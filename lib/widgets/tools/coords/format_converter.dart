@@ -19,7 +19,7 @@ class FormatConverterState extends State<FormatConverter> {
 
   var _currentCoordsFormat = defaultCoordFormat();
 
-  var _currentOutputFormat = keyCoordsDEC;
+  Map<String, String> _currentOutputFormat = {'format': keyCoordsDEC};
   List<String> _currentOutput = [];
 
   @override

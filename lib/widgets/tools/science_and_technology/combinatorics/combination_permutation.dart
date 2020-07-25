@@ -50,7 +50,7 @@ class CombinationPermutationState extends State<CombinationPermutation> {
   _buildOutput(BuildContext context) {
     if (_currentInput == null || _currentInput.length == 0) {
       return GCWDefaultOutput(
-          text: ''
+        text: ''
       );
     }
 
@@ -58,12 +58,12 @@ class CombinationPermutationState extends State<CombinationPermutation> {
 
     var count = 0;
     List<List<dynamic>> outputData = combinations
-        .map((combination) {
-          var permutations = generatePermutations(combination, avoidDuplicates: !_currentShowDuplicates);
-          count += permutations.length;
-          return [combination, permutations.join(' ')];
-        })
-        .toList();
+      .map((combination) {
+        var permutations = generatePermutations(combination, avoidDuplicates: !_currentShowDuplicates);
+        count += permutations.length;
+        return [combination, permutations.join(' ')];
+      })
+      .toList();
 
     var rows = columnedMultiLineOutput(outputData, flexValues: [1, 3]);
 

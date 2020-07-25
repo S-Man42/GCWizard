@@ -1,17 +1,20 @@
 import 'dart:math';
 
-final ERROR_BRAINFK_POINTERTOOSMALL = 'brainfk_error_pointertoosmall';
 final ERROR_BRAINFK_LOOPNOTCLOSED = 'brainfk_error_loopnotclosed';
 final ERROR_BRAINFK_LOOPNOTOPENED = 'brainfk_error_loopnotopened';
+
+final MAX_MEMORY = 32768;
 
 String interpretBrainfk(String code, {String input}) {
   if (code == null || code.length == 0)
     return '';
 
+  print(code);
+
   var instructions = code.split('');
   
   var pointer = 0;
-  List<int> data = [0];
+  var data = List<int>.generate(MAX_MEMORY, (index) => 0);
   var out = '';
 
   var inputPointer = 0;
@@ -19,19 +22,18 @@ String interpretBrainfk(String code, {String input}) {
   List<int> loopStack = [];
 
   int i = 0;
-  var x = 0;
   while (i < instructions.length) {
-    x++;
     switch(instructions[i]) {
       case '>':
         pointer++;
         if (pointer >= data.length)
-          data.add(0);
+          pointer = 0;
         break;
       case '<':
         pointer--;
-        if (pointer < 0)
-          throw FormatException(ERROR_BRAINFK_POINTERTOOSMALL);
+        if (pointer < 0) {
+          pointer = data.length - 1;
+        }
         break;
       case '+':
         data[pointer] = (data[pointer] + 1) % 256;

@@ -3,7 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_ellipsoid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
@@ -16,7 +16,10 @@ class CoordinatesSettings extends StatefulWidget {
 }
 
 class CoordinatesSettingsState extends State<CoordinatesSettings> {
-  var _currentDefaultFormat = Prefs.getString('coord_default_format');
+  var _currentDefaultFormat = {
+    'format' : Prefs.getString('coord_default_format'),
+    'subtype' : Prefs.getString('coord_default_format_subtype')
+  };
   var _currentDefaultHemisphereLatitude = Prefs.getString('coord_default_hemisphere_latitude');
   var _currentDefaultHemisphereLongitude = Prefs.getString('coord_default_hemisphere_longitude');
   Ellipsoid _currentDefaultEllipsoid = defaultEllipsoid();
@@ -28,13 +31,13 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
         GCWTextDivider(
           text: i18n(context, 'settings_coordinates_defaultformat'),
         ),
-        GCWCoordsDropDownButton(
-          value: _currentDefaultFormat,
-          itemList: allCoordFormats.map((format) => getCoordFormatByKey(format.key, context: context)).toList(),
+        GCWCoordsFormatSelector(
+          format: _currentDefaultFormat,
           onChanged: (newValue){
             setState(() {
               _currentDefaultFormat = newValue;
-              Prefs.setString('coord_default_format', _currentDefaultFormat);
+              Prefs.setString('coord_default_format', _currentDefaultFormat['format']);
+              Prefs.setString('coord_default_format_subtype', _currentDefaultFormat['subtype']);
             });
           },
         ),

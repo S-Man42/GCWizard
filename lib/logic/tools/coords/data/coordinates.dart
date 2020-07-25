@@ -9,13 +9,15 @@ const keyCoordsUTM = 'coords_utm';
 const keyCoordsMGRS = 'coords_mgrs';
 const keyCoordsSwissGrid = 'coords_swissgrid';
 const keyCoordsSwissGridPlus = 'coords_swissgridplus';
-const keyCoordsGaussKrueger1 = 'coords_gausskrueger_gk1';
-const keyCoordsGaussKrueger2 = 'coords_gausskrueger_gk2';
-const keyCoordsGaussKrueger3 = 'coords_gausskrueger_gk3';
-const keyCoordsGaussKrueger4 = 'coords_gausskrueger_gk4';
-const keyCoordsGaussKrueger5 = 'coords_gausskrueger_gk5';
+const keyCoordsGaussKrueger = 'coords_gausskrueger';
+const keyCoordsGaussKruegerGK1 = 'coords_gausskrueger_gk1';
+const keyCoordsGaussKruegerGK2 = 'coords_gausskrueger_gk2';
+const keyCoordsGaussKruegerGK3 = 'coords_gausskrueger_gk3';
+const keyCoordsGaussKruegerGK4 = 'coords_gausskrueger_gk4';
+const keyCoordsGaussKruegerGK5 = 'coords_gausskrueger_gk5';
 const keyCoordsMaidenhead = 'coords_maidenhead';
 const keyCoordsMercator = 'coords_mercator';
+const keyCoordsSlippyMap = 'coords_slippymap';
 const keyCoordsGeohash = 'coords_geohash';
 const keyCoordsOpenLocationCode = 'coords_openlocationcode';
 const keyCoordsQuadtree = 'coords_quadtree';
@@ -24,8 +26,9 @@ const keyCoordsReverseWhereIGoWaldmeister = 'coords_reversewhereigo_waldmeister'
 class CoordinateFormat {
   final key;
   String name;
+  List<CoordinateFormat> subtypes;
 
-  CoordinateFormat(this.key, this.name);
+  CoordinateFormat(this.key, this.name, {this.subtypes});
 }
 
 List<CoordinateFormat> allCoordFormats = [
@@ -36,18 +39,25 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsMGRS, 'MGRS'),
   CoordinateFormat(keyCoordsSwissGrid, 'SwissGrid (CH1903)'),
   CoordinateFormat(keyCoordsSwissGridPlus, 'SwissGrid (CH1903+)'),
-  CoordinateFormat(keyCoordsGaussKrueger1, null),
-  CoordinateFormat(keyCoordsGaussKrueger2, null),
-  CoordinateFormat(keyCoordsGaussKrueger3, null),
-  CoordinateFormat(keyCoordsGaussKrueger4, null),
-  CoordinateFormat(keyCoordsGaussKrueger5, null),
+  CoordinateFormat(keyCoordsGaussKrueger, 'coords_formatconverter_gausskrueger', subtypes: [
+    CoordinateFormat(keyCoordsGaussKruegerGK1, 'coords_formatconverter_gausskrueger_gk1'),
+    CoordinateFormat(keyCoordsGaussKruegerGK2, 'coords_formatconverter_gausskrueger_gk2'),
+    CoordinateFormat(keyCoordsGaussKruegerGK3, 'coords_formatconverter_gausskrueger_gk3'),
+    CoordinateFormat(keyCoordsGaussKruegerGK4, 'coords_formatconverter_gausskrueger_gk4'),
+    CoordinateFormat(keyCoordsGaussKruegerGK5, 'coords_formatconverter_gausskrueger_gk5'),
+  ]),
   CoordinateFormat(keyCoordsMaidenhead, 'Maidenhead Locator (QTH)'),
   CoordinateFormat(keyCoordsMercator, 'Mercator'),
+  CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles'),
   CoordinateFormat(keyCoordsGeohash, 'Geohash'),
   CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)'),
   CoordinateFormat(keyCoordsQuadtree, 'Quadtree'),
   CoordinateFormat(keyCoordsReverseWhereIGoWaldmeister, 'Reverse WhereIGo (Waldmeister)'),
 ];
+
+CoordinateFormat getCoordinateFormatByKey(String key) {
+  return allCoordFormats.firstWhere((format) => format.key == key);
+}
 
 final defaultCoordinate = LatLng(0.0, 0.0);
 
@@ -375,5 +385,18 @@ class Mercator {
   @override
   String toString() {
     return 'Y: ${easting}\nX: ${northing}';
+  }
+}
+
+class SlippyMap {
+  double x;
+  double y;
+  double zoom;
+
+  SlippyMap(this.x, this.y, this.zoom);
+
+  @override
+  String toString() {
+    return 'X: ${x}\nY: ${y}\nZoom: ${zoom}';
   }
 }
