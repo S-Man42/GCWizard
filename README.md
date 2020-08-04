@@ -13,6 +13,7 @@ Everyone will use a different setting. Mine is as follows:
    1. When asked, import existing project
    1. Install Flutter/Dart plugin: Main menu -> File -> Settings -> Plugins -> Search for `flutter` -> Install (should install Dart automatically) -> Restart
    1. After restart, set Flutter SDK path: Main menu -> File -> Settings -> Languages & Frameworks -> Flutter -> Flutter SDK path -> Your path where you extracted flutter before.
+   1. Install Android SDK API Level 28 - Android Pie: Main menu -> Tools -> SDK Manager -> System settings ->Android SDK
 1. **Get the project ready for compiling:**
    1. A message should appeared at the top of the code view: `'Packages get' has not been run`. If so: Click *Get dependencies*; if not: Go to *Terminal* (bottom of the IDE) and type in `flutter pub get`
    1. Wait a minute for new indexing; afterwards there shouldn't be any error message, anymore
@@ -278,8 +279,12 @@ class IncreasedNState extends State<IncreasedN> {
 		</ol>
 	</li>
 	<li>
-		<b>Register the widget</b>: All widgets are registered centrally. The file is <tt>/widgets/registry.dart</tt>. This wraps your layout with a real page widget, adds a keyword for the language files (which will be mapped to title, description and example, see below), the category, where the tool fits (usually <tt>CRYPTOGRAPHY</tt> for codes or <tt>SCIENCE_AND_TECHNOLOGY</tt> for some scientific formula stuff) and even the keywords for the search engine (without umlauts or diacritics):
+		<b>Register the widget</b>: All widgets are registered centrally. The file is <tt>/widgets/registry.dart</tt>. This imports your widget, wraps your layout with a real page widget, adds a keyword for the language files (which will be mapped to title, description and example, see below), the category, where the tool fits (usually <tt>CRYPTOGRAPHY</tt> for codes or <tt>SCIENCE_AND_TECHNOLOGY</tt> for some scientific formula stuff) and even the keywords for the search engine (without umlauts or diacritics):
   
+```dart
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/increasedn.dart';
+```
+
 ```dart
 GCWToolWidget(
   tool: IncreasedN(), 
