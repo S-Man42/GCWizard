@@ -3,8 +3,10 @@ import 'dart:collection';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:latlong/latlong.dart';
 
 Set<int> _expandVariableGroup(String group) {
@@ -172,6 +174,9 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
 
       if (parsedBearing == null || parsedDistance == null)
         continue;
+
+      parsedBearing = modulo(parsedBearing, 360);
+      parsedDistance = parsedDistance.abs();
 
       parsedCoord.entries.forEach((entry) {
 
