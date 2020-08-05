@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/double_textinputformatter.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class GCWDoubleTextField extends StatefulWidget {
   final TextEditingController controller;

@@ -1,5 +1,4 @@
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:intl/intl.dart';
 
 enum StateOfMatter {SOLID, LIQUID, GAS, UNKNOWN}
 

@@ -46,9 +46,6 @@ String encodeASCII85(Uint8List payload) {
     chunk[chunkIndex++] = currByte;
 
     if (chunkIndex == 4) {
-      var x = chunk.buffer;
-      var y = x.asByteData().getUint8(0);
-
       int value = ByteData.view(chunk.buffer).getInt32(0);
       //Because all-zero data is quite common, an exception is made for the sake of data compression,
       //and an all-zero group is encoded as a single character "z" instead of "!!!!!".
@@ -110,7 +107,7 @@ Uint8List decodeASCII85(String chars) {
     var currByte = payload[i];
     //Because all-zero data is quite common, an exception is made for the sake of data compression,
     //and an all-zero group is encoded as a single character "z" instead of "!!!!!".
-    if (currByte == 'z') {
+    if (currByte == 'z'.codeUnitAt(0)) {
       if (chunkIndex > 0) {
         return null;
       }

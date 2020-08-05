@@ -35,6 +35,7 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
       case keyCoordsGaussKruegerGK3: return 3;
       case keyCoordsGaussKruegerGK4: return 4;
       case keyCoordsGaussKruegerGK5: return 5;
+      default: return 0;
     }
   }
 

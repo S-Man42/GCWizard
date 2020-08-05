@@ -75,9 +75,9 @@ List<String> latLonToWaldmeister(LatLng coord) {
     } else {
       _c3 = _tempc3;
     }
-    a = ((_lat % 1000 - _lat % 100) / 100).toInt().toString() + ((_lon % 100000000 - _lon % 10000000) / 10000000).toInt().toString()+ ((_lat % 10000000 - _lat % 1000000) / 1000000).toInt().toString()+ _a4.toInt().toString()+ ((_lon % 1000 - _lon % 100) / 100 ).toInt().toString()+  (_lat % 10).toInt().toString();
-    b = ((_lon % 10000 - _lon % 1000) / 1000).toInt().toString() +  ((_lat % 100000 - _lat % 10000) / 10000).toInt().toString()+ _b3.toInt().toString()+ ((_lon % 100000 - _lon % 10000) / 10000).toInt().toString()+ ((_lat % 1000000 - _lat % 100000) / 100000).toInt().toString()+ (_lon % 10).toInt().toString();
-    c = ((_lon % 10000000 - _lon % 1000000) / 1000000 ).toInt().toString()+ ((_lon % 100 - _lon % 10) / 10).toInt().toString()+ _c3.toInt().toString()+ ((_lat % 10000 - _lat % 1000) / 1000 ).toInt().toString()+  ((_lat % 100 - _lat % 10) / 10 ).toInt().toString()+  ((_lon % 1000000 - _lon % 100000) / 100000).toInt().toString();
+    a = ((_lat % 1000 - _lat % 100) ~/ 100).toString() + ((_lon % 100000000 - _lon % 10000000) ~/ 10000000).toString()+ ((_lat % 10000000 - _lat % 1000000) ~/ 1000000).toString()+ _a4.toInt().toString()+ ((_lon % 1000 - _lon % 100) ~/ 100 ).toString()+  (_lat % 10).toInt().toString();
+    b = ((_lon % 10000 - _lon % 1000) ~/ 1000).toString() +  ((_lat % 100000 - _lat % 10000) ~/ 10000).toString()+ _b3.toInt().toString()+ ((_lon % 100000 - _lon % 10000) ~/ 10000).toString()+ ((_lat % 1000000 - _lat % 100000) ~/ 100000).toString()+ (_lon % 10).toInt().toString();
+    c = ((_lon % 10000000 - _lon % 1000000) ~/ 1000000 ).toString()+ ((_lon % 100 - _lon % 10) ~/ 10).toString()+ _c3.toInt().toString()+ ((_lat % 10000 - _lat % 1000) ~/ 1000 ).toString()+  ((_lat % 100 - _lat % 10) ~/ 10 ).toString()+  ((_lon % 1000000 - _lon % 100000) ~/ 100000).toString();
   } else {
     _tempb3 = (11 - (_lat % 10 * 8 + (_lon % 100000 - _lon % 10000) / 10000 * 6 + (_lat % 100000 - _lat % 10000) / 10000 * 4 + _a4 * 2 + (_lon % 1000000 - _lon % 100000) / 100000 * 3 + (_lat % 1000000 - _lat % 100000) / 100000 * 5 + (_lat % 10000000 - _lat % 1000000) / 1000000 * 9 + _lon % 10 * 7) % 11);
 
@@ -98,9 +98,9 @@ List<String> latLonToWaldmeister(LatLng coord) {
       _c3 = _tempc3;
     }
 
-    a = (_lat % 10).toInt().toString() + ((_lon % 100000 - _lon % 10000) / 10000).toInt().toString() +  ((_lat % 100000 - _lat % 10000) / 10000 ).toInt().toString() +  _a4.toInt().toString() +  ((_lon % 1000000 - _lon % 100000) / 100000).toInt().toString() +  ((_lat % 1000000 - _lat % 100000) / 100000).toInt().toString();
-    b = ((_lat % 10000000 - _lat % 1000000) / 1000000).toInt().toString() +  (_lon % 10).toInt().toString() +  _b3.toInt().toString() +((_lon % 10000 - _lon % 1000) / 1000).toInt().toString() +  ((_lon % 100000000 - _lon % 10000000) / 10000000).toInt().toString() +  ((_lon % 1000 - _lon % 100) / 100).toInt().toString();
-    c = ((_lat % 10000 - _lat % 1000) / 1000 ).toInt().toString() +  ((_lon % 100 - _lon % 10) / 10 ).toInt().toString() +  _c3.toInt().toString() + ((_lat % 1000 - _lat % 100) / 100 ).toInt().toString() +  ((_lat % 100 - _lat % 10) / 10 ).toInt().toString() +  ((_lon % 10000000 - _lon % 1000000) / 1000000).toInt().toString();
+    a = (_lat % 10).toInt().toString() + ((_lon % 100000 - _lon % 10000) ~/ 10000).toString() +  ((_lat % 100000 - _lat % 10000) ~/ 10000 ).toString() +  _a4.toInt().toString() +  ((_lon % 1000000 - _lon % 100000) ~/ 100000).toString() +  ((_lat % 1000000 - _lat % 100000) ~/ 100000).toString();
+    b = ((_lat % 10000000 - _lat % 1000000) ~/ 1000000).toString() +  (_lon % 10).toInt().toString() +  _b3.toInt().toString() +((_lon % 10000 - _lon % 1000) ~/ 1000).toString() +  ((_lon % 100000000 - _lon % 10000000) ~/ 10000000).toString() +  ((_lon % 1000 - _lon % 100) ~/ 100).toString();
+    c = ((_lat % 10000 - _lat % 1000) ~/ 1000 ).toString() +  ((_lon % 100 - _lon % 10) ~/ 10 ).toString() +  _c3.toInt().toString() + ((_lat % 1000 - _lat % 100) ~/ 100 ).toString() +  ((_lat % 100 - _lat % 10) ~/ 10 ).toString() +  ((_lon % 10000000 - _lon % 1000000) ~/ 1000000).toString();
   }
 
   return [a, b, c];

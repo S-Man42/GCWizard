@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
 
 

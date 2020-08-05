@@ -384,7 +384,7 @@ class Mercator {
 
   @override
   String toString() {
-    return 'Y: ${easting}\nX: ${northing}';
+    return 'Y: $easting\nX: $northing';
   }
 }
 
@@ -397,6 +397,6 @@ class SlippyMap {
 
   @override
   String toString() {
-    return 'X: ${x}\nY: ${y}\nZoom: ${zoom}';
+    return 'X: $x\nY: $y\nZoom: $zoom';
   }
 }
