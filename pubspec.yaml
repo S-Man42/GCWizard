@@ -26,6 +26,7 @@ dependencies:
   pointycastle: ^1.0.2
   fluttertoast: ^4.0.0
   qr_flutter: ^3.2.0
+  touchable: ^0.1.7
 
 dev_dependencies:
   flutter_test:

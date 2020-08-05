@@ -69,6 +69,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/7_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -178,6 +179,7 @@ class _MainViewState extends State<MainView> {
           className(RomanNumbers()),
           className(RotationSelection()),
           className(Scrabble()),
+          className(SevenSegmentDisplay()),
           className(Skytale()),
           className(SpoonLanguage()),
           className(Substitution()),
