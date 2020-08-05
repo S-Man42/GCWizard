@@ -10,6 +10,7 @@ Everyone will use a different setting. Mine is as follows:
 1. **Download and extract Flutter SDK** https://flutter.dev/docs/get-started/install
 1. **Download and install Android Studio** (with Android Virtual Device) https://developer.android.com/studio
    1. At first start, follow the install instructions
+      1. This should include the installation of the Android SDK (minimum API Level 28); if not, do it manually: Main menu -> Tools -> SDK Manager -> System settings -> Android SDK
    1. When asked, import existing project
    1. Install Flutter/Dart plugin: Main menu -> File -> Settings -> Plugins -> Search for `flutter` -> Install (should install Dart automatically) -> Restart
    1. After restart, set Flutter SDK path: Main menu -> File -> Settings -> Languages & Frameworks -> Flutter -> Flutter SDK path -> Your path where you extracted flutter before.
@@ -278,7 +279,10 @@ class IncreasedNState extends State<IncreasedN> {
 		</ol>
 	</li>
 	<li>
-		<b>Register the widget</b>: All widgets are registered centrally. The file is <tt>/widgets/registry.dart</tt>. This wraps your layout with a real page widget, adds a keyword for the language files (which will be mapped to title, description and example, see below), the category, where the tool fits (usually <tt>CRYPTOGRAPHY</tt> for codes or <tt>SCIENCE_AND_TECHNOLOGY</tt> for some scientific formula stuff) and even the keywords for the search engine (without umlauts or diacritics):
+		<b>Register the widget</b>: All widgets are registered centrally. The file is <tt>/widgets/registry.dart</tt>. This imports your widget, wraps your layout with a real page widget, adds a keyword for the language files (which will be mapped to title, description and example, see below), the category, where the tool fits (usually <tt>CRYPTOGRAPHY</tt> for codes or <tt>SCIENCE_AND_TECHNOLOGY</tt> for some scientific formula stuff) and even the keywords for the search engine (without umlauts or diacritics):
+```dart
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/increasedn.dart';
+```
   
 ```dart
 GCWToolWidget(
