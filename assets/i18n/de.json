@@ -1227,12 +1227,14 @@
   "scrabble_version_swe" : "Schwedisch",
   "scrabble_version_klingon" : "Klingonisch",
 
+  "segment_title" : "Segment Anzeige",
+  "segment_description" : "Ver- und Entschlüsseln von LED-Segment-Anzeigen",
   "segment_typ" : "Art der Anzeige",
   "segment_typ_7" : "7 Segmente",
   "segment_typ_14" : "14 Segmente",
   "segment_crypt_mode" : "Modus",
-  "segment_crypt_mode_encrypt" :"entschlüsseln",
-  "segment_crypt_mode_decrypt" :"verschlüsseln",
+  "segment_crypt_mode_encrypt" :"verschlüsseln",
+  "segment_crypt_mode_decrypt" :"entschlüsseln",
 
   "settings_general_title" : "Allgemein",
   "settings_general_clipboard" : "Zwischenablage",
