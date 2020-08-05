@@ -6,7 +6,6 @@ import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
-import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
@@ -15,7 +14,6 @@ import 'package:gc_wizard/widgets/selector_lists/crosssum_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/easter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
@@ -39,7 +37,7 @@ import 'package:gc_wizard/widgets/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_two_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersection.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
-import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
+import 'package:gc_wizard/widgets/tools/coords/variable_coordinate.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
@@ -54,6 +52,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base85.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
@@ -80,6 +79,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_general.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/scrabble.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/segment.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
@@ -92,15 +92,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vanity_multiplenumb
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vanity_singlenumbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
-import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_date.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_years.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_position.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_rise_set.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_position.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
+import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
@@ -123,7 +115,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nth
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 
 class Registry {
@@ -131,9 +122,6 @@ class Registry {
 
   static final SEARCHSTRING_SETTINGS = 'settings einstellungen preferences ';
 
-  static final SEARCHSTRING_ASTRONOMY = 'astronomy astronomie stars sterne planets planeten astronomisches astronomical ';
-  static final SEARCHSTRING_ASTRONOMY_RISESET = 'rise set transit noon aufgang aufgaenge untergang untergaenge dawn dusk mittag culmination kulmination ';
-  static final SEARCHSTRING_ASTRONOMY_POSITION = 'declination position stand rektaszension zodiac astrology astrologischeszeichen astrologie astrologicalsign tierkreiszeichen sternzeichen azimuth altitude diameter durchmesser hoehe rightascension distance entfernung distanz observer beobachter juliandate julianischesdatum sternzeit siderealtime gmst lmst eclipticlongitude ekliptischelaenge ';
   static final SEARCHSTRING_BASE = 'base encode decode encoding decoding dekodierung dekodieren ';
   static final SEARCHSTRING_BRAINFK = SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'brainf**k ';
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
@@ -145,7 +133,6 @@ class Registry {
   static final SEARCHSTRING_CROSSSUMS = 'crosssums digits alternated crosstotals iterated iteriert products quersummen produkte alternierend alterniert iterierend ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
-  static final SEARCHSTRING_EASTER = 'eastersunday ostern ostersonntag ';
   static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterische programmiersprache esoteric programming language ';
   static final SEARCHSTRING_FORMULASOLVER = 'formula solver formelrechner ';
   static final SEARCHSTRING_GAMELANGUAGE = 'spielsprachen game languages secret languages geheimsprachen ';
@@ -196,12 +183,6 @@ class Registry {
         searchStrings: 'ascii utf8 utf-8 unicode american standard information interchange binary code binärcode'
       ),
       GCWToolWidget(
-        tool: AstronomySelection(),
-        i18nPrefix: 'astronomy_selection',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: SEARCHSTRING_ASTRONOMY
-      ),
-      GCWToolWidget(
         tool: Atbash(),
         i18nPrefix: 'atbash',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -220,10 +201,10 @@ class Registry {
         searchStrings: SEARCHSTRING_BASE
       ),
       GCWToolWidget(
-        tool: Beaufort(),
-        i18nPrefix: 'beaufort',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'beaufort wind force scale beaufort-skala windstaerke windspeed '
+          tool: Bifid(),
+          i18nPrefix: 'bifid',
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: 'felix delastelle polybios polybius transposition'
       ),
       GCWToolWidget(
         tool: Binary(),
@@ -326,7 +307,7 @@ class Registry {
         searchStrings: 'enigma rotors walzen'
       ),
       GCWToolWidget(
-        tool: FormulaSolverFormulaGroups(),
+        tool: FormulaSolver(),
         i18nPrefix: 'formulasolver',
         searchStrings: SEARCHSTRING_FORMULASOLVER
       ),
@@ -462,11 +443,17 @@ class Registry {
         searchStrings: 'science technology naturwissenschaften technologien technik maths mathematics mathematik physics physik chemistry chemie '
       ),
       GCWToolWidget(
-        tool: Scrabble(),
-        i18nPrefix: 'scrabble',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'scrabble deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'
+          tool: Scrabble(),
+          i18nPrefix: 'scrabble',
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: 'scrabble deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'
       ),
+      //GCWToolWidget(
+      //    tool: Segment(),
+      //    i18nPrefix: 'segment',
+      //    category: ToolCategory.CRYPTOGRAPHY,
+      //    searchStrings: 'segment segmente segments 7 14 display led matrix'
+      //),
       GCWToolWidget(
         tool: Skytale(),
         i18nPrefix: 'skytale',
@@ -515,12 +502,6 @@ class Registry {
         searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'
       ),
       GCWToolWidget(
-        tool: UnitConverter(),
-        i18nPrefix: 'unitconverter',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'einheiten groessen units konvertieren umwandeln umrechnen converter switch konvertierer laengen lengths geschwindigkeiten speeds velocity velocities energies energy force kraft power leistung times uhrzeiten areas flaechen volumen volumes denisities density dichten watt newton meters inches zoll pounds pfund pferdestaerken horsepowers gallonen gallons barrels yoda soccerfields fussballfelder badewannen bathtubs atm psi bar pressures druecke druck angles winkel radiant degrees grad temperaturen temperatures celsius kelvin fahrenheit rankine reaumur masses gewichte massen kilogramm feinunze troyounce pints',
-      ),
-      GCWToolWidget(
         tool: VanitySelection(),
         i18nPrefix: 'vanity_selection',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -545,39 +526,7 @@ class Registry {
         searchStrings: SEARCHSTRING_CCITT2
       ),
 
-      //AstronomySelection  ********************************************************************************************
-      GCWToolWidget(
-        tool: SunRiseSet(),
-        i18nPrefix: 'astronomy_sunriseset',
-        searchStrings: SEARCHSTRING_ASTRONOMY + SEARCHSTRING_ASTRONOMY_RISESET + 'solar sun sonne twilight morning evening morgendaemmerung abenddaemmerung nautical astronomical civil zivile buergerliche astronomische nautische '
-      ),
-      GCWToolWidget(
-        tool: SunPosition(),
-        i18nPrefix: 'astronomy_sunposition',
-        searchStrings: SEARCHSTRING_ASTRONOMY + SEARCHSTRING_ASTRONOMY_POSITION + 'solar sun sonne '
-      ),
-      GCWToolWidget(
-        tool: MoonRiseSet(),
-        i18nPrefix: 'astronomy_moonriseset',
-        searchStrings: SEARCHSTRING_ASTRONOMY + SEARCHSTRING_ASTRONOMY_RISESET + 'lunar mond moon '
-      ),
-      GCWToolWidget(
-        tool: MoonPosition(),
-        i18nPrefix: 'astronomy_moonposition',
-        searchStrings: SEARCHSTRING_ASTRONOMY + SEARCHSTRING_ASTRONOMY_POSITION + 'lunar mond moon eclipticlatitude ekliptischebreite moonphase mondphase moonage mondalter mondzeichen moonsign illumination beleuchtung beleuchtet illuminated '
-      ),
-      GCWToolWidget(
-        tool: EasterSelection(),
-        i18nPrefix: 'astronomy_easter_selection',
-        searchStrings: SEARCHSTRING_EASTER
-      ),
-      GCWToolWidget(
-        tool: Seasons(),
-        i18nPrefix: 'astronomy_seasons',
-        searchStrings: 'seasons jahreszeiten spring summer winter autumn fall herbst fruehling sommer aphelion perihelion sonnennaechster sonnenaehester sonnennahster sonnennahester sonnenfernster nearest closest farthest furthest ',
-      ),
-
-      //BaseSelection **************************************************************************************************
+      //BaseSelection **********************************************************************************************
       GCWToolWidget(
         tool: Base16(),
         i18nPrefix: 'base_base16',
@@ -648,7 +597,7 @@ class Registry {
         searchStrings: SEARCHSTRING_COORDINATES + 'converter converting konverter konvertieren umwandeln quadtree openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gauss kruger krueger gauue mgrs utm dec deg dms 1903 ch1903+'
       ),
       GCWToolWidget(
-        tool: VariableCoordinateFormulas(),
+        tool: VariableCoordinate(),
         i18nPrefix: 'coords_variablecoordinate',
         iconPath: 'assets/coordinates/icon_variable_coordinate.png',
         searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_FORMULASOLVER + 'variable waypoints flex '
@@ -766,18 +715,6 @@ class Registry {
         tool: ESearch(),
         i18nPrefix: 'irrationalnumbers_search',
         searchStrings: SEARCHSTRING_E + 'occurrence vorkommen vorhanden contains containing enthaelt enthalten '
-      ),
-
-      //Easter Selection ***************************************************************************************
-      GCWToolWidget(
-        tool: EasterDate(),
-        i18nPrefix: 'astronomy_easter_easterdate',
-        searchStrings: SEARCHSTRING_EASTER,
-      ),
-      GCWToolWidget(
-        tool: EasterYears(),
-        i18nPrefix: 'astronomy_easter_easteryears',
-        searchStrings: SEARCHSTRING_EASTER,
       ),
 
       //Hash Selection *****************************************************************************************
