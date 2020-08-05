@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/bifid.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -25,7 +26,7 @@ class BifidState extends State<Bifid> {
   String _currentKey = '12345';
   String _currentAlphabet = '';
 
-  BifidMode _currentBifidMode = BifidMode.AZ09;
+  PolybiosMode _currentBifidMode = PolybiosMode.AZ09;
 
   GCWSwitchPosition _currentAlphabetMode = GCWSwitchPosition.left;       /// J-I oder C-K
   GCWSwitchPosition _currentMatrixMode = GCWSwitchPosition.left;         /// 5x5 oder 6x6
@@ -49,9 +50,9 @@ class BifidState extends State<Bifid> {
   @override
   Widget build(BuildContext context) {
     var BifidModeItems = {
-      BifidMode.AZ09 : i18n(context, 'bifid_mode_az09'),
-      BifidMode.ZA90 : i18n(context, 'bifid_mode_za90'),
-      BifidMode.CUSTOM : i18n(context, 'bifid_mode_custom'),
+      PolybiosMode.AZ09 : i18n(context, 'bifid_mode_az09'),
+      PolybiosMode.ZA90 : i18n(context, 'bifid_mode_za90'),
+      PolybiosMode.CUSTOM : i18n(context, 'bifid_mode_custom'),
     };
 
     return Column(
@@ -105,7 +106,7 @@ class BifidState extends State<Bifid> {
             );
           }).toList(),
         ),
-        _currentBifidMode == BifidMode.CUSTOM ? GCWTextField(
+        _currentBifidMode == PolybiosMode.CUSTOM ? GCWTextField(
           hintText: i18n(context, 'common_alphabet'),
           controller: _alphabetController,
           onChanged: (text) {
