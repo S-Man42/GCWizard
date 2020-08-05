@@ -280,11 +280,12 @@ class IncreasedNState extends State<IncreasedN> {
 	</li>
 	<li>
 		<b>Register the widget</b>: All widgets are registered centrally. The file is <tt>/widgets/registry.dart</tt>. This imports your widget, wraps your layout with a real page widget, adds a keyword for the language files (which will be mapped to title, description and example, see below), the category, where the tool fits (usually <tt>CRYPTOGRAPHY</tt> for codes or <tt>SCIENCE_AND_TECHNOLOGY</tt> for some scientific formula stuff) and even the keywords for the search engine (without umlauts or diacritics):
+	
 ```dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/increasedn.dart';
-```
-  
-```dart
+
+...
+
 GCWToolWidget(
   tool: IncreasedN(), 
   i18nPrefix: 'increasedn', 
@@ -296,16 +297,14 @@ GCWToolWidget(
 Notice, that the toolname is a call of the <tt>i18n()</tt> method. This is for internationalization. It maps the given keyword (<tt>increasedn_title</tt> in this case) to the real output in all available languages. 
   </li>
 	<li>
-		<b>Put the widget into a list</b>: This means: Every widget has a list as parent. Most widget are located in the main list, which is shown on the main screen. But some tools, like the coordinate functions are part of an own list. All lists order their tools by their (localized) titles. So, this tool can be put into the main list, which can be found in <tt>/widgets/main_view.dart</tt>, around lines 112ff.. Add line:
+		<b>Put the widget into a list</b>: This means: Every widget has a list as parent. Most widget are located in the main list, which is shown on the main screen. But some tools, like the coordinate functions are part of an own list. All lists order their tools by their (localized) titles. So, this tool can be put into the main list, which can be found in <tt>/widgets/main_view.dart</tt>, around lines 112ff.. Add line (and import):
   
 ```dart
-className(IncreasedN()),
-```
-
-               <b>Do not forget to import your dart-File: Add line
-
-```dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/increased.dart';
+
+...
+
+className(IncreasedN()),
 ```
 
 </li>
