@@ -192,7 +192,7 @@
 
   "bifid_title" : "Bifid Cipher",
   "bifid_description" : "Cipher based on a square with an additional transposition",
-  "bifid_example" : "HALLO → FNNVD",
+  "bifid_example" : "HELLO → FNNVD",
   "bifid_mode_az09" : "A-Z 0-9",
   "bifid_mode_za90" : "Z-A 9-0",
   "bifid_mode_custom" : "Custom alphabet",
