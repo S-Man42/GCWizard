@@ -52,7 +52,7 @@ class SegmentState extends State<Segment> {
     return Column(
       children: <Widget>[
         GCWTextDivider(
-            text: i18n(context, 'bifid_alphabet_mod')
+            text: i18n(context, 'segment_typ')
         ),
 
         GCWDropDownButton(
@@ -90,6 +90,7 @@ class SegmentState extends State<Segment> {
               },
             )
           : GCWTextField(
+              hintText: i18n(context, 'segment_hint_decode'),
               controller: _decodeController,
               onChanged: (text) {
                 setState(() {
