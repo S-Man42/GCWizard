@@ -123,7 +123,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nth
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/7_segment_display.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/segment_demo.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 
@@ -469,7 +469,7 @@ class Registry {
         searchStrings: 'scrabble deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'
       ),
       GCWToolWidget(
-        tool: SevenSegmentDisplay(),
+        tool: SegmentDemo(),
         i18nPrefix: 'sevensegment',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: ''

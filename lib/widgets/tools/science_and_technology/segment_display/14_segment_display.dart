@@ -4,23 +4,24 @@ import 'package:touchable/touchable.dart';
 
 const _INITIAL_SEGMENTS = <String, bool>{
   'a': false, 'b': false, 'c': false, 'd': false,
-  'e': false, 'f': false, 'g': false, 'dp': false
+  'e': false, 'f': false, 'g1': false, 'g2': false, 'h': false, 'i': false,
+  'j': false, 'k': false, 'l': false, 'm': false, 'dp': false
 };
 
-class SevenSegmentDisplay extends StatefulWidget {
+class FourteenSegmentDisplay extends StatefulWidget {
 
   Map<String, bool> segments;
   final bool readOnly;
   final bool showPoint;
   final Function onChanged;
 
-  SevenSegmentDisplay({Key key, this.segments, this.showPoint: true, this.readOnly: false, this.onChanged}) : super(key: key);
+  FourteenSegmentDisplay({Key key, this.segments, this.showPoint: true, this.readOnly: false, this.onChanged}) : super(key: key);
 
   @override
-  SevenSegmentDisplayState createState() => SevenSegmentDisplayState();
+  FourteenSegmentDisplayState createState() => FourteenSegmentDisplayState();
 }
 
-class SevenSegmentDisplayState extends State<SevenSegmentDisplay> {
+class FourteenSegmentDisplayState extends State<FourteenSegmentDisplay> {
   Map<String, bool> _segments;
 
   @override
@@ -52,7 +53,7 @@ class SevenSegmentDisplayState extends State<SevenSegmentDisplay> {
           child: CanvasTouchDetector(
             builder: (context) {
               return CustomPaint(
-                painter: SevenSegmentPainter(context, _segments, (key, value) {
+                painter: FourteenSegmentPainter(context, _segments, (key, value) {
                   if (widget.readOnly)
                     return;
 
