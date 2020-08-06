@@ -469,10 +469,10 @@ class Registry {
         searchStrings: 'scrabble deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'
       ),
       GCWToolWidget(
-          tool: Segment(),
-          i18nPrefix: 'segment',
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'segment segmente segments 7 14 16 display led matrix'
+        tool: Segment(),
+        i18nPrefix: 'segment',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'segment segmente segments 7 14 16 display led matrix'
       ),
       GCWToolWidget(
         tool: Skytale(),
