@@ -80,6 +80,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_general.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/scrabble.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/segment.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
@@ -466,6 +467,12 @@ class Registry {
         i18nPrefix: 'scrabble',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'scrabble deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'
+      ),
+      GCWToolWidget(
+          tool: Segment(),
+          i18nPrefix: 'segment',
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: 'segment segmente segments 7 14 16 display led matrix'
       ),
       GCWToolWidget(
         tool: Skytale(),
