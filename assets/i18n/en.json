@@ -1222,7 +1222,9 @@
   "segment_crypt_mode" : "Mode",
   "segment_crypt_mode_encrypt" :"encrypt",
   "segment_crypt_mode_decrypt" :"decrypt",
-  "segment_hint_decode" : "Input are a,a1,a2,b,c,d,d1,d2,e,f,g,g1,g2,h,i,j,k,l,m, \nto seperate letters use space, \nto seperate words use space+dot+space",
+  "segment_hint_decode_16" : "possible Inputs are \n- a,a1,a2,b,c,d,d1,d2,e,f,g,g1,g2,h,i,j,k,l,m\n- space to seperate letters\n- space+dot+space to seperate words",
+  "segment_hint_decode_14" : "possible Inputs are \n- a,b,c,d,e,f,g,g1,g2,h,i,j,k,l,m            \n- space to seperate letters\n- space+dot+space to seperate words",
+  "segment_hint_decode_7"  : "possible Inputs are \n- a,b,c,d,e,f,g                             \n- space to seperate letters\n- space+dot+space to seperate words",
 
   "settings_general_title" : "General",
   "settings_general_clipboard" : "Clipboard",
