@@ -1222,6 +1222,7 @@
   "segment_crypt_mode" : "Modus",
   "segment_crypt_mode_encrypt" :"verschlüsseln",
   "segment_crypt_mode_decrypt" :"entschlüsseln",
+  "segment_hint_decode" : "Eingaben sind a,a1,a2,b,c,d,d1,d2,e,f,g,g1,g2,h,i,j,k,l,m, \num Zeichen zu trennen: Leerzeichen, \num Wörter zu trennen: Leerzeichen+Punkt+Leerzeichen",
 
   "settings_general_title" : "Allgemein",
   "settings_general_clipboard" : "Zwischenablage",

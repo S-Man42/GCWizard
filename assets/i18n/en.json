@@ -1222,6 +1222,7 @@
   "segment_crypt_mode" : "Mode",
   "segment_crypt_mode_encrypt" :"encrypt",
   "segment_crypt_mode_decrypt" :"decrypt",
+  "segment_hint_decode" : "Input are a,a1,a2,b,c,d,d1,d2,e,f,g,g1,g2,h,i,j,k,l,m, \nto seperate letters use space, \nto seperate words use space+dot+space",
 
   "settings_general_title" : "General",
   "settings_general_clipboard" : "Clipboard",
