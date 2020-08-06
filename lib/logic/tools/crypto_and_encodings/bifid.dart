@@ -12,7 +12,7 @@ enum BifidAlphabetMode{JTOI, CTOK, WTOVV}
 
 String createBifidAlphabet(int gridDimension, {String firstLetters: '', PolybiosMode mode: PolybiosMode.AZ09, String fillAlphabet: '', BifidAlphabetMode alphabetMode}) {
   switch (alphabetMode) {
-    case BifidAlphabetMode.JTOI: // J->I
+    case BifidAlphabetMode.JTOI:
       switch (mode) {
         case PolybiosMode.AZ09:
           if (gridDimension==5)
@@ -29,7 +29,7 @@ String createBifidAlphabet(int gridDimension, {String firstLetters: '', Polybios
         default: break;
       }
       break;
-    case BifidAlphabetMode.CTOK: // C->K
+    case BifidAlphabetMode.CTOK:
       switch (mode) {
         case PolybiosMode.AZ09:
           if (gridDimension == 5)
@@ -46,7 +46,7 @@ String createBifidAlphabet(int gridDimension, {String firstLetters: '', Polybios
         default: break;
       }
       break;
-    case BifidAlphabetMode.WTOVV: // C->K
+    case BifidAlphabetMode.WTOVV:
       switch (mode) {
         case PolybiosMode.AZ09:
           if (gridDimension == 5)
@@ -85,30 +85,29 @@ BifidOutput encryptBifid (String input, String key, {PolybiosMode mode: Polybios
   key = key.toUpperCase();
   input = input.toUpperCase();
 
-  if (alphabetMode == GCWSwitchPosition.left) {  /// J->I
-    if (!alphabet.contains('J'))
-      input = input.replaceAll('J', 'I');
-  } else {                                       /// C->K
-    if (!alphabet.contains('C'))
-      input = input.replaceAll('C', 'K');
+  // check Input and correct it according to the chosen Alphabetmodification
+  if (dim == 5) {
+    switch (alphabetMode) {
+      case BifidAlphabetMode.JTOI:
+        input = input.replaceAll('J', 'I');
+        break;
+      case BifidAlphabetMode.CTOK:
+        input = input.replaceAll('C', 'K');
+        break;
+      case BifidAlphabetMode.WTOVV:
+        input = input.replaceAll('W', 'VV');
+        break;
+      default:
+        break;
+    }
   }
 
-  Map<String, List<int>> grid = createPolybiosGrid(alphabet, dim);
+  PolybiosOutput polybiosOutput = encryptPolybios(input, key, mode: PolybiosMode.CUSTOM, alphabet: alphabet);
 
-  if (grid == null)
+  if (polybiosOutput == null)
     return null;
 
-  var output = input
-    .split('')
-    .where((character) => alphabet.contains(character))
-    .map((character) {
-      var coords = grid[character];
-      if (coords == null)
-        return '';
-
-      return '${key[coords[0]]}${key[coords[1]]}';
-    })
-    .join(' ');
+  var polybiosEncoded = polybiosOutput.output.replaceAll(' ', '');
 
   /// split output into two rows und build a new string with digits
   /// use this string as input for the decrypt-routine
@@ -116,18 +115,15 @@ BifidOutput encryptBifid (String input, String key, {PolybiosMode mode: Polybios
     String row2 = '';
     String helpInput = '';
 
-    output = output.replaceAll(' ', '');
-
-    for (var i = 0; i < output.length; i = i + 2) {
-      row1 = row1 + output.substring(i, i+1);
-      row2 = row2 + output.substring(i+1, i+2);
+    for (var i = 0; i < polybiosEncoded.length; i = i + 2) {
+      row1 = row1 + polybiosEncoded.substring(i, i + 1);
+      row2 = row2 + polybiosEncoded.substring(i + 1, i + 2);
     }
     helpInput = row1 + row2;
 
-    output = helpDecryptBifid (helpInput, key, mode: mode,  alphabet: alphabet,  alphabetMode: alphabetMode).output;
+    polybiosOutput = decryptPolybios(helpInput, key, mode: PolybiosMode.CUSTOM, alphabet: alphabet);
 
-  return BifidOutput(output, polybiosGridToString(grid, key));
-
+  return BifidOutput(polybiosOutput.output,polybiosOutput.grid);
 }
 
 BifidOutput decryptBifid (String input, String key, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet, BifidAlphabetMode alphabetMode}) {
@@ -139,95 +135,52 @@ BifidOutput decryptBifid (String input, String key, {PolybiosMode mode: Polybios
     return null; //TODO Exception
 
   alphabet = createBifidAlphabet(dim, mode: mode, fillAlphabet: alphabet, alphabetMode: alphabetMode);
+
   if (alphabet == null)
     return null; //TODO Exception
 
   key = key.toUpperCase();
   input = input.toUpperCase();
 
-  if (alphabetMode == GCWSwitchPosition.left) {  /// J->I
-    if (!alphabet.contains('J'))
-      input = input.replaceAll('J', 'I');
-  } else {                                       /// C->K
-    if (!alphabet.contains('C'))
-      input = input.replaceAll('C', 'K');
+  // check Input and correct it according to the chosen Alphabetmodification
+  if (dim == 5) {
+    switch (alphabetMode) {
+      case BifidAlphabetMode.JTOI:
+        input = input.replaceAll('J', 'I');
+        break;
+      case BifidAlphabetMode.CTOK:
+        input = input.replaceAll('C', 'K');
+        break;
+      case BifidAlphabetMode.WTOVV:
+        input = input.replaceAll('W', 'VV');
+        break;
+      default:
+        break;
+    }
   }
 
-  Map<String, List<int>> grid = createPolybiosGrid(alphabet, dim);
+  PolybiosOutput polybiosOutput = encryptPolybios(input, key, mode: PolybiosMode.CUSTOM, alphabet: alphabet);
 
-  if (grid == null)
+  if (polybiosOutput == null)
     return null;
 
-  var output = input
-      .split('')
-      .where((character) => alphabet.contains(character))
-      .map((character) {
-    var coords = grid[character];
-    if (coords == null)
-      return '';
+  var polybiosEncoded = polybiosOutput.output.replaceAll(' ', '');
 
-    return '${key[coords[0]]}${key[coords[1]]}';
-  })
-      .join(' ');
-
+  /// split output into two rows und build a new string with digits
+  /// use this string as input for the decrypt-routine
   String row1 = '';
   String row2 = '';
   String helpInput = '';
 
-  output = output.replaceAll(' ', '');
+  row1 = polybiosEncoded.substring(0, polybiosEncoded.length ~/ 2);
+  row2 = polybiosEncoded.substring(polybiosEncoded.length ~/ 2, polybiosEncoded.length);
 
-  row1 = output.substring(0,output.length~/2);
-  row2 = output.substring(output.length~/2,output.length);
-
-  for (var i = 0; i < output.length/2; i = i + 1) {
-    helpInput = helpInput + row1.substring(i, i+1) + row2.substring(i, i+1);
+  for (var i = 0; i < polybiosEncoded.length / 2; i = i + 1) {
+    helpInput = helpInput + row1.substring(i, i + 1) + row2.substring(i, i + 1);
   }
 
-  output = helpDecryptBifid (helpInput, key, mode: PolybiosMode.AZ09,  alphabet: alphabet,  alphabetMode: alphabetMode).output;
+  polybiosOutput = decryptPolybios(helpInput, key, mode: PolybiosMode.CUSTOM, alphabet: alphabet);
 
-  return BifidOutput(output, polybiosGridToString(grid, key));
-}
-
-BifidOutput helpDecryptBifid (String input, String key, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet, BifidAlphabetMode alphabetMode}) {
-  if (input == null || key == null)
-    return null; //TODO Exception
-
-  int dim = key.length;
-  if (dim != 5 && dim != 6)
-    return null; //TODO Exception
-
-  alphabet = createBifidAlphabet(dim, mode: mode, fillAlphabet: alphabet, alphabetMode: alphabetMode);
-  if (alphabet == null)
-    return null;
-
-  key = key.toUpperCase();
-  input = input
-      .split('')
-      .map((character) => key.contains(character) ? character : '')
-      .join();
-
-  if (input.length % 2 != 0)
-    input = input.substring(0, input.length - 1);
-
-  if (input.length == 0)
-    return null; //TODO: Exception
-
-  var grid = createPolybiosGrid(alphabet, dim);
-
-  if (grid == null)
-    return null;
-
-  String out = '';
-
-  int i = 0;
-  while (i < input.length - 1) {
-    var x = key.indexOf(input[i]);
-    var y = key.indexOf(input[i + 1]);
-
-    out += polybiosGridCharacterByCoordinate(grid, x, y);
-    i += 2;
-  }
-
-  return BifidOutput(out, polybiosGridToString(grid, key));
+  return BifidOutput(polybiosOutput.output,polybiosOutput.grid);
 }
 
