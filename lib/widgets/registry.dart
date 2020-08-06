@@ -47,6 +47,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
@@ -226,10 +227,16 @@ class Registry {
         searchStrings: 'beaufort wind force scale beaufort-skala windstaerke windspeed '
       ),
       GCWToolWidget(
-        tool: Binary(),
-        i18nPrefix: 'binary',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'binary numbers binaerzahlen dezimalzahlen decimal dual'
+          tool: Binary(),
+          i18nPrefix: 'binary',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          searchStrings: 'binary numbers binaerzahlen dezimalzahlen decimal dual'
+      ),
+      GCWToolWidget(
+          tool: Binary(),
+          i18nPrefix: 'bifid',
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: 'bifid felix delastelle polybios polybius transposition'
       ),
       GCWToolWidget(
         tool: BrainfkSelection(),
