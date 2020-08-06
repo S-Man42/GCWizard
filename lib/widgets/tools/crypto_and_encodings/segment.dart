@@ -20,7 +20,7 @@ class SegmentState extends State<Segment> {
   TextEditingController _encodeController;
   TextEditingController _decodeController;
 
-  GCWSwitchPosition _currentCryptMode = GCWSwitchPosition.left;         /// de or en crypt
+  GCWSwitchPosition _currentCryptMode = GCWSwitchPosition.left;         /// de- or encrypt
   SegmentTyp _currentSegmentTyp = SegmentTyp.Segment7;
 
   var _currentEncodeInput = '';
