@@ -233,7 +233,7 @@ class Registry {
           searchStrings: 'binary numbers binaerzahlen dezimalzahlen decimal dual'
       ),
       GCWToolWidget(
-          tool: Binary(),
+          tool: Bifid(),
           i18nPrefix: 'bifid',
           category: ToolCategory.CRYPTOGRAPHY,
           searchStrings: 'bifid felix delastelle polybios polybius transposition'
