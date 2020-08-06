@@ -53,6 +53,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/scrabble.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/segment.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
@@ -179,6 +180,7 @@ class _MainViewState extends State<MainView> {
           className(RomanNumbers()),
           className(RotationSelection()),
           className(Scrabble()),
+          className(Segment()),
           className(SegmentDemo()),
           className(Skytale()),
           className(SpoonLanguage()),
