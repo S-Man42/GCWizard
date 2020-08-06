@@ -29,7 +29,7 @@ class BifidState extends State<Bifid> {
   PolybiosMode _currentBifidMode = PolybiosMode.AZ09;
   BifidAlphabetMode _currentBifidAlphabetMode = BifidAlphabetMode.JToI;
 
-  GCWSwitchPosition _currentMatrixMode = GCWSwitchPosition.left;         /// 5x5 oder 6x6
+  GCWSwitchPosition _currentMatrixMode = GCWSwitchPosition.left;         /// switches between 5x5 or 6x6 square
 
   @override
   void initState() {
