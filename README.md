@@ -2,7 +2,9 @@
 
 ## How to contribute a new function?
 
-### Create your development environment
+### Create your development environment (Android)
+
+[And iOS setup is missing at the moment]
 
 Everyone will use a different setting. Mine is as follows:
 
@@ -51,6 +53,7 @@ decryptIncreasedN(int number) {
 ```
 
 #### Create tests for business logic:
+Tests for the logic are essential: First, they ensure that the logic works as expected and they ensure, that a possible change will not destroy the current functionality. Second, they serve as a documentation. If somebody wants to know, how a certain functions works, he or she can take a look at the test cases, check out the parameters and can see the expected result. This is also one of the first things, a reviewer for Pull Requests checks out before he or she will take a look at the real code.
 1. Tests are located in the `/test/` directory. Its structure follows the main structure. So, your test should be located into `/test/logic/tools/crypto_and_encodings/increased_n.dart`.
 1. **Test structure**: There are test groups. Every group is for testing a specific method. Usually there are two groups, one for encryption and one for decryption. Every group gets a list of input values, combined with the specific expected output.  Every list entry is a key/pair map, which should mirror the parameter names and their values. Afterwards this list will be iterated. For every list entry the relevant function will be called. Please add some well-thought test cases, some crazy values and, of course, the typical cases `null` and, if relevant, empty strings or lists.
 2. **Write and run tests**
@@ -327,3 +330,26 @@ de.json:
 </ol>
 
 #### Run App. Enjoy!
+
+## Branching philosophy
+<ul>
+	<li>Every single upcoming version has its own version branch. E.g. The next version would be 1.42.0, then there's a branch with name <tt>1.42.0</tt>. All features, fixes, etc. should be merged onto this version branch (PR destination branch is the version branch). You can think of it as the current temporary master branch.</li>
+	<li>Feature branch: Every single feature needs its own branch. If you want to contribute a new feature "Increased N", please create a branch with a corresponding name (maybe <tt>increased_n</tt>) from the current <b>version branch</b>. If you worked on two different features simultaneously, you would need two different feature branches. This allows me to merge the features separately, maybe one includes some errors but the other one is ready to merge. The final PR's destination branch is the version branch, of course. (If there's just a small bug fix or a typo, it is ok, to do this the pragmatic way without creating a specific branch, but this should be an exception for really small things!)</li>
+	<li><tt>master</tt> branch: This branch should always contain the stable code of the current productive version. So, if the current productive version would be 1.41.3, this branch's last commit contains exactly the code for this version. So, when the new, following version 1.42.0 is released, the version branch <tt>1.42.0</tt> will be merged onto the <tt>master</tt>. So, checking out the master should reflect the code of the released app. Any further contributions need to be done on a new version branch (e.g. <tt>1.43.0</tt> for a new feature version or <tt>1.42.1</tt> for a patch version with bug fixes, but without any new features)</li>
+</ul>
+
+## Misc, Coding Styles, etc.
+<ul>
+	<li>Please try to reuse already existing code to avoid code duplication. For example, your new crypto function uses a "Polybios" cipher internally, it is a good idea to reuse the Polybios code (creating the grid and use the encryption/decryption. E.g. have a look at the ADFGVX or Bifid Ciphers). Many functions are included in the code. There's a great chance that something similar to your new function has already been done.
+		<ul><li>Other basic crypto functions are "Transposition" (<tt>logic/tools/crypto_end_encodings/transposition.dart</tt>; moves characters or strings from rows to columns and vice versa) and "Substitution" (<tt>logic/tools/crypto_and_encodings/substitution.dart</tt>; very common operation in many ciphers; replaces characters or strings with new characters or strings)</li>
+			<li>When it comes to coordinate calculations, the base functions <tt>logic/tools/coords/projection/projection()</tt> for waypoint projection and <tt>logic/tools/coords/distance_and_bearing/distanceBearing()</tt> for calculation of distances and bearings between two coordinates should be useful.
+			<li>Maybe you discover new possibilities for centralizing some functions or values, please do not hesitate to encapsulate them to a more common place. Cleanup and refactoring is an important and necessary step in coding. For example, you could use one of the Utils files for such centralization if they fit.
+		</ul>
+	</li>
+	<li>Please avoid using Frontend/UI classes or types in logic or test code. This avoids many nested internal Flutter UI dependencies where there are not necessary. These types usually have the prefix <tt>GCW</tt> and they are located in the <tt>widgets</tt> path. Best way to avoid this, is to write the logic/test code before creating the UI. If you need, for example, the output of a Switch widget (usually of type <tt>GCWSwitchPosition</tt>), do not hesitate to map it to a more common enum type, that can be used easily within the logic or test code.
+	</li>
+	<li>Please always use spaces around comparators and operators: <tt>var i = a + b</tt></li>
+	<li>The Dart coding style uses two spaces as default indent. Please use this, althought it may looks nasty... ;)</li>
+	<li>The localisation keywords currently follow their own rules: E.g. let's take <tt>coords_formatconverter_mgrs_easting</tt>: This keywords contains four parts, separated by an underscore. Those can be seen as an hierachy: Topmost the coords section, after that the tool "Format Converter" (here without any separator and without camel case!), afterwards the sub tool "MGRS", which has an "Easting". So, please try to keep such an order when creating a tool. I believe, in more complex cases a separator for parts could make sense. Then please use a dot: <tt>coords_format.converter_mgrs_easting</tt></li>
+	<li>Please name all methods and variables in English. All comments have to be in English, as well.</li>
+</ul>
