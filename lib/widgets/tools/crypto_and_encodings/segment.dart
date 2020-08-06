@@ -26,6 +26,8 @@ class SegmentState extends State<Segment> {
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
 
+  String hint = '';
+
 
   @override
   void initState() {
@@ -61,6 +63,17 @@ class SegmentState extends State<Segment> {
             setState(() {
               _currentSegmentTyp = value;
             });
+            switch (_currentSegmentTyp) {
+              case SegmentTyp.Segment7:
+                hint = 'segment_hint_decode_7';
+                break;
+              case SegmentTyp.Segment14:
+                hint = 'segment_hint_decode_14';
+                break;
+              case SegmentTyp.Segment16:
+                hint = 'segment_hint_decode_16';
+                break;
+            }
           },
           items: SegmentTypItems.entries.map((mode) {
             return DropdownMenuItem(
@@ -89,15 +102,29 @@ class SegmentState extends State<Segment> {
                 });
               },
             )
-          : GCWTextField(
-              hintText: i18n(context, 'segment_hint_decode'),
-              controller: _decodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecodeInput = text;
-                });
-              },
-            ),
+          :  _currentSegmentTyp == SegmentTyp.Segment7
+                ? GCWTextDivider(
+                    text: i18n(context, 'segment_hint_decode_7')
+                  )
+                : _currentSegmentTyp == SegmentTyp.Segment14
+                    ? GCWTextDivider(
+                        text: i18n(context, 'segment_hint_decode_14')
+                      )
+                : GCWTextDivider(
+                    text: i18n(context, 'segment_hint_decode_16')
+                  ),
+
+        _currentCryptMode == GCWSwitchPosition.right
+            ? GCWTextField(
+                controller: _decodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                  });
+                },
+        )
+            : Container(),
+
         GCWTextDivider(
           text: i18n(context, 'common_output')
         ),
@@ -109,7 +136,6 @@ class SegmentState extends State<Segment> {
   Widget _buildOutput(BuildContext context) {
     var output = '';
 
-    var textStyle = gcwTextStyle();
     if (_currentCryptMode == GCWSwitchPosition.left) { //encode
       output = encodeSegment(_currentEncodeInput, _currentSegmentTyp);
     } else { // decode
