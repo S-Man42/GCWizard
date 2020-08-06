@@ -5,7 +5,15 @@ enum SegmentTyp{Segment7,Segment14,Segment16}
 
 var AZToSegment = {};
 final AZTo16Segment = {
-  //
+  // the same encoding as 14-Segment
+  '1' : 'bcj', '2' : 'abdeg1g2', '3' : 'abcdg2', '4' : 'bcfg1g2', '5' : 'acdfg1g2',
+  '6' : 'acdefg1g2', '7' : 'ajl', '8' : 'abcdefg1g2', '9' : 'abcfg1g2', '0' : 'abcdefjk',
+  'A' : 'abcefg1g2', 'B' : 'abcdg2il', 'C' : 'adef', 'D' : 'abcdil', 'E' : 'adefg1g2',
+  'F' : 'aefg1g2', 'G' : 'acdefg2', 'H' : 'bcefg1g2', 'I' : 'adil', 'J' : 'abcde',
+  'K' : 'efg1jm', 'L' : 'def', 'M' : 'bcefhj',  'N' : 'bcefhm', 'O' : 'abcdef',
+  'P' : 'abefg1g2', 'Q' : 'abcdefm', 'R' : 'abefg1g2m', 'S' : 'acdg2h', 'T' : 'ail',
+  'U' : 'bcdef', 'V' : 'efjk', 'W' : 'bcefkm', 'X' : 'hjkm', 'Y' : 'hjl', 'Z' : 'adjk',
+  /*
   '1' : '', '2' : '', '3' : '', '4' : '', '5' : '',
   '6' : '', '7' : '', '8' : '', '9' : '', '0' : '',
   'A' : '', 'B' : '', 'C' : '', 'D' : '', 'E' : '',
@@ -13,6 +21,7 @@ final AZTo16Segment = {
   'K' : '', 'L' : '', 'M' : '',  'N' : '', 'O' : '',
   'P' : '', 'Q' : '', 'R' : '',  'S' : '', 'T' : '',
   'U' : '', 'V' : '', 'W' : '', 'X' : '', 'Y' : '', 'Z' : '',
+  */
 };
 final AZTo14Segment = {
   // http://kryptografie.de/kryptografie/chiffre/14-segment.htm
@@ -39,6 +48,7 @@ var SegmentToAZ = {};
 var Segment7ToAZ = switchMapKeyValue(AZTo7Segment);
 var Segment14ToAZ = switchMapKeyValue(AZTo14Segment);
 var Segment16ToAZ = switchMapKeyValue(AZTo16Segment);
+
 
 String encodeSegment(String input, SegmentTyp currentSegmentTyp) {
   if (input == null || input == '')
@@ -68,6 +78,7 @@ String encodeSegment(String input, SegmentTyp currentSegmentTyp) {
       .join(String.fromCharCode(8195)); // using wide space
 }
 
+
 String decodeSegment(String input, SegmentTyp currentSegmentTyp) {
   if (input == null || input == '')
     return '';
@@ -84,6 +95,8 @@ String decodeSegment(String input, SegmentTyp currentSegmentTyp) {
       break;
   }
 
+  input = input.toLowerCase();
+
   return input
       .split(RegExp(r'[^abcdefghijklm12.]'))
       .map((Segment) {
@@ -91,31 +104,32 @@ String decodeSegment(String input, SegmentTyp currentSegmentTyp) {
           return ' . ';
 
         //rebuild Segment: sort the letters ascending
-        Segment = Segment.toUpperCase();
+        Segment = Segment.toLowerCase();
         String hSegment = '';
-        if (Segment.contains('A1')) {hSegment = hSegment + 'A1';}
-        if (Segment.contains('A2')) {hSegment = hSegment + 'A2';}
-        if (Segment.contains('A')) {hSegment = hSegment + 'A';}
-        if (Segment.contains('B')) {hSegment = hSegment + 'B';}
-        if (Segment.contains('C')) {hSegment = hSegment + 'C';}
-        if (Segment.contains('D1')) {hSegment = hSegment + 'D1';}
-        if (Segment.contains('D2')) {hSegment = hSegment + 'D2';}
-        if (Segment.contains('D')) {hSegment = hSegment + 'D';}
-        if (Segment.contains('E')) {hSegment = hSegment + 'E';}
-        if (Segment.contains('F')) {hSegment = hSegment + 'F';}
-        if (Segment.contains('G1')) {hSegment = hSegment + 'G1';}
-        if (Segment.contains('G2')) {hSegment = hSegment + 'G2';}
-        if (Segment.contains('G')) {hSegment = hSegment + 'G';}
-        if (Segment.contains('I')) {hSegment = hSegment + 'I';}
-        if (Segment.contains('J')) {hSegment = hSegment + 'J';}
-        if (Segment.contains('K')) {hSegment = hSegment + 'K';}
-        if (Segment.contains('L')) {hSegment = hSegment + 'L';}
-        if (Segment.contains('M')) {hSegment = hSegment + 'M';}
-        if (Segment.contains('DP')) {hSegment = hSegment + 'DP';}
+        if (Segment.contains('a1')) {hSegment = hSegment + 'a1';}
+        if (Segment.contains('a2')) {hSegment = hSegment + 'a2';}
+        if (Segment.contains('a')) {hSegment = hSegment + 'a';}
+        if (Segment.contains('b')) {hSegment = hSegment + 'b';}
+        if (Segment.contains('c')) {hSegment = hSegment + 'c';}
+        if (Segment.contains('d1')) {hSegment = hSegment + 'd1';}
+        if (Segment.contains('d2')) {hSegment = hSegment + 'd2';}
+        if (Segment.contains('d')) {hSegment = hSegment + 'd';}
+        if (Segment.contains('e')) {hSegment = hSegment + 'e';}
+        if (Segment.contains('f')) {hSegment = hSegment + 'f';}
+        if (Segment.contains('g1')) {hSegment = hSegment + 'g1';}
+        if (Segment.contains('g2')) {hSegment = hSegment + 'g2';}
+        if (Segment.contains('g')) {hSegment = hSegment + 'g';}
+        if (Segment.contains('i')) {hSegment = hSegment + 'i';}
+        if (Segment.contains('j')) {hSegment = hSegment + 'j';}
+        if (Segment.contains('k')) {hSegment = hSegment + 'k';}
+        if (Segment.contains('l')) {hSegment = hSegment + 'l';}
+        if (Segment.contains('m')) {hSegment = hSegment + 'm';}
+        if (Segment.contains('dp')) {hSegment = hSegment + 'dp';}
 
         var character = SegmentToAZ[hSegment];
 
         return character != null ? character : '?';
       })
       .join();
+
 }
