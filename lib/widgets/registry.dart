@@ -227,16 +227,16 @@ class Registry {
         searchStrings: 'beaufort wind force scale beaufort-skala windstaerke windspeed '
       ),
       GCWToolWidget(
-          tool: Binary(),
-          i18nPrefix: 'binary',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          searchStrings: 'binary numbers binaerzahlen dezimalzahlen decimal dual'
+        tool: Binary(),
+        i18nPrefix: 'binary',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'binary numbers binaerzahlen dezimalzahlen decimal dual'
       ),
       GCWToolWidget(
-          tool: Bifid(),
-          i18nPrefix: 'bifid',
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'bifid felix delastelle polybios polybius transposition'
+        tool: Bifid(),
+        i18nPrefix: 'bifid',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'bifid felix delastelle polybios polybius transposition'
       ),
       GCWToolWidget(
         tool: BrainfkSelection(),
