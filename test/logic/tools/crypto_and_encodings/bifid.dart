@@ -1,7 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/bifid.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 void main() {
   // https://gc.de/gc/bifid/
@@ -26,8 +25,8 @@ void main() {
       //            BifidAlphabetMode.JToI, .CToK, WToVV
 
       // empty Input
-      {'input' : null, 'key': null, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': GCWSwitchPosition.left, 'expectedOutput' : null},
-      {'input' : '', 'key': '', 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': GCWSwitchPosition.left, 'expectedOutput' : null},
+      {'input' : null, 'key': null, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': BifidAlphabetMode.JToI, 'expectedOutput' : null},
+      {'input' : '', 'key': '', 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': BifidAlphabetMode.JToI, 'expectedOutput' : null},
 
       //empty alphabet
       {'input' : 'THE QUICK BROWN FOX JUMPS OVER A LAZY DOGS BACK', 'key': '12345', 'mode': PolybiosMode.CUSTOM, 'alphabet': null, 'alphabetMode': BifidAlphabetMode.JToI, 'expectedOutput' : null},
@@ -75,8 +74,8 @@ void main() {
       //            BifidAlphabetMode.JTOI, .CTOK, WTOVV
 
       // empty Input
-      {'input' : null, 'key': null, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': GCWSwitchPosition.left, 'expectedOutput' : null},
-      {'input' : '', 'key': '', 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': GCWSwitchPosition.left, 'expectedOutput' : null},
+      {'input' : null, 'key': null, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': BifidAlphabetMode.JToI, 'expectedOutput' : null},
+      {'input' : '', 'key': '', 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'alphabetMode': BifidAlphabetMode.JToI, 'expectedOutput' : null},
 
       //empty alphabet
       {'input' : 'RDRBDPMPINSVQLZCIABSVYPGRLSUKOEFAYTHFP', 'key': '12345', 'mode': PolybiosMode.CUSTOM, 'alphabet': null, 'alphabetMode': BifidAlphabetMode.JToI, 'expectedOutput' : null},
