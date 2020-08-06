@@ -1213,6 +1213,16 @@
   "scrabble_version_swe" : "Swedish",
   "scrabble_version_klingon" : "Klingon",
 
+  "segment_title" : "Segment-Display",
+  "segment_description" : "Encoding and decoding of LED-Segment-Displays",
+  "segment_typ" : "type of display",
+  "segment_typ_7" : "7 Segments",
+  "segment_typ_14" : "14 Segments",
+  "segment_typ_16" : "16 Segments",
+  "segment_crypt_mode" : "Mode",
+  "segment_crypt_mode_encrypt" :"encrypt",
+  "segment_crypt_mode_decrypt" :"decrypt",
+
   "settings_general_title" : "General",
   "settings_general_clipboard" : "Clipboard",
   "settings_general_clipboard_maxitems" : "Max. Number Entries",
