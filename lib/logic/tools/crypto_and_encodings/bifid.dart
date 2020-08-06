@@ -8,11 +8,11 @@ class BifidOutput {
   BifidOutput(this.output, this.grid);
 }
 
-enum BifidAlphabetMode{JTOI, CTOK, WTOVV}
+enum BifidAlphabetMode{JToI, CToK, WToVV}
 
 String createBifidAlphabet(int gridDimension, {String firstLetters: '', PolybiosMode mode: PolybiosMode.AZ09, String fillAlphabet: '', BifidAlphabetMode alphabetMode}) {
   switch (alphabetMode) {
-    case BifidAlphabetMode.JTOI:
+    case BifidAlphabetMode.JToI:
       switch (mode) {
         case PolybiosMode.AZ09:
           if (gridDimension==5)
@@ -29,7 +29,7 @@ String createBifidAlphabet(int gridDimension, {String firstLetters: '', Polybios
         default: break;
       }
       break;
-    case BifidAlphabetMode.CTOK:
+    case BifidAlphabetMode.CToK:
       switch (mode) {
         case PolybiosMode.AZ09:
           if (gridDimension == 5)
@@ -46,7 +46,7 @@ String createBifidAlphabet(int gridDimension, {String firstLetters: '', Polybios
         default: break;
       }
       break;
-    case BifidAlphabetMode.WTOVV:
+    case BifidAlphabetMode.WToVV:
       switch (mode) {
         case PolybiosMode.AZ09:
           if (gridDimension == 5)
@@ -88,13 +88,13 @@ BifidOutput encryptBifid (String input, String key, {PolybiosMode mode: Polybios
   // check Input and correct it according to the chosen Alphabetmodification
   if (dim == 5) {
     switch (alphabetMode) {
-      case BifidAlphabetMode.JTOI:
+      case BifidAlphabetMode.JToI:
         input = input.replaceAll('J', 'I');
         break;
-      case BifidAlphabetMode.CTOK:
+      case BifidAlphabetMode.CToK:
         input = input.replaceAll('C', 'K');
         break;
-      case BifidAlphabetMode.WTOVV:
+      case BifidAlphabetMode.WToVV:
         input = input.replaceAll('W', 'VV');
         break;
       default:
@@ -145,13 +145,13 @@ BifidOutput decryptBifid (String input, String key, {PolybiosMode mode: Polybios
   // check Input and correct it according to the chosen Alphabetmodification
   if (dim == 5) {
     switch (alphabetMode) {
-      case BifidAlphabetMode.JTOI:
+      case BifidAlphabetMode.JToI:
         input = input.replaceAll('J', 'I');
         break;
-      case BifidAlphabetMode.CTOK:
+      case BifidAlphabetMode.CToK:
         input = input.replaceAll('C', 'K');
         break;
-      case BifidAlphabetMode.WTOVV:
+      case BifidAlphabetMode.WToVV:
         input = input.replaceAll('W', 'VV');
         break;
       default:

@@ -27,7 +27,7 @@ class BifidState extends State<Bifid> {
   String _currentAlphabet = '';
 
   PolybiosMode _currentBifidMode = PolybiosMode.AZ09;
-  BifidAlphabetMode _currentBifidAlphabetMode = BifidAlphabetMode.JTOI;
+  BifidAlphabetMode _currentBifidAlphabetMode = BifidAlphabetMode.JToI;
 
   GCWSwitchPosition _currentMatrixMode = GCWSwitchPosition.left;         /// 5x5 oder 6x6
 
@@ -55,9 +55,9 @@ class BifidState extends State<Bifid> {
       PolybiosMode.CUSTOM : i18n(context, 'bifid_mode_custom'),
     };
     var BifidAlphabetModeItems = {
-      BifidAlphabetMode.JTOI : i18n(context, 'bifid_alphabet_mod_jtoi'),
-      BifidAlphabetMode.CTOK : i18n(context, 'bifid_alphabet_mod_ctok'),
-      BifidAlphabetMode.WTOVV : i18n(context, 'bifid_alphabet_mod_wtovv'),
+      BifidAlphabetMode.JToI : i18n(context, 'bifid_alphabet_mod_jtoi'),
+      BifidAlphabetMode.CToK : i18n(context, 'bifid_alphabet_mod_ctok'),
+      BifidAlphabetMode.WToVV : i18n(context, 'bifid_alphabet_mod_wtovv'),
     };
 
     return Column(
