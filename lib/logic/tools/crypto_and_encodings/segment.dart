@@ -1,6 +1,5 @@
 import 'dart:core';
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 enum SegmentTyp{Segment7,Segment14,Segment16}
 
@@ -37,31 +36,34 @@ final AZTo7Segment = {
 };
 
 // Å has same code as À, so À replaces Å in mapping; Å will not occur in this map
+
 var SegmentToAZ = {};
 var Segment7ToAZ = switchMapKeyValue(AZTo7Segment);
 var Segment14ToAZ = switchMapKeyValue(AZTo14Segment);
+var Segment16ToAZ = switchMapKeyValue(AZTo16Segment);
 
 String encodeSegment(String input, SegmentTyp currentSegmentTyp) {
   if (input == null || input == '')
     return '';
+
+  switch (currentSegmentTyp) {
+    case SegmentTyp.Segment7:
+      AZToSegment = AZTo7Segment;
+      break;
+    case SegmentTyp.Segment14:
+      AZToSegment = AZTo14Segment;
+      break;
+    case SegmentTyp.Segment16:
+      AZToSegment = AZTo16Segment;
+      break;
+  }
 
   return input
       .toUpperCase()
       .split('')
       .map((character) {
         if (character == ' ')
-          return '|';
-        switch (currentSegmentTyp) {
-          case SegmentTyp.Segment7:
-            AZToSegment = AZTo7Segment;
-            break;
-          case SegmentTyp.Segment14:
-            AZToSegment = AZTo14Segment;
-            break;
-          case SegmentTyp.Segment16:
-            AZToSegment = AZTo16Segment;
-            break;
-        }
+          return '-';
         var Segment = AZToSegment[character];
         return Segment != null ? Segment : '';
       })
@@ -72,26 +74,25 @@ String decodeSegment(String input, SegmentTyp currentSegmentTyp) {
   if (input == null || input == '')
     return '';
 
+  switch (currentSegmentTyp) {
+    case SegmentTyp.Segment7:
+      SegmentToAZ = Segment7ToAZ;
+      break;
+    case SegmentTyp.Segment14:
+      SegmentToAZ = Segment14ToAZ;
+      break;
+    case SegmentTyp.Segment16:
+      SegmentToAZ = Segment16ToAZ;
+      break;
+  }
+
   return input
-      //.split(RegExp(r'[^\.\-/\|]'))
-      .split('.')
+      .split(RegExp(r'[^abcdefghijklm12.]'))
       .map((Segment) {
-        if (Segment == '|' || Segment == '/')
-          return ' ';
+        if (Segment == ' ' || Segment == '.')
+          return ' . ';
 
-        switch (currentSegmentTyp) {
-          case SegmentTyp.Segment7:
-            AZToSegment = AZTo7Segment;
-            break;
-          case SegmentTyp.Segment14:
-            AZToSegment = AZTo14Segment;
-            break;
-          case SegmentTyp.Segment16:
-            AZToSegment = AZTo16Segment;
-            break;
-        }
-
-        //rebuild Segmant: sort the letters ascending
+        //rebuild Segment: sort the letters ascending
         Segment = Segment.toUpperCase();
         String hSegment = '';
         if (Segment.contains('A1')) {hSegment = hSegment + 'A1';}
@@ -115,6 +116,7 @@ String decodeSegment(String input, SegmentTyp currentSegmentTyp) {
         if (Segment.contains('DP')) {hSegment = hSegment + 'DP';}
 
         var character = SegmentToAZ[hSegment];
+
         return character != null ? character : '?';
       })
       .join();
