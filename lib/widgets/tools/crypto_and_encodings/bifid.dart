@@ -71,18 +71,7 @@ class BifidState extends State<Bifid> {
           },
         ),
 
-        GCWTwoOptionsSwitch(
-          title: i18n(context, 'bifid_matrix'),
-          leftValue: i18n(context, 'bifid_mode_5x5'),
-          rightValue: i18n(context, 'bifid_mode_6x6'),
-          onChanged: (value) {
-            setState(() {
-              _currentMatrixMode = value;
-            });
-          },
-        ),
-
-         GCWTextDivider(
+        GCWTextDivider(
             text: i18n(context, 'common_alphabet')
         ),
 
@@ -100,6 +89,7 @@ class BifidState extends State<Bifid> {
             );
           }).toList(),
         ),
+
         _currentBifidMode == PolybiosMode.CUSTOM ? GCWTextField(
           hintText: i18n(context, 'common_alphabet'),
           controller: _alphabetController,
@@ -110,24 +100,39 @@ class BifidState extends State<Bifid> {
           },
         ) : Container(),
 
-        GCWTextDivider(
-            text: i18n(context, 'bifid_alphabet_mod')
-        ),
-
-        GCWDropDownButton(
-          value: _currentBifidAlphabetMode,
+        GCWTwoOptionsSwitch(
+          title: i18n(context, 'bifid_matrix'),
+          leftValue: i18n(context, 'bifid_mode_5x5'),
+          rightValue: i18n(context, 'bifid_mode_6x6'),
           onChanged: (value) {
             setState(() {
-              _currentBifidAlphabetMode = value;
+              _currentMatrixMode = value;
             });
           },
-          items: BifidAlphabetModeItems.entries.map((mode) {
-            return DropdownMenuItem(
-              value: mode.key,
-              child: Text(mode.value),
-            );
-          }).toList(),
         ),
+
+        _currentMatrixMode == GCWSwitchPosition.left
+            ?   GCWTextDivider(
+                text: i18n(context, 'bifid_alphabet_mod')
+                )
+            : Container(), //empty widget
+
+        _currentMatrixMode == GCWSwitchPosition.left
+            ?   GCWDropDownButton(
+                value: _currentBifidAlphabetMode,
+                onChanged: (value) {
+                  setState(() {
+                    _currentBifidAlphabetMode = value;
+                  });
+                },
+                items: BifidAlphabetModeItems.entries.map((mode) {
+                  return DropdownMenuItem(
+                    value: mode.key,
+                    child: Text(mode.value),
+                  );
+                }).toList(),
+              )
+            : Container(), //empty widget
 
         GCWEncryptButtonBar(
           onPressedEncode: () {
