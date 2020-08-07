@@ -11,10 +11,9 @@ class SevenSegmentDisplay extends StatefulWidget {
 
   Map<String, bool> segments;
   final bool readOnly;
-  final bool showPoint;
   final Function onChanged;
 
-  SevenSegmentDisplay({Key key, this.segments, this.showPoint: true, this.readOnly: false, this.onChanged}) : super(key: key);
+  SevenSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged}) : super(key: key);
 
   @override
   SevenSegmentDisplayState createState() => SevenSegmentDisplayState();
@@ -42,50 +41,28 @@ class SevenSegmentDisplayState extends State<SevenSegmentDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    var sizes = getDisplaySize(context, widget.showPoint);
-
-    return Row(
+    return Row (
       children: <Widget>[
-        Container(
-          width: sizes['width'],
-          height: sizes['height'],
-          child: CanvasTouchDetector(
-            builder: (context) {
-              return CustomPaint(
-                painter: SevenSegmentPainter(context, _segments, (key, value) {
-                  if (widget.readOnly)
-                    return;
+        Expanded(
+          child: AspectRatio(
+            aspectRatio: RELATIVE_DISPLAY_WIDTH / RELATIVE_DISPLAY_HEIGHT,
+            child: CanvasTouchDetector(
+              builder: (context) {
+                return CustomPaint(
+                  painter: SevenSegmentPainter(context, _segments, (key, value) {
+                    if (widget.readOnly)
+                      return;
 
-                  setState(() {
-                    _segments[key] = value;
-//                    widget.onChanged(_segments);
-                  });
-                })
-              );
-            },
-          )
-        ),
-        widget.showPoint
-          ? Container(
-              width: sizes['widthPoint'],
-              height: sizes['height'],
-              child: CanvasTouchDetector(
-                builder: (context) {
-                  return CustomPaint(
-                      painter: PointPainter(context, _segments['dp'], (value) {
-                        if (widget.readOnly)
-                          return;
-
-                        setState(() {
-                          _segments['dp'] = value;
-//                          widget.onChanged(_segments);
-                        });
-                      })
-                  );
-                },
-              )
+                    setState(() {
+                      _segments[key] = value;
+                      widget.onChanged(_segments);
+                    });
+                  })
+                );
+              },
             )
-          : Container()
+          )
+        )
       ],
     );
   }

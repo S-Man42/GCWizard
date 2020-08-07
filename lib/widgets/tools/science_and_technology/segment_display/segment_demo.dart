@@ -13,18 +13,64 @@ class SegmentDemoState extends State<SegmentDemo> {
 
   @override
   Widget build(BuildContext context) {
+    var displays = [
+      SevenSegmentDisplay(
+        segments: {'a': true, 'b': true, 'e': true},
+        readOnly: true,
+        onChanged: (value) {
+          print(value);
+        },
+      ),
+      SevenSegmentDisplay(
+        segments: {'a': true, 'b': true, 'e': true},
+        readOnly: false,
+        onChanged: (value) {
+          print(value);
+        },
+      ),
+      SevenSegmentDisplay(
+        segments: {'a': true, 'b': true, 'e': true},
+        readOnly: true,
+        onChanged: (value) {
+          print(value);
+        },
+      ),
+      SevenSegmentDisplay(
+        segments: {'a': true, 'b': true, 'e': true},
+        readOnly: true,
+        onChanged: (value) {
+          print(value);
+        },
+      ),
+      SevenSegmentDisplay(
+        segments: {'a': true, 'b': true, 'e': true},
+        readOnly: true,
+        onChanged: (value) {
+          print(value);
+        },
+      ),
+      SevenSegmentDisplay(
+        segments: {'a': true, 'b': true, 'e': true},
+        readOnly: true,
+        onChanged: (value) {
+          print(value);
+        },
+      )
+    ];
+
     return Column(
       children: <Widget>[
         GCWTextDivider(text: '7 Segments'),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: SevenSegmentDisplay(
-                segments: {'a': true, 'b': true, 'e': true},
-                showPoint: true,
-                readOnly: true,
-              ),
-            ),
+        _buildEncryptionOutput(4, displays)
+//        Row(
+//          children: <Widget>[
+//            Expanded(
+//              child: SevenSegmentDisplay(
+//                segments: {'a': true, 'b': true, 'e': true},
+//                showPoint: true,
+//                readOnly: true,
+//              ),
+//            ),
 //            Expanded(
 //              child: SevenSegmentDisplay(
 //                segments: {'a': false, 'b': true, 'f': true, 'dp': true},
@@ -40,33 +86,51 @@ class SegmentDemoState extends State<SegmentDemo> {
 //                readOnly: true,
 //              ),
 //            ),
-          ],
-        ),
-        GCWTextDivider(text: '14 Segments'),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: FourteenSegmentDisplay(
-                segments: {'a': true, 'b': true, 'e': true, 'g1': true, 'g2': false, 'j': true},
-                showPoint: false,
-                readOnly: false,
-              ),
-            ),
-          ],
-        ),
-        GCWTextDivider(text: '16 Segments'),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: SixteenSegmentDisplay(
-                segments: {'a1': true, 'b': true, 'e': true, 'g1': true, 'g2': false, 'm': true, 'l': true, 'dp': true},
-                showPoint: true,
-                readOnly: false,
-              ),
-            ),
-          ],
-        )
+//          ],
+//        ),
       ]
     );
   }
+
+  _buildEncryptionOutput(countColumns, displays) {
+    var rows = <Widget>[];
+    var countRows = (displays.length / countColumns).floor();
+
+    for (var i = 0; i <= countRows; i++) {
+      var columns = <Widget>[];
+
+      for (var j = 0; j < countColumns; j++) {
+        var widget;
+        var imageIndex = i * countColumns + j;
+
+        if (imageIndex < displays.length) {
+          var image = displays[imageIndex];
+
+          widget = Container(
+            child: image,
+            padding: EdgeInsets.all(2),
+          );
+
+        } else {
+          widget = Container();
+        }
+
+        columns.add(Expanded(
+          child: Container(
+            child: widget,
+            padding: EdgeInsets.all(3),
+          )
+        ));
+      }
+
+      rows.add(Row(
+        children: columns,
+      ));
+    }
+
+    return Column(
+      children: rows,
+    );
+  }
+
 }
