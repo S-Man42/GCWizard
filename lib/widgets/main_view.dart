@@ -32,6 +32,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
@@ -69,7 +70,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/7_segment_display.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segment.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -142,6 +143,7 @@ class _MainViewState extends State<MainView> {
           className(Bacon()),
           className(BaseSelection()),
           className(Beaufort()),
+          className(Bifid()),
           className(Binary()),
           className(BrainfkSelection()),
           className(Caesar()),
@@ -179,7 +181,7 @@ class _MainViewState extends State<MainView> {
           className(RomanNumbers()),
           className(RotationSelection()),
           className(Scrabble()),
-          className(SevenSegmentDisplay()),
+          className(SevenSegment()),
           className(Skytale()),
           className(SpoonLanguage()),
           className(Substitution()),

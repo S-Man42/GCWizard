@@ -47,6 +47,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
@@ -123,7 +124,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nth
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/7_segment_display.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segment.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 
@@ -231,6 +232,12 @@ class Registry {
         i18nPrefix: 'binary',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'binary numbers binaerzahlen dezimalzahlen decimal dual'
+      ),
+      GCWToolWidget(
+        tool: Bifid(),
+        i18nPrefix: 'bifid',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'bifid felix delastelle polybios polybius transposition'
       ),
       GCWToolWidget(
         tool: BrainfkSelection(),
@@ -469,7 +476,7 @@ class Registry {
         searchStrings: 'scrabble deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'
       ),
       GCWToolWidget(
-        tool: SevenSegmentDisplay(),
+        tool: SevenSegment(),
         i18nPrefix: 'sevensegment',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: ''
