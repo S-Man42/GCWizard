@@ -205,6 +205,10 @@
   "bifid_alphabet_mod_wtovv" :"W → VV",
   "bifid_mode_5x5" : "5x5",
   "bifid_mode_6x6" : "6x6",
+  "bifid_error_no_encrypt_input" : "ERROR: no Plaintext",
+  "bifid_error_wrong_griddimension" : "ERROR: wrong Square-Dimension",
+  "bifid_error_no_alphabet" : "ERROR: no Alphabet",
+  "bifid_error_no_output" : "ERROR: no Ciphyertext",
 
   "binary_title" : "Binary Numbers",
   "binary_description" : "Convert binary numbers into decimal numbers",

@@ -192,6 +192,10 @@
   "bifid_alphabet_mod_wtovv" :"W → VV",
   "bifid_mode_5x5" : "5x5",
   "bifid_mode_6x6" : "6x6",
+  "bifid_error_no_encrypt_input" : "FEHLER: kein Klartext",
+  "bifid_error_wrong_griddimension" : "FEHLER: falsche Quadratgröße",
+  "bifid_error_no_alphabet" : "FEHLER: kein Alphabet",
+  "bifid_error_no_output" : "FEHLER: kein Chiffretext",
 
   "binary_title" : "Binärzahlen",
   "binary_description" : "Wandelt Binärzahlen in Dezimalzahlen um",
