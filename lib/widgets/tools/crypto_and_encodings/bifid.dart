@@ -136,8 +136,10 @@ class BifidState extends State<Bifid> {
 
         GCWEncryptButtonBar(
           onPressedEncode: () {
-            if (_currentInput == null || _currentInput.output.length == 0) {
-              _currentOutput = BifidOutput("bifid_error_no_encrypt_input", null);
+            if (_currentInput == null || _currentInput.length == 0) {
+              setState(() {
+                _currentOutput = errorBifid("bifid_error_no_encrypt_input");
+              });
             } else {
               if (_currentMatrixMode == GCWSwitchPosition.left) {
                 _currentKey = "12345";
@@ -153,14 +155,20 @@ class BifidState extends State<Bifid> {
             }
           },
           onPressedDecode: () {
-            if (_currentMatrixMode == GCWSwitchPosition.left) {
-              _currentKey = "12345";
+            if (_currentInput == null || _currentInput.length == 0) {
+              setState(() {
+                _currentOutput = errorBifid("bifid_error_no_output");
+              });
             } else {
-              _currentKey = "123456";
+              if (_currentMatrixMode == GCWSwitchPosition.left) {
+                _currentKey = "12345";
+              } else {
+                _currentKey = "123456";
+              }
+              setState(() {
+                _currentOutput = decryptBifid(_currentInput, _currentKey, mode: _currentBifidMode, alphabet: _currentAlphabet, alphabetMode: _currentBifidAlphabetMode);
+              });
             }
-            setState(() {
-               _currentOutput = decryptBifid(_currentInput, _currentKey, mode: _currentBifidMode, alphabet: _currentAlphabet, alphabetMode: _currentBifidAlphabetMode);
-            });
           },
         ),
         _buildOutput(context)

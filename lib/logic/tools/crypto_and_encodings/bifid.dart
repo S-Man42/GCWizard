@@ -60,21 +60,26 @@ String createBifidAlphabet(int gridDimension, {String firstLetters: '', Polybios
 }
 
 
+BifidOutput errorBifid (String input) {
+  return BifidOutput(input, null);
+}
+
+
 BifidOutput encryptBifid (String input, String key, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet, BifidAlphabetMode alphabetMode}) {
   if (input == null || key == null)
     //return null; //TODO Exception
-    return BifidOutput('bifid_error_no_encrypt_input',null);
+    return BifidOutput('bifid_error_no_encrypt_input', null);
 
   int dim = key.length;
   if (dim != 5 && dim != 6)
     //return null; //TODO Exception
-    return BifidOutput('bifid_error_wrong_griddimension',null);
+    return BifidOutput('bifid_error_wrong_griddimension', null);
 
   alphabet = createBifidAlphabet(dim, mode: mode, fillAlphabet: alphabet, alphabetMode: alphabetMode);
 
   if (alphabet == null)
     //return null; //TODO Exception
-    return BifidOutput('bifid_error_no_alphabet',null);
+    return BifidOutput('bifid_error_no_alphabet', null);
 
   key = key.toUpperCase();
   input = input.toUpperCase();
@@ -99,7 +104,7 @@ BifidOutput encryptBifid (String input, String key, {PolybiosMode mode: Polybios
 
   if (polybiosOutput == null)
     //return null;
-    return BifidOutput('bifid_error_no_output',null);
+    return BifidOutput('bifid_error_no_output', null);
 
   var polybiosEncoded = polybiosOutput.output.replaceAll(' ', '');
 
@@ -117,25 +122,25 @@ BifidOutput encryptBifid (String input, String key, {PolybiosMode mode: Polybios
 
     polybiosOutput = decryptPolybios(helpInput, key, mode: PolybiosMode.CUSTOM, alphabet: alphabet);
 
-  return BifidOutput(polybiosOutput.output,polybiosOutput.grid);
+  return BifidOutput(polybiosOutput.output, polybiosOutput.grid);
 }
 
 
 BifidOutput decryptBifid (String input, String key, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet, BifidAlphabetMode alphabetMode}) {
   if (input == null || key == null)
     //return null; //TODO Exception
-    return BifidOutput('bifid_error_no_decrypt_input',null);
+    return BifidOutput('bifid_error_no_decrypt_input', null);
 
   int dim = key.length;
   if (dim != 5 && dim != 6)
     //return null; //TODO Exception
-    return BifidOutput('bifid_error_wrong_griddimension',null);
+    return BifidOutput('bifid_error_wrong_griddimension', null);
 
   alphabet = createBifidAlphabet(dim, mode: mode, fillAlphabet: alphabet, alphabetMode: alphabetMode);
 
   if (alphabet == null)
     //return null; //TODO Exception
-    return BifidOutput('bifid_error_no_alphabet',null);
+    return BifidOutput('bifid_error_no_alphabet', null);
 
   key = key.toUpperCase();
   input = input.toUpperCase();
@@ -161,7 +166,7 @@ BifidOutput decryptBifid (String input, String key, {PolybiosMode mode: Polybios
 
   if (polybiosOutput == null)
     //return null;
-    return BifidOutput('bifid_error_no_output',null);
+    return BifidOutput('bifid_error_no_output', null);
 
   var polybiosEncoded = polybiosOutput.output.replaceAll(' ', '');
 
@@ -180,6 +185,6 @@ BifidOutput decryptBifid (String input, String key, {PolybiosMode mode: Polybios
 
   polybiosOutput = decryptPolybios(helpInput, key, mode: PolybiosMode.CUSTOM, alphabet: alphabet);
 
-  return BifidOutput(polybiosOutput.output,polybiosOutput.grid);
+  return BifidOutput(polybiosOutput.output, polybiosOutput.grid);
 }
 
