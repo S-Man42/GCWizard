@@ -78,3 +78,5 @@
 web
 /pubspec.lock
 /assets/tokens/mapbox
+*.docx
+*.pdf
