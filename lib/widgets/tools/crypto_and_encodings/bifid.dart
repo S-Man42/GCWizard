@@ -5,6 +5,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_encrypt_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
@@ -136,10 +137,11 @@ class BifidState extends State<Bifid> {
 
         GCWEncryptButtonBar(
           onPressedEncode: () {
-            if (_currentInput == null || _currentInput.length == 0) {
-              setState(() {
-                _currentOutput = errorBifid("bifid_error_no_encrypt_input");
-              });
+            // nutzung von Toasts - https://github.com/t-m-z/GCWizard/blob/_Bifid/lib/widgets/tools/formula_solver/formula_solver_formulagroups.dart
+            // Zeile 122ff:
+            //showToast(i18n(context, 'formulasolver_groups_imported'));
+           if (_currentInput == null || _currentInput.length == 0) {
+              showToast(i18n(context, 'bifid_error_no_encrypt_input'));
             } else {
               if (_currentMatrixMode == GCWSwitchPosition.left) {
                 _currentKey = "12345";
@@ -153,12 +155,23 @@ class BifidState extends State<Bifid> {
                     alphabetMode: _currentBifidAlphabetMode);
               });
             }
+            /*
+            if (_currentMatrixMode == GCWSwitchPosition.left) {
+              _currentKey = "12345";
+            } else {
+              _currentKey = "123456";
+            }
+            setState(() {
+              _currentOutput = encryptBifid(
+                  _currentInput, _currentKey, mode: _currentBifidMode,
+                  alphabet: _currentAlphabet,
+                  alphabetMode: _currentBifidAlphabetMode);
+            });
+            */
           },
           onPressedDecode: () {
             if (_currentInput == null || _currentInput.length == 0) {
-              setState(() {
-                _currentOutput = errorBifid("bifid_error_no_output");
-              });
+              showToast(i18n(context, 'bifid_error_no_output'));
             } else {
               if (_currentMatrixMode == GCWSwitchPosition.left) {
                 _currentKey = "12345";
@@ -169,6 +182,16 @@ class BifidState extends State<Bifid> {
                 _currentOutput = decryptBifid(_currentInput, _currentKey, mode: _currentBifidMode, alphabet: _currentAlphabet, alphabetMode: _currentBifidAlphabetMode);
               });
             }
+            /*
+            if (_currentMatrixMode == GCWSwitchPosition.left) {
+              _currentKey = "12345";
+            } else {
+              _currentKey = "123456";
+            }
+            setState(() {
+              _currentOutput = decryptBifid(_currentInput, _currentKey, mode: _currentBifidMode, alphabet: _currentAlphabet, alphabetMode: _currentBifidAlphabetMode);
+            });
+            */
           },
         ),
         _buildOutput(context)
@@ -182,25 +205,32 @@ class BifidState extends State<Bifid> {
         text: '' //TODO: Exception
       );
     } else {
+      // nutzung von Toasts - https://github.com/t-m-z/GCWizard/blob/_Bifid/lib/widgets/tools/formula_solver/formula_solver_formulagroups.dart
+      // Zeile 122ff
+
       switch (_currentOutput.output) {
         case "bifid_error_no_encrypt_input":
+          showToast(i18n(context, 'bifid_error_no_encrypt_input'));
           return GCWDefaultOutput(
-              text: i18n(context, 'bifid_error_no_encrypt_input') //TODO: Exception
+              text: '' //TODO: Exception
           );
           break;
         case "bifid_error_wrong_griddimension":
+          showToast(i18n(context, 'bifid_error_wrong_griddimension'));
           return GCWDefaultOutput(
-              text: i18n(context, 'bifid_error_wrong_griddimension') //TODO: Exception
+              text: '' //TODO: Exception
           );
           break;
         case "bifid_error_no_alphabet":
+          showToast(i18n(context, 'bifid_error_no_alphabet'));
           return GCWDefaultOutput(
-              text: i18n(context, 'bifid_error_no_alphabet') //TODO: Exception
+              text: '' //TODO: Exception
           );
           break;
         case "bifid_error_no_output":
+          showToast(i18n(context, 'bifid_error_no_output'));
           return GCWDefaultOutput(
-              text: i18n(context, 'bifid_error_no_output') //TODO: Exception
+              text: '' //TODO: Exception
           );
           break;
         default: break;
