@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
 import 'package:touchable/touchable.dart';
 
 _segmentPaint() {
@@ -15,15 +16,24 @@ const RELATIVE_DISPLAY_HEIGHT = 99;
 const _COLOR_ON = Colors.red;
 const _COLOR_OFF = Color.fromARGB(255, 80, 80, 80);
 
-class SixteenSegmentPainter extends CustomPainter {
+class SegmentDisplayPainter extends CustomPainter {
   final Function(String, bool) setSegmentState;
   final Map<String, bool> segments;
   final BuildContext context;
+  final SegmentDisplayType type;
 
-  SixteenSegmentPainter(this.context, this.segments, this.setSegmentState); // context from CanvasTouchDetector
+  SegmentDisplayPainter(this.context, this.type, this.segments, this.setSegmentState);
 
   @override
   void paint(Canvas canvas, Size size) {
+    switch (type) {
+      case SegmentDisplayType.SEVEN: _paintSevenSegmentDisplay(canvas, size); break;
+      case SegmentDisplayType.FOURTEEN: _paintFourteenSegmentDisplay(canvas, size); break;
+      case SegmentDisplayType.SIXTEEN: _paintSixteenSegmentDisplay(canvas, size); break;
+    }
+  }
+
+  void _paintSixteenSegmentDisplay(Canvas canvas, Size size) {
     var _touchCanvas = TouchyCanvas(context, canvas);
 
     var paint = _segmentPaint();
@@ -246,33 +256,19 @@ class SixteenSegmentPainter extends CustomPainter {
 
     paint.color = segments['dp'] ? _COLOR_ON : _COLOR_OFF;
     _touchCanvas.drawCircle(
-      Offset(
-        size.width / RELATIVE_DISPLAY_WIDTH * 72,
-        size.height / RELATIVE_DISPLAY_HEIGHT * 94
-      ),
-      size.height / RELATIVE_DISPLAY_HEIGHT * 4.5,
-      paint,
-      onTapDown: (tapDetail) {
-        setSegmentState('dp', !segments['dp']);
-      }
+        Offset(
+            size.width / RELATIVE_DISPLAY_WIDTH * 72,
+            size.height / RELATIVE_DISPLAY_HEIGHT * 94
+        ),
+        size.height / RELATIVE_DISPLAY_HEIGHT * 4.5,
+        paint,
+        onTapDown: (tapDetail) {
+          setSegmentState('dp', !segments['dp']);
+        }
     );
   }
 
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-}
-
-class FourteenSegmentPainter extends CustomPainter {
-  final Function(String, bool) setSegmentState;
-  final Map<String, bool> segments;
-  final BuildContext context;
-
-  FourteenSegmentPainter(this.context, this.segments, this.setSegmentState); // context from CanvasTouchDetector
-
-  @override
-  void paint(Canvas canvas, Size size) {
+  void _paintFourteenSegmentDisplay(Canvas canvas, Size size) {
     var _touchCanvas = TouchyCanvas(context, canvas);
 
     var paint = _segmentPaint();
@@ -465,33 +461,19 @@ class FourteenSegmentPainter extends CustomPainter {
 
     paint.color = segments['dp'] ? _COLOR_ON : _COLOR_OFF;
     _touchCanvas.drawCircle(
-      Offset(
-        size.width / RELATIVE_DISPLAY_WIDTH * 72,
-        size.height / RELATIVE_DISPLAY_HEIGHT * 94
-      ),
-      size.height / RELATIVE_DISPLAY_HEIGHT * 4.5,
-      paint,
-      onTapDown: (tapDetail) {
-        setSegmentState('dp', !segments['dp']);
-      }
+        Offset(
+            size.width / RELATIVE_DISPLAY_WIDTH * 72,
+            size.height / RELATIVE_DISPLAY_HEIGHT * 94
+        ),
+        size.height / RELATIVE_DISPLAY_HEIGHT * 4.5,
+        paint,
+        onTapDown: (tapDetail) {
+          setSegmentState('dp', !segments['dp']);
+        }
     );
   }
 
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-}
-
-class SevenSegmentPainter extends CustomPainter {
-  final Function(String, bool) setSegmentState;
-  final Map<String, bool> segments;
-  final BuildContext context;
-
-  SevenSegmentPainter(this.context, this.segments, this.setSegmentState); // context from CanvasTouchDetector
-
-  @override
-  void paint(Canvas canvas, Size size) {
+  void _paintSevenSegmentDisplay(Canvas canvas, Size size) {
     var _touchCanvas = TouchyCanvas(context, canvas);
 
     var paint = _segmentPaint();
@@ -588,15 +570,15 @@ class SevenSegmentPainter extends CustomPainter {
 
     paint.color = segments['dp'] ? _COLOR_ON : _COLOR_OFF;
     _touchCanvas.drawCircle(
-      Offset(
-        size.width / RELATIVE_DISPLAY_WIDTH * 72,
-        size.height / RELATIVE_DISPLAY_HEIGHT * 94
-      ),
-      size.height / RELATIVE_DISPLAY_HEIGHT * 4.5,
-      paint,
-      onTapDown: (tapDetail) {
-        setSegmentState('dp', !segments['dp']);
-      }
+        Offset(
+            size.width / RELATIVE_DISPLAY_WIDTH * 72,
+            size.height / RELATIVE_DISPLAY_HEIGHT * 94
+        ),
+        size.height / RELATIVE_DISPLAY_HEIGHT * 4.5,
+        paint,
+        onTapDown: (tapDetail) {
+          setSegmentState('dp', !segments['dp']);
+        }
     );
   }
 

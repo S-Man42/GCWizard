@@ -136,7 +136,7 @@ class BifidState extends State<Bifid> {
 
         GCWEncryptButtonBar(
           onPressedEncode: () {
-            if (_currentInput == null || _currentInput.output.length == 0) {
+            if (_currentInput == null || _currentInput.length == 0) {
               _currentOutput = BifidOutput("bifid_error_no_encrypt_input", null);
             } else {
               if (_currentMatrixMode == GCWSwitchPosition.left) {

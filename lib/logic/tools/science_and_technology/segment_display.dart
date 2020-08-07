@@ -64,19 +64,17 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType currentSegment
 
   var output = <List<String>>[];
 
-  List<String> prevCharacter;
   for (String character in inputCharacters) {
     if (['.', ','].contains(character)) {
-      if (prevCharacter == null)
+      if (output.length == 0 || output.last.contains('dp')) {
         output.add(['dp']);
-      else {
+      } else {
+        var prevCharacter = List<String>.from(output.removeLast());
         prevCharacter.add('dp');
         output.add(prevCharacter);
-        prevCharacter = null;
       }
     } else {
       output.add(AZToSegment[character]);
-      prevCharacter = AZToSegment[character];
     }
   }
 

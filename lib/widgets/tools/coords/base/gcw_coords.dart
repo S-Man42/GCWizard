@@ -218,7 +218,7 @@ class GCWCoordsState extends State<GCWCoords> {
         GCWTextDivider(
           text: widget.text,
           bottom: 0.0,
-          trailingButton: GCWPasteButton(
+          trailing: GCWPasteButton(
             onSelected: _parseClipboardAndSetCoords
           ),
         ),
