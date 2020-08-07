@@ -136,14 +136,21 @@ class BifidState extends State<Bifid> {
 
         GCWEncryptButtonBar(
           onPressedEncode: () {
-            if (_currentMatrixMode == GCWSwitchPosition.left) {
-              _currentKey = "12345";
+            if (_currentInput == null || _currentInput.output.length == 0) {
+              _currentOutput = BifidOutput("bifid_error_no_encrypt_input", null);
             } else {
-              _currentKey = "123456";
+              if (_currentMatrixMode == GCWSwitchPosition.left) {
+                _currentKey = "12345";
+              } else {
+                _currentKey = "123456";
+              }
+              setState(() {
+                _currentOutput = encryptBifid(
+                    _currentInput, _currentKey, mode: _currentBifidMode,
+                    alphabet: _currentAlphabet,
+                    alphabetMode: _currentBifidAlphabetMode);
+              });
             }
-            setState(() {
-              _currentOutput = encryptBifid(_currentInput, _currentKey, mode: _currentBifidMode, alphabet: _currentAlphabet, alphabetMode: _currentBifidAlphabetMode);
-            });
           },
           onPressedDecode: () {
             if (_currentMatrixMode == GCWSwitchPosition.left) {
@@ -166,6 +173,30 @@ class BifidState extends State<Bifid> {
       return GCWDefaultOutput(
         text: '' //TODO: Exception
       );
+    } else {
+      switch (_currentOutput.output) {
+        case "bifid_error_no_encrypt_input":
+          return GCWDefaultOutput(
+              text: i18n(context, 'bifid_error_no_encrypt_input') //TODO: Exception
+          );
+          break;
+        case "bifid_error_wrong_griddimension":
+          return GCWDefaultOutput(
+              text: i18n(context, 'bifid_error_wrong_griddimension') //TODO: Exception
+          );
+          break;
+        case "bifid_error_no_alphabet":
+          return GCWDefaultOutput(
+              text: i18n(context, 'bifid_error_no_alphabet') //TODO: Exception
+          );
+          break;
+        case "bifid_error_no_output":
+          return GCWDefaultOutput(
+              text: i18n(context, 'bifid_error_no_output') //TODO: Exception
+          );
+          break;
+        default: break;
+      }
     }
 
     return GCWOutput(
