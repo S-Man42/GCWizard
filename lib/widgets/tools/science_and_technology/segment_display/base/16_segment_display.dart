@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/painters.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painters.dart';
 import 'package:touchable/touchable.dart';
 
 const _INITIAL_SEGMENTS = <String, bool>{
-  'a': false, 'b': false, 'c': false, 'd': false,
-  'e': false, 'f': false, 'g': false, 'dp': false
+  'a1': false, 'a2': false, 'b': false, 'c': false, 'd1': false, 'd2': false,
+  'e': false, 'f': false, 'g1': false, 'g2': false, 'h': false, 'i': false,
+  'j': false, 'k': false, 'l': false, 'm': false, 'dp': false
 };
 
-class SevenSegmentDisplay extends StatefulWidget {
+class SixteenSegmentDisplay extends StatefulWidget {
 
   Map<String, bool> segments;
   final bool readOnly;
+  final bool showPoint;
   final Function onChanged;
 
-  SevenSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged}) : super(key: key);
+  SixteenSegmentDisplay({Key key, this.segments, this.showPoint: true, this.readOnly: false, this.onChanged}) : super(key: key);
 
   @override
-  SevenSegmentDisplayState createState() => SevenSegmentDisplayState();
+  SixteenSegmentDisplayState createState() => SixteenSegmentDisplayState();
 }
 
-class SevenSegmentDisplayState extends State<SevenSegmentDisplay> {
+class SixteenSegmentDisplayState extends State<SixteenSegmentDisplay> {
   Map<String, bool> _segments;
 
   @override
@@ -49,7 +51,7 @@ class SevenSegmentDisplayState extends State<SevenSegmentDisplay> {
             child: CanvasTouchDetector(
               builder: (context) {
                 return CustomPaint(
-                  painter: SevenSegmentPainter(context, _segments, (key, value) {
+                  painter: SixteenSegmentPainter(context, _segments, (key, value) {
                     if (widget.readOnly)
                       return;
 

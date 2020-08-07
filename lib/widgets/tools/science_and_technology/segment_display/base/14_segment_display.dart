@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/painters.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painters.dart';
 import 'package:touchable/touchable.dart';
 
 const _INITIAL_SEGMENTS = <String, bool>{

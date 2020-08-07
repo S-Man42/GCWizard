@@ -53,7 +53,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/scrabble.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/segment.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
@@ -70,7 +69,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/segment_demo.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segment.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -180,8 +179,7 @@ class _MainViewState extends State<MainView> {
           className(RomanNumbers()),
           className(RotationSelection()),
           className(Scrabble()),
-          className(Segment()),
-          className(SegmentDemo()),
+          className(SevenSegment()),
           className(Skytale()),
           className(SpoonLanguage()),
           className(Substitution()),

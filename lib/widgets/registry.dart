@@ -80,7 +80,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_general.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/scrabble.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/segment.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
@@ -124,7 +123,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nth
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/segment_demo.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segment.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 
@@ -470,13 +469,7 @@ class Registry {
         searchStrings: 'scrabble deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'
       ),
       GCWToolWidget(
-        tool: Segment(),
-        i18nPrefix: 'segment',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'segment segmente segments 7 14 16 display led matrix'
-      ),
-      GCWToolWidget(
-        tool: SegmentDemo(),
+        tool: SevenSegment(),
         i18nPrefix: 'sevensegment',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: ''
