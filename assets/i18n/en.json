@@ -841,6 +841,12 @@
   "gccode_example" : "GCK25B → 156997",
   "gccode_novalidgcode" : "No valid GC Code",
 
+  "geschoss_title" : "Bullets/projectiles",
+  "geschoss_description" : "calculate kinetic energy, mass and speed of bullets/projectiles",
+  "geschoss_energy" : "kinetic Energy [Joule]",
+  "geschoss_mass" : "mass [kg]",
+  "geschoss_speed" : "speed [m/s]",
+
   "gronsfeld_title" : "Gronsfeld Cipher",
   "gronsfeld_description" : "Special case of Vigenère encryption with numbers as key",
 

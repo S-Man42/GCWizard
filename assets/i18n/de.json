@@ -841,6 +841,12 @@
   "gccode_example" : "GCK25B → 156997",
   "gccode_novalidgcode" : "Kein valider GC-Code",
 
+  "geschoss_title" : "Geschosss",
+  "geschoss_description" : "Berechnet kinetische Energie, Masse und Geschwindigkeit von Geschossen",
+  "geschoss_energy" : "kinetische Energie [Joule]",
+  "geschoss_mass" : "Masse [kg]",
+  "geschoss_speed" : "Geschwindigkeit [m/s]",
+
   "gronsfeld_title" : "Gronsfeld Chiffre",
   "gronsfeld_description" : "Spezialfall der Vigenère-Verschlüsselung mit Zahlen als Schlüssel",
 
