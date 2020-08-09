@@ -70,6 +70,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/geschoss.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
@@ -162,6 +163,7 @@ class _MainViewState extends State<MainView> {
           className(ESelection()),
           className(FormulaSolverFormulaGroups()),
           className(GCCode()),
+          className(Geschoss()),
           className(Gronsfeld()),
           className(Kamasutra()),
           className(Kenny()),

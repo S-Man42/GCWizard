@@ -846,6 +846,11 @@
   "geschoss_energy" : "kinetic Energy [Joule]",
   "geschoss_mass" : "mass [kg]",
   "geschoss_speed" : "speed [m/s]",
+  "geschoss_calculate" : "calculate",
+  "geschoss_error_noInput_Energy" : "missing Input: Energy [Joule]",
+  "geschoss_error_noInput_Mass" : "missing Input: Mass [kg]",
+  "geschoss_error_noInput_Speed" : "missing Input: Speed [m/s]",
+  "geschoss_error_wrongFormat_Double" : "Input is not a valid Double",
 
   "gronsfeld_title" : "Gronsfeld Cipher",
   "gronsfeld_description" : "Special case of Vigenère encryption with numbers as key",

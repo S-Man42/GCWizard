@@ -846,6 +846,11 @@
   "geschoss_energy" : "kinetische Energie [Joule]",
   "geschoss_mass" : "Masse [kg]",
   "geschoss_speed" : "Geschwindigkeit [m/s]",
+  "geschoss_calculate" : "berechnen",
+  "geschoss_error_noInput_Energy" : "fehlende Eingabe: Energie [Joule]",
+  "geschoss_error_noInput_Mass" : "fehlende Eingabe: Masse [kg]",
+  "geschoss_error_noInput_Speed" : "fehlende Eingabe: Geschwindigkeit [m/s]",
+  "geschoss_error_wrongFormat_Double" : "Eingabe ist keine korrekte Reelle Zahl",
 
   "gronsfeld_title" : "Gronsfeld Chiffre",
   "gronsfeld_description" : "Spezialfall der Vigenère-Verschlüsselung mit Zahlen als Schlüssel",
