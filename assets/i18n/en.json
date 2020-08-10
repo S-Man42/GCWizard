@@ -879,10 +879,11 @@
 
   "heat_title" : "Heat indices",
   "heat_description" : "Calculating heat indices",
-  "heat_temperature" : "Temperature",
-  "heat_humidity" : "Humidity",
+  "heat_temperature" : "Temperature [°C|°F]",
+  "heat_humidity" : "Humidity [%]",
   "heat_degree" : "System",
   "heat_calculate" : "Calculate",
+  "heat_output" : "Temperature seems to be",
   "heat_degree_Celsius" : "Celsius",
   "heat_degree_Fahrenheit" : "Fahrenheit",
   "heat_error_noInput_Temperature": "missing input: temperature",

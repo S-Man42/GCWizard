@@ -19,12 +19,12 @@ class HeatState extends State<Heat> {
   var _inputControllerTemperature;
   var _inputControllerHumidity;
   var _currentOutput = HeatOutput('', '');
-  var _currentTemperatureSystem;
 
   String _currentInputTemperature = '';
   String _currentInputHumidity = '';
 
   GCWSwitchPosition _currentTemperatureMode = GCWSwitchPosition.left;
+  HeatTemperatureMode _currentTemperatureSystem = HeatTemperatureMode.Celsius;
 
   @override
   void initState() {
@@ -53,6 +53,15 @@ class HeatState extends State<Heat> {
             setState(() {
               _currentTemperatureMode = value;
             });
+            switch (_currentTemperatureMode) {
+              case GCWSwitchPosition.left:
+                _currentTemperatureSystem = HeatTemperatureMode.Celsius;
+                break;
+              case GCWSwitchPosition.left:
+                _currentTemperatureSystem = HeatTemperatureMode.Fahrenheit;
+                break;
+              default:break;
+            }
           },
         ),
 
@@ -86,15 +95,6 @@ class HeatState extends State<Heat> {
         GCWButton(
           text: i18n(context, 'heat_calculate'),
           onPressed: () {
-            switch (_currentTemperatureMode) {
-              case GCWSwitchPosition.left:
-                _currentTemperatureSystem = HeatTemperatureMode.Celsius;
-                break;
-              case GCWSwitchPosition.left:
-                _currentTemperatureSystem = HeatTemperatureMode.Fahrenheit;
-                break;
-              default:break;
-            }
             _currentOutput = calculateHeat(_currentInputTemperature, _currentInputHumidity, _currentTemperatureSystem);
           },
         ),
@@ -104,6 +104,11 @@ class HeatState extends State<Heat> {
   }
 
   Widget _buildOutput(BuildContext context) {
+    if (_currentOutput == null) {
+      return GCWDefaultOutput(
+          text: '' //TODO: Exception
+      );
+    } else
     if (_currentOutput.state == 'ERROR') {
       showToast(i18n(context, _currentOutput.output));
       return GCWDefaultOutput(
@@ -113,6 +118,10 @@ class HeatState extends State<Heat> {
       return GCWOutput(
         child: Column(
           children: <Widget>[
+            GCWTextDivider(
+                text: i18n(context, 'heat_output')
+            ),
+
             GCWOutputText(
                 text: _currentOutput.output
             ),

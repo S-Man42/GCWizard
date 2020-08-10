@@ -1,8 +1,5 @@
 import 'dart:math';
 
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-
-
 class HeatOutput {
   final String state;
   final String output;
