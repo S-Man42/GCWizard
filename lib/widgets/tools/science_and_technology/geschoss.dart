@@ -22,7 +22,7 @@ class GeschossState extends State<Geschoss> {
   var _inputControllerEnergy;
   var _inputControllerMass;
   var _inputControllerSpeed;
-  var _currentOutput = GeschossOutput('', '');
+  var _currentOutput = GeschossOutput('', '', '');
 
   String _currentInputEnergy = '';
   String _currentInputMass = '';
@@ -122,7 +122,7 @@ class GeschossState extends State<Geschoss> {
         child: Column(
           children: <Widget>[
             GCWTextDivider(
-                text: i18n(context, 'geschoss_speed')
+                text: i18n(context, _currentOutput.formula)
             ),
             GCWOutputText(
                 text: _currentOutput.output
