@@ -171,6 +171,16 @@
   "base_base85_title" : "Base85 (ASCII85)",
   "base85_example" : "<~<+oue+DGm>FD,5.@;^.1AT@~>",
 
+  "bcd_selection_title" : "BCD Encodings",
+  "bcd_original_title" : "BCD",
+  "bcd_original_example" : "",
+  "bcd_aiken_title" : "BCD Type according to Aiken",
+  "bcd_aiken_example" : "",
+  "bcd_libawcraig_title" : "BCD Type according to Libaw-Craig",
+  "bcd_libawcraig_example" : "",
+  "bcd_stibitz_title" : "BCD Type according to Stibitz",
+  "bcd_stibitz_example" : "",
+
   "beaufort_title" : "Wind Force (Beaufort)",
   "beaufort_description" : "Converts wind speed into Beaufort value (Scale up to Bft. 17)",
   "beaufort_example" : "42 kn → Bft. 9",
