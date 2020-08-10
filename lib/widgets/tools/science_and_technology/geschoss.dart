@@ -49,6 +49,9 @@ class GeschossState extends State<Geschoss> {
 
     return Column(
       children: <Widget>[
+        GCWTextDivider(
+            text: i18n(context, 'geschoss_energy')
+        ),
         GCWTextField(
           controller: _inputControllerEnergy,
           hintText: i18n(context, 'geschoss_energy'),
@@ -57,6 +60,9 @@ class GeschossState extends State<Geschoss> {
               _currentInputEnergy = text;
             });
           },
+        ),
+        GCWTextDivider(
+            text: i18n(context, 'geschoss_mass')
         ),
         GCWTextField(
           controller: _inputControllerMass,
@@ -67,6 +73,9 @@ class GeschossState extends State<Geschoss> {
             });
           },
         ),
+        GCWTextDivider(
+            text: i18n(context, 'geschoss_speed')
+        ),
         GCWTextField(
           controller: _inputControllerSpeed,
           hintText: i18n(context, 'geschoss_speed'),
@@ -75,10 +84,6 @@ class GeschossState extends State<Geschoss> {
                 _currentInputSpeed = text;
               });
             },
-        ),
-
-        GCWTextDivider(
-            text: i18n(context, 'common_alphabet')
         ),
 
         GCWButton(
@@ -116,6 +121,9 @@ class GeschossState extends State<Geschoss> {
       return GCWOutput(
         child: Column(
           children: <Widget>[
+            GCWTextDivider(
+                text: i18n(context, 'geschoss_speed')
+            ),
             GCWOutputText(
                 text: _currentOutput.output
             ),

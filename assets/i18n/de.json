@@ -850,7 +850,9 @@
   "geschoss_error_noInput_Energy" : "fehlende Eingabe: Energie [Joule]",
   "geschoss_error_noInput_Mass" : "fehlende Eingabe: Masse [kg]",
   "geschoss_error_noInput_Speed" : "fehlende Eingabe: Geschwindigkeit [m/s]",
-  "geschoss_error_wrongFormat_Double" : "Eingabe ist keine korrekte Reelle Zahl",
+  "geschoss_error_wrongFormat_Double_Energy" : "Eingabe für Energie ist keine korrekte Reelle Zahl",
+  "geschoss_error_wrongFormat_Double_Mass" : "Eingabe für Masse ist keine korrekte Reelle Zahl",
+  "geschoss_error_wrongFormat_Double_Speed" : "Eingabe für Geschwindigkeit ist keine korrekte Reelle Zahl",
 
   "gronsfeld_title" : "Gronsfeld Chiffre",
   "gronsfeld_description" : "Spezialfall der Vigenère-Verschlüsselung mit Zahlen als Schlüssel",

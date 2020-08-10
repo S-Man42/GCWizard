@@ -850,7 +850,9 @@
   "geschoss_error_noInput_Energy" : "missing Input: Energy [Joule]",
   "geschoss_error_noInput_Mass" : "missing Input: Mass [kg]",
   "geschoss_error_noInput_Speed" : "missing Input: Speed [m/s]",
-  "geschoss_error_wrongFormat_Double" : "Input is not a valid Double",
+  "geschoss_error_wrongFormat_Double_Energy" : "Input fo Energy is not a valid Number",
+  "geschoss_error_wrongFormat_Double_Mass" : "Input for Mass is not a valid Number",
+  "geschoss_error_wrongFormat_Double_Speed" : "Input for Speed is not a valid Number",
 
   "gronsfeld_title" : "Gronsfeld Cipher",
   "gronsfeld_description" : "Special case of Vigenère encryption with numbers as key",
