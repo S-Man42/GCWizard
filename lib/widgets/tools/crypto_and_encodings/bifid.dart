@@ -5,6 +5,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_encrypt_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
@@ -20,7 +21,7 @@ class BifidState extends State<Bifid> {
   var _inputController;
   var _keyController;
   var _alphabetController;
-  var _currentOutput = BifidOutput('', '');
+  var _currentOutput = BifidOutput('', '', '');
 
   String _currentInput = '';
   String _currentKey = '12345';
@@ -136,8 +137,8 @@ class BifidState extends State<Bifid> {
 
         GCWEncryptButtonBar(
           onPressedEncode: () {
-            if (_currentInput == null || _currentInput.output.length == 0) {
-              _currentOutput = BifidOutput("bifid_error_no_encrypt_input", null);
+           if (_currentInput == null || _currentInput.length == 0) {
+              showToast(i18n(context, 'bifid_error_no_encrypt_input'));
             } else {
               if (_currentMatrixMode == GCWSwitchPosition.left) {
                 _currentKey = "12345";
@@ -153,14 +154,18 @@ class BifidState extends State<Bifid> {
             }
           },
           onPressedDecode: () {
-            if (_currentMatrixMode == GCWSwitchPosition.left) {
-              _currentKey = "12345";
+            if (_currentInput == null || _currentInput.length == 0) {
+              showToast(i18n(context, 'bifid_error_no_output'));
             } else {
-              _currentKey = "123456";
+              if (_currentMatrixMode == GCWSwitchPosition.left) {
+                _currentKey = "12345";
+              } else {
+                _currentKey = "123456";
+              }
+              setState(() {
+                _currentOutput = decryptBifid(_currentInput, _currentKey, mode: _currentBifidMode, alphabet: _currentAlphabet, alphabetMode: _currentBifidAlphabetMode);
+              });
             }
-            setState(() {
-               _currentOutput = decryptBifid(_currentInput, _currentKey, mode: _currentBifidMode, alphabet: _currentAlphabet, alphabetMode: _currentBifidAlphabetMode);
-            });
           },
         ),
         _buildOutput(context)
@@ -169,51 +174,32 @@ class BifidState extends State<Bifid> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentOutput == null || _currentOutput.output.length == 0) {
-      return GCWDefaultOutput(
-        text: '' //TODO: Exception
-      );
-    } else {
-      switch (_currentOutput.output) {
-        case "bifid_error_no_encrypt_input":
-          return GCWDefaultOutput(
-              text: i18n(context, 'bifid_error_no_encrypt_input') //TODO: Exception
-          );
-          break;
-        case "bifid_error_wrong_griddimension":
-          return GCWDefaultOutput(
-              text: i18n(context, 'bifid_error_wrong_griddimension') //TODO: Exception
-          );
-          break;
-        case "bifid_error_no_alphabet":
-          return GCWDefaultOutput(
-              text: i18n(context, 'bifid_error_no_alphabet') //TODO: Exception
-          );
-          break;
-        case "bifid_error_no_output":
-          return GCWDefaultOutput(
-              text: i18n(context, 'bifid_error_no_output') //TODO: Exception
-          );
-          break;
-        default: break;
-      }
+    switch (_currentOutput.state ) {
+      case 'ERROR':
+        showToast(i18n(context, _currentOutput.output));
+        return GCWDefaultOutput(
+          text: '' //TODO: Exception
+        );
+        break;
+      case 'OK':
+        return GCWOutput(
+          child: Column(
+            children: <Widget>[
+              GCWOutputText(
+                  text: _currentOutput.output
+              ),
+              GCWTextDivider(
+                  text: i18n(context, 'bifid_usedgrid')
+              ),
+              GCWOutputText(
+                text: _currentOutput.grid,
+                isMonotype: true,
+              )
+            ],
+          ),
+        );
+        break;
+      default: break;
     }
-
-    return GCWOutput(
-      child: Column(
-        children: <Widget>[
-          GCWOutputText(
-            text: _currentOutput.output
-          ),
-          GCWTextDivider(
-            text: i18n(context, 'bifid_usedgrid')
-          ),
-          GCWOutputText(
-            text: _currentOutput.grid,
-            isMonotype: true,
-          )
-        ],
-      ),
-    );
   }
 }
