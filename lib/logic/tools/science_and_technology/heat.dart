@@ -42,6 +42,8 @@ HeatOutput calculateHeat (String StrTemperature, String StrHumidity, HeatTempera
   double Humidity = 0;
   double Heat = 0;
 
+  String degree = '';
+
   if (StrTemperature == null || StrTemperature.length == 0) {
     return HeatOutput('ERROR', 'heat_error_noInput_Temperature');
   }
@@ -63,9 +65,11 @@ HeatOutput calculateHeat (String StrTemperature, String StrHumidity, HeatTempera
   switch (TemperatureMode) {
     case HeatTemperatureMode.Celsius:
       heatParameter = heatParameterCelsius;
+      degree = ' °C';
       break;
     case HeatTemperatureMode.Fahrenheit:
       heatParameter = heatParameterFahrenheit;
+      degree = ' °F';
       break;
     default:break;
   }
@@ -79,5 +83,5 @@ HeatOutput calculateHeat (String StrTemperature, String StrHumidity, HeatTempera
           heatParameter['c7'] * Temperature * Temperature * Humidity +
           heatParameter['c8'] * Temperature * Humidity * Humidity +
           heatParameter['c9'] * Temperature * Temperature *Humidity * Humidity;
-  return HeatOutput('OK', Heat.toStringAsFixed(5));
+  return HeatOutput('OK', Heat.toStringAsFixed(5) + degree);
 }

@@ -883,7 +883,7 @@
   "heat_humidity" : "Luftfeuchtigkeit [%]",
   "heat_calculate" : "Berechnen",
   "heat_output" : "die gefühlte Temperatur ist",
-  "heat_degree" : "System",
+  "heat_degree" : "Grad",
   "heat_degree_Celsius" : "Celsius",
   "heat_degree_Fahrenheit" : "Fahrenheit",
   "heat_error_noInput_Temperature": "fehlende Eingabe: Temperatur [°C|°F]",

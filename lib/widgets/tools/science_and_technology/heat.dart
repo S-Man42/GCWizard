@@ -45,6 +45,20 @@ class HeatState extends State<Heat> {
 
     return Column(
       children: <Widget>[
+        GCWTextDivider(
+            text: i18n(context, 'heat_temperature')
+        ),
+
+        GCWTextField(
+          controller: _inputControllerTemperature,
+          hintText: i18n(context, 'heat_temperature'),
+          onChanged: (text) {
+            setState(() {
+              _currentInputTemperature = text;
+            });
+          },
+        ),
+
         GCWTwoOptionsSwitch(
           title: i18n(context, 'heat_degree'),
           leftValue: i18n(context, 'heat_degree_Celsius'),
@@ -62,19 +76,6 @@ class HeatState extends State<Heat> {
                 break;
               default:break;
             }
-          },
-        ),
-
-        GCWTextDivider(
-            text: i18n(context, 'heat_temperature')
-        ),
-        GCWTextField(
-          controller: _inputControllerTemperature,
-          hintText: i18n(context, 'heat_temperature'),
-          onChanged: (text) {
-            setState(() {
-              _currentInputTemperature = text;
-            });
           },
         ),
 
