@@ -21,7 +21,7 @@ class BifidState extends State<Bifid> {
   var _inputController;
   var _keyController;
   var _alphabetController;
-  var _currentOutput = BifidOutput('', '');
+  var _currentOutput = BifidOutput('', '', '');
 
   String _currentInput = '';
   String _currentKey = '12345';
@@ -137,9 +137,6 @@ class BifidState extends State<Bifid> {
 
         GCWEncryptButtonBar(
           onPressedEncode: () {
-            // nutzung von Toasts - https://github.com/t-m-z/GCWizard/blob/_Bifid/lib/widgets/tools/formula_solver/formula_solver_formulagroups.dart
-            // Zeile 122ff:
-            //showToast(i18n(context, 'formulasolver_groups_imported'));
            if (_currentInput == null || _currentInput.length == 0) {
               showToast(i18n(context, 'bifid_error_no_encrypt_input'));
             } else {
@@ -155,19 +152,6 @@ class BifidState extends State<Bifid> {
                     alphabetMode: _currentBifidAlphabetMode);
               });
             }
-            /*
-            if (_currentMatrixMode == GCWSwitchPosition.left) {
-              _currentKey = "12345";
-            } else {
-              _currentKey = "123456";
-            }
-            setState(() {
-              _currentOutput = encryptBifid(
-                  _currentInput, _currentKey, mode: _currentBifidMode,
-                  alphabet: _currentAlphabet,
-                  alphabetMode: _currentBifidAlphabetMode);
-            });
-            */
           },
           onPressedDecode: () {
             if (_currentInput == null || _currentInput.length == 0) {
@@ -182,16 +166,6 @@ class BifidState extends State<Bifid> {
                 _currentOutput = decryptBifid(_currentInput, _currentKey, mode: _currentBifidMode, alphabet: _currentAlphabet, alphabetMode: _currentBifidAlphabetMode);
               });
             }
-            /*
-            if (_currentMatrixMode == GCWSwitchPosition.left) {
-              _currentKey = "12345";
-            } else {
-              _currentKey = "123456";
-            }
-            setState(() {
-              _currentOutput = decryptBifid(_currentInput, _currentKey, mode: _currentBifidMode, alphabet: _currentAlphabet, alphabetMode: _currentBifidAlphabetMode);
-            });
-            */
           },
         ),
         _buildOutput(context)
@@ -200,58 +174,32 @@ class BifidState extends State<Bifid> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentOutput == null || _currentOutput.output.length == 0) {
-      return GCWDefaultOutput(
-        text: '' //TODO: Exception
-      );
-    } else {
-      // nutzung von Toasts - https://github.com/t-m-z/GCWizard/blob/_Bifid/lib/widgets/tools/formula_solver/formula_solver_formulagroups.dart
-      // Zeile 122ff
-
-      switch (_currentOutput.output) {
-        case "bifid_error_no_encrypt_input":
-          showToast(i18n(context, 'bifid_error_no_encrypt_input'));
-          return GCWDefaultOutput(
-              text: '' //TODO: Exception
-          );
-          break;
-        case "bifid_error_wrong_griddimension":
-          showToast(i18n(context, 'bifid_error_wrong_griddimension'));
-          return GCWDefaultOutput(
-              text: '' //TODO: Exception
-          );
-          break;
-        case "bifid_error_no_alphabet":
-          showToast(i18n(context, 'bifid_error_no_alphabet'));
-          return GCWDefaultOutput(
-              text: '' //TODO: Exception
-          );
-          break;
-        case "bifid_error_no_output":
-          showToast(i18n(context, 'bifid_error_no_output'));
-          return GCWDefaultOutput(
-              text: '' //TODO: Exception
-          );
-          break;
-        default: break;
-      }
+    switch (_currentOutput.state ) {
+      case 'ERROR':
+        showToast(i18n(context, _currentOutput.output));
+        return GCWDefaultOutput(
+          text: '' //TODO: Exception
+        );
+        break;
+      case 'OK':
+        return GCWOutput(
+          child: Column(
+            children: <Widget>[
+              GCWOutputText(
+                  text: _currentOutput.output
+              ),
+              GCWTextDivider(
+                  text: i18n(context, 'bifid_usedgrid')
+              ),
+              GCWOutputText(
+                text: _currentOutput.grid,
+                isMonotype: true,
+              )
+            ],
+          ),
+        );
+        break;
+      default: break;
     }
-
-    return GCWOutput(
-      child: Column(
-        children: <Widget>[
-          GCWOutputText(
-            text: _currentOutput.output
-          ),
-          GCWTextDivider(
-            text: i18n(context, 'bifid_usedgrid')
-          ),
-          GCWOutputText(
-            text: _currentOutput.grid,
-            isMonotype: true,
-          )
-        ],
-      ),
-    );
   }
 }
