@@ -667,6 +667,8 @@
   "coords_formatconverter_mercator_easting" : "Ost",
   "coords_formatconverter_mercator_northing" : "Nord",
   "coords_formatconverter_geohash_locator" : "Geohash",
+  "coords_formatconverter_naturalareacode_x" : "X (Ost)",
+  "coords_formatconverter_naturalareacode_y" : "Y (Nord)",
   "coords_formatconverter_openlocationcode_novalidcode" : "Kein valider OpenLocationCode input",
   "coords_formatconverter_slippymap_zoom" : "Zoom",
   "coords_intersection_title" : "Vorwärtseinschnitt",

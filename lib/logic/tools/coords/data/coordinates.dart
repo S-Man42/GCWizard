@@ -17,6 +17,7 @@ const keyCoordsGaussKruegerGK4 = 'coords_gausskrueger_gk4';
 const keyCoordsGaussKruegerGK5 = 'coords_gausskrueger_gk5';
 const keyCoordsMaidenhead = 'coords_maidenhead';
 const keyCoordsMercator = 'coords_mercator';
+const keyCoordsNaturalAreaCode = 'coords_naturalareacode';
 const keyCoordsSlippyMap = 'coords_slippymap';
 const keyCoordsGeohash = 'coords_geohash';
 const keyCoordsOpenLocationCode = 'coords_openlocationcode';
@@ -48,6 +49,7 @@ List<CoordinateFormat> allCoordFormats = [
   ]),
   CoordinateFormat(keyCoordsMaidenhead, 'Maidenhead Locator (QTH)'),
   CoordinateFormat(keyCoordsMercator, 'Mercator'),
+  CoordinateFormat(keyCoordsNaturalAreaCode, 'Natural Area Code (NAC)'),
   CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles'),
   CoordinateFormat(keyCoordsGeohash, 'Geohash'),
   CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)'),
@@ -385,6 +387,18 @@ class Mercator {
   @override
   String toString() {
     return 'Y: $easting\nX: $northing';
+  }
+}
+
+class NaturalAreaCode {
+  String x; //east
+  String y; //north
+
+  NaturalAreaCode(this.x, this.y);
+
+  @override
+  String toString() {
+    return 'X: $x\nY: $y';
   }
 }
 

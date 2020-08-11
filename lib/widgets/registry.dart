@@ -663,7 +663,7 @@ class Registry {
         tool: FormatConverter(),
         i18nPrefix: 'coords_formatconverter',
         iconPath: 'assets/coordinates/icon_format_converter.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'converter converting konverter konvertieren umwandeln quadtree openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gauss kruger krueger gauue mgrs utm dec deg dms 1903 ch1903+'
+        searchStrings: SEARCHSTRING_COORDINATES + 'converter converting konverter konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gauss kruger krueger gauue mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
       ),
       GCWToolWidget(
         tool: VariableCoordinateFormulas(),
