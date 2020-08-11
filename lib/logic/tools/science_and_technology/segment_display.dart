@@ -1,10 +1,15 @@
 import 'dart:core';
-import 'package:gc_wizard/utils/common_utils.dart';
+
+import 'package:gc_wizard/utils/constants.dart';
 
 enum SegmentDisplayType{SEVEN, FOURTEEN, SIXTEEN}
 
-final Map<String, List<String>> AZTo16Segment = {
-  '1'  : ['i','l'],
+final _baseSegments7Segment = ['a','b','c','d','e','f','g','dp'];
+final _baseSegments14Segment = ['a','b','c','d','e','f','g1','g2','h','i','j','k','l','m','dp'];
+final _baseSegments16Segment = ['a1','a2','b','c','d1','d2','e','f','g1','g2','h','i','j','k','l','m','dp'];
+
+final Map<String, List<String>> _AZTo16Segment = {
+  '1'  : ['b','c','j'],
   '2'  : ['a1','a2','b','d1','d2','e','g1','g2'],
   '3'  : ['a1','a2','b','c','d1','d2','g1','g2'],
   '4'  : ['b','c','f','g1','g2'],
@@ -60,8 +65,8 @@ final Map<String, List<String>> AZTo16Segment = {
   ' '  : []
 };
 
-final Map<String, List<String>> AZTo14Segment = {
-  '1'  : ['i','l'],
+final Map<String, List<String>> _AZTo14Segment = {
+  '1'  : ['b','c','j'],
   '2'  : ['a','b','d','e','g1','g2'],
   '3'  : ['a','b','c','d','g1','g2'],
   '4'  : ['b','c','f','g1','g2'],
@@ -113,7 +118,7 @@ final Map<String, List<String>> AZTo14Segment = {
   ' '  : []
 };
 
-final Map<String, List<String>> AZTo7Segment = {
+final Map<String, List<String>> _AZTo7Segment = {
   // https://www.wikizero.com/en/Seven-segment_display
   '1'  : ['b','c'],                     //'1' : ['a','e'],
   '2'  : ['a','b','d','e','g'],
@@ -150,7 +155,7 @@ final Map<String, List<String>> AZTo7Segment = {
   '='  : ['d','g'],
   '°'  : ['a','b','g','f'],
   '"'  : ['b','f'],
-  '\'' : ['f'], '\'' : ['b'],
+  '\'' : ['f'],                         //'\'' : ['b'],
   '('  : ['a','d','e','f'],
   '['  : ['a','d','e','f'],
   ')'  : ['a','b','c','d'],
@@ -159,9 +164,7 @@ final Map<String, List<String>> AZTo7Segment = {
   ' '  : []
 };
 
-//TODO!
-//var Segment7ToAZ = switchMapKeyValue(AZTo7Segment);
-final Map<List<String>, String> Segment7ToAZ = {
+final Map<List<String>, String> _Segment7ToAZ = {
   ['b', 'c'] : '1',
   ['a', 'b', 'd', 'e', 'g'] : '2',
   ['a', 'b', 'c', 'd', 'g'] : '3',
@@ -210,15 +213,19 @@ final Map<List<String>, String> Segment7ToAZ = {
   ['a', 'b', 'e', 'g'] : '?',
   [] : ''
 };
-//var Segment14ToAZ = switchMapKeyValue(AZTo14Segment);
-final Map<List<String>, String> Segment14ToAZ = {
-  ['i','l'] : '1',
+
+final Map<List<String>, String> _Segment14ToAZ = {
+  ['b','c','j'] : '1',
+  ['b','c'] : '1',
   ['a','b','d','e','g1','g2'] : '2',
   ['a','b','c','d','g1','g2'] : '3',
   ['b','c','f','g1','g2'] : '4',
   ['a','c','d','f','g1','g2'] : '5',
   ['a','c','d','e','f','g1','g2'] : '6',
   ['a','j','k'] : '7',
+  ['a','j','l'] : '7',
+  ['a','b','c'] : '7',
+  ['a','b','c','f'] : '7',
   ['a','b','c','d','e','f','g1','g2'] : '8',
   ['a','b','c','f','g1','g2'] : '9',
   ['a','b','c','d','e','f','j','k'] : '0',
@@ -264,14 +271,20 @@ final Map<List<String>, String> Segment14ToAZ = {
   [] : ' '
 };
 
-final Map<List<String>, String> Segment16ToAZ = {
+final Map<List<String>, String> _Segment16ToAZ = {
   ['a1','i','l'] : '1',
+  ['a1','d1','d2','i','l'] : '1',
+  ['b','c','j'] : '1',
+  ['b','c'] : '1',
   ['a1','a2','b','d1','d2','e','g1','g2'] : '2',
   ['a1','a2','b','c','d1','d2','g1','g2'] : '3',
   ['b','c','f','g1','g2'] : '4',
   ['a1','a2','c','d1','d2','f','g1','g2'] : '5',
   ['a1','a2','c','d1','d2','e','f','g1','g2'] : '6',
   ['a1','a2','j','k'] : '7',
+  ['a1','a2','j','l'] : '7',
+  ['a1','a2','b','c'] : '7',
+  ['a1','a2','b','c','f'] : '7',
   ['a1','a2','b','c','d1','d2','e','f','g1','g2'] : '8',
   ['a1','a2','b','c','f','g1','g2'] : '9',
   ['a1','a2','b','c','d1','d2','e','f','j','k'] : '0',
@@ -318,21 +331,21 @@ final Map<List<String>, String> Segment16ToAZ = {
   [] : ' '
 };
 
-List<List<String>> encodeSegment(String input, SegmentDisplayType currentSegmentTyp) {
+List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
   if (input == null || input == '')
     return [];
 
-  Map<String, List<String>> AZToSegment;
+  var AZToSegment;
 
-  switch (currentSegmentTyp) {
+  switch (segmentType) {
     case SegmentDisplayType.SEVEN:
-      AZToSegment = AZTo7Segment;
+      AZToSegment = _AZTo7Segment;
       break;
     case SegmentDisplayType.FOURTEEN:
-      AZToSegment = AZTo14Segment;
+      AZToSegment = _AZTo14Segment;
       break;
     case SegmentDisplayType.SIXTEEN:
-      AZToSegment = AZTo16Segment;
+      AZToSegment = _AZTo16Segment;
       break;
   }
 
@@ -358,59 +371,91 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType currentSegment
 }
 
 
-String decodeSegment(String input, SegmentDisplayType currentSegmentTyp) {
+Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType) {
   if (input == null || input == '')
-    return '';
+    return {'displays': [], 'text': ''};
 
-  var SegmentToAZ;
+  var baseSegments;
 
-  switch (currentSegmentTyp) {
+  switch (segmentType) {
     case SegmentDisplayType.SEVEN:
-      SegmentToAZ = Segment7ToAZ;
+      baseSegments = _baseSegments7Segment;
       break;
     case SegmentDisplayType.FOURTEEN:
-      SegmentToAZ = Segment14ToAZ;
+      baseSegments = _baseSegments14Segment;
       break;
     case SegmentDisplayType.SIXTEEN:
-      SegmentToAZ = Segment16ToAZ;
+      baseSegments = _baseSegments16Segment;
       break;
   }
 
   input = input.toLowerCase();
+  var displays = <List<String>>[];
+  List<String> currentDisplay;
 
-  return input
-    .split(RegExp(r'[^abcdefghijklm12.]'))
-    .map((Segment) {
-      if (Segment == ' ' || Segment == '.')
-        return ' . ';
+  for (int i = 0; i < input.length; i++) {
+    var segment = input[i];
+    if (i + 1 < input.length && ['1', '2', 'p'].contains(input[i + 1])) {
+      i++;
+      segment += input[i];
+    }
 
-      //rebuild Segment: sort the letters ascending
-      Segment = Segment.toLowerCase();
-      String hSegment = '';
-      if (Segment.contains('a1')) {hSegment = hSegment + 'a1';}
-      if (Segment.contains('a2')) {hSegment = hSegment + 'a2';}
-      if (Segment.contains('a')) {hSegment = hSegment + 'a';}
-      if (Segment.contains('b')) {hSegment = hSegment + 'b';}
-      if (Segment.contains('c')) {hSegment = hSegment + 'c';}
-      if (Segment.contains('d1')) {hSegment = hSegment + 'd1';}
-      if (Segment.contains('d2')) {hSegment = hSegment + 'd2';}
-      if (Segment.contains('d')) {hSegment = hSegment + 'd';}
-      if (Segment.contains('e')) {hSegment = hSegment + 'e';}
-      if (Segment.contains('f')) {hSegment = hSegment + 'f';}
-      if (Segment.contains('g1')) {hSegment = hSegment + 'g1';}
-      if (Segment.contains('g2')) {hSegment = hSegment + 'g2';}
-      if (Segment.contains('g')) {hSegment = hSegment + 'g';}
-      if (Segment.contains('i')) {hSegment = hSegment + 'i';}
-      if (Segment.contains('j')) {hSegment = hSegment + 'j';}
-      if (Segment.contains('k')) {hSegment = hSegment + 'k';}
-      if (Segment.contains('l')) {hSegment = hSegment + 'l';}
-      if (Segment.contains('m')) {hSegment = hSegment + 'm';}
-      if (Segment.contains('dp')) {hSegment = hSegment + 'dp';}
+    if (!baseSegments.contains(segment)) {
+      if (currentDisplay != null) {
+        currentDisplay.sort();
+        displays.add(currentDisplay.toSet().toList());
+      }
 
-      var character = SegmentToAZ[hSegment];
+      currentDisplay = null;
+      continue;
+    }
 
-      return character != null ? character : '?';
-    })
-    .join();
+    if (currentDisplay == null)
+      currentDisplay = [];
 
+    currentDisplay.add(segment);
+  }
+
+  if (currentDisplay != null) {
+    currentDisplay.sort();
+    displays.add(currentDisplay.toSet().toList());
+  }
+
+  var out = displays.map((display) {
+    if (display.length == 1 && display[0] == 'dp') {
+      return '.';
+    }
+
+    var containsDot = display.contains('dp');
+    var segments = List<String>.from(display);
+    if (containsDot)
+      segments.remove('dp');
+
+    var character = _characterFromSegmentList(segmentType, segments);
+    if (character == null) {
+      return UNKNOWN_ELEMENT;
+    }
+
+    return character + (containsDot ? '.' : '');
+  }).join();
+
+  return {'displays': displays, 'text': out};
+}
+
+_characterFromSegmentList(SegmentDisplayType type, List<String> segments) {
+  Map<List<String>,String> segmentToAZ;
+
+  switch (type) {
+    case SegmentDisplayType.SEVEN:
+      segmentToAZ = _Segment7ToAZ;
+      break;
+    case SegmentDisplayType.FOURTEEN:
+      segmentToAZ = _Segment14ToAZ;
+      break;
+    case SegmentDisplayType.SIXTEEN:
+      segmentToAZ = _Segment16ToAZ;
+      break;
+  }
+
+  return segmentToAZ.map((key, value) => MapEntry(key.join(), value))[segments.join()];
 }
