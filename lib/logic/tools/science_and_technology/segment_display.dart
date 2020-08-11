@@ -306,9 +306,9 @@ final Map<List<String>, String> _Segment14ToAZ = {
   ['h','m'] : '\\' ,
   ['g1','g2','i','l'] : '+'  ,
   ['g1','g2','i','l','h','j','k','m'] : '*' ,
-  ['a','f','g1','g2','c','d','i','l'] : '\$' ,
+  ['a','c','d','f','g1','g2','i','l'] : '\$' ,
   ['a','b','g2','l'] : '?' ,
-  ['a','b','g1','g2','e'] : '?' ,
+  ['a','b','e','g1','g2'] : '?' ,
   [] : ' '
 };
 
@@ -411,9 +411,9 @@ final Map<List<String>, String> _Segment16ToAZ = {
   ['h','m'] : '\\' ,
   ['g1','g2','i','l'] : '+'  ,
   ['g1','g2','i','l','h','j','k','m'] : '*' ,
-  ['a1','a2','f','g1','g2','c','d1','d2','i','l'] : '\$' ,
+  ['a1','a2','c','d1','d2','f','g1','g2','i','l'] : '\$' ,
   ['a1','a2','b','g2','l'] : '?' ,
-  ['a1','a2','b','g1','g2','e'] : '?' ,
+  ['a1','a2','b','e','g1','g2'] : '?' ,
   [] : ' '
 };
 
@@ -486,6 +486,8 @@ Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType)
       segment += input[i];
     }
 
+    print(segment);
+
     if (!baseSegments.contains(segment)) {
       if (currentDisplay != null) {
         currentDisplay.sort();
@@ -506,6 +508,8 @@ Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType)
     currentDisplay.sort();
     displays.add(currentDisplay.toSet().toList());
   }
+
+  print(displays);
 
   var out = displays.map((display) {
     if (display.length == 1 && display[0] == 'dp') {
