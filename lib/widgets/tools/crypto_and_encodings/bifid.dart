@@ -119,25 +119,25 @@ class BifidState extends State<Bifid> {
             : Container(), //empty widget
 
         _currentMatrixMode == GCWSwitchPosition.left
-            ?   GCWDropDownButton(
-                value: _currentBifidAlphabetMode,
-                onChanged: (value) {
-                  setState(() {
-                    _currentBifidAlphabetMode = value;
-                  });
-                },
-                items: BifidAlphabetModeItems.entries.map((mode) {
-                  return DropdownMenuItem(
-                    value: mode.key,
-                    child: Text(mode.value),
-                  );
-                }).toList(),
-              )
-            : Container(), //empty widget
+        ? GCWDropDownButton(
+              value: _currentBifidAlphabetMode,
+              onChanged: (value) {
+                setState(() {
+                  _currentBifidAlphabetMode = value;
+                });
+              },
+              items: BifidAlphabetModeItems.entries.map((mode) {
+                return DropdownMenuItem(
+                  value: mode.key,
+                  child: Text(mode.value),
+                );
+              }).toList(),
+            )
+          : Container(), //empty widget
 
         GCWEncryptButtonBar(
           onPressedEncode: () {
-           if (_currentInput == null || _currentInput.length == 0) {
+            if (_currentInput == null || _currentInput.length == 0) {
               showToast(i18n(context, 'bifid_error_no_encrypt_input'));
             } else {
               if (_currentMatrixMode == GCWSwitchPosition.left) {
@@ -147,9 +147,9 @@ class BifidState extends State<Bifid> {
               }
               setState(() {
                 _currentOutput = encryptBifid(
-                    _currentInput, _currentKey, mode: _currentBifidMode,
-                    alphabet: _currentAlphabet,
-                    alphabetMode: _currentBifidAlphabetMode);
+                  _currentInput, _currentKey, mode: _currentBifidMode,
+                  alphabet: _currentAlphabet,
+                  alphabetMode: _currentBifidAlphabetMode);
               });
             }
           },
@@ -174,32 +174,31 @@ class BifidState extends State<Bifid> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    switch (_currentOutput.state ) {
-      case 'ERROR':
-        showToast(i18n(context, _currentOutput.output));
-        return GCWDefaultOutput(
-          text: '' //TODO: Exception
-        );
-        break;
-      case 'OK':
-        return GCWOutput(
-          child: Column(
-            children: <Widget>[
-              GCWOutputText(
-                  text: _currentOutput.output
-              ),
-              GCWTextDivider(
-                  text: i18n(context, 'bifid_usedgrid')
-              ),
-              GCWOutputText(
-                text: _currentOutput.grid,
-                isMonotype: true,
-              )
-            ],
-          ),
-        );
-        break;
-      default: break;
+    if (_currentOutput.state == null || _currentOutput.state == '')
+      return Container();
+
+    if (_currentOutput.state == 'ERROR') {
+      showToast(i18n(context, _currentOutput.output));
+      return GCWDefaultOutput(
+        text: '' //TODO: Exception
+      );
     }
+
+    return GCWOutput(
+      child: Column(
+        children: <Widget>[
+          GCWOutputText(
+            text: _currentOutput.output
+          ),
+          GCWTextDivider(
+            text: i18n(context, 'bifid_usedgrid')
+          ),
+          GCWOutputText(
+            text: _currentOutput.grid,
+            isMonotype: true,
+          )
+        ],
+      ),
+    );
   }
 }

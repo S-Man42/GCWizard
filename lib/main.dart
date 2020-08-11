@@ -46,6 +46,7 @@ class App extends StatelessWidget {
                   GlobalWidgetsLocalizations.delegate,
                 ],
                 theme: buildTheme(),
+                debugShowCheckedModeBanner: false,
                 home: MainView(),
               );
             }
