@@ -14,6 +14,7 @@ class GCWIntegerSpinner extends StatefulWidget {
   final value;
   final min;
   final max;
+  final step;
   final controller;
   final SpinnerLayout layout;
   final focusNode;
@@ -26,6 +27,7 @@ class GCWIntegerSpinner extends StatefulWidget {
     this.value: 0,
     this.min: -9007199254740991,
     this.max: 9007199254740992,
+    this.step: 1,
     this.controller,
     this.layout: SpinnerLayout.horizontal,
     this.focusNode,
@@ -73,8 +75,9 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _decreaseValue() {
     setState(() {
-      if (widget.min == null || _currentValue > widget.min) {
-        _currentValue--;
+      if (widget.min == null || _currentValue >= widget.min + widget.step) {
+        //_currentvalue--;
+        _currentValue = _currentValue - widget.step;
       } else if (_currentValue == widget.min && widget.max != null) {
         _currentValue = widget.max;
       }
@@ -85,8 +88,9 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _increaseValue() {
     setState(() {
-      if (widget.max == null || _currentValue < widget.max) {
-        _currentValue++;
+      if (widget.max == null || _currentValue <= widget.max - widget.step) {
+        //_currentValue++;
+        _currentValue = _currentValue + widget.step;
       } else if (_currentValue == widget.max && widget.min != null) {
         _currentValue = widget.min;
       }
