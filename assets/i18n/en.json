@@ -3,6 +3,17 @@
   "abaddon_description" : "One letter to a three-element group of ¥, µ, þ",
   "abaddon_example" : "þ¥µþµ¥¥¥¥þµþ",
 
+  "affine_title" : "Affine Code",
+  "affine_description" : "A substitutionschiffre",
+  "affine_example" : "HALLO  → UZNDU",
+  "affine_key_a" : "key a",
+  "affine_key_b" : "key b",
+  "affine_mode" : "Mode",
+  "affine_mode_encrypt" : "encrypt",
+  "affine_mode_decrypt" : "decrypt",
+  "affine_error_wrong_key_a" : "key A is wrong",
+  "affine_error_wrong_key_b" : "key B is wrong",
+
   "about_version" : "Version",
   "about_maintainer" : "Maintainer & Developer",
   "about_contact_email" : "eMail",

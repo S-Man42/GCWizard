@@ -29,6 +29,7 @@ import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
@@ -137,6 +138,7 @@ class _MainViewState extends State<MainView> {
         return [
           className(Abaddon()),
           className(ADFGVX()),
+          className(Affine()),
           className(AlphabetValues()),
           className(ASCIIValues()),
           className(AstronomySelection()),
