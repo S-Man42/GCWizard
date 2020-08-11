@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
-import 'package:touchable/touchable.dart';
 
 const _INITIAL_SEGMENTS = <String, bool>{
   'a': false, 'b': false, 'c': false, 'd': false,
