@@ -26,6 +26,9 @@ String encodeAffine(String input, int keyA, int keyB) {
           return ' ';
 
         affinePlain = AZToAffineDigit[character];
+        if (affinePlain == null)
+          return '';
+
         affinePlain = (keyA * affinePlain + keyB) % 26;
 
         affineCipher = AffineDigitToAZ[affinePlain];
