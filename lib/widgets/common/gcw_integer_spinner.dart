@@ -15,6 +15,7 @@ class GCWIntegerSpinner extends StatefulWidget {
   final min;
   final max;
   final step;
+  final items;
   final controller;
   final SpinnerLayout layout;
   final focusNode;
@@ -29,6 +30,7 @@ class GCWIntegerSpinner extends StatefulWidget {
     this.max: 9007199254740992,
     this.step: 1,
     this.controller,
+    this.items: null,
     this.layout: SpinnerLayout.horizontal,
     this.focusNode,
     this.isBinary: false
@@ -41,6 +43,7 @@ class GCWIntegerSpinner extends StatefulWidget {
 class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   var _controller;
   var _currentValue = 1;
+  var index = 1;
 
   var _binaryMaskFormatter = MaskTextInputFormatter(
     mask: '#' * 10000,
@@ -75,24 +78,45 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _decreaseValue() {
     setState(() {
-      if (widget.min == null || _currentValue >= widget.min + widget.step) {
-        //_currentvalue--;
-        _currentValue = _currentValue - widget.step;
-      } else if (_currentValue == widget.min && widget.max != null) {
-        _currentValue = widget.max;
+      if (widget.items == null) {
+          if (widget.min == null || _currentValue >= widget.min + widget.step) {
+            //_currentvalue--;
+            _currentValue = _currentValue - widget.step;
+          } else if (_currentValue == widget.min && widget.max != null) {
+            _currentValue = widget.max;
+          }
+      } else {
+        if (widget.min == null || index >= widget.min + widget.step) {
+          //_currentvalue--;
+          index = index - widget.step;
+          _currentValue = widget.items[index];
+        } else if (index == widget.min && widget.max != null) {
+          index = widget.max;
+          _currentValue = widget.items[index];
+        }
       }
-
       _setCurrentValueAndEmitOnChange(setTextFieldText: true);
     });
   }
 
   _increaseValue() {
     setState(() {
-      if (widget.max == null || _currentValue <= widget.max - widget.step) {
-        //_currentValue++;
-        _currentValue = _currentValue + widget.step;
-      } else if (_currentValue == widget.max && widget.min != null) {
-        _currentValue = widget.min;
+      if (widget.items == null) {
+        if (widget.max == null || _currentValue <= widget.max - widget.step) {
+          //_currentValue++;
+          _currentValue = _currentValue + widget.step;
+        } else if (_currentValue == widget.max && widget.min != null) {
+          _currentValue = widget.min;
+        }
+      } else {
+        if (widget.min == null || index <= widget.max -widget.step) {
+          //_currentvalue--;
+          index = index + widget.step;
+          _currentValue = widget.items[index];
+        } else if (index == widget.max && widget.min != null) {
+          index = widget.min;
+          _currentValue = widget.items[index];
+        }
       }
 
       _setCurrentValueAndEmitOnChange(setTextFieldText: true);
