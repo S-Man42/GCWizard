@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/affine.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -60,26 +61,28 @@ class AffineState extends State<Affine> {
 
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-          controller: _encodeController,
-          onChanged: (text) {
-            setState(() {
-              _currentEncodeInput = text;
-            });
-          },
+                controller: _encodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
         )
             : GCWTextField(
-          controller: _decodeController,
-          onChanged: (text) {
-            setState(() {
-              _currentDecodeInput = text;
-            });
-          },
-        ),
-        GCWIntegerSpinner(
+                controller: _decodeController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentDecodeInput = text;
+                    });
+                  },
+            ),
+
+          GCWIntegerSpinner(
           title: i18n(context, 'affine_key_a'),
           min: 1,
-          max: 25,
-          step: 2,
+          max: 11,
+          step: 1,
+          items: {1 : 1, 2 : 3, 3 : 5, 4 : 7, 5 : 9, 6 : 11, 7 : 15, 8 : 19, 9 : 21, 10 : 23, 11 : 25},
           value: _currentKeyA,
           onChanged: (value) {
             setState(() {
