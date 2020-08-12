@@ -80,9 +80,9 @@ class AffineState extends State<Affine> {
           GCWIntegerSpinner(
           title: i18n(context, 'affine_key_a'),
           min: 1,
-          max: 11,
+          max: 12,
           step: 1,
-          items: {1 : 1, 2 : 3, 3 : 5, 4 : 7, 5 : 9, 6 : 11, 7 : 15, 8 : 19, 9 : 21, 10 : 23, 11 : 25},
+          items: {1 : 1, 2 : 3, 3 : 5, 4 : 7, 5 : 9, 6 : 11, 7 : 15, 8 : 17, 9 : 19, 10 : 21, 11 : 23, 12: 25},
           value: _currentKeyA,
           onChanged: (value) {
             setState(() {
