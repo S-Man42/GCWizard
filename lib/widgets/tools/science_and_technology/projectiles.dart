@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/geschoss.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
@@ -13,16 +13,16 @@ import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class Geschoss extends StatefulWidget {
+class Projectiles extends StatefulWidget {
   @override
-  GeschossState createState() => GeschossState();
+  ProjectilesState createState() => ProjectilesState();
 }
 
-class GeschossState extends State<Geschoss> {
+class ProjectilesState extends State<Projectiles> {
   var _inputControllerEnergy;
   var _inputControllerMass;
   var _inputControllerSpeed;
-  var _currentOutput = GeschossOutput('', '', '');
+  var _currentOutput = ProjectilesOutput('', '', '');
 
   String _currentInputEnergy = '';
   String _currentInputMass = '';
@@ -50,11 +50,11 @@ class GeschossState extends State<Geschoss> {
     return Column(
       children: <Widget>[
         GCWTextDivider(
-            text: i18n(context, 'geschoss_energy')
+            text: i18n(context, 'Projectiles_energy')
         ),
         GCWTextField(
           controller: _inputControllerEnergy,
-          hintText: i18n(context, 'geschoss_energy'),
+          hintText: i18n(context, 'Projectiles_energy'),
           onChanged: (text) {
             setState(() {
               _currentInputEnergy = text;
@@ -62,11 +62,11 @@ class GeschossState extends State<Geschoss> {
           },
         ),
         GCWTextDivider(
-            text: i18n(context, 'geschoss_mass')
+            text: i18n(context, 'Projectiles_mass')
         ),
         GCWTextField(
           controller: _inputControllerMass,
-          hintText: i18n(context, 'geschoss_mass'),
+          hintText: i18n(context, 'Projectiles_mass'),
           onChanged: (text) {
             setState(() {
               _currentInputMass = text;
@@ -74,11 +74,11 @@ class GeschossState extends State<Geschoss> {
           },
         ),
         GCWTextDivider(
-            text: i18n(context, 'geschoss_speed')
+            text: i18n(context, 'Projectiles_speed')
         ),
         GCWTextField(
           controller: _inputControllerSpeed,
-          hintText: i18n(context, 'geschoss_speed'),
+          hintText: i18n(context, 'Projectiles_speed'),
             onChanged: (text) {
               setState(() {
                 _currentInputSpeed = text;
@@ -87,7 +87,7 @@ class GeschossState extends State<Geschoss> {
         ),
 
         GCWButton(
-          text: i18n(context, 'geschoss_calculate'),
+          text: i18n(context, 'Projectiles_calculate'),
           onPressed: () {
             if (_currentInputEnergy == null || _currentInputEnergy.length == 0) {
               setState(() {
