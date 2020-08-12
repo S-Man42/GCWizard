@@ -8,6 +8,10 @@ import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
+}
 class GCWIntegerSpinner extends StatefulWidget {
   final Function onChanged;
   final title;
@@ -134,19 +138,35 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   }
 
   Widget _buildTextField() {
-    return GCWIntegerTextField(
-      focusNode: widget.focusNode,
-      min: widget.min,
-      max: widget.max,
-      textInputFormatter: widget.isBinary ? _binaryMaskFormatter : null,
-      controller: _controller,
-      onChanged: (ret) {
-        setState(() {
-          _currentValue = widget.isBinary ? int.tryParse(ret['value'].toString(), radix: 2) : ret['value'];
-          _setCurrentValueAndEmitOnChange();
-        });
-      }
-    );
+    if (widget.items == null) {
+        return GCWIntegerTextField(
+          focusNode: widget.focusNode,
+          min: widget.min,
+          max: widget.max,
+          textInputFormatter: widget.isBinary ? _binaryMaskFormatter : null,
+          controller: _controller,
+          onChanged: (ret) {
+            setState(() {
+              _currentValue = widget.isBinary ? int.tryParse(ret['value'].toString(), radix: 2) : ret['value'];
+              _setCurrentValueAndEmitOnChange();
+            });
+          }
+        );
+    } else {
+        return GCWIntegerTextField(
+          focusNode: new AlwaysDisabledFocusNode(),
+          min: widget.min,
+          max: widget.max,
+          textInputFormatter: widget.isBinary ? _binaryMaskFormatter : null,
+          controller: _controller,
+          onChanged: (ret) {
+            setState(() {
+              _currentValue = widget.isBinary ? int.tryParse(ret['value'].toString(), radix: 2) : ret['value'];
+              _setCurrentValueAndEmitOnChange();
+            });
+          }
+        );
+    }
   }
 
   Widget _buildSpinner() {
