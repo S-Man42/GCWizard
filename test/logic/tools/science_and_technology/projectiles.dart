@@ -2,30 +2,33 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/science_and_technology/projectiles.dart';
 
 void main() {
-  group("Windchill.calculate:", () {
+  group("Projectiles.calculate:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'temperature' : null, 'windspeed' : null, 'isMetric' : true, 'expectedOutput' : null},
-      {'temperature' : null, 'windspeed' : null, 'isMetric' : false, 'expectedOutput' : null},
-      {'temperature' : -10.0, 'windspeed' : null, 'isMetric' : true, 'expectedOutput' : null},
-      {'temperature' : -10.0, 'windspeed' : null, 'isMetric' : false, 'expectedOutput' : null},
-      {'temperature' : null, 'windspeed' : -10.0, 'isMetric' : true, 'expectedOutput' : null},
-      {'temperature' : null, 'windspeed' : -10.0, 'isMetric' : false, 'expectedOutput' : null},
+      {'energy' : null, 'mass' : null, 'speed' : true, 'expectedOutput' : null},
+      {'energy' : null, 'mass' : null, 'speed' : false, 'expectedOutput' : null},
+      {'energy' : -10.0, 'mass' : null, 'speed' : true, 'expectedOutput' : null},
+      {'energy' : -10.0, 'mass' : null, 'speed' : false, 'expectedOutput' : null},
+      {'energy' : null, 'mass' : -10.0, 'speed' : true, 'expectedOutput' : null},
+      {'energy' : null, 'mass' : -10.0, 'speed' : false, 'expectedOutput' : null},
 
-      {'temperature' : -10.0, 'windspeed' : 5.0, 'isMetric' : true, 'expectedOutput' : -12.934},
-      {'temperature' : -10.0, 'windspeed' : 5.0, 'isMetric' : false, 'expectedOutput' : -22.256},
-      {'temperature' : 5.0, 'windspeed' : 5.0, 'isMetric' : true, 'expectedOutput' : 4.083},
-      {'temperature' : 5.0, 'windspeed' : 5.0, 'isMetric' : false, 'expectedOutput' : -4.637},
-      {'temperature' : 5.0, 'windspeed' : 10.0, 'isMetric' : true, 'expectedOutput' : 2.658},
-      {'temperature' : 41.0, 'windspeed' : 6.22, 'isMetric' : false, 'expectedOutput' : 36.809},
+      {'energy' : -10.0, 'mass' : 5.0, 'speed' : true, 'expectedOutput' : -12.934},
+      {'energy' : -10.0, 'mass' : 5.0, 'speed' : false, 'expectedOutput' : -22.256},
+      {'energy' : 5.0, 'mass' : 5.0, 'speed' : true, 'expectedOutput' : 4.083},
+      {'energy' : 5.0, 'mass' : 5.0, 'speed' : false, 'expectedOutput' : -4.637},
+      {'energy' : 5.0, 'mass' : 10.0, 'speed' : true, 'expectedOutput' : 2.658},
+      {'energy' : 41.0, 'mass' : 6.22, 'speed' : false, 'expectedOutput' : 36.809},
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('temperature: ${elem['temperature']}, windspeed: ${elem['windspeed']}, isMetric: ${elem['isMetric']}', () {
+      test('energy: ${elem['energy']}, mass: ${elem['mass']}, speed: ${elem['speed']}', () {
         var _actual;
-        if (elem['isMetric'])
-          _actual = calcWindchillMetric(elem['temperature'], elem['windspeed']);
+        if (elem['energy'] == null)
+          _actual = calculateEnergy(elem['mass'], elem['speed']);
         else
-          _actual = calcWindchillImperial(elem['temperature'], elem['windspeed']);
+          if (elem['mass'] == null)
+            _actual = calculateMass(elem['energy'], elem['speed']);
+          else
+            _actual = calculateSpeed(elem['energy'], elem['mass']);
 
         expect(_actual, elem['expectedOutput']);
       });
