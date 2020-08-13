@@ -9,7 +9,7 @@ class GCWABCSpinner extends StatefulWidget {
   final SpinnerLayout layout;
   final value;
 
-  const GCWABCSpinner({Key key, this.value: 0, this.onChanged, this.layout: SpinnerLayout.horizontal}) : super(key: key);
+  const GCWABCSpinner({Key key, this.value: 1, this.onChanged, this.layout: SpinnerLayout.horizontal}) : super(key: key);
 
   @override
   GCWABCSpinnerState createState() => GCWABCSpinnerState();
@@ -21,13 +21,10 @@ class GCWABCSpinnerState extends State<GCWABCSpinner> {
   @override
   Widget build(BuildContext context) {
     return GCWDropDownSpinner(
-      value: _currentValue ?? (widget.value != null ? widget.value - 1 : null) ?? 0,
+      index: _currentValue ?? (widget.value != null ? widget.value - 1 : null) ?? 0,
       layout: widget.layout,
       items: alphabet_AZ.entries.map((entry) {
-        return DropdownMenuItem(
-          value: entry.value - 1,
-          child: Text('${entry.key} (${entry.value})'),
-        );
+        return Text('${entry.key} (${entry.value})');
       }).toList(),
       onChanged: (value) {
         setState(() {

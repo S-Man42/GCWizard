@@ -3,17 +3,6 @@
   "abaddon_description" : "Ein Buchstabe zu einer Dreigruppe aus ¥, µ, þ",
   "abaddon_example" : "þ¥µþµ¥¥¥¥þµþ",
 
-  "affine_title" : "Affine Code",
-  "affine_description" : "Ein Substitutionschiffre",
-  "affine_example" : "HALLO  → UZNDU",
-  "affine_key_a" : "Schlüssel a",
-  "affine_key_b" : "Schlüssel b",
-  "affine_mode" : "Modus",
-  "affine_mode_encrypt" : "Verschlüsseln",
-  "affine_mode_decrypt" : "Entschlüsseln",
-  "affine_error_wrong_key_a" : "Schlüssel A ist nicht korrekt",
-  "affine_error_wrong_key_b" : "Schlüssel B ist nicht korrekt",
-
   "about_version" : "Version",
   "about_maintainer" : "Maintainer & Entwickler",
   "about_contact_email" : "eMail",
@@ -37,6 +26,12 @@
   "adfgvx_key_transposition" : "Transpositionsschlüssel",
   "adfgvx_description" : "Deutscher Militärcode aus dem 1. Weltkrieg",
   "adfgvx_example" : "XXFXD FGAFF XAFX",
+
+  "affine_title" : "Affine Chiffre",
+  "affine_description" : "Eine Substitutionschiffre",
+  "affine_example" : "HALLO → LWBBA",
+  "affine_key_a" : "Schlüssel A",
+  "affine_key_b" : "Schlüssel B",
 
   "alphabet_name_az" : "Standard Alphabet",
   "alphabet_name_az_description" : "A-Z → 1-26",

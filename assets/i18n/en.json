@@ -3,17 +3,6 @@
   "abaddon_description" : "One letter to a three-element group of ¥, µ, þ",
   "abaddon_example" : "þ¥µþµ¥¥¥¥þµþ",
 
-  "affine_title" : "Affine Code",
-  "affine_description" : "A substitutionschiffre",
-  "affine_example" : "HALLO  → UZNDU",
-  "affine_key_a" : "key a",
-  "affine_key_b" : "key b",
-  "affine_mode" : "Mode",
-  "affine_mode_encrypt" : "encrypt",
-  "affine_mode_decrypt" : "decrypt",
-  "affine_error_wrong_key_a" : "key A is wrong",
-  "affine_error_wrong_key_b" : "key B is wrong",
-
   "about_version" : "Version",
   "about_maintainer" : "Maintainer & Developer",
   "about_contact_email" : "eMail",
@@ -37,6 +26,12 @@
   "adfgvx_mode_adfgvx" : "ADFGVX (6)",
   "adfgvx_key_substitution" : "Substitution Key",
   "adfgvx_key_transposition" : "Transposition Key",
+
+  "affine_title" : "Affine Cipher",
+  "affine_description" : "A substitution chipher",
+  "affine_example" : "HELLO → LMBBA",
+  "affine_key_a" : "Key A",
+  "affine_key_b" : "Key B",
 
   "alphabet_name_az" : "Standard Alphabet",
   "alphabet_name_az_description" : "A-Z → 1-26",

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/affine.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
@@ -26,11 +25,11 @@ class AffineState extends State<Affine> {
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 
-  String _currentOutput ='';
-  String _currentInput = '';
+  int _currentKeyAIndex = 0;
+  int _currentKeyBIndex = 0;
 
-  int _currentKeyA = 1;
-  int _currentKeyB = 0;
+  final aKeys = [1,3,5,7,9,11,15,17,19,21,25];
+  final bKeys = List<int>.generate(26, (index) => index);
 
   @override
   void initState() {
@@ -60,33 +59,30 @@ class AffineState extends State<Affine> {
         ),
 
         _currentMode == GCWSwitchPosition.left
-            ? GCWTextField(
-                controller: _encodeController,
+          ? GCWTextField(
+              controller: _encodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentEncodeInput = text;
+                });
+              },
+            )
+          : GCWTextField(
+              controller: _decodeController,
                 onChanged: (text) {
                   setState(() {
-                    _currentEncodeInput = text;
+                    _currentDecodeInput = text;
                   });
                 },
-        )
-            : GCWTextField(
-                controller: _decodeController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentDecodeInput = text;
-                    });
-                  },
-            ),
+          ),
 
-          GCWIntegerSpinner(
+        GCWDropDownSpinner(
           title: i18n(context, 'affine_key_a'),
-          min: 1,
-          max: 12,
-          step: 1,
-          items: {1 : 1, 2 : 3, 3 : 5, 4 : 7, 5 : 9, 6 : 11, 7 : 15, 8 : 17, 9 : 19, 10 : 21, 11 : 23, 12: 25},
-          value: _currentKeyA,
+          index: _currentKeyAIndex,
+          items: aKeys.map((item) => GCWText(text: item.toString())).toList(),
           onChanged: (value) {
             setState(() {
-              _currentKeyA = value;
+              _currentKeyAIndex = value;
             });
           },
         ),
@@ -95,16 +91,16 @@ class AffineState extends State<Affine> {
           title: i18n(context, 'affine_key_b'),
           min: 0,
           max: 25,
-          value: _currentKeyB,
+          value: _currentKeyBIndex,
           onChanged: (value) {
             setState(() {
-              _currentKeyB = value;
+              _currentKeyBIndex = value;
             });
           },
         ),
 
         GCWTextDivider(
-            text: i18n(context, 'common_output')
+          text: i18n(context, 'common_output')
         ),
 
         _buildOutput(context)
@@ -114,17 +110,16 @@ class AffineState extends State<Affine> {
 
   Widget _buildOutput(BuildContext context) {
     var output = '';
+    var keyA = aKeys[_currentKeyAIndex];
+    var keyB = bKeys[_currentKeyBIndex];
 
-    if (_currentKeyA % 2 == 0)
-      showToast(i18n(context, 'affine_error_wrong_key_a'));
-    else
     if (_currentMode == GCWSwitchPosition.left) {
-      output = encodeAffine(_currentEncodeInput, _currentKeyA, _currentKeyB);
+      output = encodeAffine(_currentEncodeInput, keyA, keyB);
     } else
-      output = decodeAffine(_currentDecodeInput, _currentKeyA, _currentKeyB);
+      output = decodeAffine(_currentDecodeInput, keyA, keyB);
 
     return GCWOutputText(
-        text: output,
+      text: output,
     );
   }
 }
