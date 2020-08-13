@@ -5,6 +5,7 @@
 // https://de.wikipedia.org/wiki/Libaw-Craig-Code
 // https://de.wikipedia.org/wiki/Gray-Code
 // https://www.itwissen.info/Glixon-Code-Glixon-code.html
+// http://www.ahok.de/en/hoklas-code.html#:~:text=Three%20of%20the%20four%20bits%20of%20Tompkins%27s%20code,least%20significant%20bits.%20It%27s%20known%20as%20%22reflected%20code%22.
 
 import 'package:gc_wizard/utils/common_utils.dart';
 
@@ -15,7 +16,7 @@ final DigitToBCDGray =       {'0' : '0000', '1' : '0001', '2' : '0011', '3' : '0
 final DigitToBCDGlixon =     {'0' : '0000', '1' : '0001', '2' : '0011', '3' : '0010', '4' : '0110', '5' : '0111', '6' : '0101', '7' : '0100', '8' : '1100', '9' : '1000'};
 final DigitToBCDOBrien =     {'0' : '0001', '1' : '0011', '2' : '0010', '3' : '0110', '4' : '0100', '5' : '1100', '6' : '1110', '7' : '1010', '8' : '1011', '9' : '1001'};
 final DigitToBCDPetherick =  {'0' : '0101', '1' : '0001', '2' : '0011', '3' : '0010', '4' : '0110', '5' : '1110', '6' : '1010', '7' : '1011', '8' : '1001', '9' : '1101'};
-final DigitToBCDTompkins =   {'0' : '0010', '1' : '0011', '2' : '0111', '3' : '0101', '4' : '0100', '5' : '1100', '6' : '1101', '7' : '1001', '8' : '0111', '9' : '1010'};
+final DigitToBCDTompkins =   {'0' : '0010', '1' : '0011', '2' : '0111', '3' : '0101', '4' : '0100', '5' : '1100', '6' : '1101', '7' : '1001', '8' : '1011', '9' : '1010'};
 final DigitToBCDLibawCraig = {'0' : '00000', '1' : '00001', '2' : '00011', '3' : '00111', '4' : '01111', '5' : '11111', '6' : '11110', '7' : '11100', '8' : '11000', '9' : '10000'};
 
 
