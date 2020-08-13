@@ -87,12 +87,6 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
     );
   }
 
-  _getCircleColorVariant() {
-    var _hsl = HSLColor.fromColor(ThemeColors.mapCircle);
-    _hsl.withLightness(_hsl.lightness - 0.1);
-    return _hsl.toColor();
-  }
-
   _calculateOutput() {
     _currentIntersections = equilateralTriangle(_currentCoords1, _currentCoords2, defaultEllipsoid());
 

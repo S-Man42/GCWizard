@@ -10,7 +10,6 @@ adapted by Juergen Giesen
 import 'dart:math';
 
 import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:intl/intl.dart';
 
 Map<String, DateTime> computeSeasons(int year) {
   return {
@@ -76,6 +75,8 @@ double _JDE0(int year, int month) {
       case 12: return 2451900.05952 + 365242.74049*y - 0.06223*y*y  - 0.00823*y*y*y + 0.00032*y*y*y*y;
     }
   }
+
+  return 0;
 }
 
 double _JDE(int year, int month) {

@@ -72,7 +72,7 @@ class MapCircle {
 
   MapCircle({
     @required this.centerPoint,
-    @required this.radius: 0.0,
+    @required this.radius,
     this.color: ThemeColors.mapCircle
   }) {
     _initialize();

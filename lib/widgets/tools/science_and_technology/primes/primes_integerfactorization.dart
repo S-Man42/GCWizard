@@ -10,8 +10,6 @@ class IntegerFactorization extends StatefulWidget {
 }
 
 class IntegerFactorizationState extends State<IntegerFactorization> {
-  String _output = '1';
-
   List<BigInt> _currentFactors = [BigInt.one];
 
   @override

@@ -55,7 +55,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
       children: <Widget>[
         GCWTextDivider(
           text: i18n(context, 'formulasolver_groups_newgroup'),
-          trailingButton: GCWIconButton(
+          trailing: GCWIconButton(
             size: IconButtonSize.SMALL,
             iconData: Icons.content_paste,
             onPressed: () {

@@ -1,5 +1,4 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
 import 'package:latlong/latlong.dart';
 
