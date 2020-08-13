@@ -186,10 +186,10 @@ class Registry {
         searchStrings: 'adfgx adfgvx polybius polybios transposition substitution'
       ),
       GCWToolWidget(
-          tool: Affine(),
-          i18nPrefix: 'affine',
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'affine'
+        tool: Affine(),
+        i18nPrefix: 'affine',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'affine'
       ),
       GCWToolWidget(
         tool: AlphabetValues(),
