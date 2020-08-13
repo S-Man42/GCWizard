@@ -172,7 +172,7 @@
   "base85_example" : "<~<+oue+DGm>FD,5.@;^.1AT@~>",
 
   "bcd_selection_title" : "BCD Codierungen",
-  "bcd_description" : "Codiert Zahlen ziffernweise jeweils mit einem 4-Bit-Wert",
+  "bcd_selection_description" : "Codiert Zahlen ziffernweise jeweils mit einem 4-Bit-Wert",
   "bcd_original_title" : "BCD",
   "bcd_original_example" : "19 → 0001 1001",
   "bcd_aiken_title" : "BCD (Aiken)",
