@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/services.dart';
 
 class IntegerTextInputFormatter extends TextInputFormatter {

@@ -10,7 +10,6 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_velocity_dropdownbutton.dart';
 import 'package:intl/intl.dart';
-import 'package:math_expressions/math_expressions.dart';
 
 class Beaufort extends StatefulWidget {
   @override

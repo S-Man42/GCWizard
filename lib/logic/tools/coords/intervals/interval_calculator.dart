@@ -133,7 +133,7 @@ abstract class IntervalCalculator {
     _initializeCells(easternCells);
     _initializeCells(westernCells);
 
-    while (!cells.isEmpty) {
+    while (cells.isNotEmpty) {
       _divideCell(cells.first);
       cells.removeAt(0);
     }

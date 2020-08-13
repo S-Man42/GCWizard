@@ -14,6 +14,7 @@ String getAstrologicalSign(AstrologicalSign sign) {
     case AstrologicalSign.CAPRICORN: return 'astronomy_signs_capricorn';
     case AstrologicalSign.AQUARIUS: return 'astronomy_signs_aquarius';
     case AstrologicalSign.PISCES: return 'astronomy_signs_pisces';
+    default: return null;
   }
 }
 
@@ -27,5 +28,6 @@ String getMoonPhase(MoonPhase phase) {
     case MoonPhase.DECREASING_MOON: return 'astronomy_moonphase_decreasingmoon';
     case MoonPhase.LAST_QUARTER: return 'astronomy_moonphase_lastquarter';
     case MoonPhase.DECREASING_CRESCENT: return 'astronomy_moonphase_decreasingcrescent';
+    default: return null;
   }
 }

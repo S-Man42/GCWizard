@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:sqflite/utils/utils.dart';
-
 class RGB {
   double red;
   double green;

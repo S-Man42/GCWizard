@@ -10,8 +10,6 @@ class NearestPrime extends StatefulWidget {
 }
 
 class NearestPrimeState extends State<NearestPrime> {
-  String _output = '2';
-
   var _currentPrimes = [2];
 
   @override
