@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_switch.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';

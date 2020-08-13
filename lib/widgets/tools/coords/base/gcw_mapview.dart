@@ -45,7 +45,7 @@ class GCWMapViewState extends State<GCWMapView> {
   final MapController _mapController = MapControllerImpl();
 
   _LayerType _currentLayer = _LayerType.OPENSTREETMAP_MAPNIK;
-  var _mapBoxToken = null;
+  var _mapBoxToken;
 
   //////////////////////////////////////////////////////////////////////////////
   // from: https://stackoverflow.com/a/58958668/3984221

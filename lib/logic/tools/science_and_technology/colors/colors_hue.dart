@@ -65,6 +65,8 @@ _toRGB(double hue, double saturation, double thirdComponent, _HueType type) {
     case _HueType.HSL:
       c = (1.0 - (2.0 * thirdComponent - 1.0).abs()) * saturation;
       break;
+    default:
+      break;
   }
 
   double x = c * (1.0 - ((hue / 60.0) % 2.0 - 1.0).abs());
@@ -94,6 +96,8 @@ _toRGB(double hue, double saturation, double thirdComponent, _HueType type) {
       break;
     case _HueType.HSL:
       m = thirdComponent - c / 2.0;
+      break;
+    default:
       break;
   }
 

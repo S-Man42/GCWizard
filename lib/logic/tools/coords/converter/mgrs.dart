@@ -68,10 +68,7 @@ UTMREF convertMGRSToUTM(MGRS mgrs) {
   
   double grid_easting;        /* Easting for 100,000 meter grid square      */
   double grid_northing;       /* Northing for 100,000 meter grid square     */
-  double latitude = 0.0;
-  double divisor = 1.0;
 
-  HemisphereLatitude hemisphere = HemisphereLatitude.North;
   double easting = 0;
   double northing = 0;
 

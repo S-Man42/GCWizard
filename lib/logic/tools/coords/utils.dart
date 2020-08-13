@@ -3,6 +3,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
@@ -35,6 +36,7 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
       case keyCoordsGaussKruegerGK3: return 3;
       case keyCoordsGaussKruegerGK4: return 4;
       case keyCoordsGaussKruegerGK5: return 5;
+      default: return 0;
     }
   }
 
@@ -51,6 +53,7 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
     case keyCoordsGaussKrueger: return latLonToGaussKruegerString(_coords, _getGKCode(), ells);
     case keyCoordsMaidenhead: return latLonToMaidenhead(_coords);
     case keyCoordsMercator: return latLonToMercator(_coords, ells).toString();
+    case keyCoordsNaturalAreaCode: return latLonToNaturalAreaCode(_coords).toString();
     case keyCoordsSlippyMap: return latLonToSlippyMapString(_coords, double.tryParse(_outputFormat['subtype']));
     case keyCoordsGeohash: return latLonToGeohash(_coords, 14);
     case keyCoordsOpenLocationCode: return latLonToOpenLocationCode(_coords, codeLength: 14);

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:gc_wizard/logic/units/unit.dart';
 
 class Mass extends Unit {

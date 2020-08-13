@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/utils/alphabets.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
 
 
@@ -50,8 +48,16 @@ class GCWNumeralBaseSpinnerState extends State<GCWNumeralBaseSpinner> {
     }).toList();
 
     return GCWDropDownSpinner(
-      index: _currentValue ?? list.indexOf(widget.value),
-      items: items.map((item) => GCWText(text: item)).toList(),
+      value: _currentValue ?? list.indexOf(widget.value),
+      items: items.asMap().map((index, value) {
+        return MapEntry(
+            index,
+            DropdownMenuItem(
+              value: index,
+              child: Text(value)
+            )
+        );
+      }).values.toList(),
       onChanged: (value) {
         setState(() {
           _currentValue = value;

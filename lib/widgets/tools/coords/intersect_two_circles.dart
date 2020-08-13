@@ -105,9 +105,9 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
               radius: _currentRadius1,
               color:
                 HSLColor
-                    .fromColor(ThemeColors.mapCircle)
-                    .withLightness(HSLColor.fromColor(ThemeColors.mapCircle).lightness - 0.3)
-                    .toColor()
+                  .fromColor(ThemeColors.mapCircle)
+                  .withLightness(HSLColor.fromColor(ThemeColors.mapCircle).lightness - 0.3)
+                  .toColor()
             ),
             MapCircle(
               centerPoint: _currentCoords2,
@@ -117,12 +117,6 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
         ),
       ],
     );
-  }
-
-  _getCircleColorVariant() {
-    var _hsl = HSLColor.fromColor(ThemeColors.mapCircle);
-    _hsl.withLightness(_hsl.lightness - 0.1);
-    return _hsl.toColor();
   }
 
   _calculateOutput() {

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:gc_wizard/utils/common_utils.dart';
 
 final AZToCCITT1 = {

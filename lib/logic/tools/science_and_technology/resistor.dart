@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:intl/intl.dart';
 
@@ -271,7 +270,7 @@ ResistorValue _getFiveOrSixBandResistorValue(int numberBands, List<ResistorBandC
 
   var tolerance = _getResistorValueByTypeAndColor(numberBands, ResistorBandType.TOLERANCE, colors[4]);
 
-  var temperaturCoefficient = null;
+  var temperaturCoefficient;
   if (numberBands == 6) {
     temperaturCoefficient = _getResistorValueByTypeAndColor(numberBands, ResistorBandType.TEMPERATURE_COEFFICIENT, colors[5]);
   }
