@@ -240,7 +240,7 @@ class Registry {
           tool: BCDSelection(),
           i18nPrefix: 'bcd_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'bcd aiken libaw craig stibitz'
+          searchStrings: 'bcd aiken libaw craig stibitz tompkins gray petherick ö\'brien glixon binary decimal binaer dezimal'
       ),
       GCWToolWidget(
         tool: Beaufort(),
