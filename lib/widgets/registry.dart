@@ -24,6 +24,7 @@ import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
@@ -48,15 +49,19 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
+<<<<<<< HEAD
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdaiken.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdlibawcraig.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdoriginal.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
+=======
+>>>>>>> b1a866a186b87c20fb5421b0995cce03ffda0311
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base85.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
@@ -129,6 +134,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nth
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 
@@ -170,6 +178,7 @@ class Registry {
   static final SEARCHSTRING_RESISTOR = 'resistors widerstand widerstaende resistance ohm ';
   static final SEARCHSTRING_RESISTOR_COLORCODE = SEARCHSTRING_RESISTOR + 'colorcodes farben farbcodes colors ';
   static final SEARCHSTRING_ROTATION = 'rotate rotieren verschieben shift rotations rotx rotn rot-x rotationen ';
+  static final SEARCHSTRING_SEGMENTDISPLAY = 'led segments segmente display segmentanzeige ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
   static final SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER = 'lwl llk lichtwellenleiter lichtleitkabel opticalfiber glasfaserkabel ';
   static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
@@ -487,6 +496,12 @@ class Registry {
         searchStrings: 'scrabble deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'
       ),
       GCWToolWidget(
+        tool: SegmentDisplaySelection(),
+        i18nPrefix: 'segmentdisplay_selection',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: SEARCHSTRING_SEGMENTDISPLAY
+      ),
+      GCWToolWidget(
         tool: Skytale(),
         i18nPrefix: 'skytale',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -686,7 +701,7 @@ class Registry {
         tool: FormatConverter(),
         i18nPrefix: 'coords_formatconverter',
         iconPath: 'assets/coordinates/icon_format_converter.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'converter converting konverter konvertieren umwandeln quadtree openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gauss kruger krueger gauue mgrs utm dec deg dms 1903 ch1903+'
+        searchStrings: SEARCHSTRING_COORDINATES + 'converter converting konverter konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gauss kruger krueger gauue mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
       ),
       GCWToolWidget(
         tool: VariableCoordinateFormulas(),
@@ -1098,6 +1113,23 @@ class Registry {
         tool: RotationGeneral(),
         i18nPrefix: 'rotation_general',
         searchStrings: SEARCHSTRING_ROTATION
+      ),
+
+      //Segments Display *******************************************************************************************
+      GCWToolWidget(
+        tool: SevenSegments(),
+        i18nPrefix: 'segmentdisplay_7segments',
+        searchStrings: SEARCHSTRING_SEGMENTDISPLAY + '7 seven sieben'
+      ),
+      GCWToolWidget(
+        tool: FourteenSegments(),
+        i18nPrefix: 'segmentdisplay_14segments',
+        searchStrings: SEARCHSTRING_SEGMENTDISPLAY + '14 vierzehn fourteen'
+      ),
+      GCWToolWidget(
+        tool: SixteenSegments(),
+        i18nPrefix: 'segmentdisplay_16segments',
+        searchStrings: SEARCHSTRING_SEGMENTDISPLAY + '16 sixteen sechzehn'
       ),
 
       //Symbol Tables **********************************************************************************************
