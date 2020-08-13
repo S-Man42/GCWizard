@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:latlong/latlong.dart';

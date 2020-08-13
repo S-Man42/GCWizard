@@ -21,7 +21,7 @@ class IntersectBearings extends StatefulWidget {
 }
 
 class IntersectBearingsState extends State<IntersectBearings> {
-  LatLng _currentIntersection = null;
+  LatLng _currentIntersection;
 
   var _currentCoordsFormat1 = defaultCoordFormat();
   var _currentCoords1 = defaultCoordinate;

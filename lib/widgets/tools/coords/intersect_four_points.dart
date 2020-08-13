@@ -18,7 +18,7 @@ class IntersectFourPoints extends StatefulWidget {
 }
 
 class IntersectFourPointsState extends State<IntersectFourPoints> {
-  LatLng _currentIntersection = null;
+  LatLng _currentIntersection;
 
   var _currentCoords11 = defaultCoordinate;
   var _currentCoords12 = defaultCoordinate;

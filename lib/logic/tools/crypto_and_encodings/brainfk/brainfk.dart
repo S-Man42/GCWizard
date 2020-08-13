@@ -9,8 +9,6 @@ String interpretBrainfk(String code, {String input}) {
   if (code == null || code.length == 0)
     return '';
 
-  print(code);
-
   var instructions = code.split('');
   
   var pointer = 0;
