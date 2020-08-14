@@ -24,8 +24,14 @@ class BCDState extends State<BCD> {
       mask: '#' * 10000, // allow 10000 characters input
       filter: {"#": RegExp(r'[0-9]')}
   );
-  var _decodeMaskFormatter = MaskTextInputFormatter(
+
+  var _decode4DigitsMaskFormatter = MaskTextInputFormatter(
       mask: '#### ' * 5000, // allow 5000 4-digit binary blocks, spaces will be set automatically after each block
+      filter: {"#": RegExp(r'[01]')}
+  );
+
+  var _decode5DigitsMaskFormatter = MaskTextInputFormatter(
+      mask: '##### ' * 5000, // allow 5000 4-digit binary blocks, spaces will be set automatically after each block
       filter: {"#": RegExp(r'[01]')}
   );
 
@@ -53,7 +59,7 @@ class BCDState extends State<BCD> {
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
             controller: _encodeController,
-            inputFormatters: [_encodeMaskFormatter ],
+            inputFormatters: [_encodeMaskFormatter],
             onChanged: (text){
               setState(() {
                 _currentInput = text;
@@ -62,7 +68,7 @@ class BCDState extends State<BCD> {
         )
             : GCWTextField (
             controller: _decodeController,
-            inputFormatters: [_decodeMaskFormatter ],
+            inputFormatters: [widget.type == BCDType.LIBAWCRAIG ? _decode5DigitsMaskFormatter : _decode4DigitsMaskFormatter],
             onChanged: (text){
               setState(() {
                 _currentInput = text;
