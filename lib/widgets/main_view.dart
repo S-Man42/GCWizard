@@ -23,6 +23,7 @@ import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
@@ -180,6 +181,7 @@ class _MainViewState extends State<MainView> {
           className(RobberLanguage()),
           className(RomanNumbers()),
           className(RotationSelection()),
+          className(RSASelection()),
           className(Scrabble()),
           className(SegmentDisplaySelection()),
           className(Skytale()),

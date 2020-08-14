@@ -65,7 +65,7 @@ BigInt calculateD(BigInt e, BigInt p, BigInt q) {
     return null;
 
   if (p > BigInt.from(10000) || p > BigInt.from(10000))
-    throw Exception('rsa_error.primes.too.large');
+    throw Exception('rsa_error_primes.too.large');
 
   if (!validateE(e, p, q))
     throw Exception('rsa_error_phi.e.not.coprime');
