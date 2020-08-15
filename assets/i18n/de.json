@@ -1291,6 +1291,14 @@
   "substitution_current_substitutions" : "Erstellte Ersetzungen",
   "substitution_case_sensitive" : "Beachte Groß-/Kleinschreibung",
 
+  "sudokusolver_title" : "Sudoku-Löser",
+  "sudokusolver_description" : "Berechnet eine Lösung für ein Sudoku",
+  "sudokusolver_removevalue" : "Wert entfernen",
+  "sudokusolver_entervalue" : "Wert eingeben",
+  "sudokusolver_solve" :  "Berechne",
+  "sudokusolver_clearcalculated" : "Lösche Berechnung",
+  "sudokusolver_error" : "Konnte nicht gelöst werden.",
+
   "symboltables_selection_title" : "Symboltabellen",
   "symboltables_selection_description" : "Symbole, die Zahlen und Buchstaben repräsentieren",
   "symboltables_showoverlay" : "Overlays",

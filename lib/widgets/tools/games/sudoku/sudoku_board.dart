@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:touchable/touchable.dart';
 
 enum SudokuFillType {USER_FILLED, CALCULATED}
@@ -155,6 +157,7 @@ class SudokuBoardPainter extends CustomPainter {
         rows.add(
           GCWButton(
             text: value.toString(),
+            textStyle: gcwTextStyle().copyWith(fontSize: 32),
             onPressed: () {
               Navigator.of(context).pop();
               setBoxValue(x, y, value);
@@ -172,7 +175,7 @@ class SudokuBoardPainter extends CustomPainter {
 
     columns.add(
       GCWButton(
-        text: 'Remove Value',
+        text: i18n(context, 'sudokusolver_removevalue'),
         onPressed: () {
           Navigator.of(context).pop();
           setBoxValue(x, y, null);
@@ -180,7 +183,7 @@ class SudokuBoardPainter extends CustomPainter {
       )
     );
 
-    showGCWDialog(context, 'Enter Value',
+    showGCWDialog(context, i18n(context, 'sudokusolver_entervalue'),
       Container(
         height: 300,
         child: Column(

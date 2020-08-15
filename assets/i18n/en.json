@@ -1292,6 +1292,12 @@
   "substitution_case_sensitive" : "Case sensitive",
 
   "sudokusolver_title" : "Sudoku Solver",
+  "sudokusolver_description" : "Creates a solution for a given Sudoku",
+  "sudokusolver_removevalue" : "Remove Value",
+  "sudokusolver_entervalue" : "Enter Value",
+  "sudokusolver_solve" :  "Solve",
+  "sudokusolver_clearcalculated" : "Clear Calculation",
+  "sudokusolver_error" : "Could not be solved.",
 
   "symboltables_selection_title" : "Symbol Tables",
   "symboltables_selection_description" : "Symbols that represent letters or numbers",
