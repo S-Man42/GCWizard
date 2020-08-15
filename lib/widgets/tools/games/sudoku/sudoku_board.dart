@@ -21,22 +21,8 @@ class SudokuBoard extends StatefulWidget {
 }
 
 class SudokuBoardState extends State<SudokuBoard> {
-  Map<String, bool> _segments;
-
   @override
   Widget build(BuildContext context) {
-//    if (widget.segments != null) {
-//      _segments = Map.from(widget.segments);
-//      widget.initialSegments.keys.forEach((segmentID) {
-//        if (_segments.containsKey(segmentID))
-//          return;
-//
-//        _segments.putIfAbsent(segmentID, () =>  widget.initialSegments[segmentID]);
-//      });
-//    } else {
-//      _segments = Map.from( widget.initialSegments);
-//    }
-
     return Row (
       children: <Widget>[
         Expanded(
