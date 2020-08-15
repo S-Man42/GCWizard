@@ -102,6 +102,7 @@ class SudokuBoardPainter extends CustomPainter {
               Rect.fromLTWH(xInner, yInner, widthInner, heightInner),
               paint,
               onTapDown: (tapDetail) {
+                _removeCalculated(board);
                 _showInputDialog(boardX, boardY);
               }
             );
@@ -144,6 +145,15 @@ class SudokuBoardPainter extends CustomPainter {
 
     _touchCanvas.drawLine(Offset(size.height, 0.0), Offset(size.height, size.width), paint);
     _touchCanvas.drawLine(Offset(0.0, size.width), Offset(size.height, size.width), paint);
+  }
+
+  _removeCalculated(List<List<Map<String, dynamic>>> board) {
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        if (board[i][j] != null && board[i][j]['type'] == SudokuFillType.CALCULATED)
+          board[i][j] = null;
+      }
+    }
   }
 
   _showInputDialog(int x, y) {
