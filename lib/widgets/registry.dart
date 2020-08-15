@@ -96,6 +96,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
+import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_date.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_years.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_position.dart';
@@ -508,6 +509,12 @@ class Registry {
         i18nPrefix: 'substitution',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'substitution ersetzen alphabet change austauschen change switch'
+      ),
+      GCWToolWidget(
+        tool: SudokuSolver(),
+        i18nPrefix: 'sudokusolver',
+        category: ToolCategory.GAMES,
+        searchStrings: 'sudoku grid gitter'
       ),
       GCWToolWidget(
         tool: SymbolTableSelection(),

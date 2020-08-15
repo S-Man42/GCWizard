@@ -1291,6 +1291,8 @@
   "substitution_current_substitutions" : "Created Replacements",
   "substitution_case_sensitive" : "Case sensitive",
 
+  "sudokusolver_title" : "Sudoku Solver",
+
   "symboltables_selection_title" : "Symbol Tables",
   "symboltables_selection_description" : "Symbols that represent letters or numbers",
   "symboltables_showoverlay" : "Overlays",
