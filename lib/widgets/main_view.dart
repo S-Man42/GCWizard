@@ -18,6 +18,7 @@ import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
@@ -54,7 +55,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
@@ -65,6 +65,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
+import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
@@ -208,6 +209,7 @@ class _MainViewState extends State<MainView> {
         className(CoordsSelection()),
         className(CryptographySelection()),
         className(FormulaSolverFormulaGroups()),
+        className(GamesSelection()),
         className(ScienceAndTechnologySelection()),
         className(SymbolTableSelection()),
       ].contains(className(element.tool));

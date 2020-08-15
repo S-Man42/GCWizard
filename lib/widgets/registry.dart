@@ -16,6 +16,7 @@ import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/easter_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
@@ -81,7 +82,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot18.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_general.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
@@ -95,6 +95,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vanity_singlenumber
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
+import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_date.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_years.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_position.dart';
@@ -343,6 +344,11 @@ class Registry {
         searchStrings: SEARCHSTRING_FORMULASOLVER
       ),
       GCWToolWidget(
+        tool: GamesSelection(),
+        i18nPrefix: 'games_selection',
+        searchStrings: 'games spiele'
+      ),
+      GCWToolWidget(
         tool: GCCode(),
         i18nPrefix: 'gccode',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -476,7 +482,7 @@ class Registry {
       GCWToolWidget(
         tool: Scrabble(),
         i18nPrefix: 'scrabble',
-        category: ToolCategory.CRYPTOGRAPHY,
+        category: ToolCategory.GAMES,
         searchStrings: 'scrabble deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'
       ),
       GCWToolWidget(

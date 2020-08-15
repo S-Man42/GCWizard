@@ -838,6 +838,9 @@
   "formulasolver_values_value" : "Wert",
   "formulasolver_values_currentvalues" : "Erstellte Variablen",
 
+  "games_selection_title" : "Spiele",
+  "games_selection_description" : "Unterstützung für bekannte Spiele (z.B. Scrabble, Sudoku)",
+
   "gccode_title" : "GC-Code",
   "gccode_decription" : "Konvertiert den GC-Code eines Geocaches zu seiner internen ID (Base31)",
   "gccode_example" : "GCK25B → 156997",
