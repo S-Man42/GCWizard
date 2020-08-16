@@ -14,6 +14,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geohash.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_maidenhead.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mercator.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mgrs.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_naturalareacode.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_openlocationcode.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_quadtree.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewhereigo_waldmeister.dart';
@@ -159,6 +160,16 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsNaturalAreaCode),
+        'widget': GCWCoordsNaturalAreaCode(
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
         'coordFormat': getCoordinateFormatByKey(keyCoordsSlippyMap),
         'widget': GCWCoordsSlippyMap(
           zoom: _currentCoordsFormat['subtype'],
@@ -218,7 +229,7 @@ class GCWCoordsState extends State<GCWCoords> {
         GCWTextDivider(
           text: widget.text,
           bottom: 0.0,
-          trailingButton: GCWPasteButton(
+          trailing: GCWPasteButton(
             onSelected: _parseClipboardAndSetCoords
           ),
         ),

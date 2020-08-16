@@ -22,7 +22,9 @@ import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
@@ -47,11 +49,11 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base85.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
@@ -80,6 +82,12 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot18.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_general.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_calculator.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_checker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_e_checker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculator.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
@@ -124,6 +132,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nth
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 
@@ -164,6 +175,8 @@ class Registry {
   static final SEARCHSTRING_RESISTOR = 'resistors widerstand widerstaende resistance ohm ';
   static final SEARCHSTRING_RESISTOR_COLORCODE = SEARCHSTRING_RESISTOR + 'colorcodes farben farbcodes colors ';
   static final SEARCHSTRING_ROTATION = 'rotate rotieren verschieben shift rotations rotx rotn rot-x rotationen ';
+  static final SEARCHSTRING_RSA = SEARCHSTRING_PRIMES + 'rsa ronald rivest adi shamir leonard adleman asymmetry asymmetric asymmetrie asymmetrisches public private key oeffentlicher privater schluessel phi ';
+  static final SEARCHSTRING_SEGMENTDISPLAY = 'led segments segmente display segmentanzeige ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
   static final SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER = 'lwl llk lichtwellenleiter lichtleitkabel opticalfiber glasfaserkabel ';
   static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
@@ -464,6 +477,12 @@ class Registry {
         searchStrings: SEARCHSTRING_ROTATION
       ),
       GCWToolWidget(
+        tool: RSASelection(),
+        i18nPrefix: 'rsa_selection',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
         tool: ScienceAndTechnologySelection(),
         i18nPrefix: 'scienceandtechnology_selection',
         searchStrings: 'science technology naturwissenschaften technologien technik maths mathematics mathematik physics physik chemistry chemie '
@@ -473,6 +492,12 @@ class Registry {
         i18nPrefix: 'scrabble',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'scrabble deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'
+      ),
+      GCWToolWidget(
+        tool: SegmentDisplaySelection(),
+        i18nPrefix: 'segmentdisplay_selection',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: SEARCHSTRING_SEGMENTDISPLAY
       ),
       GCWToolWidget(
         tool: Skytale(),
@@ -652,7 +677,7 @@ class Registry {
         tool: FormatConverter(),
         i18nPrefix: 'coords_formatconverter',
         iconPath: 'assets/coordinates/icon_format_converter.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'converter converting konverter konvertieren umwandeln quadtree openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gauss kruger krueger gauue mgrs utm dec deg dms 1903 ch1903+'
+        searchStrings: SEARCHSTRING_COORDINATES + 'converter converting konverter konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gauss kruger krueger gauue mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
       ),
       GCWToolWidget(
         tool: VariableCoordinateFormulas(),
@@ -1064,6 +1089,55 @@ class Registry {
         tool: RotationGeneral(),
         i18nPrefix: 'rotation_general',
         searchStrings: SEARCHSTRING_ROTATION
+      ),
+
+      // RSA *******************************************************************************************************
+      GCWToolWidget(
+        tool: RSA(),
+        i18nPrefix: 'rsa_rsa',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSAEChecker(),
+        i18nPrefix: 'rsa_e.checker',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSADChecker(),
+        i18nPrefix: 'rsa_d.checker',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSADCalculator(),
+        i18nPrefix: 'rsa_d.calculator',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSANCalculator(),
+        i18nPrefix: 'rsa_n.calculator',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSAPhiCalculator(),
+        i18nPrefix: 'rsa_phi.calculator',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+
+      //Segments Display *******************************************************************************************
+      GCWToolWidget(
+        tool: SevenSegments(),
+        i18nPrefix: 'segmentdisplay_7segments',
+        searchStrings: SEARCHSTRING_SEGMENTDISPLAY + '7 seven sieben'
+      ),
+      GCWToolWidget(
+        tool: FourteenSegments(),
+        i18nPrefix: 'segmentdisplay_14segments',
+        searchStrings: SEARCHSTRING_SEGMENTDISPLAY + '14 vierzehn fourteen'
+      ),
+      GCWToolWidget(
+        tool: SixteenSegments(),
+        i18nPrefix: 'segmentdisplay_16segments',
+        searchStrings: SEARCHSTRING_SEGMENTDISPLAY + '16 sixteen sechzehn'
       ),
 
       //Symbol Tables **********************************************************************************************

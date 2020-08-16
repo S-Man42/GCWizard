@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 
 class GCWTextDivider extends StatefulWidget {
   final String text;
-  final Widget trailingButton;
+  final Widget trailing;
   final bottom;
 
-  const GCWTextDivider({Key key, this.text: '', this.trailingButton, this.bottom}) : super(key: key);
+  const GCWTextDivider({Key key, this.text: '', this.trailing, this.bottom}) : super(key: key);
 
   @override
   _GCWTextDividerState createState() => _GCWTextDividerState();
@@ -37,7 +36,7 @@ class _GCWTextDividerState extends State<GCWTextDivider> {
           Expanded(
             child: GCWDivider()
           ),
-          widget.trailingButton ?? Container()
+          widget.trailing ?? Container()
         ]
       )
     );

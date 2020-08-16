@@ -5,7 +5,6 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/roman_numbers.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/logic/units/temperature.dart';
-import 'package:gc_wizard/logic/units/unit.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';

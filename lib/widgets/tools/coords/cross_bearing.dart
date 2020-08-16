@@ -21,7 +21,7 @@ class CrossBearing extends StatefulWidget {
 }
 
 class CrossBearingState extends State<CrossBearing> {
-  LatLng _currentIntersection = null;
+  LatLng _currentIntersection;
 
   var _currentCoordsFormat1 = defaultCoordFormat();
   var _currentCoords1 = defaultCoordinate;
