@@ -183,7 +183,7 @@
   "bcd_gray_example" : "19 → 0001 1101",
   "bcd_glixon_title" : "BCD (Glixon)",
   "bcd_glixon_example" : "19 → 0001 1000",
-  "bcd_obrien_title" : "BCD (O\'Brien)",
+  "bcd_obrien_title" : "BCD (O'Brien)",
   "bcd_obrienk_example" : "19 → 0011 1001",
   "bcd_petherick_title" : "BCD (Petherick)",
   "bcd_petherick_example" : "19 → 0001 1101",
