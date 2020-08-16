@@ -150,7 +150,7 @@ class Registry {
   static final SEARCHSTRING_ASTRONOMY_RISESET = 'rise set transit noon aufgang aufgaenge untergang untergaenge dawn dusk mittag culmination kulmination ';
   static final SEARCHSTRING_ASTRONOMY_POSITION = 'declination position stand rektaszension zodiac astrology astrologischeszeichen astrologie astrologicalsign tierkreiszeichen sternzeichen azimuth altitude diameter durchmesser hoehe rightascension distance entfernung distanz observer beobachter juliandate julianischesdatum sternzeit siderealtime gmst lmst eclipticlongitude ekliptischelaenge ';
   static final SEARCHSTRING_BASE = 'base encode decode encoding decoding dekodierung dekodieren ';
-  static final SEARCHSTRING_BCD = 'bcd encode decode encoding decoding dekodierung dekodieren binary coded decimal binaer codierte dezimalzahlen';
+  static final SEARCHSTRING_BCD = 'bcd encode decode encoding decoding dekodierung dekodieren binary coded decimal binaer codierte dezimalzahlen ';
   static final SEARCHSTRING_BRAINFK = SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'brainf**k ';
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
   static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen konrad zuse z-22 z22 purched paper baudot-murray-code ';
@@ -240,7 +240,7 @@ class Registry {
           tool: BCDSelection(),
           i18nPrefix: 'bcd_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'bcd aiken libaw craig stibitz tompkins gray petherick ö\'brien glixon binary decimal binaer dezimal'
+          searchStrings: SEARCHSTRING_BCD
       ),
       GCWToolWidget(
         tool: Beaufort(),
@@ -636,49 +636,49 @@ class Registry {
 
       //BCD selection **************************************************************************************************
       GCWToolWidget(
-          tool: BCDOriginal(),
-          i18nPrefix: 'bcd_original',
-          searchStrings: SEARCHSTRING_BCD
+        tool: BCDOriginal(),
+        i18nPrefix: 'bcd_original',
+        searchStrings: SEARCHSTRING_BCD
       ),
       GCWToolWidget(
-          tool: BCDAiken(),
-          i18nPrefix: 'bcd_aiken',
-          searchStrings: SEARCHSTRING_BCD + 'Aiken'
+        tool: BCDAiken(),
+        i18nPrefix: 'bcd_aiken',
+        searchStrings: SEARCHSTRING_BCD + 'Aiken'
       ),
       GCWToolWidget(
-          tool: BCDGlixon(),
-          i18nPrefix: 'bcd_glixon',
-          searchStrings: SEARCHSTRING_BCD + 'Glixon'
+        tool: BCDGlixon(),
+        i18nPrefix: 'bcd_glixon',
+        searchStrings: SEARCHSTRING_BCD + 'Glixon'
       ),
       GCWToolWidget(
-          tool: BCDGray(),
-          i18nPrefix: 'bcd_gray',
-          searchStrings: SEARCHSTRING_BCD + 'Gray'
+        tool: BCDGray(),
+        i18nPrefix: 'bcd_gray',
+        searchStrings: SEARCHSTRING_BCD + 'Gray'
       ),
       GCWToolWidget(
-          tool: BCDLibawCraig(),
-          i18nPrefix: 'bcd_libawcraig',
-          searchStrings: SEARCHSTRING_BCD + 'Libaw Craig'
+        tool: BCDLibawCraig(),
+        i18nPrefix: 'bcd_libawcraig',
+        searchStrings: SEARCHSTRING_BCD + 'Libaw Craig'
       ),
       GCWToolWidget(
-          tool: BCDOBrien(),
-          i18nPrefix: 'bcd_obrien',
-          searchStrings: SEARCHSTRING_BCD + 'O\'Brien'
+        tool: BCDOBrien(),
+        i18nPrefix: 'bcd_obrien',
+        searchStrings: SEARCHSTRING_BCD + 'O\'Brien'
       ),
       GCWToolWidget(
-          tool: BCDPetherick(),
-          i18nPrefix: 'bcd_petherick',
-          searchStrings: SEARCHSTRING_BCD + 'Petherick'
+        tool: BCDPetherick(),
+        i18nPrefix: 'bcd_petherick',
+        searchStrings: SEARCHSTRING_BCD + 'Petherick'
       ),
       GCWToolWidget(
-          tool: BCDStibitz(),
-          i18nPrefix: 'bcd_stibitz',
-          searchStrings: SEARCHSTRING_BCD + 'Stibitz'
+        tool: BCDStibitz(),
+        i18nPrefix: 'bcd_stibitz',
+        searchStrings: SEARCHSTRING_BCD + 'Stibitz'
       ),
       GCWToolWidget(
-          tool: BCDTompkins(),
-          i18nPrefix: 'bcd_tompkins',
-          searchStrings: SEARCHSTRING_BCD + 'Tompkins'
+        tool: BCDTompkins(),
+        i18nPrefix: 'bcd_tompkins',
+        searchStrings: SEARCHSTRING_BCD + 'Tompkins'
       ),
 
       //Brainfk Selection **********************************************************************************************
