@@ -27,6 +27,12 @@
   "adfgvx_description" : "Deutscher Militärcode aus dem 1. Weltkrieg",
   "adfgvx_example" : "XXFXD FGAFF XAFX",
 
+  "affine_title" : "Affine Chiffre",
+  "affine_description" : "Eine Substitutionschiffre",
+  "affine_example" : "HALLO → LWBBA",
+  "affine_key_a" : "Schlüssel A",
+  "affine_key_b" : "Schlüssel B",
+
   "alphabet_name_az" : "Standard Alphabet",
   "alphabet_name_az_description" : "A-Z → 1-26",
   "alphabet_name_german1" : "Deutsch, Version 1",

@@ -44,6 +44,7 @@ import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
@@ -199,6 +200,12 @@ class Registry {
         i18nPrefix: 'adfgvx',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'adfgx adfgvx polybius polybios transposition substitution'
+      ),
+      GCWToolWidget(
+        tool: Affine(),
+        i18nPrefix: 'affine',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'affine'
       ),
       GCWToolWidget(
         tool: AlphabetValues(),

@@ -27,6 +27,12 @@
   "adfgvx_key_substitution" : "Substitution Key",
   "adfgvx_key_transposition" : "Transposition Key",
 
+  "affine_title" : "Affine Cipher",
+  "affine_description" : "A substitution chipher",
+  "affine_example" : "HELLO → LMBBA",
+  "affine_key_a" : "Key A",
+  "affine_key_b" : "Key B",
+
   "alphabet_name_az" : "Standard Alphabet",
   "alphabet_name_az_description" : "A-Z → 1-26",
   "alphabet_name_german1" : "German, Version 1",
