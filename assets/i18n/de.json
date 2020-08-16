@@ -872,6 +872,12 @@
   "gray_mode_binary" : "Binär",
   "gray_error_no_encrypt_input" :"Keine Eingabe zum codieren",
   "gray_error_no_decrypt_input" : "Keine Eingabe zum decodieren",
+  "gray_output_input_decimal" : "Eingabe als Dezimalzahl",
+  "gray_output_input_binary" : "Eingabe als Binärzahl",
+  "gray_output_output_gray_decimal" : "Dezimalzahl, Gray-codiert",
+  "gray_output_output_gray_binary" : "Binärzahl, Gray-codiert",
+  "gray_output_output_decimal" : "Dezimalzahl, Gray-decodiert",
+  "gray_output_output_binary" : "Binärzahl, Gray-decodiert",
 
   "gronsfeld_title" : "Gronsfeld Chiffre",
   "gronsfeld_description" : "Spezialfall der Vigenère-Verschlüsselung mit Zahlen als Schlüssel",

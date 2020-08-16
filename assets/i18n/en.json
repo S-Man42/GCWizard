@@ -872,6 +872,12 @@
   "gray_mode_binary" : "Binary",
   "gray_error_no_encrypt_input" :"No Input for encoding",
   "gray_error_no_decrypt_input" : "No input for deoding",
+  "gray_output_input_decimal" : "Decimal, Input",
+  "gray_output_input_binary" : "Binary, Input",
+  "gray_output_output_gray_decimal" : "Decimal, Gray-encoded",
+  "gray_output_output_gray_binary" : "Binary, Gray-encoded",
+  "gray_output_output_decimal" : "Decimal, Gray-decoded",
+  "gray_output_output_binary" : "Binary, Gray-decoded",
 
   "gronsfeld_title" : "Gronsfeld Cipher",
   "gronsfeld_description" : "Special case of Vigenère encryption with numbers as key",
