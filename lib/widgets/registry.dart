@@ -73,6 +73,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
@@ -366,10 +367,16 @@ class Registry {
         searchStrings: 'geocaching geocache code gccode gc-code base31 hexadecimal hexadezimal'
       ),
       GCWToolWidget(
-        tool: Gronsfeld(),
-        i18nPrefix: 'gronsfeld',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'
+          tool: Gray(),
+          i18nPrefix: 'gray',
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: 'binary decimal gray binär dezimal enoding decoding verschlüsseln entschlüsseln'
+      ),
+      GCWToolWidget(
+          tool: Gronsfeld(),
+          i18nPrefix: 'gronsfeld',
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'
       ),
       GCWToolWidget(
         tool: HashSelection(),
