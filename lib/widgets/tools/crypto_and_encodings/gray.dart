@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_encrypt_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class Gray extends StatefulWidget {
@@ -22,7 +23,11 @@ class GrayState extends State<Gray> {
   var _currentOutput = GrayOutput('', '', '', '');
 
   String _currentInput = '';
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;         /// switches between 5x5 or 6x6 square
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+
+  String outputLine1 = '';
+  String outputLine2 = '';
+  String outputLine3 = '';
 
   var _decimalMaskFormatter = MaskTextInputFormatter(
       mask: '#' * 10000, // allow 10000 characters input
@@ -54,14 +59,6 @@ class GrayState extends State<Gray> {
 
     return Column(
       children: <Widget>[
-/*        GCWTextField(
-          controller: _inputController,
-          onChanged: (text) {
-            setState(() {
-              _currentInput = text;
-            });
-          },
-        ),*/
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
             controller: _inputDecimalController,
@@ -102,10 +99,16 @@ class GrayState extends State<Gray> {
                 setState(() {
                   _currentOutput = encryptGray(_currentInput, mode: GrayMode.Decimal);
                 });
+                outputLine1 = i18n(context, 'gray_output_input_binary');
+                outputLine2 = i18n(context, 'gray_output_output_gray_decimal');
+                outputLine3 = i18n(context, 'gray_output_output_gray_binary');
               } else {
                 setState(() {
-                  _currentOutput = encryptGray(_currentInput);
+                  _currentOutput = encryptGray(_currentInput, mode: GrayMode.Binary);
                 });
+                outputLine1 = i18n(context, 'gray_output_input_binary');
+                outputLine2 = i18n(context, 'gray_output_output_gray_decimal');
+                outputLine3 = i18n(context, 'gray_output_output_gray_binary');
               }
             }
           },
@@ -113,9 +116,21 @@ class GrayState extends State<Gray> {
             if (_currentInput == null || _currentInput.length == 0) {
               showToast(i18n(context, 'Gray_error_no_output'));
             } else {
-              setState(() {
-                _currentOutput = decryptGray(_currentInput, mode: GrayMode.Decimal);
-              });
+              if (_currentMode == GCWSwitchPosition.left) {
+                setState(() {
+                  _currentOutput = decryptGray(_currentInput, mode: GrayMode.Decimal);
+                });
+                outputLine1 = i18n(context, 'gray_output_input_binary');
+                outputLine2 = i18n(context, 'gray_output_output_decimal');
+                outputLine3 = i18n(context, 'gray_output_output_binary');
+              } else {
+                setState(() {
+                  _currentOutput = decryptGray(_currentInput, mode: GrayMode.Binary);
+                });
+                outputLine1 = i18n(context, 'gray_output_input_decimal');
+                outputLine2 = i18n(context, 'gray_output_output_decimal');
+                outputLine3 = i18n(context, 'gray_output_output_binary');
+              }
             }
           },
         ),
@@ -129,11 +144,40 @@ class GrayState extends State<Gray> {
       return Container();
 
     if (_currentOutput.state == 'ERROR') {
-      showToast(i18n(context, _currentOutput.output_plain_binary));
+      showToast(i18n(context, _currentOutput.output_plain));
       return GCWDefaultOutput(
           text: '' //TODO: Exception
       );
     }
+
+    List<List> grayValues;
+    if (_currentMode == GCWSwitchPosition.left) {
+      grayValues = [
+        [outputLine1, _currentOutput.output_plain],
+        [outputLine2, _currentOutput.output_gray_decimal],
+        [outputLine3, _currentOutput.output_gray_binary],
+      ];
+    } else {
+      grayValues = [
+        [i18n(context, 'gray_output_input_decimal'), _currentOutput.output_plain],
+        [i18n(context, 'gray_output_output_gray_decimal'), _currentOutput.output_gray_decimal],
+        [i18n(context, 'gray_output_output_gray_binary'), _currentOutput.output_gray_binary],
+      ];
+    }
+
+    var rows = columnedMultiLineOutput(grayValues, flexValues: [2, 1]);
+    rows.insert(0,
+        GCWTextDivider(
+            text: i18n(context, 'common_output')
+        )
+    );
+
+    return
+      Column(
+      children: rows
+    );
+
+/*
 
     return GCWOutput(
       child: Column(
@@ -146,5 +190,6 @@ class GrayState extends State<Gray> {
         ],
       ),
     );
+*/
   }
 }
