@@ -8,6 +8,7 @@ import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
@@ -16,12 +17,14 @@ import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/easter_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
@@ -43,16 +46,26 @@ import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdaiken.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdlibawcraig.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdoriginal.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdgray.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdglixon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdpetherick.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdobrien.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base85.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
@@ -81,7 +94,12 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot18.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_general.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/scrabble.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_calculator.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_checker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_e_checker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculator.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
@@ -95,6 +113,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vanity_singlenumber
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
+import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
+import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_date.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_years.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_position.dart';
@@ -141,6 +161,7 @@ class Registry {
   static final SEARCHSTRING_ASTRONOMY_RISESET = 'rise set transit noon aufgang aufgaenge untergang untergaenge dawn dusk mittag culmination kulmination ';
   static final SEARCHSTRING_ASTRONOMY_POSITION = 'declination position stand rektaszension zodiac astrology astrologischeszeichen astrologie astrologicalsign tierkreiszeichen sternzeichen azimuth altitude diameter durchmesser hoehe rightascension distance entfernung distanz observer beobachter juliandate julianischesdatum sternzeit siderealtime gmst lmst eclipticlongitude ekliptischelaenge ';
   static final SEARCHSTRING_BASE = 'base encode decode encoding decoding dekodierung dekodieren ';
+  static final SEARCHSTRING_BCD = 'bcd encode decode encoding decoding dekodierung dekodieren binary coded decimal binaer codierte dezimalzahlen ';
   static final SEARCHSTRING_BRAINFK = SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'brainf**k ';
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
   static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen konrad zuse z-22 z22 purched paper baudot-murray-code ';
@@ -169,6 +190,7 @@ class Registry {
   static final SEARCHSTRING_RESISTOR = 'resistors widerstand widerstaende resistance ohm ';
   static final SEARCHSTRING_RESISTOR_COLORCODE = SEARCHSTRING_RESISTOR + 'colorcodes farben farbcodes colors ';
   static final SEARCHSTRING_ROTATION = 'rotate rotieren verschieben shift rotations rotx rotn rot-x rotationen ';
+  static final SEARCHSTRING_RSA = SEARCHSTRING_PRIMES + 'rsa ronald rivest adi shamir leonard adleman asymmetry asymmetric asymmetrie asymmetrisches public private key oeffentlicher privater schluessel phi ';
   static final SEARCHSTRING_SEGMENTDISPLAY = 'led segments segmente display segmentanzeige ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
   static final SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER = 'lwl llk lichtwellenleiter lichtleitkabel opticalfiber glasfaserkabel ';
@@ -189,6 +211,12 @@ class Registry {
         i18nPrefix: 'adfgvx',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'adfgx adfgvx polybius polybios transposition substitution'
+      ),
+      GCWToolWidget(
+        tool: Affine(),
+        i18nPrefix: 'affine',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'affine'
       ),
       GCWToolWidget(
         tool: AlphabetValues(),
@@ -225,6 +253,12 @@ class Registry {
         i18nPrefix: 'base_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_BASE
+      ),
+      GCWToolWidget(
+        tool: BCDSelection(),
+        i18nPrefix: 'bcd_selection',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_BCD
       ),
       GCWToolWidget(
         tool: Beaufort(),
@@ -342,6 +376,11 @@ class Registry {
         tool: FormulaSolverFormulaGroups(),
         i18nPrefix: 'formulasolver',
         searchStrings: SEARCHSTRING_FORMULASOLVER
+      ),
+      GCWToolWidget(
+        tool: GamesSelection(),
+        i18nPrefix: 'games_selection',
+        searchStrings: 'games spiele'
       ),
       GCWToolWidget(
         tool: GCCode(),
@@ -476,6 +515,12 @@ class Registry {
         searchStrings: SEARCHSTRING_ROTATION
       ),
       GCWToolWidget(
+        tool: RSASelection(),
+        i18nPrefix: 'rsa_selection',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
         tool: ScienceAndTechnologySelection(),
         i18nPrefix: 'scienceandtechnology_selection',
         searchStrings: 'science technology naturwissenschaften technologien technik maths mathematics mathematik physics physik chemistry chemie '
@@ -483,7 +528,7 @@ class Registry {
       GCWToolWidget(
         tool: Scrabble(),
         i18nPrefix: 'scrabble',
-        category: ToolCategory.CRYPTOGRAPHY,
+        category: ToolCategory.GAMES,
         searchStrings: 'scrabble deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'
       ),
       GCWToolWidget(
@@ -509,6 +554,12 @@ class Registry {
         i18nPrefix: 'substitution',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'substitution ersetzen alphabet change austauschen change switch'
+      ),
+      GCWToolWidget(
+        tool: SudokuSolver(),
+        i18nPrefix: 'sudokusolver',
+        category: ToolCategory.GAMES,
+        searchStrings: 'sudoku grid gitter'
       ),
       GCWToolWidget(
         tool: SymbolTableSelection(),
@@ -622,6 +673,53 @@ class Registry {
         tool: Base85(),
         i18nPrefix: 'base_base85',
         searchStrings: SEARCHSTRING_BASE + 'base85 ascii85'
+      ),
+
+      //BCD selection **************************************************************************************************
+      GCWToolWidget(
+        tool: BCDOriginal(),
+        i18nPrefix: 'bcd_original',
+        searchStrings: SEARCHSTRING_BCD
+      ),
+      GCWToolWidget(
+        tool: BCDAiken(),
+        i18nPrefix: 'bcd_aiken',
+        searchStrings: SEARCHSTRING_BCD + 'Aiken'
+      ),
+      GCWToolWidget(
+        tool: BCDGlixon(),
+        i18nPrefix: 'bcd_glixon',
+        searchStrings: SEARCHSTRING_BCD + 'Glixon'
+      ),
+      GCWToolWidget(
+        tool: BCDGray(),
+        i18nPrefix: 'bcd_gray',
+        searchStrings: SEARCHSTRING_BCD + 'Gray'
+      ),
+      GCWToolWidget(
+        tool: BCDLibawCraig(),
+        i18nPrefix: 'bcd_libawcraig',
+        searchStrings: SEARCHSTRING_BCD + 'Libaw Craig'
+      ),
+      GCWToolWidget(
+        tool: BCDOBrien(),
+        i18nPrefix: 'bcd_obrien',
+        searchStrings: SEARCHSTRING_BCD + 'O\'Brien'
+      ),
+      GCWToolWidget(
+        tool: BCDPetherick(),
+        i18nPrefix: 'bcd_petherick',
+        searchStrings: SEARCHSTRING_BCD + 'Petherick'
+      ),
+      GCWToolWidget(
+        tool: BCDStibitz(),
+        i18nPrefix: 'bcd_stibitz',
+        searchStrings: SEARCHSTRING_BCD + 'Stibitz'
+      ),
+      GCWToolWidget(
+        tool: BCDTompkins(),
+        i18nPrefix: 'bcd_tompkins',
+        searchStrings: SEARCHSTRING_BCD + 'Tompkins'
       ),
 
       //Brainfk Selection **********************************************************************************************
@@ -1082,6 +1180,38 @@ class Registry {
         tool: RotationGeneral(),
         i18nPrefix: 'rotation_general',
         searchStrings: SEARCHSTRING_ROTATION
+      ),
+
+      // RSA *******************************************************************************************************
+      GCWToolWidget(
+        tool: RSA(),
+        i18nPrefix: 'rsa_rsa',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSAEChecker(),
+        i18nPrefix: 'rsa_e.checker',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSADChecker(),
+        i18nPrefix: 'rsa_d.checker',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSADCalculator(),
+        i18nPrefix: 'rsa_d.calculator',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSANCalculator(),
+        i18nPrefix: 'rsa_n.calculator',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSAPhiCalculator(),
+        i18nPrefix: 'rsa_phi.calculator',
+        searchStrings: SEARCHSTRING_RSA
       ),
 
       //Segments Display *******************************************************************************************
