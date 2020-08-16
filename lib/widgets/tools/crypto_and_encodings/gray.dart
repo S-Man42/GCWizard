@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_encrypt_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class Gray extends StatefulWidget {
   @override
@@ -16,21 +17,35 @@ class Gray extends StatefulWidget {
 }
 
 class GrayState extends State<Gray> {
-  var _inputController;
+  var _inputDecimalController;
+  var _inputBinaryController;
   var _currentOutput = GrayOutput('', '', '', '');
 
   String _currentInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;         /// switches between 5x5 or 6x6 square
 
+  var _decimalMaskFormatter = MaskTextInputFormatter(
+      mask: '#' * 10000, // allow 10000 characters input
+      filter: {"#": RegExp(r'[0-9]')}
+  );
+
+  var _binaryDigitsMaskFormatter = MaskTextInputFormatter(
+      mask: '#' * 5000, // allow 5000 4-digit binary blocks, spaces will be set automatically after each block
+      filter: {"#": RegExp(r'[01]')}
+  );
+
+
   @override
   void initState() {
     super.initState();
-    _inputController = TextEditingController(text: _currentInput);
+    _inputDecimalController = TextEditingController(text: _currentInput);
+    _inputBinaryController = TextEditingController(text: _currentInput);
   }
 
   @override
   void dispose() {
-    _inputController.dispose();
+    _inputBinaryController.dispose();
+    _inputDecimalController.dispose();
     super.dispose();
   }
 
@@ -39,13 +54,32 @@ class GrayState extends State<Gray> {
 
     return Column(
       children: <Widget>[
-        GCWTextField(
+/*        GCWTextField(
           controller: _inputController,
           onChanged: (text) {
             setState(() {
               _currentInput = text;
             });
           },
+        ),*/
+        _currentMode == GCWSwitchPosition.left
+            ? GCWTextField(
+            controller: _inputDecimalController,
+            inputFormatters: [_decimalMaskFormatter],
+            onChanged: (text){
+              setState(() {
+                _currentInput = text;
+              });
+            }
+        )
+            : GCWTextField (
+            controller: _inputBinaryController,
+            inputFormatters: [_binaryDigitsMaskFormatter],
+            onChanged: (text){
+              setState(() {
+                _currentInput = text;
+              });
+            }
         ),
 
         GCWTwoOptionsSwitch(
