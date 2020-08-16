@@ -864,6 +864,15 @@
   "gccode_example" : "GCK25B → 156997",
   "gccode_novalidgcode" : "No valid GC Code",
 
+  "gray_title" : "Gray-Code",
+  "gray_description" : "encodes a decimal to a decimal/binary with Gray encoding algorithm",
+  "gray_example" : "4 | 100 → 6 | 110",
+  "gray_mode" : "Mode",
+  "gray_mode_decimal" : "Decimal",
+  "gray_mode_binary" : "Binary",
+  "gray_error_no_encrypt_input" :"No Input for encoding",
+  "gray_error_no_decrypt_input" : "No input for deoding",
+
   "gronsfeld_title" : "Gronsfeld Cipher",
   "gronsfeld_description" : "Special case of Vigenère encryption with numbers as key",
 
