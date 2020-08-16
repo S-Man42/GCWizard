@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/scrabble.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/scrabble_sets.dart';
+import 'package:gc_wizard/logic/tools/games/scrabble.dart';
+import 'package:gc_wizard/logic/tools/games/scrabble_sets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';

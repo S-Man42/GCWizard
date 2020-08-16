@@ -865,6 +865,9 @@
   "formulasolver_values_value" : "Value",
   "formulasolver_values_currentvalues" : "Created Variables",
 
+  "games_selection_title" : "Games",
+  "games_selection_description" : "Support for famous games (e.g. Scrabble, Sudoku)",
+
   "gccode_title" : "GC Code",
   "gccode_decription" : "Converts the GC Code of a Geocache into its internal ID (Base31)",
   "gccode_example" : "GCK25B → 156997",
@@ -1314,6 +1317,14 @@
   "substitution_to" : "...with this",
   "substitution_current_substitutions" : "Created Replacements",
   "substitution_case_sensitive" : "Case sensitive",
+
+  "sudokusolver_title" : "Sudoku Solver",
+  "sudokusolver_description" : "Creates a solution for a given Sudoku",
+  "sudokusolver_removevalue" : "Remove Value",
+  "sudokusolver_entervalue" : "Enter Value",
+  "sudokusolver_solve" :  "Solve",
+  "sudokusolver_clearcalculated" : "Clear Calculation",
+  "sudokusolver_error" : "Could not be solved.",
 
   "symboltables_selection_title" : "Symbol Tables",
   "symboltables_selection_description" : "Symbols that represent letters or numbers",
