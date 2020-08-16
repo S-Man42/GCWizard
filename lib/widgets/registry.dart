@@ -24,6 +24,7 @@ import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
@@ -93,6 +94,12 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot18.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_general.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_calculator.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_checker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_e_checker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculator.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
@@ -182,6 +189,7 @@ class Registry {
   static final SEARCHSTRING_RESISTOR = 'resistors widerstand widerstaende resistance ohm ';
   static final SEARCHSTRING_RESISTOR_COLORCODE = SEARCHSTRING_RESISTOR + 'colorcodes farben farbcodes colors ';
   static final SEARCHSTRING_ROTATION = 'rotate rotieren verschieben shift rotations rotx rotn rot-x rotationen ';
+  static final SEARCHSTRING_RSA = SEARCHSTRING_PRIMES + 'rsa ronald rivest adi shamir leonard adleman asymmetry asymmetric asymmetrie asymmetrisches public private key oeffentlicher privater schluessel phi ';
   static final SEARCHSTRING_SEGMENTDISPLAY = 'led segments segmente display segmentanzeige ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
   static final SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER = 'lwl llk lichtwellenleiter lichtleitkabel opticalfiber glasfaserkabel ';
@@ -246,10 +254,10 @@ class Registry {
         searchStrings: SEARCHSTRING_BASE
       ),
       GCWToolWidget(
-          tool: BCDSelection(),
-          i18nPrefix: 'bcd_selection',
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: SEARCHSTRING_BCD
+        tool: BCDSelection(),
+        i18nPrefix: 'bcd_selection',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_BCD
       ),
       GCWToolWidget(
         tool: Beaufort(),
@@ -498,6 +506,12 @@ class Registry {
         i18nPrefix: 'rotation_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_ROTATION
+      ),
+      GCWToolWidget(
+        tool: RSASelection(),
+        i18nPrefix: 'rsa_selection',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_RSA
       ),
       GCWToolWidget(
         tool: ScienceAndTechnologySelection(),
@@ -1159,6 +1173,38 @@ class Registry {
         tool: RotationGeneral(),
         i18nPrefix: 'rotation_general',
         searchStrings: SEARCHSTRING_ROTATION
+      ),
+
+      // RSA *******************************************************************************************************
+      GCWToolWidget(
+        tool: RSA(),
+        i18nPrefix: 'rsa_rsa',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSAEChecker(),
+        i18nPrefix: 'rsa_e.checker',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSADChecker(),
+        i18nPrefix: 'rsa_d.checker',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSADCalculator(),
+        i18nPrefix: 'rsa_d.calculator',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSANCalculator(),
+        i18nPrefix: 'rsa_n.calculator',
+        searchStrings: SEARCHSTRING_RSA
+      ),
+      GCWToolWidget(
+        tool: RSAPhiCalculator(),
+        i18nPrefix: 'rsa_phi.calculator',
+        searchStrings: SEARCHSTRING_RSA
       ),
 
       //Segments Display *******************************************************************************************
