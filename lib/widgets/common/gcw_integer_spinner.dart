@@ -40,8 +40,8 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   var _currentValue = 1;
 
   var _binaryMaskFormatter = MaskTextInputFormatter(
-      mask: '#' * 10000,
-      filter: {"#": RegExp(r'[01]')}
+    mask: '#' * 10000,
+    filter: {"#": RegExp(r'[01]')}
   );
 
   @override
@@ -96,27 +96,27 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   Widget _buildTitle() {
     return widget.title == null ?  Container() :
-    Expanded(
+      Expanded(
         child: GCWText(
-            text: widget.title + ':'
+          text: widget.title + ':'
         ),
         flex: 1
-    );
+      );
   }
 
   Widget _buildTextField() {
     return GCWIntegerTextField(
-        focusNode: widget.focusNode,
-        min: widget.min,
-        max: widget.max,
-        textInputFormatter: widget.isBinary ? _binaryMaskFormatter : null,
-        controller: _controller,
-        onChanged: (ret) {
-          setState(() {
-            _currentValue = widget.isBinary ? int.tryParse(ret['value'].toString(), radix: 2) : ret['value'];
-            _setCurrentValueAndEmitOnChange();
-          });
-        }
+      focusNode: widget.focusNode,
+      min: widget.min,
+      max: widget.max,
+      textInputFormatter: widget.isBinary ? _binaryMaskFormatter : null,
+      controller: _controller,
+      onChanged: (ret) {
+        setState(() {
+          _currentValue = widget.isBinary ? int.tryParse(ret['value'].toString(), radix: 2) : ret['value'];
+          _setCurrentValueAndEmitOnChange();
+        });
+      }
     );
   }
 
@@ -126,32 +126,32 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
         children: <Widget>[
           _buildTitle(),
           Expanded(
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    child: GCWIconButton(
-                        iconData: Icons.remove,
-                        onPressed: _decreaseValue
-                    ),
-                    margin: EdgeInsets.only(
-                        right: 2 * DEFAULT_MARGIN
-                    ),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  child: GCWIconButton(
+                    iconData: Icons.remove,
+                    onPressed: _decreaseValue
                   ),
-                  Expanded(
-                      child: _buildTextField()
+                  margin: EdgeInsets.only(
+                    right: 2 * DEFAULT_MARGIN
                   ),
-                  Container(
-                    child: GCWIconButton(
-                        iconData: Icons.add,
-                        onPressed: _increaseValue
-                    ),
-                    margin: EdgeInsets.only(
-                        left: 2 * DEFAULT_MARGIN
-                    ),
-                  )
-                ],
-              ),
-              flex: 3
+                ),
+                Expanded(
+                  child: _buildTextField()
+                ),
+                Container(
+                  child: GCWIconButton(
+                    iconData: Icons.add,
+                    onPressed: _increaseValue
+                  ),
+                  margin: EdgeInsets.only(
+                    left: 2 * DEFAULT_MARGIN
+                  ),
+                )
+              ],
+            ),
+            flex: 3
           )
         ],
       );
@@ -160,21 +160,21 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
         children: <Widget>[
           _buildTitle(),
           Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  GCWIconButton(
-                      iconData: Icons.arrow_drop_up,
-                      onPressed: _increaseValue
-                  ),
-                  _buildTextField(),
-                  GCWIconButton(
-                      iconData: Icons.arrow_drop_down,
-                      onPressed: _decreaseValue
-                  ),
-                ],
-              ),
-              flex: 3
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                GCWIconButton(
+                  iconData: Icons.arrow_drop_up,
+                  onPressed: _increaseValue
+                ),
+                _buildTextField(),
+                GCWIconButton(
+                  iconData: Icons.arrow_drop_down,
+                  onPressed: _decreaseValue
+                ),
+              ],
+            ),
+            flex: 3
           ),
         ],
       );
