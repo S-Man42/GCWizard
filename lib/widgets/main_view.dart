@@ -12,6 +12,7 @@ import 'package:gc_wizard/widgets/main_menu.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
@@ -144,6 +145,7 @@ class _MainViewState extends State<MainView> {
           className(Atbash()),
           className(Bacon()),
           className(BaseSelection()),
+          className(BCDSelection()),
           className(Beaufort()),
           className(Bifid()),
           className(Binary()),

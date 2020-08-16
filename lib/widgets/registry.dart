@@ -8,6 +8,7 @@ import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
@@ -49,11 +50,20 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdaiken.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdlibawcraig.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdoriginal.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdgray.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdglixon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdpetherick.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdobrien.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base85.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
@@ -141,6 +151,7 @@ class Registry {
   static final SEARCHSTRING_ASTRONOMY_RISESET = 'rise set transit noon aufgang aufgaenge untergang untergaenge dawn dusk mittag culmination kulmination ';
   static final SEARCHSTRING_ASTRONOMY_POSITION = 'declination position stand rektaszension zodiac astrology astrologischeszeichen astrologie astrologicalsign tierkreiszeichen sternzeichen azimuth altitude diameter durchmesser hoehe rightascension distance entfernung distanz observer beobachter juliandate julianischesdatum sternzeit siderealtime gmst lmst eclipticlongitude ekliptischelaenge ';
   static final SEARCHSTRING_BASE = 'base encode decode encoding decoding dekodierung dekodieren ';
+  static final SEARCHSTRING_BCD = 'bcd encode decode encoding decoding dekodierung dekodieren binary coded decimal binaer codierte dezimalzahlen ';
   static final SEARCHSTRING_BRAINFK = SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'brainf**k ';
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
   static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen konrad zuse z-22 z22 purched paper baudot-murray-code ';
@@ -231,6 +242,12 @@ class Registry {
         i18nPrefix: 'base_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_BASE
+      ),
+      GCWToolWidget(
+          tool: BCDSelection(),
+          i18nPrefix: 'bcd_selection',
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: SEARCHSTRING_BCD
       ),
       GCWToolWidget(
         tool: Beaufort(),
@@ -622,6 +639,53 @@ class Registry {
         tool: Base85(),
         i18nPrefix: 'base_base85',
         searchStrings: SEARCHSTRING_BASE + 'base85 ascii85'
+      ),
+
+      //BCD selection **************************************************************************************************
+      GCWToolWidget(
+        tool: BCDOriginal(),
+        i18nPrefix: 'bcd_original',
+        searchStrings: SEARCHSTRING_BCD
+      ),
+      GCWToolWidget(
+        tool: BCDAiken(),
+        i18nPrefix: 'bcd_aiken',
+        searchStrings: SEARCHSTRING_BCD + 'Aiken'
+      ),
+      GCWToolWidget(
+        tool: BCDGlixon(),
+        i18nPrefix: 'bcd_glixon',
+        searchStrings: SEARCHSTRING_BCD + 'Glixon'
+      ),
+      GCWToolWidget(
+        tool: BCDGray(),
+        i18nPrefix: 'bcd_gray',
+        searchStrings: SEARCHSTRING_BCD + 'Gray'
+      ),
+      GCWToolWidget(
+        tool: BCDLibawCraig(),
+        i18nPrefix: 'bcd_libawcraig',
+        searchStrings: SEARCHSTRING_BCD + 'Libaw Craig'
+      ),
+      GCWToolWidget(
+        tool: BCDOBrien(),
+        i18nPrefix: 'bcd_obrien',
+        searchStrings: SEARCHSTRING_BCD + 'O\'Brien'
+      ),
+      GCWToolWidget(
+        tool: BCDPetherick(),
+        i18nPrefix: 'bcd_petherick',
+        searchStrings: SEARCHSTRING_BCD + 'Petherick'
+      ),
+      GCWToolWidget(
+        tool: BCDStibitz(),
+        i18nPrefix: 'bcd_stibitz',
+        searchStrings: SEARCHSTRING_BCD + 'Stibitz'
+      ),
+      GCWToolWidget(
+        tool: BCDTompkins(),
+        i18nPrefix: 'bcd_tompkins',
+        searchStrings: SEARCHSTRING_BCD + 'Tompkins'
       ),
 
       //Brainfk Selection **********************************************************************************************
