@@ -389,16 +389,16 @@ class Registry {
         searchStrings: 'geocaching geocache code gccode gc-code base31 hexadecimal hexadezimal'
       ),
       GCWToolWidget(
-          tool: Gray(),
-          i18nPrefix: 'gray',
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'binary decimal gray binär dezimal enoding decoding verschlüsseln entschlüsseln'
+        tool: Gray(),
+        i18nPrefix: 'gray',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'binary decimal gray binär dezimal enoding decoding verschlüsseln entschlüsseln'
       ),
       GCWToolWidget(
-          tool: Gronsfeld(),
-          i18nPrefix: 'gronsfeld',
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'
+        tool: Gronsfeld(),
+        i18nPrefix: 'gronsfeld',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'
       ),
       GCWToolWidget(
         tool: HashSelection(),
