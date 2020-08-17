@@ -1359,6 +1359,7 @@
   "sudokusolver_entervalue" : "Enter Value",
   "sudokusolver_solve" :  "Solve",
   "sudokusolver_clearcalculated" : "Clear Calculation",
+  "sudokusolver_clearall" : "Clear all",
   "sudokusolver_error" : "Could not be solved.",
 
   "symboltables_selection_title" : "Symbol Tables",

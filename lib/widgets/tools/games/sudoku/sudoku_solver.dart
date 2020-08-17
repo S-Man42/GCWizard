@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/games/sudoku_solver.dart';
@@ -13,7 +15,6 @@ class SudokuSolver extends StatefulWidget {
 
 class SudokuSolverState extends State<SudokuSolver> {
   List<List<Map<String, dynamic>>> _currentBoard;
-  var _output = '';
 
   @override
   void initState() {
@@ -26,13 +27,18 @@ class SudokuSolverState extends State<SudokuSolver> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        SudokuBoard(
-          board: _currentBoard,
-          onChanged: (newBoard) {
-            setState(() {
-              _currentBoard = newBoard;
-            });
-          },
+        Container(
+          constraints: BoxConstraints(
+            maxWidth: min(500, MediaQuery.of(context).size.height * 0.8)
+          ),
+          child: SudokuBoard(
+            board: _currentBoard,
+            onChanged: (newBoard) {
+              setState(() {
+                _currentBoard = newBoard;
+              });
+            },
+          ),
         ),
         Row(
           children: <Widget>[
@@ -77,6 +83,19 @@ class SudokuSolverState extends State<SudokuSolver> {
                             _currentBoard[i][j] = null;
                         }
                       }
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+              )
+            ),
+            Expanded(
+              child: Container(
+                child: GCWButton(
+                  text: i18n(context, 'sudokusolver_clearall'),
+                  onPressed: () {
+                    setState(() {
+                      _currentBoard = List<List<Map<String, dynamic>>>.generate(9, (index) => List<Map<String, dynamic>>.generate(9, (index) => null));
                     });
                   },
                 ),
