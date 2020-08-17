@@ -74,6 +74,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/heat.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
@@ -164,6 +165,7 @@ class _MainViewState extends State<MainView> {
           className(DatesSelection()),
           className(Deadfish()),
           className(Decabit()),
+          className(DTMF()),
           className(DuckSpeak()),
           className(Enigma()),
           className(ESelection()),

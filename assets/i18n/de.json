@@ -819,6 +819,10 @@
   "deletealert_title" : "Wirklich löschen?",
   "deletealert_text" : "Möchtest du wirklich '%s1' löschen?",
 
+  "dtmf_title" : "MFWV",
+  "dtmf_description" : "Mehrfrequenzwahlverfahren",
+  "dtmf_example" : "5 → (1336Hz | 770Hz)",
+
   "duckspeak_title": "Entensprache",
   "duckspeak_description" : "Eine Spaß-Sprache die aus 'Nak'-Lauten besteht",
   "duckspeak_example" : "Ente → Nak? nak? Naknak nak. Naknaknak Nak? Naknak nak?",

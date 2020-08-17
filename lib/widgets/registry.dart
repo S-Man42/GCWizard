@@ -133,6 +133,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/heat.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
@@ -347,6 +348,12 @@ class Registry {
         i18nPrefix: 'deadfish',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd '
+      ),
+      GCWToolWidget(
+        tool: DTMF(),
+        i18nPrefix: 'dtmf',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'dual tone multi frequency Mehrfrequenzwahlverfahren Tonwahl'
       ),
       GCWToolWidget(
         tool: Decabit(),

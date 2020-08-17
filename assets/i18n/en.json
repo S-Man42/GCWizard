@@ -819,6 +819,10 @@
   "deletealert_title" : "Really remove?",
   "deletealert_text" : "Do you really want to remove '%s1'?",
 
+  "dtmf_title" : "DTMF",
+  "dtmf_description" : "Dual-Tone Multi-Frequenzy",
+  "dtmf_example" : "5 → (1336Hz | 770Hz)",
+
   "duckspeak_title": "Duck Speak",
   "duckspeak_description" : "A fun language made up of 'nak' sounds",
   "duckspeak_example" : "Duck → Nak? Nak? Naknaknak nak? Naknak Nanananak Naknak nanak",
