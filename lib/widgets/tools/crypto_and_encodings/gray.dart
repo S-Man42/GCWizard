@@ -20,23 +20,21 @@ class Gray extends StatefulWidget {
 class GrayState extends State<Gray> {
   var _inputDecimalController;
   var _inputBinaryController;
-  var _currentOutput = GrayOutput('', '', '', '');
 
   String _currentInput = '';
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  var _currentOutput = GrayOutput('', '', '', '');
 
-  String outputLine1 = '';
-  String outputLine2 = '';
-  String outputLine3 = '';
+  GCWSwitchPosition _currentInputMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentCodingMode = GCWSwitchPosition.left;
 
   var _decimalMaskFormatter = MaskTextInputFormatter(
-      mask: '#' * 10000, // allow 10000 characters input
-      filter: {"#": RegExp(r'[0-9]')}
+      mask: '#' * 10000,
+      filter: {"#": RegExp(r'[0-9\s]')}
   );
 
   var _binaryDigitsMaskFormatter = MaskTextInputFormatter(
-      mask: '#' * 5000, // allow 5000 4-digit binary blocks, spaces will be set automatically after each block
-      filter: {"#": RegExp(r'[01]')}
+      mask: '#' * 10000,
+      filter: {"#": RegExp(r'[01\s]')}
   );
 
 
@@ -59,7 +57,8 @@ class GrayState extends State<Gray> {
 
     return Column(
       children: <Widget>[
-        _currentMode == GCWSwitchPosition.left
+
+        _currentInputMode == GCWSwitchPosition.left
             ? GCWTextField(
             controller: _inputDecimalController,
             inputFormatters: [_decimalMaskFormatter],
@@ -85,111 +84,56 @@ class GrayState extends State<Gray> {
           rightValue: i18n(context, 'gray_mode_binary'),
           onChanged: (value) {
             setState(() {
-              _currentMode = value;
+              _currentInputMode = value;
+            });
+          },
+        ),
+        GCWTwoOptionsSwitch(
+          onChanged: (value) {
+            setState(() {
+              _currentCodingMode = value;
             });
           },
         ),
 
-        GCWEncryptButtonBar(
-          onPressedEncode: () {
-            if (_currentInput == null || _currentInput.length == 0) {
-              showToast(i18n(context, 'Gray_error_no_encrypt_input'));
-            } else {
-              if (_currentMode == GCWSwitchPosition.left) {
-                setState(() {
-                  _currentOutput = encryptGray(_currentInput, mode: GrayMode.Decimal);
-                });
-                outputLine1 = i18n(context, 'gray_output_input_binary');
-                outputLine2 = i18n(context, 'gray_output_output_gray_decimal');
-                outputLine3 = i18n(context, 'gray_output_output_gray_binary');
-              } else {
-                setState(() {
-                  _currentOutput = encryptGray(_currentInput, mode: GrayMode.Binary);
-                });
-                outputLine1 = i18n(context, 'gray_output_input_binary');
-                outputLine2 = i18n(context, 'gray_output_output_gray_decimal');
-                outputLine3 = i18n(context, 'gray_output_output_gray_binary');
-              }
-            }
-          },
-          onPressedDecode: () {
-            if (_currentInput == null || _currentInput.length == 0) {
-              showToast(i18n(context, 'Gray_error_no_output'));
-            } else {
-              if (_currentMode == GCWSwitchPosition.left) {
-                setState(() {
-                  _currentOutput = decryptGray(_currentInput, mode: GrayMode.Decimal);
-                });
-                outputLine1 = i18n(context, 'gray_output_input_binary');
-                outputLine2 = i18n(context, 'gray_output_output_decimal');
-                outputLine3 = i18n(context, 'gray_output_output_binary');
-              } else {
-                setState(() {
-                  _currentOutput = decryptGray(_currentInput, mode: GrayMode.Binary);
-                });
-                outputLine1 = i18n(context, 'gray_output_input_decimal');
-                outputLine2 = i18n(context, 'gray_output_output_decimal');
-                outputLine3 = i18n(context, 'gray_output_output_binary');
-              }
-            }
-          },
-        ),
         _buildOutput(context)
       ],
     );
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentOutput.state == null || _currentOutput.state == '')
-      return Container();
-
-    if (_currentOutput.state == 'ERROR') {
-      showToast(i18n(context, _currentOutput.output_plain));
-      return GCWDefaultOutput(
-          text: '' //TODO: Exception
-      );
-    }
-
-    List<List> grayValues;
-    if (_currentMode == GCWSwitchPosition.left) {
-      grayValues = [
-        [outputLine1, _currentOutput.output_plain],
-        [outputLine2, _currentOutput.output_gray_decimal],
-        [outputLine3, _currentOutput.output_gray_binary],
-      ];
+      if (_currentCodingMode == GCWSwitchPosition.left) {
+      if (_currentInputMode == GCWSwitchPosition.left) {
+         _currentOutput = encryptGray(_currentInput, mode: GrayMode.Decimal);
+      } else {// input is binary
+         _currentOutput = encryptGray(_currentInput, mode: GrayMode.Binary);
+      }
     } else {
-      grayValues = [
-        [i18n(context, 'gray_output_input_decimal'), _currentOutput.output_plain],
-        [i18n(context, 'gray_output_output_gray_decimal'), _currentOutput.output_gray_decimal],
-        [i18n(context, 'gray_output_output_gray_binary'), _currentOutput.output_gray_binary],
-      ];
+      if (_currentInputMode == GCWSwitchPosition.left) {
+         _currentOutput = decryptGray(_currentInput, mode: GrayMode.Decimal);
+      } else {
+         _currentOutput = decryptGray(_currentInput, mode: GrayMode.Binary);
+      }
     }
 
-    var rows = columnedMultiLineOutput(grayValues, flexValues: [2, 1]);
-    rows.insert(0,
-        GCWTextDivider(
-            text: i18n(context, 'common_output')
-        )
-    );
+    if (_currentOutput == null )
+        return GCWDefaultOutput(
+            text: '' //TODO: Exception
+        );
 
     return
       Column(
-      children: rows
-    );
-
-/*
-
-    return GCWOutput(
-      child: Column(
         children: <Widget>[
+          GCWTextDivider(
+            text: i18n(context, 'common_output')
+        ),
           GCWOutputText(
-              text: _currentOutput.output_plain_binary + '\n'
-                  + _currentOutput.output_gray_decimal + '\n'
-                  + _currentOutput.output_gray_binary
+            text: _currentOutput.output_gray_decimal
           ),
-        ],
-      ),
+          GCWOutputText(
+              text: _currentOutput.output_gray_binary
+          ),
+      ]
     );
-*/
   }
 }
