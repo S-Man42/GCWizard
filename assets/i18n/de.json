@@ -874,7 +874,7 @@
   "gccode_novalidgcode" : "Kein valider GC-Code",
 
   "gray_title" : "Gray-Code",
-  "gray_description" : "Konvertiert eine Dezimalzahl in eine Dezimalzahl basierend auf der Gray-Codierung",
+  "gray_description" : "Konvertiert eine Dezimalzahl in eine Dezimal-/Binärzahl basierend auf der Gray-Codierung",
   "gray_example" : "4 | 100 → 6 | 110",
   "gray_mode" : "Modus",
   "gray_mode_decimal" : "Dezimal",
