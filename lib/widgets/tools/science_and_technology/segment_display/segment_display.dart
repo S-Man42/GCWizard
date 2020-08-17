@@ -28,8 +28,10 @@ class SegmentDisplay extends StatefulWidget {
 
 class SegmentDisplayState extends State<SegmentDisplay> {
 
-  var _inputController;
-  var _currentInput = '';
+  var _inputEncodeController;
+  var _inputDecodeController;
+  var _currentEncodeInput = '';
+  var _currentDecodeInput = '';
   var _currentDisplays = <List<String>>[];
   var _currentMode = GCWSwitchPosition.left;
   var _currentEncryptMode = GCWSwitchPosition.left;
@@ -38,12 +40,14 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   void initState() {
     super.initState();
 
-    _inputController = TextEditingController(text: _currentInput);
+    _inputEncodeController = TextEditingController(text: _currentEncodeInput);
+    _inputDecodeController = TextEditingController(text: _currentDecodeInput);
   }
 
   @override
   void dispose() {
-    _inputController.dispose();
+    _inputEncodeController.dispose();
+    _inputDecodeController.dispose();
 
     super.dispose();
   }
@@ -75,22 +79,33 @@ class SegmentDisplayState extends State<SegmentDisplay> {
                 setState(() {
                   _currentEncryptMode = value;
                   if (_currentEncryptMode == GCWSwitchPosition.right) {
-                    _currentDisplays = encodeSegment(_currentInput, widget.type);
+                    _currentDisplays = encodeSegment(_currentEncodeInput, widget.type);
                   }
                 });
               },
             )
           : Container(),
-        _currentMode == GCWSwitchPosition.right || _currentEncryptMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              controller: _inputController,
+        _currentMode == GCWSwitchPosition.left
+          ? (
+              _currentEncryptMode == GCWSwitchPosition.left
+                ? GCWTextField(
+                    controller: _inputEncodeController,
+                    onChanged: (text) {
+                      setState(() {
+                        _currentEncodeInput = text;
+                      });
+                    },
+                  )
+                : _buildVisualEncryption()
+            )
+          : GCWTextField(
+              controller: _inputDecodeController,
               onChanged: (text) {
                 setState(() {
-                  _currentInput = text;
+                  _currentDecodeInput = text;
                 });
               },
-            )
-          : _buildVisualEncryption(),
+            ),
         GCWTextDivider(
           text: i18n(context, 'segmentdisplay_displayoutput'),
           trailing: Row(
@@ -268,7 +283,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
     if (_currentMode == GCWSwitchPosition.left) {
       var segments;
       if (_currentEncryptMode == GCWSwitchPosition.left)
-        segments = encodeSegment(_currentInput, widget.type);
+        segments = encodeSegment(_currentEncodeInput, widget.type);
       else
         segments = _currentDisplays;
 
@@ -288,13 +303,13 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         ],
       );
     } else {
-      var segments = decodeSegment(_currentInput, widget.type);
+      var segments = decodeSegment(_currentDecodeInput, widget.type);
 
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
           GCWDefaultOutput(
-              text: segments['text']
+            text: segments['text']
           )
         ],
       );
