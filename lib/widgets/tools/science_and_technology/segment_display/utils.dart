@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 buildSegmentDisplayOutput(countColumns, displays) {
   var rows = <Widget>[];

@@ -8,11 +8,12 @@ class BifidOutput {
   BifidOutput(this.state, this.output, this.grid);
 }
 
-enum BifidAlphabetMode{JToI, CToK, WToVV}
+enum BifidAlphabetMode{JToI, CToK, WToVV, RemoveQ}
 
 String createBifidAlphabet(int gridDimension, {String firstLetters: '', PolybiosMode mode: PolybiosMode.AZ09, String fillAlphabet: '', BifidAlphabetMode alphabetMode}) {
-  if (gridDimension ==5){ //
+  if (gridDimension ==5) { //
     switch (mode) {
+      case PolybiosMode.CUSTOM:
       case PolybiosMode.AZ09:
         switch (alphabetMode) {
           case BifidAlphabetMode.JToI:
@@ -23,6 +24,9 @@ String createBifidAlphabet(int gridDimension, {String firstLetters: '', Polybios
             break;
           case BifidAlphabetMode.WToVV:
             fillAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVXYZ';
+            break;
+          case BifidAlphabetMode.RemoveQ:
+            fillAlphabet = 'ABCDEFGHIJKLMNOPRSTUVWXYZ';
             break;
           default: break;
         }
@@ -38,6 +42,9 @@ String createBifidAlphabet(int gridDimension, {String firstLetters: '', Polybios
           case BifidAlphabetMode.WToVV:
             fillAlphabet = 'ZYXVUTSRQPONMLKJIHGFEDCBA';
             break;
+          case BifidAlphabetMode.RemoveQ:
+            fillAlphabet = 'ZYXWVUTSRPONMLKJIHGFEDCBA';
+            break;
           default: break;
         }
         break;
@@ -45,6 +52,7 @@ String createBifidAlphabet(int gridDimension, {String firstLetters: '', Polybios
     }
   } else { // 6x6 square - no modification of alphabet
     switch (mode) {
+      case PolybiosMode.CUSTOM:
       case PolybiosMode.AZ09:
         fillAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         break;
@@ -56,7 +64,7 @@ String createBifidAlphabet(int gridDimension, {String firstLetters: '', Polybios
     }
   }
   mode = PolybiosMode.CUSTOM;
-  fillAlphabet = createPolybiosAlphabet(gridDimension, firstLetters: '', mode: mode, fillAlphabet: fillAlphabet);
+  fillAlphabet = createPolybiosAlphabet(gridDimension, firstLetters: firstLetters, mode: mode, fillAlphabet: fillAlphabet);
   return fillAlphabet;
 }
 
@@ -71,7 +79,7 @@ BifidOutput encryptBifid (String input, String key, {PolybiosMode mode: Polybios
     //return null; //TODO Exception
     return BifidOutput('ERROR', 'bifid_error_wrong_griddimension', null);
 
-  alphabet = createBifidAlphabet(dim, mode: mode, fillAlphabet: alphabet, alphabetMode: alphabetMode);
+  alphabet = createBifidAlphabet(dim, mode: mode, firstLetters: alphabet, alphabetMode: alphabetMode);
 
   if (alphabet == null)
     //return null; //TODO Exception
@@ -90,6 +98,9 @@ BifidOutput encryptBifid (String input, String key, {PolybiosMode mode: Polybios
         break;
       case BifidAlphabetMode.WToVV:
         input = input.replaceAll('W', 'VV');
+        break;
+      case BifidAlphabetMode.RemoveQ:
+        input = input.replaceAll('Q', '');
         break;
       default:
         break;
@@ -132,7 +143,7 @@ BifidOutput decryptBifid (String input, String key, {PolybiosMode mode: Polybios
     //return null; //TODO Exception
     return BifidOutput('ERROR', 'bifid_error_wrong_griddimension', null);
 
-  alphabet = createBifidAlphabet(dim, mode: mode, fillAlphabet: alphabet, alphabetMode: alphabetMode);
+  alphabet = createBifidAlphabet(dim, mode: mode, firstLetters: alphabet, alphabetMode: alphabetMode);
 
   if (alphabet == null)
     //return null; //TODO Exception
@@ -152,6 +163,9 @@ BifidOutput decryptBifid (String input, String key, {PolybiosMode mode: Polybios
         break;
       case BifidAlphabetMode.WToVV:
         input = input.replaceAll('W', 'VV');
+        break;
+      case BifidAlphabetMode.RemoveQ:
+        input = input.replaceAll('Q', '');
         break;
       default:
         break;
