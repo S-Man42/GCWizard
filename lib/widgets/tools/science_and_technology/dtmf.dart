@@ -79,11 +79,6 @@ class DTMFState extends State<DTMF> {
     var textStyle = gcwTextStyle();
     if (_currentMode == GCWSwitchPosition.left) {
       output = encodeDTMF(_currentEncodeInput);
-      textStyle = TextStyle(
-          fontSize: textStyle.fontSize + 15,
-          fontFamily: textStyle.fontFamily,
-          fontWeight: FontWeight.bold
-      );
     } else
       output = decodeDTMF(_currentDecodeInput);
 
