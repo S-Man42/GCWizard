@@ -401,10 +401,10 @@ class Registry {
         searchStrings: SEARCHSTRING_HASHES
       ),
       GCWToolWidget(
-          tool: Heat(),
-          i18nPrefix: 'heat',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          searchStrings: 'temperature temperetur humidity luftfeuchtigkeit hitze'
+        tool: Heat(),
+        i18nPrefix: 'heat',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'temperature temperetur humidity luftfeuchtigkeit hitze'
       ),
       GCWToolWidget(
         tool: Kamasutra(),
