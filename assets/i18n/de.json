@@ -213,11 +213,6 @@
   "bifid_usedgrid" : "Verwendete Matrix",
   "bifid_mode" : "Modus",
   "bifid_matrix" : "Quadrat",
-  "bifid_alphabet_mod" : "Modifizierung des Alphabets",
-  "bifid_alphabet_mod_jtoi" : "J → I",
-  "bifid_alphabet_mod_ctok" : "C → K",
-  "bifid_alphabet_mod_wtovv" :"W → VV",
-  "bifid_alphabet_mod_removeq" :"Entferne Q",
   "bifid_mode_5x5" : "5x5",
   "bifid_mode_6x6" : "6x6",
   "bifid_error_no_encrypt_input" : "FEHLER: kein Klartext",
@@ -403,6 +398,12 @@
   "common_text" : "Text",
   "common_unknown" : "Unbekannt",
   "common_year" : "Jahr",
+
+  "common_alphabetmodification_title" : "Modifikation",
+  "common_alphabetmodification_jtoi" : "J → I",
+  "common_alphabetmodification_ctok" : "C → K",
+  "common_alphabetmodification_wtovv" : "W → VV",
+  "common_alphabetmodification_removeq" : "Entferne Q",
 
   "common_color_black" : "Schwarz",
   "common_color_blue" : "Blau",
@@ -1158,9 +1159,6 @@
 
   "playfair_title" : "Playfair",
   "playfair_example" : "AM EF KP RC PQ CW CB",
-  "playfair_mode" : "Modus",
-  "playfair_mode_jtoi" : "J → I",
-  "playfair_mode_wtovv" : "W → VV",
 
   "polybios_title" : "Polybios Chiffre",
   "polybios_description" : "Verschlüsselung basierend auf einem Quadrat",

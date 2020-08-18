@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_alphabetmodification_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -26,7 +28,7 @@ class BifidState extends State<Bifid> {
   String _currentAlphabet = '';
 
   PolybiosMode _currentBifidMode = PolybiosMode.AZ09;
-  BifidAlphabetMode _currentBifidAlphabetMode = BifidAlphabetMode.JToI;
+  AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
 
   GCWSwitchPosition _currentMatrixMode = GCWSwitchPosition.left;         /// switches between 5x5 or 6x6 square
 
@@ -51,12 +53,6 @@ class BifidState extends State<Bifid> {
       PolybiosMode.AZ09 : i18n(context, 'bifid_mode_az09'),
       PolybiosMode.ZA90 : i18n(context, 'bifid_mode_za90'),
       PolybiosMode.CUSTOM : i18n(context, 'bifid_mode_custom'),
-    };
-    var BifidAlphabetModeItems = {
-      BifidAlphabetMode.JToI : i18n(context, 'bifid_alphabet_mod_jtoi'),
-      BifidAlphabetMode.CToK : i18n(context, 'bifid_alphabet_mod_ctok'),
-      BifidAlphabetMode.WToVV : i18n(context, 'bifid_alphabet_mod_wtovv'),
-      BifidAlphabetMode.RemoveQ : i18n(context, 'bifid_alphabet_mod_removeq'),
     };
 
     return Column(
@@ -123,25 +119,13 @@ class BifidState extends State<Bifid> {
         ),
 
         _currentMatrixMode == GCWSwitchPosition.left
-          ? GCWTextDivider(
-              text: i18n(context, 'bifid_alphabet_mod')
-            )
-          : Container(), //empty widget
-
-        _currentMatrixMode == GCWSwitchPosition.left
-          ? GCWDropDownButton(
-              value: _currentBifidAlphabetMode,
+          ? GCWAlphabetModificationDropDownButton(
+              value: _currentModificationMode,
               onChanged: (value) {
                 setState(() {
-                  _currentBifidAlphabetMode = value;
+                  _currentModificationMode = value;
                 });
               },
-              items: BifidAlphabetModeItems.entries.map((mode) {
-                return DropdownMenuItem(
-                  value: mode.key,
-                  child: Text(mode.value),
-                );
-              }).toList(),
             )
           : Container(), //empty widget
 
@@ -168,7 +152,7 @@ class BifidState extends State<Bifid> {
         key,
         mode: _currentBifidMode,
         alphabet: _currentAlphabet,
-        alphabetMode: _currentBifidAlphabetMode
+        alphabetMode: _currentModificationMode
       );
     } else {
       _currentOutput = decryptBifid(
@@ -176,7 +160,7 @@ class BifidState extends State<Bifid> {
         key,
         mode: _currentBifidMode,
         alphabet: _currentAlphabet,
-        alphabetMode: _currentBifidAlphabetMode
+        alphabetMode: _currentModificationMode
       );
     }
 

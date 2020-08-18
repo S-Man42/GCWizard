@@ -1,10 +1,9 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
-enum PlayFairMode {JToI, WToVV}
-
-Map<String, List<int>> _createKeyGrid(String key, PlayFairMode mode) {
+Map<String, List<int>> _createKeyGrid(String key, AlphabetModificationMode mode) {
   if (key == null)
     key = '';
 
@@ -14,13 +13,21 @@ Map<String, List<int>> _createKeyGrid(String key, PlayFairMode mode) {
   key = characters
       .map((character) {
         switch (mode) {
-          case PlayFairMode.JToI:
+          case AlphabetModificationMode.J_TO_I:
             if (character == 'J')
               return 'I';
             break;
-          case PlayFairMode.WToVV:
+          case AlphabetModificationMode.W_TO_VV:
             if (character == 'W')
-              return 'V';
+              return 'VV';
+            break;
+          case AlphabetModificationMode.C_TO_K:
+            if (character == 'C')
+              return 'K';
+            break;
+          case AlphabetModificationMode.REMOVE_Q:
+            if (character == 'Q')
+              return '';
             break;
         }
 
@@ -32,21 +39,23 @@ Map<String, List<int>> _createKeyGrid(String key, PlayFairMode mode) {
   return createPolybiosGrid(key, 5);
 }
 
-String _sanitizeInput(String input, PlayFairMode mode) {
+String _sanitizeInput(String input, AlphabetModificationMode mode) {
   if (input == null)
     return '';
 
   input = input.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
 
   switch (mode) {
-    case PlayFairMode.JToI: input = input.replaceAll('J', 'I'); break;
-    case PlayFairMode.WToVV: input = input.replaceAll('W', 'VV'); break;
+    case AlphabetModificationMode.J_TO_I: input = input.replaceAll('J', 'I'); break;
+    case AlphabetModificationMode.W_TO_VV: input = input.replaceAll('W', 'VV'); break;
+    case AlphabetModificationMode.C_TO_K: input = input.replaceAll('C', 'K'); break;
+    case AlphabetModificationMode.REMOVE_Q: input = input.replaceAll('Q', ''); break;
   }
 
   return input;
 }
 
-String encryptPlayfair(String input, String key, {PlayFairMode mode: PlayFairMode.JToI}) {
+String encryptPlayfair(String input, String key, {AlphabetModificationMode mode: AlphabetModificationMode.J_TO_I}) {
   var keyGrid = _createKeyGrid(key, mode);
   input = _sanitizeInput(input, mode);
 
@@ -93,7 +102,7 @@ String encryptPlayfair(String input, String key, {PlayFairMode mode: PlayFairMod
   return out.trim();
 }
 
-String decryptPlayfair(String input, String key, {PlayFairMode mode: PlayFairMode.JToI}) {
+String decryptPlayfair(String input, String key, {AlphabetModificationMode mode: AlphabetModificationMode.J_TO_I}) {
   var keyGrid = _createKeyGrid(key, mode);
   input = _sanitizeInput(input, mode);
 

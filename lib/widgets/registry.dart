@@ -592,7 +592,7 @@ class Registry {
       GCWToolWidget(
         tool: VanitySelection(),
         i18nPrefix: 'vanity_selection',
-        category: ToolCategory.CRYPTOGRAPHY,
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_VANITY
       ),
       GCWToolWidget(

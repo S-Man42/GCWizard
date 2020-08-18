@@ -226,11 +226,6 @@
   "bifid_usedgrid" : "Used Grid",
   "bifid_mode" : "Mode",
   "bifid_matrix" : "Square",
-  "bifid_alphabet_mod" : "Modification of Alphabet",
-  "bifid_alphabet_mod_jtoi" : "J → I",
-  "bifid_alphabet_mod_ctok" : "C → K",
-  "bifid_alphabet_mod_wtovv" :"W → VV",
-  "bifid_alphabet_mod_removeq" :"Remove Q",
   "bifid_mode_5x5" : "5x5",
   "bifid_mode_6x6" : "6x6",
   "bifid_error_no_encrypt_input" : "ERROR: no Plaintext",
@@ -403,6 +398,12 @@
   "common_text" : "Text",
   "common_unknown" : "Unknown",
   "common_year" : "Year",
+
+  "common_alphabetmodification_title" : "Modification",
+  "common_alphabetmodification_jtoi" : "J → I",
+  "common_alphabetmodification_ctok" : "C → K",
+  "common_alphabetmodification_wtovv" : "W → VV",
+  "common_alphabetmodification_removeq" : "Remove Q",
 
   "common_color_black" : "Black",
   "common_color_blue" : "Blue",
@@ -1158,9 +1159,6 @@
 
   "playfair_title" : "Playfair",
   "playfair_example" : "AM EF KP RC PQ CW CB",
-  "playfair_mode" : "Mode",
-  "playfair_mode_jtoi" : "J = I",
-  "playfair_mode_wtovv" : "W = VV",
 
   "polybios_title" : "Polybios Cipher",
   "polybios_description" : "Cipher based on a square",

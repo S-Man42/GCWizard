@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/tap_code.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_alphabetmodification_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -17,7 +19,7 @@ class TapCodeState extends State<TapCode> {
 
   var _currentEncryptionInput = '';
   var _currentDecryptionInput = '';
-  GCWSwitchPosition _currentTapCodeMode = GCWSwitchPosition.left;
+  AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 
   var _maskFormatter = MaskTextInputFormatter(
@@ -63,13 +65,11 @@ class TapCodeState extends State<TapCode> {
                 });
               },
             ),
-        GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'tapcode_mode_jtoi'),
-          rightValue: i18n(context, 'tapcode_mode_ctok'),
-          value: _currentTapCodeMode,
+        GCWAlphabetModificationDropDownButton(
+          value: _currentModificationMode,
           onChanged: (value) {
             setState(() {
-              _currentTapCodeMode = value;
+              _currentModificationMode = value;
             });
           },
         ),
@@ -89,12 +89,10 @@ class TapCodeState extends State<TapCode> {
   }
 
   _calculateOutput() {
-    var mode = _currentTapCodeMode == GCWSwitchPosition.left ? TapCodeMode.JToI : TapCodeMode.CToK;
-
     if (_currentMode == GCWSwitchPosition.left) {
-      return encryptTapCode(_currentEncryptionInput, mode: mode);
+      return encryptTapCode(_currentEncryptionInput, mode: _currentModificationMode);
     } else {
-      return decryptTapCode(_currentDecryptionInput, mode: mode);
+      return decryptTapCode(_currentDecryptionInput, mode: _currentModificationMode);
     }
   }
 }
