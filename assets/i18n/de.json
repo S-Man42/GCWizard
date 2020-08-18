@@ -911,6 +911,10 @@
   "hashes_tiger192_title" : "Tiger (192 Bit)",
   "hashes_whirlpool512_title" : "Whirlpool (512 Bit)",
 
+  "hexadecimal_title" : "Hexadezimalzahlen",
+  "hexadecimal_description" : "Wandelt Hexadezimalzahlen in Dezimalzahlen um",
+  "hexadecimal_example" : "2A → 42",
+
   "irrationalnumbers_error_indextoosmall" : "Index zu klein",
   "irrationalnumbers_error_indextoobig" : "Index zu groß",
   "irrationalnumbers_decimalrange_start" : "Startindex",

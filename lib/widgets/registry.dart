@@ -133,6 +133,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
@@ -398,6 +399,12 @@ class Registry {
         i18nPrefix: 'hashes_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_HASHES
+      ),
+      GCWToolWidget(
+        tool: Hexadecimal(),
+        i18nPrefix: 'hexadecimal',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'hexadecimal hexadezimalzahlen numbers dezimalzahlen decimal 16'
       ),
       GCWToolWidget(
         tool: Kamasutra(),
