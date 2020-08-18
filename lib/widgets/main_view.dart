@@ -17,6 +17,7 @@ import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/dna_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
@@ -164,6 +165,7 @@ class _MainViewState extends State<MainView> {
           className(DatesSelection()),
           className(Deadfish()),
           className(Decabit()),
+          className(DNASelection()),
           className(DuckSpeak()),
           className(Enigma()),
           className(ESelection()),

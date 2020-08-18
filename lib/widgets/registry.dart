@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/crosssum_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/dna_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/easter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
@@ -133,6 +134,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
@@ -171,6 +175,7 @@ class Registry {
   static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
   static final SEARCHSTRING_CROSSSUMS = 'crosssums digits alternated crosstotals iterated iteriert products quersummen produkte alternierend alterniert iterierend ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
+  static final SEARCHSTRING_DNA = 'code-sonne codesonne codesun dna mrna desoxyribonucleicacid desoxyribonukleinsaeure dns mrns genetisches genetik genetics genes genomes gattaca nucleotide nukleotid sequence sequenz thymine uracile cytosine adenine guanine ';
   static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
   static final SEARCHSTRING_EASTER = 'eastersunday ostern ostersonntag ';
   static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterische programmiersprache esoteric programming language ';
@@ -355,6 +360,12 @@ class Registry {
         searchStrings: 'decabit impulsraster zellweger plus minus rundsteuertechnik ripple control'
       ),
       GCWToolWidget(
+        tool: DNASelection(),
+        i18nPrefix: 'dna_selection',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: SEARCHSTRING_DNA
+      ),
+      GCWToolWidget(
         tool: DuckSpeak(),
         i18nPrefix: 'duckspeak',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -523,7 +534,7 @@ class Registry {
       GCWToolWidget(
         tool: ScienceAndTechnologySelection(),
         i18nPrefix: 'scienceandtechnology_selection',
-        searchStrings: 'science technology naturwissenschaften technologien technik maths mathematics mathematik physics physik chemistry chemie '
+        searchStrings: 'science technology naturwissenschaften technologien technik maths mathematics mathematik physics physik chemistry chemie electronics elektronik '
       ),
       GCWToolWidget(
         tool: Scrabble(),
@@ -850,7 +861,6 @@ class Registry {
       ),
 
       //CrossSumSelection *******************************************************************************************
-
       GCWToolWidget(
         tool: CrossSum(),
         i18nPrefix: 'crosssum_crosssum',
@@ -874,7 +884,24 @@ class Registry {
         searchStrings: 'weekdays wochentage'
       ),
 
-      //E Selection **********************************************************************************************
+      //DNASelection ************************************************************************************************
+      GCWToolWidget(
+        tool: DNANucleicAcidSequence(),
+        i18nPrefix: 'dna_nucleicacidsequence',
+        searchStrings: SEARCHSTRING_DNA + 'nucleicacid sequence nukleotidsequenz nukleitide nukleinsaeure basenpaare basepairs alleles'
+      ),
+      GCWToolWidget(
+        tool: DNAAminoAcids(),
+        i18nPrefix: 'dna_aminoacids',
+        searchStrings: SEARCHSTRING_DNA + 'aminosaeuren aminoacids'
+      ),
+      GCWToolWidget(
+        tool: DNAAminoAcidsTable(),
+        i18nPrefix: 'dna_aminoacids_table',
+        searchStrings: SEARCHSTRING_DNA + 'aminosaeuren aminoacids'
+      ),
+
+      //E Selection *************************************************************************************************
       GCWToolWidget(
         tool: ENthDecimal(),
         i18nPrefix: 'irrationalnumbers_nthdecimal',
