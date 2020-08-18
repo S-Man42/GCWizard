@@ -1,4 +1,4 @@
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/scrabble_sets.dart';
+import 'file:///E:/workspace/GCWizard/lib/logic/tools/games/scrabble_sets.dart';
 
 List<int> textToLetterValues (String text, String scrabbleVersion) {
   List<int> output = [];
