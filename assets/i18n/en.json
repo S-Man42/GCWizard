@@ -823,7 +823,7 @@
 
   "dtmf_title" : "DTMF",
   "dtmf_description" : "Dual-Tone Multi-Frequenzy",
-  "dtmf_example" : "5 → (1336Hz | 770Hz)",
+  "dtmf_example" : "5 → 1336 770",
 
   "duckspeak_title": "Duck Speak",
   "duckspeak_description" : "A fun language made up of 'nak' sounds",

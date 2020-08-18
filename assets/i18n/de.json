@@ -823,7 +823,7 @@
 
   "dtmf_title" : "MFWV",
   "dtmf_description" : "Mehrfrequenzwahlverfahren",
-  "dtmf_example" : "5 → (1336Hz | 770Hz)",
+  "dtmf_example" : "5 → 1336 770",
 
   "duckspeak_title": "Entensprache",
   "duckspeak_description" : "Eine Spaß-Sprache die aus 'Nak'-Lauten besteht",

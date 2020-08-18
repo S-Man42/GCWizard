@@ -6,6 +6,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class DTMF extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class DTMFState extends State<DTMF> {
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
+
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 
   @override
