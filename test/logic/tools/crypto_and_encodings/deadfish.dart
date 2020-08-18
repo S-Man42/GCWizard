@@ -9,7 +9,6 @@ void main() {
 
       {'input' : 'Hallo Welt', 'expectedOutput' : 'iissiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiioiiiiiiiiiiiiiiiiiiiiiiiiioiiiiiiiiiiiooiiiodddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddoiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiioiiiiiiiiiiiiiioiiiiiiioiiiiiiiio'},
       {'input' : 'Test123', 'expectedOutput' : 'iissiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiioiiiiiiiiiiiiiiiiioiiiiiiiiiiiiiioiodddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddoioio'},
-
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -27,7 +26,9 @@ void main() {
 
       {'expectedOutput' : 'Hallo Welt', 'input' : 'iisiiiisiiiiiiiioiiiiiiiiiiiiiiiiiiiiiiiiioiiiiiiiiiiiooiiiodddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddoiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiioiiiiiiiiiiiiiioiiiiiiioiiiiiiiio'},
       {'expectedOutput' : 'H', 'input' : 'IISIIIISIIIIIIIIO'},
-      {'expectedOutput' : '', 'input' : 'hallo'},
+
+      {'expectedOutput' : '0 0', 'input' : 'Otto'},
+      {'expectedOutput' : '0 0 0 1 0 1 2 2 4 3', 'input' : 'Otto, Odilo und Otila wohnen in Honolulu in ihrem orangenen Domizil'},
     ];
 
     _inputsToExpected.forEach((elem) {

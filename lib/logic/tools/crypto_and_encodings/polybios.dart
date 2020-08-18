@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 enum PolybiosMode{AZ09, ZA90, CUSTOM}
 
@@ -24,25 +26,53 @@ String _sanitizeAlphabet(String alphabet) {
   return alphabet.split('').toSet().join();
 }
 
-String createPolybiosAlphabet(int gridDimension, {String firstLetters: '', PolybiosMode mode: PolybiosMode.AZ09, String fillAlphabet: ''}) {
+String createPolybiosAlphabet(int gridDimension, {
+  String firstLetters: '',
+  PolybiosMode mode: PolybiosMode.AZ09,
+  String fillAlphabet: '',
+  AlphabetModificationMode modificationMode: AlphabetModificationMode.J_TO_I
+}) {
+  if (firstLetters == null)
+    firstLetters = '';
+
+  if (fillAlphabet == null)
+    fillAlphabet = '';
+
+  if (modificationMode == null)
+    modificationMode = AlphabetModificationMode.J_TO_I;
 
   switch (gridDimension)  {
     case 5:
       switch (mode) {
+        case PolybiosMode.CUSTOM:
+          fillAlphabet = fillAlphabet.toUpperCase() + alphabet_AZ.keys.join();
+          break;
         case PolybiosMode.AZ09:
-          fillAlphabet = alphabet_AZ.keys.map((key) => key == 'J' ? '' : key).join();
+          fillAlphabet = alphabet_AZ.keys.join();
           break;
         case PolybiosMode.ZA90:
-          fillAlphabet = alphabet_AZ.keys.map((key) => key == 'J' ? '' : key).toList().reversed.join();
+          fillAlphabet = alphabet_AZ.keys.toList().reversed.join();
           break;
         default: break;
       }
+
+      switch (modificationMode) {
+        case AlphabetModificationMode.J_TO_I: fillAlphabet = fillAlphabet.replaceAll('J', ''); break;
+        case AlphabetModificationMode.C_TO_K: fillAlphabet = fillAlphabet.replaceAll('C', ''); break;
+        case AlphabetModificationMode.W_TO_VV: fillAlphabet = fillAlphabet.replaceAll('W', ''); break;
+        case AlphabetModificationMode.REMOVE_Q: fillAlphabet = fillAlphabet.replaceAll('Q', ''); break;
+      }
+
       break;
     case 6:
       var alphabetAZ = alphabet_AZ.keys.toList();
 
       switch (mode) {
         // ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
+        case PolybiosMode.CUSTOM:
+          alphabetAZ.addAll(alphabet_09.keys);
+          fillAlphabet += alphabetAZ.join();
+          break;
         case PolybiosMode.AZ09:
           alphabetAZ.addAll(alphabet_09.keys);
           fillAlphabet = alphabetAZ.join();
@@ -58,12 +88,6 @@ String createPolybiosAlphabet(int gridDimension, {String firstLetters: '', Polyb
       break;
     default: return null;
   }
-
-  if (firstLetters == null)
-    firstLetters = '';
-
-  if (fillAlphabet == null)
-    fillAlphabet = '';
 
   var alphabet = _sanitizeAlphabet(firstLetters + fillAlphabet);
 
@@ -101,23 +125,36 @@ String polybiosGridCharacterByCoordinate(Map<String, List<int>> grid, int row, i
     .key;
 }
 
-PolybiosOutput encryptPolybios (String input, String key, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
+PolybiosOutput encryptPolybios (
+  String input,
+  String key,
+  {
+    PolybiosMode mode: PolybiosMode.AZ09,
+    String fillAlphabet,
+    String firstLetters,
+    AlphabetModificationMode modificationMode: AlphabetModificationMode.J_TO_I
+  }
+) {
   if (input == null || key == null)
     return null; //TODO Exception
+
+  if (modificationMode == null)
+    modificationMode = AlphabetModificationMode.J_TO_I;
 
   int dim = key.length;
   if (dim != 5 && dim != 6)
     return null; //TODO Exception
 
-  alphabet = createPolybiosAlphabet(dim, mode: mode, fillAlphabet: alphabet);
+  var alphabet = createPolybiosAlphabet(dim, mode: mode, fillAlphabet: fillAlphabet, firstLetters: firstLetters, modificationMode: modificationMode);
   if (alphabet == null)
     return null; //TODO Exception
 
   key = key.toUpperCase();
   input = input.toUpperCase();
 
-  if (!alphabet.contains('J'))
-    input = input.replaceAll('J', 'I');
+  if (dim == 5) {
+    input = applyAlphabetModification(input, modificationMode);
+  }
 
   Map<String, List<int>> grid = createPolybiosGrid(alphabet, dim);
 
@@ -139,23 +176,34 @@ PolybiosOutput encryptPolybios (String input, String key, {PolybiosMode mode: Po
   return PolybiosOutput(output, polybiosGridToString(grid, key));
 }
 
-PolybiosOutput decryptPolybios (String input, String key, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
+PolybiosOutput decryptPolybios (String input,
+    String key,
+    {
+      PolybiosMode mode: PolybiosMode.AZ09,
+      String fillAlphabet,
+      String firstLetters,
+      AlphabetModificationMode modificationMode: AlphabetModificationMode.J_TO_I
+    }
+) {
   if (input == null || key == null)
     return null; //TODO Exception
+
+  if (modificationMode == null)
+    modificationMode = AlphabetModificationMode.J_TO_I;
 
   int dim = key.length;
   if (dim != 5 && dim != 6)
     return null; //TODO Exception
 
-  alphabet = createPolybiosAlphabet(dim, mode: mode, fillAlphabet: alphabet);
+  var alphabet = createPolybiosAlphabet(dim, mode: mode, fillAlphabet: fillAlphabet, firstLetters: firstLetters, modificationMode: modificationMode);
   if (alphabet == null)
     return null;
 
   key = key.toUpperCase();
   input = input
-      .split('')
-      .map((character) => key.contains(character) ? character : '')
-      .join();
+    .split('')
+    .map((character) => key.contains(character) ? character : '')
+    .join();
 
   if (input.length % 2 != 0)
     input = input.substring(0, input.length - 1);
