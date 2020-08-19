@@ -9,8 +9,7 @@ class GrayOutput {
   final String output_gray_decimal;
   final String output_gray_binary;
 
-  GrayOutput(this.state, this.output_plain, this.output_gray_decimal,
-      this.output_gray_binary);
+  GrayOutput(this.state, this.output_plain, this.output_gray_decimal, this.output_gray_binary);
 }
 
 enum GrayMode { Decimal, Binary }

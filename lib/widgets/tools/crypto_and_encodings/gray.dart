@@ -28,13 +28,13 @@ class GrayState extends State<Gray> {
   GCWSwitchPosition _currentCodingMode = GCWSwitchPosition.left;
 
   var _decimalMaskFormatter = MaskTextInputFormatter(
-      mask: '#' * 10000,
-      filter: {"#": RegExp(r'[0-9\s]')}
+    mask: '#' * 10000,
+    filter: {"#": RegExp(r'[0-9\s]')}
   );
 
   var _binaryDigitsMaskFormatter = MaskTextInputFormatter(
-      mask: '#' * 10000,
-      filter: {"#": RegExp(r'[01\s]')}
+    mask: '#' * 10000,
+    filter: {"#": RegExp(r'[01\s]')}
   );
 
 
@@ -59,7 +59,7 @@ class GrayState extends State<Gray> {
       children: <Widget>[
 
         _currentInputMode == GCWSwitchPosition.left
-            ? GCWTextField(
+          ? GCWTextField(
             controller: _inputDecimalController,
             inputFormatters: [_decimalMaskFormatter],
             onChanged: (text){
@@ -67,8 +67,8 @@ class GrayState extends State<Gray> {
                 _currentInput = text;
               });
             }
-        )
-            : GCWTextField (
+          )
+          : GCWTextField (
             controller: _inputBinaryController,
             inputFormatters: [_binaryDigitsMaskFormatter],
             onChanged: (text){
@@ -102,7 +102,7 @@ class GrayState extends State<Gray> {
   }
 
   Widget _buildOutput(BuildContext context) {
-      if (_currentCodingMode == GCWSwitchPosition.left) {
+    if (_currentCodingMode == GCWSwitchPosition.left) {
       if (_currentInputMode == GCWSwitchPosition.left) {
          _currentOutput = encryptGray(_currentInput, mode: GrayMode.Decimal);
       } else {// input is binary
