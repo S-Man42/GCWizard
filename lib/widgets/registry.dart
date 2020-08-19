@@ -169,7 +169,7 @@ class Registry {
   static final SEARCHSTRING_BCD = 'bcd encode decode encoding decoding dekodierung dekodieren binary coded decimal binaer codierte dezimalzahlen ';
   static final SEARCHSTRING_BRAINFK = SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'brainf**k ';
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
-  static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen konrad zuse z-22 z22 purched paper baudot-murray-code ';
+  static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen lochkarten konrad zuse z-22 z22 punchedpapertape cards baudot-murray-code ';
   static final SEARCHSTRING_COMBINATORICS = 'mathematics mathematik kombinatorik combinatorics ';
   static final SEARCHSTRING_COMBINATORICS_COMBINATION = SEARCHSTRING_COMBINATORICS + 'combinations kombinationen untergruppen subgroups ';
   static final SEARCHSTRING_COMBINATORICS_PERMUTATION = SEARCHSTRING_COMBINATORICS + 'permutationen permutations anordnungen reihenfolgen arrangements orders ';
@@ -1273,10 +1273,22 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'alchemy alchemie elements elemente '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'angerthas_cirth'),
+        i18nPrefix: 'symboltables_angerthas_cirth',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'angerthas_cirth/ghw.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'angerthas cirth runen runes zwerge dwarfs derherrderringe elben elbisch elves elvish thelordoftherings j.r.r. jrr tolkien'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'antiker'),
         i18nPrefix: 'symboltables_antiker',
         iconPath: SYMBOLTABLES_ASSETPATH + 'antiker/72.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'antiker stargate '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'arabic_indian_numerals'),
+        i18nPrefix: 'symboltables_arabic_indian_numerals',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'arabic_indian_numerals/51.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'arabisches indisches arabic indian arabian arabien indien zahlen ziffern numbers numerals'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'arcadian'),
@@ -1297,6 +1309,24 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'aurebesh starwars wookies clonewars outerrim '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'babylonian_numerals'),
+        i18nPrefix: 'symboltables_babylonian_numerals',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'babylonian_numerals/52.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + ' babylonisches babylonian zahlen ziffern numbers numerals keilschrift cuneiform'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'barbier'),
+        i18nPrefix: 'symboltables_barbier',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'barbier/74.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'charles barbier nachtschrift militär military army armee lautschrift dots points punkte tactiles blindenschrift'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'baudot'),
+        i18nPrefix: 'symboltables_baudot',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'baudot/58.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_CCITT + 'ccitt-1 ccitt1 baudot-code'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'birds_on_a_wire'),
         i18nPrefix: 'symboltables_birds_on_a_wire',
         iconPath: SYMBOLTABLES_ASSETPATH + 'birds_on_a_wire/80.png',
@@ -1312,7 +1342,13 @@ class Registry {
         tool: SymbolTable(symbolKey: 'braille'),
         i18nPrefix: 'symboltables_braille',
         iconPath: SYMBOLTABLES_ASSETPATH + 'braille/72.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift braille '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tactiles blindenschrift braille dots points punkte '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'brahmi_numerals'),
+        i18nPrefix: 'symboltables_brahmi_numerals',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'brahmi_numerals/54.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'brahmi indisches indian zahlen ziffern numbers numerals aramaeisch kharoshthi hieratisch hieratic aramaic'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'chappe'),
@@ -1325,6 +1361,18 @@ class Registry {
         i18nPrefix: 'symboltables_chappe_v2',
         iconPath: SYMBOLTABLES_ASSETPATH + 'chappe_v2/72.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'optical telegraph visual visueller optischer telegraf claude chappe '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'cherokee'),
+        i18nPrefix: 'symboltables_cherokee',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'cherokee/83.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'cherokee nation silbenschrift syllabary indianer indians'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'chinese_numerals'),
+        i18nPrefix: 'symboltables_chinese_numerals',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'chinese_numerals/54.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'chinesisches zahlen ziffern chinese numbers numerals'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'color_code'),
@@ -1363,16 +1411,52 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dancingmen tanzende strichmaennchen sherlockholmes matchstickman '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'deafblind'),
+        i18nPrefix: 'symboltables_deafblind',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'deafblind/82.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'deafmute deaf-mute deafblind hearing loss deaf-blind taub-stumme taubstumme gehoerlose sign language hands haende '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'devanagari_numerals'),
+        i18nPrefix: 'symboltables_devanagari_numerals',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'devanagari_numerals/51.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'devanagari indisches indian indien sanskrit prakrit hindi marathi zahlen ziffern numbers numerals'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'doremi'),
+        i18nPrefix: 'symboltables_doremi',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'doremi/54.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'doremifalamiresisol notesystem musictheory musiktheorie solmisation notensystem tonstufen degrees octal oktal'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'dragon_runes'),
         i18nPrefix: 'symboltables_dragon_runes',
         iconPath: SYMBOLTABLES_ASSETPATH + 'dragon_runes/71.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dragonrunes drachenrunen dragonlords '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dragonrunes drachenrunen dragonlords drunes d-runes drunen d-runen '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'eastern_arabic_indian_numerals'),
+        i18nPrefix: 'symboltables_eastern_arabic_indian_numerals',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'eastern_arabic_indian_numerals/52.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'oestliche ostarabische ostarabisch-indische eastern arabische indische arabic arabian arabien indian indien persisch persian urdu zahlen ziffern numbers numerals'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'egyptian_numerals'),
         i18nPrefix: 'symboltables_egyptian_numerals',
         iconPath: SYMBOLTABLES_ASSETPATH + 'egyptian_numerals/hundred.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'altaegyptische eyptian numerals zahlen ziffern numbers hieroglyphs hieroglyphen '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'elia'),
+        i18nPrefix: 'symboltables_elia',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'elia/56.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'elia blindenschrift blinde eyeless relief taktile tactiles'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'enochian'),
+        i18nPrefix: 'symboltables_enochian',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'enochian/75.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'enochian henochisch john dee magische sprache magie language edward kelley henoic'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'fakoo'),
@@ -1423,6 +1507,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'futurama matt groening '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'gallifreyan'),
+        i18nPrefix: 'symboltables_gallifreyan',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'gallifreyan/77.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'doctorwho timelords gallifreyan gallifreyisch drwho'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'gargish'),
         i18nPrefix: 'symboltables_gargish',
         iconPath: SYMBOLTABLES_ASSETPATH + 'gargish/gl.png',
@@ -1447,6 +1537,18 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'gnommish gnomisch eoincolfer artemisfowl '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'greek_numerals'),
+        i18nPrefix: 'symboltables_greek_numerals',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'greek_numerals/eighty.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'griechisches greek zahlen ziffern numbers numerals zahlschrift'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hebrew'),
+        i18nPrefix: 'symboltables_hebrew',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hebrew/sh.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hebrew hebraeisches jews juden'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'hexahue'),
         i18nPrefix: 'symboltables_hexahue',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hexahue/81.png',
@@ -1459,6 +1561,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hieratic numbers numerals zahlen ziffern hieratische altaegyptische egyptian hieroglyphs hieroglyphen '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hobbit_runes'),
+        i18nPrefix: 'symboltables_hobbit_runes',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hobbit_runes/80.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hobbits halblinge dwarf dwarves zwerge altenglisch old english erebor mondrunen moonrunes derherrderringe thelordoftherings j.r.r. jrr tolkien'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'hvd'),
         i18nPrefix: 'symboltables_hvd',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hvd/81.png',
@@ -1468,7 +1576,13 @@ class Registry {
         tool: SymbolTable(symbolKey: 'hylian_skyward_sword'),
         i18nPrefix: 'symboltables_hylian_skyward_sword',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_skyward_sword/79.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hylianische skyward sword schwert zelda '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hylianische skywardsword skywardschwert thelegendofzelda hyrule '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hylian_wind_waker'),
+        i18nPrefix: 'symboltables_hylian_wind_waker',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_wind_waker/gu.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'moderne modern hylianische thelegendofzelda thewindwaker hyrule'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'hymmnos', isCaseSensitive: true),
@@ -1483,10 +1597,22 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'intergalactical galaxy galaxies intergalaktisch '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'japanese_numerals'),
+        i18nPrefix: 'symboltables_japanese_numerals',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'japanese_numerals/57.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'japanese japanisches zahlen ziffern numbers'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'klingon', isCaseSensitive: true),
         i18nPrefix: 'symboltables_klingon',
         iconPath: SYMBOLTABLES_ASSETPATH + 'klingon/106.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klingonisch klingonen klingons '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'krempel'),
+        i18nPrefix: 'symboltables_krempel',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'krempel/81.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'ralfkrempel farbcode farben colorcode colourcode rot red gelb yellow gruen green blau blue boxes kastchen'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'krypton'),
@@ -1498,7 +1624,7 @@ class Registry {
         tool: SymbolTable(symbolKey: 'lorm'),
         i18nPrefix: 'symboltables_lorm',
         iconPath: SYMBOLTABLES_ASSETPATH + 'lorm/72.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift lormen deafmute deaf-mute deafblind hearing loss deaf-blind taub-stumme taubstumme gehoerlose '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'blind tactiles blindenschrift lormen deafmute deaf-mute deafblind hearing loss deaf-blind taub-stumme taubstumme gehoerlose haende hands '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'magicode'),
@@ -1525,6 +1651,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'matoran lego bionicles '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'maya_numerals'),
+        i18nPrefix: 'symboltables_maya_numerals',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'maya_numerals/eighteen.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'maya zahlen ziffern numbers numerals vigesimalsystem 20'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'maze'),
         i18nPrefix: 'symboltables_maze',
         iconPath: SYMBOLTABLES_ASSETPATH + 'maze/55.png',
@@ -1549,10 +1681,22 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'george murray telex shuttertelegraph klappentelegraph klappentelegraf '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'murraybaudot'),
+        i18nPrefix: 'symboltables_murraybaudot',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'murraybaudot/74.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_CCITT2
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'nato'),
         i18nPrefix: 'symboltables_nato',
         iconPath: SYMBOLTABLES_ASSETPATH + 'nato/54.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen nato army armee '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'notes'),
+        i18nPrefix: 'symboltables_notes',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'notes/49.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'doremifalamiresisol notesystem solmisation notensystem tonstufen degrees octal oktal musik music'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'ogham'),
@@ -1579,6 +1723,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER + 'swisscom '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'phoenician'),
+        i18nPrefix: 'symboltables_phoenician',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'phoenician/66.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'phoenizisches phoenician hebraeisches hebrew'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'pipeline'),
         i18nPrefix: 'symboltables_pipeline',
         iconPath: SYMBOLTABLES_ASSETPATH + 'pipeline/72.png',
@@ -1591,10 +1741,16 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'pixel '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'planet'),
+        i18nPrefix: 'symboltables_planet',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'planet/51.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'planet united states postal service usps barcode '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'postnet'),
         i18nPrefix: 'symboltables_postnet',
         iconPath: SYMBOLTABLES_ASSETPATH + 'postnet/54.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'postnet planet united states postal service usps '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'postnet united states postal service usps barcode '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'puzzle'),
@@ -1621,6 +1777,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_RESISTOR_COLORCODE
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'rhesus_a', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_rhesus_a',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'rhesus_a/67.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'rhesusa tintenkleckse blutspritzer inkblots bloodsplatter blutgruppen bloodgroup bloodtype',
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'romulan', isCaseSensitive: true),
         i18nPrefix: 'symboltables_romulan',
         iconPath: SYMBOLTABLES_ASSETPATH + 'romulan/57.png',
@@ -1633,6 +1795,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'runes runen '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'sarati'),
+        i18nPrefix: 'symboltables_sarati',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'sarati/86.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sarati lautschrift spokenlanguage schriftsystem j.r.r. jrr tolkien rumil quenya elves elvish elbisches elben thelordoftherings derherrderringe'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'semaphore'),
         i18nPrefix: 'symboltables_semaphore',
         iconPath: SYMBOLTABLES_ASSETPATH + 'semaphore/81.png',
@@ -1643,6 +1811,18 @@ class Registry {
         i18nPrefix: 'symboltables_sign',
         iconPath: SYMBOLTABLES_ASSETPATH + 'sign/75.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sign language zeichensprache gebaerdensprache hearing loss taubstumme taub-stumme deafblind deaf-blind gehoerlose deaf-mute deafmute'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'slash_and_pipe'),
+        i18nPrefix: 'symboltables_slash_and_pipe',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'slash_and_pipe/79.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'schraegstrich slash pipe'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'solmisation'),
+        i18nPrefix: 'symboltables_solmisation',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'solmisation/54.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'doremifalamiresisol notesystem musictheory musiktheorie solmisation notensystem tonstufen degrees octal oktal'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'space_invaders', isCaseSensitive: true),
@@ -1663,6 +1843,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sunuz tekumel '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'tamil_numerals'),
+        i18nPrefix: 'symboltables_tamil_numerals',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'tamil_numerals/49.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tamil indisches indian indien dravidisch dravidian zahlen ziffern numbers numerals'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'templers'),
         i18nPrefix: 'symboltables_templers',
         iconPath: SYMBOLTABLES_ASSETPATH + 'templers/87.png',
@@ -1673,6 +1859,24 @@ class Registry {
         i18nPrefix: 'symboltables_tenctonese',
         iconPath: SYMBOLTABLES_ASSETPATH + 'tenctonese/75.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tenctonese aliennation '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'terzi'),
+        i18nPrefix: 'symboltables_terzi',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'terzi/90.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'francesco lana di terzi alphabet square dots punkte points quadrat alphabet blindenschrift braille eyeless relief taktil tactiles'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'theban'),
+        i18nPrefix: 'symboltables_theban',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'theban/56.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'thebanisches hexenalphabet onorius witches witchalphabet engelsschrift angels wikka wicca wicka'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'tomtom'),
+        i18nPrefix: 'symboltables_tomtom',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'tomtom/80.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tomtom tom a-tom-tom tom-tom atomtom'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'utopian'),

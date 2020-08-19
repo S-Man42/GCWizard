@@ -77,7 +77,7 @@ class SymbolTableState extends State<SymbolTable> {
         key: (filePath) {
           return filePath.split(pathKey)[1].split(imageSuffixes)[0];
         },
-        value: (filePath) => filePath,
+        value: (filePath) => imageSuffixes.hasMatch(filePath) ? filePath : null,
         // first order all ASCII values, afterward all special symbols
         compare: (a, b) {
           var intA = int.tryParse(a);
@@ -97,6 +97,8 @@ class SymbolTableState extends State<SymbolTable> {
           }
         }
       );
+      //Remove non-image files
+      _imageFilePaths.removeWhere((key, value) => value == null);
     });
   }
 
