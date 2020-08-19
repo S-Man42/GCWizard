@@ -88,8 +88,6 @@ List<AminoAcid> decodeRNANucleobaseSequence(String input) {
   if (input == null || input.length < 3)
     return [];
 
-  print(input);
-
   input = input.toUpperCase().replaceAll(RegExp(r'[^AUCG]'), '');
 
   while (input.length % 3 != 0)

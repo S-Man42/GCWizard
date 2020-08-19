@@ -382,6 +382,7 @@
   "common_location": "Standort",
   "common_month": "Monat",
   "common_notdefined" : "Nicht definiert",
+  "common_note" : "Anmerkung",
   "common_ok" : "OK",
   "common_output" : "Ausgabe",
   "common_portrait" : "Hochformat",
@@ -1400,7 +1401,7 @@
   "sudokusolver_removevalue" : "Wert entfernen",
   "sudokusolver_entervalue" : "Wert eingeben",
   "sudokusolver_solve" :  "Berechne",
-  "sudokusolver_clearcalculated" : "Lösche Berechnung",
+  "sudokusolver_clearcalculated" : "Lösche Ergebnis",
   "sudokusolver_clearall" : "Alles löschen",
   "sudokusolver_error" : "Konnte nicht gelöst werden.",
 

@@ -101,7 +101,6 @@ class BifidState extends State<Bifid> {
               onChanged: (text) {
                 setState(() {
                   _currentAlphabet = text;
-                  print(_currentAlphabet);
                 });
               },
             )
