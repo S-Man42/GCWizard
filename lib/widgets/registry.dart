@@ -402,7 +402,7 @@ class Registry {
       ),
       GCWToolWidget(
         tool: Projectiles(),
-        i18nPrefix: 'geschoss',
+        i18nPrefix: 'projectiles',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'geschoss bullet projectile ballistik ballistic'
       ),
