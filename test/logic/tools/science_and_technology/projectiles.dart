@@ -4,30 +4,27 @@ import 'package:gc_wizard/logic/tools/science_and_technology/projectiles.dart';
 void main() {
   group("Projectiles.calculate:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'energy' : null, 'mass' : null, 'speed' : null, 'expectedOutput' : null},
-      {'energy' : null, 'mass' : null, 'speed' : 345, 'expectedOutput' : null},
-      {'energy' : null, 'mass' : 345, 'speed' : null, 'expectedOutput' : null},
-      {'energy' : 100, 'mass' : null, 'speed' : null, 'expectedOutput' : null},
-      {'energy' : 100, 'mass' : -10.0, 'speed' : null, 'expectedOutput' : null},
-      {'energy' : null, 'mass' : -10.0, 'speed' : null, 'expectedOutput' : null},
-      {'energy' : 100, 'mass' : 5.0, 'speed' : null, 'expectedOutput' : -12.934},
-      {'energy' : 100, 'mass' : 5.0, 'speed' : null, 'expectedOutput' : -22.256},
-      {'energy' : 5.0, 'mass' : 5.0, 'speed' : null, 'expectedOutput' : 4.083},
-      {'energy' : 5.0, 'mass' : 5.0, 'speed' : null, 'expectedOutput' : -4.637},
-      {'energy' : 5.0, 'mass' : 10.0, 'speed' : null, 'expectedOutput' : 2.658},
-      {'energy' : 41.0, 'mass' : 6.22, 'speed' : null, 'expectedOutput' : 36.809},
+      {'energy' : 0.0, 'mass' : 0.0, 'speed' : 0.0, 'expectedOutput' : '0.000'},
+      {'energy' : 0.0, 'mass' : 0.0, 'speed' : 120.0, 'expectedOutput' : '0.000'},
+      {'energy' : 0.0, 'mass' : 120.0, 'speed' : 0.0, 'expectedOutput' : '0.000'},
+      {'energy' : 0.0, 'mass' : 120.0, 'speed' : 120.0, 'expectedOutput' : '864000.000'},
+      {'energy' : 120.0, 'mass' : 0.0, 'speed' : 120.0, 'expectedOutput' : '0.017'},
+      {'energy' : 120.0, 'mass' : 120.0, 'speed' : 0.0, 'expectedOutput' : '1.414'},
+      {'energy' : 120.0, 'mass' : 120.0, 'speed' : 120.0, 'expectedOutput' : '0'},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('energy: ${elem['energy']}, mass: ${elem['mass']}, speed: ${elem['speed']}', () {
         var _actual;
-        if (elem['energy'] == null)
-          _actual = calculateEnergy(elem['mass'], elem['speed']);
+        if (elem['energy'] == 0)
+          _actual = calculateEnergy(elem['mass'], elem['speed']).toStringAsFixed(3);
         else
-          if (elem['mass'] == null)
-            _actual = calculateMass(elem['energy'], elem['speed']);
-          else
-            _actual = calculateSpeed(elem['energy'], elem['mass']);
+          if (elem['mass'] == 0)
+            _actual = calculateMass(elem['energy'], elem['speed']).toStringAsFixed(3);
+          else if (elem['speed'] == 0)
+                 _actual = calculateSpeed(elem['energy'], elem['mass']).toStringAsFixed(3);
+               else
+                 _actual = '0';
 
         expect(_actual, elem['expectedOutput']);
       });
