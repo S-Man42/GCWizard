@@ -25,7 +25,6 @@ class DTMFState extends State<DTMF> {
   @override
   void initState() {
     super.initState();
-
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput);
   }
@@ -34,7 +33,6 @@ class DTMFState extends State<DTMF> {
   void dispose() {
     _encodeController.dispose();
     _decodeController.dispose();
-
     super.dispose();
   }
 
