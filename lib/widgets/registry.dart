@@ -416,7 +416,7 @@ class Registry {
         tool: Heat(),
         i18nPrefix: 'heat',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'temperature temperetur humidity luftfeuchtigkeit hitze'
+        searchStrings: 'temperature temperatur humidity luftfeuchtigkeit hitze'
       ),
       GCWToolWidget(
         tool: Hexadecimal(),
