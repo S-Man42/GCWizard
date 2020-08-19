@@ -17,8 +17,10 @@ import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/dna_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
@@ -73,7 +75,11 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
+<<<<<<< HEAD
 import 'package:gc_wizard/widgets/tools/science_and_technology/heat.dart';
+=======
+import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
+>>>>>>> bbd04e1beaade70d2b7118aa6409a0f1f1837235
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
@@ -163,13 +169,19 @@ class _MainViewState extends State<MainView> {
           className(DatesSelection()),
           className(Deadfish()),
           className(Decabit()),
+          className(DNASelection()),
           className(DuckSpeak()),
           className(Enigma()),
           className(ESelection()),
           className(FormulaSolverFormulaGroups()),
           className(GCCode()),
           className(Gronsfeld()),
+<<<<<<< HEAD
           className(Heat()),
+=======
+          className(HashSelection()),
+          className(Hexadecimal()),
+>>>>>>> bbd04e1beaade70d2b7118aa6409a0f1f1837235
           className(Kamasutra()),
           className(Kenny()),
           className(Morse()),

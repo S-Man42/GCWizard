@@ -15,18 +15,14 @@ Map<String, List<int>> _createKeyGrid(String key, AlphabetModificationMode mode)
         switch (mode) {
           case AlphabetModificationMode.J_TO_I:
             if (character == 'J')
-              return 'I';
+              return '';
             break;
           case AlphabetModificationMode.W_TO_VV:
             if (character == 'W')
-              return 'VV';
+              return '';
             break;
           case AlphabetModificationMode.C_TO_K:
             if (character == 'C')
-              return 'K';
-            break;
-          case AlphabetModificationMode.REMOVE_Q:
-            if (character == 'Q')
               return '';
             break;
         }
@@ -49,7 +45,6 @@ String _sanitizeInput(String input, AlphabetModificationMode mode) {
     case AlphabetModificationMode.J_TO_I: input = input.replaceAll('J', 'I'); break;
     case AlphabetModificationMode.W_TO_VV: input = input.replaceAll('W', 'VV'); break;
     case AlphabetModificationMode.C_TO_K: input = input.replaceAll('C', 'K'); break;
-    case AlphabetModificationMode.REMOVE_Q: input = input.replaceAll('Q', ''); break;
   }
 
   return input;

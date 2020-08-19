@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -16,7 +17,6 @@ class GCWIntegerSpinner extends StatefulWidget {
   final controller;
   final SpinnerLayout layout;
   final focusNode;
-  final isBinary;
 
   const GCWIntegerSpinner({
     Key key,
@@ -27,8 +27,7 @@ class GCWIntegerSpinner extends StatefulWidget {
     this.max: 9007199254740992,
     this.controller,
     this.layout: SpinnerLayout.horizontal,
-    this.focusNode,
-    this.isBinary: false
+    this.focusNode
   }) : super(key: key);
 
   @override
@@ -54,7 +53,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
       if (widget.value != null)
         _currentValue = widget.value;
 
-      _controller = TextEditingController(text: widget.isBinary ? _currentValue.toRadixString(2) : _currentValue.toString());
+      _controller = TextEditingController(text: _currentValue.toString());
     }
   }
 
@@ -109,11 +108,10 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
       focusNode: widget.focusNode,
       min: widget.min,
       max: widget.max,
-      textInputFormatter: widget.isBinary ? _binaryMaskFormatter : null,
       controller: _controller,
       onChanged: (ret) {
         setState(() {
-          _currentValue = widget.isBinary ? int.tryParse(ret['value'].toString(), radix: 2) : ret['value'];
+          _currentValue = ret['value'];
           _setCurrentValueAndEmitOnChange();
         });
       }
@@ -183,7 +181,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _setCurrentValueAndEmitOnChange({setTextFieldText: false}) {
     if (setTextFieldText)
-      _controller.text = widget.isBinary ? _currentValue.toRadixString(2) : _currentValue.toString();
+      _controller.text = _currentValue.toString();
 
     widget.onChanged(_currentValue);
   }

@@ -61,6 +61,11 @@ class PlayfairState extends State<Playfair> {
         ),
         GCWAlphabetModificationDropDownButton(
           value: _currentModificationMode,
+          allowedModifications: [
+            AlphabetModificationMode.J_TO_I,
+            AlphabetModificationMode.W_TO_VV,
+            AlphabetModificationMode.C_TO_K
+          ],
           onChanged: (value) {
             setState(() {
               _currentModificationMode = value;

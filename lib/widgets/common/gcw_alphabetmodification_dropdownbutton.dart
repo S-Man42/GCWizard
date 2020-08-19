@@ -8,11 +8,13 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 class GCWAlphabetModificationDropDownButton extends StatefulWidget {
   final Function onChanged;
   final value;
+  final List<AlphabetModificationMode> allowedModifications;
 
   const GCWAlphabetModificationDropDownButton({
     Key key,
     this.onChanged,
     this.value,
+    this.allowedModifications,
   }) : super(key: key);
 
   @override
@@ -21,6 +23,29 @@ class GCWAlphabetModificationDropDownButton extends StatefulWidget {
 
 class GCWAlphabetModificationDropDownButtonState extends State<GCWAlphabetModificationDropDownButton> {
   AlphabetModificationMode _currentValue;
+  List<Map<String, dynamic>> modifications;
+
+  var allModifications = [
+    {'mode': AlphabetModificationMode.J_TO_I, 'text' : 'common_alphabetmodification_jtoi'},
+    {'mode': AlphabetModificationMode.C_TO_K, 'text' : 'common_alphabetmodification_ctok'},
+    {'mode': AlphabetModificationMode.W_TO_VV, 'text' : 'common_alphabetmodification_wtovv'},
+    {'mode': AlphabetModificationMode.REMOVE_Q, 'text' : 'common_alphabetmodification_removeq'},
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.allowedModifications == null) {
+      modifications = allModifications;
+    } else {
+      modifications = [];
+      allModifications.forEach((modification) {
+        if (widget.allowedModifications.contains(modification['mode']))
+          modifications.add(modification);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +66,7 @@ class GCWAlphabetModificationDropDownButtonState extends State<GCWAlphabetModifi
                 widget.onChanged(_currentValue);
               });
             },
-            items: [
-              {'mode': AlphabetModificationMode.J_TO_I, 'text' : 'common_alphabetmodification_jtoi'},
-              {'mode': AlphabetModificationMode.C_TO_K, 'text' : 'common_alphabetmodification_ctok'},
-              {'mode': AlphabetModificationMode.W_TO_VV, 'text' : 'common_alphabetmodification_wtovv'},
-              {'mode': AlphabetModificationMode.REMOVE_Q, 'text' : 'common_alphabetmodification_removeq'},
-            ].map((entry) {
+            items: modifications.map((entry) {
               return DropdownMenuItem(
                 value: entry['mode'],
                 child: Text(i18n(context, entry['text'])),
