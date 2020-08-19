@@ -25,13 +25,13 @@ class HeatState extends State<Heat> {
     return Column(
       children: <Widget>[
         GCWDoubleSpinner(
-            title: i18n(context, 'heat_temperature'),
-            value: _currentTemperature,
-            onChanged: (value) {
-              setState(() {
-                _currentTemperature = value;
-              });
-            }
+          title: i18n(context, 'heat_temperature'),
+          value: _currentTemperature,
+          onChanged: (value) {
+            setState(() {
+              _currentTemperature = value;
+            });
+          }
         ),
 
         GCWTwoOptionsSwitch(
@@ -47,15 +47,15 @@ class HeatState extends State<Heat> {
         ),
 
         GCWDoubleSpinner(
-            title: i18n(context, 'heat_humidity'),
-            value: _currentHumidity,
-            min: 0.0,
-            max: 100.0,
-            onChanged: (value) {
-              setState(() {
-                _currentHumidity = value;
-              });
-            }
+          title: i18n(context, 'heat_humidity'),
+          value: _currentHumidity,
+          min: 0.0,
+          max: 100.0,
+          onChanged: (value) {
+            setState(() {
+              _currentHumidity = value;
+            });
+          }
         ),
         _buildOutput(context)
       ],
