@@ -50,6 +50,7 @@ class HeatState extends State<Heat> {
             title: i18n(context, 'heat_humidity'),
             value: _currentHumidity,
             min: 0.0,
+            max: 100.0,
             onChanged: (value) {
               setState(() {
                 _currentHumidity = value;
