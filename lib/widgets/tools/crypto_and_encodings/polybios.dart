@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_alphabetmodification_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_encrypt_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class Polybios extends StatefulWidget {
   @override
@@ -25,7 +27,9 @@ class PolybiosState extends State<Polybios> {
   PolybiosMode _currentPolybiosMode = PolybiosMode.AZ09;
   String _currentAlphabet = '';
 
-  var _currentOutput = PolybiosOutput('', '');
+  AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
+
+  var _currentMode = GCWSwitchPosition.left;
 
   @override
   void initState() {
@@ -61,11 +65,20 @@ class PolybiosState extends State<Polybios> {
             });
           },
         ),
+        GCWTwoOptionsSwitch(
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
         GCWTextDivider(
-            text: i18n(context, 'common_key')
+          text: i18n(context, 'common_key')
         ),
         GCWTextField(
           hintText: i18n(context, 'common_key'),
+          maxLength: 6,
           controller: _keyController,
           onChanged: (text) {
             setState(() {
@@ -90,37 +103,48 @@ class PolybiosState extends State<Polybios> {
             );
           }).toList(),
         ),
-        _currentPolybiosMode == PolybiosMode.CUSTOM ? GCWTextField(
-          hintText: i18n(context, 'common_alphabet'),
-          controller: _alphabetController,
-          onChanged: (text) {
-            setState(() {
-              _currentAlphabet = text;
-            });
-          },
-        ) : Container(),
-        GCWEncryptButtonBar(
-          onPressedEncode: () {
-            setState(() {
-              _currentOutput = encryptPolybios(_currentInput, _currentKey, mode: _currentPolybiosMode, alphabet: _currentAlphabet);
-            });
-          },
-          onPressedDecode: () {
-            setState(() {
-              _currentOutput = decryptPolybios(_currentInput, _currentKey, mode: _currentPolybiosMode, alphabet: _currentAlphabet);
-            });
-          },
-        ),
+        _currentPolybiosMode == PolybiosMode.CUSTOM
+          ? GCWTextField(
+              hintText: i18n(context, 'common_alphabet'),
+              controller: _alphabetController,
+              onChanged: (text) {
+                setState(() {
+                  _currentAlphabet = text;
+                });
+              },
+            )
+          : Container(),
+        _currentKey != null && _currentKey.length < 6
+          ? GCWAlphabetModificationDropDownButton(
+              value: _currentModificationMode,
+              onChanged: (value) {
+                setState(() {
+                  _currentModificationMode = value;
+                });
+              },
+            )
+          : Container(),
         _buildOutput(context)
       ],
     );
   }
 
   Widget _buildOutput(BuildContext context) {
+    if (_currentInput == null || _currentInput.length == 0
+        || _currentKey == null  || ![5, 6].contains(_currentKey.length)
+    ) {
+      return GCWDefaultOutput(text: ''); // TODO: Exception
+    }
+
+    var _currentOutput;
+    if (_currentMode == GCWSwitchPosition.left) {
+      _currentOutput = encryptPolybios(_currentInput, _currentKey, mode: _currentPolybiosMode, modificationMode: _currentModificationMode, fillAlphabet: _currentAlphabet);
+    } else {
+      _currentOutput = decryptPolybios(_currentInput, _currentKey, mode: _currentPolybiosMode, modificationMode: _currentModificationMode, fillAlphabet: _currentAlphabet);
+    }
+
     if (_currentOutput == null || _currentOutput.output.length == 0) {
-      return GCWDefaultOutput(
-        text: '' //TODO: Exception
-      );
+      return GCWDefaultOutput(text: ''); // TODO: Exception
     }
 
     return GCWOutput(

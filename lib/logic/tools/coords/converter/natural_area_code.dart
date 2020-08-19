@@ -56,13 +56,3 @@ LatLng naturalAreaCodeToLatLon(NaturalAreaCode nac) {
     _nacComponentToLatLonComponent(nac.x) * 360.0 - 180.0,
   );
 }
-
-main() {
-  var c = LatLng(51.907002, 9.113159);
-  var nac = latLonToNaturalAreaCode(c);
-  var newC = naturalAreaCodeToLatLon(nac);
-
-  print(c);
-  print(nac);
-  print(newC);
-}

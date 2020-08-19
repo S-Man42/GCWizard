@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/text_only01andspace_textinputformatter.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlydigitsandspace_textinputformatter.dart';
 
 class Binary extends StatefulWidget {
   @override
@@ -9,14 +12,25 @@ class Binary extends StatefulWidget {
 }
 
 class BinaryState extends State<Binary> {
-  var _currentDecimalValue = 1;
-  var _currentBinaryValue = 1;
+  var _currentDecimalValue = '';
+  var _currentBinaryValue = '';
+  var _binaryController;
+  var _decimalController;
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 
   @override
   void initState() {
     super.initState();
+    _binaryController = TextEditingController(text: _currentBinaryValue);
+    _decimalController = TextEditingController(text: _currentDecimalValue);
+  }
+
+  @override
+  void dispose() {
+    _binaryController.dispose();
+    _decimalController.dispose();
+    super.dispose();
   }
 
   @override
@@ -24,20 +38,18 @@ class BinaryState extends State<Binary> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
-          ? GCWIntegerSpinner(
-              value: _currentDecimalValue,
+          ? GCWTextField(
+              inputFormatters: [TextOnlyDigitsAndSpaceInputFormatter()],
+              controller: _decimalController,
               onChanged: (value) {
                 setState(() {
                   _currentDecimalValue = value;
                 });
               },
             )
-          : Container(),
-        _currentMode == GCWSwitchPosition.left
-          ? Container()
-          : GCWIntegerSpinner(
-              value: _currentBinaryValue,
-              isBinary: true,
+          : GCWTextField(
+              inputFormatters: [TextOnly01AndSpaceInputFormatter()],
+              controller: _binaryController,
               onChanged: (value) {
                 setState(() {
                   _currentBinaryValue = value;
@@ -61,9 +73,9 @@ class BinaryState extends State<Binary> {
 
   _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      return _currentDecimalValue.toRadixString(2);
+      return _currentDecimalValue.split(' ').map((value) => convertBase(value, 10, 2)).join(' ');
     } else {
-      return _currentBinaryValue.toString();
+      return _currentBinaryValue.split(' ').map((value) => convertBase(value, 2, 10)).join(' ');
     }
   }
 }
