@@ -73,6 +73,9 @@ class ProjectilesState extends State<Projectiles> {
         if (_currentSpeed == 0) {
           calculate = 'projectiles_speed';
           result = calculateSpeed(_currentEnergy, _currentMass).toStringAsFixed(3);
+        } else {
+          calculate = 'projectiles_error';
+          result = '0';
         }
 
     return GCWOutput(
