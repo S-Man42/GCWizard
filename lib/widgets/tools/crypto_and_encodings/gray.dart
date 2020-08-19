@@ -117,9 +117,9 @@ class GrayState extends State<Gray> {
     }
 
     if (_currentOutput == null )
-        return GCWDefaultOutput(
-            text: '' //TODO: Exception
-        );
+      return GCWDefaultOutput(
+        text: '' //TODO: Exception
+      );
 
     return
       Column(
@@ -131,7 +131,7 @@ class GrayState extends State<Gray> {
             text: _currentOutput.output_gray_decimal
           ),
           GCWOutputText(
-              text: _currentOutput.output_gray_binary
+            text: _currentOutput.output_gray_binary
           ),
       ]
     );
