@@ -134,14 +134,11 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
-<<<<<<< HEAD
 import 'package:gc_wizard/widgets/tools/science_and_technology/heat.dart';
-=======
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
->>>>>>> bbd04e1beaade70d2b7118aa6409a0f1f1837235
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
@@ -416,17 +413,16 @@ class Registry {
         searchStrings: SEARCHSTRING_HASHES
       ),
       GCWToolWidget(
-<<<<<<< HEAD
         tool: Heat(),
         i18nPrefix: 'heat',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'temperature temperetur humidity luftfeuchtigkeit hitze'
-=======
+      ),
+      GCWToolWidget(
         tool: Hexadecimal(),
         i18nPrefix: 'hexadecimal',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'hexadecimal hexadezimalzahlen numbers dezimalzahlen decimal 16'
->>>>>>> bbd04e1beaade70d2b7118aa6409a0f1f1837235
       ),
       GCWToolWidget(
         tool: Kamasutra(),

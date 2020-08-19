@@ -951,7 +951,6 @@
   "hashes_tiger192_title" : "Tiger (192 bits)",
   "hashes_whirlpool512_title" : "Whirlpool (512 bits)",
 
-<<<<<<< .merge_file_a08376
   "heat_title" : "Heat index",
   "heat_description" : "Calculating heat indices",
   "heat_temperature" : "Temperature",
@@ -970,11 +969,10 @@
   "heat_index_32" : "Increased caution – There is a possibility of heat damage such as sunstroke, heat spasm and heat collapse.",
   "heat_index_40" : "Danger – Sunstroke, heat spasm and heat collapse are likely; Heat stroke is possible.",
   "heat_index_54" : "Increased risk - heat stroke and sunstroke are likely.",
-=======
+
   "hexadecimal_title" : "Hexadecimal Numbers",
   "hexadecimal_description" : "Convert hexadecimal numbers into decimal numbers",
   "hexadecimal_example" : "2A → 42",
->>>>>>> .merge_file_a10984
 
   "irrationalnumbers_error_indextoosmall" : "Index too small",
   "irrationalnumbers_error_indextoobig" : "Index too big",
