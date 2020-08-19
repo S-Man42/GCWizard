@@ -486,8 +486,6 @@ Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType)
       segment += input[i];
     }
 
-    print(segment);
-
     if (!baseSegments.contains(segment)) {
       if (currentDisplay != null) {
         currentDisplay.sort();
@@ -508,8 +506,6 @@ Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType)
     currentDisplay.sort();
     displays.add(currentDisplay.toSet().toList());
   }
-
-  print(displays);
 
   var out = displays.map((display) {
     if (display.length == 1 && display[0] == 'dp') {

@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 1.1.0+49
+version: 1.1.0+51
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -42,23 +42,37 @@ flutter:
     - assets/tokens/
     - assets/symbol_tables/
     - assets/symbol_tables/alchemy/
+    - assets/symbol_tables/angerthas_cirth/
     - assets/symbol_tables/antiker/
+    - assets/symbol_tables/arabic_indian_numerals/
     - assets/symbol_tables/arcadian/
     - assets/symbol_tables/ath/
     - assets/symbol_tables/aurebesh/
+    - assets/symbol_tables/babylonian_numerals/
+    - assets/symbol_tables/barbier/
+    - assets/symbol_tables/baudot/
     - assets/symbol_tables/birds_on_a_wire/
     - assets/symbol_tables/blox/
+    - assets/symbol_tables/brahmi_numerals/
     - assets/symbol_tables/braille/
     - assets/symbol_tables/chappe/
     - assets/symbol_tables/chappe_v2/
+    - assets/symbol_tables/cherokee/
+    - assets/symbol_tables/chinese_numerals/
     - assets/symbol_tables/color_code/
     - assets/symbol_tables/color_honey/
     - assets/symbol_tables/color_tokki/
     - assets/symbol_tables/daedric/
     - assets/symbol_tables/dagger/
     - assets/symbol_tables/dancing_men/
+    - assets/symbol_tables/deafblind/
+    - assets/symbol_tables/devanagari_numerals/
+    - assets/symbol_tables/doremi/
     - assets/symbol_tables/dragon_runes/
+    - assets/symbol_tables/eastern_arabic_indian_numerals/
     - assets/symbol_tables/egyptian_numerals/
+    - assets/symbol_tables/elia/
+    - assets/symbol_tables/enochian/
     - assets/symbol_tables/fakoo/
     - assets/symbol_tables/finger/
     - assets/symbol_tables/flags/
@@ -67,48 +81,68 @@ flutter:
     - assets/symbol_tables/freemason/
     - assets/symbol_tables/freemason_v2/
     - assets/symbol_tables/futurama/
+    - assets/symbol_tables/gallifreyan/
     - assets/symbol_tables/gargish/
     - assets/symbol_tables/genreich/
     - assets/symbol_tables/glagolitic/
     - assets/symbol_tables/gnommish/
+    - assets/symbol_tables/greek_numerals/
+    - assets/symbol_tables/hebrew/
     - assets/symbol_tables/hexahue/
     - assets/symbol_tables/hieratic_numerals/
+    - assets/symbol_tables/hobbit_runes/
     - assets/symbol_tables/hvd/
     - assets/symbol_tables/hylian_skyward_sword/
+    - assets/symbol_tables/hylian_wind_waker/
     - assets/symbol_tables/hymmnos/
     - assets/symbol_tables/intergalactic/
+    - assets/symbol_tables/japanese_numerals/
     - assets/symbol_tables/klingon/
+    - assets/symbol_tables/krempel/
     - assets/symbol_tables/krypton/
     - assets/symbol_tables/lorm/
     - assets/symbol_tables/magicode/
     - assets/symbol_tables/marain/
     - assets/symbol_tables/marain_v2/
     - assets/symbol_tables/matoran/
+    - assets/symbol_tables/maya_numerals/
     - assets/symbol_tables/maze/
     - assets/symbol_tables/minimoys/
     - assets/symbol_tables/moon/
     - assets/symbol_tables/murray/
+    - assets/symbol_tables/murraybaudot/
     - assets/symbol_tables/nato/
+    - assets/symbol_tables/notes/
     - assets/symbol_tables/ogham/
     - assets/symbol_tables/optical_fiber_fotag/
     - assets/symbol_tables/optical_fiber_iec60304/
     - assets/symbol_tables/optical_fiber_swisscom/
+    - assets/symbol_tables/phoenician/
     - assets/symbol_tables/pipeline/
     - assets/symbol_tables/pixel/
+    - assets/symbol_tables/planet/
     - assets/symbol_tables/postnet/
     - assets/symbol_tables/puzzle/
     - assets/symbol_tables/quadoo/
     - assets/symbol_tables/reality/
     - assets/symbol_tables/resistor/
+    - assets/symbol_tables/rhesus_a/
     - assets/symbol_tables/romulan/
     - assets/symbol_tables/runes/
+    - assets/symbol_tables/sarati/
     - assets/symbol_tables/semaphore/
     - assets/symbol_tables/sign/
+    - assets/symbol_tables/slash_and_pipe/
+    - assets/symbol_tables/solmisation/
     - assets/symbol_tables/space_invaders/
     - assets/symbol_tables/spintype/
     - assets/symbol_tables/sunuz/
+    - assets/symbol_tables/tamil_numerals/
     - assets/symbol_tables/templers/
     - assets/symbol_tables/tenctonese/
+    - assets/symbol_tables/terzi/
+    - assets/symbol_tables/theban/
+    - assets/symbol_tables/tomtom/
     - assets/symbol_tables/utopian/
     - assets/symbol_tables/visitor/
     - assets/symbol_tables/yan_koryani/

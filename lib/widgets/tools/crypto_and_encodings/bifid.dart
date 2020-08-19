@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_alphabetmodification_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_encrypt_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -19,16 +20,15 @@ class Bifid extends StatefulWidget {
 
 class BifidState extends State<Bifid> {
   var _inputController;
-  var _keyController;
   var _alphabetController;
-  var _currentOutput = BifidOutput('', '', '');
+
+  var _currentMode = GCWSwitchPosition.left;
 
   String _currentInput = '';
-  String _currentKey = '12345';
   String _currentAlphabet = '';
 
   PolybiosMode _currentBifidMode = PolybiosMode.AZ09;
-  BifidAlphabetMode _currentBifidAlphabetMode = BifidAlphabetMode.JToI;
+  AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
 
   GCWSwitchPosition _currentMatrixMode = GCWSwitchPosition.left;         /// switches between 5x5 or 6x6 square
 
@@ -36,15 +36,14 @@ class BifidState extends State<Bifid> {
   void initState() {
     super.initState();
     _inputController = TextEditingController(text: _currentInput);
-    _keyController = TextEditingController(text: _currentKey);
     _alphabetController = TextEditingController(text: _currentAlphabet);
   }
 
   @override
   void dispose() {
     _inputController.dispose();
-    _keyController.dispose();
     _alphabetController.dispose();
+
     super.dispose();
   }
 
@@ -55,11 +54,6 @@ class BifidState extends State<Bifid> {
       PolybiosMode.ZA90 : i18n(context, 'bifid_mode_za90'),
       PolybiosMode.CUSTOM : i18n(context, 'bifid_mode_custom'),
     };
-    var BifidAlphabetModeItems = {
-      BifidAlphabetMode.JToI : i18n(context, 'bifid_alphabet_mod_jtoi'),
-      BifidAlphabetMode.CToK : i18n(context, 'bifid_alphabet_mod_ctok'),
-      BifidAlphabetMode.WToVV : i18n(context, 'bifid_alphabet_mod_wtovv'),
-    };
 
     return Column(
       children: <Widget>[
@@ -68,6 +62,15 @@ class BifidState extends State<Bifid> {
           onChanged: (text) {
             setState(() {
               _currentInput = text;
+            });
+          },
+        ),
+
+        GCWTwoOptionsSwitch(
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
             });
           },
         ),
@@ -91,15 +94,17 @@ class BifidState extends State<Bifid> {
           }).toList(),
         ),
 
-        _currentBifidMode == PolybiosMode.CUSTOM ? GCWTextField(
-          hintText: i18n(context, 'common_alphabet'),
-          controller: _alphabetController,
-          onChanged: (text) {
-            setState(() {
-              _currentAlphabet = text;
-            });
-          },
-        ) : Container(),
+        _currentBifidMode == PolybiosMode.CUSTOM
+          ? GCWTextField(
+              hintText: i18n(context, 'common_alphabet'),
+              controller: _alphabetController,
+              onChanged: (text) {
+                setState(() {
+                  _currentAlphabet = text;
+                });
+              },
+            )
+          : Container(),
 
         GCWTwoOptionsSwitch(
           title: i18n(context, 'bifid_matrix'),
@@ -113,75 +118,54 @@ class BifidState extends State<Bifid> {
         ),
 
         _currentMatrixMode == GCWSwitchPosition.left
-            ?   GCWTextDivider(
-                text: i18n(context, 'bifid_alphabet_mod')
-                )
-            : Container(), //empty widget
-
-        _currentMatrixMode == GCWSwitchPosition.left
-        ? GCWDropDownButton(
-              value: _currentBifidAlphabetMode,
+          ? GCWAlphabetModificationDropDownButton(
+              value: _currentModificationMode,
               onChanged: (value) {
                 setState(() {
-                  _currentBifidAlphabetMode = value;
+                  _currentModificationMode = value;
                 });
               },
-              items: BifidAlphabetModeItems.entries.map((mode) {
-                return DropdownMenuItem(
-                  value: mode.key,
-                  child: Text(mode.value),
-                );
-              }).toList(),
             )
           : Container(), //empty widget
 
-        GCWEncryptButtonBar(
-          onPressedEncode: () {
-            if (_currentInput == null || _currentInput.length == 0) {
-              showToast(i18n(context, 'bifid_error_no_encrypt_input'));
-            } else {
-              if (_currentMatrixMode == GCWSwitchPosition.left) {
-                _currentKey = "12345";
-              } else {
-                _currentKey = "123456";
-              }
-              setState(() {
-                _currentOutput = encryptBifid(
-                  _currentInput, _currentKey, mode: _currentBifidMode,
-                  alphabet: _currentAlphabet,
-                  alphabetMode: _currentBifidAlphabetMode);
-              });
-            }
-          },
-          onPressedDecode: () {
-            if (_currentInput == null || _currentInput.length == 0) {
-              showToast(i18n(context, 'bifid_error_no_output'));
-            } else {
-              if (_currentMatrixMode == GCWSwitchPosition.left) {
-                _currentKey = "12345";
-              } else {
-                _currentKey = "123456";
-              }
-              setState(() {
-                _currentOutput = decryptBifid(_currentInput, _currentKey, mode: _currentBifidMode, alphabet: _currentAlphabet, alphabetMode: _currentBifidAlphabetMode);
-              });
-            }
-          },
-        ),
-        _buildOutput(context)
+        _buildOutput()
       ],
     );
   }
 
-  Widget _buildOutput(BuildContext context) {
-    if (_currentOutput.state == null || _currentOutput.state == '')
-      return Container();
+  _buildOutput() {
+    var key;
+    if (_currentMatrixMode == GCWSwitchPosition.left) {
+      key = "12345";
+    } else {
+      key = "123456";
+    }
+
+    if (_currentInput == null || _currentInput.length == 0)
+      return GCWDefaultOutput(text: '');
+
+    var _currentOutput = BifidOutput('', '', '');
+    if (_currentMode == GCWSwitchPosition.left) {
+      _currentOutput = encryptBifid(
+        _currentInput,
+        key,
+        mode: _currentBifidMode,
+        alphabet: _currentAlphabet,
+        alphabetMode: _currentModificationMode
+      );
+    } else {
+      _currentOutput = decryptBifid(
+        _currentInput,
+        key,
+        mode: _currentBifidMode,
+        alphabet: _currentAlphabet,
+        alphabetMode: _currentModificationMode
+      );
+    }
 
     if (_currentOutput.state == 'ERROR') {
       showToast(i18n(context, _currentOutput.output));
-      return GCWDefaultOutput(
-        text: '' //TODO: Exception
-      );
+      return GCWDefaultOutput(text: '');
     }
 
     return GCWOutput(
