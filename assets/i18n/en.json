@@ -956,7 +956,7 @@
   "heat_temperature" : "Temperature",
   "heat_humidity" : "Humidity [%]",
   "heat_degree" : "Degree",
-  "heat_output" : "Temperature feels like",
+  "heat_output" : "The apparent temperature is",
   "heat_degree_celsius" : "Celsius",
   "heat_degree_fahrenheit" : "Fahrenheit",
   "heat_hint" : "Hint",
