@@ -1247,6 +1247,7 @@
   "projectiles_imperial" : "Imperial",
   "projectiles_system" : "System",
   "projectiles_metricunit" : "v Einheit",
+  "projectiles_error" : "Fehler",
 
   "railfence_title" : "Jägerzaun/Lattenzaun",
   "railfence_description" : "Chiffre, bei der der Text diagonal über Latten eines imaginären Zauns geschrieben wird",

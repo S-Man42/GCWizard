@@ -1247,6 +1247,7 @@
   "projectiles_imperial" : "imperial",
   "projectiles_system" : "System",
   "projectiles_metricunit" : "v Unit",
+  "projectiles_error" : "Error",
 
   "railfence_title" : "Railfence/Zig-Zag",
   "railfence_description" : "Cipher written diagonally on rails of an imaginary fence (transposition)",
