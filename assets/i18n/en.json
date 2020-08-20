@@ -169,13 +169,13 @@
 
   "base_selection_title" : "Base Encodings",
   "base_base16_title" : "Base16",
-  "base16_example" : "414e535745523f",
+  "base_base16_example" : "414e535745523f",
   "base_base32_title" : "Base32",
-  "base32_example" : "IJWGCYTMOVRD6===",
+  "base_base32_example" : "IJWGCYTMOVRD6===",
   "base_base64_title" : "Base64",
-  "base64_example" : "QmxhYmx1Yj8=",
+  "base_base64_example" : "QmxhYmx1Yj8=",
   "base_base85_title" : "Base85 (ASCII85)",
-  "base85_example" : "<~<+oue+DGm>FD,5.@;^.1AT@~>",
+  "base_base85_example" : "<~<+oue+DGm>FD,5.@;^.1AT@~>",
 
   "bcd_selection_title" : "BCD Encodings",
   "bcd_selection_description" : "Encodes numbers digit per digit to several binary representations (0 or 1)",
@@ -878,6 +878,7 @@
   "enigma_rotors" : "Rotors: Name | Offset (Inner) | Setting (Outer)",
   "enigma_numberrotors" : "Count",
   "enigma_input" : "Input",
+  "enigma_usedmessagekey" : "Applied Message Key",
 
   "formulasolver_title" : "Formula Solver",
   "formulasolver_description" : "Create formulas for stations and finals, add variables, solve them",

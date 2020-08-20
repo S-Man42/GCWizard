@@ -5,6 +5,7 @@ import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/units/length.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_lengths_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -28,7 +29,7 @@ class DistanceBearingState extends State<DistanceBearing> {
   var _currentOutputUnit = defaultLength;
 
   DistanceBearingData _currentValue = DistanceBearingData();
-  List<String> _currentOutput = [];
+  List<GCWOutputText> _currentOutput = [];
 
   @override
   void initState() {
@@ -106,8 +107,17 @@ class DistanceBearingState extends State<DistanceBearing> {
     _currentValue = distanceBearing(_currentCoords1, _currentCoords2, defaultEllipsoid());
 
     _currentOutput = [];
-    _currentOutput.add('${i18n(context, 'coords_distancebearing_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentValue.distance))} ${_currentOutputUnit.symbol}');
-    _currentOutput.add('${i18n(context, 'coords_distancebearing_bearingatob')}: ${doubleFormat.format(_currentValue.bearingAToB)}°');
-    _currentOutput.add('${i18n(context, 'coords_distancebearing_bearingbtoa')}: ${doubleFormat.format(_currentValue.bearingBToA)}°');
+    _currentOutput.add(GCWOutputText(
+      text: '${i18n(context, 'coords_distancebearing_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentValue.distance))} ${_currentOutputUnit.symbol}',
+      copyText: doubleFormat.format(_currentOutputUnit.fromMeter(_currentValue.distance)),
+    ));
+    _currentOutput.add(GCWOutputText(
+      text: '${i18n(context, 'coords_distancebearing_bearingatob')}: ${doubleFormat.format(_currentValue.bearingAToB)}°',
+      copyText: doubleFormat.format(_currentValue.bearingAToB),
+    ));
+    _currentOutput.add(GCWOutputText(
+      text: '${i18n(context, 'coords_distancebearing_bearingbtoa')}: ${doubleFormat.format(_currentValue.bearingBToA)}°',
+      copyText: doubleFormat.format(_currentValue.bearingBToA),
+    ));
   }
 }

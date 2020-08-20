@@ -169,13 +169,13 @@
 
   "base_selection_title" : "Base Codierungen",
   "base_base16_title" : "Base16",
-  "base16_example" : "414e535745523f",
+  "base_base16_example" : "414e535745523f",
   "base_base32_title" : "Base32",
-  "base32_example" : "IJWGCYTMOVRD6===",
+  "base_base32_example" : "IJWGCYTMOVRD6===",
   "base_base64_title" : "Base64",
-  "base64_example" : "QmxhYmx1Yj8=",
+  "base_base64_example" : "QmxhYmx1Yj8=",
   "base_base85_title" : "Base85 (ASCII85)",
-  "base85_example" : "<~<+oue+DGm>FD,5.@;^.1AT@~>",
+  "base_base85_example" : "<~<+oue+DGm>FD,5.@;^.1AT@~>",
 
   "bcd_selection_title" : "BCD Codierungen",
   "bcd_selection_description" : "Codiert Zahlen ziffernweise jeweils mit einem 4- oder 5-Bit-Wert (0 und 1)",
@@ -878,6 +878,7 @@
   "enigma_rotors" : "Walzen: Name | Ringst. (Innen) | Walzenst. (Außen)",
   "enigma_numberrotors" : "Anzahl",
   "enigma_input" : "Eingabe",
+  "enigma_usedmessagekey" : "Angewandter Nachrichtenschlüssel",
 
   "formulasolver_title" : "Formelrechner",
   "formulasolver_description" : "Erstelle Formeln für Stationen und Finals, füge Variablen hinzu, errechne Ergebnis",

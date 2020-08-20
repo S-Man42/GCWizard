@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
 class GCWOutput extends StatefulWidget {
-  final Widget child;
+  final dynamic child; // could be Widget or String
   final String title;
 
   const GCWOutput({
@@ -23,10 +23,16 @@ class _GCWOutputState extends State<GCWOutput> {
   Widget build(BuildContext context) {
     return Column (
       children: <Widget>[
-        GCWTextDivider(
-          text: widget.title ?? i18n(context, 'common_output')
-        ),
-        widget.child
+        widget.title != null && widget.title.length > 0
+          ? GCWTextDivider(
+              text: widget.title
+            )
+          : Container(),
+        widget.child is Widget
+          ? widget.child
+          : GCWOutputText(
+              text: widget.child.toString(),
+            )
       ]
     );
   }

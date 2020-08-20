@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/bacon.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/base.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class Bacon extends StatefulWidget {
+class Base extends StatefulWidget {
+  final Function encode;
+  final Function decode;
+
+  Base({Key key, this.encode, this.decode}) : super(key: key);
+
   @override
-  BaconState createState() => BaconState();
+  BaseState createState() => BaseState();
 }
 
-class BaconState extends State<Bacon> {
-  var _controller;
+class BaseState extends State<Base> {
+  var _inputController;
 
-  var _currentInput = '';
+  String _currentInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  
-  String _output = '';
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: _currentInput);
+    _inputController = TextEditingController(text: _currentInput);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _inputController.dispose();
     super.dispose();
   }
 
@@ -34,7 +37,7 @@ class BaconState extends State<Bacon> {
     return Column(
       children: <Widget>[
         GCWTextField(
-          controller: _controller,
+          controller: _inputController,
           onChanged: (text) {
             setState(() {
               _currentInput = text;
@@ -48,20 +51,22 @@ class BaconState extends State<Bacon> {
             });
           },
         ),
-        _buildOutput()
+        _buildOutput(context)
       ],
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput(BuildContext context) {
+    var output = '';
+
     if (_currentMode == GCWSwitchPosition.left) {
-      _output = encodeBacon(_currentInput);
+      output = widget.encode(_currentInput);
     } else {
-      _output = decodeBacon(_currentInput);
+      output = decode(_currentInput, widget.decode);
     }
 
     return GCWDefaultOutput(
-      child: _output
+      child: output
     );
   }
 }

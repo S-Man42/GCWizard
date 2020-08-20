@@ -111,7 +111,7 @@ class SkytaleState extends State<Skytale> {
       _output = decryptSkytale(_currentInput, countRows: _currentPerimeter, countColumns: _currentCountColumns, countLettersPerCell: _currentStripWidth);
 
     return GCWDefaultOutput(
-      text: _output
+      child: _output
     );
 
   }

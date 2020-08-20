@@ -32,7 +32,7 @@ class RobberLanguageState extends State<RobberLanguage> {
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

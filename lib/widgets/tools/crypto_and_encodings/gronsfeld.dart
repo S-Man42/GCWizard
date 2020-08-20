@@ -96,7 +96,7 @@ class GronsfeldState extends State<Gronsfeld> {
     }
 
     return GCWDefaultOutput(
-      text: output
+      child: output
     );
 
   }

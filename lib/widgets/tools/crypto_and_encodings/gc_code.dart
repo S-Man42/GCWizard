@@ -68,7 +68,7 @@ class GCCodeState extends State<GCCode> {
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput(context)
+          child: _buildOutput(context)
         )
       ],
     );

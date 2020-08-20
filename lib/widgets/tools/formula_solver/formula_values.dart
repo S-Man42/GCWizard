@@ -84,7 +84,7 @@ class FormulaValuesState extends State<FormulaValues> {
     return Column(
       children: <Widget>[
         GCWTextDivider(
-            text: i18n(context, 'formulasolver_values_newvalue')
+          text: i18n(context, 'formulasolver_values_newvalue')
         ),
         Row(
           children: <Widget>[

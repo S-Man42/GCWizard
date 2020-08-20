@@ -82,7 +82,7 @@ class TapCodeState extends State<TapCode> {
           },
         ),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         )
       ],
     );

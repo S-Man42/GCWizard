@@ -89,7 +89,7 @@ class ASCIIValuesState extends State<ASCIIValues> {
           },
         ),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         ),
         _buildCrossTotals()
       ],

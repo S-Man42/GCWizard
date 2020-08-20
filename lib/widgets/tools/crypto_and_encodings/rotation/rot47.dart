@@ -28,7 +28,7 @@ class Rot47State extends State<Rot47> {
           },
         ),
         GCWDefaultOutput(
-          text: _output
+          child: _output
         )
       ],
     );

@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/heat_index.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -103,42 +104,31 @@ class HeatIndexState extends State<HeatIndex> {
           if (double.parse(_currentOutput) > 27)
             hintM = 'heatindex_index_27';
 
-    return GCWOutput(
-      child: Column(
-        children: <Widget>[
-          GCWTextDivider(
-            text: i18n(context, 'heatindex_output')
-          ),
+    var outputs = [
+      GCWOutput(
+        title: i18n(context, 'heatindex_output'),
+        child: _currentOutput + unit,
+      )
+    ];
 
-          GCWOutputText(
-            text: _currentOutput + unit
-          ),
+    if (hint != null && hint.length > 0)
+      outputs.add(
+        GCWOutput(
+          title: i18n(context, 'heatindex_hint'),
+          child: hint
+        )
+      );
 
-          hint != null && hint.length > 0
-            ? GCWTextDivider(
-                text: i18n(context, 'heatindex_hint')
-              )
-            : Container(),
+    if (hintM != null && hintM.length > 0)
+      outputs.add(
+        GCWOutput(
+          title: i18n(context, 'heatindex_meaning'),
+          child: i18n(context, hintM)
+        )
+      );
 
-          hint != null && hint.length > 0
-            ? GCWOutputText(
-                text: hint
-              )
-            : Container(),
-
-          hintM != null && hintM.length > 0
-            ? GCWTextDivider(
-                text: i18n(context, 'heatindex_meaning')
-              )
-            : Container(),
-
-          hintM != null && hintM.length > 0
-            ? GCWOutputText(
-                text: i18n(context, hintM)
-              )
-            : Container()
-        ],
-      ),
+    return GCWMultipleOutput(
+      children: outputs,
     );
   }
 }
