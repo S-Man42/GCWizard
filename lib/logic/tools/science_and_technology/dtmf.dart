@@ -22,11 +22,17 @@ String encodeDTMF(String plain) {
 
 
 String decodeDTMF(String chiffre) {
-  return chiffre
-      .split('.')
-      .map((tone) {
-        var character = DTMFToDigit[tone];
-        return character != null ? character : '';
-      })
-      .join(' ');
+  List chiffreList = chiffre.split(' ');
+  List dtmfCode = new List<String>();
+
+  for(var i = 0; i < chiffreList.length - 1; i = i + 2) {
+    dtmfCode.add(chiffreList[i] + ' ' + chiffreList[i + 1]);
+  }
+
+  return dtmfCode
+    .map((tone) {
+      var character = DTMFToDigit[tone];
+      return character != null ? character : '';
+    })
+    .join(' ');
 }
