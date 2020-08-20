@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/projectiles.dart';
+import 'package:gc_wizard/logic/units/velocity.dart';
+import 'package:gc_wizard/logic/units/mass.dart';
+import 'package:gc_wizard/logic/units/energy.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_mass_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_velocity_dropdownbutton.dart';
 
 class Projectiles extends StatefulWidget {
   @override
@@ -13,47 +19,126 @@ class Projectiles extends StatefulWidget {
 }
 
 class ProjectilesState extends State<Projectiles> {
-  double _currentEnergy = 0.0;
-  double _currentMass = 0.0;
-  double _currentSpeed = 0.0;
-  GCWSwitchPosition _currentSpeedUnit = GCWSwitchPosition.left;
-  var _isMetric = true;
+  CalculateProjectilesMode _currentCalculateMode = CalculateProjectilesMode.ENERGY;
+
+  var _currentVelocityUnit = defaultVelocity;
+  var _currentMassUnit = defaultMass;
+  var _currentEnergyUnit = defaultEnergy;
+
+  double _currentInput1 = 0.0;
+  double _currentInput2 = 0.0;
+
+  String titleInput1 = 'projectiles_mass';
+  String titleInput2 = 'projectiles_speed';
 
   @override
   Widget build(BuildContext context) {
+    var calculateProjectilesModeItems = {
+      CalculateProjectilesMode.ENERGY : i18n(context, 'projectiles_energy'),
+      CalculateProjectilesMode.MASS : i18n(context, 'projectiles_mass'),
+      CalculateProjectilesMode.SPEED : i18n(context, 'projectiles_speed'),
+    };
+
     return Column(
       children: <Widget>[
-        GCWDoubleSpinner(
-            title: i18n(context, 'projectiles_energy'),
-            min: 0.0,
-            value: _currentEnergy,
-            onChanged: (value) {
-              setState(() {
-                _currentEnergy = value;
-              });
+        GCWDropDownButton(
+          value: _currentCalculateMode,
+          onChanged: (value) {
+            setState(() {
+              _currentCalculateMode = value;
+            });
+            switch (_currentCalculateMode){
+              case CalculateProjectilesMode.ENERGY:
+                titleInput1 = 'projectiles_mass';
+                titleInput2 = 'projectiles_speed';
+                break;
+              case CalculateProjectilesMode.MASS:
+                titleInput1 = 'projectiles_energy';
+                titleInput2 = 'projectiles_speed';
+                break;
+              case CalculateProjectilesMode.SPEED:
+                titleInput1 = 'projectiles_energy';
+                titleInput2 = 'projectiles_mass';
+                break;
             }
+          },
+          items: calculateProjectilesModeItems.entries.map((mode) {
+            return DropdownMenuItem(
+              value: mode.key,
+              child: Text(mode.value),
+            );
+          }).toList(),
         ),
-        GCWDoubleSpinner(
-            title: i18n(context, 'projectiles_mass'),
-            min: 0.0,
-            value: _currentMass,
-            onChanged: (value) {
-              setState(() {
-                _currentMass = value;
-              });
-            }
-        ),
-        GCWDoubleSpinner(
-            title: i18n(context, 'projectiles_speed'),
-            value: _currentSpeed,
-            min: 0.0,
-            onChanged: (value) {
-              setState(() {
-                _currentSpeed = value;
-              });
-            }
-        ),
-            _buildOutput(context)
+
+        _currentCalculateMode == CalculateProjectilesMode.ENERGY
+        ? Column(
+            children: <Widget>[
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      child: GCWDoubleSpinner(
+                        title: i18n(context, titleInput1),
+                        min: 0.0,
+                        value: _currentInput1,
+                        onChanged: (value) {
+                          setState(() {
+                            _currentInput1 = value;
+                          });
+                        },
+                      ),
+                      padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
+                    ),
+                    flex: 3
+                  ),
+                  Expanded(
+                    child: GCWMassDropDownButton(
+                      value: _currentMassUnit,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentMassUnit = value;
+                        });
+                      },
+                    ),
+                    flex: 1
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      child: GCWDoubleSpinner(
+                        title: i18n(context, titleInput2),
+                        min: 0.0,
+                        value: _currentInput2,
+                        onChanged: (value) {
+                          setState(() {
+                            _currentInput2 = value;
+                          });
+                        },
+                      ),
+                      padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
+                    ),
+                    flex: 3
+                  ),
+                  Expanded(
+                  child: GCWVelocityDropDownButton(
+                    value: _currentVelocityUnit,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentVelocityUnit = value;
+                      });
+                      },
+                  ),
+                  flex: 1
+              )
+            ],
+            ),
+            ]
+          )
+        : null,
+        _buildOutput(context)
       ],
     );
   }
@@ -62,21 +147,20 @@ class ProjectilesState extends State<Projectiles> {
     String calculate = '';
     String result = '';
 
-    if (_currentEnergy == 0) {
-      calculate = 'projectiles_energy';
-      result = calculateEnergy(_currentMass, _currentSpeed).toStringAsFixed(3);
-    } else
-      if (_currentMass == 0) {
+    switch (_currentCalculateMode){
+      case CalculateProjectilesMode.ENERGY:
+        calculate = 'projectiles_energy';
+        result = calculateEnergy(_currentInput1, _currentInput2).toStringAsFixed(3);
+        break;
+      case CalculateProjectilesMode.MASS:
         calculate = 'projectiles_mass';
-        result = calculateMass(_currentEnergy, _currentSpeed).toStringAsFixed(3);
-      } else
-        if (_currentSpeed == 0) {
-          calculate = 'projectiles_speed';
-          result = calculateSpeed(_currentEnergy, _currentMass).toStringAsFixed(3);
-        } else {
-          calculate = 'projectiles_error';
-          result = '0';
-        }
+        result = calculateMass(_currentInput1, _currentInput2).toStringAsFixed(3);
+        break;
+      case CalculateProjectilesMode.SPEED:
+        calculate = 'projectiles_speed';
+        result = calculateSpeed(_currentInput1, _currentInput2).toStringAsFixed(3);
+        break;
+    }
 
     return GCWOutput(
       child: Column(

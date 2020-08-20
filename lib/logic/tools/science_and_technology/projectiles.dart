@@ -1,5 +1,7 @@
 import 'dart:math';
 
+enum CalculateProjectilesMode {ENERGY, MASS, SPEED}
+
 
 double calculateEnergy (double mass, double speed) {
     return mass / 2 * speed * speed;
