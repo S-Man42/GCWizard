@@ -138,6 +138,76 @@ class ProjectilesState extends State<Projectiles> {
             ]
           )
         : null,
+        _currentCalculateMode == CalculateProjectilesMode.ENERGY
+            ? Column(
+            children: <Widget>[
+              Row(
+                children: [
+                  Expanded(
+                      child: Container(
+                        child: GCWDoubleSpinner(
+                          title: i18n(context, titleInput1),
+                          min: 0.0,
+                          value: _currentInput1,
+                          onChanged: (value) {
+                            setState(() {
+                              _currentInput1 = value;
+                            });
+                          },
+                        ),
+                        padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
+                      ),
+                      flex: 3
+                  ),
+                  Expanded(
+                      child: GCWMassDropDownButton(
+                        value: _currentMassUnit,
+                        onChanged: (value) {
+                          setState(() {
+                            _currentMassUnit = value;
+                          });
+                        },
+                      ),
+                      flex: 1
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                      child: Container(
+                        child: GCWDoubleSpinner(
+                          title: i18n(context, titleInput2),
+                          min: 0.0,
+                          value: _currentInput2,
+                          onChanged: (value) {
+                            setState(() {
+                              _currentInput2 = value;
+                            });
+                          },
+                        ),
+                        padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
+                      ),
+                      flex: 3
+                  ),
+                  Expanded(
+                      child: GCWVelocityDropDownButton(
+                        value: _currentVelocityUnit,
+                        onChanged: (value) {
+                          setState(() {
+                            _currentVelocityUnit = value;
+                          });
+                        },
+                      ),
+                      flex: 1
+                  )
+                ],
+              ),
+            ]
+        )
+            : _currentCalculateMode == CalculateProjectilesMode.MASS
+                ? Column()
+                : Column(),
         _buildOutput(context)
       ],
     );
