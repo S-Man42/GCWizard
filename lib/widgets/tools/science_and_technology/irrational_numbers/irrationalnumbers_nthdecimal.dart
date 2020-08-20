@@ -38,7 +38,7 @@ class IrrationalNumbersNthDecimalState extends State<IrrationalNumbersNthDecimal
           },
         ),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         )
       ],
     );

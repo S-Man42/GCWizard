@@ -65,7 +65,7 @@ class HexadecimalState extends State<Hexadecimal> {
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

@@ -88,7 +88,7 @@ class RomanNumbersState extends State<RomanNumbers> {
             )
           : Container(),
         GCWDefaultOutput(
-          text: _output
+          child: _output
         )
       ],
     );

@@ -123,7 +123,7 @@ class TomTomState extends State<TomTom> {
               },
             ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

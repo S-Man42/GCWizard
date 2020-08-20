@@ -120,7 +120,7 @@ class AbaddonState extends State<Abaddon> {
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

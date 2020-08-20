@@ -27,7 +27,7 @@ class _DefaultHashState extends State<_DefaultHash> {
           },
         ),
         GCWDefaultOutput(
-          text: widget.hashFunction(_currentValue)
+          child: widget.hashFunction(_currentValue)
         )
       ],
     );

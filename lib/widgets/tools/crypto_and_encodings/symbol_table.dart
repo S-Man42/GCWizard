@@ -11,7 +11,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
@@ -77,7 +76,7 @@ class SymbolTableState extends State<SymbolTable> {
         key: (filePath) {
           return filePath.split(pathKey)[1].split(imageSuffixes)[0];
         },
-        value: (filePath) => filePath,
+        value: (filePath) => imageSuffixes.hasMatch(filePath) ? filePath : null,
         // first order all ASCII values, afterward all special symbols
         compare: (a, b) {
           var intA = int.tryParse(a);
@@ -97,6 +96,8 @@ class SymbolTableState extends State<SymbolTable> {
           }
         }
       );
+      //Remove non-image files
+      _imageFilePaths.removeWhere((key, value) => value == null);
     });
   }
 
@@ -138,7 +139,7 @@ class SymbolTableState extends State<SymbolTable> {
                     });
                   },
                 ),
-                GCWOutput(
+                GCWDefaultOutput(
                   child: _buildEncryptionOutput(countColumns, widget.isCaseSensitive)
                 ),
               ],
@@ -188,7 +189,7 @@ class SymbolTableState extends State<SymbolTable> {
                 ),
                 _buildDecryptionButtonMatrix(countColumns, widget.isCaseSensitive),
                 GCWDefaultOutput(
-                  text: _output
+                  child: _output
                 )
               ],
             )

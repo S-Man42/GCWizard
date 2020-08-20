@@ -3,14 +3,15 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/logic/units/length.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart' as formula_base;
 import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart';
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/logic/units/length.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_lengths_dropdownbutton.dart';
@@ -62,7 +63,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   var _editKeyController;
   var _editValueController;
 
-  List<String> _currentOutput = [];
+  List<dynamic> _currentOutput = [];
   List<MapPoint> _currentMapPoints = [];
 
   @override
@@ -473,9 +474,12 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
     var hasLeftPaddedCoords = leftPaddedCoords.length > 0;
 
-    _currentOutput = List<String>.from((_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
-      return formatCoordOutput(coord['coordinate'], _currentOutputFormat, defaultEllipsoid())
-        + '\n' + _formatVariables(coord['variables']);
+    _currentOutput = List<GCWOutputText>.from((_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
+      var formattedCoordinate = formatCoordOutput(coord['coordinate'], _currentOutputFormat, defaultEllipsoid());
+      return GCWOutputText(
+        text: formattedCoordinate + '\n' + _formatVariables(coord['variables']),
+        copyText: formattedCoordinate,
+      );
     }));
 
     _currentMapPoints = List<MapPoint>.from((_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {

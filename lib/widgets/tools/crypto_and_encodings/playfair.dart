@@ -94,7 +94,7 @@ class PlayfairState extends State<Playfair> {
     }
 
     return GCWDefaultOutput(
-      text: output
+      child: output
     );
 
   }

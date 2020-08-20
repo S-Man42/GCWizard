@@ -4,8 +4,8 @@ import 'package:gc_wizard/logic/tools/science_and_technology/combinatorics/permu
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
 
 class Permutation extends StatefulWidget {
   @override
@@ -44,24 +44,19 @@ class PermutationState extends State<Permutation> {
 
   _buildOutput(BuildContext context) {
     if (_currentInput == null || _currentInput.length == 0) {
-      return GCWDefaultOutput(
-          text: ''
-      );
+      return GCWDefaultOutput();
     }
 
     List out = generatePermutations(_currentInput, avoidDuplicates: !_currentShowDuplicates);
 
-    return GCWOutput(
-      child: Column(
-        children: <Widget>[
-          GCWOutputText(
-            text: '${i18n(context, 'common_count')}: ${out.length}'
-          ),
-          GCWOutputText(
-            text: out.join(' ')
-          )
-        ],
-      ),
+    return GCWMultipleOutput(
+      children: [
+        GCWOutputText(
+          text: '${i18n(context, 'common_count')}: ${out.length}',
+          copyText: out.length.toString(),
+        ),
+        out.join(' ')
+      ],
     );
   }
 }

@@ -50,7 +50,7 @@ class RotationGeneralState extends State<RotationGeneral> {
           },
         ),
         GCWDefaultOutput(
-          text: _output
+          child: _output
         )
       ],
     );

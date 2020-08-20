@@ -30,7 +30,7 @@ class IsPrimeState extends State<IsPrime> {
           },
         ),
         GCWDefaultOutput(
-          text: _output
+          child: _output
         )
       ],
     );

@@ -94,7 +94,7 @@ class EasterYearsState extends State<EasterYears> {
     var years = gregorianEasterYears(_currentMonth, _currentDay);
 
     return GCWDefaultOutput(
-      text: years.join('\n')
+      child: years.join('\n')
     );
   }
 }

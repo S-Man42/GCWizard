@@ -97,7 +97,7 @@ class BCDState extends State<BCD> {
     }
 
     return GCWDefaultOutput(
-        text: output
+      child: output
     );
   }
 }
