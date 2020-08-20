@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/science_and_technology/heat.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/heat_index.dart';
 
 void main() {
   group("heat.calculate:", () {
@@ -14,9 +14,9 @@ void main() {
       test('temperature: ${elem['temperature']}, humidity: ${elem['humidity']}, isMetric: ${elem['isMetric']}', () {
         var _actual;
         if (elem['isMetric'])
-          _actual = calculateHeat(elem['temperature'], elem['humidity'], HeatTemperatureMode.Celsius);
+          _actual = calculateHeatIndex(elem['temperature'], elem['humidity'], HeatTemperatureMode.CELSIUS);
         else
-          _actual = calculateHeat(elem['temperature'], elem['humidity'], HeatTemperatureMode.Fahrenheit);
+          _actual = calculateHeatIndex(elem['temperature'], elem['humidity'], HeatTemperatureMode.FAHRENHEIT);
 
         expect(_actual, elem['expectedOutput']);
       });

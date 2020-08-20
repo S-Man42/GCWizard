@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/heat.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/heat_index.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class Heat extends StatefulWidget {
+class HeatIndex extends StatefulWidget {
   @override
-  HeatState createState() => HeatState();
+  HeatIndexState createState() => HeatIndexState();
 }
 
-class HeatState extends State<Heat> {
+class HeatIndexState extends State<HeatIndex> {
 
   double _currentTemperature = 0.0;
   double _currentHumidity = 0.0;
@@ -25,7 +25,7 @@ class HeatState extends State<Heat> {
     return Column(
       children: <Widget>[
         GCWDoubleSpinner(
-          title: i18n(context, 'heat_temperature'),
+          title: i18n(context, 'heatindex_temperature'),
           value: _currentTemperature,
           onChanged: (value) {
             setState(() {
@@ -35,9 +35,9 @@ class HeatState extends State<Heat> {
         ),
 
         GCWTwoOptionsSwitch(
-          title: i18n(context, 'heat_degree'),
-          leftValue: i18n(context, 'heat_degree_celsius'),
-          rightValue: i18n(context, 'heat_degree_fahrenheit'),
+          title: i18n(context, 'heatindex_unit'),
+          leftValue: i18n(context, 'heatindex_unit_celsius'),
+          rightValue: i18n(context, 'heatindex_unit_fahrenheit'),
           value: _isMetric ? GCWSwitchPosition.left : GCWSwitchPosition.right,
           onChanged: (value) {
             setState(() {
@@ -47,7 +47,7 @@ class HeatState extends State<Heat> {
         ),
 
         GCWDoubleSpinner(
-          title: i18n(context, 'heat_humidity'),
+          title: i18n(context, 'heatindex_humidity'),
           value: _currentHumidity,
           min: 0.0,
           max: 100.0,
@@ -63,72 +63,80 @@ class HeatState extends State<Heat> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    String degree = '';
-    String hint = '';
-    String hintT = 'heat_hint_noHint';
-    String hintH = 'heat_hint_noHint';
-    String hintM = 'heat_hint_noHint';
+    String unit = '';
+    String hintT;
+    String hintH;
+    String hintM;
 
     if (_isMetric) {
-      _currentOutput = calculateHeat(_currentTemperature, _currentHumidity, HeatTemperatureMode.Celsius);
-      degree = ' °C';
+      _currentOutput = calculateHeatIndex(_currentTemperature, _currentHumidity, HeatTemperatureMode.CELSIUS);
+      unit = ' °C';
     } else {
-      _currentOutput = calculateHeat(_currentTemperature, _currentHumidity, HeatTemperatureMode.Fahrenheit);
-      degree = ' °F';
+      _currentOutput = calculateHeatIndex(_currentTemperature, _currentHumidity, HeatTemperatureMode.FAHRENHEIT);
+      unit = ' °F';
     }
 
     if (_isMetric && _currentTemperature < 27)
-      hintT = 'heat_hint_temperature_C';
+      hintT = 'heatindex_hint_temperature_c';
     else
     if (!_isMetric && _currentTemperature < 80)
-      hintT = 'heat_hint_temperature_F';
+      hintT = 'heatindex_hint_temperature_f';
 
     if (_currentHumidity < 40)
-      hintH = 'heat_hint_humidity';
+      hintH = 'heatindex_hint_humidity';
 
-    if (hintT == 'heat_hint_noHint')
+    String hint;
+    if (hintT == null)
       hint = i18n(context, hintH) ;
     else
       hint = i18n(context, hintT) + '\n' + i18n(context, hintH);
 
     if (double.parse(_currentOutput) > 54)
-      hintM = 'heat_index_54';
+      hintM = 'heatindex_index_54';
     else
       if (double.parse(_currentOutput) > 40)
-        hintM = 'heat_index_40';
+        hintM = 'heatindex_index_40';
       else
         if (double.parse(_currentOutput) > 32)
-          hintM = 'heat_index_32';
+          hintM = 'heatindex_index_32';
         else
           if (double.parse(_currentOutput) > 27)
-            hintM = 'heat_index_27';
+            hintM = 'heatindex_index_27';
 
     return GCWOutput(
       child: Column(
         children: <Widget>[
           GCWTextDivider(
-              text: i18n(context, 'heat_output')
+            text: i18n(context, 'heatindex_output')
           ),
 
           GCWOutputText(
-              text: _currentOutput + degree
+            text: _currentOutput + unit
           ),
 
-          GCWTextDivider(
-              text: i18n(context, 'heat_hint')
-          ),
+          hint != null && hint.length > 0
+            ? GCWTextDivider(
+                text: i18n(context, 'heatindex_hint')
+              )
+            : Container(),
 
-          GCWOutputText(
+          hint != null && hint.length > 0
+            ? GCWOutputText(
                 text: hint
-          ),
+              )
+            : Container(),
 
-          GCWTextDivider(
-              text: i18n(context, 'heat_meaning')
-          ),
+          hintM != null && hintM.length > 0
+            ? GCWTextDivider(
+                text: i18n(context, 'heatindex_meaning')
+              )
+            : Container(),
 
-          GCWOutputText(
-              text: i18n(context, hintM)
-          ),
+          hintM != null && hintM.length > 0
+            ? GCWOutputText(
+                text: i18n(context, hintM)
+              )
+            : Container()
         ],
       ),
     );

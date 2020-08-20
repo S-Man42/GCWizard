@@ -134,7 +134,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/heat.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
@@ -413,10 +413,10 @@ class Registry {
         searchStrings: SEARCHSTRING_HASHES
       ),
       GCWToolWidget(
-        tool: Heat(),
-        i18nPrefix: 'heat',
+        tool: HeatIndex(),
+        i18nPrefix: 'heatindex',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'gefuehlte temperatur apparent temperature humidity luftfeuchtigkeit hitze'
+        searchStrings: 'gefuehlte temperatur apparent temperature humidity luftfeuchtigkeit hitzeindex heatindex'
       ),
       GCWToolWidget(
         tool: Hexadecimal(),
