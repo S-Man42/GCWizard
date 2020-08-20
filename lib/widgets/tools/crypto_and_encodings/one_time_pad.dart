@@ -60,7 +60,7 @@ class OneTimePadState extends State<OneTimePad> {
             }
         ),
         GCWDefaultOutput(
-            text: _calculateOutput()
+          child: _calculateOutput()
         )
       ],
     );

@@ -65,7 +65,7 @@ class BinaryState extends State<Binary> {
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

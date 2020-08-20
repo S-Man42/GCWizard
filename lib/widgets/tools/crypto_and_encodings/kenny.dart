@@ -120,7 +120,7 @@ class KennyState extends State<Kenny> {
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

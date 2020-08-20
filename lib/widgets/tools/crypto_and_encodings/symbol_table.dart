@@ -11,7 +11,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
@@ -140,7 +139,7 @@ class SymbolTableState extends State<SymbolTable> {
                     });
                   },
                 ),
-                GCWOutput(
+                GCWDefaultOutput(
                   child: _buildEncryptionOutput(countColumns, widget.isCaseSensitive)
                 ),
               ],
@@ -190,7 +189,7 @@ class SymbolTableState extends State<SymbolTable> {
                 ),
                 _buildDecryptionButtonMatrix(countColumns, widget.isCaseSensitive),
                 GCWDefaultOutput(
-                  text: _output
+                  child: _output
                 )
               ],
             )

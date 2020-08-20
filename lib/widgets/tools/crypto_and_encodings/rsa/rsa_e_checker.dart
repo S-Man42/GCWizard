@@ -54,7 +54,7 @@ class RSAECheckerState extends State<RSAEChecker> {
           },
         ),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         )
       ],
     );

@@ -73,7 +73,7 @@ class BrainfkState extends State<Brainfk> {
             )
           : Container(),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         )
       ],
     );

@@ -71,7 +71,7 @@ class TrithemiusState extends State<Trithemius> {
     }
 
     return GCWDefaultOutput(
-      text: output
+      child: output
     );
 
   }

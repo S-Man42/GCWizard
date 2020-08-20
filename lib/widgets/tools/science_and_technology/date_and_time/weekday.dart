@@ -55,7 +55,7 @@ class WeekdayState extends State<Weekday> {
     }
 
     return GCWDefaultOutput(
-      text: output
+      child: output
     );
   }
 }

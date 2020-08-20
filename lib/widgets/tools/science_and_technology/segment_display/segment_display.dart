@@ -298,7 +298,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments),
           GCWDefaultOutput(
-            text: output
+            child: output
           )
         ],
       );
@@ -309,7 +309,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
           GCWDefaultOutput(
-            text: segments['text']
+            child: segments['text']
           )
         ],
       );

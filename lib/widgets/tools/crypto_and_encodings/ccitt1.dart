@@ -81,7 +81,7 @@ class CCITT1State extends State<CCITT1> {
           },
         ),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         ),
       ],
     );

@@ -1,5 +1,3 @@
-
-
 import 'package:gc_wizard/logic/tools/games/scrabble_sets.dart';
 
 List<int> textToLetterValues (String text, String scrabbleVersion) {

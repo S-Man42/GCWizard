@@ -7,6 +7,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_alphabetmodification_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -133,7 +134,7 @@ class PolybiosState extends State<Polybios> {
     if (_currentInput == null || _currentInput.length == 0
         || _currentKey == null  || ![5, 6].contains(_currentKey.length)
     ) {
-      return GCWDefaultOutput(text: ''); // TODO: Exception
+      return GCWDefaultOutput(); // TODO: Exception
     }
 
     var _currentOutput;
@@ -144,24 +145,20 @@ class PolybiosState extends State<Polybios> {
     }
 
     if (_currentOutput == null || _currentOutput.output.length == 0) {
-      return GCWDefaultOutput(text: ''); // TODO: Exception
+      return GCWDefaultOutput(); // TODO: Exception
     }
 
-    return GCWOutput(
-      child: Column(
-        children: <Widget>[
-          GCWOutputText(
-            text: _currentOutput.output
-          ),
-          GCWTextDivider(
-            text: i18n(context, 'polybios_usedgrid')
-          ),
-          GCWOutputText(
+    return GCWMultipleOutput(
+      children: [
+        _currentOutput.output,
+        GCWOutput(
+          title: i18n(context, 'polybios_usedgrid'),
+          child: GCWOutputText(
             text: _currentOutput.grid,
             isMonotype: true,
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 }

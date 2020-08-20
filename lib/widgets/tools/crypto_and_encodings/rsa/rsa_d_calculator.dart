@@ -56,7 +56,7 @@ class RSADCalculatorState extends State<RSADCalculator> {
           },
         ),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         )
       ],
     );

@@ -5,8 +5,8 @@ import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/gcw_enigma_rotor_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlyspaceandletters_textinputformatter.dart';
@@ -229,47 +229,35 @@ class EnigmaState extends State<Enigma> {
 
     var results = calculateEnigmaWithMessageKey(_currentInput, key);
 
-    List<Widget> output = [];
+    var output = [];
 
     results.forEach((result) {
-      output.add(
-        Padding(
-          child: GCWOutputText(
-            text: result['text']
-          ),
-          padding: EdgeInsets.only(
-            top: 10
-          ),
-        )
-      );
+      output.add(result['text']);
 
       var rotorSettings = result['rotorSettingAfter'] as List<int>;
 
       var stripHead = _currentEntryRotorMode ? 1 : 0;
       var stripTail = _currentReflectorMode ? 1 : 0;
 
+      var rotorSetting = rotorSettings
+        .sublist(stripHead, rotorSettings.length - stripTail)
+        .reversed
+        .map((setting) => alphabet_AZIndexes[setting + 1]);
+
       output.add(
-        Padding(
-          child: GCWOutputText(
-            text: i18n(context, 'enigma_output_rotorsettingafter') + ': '
-                + rotorSettings
-                  .sublist(stripHead, rotorSettings.length - stripTail)
-                  .reversed
-                  .map((setting) => alphabet_AZIndexes[setting + 1])
-                  .join(' - ')
-          ),
-          padding: EdgeInsets.only(
-            top: 10
-          ),
+        GCWOutputText(
+          text: i18n(context, 'enigma_output_rotorsettingafter') + ': '
+            + rotorSetting.join(' - '),
+          copyText: rotorSetting.join(),
         )
       );
     });
 
-    return GCWOutput(
-      title: i18n(context, 'common_output'),
-      child: Column(
-        children: output
-      )
+    if (results.length == 2)
+      output.insert(2, GCWTextDivider(text: i18n(context, 'enigma_usedmessagekey')));
+
+    return GCWMultipleOutput(
+      children: output
     );
   }
 }

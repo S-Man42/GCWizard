@@ -44,7 +44,7 @@ class DeadfishState extends State<Deadfish> {
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

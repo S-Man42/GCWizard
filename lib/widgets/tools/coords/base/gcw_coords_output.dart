@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_mapview.dart';
 
 class GCWCoordsOutput extends StatefulWidget {
-  final List<String> outputs;
+  final List<dynamic> outputs;
   final List<MapPoint> points;
   final List<MapGeodetic> geodetics;
   final List<MapCircle> circles;
@@ -33,8 +34,8 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
   Widget build(BuildContext context) {
     var children = widget.outputs.map((output) {
       return Container(
-        child: GCWOutputText(
-          text: output
+        child: GCWOutput(
+          child: output,
         ),
         padding: EdgeInsets.only(bottom: 15),
       );
@@ -44,7 +45,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
     );
 
     var _button = Visibility (
-      visible: widget.outputs != null && widget.points.length > 0,
+      visible: widget.outputs != null && widget.outputs.length > 0 && widget.points.length > 0,
       child: GCWButton (
         text: i18n(context, 'coords_show_on_map'),
         onPressed: () {
@@ -63,10 +64,8 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
 
     var _children = widget.mapButtonTop ? [_button, _outputText] : [_outputText, _button];
 
-    return GCWOutput(
-      child: Column(
-        children: _children,
-      ),
+    return GCWMultipleOutput(
+      children: _children
     );
   }
 }

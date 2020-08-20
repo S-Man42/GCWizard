@@ -80,7 +80,7 @@ class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
             )
           : Container(),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

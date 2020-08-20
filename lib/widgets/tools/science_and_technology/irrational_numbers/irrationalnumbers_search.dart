@@ -48,7 +48,7 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
           },
         ),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         )
       ],
     );

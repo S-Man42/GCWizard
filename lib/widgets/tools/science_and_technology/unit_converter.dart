@@ -237,7 +237,7 @@ class UnitConverterState extends State<UnitConverter> {
           ],
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

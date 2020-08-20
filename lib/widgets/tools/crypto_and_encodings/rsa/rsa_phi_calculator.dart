@@ -46,7 +46,7 @@ class RSAPhiCalculatorState extends State<RSAPhiCalculator> {
           },
         ),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         )
       ],
     );

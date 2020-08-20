@@ -83,7 +83,7 @@ class RailFenceState extends State<RailFence> {
           }
         ),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         )
       ],
     );

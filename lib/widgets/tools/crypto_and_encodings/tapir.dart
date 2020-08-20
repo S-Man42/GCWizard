@@ -83,7 +83,7 @@ class TapirState extends State<Tapir> {
             )
           : Container(),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         ),
       ],
     );

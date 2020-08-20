@@ -67,7 +67,7 @@ class WindchillState extends State<Windchill> {
             )
           : Container(),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );
