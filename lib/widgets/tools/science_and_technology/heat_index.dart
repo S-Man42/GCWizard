@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/heat_index.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
+import 'package:gc_wizard/logic/units/temperature.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class HeatIndex extends StatefulWidget {
@@ -71,26 +70,25 @@ class HeatIndexState extends State<HeatIndex> {
 
     if (_isMetric) {
       _currentOutput = calculateHeatIndex(_currentTemperature, _currentHumidity, HeatTemperatureMode.CELSIUS);
-      unit = ' °C';
+      unit = TEMPERATURE_CELSIUS.symbol;
     } else {
       _currentOutput = calculateHeatIndex(_currentTemperature, _currentHumidity, HeatTemperatureMode.FAHRENHEIT);
-      unit = ' °F';
+      unit = TEMPERATURE_FAHRENHEIT.symbol;
     }
 
-    if (_isMetric && _currentTemperature < 27)
-      hintT = 'heatindex_hint_temperature_c';
-    else
-    if (!_isMetric && _currentTemperature < 80)
-      hintT = 'heatindex_hint_temperature_f';
+    if (
+        (_isMetric && _currentTemperature < 27)
+      || (!_isMetric && _currentTemperature < 80)
+    ) {
+      hintT = i18n(context, 'heatindex_hint_temperature', parameters: ['${_isMetric ? 27 : 80} $unit']);
+    }
 
     if (_currentHumidity < 40)
       hintH = 'heatindex_hint_humidity';
 
-    String hint;
-    if (hintT == null)
-      hint = i18n(context, hintH) ;
-    else
-      hint = i18n(context, hintT) + '\n' + i18n(context, hintH);
+    String hint = i18n(context, hintH);
+    if (hintT != null)
+      hint = hintT + '\n' + hint;
 
     if (double.parse(_currentOutput) > 54)
       hintM = 'heatindex_index_54';
@@ -107,7 +105,7 @@ class HeatIndexState extends State<HeatIndex> {
     var outputs = [
       GCWOutput(
         title: i18n(context, 'heatindex_output'),
-        child: _currentOutput + unit,
+        child: _currentOutput + ' ' + unit,
       )
     ];
 
