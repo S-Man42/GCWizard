@@ -1,7 +1,7 @@
 // https://de.wikipedia.org/wiki/Hitzeindex
 import 'dart:math';
 
-enum HeatTemperatureMode{CELSIUS, FAHRENHEIT}
+import 'package:gc_wizard/logic/units/temperature.dart';
 
 var _heatParameterCelsius = {
   1 : 8.784695 * (-1),
@@ -27,25 +27,26 @@ var _heatParameterFahrenheit = {
   9 : 1.99 * pow(10, -6) * (-1),
 };
 
-String calculateHeatIndex (double temperature, double humidity, HeatTemperatureMode temperatureMode) {
-
+double calculateHeatIndex (double temperature, double humidity, Temperature temperatureUnit) {
   var c;
-  double heat = 0;
+  double heatIndex = 0;
 
-  if (temperatureMode == HeatTemperatureMode.CELSIUS)
+  if (temperatureUnit == TEMPERATURE_CELSIUS)
     c = _heatParameterCelsius;
-  else
+  else if (temperatureUnit == TEMPERATURE_FAHRENHEIT)
     c = _heatParameterFahrenheit;
+  else return double.nan;
 
-  heat =  c[1] +
-          c[2] * temperature +
-          c[3] * humidity +
-          c[4] * temperature * humidity +
-          c[5] * temperature * temperature +
-          c[6] * humidity * humidity +
-          c[7] * temperature * temperature * humidity +
-          c[8] * temperature * humidity * humidity +
-          c[9] * temperature * temperature *humidity * humidity;
+  heatIndex =
+    c[1] +
+    c[2] * temperature +
+    c[3] * humidity +
+    c[4] * temperature * humidity +
+    c[5] * temperature * temperature +
+    c[6] * humidity * humidity +
+    c[7] * temperature * temperature * humidity +
+    c[8] * temperature * humidity * humidity +
+    c[9] * temperature * temperature *humidity * humidity;
 
-  return heat.toStringAsFixed(3);
+  return heatIndex;
 }

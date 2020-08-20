@@ -16,7 +16,6 @@ class HeatIndexState extends State<HeatIndex> {
 
   double _currentTemperature = 0.0;
   double _currentHumidity = 0.0;
-  String _currentOutput = '';
 
   var _isMetric = true;
 
@@ -68,11 +67,12 @@ class HeatIndexState extends State<HeatIndex> {
     String hintH;
     String hintM;
 
+    double output;
     if (_isMetric) {
-      _currentOutput = calculateHeatIndex(_currentTemperature, _currentHumidity, HeatTemperatureMode.CELSIUS);
+      output = calculateHeatIndex(_currentTemperature, _currentHumidity, TEMPERATURE_CELSIUS);
       unit = TEMPERATURE_CELSIUS.symbol;
     } else {
-      _currentOutput = calculateHeatIndex(_currentTemperature, _currentHumidity, HeatTemperatureMode.FAHRENHEIT);
+      output = calculateHeatIndex(_currentTemperature, _currentHumidity, TEMPERATURE_FAHRENHEIT);
       unit = TEMPERATURE_FAHRENHEIT.symbol;
     }
 
@@ -90,22 +90,22 @@ class HeatIndexState extends State<HeatIndex> {
     if (hintT != null)
       hint = hintT + '\n' + hint;
 
-    if (double.parse(_currentOutput) > 54)
+    if (output > 54)
       hintM = 'heatindex_index_54';
     else
-      if (double.parse(_currentOutput) > 40)
+      if (output > 40)
         hintM = 'heatindex_index_40';
       else
-        if (double.parse(_currentOutput) > 32)
+        if (output > 32)
           hintM = 'heatindex_index_32';
         else
-          if (double.parse(_currentOutput) > 27)
+          if (output > 27)
             hintM = 'heatindex_index_27';
 
     var outputs = [
       GCWOutput(
         title: i18n(context, 'heatindex_output'),
-        child: _currentOutput + ' ' + unit,
+        child: output.toStringAsFixed(3) + ' ' + unit,
       )
     ];
 
