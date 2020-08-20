@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/rotator.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_abc_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 
 class Caesar extends StatefulWidget {
   @override
@@ -51,7 +51,7 @@ class CaesarState extends State<Caesar> {
             });
           },
         ),
-        GCWStandardOutput(
+        GCWDefaultOutput(
           text: _output
         )
       ],

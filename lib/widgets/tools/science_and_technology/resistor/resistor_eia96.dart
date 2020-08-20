@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/resistor.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 
 class ResistorEIA96 extends StatefulWidget {
@@ -70,7 +70,7 @@ class ResistorEIA96State extends State<ResistorEIA96> {
             )
           ],
         ),
-        GCWStandardOutput(
+        GCWDefaultOutput(
           text: formatResistorValue(eia96(_currentCode, multiplicator: _currentMultiplicator))
         )
       ],

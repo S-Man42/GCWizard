@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/primes/primes.dart';
-import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 
 class NthPrime extends StatefulWidget {
@@ -30,7 +30,7 @@ class NthPrimeState extends State<NthPrime> {
             });
           },
         ),
-        GCWStandardOutput(
+        GCWDefaultOutput(
           text: _output
         )
       ],

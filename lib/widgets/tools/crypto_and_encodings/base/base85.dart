@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/base.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class Base85 extends StatefulWidget {
@@ -60,7 +60,7 @@ class Base85State extends State<Base85> {
       output = decode(_currentInput, base85Decode);
     }
 
-    return GCWStandardOutput(
+    return GCWDefaultOutput(
       text: output
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
-import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
 class Weekday extends StatefulWidget {
@@ -54,7 +54,7 @@ class WeekdayState extends State<Weekday> {
       case 7: output = i18n(context, 'dates_weekday_sunday'); break;
     }
 
-    return GCWStandardOutput(
+    return GCWDefaultOutput(
       text: output
     );
   }

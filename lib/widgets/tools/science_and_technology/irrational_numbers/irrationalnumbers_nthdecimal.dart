@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/irrational_numbers/irrational_numbers.dart';
-import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
@@ -37,7 +37,7 @@ class IrrationalNumbersNthDecimalState extends State<IrrationalNumbersNthDecimal
             });
           },
         ),
-        GCWStandardOutput(
+        GCWDefaultOutput(
           text: _calculateOutput()
         )
       ],

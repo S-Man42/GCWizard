@@ -3,7 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/dna.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
@@ -42,7 +42,7 @@ class DNAAminoAcidsState extends State<DNAAminoAcids> {
 
   _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      return GCWStandardOutput(
+      return GCWDefaultOutput(
         text: encodeRNASymbolLong(_currentInput)
       );
     } else {
@@ -51,7 +51,7 @@ class DNAAminoAcidsState extends State<DNAAminoAcids> {
 
       return Column(
         children: <Widget>[
-          GCWStandardOutput(
+          GCWDefaultOutput(
             text: output
           ),
           includesM ? GCWTextDivider(text: i18n(context, 'common_note')) : Container(),
