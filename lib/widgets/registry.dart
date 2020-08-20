@@ -402,12 +402,6 @@ class Registry {
         searchStrings: 'geocaching geocache code gccode gc-code base31 hexadecimal hexadezimal'
       ),
       GCWToolWidget(
-        tool: Projectiles(),
-        i18nPrefix: 'projectiles',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'geschoss bullet projectile ballistik ballistic'
-      ),
-      GCWToolWidget(
         tool: Gronsfeld(),
         i18nPrefix: 'gronsfeld',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -502,6 +496,12 @@ class Registry {
         i18nPrefix: 'primes_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_PRIMES
+      ),
+      GCWToolWidget(
+        tool: Projectiles(),
+        i18nPrefix: 'projectiles',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'geschosse projektile bullets projectile ballistik ballistics'
       ),
       GCWToolWidget(
         tool: RailFence(),
