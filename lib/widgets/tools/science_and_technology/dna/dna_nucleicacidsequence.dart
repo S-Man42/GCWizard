@@ -63,7 +63,7 @@ class DNANucleicAcidSequenceState extends State<DNANucleicAcidSequence> {
       }
 
       return GCWDefaultOutput(
-        text: output
+        child: output
       );
     } else {
       var acids = <AminoAcid>[];
@@ -92,7 +92,7 @@ class DNANucleicAcidSequenceState extends State<DNANucleicAcidSequence> {
       return Column(
         children: <Widget>[
           GCWDefaultOutput(
-            text: outputText
+            child: outputText
           ),
           includesM ? GCWTextDivider(text: i18n(context, 'common_note')) : Container(),
           includesM ? GCWText(text: i18n(context, 'dna_nucleicacidsequence_notem', parameters: [_currentDNAMode == GCWSwitchPosition.left ? 'ATG' : 'AUG'])) : Container()

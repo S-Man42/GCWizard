@@ -110,7 +110,7 @@ class SubstitutionState extends State<Substitution> {
         ),
         _buildSubstitutionList(context),
         GCWDefaultOutput(
-          text: _output
+          child: _output
         )
       ],
     );

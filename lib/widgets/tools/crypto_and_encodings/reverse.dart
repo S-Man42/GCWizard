@@ -23,7 +23,7 @@ class ReverseState extends State<Reverse> {
           },
         ),
         GCWDefaultOutput(
-          text: _output
+          child: _output
         )
       ],
     );

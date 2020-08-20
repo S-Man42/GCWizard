@@ -129,52 +129,8 @@ class ADFGVXState extends State<ADFGVX> {
             });
           },
         ) : Container(),
-//        GCWEncryptButtonBar(
-//          onPressedEncode: () {
-//            setState(() {
-//              if (_currentADFGVXMode == GCWSwitchPosition.left) {
-//                _currentOutput = encryptADFGX(
-//                    _currentInput,
-//                    _currentSubstitutionKey,
-//                    _currentTranspositionKey,
-//                    polybiosMode: _currentPolybiosMode,
-//                    alphabet: _currentAlphabet
-//                );
-//              } else {
-//                _currentOutput = encryptADFGVX(
-//                    _currentInput,
-//                    _currentSubstitutionKey,
-//                    _currentTranspositionKey,
-//                    polybiosMode: _currentPolybiosMode,
-//                    alphabet: _currentAlphabet
-//                );
-//              }
-//            });
-//          },
-//          onPressedDecode: () {
-//            setState(() {
-//              if (_currentADFGVXMode == GCWSwitchPosition.left) {
-//                _currentOutput = decryptADFGX(
-//                    _currentInput,
-//                    _currentSubstitutionKey,
-//                    _currentTranspositionKey,
-//                    polybiosMode: _currentPolybiosMode,
-//                    alphabet: _currentAlphabet
-//                );
-//              } else {
-//                _currentOutput = decryptADFGVX(
-//                    _currentInput,
-//                    _currentSubstitutionKey,
-//                    _currentTranspositionKey,
-//                    polybiosMode: _currentPolybiosMode,
-//                    alphabet: _currentAlphabet
-//                );
-//              }
-//            });
-//          },
-//        ),
         GCWDefaultOutput(
-          text: _calculateOutput()//_currentOutput == null ? '' : _currentOutput
+          child: _calculateOutput()//_currentOutput == null ? '' : _currentOutput
         )
       ],
     );

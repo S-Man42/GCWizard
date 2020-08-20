@@ -91,9 +91,7 @@ class NumeralBasesState extends State<NumeralBases> {
   _buildOutput(BuildContext context) {
 
     if (_currentInput == null || _currentInput.length == 0) {
-      return GCWDefaultOutput(
-        text: ''
-      );
+      return GCWDefaultOutput();
     }
 
     var calculateableToBases = _currentToMode == GCWSwitchPosition.left ? _COMMON_BASES : [_currentToKey];
@@ -119,7 +117,7 @@ class NumeralBasesState extends State<NumeralBases> {
 
     if (_currentToMode == GCWSwitchPosition.right) {
       return GCWDefaultOutput(
-        text: values.join('')
+        child: values.join('')
       );
     } else {
       List<List<dynamic>> outputValues = [];

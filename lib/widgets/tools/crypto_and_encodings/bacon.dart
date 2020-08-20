@@ -61,7 +61,7 @@ class BaconState extends State<Bacon> {
     }
 
     return GCWDefaultOutput(
-        text: _output
+      child: _output
     );
   }
 }

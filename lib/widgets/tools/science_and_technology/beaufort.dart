@@ -96,7 +96,7 @@ class BeaufortState extends State<Beaufort> {
               ],
             ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

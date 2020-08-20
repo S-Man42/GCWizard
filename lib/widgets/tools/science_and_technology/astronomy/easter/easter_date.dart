@@ -40,7 +40,7 @@ class EasterDateState extends State<EasterDate> {
     var date = gregorianEasterDate(_currentYear);
 
     return GCWDefaultOutput(
-      text: DateFormat('yMd', Localizations.localeOf(context).toString()).format(date)
+      child: DateFormat('yMd', Localizations.localeOf(context).toString()).format(date)
     );
   }
 }

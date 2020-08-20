@@ -48,7 +48,7 @@ class KamasutraState extends State<Kamasutra> {
             )
           : Container(),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         )
       ],
     );

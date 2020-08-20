@@ -57,7 +57,7 @@ class IrrationalNumbersDecimalRangeState extends State<IrrationalNumbersDecimalR
           },
         ),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         )
       ],
     );

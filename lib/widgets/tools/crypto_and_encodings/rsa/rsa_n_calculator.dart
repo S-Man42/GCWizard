@@ -46,7 +46,7 @@ class RSANCalculatorState extends State<RSANCalculator> {
           },
         ),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         )
       ],
     );

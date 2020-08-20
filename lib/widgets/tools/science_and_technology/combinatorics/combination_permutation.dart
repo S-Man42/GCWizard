@@ -46,9 +46,7 @@ class CombinationPermutationState extends State<CombinationPermutation> {
 
   _buildOutput(BuildContext context) {
     if (_currentInput == null || _currentInput.length == 0) {
-      return GCWDefaultOutput(
-        text: ''
-      );
+      return GCWDefaultOutput();
     }
 
     List<String> combinations = generateCombinations(_currentInput, avoidDuplicates: !_currentShowDuplicates);
@@ -65,7 +63,8 @@ class CombinationPermutationState extends State<CombinationPermutation> {
     var rows = columnedMultiLineOutput(outputData, flexValues: [1, 3]);
 
     rows.insert(0, GCWOutputText(
-      text: '${i18n(context, 'common_count')}: $count'
+      text: '${i18n(context, 'common_count')}: $count',
+      copyText: count.toString(),
     ));
 
     rows.insert(0,

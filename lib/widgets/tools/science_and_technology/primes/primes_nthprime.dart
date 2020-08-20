@@ -31,7 +31,7 @@ class NthPrimeState extends State<NthPrime> {
           },
         ),
         GCWDefaultOutput(
-          text: _output
+          child: _output
         )
       ],
     );

@@ -32,7 +32,7 @@ class DuckSpeakState extends State<DuckSpeak> {
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

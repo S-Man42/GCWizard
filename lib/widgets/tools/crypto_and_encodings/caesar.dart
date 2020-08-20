@@ -52,7 +52,7 @@ class CaesarState extends State<Caesar> {
           },
         ),
         GCWDefaultOutput(
-          text: _output
+          child: _output
         )
       ],
     );
