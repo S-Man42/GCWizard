@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/rotator.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
 
 class RotationGeneral extends StatefulWidget {
   @override
@@ -49,7 +49,7 @@ class RotationGeneralState extends State<RotationGeneral> {
             });
           },
         ),
-        GCWDefaultOutput(
+        GCWStandardOutput(
           text: _output
         )
       ],

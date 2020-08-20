@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_numeralbase_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -91,7 +91,7 @@ class NumeralBasesState extends State<NumeralBases> {
   _buildOutput(BuildContext context) {
 
     if (_currentInput == null || _currentInput.length == 0) {
-      return GCWDefaultOutput(
+      return GCWStandardOutput(
         text: ''
       );
     }
@@ -118,7 +118,7 @@ class NumeralBasesState extends State<NumeralBases> {
     }).toList();
 
     if (_currentToMode == GCWSwitchPosition.right) {
-      return GCWDefaultOutput(
+      return GCWStandardOutput(
         text: values.join('')
       );
     } else {

@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
@@ -173,7 +173,7 @@ class ADFGVXState extends State<ADFGVX> {
 //            });
 //          },
 //        ),
-        GCWDefaultOutput(
+        GCWStandardOutput(
           text: _calculateOutput()//_currentOutput == null ? '' : _currentOutput
         )
       ],

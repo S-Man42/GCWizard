@@ -8,7 +8,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/14_segment_display.dart';
@@ -297,7 +297,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments),
-          GCWDefaultOutput(
+          GCWStandardOutput(
             text: output
           )
         ],
@@ -308,7 +308,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
-          GCWDefaultOutput(
+          GCWStandardOutput(
             text: segments['text']
           )
         ],

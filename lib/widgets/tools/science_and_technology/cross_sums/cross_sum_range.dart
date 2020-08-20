@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/cross_sum.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
@@ -54,7 +54,7 @@ class CrossSumRangeState extends State<CrossSumRange> {
             });
           },
         ),
-        GCWDefaultOutput(
+        GCWStandardOutput(
           text: crossSumRange(_currentRangeStart, _currentRangeEnd, _currentCrossSum).join('\n')
         )
       ],

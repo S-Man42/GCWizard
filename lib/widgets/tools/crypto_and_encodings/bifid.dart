@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_alphabetmodification_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -142,7 +142,7 @@ class BifidState extends State<Bifid> {
     }
 
     if (_currentInput == null || _currentInput.length == 0)
-      return GCWDefaultOutput(text: '');
+      return GCWStandardOutput(text: '');
 
     var _currentOutput = BifidOutput('', '', '');
     if (_currentMode == GCWSwitchPosition.left) {
@@ -165,7 +165,7 @@ class BifidState extends State<Bifid> {
 
     if (_currentOutput.state == 'ERROR') {
       showToast(i18n(context, _currentOutput.output));
-      return GCWDefaultOutput(text: '');
+      return GCWStandardOutput(text: '');
     }
 
     return GCWOutput(

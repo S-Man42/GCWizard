@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_alphabetmodification_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -81,7 +81,7 @@ class TapCodeState extends State<TapCode> {
             });
           },
         ),
-        GCWDefaultOutput(
+        GCWStandardOutput(
           text: _calculateOutput()
         )
       ],

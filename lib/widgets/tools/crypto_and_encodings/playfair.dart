@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_alphabetmodification_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlyspaceandletters_textinputformatter.dart';
 
@@ -93,7 +93,7 @@ class PlayfairState extends State<Playfair> {
       output = decryptPlayfair(_currentInput, _currentKey, mode: _currentModificationMode);
     }
 
-    return GCWDefaultOutput(
+    return GCWStandardOutput(
       text: output
     );
 

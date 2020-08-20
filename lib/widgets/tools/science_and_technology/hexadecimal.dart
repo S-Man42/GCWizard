@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlydigitsandspace_textinputformatter.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlyhexdigitsandspace_textinputformatter.dart';
@@ -64,7 +64,7 @@ class HexadecimalState extends State<Hexadecimal> {
             });
           },
         ),
-        GCWDefaultOutput(
+        GCWStandardOutput(
           text: _buildOutput()
         )
       ],

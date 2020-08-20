@@ -3,7 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/rsa.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_encrypt_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -84,7 +84,7 @@ class RSAState extends State<RSA> {
       || _currentP == null || _currentP.length == 0
       || _currentQ == null || _currentQ.length == 0
     ) {
-      return GCWDefaultOutput(text: '');
+      return GCWStandardOutput(text: '');
     }
 
     try {
@@ -109,7 +109,7 @@ class RSAState extends State<RSA> {
       _state = _RSAEncryptState.NONE;
 
       var outputChildren = <Widget>[
-        GCWDefaultOutput(
+        GCWStandardOutput(
           text: outputText,
         ),
         GCWTextDivider(
@@ -130,7 +130,7 @@ class RSAState extends State<RSA> {
       showToast(i18n(context, exception.message));
 
       _state = _RSAEncryptState.NONE;
-      return GCWDefaultOutput(text: '');
+      return GCWStandardOutput(text: '');
     }
   }
 }

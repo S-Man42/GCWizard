@@ -7,7 +7,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_crosstotal_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_crosstotal_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class Scrabble extends StatefulWidget {
@@ -85,7 +85,7 @@ class ScrabbleState extends State<Scrabble> {
             });
           },
         ),
-        GCWDefaultOutput(
+        GCWStandardOutput(
           text: _output
         ),
         _currentCrosstotalMode ? GCWCrosstotalOutput(

@@ -17,7 +17,7 @@ import 'package:gc_wizard/logic/units/velocity.dart';
 import 'package:gc_wizard/logic/units/volume.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_standard_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:intl/intl.dart';
@@ -236,7 +236,7 @@ class UnitConverterState extends State<UnitConverter> {
             ),
           ],
         ),
-        GCWDefaultOutput(
+        GCWStandardOutput(
           text: _buildOutput()
         )
       ],
