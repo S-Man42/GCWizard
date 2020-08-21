@@ -1,10 +1,13 @@
 import 'dart:math';
+import 'package:gc_wizard/logic/units/mass.dart';
+import 'package:gc_wizard/logic/units/energy.dart';
+import 'package:gc_wizard/theme/theme.dart';
 
 enum CalculateProjectilesMode {ENERGY, MASS, SPEED}
 
 
 double calculateEnergy (double mass, double speed) {
-    return mass / 2 * speed * speed;
+    return mass * speed * speed / 2;
 }
 
 
@@ -22,3 +25,5 @@ double calculateSpeed (double energy, double mass) {
   else
     return sqrt(2 * energy / mass);
 }
+
+
