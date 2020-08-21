@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/logic/units/velocity.dart';
+import 'package:gc_wizard/logic/units/unit.dart';
 import 'package:gc_wizard/logic/units/mass.dart';
 import 'package:gc_wizard/logic/units/energy.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_energy_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_mass_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -71,7 +73,7 @@ class ProjectilesState extends State<Projectiles> {
         ),
 
         _currentCalculateMode == CalculateProjectilesMode.ENERGY
-        ? Column(
+          ? Column(
             children: <Widget>[
               Row(
                 children: [
@@ -102,7 +104,7 @@ class ProjectilesState extends State<Projectiles> {
                     ),
                     flex: 1
                   )
-                ],
+                ], // children
               ),
               Row(
                 children: [
@@ -132,14 +134,13 @@ class ProjectilesState extends State<Projectiles> {
                       },
                   ),
                   flex: 1
-              )
-            ],
-            ),
+                  )
+                ], //children
+              ),
             ]
           )
-        : null,
-        _currentCalculateMode == CalculateProjectilesMode.ENERGY
-            ? Column(
+          : _currentCalculateMode == CalculateProjectilesMode.MASS
+          ? Column(
             children: <Widget>[
               Row(
                 children: [
@@ -160,11 +161,11 @@ class ProjectilesState extends State<Projectiles> {
                       flex: 3
                   ),
                   Expanded(
-                      child: GCWMassDropDownButton(
-                        value: _currentMassUnit,
+                      child: GCWEnergyDropDownButton(
+                        value: _currentEnergyUnit,
                         onChanged: (value) {
                           setState(() {
-                            _currentMassUnit = value;
+                            _currentEnergyUnit = value;
                           });
                         },
                       ),
@@ -205,9 +206,74 @@ class ProjectilesState extends State<Projectiles> {
               ),
             ]
         )
-            : _currentCalculateMode == CalculateProjectilesMode.MASS
-                ? Column()
-                : Column(),
+          : _currentCalculateMode == CalculateProjectilesMode.SPEED
+          ? Column(
+            children: <Widget>[
+              Row(
+                children: [
+                  Expanded(
+                      child: Container(
+                        child: GCWDoubleSpinner(
+                          title: i18n(context, titleInput1),
+                          min: 0.0,
+                          value: _currentInput1,
+                          onChanged: (value) {
+                            setState(() {
+                              _currentInput1 = value;
+                            });
+                          },
+                        ),
+                        padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
+                      ),
+                      flex: 3
+                  ),
+                  Expanded(
+                      child: GCWEnergyDropDownButton(
+                        value: _currentEnergyUnit,
+                        onChanged: (value) {
+                          setState(() {
+                            _currentEnergyUnit = value;
+                          });
+                        },
+                      ),
+                      flex: 1
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                      child: Container(
+                        child: GCWDoubleSpinner(
+                          title: i18n(context, titleInput2),
+                          min: 0.0,
+                          value: _currentInput2,
+                          onChanged: (value) {
+                            setState(() {
+                              _currentInput2 = value;
+                            });
+                          },
+                        ),
+                        padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
+                      ),
+                      flex: 3
+                  ),
+                  Expanded(
+                      child: GCWMassDropDownButton(
+                        value: _currentMassUnit,
+                        onChanged: (value) {
+                          setState(() {
+                            _currentMassUnit = value;
+                          });
+                        },
+                      ),
+                      flex: 1
+                  )
+                ],
+              ),
+            ]
+        )
+          : null,
         _buildOutput(context)
       ],
     );
@@ -220,15 +286,25 @@ class ProjectilesState extends State<Projectiles> {
     switch (_currentCalculateMode){
       case CalculateProjectilesMode.ENERGY:
         calculate = 'projectiles_energy';
-        result = calculateEnergy(_currentInput1, _currentInput2).toStringAsFixed(3);
+        result = calculateEnergy(
+            convert(_currentInput1 , _currentMassUnit, MASS_GRAM) / 1000,
+            convert(_currentInput2 , _currentVelocityUnit, VELOCITY_MS)
+            )
+            .toStringAsFixed(3) + ' Joule';
         break;
       case CalculateProjectilesMode.MASS:
         calculate = 'projectiles_mass';
-        result = calculateMass(_currentInput1, _currentInput2).toStringAsFixed(3);
+        result = calculateMass(
+            convert(_currentInput1 , _currentEnergyUnit, ENERGY_JOULE),
+            convert(_currentInput2 , _currentVelocityUnit, VELOCITY_MS)
+            ).toStringAsFixed(3) + ' kg';
         break;
       case CalculateProjectilesMode.SPEED:
         calculate = 'projectiles_speed';
-        result = calculateSpeed(_currentInput1, _currentInput2).toStringAsFixed(3);
+        result = calculateSpeed(
+            convert(_currentInput1 , _currentEnergyUnit, ENERGY_JOULE),
+            convert(_currentInput2 , _currentMassUnit, MASS_GRAM) / 1000
+            ).toStringAsFixed(3) + 'm/s';
         break;
     }
 
