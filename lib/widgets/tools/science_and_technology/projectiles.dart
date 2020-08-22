@@ -27,6 +27,10 @@ class ProjectilesState extends State<Projectiles> {
   var _currentMassUnit = defaultMass;
   var _currentEnergyUnit = defaultEnergy;
 
+  var _currentOutputVelocityUnit = VELOCITY_MS;
+  var _currentOutputMassUnit = MASS_GRAM;
+  var _currentOutputEnergyUnit = ENERGY_JOULE;
+
   double _currentInput1 = 0.0;
   double _currentInput2 = 0.0;
 
@@ -43,6 +47,45 @@ class ProjectilesState extends State<Projectiles> {
 
     return Column(
       children: <Widget>[
+        Row(
+          children: [
+            Expanded (
+              child: Container(
+                child: GCWDropDownButton(
+                  value: _currentCalculateMode,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentCalculateMode = value;
+                    });
+                    switch (_currentCalculateMode){
+                      case CalculateProjectilesMode.ENERGY:
+                        titleInput1 = 'projectiles_mass';
+                        titleInput2 = 'projectiles_speed';
+                        break;
+                      case CalculateProjectilesMode.MASS:
+                        titleInput1 = 'projectiles_energy';
+                        titleInput2 = 'projectiles_speed';
+                        break;
+                      case CalculateProjectilesMode.SPEED:
+                        titleInput1 = 'projectiles_energy';
+                        titleInput2 = 'projectiles_mass';
+                        break;
+                    }
+                  },
+                  items: calculateProjectilesModeItems.entries.map((mode) {
+                    return DropdownMenuItem(
+                      value: mode.key,
+                      child: Text(mode.value),
+                    );
+                  }).toList(),
+                ),
+                  padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
+              ),
+              flex: 3
+            )
+          ]
+        ),
+/*
         GCWDropDownButton(
           value: _currentCalculateMode,
           onChanged: (value) {
@@ -71,6 +114,7 @@ class ProjectilesState extends State<Projectiles> {
             );
           }).toList(),
         ),
+*/
 
         _currentCalculateMode == CalculateProjectilesMode.ENERGY
           ? Column(
