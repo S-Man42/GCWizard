@@ -367,25 +367,24 @@ class ProjectilesState extends State<Projectiles> {
     switch (_currentCalculateMode){
       case CalculateProjectilesMode.ENERGY:
         calculate = 'projectiles_energy';
-        result = calculateEnergy(
-            convert(_currentInput1 , _currentMassUnit, MASS_GRAM) / 1000,
-            convert(_currentInput2 , _currentVelocityUnit, _currentOutputEnergyUnit)
-            )
-            .toStringAsFixed(3) + ' ' + _currentOutputEnergyUnit.symbol;
+        result = convert(calculateEnergy(convert(_currentInput1 , _currentMassUnit, MASS_GRAM) / 1000,
+                                         convert(_currentInput2 , _currentVelocityUnit, VELOCITY_MS)),
+                         ENERGY_JOULE, _currentOutputEnergyUnit)
+                        .toStringAsFixed(3) + ' ' + _currentOutputEnergyUnit.symbol;
         break;
       case CalculateProjectilesMode.MASS:
         calculate = 'projectiles_mass';
-        result = calculateMass(
-            convert(_currentInput1 , _currentEnergyUnit, ENERGY_JOULE),
-            convert(_currentInput2 , _currentVelocityUnit, _currentOutputMassUnit)
-            ).toStringAsFixed(3) + ' ' + _currentOutputMassUnit.symbol;
+        result = convert(calculateMass(convert(_currentInput1, _currentEnergyUnit, ENERGY_JOULE),
+                                       convert(_currentInput2, _currentVelocityUnit, VELOCITY_MS)),
+                         MASS_GRAM, _currentOutputMassUnit)
+                        .toStringAsFixed(3) + ' ' + _currentOutputMassUnit.symbol;
         break;
       case CalculateProjectilesMode.SPEED:
         calculate = 'projectiles_speed';
-        result = calculateSpeed(
-            convert(_currentInput1 , _currentEnergyUnit, ENERGY_JOULE),
-            convert(_currentInput2 , _currentMassUnit, _currentOutputVelocityUnit) / 1000
-            ).toStringAsFixed(3) + ' ' + _currentOutputVelocityUnit.symbol;
+        result = convert(calculateSpeed(convert(_currentInput1, _currentEnergyUnit, ENERGY_JOULE),
+                                        convert(_currentInput2, _currentMassUnit, MASS_GRAM) / 1000),
+                         VELOCITY_MS, _currentOutputVelocityUnit)
+                        .toStringAsFixed(3) + ' ' + _currentOutputVelocityUnit.symbol;
         break;
     }
 
