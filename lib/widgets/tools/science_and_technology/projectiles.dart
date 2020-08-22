@@ -82,7 +82,44 @@ class ProjectilesState extends State<Projectiles> {
                   padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
               ),
               flex: 3
-            )
+            ),
+            _currentCalculateMode == CalculateProjectilesMode.ENERGY
+            ? Expanded(
+                child: GCWEnergyDropDownButton(
+                  value: _currentOutputEnergyUnit,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentOutputEnergyUnit = value;
+                      });
+                    },
+                ),
+                flex: 1
+              )
+            : _currentCalculateMode == CalculateProjectilesMode.MASS
+              ? Expanded(
+                child: GCWMassDropDownButton(
+                  value: _currentOutputMassUnit,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentOutputMassUnit = value;
+                    });
+                  },
+                ),
+                flex: 1
+                )
+              : _currentCalculateMode == CalculateProjectilesMode.SPEED
+                ? Expanded(
+                child: GCWVelocityDropDownButton(
+                  value: _currentOutputVelocityUnit,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentOutputVelocityUnit = value;
+                    });
+                  },
+                ),
+                flex: 1
+                  )
+                : null,
           ]
         ),
 /*
