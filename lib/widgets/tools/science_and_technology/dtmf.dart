@@ -49,21 +49,21 @@ class DTMFState extends State<DTMF> {
         ),
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-          controller: _encodeController,
-          onChanged: (text) {
-            setState(() {
-              _currentEncodeInput = text;
-            });
-          },
-        )
+                controller: _encodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
             : GCWTextField(
-          controller: _decodeController,
-          onChanged: (text) {
-            setState(() {
-              _currentDecodeInput = text;
-            });
-          },
-        ),
+                controller: _decodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                  });
+                },
+              ),
         GCWTextDivider(
             text: i18n(context, 'common_output')
         ),
@@ -76,15 +76,13 @@ class DTMFState extends State<DTMF> {
   Widget _buildOutput(BuildContext context) {
     var output = '';
 
-    var textStyle = gcwTextStyle();
     if (_currentMode == GCWSwitchPosition.left) {
       output = encodeDTMF(_currentEncodeInput);
     } else
       output = decodeDTMF(_currentDecodeInput);
 
     return GCWOutputText(
-        text: output,
-        style: textStyle
+      text: output,
     );
   }
 }
