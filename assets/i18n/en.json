@@ -823,7 +823,7 @@
   "deletealert_text" : "Do you really want to remove '%s1'?",
 
   "dtmf_title" : "DTMF",
-  "dtmf_description" : "Dual-Tone Multi-Frequenzy",
+  "dtmf_description" : "Dual-Tone Multi-Frequency",
   "dtmf_example" : "5 → 1336 770",
 
   "dna_selection_title" : "DNA/mRNA",

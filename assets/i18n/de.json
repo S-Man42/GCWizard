@@ -822,8 +822,8 @@
   "deletealert_title" : "Wirklich löschen?",
   "deletealert_text" : "Möchtest du wirklich '%s1' löschen?",
 
-  "dtmf_title" : "MFWV",
-  "dtmf_description" : "Mehrfrequenzwahlverfahren",
+  "dtmf_title" : "DTMF (MFV)",
+  "dtmf_description" : "Dualton-Mehrfrequenz(wahl)verfahren",
   "dtmf_example" : "5 → 1336 770",
 
   "dna_selection_title" : "DNA/mRNA",
