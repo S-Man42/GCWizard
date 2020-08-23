@@ -502,6 +502,7 @@
   "common_unit_energy_cal_name" : "Kalorie",
   "common_unit_energy_btu_name" : "British Thermal Unit",
   "common_unit_energy_erg_name" : "Erg",
+  "common_unit_energy_ftlb_name" : "Foot pound",
   "common_unit_force_n_name" : "Newton",
   "common_unit_force_lbf_name" : "Pound-force",
   "common_unit_force_pdl_name" : "Poundal",
