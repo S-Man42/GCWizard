@@ -35,14 +35,14 @@ class ProjectilesState extends State<Projectiles> {
   double _currentInput2 = 0.0;
 
   String titleInput1 = 'projectiles_mass';
-  String titleInput2 = 'projectiles_speed';
+  String titleInput2 = 'projectiles_velocity';
 
   @override
   Widget build(BuildContext context) {
     var calculateProjectilesModeItems = {
       CalculateProjectilesMode.ENERGY : i18n(context, 'projectiles_energy'),
       CalculateProjectilesMode.MASS : i18n(context, 'projectiles_mass'),
-      CalculateProjectilesMode.SPEED : i18n(context, 'projectiles_speed'),
+      CalculateProjectilesMode.VELOCITY : i18n(context, 'projectiles_Velocity'),
     };
 
     return Column(
@@ -60,13 +60,13 @@ class ProjectilesState extends State<Projectiles> {
                     switch (_currentCalculateMode){
                       case CalculateProjectilesMode.ENERGY:
                         titleInput1 = 'projectiles_mass';
-                        titleInput2 = 'projectiles_speed';
+                        titleInput2 = 'projectiles_Velocity';
                         break;
                       case CalculateProjectilesMode.MASS:
                         titleInput1 = 'projectiles_energy';
-                        titleInput2 = 'projectiles_speed';
+                        titleInput2 = 'projectiles_Velocity';
                         break;
-                      case CalculateProjectilesMode.SPEED:
+                      case CalculateProjectilesMode.VELOCITY:
                         titleInput1 = 'projectiles_energy';
                         titleInput2 = 'projectiles_mass';
                         break;
@@ -107,7 +107,7 @@ class ProjectilesState extends State<Projectiles> {
                 ),
                 flex: 1
                 )
-              : _currentCalculateMode == CalculateProjectilesMode.SPEED
+              : _currentCalculateMode == CalculateProjectilesMode.VELOCITY
                 ? Expanded(
                 child: GCWVelocityDropDownButton(
                   value: _currentOutputVelocityUnit,
@@ -132,13 +132,13 @@ class ProjectilesState extends State<Projectiles> {
             switch (_currentCalculateMode){
               case CalculateProjectilesMode.ENERGY:
                 titleInput1 = 'projectiles_mass';
-                titleInput2 = 'projectiles_speed';
+                titleInput2 = 'projectiles_Velocity';
                 break;
               case CalculateProjectilesMode.MASS:
                 titleInput1 = 'projectiles_energy';
-                titleInput2 = 'projectiles_speed';
+                titleInput2 = 'projectiles_Velocity';
                 break;
-              case CalculateProjectilesMode.SPEED:
+              case CalculateProjectilesMode.Velocity:
                 titleInput1 = 'projectiles_energy';
                 titleInput2 = 'projectiles_mass';
                 break;
@@ -287,7 +287,7 @@ class ProjectilesState extends State<Projectiles> {
               ),
             ]
         )
-          : _currentCalculateMode == CalculateProjectilesMode.SPEED
+          : _currentCalculateMode == CalculateProjectilesMode.VELOCITY
           ? Column(
             children: <Widget>[
               Row(
@@ -379,9 +379,9 @@ class ProjectilesState extends State<Projectiles> {
                          MASS_GRAM, _currentOutputMassUnit)
                         .toStringAsFixed(3) + ' ' + _currentOutputMassUnit.symbol;
         break;
-      case CalculateProjectilesMode.SPEED:
-        calculate = 'projectiles_speed';
-        result = convert(calculateSpeed(convert(_currentInput1, _currentEnergyUnit, ENERGY_JOULE),
+      case CalculateProjectilesMode.VELOCITY:
+        calculate = 'projectiles_Velocity';
+        result = convert(calculateVelocity(convert(_currentInput1, _currentEnergyUnit, ENERGY_JOULE),
                                         convert(_currentInput2, _currentMassUnit, MASS_GRAM) / 1000),
                          VELOCITY_MS, _currentOutputVelocityUnit)
                         .toStringAsFixed(3) + ' ' + _currentOutputVelocityUnit.symbol;
