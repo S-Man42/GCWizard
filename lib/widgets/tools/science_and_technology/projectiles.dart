@@ -23,12 +23,12 @@ class Projectiles extends StatefulWidget {
 class ProjectilesState extends State<Projectiles> {
   CalculateProjectilesMode _currentCalculateMode = CalculateProjectilesMode.ENERGY;
 
-  var _currentVelocityUnit = defaultVelocity;
-  var _currentMassUnit = defaultMass;
-  var _currentEnergyUnit = defaultEnergy;
+  var _currentVelocityUnit = VELOCITY_MS;
+  var _currentMassUnit = MASS_KGRAM;
+  var _currentEnergyUnit = ENERGY_JOULE;
 
   var _currentOutputVelocityUnit = VELOCITY_MS;
-  var _currentOutputMassUnit = MASS_GRAM;
+  var _currentOutputMassUnit = MASS_KGRAM;
   var _currentOutputEnergyUnit = ENERGY_JOULE;
 
   double _currentInput1 = 0.0;
@@ -42,7 +42,7 @@ class ProjectilesState extends State<Projectiles> {
     var calculateProjectilesModeItems = {
       CalculateProjectilesMode.ENERGY : i18n(context, 'projectiles_energy'),
       CalculateProjectilesMode.MASS : i18n(context, 'projectiles_mass'),
-      CalculateProjectilesMode.VELOCITY : i18n(context, 'projectiles_Velocity'),
+      CalculateProjectilesMode.VELOCITY : i18n(context, 'projectiles_velocity'),
     };
 
     return Column(
@@ -60,11 +60,11 @@ class ProjectilesState extends State<Projectiles> {
                     switch (_currentCalculateMode){
                       case CalculateProjectilesMode.ENERGY:
                         titleInput1 = 'projectiles_mass';
-                        titleInput2 = 'projectiles_Velocity';
+                        titleInput2 = 'projectiles_velocity';
                         break;
                       case CalculateProjectilesMode.MASS:
                         titleInput1 = 'projectiles_energy';
-                        titleInput2 = 'projectiles_Velocity';
+                        titleInput2 = 'projectiles_velocity';
                         break;
                       case CalculateProjectilesMode.VELOCITY:
                         titleInput1 = 'projectiles_energy';
@@ -122,36 +122,6 @@ class ProjectilesState extends State<Projectiles> {
                 : null,
           ]
         ),
-/*
-        GCWDropDownButton(
-          value: _currentCalculateMode,
-          onChanged: (value) {
-            setState(() {
-              _currentCalculateMode = value;
-            });
-            switch (_currentCalculateMode){
-              case CalculateProjectilesMode.ENERGY:
-                titleInput1 = 'projectiles_mass';
-                titleInput2 = 'projectiles_Velocity';
-                break;
-              case CalculateProjectilesMode.MASS:
-                titleInput1 = 'projectiles_energy';
-                titleInput2 = 'projectiles_Velocity';
-                break;
-              case CalculateProjectilesMode.Velocity:
-                titleInput1 = 'projectiles_energy';
-                titleInput2 = 'projectiles_mass';
-                break;
-            }
-          },
-          items: calculateProjectilesModeItems.entries.map((mode) {
-            return DropdownMenuItem(
-              value: mode.key,
-              child: Text(mode.value),
-            );
-          }).toList(),
-        ),
-*/
 
         _currentCalculateMode == CalculateProjectilesMode.ENERGY
           ? Column(
@@ -163,6 +133,7 @@ class ProjectilesState extends State<Projectiles> {
                       child: GCWDoubleSpinner(
                         title: i18n(context, titleInput1),
                         min: 0.0,
+                        numberDecimalDigits: 3,
                         value: _currentInput1,
                         onChanged: (value) {
                           setState(() {
@@ -194,6 +165,7 @@ class ProjectilesState extends State<Projectiles> {
                       child: GCWDoubleSpinner(
                         title: i18n(context, titleInput2),
                         min: 0.0,
+                        numberDecimalDigits: 3,
                         value: _currentInput2,
                         onChanged: (value) {
                           setState(() {
@@ -230,6 +202,7 @@ class ProjectilesState extends State<Projectiles> {
                         child: GCWDoubleSpinner(
                           title: i18n(context, titleInput1),
                           min: 0.0,
+                          numberDecimalDigits: 3,
                           value: _currentInput1,
                           onChanged: (value) {
                             setState(() {
@@ -261,6 +234,7 @@ class ProjectilesState extends State<Projectiles> {
                         child: GCWDoubleSpinner(
                           title: i18n(context, titleInput2),
                           min: 0.0,
+                          numberDecimalDigits: 3,
                           value: _currentInput2,
                           onChanged: (value) {
                             setState(() {
@@ -297,6 +271,7 @@ class ProjectilesState extends State<Projectiles> {
                         child: GCWDoubleSpinner(
                           title: i18n(context, titleInput1),
                           min: 0.0,
+                          numberDecimalDigits: 3,
                           value: _currentInput1,
                           onChanged: (value) {
                             setState(() {
@@ -328,6 +303,7 @@ class ProjectilesState extends State<Projectiles> {
                         child: GCWDoubleSpinner(
                           title: i18n(context, titleInput2),
                           min: 0.0,
+                          numberDecimalDigits: 3,
                           value: _currentInput2,
                           onChanged: (value) {
                             setState(() {
@@ -367,7 +343,7 @@ class ProjectilesState extends State<Projectiles> {
     switch (_currentCalculateMode){
       case CalculateProjectilesMode.ENERGY:
         calculate = 'projectiles_energy';
-        result = convert(calculateEnergy(convert(_currentInput1 , _currentMassUnit, MASS_GRAM) / 1000,
+        result = convert(calculateEnergy(convert(_currentInput1 , _currentMassUnit, MASS_KGRAM),
                                          convert(_currentInput2 , _currentVelocityUnit, VELOCITY_MS)),
                          ENERGY_JOULE, _currentOutputEnergyUnit)
                         .toStringAsFixed(3) + ' ' + _currentOutputEnergyUnit.symbol;
@@ -376,13 +352,13 @@ class ProjectilesState extends State<Projectiles> {
         calculate = 'projectiles_mass';
         result = convert(calculateMass(convert(_currentInput1, _currentEnergyUnit, ENERGY_JOULE),
                                        convert(_currentInput2, _currentVelocityUnit, VELOCITY_MS)),
-                         MASS_GRAM, _currentOutputMassUnit)
+                         MASS_KGRAM, _currentOutputMassUnit)
                         .toStringAsFixed(3) + ' ' + _currentOutputMassUnit.symbol;
         break;
       case CalculateProjectilesMode.VELOCITY:
-        calculate = 'projectiles_Velocity';
+        calculate = 'projectiles_velocity';
         result = convert(calculateVelocity(convert(_currentInput1, _currentEnergyUnit, ENERGY_JOULE),
-                                        convert(_currentInput2, _currentMassUnit, MASS_GRAM) / 1000),
+                                        convert(_currentInput2, _currentMassUnit, MASS_KGRAM)),
                          VELOCITY_MS, _currentOutputVelocityUnit)
                         .toStringAsFixed(3) + ' ' + _currentOutputVelocityUnit.symbol;
         break;
