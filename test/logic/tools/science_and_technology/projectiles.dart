@@ -8,25 +8,30 @@ import 'package:gc_wizard/logic/units/velocity.dart';
 void main() {
   group("Projectiles.calculate:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'mode': CalculateProjectilesMode.ENERGY, 'outputUnit' : null,'input1' : 0.0, 'inputUnit1': null, 'input2' : 0.0, 'inputUnit1': null, 'expectedOutput' : '0.000'},
+      {'mode': CalculateProjectilesMode.ENERGY, 'outputUnit' : ENERGY_JOULE,'input1' : 1000.0, 'inputUnit1': MASS_GRAM, 'input2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '0.500 J'},
+      {'mode': CalculateProjectilesMode.ENERGY, 'outputUnit' : ENERGY_JOULE,'input1' : 1000.0, 'inputUnit1': MASS_GRAM, 'input2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '0.500 J'},
+      {'mode': CalculateProjectilesMode.MASS, 'outputUnit' : MASS_GRAM,'input1' : 1000.0, 'inputUnit1': MASS_GRAM, 'input2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '0.500 J'},
+      {'mode': CalculateProjectilesMode.MASS, 'outputUnit' : MASS_GRAM,'input1' : 1000.0, 'inputUnit1': MASS_GRAM, 'input2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '0.500 J'},
+      {'mode': CalculateProjectilesMode.VELOCITY, 'outputUnit' : VELOCITY_MS,'input1' : 1000.0, 'inputUnit1': MASS_GRAM, 'input2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '0.500 J'},
+      {'mode': CalculateProjectilesMode.VELOCITY, 'outputUnit' : VELOCITY_MPH,'input1' : 1000.0, 'inputUnit1': MASS_GRAM, 'input2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '0.500 J'},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('energy: ${elem['energy']}, mass: ${elem['mass']}, speed: ${elem['speed']}', () {
         var _actual;
         if (elem['mode'] == CalculateProjectilesMode.ENERGY) {
-          _actual = convert(calculateSpeed(convert(elem['input1'] , elem['inputUnit1'], MASS_GRAM) / 1000,
+          _actual = convert(calculateEnergy(convert(elem['input1'] , elem['inputUnit1'], MASS_GRAM) / 1000,
                                            convert(elem['input2'] , elem['inputUnit2'], VELOCITY_MS)),
                             ENERGY_JOULE, elem['outputUnit'])
                             .toStringAsFixed(3) + ' ' + elem['outputUnit'].symbol;
         }
         else if (elem['mode'] == CalculateProjectilesMode.MASS) {
-          _actual = convert(calculateSpeed(convert(elem['input1'] , elem['inputUnit1'], ENERGY_JOULE),
+          _actual = convert(calculateMass(convert(elem['input1'] , elem['inputUnit1'], ENERGY_JOULE),
                                            convert(elem['input2'] , elem['inputUnit2'], VELOCITY_MS)),
                             MASS_GRAM, elem['outputUnit'])
                             .toStringAsFixed(3) + ' ' + elem['outputUnit'].symbol;
         } else {
-          _actual = convert(calculateSpeed(convert(elem['input1'] , elem['inputUnit1'], ENERGY_JOULE),
+          _actual = convert(calculateVelocity(convert(elem['input1'] , elem['inputUnit1'], ENERGY_JOULE),
                                            convert(elem['input2'] , elem['inputUnit2'], MASS_GRAM) / 1000),
                             VELOCITY_MS, elem['outputUnit'])
                             .toStringAsFixed(3) + ' ' + elem['outputUnit'].symbol;
