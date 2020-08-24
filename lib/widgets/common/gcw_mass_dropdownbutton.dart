@@ -31,10 +31,7 @@ class _GCWMassDropDownButtonState extends State<GCWMassDropDownButton> {
 
     _masses = [
       MASS_GRAM,
-        Mass(
-          symbol: 'kg',
-          inGram: 1000.0
-        ),
+      MASS_KGRAM,
       MASS_TON,
       MASS_GRAIN,
       MASS_DRAM,
@@ -57,19 +54,19 @@ class _GCWMassDropDownButtonState extends State<GCWMassDropDownButton> {
   @override
   Widget build(BuildContext context) {
     return GCWDropDownButton(
-    value: widget.value ?? _currentMassUnit,
-    onChanged: (newValue) {
-      setState(() {
-        _currentMassUnit = newValue;
-        widget.onChanged(newValue);
-      });
-    },
-    items: _masses.map((mass) {
-    return DropdownMenuItem(
-    value: mass,
-    child: Text(mass.symbol),
-    );
-    }).toList(),
+      value: widget.value ?? _currentMassUnit,
+      onChanged: (newValue) {
+        setState(() {
+          _currentMassUnit = newValue;
+          widget.onChanged(newValue);
+        });
+      },
+      items: _masses.map((mass) {
+        return DropdownMenuItem(
+          value: mass,
+          child: Text(mass.symbol),
+        );
+      }).toList(),
     );
   }
 }
