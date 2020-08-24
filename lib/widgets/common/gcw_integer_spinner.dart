@@ -38,11 +38,6 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   var _controller;
   var _currentValue = 1;
 
-  var _binaryMaskFormatter = MaskTextInputFormatter(
-    mask: '#' * 10000,
-    filter: {"#": RegExp(r'[01]')}
-  );
-
   @override
   void initState() {
     super.initState();
