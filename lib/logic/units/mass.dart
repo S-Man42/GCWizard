@@ -21,12 +21,6 @@ final MASS_GRAM = Mass(
   isReference: true
 );
 
-final MASS_KGRAM = Mass(
-    name: 'common_unit_mass_kg_name',
-    symbol: 'kg',
-    inGram: 1000.0
-);
-
 final MASS_TON = Mass(
   name: 'common_unit_mass_t_name',
   symbol: 't',
@@ -97,12 +91,6 @@ final MASS_USSHORTTON = Mass(
   name: 'common_unit_mass_uston_name',
   symbol: 't',
   inGram: 453.59237 * 2000.0
-);
-
-final MASS_DEKA = Mass(
-    name: 'common_unit_mass_deka_name',
-    symbol: 'Deka',
-    inGram: 10.0
 );
 
 final MASS_PFUND = Mass(
