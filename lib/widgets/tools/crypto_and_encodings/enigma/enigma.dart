@@ -10,7 +10,7 @@ import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/gcw_enigma_rotor_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlyspaceandletters_textinputformatter.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
 class Enigma extends StatefulWidget {
   @override
@@ -35,7 +35,7 @@ class EnigmaState extends State<Enigma> {
   List<GCWEnigmaRotorDropDownButton> _currentRotors = [];
   List<EnigmaRotorConfiguration> _currentRotorsConfigurations = [];
 
-  var _plugboardMaskFormatter = MaskTextInputFormatter(
+  var _plugboardMaskFormatter = WrapperForMaskTextInputFormatter(
     mask: '## ' * 25 + '##',
     filter: {"#": RegExp(r'[A-Za-z]')}
   );

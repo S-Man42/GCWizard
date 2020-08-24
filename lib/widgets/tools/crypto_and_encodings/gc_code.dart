@@ -5,7 +5,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
 class GCCode extends StatefulWidget {
   @override
@@ -19,7 +19,7 @@ class GCCodeState extends State<GCCode> {
   int _currentID = 1;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  var _maskFormatter = MaskTextInputFormatter(
+  var _maskFormatter = WrapperForMaskTextInputFormatter(
     mask: 'GC############',
     filter: {"#": RegExp(r'[0-9A-Za-z]')}
   );

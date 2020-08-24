@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 import 'package:latlong/latlong.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -17,7 +18,7 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
   var _controller;
   var _currentCoord = '';
 
-  var _maskInputFormatter = MaskTextInputFormatter(
+  var _maskInputFormatter = WrapperForMaskTextInputFormatter(
     mask: '########+##########',
     filter: {"#": RegExp(r'[23456789CFGHJMPQRVWXcfghjmpqrvwx]')}
   );
