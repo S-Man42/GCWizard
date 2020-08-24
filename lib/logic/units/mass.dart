@@ -113,7 +113,6 @@ final MASS_ZENTNER = Mass(
 
 final List<Unit> masses = [
   MASS_GRAM,
-  MASS_KGRAM,
   MASS_TON,
   MASS_GRAIN,
   MASS_DRAM,
@@ -127,7 +126,6 @@ final List<Unit> masses = [
   MASS_USSHORTTON,
   MASS_TROYOUNCE,
   MASS_CARAT,
-  MASS_DEKA,
   MASS_PFUND,
   MASS_ZENTNER
 ];
