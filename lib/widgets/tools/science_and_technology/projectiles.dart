@@ -31,6 +31,9 @@ class ProjectilesState extends State<Projectiles> {
   var _currentOutputMassUnit = MASS_KGRAM;
   var _currentOutputEnergyUnit = ENERGY_JOULE;
 
+  var unit1;
+  var unit2;
+
   double _currentInput1 = 0.0;
   double _currentInput2 = 0.0;
 
@@ -61,14 +64,20 @@ class ProjectilesState extends State<Projectiles> {
                       case CalculateProjectilesMode.ENERGY:
                         titleInput1 = 'projectiles_mass';
                         titleInput2 = 'projectiles_velocity';
+                        unit1 = masses;
+                        unit2 = velocities;
                         break;
                       case CalculateProjectilesMode.MASS:
                         titleInput1 = 'projectiles_energy';
                         titleInput2 = 'projectiles_velocity';
+                        unit1 = energies;
+                        unit2 = velocities;
                         break;
                       case CalculateProjectilesMode.VELOCITY:
                         titleInput1 = 'projectiles_energy';
                         titleInput2 = 'projectiles_mass';
+                        unit1 = energies;
+                        unit2 = masses;
                         break;
                     }
                   },
@@ -83,6 +92,7 @@ class ProjectilesState extends State<Projectiles> {
               ),
               flex: 3
             ),
+
             _currentCalculateMode == CalculateProjectilesMode.ENERGY
             ? Expanded(
                 child: GCWEnergyDropDownButton(
@@ -123,6 +133,22 @@ class ProjectilesState extends State<Projectiles> {
           ]
         ),
 
+        /*
+        GCWUnitInput(
+          title: i18n(context, titleInput1),
+          min: 0.0,
+          numberDecimalDigits: 3,
+          value: _currentInput1,
+          unit, _currentUnit1,
+          items: unit1,
+          onChanged: (value) {
+            setState(() {
+              _currentInput1 = value;
+              _currentUnit1 = unit;
+            }
+          }
+
+         */
         _currentCalculateMode == CalculateProjectilesMode.ENERGY
           ? Column(
             children: <Widget>[
