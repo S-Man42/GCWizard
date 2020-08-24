@@ -17,20 +17,23 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_unit_dropdownbutton.dart';
-
-import 'gcw_double_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_unit_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 
 
 class GCWUnitInput extends StatefulWidget {
-  final Function onChanged;
-  value;
-  unit;
+  final Function onValueChanged;
+  final Function onUnitChanged;
+  final min;
+  final numberDecimalDigits;
+  var value;
+  var unit;
   final items;
   final title;
 
-  const GCWUnitInput({Key key, this.title, this.value, this.unit, this.items, this.onChanged,}) : super(key: key);
+  GCWUnitInput({Key key, this.title, this.min, this. numberDecimalDigits, this.value, this.unit, this.items, this.onValueChanged, this.onUnitChanged}) : super(key: key);
 
   @override
   _GCWUnitInputState createState() => _GCWUnitInputState();
@@ -47,6 +50,7 @@ class _GCWUnitInputState extends State<GCWUnitInput> {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: <Widget>[
         Row(
@@ -55,8 +59,8 @@ class _GCWUnitInputState extends State<GCWUnitInput> {
                 child: Container(
                   child: GCWDoubleSpinner(
                     title: i18n(context, widget.title),
-                    min: 0.0,
-                    numberDecimalDigits: 3,
+                    min: widget.min,
+                    numberDecimalDigits: widget.numberDecimalDigits,
                     value: widget.value,
                     onChanged: (value) {
                       setState(() {

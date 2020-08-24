@@ -11,9 +11,10 @@ import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_energy_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_mass_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_velocity_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/gcw_velocity_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_unit_input.dart';
 
 class Projectiles extends StatefulWidget {
   @override
@@ -31,14 +32,18 @@ class ProjectilesState extends State<Projectiles> {
   var _currentOutputMassUnit = MASS_KGRAM;
   var _currentOutputEnergyUnit = ENERGY_JOULE;
 
-  var unit1;
-  var unit2;
+  String titleInput1 = 'projectiles_mass';
+  String titleInput2 = 'projectiles_velocity';
 
   double _currentInput1 = 0.0;
   double _currentInput2 = 0.0;
 
-  String titleInput1 = 'projectiles_mass';
-  String titleInput2 = 'projectiles_velocity';
+  var _currentUnit1  = MASS_KGRAM;
+  var _currentUnit2  = VELOCITY_MS;
+
+  List unit1 = masses;
+  List unit2 = velocities;
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,20 +69,20 @@ class ProjectilesState extends State<Projectiles> {
                       case CalculateProjectilesMode.ENERGY:
                         titleInput1 = 'projectiles_mass';
                         titleInput2 = 'projectiles_velocity';
-                        unit1 = masses;
-                        unit2 = velocities;
+                        masses.forEach((element) { unit1.add(element);});
+                        velocities.forEach((element) { unit2.add(element);});
                         break;
                       case CalculateProjectilesMode.MASS:
                         titleInput1 = 'projectiles_energy';
                         titleInput2 = 'projectiles_velocity';
-                        unit1 = energies;
-                        unit2 = velocities;
+                        energies.forEach((element) { unit1.add(element);});
+                        velocities.forEach((element) { unit2.add(element);});
                         break;
                       case CalculateProjectilesMode.VELOCITY:
                         titleInput1 = 'projectiles_energy';
                         titleInput2 = 'projectiles_mass';
-                        unit1 = energies;
-                        unit2 = masses;
+                        energies.forEach((element) { unit1.add(element);});
+                        masses.forEach((element) { unit2.add(element);});
                         break;
                     }
                   },
@@ -133,22 +138,44 @@ class ProjectilesState extends State<Projectiles> {
           ]
         ),
 
-        /*
         GCWUnitInput(
           title: i18n(context, titleInput1),
           min: 0.0,
           numberDecimalDigits: 3,
           value: _currentInput1,
-          unit, _currentUnit1,
+          unit: _currentUnit1,
           items: unit1,
-          onChanged: (value) {
+          onValueChanged: (value) {
             setState(() {
               _currentInput1 = value;
+            });
+          },
+          onUnitChanged: (unit) {
+            setState(() {
               _currentUnit1 = unit;
-            }
-          }
+            });
+          },
+        ),
 
-         */
+        GCWUnitInput(
+          title: i18n(context, titleInput2),
+          min: 0.0,
+          numberDecimalDigits: 3,
+          value: _currentInput2,
+          unit: _currentUnit2,
+          items: unit2,
+          onValueChanged: (value) {
+            setState(() {
+              _currentInput2 = value;
+            });
+          },
+          onUnitChanged: (unit) {
+            setState(() {
+              _currentUnit2 = unit;
+            });
+          },
+        ),
+
         _currentCalculateMode == CalculateProjectilesMode.ENERGY
           ? Column(
             children: <Widget>[
