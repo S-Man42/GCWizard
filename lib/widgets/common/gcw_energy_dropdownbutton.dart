@@ -25,10 +25,10 @@ class _GCWEnergyDropDownButtonState extends State<GCWEnergyDropDownButton> {
           widget.onChanged(newValue);
         });
       },
-      items: logic.energies.map((length) {
+      items: logic.energies.map((energy) {
         return DropdownMenuItem(
-          value: length,
-          child: Text(length.symbol),
+          value: energy,
+          child: Text(energy.symbol),
         );
       }).toList(),
     );
