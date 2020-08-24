@@ -42,6 +42,13 @@ void main() {
       {'input' : ' .', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp']]},
       {'input' : '  .', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [[],['dp']]},
       {'input' : '1 1', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['b', 'c'], [], ['b', 'c']]},
+
+      {'input' : 'ö', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': []},
+      {'input' : 'öa', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['a1', 'a2', 'b', 'c', 'e', 'f', 'g']]},
+      {'input' : 'ö.', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp']]},
+      {'input' : 'aö', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['a1', 'a2', 'b', 'c', 'e', 'f', 'g']]},
+      {'input' : '.ö', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['dp']]},
+      {'input' : 'aö', 'segmentType' : SegmentDisplayType.SEVEN, 'expectedOutput': [['a1', 'a2', 'b', 'c', 'e', 'f', 'g']]},
     ];
 
     _inputsToExpected.forEach((elem) {
