@@ -73,8 +73,10 @@ class _GCWUnitInputState extends State<GCWUnitInput> {
                 flex: 3
             ),
             Expanded(
+
                 child: GCWUnitDropDownButton(
                   value: widget.unit,
+                  items: widget.items,
                   onChanged: (value) {
                     setState(() {
                       widget.unit = value;
