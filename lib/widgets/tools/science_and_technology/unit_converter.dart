@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/logic/units/angle.dart';
 import 'package:gc_wizard/logic/units/area.dart';
 import 'package:gc_wizard/logic/units/density.dart';
@@ -15,11 +14,13 @@ import 'package:gc_wizard/logic/units/time.dart';
 import 'package:gc_wizard/logic/units/unit.dart';
 import 'package:gc_wizard/logic/units/velocity.dart';
 import 'package:gc_wizard/logic/units/volume.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/units/gcw_unit_prefix_dropdownbutton.dart';
 import 'package:intl/intl.dart';
 
 class UnitConverter extends StatefulWidget {
@@ -46,26 +47,6 @@ class UnitConverterState extends State<UnitConverter> {
     {'key' : 'unitconverter_category_time', 'units' : times, 'default_from_unit': TIME_HOUR, 'default_to_unit': TIME_MINUTE},
     {'key' : 'unitconverter_category_velocity', 'units' : velocities, 'default_from_unit': VELOCITY_KMH, 'default_to_unit': VELOCITY_MS, 'suppress_prefixes': true},
     {'key' : 'unitconverter_category_volume', 'units' : volumes, 'default_from_unit': VOLUME_CUBICMETER, 'default_to_unit': VOLUME_LITER, 'suppress_prefixes': true},
-  ];
-
-  var _prefixes = [
-    {'name': 'common_unit_prefix_exa', 'symbol' : 'E', 'value': 1.0e18},
-    {'name': 'common_unit_prefix_peta', 'symbol' : 'P', 'value': 1.0e15},
-    {'name': 'common_unit_prefix_tera', 'symbol' : 'T', 'value': 1.0e12},
-    {'name': 'common_unit_prefix_giga', 'symbol' : 'G', 'value': 1.0e9},
-    {'name': 'common_unit_prefix_mega', 'symbol' : 'M', 'value': 1.0e6},
-    {'name': 'common_unit_prefix_kilo', 'symbol' : 'k', 'value': 1.0e3},
-    {'name': 'common_unit_prefix_hecto', 'symbol' : 'h', 'value': 1.0e2},
-    {'name': 'common_unit_prefix_deca', 'symbol' : 'da', 'value': 1.0e1},
-    {'name': null, 'symbol' : null, 'value': 1.0},
-    {'name': 'common_unit_prefix_deci', 'symbol' : 'd', 'value': 1.0e-1},
-    {'name': 'common_unit_prefix_centi', 'symbol' : 'c', 'value': 1.0e-2},
-    {'name': 'common_unit_prefix_milli', 'symbol' : 'm', 'value': 1.0e-3},
-    {'name': 'common_unit_prefix_micro', 'symbol' : '\u00B5', 'value': 1.0e-6},
-    {'name': 'common_unit_prefix_nano', 'symbol' : 'n', 'value': 1.0e-9},
-    {'name': 'common_unit_prefix_pico', 'symbol' : 'p', 'value': 1.0e-12},
-    {'name': 'common_unit_prefix_femto', 'symbol' : 'f', 'value': 1.0e-15},
-    {'name': 'common_unit_prefix_atto', 'symbol' : 'a', 'value': 1.0e-18},
   ];
 
   var _currentFromPrefix = 1.0;
@@ -132,29 +113,13 @@ class UnitConverterState extends State<UnitConverter> {
             ),
             _currentCategory['suppress_prefixes'] != null ? Container() :
             Expanded(
-              child: GCWDropDownButton(
+              child: GCWUnitPrefixDropDownButton(
                 value: _currentFromPrefix,
-                items: _prefixes.map((prefix) {
-                  return DropdownMenuItem(
-                    value: prefix['value'],
-                    child: Text(prefix['name'] == null ? '' : i18n(context, prefix['name']) + ' (${prefix['symbol']})'),
-                  );
-                }).toList(),
                 onChanged: (value) {
                   setState(() {
-                    _currentFromPrefix = value;
+                    _currentFromPrefix = value['value'];
                   });
                 },
-                selectedItemBuilder: (context) {
-                  return _prefixes.map((prefix) {
-                    return Align(
-                      child: Text(
-                        prefix['symbol'] == null ? '' : prefix['symbol']
-                      ),
-                      alignment: Alignment.centerLeft,
-                    );
-                  }).toList();
-                }
               ),
               flex: 2
             ),
@@ -188,29 +153,13 @@ class UnitConverterState extends State<UnitConverter> {
             ),
             _currentCategory['suppress_prefixes'] != null ? Container() :
             Expanded(
-              child: GCWDropDownButton(
+              child: GCWUnitPrefixDropDownButton(
                 value: _currentToPrefix,
-                items: _prefixes.map((prefix) {
-                  return DropdownMenuItem(
-                    value: prefix['value'],
-                    child:  Text(prefix['name'] == null ? '' : i18n(context, prefix['name']) + ' (${prefix['symbol']})'),
-                  );
-                }).toList(),
                 onChanged: (value) {
                   setState(() {
-                    _currentToPrefix = value;
+                    _currentToPrefix = value['value'];
                   });
                 },
-                selectedItemBuilder: (context) {
-                  return _prefixes.map((prefix) {
-                    return Align(
-                      child: Text(
-                        prefix['symbol'] == null ? '' : prefix['symbol']
-                      ),
-                      alignment: Alignment.centerLeft,
-                    );
-                  }).toList();
-                }
               ),
               flex: 2
             ),

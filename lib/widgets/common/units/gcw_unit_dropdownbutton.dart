@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/units/unit.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 
 
 class GCWUnitDropDownButton extends StatefulWidget {
   final Function onChanged;
   final value;
-  final items;
+  final List<Unit> unitList;
 
-  const GCWUnitDropDownButton({Key key, this.onChanged, this.value, this.items}) : super(key: key);
+  const GCWUnitDropDownButton({Key key, this.onChanged, this.value, this.unitList}) : super(key: key);
 
   @override
   GCWUnitDropDownButtonState createState() => GCWUnitDropDownButtonState();
 }
-
 
 class GCWUnitDropDownButtonState extends State<GCWUnitDropDownButton> {
   var _currentUnit;
@@ -27,8 +27,7 @@ class GCWUnitDropDownButtonState extends State<GCWUnitDropDownButton> {
           widget.onChanged(newValue);
         });
       },
-
-      items: widget.items.map((element) {
+      items: widget.unitList.map((element) {
         return DropdownMenuItem(
           value: element,
           child: Text(element.symbol),
