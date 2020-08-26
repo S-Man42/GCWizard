@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/projectiles.dart';
-import 'package:gc_wizard/logic/units/energy.dart';
 import 'package:gc_wizard/logic/units/mass.dart';
 import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/logic/units/unit_prefix.dart';
-import 'package:gc_wizard/logic/units/velocity.dart' as velocityLogic;
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -85,7 +83,7 @@ class ProjectilesState extends State<Projectiles> {
           ? GCWUnitInput(
               value: _currentInputEnergy,
               title: i18n(context, 'projectiles_energy'),
-              unitList: energies,
+              unitCategory: UNITCATEGORY_ENERGY,
               onChanged: (value) {
                 setState(() {
                   _currentInputEnergy = value;
@@ -97,7 +95,7 @@ class ProjectilesState extends State<Projectiles> {
           ? GCWUnitInput(
               value: _currentInputVelocity,
               title: i18n(context, 'projectiles_velocity'),
-              unitList: velocityLogic.velocities,
+              unitCategory: UNITCATEGORY_VELOCITY,
               onChanged: (value) {
                 setState(() {
                   _currentInputVelocity = value;
@@ -105,7 +103,7 @@ class ProjectilesState extends State<Projectiles> {
               },
             )
           : Container(),
-        GCWTextDivider(text: i18n(context, 'projectiles_outputunit')),
+        GCWTextDivider(text: i18n(context, 'common_outputunit')),
         GCWUnits(
           value: _currentOutputUnit,
           unitCategory: _currentMode,

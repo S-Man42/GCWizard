@@ -3,13 +3,12 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/logic/units/velocity.dart' as logic;
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_velocity_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/units/gcw_unit_input.dart';
 import 'package:intl/intl.dart';
 
 class Beaufort extends StatefulWidget {
@@ -20,7 +19,7 @@ class Beaufort extends StatefulWidget {
 class BeaufortState extends State<Beaufort> {
   var _currentMode = GCWSwitchPosition.left;
 
-  var _currentVelocityInput = 0.0;
+  var _currentVelocity = 0.0;
   logic.Velocity _currentVelocityUnit = UNITCATEGORY_VELOCITY.defaultUnit;
 
   var _currentBeaufortInput = 0;
@@ -41,35 +40,13 @@ class BeaufortState extends State<Beaufort> {
           },
         ),
         _currentMode == GCWSwitchPosition.left
-          ? Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    child: GCWDoubleSpinner(
-                      min: 0.0,
-                      value: _currentVelocityInput,
-                      onChanged: (value) {
-                        setState(() {
-                          _currentVelocityInput = value;
-                        });
-                      },
-                    ),
-                    padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
-                  ),
-                  flex: 3
-                ),
-                Expanded(
-                  child: GCWVelocityDropDownButton(
-                    value: _currentVelocityUnit,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentVelocityUnit = value;
-                      });
-                    },
-                  ),
-                  flex: 1
-                )
-              ],
+          ? GCWUnitInput(
+              unitCategory: UNITCATEGORY_VELOCITY,
+              onChanged: (value) {
+                setState(() {
+                  _currentVelocity = value; 
+                });
+              },
             )
           : Column(
               children: [
@@ -84,16 +61,16 @@ class BeaufortState extends State<Beaufort> {
                   },
                 ),
                 GCWTextDivider(
-                  text: 'Output Unit'
+                  text: i18n(context, 'common_outputunit')
                 ),
-                GCWVelocityDropDownButton(
-                  value: _currentOutputUnit,
+                GCWUnitDropDownButton(
+                  unitCategory: UNITCATEGORY_VELOCITY,
                   onChanged: (value) {
                     setState(() {
                       _currentOutputUnit = value;
                     });
-                  }
-                ),
+                  },
+                )
               ],
             ),
         GCWDefaultOutput(
@@ -105,11 +82,10 @@ class BeaufortState extends State<Beaufort> {
 
   _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      var speed = _currentVelocityUnit.toMS(_currentVelocityInput);
-      return meterPerSecondToBeaufort(speed).toString();
+      return meterPerSecondToBeaufort(_currentVelocity).toString();
     } else {
       var format = NumberFormat('0');
-      if (_currentOutputUnit.symbol == 'm/s')
+      if (_currentOutputUnit == logic.VELOCITY_MS)
         format = NumberFormat('0.0');
 
       var range = beaufortToMeterPerSecond(_currentBeaufortInput);
