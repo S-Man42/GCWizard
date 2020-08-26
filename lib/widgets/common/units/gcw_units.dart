@@ -86,9 +86,6 @@ class _GCWUnitsState extends State<GCWUnits> {
   }
 
   _emitOnChange() {
-//    if (_currentUnit == null)
-//      _currentUnit = widget.value ?? widget.unitCategory.defaultUnit;
-
     widget.onChanged({'prefix': _currentPrefix, 'unit': _currentUnit});
   }
 }

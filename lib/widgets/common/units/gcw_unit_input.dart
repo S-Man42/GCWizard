@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
@@ -10,6 +10,7 @@ class GCWUnitInput extends StatefulWidget {
   final numberDecimalDigits;
   final double value;
   final List<Unit> unitList;
+  final UnitCategory unitCategory;
   final title;
 
   final Function onChanged;
@@ -18,8 +19,9 @@ class GCWUnitInput extends StatefulWidget {
     Key key,
     this.title,
     this.min,
-    this.numberDecimalDigits: 3,
+    this.numberDecimalDigits: 5,
     this.value: 0.0,
+    this.unitCategory,
     this.unitList,
     this.onChanged
   }) : super(key: key);
@@ -37,9 +39,7 @@ class _GCWUnitInputState extends State<GCWUnitInput> {
     super.initState();
 
     _currentValue = widget.value;
-    _currentUnit = getReferenceUnit(widget.unitList);
-
-    print(_currentUnit.symbol);
+    _currentUnit = getReferenceUnit(widget.unitList ?? widget.unitCategory.units);
   }
 
   @override
@@ -68,7 +68,7 @@ class _GCWUnitInputState extends State<GCWUnitInput> {
           Expanded(
             child: GCWUnitDropDownButton(
               value: _currentUnit,
-              unitList: widget.unitList,
+              unitList: widget.unitList ?? widget.unitCategory.units,
               onChanged: (value) {
                 setState(() {
                   _currentUnit = value;

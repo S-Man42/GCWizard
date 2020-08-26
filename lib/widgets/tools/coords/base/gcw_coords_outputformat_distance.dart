@@ -3,8 +3,8 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/units/length.dart';
 import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/gcw_lengths_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
@@ -50,7 +50,8 @@ class GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDist
             ),
             Expanded(
               flex: 1,
-              child: GCWLengthsDropDownButton(
+              child: GCWUnitDropDownButton(
+                unitList: allLengths(),
                 value: _currentLengthUnit,
                 onChanged: (Length value) {
                   setState(() {
@@ -58,7 +59,7 @@ class GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDist
                     _setCurrentValueAndEmitOnChange();
                   });
                 }
-              )
+              ),
             )
           ],
         )

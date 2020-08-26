@@ -501,7 +501,7 @@ class Registry {
         tool: Projectiles(),
         i18nPrefix: 'projectiles',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'geschosse projektile bullets projectile ballistik ballistics'
+        searchStrings: 'geschosse projektile bullets projectiles ballistik ballistics kugeln'
       ),
       GCWToolWidget(
         tool: RailFence(),

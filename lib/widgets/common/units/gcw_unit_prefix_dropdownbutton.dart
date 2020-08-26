@@ -18,14 +18,10 @@ class GCWUnitPrefixDropDownButtonState extends State<GCWUnitPrefixDropDownButton
   var _currentPrefix;
 
   @override
-  void initState() {
-    super.initState();
-
-    _currentPrefix = widget.value;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    if (widget.value != null)
+      _currentPrefix = widget.value;
+
     return GCWDropDownButton(
       value: _currentPrefix,
       items: unitPrefixes.map((prefix) {
@@ -44,9 +40,9 @@ class GCWUnitPrefixDropDownButtonState extends State<GCWUnitPrefixDropDownButton
         return unitPrefixes.map((prefix) {
           return Align(
             child: Text(
-                widget.onlyShowSymbols
-                  ? prefix.symbol ?? ''
-                  : ((i18n(context, prefix.key) ?? '') + (prefix.symbol == null ? '' : ' (${prefix.symbol})'))
+              widget.onlyShowSymbols
+                ? prefix.symbol ?? ''
+                : ((i18n(context, prefix.key) ?? '') + (prefix.symbol == null ? '' : ' (${prefix.symbol})'))
             ),
             alignment: Alignment.centerLeft,
           );

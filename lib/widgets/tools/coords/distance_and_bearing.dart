@@ -7,9 +7,9 @@ import 'package:gc_wizard/logic/units/length.dart';
 import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
-import 'package:gc_wizard/widgets/common/gcw_lengths_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
@@ -64,8 +64,10 @@ class DistanceBearingState extends State<DistanceBearing> {
         GCWTextDivider(
           text: i18n(context, 'coords_distancebearing_outputunit'),
         ),
-        GCWLengthsDropDownButton(
+        GCWUnitDropDownButton(
+          unitList: allLengths(),
           value: _currentOutputUnit,
+          onlyShowSymbols: false,
           onChanged: (Length value) {
             setState(() {
               _currentOutputUnit = value;
