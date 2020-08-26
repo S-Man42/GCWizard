@@ -4,6 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/units/length.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_lengths_dropdownbutton.dart';
@@ -26,7 +27,7 @@ class DistanceBearingState extends State<DistanceBearing> {
   var _currentCoordsFormat1 = defaultCoordFormat();
   var _currentCoordsFormat2 = defaultCoordFormat();
 
-  var _currentOutputUnit = defaultLength;
+  Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
 
   DistanceBearingData _currentValue = DistanceBearingData();
   List<GCWOutputText> _currentOutput = [];

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/units/energy.dart' as logic;
+import 'package:gc_wizard/logic/units/energy.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 
 class GCWEnergyDropDownButton extends StatefulWidget {
@@ -13,7 +14,7 @@ class GCWEnergyDropDownButton extends StatefulWidget {
 }
 
 class _GCWEnergyDropDownButtonState extends State<GCWEnergyDropDownButton> {
-  logic.Energy _currentEnergyUnit = logic.defaultEnergy;
+  Energy _currentEnergyUnit = UNITCATEGORY_ENERGY.defaultUnit;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class _GCWEnergyDropDownButtonState extends State<GCWEnergyDropDownButton> {
           widget.onChanged(newValue);
         });
       },
-      items: logic.energies.map((energy) {
+      items: energies.map((energy) {
         return DropdownMenuItem(
           value: energy,
           child: Text(energy.symbol),

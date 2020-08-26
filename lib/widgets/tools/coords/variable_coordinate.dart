@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/units/length.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
@@ -31,7 +32,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
   final MAX_COUNT_COORDINATES = 100;
 
-  Length _currentLengthUnit = defaultLength;
+  Length _currentLengthUnit = UNITCATEGORY_LENGTH.defaultUnit;
   bool _currentProjectionMode = false;
   var _currentOutputFormat = defaultCoordFormat();
 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/logic/units/length.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_lengths_dropdownbutton.dart';
 
@@ -19,7 +20,7 @@ class _GCWDistanceState extends State<GCWDistance> {
   var _controller;
 
   var _currentInput = {'text': '','value': 0.0};
-  Length _currentLengthUnit = defaultLength;
+  Length _currentLengthUnit = UNITCATEGORY_LENGTH.defaultUnit;
 
   @override
   void initState() {

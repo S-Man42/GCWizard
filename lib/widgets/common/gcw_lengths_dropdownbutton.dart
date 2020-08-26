@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/units/length.dart';
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 
 class GCWLengthsDropDownButton extends StatefulWidget {
@@ -14,7 +15,7 @@ class GCWLengthsDropDownButton extends StatefulWidget {
 }
 
 class _GCWLengthsDropDownButtonState extends State<GCWLengthsDropDownButton> {
-  Length _currentLengthUnit = defaultLength;
+  Length _currentLengthUnit = UNITCATEGORY_LENGTH.defaultUnit;
 
   List<Unit> _lengths;
 
@@ -23,16 +24,16 @@ class _GCWLengthsDropDownButtonState extends State<GCWLengthsDropDownButton> {
     super.initState();
 
     _lengths = [
-      LENGTH_M,
+      LENGTH_METER,
       Length(
           symbol: 'km',
           inMeters: 1000.0
       ),
-      LENGTH_MI,
-      LENGTH_IN,
-      LENGTH_FT,
-      LENGTH_YD,
-      LENGTH_NM
+      LENGTH_STATUTEMILE,
+      LENGTH_INCH,
+      LENGTH_FOOT,
+      LENGTH_YARD,
+      LENGTH_NAUTICALMILE
     ];
   }
 

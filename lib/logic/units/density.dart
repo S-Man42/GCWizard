@@ -1,4 +1,5 @@
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 
 class Density extends Unit {
   Function toGramPerCubicMeter;
@@ -101,5 +102,3 @@ final List<Unit> densities = [
   DENSITY_OUNCEPERUSLIQUIDGALLON,
   DENSITY_POUNDPERUSBUSHEL
 ];
-
-final defaultDensity = DENSITY_KILOGRAMPERCUBICMETER;

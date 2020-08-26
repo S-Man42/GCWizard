@@ -4,6 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/units/length.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart' as formula_base;
 import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart';
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart';
@@ -40,7 +41,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
   final MAX_COUNT_COORDINATES = 100;
 
-  Length _currentLengthUnit = defaultLength;
+  Length _currentLengthUnit = UNITCATEGORY_LENGTH.defaultUnit;
   bool _currentProjectionMode = false;
   var _currentOutputFormat = defaultCoordFormat();
 
@@ -75,7 +76,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
     if (_currentProjectionMode) {
       _currentDistanceInput = widget.formula.projection.distance ?? '';
-      _currentLengthUnit = lengths.firstWhere((unit) => unit.name == widget.formula.projection.distanceUnit);
+      _currentLengthUnit = baseLengths.firstWhere((unit) => unit.name == widget.formula.projection.distanceUnit);
       _currentBearingInput = widget.formula.projection.bearing ?? '';
       _currentReverseBearing = widget.formula.projection.reverse;
     }

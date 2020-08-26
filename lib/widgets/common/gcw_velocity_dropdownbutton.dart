@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/logic/units/velocity.dart' as logic;
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 
@@ -13,7 +14,7 @@ class GCWVelocityDropDownButton extends StatefulWidget {
 }
 
 class _GCWVelocityDropDownButtonState extends State<GCWVelocityDropDownButton> {
-  logic.Velocity _currentVelocityUnit = logic.defaultVelocity;
+  logic.Velocity _currentVelocityUnit = UNITCATEGORY_VELOCITY.defaultUnit;
 
   @override
   Widget build(BuildContext context) {

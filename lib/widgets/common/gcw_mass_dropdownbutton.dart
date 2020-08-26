@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/units/mass.dart';
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-
-final MASS_KGRAM = Mass(
-    name: 'common_unit_mass_kg_name',
-    symbol: 'kg',
-    inGram: 1000.0
-);
-
 
 class GCWMassDropDownButton extends StatefulWidget {
   final Function onChanged;
@@ -21,7 +15,7 @@ class GCWMassDropDownButton extends StatefulWidget {
 }
 
 class _GCWMassDropDownButtonState extends State<GCWMassDropDownButton> {
-  Mass _currentMassUnit = defaultMass;
+  Mass _currentMassUnit = UNITCATEGORY_MASS.defaultUnit;
 
   List<Unit> _masses;
 
@@ -31,7 +25,7 @@ class _GCWMassDropDownButtonState extends State<GCWMassDropDownButton> {
 
     _masses = [
       MASS_GRAM,
-      MASS_KGRAM,
+      MASS_KILOGRAM,
       MASS_TON,
       MASS_GRAIN,
       MASS_DRAM,

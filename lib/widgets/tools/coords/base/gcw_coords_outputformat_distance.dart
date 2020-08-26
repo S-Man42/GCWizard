@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/units/length.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_lengths_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -20,7 +21,7 @@ class GCWCoordsOutputFormatDistance extends StatefulWidget {
 
 class GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDistance> {
   var _currentCoordFormat = defaultCoordFormat();
-  Length _currentLengthUnit = defaultLength;
+  Length _currentLengthUnit = UNITCATEGORY_LENGTH.defaultUnit;
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/beaufort.dart';
-import 'package:gc_wizard/logic/units/velocity.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
+import 'package:gc_wizard/logic/units/velocity.dart' as logic;
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
@@ -20,10 +21,10 @@ class BeaufortState extends State<Beaufort> {
   var _currentMode = GCWSwitchPosition.left;
 
   var _currentVelocityInput = 0.0;
-  var _currentVelocityUnit = defaultVelocity;
+  logic.Velocity _currentVelocityUnit = UNITCATEGORY_VELOCITY.defaultUnit;
 
   var _currentBeaufortInput = 0;
-  var _currentOutputUnit = defaultVelocity;
+  logic.Velocity _currentOutputUnit = UNITCATEGORY_VELOCITY.defaultUnit;
 
   @override
   Widget build(BuildContext context) {

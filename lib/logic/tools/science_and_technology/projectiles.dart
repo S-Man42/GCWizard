@@ -3,27 +3,28 @@ import 'package:gc_wizard/logic/units/mass.dart';
 import 'package:gc_wizard/logic/units/energy.dart';
 import 'package:gc_wizard/theme/theme.dart';
 
-enum CalculateProjectilesMode {ENERGY, MASS, VELOCITY}
-
+enum ProjectilesMode {ENERGY, MASS, VELOCITY}
 
 double calculateEnergy (double mass, double velocity) {
-    return mass * velocity * velocity / 2;
-}
+  var massInKG = mass / 1000;
 
+  return massInKG * velocity * velocity / 2;
+}
 
 double calculateMass (double energy, double velocity) {
   if ( velocity == 0)
     return 0;
   else
-    return 2 * energy / velocity / velocity;
+    return 2 * energy / velocity / velocity * 1000;
 }
 
-
 double calculateVelocity (double energy, double mass) {
-  if (mass == 0)
+  var massInKG = mass / 1000;
+
+  if (massInKG == 0)
     return 0;
   else
-    return sqrt(2 * energy / mass);
+    return sqrt(2 * energy / massInKG);
 }
 
 
