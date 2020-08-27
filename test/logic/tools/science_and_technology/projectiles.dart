@@ -2,48 +2,41 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/logic/units/energy.dart';
 import 'package:gc_wizard/logic/units/mass.dart';
-import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_prefix.dart';
 import 'package:gc_wizard/logic/units/velocity.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
+import 'package:intl/intl.dart';
 
 void main() {
-//  group("Projectiles.calculate:", () {
-//    List<Map<String, dynamic>> _inputsToExpected = [
-//      {'mode': CalculateProjectilesMode.ENERGY, 'outputUnit' : ENERGY_JOULE,'input1' : 1.0, 'inputUnit1': MASS_KGRAM, 'input2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '0.500 J'},
-//      {'mode': CalculateProjectilesMode.ENERGY, 'outputUnit' : ENERGY_FTLB,'input1' : 1.0, 'inputUnit1': MASS_KGRAM, 'input2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '0.369 ft-lb'},
-//      {'mode': CalculateProjectilesMode.ENERGY, 'outputUnit' : ENERGY_JOULE,'input1' : 1000.0, 'inputUnit1': MASS_GRAM, 'input2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '0.500 J'},
-//      {'mode': CalculateProjectilesMode.ENERGY, 'outputUnit' : ENERGY_FTLB,'input1' : 1000.0, 'inputUnit1': MASS_GRAM, 'input2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '0.369 ft-lb'},
-//      {'mode': CalculateProjectilesMode.VELOCITY, 'outputUnit' : VELOCITY_MS,'input1' : 0.500, 'inputUnit1': ENERGY_JOULE, 'input2' : 1.0, 'inputUnit2': MASS_KGRAM, 'expectedOutput' : '1.000 m/s'},
-//      {'mode': CalculateProjectilesMode.VELOCITY, 'outputUnit' : VELOCITY_MS,'input1' : 0.369, 'inputUnit1': ENERGY_FTLB, 'input2' : 1000.0, 'inputUnit2': MASS_GRAM, 'expectedOutput' : '1.000 m/s'},
-//      {'mode': CalculateProjectilesMode.VELOCITY, 'outputUnit' : VELOCITY_MS,'input1' : 0.500, 'inputUnit1': ENERGY_JOULE, 'input2' : 1.0, 'inputUnit2': MASS_KGRAM, 'expectedOutput' : '1.000 m/s'},
-//      {'mode': CalculateProjectilesMode.VELOCITY, 'outputUnit' : VELOCITY_MS,'input1' : 0.369, 'inputUnit1': ENERGY_FTLB, 'input2' : 1000.0, 'inputUnit2': MASS_GRAM, 'expectedOutput' : '1.000 m/s'},
-//      {'mode': CalculateProjectilesMode.MASS, 'outputUnit' : MASS_KGRAM,'input1' : 0.500, 'inputUnit1': ENERGY_JOULE, 'input2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '1.000 kg'},
-//      {'mode': CalculateProjectilesMode.MASS, 'outputUnit' : MASS_KGRAM,'input1' : 0.369, 'inputUnit1': ENERGY_FTLB, 'input2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '1.001 kg'},
-//      {'mode': CalculateProjectilesMode.MASS, 'outputUnit' : MASS_GRAM,'input1' : 0.500, 'inputUnit1': ENERGY_JOULE, 'input2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '1000.000 g'},
-//      {'mode': CalculateProjectilesMode.MASS, 'outputUnit' : MASS_GRAM,'input1' : 0.369, 'inputUnit1': ENERGY_FTLB, 'input2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '1000.594 g'},
-//    ];
-//
-//    _inputsToExpected.forEach((elem) {
-//      test('energy: ${elem['energy']}, mass: ${elem['mass']}, speed: ${elem['speed']}', () {
-//        var _actual;
-//        if (elem['mode'] == CalculateProjectilesMode.ENERGY) {
-//          _actual = convert(calculateEnergy(convert(elem['input1'] , elem['inputUnit1'], MASS_KGRAM),
-//                                            convert(elem['input2'] , elem['inputUnit2'], VELOCITY_MS)),
-//                            ENERGY_JOULE, elem['outputUnit'])
-//                            .toStringAsFixed(3) + ' ' + elem['outputUnit'].symbol;
-//        }
-//        else if (elem['mode'] == CalculateProjectilesMode.MASS) {
-//          _actual = convert(calculateMass(convert(elem['input1'] , elem['inputUnit1'], ENERGY_JOULE),
-//                                          convert(elem['input2'] , elem['inputUnit2'], VELOCITY_MS)),
-//                            MASS_KGRAM, elem['outputUnit'])
-//                            .toStringAsFixed(3) + ' ' + elem['outputUnit'].symbol;
-//        } else { // if (elem['mode'] == CalculateProjectilesMode.VELOCITY)
-//          _actual = convert(calculateVelocity(convert(elem['input1'] , elem['inputUnit1'], ENERGY_JOULE),
-//                                              convert(elem['input2'] , elem['inputUnit2'], MASS_KGRAM)),
-//                            VELOCITY_MS, elem['outputUnit'])
-//                            .toStringAsFixed(3) + ' ' + elem['outputUnit'].symbol;
-//      }
-//        expect(_actual, elem['expectedOutput']);
-//      });
-//    });
-//  });
+  group("Projectiles.calculate:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'mode': UNITCATEGORY_ENERGY, 'prefix' : UNITPREFIX_NONE, 'outputUnit' : ENERGY_JOULE,'inputValue1' : 1.0, 'inputUnit1': MASS_KILOGRAM, 'inputValue2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '0.5 J'},
+      {'mode': UNITCATEGORY_ENERGY, 'prefix' : UNITPREFIX_KILO, 'outputUnit' : ENERGY_JOULE,'inputValue1' : 1.0, 'inputUnit1': MASS_KILOGRAM, 'inputValue2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '0.0005 kJ'},
+      {'mode': UNITCATEGORY_MASS, 'prefix' : UNITPREFIX_NONE, 'outputUnit' : MASS_GRAM,'inputValue1' : 0.5, 'inputUnit1': ENERGY_JOULE, 'inputValue2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '1000.0 g'},
+      {'mode': UNITCATEGORY_MASS, 'prefix' : UNITPREFIX_KILO, 'outputUnit' : MASS_GRAM,'inputValue1' : 0.5, 'inputUnit1': ENERGY_JOULE, 'inputValue2' : 1.0, 'inputUnit2': VELOCITY_MS, 'expectedOutput' : '1.0 kg'},
+      {'mode': UNITCATEGORY_VELOCITY, 'prefix' : UNITPREFIX_NONE, 'outputUnit' : VELOCITY_MS,'inputValue1' : 0.5, 'inputUnit1': ENERGY_JOULE, 'inputValue2' : 1.0, 'inputUnit2': MASS_KILOGRAM, 'expectedOutput' : '1.0 m/s'},
+      {'mode': UNITCATEGORY_VELOCITY, 'prefix' : UNITPREFIX_NONE, 'outputUnit' : VELOCITY_MS,'inputValue1' : 0.5, 'inputUnit1': ENERGY_JOULE, 'inputValue2' : 1000.0, 'inputUnit2': MASS_GRAM, 'expectedOutput' : '1.0 m/s'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('mode: ${elem['mode']}, outputUnit: ${elem['outputUnit']}, inputValue1: ${elem['inputValue1']}, inputValue2: ${elem['inputUnit2']}, inputUnit2: ${elem['inputUnit2']}, prefix: ${elem['prefix']}', () {
+        var _actual;
+        // referenceValue = _currentUnit.toReference(_currentValue);
+        double _refInputValue1 = elem['inputUnit1'].toReference(elem['inputValue1']);
+        double _refInputValue2 = elem['inputUnit2'].toReference(elem['inputValue2']);
+
+        if (elem['mode'] == UNITCATEGORY_ENERGY) {
+          _actual = calculateEnergy(_refInputValue1, _refInputValue2);
+        } else if (elem['mode'] == UNITCATEGORY_MASS) {
+          _actual = calculateMass(_refInputValue1, _refInputValue2);
+        } else { // if (elem['mode'] == UNITCATEGORY_VELOCITY)
+          _actual = calculateVelocity(_refInputValue1, _refInputValue2);
+        }
+        // outputValue = _currentOutputUnit['unit'].fromReference(outputValue) / _currentOutputUnit['prefix'].value;
+        _actual = elem['outputUnit'].fromReference(_actual) / elem['prefix'].value;
+        // return NumberFormat('0.0' + '#' * 6).format(outputValue) + ' ' + (_currentOutputUnit['prefix'].symbol ?? '') + _currentOutputUnit['unit'].symbol;
+        expect(NumberFormat('0.0' + '#' * 6).format(_actual) + ' ' + (elem['prefix'].symbol ?? '') + elem['outputUnit'].symbol, elem['expectedOutput']);
+      });
+    });
+  });
 }
