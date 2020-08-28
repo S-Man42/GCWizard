@@ -59,7 +59,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   Widget build(BuildContext context) {
     var formulaTool = GCWToolWidget(
       tool: FormulaSolverFormulaValues(group: widget.group),
-      toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}'
+      toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
+      i18nPrefix: 'formulasolver', // for calling the help of the formulasolver
     );
 
     Future _navigateToSubPage(context) async {

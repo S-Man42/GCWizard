@@ -52,6 +52,7 @@
 
   "alphabetvalues_title" : "Buchstabenwerte",
   "alphabetvalues_description" : "Buchstaben zu ihrer Position im Alphabet",
+  "alphabetvalues_onlinehelp" : "https://blog.gcwizard.net/de/2020/05/28/buchstabenwerte-jetzt-mit-sonderzeichen-umlauten-und-eigenen-alphabeten/",
   "alphabetvalues_example" : "A → 1, B → 2, C → 3, ...",
   "alphabetvalues_mode_left" : "Buchstabe → Wert",
   "alphabetvalues_mode_right" : "Wert → Buchstabe",
@@ -731,6 +732,7 @@
   "coords_ellipsoid_minoraxis" : "Kl. Halbachse b",
   "coords_variablecoordinate_title" : "Variable Koordinate",
   "coords_variablecoordinate_description" : "Interpoliert Variablen und errechnet mögliche Koordinaten",
+  "coords_variablecoordinate_onlinehelp" : "https://blog.gcwizard.net/de/2020/06/12/variable-koordinate/",
   "coords_variablecoordinate_projection" : "Peilung",
   "coords_variablecoordinate_variables" : "Variablen",
   "coords_variablecoordinate_variable" : "Variable",
@@ -886,6 +888,7 @@
 
   "formulasolver_title" : "Formelrechner",
   "formulasolver_description" : "Erstelle Formeln für Stationen und Finals, füge Variablen hinzu, errechne Ergebnis",
+  "formulasolver_onlinehelp" : "https://blog.gcwizard.net/de/2020/06/11/formelrechner/",
   "formulasolver_group" : "Gruppe",
   "formulasolver_formulas" : "Formeln",
   "formulasolver_formula" : "Formel",

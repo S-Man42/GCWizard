@@ -449,7 +449,9 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
         output.add(prevCharacter);
       }
     } else {
-      output.add(AZToSegment[character]);
+      var display = AZToSegment[character];
+      if (display != null)
+        output.add(AZToSegment[character]);
     }
   }
 
