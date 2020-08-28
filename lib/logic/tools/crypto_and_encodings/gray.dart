@@ -4,12 +4,10 @@
 import 'dart:math';
 
 class GrayOutput {
-  final String state;
-  final String output_plain;
   final String output_gray_decimal;
   final String output_gray_binary;
 
-  GrayOutput(this.state, this.output_plain, this.output_gray_decimal, this.output_gray_binary);
+  GrayOutput(this.output_gray_decimal, this.output_gray_binary);
 }
 
 enum GrayMode { Decimal, Binary }
@@ -30,8 +28,6 @@ int getMaxPossibleInt(int digits) {
 }
 
 GrayOutput encryptGray(String plainText, {GrayMode mode: GrayMode.Decimal}) {
-  if (plainText == null)
-    return GrayOutput('ERROR', 'gray_error_no_encrypt_input', '', '');
 
   String outputGrayDecimal = '';
   String outputGrayBinary = '';
@@ -43,8 +39,6 @@ GrayOutput encryptGray(String plainText, {GrayMode mode: GrayMode.Decimal}) {
   int outputIntGray = 0;
 
   return GrayOutput(
-      'OK',
-      '',
       outputTextDecimal
           .split(' ')
           .map((input) {
@@ -86,78 +80,70 @@ GrayOutput encryptGray(String plainText, {GrayMode mode: GrayMode.Decimal}) {
 
 
 GrayOutput decryptGray(String chiffreText, {GrayMode mode: GrayMode.Decimal}) {
-  if (chiffreText == null)
-    return GrayOutput('ERROR', 'gray_error_no_decrypt_input', '', '');
-
   int plainDecimal = 0;
-
   String outBinaryGray = '';
   String outBinaryPlain = '';
   String outDecimalPlain = '';
-
   String outputTextDecimal = chiffreText;
   String outputTextBinary = chiffreText;
 
   return GrayOutput(
-      'OK',
-      '',
       outputTextDecimal
-          .split(' ')
-          .map((input) {
-            if (input != '') {
-              if (mode == GrayMode.Decimal) {
-                outBinaryGray = int.parse(input).toRadixString(2);
-              } else {
-                outBinaryGray = input;
-              }
+        .split(' ')
+        .map((input) {
+          if (input != '') {
+            if (mode == GrayMode.Decimal) {
+              outBinaryGray = int.parse(input).toRadixString(2);
+            } else {
+              outBinaryGray = input;
+            }
 
-              plainDecimal = getMaxPossibleInt(outBinaryGray.length) * int.parse(outBinaryGray[0]);
-              bool firstOne = true;
-              for (int i = 1; i < (outBinaryGray.length); i++) {
-                if (outBinaryGray[i] == '1') {
-                  if (firstOne) {
-                    firstOne = false;
-                    plainDecimal = plainDecimal - getMaxPossibleInt(outBinaryGray.length - i) * int.parse(outBinaryGray[i]);
-                  } else {
-                    plainDecimal = plainDecimal + getMaxPossibleInt(outBinaryGray.length - i) * int.parse(outBinaryGray[i]);
-                  }
+            plainDecimal = getMaxPossibleInt(outBinaryGray.length) * int.parse(outBinaryGray[0]);
+            bool firstOne = true;
+            for (int i = 1; i < (outBinaryGray.length); i++) {
+              if (outBinaryGray[i] == '1') {
+                if (firstOne) {
+                  firstOne = false;
+                  plainDecimal = plainDecimal - getMaxPossibleInt(outBinaryGray.length - i) * int.parse(outBinaryGray[i]);
+                } else {
+                  plainDecimal = plainDecimal + getMaxPossibleInt(outBinaryGray.length - i) * int.parse(outBinaryGray[i]);
                 }
               }
-              outDecimalPlain = plainDecimal.toString();
-
-              return outDecimalPlain;
             }
-          })
-          .join(' '),
+            outDecimalPlain = plainDecimal.toString();
+
+            return outDecimalPlain;
+          }
+        })
+        .join(' '),
 
       outputTextBinary
-          .split(' ')
-          .map((input) {
-            if (input != '') {
-              if (mode == GrayMode.Decimal) {
-                outBinaryGray = int.parse(input).toRadixString(2);
-              } else {
-                outBinaryGray = input;
-              }
+        .split(' ')
+        .map((input) {
+          if (input != '') {
+            if (mode == GrayMode.Decimal) {
+              outBinaryGray = int.parse(input).toRadixString(2);
+            } else {
+              outBinaryGray = input;
+            }
 
-              plainDecimal = getMaxPossibleInt(outBinaryGray.length) *
-                  int.parse(outBinaryGray[0]);
-              bool firstOne = true;
-              for (int i = 1; i < (outBinaryGray.length); i++) {
-                if (outBinaryGray[i] == '1') {
-                  if (firstOne) {
-                    firstOne = false;
-                    plainDecimal = plainDecimal - getMaxPossibleInt(outBinaryGray.length - i) * int.parse(outBinaryGray[i]);
-                  } else {
-                    plainDecimal = plainDecimal + getMaxPossibleInt(outBinaryGray.length - i) * int.parse(outBinaryGray[i]);
-                  }
+            plainDecimal = getMaxPossibleInt(outBinaryGray.length) * int.parse(outBinaryGray[0]);
+            bool firstOne = true;
+            for (int i = 1; i < (outBinaryGray.length); i++) {
+              if (outBinaryGray[i] == '1') {
+                if (firstOne) {
+                  firstOne = false;
+                  plainDecimal = plainDecimal - getMaxPossibleInt(outBinaryGray.length - i) * int.parse(outBinaryGray[i]);
+                } else {
+                  plainDecimal = plainDecimal + getMaxPossibleInt(outBinaryGray.length - i) * int.parse(outBinaryGray[i]);
                 }
               }
-
-              outBinaryPlain = plainDecimal.toRadixString(2);
-
-              return outBinaryPlain;
             }
-          })
-          .join(' '));
+
+            outBinaryPlain = plainDecimal.toRadixString(2);
+
+            return outBinaryPlain;
+          }
+        })
+        .join(' '));
 }
