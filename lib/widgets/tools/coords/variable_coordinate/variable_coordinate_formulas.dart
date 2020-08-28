@@ -104,7 +104,8 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
     var rows = formulas.map((formula) {
       var formulaTool = GCWToolWidget(
         tool: VariableCoordinate(formula: formula),
-        toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}'
+        toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
+        i18nPrefix: 'coords_variablecoordinate', // for calling the help of Variable Coordinates
       );
 
       Future _navigateToSubPage(context) async {
