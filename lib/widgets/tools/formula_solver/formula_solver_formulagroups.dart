@@ -158,7 +158,8 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
     var rows = formulaGroups.map((group) {
       var formulaTool = GCWToolWidget(
         tool: FormulaSolverFormulas(group: group),
-        toolName: '${group.name} - ${i18n(context, 'formulasolver_formulas')}'
+        toolName: '${group.name} - ${i18n(context, 'formulasolver_formulas')}',
+        i18nPrefix: 'formulasolver', // for calling the help of the formulasolver
       );
 
       Future _navigateToSubPage(context) async {
@@ -198,7 +199,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
                         ),
                         Container(
                           child: GCWText(
-                            text: '${group.formulas.length} ' + i18n(context, group.formulas.length == 1 ? 'formulasolver_formula' : 'formulasolver_formulas'),
+                            text: '${group.formulas.length} ' + i18n(context, group.formulas.length == 1 ? 'formulasolver_formula' : 'formulasolver_formulas123'),
                             style: gcwDescriptionTextStyle(),
                           ),
                           padding: EdgeInsets.only(left: 10),
