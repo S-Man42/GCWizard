@@ -522,7 +522,6 @@
   "common_unit_length_au_name" : "Astronomische Einheit",
   "common_unit_length_pc_name" : "Parsec",
   "common_unit_mass_g_name" : "Gramm",
-  "common_unit_mass_deka_name" : "Dekagramm",
   "common_unit_mass_kg_name" : "Kilogramm",
   "common_unit_mass_t_name" : "Tonne",
   "common_unit_mass_ozt_name" : "Feinunze",
