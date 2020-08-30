@@ -1,4 +1,5 @@
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 
 class Area extends Unit {
   Function toSquareMeter;
@@ -129,5 +130,3 @@ final List<Unit> areas = [
   AREA_SECTION,
   AREA_SOCCERFIELD
 ];
-
-final defaultArea = AREA_SQUAREMETER;

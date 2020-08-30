@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 
 class Angle extends Unit {
   Function toDegree;
@@ -33,5 +34,3 @@ final List<Unit> angles = [
   ANGLE_DEGREE,
   ANGLE_RADIAN
 ];
-
-final defaultAngle = ANGLE_DEGREE;

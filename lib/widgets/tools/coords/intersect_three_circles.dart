@@ -3,9 +3,10 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/logic/units/length.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/logic/units/length.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
@@ -35,7 +36,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
   var _currentRadius3 = 0.0;
 
   var _currentOutputFormat = defaultCoordFormat();
-  var _currentOutputUnit = defaultLength;
+  Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
   List<String> _currentOutput = [];
   var _currentMapPoints;
 

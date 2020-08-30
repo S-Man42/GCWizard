@@ -1,4 +1,5 @@
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 
 class Volume extends Unit {
   Function toCubicMeter;
@@ -304,5 +305,3 @@ final List<Unit> volumes = [
   VOLUME_USBUSHEL,
   VOLUME_BATHTUB
 ];
-
-final defaultVolume = VOLUME_CUBICMETER;

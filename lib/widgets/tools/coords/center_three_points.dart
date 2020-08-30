@@ -3,15 +3,16 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/centerpoint.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/logic/units/length.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/logic/units/length.dart';
+import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat_distance.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:latlong/latlong.dart';
 
 class CenterThreePoints extends StatefulWidget {
@@ -32,7 +33,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
   var _currentCoordsFormat3 = defaultCoordFormat();
 
   var _currentOutputFormat = defaultCoordFormat();
-  var _currentOutputUnit = defaultLength;
+  Length _currentOutputUnit = UNITCATEGORY_LENGTH.defaultUnit;
   List<String> _currentOutput = [];
 
   @override

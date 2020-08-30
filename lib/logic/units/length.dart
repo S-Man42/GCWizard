@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 
 class Length extends Unit {
   Function toMeter;
@@ -17,77 +18,89 @@ class Length extends Unit {
   }
 }
 
-final LENGTH_M = Length(
+final LENGTH_METER = Length(
   name: 'common_unit_length_m_name',
   symbol: 'm',
   isReference: true
 );
 
-final LENGTH_MI = Length(
+final LENGTH_STATUTEMILE = Length(
   name: 'common_unit_length_mi_name',
   symbol: 'mi',
   inMeters: 1609.344
 );
 
-final LENGTH_NM = Length(
+final LENGTH_NAUTICALMILE = Length(
   name: 'common_unit_length_nm_name',
   symbol: 'nm',
   inMeters: 1852.0
 );
 
-final LENGTH_IN = Length(
+final LENGTH_INCH = Length(
   name: 'common_unit_length_in_name',
   symbol: 'in',
   inMeters: 0.3048 / 12.0
 );
 
-final LENGTH_FT = Length(
+final LENGTH_FOOT = Length(
   name: 'common_unit_length_ft_name',
   symbol: 'ft',
   inMeters: 0.3048
 );
 
-final LENGTH_YD = Length(
+final LENGTH_YARD = Length(
   name: 'common_unit_length_yd_name',
   symbol: 'yd',
   inMeters: 3 * 0.3048
 );
 
-final LENGTH_USSURVEYFT = Length(
+final LENGTH_USSURVEYFOOT = Length(
   name: 'common_unit_length_ussurveyft_name',
   symbol: 'ft',
   inMeters: 1200.0 / 3937.0
 );
 
-final LENGTH_LY = Length(
+final LENGTH_LIGHTYEAR = Length(
   name: 'common_unit_length_ly_name',
   symbol: 'ly',
   inMeters: 9460730472580800.0
 );
 
-final LENGTH_AU = Length(
+final LENGTH_ASTRONOMICALUNIT = Length(
   name: 'common_unit_length_au_name',
   symbol: 'AU',
   inMeters: 149597870700.0
 );
 
-final LENGTH_PC= Length(
-    name: 'common_unit_length_pc_name',
-    symbol: 'pc',
-    inMeters: 96939420213600000.0 / pi
+final LENGTH_PARSEC= Length(
+  name: 'common_unit_length_pc_name',
+  symbol: 'pc',
+  inMeters: 96939420213600000.0 / pi
 );
 
-final List<Unit> lengths = [
-  LENGTH_M,
-  LENGTH_MI,
-  LENGTH_IN,
-  LENGTH_FT,
-  LENGTH_YD,
-  LENGTH_USSURVEYFT,
-  LENGTH_NM,
-  LENGTH_LY,
-  LENGTH_AU,
-  LENGTH_PC
+final List<Unit> baseLengths = [
+  LENGTH_METER,
+  LENGTH_STATUTEMILE,
+  LENGTH_INCH,
+  LENGTH_FOOT,
+  LENGTH_YARD,
+  LENGTH_USSURVEYFOOT,
+  LENGTH_NAUTICALMILE,
+  LENGTH_LIGHTYEAR,
+  LENGTH_ASTRONOMICALUNIT,
+  LENGTH_PARSEC
 ];
 
-final defaultLength = LENGTH_M;
+final LENGTH_KM = Length(
+  name: 'common_unit_length_km_name',
+  symbol: 'km',
+  inMeters: 1000.0
+);
+
+List<Unit> allLengths() {
+  var lengths = List<Unit>.from(baseLengths);
+  var indexM = baseLengths.indexOf(LENGTH_METER);
+  lengths.insert(indexM + 1, LENGTH_KM);
+
+  return lengths;
+}
