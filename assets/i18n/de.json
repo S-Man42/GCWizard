@@ -1261,7 +1261,7 @@
   "projectiles_description" : "Berechnet kinetische Energie, Masse und Geschwindigkeit von Projektilen",
   "projectiles_energy" : "Kin. Energie",
   "projectiles_mass" : "Masse",
-  "projectiles_velocity" : "Geschwindigkeit"
+  "projectiles_velocity" : "Geschwindigkeit",
 
   "railfence_title" : "Jägerzaun/Lattenzaun",
   "railfence_description" : "Chiffre, bei der der Text diagonal über Latten eines imaginären Zauns geschrieben wird",
