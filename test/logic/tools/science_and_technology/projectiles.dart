@@ -21,7 +21,6 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('mode: ${elem['mode']}, outputUnit: ${elem['outputUnit']}, inputValue1: ${elem['inputValue1']}, inputValue2: ${elem['inputUnit2']}, inputUnit2: ${elem['inputUnit2']}, prefix: ${elem['prefix']}', () {
         var _actual;
-        // referenceValue = _currentUnit.toReference(_currentValue);
         double _refInputValue1 = elem['inputUnit1'].toReference(elem['inputValue1']);
         double _refInputValue2 = elem['inputUnit2'].toReference(elem['inputValue2']);
 
@@ -29,12 +28,10 @@ void main() {
           _actual = calculateEnergy(_refInputValue1, _refInputValue2);
         } else if (elem['mode'] == UNITCATEGORY_MASS) {
           _actual = calculateMass(_refInputValue1, _refInputValue2);
-        } else { // if (elem['mode'] == UNITCATEGORY_VELOCITY)
+        } else {
           _actual = calculateVelocity(_refInputValue1, _refInputValue2);
         }
-        // outputValue = _currentOutputUnit['unit'].fromReference(outputValue) / _currentOutputUnit['prefix'].value;
         _actual = elem['outputUnit'].fromReference(_actual) / elem['prefix'].value;
-        // return NumberFormat('0.0' + '#' * 6).format(outputValue) + ' ' + (_currentOutputUnit['prefix'].symbol ?? '') + _currentOutputUnit['unit'].symbol;
         expect(NumberFormat('0.0' + '#' * 6).format(_actual) + ' ' + (elem['prefix'].symbol ?? '') + elem['outputUnit'].symbol, elem['expectedOutput']);
       });
     });
