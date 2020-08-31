@@ -103,7 +103,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
                       if (widget.inputFormatters != null) {
                         widget.inputFormatters.forEach((formatter) {
                           if (formatter is WrapperForMaskTextInputFormatter) {
-                            formatter.reinitialize();
+                            formatter.clear();
                           }
                         });
                       }
