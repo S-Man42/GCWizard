@@ -28,6 +28,12 @@ void main() {
       {'expectedOutput' : 'A', 'input' : '697.1633.'},
       {'expectedOutput' : '27', 'input' : '697 1336 1209 852 '},
       {'expectedOutput' : '274', 'input' : '697 1336 1209 852 fghi 770 1209 '},
+
+      {'expectedOutput' : '', 'input' : '697'},
+      {'expectedOutput' : '', 'input' : '69'},
+      {'expectedOutput' : '', 'input' : '69 1633'},
+      {'expectedOutput' : '', 'input' : '697 1632'},
+      {'expectedOutput' : 'A2', 'input' : '697 1633 697 1336 1209'},
     ];
 
     _inputsToExpected.forEach((elem) {

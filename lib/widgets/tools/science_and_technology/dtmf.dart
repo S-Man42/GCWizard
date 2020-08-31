@@ -1,8 +1,14 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -19,6 +25,9 @@ class DTMFState extends State<DTMF> {
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
+
+  var _currentDecryptLowFrequency = DTMF_FREQUENCIES_LOW[0];
+  var _currentDecryptHighFrequency = DTMF_FREQUENCIES_HIGH[0];
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 
@@ -48,22 +57,85 @@ class DTMFState extends State<DTMF> {
           },
         ),
         _currentMode == GCWSwitchPosition.left
-            ? GCWTextField(
-                controller: _encodeController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentEncodeInput = text;
-                  });
-                },
-              )
-            : GCWTextField(
-                controller: _decodeController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentDecodeInput = text;
-                  });
-                },
-              ),
+          ? GCWTextField(
+              controller: _encodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentEncodeInput = text;
+                });
+              },
+            )
+          : Container(),
+        _currentMode == GCWSwitchPosition.right
+          ? Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    child: GCWDropDownButton(
+                      value: _currentDecryptLowFrequency,
+                      items: DTMF_FREQUENCIES_LOW.map((frequency) {
+                        return DropdownMenuItem(
+                          value: frequency,
+                          child: Text(frequency.toString()),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _currentDecryptLowFrequency = value;
+                        });
+                      },
+                    ),
+                    padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                  )
+                ),
+                Expanded(
+                  child: Container(
+                    child: GCWDropDownButton(
+                      value: _currentDecryptHighFrequency,
+                      items: DTMF_FREQUENCIES_HIGH.map((frequency) {
+                        return DropdownMenuItem(
+                          value: frequency,
+                          child: Text(frequency.toString()),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _currentDecryptHighFrequency = value;
+                        });
+                      },
+                    ),
+                    padding: EdgeInsets.only(
+                      left: DEFAULT_MARGIN,
+                      right: DEFAULT_MARGIN
+                    ),
+                  )
+                ),
+                GCWIconButton(
+                  iconData: Icons.add,
+                  onPressed: () {
+                    setState(() {
+                      var input = ' [$_currentDecryptLowFrequency, $_currentDecryptHighFrequency] ';
+                      var cursorPosition = max(_decodeController.selection.end, 0);
+
+                      _currentDecodeInput = _currentDecodeInput.substring(0, cursorPosition) + input + _currentDecodeInput.substring(cursorPosition);
+                      _decodeController.text = _currentDecodeInput;
+                      _decodeController.selection = TextSelection.collapsed(offset: cursorPosition + input.length);
+                    });
+                  },
+                )
+              ],
+            )
+          : Container(),
+        _currentMode == GCWSwitchPosition.right
+          ? GCWTextField(
+              controller: _decodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentDecodeInput = text;
+                });
+              },
+            )
+          : Container(),
         GCWTextDivider(
             text: i18n(context, 'common_output')
         ),
