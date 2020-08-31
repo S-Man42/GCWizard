@@ -24,9 +24,9 @@ dependencies:
   package_info: ^0.4.0+16
   math_expressions: ^2.0.0
   pointycastle: ^1.0.2
-  fluttertoast: ^4.0.0
+  fluttertoast: ^7.0.4
   qr_flutter: ^3.2.0
-  touchable: ^0.1.7
+  touchable: ^0.2.0
 
 dev_dependencies:
   flutter_test:
