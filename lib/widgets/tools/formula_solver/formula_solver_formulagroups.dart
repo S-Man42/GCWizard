@@ -199,7 +199,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
                         ),
                         Container(
                           child: GCWText(
-                            text: '${group.formulas.length} ' + i18n(context, group.formulas.length == 1 ? 'formulasolver_formula' : 'formulasolver_formulas123'),
+                            text: '${group.formulas.length} ' + i18n(context, group.formulas.length == 1 ? 'formulasolver_formula' : 'formulasolver_formulas'),
                             style: gcwDescriptionTextStyle(),
                           ),
                           padding: EdgeInsets.only(left: 10),

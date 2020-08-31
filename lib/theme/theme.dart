@@ -60,15 +60,16 @@ ThemeData buildTheme() {
       hintStyle: TextStyle(color: ThemeColors.hintText),
       fillColor: ThemeColors.inputBackground,
       focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: ThemeColors.focused, width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius))
+        borderSide: BorderSide(color: ThemeColors.focused, width: 2.0),
+        borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius))
       ),
       enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: ThemeColors.accent, width: 1.0),
-          borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius))
+        borderSide: BorderSide(color: ThemeColors.accent, width: 1.0),
+        borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius))
       ),
       contentPadding: EdgeInsets.all(10.0),
     ),
-    unselectedWidgetColor: ThemeColors.accent
+    unselectedWidgetColor: ThemeColors.accent,
+    cardColor: ThemeColors.gray80
   );
 }
