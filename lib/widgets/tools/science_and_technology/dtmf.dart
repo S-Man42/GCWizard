@@ -12,6 +12,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class DTMF extends StatefulWidget {
@@ -30,6 +31,11 @@ class DTMFState extends State<DTMF> {
   var _currentDecryptHighFrequency = DTMF_FREQUENCIES_HIGH[0];
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+
+  var _maskInputFormatter = WrapperForMaskTextInputFormatter(
+    mask: '#' * 10000,
+    filter: {"#": RegExp(r'[0-9\*\#a-dA-D]')}
+  );
 
   @override
   void initState() {
@@ -59,6 +65,7 @@ class DTMFState extends State<DTMF> {
         _currentMode == GCWSwitchPosition.left
           ? GCWTextField(
               controller: _encodeController,
+              inputFormatters: [_maskInputFormatter],
               onChanged: (text) {
                 setState(() {
                   _currentEncodeInput = text;
