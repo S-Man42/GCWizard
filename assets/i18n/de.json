@@ -867,6 +867,10 @@
   "dna_aminoacid_glutamicacid" : "Glutaminsäure",
   "dna_aminoacid_glycine" : "Glycin",
 
+  "dtmf_title" : "DTMF (MFV)",
+  "dtmf_description" : "Dualton-Mehrfrequenz(wahl)verfahren",
+  "dtmf_example" : "5 → [770, 1336]",
+
   "duckspeak_title": "Entensprache",
   "duckspeak_description" : "Eine Spaß-Sprache die aus 'Nak'-Lauten besteht",
   "duckspeak_example" : "Ente → Nak? nak? Naknak nak. Naknaknak Nak? Naknak nak?",
