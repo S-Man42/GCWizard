@@ -47,26 +47,26 @@ import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdaiken.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdlibawcraig.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdoriginal.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdgray.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdglixon.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdpetherick.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdobrien.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base85.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdaiken.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdglixon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdgray.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdlibawcraig.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdobrien.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdoriginal.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdpetherick.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
@@ -134,11 +134,11 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
@@ -150,6 +150,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isp
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nearestprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nthprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
@@ -502,6 +503,12 @@ class Registry {
         i18nPrefix: 'primes_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_PRIMES
+      ),
+      GCWToolWidget(
+        tool: Projectiles(),
+        i18nPrefix: 'projectiles',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'geschosse projektile bullets projectiles ballistik ballistics kugeln'
       ),
       GCWToolWidget(
         tool: RailFence(),

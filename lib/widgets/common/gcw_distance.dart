@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/logic/units/length.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_lengths_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 
 class GCWDistance extends StatefulWidget {
   final Function onChanged;
@@ -19,7 +20,7 @@ class _GCWDistanceState extends State<GCWDistance> {
   var _controller;
 
   var _currentInput = {'text': '','value': 0.0};
-  Length _currentLengthUnit = defaultLength;
+  Length _currentLengthUnit = UNITCATEGORY_LENGTH.defaultUnit;
 
   @override
   void initState() {
@@ -58,7 +59,8 @@ class _GCWDistanceState extends State<GCWDistance> {
         ),
         Expanded(
           flex: 1,
-          child: GCWLengthsDropDownButton(
+          child: GCWUnitDropDownButton(
+            unitList: allLengths(),
             value: _currentLengthUnit,
             onChanged: (Length value) {
               setState(() {
@@ -66,7 +68,7 @@ class _GCWDistanceState extends State<GCWDistance> {
                 _setCurrentValueAndEmitOnChange();
               });
             }
-          )
+          ),
         )
       ],
     );

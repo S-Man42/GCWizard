@@ -1,4 +1,5 @@
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 
 class Mass extends Unit {
   Function toGram;
@@ -111,7 +112,7 @@ final MASS_ZENTNER = Mass(
   inGram: 50.0 * 1000.0
 );
 
-final List<Unit> masses = [
+final List<Unit> baseMasses = [
   MASS_GRAM,
   MASS_TON,
   MASS_GRAIN,
@@ -130,4 +131,16 @@ final List<Unit> masses = [
   MASS_ZENTNER
 ];
 
-final defaultMass = MASS_GRAM;
+final MASS_KILOGRAM = Mass(
+  name: 'common_unit_mass_kg_name',
+  symbol: 'kg',
+  inGram: 1000.0
+);
+
+List<Unit> allMasses() {
+  var masses = List<Unit>.from(baseMasses);
+  var indexKG = baseMasses.indexOf(MASS_GRAM);
+  masses.insert(indexKG + 1, MASS_KILOGRAM);
+
+  return masses;
+}

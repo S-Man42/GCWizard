@@ -1,25 +1,26 @@
 import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-// Wrapper for currently (2020/08) buggy external MaskTextInputFormatter
+// Wrapper for external MaskTextInputFormatter
+// (was buggy sometimes, so required work-arounds; still remains for potential future issues)
 class WrapperForMaskTextInputFormatter extends TextInputFormatter {
   String mask;
   Map<String, RegExp> filter;
 
   MaskTextInputFormatter _formatter;
   WrapperForMaskTextInputFormatter({this.mask, this.filter}) {
-    reinitialize();
+    _formatter = MaskTextInputFormatter(
+      mask: mask,
+      filter: filter
+    );
   }
 
   String getMaskedText() {
     return _formatter.getMaskedText();
   }
 
-  void reinitialize() {
-    _formatter = MaskTextInputFormatter(
-      mask: mask,
-      filter: filter
-    );
+  void clear() {
+    _formatter.clear();
   }
 
   @override
