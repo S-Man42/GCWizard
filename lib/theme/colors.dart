@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ThemeColors {
   static const gray = Color(0xFFD8D8D8);
+  static const gray80 = Color(0xFF424242);
   static const gray60 = Color(0x99D8D8D8);
   static const gray25 = Color(0x40D8D8D8);
   static const darkgrey = Color(0xFF26282F);

@@ -47,26 +47,26 @@ import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdaiken.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdlibawcraig.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdoriginal.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdgray.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdglixon.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdpetherick.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdobrien.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base85.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdaiken.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdglixon.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdgray.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdlibawcraig.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdobrien.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdoriginal.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdpetherick.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
@@ -135,10 +135,11 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
@@ -150,6 +151,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isp
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nearestprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nthprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
@@ -200,6 +202,8 @@ class Registry {
   static final SEARCHSTRING_RSA = SEARCHSTRING_PRIMES + 'rsa ronald rivest adi shamir leonard adleman asymmetry asymmetric asymmetrie asymmetrisches public private key oeffentlicher privater schluessel phi ';
   static final SEARCHSTRING_SEGMENTDISPLAY = 'led segments segmente display segmentanzeige ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
+  static final SEARCHSTRING_SYMBOLTABLES_FREEMASONS = 'freemasons freimaurer ';
+  static final SEARCHSTRING_SYMBOLTABLES_ILLUMINATI = SEARCHSTRING_SYMBOLTABLES_FREEMASONS + 'illuminati illuminatus illuminaten 23 ';
   static final SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER = 'lwl llk lichtwellenleiter lichtleitkabel opticalfiber glasfaserkabel ';
   static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
   static final SEARCHSTRING_VIGENERE = SEARCHSTRING_ROTATION + 'vigenere ';
@@ -356,6 +360,12 @@ class Registry {
         searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd '
       ),
       GCWToolWidget(
+        tool: DTMF(),
+        i18nPrefix: 'dtmf',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'dual tone multi frequency mehrfrequenzwahlverfahren tonwahl'
+      ),
+      GCWToolWidget(
         tool: Decabit(),
         i18nPrefix: 'decabit',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -502,6 +512,12 @@ class Registry {
         i18nPrefix: 'primes_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_PRIMES
+      ),
+      GCWToolWidget(
+        tool: Projectiles(),
+        i18nPrefix: 'projectiles',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'geschosse projektile bullets projectiles ballistik ballistics kugeln'
       ),
       GCWToolWidget(
         tool: RailFence(),
@@ -1556,6 +1572,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hebrew hebraeisches jews juden'
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hebrew_v2'),
+        i18nPrefix: 'symboltables_hebrew_v2',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hebrew_v2/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hebrew hebraeisches jews juden'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'hexahue'),
         i18nPrefix: 'symboltables_hexahue',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hexahue/81.png',
@@ -1596,6 +1618,18 @@ class Registry {
         i18nPrefix: 'symboltables_hymmnos',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hymmnos/74.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hymmnos artonelico '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'illuminati_v1'),
+        i18nPrefix: 'symboltables_illuminati_v1',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'illuminati_v1/86.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_ILLUMINATI
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'illuminati_v2'),
+        i18nPrefix: 'symboltables_illuminati_v2',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'illuminati_v2/86.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_ILLUMINATI
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'intergalactic'),
@@ -1896,6 +1930,12 @@ class Registry {
         i18nPrefix: 'symboltables_visitor',
         iconPath: SYMBOLTABLES_ASSETPATH + 'visitor/57.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'visitor die besucher v aliens ausserirdische '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'wakandan', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_wakandan',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'wakandan/78.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'wakandanisches wakandisches blackpanther marvel chadwickboseman schwarzerpanther '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'yan_koryani'),

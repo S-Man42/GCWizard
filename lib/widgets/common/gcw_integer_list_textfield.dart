@@ -31,7 +31,7 @@ class _GCWIntegerListTextFieldState extends State<GCWIntegerListTextField> {
           });
         },
         controller: widget.controller,
-        inputFormatters: [WhitelistingTextInputFormatter(RegExp(r'[0-9 ]'))],
+        inputFormatters: [WhitelistingTextInputFormatter(RegExp(r'[0-9\s]'))],
       );
   }
 }

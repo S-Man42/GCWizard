@@ -1,4 +1,5 @@
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 
 class Temperature extends Unit {
   final Function toKelvin;
@@ -54,5 +55,3 @@ final List<Unit> temperatures = [
   TEMPERATURE_REAUMUR,
   TEMPERATURE_RANKINE
 ];
-
-final defaultTemperature = TEMPERATURE_KELVIN;
