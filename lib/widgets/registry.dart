@@ -201,6 +201,8 @@ class Registry {
   static final SEARCHSTRING_RSA = SEARCHSTRING_PRIMES + 'rsa ronald rivest adi shamir leonard adleman asymmetry asymmetric asymmetrie asymmetrisches public private key oeffentlicher privater schluessel phi ';
   static final SEARCHSTRING_SEGMENTDISPLAY = 'led segments segmente display segmentanzeige ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
+  static final SEARCHSTRING_SYMBOLTABLES_FREEMASONS = 'freemasons freimaurer ';
+  static final SEARCHSTRING_SYMBOLTABLES_ILLUMINATI = SEARCHSTRING_SYMBOLTABLES_FREEMASONS + 'illuminati illuminatus illuminaten 23 ';
   static final SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER = 'lwl llk lichtwellenleiter lichtleitkabel opticalfiber glasfaserkabel ';
   static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
   static final SEARCHSTRING_VIGENERE = SEARCHSTRING_ROTATION + 'vigenere ';
@@ -1563,6 +1565,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hebrew hebraeisches jews juden'
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hebrew_v2'),
+        i18nPrefix: 'symboltables_hebrew_v2',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hebrew_v2/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hebrew hebraeisches jews juden'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'hexahue'),
         i18nPrefix: 'symboltables_hexahue',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hexahue/81.png',
@@ -1603,6 +1611,18 @@ class Registry {
         i18nPrefix: 'symboltables_hymmnos',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hymmnos/74.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hymmnos artonelico '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'illuminati_v1'),
+        i18nPrefix: 'symboltables_illuminati_v1',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'illuminati_v1/86.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_ILLUMINATI
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'illuminati_v2'),
+        i18nPrefix: 'symboltables_illuminati_v2',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'illuminati_v2/86.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_ILLUMINATI
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'intergalactic'),
@@ -1903,6 +1923,12 @@ class Registry {
         i18nPrefix: 'symboltables_visitor',
         iconPath: SYMBOLTABLES_ASSETPATH + 'visitor/57.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'visitor die besucher v aliens ausserirdische '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'wakandan', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_wakandan',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'wakandan/78.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'wakandanisch blackpanther marvel chadwickboseman schwarzerpanther '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'yan_koryani'),
