@@ -169,7 +169,8 @@ class Registry {
   static final SEARCHSTRING_ASTRONOMY_RISESET = 'rise set transit noon aufgang aufgaenge untergang untergaenge dawn dusk mittag culmination kulmination ';
   static final SEARCHSTRING_ASTRONOMY_POSITION = 'declination position stand rektaszension zodiac astrology astrologischeszeichen astrologie astrologicalsign tierkreiszeichen sternzeichen azimuth altitude diameter durchmesser hoehe rightascension distance entfernung distanz observer beobachter juliandate julianischesdatum sternzeit siderealtime gmst lmst eclipticlongitude ekliptischelaenge ';
   static final SEARCHSTRING_BASE = 'base encode decode encoding decoding dekodierung dekodieren ';
-  static final SEARCHSTRING_BCD = 'bcd encode decode encoding decoding dekodierung dekodieren binary coded decimal binaer codierte dezimalzahlen ';
+  static final SEARCHSTRING_BCD = SEARCHSTRING_BINARY + 'bcd binary coded decimal binaer codierte dezimalzahlen hamming distance hamming-distanz';
+  static final SEARCHSTRING_BINARY = 'dezimalzahlen binaerzahlen dualzahlen binary numbers decimal ';
   static final SEARCHSTRING_BRAINFK = SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'brainf**k ';
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
   static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen lochkarten konrad zuse z-22 z22 punchedpapertape cards baudot-murray-code ';
@@ -239,7 +240,7 @@ class Registry {
         tool: ASCIIValues(),
         i18nPrefix: 'asciivalues',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'ascii utf8 utf-8 unicode american standard information interchange binary code binärcode'
+        searchStrings: SEARCHSTRING_BINARY + 'ascii utf8 utf-8 unicode american standard information interchange'
       ),
       GCWToolWidget(
         tool: AstronomySelection(),
@@ -257,7 +258,7 @@ class Registry {
         tool: Bacon(),
         i18nPrefix: 'bacon',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'francis bacon binary binaer dual'
+        searchStrings: SEARCHSTRING_BINARY + 'francis bacon'
       ),
       GCWToolWidget(
         tool: BaseSelection(),
@@ -281,7 +282,7 @@ class Registry {
         tool: Binary(),
         i18nPrefix: 'binary',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'binary numbers binaerzahlen dezimalzahlen decimal dual'
+        searchStrings: SEARCHSTRING_BINARY
       ),
       GCWToolWidget(
         tool: Bifid(),
@@ -415,7 +416,7 @@ class Registry {
         tool: Gray(),
         i18nPrefix: 'gray',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'binary decimal gray binär dezimal enoding decoding verschlüsseln entschlüsseln'
+        searchStrings: SEARCHSTRING_BINARY + 'gray hamming distance hamming-distanz'
       ),
       GCWToolWidget(
         tool: Gronsfeld(),
@@ -463,7 +464,7 @@ class Registry {
         tool: NumeralBases(),
         i18nPrefix: 'numeralbases',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'radix numeral systems basis basen zahlensysteme binaer binary decimal dezimal octal octenary oktal dual hexadecimal hexadezimal'
+        searchStrings: SEARCHSTRING_BINARY + 'radix numeral systems basis basen zahlensysteme octal octenary oktal dual hexadecimal hexadezimal'
       ),
       GCWToolWidget(
         tool: OneTimePad(),
