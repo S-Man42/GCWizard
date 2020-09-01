@@ -1928,7 +1928,7 @@ class Registry {
         tool: SymbolTable(symbolKey: 'wakandan', isCaseSensitive: true),
         i18nPrefix: 'symboltables_wakandan',
         iconPath: SYMBOLTABLES_ASSETPATH + 'wakandan/78.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'wakandanisch blackpanther marvel chadwickboseman schwarzerpanther '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'wakandanisches wakandisches blackpanther marvel chadwickboseman schwarzerpanther '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'yan_koryani'),
