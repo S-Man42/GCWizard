@@ -381,7 +381,7 @@ class AboutState extends State<About> {
                           'Mike B. (Symbol Tables)',
                           '\'moenk\' (GK Coords)',
                           'Stefan S. (Symbol Tables)',
-                          '\'TeamBirdy2404 (Symbol Tables)\''
+                          '\'TeamBirdy2404 (Symbol Tables)\'',
                           'Thomas \'TMZ\' Z. (Code, Symbol Tables)',
                           'Udo J. (Code)',
                           '\'wollpirat\' (Food, Tea & more)'
