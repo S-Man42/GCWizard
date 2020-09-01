@@ -47,6 +47,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
@@ -175,6 +176,7 @@ class _MainViewState extends State<MainView> {
           className(ESelection()),
           className(FormulaSolverFormulaGroups()),
           className(GCCode()),
+          className(Gray()),
           className(Projectiles()),
           className(Gronsfeld()),
           className(HeatIndex()),

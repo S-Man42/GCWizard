@@ -927,6 +927,13 @@
   "gccode_example" : "GCK25B → 156997",
   "gccode_novalidgcode" : "Kein valider GC-Code",
 
+  "gray_title" : "Gray-Code",
+  "gray_description" : "Konvertiert eine Binär-/Dezimalzahl in eine Gray-codierte Dezimal-/Binärzahl",
+  "gray_example" : "4 | 100 → 6 | 110",
+  "gray_mode" : "Modus",
+  "gray_mode_decimal" : "Dezimal",
+  "gray_mode_binary" : "Binär",
+
   "gronsfeld_title" : "Gronsfeld Chiffre",
   "gronsfeld_description" : "Spezialfall der Vigenère-Verschlüsselung mit Zahlen als Schlüssel",
 
