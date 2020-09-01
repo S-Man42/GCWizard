@@ -1,149 +1,64 @@
 //
 // https://web.archive.org/web/20071011164305/http://en.wikipedia.org/wiki/Gray_code
 
-import 'dart:math';
-
 class GrayOutput {
-  final String output_gray_decimal;
-  final String output_gray_binary;
+  final List<String> decimalOutput;
+  final List<String> binaryOutput;
 
-  GrayOutput(this.output_gray_decimal, this.output_gray_binary);
+  GrayOutput(this.decimalOutput, this.binaryOutput);
 }
 
-enum GrayMode { Decimal, Binary }
+enum GrayMode {DECIMAL, BINARY}
 
-String buildDecimalStringFromBinaryString(String input) {
-  int output = 0;
-  int position = 1;
+BigInt _encodeGray(BigInt i) {
+  return i ^ (i >> 1);
+}
 
-  for (int i = (input.length - 1); i >= 0; i--) {
-    if (input[i] == '1') output = output + position;
-    position = position * 2;
+BigInt _decodeGray(BigInt i) {
+  BigInt mask = i;
+
+  while (mask > BigInt.zero) {
+    mask >>= 1;
+    i ^= mask;
   }
-  return output.toString();
+
+  return i;
 }
 
-int getMaxPossibleInt(int digits) {
-  return pow(2, digits) - 1;
-}
+GrayOutput encodeGray(String plainText, {GrayMode mode: GrayMode.DECIMAL}) {
+  if (plainText == null || plainText.length == 0)
+    return GrayOutput([], []);
 
-GrayOutput encryptGray(String plainText, {GrayMode mode: GrayMode.Decimal}) {
-
-  String outputGrayDecimal = '';
-  String outputGrayBinary = '';
-
-  String outputTextDecimal = plainText;
-  String outputTextBinary = plainText;
-
-  int inputIntPlain = 0;
-  int outputIntGray = 0;
+  var encoded = plainText
+    .split(RegExp(mode == GrayMode.DECIMAL ? r'[^0-9]' : r'[^01]'))
+    .where((input) => input != null && input.length > 0)
+    .map((input) {
+      var inputIntPlain = BigInt.tryParse(input, radix: mode == GrayMode.DECIMAL ? 10 : 2);
+      return _encodeGray(inputIntPlain);
+    })
+    .toList();
 
   return GrayOutput(
-      outputTextDecimal
-          .split(' ')
-          .map((input) {
-            if (input != '') {
-              if (mode == GrayMode.Decimal) {
-                inputIntPlain = int.parse(input);
-              } else {
-                inputIntPlain = int.tryParse(buildDecimalStringFromBinaryString(input));
-              }
-
-              outputIntGray = inputIntPlain ^ (inputIntPlain >> 1);
-              outputGrayDecimal = outputIntGray.toString();
-              outputGrayBinary = outputIntGray.toRadixString(2);
-
-              return outputGrayDecimal;
-            }
-          })
-          .join(' '),
-
-      outputTextBinary
-          .split(' ')
-          .map((input) {
-            if (input != '') {
-              if (mode == GrayMode.Decimal) {
-                inputIntPlain = int.parse(input);
-              } else {
-                inputIntPlain = int.tryParse(buildDecimalStringFromBinaryString(input));
-              }
-
-              outputIntGray = inputIntPlain ^ (inputIntPlain >> 1);
-              outputGrayDecimal = outputIntGray.toString();
-              outputGrayBinary = outputIntGray.toRadixString(2);
-
-              return outputGrayBinary;
-            }
-          })
-          .join(' '));
+    encoded.map((i) => i.toString()).toList(),
+    encoded.map((i) => i.toRadixString(2)).toList()
+  );
 }
 
+GrayOutput decodeGray(String plainText, {GrayMode mode: GrayMode.DECIMAL}) {
+  if (plainText == null || plainText.length == 0)
+    return GrayOutput([], []);
 
-GrayOutput decryptGray(String chiffreText, {GrayMode mode: GrayMode.Decimal}) {
-  int plainDecimal = 0;
-  String outBinaryGray = '';
-  String outBinaryPlain = '';
-  String outDecimalPlain = '';
-  String outputTextDecimal = chiffreText;
-  String outputTextBinary = chiffreText;
+  var decoded = plainText
+    .split(RegExp(mode == GrayMode.DECIMAL ? r'[^0-9]' : r'[^01]'))
+    .where((input) => input != null && input.length > 0)
+    .map((input) {
+      var inputIntPlain = BigInt.tryParse(input, radix: mode == GrayMode.DECIMAL ? 10 : 2);
+      return _decodeGray(inputIntPlain);
+    })
+    .toList();
 
   return GrayOutput(
-      outputTextDecimal
-        .split(' ')
-        .map((input) {
-          if (input != '') {
-            if (mode == GrayMode.Decimal) {
-              outBinaryGray = int.parse(input).toRadixString(2);
-            } else {
-              outBinaryGray = input;
-            }
-
-            plainDecimal = getMaxPossibleInt(outBinaryGray.length) * int.parse(outBinaryGray[0]);
-            bool firstOne = true;
-            for (int i = 1; i < (outBinaryGray.length); i++) {
-              if (outBinaryGray[i] == '1') {
-                if (firstOne) {
-                  firstOne = false;
-                  plainDecimal = plainDecimal - getMaxPossibleInt(outBinaryGray.length - i) * int.parse(outBinaryGray[i]);
-                } else {
-                  plainDecimal = plainDecimal + getMaxPossibleInt(outBinaryGray.length - i) * int.parse(outBinaryGray[i]);
-                }
-              }
-            }
-            outDecimalPlain = plainDecimal.toString();
-
-            return outDecimalPlain;
-          }
-        })
-        .join(' '),
-
-      outputTextBinary
-        .split(' ')
-        .map((input) {
-          if (input != '') {
-            if (mode == GrayMode.Decimal) {
-              outBinaryGray = int.parse(input).toRadixString(2);
-            } else {
-              outBinaryGray = input;
-            }
-
-            plainDecimal = getMaxPossibleInt(outBinaryGray.length) * int.parse(outBinaryGray[0]);
-            bool firstOne = true;
-            for (int i = 1; i < (outBinaryGray.length); i++) {
-              if (outBinaryGray[i] == '1') {
-                if (firstOne) {
-                  firstOne = false;
-                  plainDecimal = plainDecimal - getMaxPossibleInt(outBinaryGray.length - i) * int.parse(outBinaryGray[i]);
-                } else {
-                  plainDecimal = plainDecimal + getMaxPossibleInt(outBinaryGray.length - i) * int.parse(outBinaryGray[i]);
-                }
-              }
-            }
-
-            outBinaryPlain = plainDecimal.toRadixString(2);
-
-            return outBinaryPlain;
-          }
-        })
-        .join(' '));
+    decoded.map((i) => i.toString()).toList(),
+    decoded.map((i) => i.toRadixString(2)).toList()
+  );
 }

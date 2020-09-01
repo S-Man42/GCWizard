@@ -100,15 +100,15 @@ class GrayState extends State<Gray> {
   Widget _buildOutput(BuildContext context) {
     if (_currentCodingMode == GCWSwitchPosition.left) {
       if (_currentInputMode == GCWSwitchPosition.left) {
-         _currentOutput = encryptGray(_currentInput, mode: GrayMode.Decimal);
+         _currentOutput = encodeGray(_currentInput, mode: GrayMode.DECIMAL);
       } else {// input is binary
-         _currentOutput = encryptGray(_currentInput, mode: GrayMode.Binary);
+         _currentOutput = encodeGray(_currentInput, mode: GrayMode.BINARY);
       }
     } else {
       if (_currentInputMode == GCWSwitchPosition.left) {
-         _currentOutput = decryptGray(_currentInput, mode: GrayMode.Decimal);
+         _currentOutput = decodeGray(_currentInput, mode: GrayMode.DECIMAL);
       } else {
-         _currentOutput = decryptGray(_currentInput, mode: GrayMode.Binary);
+         _currentOutput = decodeGray(_currentInput, mode: GrayMode.BINARY);
       }
     }
 
@@ -123,10 +123,10 @@ class GrayState extends State<Gray> {
             text: i18n(context, 'common_output')
         ),
           GCWOutputText(
-            text: _currentOutput.output_gray_decimal
+            text: _currentOutput.decimalOutput
           ),
           GCWOutputText(
-            text: _currentOutput.output_gray_binary
+            text: _currentOutput.binaryOutput
           ),
       ]
     );
