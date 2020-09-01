@@ -163,7 +163,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 class Registry {
   static List<GCWToolWidget> toolList;
 
-  static final SEARCHSTRING_SETTINGS = 'settings einstellungen preferences ';
+  static final SEARCHSTRING_SETTINGS = 'settings einstellungen preferences options optionen ';
 
   static final SEARCHSTRING_ASTRONOMY = 'astronomy astronomie stars sterne planets planeten astronomisches astronomical ';
   static final SEARCHSTRING_ASTRONOMY_RISESET = 'rise set transit noon aufgang aufgaenge untergang untergaenge dawn dusk mittag culmination kulmination ';

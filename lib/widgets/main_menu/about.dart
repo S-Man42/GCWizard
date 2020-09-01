@@ -376,10 +376,13 @@ class AboutState extends State<About> {
                           '\'capoaira\' (Code)',
                           'Dennis \'dennistreysa\' (Code)',
                           '\'Geo-Link\' (Hardware & Symbol Tables)',
-                          'Karl B. (Coords)',
+                          'Karl B. (Coords Algorithms)',
                           'Michael D. (Symbol Tables)',
+                          'Mike B. (Symbol Tables)',
                           '\'moenk\' (GK Coords)',
                           'Stefan S. (Symbol Tables)',
+                          '\'TeamBirdy2404 (Symbol Tables)\''
+                          'Thomas \'TMZ\' Z. (Code, Symbol Tables)',
                           'Udo J. (Code)',
                           '\'wollpirat\' (Food, Tea & more)'
                         ].join('\n') + '\n'
