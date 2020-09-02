@@ -681,7 +681,7 @@
   "coords_crossbearing_coord1" : "End Point of First Line",
   "coords_crossbearing_coord2" : "End Point of Second Line",
   "coords_formatconverter_title" : "Format Converter",
-  "coords_formatconverter_description" : "Converts different coordinate formats into another",
+  "coords_formatconverter_description" : "Converts different coordinate formats into another (incl. Reverse WhereIGo)",
   "coords_formatconverter_coord" : "Coordinate",
   "coords_formatconverter_utm_lonzone" : "Lon Zone",
   "coords_formatconverter_utm_easting" : "Easting",
