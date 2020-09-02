@@ -57,6 +57,8 @@ void main() {
       {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXY', 'countRows' : 3, 'countColumns': 4, 'countLettersPerCell': 3, 'expectedOutput' : 'ABCMNOYDEFPQRGHISTUJKLVWX'},
       {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZa', 'countRows' : 3, 'countColumns': 4, 'countLettersPerCell': 3, 'expectedOutput' : 'ABCMNOYZaDEFPQRGHISTUJKLVWX'},
       {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZab', 'countRows' : 3, 'countColumns': 4, 'countLettersPerCell': 3, 'expectedOutput' : 'ABCMNOYZaDEFPQRbGHISTUJKLVWX'},
+
+      {'input' : 'ABC', 'countRows' : 0, 'countColumns': 2, 'countLettersPerCell': 1, 'expectedOutput' : 'ACB'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -121,6 +123,8 @@ void main() {
       {'expectedOutput' : 'ABCDEFGHIJKLMNOPQRSTUVWXY', 'countRows' : 3, 'countColumns': 4, 'countLettersPerCell': 3, 'input' : 'ABCMNOYDEFPQRGHISTUJKLVWX'},
       {'expectedOutput' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZa', 'countRows' : 3, 'countColumns': 4, 'countLettersPerCell': 3, 'input' : 'ABCMNOYZaDEFPQRGHISTUJKLVWX'},
       {'expectedOutput' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZab', 'countRows' : 3, 'countColumns': 4, 'countLettersPerCell': 3, 'input' : 'ABCMNOYZaDEFPQRbGHISTUJKLVWX'},
+
+      {'expectedOutput' : 'ABC', 'countRows' : 0, 'countColumns': 2, 'countLettersPerCell': 1, 'input' : 'ACB'},
     ];
 
     _inputsToExpected.forEach((elem) {

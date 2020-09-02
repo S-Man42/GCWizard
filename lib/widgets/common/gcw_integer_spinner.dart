@@ -17,6 +17,7 @@ class GCWIntegerSpinner extends StatefulWidget {
   final controller;
   final SpinnerLayout layout;
   final focusNode;
+  final suppressOverflow;
 
   const GCWIntegerSpinner({
     Key key,
@@ -27,7 +28,8 @@ class GCWIntegerSpinner extends StatefulWidget {
     this.max: 9007199254740992,
     this.controller,
     this.layout: SpinnerLayout.horizontal,
-    this.focusNode
+    this.focusNode,
+    this.suppressOverflow: false // TODO: Automatically true if this.min == null || this.max == null
   }) : super(key: key);
 
   @override
@@ -68,7 +70,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     setState(() {
       if (widget.min == null || _currentValue > widget.min) {
         _currentValue--;
-      } else if (_currentValue == widget.min && widget.max != null) {
+      } else if (!widget.suppressOverflow && _currentValue == widget.min && widget.max != null) {
         _currentValue = widget.max;
       }
 
@@ -80,7 +82,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     setState(() {
       if (widget.max == null || _currentValue < widget.max) {
         _currentValue++;
-      } else if (_currentValue == widget.max && widget.min != null) {
+      } else if (!widget.suppressOverflow && _currentValue == widget.max && widget.min != null) {
         _currentValue = widget.min;
       }
 
