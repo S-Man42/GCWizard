@@ -303,10 +303,6 @@ class SymbolTableState extends State<SymbolTable> {
   }
 
   _getSpecialText(String key) {
-    print(key.startsWith('special_'));
-    print(i18n(context, 'symboltables_' + widget.symbolKey + '_' + key));
-    print((key.startsWith('special_') ? SPECIAL_MARKER : '') + i18n(context, 'symboltables_' + widget.symbolKey + '_' + key));
-
     return (key.startsWith('special_') ? SPECIAL_MARKER : '') + i18n(context, 'symboltables_' + widget.symbolKey + '_' + key);
   }
   
