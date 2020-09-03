@@ -9,22 +9,6 @@ import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final ABOUT_MAINTAINER = 'Mark \'S-Man42\' Lorenz';
-final ABOUT_EMAIL = 'geocache.wizard' + String.fromCharCode(64) + 'gmail.com';
-final ABOUT_EMAIL_URL = 'mailto:geocache.wizard' + String.fromCharCode(64) + 'gmail.com';
-final ABOUT_WEBSITE = 'gcwizard.net';
-final ABOUT_WEBSITE_URL = 'https://gcwizard.net/';
-final ABOUT_BLOG = 'blog.gcwizard.net';
-final ABOUT_BLOG_URL = 'https://blog.gcwizard.net/';
-final ABOUT_TWITTER = '@gc_wizard';
-final ABOUT_TWITTER_URL = 'https://twitter.com/gc_wizard';
-final ABOUT_FACEBOOK = '@geocache.wizard';
-final ABOUT_FACEBOOK_URL = 'https://www.facebook.com/geocache.wizard';
-final ABOUT_LICENSE = 'GNU General Public License v3.0';
-final ABOUT_LICENSE_URL = 'https://www.gnu.org/licenses/gpl-3.0.en.html';
-final ABOUT_GITHUB = 'github.com/S-Man42/GCWizard';
-final ABOUT_GITHUB_URL = 'https://github.com/S-Man42/GCWizard';
-final ABOUT_PRIVACYPOLICY = 'legal.gcwizard.net/privacy_policy.html';
-final ABOUT_PRIVACYPOLICY_URL = 'https://legal.gcwizard.net/privacy_policy.html';
 
 class About extends StatefulWidget {
   @override
@@ -46,6 +30,37 @@ class AboutState extends State<About> {
     setState(() {
       packageInfo = info;
     });
+  }
+
+  _buildUrl(String key) {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: GCWText(
+              text: i18n(context, 'about_${key}')
+            ),
+            flex: 2
+          ),
+          Expanded(
+            child: InkWell(
+              child: Text(
+                i18n(context, 'about_${key}_url_text'),
+                style: gcwHyperlinkTextStyle(),
+              ),
+              onTap: () {
+                launch(i18n(context, 'about_${key}_url'));
+              },
+            ),
+            flex: 3
+          )
+        ]
+      ),
+      padding: EdgeInsets.only(
+        top: 15,
+        bottom: 10
+      )
+    );
   }
 
   @override
@@ -101,249 +116,36 @@ class AboutState extends State<About> {
           )
         ),
         GCWDivider(),
-        Container(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: GCWText(
-                  text: i18n(context, 'about_contact_email')
-                ),
-                flex: 2
-              ),
-              Expanded(
-                child: InkWell(
-                  child: Text(
-                    ABOUT_EMAIL,
-                    style: gcwHyperlinkTextStyle(),
-                  ),
-                  onTap: () {
-                    launch(ABOUT_EMAIL_URL);
-                  },
-                ),
-                flex: 3
-              )
-            ]
-          ),
-          padding: EdgeInsets.only(
-            top: 15,
-            bottom: 10
-          )
-        ),
-        Container(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: GCWText(
-                  text: i18n(context, 'about_website')
-                ),
-                flex: 2
-              ),
-              Expanded(
-                child: InkWell(
-                  child: Text(
-                    ABOUT_WEBSITE,
-                    style: gcwHyperlinkTextStyle(),
-                  ),
-                  onTap: () {
-                    launch(ABOUT_WEBSITE_URL);
-                  },
-                ),
-                flex: 3
-              )
-            ]
-          ),
-          padding: EdgeInsets.only(
-              top: 15,
-              bottom: 10
-          )
-        ),
-        Container(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: GCWText(
-                    text: i18n(context, 'about_blog')
-                ),
-                flex: 2
-              ),
-              Expanded(
-                child: InkWell(
-                  child: Text(
-                    ABOUT_BLOG,
-                    style: gcwHyperlinkTextStyle(),
-                  ),
-                  onTap: () {
-                    launch(ABOUT_BLOG_URL);
-                  },
-                ),
-                flex: 3
-              )
-            ]
-          ),
-          padding: EdgeInsets.only(
-              top: 15,
-              bottom: 10
-          )
-        ),
-        Container(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: GCWText(
-                  text: i18n(context, 'about_twitter')
-                ),
-                flex: 2
-              ),
-              Expanded(
-                child: InkWell(
-                  child: Text(
-                    ABOUT_TWITTER,
-                    style: gcwHyperlinkTextStyle(),
-                  ),
-                  onTap: () {
-                    launch(ABOUT_TWITTER_URL);
-                  },
-                ),
-                flex: 3
-              )
-            ]
-          ),
-          padding: EdgeInsets.only(
-            top: 15,
-            bottom: 10
-          )
-        ),
-        Container(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: GCWText(
-                  text: i18n(context, 'about_facebook')
-                ),
-                flex: 2
-              ),
-              Expanded(
-                child: InkWell(
-                  child: Text(
-                    ABOUT_FACEBOOK,
-                    style: gcwHyperlinkTextStyle(),
-                  ),
-                  onTap: () {
-                    launch(ABOUT_FACEBOOK_URL);
-                  },
-                ),
-                flex: 3
-              )
-            ]
-          ),
-          padding: EdgeInsets.only(
-            top: 15,
-            bottom: 10
-          )
-        ),
+        _buildUrl('contact_email'),
+        _buildUrl('faq'),
+        _buildUrl('blog'),
+        _buildUrl('twitter'),
+        _buildUrl('facebook'),
+        _buildUrl('webversion'),
         GCWDivider(),
-        Container(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: GCWText(
-                  text: i18n(context, 'about_license')
-                ),
-                flex: 2
-              ),
-              Expanded(
-                child: InkWell(
-                  child: Text(
-                    ABOUT_LICENSE,
-                    style: gcwHyperlinkTextStyle(),
-                  ),
-                  onTap: () {
-                    launch(ABOUT_LICENSE_URL);
-                  },
-                ),
-                flex: 3
-              )
-            ]
-          ),
-          padding: EdgeInsets.only(
-            top: 15,
-            bottom: 10
-          )
-        ),
-        Container(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: GCWText(
-                  text: i18n(context, 'about_github')
-                ),
-                flex: 2
-              ),
-              Expanded(
-                child: InkWell(
-                  child: Text(
-                    ABOUT_GITHUB,
-                    style: gcwHyperlinkTextStyle(),
-                  ),
-                  onTap: () {
-                    launch(ABOUT_GITHUB_URL);
-                  },
-                ),
-                flex: 3
-              )
-            ]
-          ),
-          padding: EdgeInsets.only(
-            top: 15,
-            bottom: 10
-          )
-        ),
+        _buildUrl('license'),
+        _buildUrl('github'),
         GCWDivider(),
-        Container(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: GCWText(
-                    text: i18n(context, 'about_privacypolicy')
-                ),
-                flex: 2
-              ),
-              Expanded(
-                child: InkWell(
-                  child: Text(
-                    ABOUT_PRIVACYPOLICY,
-                    style: gcwHyperlinkTextStyle(),
-                  ),
-                  onTap: () {
-                    launch(ABOUT_PRIVACYPOLICY_URL);
-                  },
-                ),
-                flex: 3
-              )
-            ]
-          ),
-          padding: EdgeInsets.only(
-              top: 15,
-              bottom: 10
-          )
-        ),
+        _buildUrl('privacypolicy'),
         GCWDivider(),
         Container(
           child: Column(
             children: <Widget>[
-              Text(
-                i18n(context, 'about_thanks'),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: defaultFontSize()),
-              ),
-              Container(
-                child: GCWText(
-                  align: Alignment.center,
-                  text: 'Daniel \'Eisbehr\' K. (Maintainer GCC)\n'
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: i18n(context, 'about_specialthanks') + '\n',
+                      style: TextStyle(fontWeight: FontWeight.bold)
+                    ),
+                    TextSpan(
+                      text: 'Daniel \'Eisbehr\' K. (Maintainer GCC)'
+                        + '\n'
+                    )
+                  ],
+                  style: TextStyle(fontSize: defaultFontSize())
                 ),
-                padding: EdgeInsets.only(
-                  top: 15,
-                  bottom: 10
-                )
               ),
               RichText(
                 textAlign: TextAlign.center,
@@ -380,9 +182,9 @@ class AboutState extends State<About> {
                           'Michael D. (Symbol Tables)',
                           'Mike B. (Symbol Tables)',
                           '\'moenk\' (GK Coords)',
-                          'Stefan S. (Symbol Tables)',
+                          '\'Schnatt\' (Symbol Tables)',
                           '\'TeamBirdy2404\' (Symbol Tables)',
-                          'Thomas \'TMZ\' Z. (Code, Symbol Tables)',
+                          'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
                           'Udo J. (Code)',
                           '\'wollpirat\' (Food, Tea & more)'
                         ].join('\n') + '\n'
@@ -410,7 +212,7 @@ class AboutState extends State<About> {
                           'Franz K.',
                           'Johannes C.',
                           '\'Klumpenkukuk\'',
-                          '\'lupusmaximus\'',
+                          '\'LupiMus\'',
                           '\'mahoplus\'',
                           'Martin Sch.',
                           '\'Schnatt\'',
