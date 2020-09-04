@@ -1609,6 +1609,18 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hylianische skywardsword skywardschwert thelegendofzelda hyrule '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hylian_twilight_princes_gcn'),
+        i18nPrefix: 'symboltables_hylian_twilight_princes_gcn',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_twilight_princes_gcn/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hylian legende von zelda daemmerungsprinzessin thelegendofzelda twilightprinces gcn Gamecube hyrule'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hylian_twilight_princes_wii'),
+        i18nPrefix: 'symboltables_hylian_twilight_princes_wii',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_twilight_princes_wii/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hylian legende von zelda daemmerungsprinzessin thelegendofzelda twilightprinces wii hyrule'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'hylian_wind_waker'),
         i18nPrefix: 'symboltables_hylian_wind_waker',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_wind_waker/gu.png',
