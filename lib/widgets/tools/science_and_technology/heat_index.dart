@@ -24,13 +24,13 @@ class HeatIndexState extends State<HeatIndex> {
     return Column(
       children: <Widget>[
         GCWDoubleSpinner(
-          title: i18n(context, 'heatindex_temperature'),
-          value: _currentTemperature,
-          onChanged: (value) {
-            setState(() {
-              _currentTemperature = value;
-            });
-          }
+            title: i18n(context, 'heatindex_temperature'),
+            value: _currentTemperature,
+            onChanged: (value) {
+              setState(() {
+                _currentTemperature = value;
+              });
+            }
         ),
 
         GCWTwoOptionsSwitch(
@@ -46,15 +46,15 @@ class HeatIndexState extends State<HeatIndex> {
         ),
 
         GCWDoubleSpinner(
-          title: i18n(context, 'heatindex_humidity'),
-          value: _currentHumidity,
-          min: 0.0,
-          max: 100.0,
-          onChanged: (value) {
-            setState(() {
-              _currentHumidity = value;
-            });
-          }
+            title: i18n(context, 'heatindex_humidity'),
+            value: _currentHumidity,
+            min: 0.0,
+            max: 100.0,
+            onChanged: (value) {
+              setState(() {
+                _currentHumidity = value;
+              });
+            }
         ),
         _buildOutput(context)
       ],
@@ -63,9 +63,6 @@ class HeatIndexState extends State<HeatIndex> {
 
   Widget _buildOutput(BuildContext context) {
     String unit = '';
-    String hintT;
-    String hintH;
-    String hintM;
 
     double output;
     if (_isMetric) {
@@ -76,31 +73,32 @@ class HeatIndexState extends State<HeatIndex> {
       unit = TEMPERATURE_FAHRENHEIT.symbol;
     }
 
+    String hintT;
     if (
-        (_isMetric && _currentTemperature < 27)
-      || (!_isMetric && _currentTemperature < 80)
+    (_isMetric && _currentTemperature < 27)
+        || (!_isMetric && _currentTemperature < 80)
     ) {
       hintT = i18n(context, 'heatindex_hint_temperature', parameters: ['${_isMetric ? 27 : 80} $unit']);
     }
 
+    String hintH;
     if (_currentHumidity < 40)
-      hintH = 'heatindex_hint_humidity';
+      hintH = i18n(context, 'heatindex_hint_humidity');
 
-    String hint = i18n(context, hintH);
-    if (hintT != null)
-      hint = hintT + '\n' + hint;
+    var hint = [hintT, hintH].where((element) => element != null && element.length > 0).join('\n');
 
+    String hintM;
     if (output > 54)
       hintM = 'heatindex_index_54';
     else
-      if (output > 40)
-        hintM = 'heatindex_index_40';
-      else
-        if (output > 32)
-          hintM = 'heatindex_index_32';
-        else
-          if (output > 27)
-            hintM = 'heatindex_index_27';
+    if (output > 40)
+      hintM = 'heatindex_index_40';
+    else
+    if (output > 32)
+      hintM = 'heatindex_index_32';
+    else
+    if (output > 27)
+      hintM = 'heatindex_index_27';
 
     var outputs = [
       GCWOutput(
