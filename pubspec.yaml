@@ -77,6 +77,7 @@ flutter:
     - assets/symbol_tables/finger/
     - assets/symbol_tables/flags/
     - assets/symbol_tables/flags_german_kriegsmarine/
+    - assets/symbol_tables/flags_nato/
     - assets/symbol_tables/fonic/
     - assets/symbol_tables/freemason/
     - assets/symbol_tables/freemason_v2/
@@ -114,7 +115,6 @@ flutter:
     - assets/symbol_tables/moon/
     - assets/symbol_tables/murray/
     - assets/symbol_tables/murraybaudot/
-    - assets/symbol_tables/nato/
     - assets/symbol_tables/notes/
     - assets/symbol_tables/ogham/
     - assets/symbol_tables/optical_fiber_fotag/
