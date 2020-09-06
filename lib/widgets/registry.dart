@@ -1648,7 +1648,7 @@ class Registry {
         tool: SymbolTable(symbolKey: 'klingon', isCaseSensitive: true),
         i18nPrefix: 'symboltables_klingon',
         iconPath: SYMBOLTABLES_ASSETPATH + 'klingon/106.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klingonisch klingonen klingons '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klingonisch klingonen klingons klingonlanguageinstitute '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'krempel'),
