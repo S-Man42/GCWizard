@@ -62,6 +62,7 @@ flutter:
     - assets/symbol_tables/color_code/
     - assets/symbol_tables/color_honey/
     - assets/symbol_tables/color_tokki/
+    - assets/symbol_tables/cyrillic/
     - assets/symbol_tables/daedric/
     - assets/symbol_tables/dagger/
     - assets/symbol_tables/dancing_men/

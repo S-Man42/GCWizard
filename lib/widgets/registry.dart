@@ -1417,6 +1417,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colortokki color-tokki farbcode woven carpet webteppich gewebter farben colors six '
       ),
       GCWToolWidget(
+          tool: SymbolTable(symbolKey: 'cyrillic'),
+          i18nPrefix: 'symboltables_cyrillic',
+          iconPath: SYMBOLTABLES_ASSETPATH + 'cyrillic/68.png',
+          searchStrings: SEARCHSTRING_SYMBOLTABLES + 'kyrillisch cyrillic russisch russian alphabet schrift font cyrl kyrill saloniki'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'daedric'),
         i18nPrefix: 'symboltables_daedric',
         iconPath: SYMBOLTABLES_ASSETPATH + 'daedric/72.png',
