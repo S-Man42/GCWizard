@@ -898,6 +898,11 @@
   "e_selection_title" : "e (e = 2,7182818...)",
   "e_selection_description" : "Mathematische Konstante: Eulers Zahl",
 
+  "enclosedareas_title": "Eingeschlossene Flächen",
+  "enclosedareas_description" : "Anzahl der eingeschlossenen Flächen von Buchstaben und Zahlen",
+  "enclosedareas_with4" : "mit 4",
+  "enclosedareas_without4" : "ohne 4",
+
   "enigma_title": "Enigma",
   "enigma_description" : "Deutsche Verschlüsselungsmaschine im 2. Weltkrieg",
   "enigma_example" : "SJDSF TTVWB ZXPDU",

@@ -75,6 +75,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
@@ -383,6 +384,12 @@ class Registry {
         i18nPrefix: 'duckspeak',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'entensprache duck speak nak entisch duckish'
+      ),
+      GCWToolWidget(
+          tool: EnclosedAreas(),
+          i18nPrefix: 'enclosedareas',
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: 'enclosed areas eingeschlossene flaechen holes loecher'
       ),
       GCWToolWidget(
         tool: ESelection(),
