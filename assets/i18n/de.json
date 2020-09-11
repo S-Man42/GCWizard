@@ -321,6 +321,11 @@
   "chickenlanguage_description" : "Spielsprache, Geheimsprache",
   "chickenlanguage_example" : "Huhn → huhudefuhn",
 
+  "chronogram_title" : "Chronogramm",
+  "chronogram_description" : "Übersetzt Texte in passenden Wert",
+  "chronogram_example" : "AMORE MATVRITAS → MMVI → 2006",
+  "chronogram_modus" : "J,U → I,V",
+
   "colors_title" : "Farben",
   "colors_description" : "Farbwähler und Farbraum-Konvertierer",
   "colors_outputcolorspace" : "Ausgabe-Farbraum",
