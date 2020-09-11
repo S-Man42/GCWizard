@@ -74,6 +74,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chronogram.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
@@ -326,6 +327,12 @@ class Registry {
         i18nPrefix: 'chickenlanguage',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_GAMELANGUAGE + 'chickenlanguage huehnersprache huenersprache huhn'
+      ),
+      GCWToolWidget(
+      tool: Chronogram(),
+      i18nPrefix: 'chronogram',
+      category: ToolCategory.CRYPTOGRAPHY,
+      searchStrings: 'roman numbers roemische zahlen chronogram chronogramm'
       ),
       GCWToolWidget(
         tool: ColorPicker(),
