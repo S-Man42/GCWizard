@@ -186,6 +186,8 @@
   "bacon_title" : "Bacon Chiffre",
   "bacon_description" : "Buchstaben zu Fünfergruppen aus A, B",
   "bacon_example" : "XYZ → BABABBABBABABBB",
+  "bacon_invers" : "AAAAB → BBBBA",
+  "bacon_coding" : "Kodierung",
 
   "base_selection_title" : "Base Codierungen",
   "base_base16_title" : "Base16",

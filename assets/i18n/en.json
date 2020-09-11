@@ -186,6 +186,8 @@
   "bacon_title" : "Bacon Cipher",
   "bacon_description" : "Letters to five-element groups of A and B",
   "bacon_example" : "XYZ → BABABBABBABABBB",
+  "bacon_invers" : "AAAAB → BBBBA",
+  "bacon_coding" : "Coding",
 
   "base_selection_title" : "Base Encodings",
   "base_base16_title" : "Base16",

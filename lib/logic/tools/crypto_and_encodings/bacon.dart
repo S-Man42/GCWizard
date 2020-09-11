@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 const AZToBacon = {
@@ -9,11 +10,11 @@ const AZToBacon = {
 // U has same code as V, so U replaces V in mapping; V will not occur in this map
 final BaconToAZ = switchMapKeyValue(AZToBacon);
 
-String encodeBacon(String input) {
+String encodeBacon(String input, bool invers, bool binary) {
   if (input == null || input == '')
     return '';
 
-  return input
+  var out = input
       .toUpperCase()
       .split('')
       .map((character) {
@@ -21,13 +22,31 @@ String encodeBacon(String input) {
         return bacon != null ? bacon : '';
       })
       .join();
+
+  if (invers)
+    out = _inversString(out);
+
+  if (binary & (out != null)) {
+    out = out.replaceAll("A", "0");
+    out = out.replaceAll("B", "1");
+  }
+
+  return out;
 }
 
-String decodeBacon(String input) {
+String decodeBacon(String input, bool invers, bool binary) {
   if (input == null || input == '')
     return '';
 
+  if (binary) {
+    input = input.toUpperCase().replaceAll(RegExp('[A-B]'), '');
+    input = input.replaceAll("0", "A");
+    input = input.replaceAll("1", "B");
+  }
+
   input = input.toUpperCase().replaceAll(RegExp(r'[^A-B]'), '');
+  if (invers)
+    input = _inversString(input);
   input = input.substring(0, input.length - (input.length % 5));
 
   var out = '';
@@ -37,5 +56,24 @@ String decodeBacon(String input) {
     i += 5;
   }
 
+  return out;
+}
+
+String _inversString(String text) {
+  String out;
+
+  if (text != null) {
+     out = text
+        .split('')
+        .map((character) {
+          if (character == "A")
+            return "B";
+          else if (character == "B")
+            return "A";
+          else
+            return character;
+        })
+        .join();
+  }
   return out;
 }
