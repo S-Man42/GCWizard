@@ -154,6 +154,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_pri
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/cistercian_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
@@ -319,6 +320,12 @@ class Registry {
         i18nPrefix: 'chickenlanguage',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_GAMELANGUAGE + 'chickenlanguage huehnersprache huenersprache huhn'
+      ),
+      GCWToolWidget(
+          tool: CistercianSegments(),
+          i18nPrefix: 'cistercian',
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: 'cistercian numbers Zisterzienser'
       ),
       GCWToolWidget(
         tool: ColorPicker(),
@@ -1397,6 +1404,12 @@ class Registry {
         i18nPrefix: 'symboltables_chinese_numerals',
         iconPath: SYMBOLTABLES_ASSETPATH + 'chinese_numerals/54.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'chinesisches zahlen ziffern chinese numbers numerals'
+      ),
+      GCWToolWidget(
+          tool: SymbolTable(symbolKey: 'cistercian'),
+          i18nPrefix: 'symboltables_cistercian',
+          iconPath: SYMBOLTABLES_ASSETPATH + 'cistercian/55.png',
+          searchStrings: 'cistercian Zisterzienser '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'color_code'),

@@ -17,6 +17,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:prefs/prefs.dart';
 
+import 'base/cistercian_segment_display.dart';
+
 class SegmentDisplay extends StatefulWidget {
   final SegmentDisplayType type;
 
@@ -56,49 +58,148 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait
-      ? Prefs.get('symboltables_countcolumns_portrait')
-      : Prefs.get('symboltables_countcolumns_landscape');
+        ? Prefs.get('symboltables_countcolumns_portrait')
+        : Prefs.get('symboltables_countcolumns_landscape');
 
-    return Column(
-      children: <Widget>[
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          },
-        ),
-        _currentMode == GCWSwitchPosition.left
-          ? GCWTwoOptionsSwitch(
+    if (widget.type == SegmentDisplayType.CISTERCIAN) {
+      _currentEncryptMode == GCWSwitchPosition.left;
+      return Column(
+          children: <Widget>[
+            GCWTwoOptionsSwitch(
+              value: _currentMode,
+              onChanged: (value) {
+                setState(() {
+                  _currentMode = value;
+                });
+              },
+            ),
+/*
+            _currentMode == GCWSwitchPosition.left
+              ? GCWTwoOptionsSwitch(
+                  value: _currentEncryptMode,
+                  title: i18n(context, 'segmentdisplay_encodemode'),
+                  leftValue: i18n(context, 'segmentdisplay_encodemode_text'),
+                  rightValue: i18n(context, 'segmentdisplay_encodemode_visualsegments'),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentEncryptMode = value;
+                      if (_currentEncryptMode == GCWSwitchPosition.right) {
+                        _currentDisplays = encodeSegment(_currentEncodeInput, widget.type);
+                      }
+                    });
+                  },
+                )
+            : Container(),
+*/
+            _currentMode == GCWSwitchPosition.left
+              ? (
+                  _currentEncryptMode == GCWSwitchPosition.left
+                    ? GCWTextField(
+                        controller: _inputEncodeController,
+                        onChanged: (text) {
+                          setState(() {
+                            _currentEncodeInput = text;
+                          });
+                        },
+                      )
+                    : _buildVisualEncryption()
+                )
+              : _buildVisualEncryption(),
+/*
+                GCWTextField(
+                  controller: _inputDecodeController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentDecodeInput = text;
+                    });
+                  },
+                ),
+*/
+            GCWTextDivider(
+              text: i18n(context, 'segmentdisplay_displayoutput'),
+              trailing: Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    size: IconButtonSize.SMALL,
+                    iconData: Icons.zoom_in,
+                    onPressed: () {
+                      setState(() {
+                        int newCountColumn = max(countColumns - 1, 1);
+
+                        mediaQueryData.orientation == Orientation.portrait
+                            ? Prefs.setInt('symboltables_countcolumns_portrait',
+                            newCountColumn)
+                            : Prefs.setInt(
+                            'symboltables_countcolumns_landscape',
+                            newCountColumn);
+                      });
+                    },
+                  ),
+                  GCWIconButton(
+                    size: IconButtonSize.SMALL,
+                    iconData: Icons.zoom_out,
+                    onPressed: () {
+                      setState(() {
+                        int newCountColumn = countColumns + 1;
+
+                        mediaQueryData.orientation == Orientation.portrait
+                            ? Prefs.setInt('symboltables_countcolumns_portrait',
+                            newCountColumn)
+                            : Prefs.setInt(
+                            'symboltables_countcolumns_landscape',
+                            newCountColumn);
+                      });
+                    },
+                  )
+                ],
+              ),
+            ),
+            _buildOutput(countColumns)
+          ]
+      );
+    } else {
+      return Column(
+          children: <Widget>[
+            GCWTwoOptionsSwitch(
+              value: _currentMode,
+              onChanged: (value) {
+                setState(() {
+                  _currentMode = value;
+                });
+              },
+            ),
+            _currentMode == GCWSwitchPosition.left
+                ? GCWTwoOptionsSwitch(
               value: _currentEncryptMode,
               title: i18n(context, 'segmentdisplay_encodemode'),
               leftValue: i18n(context, 'segmentdisplay_encodemode_text'),
-              rightValue: i18n(context, 'segmentdisplay_encodemode_visualsegments'),
+              rightValue: i18n(
+                  context, 'segmentdisplay_encodemode_visualsegments'),
               onChanged: (value) {
                 setState(() {
                   _currentEncryptMode = value;
                   if (_currentEncryptMode == GCWSwitchPosition.right) {
-                    _currentDisplays = encodeSegment(_currentEncodeInput, widget.type);
+                    _currentDisplays =
+                        encodeSegment(_currentEncodeInput, widget.type);
                   }
                 });
               },
             )
-          : Container(),
-        _currentMode == GCWSwitchPosition.left
-          ? (
-              _currentEncryptMode == GCWSwitchPosition.left
-                ? GCWTextField(
-                    controller: _inputEncodeController,
-                    onChanged: (text) {
-                      setState(() {
-                        _currentEncodeInput = text;
-                      });
-                    },
-                  )
-                : _buildVisualEncryption()
+                : Container(),
+            _currentMode == GCWSwitchPosition.left
+                ? (
+                _currentEncryptMode == GCWSwitchPosition.left
+                    ? GCWTextField(
+                  controller: _inputEncodeController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentEncodeInput = text;
+                    });
+                  },
+                )
+                    : _buildVisualEncryption()
             )
-          : GCWTextField(
+                : GCWTextField(
               controller: _inputDecodeController,
               onChanged: (text) {
                 setState(() {
@@ -106,42 +207,49 @@ class SegmentDisplayState extends State<SegmentDisplay> {
                 });
               },
             ),
-        GCWTextDivider(
-          text: i18n(context, 'segmentdisplay_displayoutput'),
-          trailing: Row(
-            children: <Widget>[
-              GCWIconButton(
-                size: IconButtonSize.SMALL,
-                iconData: Icons.zoom_in,
-                onPressed: () {
-                  setState(() {
-                    int newCountColumn = max(countColumns - 1, 1);
+            GCWTextDivider(
+              text: i18n(context, 'segmentdisplay_displayoutput'),
+              trailing: Row(
+                children: <Widget>[
+                  GCWIconButton(
+                    size: IconButtonSize.SMALL,
+                    iconData: Icons.zoom_in,
+                    onPressed: () {
+                      setState(() {
+                        int newCountColumn = max(countColumns - 1, 1);
 
-                    mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                  });
-                },
+                        mediaQueryData.orientation == Orientation.portrait
+                            ? Prefs.setInt('symboltables_countcolumns_portrait',
+                            newCountColumn)
+                            : Prefs.setInt(
+                            'symboltables_countcolumns_landscape',
+                            newCountColumn);
+                      });
+                    },
+                  ),
+                  GCWIconButton(
+                    size: IconButtonSize.SMALL,
+                    iconData: Icons.zoom_out,
+                    onPressed: () {
+                      setState(() {
+                        int newCountColumn = countColumns + 1;
+
+                        mediaQueryData.orientation == Orientation.portrait
+                            ? Prefs.setInt('symboltables_countcolumns_portrait',
+                            newCountColumn)
+                            : Prefs.setInt(
+                            'symboltables_countcolumns_landscape',
+                            newCountColumn);
+                      });
+                    },
+                  )
+                ],
               ),
-              GCWIconButton(
-                size: IconButtonSize.SMALL,
-                iconData: Icons.zoom_out,
-                onPressed: () {
-                  setState(() {
-                    int newCountColumn = countColumns + 1;
-
-                    mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                  });
-                },
-              )
-            ],
-          ),
-        ),
-        _buildOutput(countColumns)
-      ]
-    );
+            ),
+            _buildOutput(countColumns)
+          ]
+      );
+    }
   }
 
   _buildVisualEncryption() {
@@ -194,6 +302,12 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         break;
       case SegmentDisplayType.SIXTEEN:
         displayWidget = SixteenSegmentDisplay(
+          segments: currentDisplay,
+          onChanged: onChanged,
+        );
+        break;
+      case SegmentDisplayType.CISTERCIAN:
+        displayWidget = CistercianSegmentDisplay(
           segments: currentDisplay,
           onChanged: onChanged,
         );
@@ -257,19 +371,16 @@ class SegmentDisplayState extends State<SegmentDisplay> {
 
         switch (widget.type) {
           case SegmentDisplayType.SEVEN:
-            return SevenSegmentDisplay(
-              segments: displayedSegments,
-              readOnly: true,
+            return SevenSegmentDisplay(segments: displayedSegments, readOnly: true,
             );
           case SegmentDisplayType.FOURTEEN:
-            return FourteenSegmentDisplay(
-              segments: displayedSegments,
-              readOnly: true,
+            return FourteenSegmentDisplay(segments: displayedSegments, readOnly: true,
             );
           case SegmentDisplayType.SIXTEEN:
-            return SixteenSegmentDisplay(
-              segments: displayedSegments,
-              readOnly: true,
+            return SixteenSegmentDisplay(segments: displayedSegments, readOnly: true,
+            );
+          case SegmentDisplayType.CISTERCIAN:
+            return CistercianSegmentDisplay(segments: displayedSegments, readOnly: true,
             );
           default: return null;
         }
@@ -288,31 +399,32 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         segments = _currentDisplays;
 
       var output =  segments.map((character) {
-        if (character == null)
-          return UNKNOWN_ELEMENT;
+                      if (character == null)
+                        return UNKNOWN_ELEMENT;
+                      return character.join();
+                    }).join(' ');
 
-        return character.join();
-      }).join(' ');
+      if (widget.type == SegmentDisplayType.CISTERCIAN) {output = '';};
 
-      return Column(
-        children: <Widget>[
-          _buildDigitalOutput(countColumns, segments),
-          GCWDefaultOutput(
-            child: output
-          )
-        ],
-      );
+        return Column(
+          children: <Widget>[
+            _buildDigitalOutput(countColumns, segments),
+            GCWDefaultOutput(
+                child: output
+            )
+          ],
+        );
     } else {
-      var segments = decodeSegment(_currentDecodeInput, widget.type);
+        var segments = decodeSegment(_currentDecodeInput, widget.type);
 
-      return Column(
-        children: <Widget>[
-          _buildDigitalOutput(countColumns, segments['displays']),
-          GCWDefaultOutput(
-            child: segments['text']
-          )
-        ],
-      );
+        return Column(
+          children: <Widget>[
+            _buildDigitalOutput(countColumns, segments['displays']),
+            GCWDefaultOutput(
+                child: segments['text']
+            )
+          ],
+        );
+      }
     }
-  }
 }

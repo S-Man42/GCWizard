@@ -318,6 +318,9 @@
   "chickenlanguage_description" : "Spielsprache, Geheimsprache",
   "chickenlanguage_example" : "Huhn → huhudefuhn",
 
+  "cistercian_title" : "Zisterzienser",
+  "cistercian_description" : "Zahlensystem der Zisterzienser",
+
   "colors_title" : "Farben",
   "colors_description" : "Farbwähler und Farbraum-Konvertierer",
   "colors_outputcolorspace" : "Ausgabe-Farbraum",
@@ -1713,6 +1716,8 @@
   "symboltables_chinese_numerals_hundred" : "100",
   "symboltables_chinese_numerals_thousand" : "1000",
   "symboltables_chinese_numerals_tenthousand" : "10000",
+  "symboltables_cistercian_title" : "Zisterzienser",
+  "symboltables_cistercian_description" : "Zahlensystem der Zisterzienser",
   "symboltables_color_code_title" : "Farbcode",
   "symboltables_color_honey_title" : "Color-Honey",
   "symboltables_color_honey_description" : "Sechs-Farben-Code, Bienenwaben",

@@ -1,12 +1,14 @@
 import 'dart:core';
 
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
-enum SegmentDisplayType{SEVEN, FOURTEEN, SIXTEEN}
+enum SegmentDisplayType{SEVEN, FOURTEEN, SIXTEEN, CISTERCIAN}
 
 final _baseSegments7Segment = ['a','b','c','d','e','f','g','dp'];
 final _baseSegments14Segment = ['a','b','c','d','e','f','g1','g2','h','i','j','k','l','m','dp'];
 final _baseSegments16Segment = ['a1','a2','b','c','d1','d2','e','f','g1','g2','h','i','j','k','l','m','dp'];
+final _baseSegmentsCistercianSegment = ['z1','z2','z3','z4','z5','z6','z7','z8','z9','z10','z11','z12','z13','z14','z15','16','z17','z18','z19','z20','z21'];
 
 final Map<String, List<String>> _AZTo16Segment = {
   '1'  : ['b','c','j'],
@@ -435,6 +437,47 @@ final Map<List<String>, String> _Segment16ToAZ = {
   [] : ' '
 };
 
+final Map<String, List<String>> _AZToCistercianSegment = {
+  '1' : ['z11','z2'],
+  '2' : ['z11','z10'],
+  '3' : ['z11','z8'],
+  '4' : ['z11','z7'],
+  '5' : ['z11','z2','z7'],
+  '6' : ['z11','z4'],
+  '7' : ['z11','z2','z4'],
+  '8' : ['z11','z10','z4'],
+  '9' : ['z11','z2','z4','z10'],
+  '10' : ['z11','z1'],
+  '20' : ['z11','z9'],
+  '30' : ['z11','z5'],
+  '40' : ['z11','z6'],
+  '50' : ['z11','z1','z6'],
+  '60' : ['z11','z3'],
+  '70' : ['z11','z1','z3'],
+  '80' : ['z11','z1','z9'],
+  '90' : ['z11','z1','z3','z9'],
+  '100' : ['z11','z21'],
+  '200' : ['z11','z13'],
+  '300' : ['z11','z18'],
+  '400' : ['z11','z19'],
+  '500' : ['z11','z21','z19'],
+  '600' : ['z11','z15'],
+  '700' : ['z11','z15','z21'],
+  '800' : ['z11','z15','z13'],
+  '900' : ['z11','z15','z13','z21'],
+  '1000' : ['z11','z20'],
+  '2000' : ['z11','z12'],
+  '3000' : ['z11','z17'],
+  '4000' : ['z11','z16'],
+  '5000' : ['z11','z16','z20'],
+  '6000' : ['z11','z14'],
+  '7000' : ['z11','z20','z14'],
+  '8000' : ['z11','z14','z12'],
+  '9000' : ['z11','z20','z14','z12'],
+};
+
+final Map<List<String>, String> _SegmentCistercianToAZ = switchMapKeyValue(_AZToCistercianSegment);
+
 List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
   if (input == null || input == '')
     return [];
@@ -451,10 +494,17 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
     case SegmentDisplayType.SIXTEEN:
       AZToSegment = _AZTo16Segment;
       break;
+    case SegmentDisplayType.CISTERCIAN:
+      AZToSegment = _AZToCistercianSegment;
+      break;
   }
 
-  var inputCharacters = input.toUpperCase().split('').toList();
-
+  var inputCharacters;
+  if (segmentType == SegmentDisplayType.CISTERCIAN) {
+    inputCharacters = input.toUpperCase().split(RegExp(r'[^1234567890]')).toList();
+  } else {
+    inputCharacters = input.toUpperCase().split('').toList();
+  }
   var output = <List<String>>[];
 
   for (String character in inputCharacters) {
@@ -467,9 +517,82 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
         output.add(prevCharacter);
       }
     } else {
-      var display = AZToSegment[character];
-      if (display != null)
-        output.add(AZToSegment[character]);
+      var display;
+      if (segmentType == SegmentDisplayType.CISTERCIAN) {
+        var number = new List<String>();
+        switch (character.length) {
+          case 1 :
+              display = AZToSegment[character];
+            break;
+          case 2 :
+              display = AZToSegment[character[0] + '0'];
+              if (character[1] != '0') {
+                number = AZToSegment[character[1]];
+                for (String character in number) {
+                  if (!display.contains(character)) {
+                    display.add(character);
+                  }
+                }
+              }
+            break;
+          case 3 :
+            display = AZToSegment[character[0] + '00'];
+            if (character[1] != '0') {
+              number = AZToSegment[character[1] + '0'];
+              for (String character in number) {
+                if (!display.contains(character)) {
+                  display.add(character);
+                }
+              }
+            }
+            if (character[2] != '0') {
+              number = AZToSegment[character[2]];
+              for (String character in number) {
+                if (!display.contains(character)) {
+                  display.add(character);
+                }
+              }
+            }
+            break;
+          case 4 :
+            display = AZToSegment[character[0] + '000'];
+            if (character[1] != '0') {
+              number = AZToSegment[character[1] + '00'];
+              for (String character in number) {
+                if (!display.contains(character)) {
+                  display.add(character);
+                }
+              }
+            }
+            if (character[2] != '0') {
+              number = AZToSegment[character[2] +'0'];
+              for (String character in number) {
+                if (!display.contains(character)) {
+                  display.add(character);
+                }
+              }
+            }
+            if (character[3] != '0') {
+              number = AZToSegment[character[3]];
+              for (String character in number) {
+                if (!display.contains(character)) {
+                  display.add(character);
+                }
+              }
+            }
+            break;
+        }
+        if (display != null) {
+          display.sort();
+          output.add(display);
+        }
+      }
+
+      else {
+        display = AZToSegment[character];
+        if (display != null)
+          output.add(AZToSegment[character]);
+      }
     }
   }
 
@@ -492,6 +615,9 @@ Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType)
       break;
     case SegmentDisplayType.SIXTEEN:
       baseSegments = _baseSegments16Segment;
+      break;
+    case SegmentDisplayType.CISTERCIAN:
+      baseSegments = _baseSegmentsCistercianSegment;
       break;
   }
 
@@ -560,6 +686,9 @@ _characterFromSegmentList(SegmentDisplayType type, List<String> segments) {
       break;
     case SegmentDisplayType.SIXTEEN:
       segmentToAZ = _Segment16ToAZ;
+      break;
+    case SegmentDisplayType.CISTERCIAN:
+      segmentToAZ = _SegmentCistercianToAZ;
       break;
   }
 

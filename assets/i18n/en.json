@@ -318,6 +318,9 @@
   "chickenlanguage_description" : "Game Language, Secret Language",
   "chickenlanguage_example" : "code → cohodefodehedefe",
 
+  "cistercian_title" : "Cistercian",
+  "cistercian_description" : "Cistercian numbers",
+
   "colors_title" : "Colors",
   "colors_description" : "Color Picker and Color Space Converter",
   "colors_outputcolorspace" : "Output Color Space",
@@ -1713,6 +1716,8 @@
   "symboltables_chinese_numerals_hundred" : "100",
   "symboltables_chinese_numerals_thousand" : "1000",
   "symboltables_chinese_numerals_tenthousand" : "10000",
+  "symboltables_cistercian_title" : "Cistercian numbers",
+  "symboltables_cistercian_description" : "Cistercian numbers",
   "symboltables_color_code_title" : "Color Code",
   "symboltables_color_honey_title" : "Color Honey",
   "symboltables_color_honey_description" : "Six-color code, Honeycombs",
