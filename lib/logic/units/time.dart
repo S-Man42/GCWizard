@@ -1,4 +1,5 @@
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 
 class Time extends Unit {
   Function toSeconds;
@@ -52,5 +53,3 @@ final List<Unit> times = [
   TIME_MINUTE,
   TIME_SECOND
 ];
-
-final defaultTime = TIME_SECOND;

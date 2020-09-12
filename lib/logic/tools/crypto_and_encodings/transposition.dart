@@ -21,13 +21,13 @@ List<List<String>> createTranspositionMatrix(
 
   var necessaryCells = (input.length / countLettersPerCell).ceil();
 
-  if (countColumns == null) {
-    countRows = max(1, countRows);
+  if (countColumns == null || countColumns < 1) {
+    countRows = max(1, countRows ?? 1);
     countColumns = (necessaryCells / countRows).ceil(); //minimum columns for input length
   }
 
-  if (countRows == null) {
-    countColumns = max(1, countColumns);
+  if (countRows == null || countRows < 1) {
+    countColumns = max(1, countColumns ?? 1);
     countRows = (necessaryCells / countColumns).ceil();
   }
 

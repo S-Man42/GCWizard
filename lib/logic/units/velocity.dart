@@ -1,4 +1,5 @@
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 
 class Velocity extends Unit {
   Function toMS;
@@ -52,5 +53,3 @@ final List<Unit> velocities = [
   VELOCITY_MPH,
   VELOCITY_KN
 ];
-
-final defaultVelocity = VELOCITY_MS;

@@ -71,7 +71,7 @@ class ResistorEIA96State extends State<ResistorEIA96> {
           ],
         ),
         GCWDefaultOutput(
-          text: formatResistorValue(eia96(_currentCode, multiplicator: _currentMultiplicator))
+          child: formatResistorValue(eia96(_currentCode, multiplicator: _currentMultiplicator))
         )
       ],
     );

@@ -32,7 +32,7 @@ class ChickenLanguageState extends State<ChickenLanguage> {
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

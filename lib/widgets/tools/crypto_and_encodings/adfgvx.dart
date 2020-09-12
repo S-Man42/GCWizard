@@ -5,7 +5,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_encrypt_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
@@ -28,7 +27,7 @@ class ADFGVXState extends State<ADFGVX> {
   PolybiosMode _currentPolybiosMode = PolybiosMode.ZA90;
   String _currentAlphabet = '';
 
-  var _currentOutput = '';
+  var _currentMode = GCWSwitchPosition.left;
 
   @override
   void initState() {
@@ -72,6 +71,14 @@ class ADFGVXState extends State<ADFGVX> {
           onChanged: (text) {
             setState(() {
               _currentADFGVXMode = text;
+            });
+          },
+        ),
+        GCWTwoOptionsSwitch(
+          value:  _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
             });
           },
         ),
@@ -122,54 +129,54 @@ class ADFGVXState extends State<ADFGVX> {
             });
           },
         ) : Container(),
-        GCWEncryptButtonBar(
-          onPressedEncode: () {
-            setState(() {
-              if (_currentADFGVXMode == GCWSwitchPosition.left) {
-                _currentOutput = encryptADFGX(
-                    _currentInput,
-                    _currentSubstitutionKey,
-                    _currentTranspositionKey,
-                    polybiosMode: _currentPolybiosMode,
-                    alphabet: _currentAlphabet
-                );
-              } else {
-                _currentOutput = encryptADFGVX(
-                    _currentInput,
-                    _currentSubstitutionKey,
-                    _currentTranspositionKey,
-                    polybiosMode: _currentPolybiosMode,
-                    alphabet: _currentAlphabet
-                );
-              }
-            });
-          },
-          onPressedDecode: () {
-            setState(() {
-              if (_currentADFGVXMode == GCWSwitchPosition.left) {
-                _currentOutput = decryptADFGX(
-                    _currentInput,
-                    _currentSubstitutionKey,
-                    _currentTranspositionKey,
-                    polybiosMode: _currentPolybiosMode,
-                    alphabet: _currentAlphabet
-                );
-              } else {
-                _currentOutput = decryptADFGVX(
-                    _currentInput,
-                    _currentSubstitutionKey,
-                    _currentTranspositionKey,
-                    polybiosMode: _currentPolybiosMode,
-                    alphabet: _currentAlphabet
-                );
-              }
-            });
-          },
-        ),
         GCWDefaultOutput(
-          text: _currentOutput == null ? '' : _currentOutput
+          child: _calculateOutput()//_currentOutput == null ? '' : _currentOutput
         )
       ],
     );
+  }
+
+  _calculateOutput() {
+    var output = '';
+
+    if (_currentMode == GCWSwitchPosition.left) {
+      if (_currentADFGVXMode == GCWSwitchPosition.left) {
+        output = encryptADFGX(
+          _currentInput,
+          _currentSubstitutionKey,
+          _currentTranspositionKey,
+          polybiosMode: _currentPolybiosMode,
+          alphabet: _currentAlphabet
+        );
+      } else {
+        output = encryptADFGVX(
+          _currentInput,
+          _currentSubstitutionKey,
+          _currentTranspositionKey,
+          polybiosMode: _currentPolybiosMode,
+          alphabet: _currentAlphabet
+        );
+      }
+    } else {
+      if (_currentADFGVXMode == GCWSwitchPosition.left) {
+        output = decryptADFGX(
+          _currentInput,
+          _currentSubstitutionKey,
+          _currentTranspositionKey,
+          polybiosMode: _currentPolybiosMode,
+          alphabet: _currentAlphabet
+        );
+      } else {
+        output = decryptADFGVX(
+          _currentInput,
+          _currentSubstitutionKey,
+          _currentTranspositionKey,
+          polybiosMode: _currentPolybiosMode,
+          alphabet: _currentAlphabet
+        );
+      }
+    }
+
+    return output ?? '';
   }
 }

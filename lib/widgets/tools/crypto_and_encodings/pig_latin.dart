@@ -32,7 +32,7 @@ class PigLatinState extends State<PigLatin> {
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

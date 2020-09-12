@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:base32/base32.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/ascii85.dart';
 
-String base16Decode(String input) {
+String decodeBase16(String input) {
   if (input == null || input == '')
     return '';
 
@@ -15,7 +15,7 @@ String base16Decode(String input) {
       .join();
 }
 
-String base16Encode(String input) {
+String encodeBase16(String input) {
   if (input == null || input == '')
     return '';
 
@@ -24,14 +24,14 @@ String base16Encode(String input) {
       .join();
 }
 
-String base32Encode(String input) {
+String encodeBase32(String input) {
   if (input == null || input == '')
     return '';
 
   return base32.encodeString(input);
 }
 
-String base32Decode(String input) {
+String decodeBase32(String input) {
   if (input == null || input == '')
     return '';
 
@@ -50,14 +50,14 @@ String base32Decode(String input) {
   return out;
 }
 
-String base64Encode(String input) {
+String encodeBase64(String input) {
   if (input == null || input == '')
     return '';
 
   return base64.encode(utf8.encode(input));
 }
 
-String base64Decode(String input) {
+String decodeBase64(String input) {
   if (input == null || input == '')
     return '';
 
@@ -76,7 +76,7 @@ String base64Decode(String input) {
   return out;
 }
 
-String base85Encode(String input) {
+String encodeBase85(String input) {
   if (input == null || input == '')
     return '';
 
@@ -88,7 +88,7 @@ String base85Encode(String input) {
   return '<~' + encoded + '~>';
 }
 
-String base85Decode(String input) {
+String decodeBase85(String input) {
   if (input == null || input == '')
     return '';
 

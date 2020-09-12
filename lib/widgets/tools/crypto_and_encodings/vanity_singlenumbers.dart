@@ -37,7 +37,7 @@ class VanitySingleNumbersState extends State<VanitySingleNumbers> {
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

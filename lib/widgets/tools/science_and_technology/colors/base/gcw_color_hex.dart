@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
 class GCWColorHexCode extends StatefulWidget {
   final Function onChanged;
@@ -18,9 +18,9 @@ class _GCWColorHexCodeState extends State<GCWColorHexCode> {
 
   var _controller;
 
-  var _maskInputFormatter = MaskTextInputFormatter(
-      mask: '#......',
-      filter: {".": RegExp(r'[A-Fa-f0-9]')}
+  var _maskInputFormatter = WrapperForMaskTextInputFormatter(
+    mask: '#......',
+    filter: {".": RegExp(r'[A-Fa-f0-9]')}
   );
 
   @override

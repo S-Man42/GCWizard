@@ -11,7 +11,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
@@ -30,9 +29,11 @@ class SymbolTable extends StatefulWidget {
 }
 
 class SymbolTableState extends State<SymbolTable> {
+  final SPECIAL_MARKER = '[#*?SPECIAL_MARKER%&]';
+
   String _output = '';
 
-  var _imageFilePaths = SplayTreeMap<String, String>();
+  var _images = SplayTreeMap<String, Widget>();
   var _currentMode = GCWSwitchPosition.right;
 
   var _currentShowOverlayedSymbols = true;
@@ -64,39 +65,62 @@ class SymbolTableState extends State<SymbolTable> {
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
 
     var pathKey = SYMBOLTABLES_ASSETPATH + widget.symbolKey + '/';
-
+    var imageSuffixes = RegExp(r'\.(png|jpg|bmp|gif)', caseSensitive: false);
+    
     final imagePaths = manifestMap.keys
       .where((String key) => key.contains(pathKey))
+      .where((String key) => imageSuffixes.hasMatch(key))
       .toList();
 
-    var imageSuffixes = RegExp(r'\.(png|jpg|bmp|gif)');
-
     setState(() {
-      _imageFilePaths = SplayTreeMap.fromIterable(
+      _images = SplayTreeMap.fromIterable(
         imagePaths,
         key: (filePath) {
-          return filePath.split(pathKey)[1].split(imageSuffixes)[0];
+          var imageKey = filePath.split(pathKey)[1].split(imageSuffixes)[0];
+
+          var ascii = int.tryParse(imageKey.split('_')[0]);
+          return ascii == null ? _getSpecialText(imageKey) : String.fromCharCode(ascii);
         },
-        value: (filePath) => filePath,
-        // first order all ASCII values, afterward all special symbols
+        value: (filePath) {
+          var imagePath = imageSuffixes.hasMatch(filePath) ? filePath : null;
+          return Image.asset(imagePath);
+        },
+        // first order all Numerals (numeral order),
+        // second alphabetical order all other characters/groups,
+        // finally special commands like "START, CORRECTION, ERROR, LETTER FOLLOWS"
         compare: (a, b) {
           var intA = int.tryParse(a);
           var intB = int.tryParse(b);
 
           if (intA == null) {
             if (intB == null) {
-              return a.compareTo(b);
+              if (a.startsWith(SPECIAL_MARKER)) {
+                if (b.startsWith(SPECIAL_MARKER)) {
+                  return a.compareTo(b);
+                } else {
+                  return 1;
+                }
+              } else {
+                if (b.startsWith(SPECIAL_MARKER)) {
+                  return -1;
+                } else {
+                  return a.compareTo(b);
+                }
+              }
+            } else {
+              return 1;
             }
-            return 1;
           } else {
             if (intB == null) {
               return -1;
+            } else {
+              return intA.compareTo(intB);
             }
-
-            return intA.compareTo(intB);
           }
         }
       );
+      //Remove non-image files
+      _images.removeWhere((key, value) => value == null);
     });
   }
 
@@ -138,7 +162,7 @@ class SymbolTableState extends State<SymbolTable> {
                     });
                   },
                 ),
-                GCWOutput(
+                GCWDefaultOutput(
                   child: _buildEncryptionOutput(countColumns, widget.isCaseSensitive)
                 ),
               ],
@@ -188,7 +212,7 @@ class SymbolTableState extends State<SymbolTable> {
                 ),
                 _buildDecryptionButtonMatrix(countColumns, widget.isCaseSensitive),
                 GCWDefaultOutput(
-                  text: _output
+                  child: _output
                 )
               ],
             )
@@ -278,16 +302,8 @@ class SymbolTableState extends State<SymbolTable> {
     );
   }
 
-  _getSpecialText(key) {
-    return i18n(context, 'symboltables_' + widget.symbolKey + '_' + key);
-  }
-
-  String _getSymbolText(imageIndex) {
-    var key = _imageFilePaths.keys.toList()[imageIndex];
-
-    // split, if there are different symbols for same value. Then there should be named "10.png" and "10_.png" or "10_2.png" or something like that
-    var ascii = int.tryParse(key.split('_')[0]);
-    return ascii == null ? _getSpecialText(key) : String.fromCharCode(ascii);
+  _getSpecialText(String key) {
+    return (key.startsWith('special_') ? SPECIAL_MARKER : '') + i18n(context, 'symboltables_' + widget.symbolKey + '_' + key);
   }
   
   _showSpaceSymbolInOverlay(text) {
@@ -296,7 +312,7 @@ class SymbolTableState extends State<SymbolTable> {
 
   _buildDecryptionButtonMatrix(countColumns, isCaseSensitive) {
     var rows = <Widget>[];
-    var countRows = (_imageFilePaths.length / countColumns).floor();
+    var countRows = (_images.length / countColumns).floor();
 
     for (var i = 0; i <= countRows; i++) {
       var columns = <Widget>[];
@@ -305,11 +321,9 @@ class SymbolTableState extends State<SymbolTable> {
         var widget;
         var imageIndex = i * countColumns + j;
 
-        if (imageIndex < _imageFilePaths.length) {
-          var symbolText = _getSymbolText(imageIndex);
-          var image = Image.asset(
-            _imageFilePaths.values.toList()[imageIndex],
-          );
+        if (imageIndex < _images.length) {
+          var symbolText = _images.keys.toList()[imageIndex].replaceAll(SPECIAL_MARKER, '');
+          var image = _images.values.toList()[imageIndex];
 
           if (symbolText.length > _maxSymbolTextLength)
             _maxSymbolTextLength = symbolText.length;

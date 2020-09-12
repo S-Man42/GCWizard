@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -16,7 +17,7 @@ class GCWIntegerSpinner extends StatefulWidget {
   final controller;
   final SpinnerLayout layout;
   final focusNode;
-  final isBinary;
+  final suppressOverflow;
 
   const GCWIntegerSpinner({
     Key key,
@@ -28,7 +29,7 @@ class GCWIntegerSpinner extends StatefulWidget {
     this.controller,
     this.layout: SpinnerLayout.horizontal,
     this.focusNode,
-    this.isBinary: false
+    this.suppressOverflow: false // TODO: Automatically true if this.min == null || this.max == null
   }) : super(key: key);
 
   @override
@@ -38,11 +39,6 @@ class GCWIntegerSpinner extends StatefulWidget {
 class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   var _controller;
   var _currentValue = 1;
-
-  var _binaryMaskFormatter = MaskTextInputFormatter(
-    mask: '#' * 10000,
-    filter: {"#": RegExp(r'[01]')}
-  );
 
   @override
   void initState() {
@@ -54,7 +50,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
       if (widget.value != null)
         _currentValue = widget.value;
 
-      _controller = TextEditingController(text: widget.isBinary ? _currentValue.toRadixString(2) : _currentValue.toString());
+      _controller = TextEditingController(text: _currentValue.toString());
     }
   }
 
@@ -74,7 +70,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     setState(() {
       if (widget.min == null || _currentValue > widget.min) {
         _currentValue--;
-      } else if (_currentValue == widget.min && widget.max != null) {
+      } else if (!widget.suppressOverflow && _currentValue == widget.min && widget.max != null) {
         _currentValue = widget.max;
       }
 
@@ -86,7 +82,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     setState(() {
       if (widget.max == null || _currentValue < widget.max) {
         _currentValue++;
-      } else if (_currentValue == widget.max && widget.min != null) {
+      } else if (!widget.suppressOverflow && _currentValue == widget.max && widget.min != null) {
         _currentValue = widget.min;
       }
 
@@ -109,11 +105,10 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
       focusNode: widget.focusNode,
       min: widget.min,
       max: widget.max,
-      textInputFormatter: widget.isBinary ? _binaryMaskFormatter : null,
       controller: _controller,
       onChanged: (ret) {
         setState(() {
-          _currentValue = widget.isBinary ? int.tryParse(ret['value'].toString(), radix: 2) : ret['value'];
+          _currentValue = ret['value'];
           _setCurrentValueAndEmitOnChange();
         });
       }
@@ -183,7 +178,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _setCurrentValueAndEmitOnChange({setTextFieldText: false}) {
     if (setTextFieldText)
-      _controller.text = widget.isBinary ? _currentValue.toRadixString(2) : _currentValue.toString();
+      _controller.text = _currentValue.toString();
 
     widget.onChanged(_currentValue);
   }

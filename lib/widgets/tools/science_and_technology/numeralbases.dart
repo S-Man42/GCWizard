@@ -8,6 +8,8 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
+List<int> _COMMON_BASES = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,60];
+
 class NumeralBases extends StatefulWidget {
   @override
   NumeralBasesState createState() => NumeralBasesState();
@@ -87,46 +89,52 @@ class NumeralBasesState extends State<NumeralBases> {
   }
 
   _buildOutput(BuildContext context) {
-    if (_currentInput.startsWith('-') && _currentFromKey < 0) {
-      return GCWDefaultOutput(
-        text: i18n(context, 'common_notdefined')
-      );
+
+    if (_currentInput == null || _currentInput.length == 0) {
+      return GCWDefaultOutput();
     }
 
-    //TODO: React on exceptions
-    var testValidInput = convertBase(_currentInput, _currentFromKey, 2);
-    if (testValidInput == null || testValidInput.length == 0) {
-      return GCWDefaultOutput(
-          text: i18n(context, 'common_notdefined')
-      );
-    }
+    var calculateableToBases = _currentToMode == GCWSwitchPosition.left ? _COMMON_BASES : [_currentToKey];
+    List<String> values = calculateableToBases.map((toBase) {
+      return _currentInput
+        .split(' ')
+        .where((element) => element.length > 0)
+        .map((value) {
+          if (value.startsWith('-') && _currentFromKey < 0) {
+            return i18n(context, 'common_notdefined');
+          }
+
+          //TODO: React on exceptions
+          var testValidInput = convertBase(value, _currentFromKey, 2);
+          if (testValidInput == null || testValidInput.length == 0) {
+            return i18n(context, 'common_notdefined');
+          }
+
+          return convertBase(value, _currentFromKey, toBase);
+        })
+        .join(' ');
+    }).toList();
 
     if (_currentToMode == GCWSwitchPosition.right) {
       return GCWDefaultOutput(
-        text: convertBase(_currentInput, _currentFromKey, _currentToKey)
+        child: values.join('')
+      );
+    } else {
+      List<List<dynamic>> outputValues = [];
+      for (int i = 0; i < values.length; i++) {
+        outputValues.add([calculateableToBases[i], values[i]]);
+      }
+
+      var rows = columnedMultiLineOutput(outputValues, flexValues: [1,3]);
+      rows.insert(0,
+        GCWTextDivider(
+          text: i18n(context, 'common_output')
+        )
+      );
+
+      return Column(
+        children: rows
       );
     }
-
-    var outputData = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,60].map((base) {
-      return [base.toString(), convertBase(_currentInput, _currentFromKey, base)];
-    }).toList();
-
-    var rows = columnedMultiLineOutput(outputData, flexValues: [1,3]);
-
-    rows.insert(0,
-      GCWTextDivider(
-        text: i18n(context, 'common_output')
-      )
-    );
-
-    return Column(
-      children: rows
-    );
   }
-
-//  _calculateOutput(BuildContext context) {
-//
-//
-//    return _output;
-//  }
 }

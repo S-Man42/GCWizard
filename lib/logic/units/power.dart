@@ -1,4 +1,5 @@
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 
 class Power extends Unit {
   Function toWatt;
@@ -46,5 +47,3 @@ final List<Unit> powers = [
   POWER_METRICHORSEPOWER,
   POWER_YODA
 ];
-
-final defaultPower = POWER_WATT;

@@ -33,7 +33,7 @@ class PrimeIndexState extends State<PrimeIndex> {
           },
         ),
         GCWDefaultOutput(
-          text: _output
+          child: _output
         )
       ],
     );

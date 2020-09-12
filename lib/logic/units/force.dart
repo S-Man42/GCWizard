@@ -1,4 +1,5 @@
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 
 class Force extends Unit {
   Function toNewton;
@@ -52,5 +53,3 @@ final List<Unit> forces = [
   FORCE_POND,
   FORCE_DYNE
 ];
-
-final defaultForce = FORCE_NEWTON;

@@ -97,7 +97,7 @@ class VigenereState extends State<Vigenere> {
     }
 
     return GCWDefaultOutput(
-      text: output
+      child: output
     );
 
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/base.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -13,7 +14,7 @@ class Deadfish extends StatefulWidget {
 class DeadfishState extends State<Deadfish> {
   var _currentInput = '';
   var _currentMode = GCWSwitchPosition.left;
-  var _currentOutputMode = GCWSwitchPosition.left;
+  var _currentDeadfishMode = GCWSwitchPosition.left;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class DeadfishState extends State<Deadfish> {
           rightValue: i18n(context, 'deadfish_mode_right'),
           onChanged: (value) {
             setState(() {
-              _currentOutputMode = value;
+              _currentDeadfishMode = value;
             });
           },
         ),
@@ -43,7 +44,7 @@ class DeadfishState extends State<Deadfish> {
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );
@@ -53,16 +54,18 @@ class DeadfishState extends State<Deadfish> {
     if (_currentInput == null)
       return '';
 
-    var out = _currentMode == GCWSwitchPosition.left
-      ? encodeDeadfish(_currentInput)
-      : decodeDeadfish(
-      _currentOutputMode == GCWSwitchPosition.right
-        ? _currentInput.replaceAll('x', 'i').replaceAll('k', 's').replaceAll('c', 'o')
-        : _currentInput
-    );
-    if (_currentMode == GCWSwitchPosition.left && _currentOutputMode == GCWSwitchPosition.right)
-      out = out.replaceAll('i', 'x').replaceAll('s', 'k').replaceAll('o', 'c');
+    if (_currentMode == GCWSwitchPosition.left) {
+      var encoded = encodeDeadfish(_currentInput);
+      if (_currentDeadfishMode == GCWSwitchPosition.right) //XKCD
+        encoded = encoded.replaceAll('i', 'x').replaceAll('s', 'k').replaceAll('o', 'c');
 
-    return out;
+      return encoded;
+    } else {
+      var decodeable = _currentInput;
+      if (_currentDeadfishMode == GCWSwitchPosition.right) //XKCD
+        decodeable = decodeable.toLowerCase().replaceAll(RegExp(r'[iso]'), '').replaceAll('x', 'i').replaceAll('k', 's').replaceAll('c', 'o');
+
+      return decodeDeadfish(decodeable);
+    }
   }
 }

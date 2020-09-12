@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-enum ToolCategory {CRYPTOGRAPHY, COORDINATES, FORMULA_SOLVER, SCIENCE_AND_TECHNOLOGY, SYMBOL_TABLES}
+enum ToolCategory {CRYPTOGRAPHY, COORDINATES, FORMULA_SOLVER, GAMES, SCIENCE_AND_TECHNOLOGY, SYMBOL_TABLES}
 
 class GCWToolWidget extends StatefulWidget {
   final Widget tool;
@@ -14,7 +16,6 @@ class GCWToolWidget extends StatefulWidget {
   final autoScroll;
   final iconPath;
   final String searchStrings;
-  final Map<String, dynamic> options;
 
   var icon;
   var _id = '';
@@ -33,7 +34,6 @@ class GCWToolWidget extends StatefulWidget {
     this.autoScroll: true,
     this.iconPath,
     this.searchStrings: '',
-    this.options
   }) : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
     this._isFavorite = Prefs.getStringList('favorites').contains('$_id');
@@ -75,8 +75,29 @@ class _GCWToolWidgetState extends State<GCWToolWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.toolName),
+        actions: <Widget>[
+          _buildHelpButton()
+        ],
       ),
       body: _buildBody()
+    );
+  }
+
+  _buildHelpButton() {
+    if (widget.i18nPrefix == null)
+      return Container();
+
+    var onlineHelpKey = widget.i18nPrefix + '_onlinehelp';
+
+    var onlineHelpUrl = i18n(context, onlineHelpKey);
+    if (onlineHelpUrl == null || onlineHelpUrl.length == 0)
+      return Container();
+
+    return IconButton(
+      icon: Icon(Icons.help),
+      onPressed: () {
+        launch(onlineHelpUrl);
+      },
     );
   }
 

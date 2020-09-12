@@ -32,7 +32,7 @@ class SpoonLanguageState extends State<SpoonLanguage> {
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

@@ -70,7 +70,7 @@ class SunRiseSetState extends State<SunRiseSet> {
       [i18n(context, 'astronomy_riseset_set'), sunRise.set.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.set)],
       [i18n(context, 'astronomy_riseset_civilevening'), sunRise.civilEvening.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.civilEvening)],
       [i18n(context, 'astronomy_riseset_nauticalevening'), sunRise.nauticalEvening.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.nauticalEvening)],
-      [i18n(context, 'astronomy_riseset_astronomicalmorning'), sunRise.astronomicalEvening.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.astronomicalEvening)],
+      [i18n(context, 'astronomy_riseset_astronomicalevening'), sunRise.astronomicalEvening.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.astronomicalEvening)],
     ];
 
     var rows = columnedMultiLineOutput(outputs);

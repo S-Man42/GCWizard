@@ -111,7 +111,7 @@ class DecabitState extends State<Decabit> {
           },
         ),
         GCWDefaultOutput(
-          text: _buildOutput()
+          child: _buildOutput()
         )
       ],
     );

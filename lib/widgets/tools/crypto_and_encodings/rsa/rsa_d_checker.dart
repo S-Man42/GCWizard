@@ -49,7 +49,7 @@ class RSADCheckerState extends State<RSADChecker> {
           },
         ),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         )
       ],
     );

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/playfair.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_alphabetmodification_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlyspaceandletters_textinputformatter.dart';
@@ -19,8 +21,7 @@ class PlayfairState extends State<Playfair> {
   String _currentKey = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  GCWSwitchPosition _currentPlayfairMode = GCWSwitchPosition.left;
-
+  AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
 
   @override
   void initState() {
@@ -58,13 +59,16 @@ class PlayfairState extends State<Playfair> {
             });
           },
         ),
-        GCWTwoOptionsSwitch(
-          title: i18n(context, 'playfair_mode'),
-          leftValue: i18n(context, 'playfair_mode_jtoi'),
-          rightValue: i18n(context, 'playfair_mode_wtovv'),
+        GCWAlphabetModificationDropDownButton(
+          value: _currentModificationMode,
+          allowedModifications: [
+            AlphabetModificationMode.J_TO_I,
+            AlphabetModificationMode.W_TO_VV,
+            AlphabetModificationMode.C_TO_K
+          ],
           onChanged: (value) {
             setState(() {
-              _currentPlayfairMode = value;
+              _currentModificationMode = value;
             });
           },
         ),
@@ -83,16 +87,14 @@ class PlayfairState extends State<Playfair> {
   Widget _buildOutput(BuildContext context) {
     var output = '';
 
-    var playFairMode = _currentPlayfairMode == GCWSwitchPosition.left ? PlayFairMode.JToI : PlayFairMode.WToVV;
-
     if (_currentMode == GCWSwitchPosition.left) {
-      output = encryptPlayfair(_currentInput, _currentKey, mode: playFairMode);
+      output = encryptPlayfair(_currentInput, _currentKey, mode: _currentModificationMode);
     } else {
-      output = decryptPlayfair(_currentInput, _currentKey, mode: playFairMode);;
+      output = decryptPlayfair(_currentInput, _currentKey, mode: _currentModificationMode);
     }
 
     return GCWDefaultOutput(
-      text: output
+      child: output
     );
 
   }

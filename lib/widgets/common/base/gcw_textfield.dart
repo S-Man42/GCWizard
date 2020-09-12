@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
 class GCWTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -98,6 +99,14 @@ class _GCWTextFieldState extends State<GCWTextField> {
 
                       if (widget.onChanged != null)
                         widget.onChanged('');
+
+                      if (widget.inputFormatters != null) {
+                        widget.inputFormatters.forEach((formatter) {
+                          if (formatter is WrapperForMaskTextInputFormatter) {
+                            formatter.clear();
+                          }
+                        });
+                      }
                     },
                   )
                   : null

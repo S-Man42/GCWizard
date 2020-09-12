@@ -82,10 +82,6 @@ BigInt calculateD(BigInt e, BigInt p, BigInt q) {
   return i;
 }
 
-main() {
-  print(calculateD(BigInt.from(1721), BigInt.from(307), BigInt.from(859)));
-}
-
 BigInt _decryptInteger(BigInt value, BigInt d, BigInt N) {
   return value.modPow(d, N);
 }

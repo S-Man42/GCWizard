@@ -81,3 +81,10 @@ web
 *.tmp
 *.docx
 *.pdf
+*.aux
+*.lof
+*.lol
+*.lot
+*.gz
+*.toc
+howtocode/

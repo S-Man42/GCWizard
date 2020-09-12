@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-
 
 class GCWDropDownSpinner extends StatefulWidget {
   final Function onChanged;
-  final value;
-  final items;
+  final index;
+  final List<dynamic> items;
   final SpinnerLayout layout;
+  final String title;
 
   const GCWDropDownSpinner({
     Key key,
     this.onChanged,
-    this.value,
+    this.title,
+    this.index,
     this.items,
     this.layout:
     SpinnerLayout.horizontal
@@ -25,45 +27,62 @@ class GCWDropDownSpinner extends StatefulWidget {
 }
 
 class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
-  int _currentValue;
+  int _currentIndex;
 
   _increaseValue() {
     setState(() {
-      _currentValue = (_currentValue + 1) % widget.items.length;
-      widget.onChanged(_currentValue);
+      _setValueAndEmitOnChange((_currentIndex + 1) % widget.items.length);
     });
   }
 
   _decreaseValue() {
     setState(() {
-      _currentValue = (_currentValue - 1) % widget.items.length;
-      widget.onChanged(_currentValue);
+      _setValueAndEmitOnChange((_currentIndex - 1) % widget.items.length);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    _currentValue = widget.value ?? 0;
+    _currentIndex = widget.index ?? 0;
 
     if (widget.layout == SpinnerLayout.horizontal) {
       return Row(
         children: <Widget>[
-          GCWIconButton(
-            iconData: Icons.remove,
-            onPressed: _decreaseValue
-          ),
+          _buildTitle(),
           Expanded(
-            child: _buildDropDownButton()
-          ),
-          GCWIconButton(
-            iconData: Icons.add,
-            onPressed: _increaseValue
-          ),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  child: GCWIconButton(
+                    iconData: Icons.remove,
+                    onPressed: _decreaseValue
+                  ),
+                  margin: EdgeInsets.only(
+                    right: DEFAULT_MARGIN
+                  ),
+                ),
+                Expanded(
+                  child: _buildDropDownButton()
+                ),
+                Container(
+                  child: GCWIconButton(
+                    iconData: Icons.add,
+                    onPressed: _increaseValue
+                  ),
+                  margin: EdgeInsets.only(
+                    left: DEFAULT_MARGIN
+                  ),
+                )
+              ],
+            ),
+            flex: 3
+          )
         ],
       );
     } else {
       return Row(
         children: <Widget>[
+          _buildTitle(),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -85,19 +104,41 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
     }
   }
 
+  Widget _buildTitle() {
+    return widget.title == null ?  Container() :
+    Expanded(
+      child: GCWText(
+        text: widget.title + ':'
+      ),
+      flex: 1
+    );
+  }
+
   _buildDropDownButton() {
     return Container(
       child: GCWDropDownButton(
-        value: (widget.value ?? _currentValue) % widget.items.length,
+        value: (widget.index ?? _currentIndex) % widget.items.length,
         onChanged: (newValue) {
           setState(() {
-            _currentValue = newValue;
-            widget.onChanged(_currentValue);
+            _setValueAndEmitOnChange(newValue);
           });
         },
-        items: widget.items,
+        items: widget.items.asMap().map((index, item) {
+          return MapEntry(
+            index,
+            DropdownMenuItem(
+              value: index,
+              child: item
+            )
+          );
+        }).values.toList(),
       ),
       padding: EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
     );
+  }
+
+  _setValueAndEmitOnChange(int newIndex) {
+    _currentIndex = newIndex;
+    widget.onChanged(_currentIndex);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/units/unit_category.dart';
 
 class Energy extends Unit {
   Function toJoule;
@@ -39,11 +40,16 @@ final ENERGY_ERG = Energy(
   inJoule: 1e-7
 );
 
+final ENERGY_FTLB = Energy(
+    name: 'common_unit_energy_ftlb_name',
+    symbol: 'ft-lb',
+    inJoule: 1.35581795
+);
+
 final List<Unit> energies = [
   ENERGY_JOULE,
   ENERGY_CALORIE,
   ENERGY_BRITISHTHERMALUNIT,
-  ENERGY_ERG
+  ENERGY_ERG,
+  ENERGY_FTLB
 ];
-
-final defaultEnergy = ENERGY_JOULE;

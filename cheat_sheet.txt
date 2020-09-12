@@ -20,3 +20,14 @@ Gold Version:
     1. change bundle identifier in XCode/Info.plist in ios/Runner to de.sman42.gcWizardGold
     2. change Display Name to GC Wizard Gold
 
+/*** Troubleshooting on compiling ***/
+
+
+Execution failed for task ':app:compileFlutterBuildDebug' Issue
+->
+flutter channel stable
+flutter upgrade --force
+flutter pub cache repair
+cd <YOUR APP FOLDER>
+flutter clean
+

@@ -254,7 +254,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
           },
         ),
         GCWDefaultOutput(
-          text: _calculateOutput()
+          child: _calculateOutput()
         ),
         _buildCrossTotals()
       ],

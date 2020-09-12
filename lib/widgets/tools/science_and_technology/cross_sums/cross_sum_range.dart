@@ -55,7 +55,7 @@ class CrossSumRangeState extends State<CrossSumRange> {
           },
         ),
         GCWDefaultOutput(
-          text: crossSumRange(_currentRangeStart, _currentRangeEnd, _currentCrossSum).join('\n')
+          child: crossSumRange(_currentRangeStart, _currentRangeEnd, _currentCrossSum).join('\n')
         )
       ],
     );

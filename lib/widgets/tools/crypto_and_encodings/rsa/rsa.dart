@@ -84,7 +84,7 @@ class RSAState extends State<RSA> {
       || _currentP == null || _currentP.length == 0
       || _currentQ == null || _currentQ.length == 0
     ) {
-      return GCWDefaultOutput(text: '');
+      return GCWDefaultOutput(child: '');
     }
 
     try {
@@ -110,7 +110,7 @@ class RSAState extends State<RSA> {
 
       var outputChildren = <Widget>[
         GCWDefaultOutput(
-          text: outputText,
+          child: outputText,
         ),
         GCWTextDivider(
           text: i18n(context, 'rsa_rsa_calculatedparameters')
@@ -130,7 +130,7 @@ class RSAState extends State<RSA> {
       showToast(i18n(context, exception.message));
 
       _state = _RSAEncryptState.NONE;
-      return GCWDefaultOutput(text: '');
+      return GCWDefaultOutput(child: '');
     }
   }
 }
