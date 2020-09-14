@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/database/formula_solver/database_provider.dart';
 import 'package:gc_wizard/database/formula_solver/model.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -101,7 +101,7 @@ class FormulaValuesState extends State<FormulaValues> {
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.gray,
+              color: ThemeColors.lightGray,
             ),
             Expanded(
               child: Padding (
@@ -182,7 +182,7 @@ class FormulaValuesState extends State<FormulaValues> {
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.gray,
+              color: ThemeColors.lightGray,
             ),
             Expanded(
               child: _currentEditId == value.id

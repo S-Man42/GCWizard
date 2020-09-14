@@ -10,7 +10,7 @@ import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
@@ -235,7 +235,7 @@ class GCWMapViewState extends State<GCWMapView> {
                   child: Text(
                     i18n(context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_TEXT : MAPBOX_SATELLITE_TEXT),
                     style: TextStyle(
-                      color: ThemeColors.darkgrey,
+                      color: ThemeColors.darkGray,
                       fontSize: defaultFontSize() - 4,
                       decoration: TextDecoration.underline
                     )
@@ -291,7 +291,7 @@ class GCWMapViewState extends State<GCWMapView> {
           borderRadius: BorderRadius.circular(roundedBorderRadius),
           side:  BorderSide(
             width: 1,
-            color: ThemeColors.darkgrey,
+            color: ThemeColors.darkGray,
           ),
         ),
       ),
@@ -306,7 +306,7 @@ class GCWMapViewState extends State<GCWMapView> {
                   style: TextStyle(
                     fontFamily: gcwTextStyle().fontFamily,
                     fontSize: defaultFontSize(),
-                    color: ThemeColors.darkgrey,
+                    color: ThemeColors.darkGray,
                     fontWeight: FontWeight.bold
                   )
                 ),
@@ -319,7 +319,7 @@ class GCWMapViewState extends State<GCWMapView> {
             style: TextStyle(
                 fontFamily: gcwTextStyle().fontFamily,
                 fontSize: defaultFontSize(),
-                color: ThemeColors.darkgrey
+                color: ThemeColors.darkGray
             )
           )
         ],

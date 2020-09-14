@@ -4,7 +4,7 @@ import 'package:gc_wizard/database/formula_solver/database_provider.dart';
 import 'package:gc_wizard/database/formula_solver/model.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -183,7 +183,7 @@ class FormulasState extends State<Formulas> {
                           calculated['state'] == STATE_OK
                             ? Icon(
                                 Icons.check,
-                                color: ThemeColors.gray,
+                                color: ThemeColors.lightGray,
                               )
                             : Icon(
                                 Icons.priority_high,

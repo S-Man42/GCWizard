@@ -6,7 +6,7 @@ import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart' as var_coords_provider;
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart' as var_coords_model;
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -209,7 +209,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                           calculated['state'] == STATE_OK
                             ? Icon(
                                 Icons.check,
-                                color: ThemeColors.gray,
+                                color: ThemeColors.lightGray,
                               )
                             : Icon(
                                 Icons.priority_high,

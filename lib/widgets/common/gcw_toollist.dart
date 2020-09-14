@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
@@ -52,7 +52,7 @@ class _GCWToolListState extends State<GCWToolList> {
       leading: tool.icon,
       trailing: IconButton(
         icon: tool.isFavorite ?? false ? Icon(Icons.star) : Icon(Icons.star_border),
-        color: ThemeColors.gray,
+        color: ThemeColors.lightGray,
         onPressed: () {
           if (tool.isFavorite) {
             showDeleteAlertDialog(context, tool.toolName, () {

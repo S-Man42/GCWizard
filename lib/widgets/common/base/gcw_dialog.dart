@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 TextStyle _textStyle = TextStyle(
   fontFamily: gcwTextStyle().fontFamily,
   fontSize: defaultFontSize(),
-  color: ThemeColors.darkgrey
+  color: ThemeColors.darkGray
 );
 
 TextStyle _boldTextStyle = TextStyle(

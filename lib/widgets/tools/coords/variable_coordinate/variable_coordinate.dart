@@ -8,7 +8,7 @@ import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart' as formula_base;
 import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart';
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -201,7 +201,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.gray,
+              color: ThemeColors.lightGray,
             ),
             Expanded(
               child: GCWTextField(
@@ -346,7 +346,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.gray,
+              color: ThemeColors.lightGray,
             ),
             Expanded(
               child: Container(

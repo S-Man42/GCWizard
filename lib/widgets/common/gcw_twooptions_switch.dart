@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_switch.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
@@ -53,10 +53,10 @@ class GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
                       widget.onChanged(_currentValue);
                     });
                   },
-                  activeThumbColor: widget.alternativeColor ? ThemeColors.gray : null,
-                  activeTrackColor: widget.alternativeColor ? ThemeColors.darkgrey : null,
-                  inactiveThumbColor: widget.alternativeColor ? ThemeColors.gray : Theme.of(context).toggleableActiveColor,
-                  inactiveTrackColor: widget.alternativeColor ? ThemeColors.darkgrey : Theme.of(context).toggleableActiveColor.withOpacity(0.5),
+                  activeThumbColor: widget.alternativeColor ? ThemeColors.lightGray : null,
+                  activeTrackColor: widget.alternativeColor ? ThemeColors.darkGray : null,
+                  inactiveThumbColor: widget.alternativeColor ? ThemeColors.lightGray : Theme.of(context).toggleableActiveColor,
+                  inactiveTrackColor: widget.alternativeColor ? ThemeColors.darkGray : Theme.of(context).toggleableActiveColor.withOpacity(0.5),
                 ),
                 Expanded (
                   child: GCWText(

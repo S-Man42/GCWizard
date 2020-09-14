@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
@@ -69,7 +69,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
             autocorrect: false,
             decoration: InputDecoration(
               hintText: widget.hintText,
-              fillColor: widget.filled ? ThemeColors.darkgrey : null,
+              fillColor: widget.filled ? ThemeColors.darkGray : null,
               filled: widget.filled,
               prefixIcon: widget.icon,
               isDense: true,
