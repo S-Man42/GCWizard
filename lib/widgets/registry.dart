@@ -1504,13 +1504,19 @@ class Registry {
         tool: SymbolTable(symbolKey: 'flags'),
         i18nPrefix: 'symboltables_flags',
         iconPath: SYMBOLTABLES_ASSETPATH + 'flags/71.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen flaggenalphabet flagalphabet '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'flags_german_kriegsmarine'),
         i18nPrefix: 'symboltables_flags_german_kriegsmarine',
         iconPath: SYMBOLTABLES_ASSETPATH + 'flags_german_kriegsmarine/70.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen deutsche kriegsmarine german warnavy '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen deutsche kriegsmarine german warnavy flaggenalphabet flagalphabet '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'flags_nato'),
+        i18nPrefix: 'symboltables_flags_nato',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'flags_nato/54.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen nato army armee flaggenalphabet flagalphabet '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'fonic'),
@@ -1666,7 +1672,7 @@ class Registry {
         tool: SymbolTable(symbolKey: 'klingon', isCaseSensitive: true),
         i18nPrefix: 'symboltables_klingon',
         iconPath: SYMBOLTABLES_ASSETPATH + 'klingon/106.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klingonisch klingonen klingons '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klingonisch klingonen klingons klingonlanguageinstitute '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'krempel'),
@@ -1745,12 +1751,6 @@ class Registry {
         i18nPrefix: 'symboltables_murraybaudot',
         iconPath: SYMBOLTABLES_ASSETPATH + 'murraybaudot/74.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_CCITT2
-      ),
-      GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'nato'),
-        i18nPrefix: 'symboltables_nato',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'nato/54.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen nato army armee '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'notes'),
