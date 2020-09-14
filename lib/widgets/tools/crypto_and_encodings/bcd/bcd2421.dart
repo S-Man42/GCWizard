@@ -3,12 +3,12 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/bcd.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd.dart';
 
 
-class BCDGrayExzess extends BCD {
+class BCD2421 extends BCD {
 
-  BCDGrayExzess({Key key}) :
+  BCD2421({Key key}) :
         super(
         key: key,
-        type: BCDType.GRAYEXZESS,
+        type: BCDType.TWOFOURTWOONE,
       );
 }
 
