@@ -322,7 +322,7 @@
   "chickenlanguage_example" : "Huhn → huhudefuhn",
 
   "chronogram_title" : "Chronogramm",
-  "chronogram_description" : "Übersetzt Texte in passenden Wert",
+  "chronogram_description" : "Addition römischer Zahlen",
   "chronogram_example" : "AMORE MATVRITAS → MMVI → 2006",
   "chronogram_modus" : "J,U → I,V",
 
