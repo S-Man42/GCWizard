@@ -580,6 +580,12 @@
   "common_unit_time_h_name" : "Stunde",
   "common_unit_time_min_name" : "Minute",
   "common_unit_time_s_name" : "Sekunde",
+  "common_unit_typography_pt_name" : "Point",
+  "common_unit_typography_sp_name" : "Scaled Point",
+  "common_unit_typography_bp_name" : "Big Point",
+  "common_unit_typography_dd_name" : "Didot",
+  "common_unit_typography_cc_name" : "Cicero",
+  "common_unit_typography_pc_name" : "Pica",
   "common_unit_velocity_ms_name" : "Meter pro Sekunde",
   "common_unit_velocity_kmh_name" : "Kilometer pro Stunde",
   "common_unit_velocity_mph_name" : "(Englische/Land-) Meilen pro Stunde",
@@ -938,6 +944,9 @@
   "formulasolver_values_key" : "Name",
   "formulasolver_values_value" : "Wert",
   "formulasolver_values_currentvalues" : "Erstellte Variablen",
+
+  "gade_title" : "Gade",
+  "gade_description" : "Berechnen der Buchstaben nach Gade",
 
   "games_selection_title" : "Spiele",
   "games_selection_description" : "Unterstützung für bekannte Spiele (z.B. Scrabble, Sudoku)",
