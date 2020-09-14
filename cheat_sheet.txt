@@ -21,8 +21,7 @@ Gold Version:
     2. change Display Name to GC Wizard Gold
 
 /*** Troubleshooting on compiling ***/
-
-
+-----------
 Execution failed for task ':app:compileFlutterBuildDebug' Issue
 ->
 flutter channel stable
@@ -30,4 +29,15 @@ flutter upgrade --force
 flutter pub cache repair
 cd <YOUR APP FOLDER>
 flutter clean
+-----------
+"build web" is not currently supported
+
+->
+flutter channel beta
+flutter upgrade --force
+flutter pub cache repair
+flutter clean
+
+flutter config --enable-web
+
 
