@@ -18,7 +18,9 @@ final DigitToBCDOBrien =     {'0' : '0001', '1' : '0011', '2' : '0010', '3' : '0
 final DigitToBCDPetherick =  {'0' : '0101', '1' : '0001', '2' : '0011', '3' : '0010', '4' : '0110', '5' : '1110', '6' : '1010', '7' : '1011', '8' : '1001', '9' : '1101'};
 final DigitToBCDTompkins =   {'0' : '0010', '1' : '0011', '2' : '0111', '3' : '0101', '4' : '0100', '5' : '1100', '6' : '1101', '7' : '1001', '8' : '0111', '9' : '1010'};
 final DigitToBCDLibawCraig = {'0' : '00000', '1' : '00001', '2' : '00011', '3' : '00111', '4' : '01111', '5' : '11111', '6' : '11110', '7' : '11100', '8' : '11000', '9' : '10000'};
-
+final DigitToBCDGrayExzess = {};
+final DigitToBCD1of10 = {};
+final DigitToBCD2of5 = {};
 
 var BCDOriginalToDigit = switchMapKeyValue(DigitToBCDOriginal);
 var BCDAikenToDigit = switchMapKeyValue(DigitToBCDAiken);
@@ -29,8 +31,11 @@ var BCDOBrienToDigit = switchMapKeyValue(DigitToBCDOBrien);
 var BCDPetherickToDigit = switchMapKeyValue(DigitToBCDPetherick);
 var BCDTompkinsToDigit = switchMapKeyValue(DigitToBCDTompkins);
 var BCDLibawCraigToDigit = switchMapKeyValue(DigitToBCDLibawCraig);
+var BCDGrayExzessToDigit = switchMapKeyValue(DigitToBCDGrayExzess);
+var BCD1of10ToDigit = switchMapKeyValue(DigitToBCD1of10);
+var BCD2of5ToDigit = switchMapKeyValue(DigitToBCD2of5);
 
-enum BCDType {ORIGINAL, AIKEN, STIBITZ, GRAY, GLIXON, OBRIEN, PETHERICK, TOMPKINS, LIBAWCRAIG}
+enum BCDType {ORIGINAL, AIKEN, STIBITZ, GRAY, GLIXON, OBRIEN, PETHERICK, TOMPKINS, LIBAWCRAIG, GRAYEXZESS, TWOOFFIVE, ONEOFTEN}
 
 String encodeBCD(String input, BCDType type){
   if (input == null || input == '')
@@ -56,6 +61,12 @@ String encodeBCD(String input, BCDType type){
       break;
     case BCDType.LIBAWCRAIG: bcdMap = DigitToBCDLibawCraig;
       break;
+    case BCDType.GRAYEXZESS: bcdMap = DigitToBCDGrayExzess;
+    break;
+    case BCDType.TWOOFFIVE: bcdMap = DigitToBCD2of5;
+    break;
+    case BCDType.ONEOFTEN: bcdMap = DigitToBCD1of10;
+    break;
   }
 
   return input
@@ -92,6 +103,12 @@ String decodeBCD(String input, BCDType type){
       break;
     case BCDType.LIBAWCRAIG: bcdMap = BCDLibawCraigToDigit;
       break;
+    case BCDType.GRAYEXZESS: bcdMap = BCDGrayExzessToDigit;
+    break;
+    case BCDType.TWOOFFIVE: bcdMap = BCD2of5ToDigit;
+    break;
+    case BCDType.ONEOFTEN: bcdMap = BCD1of10ToDigit;
+    break;
   }
 
   return input
