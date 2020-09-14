@@ -19,11 +19,11 @@ class ChronogramState extends State<Chronogram> {
     return Column(
       children: <Widget>[
         GCWTextField(
-            onChanged: (text) {
-              setState(() {
-                _currentInput = text;
-              });
-            }
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
+            });
+          }
         ),
         GCWOnOffSwitch(
           title: i18n(context, 'chronogram_modus'),
@@ -35,18 +35,9 @@ class ChronogramState extends State<Chronogram> {
           },
         ),
         GCWDefaultOutput(
-            child: _buildOutput()
+          child: decodeChronogram(_currentInput, _currentValue)
         )
       ],
     );
-  }
-
-  _buildOutput() {
-    if (_currentInput == null)
-      return '';
-
-    var out = decodeChronogram(_currentInput, _currentValue) ;
-
-    return out;
   }
 }
