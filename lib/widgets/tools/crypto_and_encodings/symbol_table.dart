@@ -65,12 +65,12 @@ class SymbolTableState extends State<SymbolTable> {
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
 
     var pathKey = SYMBOLTABLES_ASSETPATH + widget.symbolKey + '/';
-
+    var imageSuffixes = RegExp(r'\.(png|jpg|bmp|gif)', caseSensitive: false);
+    
     final imagePaths = manifestMap.keys
       .where((String key) => key.contains(pathKey))
+      .where((String key) => imageSuffixes.hasMatch(key))
       .toList();
-
-    var imageSuffixes = RegExp(r'\.(png|jpg|bmp|gif)', caseSensitive: false);
 
     setState(() {
       _images = SplayTreeMap.fromIterable(
