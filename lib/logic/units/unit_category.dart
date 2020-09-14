@@ -9,7 +9,6 @@ import 'package:gc_wizard/logic/units/power.dart';
 import 'package:gc_wizard/logic/units/pressure.dart';
 import 'package:gc_wizard/logic/units/temperature.dart';
 import 'package:gc_wizard/logic/units/time.dart';
-import 'package:gc_wizard/logic/units/typography.dart';
 import 'package:gc_wizard/logic/units/unit.dart';
 import 'package:gc_wizard/logic/units/velocity.dart';
 import 'package:gc_wizard/logic/units/volume.dart';
@@ -27,7 +26,6 @@ final UNITCATEGORY_TEMPERATURE = UnitCategory('unitconverter_category_temperatur
 final UNITCATEGORY_TIME = UnitCategory('unitconverter_category_time', times, TIME_SECOND, true);
 final UNITCATEGORY_VELOCITY = UnitCategory('unitconverter_category_velocity', velocities, VELOCITY_MS, false);
 final UNITCATEGORY_VOLUME = UnitCategory('unitconverter_category_volume', volumes, VOLUME_CUBICMETER, false);
-final UNITCATEGORY_TYPOGRAPHY = UnitCategory('unitconverter_category_typography', typographies, TYPOGRAPHY_POINT, false);
 
 class UnitCategory {
   String key;
