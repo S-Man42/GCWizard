@@ -21,11 +21,11 @@ class EnclosedAreasState extends State<EnclosedAreas> {
     return Column(
       children: <Widget>[
         GCWTextField(
-            onChanged: (text) {
-              setState(() {
-                _currentInput = text;
-              });
-            }
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
+            });
+          }
         ),
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'enclosedareas_with4'),

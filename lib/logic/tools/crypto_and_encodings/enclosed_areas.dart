@@ -9,6 +9,8 @@ final _AlphabetMap = {
   'a' : 1, 'b' : 1, 'd' : 1, 'o' : 1, 'p' : 1, 'q' : 1,
   String.fromCharCode(228) : 1, //ä
   String.fromCharCode(246) : 1, //ö
+  String.fromCharCode(37) : 2, //%
+  String.fromCharCode(38) : 2, //&
 };
 final _With4 = {'4': 1};
 

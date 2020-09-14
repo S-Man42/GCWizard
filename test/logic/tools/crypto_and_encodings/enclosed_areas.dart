@@ -11,7 +11,7 @@ void main() {
       {'input' : 'abcdefghijklmopqrstuvwxyzäöüß', 'expectedOutput' : '8'},
       {'input' : '0123456789', 'expectedOutput' : '6'},
       {'input' : 'ABCDEFGHIJKLMOPQRSTUVWXYZÄÖÜß 0123456789', 'expectedOutput' : '10 6'},
-      {'input' : '._*&><', 'expectedOutput' : '0'},
+      {'input' : '._*&%><°', 'expectedOutput' : '4'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -31,7 +31,7 @@ void main() {
       {'input' : 'abcdefghijklmopqrstuvwxyzäöüß', 'expectedOutput' : '8'},
       {'input' : '0123456789', 'expectedOutput' : '5'},
       {'input' : 'ABCDEFGHIJKLMOPQRSTUVWXYZÄÖÜß 0123456789', 'expectedOutput' : '10 5'},
-      {'input' : '._*&><', 'expectedOutput' : '0'},
+      {'input' : '._*&%><°', 'expectedOutput' : '4'},
    ];
 
     _inputsToExpected.forEach((elem) {
