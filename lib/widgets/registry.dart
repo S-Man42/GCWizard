@@ -329,10 +329,10 @@ class Registry {
         searchStrings: SEARCHSTRING_GAMELANGUAGE + 'chickenlanguage huehnersprache huenersprache huhn'
       ),
       GCWToolWidget(
-      tool: Chronogram(),
-      i18nPrefix: 'chronogram',
-      category: ToolCategory.CRYPTOGRAPHY,
-      searchStrings: 'roman numbers roemische zahlen chronogram chronogramm'
+        tool: Chronogram(),
+        i18nPrefix: 'chronogram',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'roman numbers roemische zahlen chronogram chronogramm'
       ),
       GCWToolWidget(
         tool: ColorPicker(),
