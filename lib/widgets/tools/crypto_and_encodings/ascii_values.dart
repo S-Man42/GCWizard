@@ -47,21 +47,21 @@ class ASCIIValuesState extends State<ASCIIValues> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
           ? GCWTextField(
-              controller: _encodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentEncodeInput = text;
-                });
-              },
-            )
+            controller: _encodeController,
+            onChanged: (text) {
+              setState(() {
+                _currentEncodeInput = text;
+              });
+            },
+          )
           : GCWIntegerListTextField(
-              controller: _decodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecodeInput = text;
-                });
-              },
-            ),
+            controller: _decodeController,
+            onChanged: (text) {
+              setState(() {
+                _currentDecodeInput = text;
+              });
+            },
+          ),
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'asciivalues_mode_left'),
           rightValue: i18n(context, 'asciivalues_mode_right'),

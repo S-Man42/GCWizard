@@ -38,21 +38,21 @@ class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
           ? GCWTextField(
-              controller: _controller,
-              onChanged: (text) {
-                setState(() {
-                  _currentInput = {'text': text, 'values' : []};
-                });
-              },
-            )
+            controller: _controller,
+            onChanged: (text) {
+              setState(() {
+                _currentInput = {'text': text, 'values' : []};
+              });
+            },
+          )
           : GCWIntegerListTextField(
-              controller: _controller,
-              onChanged: (text) {
-                setState(() {
-                  _currentInput = text;
-                });
-              },
-            ),
+            controller: _controller,
+            onChanged: (text) {
+              setState(() {
+                _currentInput = text;
+              });
+            },
+          ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -68,16 +68,16 @@ class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
         ),
         _currentMode == GCWSwitchPosition.left
           ? GCWTwoOptionsSwitch(
-              title: i18n(context, 'vanity_numberforspace'),
-              leftValue: '0',
-              rightValue: '1',
-              value: _currentNumberForSpaceMode,
-              onChanged: (value) {
-                setState(() {
-                  _currentNumberForSpaceMode = value;
-                });
-              },
-            )
+            title: i18n(context, 'vanity_numberforspace'),
+            leftValue: '0',
+            rightValue: '1',
+            value: _currentNumberForSpaceMode,
+            onChanged: (value) {
+              setState(() {
+                _currentNumberForSpaceMode = value;
+              });
+            },
+          )
           : Container(),
         GCWDefaultOutput(
           child: _buildOutput()

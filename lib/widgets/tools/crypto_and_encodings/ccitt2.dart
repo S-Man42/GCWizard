@@ -45,21 +45,21 @@ class CCITT2State extends State<CCITT2> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
           ? GCWTextField(
-              controller: _encodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentEncodeInput = text;
-                });
-              },
-            )
+            controller: _encodeController,
+            onChanged: (text) {
+              setState(() {
+                _currentEncodeInput = text;
+              });
+            },
+          )
           : GCWIntegerListTextField(
-              controller: _decodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecodeInput = text;
-                });
-              },
-            ),
+            controller: _decodeController,
+            onChanged: (text) {
+              setState(() {
+                _currentDecodeInput = text;
+              });
+            },
+          ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {

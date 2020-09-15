@@ -107,21 +107,21 @@ class TomTomState extends State<TomTom> {
           : Container(),
         _currentMode == GCWSwitchPosition.left
           ? GCWTextField(
-              controller: _inputEncryptController,
-              onChanged: (text) {
-                setState(() {
-                  _currentInputEncrypt = text;
-                });
-              },
-            )
+            controller: _inputEncryptController,
+            onChanged: (text) {
+              setState(() {
+                _currentInputEncrypt = text;
+              });
+            },
+          )
           : GCWTextField(
-              controller: _inputDecryptController,
-              onChanged: (text) {
-                setState(() {
-                  _currentInputDecrypt = text;
-                });
-              },
-            ),
+            controller: _inputDecryptController,
+            onChanged: (text) {
+              setState(() {
+                _currentInputDecrypt = text;
+              });
+            },
+          ),
         GCWDefaultOutput(
           child: _buildOutput()
         )
