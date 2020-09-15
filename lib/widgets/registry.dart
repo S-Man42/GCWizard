@@ -57,9 +57,15 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base85.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd1of10.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd20f5postnet.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2421.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2of5.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2of5planet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdaiken.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdglixon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdgray.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdgrayexcess.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdlibawcraig.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdobrien.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdoriginal.dart';
@@ -762,6 +768,36 @@ class Registry {
         tool: BCDTompkins(),
         i18nPrefix: 'bcd_tompkins',
         searchStrings: SEARCHSTRING_BCD + 'Tompkins'
+      ),
+      GCWToolWidget(
+          tool: BCD2421(),
+          i18nPrefix: 'bcd_2421',
+          searchStrings: SEARCHSTRING_BCD + '2421'
+      ),
+      GCWToolWidget(
+          tool: BCD2of5Planet(),
+          i18nPrefix: 'bcd_2of5planet',
+          searchStrings: SEARCHSTRING_BCD + 'Planet'
+      ),
+      GCWToolWidget(
+          tool: BCD2of5Postnet(),
+          i18nPrefix: 'bcd_2of5postnet',
+          searchStrings: SEARCHSTRING_BCD + 'Postnet'
+      ),
+      GCWToolWidget(
+          tool: BCD2of5(),
+          i18nPrefix: 'bcd_2of5',
+          searchStrings: SEARCHSTRING_BCD + '2 of 5'
+      ),
+      GCWToolWidget(
+          tool: BCD1of10(),
+          i18nPrefix: 'bcd_1of10',
+          searchStrings: SEARCHSTRING_BCD + 'Tompkins'
+      ),
+      GCWToolWidget(
+          tool: BCDGrayExcess(),
+          i18nPrefix: 'bcd_grayexcess',
+          searchStrings: SEARCHSTRING_BCD + 'Gray Excess'
       ),
 
       //Brainfk Selection **********************************************************************************************

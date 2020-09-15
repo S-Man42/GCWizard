@@ -28,20 +28,20 @@ class BCDSelection extends GCWSelection {
     Registry.toolList.where((element) {
       return [
         className(BCDOriginal()),
+        className(BCD2421()),
         className(BCDAiken()),
         className(BCDGlixon()),
         className(BCDGray()),
-        className(BCDLibawCraig()),
+        className(BCDGrayExcess()),
         className(BCDPetherick()),
         className(BCDOBrien()),
         className(BCDStibitz()),
         className(BCDTompkins()),
-        className(BCDGrayExcess()),
-        className(BCD1of10()),
+        className(BCDLibawCraig()),
         className(BCD2of5()),
         className(BCD2of5Postnet()),
         className(BCD2of5Planet()),
-        className(BCD2421()),
+        className(BCD1of10()),
       ].contains(className(element.tool));
     }).toList();
 
