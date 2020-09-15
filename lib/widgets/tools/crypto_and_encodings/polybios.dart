@@ -106,24 +106,24 @@ class PolybiosState extends State<Polybios> {
         ),
         _currentPolybiosMode == PolybiosMode.CUSTOM
           ? GCWTextField(
-              hintText: i18n(context, 'common_alphabet'),
-              controller: _alphabetController,
-              onChanged: (text) {
-                setState(() {
-                  _currentAlphabet = text;
-                });
-              },
-            )
+            hintText: i18n(context, 'common_alphabet'),
+            controller: _alphabetController,
+            onChanged: (text) {
+              setState(() {
+                _currentAlphabet = text;
+              });
+            },
+          )
           : Container(),
         _currentKey != null && _currentKey.length < 6
           ? GCWAlphabetModificationDropDownButton(
-              value: _currentModificationMode,
-              onChanged: (value) {
-                setState(() {
-                  _currentModificationMode = value;
-                });
-              },
-            )
+            value: _currentModificationMode,
+            onChanged: (value) {
+              setState(() {
+                _currentModificationMode = value;
+              });
+            },
+          )
           : Container(),
         _buildOutput(context)
       ],

@@ -48,22 +48,22 @@ class TapCodeState extends State<TapCode> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
           ? GCWTextField(
-              controller: _encryptionController,
-              onChanged: (text) {
-                setState(() {
-                  _currentEncryptionInput = text;
-                });
-              },
-            )
+            controller: _encryptionController,
+            onChanged: (text) {
+              setState(() {
+                _currentEncryptionInput = text;
+              });
+            },
+          )
           : GCWTextField(
-              inputFormatters: [_maskFormatter],
-              controller: _decryptionController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecryptionInput = text;
-                });
-              },
-            ),
+            inputFormatters: [_maskFormatter],
+            controller: _decryptionController,
+            onChanged: (text) {
+              setState(() {
+                _currentDecryptionInput = text;
+              });
+            },
+          ),
         GCWAlphabetModificationDropDownButton(
           value: _currentModificationMode,
           onChanged: (value) {

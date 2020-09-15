@@ -42,23 +42,23 @@ class GCCodeState extends State<GCCode> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.right
           ? GCWTextField(
-              controller: _gcCodeInputController,
-              inputFormatters: [_maskFormatter],
-              onChanged: (text) {
-                setState(() {
-                  _currentGCCodeInput = text;
-                });
-              },
-            )
+            controller: _gcCodeInputController,
+            inputFormatters: [_maskFormatter],
+            onChanged: (text) {
+              setState(() {
+                _currentGCCodeInput = text;
+              });
+            },
+          )
           : GCWIntegerSpinner(
-              value: _currentID,
-              min: 0,
-              onChanged: (value) {
-                setState(() {
-                  _currentID = value;
-                });
-              },
-            ),
+            value: _currentID,
+            min: 0,
+            onChanged: (value) {
+              setState(() {
+                _currentID = value;
+              });
+            },
+          ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
