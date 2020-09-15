@@ -900,8 +900,8 @@
 
   "enclosedareas_title": "Eingeschlossene Flächen",
   "enclosedareas_description" : "Anzahl der eingeschlossenen Flächen in Buchstaben und Zahlen",
-  "enclosedareas_with4" : "mit 4",
-  "enclosedareas_without4" : "ohne 4",
+  "enclosedareas_with4" : "geschlossene 4",
+  "enclosedareas_without4" : "offene 4",
 
   "enigma_title": "Enigma",
   "enigma_description" : "Deutsche Verschlüsselungsmaschine im 2. Weltkrieg",

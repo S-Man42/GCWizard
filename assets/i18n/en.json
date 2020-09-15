@@ -900,8 +900,8 @@
 
   "enclosedareas_title": "Enclosed Areas",
   "enclosedareas_description" : "Number of enclosed areas in letters and numbers",
-  "enclosedareas_with4" : "with 4",
-  "enclosedareas_without4" : "without 4",
+  "enclosedareas_with4" : "closed 4",
+  "enclosedareas_without4" : "open 4",
 
   "enigma_title": "Enigma",
   "enigma_description" : "German Military Encryption Machine in World War II.",
