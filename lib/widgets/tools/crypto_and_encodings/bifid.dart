@@ -77,7 +77,7 @@ class BifidState extends State<Bifid> {
         ),
 
         GCWTextDivider(
-            text: i18n(context, 'common_alphabet')
+          text: i18n(context, 'common_alphabet')
         ),
 
         GCWDropDownButton(
@@ -97,15 +97,15 @@ class BifidState extends State<Bifid> {
 
         _currentBifidMode == PolybiosMode.CUSTOM
           ? GCWTextField(
-              hintText: i18n(context, 'common_alphabet'),
-              controller: _alphabetController,
-              onChanged: (text) {
-                setState(() {
-                  _currentAlphabet = text;
-                });
-              },
-            )
-          : Container(),
+            hintText: i18n(context, 'common_alphabet'),
+            controller: _alphabetController,
+            onChanged: (text) {
+              setState(() {
+                _currentAlphabet = text;
+              });
+            },
+          )
+        : Container(),
 
         GCWTwoOptionsSwitch(
           title: i18n(context, 'bifid_matrix'),
@@ -120,14 +120,14 @@ class BifidState extends State<Bifid> {
 
         _currentMatrixMode == GCWSwitchPosition.left
           ? GCWAlphabetModificationDropDownButton(
-              value: _currentModificationMode,
-              onChanged: (value) {
-                setState(() {
-                  _currentModificationMode = value;
-                });
-              },
-            )
-          : Container(), //empty widget
+            value: _currentModificationMode,
+            onChanged: (value) {
+              setState(() {
+                _currentModificationMode = value;
+              });
+            },
+          )
+        : Container(), //empty widget
 
         _buildOutput()
       ],

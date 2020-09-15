@@ -153,69 +153,69 @@ class SymbolTableState extends State<SymbolTable> {
         _currentMode == GCWSwitchPosition.left
           //Encryption
           ? Column(
-              children: <Widget>[
-                GCWTextField(
-                  controller: _inputController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentInput = text;
-                    });
-                  },
-                ),
-                GCWDefaultOutput(
-                  child: _buildEncryptionOutput(countColumns, widget.isCaseSensitive)
-                ),
-              ],
-            )
+            children: <Widget>[
+              GCWTextField(
+                controller: _inputController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentInput = text;
+                  });
+                },
+              ),
+              GCWDefaultOutput(
+                child: _buildEncryptionOutput(countColumns, widget.isCaseSensitive)
+              ),
+            ],
+          )
           //Decryption
           : Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: GCWOnOffSwitch (
-                        value: _currentShowOverlayedSymbols,
-                        title: i18n(context, 'symboltables_showoverlay'),
-                        onChanged: (value) {
-                          setState(() {
-                            _currentShowOverlayedSymbols = value;
-                          });
-                        },
-                      ),
-                      flex: 4
-                    ),
-                    GCWIconButton(
-                      iconData: Icons.zoom_in,
-                      onPressed: () {
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: GCWOnOffSwitch (
+                      value: _currentShowOverlayedSymbols,
+                      title: i18n(context, 'symboltables_showoverlay'),
+                      onChanged: (value) {
                         setState(() {
-                          int newCountColumn = max(countColumns - 1, 1);
-
-                          mediaQueryData.orientation == Orientation.portrait
-                            ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                            : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                          _currentShowOverlayedSymbols = value;
                         });
                       },
                     ),
-                    GCWIconButton(
-                      iconData: Icons.zoom_out,
-                      onPressed: () {
-                        setState(() {
-                          int newCountColumn = countColumns + 1;
+                    flex: 4
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.zoom_in,
+                    onPressed: () {
+                      setState(() {
+                        int newCountColumn = max(countColumns - 1, 1);
 
-                          mediaQueryData.orientation == Orientation.portrait
-                            ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                            : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                        });
-                      },
-                    )
-                  ],
-                ),
-                _buildDecryptionButtonMatrix(countColumns, widget.isCaseSensitive),
-                GCWDefaultOutput(
-                  child: _output
-                )
-              ],
-            )
+                        mediaQueryData.orientation == Orientation.portrait
+                          ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                          : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                      });
+                    },
+                  ),
+                  GCWIconButton(
+                    iconData: Icons.zoom_out,
+                    onPressed: () {
+                      setState(() {
+                        int newCountColumn = countColumns + 1;
+
+                        mediaQueryData.orientation == Orientation.portrait
+                          ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                          : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                      });
+                    },
+                  )
+                ],
+              ),
+              _buildDecryptionButtonMatrix(countColumns, widget.isCaseSensitive),
+              GCWDefaultOutput(
+                child: _output
+              )
+            ],
+          )
       ],
     );
   }
@@ -344,26 +344,26 @@ class SymbolTableState extends State<SymbolTable> {
                 ),
                 _currentShowOverlayedSymbols
                   ? Opacity(
-                      child:  Container(
-                        child: Text(
-                          _showSpaceSymbolInOverlay(symbolText),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: defaultFontSize()
-                          ),
-                        ),
-                        height: defaultFontSize() + 5,
-                        decoration: ShapeDecoration(
-                          color: ThemeColors.accent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius)),
-                          )
+                    child:  Container(
+                      child: Text(
+                        _showSpaceSymbolInOverlay(symbolText),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: defaultFontSize()
                         ),
                       ),
-                      opacity: 0.85
-                    )
-                  : Container()
+                      height: defaultFontSize() + 5,
+                      decoration: ShapeDecoration(
+                        color: ThemeColors.accent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius)),
+                        )
+                      ),
+                    ),
+                    opacity: 0.85
+                  )
+                : Container()
               ],
             ),
             onTap: () {
