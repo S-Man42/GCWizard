@@ -12,6 +12,7 @@ final DEFAULT_POPUPBUTTON_SIZE = 40.0;
 
 TextStyle gcwTextStyle() {
  return TextStyle(
+   color: themeColors().mainFont(),
    fontSize: defaultFontSize(),
    fontFamily: 'Roboto Condensed'
  );
@@ -33,9 +34,9 @@ TextStyle gcwHyperlinkTextStyle() {
 }
 
 TextStyle gcwDescriptionTextStyle() {
-  return TextStyle(
+  return gcwTextStyle().copyWith(
+    color: themeColors().listSubtitle(),
     fontSize: defaultFontSize() - 2,
-    fontFamily: gcwTextStyle().fontFamily
   );
 }
 

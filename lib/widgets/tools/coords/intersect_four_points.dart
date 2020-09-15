@@ -3,7 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/intersect_lines.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
@@ -117,9 +117,9 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
                 start: _currentCoords21,
                 end: _currentCoords22,
                 color: HSLColor
-                    .fromColor(ThemeColors.mapPolyline)
-                    .withLightness(HSLColor.fromColor(ThemeColors.mapPolyline).lightness - 0.3)
-                    .toColor()
+                  .fromColor(COLOR_MAP_POLYLINE)
+                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+                  .toColor()
             ),
           ],
         ),
@@ -161,7 +161,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
     _currentMapPoints.add(
       MapPoint(
         point: _currentIntersection,
-        color: ThemeColors.mapCalculatedPoint,
+        color: COLOR_MAP_CALCULATEDPOINT,
         markerText: i18n(context, 'coords_common_intersection'),
         coordinateFormat: _currentOutputFormat
       )

@@ -6,9 +6,14 @@ class ThemeColorsDark extends ThemeColors {
   static const _gray = Color(0x40D8D8D8);
   static const _darkGray = Color(0xFF26282F);
 
+  ThemeData _base;
+
   @override
   ThemeData base() {
-    return ThemeData.dark();
+    if (_base == null)
+      _base = ThemeData.dark();
+
+    return _base;
   }
 
   @override
@@ -28,7 +33,7 @@ class ThemeColorsDark extends ThemeColors {
 
   @override
   Color mainFont() {
-    return _lightGray;
+    return Colors.white;
   }
 
   @override
@@ -37,13 +42,12 @@ class ThemeColorsDark extends ThemeColors {
   }
 
   @override
-  Color popupMenu() {
-    // TODO: implement popupMenu
-    throw UnimplementedError();
+  Color dialog() {
+    return Colors.orangeAccent;
   }
 
   @override
-  Color popupMenuText() {
+  Color dialogText() {
     return Colors.black;
   }
 
@@ -53,7 +57,7 @@ class ThemeColorsDark extends ThemeColors {
   }
 
   @override
-  Color symbolTableImageBackground() {
+  Color iconImageBackground() {
     return Colors.white;
   }
 
@@ -65,5 +69,30 @@ class ThemeColorsDark extends ThemeColors {
   @override
   Color textFieldSelectionControlBackground() {
     return _darkGray;
+  }
+
+  @override
+  Color switchOnOffInactive() {
+    return _lightGray;
+  }
+
+  @override
+  Color textFieldFill() {
+    return _darkGray;
+  }
+
+  @override
+  Color switchTwoOptionThumb() {
+    return _lightGray;
+  }
+
+  @override
+  Color switchTwoOptionTrack() {
+    return _darkGray;
+  }
+
+  @override
+  Color listSubtitle() {
+    return _lightGray;
   }
 }

@@ -43,7 +43,7 @@ class _GCWToolListState extends State<GCWToolList> {
     return ListTile(
       title: Text(
         tool.toolName,
-        style: TextStyle(fontSize: defaultFontSize()),
+        style: gcwTextStyle(),
       ),
       subtitle: _buildSubtitle(context, tool),
       onTap: () {
@@ -52,7 +52,7 @@ class _GCWToolListState extends State<GCWToolList> {
       leading: tool.icon,
       trailing: IconButton(
         icon: tool.isFavorite ?? false ? Icon(Icons.star) : Icon(Icons.star_border),
-        color: ThemeColors.lightGray,
+        color: themeColors().mainFont(),
         onPressed: () {
           if (tool.isFavorite) {
             showDeleteAlertDialog(context, tool.toolName, () {

@@ -185,7 +185,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
 
       if (odd) {
         output = Container(
-          color: ThemeColors.oddRows,
+          color: themeColors().outputListOddRows(),
           child: row
         );
       } else {

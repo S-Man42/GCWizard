@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:touchable/touchable.dart';
 
 enum SudokuFillType {USER_FILLED, CALCULATED}
@@ -107,13 +104,14 @@ class SudokuBoardPainter extends CustomPainter {
               }
             );
 
-            paint.color = ThemeColors.accent;
+            ThemeColors colors = themeColors();
+            paint.color = colors.accent();
 
             _touchCanvas.drawLine(Offset(xInner, 0.0), Offset(xInner, size.width), paint);
             _touchCanvas.drawLine(Offset(0.0, yInner), Offset(size.height, yInner), paint);
 
             if (board[boardX][boardY] != null) {
-              var textColor = board[boardX][boardY]['type'] == SudokuFillType.USER_FILLED ? ThemeColors.accent : Colors.white;
+              var textColor = board[boardX][boardY]['type'] == SudokuFillType.USER_FILLED ? colors.accent() : colors.mainFont();
 
               TextSpan span = TextSpan(
                 style: gcwTextStyle().copyWith(color: textColor, fontSize: heightInner * 0.8),

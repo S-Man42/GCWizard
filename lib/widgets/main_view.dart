@@ -314,7 +314,7 @@ class _MainViewState extends State<MainView> {
           controller: _searchController,
           icon: Icon(
             Icons.search,
-            color: ThemeColors.lightGray
+            color: themeColors().mainFont()
           ),
           hintText: i18n(context, 'common_search_hint')
         )

@@ -62,7 +62,7 @@ List<Widget> columnedMultiLineOutput(List<List<dynamic>> data, {List<int> flexVa
 
     if (odd) {
       output = Container(
-        color: ThemeColors.oddRows,
+        color: themeColors().outputListOddRows(),
         child: row
       );
     } else {
@@ -94,7 +94,7 @@ insertIntoGCWClipboard(String text) {
 }
 
 buildPopupItem(BuildContext context, IconData icon, String i18nKey) {
-  var color = ThemeColors.popupItemText;
+  var color = themeColors().dialogText();
 
   return  Row(
     children: [

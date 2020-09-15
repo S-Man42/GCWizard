@@ -73,7 +73,7 @@ class SubstitutionState extends State<Substitution> {
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.lightGray,
+              color: themeColors().mainFont(),
             ),
             Expanded(
               child: GCWTextField(
@@ -135,6 +135,8 @@ class SubstitutionState extends State<Substitution> {
     var rows = _currentSubstitutions.entries.map((entry) {
       Widget output;
 
+      ThemeColors colors = themeColors();
+
       var row = Container(
         child: Row (
           children: <Widget>[
@@ -146,7 +148,7 @@ class SubstitutionState extends State<Substitution> {
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.lightGray,
+              color: colors.mainFont(),
             ),
             Expanded(
               child: GCWText (
@@ -172,7 +174,7 @@ class SubstitutionState extends State<Substitution> {
 
       if (odd) {
         output = Container(
-          color: ThemeColors.oddRows,
+          color: colors.outputListOddRows(),
           child: row
         );
       } else {

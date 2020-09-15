@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/alphabet_values.dart' as logic;
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -370,7 +370,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
               ),
               Icon(
                 Icons.arrow_forward,
-                color: ThemeColors.lightGray,
+                color: themeColors().mainFont(),
               ),
               Expanded(
                 child: GCWTextField(
@@ -649,6 +649,8 @@ class AlphabetValuesState extends State<AlphabetValues> {
     var rows = _currentCustomizedAlphabet.entries.map((entry) {
       Widget output;
 
+      ThemeColors colors = themeColors();
+
       var row = Container(
         child: Row (
           children: <Widget>[
@@ -660,7 +662,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.lightGray,
+              color: colors.mainFont(),
             ),
             Expanded(
               child: GCWText (
@@ -686,7 +688,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
 
       if (odd) {
         output = Container(
-          color: ThemeColors.oddRows,
+          color: colors.outputListOddRows(),
           child: row
         );
       } else {

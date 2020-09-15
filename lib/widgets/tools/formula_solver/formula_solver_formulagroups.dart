@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -32,6 +32,8 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
   var _currentEditedName = '';
   var _currentEditId;
 
+  ThemeColors _themeColors;
+
   @override
   void initState() {
     super.initState();
@@ -51,6 +53,8 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
 
   @override
   Widget build(BuildContext context) {
+    _themeColors = themeColors();
+
     return Column(
       children: <Widget>[
         GCWTextDivider(
@@ -231,14 +235,14 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
                   borderRadius: BorderRadius.circular(roundedBorderRadius),
                   side:  BorderSide(
                     width: 1,
-                    color: ThemeColors.accent,
+                    color: _themeColors.accent(),
                   ),
                 ),
               ),
               child: PopupMenuButton(
                 offset: Offset(0, DEFAULT_POPUPBUTTON_SIZE),
-                icon: Icon(Icons.settings, color: Colors.white),
-                color: ThemeColors.accent,
+                icon: Icon(Icons.settings, color: _themeColors.mainFont()),
+                color: _themeColors.accent(),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(roundedBorderRadius),
                 ),
@@ -299,7 +303,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
 
       if (odd) {
         output = Container(
-          color: ThemeColors.oddRows,
+          color: _themeColors.outputListOddRows(),
           child: row
         );
       } else {

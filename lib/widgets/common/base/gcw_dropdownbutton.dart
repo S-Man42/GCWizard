@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class GCWDropDownButton extends StatefulWidget {
@@ -24,6 +24,8 @@ class GCWDropDownButton extends StatefulWidget {
 class _GCWDropDownButtonState extends State<GCWDropDownButton> {
   @override
   Widget build(BuildContext context) {
+    ThemeColors colors = themeColors();
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
       height: 39,
@@ -31,7 +33,8 @@ class _GCWDropDownButtonState extends State<GCWDropDownButton> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(roundedBorderRadius),
         border: Border.all(
-          color: ThemeColors.accent, style: BorderStyle.solid, width: 1.0),
+          color: colors.accent(), style: BorderStyle.solid, width: 1.0
+        ),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
@@ -39,7 +42,7 @@ class _GCWDropDownButtonState extends State<GCWDropDownButton> {
           icon: Icon(
             Icons.arrow_drop_down,
             size: 30,
-            color: ThemeColors.accent,
+            color: colors.accent(),
           ),
           value: widget.value ?? widget.items[0].value,
           items: widget.items,

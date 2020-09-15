@@ -10,8 +10,9 @@ import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -129,7 +130,7 @@ class GCWMapViewState extends State<GCWMapView> {
           return Icon(
             Icons.my_location,
             size: 28.3,
-            color: Colors.white,
+            color: themeColors().mainFont(),
           );
         });
     }).toList();
@@ -231,11 +232,11 @@ class GCWMapViewState extends State<GCWMapView> {
             child: InkWell(
               child: Opacity(
                 child: Container(
-                  color: Colors.white,
+                  color: COLOR_MAP_LICENSETEXT_BACKGROUND,
                   child: Text(
                     i18n(context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_TEXT : MAPBOX_SATELLITE_TEXT),
                     style: TextStyle(
-                      color: ThemeColors.darkGray,
+                      color: COLOR_MAP_LICENSETEXT,
                       fontSize: defaultFontSize() - 4,
                       decoration: TextDecoration.underline
                     )
@@ -278,6 +279,8 @@ class GCWMapViewState extends State<GCWMapView> {
 
   _buildPopups(Marker marker) {
 
+    ThemeColors colors = themeColors();
+
     return Container(
       width: 250,
       height: defaultFontSize() * 7,
@@ -286,12 +289,12 @@ class GCWMapViewState extends State<GCWMapView> {
         bottom: 5
       ),
       decoration: ShapeDecoration(
-        color: ThemeColors.accent,
+        color: colors.dialog(),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(roundedBorderRadius),
           side:  BorderSide(
             width: 1,
-            color: ThemeColors.darkGray,
+            color: colors.dialogText(),
           ),
         ),
       ),
@@ -306,7 +309,7 @@ class GCWMapViewState extends State<GCWMapView> {
                   style: TextStyle(
                     fontFamily: gcwTextStyle().fontFamily,
                     fontSize: defaultFontSize(),
-                    color: ThemeColors.darkGray,
+                    color: colors.dialogText(),
                     fontWeight: FontWeight.bold
                   )
                 ),
@@ -319,7 +322,7 @@ class GCWMapViewState extends State<GCWMapView> {
             style: TextStyle(
                 fontFamily: gcwTextStyle().fontFamily,
                 fontSize: defaultFontSize(),
-                color: ThemeColors.darkGray
+                color: colors.dialogText()
             )
           )
         ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
@@ -61,6 +61,8 @@ class _GCWTextFieldState extends State<GCWTextField> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeColors colors = themeColors();
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
       child: LayoutBuilder(
@@ -69,7 +71,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
             autocorrect: false,
             decoration: InputDecoration(
               hintText: widget.hintText,
-              fillColor: widget.filled ? ThemeColors.darkGray : null,
+              fillColor: widget.filled ? colors.textFieldFill() : null,
               filled: widget.filled,
               prefixIcon: widget.icon,
               isDense: true,
@@ -83,7 +85,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
                     child: Container(
                       child: Icon(
                         Icons.clear,
-                        color: ThemeColors.iconColor,
+                        color: colors.mainFont(),
                       ),
                       padding: EdgeInsets.only(
                         right: 5,

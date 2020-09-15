@@ -3,6 +3,8 @@ import 'package:gc_wizard/theme/theme_colors_dark.dart';
 
 enum ThemeType {DARK, LIGHT}
 
+ThemeColors _themeColors;
+
 abstract class ThemeColors {
   ThemeData base();
 
@@ -15,21 +17,38 @@ abstract class ThemeColors {
 
   Color textFieldSelectionControlBackground();
   Color textFieldHintText();
+  Color textFieldFill();
+
+  Color switchOnOffInactive();
+  Color switchTwoOptionThumb();
+  Color switchTwoOptionTrack();
 
   Color outputListOddRows();
 
-  Color symbolTableImageBackground();
+  Color listSubtitle();
 
-  Color popupMenu();
-  Color popupMenuText();
+  Color iconImageBackground();
+
+  Color dialog();
+  Color dialogText();
 }
 
 ThemeType type = ThemeType.DARK;
 
-ThemeColors themeColors() {
+ThemeColors themeColors({refresh: false}) {
+  if (refresh)
+    _themeColors = null;
+
+  if (_themeColors != null)
+    return _themeColors;
+
   switch (type) {
-    case ThemeType.DARK: return ThemeColorsDark();
+    case ThemeType.DARK:
+      _themeColors = ThemeColorsDark();
+      break;
     // case ThemeType.LIGHT: return ThemeColorsLight();
     default: return null;
   }
+
+  return _themeColors;
 }

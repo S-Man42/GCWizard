@@ -5,7 +5,7 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/units/length.dart';
 import 'package:gc_wizard/logic/units/unit_category.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
@@ -111,7 +111,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
             ),
             MapPoint(
               point: _currentCenter,
-              color: ThemeColors.mapCalculatedPoint,
+              color: COLOR_MAP_CALCULATEDPOINT,
               markerText: i18n(context, 'coords_common_centerpoint'),
               coordinateFormat: _currentOutputFormat
             )
@@ -125,16 +125,16 @@ class CenterThreePointsState extends State<CenterThreePoints> {
                 start: _currentCoords2,
                 end: _currentCenter,
                 color: HSLColor
-                  .fromColor(ThemeColors.mapPolyline)
-                  .withLightness(HSLColor.fromColor(ThemeColors.mapPolyline).lightness - 0.3)
+                  .fromColor(COLOR_MAP_POLYLINE)
+                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
                   .toColor()
             ),
             MapGeodetic(
                 start: _currentCoords3,
                 end: _currentCenter,
                 color: HSLColor
-                  .fromColor(ThemeColors.mapPolyline)
-                  .withLightness(HSLColor.fromColor(ThemeColors.mapPolyline).lightness + 0.2)
+                  .fromColor(COLOR_MAP_POLYLINE)
+                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
                   .toColor()
             ),
           ],

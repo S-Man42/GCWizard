@@ -32,6 +32,8 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
   var _currentEditedValue = '';
   var _currentEditId;
 
+  ThemeColors _themeColors;
+
   @override
   void initState() {
     super.initState();
@@ -74,6 +76,8 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
 
   @override
   Widget build(BuildContext context) {
+    _themeColors = themeColors();
+
     return Column(
       children: <Widget>[
         GCWTextDivider(
@@ -94,7 +98,7 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.lightGray,
+              color: _themeColors.mainFont(),
             ),
             Expanded(
               child: Padding (
@@ -175,7 +179,7 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.lightGray,
+              color: _themeColors.mainFont(),
             ),
             Expanded(
               child: _currentEditId == value.id
@@ -241,7 +245,7 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
 
       if (odd) {
         output = Container(
-            color: ThemeColors.oddRows,
+            color: _themeColors.outputListOddRows(),
             child: row
         );
       } else {

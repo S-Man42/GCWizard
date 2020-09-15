@@ -4,8 +4,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
@@ -276,7 +276,7 @@ class SymbolTableState extends State<SymbolTable> {
 
           widget = Container(
             child: image,
-            color: ThemeColors.symbolTableIconBackground,
+            color: themeColors().iconImageBackground(),
             padding: EdgeInsets.all(2),
           );
 
@@ -314,6 +314,8 @@ class SymbolTableState extends State<SymbolTable> {
     var rows = <Widget>[];
     var countRows = (_images.length / countColumns).floor();
 
+    ThemeColors colors = themeColors();
+
     for (var i = 0; i <= countRows; i++) {
       var columns = <Widget>[];
 
@@ -339,7 +341,7 @@ class SymbolTableState extends State<SymbolTable> {
               children: <Widget>[
                 Container(
                   child: image,
-                  color: ThemeColors.symbolTableIconBackground,
+                  color: colors.iconImageBackground(),
                   padding: EdgeInsets.all(2),
                 ),
                 _currentShowOverlayedSymbols
@@ -348,14 +350,14 @@ class SymbolTableState extends State<SymbolTable> {
                         child: Text(
                           _showSpaceSymbolInOverlay(symbolText),
                           style: TextStyle(
-                            color: Colors.black,
+                            color: colors.dialogText(),
                             fontWeight: FontWeight.bold,
                             fontSize: defaultFontSize()
                           ),
                         ),
                         height: defaultFontSize() + 5,
                         decoration: ShapeDecoration(
-                          color: ThemeColors.accent,
+                          color: colors.dialog(),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius)),
                           )

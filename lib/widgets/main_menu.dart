@@ -25,7 +25,7 @@ buildMainMenu(BuildContext context) {
             width: 50.0,
             height: 50.0,
             decoration: BoxDecoration(
-              color: ThemeColors.darkGray,
+              color: themeColors().dialogText(),
               shape: BoxShape.circle,
             ),
           ),
@@ -36,7 +36,7 @@ buildMainMenu(BuildContext context) {
             child: Text(
               i18n(context, 'common_app_title'),
               style: TextStyle(
-                color: ThemeColors.darkGray,
+                color: themeColors().dialogText(),
                 fontSize: 22.0
               ),
             ),
@@ -44,7 +44,7 @@ buildMainMenu(BuildContext context) {
         ],
       ),
       decoration: BoxDecoration(
-        color: ThemeColors.accent,
+        color: themeColors().dialog(),
       ),
     ),
   );
@@ -67,7 +67,7 @@ buildMainMenu(BuildContext context) {
     children: <Widget>[
       InkWell(
         child: Container(
-          color: ThemeColors.lightGray,
+          color: themeColors().mainFont(),
           width: double.infinity,
           height: 50,
           child: Row(
@@ -75,16 +75,16 @@ buildMainMenu(BuildContext context) {
               Container(
                 child: Icon(Icons.group),
                 padding: EdgeInsets.only(
-                    left: 15,
-                    right: 15
+                  left: 15,
+                  right: 15
                 ),
               ),
               Text(
                 i18n(context, 'mainmenu_callforcontribution_title'),
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: ThemeColors.darkGray,
-                    fontSize: defaultFontSize()
+                  fontWeight: FontWeight.bold,
+                  color: themeColors().dialogText(),
+                  fontSize: defaultFontSize()
                 ),
               ),
             ],
@@ -129,7 +129,7 @@ _buildSettingsItem(BuildContext context) {
     ),
     leading: Icon(
       Icons.settings,
-      color: ThemeColors.lightGray,
+      color: themeColors().mainFont(),
     ),
     children: settingsItems.map((item) {
       return Padding(
@@ -146,7 +146,7 @@ ListTile _buildMenuItem(BuildContext context, item) {
   return ListTile(
     leading: Icon(
       item['icon'],
-      color: ThemeColors.lightGray,
+      color: themeColors().mainFont(),
     ),
     title: Text(
       (item['tool'] as GCWToolWidget).toolName,
@@ -161,7 +161,7 @@ ListTile _buildMenuItem(BuildContext context, item) {
 
 _menuItemStyle() {
   return TextStyle(
-    color: ThemeColors.lightGray,
+    color: themeColors().mainFont(),
     fontSize: defaultFontSize(),
     fontWeight: FontWeight.normal
   );

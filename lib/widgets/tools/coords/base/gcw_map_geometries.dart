@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:latlong/latlong.dart';
 
@@ -16,7 +16,7 @@ class MapPoint {
   const MapPoint({
     @required this.point,
     this.markerText,
-    this.color: ThemeColors.mapPoint,
+    this.color: COLOR_MAP_POINT,
     this.coordinateFormat
   });
 }
@@ -31,7 +31,7 @@ class MapGeodetic {
   MapGeodetic({
     @required this.start,
     @required this.end,
-    this.color: ThemeColors.mapPolyline,
+    this.color: COLOR_MAP_POLYLINE,
   }) {
     _initialize();
   }
@@ -73,7 +73,7 @@ class MapCircle {
   MapCircle({
     @required this.centerPoint,
     @required this.radius,
-    this.color: ThemeColors.mapCircle
+    this.color: COLOR_MAP_CIRCLE
   }) {
     _initialize();
   }

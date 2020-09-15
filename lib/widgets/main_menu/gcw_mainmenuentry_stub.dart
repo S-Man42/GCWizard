@@ -39,8 +39,8 @@ class GCWMainMenuEntryStubState extends State<GCWMainMenuEntryStub> {
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color: ThemeColors.accent,
-                      width: 2
+                    color: themeColors().accent(),
+                    width: 2
                   ),
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(roundedBorderRadius),

@@ -5,7 +5,7 @@ class GCWDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Divider(
-      color: ThemeColors.lightGray,
+      color: themeColors().mainFont(),
       indent: 15,
       endIndent: 15
     );
