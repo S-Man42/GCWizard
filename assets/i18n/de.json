@@ -314,6 +314,12 @@
   "changelog_0.0.4" : "[fix] Berechnung von Stunden/Minuten/Sekunden in 'Anzahl Tage'",
   "changelog_0.0.1" : "[new] Google PlayStore Initialisierung",
 
+  "chao_title" : "Chao Cipher",
+  "chao_description" : "Chao cipher",
+  "chao_example" : "HALLO → SYMLH",
+  "chao_alphabet_plain" : "Klartext Alphabet",
+  "chao_alphabet_chiffre" : "Chiffretext Alphabet",
+
   "chickenlanguage_title" : "Hühnersprache",
   "chickenlanguage_description" : "Spielsprache, Geheimsprache",
   "chickenlanguage_example" : "Huhn → huhudefuhn",

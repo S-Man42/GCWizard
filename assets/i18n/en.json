@@ -314,6 +314,12 @@
   "changelog_0.0.4" : "[fix] Calculation of hours/minutes/seconds in 'Count Days'",
   "changelog_0.0.1" : "[new] Google PlayStore Initialisation",
 
+  "chao_title" : "Chao Cipher",
+  "chao_description" : "Chao cipher",
+  "chao_example" : "HALLO → STMLH",
+  "chao_alphabet_plain" : "plain alphabet",
+  "chao_alphabet_chiffre" : "chiffre alphabet",
+
   "chickenlanguage_title" : "Chicken Language",
   "chickenlanguage_description" : "Game Language, Secret Language",
   "chickenlanguage_example" : "code → cohodefodehedefe",

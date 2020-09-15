@@ -88,6 +88,8 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'tools/crypto_and_encodings/chao.dart';
+
 class MainView extends StatefulWidget {
   @override
   _MainViewState createState() => _MainViewState();
@@ -162,6 +164,7 @@ class _MainViewState extends State<MainView> {
           className(Caesar()),
           className(CCITT1()),
           className(CCITT2()),
+          className(Chao()),
           className(ChickenLanguage()),
           className(CoordsSelection()),
           className(ColorPicker()),
