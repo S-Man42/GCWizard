@@ -1417,10 +1417,10 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colortokki color-tokki farbcode woven carpet webteppich gewebter farben colors six '
       ),
       GCWToolWidget(
-          tool: SymbolTable(symbolKey: 'cyrillic'),
-          i18nPrefix: 'symboltables_cyrillic',
-          iconPath: SYMBOLTABLES_ASSETPATH + 'cyrillic/68.png',
-          searchStrings: SEARCHSTRING_SYMBOLTABLES + 'kyrillisch cyrillic russisch russian alphabet schrift font cyrl kyrill saloniki'
+        tool: SymbolTable(symbolKey: 'cyrillic', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_cyrillic',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'cyrillic/68.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'kyrillisch cyrillic russisch russian alphabet schrift font cyrl saloniki'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'daedric'),
@@ -1621,16 +1621,16 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hylianische skywardsword skywardschwert thelegendofzelda hyrule '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'hylian_twilight_princes_gcn'),
-        i18nPrefix: 'symboltables_hylian_twilight_princes_gcn',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_twilight_princes_gcn/65.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hylian legende von zelda daemmerungsprinzessin thelegendofzelda twilightprinces gcn Gamecube hyrule'
+        tool: SymbolTable(symbolKey: 'hylian_twilight_princess_gcn'),
+        i18nPrefix: 'symboltables_hylian_twilight_princess_gcn',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_twilight_princess_gcn/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hylian legende von zelda daemmerungsprinzessin thelegendofzelda twilightprincess gcn nintendo gamecube hyrule'
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'hylian_twilight_princes_wii'),
-        i18nPrefix: 'symboltables_hylian_twilight_princes_wii',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_twilight_princes_wii/65.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hylian legende von zelda daemmerungsprinzessin thelegendofzelda twilightprinces wii hyrule'
+        tool: SymbolTable(symbolKey: 'hylian_twilight_princess_wii'),
+        i18nPrefix: 'symboltables_hylian_twilight_princess_wii',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_twilight_princess_wii/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hylian legende von zelda daemmerungsprinzessin thelegendofzelda twilightprincess wii hyrule'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'hylian_wind_waker'),
