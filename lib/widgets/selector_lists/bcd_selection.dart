@@ -5,9 +5,10 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd1of10.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd20f5postnet.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2421.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdhamming.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2of5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2of5planet.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdbiquinaer.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdgrayexcess.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdoriginal.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdaiken.dart';
@@ -28,7 +29,6 @@ class BCDSelection extends GCWSelection {
     Registry.toolList.where((element) {
       return [
         className(BCDOriginal()),
-        className(BCD2421()),
         className(BCDAiken()),
         className(BCDGlixon()),
         className(BCDGray()),
@@ -41,6 +41,8 @@ class BCDSelection extends GCWSelection {
         className(BCD2of5()),
         className(BCD2of5Postnet()),
         className(BCD2of5Planet()),
+        className(BCDHamming()),
+        className(BCDBiquinaer()),
         className(BCD1of10()),
       ].contains(className(element.tool));
     }).toList();

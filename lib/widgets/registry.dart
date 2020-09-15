@@ -59,7 +59,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base85.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd1of10.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd20f5postnet.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2421.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdbiquinaer.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdhamming.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2of5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2of5planet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdaiken.dart';
@@ -770,9 +771,14 @@ class Registry {
         searchStrings: SEARCHSTRING_BCD + 'Tompkins'
       ),
       GCWToolWidget(
-          tool: BCD2421(),
-          i18nPrefix: 'bcd_2421',
-          searchStrings: SEARCHSTRING_BCD + '2421'
+          tool: BCDHamming(),
+          i18nPrefix: 'bcd_hamming',
+          searchStrings: SEARCHSTRING_BCD + 'Hamming'
+      ),
+      GCWToolWidget(
+          tool: BCDBiquinaer(),
+          i18nPrefix: 'bcd_biquinaer',
+          searchStrings: SEARCHSTRING_BCD + 'Biquinaer'
       ),
       GCWToolWidget(
           tool: BCD2of5Planet(),
