@@ -316,7 +316,7 @@
 
   "chao_title" : "Chao Cipher",
   "chao_description" : "Chao cipher",
-  "chao_example" : "HALLO → STMLH",
+  "chao_example" : "HELLO → STMLH",
   "chao_alphabet_plain" : "plain alphabet",
   "chao_alphabet_chiffre" : "chiffre alphabet",
 
