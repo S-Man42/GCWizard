@@ -319,6 +319,9 @@
   "chao_example" : "HALLO → SYMLH",
   "chao_alphabet_plain" : "Klartext Alphabet",
   "chao_alphabet_chiffre" : "Chiffretext Alphabet",
+  "chao_alphabet_az" : "A-Z",
+  "chao_alphabet_za" : "Z-A",
+  "chao_alphabet_custom" : "Benutzerdefiniert",
 
   "chickenlanguage_title" : "Hühnersprache",
   "chickenlanguage_description" : "Spielsprache, Geheimsprache",

@@ -26,8 +26,8 @@ class ChaoState extends State<Chao> {
   String _currentAlphabetPlain = '';
   String _currentAlphabetChiffre = '';
 
-  PolybiosMode _currentChaoModePlain = PolybiosMode.AZ09;
-  PolybiosMode _currentChaoModeChiffre = PolybiosMode.AZ09;
+  ChaoAlphabet _currentAlphabetTypePlain = ChaoAlphabet.AZ;
+  ChaoAlphabet _currentAlphabetTypeChiffre = ChaoAlphabet.AZ;
 
   @override
   void initState() {
@@ -48,10 +48,15 @@ class ChaoState extends State<Chao> {
 
   @override
   Widget build(BuildContext context) {
-    var ChaoModeItems = {
-      PolybiosMode.AZ09 : i18n(context, 'polybios_mode_az09'),
-      PolybiosMode.ZA90 : i18n(context, 'polybios_mode_za90'),
-      PolybiosMode.CUSTOM : i18n(context, 'polybios_mode_custom'),
+    var ChaoPlainAlphabetItems = {
+      ChaoAlphabet.AZ : i18n(context, 'chao_alphabet_az'),
+      ChaoAlphabet.ZA : i18n(context, 'chao_alphabet_za'),
+      ChaoAlphabet.CUSTOM : i18n(context, 'chao_alphabet_custom'),
+    };
+    var ChaoChiffreAlphabetItems = {
+      ChaoAlphabet.AZ : i18n(context, 'chao_alphabet_az'),
+      ChaoAlphabet.ZA : i18n(context, 'chao_alphabet_za'),
+      ChaoAlphabet.CUSTOM : i18n(context, 'chao_alphabet_custom'),
     };
 
     return Column(
@@ -64,7 +69,6 @@ class ChaoState extends State<Chao> {
             });
           },
         ),
-
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -73,27 +77,52 @@ class ChaoState extends State<Chao> {
             });
           },
         ),
-
         GCWTextDivider(
-            text: i18n(context, 'chao_alphabet_plain')
+            text: i18n(context, 'chao_alphabet_chiffre')
         ),
-
         GCWDropDownButton(
-          value: _currentChaoModePlain,
+          value: _currentAlphabetTypeChiffre,
           onChanged: (value) {
             setState(() {
-              _currentChaoModePlain = value;
+              _currentAlphabetTypeChiffre = value;
             });
           },
-          items: ChaoModeItems.entries.map((mode) {
+          items: ChaoChiffreAlphabetItems.entries.map((alphabetChiffre) {
             return DropdownMenuItem(
-              value: mode.key,
-              child: Text(mode.value),
+              value: alphabetChiffre.key,
+              child: Text(alphabetChiffre.value),
             );
           }).toList(),
         ),
-
-        _currentChaoModePlain == PolybiosMode.CUSTOM
+        _currentAlphabetTypeChiffre == ChaoAlphabet.CUSTOM
+            ? GCWTextField(
+          hintText: i18n(context, 'common_alphabet'),
+          controller: _alphabetControllerChiffre,
+          onChanged: (text) {
+            setState(() {
+              _currentAlphabetChiffre = text;
+            });
+          },
+        )
+            : Container(),
+        GCWTextDivider(
+            text: i18n(context, 'chao_alphabet_plain')
+        ),
+        GCWDropDownButton(
+          value: _currentAlphabetTypePlain,
+          onChanged: (value) {
+            setState(() {
+              _currentAlphabetTypePlain = value;
+            });
+          },
+          items: ChaoPlainAlphabetItems.entries.map((alphabetPlain) {
+            return DropdownMenuItem(
+              value: alphabetPlain.key,
+              child: Text(alphabetPlain.value),
+            );
+          }).toList(),
+        ),
+        _currentAlphabetTypePlain == ChaoAlphabet.CUSTOM
             ? GCWTextField(
           hintText: i18n(context, 'chao_alphabet_plain'),
           controller: _alphabetControllerPlain,
@@ -105,36 +134,8 @@ class ChaoState extends State<Chao> {
         )
             : Container(),
         GCWTextDivider(
-            text: i18n(context, 'chao_alphabet_chiffre')
+            text: i18n(context, 'common_output')
         ),
-
-        GCWDropDownButton(
-          value: _currentChaoModeChiffre,
-          onChanged: (value) {
-            setState(() {
-              _currentChaoModeChiffre = value;
-            });
-          },
-          items: ChaoModeItems.entries.map((mode) {
-            return DropdownMenuItem(
-              value: mode.key,
-              child: Text(mode.value),
-            );
-          }).toList(),
-        ),
-
-        _currentChaoModeChiffre == PolybiosMode.CUSTOM
-            ? GCWTextField(
-          hintText: i18n(context, 'common_alphabet'),
-          controller: _alphabetControllerChiffre,
-          onChanged: (text) {
-            setState(() {
-              _currentAlphabetChiffre = text;
-            });
-          },
-        )
-            : Container(),
-
         _buildOutput()
       ],
     );
@@ -144,26 +145,28 @@ class ChaoState extends State<Chao> {
     if (_currentInput == null || _currentInput.length == 0)
       return GCWDefaultOutput(child: '');
 
+    var alphabetChiffre = '';
+    var alphabetPlain = '';
+
+    switch (_currentAlphabetTypePlain){
+      case ChaoAlphabet.AZ: alphabetPlain = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; break;
+      case ChaoAlphabet.ZA: alphabetPlain = 'ZYXWVUTSRQPONMLKJIHGFEDCBA'; break;
+      case ChaoAlphabet.CUSTOM: alphabetPlain = _currentAlphabetPlain.toUpperCase(); break;
+    }
+
+    switch (_currentAlphabetTypeChiffre){
+      case ChaoAlphabet.AZ: alphabetChiffre = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; break;
+      case ChaoAlphabet.ZA: alphabetChiffre = 'ZYXWVUTSRQPONMLKJIHGFEDCBA'; break;
+      case ChaoAlphabet.CUSTOM: alphabetChiffre = _currentAlphabetChiffre.toUpperCase(); break;
+    }
+
     if (_currentMode == GCWSwitchPosition.left) {
-      _currentOutput = encryptChao(
-          _currentInput,
-          modePlain: _currentChaoModePlain,
-          alphabetPlain: _currentAlphabetPlain,
-          modeChiffre: _currentChaoModeChiffre,
-          alphabetChiffre: _currentAlphabetChiffre
-      );
+      _currentOutput = encryptChao(_currentInput, alphabetPlain, alphabetChiffre);
     } else {
-      _currentOutput = decryptChao(
-          _currentInput,
-          modePlain: _currentChaoModePlain,
-          alphabetPlain: _currentAlphabetPlain,
-          modeChiffre: _currentChaoModeChiffre,
-          alphabetChiffre: _currentAlphabetChiffre
-      );
+      _currentOutput = decryptChao(_currentInput, alphabetPlain, alphabetChiffre);
     }
     return GCWOutputText(
               text: _currentOutput,
             );
-
   }
 }

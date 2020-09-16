@@ -317,8 +317,11 @@
   "chao_title" : "Chao Cipher",
   "chao_description" : "Chao cipher",
   "chao_example" : "HELLO → STMLH",
-  "chao_alphabet_plain" : "plain alphabet",
-  "chao_alphabet_chiffre" : "chiffre alphabet",
+  "chao_alphabet_plain" : "plaintext alphabet",
+  "chao_alphabet_chiffre" : "chiffretext alphabet",
+  "chao_alphabet_az" : "A-Z",
+  "chao_alphabet_za" : "Z-A",
+  "chao_alphabet_custom" : "Custom",
 
   "chickenlanguage_title" : "Chicken Language",
   "chickenlanguage_description" : "Game Language, Secret Language",
