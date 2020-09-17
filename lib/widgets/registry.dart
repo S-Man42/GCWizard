@@ -1939,6 +1939,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tomtom tom a-tom-tom tom-tom atomtom'
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'ulog'),
+        i18nPrefix: 'symboltables_ulog',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'ulog/68.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'ulog universal language of the galaxy dark horizon'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'utopian'),
         i18nPrefix: 'symboltables_utopian',
         iconPath: SYMBOLTABLES_ASSETPATH + 'utopian/76.png',
