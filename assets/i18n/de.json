@@ -315,7 +315,7 @@
   "changelog_0.0.1" : "[new] Google PlayStore Initialisierung",
 
   "chao_title" : "Chao Cipher",
-  "chao_description" : "Chao cipher",
+  "chao_description" : "Symmetrisches Verschlüsselungsverfahren, das 1918 von John Francis Byrne entwickelt wurde ",
   "chao_example" : "HALLO → SYMLH",
   "chao_alphabet_plain" : "Klartext Alphabet",
   "chao_alphabet_chiffre" : "Chiffretext Alphabet",

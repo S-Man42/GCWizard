@@ -1,5 +1,3 @@
-import 'package:gc_wizard/utils/common_utils.dart';
-
 enum ChaoAlphabet{AZ, ZA, CUSTOM}
 
 String _permuteChiffreAlphabet(String chiffreChar, String alphabet){
@@ -9,7 +7,6 @@ String _permuteChiffreAlphabet(String chiffreChar, String alphabet){
   String returnAlphabet = '';
   int posChiffreChar = alphabet.indexOf(chiffreChar);
 
-  //shift chiffreAlphabet to the left until the chiffreChar is at first position - zenith
   for (int i = posChiffreChar; i <= 25; i++){
     helpAlphabet = helpAlphabet + alphabet[i];
   }
@@ -17,21 +14,17 @@ String _permuteChiffreAlphabet(String chiffreChar, String alphabet){
     helpAlphabet = helpAlphabet + alphabet[i];
   }
 
-  //get char at position zenith + 1
   var helpChar = helpAlphabet[zenith + 1];
 
-  //shift chiffreAlphabet to left from zenith + 2 to nadir
   returnAlphabet = helpAlphabet[0];
   for (int i = zenith + 2; i <= nadir; i++){
     returnAlphabet = returnAlphabet + helpAlphabet[i];
   }
-  //insert char at nadir
   returnAlphabet = returnAlphabet +  helpChar;
 
   for (int i = nadir + 1; i <= 25; i++){
     returnAlphabet = returnAlphabet + helpAlphabet[i];
   }
-print('new c = ' + returnAlphabet);
   return returnAlphabet;
 }
 
@@ -43,7 +36,6 @@ String _permutePlainAlphabet(String plainChar, String alphabet){
   String returnAlphabet = '';
   int posPlainChar = alphabet.indexOf(plainChar);
 
-  //shift plainAlphabet to the left until the plainChar is at first position - zenith
   for (int i = posPlainChar; i <= 25; i++){
     helpAlphabet = helpAlphabet + alphabet[i];
   }
@@ -51,7 +43,6 @@ String _permutePlainAlphabet(String plainChar, String alphabet){
     helpAlphabet = helpAlphabet + alphabet[i];
   }
 
-  //shift plainAlphabet 1 to the left
   returnAlphabet = helpAlphabet;
   helpAlphabet = '';
   var helpChar = returnAlphabet[0];
@@ -60,23 +51,19 @@ String _permutePlainAlphabet(String plainChar, String alphabet){
   }
   helpAlphabet = helpAlphabet + helpChar;
 
-  //get chat at zenith + 2
   helpChar = helpAlphabet[zenith + 2];
 
-  //shift plainalphabet from zenith + t to nadir one to the left
   returnAlphabet = helpAlphabet[0];
   returnAlphabet = returnAlphabet + helpAlphabet[1];
   for (int i = zenith + 3; i <= nadir; i++){
     returnAlphabet = returnAlphabet + helpAlphabet[i];
   }
-  //insert char at nadir
   returnAlphabet = returnAlphabet + helpChar;
 
   for (int i = nadir + 1; i <= 25; i++){
     returnAlphabet = returnAlphabet + helpAlphabet[i];
   }
 
-  print('new p : ' + returnAlphabet);
   return returnAlphabet;
 }
 

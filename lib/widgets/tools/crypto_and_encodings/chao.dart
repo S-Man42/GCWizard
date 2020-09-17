@@ -78,7 +78,7 @@ class ChaoState extends State<Chao> {
           },
         ),
         GCWTextDivider(
-            text: i18n(context, 'chao_alphabet_chiffre')
+          text: i18n(context, 'chao_alphabet_chiffre')
         ),
         GCWDropDownButton(
           value: _currentAlphabetTypeChiffre,
@@ -95,7 +95,7 @@ class ChaoState extends State<Chao> {
           }).toList(),
         ),
         _currentAlphabetTypeChiffre == ChaoAlphabet.CUSTOM
-            ? GCWTextField(
+          ? GCWTextField(
           hintText: i18n(context, 'common_alphabet'),
           controller: _alphabetControllerChiffre,
           onChanged: (text) {
@@ -104,7 +104,7 @@ class ChaoState extends State<Chao> {
             });
           },
         )
-            : Container(),
+          : Container(),
         GCWTextDivider(
             text: i18n(context, 'chao_alphabet_plain')
         ),
@@ -123,7 +123,7 @@ class ChaoState extends State<Chao> {
           }).toList(),
         ),
         _currentAlphabetTypePlain == ChaoAlphabet.CUSTOM
-            ? GCWTextField(
+          ? GCWTextField(
           hintText: i18n(context, 'chao_alphabet_plain'),
           controller: _alphabetControllerPlain,
           onChanged: (text) {
@@ -132,9 +132,9 @@ class ChaoState extends State<Chao> {
             });
           },
         )
-            : Container(),
+          : Container(),
         GCWTextDivider(
-            text: i18n(context, 'common_output')
+          text: i18n(context, 'common_output')
         ),
         _buildOutput()
       ],

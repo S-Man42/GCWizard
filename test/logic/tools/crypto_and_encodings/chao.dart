@@ -5,9 +5,9 @@ void main() {
 
   group("Chao.encryptChao:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'keyPlain' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'keyChiffre': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
-      {'input' : 'Hallo', 'keyPlain' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'keyChiffre': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'expectedOutput' : 'EFWWD'},
-      {'input' : 'OAHQHCNYNXTSZJRRHJBYHQKSOUJY', 'keyPlain' : 'PTLNBQDEOYSFAVZKGJRIHWXUMC', 'keyChiffre': 'HXUCZVAMDSLKPEFJRIGTWOBNYQ', 'expectedOutput' : 'OAHQHCNYNXTSZJRRHJBYHQKSOUJY'},
+      {'input' : '', 'keyPlain' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'keyChiffre': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
+      {'input' : 'Hallo', 'keyPlain' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'keyChiffre': 'ZYXWVUTSRQPONMLKJIHGFEDCBA', 'expectedOutput' : 'SAQSR'},
+      {'input' : 'WELLDONEISBETTERTHANWELLSAID', 'keyPlain' : 'PTLNBQDEOYSFAVZKGJRIHWXUMC', 'keyChiffre': 'HXUCZVAMDSLKPEFJRIGTWOBNYQ', 'expectedOutput' : 'OAHQHCNYNXTSZJRRHJBYHQKSOUJY'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -20,9 +20,9 @@ void main() {
 
   group("Chao.decryptChao:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'keyPlain' : 1, 'keyB': 0, 'expectedOutput' : ''},
-      {'input' : 'efWwd', 'keyPlain' : 11, 'keyB': 5, 'expectedOutput' : 'HALLO'},
-      {'input' : 'XMGGAN YOGGV', 'keyPlain' : 17, 'keyB': 10, 'expectedOutput' : 'NUMMER KOMMT'},
+      {'expectedOutput' : '', 'keyPlain' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'keyChiffre': 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'input' : ''},
+      {'expectedOutput' : 'HALLO', 'keyPlain' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'keyChiffre': 'ZYXWVUTSRQPONMLKJIHGFEDCBA', 'input' : 'SAQSR'},
+      {'expectedOutput' : 'WELLDONEISBETTERTHANWELLSAID', 'keyPlain' : 'PTLNBQDEOYSFAVZKGJRIHWXUMC', 'keyChiffre': 'HXUCZVAMDSLKPEFJRIGTWOBNYQ', 'input' : 'OAHQHCNYNXTSZJRRHJBYHQKSOUJY'},
     ];
 
     _inputsToExpected.forEach((elem) {

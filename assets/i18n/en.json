@@ -315,7 +315,7 @@
   "changelog_0.0.1" : "[new] Google PlayStore Initialisation",
 
   "chao_title" : "Chao Cipher",
-  "chao_description" : "Chao cipher",
+  "chao_description" : "invented by John Francis Byrne in 1918",
   "chao_example" : "HELLO → STMLH",
   "chao_alphabet_plain" : "plaintext alphabet",
   "chao_alphabet_chiffre" : "chiffretext alphabet",

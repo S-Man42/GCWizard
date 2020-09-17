@@ -316,10 +316,10 @@ class Registry {
         searchStrings: SEARCHSTRING_CCITT2
       ),
       GCWToolWidget(
-          tool: Chao(),
-          i18nPrefix: 'chao',
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'chao cipher chiffre john francis byrne'
+        tool: Chao(),
+        i18nPrefix: 'chao',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'chao cipher chiffre john francis byrne'
       ),
       GCWToolWidget(
         tool: ChickenLanguage(),
