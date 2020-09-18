@@ -5,6 +5,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_alphabetmodification_dropdownbutton.dart';
@@ -90,7 +91,7 @@ class BifidState extends State<Bifid> {
           items: BifidModeItems.entries.map((mode) {
             return DropdownMenuItem(
               value: mode.key,
-              child: Text(mode.value),
+              child: GCWText(text: mode.value),
             );
           }).toList(),
         ),

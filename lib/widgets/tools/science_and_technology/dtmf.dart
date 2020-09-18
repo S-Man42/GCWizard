@@ -83,7 +83,7 @@ class DTMFState extends State<DTMF> {
                       items: DTMF_FREQUENCIES_LOW.map((frequency) {
                         return DropdownMenuItem(
                           value: frequency,
-                          child: Text(frequency.toString()),
+                          child: GCWText(text: frequency.toString()),
                         );
                       }).toList(),
                       onChanged: (value) {
@@ -102,7 +102,7 @@ class DTMFState extends State<DTMF> {
                       items: DTMF_FREQUENCIES_HIGH.map((frequency) {
                         return DropdownMenuItem(
                           value: frequency,
-                          child: Text(frequency.toString()),
+                          child: GCWText(text: frequency.toString()),
                         );
                       }).toList(),
                       onChanged: (value) {

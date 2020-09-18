@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/units/unit_prefix.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
 class GCWUnitPrefixDropDownButton extends StatefulWidget {
   final Function onChanged;
@@ -27,7 +28,7 @@ class GCWUnitPrefixDropDownButtonState extends State<GCWUnitPrefixDropDownButton
       items: unitPrefixes.map((prefix) {
         return DropdownMenuItem(
           value: prefix,
-          child:  Text(prefix.key == null ? '' : i18n(context, prefix.key) + ' (${prefix.symbol})'),
+          child:  GCWText(text: prefix.key == null ? '' : i18n(context, prefix.key) + ' (${prefix.symbol})'),
         );
       }).toList(),
       onChanged: (value) {
@@ -39,8 +40,8 @@ class GCWUnitPrefixDropDownButtonState extends State<GCWUnitPrefixDropDownButton
       selectedItemBuilder: (context) {
         return unitPrefixes.map((prefix) {
           return Align(
-            child: Text(
-              widget.onlyShowSymbols
+            child: GCWText(
+              text: widget.onlyShowSymbols
                 ? prefix.symbol ?? ''
                 : ((i18n(context, prefix.key) ?? '') + (prefix.symbol == null ? '' : ' (${prefix.symbol})'))
             ),

@@ -72,11 +72,6 @@ class ThemeColorsDark extends ThemeColors {
   }
 
   @override
-  Color textFieldFill() {
-    return _darkGray;
-  }
-
-  @override
   Color switchThumb1() {
     return _lightGray;
   }
@@ -104,5 +99,10 @@ class ThemeColorsDark extends ThemeColors {
   @override
   Color sudokuBackground() {
     return Color.fromARGB(255, 85, 85, 85);
+  }
+
+  @override
+  Color hyperLinkText() {
+    return accent();
   }
 }

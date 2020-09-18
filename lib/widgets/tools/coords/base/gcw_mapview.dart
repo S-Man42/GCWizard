@@ -233,6 +233,7 @@ class GCWMapViewState extends State<GCWMapView> {
               child: Opacity(
                 child: Container(
                   color: COLOR_MAP_LICENSETEXT_BACKGROUND,
+                  //TODO: GCWText instead Text: Currently GCWText catches the hyperlink event
                   child: Text(
                     i18n(context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_TEXT : MAPBOX_SATELLITE_TEXT),
                     style: TextStyle(

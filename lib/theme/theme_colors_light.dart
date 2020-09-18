@@ -1,28 +1,109 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 
-class ThemeColorsLight {
-  static const lightGray = Color(0xFFD8D8D8);
-  static const gray = Color(0x40D8D8D8);
-  static const darkGray = Color(0xFF26282F);
+class ThemeColorsLight extends ThemeColors {
+  ThemeData _base;
 
-  static const textFieldSelectionControlBackground = Color(0xFF424242);
+  static const _creme = Color(0xFFF5F3ED);
+  static const _darkGray = Color(0xFF404040);
+  static const _gray = Color(0xFF919191);
+  static const _lightGray = Color(0xFFD1D1D1);
 
-  static const primaryBackground = Color(0xFF33333D);
-  static const inputBackground = darkGray;
-  static const cardBackground = Color(0x03FEFEFE);
-  static const accent = Colors.orangeAccent;
-  static const focused = Colors.greenAccent;
-  static const iconColor = Colors.white;
+  @override
+  ThemeData base() {
+    if (_base == null)
+      _base = ThemeData.light();
 
-  static const hintText = gray;
+    return _base;
+  }
 
-  static const mapPolyline = Colors.red;
-  static const mapCircle = Colors.blue;
-  static const mapPoint = Colors.black;
-  static const mapCalculatedPoint = Color.fromRGBO(6, 140, 0, 1.0);
+  @override
+  Color accent() {
+    return Colors.orange;
+  }
 
-  static const oddRows = gray;
+  @override
+  Color focused() {
+    return Colors.cyan;
+  }
 
-  static const symbolTableIconBackground = Colors.white;
-  static const popupItemText = Colors.black;
+  @override
+  Color inputBackground() {
+    return Colors.white; //TODO
+  }
+
+  @override
+  Color mainFont() {
+    return Colors.black;
+  }
+
+  @override
+  Color outputListOddRows() {
+    return _lightGray;
+  }
+
+  @override
+  Color dialog() {
+    return Colors.orangeAccent;
+  }
+
+  @override
+  Color dialogText() {
+    return Colors.black;
+  }
+
+  @override
+  Color primaryBackground() {
+    return _creme;
+  }
+
+  @override
+  Color iconImageBackground() {
+    return Colors.white;
+  }
+
+  @override
+  Color textFieldHintText() {
+    return _gray;
+  }
+
+  @override
+  Color textFieldSelectionControlBackground() {
+    return Colors.white; //TODO
+  }
+
+  @override
+  Color switchThumb1() {
+    return _gray;
+  }
+
+  @override
+  Color switchTrack1() {
+    return _lightGray.withOpacity(0.5);
+  }
+
+  @override
+  Color switchThumb2() {
+    return accent();
+  }
+
+  @override
+  Color switchTrack2() {
+    return accent().withOpacity(0.5);
+  }
+
+  @override
+  Color listSubtitle() {
+    return _darkGray;
+  }
+
+  @override
+  Color sudokuBackground() {
+    return Colors.white;
+  }
+
+  @override
+  Color hyperLinkText() {
+    return Colors.deepOrange;
+  }
 }

@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -116,7 +117,7 @@ class ADFGVXState extends State<ADFGVX> {
           items: polybiosModeItems.entries.map((mode) {
             return DropdownMenuItem(
               value: mode.key,
-              child: Text(mode.value),
+              child: GCWText(text: mode.value),
             );
           }).toList(),
         ),

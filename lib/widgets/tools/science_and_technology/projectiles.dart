@@ -5,6 +5,7 @@ import 'package:gc_wizard/logic/units/mass.dart';
 import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/logic/units/unit_prefix.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_input.dart';
@@ -63,7 +64,7 @@ class ProjectilesState extends State<Projectiles> {
           items: _calculateProjectilesModeItems.entries.map((mode) {
             return DropdownMenuItem(
               value: mode.key,
-              child: Text(i18n(context, mode.value)),
+              child: GCWText(text: i18n(context, mode.value)),
             );
           }).toList(),
         ),

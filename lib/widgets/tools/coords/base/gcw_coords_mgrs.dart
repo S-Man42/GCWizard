@@ -4,6 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
@@ -84,7 +85,7 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
                     items: digraphLettersEast.split('').map((char) {
                       return DropdownMenuItem(
                         value: char,
-                        child: Text(char),
+                        child: GCWText(text: char),
                       );
                     }).toList(),
                   ),
@@ -108,7 +109,7 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
                     items: digraphLettersEast.split('').map((char) {
                       return DropdownMenuItem(
                         value: char,
-                        child: Text(char),
+                        child: GCWText(text: char),
                       );
                     }).toList(),
                   ),
@@ -128,7 +129,7 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
                     items: digraphLettersNorth.split('').map((char) {
                       return DropdownMenuItem(
                         value: char,
-                        child: Text(char),
+                        child: GCWText(text: char),
                       );
                     }).toList(),
                   ),

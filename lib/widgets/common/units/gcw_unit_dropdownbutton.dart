@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/units/unit.dart';
 import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
 
 class GCWUnitDropDownButton extends StatefulWidget {
@@ -37,8 +38,8 @@ class GCWUnitDropDownButtonState extends State<GCWUnitDropDownButton> {
       items: _currentUnitList.map((unit) {
         return DropdownMenuItem(
           value: unit,
-          child: Text(
-            widget.onlyShowSymbols
+          child: GCWText(
+            text: widget.onlyShowSymbols
               ? unit.symbol ?? ''
               : (i18n(context, unit.name) + (unit.symbol == null ? '' : ' (${unit.symbol})'))
           ),

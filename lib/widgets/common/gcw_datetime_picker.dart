@@ -297,8 +297,8 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     if (widget.type == DateTimePickerType.DATETIME) {
       datetimeChildren.add(
         Expanded(
-          child: Text(
-            '-',
+          child: GCWText(
+            text: '-',
             textAlign: TextAlign.center,
           ),
           flex: 1
@@ -345,8 +345,8 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
             items: timeZones.map((timeZone) {
               return DropdownMenuItem(
                 value: timeZone.offset,
-                child: Text(
-                  _buildTimeZoneItemText(timeZone)
+                child: GCWText(
+                  text: _buildTimeZoneItemText(timeZone)
                 ),
               );
             }).toList(),

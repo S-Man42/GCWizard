@@ -28,7 +28,7 @@ TextStyle gcwMonotypeTextStyle() {
 
 TextStyle gcwHyperlinkTextStyle() {
   return TextStyle(
-    color: themeColors().accent(),
+    color: themeColors().hyperLinkText(),
     decoration: TextDecoration.underline
   );
 }

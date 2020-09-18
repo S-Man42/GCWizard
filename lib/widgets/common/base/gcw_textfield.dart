@@ -71,7 +71,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
             autocorrect: false,
             decoration: InputDecoration(
               hintText: widget.hintText,
-              fillColor: widget.filled ? colors.textFieldFill() : null,
+              fillColor: widget.filled ? colors.dialogText() : null,
               filled: widget.filled,
               prefixIcon: widget.icon,
               isDense: true,

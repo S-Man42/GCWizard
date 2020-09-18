@@ -6,6 +6,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_hue.d
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_yuv.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/hsv_picker.dart';
@@ -73,7 +74,7 @@ class ColorPickerState extends State<ColorPicker> {
           items: allColorSpaces.map((colorSpace) {
             return DropdownMenuItem(
               value: colorSpace.key,
-              child: Text(i18n(context, colorSpace.name))
+              child: GCWText(text: i18n(context, colorSpace.name))
             );
           }).toList(),
           onChanged: (value) {

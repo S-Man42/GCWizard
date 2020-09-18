@@ -92,7 +92,7 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
               items: allEllipsoids.map((ellipsoid) {
                 return DropdownMenuItem(
                   value: ellipsoid,
-                  child: Text(ellipsoid.name),
+                  child: GCWText(text: ellipsoid.name),
                 );
               }).toList(),
               onChanged: (newValue) {
@@ -135,7 +135,7 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
                         items: _secondUserValues.map((value) {
                           return DropdownMenuItem(
                             value: value['key'],
-                            child: Text(value['name']),
+                            child: GCWText(text: value['name']),
                           );
                         }).toList(),
                         onChanged: (newValue) {

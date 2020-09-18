@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme_colors_dark.dart';
+import 'package:gc_wizard/theme/theme_colors_light.dart';
 
 enum ThemeType {DARK, LIGHT}
 
@@ -17,7 +18,8 @@ abstract class ThemeColors {
 
   Color textFieldSelectionControlBackground();
   Color textFieldHintText();
-  Color textFieldFill();
+
+  Color hyperLinkText();
 
   Color switchThumb1();
   Color switchTrack1();
@@ -36,7 +38,7 @@ abstract class ThemeColors {
   Color sudokuBackground();
 }
 
-ThemeType type = ThemeType.DARK;
+ThemeType type = ThemeType.LIGHT;
 
 ThemeColors themeColors({refresh: false}) {
   if (refresh)
@@ -46,10 +48,8 @@ ThemeColors themeColors({refresh: false}) {
     return _themeColors;
 
   switch (type) {
-    case ThemeType.DARK:
-      _themeColors = ThemeColorsDark();
-      break;
-    // case ThemeType.LIGHT: return ThemeColorsLight();
+    case ThemeType.DARK: _themeColors = ThemeColorsDark(); break;
+    case ThemeType.LIGHT: _themeColors = ThemeColorsLight(); break;
     default: return null;
   }
 

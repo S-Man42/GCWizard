@@ -69,7 +69,7 @@ class GCWAlphabetModificationDropDownButtonState extends State<GCWAlphabetModifi
             items: modifications.map((entry) {
               return DropdownMenuItem(
                 value: entry['mode'],
-                child: Text(i18n(context, entry['text'])),
+                child: GCWText(text: i18n(context, entry['text'])),
               );
             }).toList(),
           ),

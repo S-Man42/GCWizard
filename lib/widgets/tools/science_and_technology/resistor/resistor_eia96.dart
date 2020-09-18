@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/resistor.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 
@@ -58,7 +59,7 @@ class ResistorEIA96State extends State<ResistorEIA96> {
                 }.entries.map((entry) {
                   return DropdownMenuItem(
                     value: entry.key,
-                    child: Text(entry.value),
+                    child: GCWText(text: entry.value),
                   );
                 }).toList(),
                 onChanged: (value) {

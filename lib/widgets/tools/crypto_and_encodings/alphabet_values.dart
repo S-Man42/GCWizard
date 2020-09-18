@@ -188,8 +188,8 @@ class AlphabetValuesState extends State<AlphabetValues> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
+                              GCWText(
+                                text: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
                               ),
                               Container(
                                 child: Text(
@@ -209,8 +209,8 @@ class AlphabetValuesState extends State<AlphabetValues> {
                     selectedItemBuilder: (context) {
                       return _alphabets.map<Widget>((alphabet) {
                         return Align(
-                          child: Text(
-                            alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
+                          child: GCWText(
+                            text: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
                           ),
                           alignment: Alignment.centerLeft,
                         );

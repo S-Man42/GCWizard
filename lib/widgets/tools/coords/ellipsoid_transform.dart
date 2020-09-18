@@ -4,6 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/ellipsoid_transform.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
@@ -59,7 +60,7 @@ class EllipsoidTransformState extends State<EllipsoidTransform> {
           items: transformableDates.map((date) {
             return DropdownMenuItem(
               value: date,
-              child: Text(date['name']),
+              child: GCWText(text: date['name']),
             );
           }).toList(),
         ),
@@ -76,7 +77,7 @@ class EllipsoidTransformState extends State<EllipsoidTransform> {
           items: transformableDates.map((date) {
             return DropdownMenuItem(
               value: date,
-              child: Text(date['name']),
+              child: GCWText(text: date['name']),
             );
           }).toList(),
         ),

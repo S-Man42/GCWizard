@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
@@ -33,8 +34,8 @@ buildMainMenu(BuildContext context) {
             padding: EdgeInsets.only(
               left: 20
             ),
-            child: Text(
-              i18n(context, 'common_app_title'),
+            child: GCWText(
+              text: i18n(context, 'common_app_title'),
               style: TextStyle(
                 color: themeColors().dialogText(),
                 fontSize: 22.0
@@ -67,7 +68,7 @@ buildMainMenu(BuildContext context) {
     children: <Widget>[
       InkWell(
         child: Container(
-          color: themeColors().mainFont(),
+          color: themeColors().dialog(),
           width: double.infinity,
           height: 50,
           child: Row(

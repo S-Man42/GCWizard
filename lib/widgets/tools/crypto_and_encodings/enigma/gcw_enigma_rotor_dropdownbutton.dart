@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/enigma.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_abc_dropdownbutton.dart';
 
 class GCWEnigmaRotorDropDownButton extends StatefulWidget {
@@ -55,7 +56,7 @@ class GCWEnigmaRotorDropDownButtonState extends State<GCWEnigmaRotorDropDownButt
                   .map((rotor) {
                 return DropdownMenuItem(
                   value: rotor.name,
-                  child: Text('${rotor.name}'),
+                  child: GCWText(text: '${rotor.name}'),
                 );
               })
                   .toList(),

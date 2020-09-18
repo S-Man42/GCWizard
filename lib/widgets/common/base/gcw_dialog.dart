@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
 final TextStyle _textStyle = gcwTextStyle().copyWith(color: themeColors().dialogText());
 final TextStyle _boldTextStyle = _textStyle.copyWith(fontWeight: FontWeight.bold);
@@ -53,6 +54,7 @@ class _GCWDialogButtonState extends State<GCWDialogButton> {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
+      //TODO: GCWText instead Text; currently with GCWText onPressed() is not called
       child: Text(
         widget.isCancelButton ? i18n(context, 'common_cancel') : widget.text,
         style: _boldTextStyle,
