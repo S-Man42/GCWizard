@@ -157,6 +157,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/summersimmer.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 
@@ -602,6 +603,12 @@ class Registry {
         i18nPrefix: 'sudokusolver',
         category: ToolCategory.GAMES,
         searchStrings: 'sudoku grid gitter'
+      ),
+      GCWToolWidget(
+          tool: SummersimmerIndex(),
+          i18nPrefix: 'summersimmerindex',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          searchStrings: 'gefuehlte temperatur apparent temperature humidity luftfeuchtigkeit summer simmer index'
       ),
       GCWToolWidget(
         tool: SymbolTableSelection(),

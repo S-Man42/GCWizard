@@ -1467,6 +1467,16 @@
   "sudokusolver_clearall" : "Clear all",
   "sudokusolver_error" : "Could not be solved.",
 
+  "summersimmerindex_title" : "Summer-Simmer index",
+  "summersimmerindex_description" : "Calculating the Summer-simme-index",
+  "summersimmerindex_index_21.3" : "Slightly cool – most people feel well.",
+  "summersimmerindex_index_25.0" : "Almost everybody feels well.",
+  "summersimmerindex_index_28.3" : "Slightly hot –  most people feel well.",
+  "summersimmerindex_index_32.8" : "Hot - some discomfort.",
+  "summersimmerindex_index_37.8" : "Medium hot - discomfort, continuing activity could result in heat stroke.",
+  "summersimmerindex_index_44.4" : "Very hot - heat stroke is probable with continued activity.",
+  "summersimmerindex_index_51.7" : "Extremely hot - heat stroke is imminent.",
+
   "symboltables_selection_title" : "Symbol Tables",
   "symboltables_selection_description" : "Symbols that represent letters or numbers",
   "symboltables_showoverlay" : "Overlays",
