@@ -76,6 +76,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.da
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
@@ -403,10 +404,10 @@ class Registry {
         searchStrings: SEARCHSTRING_FORMULASOLVER
       ),
       GCWToolWidget(
-          tool: Gade(),
-          i18nPrefix: 'gade',
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'gade'
+        tool: Gade(),
+        i18nPrefix: 'gade',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'gade'
       ),
       GCWToolWidget(
         tool: GamesSelection(),
