@@ -18,15 +18,15 @@ String printErrorMessage(BuildContext context, String message) {
 }
 
 defaultFontSize() {
-  var fontSize = Prefs.get('font_size');
+  var fontSize = Prefs.get('theme_font_size');
 
   if (fontSize < FONT_SIZE_MIN) {
-    Prefs.setDouble('font_size', FONT_SIZE_MIN.toDouble());
+    Prefs.setDouble('theme_font_size', FONT_SIZE_MIN.toDouble());
     return FONT_SIZE_MIN;
   }
 
   if (fontSize > FONT_SIZE_MAX) {
-    Prefs.setDouble('font_size', FONT_SIZE_MAX.toDouble());
+    Prefs.setDouble('theme_font_size', FONT_SIZE_MAX.toDouble());
     return FONT_SIZE_MAX;
   }
 

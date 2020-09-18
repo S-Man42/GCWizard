@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme_colors_dark.dart';
 import 'package:gc_wizard/theme/theme_colors_light.dart';
+import 'package:prefs/prefs.dart';
 
 enum ThemeType {DARK, LIGHT}
 
@@ -38,20 +39,22 @@ abstract class ThemeColors {
   Color sudokuBackground();
 }
 
-ThemeType type = ThemeType.LIGHT;
-
-ThemeColors themeColors({refresh: false}) {
-  if (refresh)
-    _themeColors = null;
-
-  if (_themeColors != null)
-    return _themeColors;
-
+setThemeColors(ThemeType type) {
   switch (type) {
     case ThemeType.DARK: _themeColors = ThemeColorsDark(); break;
     case ThemeType.LIGHT: _themeColors = ThemeColorsLight(); break;
     default: return null;
   }
+}
+
+ThemeColors themeColors() {
+  if (_themeColors != null)
+    return _themeColors;
+
+  var themeSetting = Prefs.getString('theme_color');
+  var type = ThemeType.values.firstWhere((e) => e.toString() == themeSetting);
+
+  setThemeColors(type);
 
   return _themeColors;
 }

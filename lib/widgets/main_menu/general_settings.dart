@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
@@ -21,16 +22,35 @@ class GeneralSettingsState extends State<GeneralSettings> {
     return Column(
       children: <Widget>[
         GCWTextDivider(
-          text: i18n(context, 'settings_general_text')
+          text: i18n(context, 'settings_general_theme')
+        ),
+        GCWTwoOptionsSwitch(
+          title: i18n(context, 'settings_general_theme_color'),
+          value: Prefs.getString('theme_color') == ThemeType.DARK.toString() ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+          leftValue: i18n(context, 'settings_general_theme_color_dark'),
+          rightValue: i18n(context, 'settings_general_theme_color_light'),
+          onChanged: (value) {
+            setState(() {
+              if (value == GCWSwitchPosition.left) {
+                Prefs.setString('theme_color', ThemeType.DARK.toString());
+                setThemeColors(ThemeType.DARK);
+              } else {
+                Prefs.setString('theme_color', ThemeType.LIGHT.toString());
+                setThemeColors(ThemeType.LIGHT);
+              }
+
+              AppBuilder.of(context).rebuild();
+            });
+          },
         ),
         GCWIntegerSpinner(
-          title: i18n(context, 'settings_general_text_size'),
-          value: Prefs.getDouble('font_size').floor(),
+          title: i18n(context, 'settings_general_theme_font_size'),
+          value: Prefs.getDouble('theme_font_size').floor(),
           min: 10,
           max: 30,
           onChanged: (value) {
             setState(() {
-              Prefs.setDouble('font_size', value.toDouble());
+              Prefs.setDouble('theme_font_size', value.toDouble());
 
               // source: https://hillel.dev/2018/08/15/flutter-how-to-rebuild-the-entire-app-to-change-the-theme-or-locale/
               AppBuilder.of(context).rebuild();
