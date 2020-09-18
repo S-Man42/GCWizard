@@ -1933,6 +1933,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'thebanisches hexenalphabet onorius witches witchalphabet engelsschrift angels wikka wicca wicka'
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'tines'),
+        i18nPrefix: 'symboltables_tines',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'tines/be_quiet_pushy.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'gaunerzinken rotwelsch gaunersprache crook language tines prong fahrendes volk traveling people tramp'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'tomtom'),
         i18nPrefix: 'symboltables_tomtom',
         iconPath: SYMBOLTABLES_ASSETPATH + 'tomtom/80.png',
