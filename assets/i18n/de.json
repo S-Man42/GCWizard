@@ -1446,6 +1446,13 @@
   "skytale_stripwidth" : "Bandbreite",
   "skytale_countcolumns" : "Spalten",
 
+  "solitaire_title" : "Solitaire",
+  "solitaire_description" : "Aus dem Buch Cryptonomicon",
+  "solitaire_example" : "ABCDEF → ITHZU JIWGR",
+  "solitaire_extended_output" : "erweiterte Ausgabe",
+  "solitaire_keystream" : "Schlüsselstrom",
+  "solitaire_resultdeck" : "Resultierendes Deck",
+
   "spoonlanguage_title" : "Löffelsprache",
   "spoonlanguage_description" : "Spielsprache, Geheimsprache",
   "spoonlanguage_example" : "Löffel → lölewöffelewel",

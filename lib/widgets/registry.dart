@@ -103,6 +103,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_e_checker.d
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/symbol_table.dart';
@@ -584,6 +585,12 @@ class Registry {
         i18nPrefix: 'skytale',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'scytale skytale stick stock stab transposition'
+      ),
+      GCWToolWidget(
+          tool: Solitaire(),
+          i18nPrefix: 'solitaire',
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: 'solitaire cryptonomicon pontifex bruce schneier stromchiffrierung stream encryption'
       ),
       GCWToolWidget(
         tool: SpoonLanguage(),

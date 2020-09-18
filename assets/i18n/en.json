@@ -1446,6 +1446,13 @@
   "skytale_stripwidth" : "Strip Width",
   "skytale_countcolumns" : "Columns",
 
+  "solitaire_title" : "Solitaire",
+  "solitaire_description" : "From the book Cryptonomicon",
+  "solitaire_example" : "ABCDEF → ITHZU JIWGR",
+  "solitaire_extended_output" : "Extended output",
+  "solitaire_keystream" : "Keystream",
+  "solitaire_resultdeck" : "Resulting deck",
+
   "spoonlanguage_title" : "Spoon Language",
   "spoonlanguage_description" : "Game Language, Secret Language",
   "spoonlanguage_example" : "Spoon → spolewoolewon",
