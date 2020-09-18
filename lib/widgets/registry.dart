@@ -141,6 +141,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicac
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
@@ -441,6 +442,12 @@ class Registry {
         i18nPrefix: 'hexadecimal',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'hexadecimal hexadezimalzahlen numbers dezimalzahlen decimal 16'
+      ),
+      GCWToolWidget(
+          tool: Humidex(),
+          i18nPrefix: 'humidex',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          searchStrings: 'gefuehlte temperatur apparent temperature humidity luftfeuchtigkeit humidex'
       ),
       GCWToolWidget(
         tool: Kamasutra(),
