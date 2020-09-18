@@ -40,7 +40,10 @@ class GCWOnOffSwitchState extends State<GCWOnOffSwitch> {
                 GCWSwitch(
                   value: widget.value ?? _currentValue,
                   onChanged: widget.onChanged,
-                  inactiveThumbColor: themeColors().switchOnOffInactive(),
+                  activeThumbColor: themeColors().switchThumb2(),
+                  activeTrackColor: themeColors().switchTrack2(),
+                  inactiveThumbColor: themeColors().switchThumb1(),
+                  inactiveTrackColor: themeColors().switchTrack1(),
                 ),
                 Expanded (
                   child: Container(),

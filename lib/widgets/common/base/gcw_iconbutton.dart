@@ -29,7 +29,7 @@ class GCWIconButton extends StatelessWidget {
             color: this.color ?? themeColors().mainFont()
           ) ?? this.image,
           onPressed: this.onPressed,
-          borderSide: BorderSide(color: Theme.of(context).accentColor),
+          borderSide: BorderSide(color: themeColors().accent()),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(roundedBorderRadius),
           )

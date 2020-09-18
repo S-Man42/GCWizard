@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/theme/theme_colors_light.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_switch.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
@@ -29,11 +28,16 @@ class GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
     var _currentValue = widget.value ?? GCWSwitchPosition.left;
     ThemeColors colors = themeColors();
 
+    var textStyle = gcwTextStyle();
+    if (widget.alternativeColor)
+      textStyle = textStyle.copyWith(color: colors.dialogText());
+
     return Row(
       children: <Widget>[
         Expanded(
           child: GCWText(
             text: (widget.title ?? i18n(context, 'common_switch_title')) + ':',
+            style: textStyle,
           ),
           flex: 1
         ),
@@ -45,6 +49,7 @@ class GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
                   child: GCWText(
                     text: widget.leftValue ?? i18n(context, 'common_encrypt'),
                     align: Alignment.center,
+                    style: textStyle,
                   ),
                   flex: 1
                 ),
@@ -56,15 +61,16 @@ class GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
                       widget.onChanged(_currentValue);
                     });
                   },
-                  activeThumbColor: widget.alternativeColor ? colors.switchTwoOptionThumb() : null,
-                  activeTrackColor: widget.alternativeColor ? colors.switchTwoOptionTrack() : null,
-                  inactiveThumbColor: widget.alternativeColor ? colors.switchTwoOptionThumb() : Theme.of(context).toggleableActiveColor,
-                  inactiveTrackColor: widget.alternativeColor ? colors.switchTwoOptionTrack() : Theme.of(context).toggleableActiveColor.withOpacity(0.5),
+                  activeThumbColor: widget.alternativeColor ? colors.switchThumb1() : colors.switchThumb2(),
+                  activeTrackColor: widget.alternativeColor ? colors.switchTrack1() : colors.switchTrack2(),
+                  inactiveThumbColor: widget.alternativeColor ? colors.switchThumb1() : colors.switchThumb2(),
+                  inactiveTrackColor: widget.alternativeColor ? colors.switchTrack1() : colors.switchTrack2(),
                 ),
                 Expanded (
                   child: GCWText(
                     text: widget.rightValue ?? i18n(context, 'common_decrypt'),
                     align: Alignment.center,
+                    style: textStyle,
                   ),
                   flex: 1
                 )

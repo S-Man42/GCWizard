@@ -72,27 +72,37 @@ class ThemeColorsDark extends ThemeColors {
   }
 
   @override
-  Color switchOnOffInactive() {
-    return _lightGray;
-  }
-
-  @override
   Color textFieldFill() {
     return _darkGray;
   }
 
   @override
-  Color switchTwoOptionThumb() {
+  Color switchThumb1() {
     return _lightGray;
   }
 
   @override
-  Color switchTwoOptionTrack() {
+  Color switchTrack1() {
     return _darkGray;
+  }
+
+  @override
+  Color switchThumb2() {
+    return accent();
+  }
+
+  @override
+  Color switchTrack2() {
+    return accent().withOpacity(0.5);
   }
 
   @override
   Color listSubtitle() {
     return _lightGray;
+  }
+
+  @override
+  Color sudokuBackground() {
+    return Color.fromARGB(255, 85, 85, 85);
   }
 }

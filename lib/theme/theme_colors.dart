@@ -19,9 +19,10 @@ abstract class ThemeColors {
   Color textFieldHintText();
   Color textFieldFill();
 
-  Color switchOnOffInactive();
-  Color switchTwoOptionThumb();
-  Color switchTwoOptionTrack();
+  Color switchThumb1();
+  Color switchTrack1();
+  Color switchThumb2();
+  Color switchTrack2();
 
   Color outputListOddRows();
 
@@ -31,6 +32,8 @@ abstract class ThemeColors {
 
   Color dialog();
   Color dialogText();
+
+  Color sudokuBackground();
 }
 
 ThemeType type = ThemeType.DARK;

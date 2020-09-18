@@ -62,12 +62,11 @@ class SudokuBoardPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var _touchCanvas = TouchyCanvas(context, canvas);
+    ThemeColors colors = themeColors();
 
     var paint = Paint();
 
     paint.style = PaintingStyle.stroke;
-
-    var backGroundColor = Color.fromARGB(255, 85, 85, 85);
 
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
@@ -90,7 +89,7 @@ class SudokuBoardPainter extends CustomPainter {
             double yInner = l * heightInner + yOuter;
 
             paint.style = PaintingStyle.fill;
-            paint.color = backGroundColor;
+            paint.color = colors.sudokuBackground();
 
             var boardY = i * 3 + k;
             var boardX = j * 3 + l;
@@ -104,7 +103,6 @@ class SudokuBoardPainter extends CustomPainter {
               }
             );
 
-            ThemeColors colors = themeColors();
             paint.color = colors.accent();
 
             _touchCanvas.drawLine(Offset(xInner, 0.0), Offset(xInner, size.width), paint);
@@ -165,7 +163,7 @@ class SudokuBoardPainter extends CustomPainter {
         rows.add(
           GCWButton(
             text: value.toString(),
-            textStyle: gcwTextStyle().copyWith(fontSize: 32),
+            textStyle: gcwTextStyle().copyWith(fontSize: 32, color: themeColors().dialogText()),
             onPressed: () {
               Navigator.of(context).pop();
               setBoxValue(x, y, value);
