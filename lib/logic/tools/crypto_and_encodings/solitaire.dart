@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:tuple/tuple.dart';
 
 const int _jockerA = 53;
@@ -19,6 +18,14 @@ Map<String, int> createSolitaireAlphabetMap() {
 }
 
 SolitaireOutput encryptSolitaire (String input, String key) {
+  return solitaireBase(input, key, true);
+}
+
+SolitaireOutput decryptSolitaire (String input, String key) {
+  return solitaireBase(input, key, false);
+}
+
+SolitaireOutput solitaireBase (String input, String key,bool encrpyt) {
   if (input == null || input.length == 0)
     return null;
 
@@ -26,7 +33,7 @@ SolitaireOutput encryptSolitaire (String input, String key) {
   if (alphabet == null)
     return null;
 
-   input = input
+  input = input
       .toUpperCase()
       .split('')
       .map((character) => alphabet.containsKey(character) ? character : '')
@@ -40,24 +47,42 @@ SolitaireOutput encryptSolitaire (String input, String key) {
         .join();
   }
 
-  int streamLength = (input.length / 5.0).ceil() * 5;
-  input = input.padRight(streamLength, 'X');
+  if (encrpyt) {
+    int streamLength = (input.length / 5.0).ceil() * 5;
+    input = input.padRight(streamLength, 'X');
+  }
 
   var deck = createDeck();
   var tuple = createKeyStream(input, key, deck, alphabet);
   var keyStream = tuple.item1;
   deck = tuple.item2;
-  var output = createOutput(input, keyStream, alphabet);
+  String output;
+  if (encrpyt) {
+    output = createEncryptOutput(input, keyStream, alphabet);
+    output = insertSpaceEveryNthCharacter(output, 5);
+  }
+  else
+    output = createDecryptOutput(input, keyStream, alphabet);
 
-  return SolitaireOutput(stringTo5LetterBlock(output), keyStream, solitaireDeckToString(deck));
+  return SolitaireOutput(output, keyStream, solitaireDeckToString(deck));
 }
 
-SolitaireOutput decryptSolitaire (String input, String key) {
-  if (input == null || key == null)
-    return null;
+String createEncryptOutput(String input, String keyStream, Map<String, int> alphabet) {
+  var output = "";
+  for (int i = 0; i < input.length; i++)
+    output += Chr(alphabet[input[i]] + alphabet[keyStream[i]], alphabet);
 
-  return SolitaireOutput('', '', '');
+  return output;
 }
+
+String createDecryptOutput(String input, String keyStream, Map<String, int> alphabet) {
+  var output = "";
+  for (int i = 0; i < input.length; i++)
+    output += Chr(alphabet[input[i]] - alphabet[keyStream[i]], alphabet);
+
+  return output;
+}
+
 
 List<int> createDeck() {
   var deck = new List<int>();
@@ -68,17 +93,8 @@ List<int> createDeck() {
   return deck;
 }
 
-String createOutput(String input, String keyStream, Map<String, int> alphabet) {
-  var output = "";
-  for (int i = 0; i < input.length; i++)
-    output += Chr(alphabet[input[i]] + alphabet[keyStream[i]], alphabet);
-
-  return output;
-}
-
 Tuple2<String, List<int>> createKeyStream(String input, String key, List<int> deck, Map<String, int> alphabet) {
   var streamLetters = "";
-  var streamLength = (input.length / 5.0).ceil() * 5;
   int _issueCard;
 
   // use Key -> init deck
@@ -89,7 +105,7 @@ Tuple2<String, List<int>> createKeyStream(String input, String key, List<int> de
     }
   }
 
-  for (int i = 0; i < streamLength; i++) {
+  for (int i = 0; i < input.length; i++) {
     deck = cycleDeck(deck);
     _issueCard = issueCard(key, i, deck);
 
@@ -125,7 +141,6 @@ int issueCard(String key, int index, List<int> deck) {
 }
 
 List<int> cycleDeck(List<int> deck) {
-  //  http://www.nplaumann.de/8-kryptographie/1-der-solitaire-verschluesselungsalgorithmus.html
 
   // Step 1
   var deckSize = deck.length;
@@ -157,19 +172,16 @@ List<int> cycleDeck(List<int> deck) {
   var secondJocker = jockerAPos < jockerBPos ? jockerBPos : jockerAPos;
 
   var newDeck = new List<int>();
-  var positionTo = 0;
   var positionFrom = secondJocker + 1;
   var count = (deckSize - 1) - secondJocker;
-  newDeck = copyToDeck(deck, newDeck, positionFrom, positionTo, count);
+  newDeck = copyToDeck(deck, newDeck, positionFrom, count);
 
-  positionTo += count;
   positionFrom = firstJocker;
   count = secondJocker - firstJocker + 1;
-  newDeck = copyToDeck(deck, newDeck, positionFrom, positionTo, count);
-  positionTo += count;
+  newDeck = copyToDeck(deck, newDeck, positionFrom, count);
   positionFrom = 0;
   count = firstJocker;
-  newDeck = copyToDeck(deck, newDeck, positionFrom, positionTo, count);
+  newDeck = copyToDeck(deck, newDeck, positionFrom, count);
   deck = newDeck;
 
   return takeOff(deck, deck[deckSize - 1]);
@@ -179,43 +191,28 @@ List<int> cycleDeck(List<int> deck) {
 List<int> takeOff(List<int> deck, int liftOffPosition)  {
   var deckSize = deck.length;
   var newDeck = new List<int>();
-  var positionTo = 0;
   var positionFrom = liftOffPosition;
   if (positionFrom == _jockerB)
     positionFrom = _jockerA;
   var count = (deckSize - 1) - positionFrom;
 
-  newDeck = copyToDeck(deck, newDeck, positionFrom, positionTo, count);
-  positionTo += count;
+  newDeck = copyToDeck(deck, newDeck, positionFrom, count);
   count = positionFrom;
   positionFrom = 0;
-  newDeck = copyToDeck(deck, newDeck, positionFrom, positionTo, count);
+  newDeck = copyToDeck(deck, newDeck, positionFrom, count);
 
   // set last card
-  newDeck = copyToDeck(deck, newDeck, deckSize - 1, deckSize - 1, 1);
+  newDeck = copyToDeck(deck, newDeck, deckSize - 1, 1);
 
   return newDeck;
 }
 
-List<int> copyToDeck(List<int> deck, List<int> targetDeck, int positionFrom, int positionTo, int count) {
+List<int> copyToDeck(List<int> deck, List<int> targetDeck, int positionFrom, int count) {
 
   for (int i = 0; i < count; i++)
     targetDeck.add(deck[positionFrom + i]);
 
   return targetDeck;
-}
-
-String stringTo5LetterBlock(String input) {
-  if (input == null)
-    return null;
-
-  var output = '';
-  do  {
-    output += input.substring(0,5) + " ";
-    input = input.substring(5);
-  } while (input.length > 0);
-
-  return  output;
 }
 
 String solitaireDeckToString(List<int> deck) {
