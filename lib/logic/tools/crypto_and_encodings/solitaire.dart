@@ -2,8 +2,8 @@ import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:tuple/tuple.dart';
 
-const int _jockerA = 53;
-const int _jockerB = 54;
+const int _jokerA = 53;
+const int _jokerB = 54;
 
 class SolitaireOutput {
   final String output;
@@ -48,7 +48,9 @@ SolitaireOutput solitaireBase (String input, String key,bool encrpyt) {
   }
 
   if (encrpyt) {
+    // Groups of 5 letters
     int streamLength = (input.length / 5.0).ceil() * 5;
+    // Use X to fill the last group
     input = input.padRight(streamLength, 'X');
   }
 
@@ -86,7 +88,7 @@ String createDecryptOutput(String input, String keyStream, Map<String, int> alph
 
 List<int> createDeck() {
   var deck = new List<int>();
-
+  // Bridge cards +2 joker
   for (int i = 0; i < 54; i++)
     deck.add(i + 1);
 
@@ -97,10 +99,11 @@ Tuple2<String, List<int>> createKeyStream(String input, String key, List<int> de
   var streamLetters = "";
   int _issueCard;
 
-  // use Key -> init deck
+  // use key -> init deck
   if (key != null && key!= "") {
     for (int i = 0; i < key.length; i++) {
       deck = cycleDeck(deck);
+      // Step 4 (position -> value from key letter)
       deck = takeOff(deck, alphabet[key[i]]);
     }
   }
@@ -109,8 +112,8 @@ Tuple2<String, List<int>> createKeyStream(String input, String key, List<int> de
     deck = cycleDeck(deck);
     _issueCard = issueCard(key, i, deck);
 
-    // if issueCard a jocker ?
-    while ((_issueCard == _jockerA) || (_issueCard == _jockerB)) {
+    // if issueCard a joker ?
+    while ((_issueCard == _jokerA) || (_issueCard == _jokerB)) {
       deck = cycleDeck(deck);
       _issueCard = issueCard(key, i, deck);
     }
@@ -135,65 +138,66 @@ String Chr(int letter, Map<String, int> alphabet) {
 int issueCard(String key, int index, List<int> deck) {
   int cardIndex= deck[0];
 
-  if (cardIndex == _jockerB)
-    cardIndex = _jockerA;
+  if (cardIndex == _jokerB)
+    cardIndex = _jokerA;
   return deck[cardIndex];
 }
 
 List<int> cycleDeck(List<int> deck) {
 
-  // Step 1
+  // Step 1 (Joker A. Move it down one card)
   var deckSize = deck.length;
   var offet = 1;
-  var jockerAPos = deck.indexOf(_jockerA);
+  var jokerAPos = deck.indexOf(_jokerA);
   // last card?
-  if (jockerAPos == deckSize - 1)
+  if (jokerAPos == deckSize - 1)
     // under first card
     offet += 1;
-  var newPos = (jockerAPos + offet) % (deckSize);
-  deck.remove(_jockerA);
-  deck.insert(newPos, _jockerA);
+  var newPos = (jokerAPos + offet) % (deckSize);
+  deck.remove(_jokerA);
+  deck.insert(newPos, _jokerA);
 
-  // Step 2
+  // Step 2 (Joker B. Move it down two cards)
   offet = 2;
-  var jockerBPos = deck.indexOf(_jockerB);
+  var jokerBPos = deck.indexOf(_jokerB);
   // last/ prelast card ?
-  if (jockerBPos >= deckSize - 2)
+  if (jokerBPos >= deckSize - 2)
     // under first/ second card
     offet += 1;
-  newPos = (jockerBPos + offet) % (deckSize);
-  deck.remove(_jockerB);
-  deck.insert(newPos, _jockerB);
+  newPos = (jokerBPos + offet) % (deckSize);
+  deck.remove(_jokerB);
+  deck.insert(newPos, _jokerB);
 
-  // Step 3
-  jockerAPos = deck.indexOf(_jockerA);
-  jockerBPos = deck.indexOf(_jockerB);
-  var firstJocker = jockerAPos < jockerBPos ? jockerAPos : jockerBPos;
-  var secondJocker = jockerAPos < jockerBPos ? jockerBPos : jockerAPos;
+  // Step 3 (tripartite take-off through. That means, swap the cards before the first joker with those after the second joker)
+  jokerAPos = deck.indexOf(_jokerA);
+  jokerBPos = deck.indexOf(_jokerB);
+  var firstjoker = jokerAPos < jokerBPos ? jokerAPos : jokerBPos;
+  var secondjoker = jokerAPos < jokerBPos ? jokerBPos : jokerAPos;
 
   var newDeck = new List<int>();
-  var positionFrom = secondJocker + 1;
-  var count = (deckSize - 1) - secondJocker;
+  var positionFrom = secondjoker + 1;
+  var count = (deckSize - 1) - secondjoker;
   newDeck = copyToDeck(deck, newDeck, positionFrom, count);
 
-  positionFrom = firstJocker;
-  count = secondJocker - firstJocker + 1;
+  positionFrom = firstjoker;
+  count = secondjoker - firstjoker + 1;
   newDeck = copyToDeck(deck, newDeck, positionFrom, count);
+
   positionFrom = 0;
-  count = firstJocker;
-  newDeck = copyToDeck(deck, newDeck, positionFrom, count);
-  deck = newDeck;
+  count = firstjoker;
+  deck = copyToDeck(deck, newDeck, positionFrom, count);
 
+  // Step 4 (position -> value from last card)
   return takeOff(deck, deck[deckSize - 1]);
 }
 
-// Step 4
+// Step 4 (take off and leave the bottom card on the bottom)
 List<int> takeOff(List<int> deck, int liftOffPosition)  {
   var deckSize = deck.length;
   var newDeck = new List<int>();
   var positionFrom = liftOffPosition;
-  if (positionFrom == _jockerB)
-    positionFrom = _jockerA;
+  if (positionFrom == _jokerB)
+    positionFrom = _jokerA;
   var count = (deckSize - 1) - positionFrom;
 
   newDeck = copyToDeck(deck, newDeck, positionFrom, count);
