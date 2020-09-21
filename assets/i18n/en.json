@@ -1299,6 +1299,13 @@
   "railfence_optionalpassword" : "Optional Password",
   "railfence_offset" : "Offset",
 
+  "rc4_title" : "RC4",
+  "rc4_description" : "stream cipher (HTTPS, SSH 1, WEP, WPA)",
+  "rc4_example" : "abcdef → CD14",
+  "rc4_format_auto" : "auto",
+  "rc4_format_text" : "text",
+  "rc4_format_asciivalues" : "ASCII values",
+
   "resistor_selection_title" : "Resistor",
   "resistor_selection_description" : "Electrical Resistor",
   "resistor_colorcodecalculator_title" : "Resistor Color Calculator",
