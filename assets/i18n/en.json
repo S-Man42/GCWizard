@@ -1472,8 +1472,8 @@
   "sudokusolver_clearall" : "Clear all",
   "sudokusolver_error" : "Could not be solved.",
 
-  "summersimmerindex_title" : "Summer-Simmer index",
-  "summersimmerindex_description" : "Calculating the Summer-simme-index",
+  "summersimmerindex_title" : "Summer-Simmer Index",
+  "summersimmerindex_description" : "Calculating the Summer-simmer index",
   "summersimmerindex_index_21.3" : "Slightly cool – most people feel well.",
   "summersimmerindex_index_25.0" : "Almost everybody feels well.",
   "summersimmerindex_index_28.3" : "Slightly hot –  most people feel well.",

@@ -82,7 +82,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart'
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/summersimmer.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/summersimmer.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
