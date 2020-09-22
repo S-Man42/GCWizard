@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -315,7 +315,7 @@ class _MainViewState extends State<MainView> {
           controller: _searchController,
           icon: Icon(
             Icons.search,
-            color: ThemeColors.gray
+            color: themeColors().mainFont()
           ),
           hintText: i18n(context, 'common_search_hint')
         )

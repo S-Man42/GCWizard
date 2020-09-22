@@ -53,9 +53,9 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
             });
           },
           items: allCoordFormats.map((entry) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: entry.key,
-              child: Text(i18n(context, entry.name) ?? entry.name),
+              child: i18n(context, entry.name) ?? entry.name,
             );
           }).toList(),
         ),
@@ -70,9 +70,9 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
         return GCWDropDownButton(
           value: _currentSubtype,
           items: getCoordinateFormatByKey(keyCoordsGaussKrueger).subtypes.map((subtype) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: subtype.key,
-              child: Text(i18n(context, subtype.name)),
+              child: i18n(context, subtype.name),
             );
           }).toList(),
           onChanged: (value) {

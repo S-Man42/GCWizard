@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
 class GCWCoordsSignDropDownButton extends StatefulWidget {
   final Function onChanged;
@@ -33,9 +34,9 @@ class _GCWCoordsSignDropDownButtonState extends State<GCWCoordsSignDropDownButto
             _value = -1;
           }
 
-          return DropdownMenuItem(
+          return GCWDropDownMenuItem(
             value: _value,
-            child: Text(char),
+            child: char,
           );
         }).toList(),
       );

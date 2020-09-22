@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/alphabet_values.dart' as logic;
-import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -182,28 +182,10 @@ class AlphabetValuesState extends State<AlphabetValues> {
                   child: GCWDropDownButton(
                     value: _currentAlphabetKey,
                     items: _alphabets.map((Alphabet alphabet) {
-                      return DropdownMenuItem(
+                      return GCWDropDownMenuItem(
                         value: alphabet.key,
-                        child: Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
-                              ),
-                              Container(
-                                child: Text(
-                                  _generateItemDescription(alphabet),
-                                  style: gcwDescriptionTextStyle(),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                padding: EdgeInsets.only(left: 10)
-                              ),
-                            ]
-                          ),
-                          padding: EdgeInsets.only(bottom: 10),
-                        )
+                        child: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
+                        subtitle: _generateItemDescription(alphabet)
                       );
                     }).toList(),
                     selectedItemBuilder: (context) {
@@ -370,7 +352,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
               ),
               Icon(
                 Icons.arrow_forward,
-                color: ThemeColors.gray,
+                color: themeColors().mainFont(),
               ),
               Expanded(
                 child: GCWTextField(
@@ -649,6 +631,8 @@ class AlphabetValuesState extends State<AlphabetValues> {
     var rows = _currentCustomizedAlphabet.entries.map((entry) {
       Widget output;
 
+      ThemeColors colors = themeColors();
+
       var row = Container(
         child: Row (
           children: <Widget>[
@@ -660,7 +644,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.gray,
+              color: colors.mainFont(),
             ),
             Expanded(
               child: GCWText (
@@ -686,7 +670,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
 
       if (odd) {
         output = Container(
-          color: ThemeColors.oddRows,
+          color: colors.outputListOddRows(),
           child: row
         );
       } else {

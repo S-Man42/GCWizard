@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -31,6 +31,8 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
   var _currentEditedKey = '';
   var _currentEditedValue = '';
   var _currentEditId;
+
+  ThemeColors _themeColors;
 
   @override
   void initState() {
@@ -74,6 +76,8 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
 
   @override
   Widget build(BuildContext context) {
+    _themeColors = themeColors();
+
     return Column(
       children: <Widget>[
         GCWTextDivider(
@@ -94,7 +98,7 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.gray,
+              color: _themeColors.mainFont(),
             ),
             Expanded(
               child: Padding (
@@ -175,7 +179,7 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.gray,
+              color: _themeColors.mainFont(),
             ),
             Expanded(
               child: _currentEditId == value.id
@@ -241,7 +245,7 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
 
       if (odd) {
         output = Container(
-            color: ThemeColors.oddRows,
+            color: _themeColors.outputListOddRows(),
             child: row
         );
       } else {
