@@ -1032,6 +1032,7 @@
   "kenny_title" : "Kenny's Code",
   "kenny_description" : "One letter to a three-element group of m, p, f; inspired by 'South Park'",
   "kenny_example" : "pmpmffpmfpmf",
+  "kenny_case_sensitive" : "Case sensitive",
 
   "mainmenu_about_title" : "About",
   "mainmenu_settings_title" : "Settings",

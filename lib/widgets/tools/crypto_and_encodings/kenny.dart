@@ -5,6 +5,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 
 class Kenny extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class KennyState extends State<Kenny> {
   var _fController;
 
   var _currentInput = '';
+  var _currentCaseSensitive = true;
   var _currentM = 'm';
   var _currentP = 'p';
   var _currentF = 'f';
@@ -119,6 +121,17 @@ class KennyState extends State<Kenny> {
             });
           },
         ),
+        _currentMode == GCWSwitchPosition.right
+        ? GCWOnOffSwitch(
+          title: i18n(context, 'kenny_case_sensitive'),
+          value: _currentCaseSensitive,
+          onChanged: (value) {
+            setState(() {
+              _currentCaseSensitive = value;
+            });
+          },
+        )
+       : Container(), //empty widget
         GCWDefaultOutput(
           child: _buildOutput()
         )
@@ -134,6 +147,6 @@ class KennyState extends State<Kenny> {
       return '';
 
     var key = [_currentM, _currentP, _currentF];
-    return _currentMode == GCWSwitchPosition.left ? encryptKenny(_currentInput, key) : decryptKenny(_currentInput, key);
+    return _currentMode == GCWSwitchPosition.left ? encryptKenny(_currentInput, key) : decryptKenny(_currentInput, key, _currentCaseSensitive);
   }
 }

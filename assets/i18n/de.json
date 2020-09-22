@@ -1032,6 +1032,7 @@
   "kenny_title" : "Kennys Code",
   "kenny_description" : "Buchstaben zu einer Dreiergruppe aus m, p, f; inspiriert durch 'South Park'",
   "kenny_example" : "pmpmffpmfpmf",
+  "kenny_case_sensitive" : "Beachte Groß-/Kleinschreibung",
 
   "mainmenu_about_title" : "Über",
   "mainmenu_settings_title" : "Einstellungen",

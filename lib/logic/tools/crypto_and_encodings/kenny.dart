@@ -32,7 +32,7 @@ encryptKenny(String input, List<String> replaceCharacters) {
   return output;
 }
 
-decryptKenny(String input, List<String> replaceCharacters) {
+decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
   if (input == null || input.length == 0)
     return '';
 
@@ -40,6 +40,13 @@ decryptKenny(String input, List<String> replaceCharacters) {
     return '';
 
   var replaceToCharacters = [String.fromCharCode(0), String.fromCharCode(1), String.fromCharCode(2)];
+
+  if (!caseSensitive) {
+    for (int i = 0; i < replaceCharacters.length; i++)
+      replaceCharacters[i] = replaceCharacters[i].toUpperCase();
+
+    input = input.toUpperCase();
+  }
 
   Map<String, String> substitutions = {};
   Map<String, String> integerSubstitutions = {};
