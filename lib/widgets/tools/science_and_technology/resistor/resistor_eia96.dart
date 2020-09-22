@@ -56,9 +56,9 @@ class ResistorEIA96State extends State<ResistorEIA96> {
                   'E' : 'E = 10' + stringToSuperscript('4') + ' = 10 000',
                   'F' : 'F = 10' + stringToSuperscript('5') + ' = 100 000',
                 }.entries.map((entry) {
-                  return DropdownMenuItem(
+                  return GCWDropDownMenuItem(
                     value: entry.key,
-                    child: Text(entry.value),
+                    child: entry.value,
                   );
                 }).toList(),
                 onChanged: (value) {

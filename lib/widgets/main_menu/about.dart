@@ -19,6 +19,8 @@ class AboutState extends State<About> {
 
   var packageInfo = PackageInfo();
 
+  var boldTextStyle = gcwTextStyle().copyWith(fontWeight: FontWeight.bold);
+
   @override
   void initState() {
     super.initState();
@@ -44,8 +46,8 @@ class AboutState extends State<About> {
           ),
           Expanded(
             child: InkWell(
-              child: Text(
-                i18n(context, 'about_${key}_url_text'),
+              child: GCWText(
+                text: i18n(context, 'about_${key}_url_text'),
                 style: gcwHyperlinkTextStyle(),
               ),
               onTap: () {
@@ -137,14 +139,14 @@ class AboutState extends State<About> {
                   children: [
                     TextSpan(
                       text: i18n(context, 'about_specialthanks') + '\n',
-                      style: TextStyle(fontWeight: FontWeight.bold)
+                      style: boldTextStyle
                     ),
                     TextSpan(
                       text: 'Daniel \'Eisbehr\' K. (Maintainer GCC)'
                         + '\n'
                     )
                   ],
-                  style: TextStyle(fontSize: defaultFontSize())
+                  style: gcwTextStyle()
                 ),
               ),
               RichText(
@@ -153,14 +155,14 @@ class AboutState extends State<About> {
                   children: [
                     TextSpan(
                       text: i18n(context, 'about_specialsupport') + '\n',
-                      style: TextStyle(fontWeight: FontWeight.bold)
+                      style: boldTextStyle
                     ),
                     TextSpan(
                       text: 'Andy \'Puma66\''
                         + '\n'
                     )
                   ],
-                  style: TextStyle(fontSize: defaultFontSize())
+                  style: gcwTextStyle()
                 ),
               ),
               RichText(
@@ -169,7 +171,7 @@ class AboutState extends State<About> {
                   children: [
                     TextSpan(
                       text: i18n(context, 'about_contributors') + '\n',
-                      style: TextStyle(fontWeight: FontWeight.bold)
+                      style: boldTextStyle
                     ),
                     TextSpan(
                       text:
@@ -190,7 +192,7 @@ class AboutState extends State<About> {
                         ].join('\n') + '\n'
                     )
                   ],
-                  style: TextStyle(fontSize: defaultFontSize())
+                  style: gcwTextStyle()
                 ),
               ),
               RichText(
@@ -199,7 +201,7 @@ class AboutState extends State<About> {
                   children: [
                     TextSpan(
                       text: i18n(context, 'about_testers') + '\n',
-                      style: TextStyle(fontWeight: FontWeight.bold)
+                      style: boldTextStyle
                     ),
                     TextSpan(
                       text:
@@ -228,7 +230,7 @@ class AboutState extends State<About> {
                         ].join(', ')
                     )
                   ],
-                  style: TextStyle(fontSize: defaultFontSize())
+                  style: gcwTextStyle()
                 ),
               ),
             ],

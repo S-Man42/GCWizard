@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
@@ -25,7 +26,7 @@ buildMainMenu(BuildContext context) {
             width: 50.0,
             height: 50.0,
             decoration: BoxDecoration(
-              color: ThemeColors.darkgrey,
+              color: themeColors().dialogText(),
               shape: BoxShape.circle,
             ),
           ),
@@ -33,10 +34,10 @@ buildMainMenu(BuildContext context) {
             padding: EdgeInsets.only(
               left: 20
             ),
-            child: Text(
-              i18n(context, 'common_app_title'),
+            child: GCWText(
+              text: i18n(context, 'common_app_title'),
               style: TextStyle(
-                color: ThemeColors.darkgrey,
+                color: themeColors().dialogText(),
                 fontSize: 22.0
               ),
             ),
@@ -44,7 +45,7 @@ buildMainMenu(BuildContext context) {
         ],
       ),
       decoration: BoxDecoration(
-        color: ThemeColors.accent,
+        color: themeColors().dialog(),
       ),
     ),
   );
@@ -67,7 +68,7 @@ buildMainMenu(BuildContext context) {
     children: <Widget>[
       InkWell(
         child: Container(
-          color: ThemeColors.gray,
+          color: themeColors().dialog(),
           width: double.infinity,
           height: 50,
           child: Row(
@@ -75,16 +76,16 @@ buildMainMenu(BuildContext context) {
               Container(
                 child: Icon(Icons.group),
                 padding: EdgeInsets.only(
-                    left: 15,
-                    right: 15
+                  left: 15,
+                  right: 15
                 ),
               ),
               Text(
                 i18n(context, 'mainmenu_callforcontribution_title'),
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: ThemeColors.darkgrey,
-                    fontSize: defaultFontSize()
+                  fontWeight: FontWeight.bold,
+                  color: themeColors().dialogText(),
+                  fontSize: defaultFontSize()
                 ),
               ),
             ],
@@ -129,7 +130,7 @@ _buildSettingsItem(BuildContext context) {
     ),
     leading: Icon(
       Icons.settings,
-      color: ThemeColors.gray,
+      color: themeColors().mainFont(),
     ),
     children: settingsItems.map((item) {
       return Padding(
@@ -146,7 +147,7 @@ ListTile _buildMenuItem(BuildContext context, item) {
   return ListTile(
     leading: Icon(
       item['icon'],
-      color: ThemeColors.gray,
+      color: themeColors().mainFont(),
     ),
     title: Text(
       (item['tool'] as GCWToolWidget).toolName,
@@ -161,7 +162,7 @@ ListTile _buildMenuItem(BuildContext context, item) {
 
 _menuItemStyle() {
   return TextStyle(
-    color: ThemeColors.gray,
+    color: themeColors().mainFont(),
     fontSize: defaultFontSize(),
     fontWeight: FontWeight.normal
   );

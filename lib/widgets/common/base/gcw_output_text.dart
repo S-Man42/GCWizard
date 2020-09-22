@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -46,7 +47,7 @@ class _GCWOutputTextState extends State<GCWOutputText> {
         ),
         widget.text != null && widget.text.length > 0 && !widget.suppressCopyButton
           ? GCWIconButton(
-              color: widget.style != null ? widget.style.color : Colors.white,
+              color: widget.style != null ? widget.style.color : themeColors().mainFont(),
               size: IconButtonSize.SMALL,
               iconData: Icons.content_copy,
               onPressed: () {

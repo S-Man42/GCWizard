@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class GCWSwitch extends StatefulWidget {
-  final String text;
   final Function onChanged;
   final value;
   final inactiveTrackColor;
@@ -12,7 +11,6 @@ class GCWSwitch extends StatefulWidget {
   const GCWSwitch({
     Key key,
     this.value: false,
-    this.text,
     this.onChanged,
     this.inactiveThumbColor,
     this.inactiveTrackColor,
