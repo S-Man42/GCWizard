@@ -82,9 +82,9 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
                       });
                     },
                     items: digraphLettersEast.split('').map((char) {
-                      return DropdownMenuItem(
+                      return GCWDropDownMenuItem(
                         value: char,
-                        child: Text(char),
+                        child: char,
                       );
                     }).toList(),
                   ),
@@ -106,9 +106,9 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
                       });
                     },
                     items: digraphLettersEast.split('').map((char) {
-                      return DropdownMenuItem(
+                      return GCWDropDownMenuItem(
                         value: char,
-                        child: Text(char),
+                        child: char,
                       );
                     }).toList(),
                   ),
@@ -126,9 +126,9 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
                       });
                     },
                     items: digraphLettersNorth.split('').map((char) {
-                      return DropdownMenuItem(
+                      return GCWDropDownMenuItem(
                         value: char,
-                        child: Text(char),
+                        child: char,
                       );
                     }).toList(),
                   ),

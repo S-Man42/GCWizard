@@ -60,9 +60,9 @@ class ScrabbleState extends State<Scrabble> {
             });
           },
           items: scrabbleSets.entries.map((set) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: set.key,
-              child: Text(i18n(context, set.value.i18nNameId)),
+              child: i18n(context, set.value.i18nNameId),
             );
           }).toList(),
         ),

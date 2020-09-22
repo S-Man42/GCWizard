@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 
 enum IconButtonSize {NORMAL, SMALL}
 
@@ -25,10 +26,10 @@ class GCWIconButton extends StatelessWidget {
           child: Icon(
             this.iconData,
             size: isNormalSize ? null : 20,
-            color: this.color ?? Colors.white
+            color: this.color ?? themeColors().mainFont()
           ) ?? this.image,
           onPressed: this.onPressed,
-          borderSide: BorderSide(color: Theme.of(context).accentColor),
+          borderSide: BorderSide(color: themeColors().accent()),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(roundedBorderRadius),
           )

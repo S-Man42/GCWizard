@@ -71,9 +71,9 @@ class ColorPickerState extends State<ColorPicker> {
         GCWDropDownButton(
           value: _currentOutputColorSpace,
           items: allColorSpaces.map((colorSpace) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: colorSpace.key,
-              child: Text(i18n(context, colorSpace.name))
+              child: i18n(context, colorSpace.name)
             );
           }).toList(),
           onChanged: (value) {

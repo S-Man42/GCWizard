@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -63,7 +64,7 @@ class GCWTextExportState extends State<GCWTextExport> {
                 version: QrVersions.auto,
                 size: 280,
                 errorCorrectionLevel: QrErrorCorrectLevel.L,
-                backgroundColor: Colors.white,
+                backgroundColor: COLOR_QR_BACKGROUND,
               )
             : Column(
                 children: <Widget>[

@@ -5,7 +5,7 @@ import 'package:gc_wizard/logic/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/units/length.dart';
 import 'package:gc_wizard/logic/units/unit_category.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
@@ -133,9 +133,9 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
               radius: _currentRadius1,
               color:
                 HSLColor
-                    .fromColor(ThemeColors.mapCircle)
-                    .withLightness(HSLColor.fromColor(ThemeColors.mapCircle).lightness - 0.3)
-                    .toColor()
+                  .fromColor(COLOR_MAP_CIRCLE)
+                  .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness - 0.3)
+                  .toColor()
             ),
             MapCircle(
               centerPoint: _currentCoords2,
@@ -146,8 +146,8 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
               radius: _currentRadius3,
               color:
               HSLColor
-                  .fromColor(ThemeColors.mapCircle)
-                  .withLightness(HSLColor.fromColor(ThemeColors.mapCircle).lightness + 0.2)
+                  .fromColor(COLOR_MAP_CIRCLE)
+                  .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness + 0.2)
                   .toColor()
             ),
           ],
@@ -192,7 +192,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
       _currentIntersections
         .map((intersection) => MapPoint(
           point: intersection.coords,
-          color: ThemeColors.mapCalculatedPoint,
+          color: COLOR_MAP_CALCULATEDPOINT,
           markerText: i18n(context, 'coords_common_intersection'),
           coordinateFormat: _currentOutputFormat
         ))

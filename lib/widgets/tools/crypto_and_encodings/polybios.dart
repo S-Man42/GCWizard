@@ -98,9 +98,9 @@ class PolybiosState extends State<Polybios> {
             });
           },
           items: polybiosModeItems.entries.map((mode) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: mode.key,
-              child: Text(mode.value),
+              child: mode.value,
             );
           }).toList(),
         ),

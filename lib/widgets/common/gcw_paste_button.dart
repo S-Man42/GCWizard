@@ -4,8 +4,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
@@ -26,6 +27,8 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeColors colors = themeColors();
+
     return Container(
       width: _BUTTON_SIZE,
       height: _BUTTON_SIZE,
@@ -34,14 +37,14 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
           borderRadius: BorderRadius.circular(roundedBorderRadius),
           side: BorderSide(
             width: 1,
-            color: ThemeColors.accent,
+            color: colors.accent(),
           ),
         ),
       ),
       child: PopupMenuButton(
         offset: Offset(0, _BUTTON_SIZE),
-        icon: Icon(Icons.content_paste, color: Colors.white, size: 20),
-        color: ThemeColors.accent,
+        icon: Icon(Icons.content_paste, color: themeColors().mainFont(), size: 20),
+        color: colors.accent(),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(roundedBorderRadius),
         ),
@@ -79,10 +82,10 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
     var popupList = <PopupMenuEntry>[
       PopupMenuItem(
         value: 0,
-        child: Text(
-          i18n(context, 'common_clipboard_fromdeviceclipboard'),
+        child: GCWText(
+          text: i18n(context, 'common_clipboard_fromdeviceclipboard'),
           style: TextStyle(
-            color: Colors.black,
+            color: themeColors().dialogText(),
           ),
         )
       ),
@@ -107,11 +110,11 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
               child: Column(
                 children: [
                   Align(
-                    child: Text(
-                      dateFormat.format(datetime) + ' ' + timeFormat.format(datetime),
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: max(defaultFontSize() - 4, 10)
+                    child: GCWText(
+                      text: dateFormat.format(datetime) + ' ' + timeFormat.format(datetime),
+                      style: gcwTextStyle().copyWith(
+                        color: themeColors().dialogText(),
+                        fontSize: max(defaultFontSize() - 4, 10)
                       ),
                     ),
                     alignment: Alignment.centerLeft
@@ -119,8 +122,8 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
                   Align(
                     child: Text(
                       item['text'],
-                      style: TextStyle(
-                        color: Colors.black,
+                      style: gcwTextStyle().copyWith(
+                        color: themeColors().dialogText(),
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
