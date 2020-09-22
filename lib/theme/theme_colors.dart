@@ -17,8 +17,9 @@ abstract class ThemeColors {
   Color accent();
   Color focused();
 
-  Color textFieldSelectionControlBackground();
   Color textFieldHintText();
+  Color textFieldFill();
+  Color textFieldFillText();
 
   Color hyperLinkText();
 
@@ -35,6 +36,8 @@ abstract class ThemeColors {
 
   Color dialog();
   Color dialogText();
+
+  Color messageBackground();
 
   Color sudokuBackground();
 }

@@ -67,7 +67,7 @@ class ThemeColorsDark extends ThemeColors {
   }
 
   @override
-  Color textFieldSelectionControlBackground() {
+  Color messageBackground() {
     return _darkGray;
   }
 
@@ -104,5 +104,15 @@ class ThemeColorsDark extends ThemeColors {
   @override
   Color hyperLinkText() {
     return accent();
+  }
+
+  @override
+  Color textFieldFill() {
+    return Colors.black;
+  }
+
+  @override
+  Color textFieldFillText() {
+    return Colors.white;
   }
 }

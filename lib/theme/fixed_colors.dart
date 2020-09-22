@@ -9,3 +9,4 @@ const COLOR_MAP_LICENSETEXT = Color(0xFF26282F);
 const COLOR_MAP_LICENSETEXT_BACKGROUND = Colors.white;
 
 const COLOR_QR_BACKGROUND = Colors.white;
+const COLOR_QR_TEXT = Colors.white;

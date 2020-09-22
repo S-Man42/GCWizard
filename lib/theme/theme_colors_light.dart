@@ -68,8 +68,8 @@ class ThemeColorsLight extends ThemeColors {
   }
 
   @override
-  Color textFieldSelectionControlBackground() {
-    return Colors.white; //TODO
+  Color messageBackground() {
+    return Colors.white;
   }
 
   @override
@@ -105,5 +105,15 @@ class ThemeColorsLight extends ThemeColors {
   @override
   Color hyperLinkText() {
     return Colors.deepOrange;
+  }
+
+  @override
+  Color textFieldFill() {
+    return Colors.black;
+  }
+
+  @override
+  Color textFieldFillText() {
+    return Colors.white;
   }
 }

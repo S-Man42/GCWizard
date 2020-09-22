@@ -72,6 +72,6 @@ ThemeData buildTheme() {
       contentPadding: EdgeInsets.all(10.0),
     ),
     unselectedWidgetColor: colors.accent(),
-    cardColor: colors.textFieldSelectionControlBackground()
+    cardColor: colors.messageBackground()
   );
 }

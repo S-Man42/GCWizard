@@ -71,11 +71,10 @@ class _GCWTextFieldState extends State<GCWTextField> {
             autocorrect: false,
             decoration: InputDecoration(
               hintText: widget.hintText,
-              fillColor: widget.filled ? colors.dialogText() : null,
+              fillColor: widget.filled ? colors.textFieldFill() : null,
               filled: widget.filled,
               prefixIcon: widget.icon,
               isDense: true,
-              counterText: "",
               suffixIconConstraints: BoxConstraints(
                 minWidth: 2,
                 minHeight: 2,
@@ -122,7 +121,10 @@ class _GCWTextFieldState extends State<GCWTextField> {
             maxLines: widget.maxLines,
             focusNode: widget.focusNode,
             autofocus: widget.autofocus ?? false,
-            style: TextStyle(fontSize: widget.fontSize ?? defaultFontSize()),
+            style: TextStyle(
+              fontSize: widget.fontSize ?? defaultFontSize(),
+              color: widget.filled ? colors.textFieldFillText() : colors.mainFont()
+            ),
             maxLength: widget.maxLength,
           );
         }

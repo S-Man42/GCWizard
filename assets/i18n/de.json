@@ -921,6 +921,8 @@
   "formulasolver_groups_newgroup_hint" : "Gruppenname eingeben",
   "formulasolver_groups_currentgroups" : "Erstellte Formelgruppen",
   "formulasolver_groups_exportgroup" : "Formelgruppe exportieren",
+  "formulasolver_groups_editgroup" : "Formelgruppe bearbeiten",
+  "formulasolver_groups_removegroup" : "Formelgruppe löschen",
   "formulasolver_groups_imported" : "Aus Zwischenablage importiert.",
   "formulasolver_groups_importfromclipboard" : "Import aus Zwischenablage",
   "formulasolver_groups_importerror" : "Keine validen Daten gefunden.",

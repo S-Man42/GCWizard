@@ -268,28 +268,28 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
                 },
                 itemBuilder: (context) => [
                   PopupMenuItem(
-                      value: 1,
-                      child: buildPopupItem(
-                        context,
-                        Icons.edit,
-                        'formulasolver_formulas_editformula'
-                      )
+                    value: 1,
+                    child: buildPopupItem(
+                      context,
+                      Icons.edit,
+                      'formulasolver_groups_editgroup'
+                    )
                   ),
                   PopupMenuItem(
-                      value: 2,
-                      child: buildPopupItem(
-                        context,
-                        Icons.delete,
-                        'formulasolver_formulas_removeformula'
-                      )
+                    value: 2,
+                    child: buildPopupItem(
+                      context,
+                      Icons.delete,
+                      'formulasolver_groups_removegroup'
+                    )
                   ),
                   PopupMenuItem(
-                      value: 3,
-                      child: buildPopupItem(
-                        context,
-                        Icons.forward,
-                        'formulasolver_groups_exportgroup'
-                      )
+                    value: 3,
+                    child: buildPopupItem(
+                      context,
+                      Icons.forward,
+                      'formulasolver_groups_exportgroup'
+                    )
                   ),
                 ],
               ),

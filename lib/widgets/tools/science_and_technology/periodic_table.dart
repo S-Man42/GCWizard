@@ -7,7 +7,6 @@ import 'package:gc_wizard/logic/tools/science_and_technology/periodic_table.dart
 import 'package:gc_wizard/logic/units/temperature.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -227,9 +226,9 @@ class PeriodicTableState extends State<PeriodicTable> {
     _currentValueCategoryValue = listItems[listItems.firstKey()];
 
     return listItems.entries.map((entry) {
-      return DropdownMenuItem(
+      return GCWDropDownMenuItem(
         value: entry.value,
-        child: GCWText(text: entry.key.toString()),
+        child: entry.key.toString(),
       );
     }).toList();
   }
