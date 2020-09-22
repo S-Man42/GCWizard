@@ -1014,7 +1014,7 @@
   "hexadecimal_example" : "2A → 42",
 
   "humidex_title" : "Humidex",
-  "humidex_description" : "Berechnet Humidex",
+  "humidex_description" : "Berechnet den Humidex",
   "humidex_example" : "30°C, 15°C  →  34",
   "humidex_unit" : "Temperatur",
   "humidex_unit_celsius" : "Celsius",
