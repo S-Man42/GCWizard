@@ -113,7 +113,7 @@ class RC4State extends State<RC4> {
             ]
         ),
         GCWTextDivider(
-            text: i18n(context, 'common_output')
+            text: i18n(context, 'common_output') + ' ' + i18n(context, 'rc4_format')
         ),
         Row(
           children: <Widget>[
