@@ -31,9 +31,9 @@ class GCWABCDropDownButtonState extends State<GCWABCDropDownButton> {
         });
       },
       items: alphabet_AZ.entries.map((entry) {
-        return DropdownMenuItem(
+        return GCWDropDownMenuItem(
           value: entry.value,
-          child: Text('${entry.key} (${entry.value})'),
+          child: '${entry.key} (${entry.value})',
         );
       }).toList(),
     );

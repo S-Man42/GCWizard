@@ -6,7 +6,7 @@ import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart' as var_coords_provider;
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart' as var_coords_model;
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -38,6 +38,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   var _currentEditedFormula = '';
   var _currentEditId;
 
+  ThemeColors _themeColors;
+
   @override
   void initState() {
     super.initState();
@@ -57,6 +59,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
   @override
   Widget build(BuildContext context) {
+    _themeColors = themeColors();
+
     var formulaTool = GCWToolWidget(
       tool: FormulaSolverFormulaValues(group: widget.group),
       toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
@@ -209,11 +213,11 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                           calculated['state'] == STATE_OK
                             ? Icon(
                                 Icons.check,
-                                color: ThemeColors.gray,
+                                color: _themeColors.mainFont(),
                               )
                             : Icon(
                                 Icons.priority_high,
-                                color: ThemeColors.accent,
+                                color: _themeColors.accent(),
                               ),
                           Flexible(
                             child:
@@ -250,14 +254,14 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                   borderRadius: BorderRadius.circular(roundedBorderRadius),
                   side:  BorderSide(
                     width: 1,
-                    color: ThemeColors.accent,
+                    color: _themeColors.accent(),
                   ),
                 ),
               ),
               child: PopupMenuButton(
                 offset: Offset(0, DEFAULT_POPUPBUTTON_SIZE),
-                icon: Icon(Icons.settings, color: Colors.white),
-                color: ThemeColors.accent,
+                icon: Icon(Icons.settings, color: _themeColors.mainFont()),
+                color: _themeColors.accent(),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(roundedBorderRadius),
                 ),
@@ -339,7 +343,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
       if (odd) {
         output = Container(
-          color: ThemeColors.oddRows,
+          color: _themeColors.outputListOddRows(),
           child: row
         );
       } else {

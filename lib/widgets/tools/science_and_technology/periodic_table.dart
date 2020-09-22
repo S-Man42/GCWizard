@@ -139,9 +139,9 @@ class PeriodicTableState extends State<PeriodicTable> {
           value: _currentCategory,
           items: _categories.entries
             .map((category) {
-              return DropdownMenuItem(
+              return GCWDropDownMenuItem(
                 value: category.key,
-                child: Text(i18n(context, category.value)),
+                child: i18n(context, category.value),
               );
             })
             .toList(),
@@ -226,9 +226,9 @@ class PeriodicTableState extends State<PeriodicTable> {
     _currentValueCategoryValue = listItems[listItems.firstKey()];
 
     return listItems.entries.map((entry) {
-      return DropdownMenuItem(
+      return GCWDropDownMenuItem(
         value: entry.value,
-        child: Text(entry.key.toString()),
+        child: entry.key.toString(),
       );
     }).toList();
   }
