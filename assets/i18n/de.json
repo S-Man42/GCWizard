@@ -1302,6 +1302,7 @@
   "rc4_title" : "RC4",
   "rc4_description" : "Stromverschlüsselung (HTTPS, SSH 1, WEP, WPA)",
   "rc4_example" : "abcdef → CD14",
+  "rc4_format" : "Format",
   "rc4_format_auto" : "Auto",
   "rc4_format_text" : "Text",
   "rc4_format_asciivalues" : "ASCII Werte",

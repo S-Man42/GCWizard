@@ -46,6 +46,8 @@ RC4Output useRC4(String input, InputFormat inputFormat, String key, InputFormat 
       default:
         break;
     }
+    out += ' ';
+
   });
 
   return new RC4Output(out, ErrorCode.OK);
