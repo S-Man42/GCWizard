@@ -130,7 +130,7 @@ class GCWMapViewState extends State<GCWMapView> {
           return Icon(
             Icons.my_location,
             size: 28.3,
-            color: themeColors().mainFont(),
+            color: COLOR_MAP_POINT_OUTLINE,
           );
         });
     }).toList();

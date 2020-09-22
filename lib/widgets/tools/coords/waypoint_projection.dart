@@ -55,40 +55,21 @@ class WaypointProjectionState extends State<WaypointProjection> {
             });
           },
         ),
-        Row(
-          children: [
-            Expanded(
-              flex: 8,
-              child: GCWBearing(
-                onChanged: (value) {
-                  setState(() {
-                    _currentBearing = value;
-                  });
-                },
-              ),
-            ),
-            Expanded(
-              flex: 4,
-              child: Container(
-                child: GCWText(
-                  text: i18n(context, 'coords_waypointprojection_reverse') + ':',
-                ),
-                margin: EdgeInsets.only(left: 15),
-              )
-            ),
-            Expanded(
-              flex: 3,
-              child: GCWOnOffSwitch(
-                value: _currentReverse,
-                notitle: true,
-                onChanged: (value) {
-                  setState(() {
-                    _currentReverse = value;
-                  });
-                },
-              )
-            )
-          ],
+        GCWBearing(
+          onChanged: (value) {
+            setState(() {
+              _currentBearing = value;
+            });
+          },
+        ),
+        GCWOnOffSwitch(
+          value: _currentReverse,
+          title: i18n(context, 'coords_waypointprojection_reverse'),
+          onChanged: (value) {
+            setState(() {
+              _currentReverse = value;
+            });
+          },
         ),
         GCWCoordsOutputFormat(
           coordFormat: _currentOutputFormat,
