@@ -64,9 +64,9 @@ class RC4State extends State<RC4> {
                   });
                 },
                 items: rc4InputFormatItems.entries.map((mode) {
-                  return DropdownMenuItem(
+                  return GCWDropDownMenuItem(
                     value: mode.key,
-                    child: Text(mode.value),
+                    child: mode.value,
                   );
                 }).toList(),
               ),
@@ -102,9 +102,9 @@ class RC4State extends State<RC4> {
                   });
                 },
                 items: rc4InputFormatItems.entries.map((mode) {
-                  return DropdownMenuItem(
+                  return GCWDropDownMenuItem(
                     value: mode.key,
-                    child: Text(mode.value),
+                    child: mode.value,
                   );
                 }).toList(),
               ),
@@ -132,9 +132,9 @@ class RC4State extends State<RC4> {
                   });
                 },
                 items: rc4OutputFormatItems.entries.map((mode) {
-                  return DropdownMenuItem(
+                  return GCWDropDownMenuItem(
                     value: mode.key,
-                    child: Text(mode.value),
+                    child: mode.value,
                   );
                 }).toList(),
               ),
