@@ -17,8 +17,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:prefs/prefs.dart';
 
-import 'base/cistercian_segment_display.dart';
-
 class SegmentDisplay extends StatefulWidget {
   final SegmentDisplayType type;
 
@@ -61,195 +59,89 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         ? Prefs.get('symboltables_countcolumns_portrait')
         : Prefs.get('symboltables_countcolumns_landscape');
 
-    if (widget.type == SegmentDisplayType.CISTERCIAN) {
-      _currentEncryptMode == GCWSwitchPosition.left;
-      return Column(
-          children: <Widget>[
-            GCWTwoOptionsSwitch(
-              value: _currentMode,
-              onChanged: (value) {
-                setState(() {
-                  _currentMode = value;
-                });
-              },
-            ),
-/*
-            _currentMode == GCWSwitchPosition.left
+    return Column(
+        children: <Widget>[
+          GCWTwoOptionsSwitch(
+            value: _currentMode,
+            onChanged: (value) {
+              setState(() {
+                _currentMode = value;
+              });
+            },
+          ),
+          _currentMode == GCWSwitchPosition.left
               ? GCWTwoOptionsSwitch(
-                  value: _currentEncryptMode,
-                  title: i18n(context, 'segmentdisplay_encodemode'),
-                  leftValue: i18n(context, 'segmentdisplay_encodemode_text'),
-                  rightValue: i18n(context, 'segmentdisplay_encodemode_visualsegments'),
-                  onChanged: (value) {
-                    setState(() {
-                      _currentEncryptMode = value;
-                      if (_currentEncryptMode == GCWSwitchPosition.right) {
-                        _currentDisplays = encodeSegment(_currentEncodeInput, widget.type);
-                      }
-                    });
-                  },
-                )
-            : Container(),
-*/
-            _currentMode == GCWSwitchPosition.left
+            value: _currentEncryptMode,
+            title: i18n(context, 'segmentdisplay_encodemode'),
+            leftValue: i18n(context, 'segmentdisplay_encodemode_text'),
+            rightValue: i18n(context, 'segmentdisplay_encodemode_visualsegments'),
+            onChanged: (value) {
+              setState(() {
+                _currentEncryptMode = value;
+                if (_currentEncryptMode == GCWSwitchPosition.right) {
+                  _currentDisplays = encodeSegment(_currentEncodeInput, widget.type);
+                }
+              });
+            },
+          )
+              : Container(),
+          _currentMode == GCWSwitchPosition.left
               ? (
-                  _currentEncryptMode == GCWSwitchPosition.left
-                    ? GCWTextField(
-                        controller: _inputEncodeController,
-                        onChanged: (text) {
-                          setState(() {
-                            _currentEncodeInput = text;
-                          });
-                        },
-                      )
-                    : _buildVisualEncryption()
-                )
-              : _buildVisualEncryption(),
-/*
-                GCWTextField(
-                  controller: _inputDecodeController,
-                  onChanged: (text) {
+              _currentEncryptMode == GCWSwitchPosition.left
+                  ? GCWTextField(
+                controller: _inputEncodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
+                  : _buildVisualEncryption()
+          )
+              : GCWTextField(
+            controller: _inputDecodeController,
+            onChanged: (text) {
+              setState(() {
+                _currentDecodeInput = text;
+              });
+            },
+          ),
+          GCWTextDivider(
+            text: i18n(context, 'segmentdisplay_displayoutput'),
+            trailing: Row(
+              children: <Widget>[
+                GCWIconButton(
+                  size: IconButtonSize.SMALL,
+                  iconData: Icons.zoom_in,
+                  onPressed: () {
                     setState(() {
-                      _currentDecodeInput = text;
+                      int newCountColumn = max(countColumns - 1, 1);
+
+                      mediaQueryData.orientation == Orientation.portrait
+                          ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                          : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
                     });
                   },
                 ),
-*/
-            GCWTextDivider(
-              text: i18n(context, 'segmentdisplay_displayoutput'),
-              trailing: Row(
-                children: <Widget>[
-                  GCWIconButton(
-                    size: IconButtonSize.SMALL,
-                    iconData: Icons.zoom_in,
-                    onPressed: () {
-                      setState(() {
-                        int newCountColumn = max(countColumns - 1, 1);
-
-                        mediaQueryData.orientation == Orientation.portrait
-                            ? Prefs.setInt('symboltables_countcolumns_portrait',
-                            newCountColumn)
-                            : Prefs.setInt(
-                            'symboltables_countcolumns_landscape',
-                            newCountColumn);
-                      });
-                    },
-                  ),
-                  GCWIconButton(
-                    size: IconButtonSize.SMALL,
-                    iconData: Icons.zoom_out,
-                    onPressed: () {
-                      setState(() {
-                        int newCountColumn = countColumns + 1;
-
-                        mediaQueryData.orientation == Orientation.portrait
-                            ? Prefs.setInt('symboltables_countcolumns_portrait',
-                            newCountColumn)
-                            : Prefs.setInt(
-                            'symboltables_countcolumns_landscape',
-                            newCountColumn);
-                      });
-                    },
-                  )
-                ],
-              ),
-            ),
-            _buildOutput(countColumns)
-          ]
-      );
-    } else {
-      return Column(
-          children: <Widget>[
-            GCWTwoOptionsSwitch(
-              value: _currentMode,
-              onChanged: (value) {
-                setState(() {
-                  _currentMode = value;
-                });
-              },
-            ),
-            _currentMode == GCWSwitchPosition.left
-                ? GCWTwoOptionsSwitch(
-              value: _currentEncryptMode,
-              title: i18n(context, 'segmentdisplay_encodemode'),
-              leftValue: i18n(context, 'segmentdisplay_encodemode_text'),
-              rightValue: i18n(
-                  context, 'segmentdisplay_encodemode_visualsegments'),
-              onChanged: (value) {
-                setState(() {
-                  _currentEncryptMode = value;
-                  if (_currentEncryptMode == GCWSwitchPosition.right) {
-                    _currentDisplays =
-                        encodeSegment(_currentEncodeInput, widget.type);
-                  }
-                });
-              },
-            )
-                : Container(),
-            _currentMode == GCWSwitchPosition.left
-                ? (
-                _currentEncryptMode == GCWSwitchPosition.left
-                    ? GCWTextField(
-                  controller: _inputEncodeController,
-                  onChanged: (text) {
+                GCWIconButton(
+                  size: IconButtonSize.SMALL,
+                  iconData: Icons.zoom_out,
+                  onPressed: () {
                     setState(() {
-                      _currentEncodeInput = text;
+                      int newCountColumn = countColumns + 1;
+
+                      mediaQueryData.orientation == Orientation.portrait
+                          ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                          : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
                     });
                   },
                 )
-                    : _buildVisualEncryption()
-            )
-                : GCWTextField(
-              controller: _inputDecodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecodeInput = text;
-                });
-              },
+              ],
             ),
-            GCWTextDivider(
-              text: i18n(context, 'segmentdisplay_displayoutput'),
-              trailing: Row(
-                children: <Widget>[
-                  GCWIconButton(
-                    size: IconButtonSize.SMALL,
-                    iconData: Icons.zoom_in,
-                    onPressed: () {
-                      setState(() {
-                        int newCountColumn = max(countColumns - 1, 1);
-
-                        mediaQueryData.orientation == Orientation.portrait
-                            ? Prefs.setInt('symboltables_countcolumns_portrait',
-                            newCountColumn)
-                            : Prefs.setInt(
-                            'symboltables_countcolumns_landscape',
-                            newCountColumn);
-                      });
-                    },
-                  ),
-                  GCWIconButton(
-                    size: IconButtonSize.SMALL,
-                    iconData: Icons.zoom_out,
-                    onPressed: () {
-                      setState(() {
-                        int newCountColumn = countColumns + 1;
-
-                        mediaQueryData.orientation == Orientation.portrait
-                            ? Prefs.setInt('symboltables_countcolumns_portrait',
-                            newCountColumn)
-                            : Prefs.setInt(
-                            'symboltables_countcolumns_landscape',
-                            newCountColumn);
-                      });
-                    },
-                  )
-                ],
-              ),
-            ),
-            _buildOutput(countColumns)
-          ]
-      );
-    }
+          ),
+          _buildOutput(countColumns)
+        ]
+    );
   }
 
   _buildVisualEncryption() {
@@ -306,12 +198,6 @@ class SegmentDisplayState extends State<SegmentDisplay> {
           onChanged: onChanged,
         );
         break;
-      case SegmentDisplayType.CISTERCIAN:
-        displayWidget = CistercianSegmentDisplay(
-          segments: currentDisplay,
-          onChanged: onChanged,
-        );
-        break;
     }
 
     return Column(
@@ -319,8 +205,8 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         Container(
           width: 180,
           padding: EdgeInsets.only(
-            top: DEFAULT_MARGIN * 2,
-            bottom: DEFAULT_MARGIN * 4
+              top: DEFAULT_MARGIN * 2,
+              bottom: DEFAULT_MARGIN * 4
           ),
           child: Row(
             children: <Widget>[
@@ -331,33 +217,33 @@ class SegmentDisplayState extends State<SegmentDisplay> {
           ),
         ),
         GCWToolBar(
-          children: [
-            GCWIconButton(
-              iconData: Icons.space_bar,
-              onPressed: () {
-                setState(() {
-                  _currentDisplays.add([]);
-                });
-              },
-            ),
-            GCWIconButton(
-              iconData: Icons.backspace,
-              onPressed: () {
-                setState(() {
-                  if (_currentDisplays.length > 0)
-                    _currentDisplays.removeLast();
-                });
-              },
-            ),
-            GCWIconButton(
-              iconData: Icons.clear,
-              onPressed: () {
-                setState(() {
-                  _currentDisplays = [];
-                });
-              },
-            )
-          ]
+            children: [
+              GCWIconButton(
+                iconData: Icons.space_bar,
+                onPressed: () {
+                  setState(() {
+                    _currentDisplays.add([]);
+                  });
+                },
+              ),
+              GCWIconButton(
+                iconData: Icons.backspace,
+                onPressed: () {
+                  setState(() {
+                    if (_currentDisplays.length > 0)
+                      _currentDisplays.removeLast();
+                  });
+                },
+              ),
+              GCWIconButton(
+                iconData: Icons.clear,
+                onPressed: () {
+                  setState(() {
+                    _currentDisplays = [];
+                  });
+                },
+              )
+            ]
         )
       ],
     );
@@ -365,27 +251,30 @@ class SegmentDisplayState extends State<SegmentDisplay> {
 
   _buildDigitalOutput(countColumns, segments) {
     var displays = segments
-      .where((character) => character != null)
-      .map((character) {
-        var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
+        .where((character) => character != null)
+        .map((character) {
+      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
 
-        switch (widget.type) {
-          case SegmentDisplayType.SEVEN:
-            return SevenSegmentDisplay(segments: displayedSegments, readOnly: true,
-            );
-          case SegmentDisplayType.FOURTEEN:
-            return FourteenSegmentDisplay(segments: displayedSegments, readOnly: true,
-            );
-          case SegmentDisplayType.SIXTEEN:
-            return SixteenSegmentDisplay(segments: displayedSegments, readOnly: true,
-            );
-          case SegmentDisplayType.CISTERCIAN:
-            return CistercianSegmentDisplay(segments: displayedSegments, readOnly: true,
-            );
-          default: return null;
-        }
-      })
-      .toList();
+      switch (widget.type) {
+        case SegmentDisplayType.SEVEN:
+          return SevenSegmentDisplay(
+            segments: displayedSegments,
+            readOnly: true,
+          );
+        case SegmentDisplayType.FOURTEEN:
+          return FourteenSegmentDisplay(
+            segments: displayedSegments,
+            readOnly: true,
+          );
+        case SegmentDisplayType.SIXTEEN:
+          return SixteenSegmentDisplay(
+            segments: displayedSegments,
+            readOnly: true,
+          );
+        default: return null;
+      }
+    })
+        .toList();
 
     return buildSegmentDisplayOutput(countColumns, displays);
   }
@@ -399,32 +288,31 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         segments = _currentDisplays;
 
       var output =  segments.map((character) {
-                      if (character == null)
-                        return UNKNOWN_ELEMENT;
-                      return character.join();
-                    }).join(' ');
+        if (character == null)
+          return UNKNOWN_ELEMENT;
 
-      if (widget.type == SegmentDisplayType.CISTERCIAN) {output = '';};
+        return character.join();
+      }).join(' ');
 
-        return Column(
-          children: <Widget>[
-            _buildDigitalOutput(countColumns, segments),
-            GCWDefaultOutput(
-                child: output
-            )
-          ],
-        );
+      return Column(
+        children: <Widget>[
+          _buildDigitalOutput(countColumns, segments),
+          GCWDefaultOutput(
+              child: output
+          )
+        ],
+      );
     } else {
-        var segments = decodeSegment(_currentDecodeInput, widget.type);
+      var segments = decodeSegment(_currentDecodeInput, widget.type);
 
-        return Column(
-          children: <Widget>[
-            _buildDigitalOutput(countColumns, segments['displays']),
-            GCWDefaultOutput(
-                child: segments['text']
-            )
-          ],
-        );
-      }
+      return Column(
+        children: <Widget>[
+          _buildDigitalOutput(countColumns, segments['displays']),
+          GCWDefaultOutput(
+              child: segments['text']
+          )
+        ],
+      );
     }
+  }
 }

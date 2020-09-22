@@ -73,6 +73,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
@@ -154,7 +155,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_pri
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/cistercian_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
@@ -322,10 +322,10 @@ class Registry {
         searchStrings: SEARCHSTRING_GAMELANGUAGE + 'chickenlanguage huehnersprache huenersprache huhn'
       ),
       GCWToolWidget(
-          tool: CistercianSegments(),
-          i18nPrefix: 'cistercian',
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'cistercian numbers Zisterzienser'
+        tool: CistercianSegments(),
+        i18nPrefix: 'cistercian',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'cistercian numbers Zisterzienser'
       ),
       GCWToolWidget(
         tool: ColorPicker(),

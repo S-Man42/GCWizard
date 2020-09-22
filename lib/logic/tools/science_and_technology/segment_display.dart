@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:math';
 
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -454,7 +455,7 @@ final Map<String, List<String>> _AZToCistercianSegment = {
   '50' : ['z11','z1','z6'],
   '60' : ['z11','z3'],
   '70' : ['z11','z1','z3'],
-  '80' : ['z11','z1','z9'],
+  '80' : ['z11','z3','z9'],
   '90' : ['z11','z1','z3','z9'],
   '100' : ['z11','z21'],
   '200' : ['z11','z13'],
@@ -478,6 +479,109 @@ final Map<String, List<String>> _AZToCistercianSegment = {
 
 final Map<List<String>, String> _SegmentCistercianToAZ = switchMapKeyValue(_AZToCistercianSegment);
 
+
+List<List<String>> encodeCistercian(String input) {
+  if (input == null || input == '')
+    return [];
+
+  var inputCharacters = input.split(RegExp(r'[^1234567890]')).toList();
+  var output = <List<String>>[];
+
+  var digit = 0;
+  var number = new List<String>();
+
+  for (String character in inputCharacters) {
+    var display; // = new List<String>();
+    for (int i = 0; i < character.length; i++){
+      digit = int.parse(character[i]) * pow(10, character.length - i - 1);
+      if (digit != 0) {
+        number = _AZToCistercianSegment[digit.toString()];
+        if (display == null){
+          display = number;
+        } else {
+          for (String charElem in number) {
+            if (!display.contains(charElem)) {
+              display.add(charElem);
+            }
+          }
+        }
+      }
+    }
+
+/*
+    switch (character.length) {
+      case 1 :
+        display = _AZToCistercianSegment[character];
+        break;
+      case 2 :
+        display = _AZToCistercianSegment[character[0] + '0'];
+        if (character[1] != '0') {
+          number = _AZToCistercianSegment[character[1]];
+          for (String character in number) {
+            if (!display.contains(character)) {
+              display.add(character);
+            }
+          }
+        }
+        break;
+      case 3 :
+        display = _AZToCistercianSegment[character[0] + '00'];
+        if (character[1] != '0') {
+          number = _AZToCistercianSegment[character[1] + '0'];
+          for (String character in number) {
+            if (!display.contains(character)) {
+              display.add(character);
+            }
+          }
+        }
+        if (character[2] != '0') {
+          number = _AZToCistercianSegment[character[2]];
+          for (String character in number) {
+            if (!display.contains(character)) {
+              display.add(character);
+            }
+          }
+        }
+        break;
+      case 4 :
+        display = _AZToCistercianSegment[character[0] + '000'];
+        if (character[1] != '0') {
+          number = _AZToCistercianSegment[character[1] + '00'];
+          for (String character in number) {
+            if (!display.contains(character)) {
+              display.add(character);
+            }
+          }
+        }
+        if (character[2] != '0') {
+          number = _AZToCistercianSegment[character[2] +'0'];
+          for (String character in number) {
+            if (!display.contains(character)) {
+              display.add(character);
+            }
+          }
+        }
+        if (character[3] != '0') {
+          number = _AZToCistercianSegment[character[3]];
+          for (String character in number) {
+            if (!display.contains(character)) {
+              display.add(character);
+            }
+          }
+        }
+        break;
+    }
+*/
+
+    if (display != null) {
+      display.sort();
+      output.add(display);
+    }
+  }
+  return output;
+}
+
+
 List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
   if (input == null || input == '')
     return [];
@@ -494,17 +598,10 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
     case SegmentDisplayType.SIXTEEN:
       AZToSegment = _AZTo16Segment;
       break;
-    case SegmentDisplayType.CISTERCIAN:
-      AZToSegment = _AZToCistercianSegment;
-      break;
   }
 
   var inputCharacters;
-  if (segmentType == SegmentDisplayType.CISTERCIAN) {
-    inputCharacters = input.toUpperCase().split(RegExp(r'[^1234567890]')).toList();
-  } else {
     inputCharacters = input.toUpperCase().split('').toList();
-  }
   var output = <List<String>>[];
 
   for (String character in inputCharacters) {
@@ -518,81 +615,9 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
       }
     } else {
       var display;
-      if (segmentType == SegmentDisplayType.CISTERCIAN) {
-        var number = new List<String>();
-        switch (character.length) {
-          case 1 :
-              display = AZToSegment[character];
-            break;
-          case 2 :
-              display = AZToSegment[character[0] + '0'];
-              if (character[1] != '0') {
-                number = AZToSegment[character[1]];
-                for (String character in number) {
-                  if (!display.contains(character)) {
-                    display.add(character);
-                  }
-                }
-              }
-            break;
-          case 3 :
-            display = AZToSegment[character[0] + '00'];
-            if (character[1] != '0') {
-              number = AZToSegment[character[1] + '0'];
-              for (String character in number) {
-                if (!display.contains(character)) {
-                  display.add(character);
-                }
-              }
-            }
-            if (character[2] != '0') {
-              number = AZToSegment[character[2]];
-              for (String character in number) {
-                if (!display.contains(character)) {
-                  display.add(character);
-                }
-              }
-            }
-            break;
-          case 4 :
-            display = AZToSegment[character[0] + '000'];
-            if (character[1] != '0') {
-              number = AZToSegment[character[1] + '00'];
-              for (String character in number) {
-                if (!display.contains(character)) {
-                  display.add(character);
-                }
-              }
-            }
-            if (character[2] != '0') {
-              number = AZToSegment[character[2] +'0'];
-              for (String character in number) {
-                if (!display.contains(character)) {
-                  display.add(character);
-                }
-              }
-            }
-            if (character[3] != '0') {
-              number = AZToSegment[character[3]];
-              for (String character in number) {
-                if (!display.contains(character)) {
-                  display.add(character);
-                }
-              }
-            }
-            break;
-        }
-        if (display != null) {
-          display.sort();
-          output.add(display);
-        }
-      }
-
-      else {
         display = AZToSegment[character];
         if (display != null)
           output.add(AZToSegment[character]);
-      }
     }
   }
 
