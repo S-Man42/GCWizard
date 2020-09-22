@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:prefs/prefs.dart';
 
@@ -64,10 +65,6 @@ void initDefaultSettings() {
     Prefs.setStringList('coord_variablecoordinate_formulas', []);
   }
 
-  if (Prefs.get('font_size') == null) {
-    Prefs.setDouble('font_size', 16.0);
-  }
-
   if (Prefs.get('formulasolver_formulas') == null) {
     Prefs.setStringList('formulasolver_formulas', []);
   }
@@ -90,6 +87,14 @@ void initDefaultSettings() {
 
   if (Prefs.get('tabs_last_viewed_tab') == null) {
     Prefs.setInt('tabs_last_viewed_tab', 0);
+  }
+
+  if (Prefs.get('theme_color') == null) {
+    Prefs.setString('theme_color', ThemeType.DARK.toString());
+  }
+
+  if (Prefs.get('theme_font_size') == null) {
+    Prefs.setDouble('theme_font_size', Prefs.get('font_size') ?? 16.0); //font_size == pre version 1.2.0
   }
 
   if (Prefs.get('toollist_show_descriptions') == null) {

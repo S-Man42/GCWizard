@@ -3,7 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/equilateral_triangle.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
@@ -112,7 +112,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
       _currentIntersections
         .map((intersection) => MapPoint(
           point: intersection,
-          color: ThemeColors.mapCalculatedPoint,
+          color: COLOR_MAP_CALCULATEDPOINT,
           markerText: i18n(context, 'coords_common_intersection'),
           coordinateFormat: _currentOutputFormat
         ))
@@ -132,16 +132,16 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
           start: _currentCoords1,
           end: intersection,
           color: HSLColor
-            .fromColor(ThemeColors.mapPolyline)
-            .withLightness(HSLColor.fromColor(ThemeColors.mapPolyline).lightness + 0.2)
+            .fromColor(COLOR_MAP_POLYLINE)
+            .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
             .toColor()
         ),
         MapGeodetic(
           start: _currentCoords2,
           end: intersection,
           color: HSLColor
-            .fromColor(ThemeColors.mapPolyline)
-            .withLightness(HSLColor.fromColor(ThemeColors.mapPolyline).lightness -0.3)
+            .fromColor(COLOR_MAP_POLYLINE)
+            .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness -0.3)
             .toColor()
         ),
       ]);

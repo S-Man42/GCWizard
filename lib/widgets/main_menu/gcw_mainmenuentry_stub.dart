@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 
 
@@ -39,8 +39,8 @@ class GCWMainMenuEntryStubState extends State<GCWMainMenuEntryStub> {
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color: ThemeColors.accent,
-                      width: 2
+                    color: themeColors().accent(),
+                    width: 2
                   ),
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(roundedBorderRadius),

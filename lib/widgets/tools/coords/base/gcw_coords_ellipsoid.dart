@@ -6,9 +6,9 @@ import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class GCWCoordsEllipsoid extends StatefulWidget {
@@ -90,9 +90,9 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
           ? GCWDropDownButton(
               value: _currentStandardEllipsoid,
               items: allEllipsoids.map((ellipsoid) {
-                return DropdownMenuItem(
+                return GCWDropDownMenuItem(
                   value: ellipsoid,
-                  child: Text(ellipsoid.name),
+                  child: ellipsoid.name,
                 );
               }).toList(),
               onChanged: (newValue) {
@@ -133,9 +133,9 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
                       child: GCWDropDownButton(
                         value: _currentEllipsoidUser2ndValue,
                         items: _secondUserValues.map((value) {
-                          return DropdownMenuItem(
+                          return GCWDropDownMenuItem(
                             value: value['key'],
-                            child: Text(value['name']),
+                            child: value['name'],
                           );
                         }).toList(),
                         onChanged: (newValue) {

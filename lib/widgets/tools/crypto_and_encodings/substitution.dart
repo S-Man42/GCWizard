@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -73,7 +73,7 @@ class SubstitutionState extends State<Substitution> {
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.gray,
+              color: themeColors().mainFont(),
             ),
             Expanded(
               child: GCWTextField(
@@ -135,6 +135,8 @@ class SubstitutionState extends State<Substitution> {
     var rows = _currentSubstitutions.entries.map((entry) {
       Widget output;
 
+      ThemeColors colors = themeColors();
+
       var row = Container(
         child: Row (
           children: <Widget>[
@@ -146,7 +148,7 @@ class SubstitutionState extends State<Substitution> {
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.gray,
+              color: colors.mainFont(),
             ),
             Expanded(
               child: GCWText (
@@ -172,7 +174,7 @@ class SubstitutionState extends State<Substitution> {
 
       if (odd) {
         output = Container(
-          color: ThemeColors.oddRows,
+          color: colors.outputListOddRows(),
           child: row
         );
       } else {

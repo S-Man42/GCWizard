@@ -51,14 +51,13 @@ class GCWEnigmaRotorDropDownButtonState extends State<GCWEnigmaRotorDropDownButt
             child: GCWDropDownButton(
               value: _currentRotor,
               items: allEnigmaRotors
-                  .where((rotor) => rotor.type == widget.type)
-                  .map((rotor) {
-                return DropdownMenuItem(
-                  value: rotor.name,
-                  child: Text('${rotor.name}'),
-                );
-              })
-                  .toList(),
+                .where((rotor) => rotor.type == widget.type)
+                .map((rotor) {
+                  return GCWDropDownMenuItem(
+                    value: rotor.name,
+                    child: '${rotor.name}',
+                  );
+                }).toList(),
               onChanged: (value) {
                 setState(() {
                   _currentRotor = value;

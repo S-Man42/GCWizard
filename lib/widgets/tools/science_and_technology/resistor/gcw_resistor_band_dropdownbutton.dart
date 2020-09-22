@@ -65,7 +65,7 @@ class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownBu
             color: _colorAttributes[colorValue.key].textColor
           );
 
-          return DropdownMenuItem(
+          return GCWDropDownMenuItem(
             value: colorValue.key,
             child: Row(
               children: <Widget>[
