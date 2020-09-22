@@ -64,9 +64,15 @@ class RC4State extends State<RC4> {
                   });
                 },
                 items: rc4InputFormatItems.entries.map((mode) {
+<<<<<<< HEAD
                   return GCWDropDownMenuItem(
                     value: mode.key,
                     child: mode.value,
+=======
+                  return DropdownMenuItem(
+                    value: mode.key,
+                    child: Text(mode.value),
+>>>>>>> 38a3a1951ce7097a91ecf06cee94b4f2bc41bf15
                   );
                 }).toList(),
               ),
@@ -102,9 +108,15 @@ class RC4State extends State<RC4> {
                   });
                 },
                 items: rc4InputFormatItems.entries.map((mode) {
+<<<<<<< HEAD
                   return GCWDropDownMenuItem(
                     value: mode.key,
                     child: mode.value,
+=======
+                  return DropdownMenuItem(
+                    value: mode.key,
+                    child: Text(mode.value),
+>>>>>>> 38a3a1951ce7097a91ecf06cee94b4f2bc41bf15
                   );
                 }).toList(),
               ),
@@ -132,9 +144,15 @@ class RC4State extends State<RC4> {
                   });
                 },
                 items: rc4OutputFormatItems.entries.map((mode) {
+<<<<<<< HEAD
                   return GCWDropDownMenuItem(
                     value: mode.key,
                     child: mode.value,
+=======
+                  return DropdownMenuItem(
+                    value: mode.key,
+                    child: Text(mode.value),
+>>>>>>> 38a3a1951ce7097a91ecf06cee94b4f2bc41bf15
                   );
                 }).toList(),
               ),
@@ -156,7 +174,11 @@ class RC4State extends State<RC4> {
 
     if (_currentOutput == null || _currentOutput.errorCode != ErrorCode.OK) {
       return GCWDefaultOutput(
+<<<<<<< HEAD
         // child: _currentOutput.errorCode.toString(),
+=======
+        child: _currentOutput.errorCode.toString(),
+>>>>>>> 38a3a1951ce7097a91ecf06cee94b4f2bc41bf15
       );
     }
 

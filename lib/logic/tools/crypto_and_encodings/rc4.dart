@@ -1,6 +1,9 @@
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
+<<<<<<< HEAD
 import 'package:math_expressions/math_expressions.dart';
 import 'dart:math';
+=======
+>>>>>>> 38a3a1951ce7097a91ecf06cee94b4f2bc41bf15
 
 enum InputFormat{AUTO, TEXT, HEX, BINARY, ASCIIVALUES}
 enum OutputFormat{TEXT, HEX, BINARY, ASCIIVALUES}
@@ -31,6 +34,7 @@ RC4Output useRC4(String input, InputFormat inputFormat, String key, InputFormat 
   var outList = rc4(inputList, keyList);
   var out ='';
 
+<<<<<<< HEAD
   outList.forEach((item) {
     switch (outputFormat) {
       case OutputFormat.TEXT:
@@ -58,10 +62,30 @@ RC4Output useRC4(String input, InputFormat inputFormat, String key, InputFormat 
           out += ' ';
 
         out += item.toString();
+=======
+  outList.forEach((element) {
+    switch (outputFormat) {
+      case OutputFormat.TEXT:
+        out += new String.fromCharCodes([element]);
+        break;
+      case OutputFormat.HEX:
+        out += convertBase(element.toString(), 10, 16);
+        break;
+      case OutputFormat.BINARY:
+        out += convertBase(element.toString(), 10, 2);
+        break;
+      case OutputFormat.ASCIIVALUES:
+        out += element.toString();
+>>>>>>> 38a3a1951ce7097a91ecf06cee94b4f2bc41bf15
         break;
       default:
         break;
     }
+<<<<<<< HEAD
+=======
+    out += ' ';
+
+>>>>>>> 38a3a1951ce7097a91ecf06cee94b4f2bc41bf15
   });
 
   return new RC4Output(out, ErrorCode.OK);
@@ -109,6 +133,7 @@ List<int> convertInputToIntList(String input, InputFormat format) {
 
   switch (format) {
     case InputFormat.AUTO:
+<<<<<<< HEAD
       out = convertInputToIntList(input, InputFormat.BINARY);
       if (out.length == 0)
         out = convertInputToIntList(input, InputFormat.ASCIIVALUES);
@@ -127,12 +152,26 @@ List<int> convertInputToIntList(String input, InputFormat format) {
       if (out.length == 0)
         out = convertInputToIntList(input,InputFormat.TEXT);
     break;
+=======
+      out = convertInputToIntList(input,InputFormat.BINARY);
+      if (out.length == 0)
+        out = convertInputToIntList(input,InputFormat.ASCIIVALUES);
+      if (out.length == 0)
+        out = convertInputToIntList(input,InputFormat.HEX);
+      if (out.length == 0)
+        out = convertInputToIntList(input,InputFormat.TEXT);
+
+      break;
+>>>>>>> 38a3a1951ce7097a91ecf06cee94b4f2bc41bf15
     case InputFormat.TEXT:
       return input.codeUnits;
       break;
     case InputFormat.HEX:
       out = _convertToIntList(input, 16);
+<<<<<<< HEAD
       var xx = convertBase(input, 16, 10);
+=======
+>>>>>>> 38a3a1951ce7097a91ecf06cee94b4f2bc41bf15
       break;
     case InputFormat.BINARY:
       out = _convertToIntList(input, 2);
@@ -150,6 +189,7 @@ List<int> convertInputToIntList(String input, InputFormat format) {
 List<int> _convertToIntList(String input, int base) {
   var out= new List<int>();
 
+<<<<<<< HEAD
   if (input.contains(' ')) {
     input
       .split(' ')
@@ -180,3 +220,17 @@ List<int> _addToIntList(String input, int base, List<int> list){
 
   return list;
 }
+=======
+  input
+    .split(' ')
+    .where((text) => text != '')
+    .map((text){
+    var valueString = convertBase(text, base, 10);
+    if ((valueString == null) || (valueString == ''))
+      return null;
+    out.add(int.tryParse(valueString));
+  });
+
+  return out;
+}
+>>>>>>> 38a3a1951ce7097a91ecf06cee94b4f2bc41bf15
