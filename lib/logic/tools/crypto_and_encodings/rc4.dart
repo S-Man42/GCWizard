@@ -1,4 +1,6 @@
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
+import 'package:math_expressions/math_expressions.dart';
+import 'dart:math';
 
 enum InputFormat{AUTO, TEXT, HEX, BINARY, ASCIIVALUES}
 enum OutputFormat{TEXT, HEX, BINARY, ASCIIVALUES}
@@ -29,25 +31,37 @@ RC4Output useRC4(String input, InputFormat inputFormat, String key, InputFormat 
   var outList = rc4(inputList, keyList);
   var out ='';
 
-  outList.forEach((element) {
+  outList.forEach((item) {
     switch (outputFormat) {
       case OutputFormat.TEXT:
-        out += new String.fromCharCodes([element]);
+        if (item <= pow(2, 16))
+          out += new String.fromCharCode(item);
+        else {
+          out += item.toString();
+          out += ' ';
+        }
         break;
       case OutputFormat.HEX:
-        out += convertBase(element.toString(), 10, 16);
+        if (out != '')
+          out += ' ';
+
+        out += convertBase(item.toString(), 10, 16);
         break;
       case OutputFormat.BINARY:
-        out += convertBase(element.toString(), 10, 2);
+        if (out != '')
+          out += ' ';
+
+        out += convertBase(item.toString(), 10, 2);
         break;
       case OutputFormat.ASCIIVALUES:
-        out += element.toString();
+        if (out != '')
+          out += ' ';
+
+        out += item.toString();
         break;
       default:
         break;
     }
-    out += ' ';
-
   });
 
   return new RC4Output(out, ErrorCode.OK);
@@ -95,20 +109,30 @@ List<int> convertInputToIntList(String input, InputFormat format) {
 
   switch (format) {
     case InputFormat.AUTO:
-      out = convertInputToIntList(input,InputFormat.BINARY);
+      out = convertInputToIntList(input, InputFormat.BINARY);
       if (out.length == 0)
-        out = convertInputToIntList(input,InputFormat.ASCIIVALUES);
-      if (out.length == 0)
-        out = convertInputToIntList(input,InputFormat.HEX);
+        out = convertInputToIntList(input, InputFormat.ASCIIVALUES);
+      if (out.length == 0) {
+        out = convertInputToIntList(input, InputFormat.HEX);
+        if (out.length > 0) {
+          for (var item in out) {
+            // to large ?
+            if (item > pow(2, 16)) {
+              out.clear();
+              break;
+            }
+          }
+        }
+      }
       if (out.length == 0)
         out = convertInputToIntList(input,InputFormat.TEXT);
-
-      break;
+    break;
     case InputFormat.TEXT:
       return input.codeUnits;
       break;
     case InputFormat.HEX:
       out = _convertToIntList(input, 16);
+      var xx = convertBase(input, 16, 10);
       break;
     case InputFormat.BINARY:
       out = _convertToIntList(input, 2);
@@ -126,15 +150,33 @@ List<int> convertInputToIntList(String input, InputFormat format) {
 List<int> _convertToIntList(String input, int base) {
   var out= new List<int>();
 
-  input
-    .split(' ')
-    .where((text) => text != '')
-    .map((text){
-    var valueString = convertBase(text, base, 10);
-    if ((valueString == null) || (valueString == ''))
-      return null;
-    out.add(int.tryParse(valueString));
-  });
+  if (input.contains(' ')) {
+    input
+      .split(' ')
+      .forEach((text) {
+      if (out != null)
+        out = _addToIntList(text, base, out);
+      });
+  } else {
+    out = _addToIntList(input, base, out);
+  }
+
+  // invalid input ??
+  if (out == null)
+    return new List<int>();
 
   return out;
+}
+
+List<int> _addToIntList(String input, int base, List<int> list){
+  if (input == '')
+    return list;
+  var valueString = convertBase(input, base, 10);
+  if ((valueString == null) || (valueString == ''))
+    // invalid input
+    return null;
+
+  list.add(int.tryParse(valueString));
+
+  return list;
 }

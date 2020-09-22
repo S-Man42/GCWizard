@@ -156,7 +156,7 @@ class RC4State extends State<RC4> {
 
     if (_currentOutput == null || _currentOutput.errorCode != ErrorCode.OK) {
       return GCWDefaultOutput(
-        child: _currentOutput.errorCode.toString(),
+        // child: _currentOutput.errorCode.toString(),
       );
     }
 
