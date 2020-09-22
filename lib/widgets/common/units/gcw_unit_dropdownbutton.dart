@@ -35,13 +35,11 @@ class GCWUnitDropDownButtonState extends State<GCWUnitDropDownButton> {
         });
       },
       items: _currentUnitList.map((unit) {
-        return DropdownMenuItem(
+        return GCWDropDownMenuItem(
           value: unit,
-          child: Text(
-            widget.onlyShowSymbols
-              ? unit.symbol ?? ''
-              : (i18n(context, unit.name) + (unit.symbol == null ? '' : ' (${unit.symbol})'))
-          ),
+          child: widget.onlyShowSymbols
+            ? unit.symbol ?? ''
+            : (i18n(context, unit.name) + (unit.symbol == null ? '' : ' (${unit.symbol})'))
         );
       }).toList()
     );

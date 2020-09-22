@@ -67,9 +67,9 @@ class GCWAlphabetModificationDropDownButtonState extends State<GCWAlphabetModifi
               });
             },
             items: modifications.map((entry) {
-              return DropdownMenuItem(
+              return GCWDropDownMenuItem(
                 value: entry['mode'],
-                child: Text(i18n(context, entry['text'])),
+                child: i18n(context, entry['text']),
               );
             }).toList(),
           ),

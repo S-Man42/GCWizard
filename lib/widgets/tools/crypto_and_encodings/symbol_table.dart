@@ -4,13 +4,15 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
@@ -274,10 +276,8 @@ class SymbolTableState extends State<SymbolTable> {
             image = Image.asset(_SYMBOL_NOT_FOUND_PATH);
           }
 
-          widget = Container(
-            child: image,
-            color: ThemeColors.symbolTableIconBackground,
-            padding: EdgeInsets.all(2),
+          widget = GCWSymbolContainer(
+            symbol: image,
           );
 
         } else {
@@ -314,6 +314,8 @@ class SymbolTableState extends State<SymbolTable> {
     var rows = <Widget>[];
     var countRows = (_images.length / countColumns).floor();
 
+    ThemeColors colors = themeColors();
+
     for (var i = 0; i <= countRows; i++) {
       var columns = <Widget>[];
 
@@ -337,25 +339,23 @@ class SymbolTableState extends State<SymbolTable> {
             child: Stack(
               overflow: Overflow.clip,
               children: <Widget>[
-                Container(
-                  child: image,
-                  color: ThemeColors.symbolTableIconBackground,
-                  padding: EdgeInsets.all(2),
+                GCWSymbolContainer(
+                  symbol: image,
                 ),
                 _currentShowOverlayedSymbols
                   ? Opacity(
                       child:  Container(
+                        //TODO: Using GCWText instead: Currently it would expand the textfield width to max.
                         child: Text(
                           _showSpaceSymbolInOverlay(symbolText),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: defaultFontSize()
+                          style: gcwTextStyle().copyWith(
+                            color: colors.dialogText(),
+                            fontWeight: FontWeight.bold
                           ),
                         ),
                         height: defaultFontSize() + 5,
                         decoration: ShapeDecoration(
-                          color: ThemeColors.accent,
+                          color: colors.dialog(),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius)),
                           )

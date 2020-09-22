@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 final FONT_SIZE_MIN = 10;
@@ -12,6 +12,7 @@ final DEFAULT_POPUPBUTTON_SIZE = 40.0;
 
 TextStyle gcwTextStyle() {
  return TextStyle(
+   color: themeColors().mainFont(),
    fontSize: defaultFontSize(),
    fontFamily: 'Roboto Condensed'
  );
@@ -27,49 +28,50 @@ TextStyle gcwMonotypeTextStyle() {
 
 TextStyle gcwHyperlinkTextStyle() {
   return TextStyle(
-    color: ThemeColors.accent,
+    color: themeColors().hyperLinkText(),
     decoration: TextDecoration.underline
   );
 }
 
 TextStyle gcwDescriptionTextStyle() {
-  return TextStyle(
+  return gcwTextStyle().copyWith(
+    color: themeColors().listSubtitle(),
     fontSize: defaultFontSize() - 2,
-    fontFamily: gcwTextStyle().fontFamily
   );
 }
 
 const roundedBorderRadius = 4.0;
 
 ThemeData buildTheme() {
-  final ThemeData base = ThemeData.dark();
+  final ThemeColors colors = themeColors();
+  final ThemeData base = colors.base();
   return ThemeData(
-    scaffoldBackgroundColor: ThemeColors.primaryBackground,
-    primaryColor: ThemeColors.primaryBackground,
-    accentColor: ThemeColors.accent,
+    scaffoldBackgroundColor: colors.primaryBackground(),
+    primaryColor: colors.primaryBackground(),
+    accentColor: colors.accent(),
     textTheme: base.textTheme,
     buttonTheme: base.buttonTheme.copyWith(
-      buttonColor: ThemeColors.accent,
+      buttonColor: colors.accent(),
       textTheme: ButtonTextTheme.primary,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius)),
       )
     ),
-    canvasColor: ThemeColors.inputBackground, //background of DropDownButton
+    canvasColor: colors.inputBackground(), //background of DropDownButton
     inputDecorationTheme: base.inputDecorationTheme.copyWith(
-      hintStyle: TextStyle(color: ThemeColors.hintText),
-      fillColor: ThemeColors.inputBackground,
+      hintStyle: TextStyle(color: colors.textFieldHintText()),
+      fillColor: colors.inputBackground(),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: ThemeColors.focused, width: 2.0),
+        borderSide: BorderSide(color: colors.focused(), width: 2.0),
         borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius))
       ),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: ThemeColors.accent, width: 1.0),
+        borderSide: BorderSide(color: colors.accent(), width: 1.0),
         borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius))
       ),
       contentPadding: EdgeInsets.all(10.0),
     ),
-    unselectedWidgetColor: ThemeColors.accent,
-    cardColor: ThemeColors.gray80
+    unselectedWidgetColor: colors.accent(),
+    cardColor: colors.messageBackground()
   );
 }

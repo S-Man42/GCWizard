@@ -126,7 +126,7 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
         items: widget.items.asMap().map((index, item) {
           return MapEntry(
             index,
-            DropdownMenuItem(
+            GCWDropDownMenuItem(
               value: index,
               child: item
             )

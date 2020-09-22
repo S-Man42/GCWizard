@@ -185,9 +185,9 @@ class GCWColorsState extends State<GCWColors> {
             });
           },
           items: _onlyColorSpaces.map((colorSpace) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: colorSpace.key,
-              child: Text(i18n(context, colorSpace.name)),
+              child: i18n(context, colorSpace.name),
             );
           }).toList(),
         ),
