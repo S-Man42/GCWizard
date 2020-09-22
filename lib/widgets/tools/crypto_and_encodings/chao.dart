@@ -88,9 +88,9 @@ class ChaoState extends State<Chao> {
             });
           },
           items: ChaoChiffreAlphabetItems.entries.map((alphabetChiffre) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: alphabetChiffre.key,
-              child: Text(alphabetChiffre.value),
+              child: alphabetChiffre.value,
             );
           }).toList(),
         ),
@@ -116,9 +116,9 @@ class ChaoState extends State<Chao> {
             });
           },
           items: ChaoPlainAlphabetItems.entries.map((alphabetPlain) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: alphabetPlain.key,
-              child: Text(alphabetPlain.value),
+              child: alphabetPlain.value,
             );
           }).toList(),
         ),
