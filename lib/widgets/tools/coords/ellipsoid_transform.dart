@@ -57,9 +57,9 @@ class EllipsoidTransformState extends State<EllipsoidTransform> {
             });
           },
           items: transformableDates.map((date) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: date,
-              child: Text(date['name']),
+              child: date['name'],
             );
           }).toList(),
         ),
@@ -74,9 +74,9 @@ class EllipsoidTransformState extends State<EllipsoidTransform> {
             });
           },
           items: transformableDates.map((date) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: date,
-              child: Text(date['name']),
+              child: date['name'],
             );
           }).toList(),
         ),

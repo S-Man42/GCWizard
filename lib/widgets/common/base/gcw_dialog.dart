@@ -1,21 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
-TextStyle _textStyle = TextStyle(
-  fontFamily: gcwTextStyle().fontFamily,
-  fontSize: defaultFontSize(),
-  color: ThemeColors.darkgrey
-);
-
-TextStyle _boldTextStyle = TextStyle(
-  fontFamily: _textStyle.fontFamily,
-  fontSize: _textStyle.fontSize,
-  color: _textStyle.color,
-  fontWeight: FontWeight.bold
-);
+final TextStyle _textStyle = gcwTextStyle().copyWith(color: themeColors().dialogText());
+final TextStyle _boldTextStyle = _textStyle.copyWith(fontWeight: FontWeight.bold);
 
 showGCWDialog(BuildContext context, String title, Widget child, List<GCWDialogButton> buttons, {cancelButton: true}) {
   if (cancelButton)
@@ -25,7 +15,7 @@ showGCWDialog(BuildContext context, String title, Widget child, List<GCWDialogBu
     title: Text(title),
     content: child,
     actions: buttons,
-    backgroundColor: ThemeColors.accent,
+    backgroundColor: themeColors().dialog(),
     titleTextStyle: _boldTextStyle,
     contentTextStyle: _textStyle
   );
@@ -64,6 +54,7 @@ class _GCWDialogButtonState extends State<GCWDialogButton> {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
+      //TODO: GCWText instead Text; currently with GCWText onPressed() is not called
       child: Text(
         widget.isCancelButton ? i18n(context, 'common_cancel') : widget.text,
         style: _boldTextStyle,

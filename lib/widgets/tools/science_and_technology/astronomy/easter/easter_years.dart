@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/easter.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -36,51 +37,57 @@ class EasterYearsState extends State<EasterYears> {
         Row(
           children: [
             Expanded(
-              child: GCWDropDownButton(
-                value: _currentMonth,
-                items: [
-                  DropdownMenuItem(
-                    value: 3,
-                    child: Text(i18n(context, 'common_month_march')),
-                  ),
-                  DropdownMenuItem(
-                    value: 4,
-                    child: Text(i18n(context, 'common_month_april')),
-                  )
-                ],
-                onChanged: (value) {
-                  if (_currentMonth != value) {
-                    setState(() {
-                      _currentMonth = value;
+              child: Container(
+                child: GCWDropDownButton(
+                  value: _currentMonth,
+                  items: [
+                    GCWDropDownMenuItem(
+                      value: 3,
+                      child: i18n(context, 'common_month_march'),
+                    ),
+                    GCWDropDownMenuItem(
+                      value: 4,
+                      child: i18n(context, 'common_month_april'),
+                    )
+                  ],
+                  onChanged: (value) {
+                    if (_currentMonth != value) {
+                      setState(() {
+                        _currentMonth = value;
 
-                      if (_currentMonth == 3) {
-                        _currentDayList = _listDaysForMarch;
-                        if (_currentDay < 22)
-                          _currentDay = 22;
-                      } else {
-                        _currentDayList = _listDaysForApril;
-                        if (_currentDay > 25)
-                          _currentDay = 25;
-                      }
-                    });
-                  }
-                },
-              ),
+                        if (_currentMonth == 3) {
+                          _currentDayList = _listDaysForMarch;
+                          if (_currentDay < 22)
+                            _currentDay = 22;
+                        } else {
+                          _currentDayList = _listDaysForApril;
+                          if (_currentDay > 25)
+                            _currentDay = 25;
+                        }
+                      });
+                    }
+                  },
+                ),
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+              )
             ),
             Expanded(
-              child: GCWDropDownButton(
-                value: _currentDay,
-                items: _currentDayList.map((day) {
-                  return DropdownMenuItem(
-                    value: day,
-                    child: Text(day.toString()),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _currentDay = value;
-                  });
-                },
+              child: Container(
+                child: GCWDropDownButton(
+                  value: _currentDay,
+                  items: _currentDayList.map((day) {
+                    return GCWDropDownMenuItem(
+                      value: day,
+                      child: day.toString(),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentDay = value;
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(left: DEFAULT_MARGIN),
               ),
             )
           ],

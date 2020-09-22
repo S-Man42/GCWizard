@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:prefs/prefs.dart';
@@ -18,15 +18,15 @@ String printErrorMessage(BuildContext context, String message) {
 }
 
 defaultFontSize() {
-  var fontSize = Prefs.get('font_size');
+  var fontSize = Prefs.get('theme_font_size');
 
   if (fontSize < FONT_SIZE_MIN) {
-    Prefs.setDouble('font_size', FONT_SIZE_MIN.toDouble());
+    Prefs.setDouble('theme_font_size', FONT_SIZE_MIN.toDouble());
     return FONT_SIZE_MIN;
   }
 
   if (fontSize > FONT_SIZE_MAX) {
-    Prefs.setDouble('font_size', FONT_SIZE_MAX.toDouble());
+    Prefs.setDouble('theme_font_size', FONT_SIZE_MAX.toDouble());
     return FONT_SIZE_MAX;
   }
 
@@ -62,7 +62,7 @@ List<Widget> columnedMultiLineOutput(List<List<dynamic>> data, {List<int> flexVa
 
     if (odd) {
       output = Container(
-        color: ThemeColors.oddRows,
+        color: themeColors().outputListOddRows(),
         child: row
       );
     } else {
@@ -94,7 +94,7 @@ insertIntoGCWClipboard(String text) {
 }
 
 buildPopupItem(BuildContext context, IconData icon, String i18nKey) {
-  var color = ThemeColors.popupItemText;
+  var color = themeColors().dialogText();
 
   return  Row(
     children: [

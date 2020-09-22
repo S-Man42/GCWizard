@@ -7,7 +7,7 @@ import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/intersect_geodetic_and_circle.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
@@ -158,7 +158,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
       _currentIntersections
         .map((intersection) => MapPoint(
           point: intersection,
-          color: ThemeColors.mapCalculatedPoint,
+          color: COLOR_MAP_CALCULATEDPOINT,
           markerText: i18n(context, 'coords_common_intersection'),
           coordinateFormat: _currentOutputFormat
         ))

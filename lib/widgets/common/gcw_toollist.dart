@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/favorites.dart';
 import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:prefs/prefs.dart';
 
@@ -43,7 +42,7 @@ class _GCWToolListState extends State<GCWToolList> {
     return ListTile(
       title: Text(
         tool.toolName,
-        style: TextStyle(fontSize: defaultFontSize()),
+        style: gcwTextStyle(),
       ),
       subtitle: _buildSubtitle(context, tool),
       onTap: () {
@@ -52,7 +51,7 @@ class _GCWToolListState extends State<GCWToolList> {
       leading: tool.icon,
       trailing: IconButton(
         icon: tool.isFavorite ?? false ? Icon(Icons.star) : Icon(Icons.star_border),
-        color: ThemeColors.gray,
+        color: themeColors().mainFont(),
         onPressed: () {
           if (tool.isFavorite) {
             showDeleteAlertDialog(context, tool.toolName, () {
