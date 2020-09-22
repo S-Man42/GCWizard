@@ -193,6 +193,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
                         return Align(
                           child: Text(
                             alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
+                            style: gcwTextStyle(),
                           ),
                           alignment: Alignment.centerLeft,
                         );
