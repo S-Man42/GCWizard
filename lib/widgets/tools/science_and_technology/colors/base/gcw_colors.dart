@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_cmy.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_cmyk.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_hex.dart';
@@ -186,9 +185,9 @@ class GCWColorsState extends State<GCWColors> {
             });
           },
           items: _onlyColorSpaces.map((colorSpace) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: colorSpace.key,
-              child: GCWText(text: i18n(context, colorSpace.name)),
+              child: i18n(context, colorSpace.name),
             );
           }).toList(),
         ),

@@ -4,7 +4,6 @@ import 'package:gc_wizard/logic/tools/games/scrabble.dart';
 import 'package:gc_wizard/logic/tools/games/scrabble_sets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_crosstotal_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_crosstotal_switch.dart';
@@ -61,9 +60,9 @@ class ScrabbleState extends State<Scrabble> {
             });
           },
           items: scrabbleSets.entries.map((set) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: set.key,
-              child: GCWText(text: i18n(context, set.value.i18nNameId)),
+              child: i18n(context, set.value.i18nNameId),
             );
           }).toList(),
         ),

@@ -84,11 +84,9 @@ class UnitConverterState extends State<UnitConverter> {
         GCWDropDownButton(
           value: _currentCategory,
           items: _categories.map((category) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: category,
-              child: GCWText(
-                text: i18n(context, category['category'].key)
-              ),
+              child: i18n(context, category['category'].key)
             );
           }).toList(),
           onChanged: (value) {

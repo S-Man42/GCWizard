@@ -115,9 +115,9 @@ class ADFGVXState extends State<ADFGVX> {
             });
           },
           items: polybiosModeItems.entries.map((mode) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: mode.key,
-              child: GCWText(text: mode.value),
+              child: mode.value,
             );
           }).toList(),
         ),

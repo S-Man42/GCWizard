@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
 class GCWCoordsDropDownButton extends StatefulWidget {
   final Function onChanged;
@@ -28,9 +27,9 @@ class _GCWCoordsDropDownButtonState extends State<GCWCoordsDropDownButton> {
         });
       },
       items: widget.itemList.map((entry) {
-        return DropdownMenuItem(
+        return GCWDropDownMenuItem(
           value: entry.key,
-          child: GCWText(text: entry.name),
+          child: entry.name,
         );
       }).toList(),
     );

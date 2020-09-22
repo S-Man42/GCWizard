@@ -4,7 +4,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_alphabetmodification_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -99,9 +98,9 @@ class PolybiosState extends State<Polybios> {
             });
           },
           items: polybiosModeItems.entries.map((mode) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: mode.key,
-              child: GCWText(text: mode.value),
+              child: mode.value,
             );
           }).toList(),
         ),

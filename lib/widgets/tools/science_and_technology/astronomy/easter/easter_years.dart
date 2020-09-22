@@ -3,7 +3,6 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/easter.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
@@ -42,13 +41,13 @@ class EasterYearsState extends State<EasterYears> {
                 child: GCWDropDownButton(
                   value: _currentMonth,
                   items: [
-                    DropdownMenuItem(
+                    GCWDropDownMenuItem(
                       value: 3,
-                      child: GCWText(text: i18n(context, 'common_month_march')),
+                      child: i18n(context, 'common_month_march'),
                     ),
-                    DropdownMenuItem(
+                    GCWDropDownMenuItem(
                       value: 4,
-                      child: GCWText(text: i18n(context, 'common_month_april')),
+                      child: i18n(context, 'common_month_april'),
                     )
                   ],
                   onChanged: (value) {
@@ -77,9 +76,9 @@ class EasterYearsState extends State<EasterYears> {
                 child: GCWDropDownButton(
                   value: _currentDay,
                   items: _currentDayList.map((day) {
-                    return DropdownMenuItem(
+                    return GCWDropDownMenuItem(
                       value: day,
-                      child: GCWText(text: day.toString()),
+                      child: day.toString(),
                     );
                   }).toList(),
                   onChanged: (value) {

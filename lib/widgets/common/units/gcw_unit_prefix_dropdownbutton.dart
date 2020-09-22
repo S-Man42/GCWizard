@@ -26,9 +26,9 @@ class GCWUnitPrefixDropDownButtonState extends State<GCWUnitPrefixDropDownButton
     return GCWDropDownButton(
       value: _currentPrefix,
       items: unitPrefixes.map((prefix) {
-        return DropdownMenuItem(
+        return GCWDropDownMenuItem(
           value: prefix,
-          child:  GCWText(text: prefix.key == null ? '' : i18n(context, prefix.key) + ' (${prefix.symbol})'),
+          child: prefix.key == null ? '' : i18n(context, prefix.key) + ' (${prefix.symbol})',
         );
       }).toList(),
       onChanged: (value) {

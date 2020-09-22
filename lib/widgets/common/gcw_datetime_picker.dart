@@ -343,11 +343,9 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           child: GCWDropDownButton(
             value: _findFittingTimeZone(),
             items: timeZones.map((timeZone) {
-              return DropdownMenuItem(
+              return GCWDropDownMenuItem(
                 value: timeZone.offset,
-                child: GCWText(
-                  text: _buildTimeZoneItemText(timeZone)
-                ),
+                child: _buildTimeZoneItemText(timeZone)
               );
             }).toList(),
             onChanged: (value) {

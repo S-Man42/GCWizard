@@ -34,9 +34,9 @@ class _GCWCoordsSignDropDownButtonState extends State<GCWCoordsSignDropDownButto
             _value = -1;
           }
 
-          return DropdownMenuItem(
+          return GCWDropDownMenuItem(
             value: _value,
-            child: GCWText(text: char),
+            child: char,
           );
         }).toList(),
       );

@@ -182,35 +182,17 @@ class AlphabetValuesState extends State<AlphabetValues> {
                   child: GCWDropDownButton(
                     value: _currentAlphabetKey,
                     items: _alphabets.map((Alphabet alphabet) {
-                      return DropdownMenuItem(
+                      return GCWDropDownMenuItem(
                         value: alphabet.key,
-                        child: Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              GCWText(
-                                text: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
-                              ),
-                              Container(
-                                child: Text(
-                                  _generateItemDescription(alphabet),
-                                  style: gcwDescriptionTextStyle(),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                padding: EdgeInsets.only(left: 10)
-                              ),
-                            ]
-                          ),
-                          padding: EdgeInsets.only(bottom: 10),
-                        )
+                        child: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
+                        subtitle: _generateItemDescription(alphabet)
                       );
                     }).toList(),
                     selectedItemBuilder: (context) {
                       return _alphabets.map<Widget>((alphabet) {
                         return Align(
-                          child: GCWText(
-                            text: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
+                          child: Text(
+                            alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
                           ),
                           alignment: Alignment.centerLeft,
                         );

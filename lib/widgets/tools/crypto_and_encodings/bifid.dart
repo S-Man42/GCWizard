@@ -89,9 +89,9 @@ class BifidState extends State<Bifid> {
             });
           },
           items: BifidModeItems.entries.map((mode) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: mode.key,
-              child: GCWText(text: mode.value),
+              child: mode.value,
             );
           }).toList(),
         ),

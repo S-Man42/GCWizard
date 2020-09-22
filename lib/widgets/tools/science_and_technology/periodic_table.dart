@@ -140,9 +140,9 @@ class PeriodicTableState extends State<PeriodicTable> {
           value: _currentCategory,
           items: _categories.entries
             .map((category) {
-              return DropdownMenuItem(
+              return GCWDropDownMenuItem(
                 value: category.key,
-                child: GCWText(text: i18n(context, category.value)),
+                child: i18n(context, category.value),
               );
             })
             .toList(),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/resistor.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
 class GCWResistorBandDropDownButton extends StatefulWidget {
   final Function onChanged;
@@ -66,7 +65,7 @@ class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownBu
             color: _colorAttributes[colorValue.key].textColor
           );
 
-          return DropdownMenuItem(
+          return GCWDropDownMenuItem(
             value: colorValue.key,
             child: Row(
               children: <Widget>[
@@ -77,8 +76,8 @@ class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownBu
                     child: Row(
                       children: [
                         Expanded(
-                          child: GCWText(
-                            text: i18n(context, _colorAttributes[colorValue.key].name) + ':',
+                          child: Text(
+                            i18n(context, _colorAttributes[colorValue.key].name) + ':',
                             style: textStyle
                           ),
                           flex: 1

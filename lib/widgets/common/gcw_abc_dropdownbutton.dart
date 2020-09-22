@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
 
 class GCWABCDropDownButton extends StatefulWidget {
@@ -33,9 +31,9 @@ class GCWABCDropDownButtonState extends State<GCWABCDropDownButton> {
         });
       },
       items: alphabet_AZ.entries.map((entry) {
-        return DropdownMenuItem(
+        return GCWDropDownMenuItem(
           value: entry.value,
-          child: GCWText(text: '${entry.key} (${entry.value})'),
+          child: '${entry.key} (${entry.value})',
         );
       }).toList(),
     );
