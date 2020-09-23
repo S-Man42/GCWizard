@@ -899,7 +899,7 @@
   "e_selection_description" : "Mathematical constant: Euler's Number",
 
   "enclosedareas_title": "Enclosed Areas",
-  "enclosedareas_description" : "Number of enclosed areas in letters and numbers",
+  "enclosedareas_description" : "Number of holes in letters and numbers",
   "enclosedareas_with4" : "closed 4",
   "enclosedareas_without4" : "open 4",
 

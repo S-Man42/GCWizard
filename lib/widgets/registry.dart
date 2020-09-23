@@ -386,10 +386,10 @@ class Registry {
         searchStrings: 'entensprache duck speak nak entisch duckish'
       ),
       GCWToolWidget(
-          tool: EnclosedAreas(),
-          i18nPrefix: 'enclosedareas',
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'enclosed areas eingeschlossene flaechen holes loecher'
+        tool: EnclosedAreas(),
+        i18nPrefix: 'enclosedareas',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'enclosedareas eingeschlosseneflaechen countholes countingholes zaehleloecherzaehlen'
       ),
       GCWToolWidget(
         tool: ESelection(),

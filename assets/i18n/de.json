@@ -899,7 +899,7 @@
   "e_selection_description" : "Mathematische Konstante: Eulers Zahl",
 
   "enclosedareas_title": "Eingeschlossene Flächen",
-  "enclosedareas_description" : "Anzahl der eingeschlossenen Flächen in Buchstaben und Zahlen",
+  "enclosedareas_description" : "Anzahl der Löcher in Buchstaben und Zahlen",
   "enclosedareas_with4" : "geschlossene 4",
   "enclosedareas_without4" : "offene 4",
 
