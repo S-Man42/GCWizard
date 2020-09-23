@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 const AZToBacon = {
@@ -10,7 +10,7 @@ const AZToBacon = {
 // U has same code as V, so U replaces V in mapping; V will not occur in this map
 final BaconToAZ = switchMapKeyValue(AZToBacon);
 
-String encodeBacon(String input, bool invers, bool binary) {
+String encodeBacon(String input, bool inverse, bool binary) {
   if (input == null || input == '')
     return '';
 
@@ -23,12 +23,11 @@ String encodeBacon(String input, bool invers, bool binary) {
       })
       .join();
 
-  if (invers)
-    out = _inversString(out);
+  if (inverse)
+    out = _inverseString(out);
 
   if (binary & (out != null)) {
-    out = out.replaceAll("A", "0");
-    out = out.replaceAll("B", "1");
+    out = substitution(out, {'A' : '0', 'B' : '1'});
   }
 
   return out;
@@ -40,13 +39,13 @@ String decodeBacon(String input, bool invers, bool binary) {
 
   if (binary) {
     input = input.toUpperCase().replaceAll(RegExp('[A-B]'), '');
-    input = input.replaceAll("0", "A");
-    input = input.replaceAll("1", "B");
+    input = substitution(input, {'0' : 'A', '1' : 'B'});
   }
 
   input = input.toUpperCase().replaceAll(RegExp(r'[^A-B]'), '');
   if (invers)
-    input = _inversString(input);
+    input = _inverseString(input);
+
   input = input.substring(0, input.length - (input.length % 5));
 
   var out = '';
@@ -59,21 +58,6 @@ String decodeBacon(String input, bool invers, bool binary) {
   return out;
 }
 
-String _inversString(String text) {
-  String out;
-
-  if (text != null) {
-     out = text
-        .split('')
-        .map((character) {
-          if (character == "A")
-            return "B";
-          else if (character == "B")
-            return "A";
-          else
-            return character;
-        })
-        .join();
-  }
-  return out;
+String _inverseString(String text) {
+  return substitution(text, {'A' : 'B', 'B' : 'A'});
 }

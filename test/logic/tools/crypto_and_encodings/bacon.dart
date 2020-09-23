@@ -42,7 +42,7 @@ void main() {
     });
   });
 
-  group("Bacon.encodeBaconInvers:", () {
+  group("Bacon.encodeBaconInverse:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
@@ -62,7 +62,7 @@ void main() {
     });
   });
 
-  group("Bacon.encodeBaconInversBinary:", () {
+  group("Bacon.encodeBaconInverseBinary:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
@@ -138,7 +138,7 @@ void main() {
     });
   });
 
-  group("Bacon.decodeBaconInvers:", () {
+  group("Bacon.decodeBaconInverse:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
@@ -166,7 +166,7 @@ void main() {
     });
   });
 
-  group("Bacon.decodeBaconInversBinary:", () {
+  group("Bacon.decodeBaconInverseBinary:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
