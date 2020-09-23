@@ -968,6 +968,11 @@
   "e_selection_title" : "e (e = 2.7182818...)",
   "e_selection_description" : "Mathematical constant: Euler's Number",
 
+  "enclosedareas_title": "Enclosed Areas",
+  "enclosedareas_description" : "Number of holes in letters and numbers",
+  "enclosedareas_with4" : "Closed 4",
+  "enclosedareas_without4" : "Open 4",
+
   "enigma_title": "Enigma",
   "enigma_description" : "German Military Encryption Machine in World War II.",
   "enigma_example" : "SJDSF TTVWB ZXPDU",
