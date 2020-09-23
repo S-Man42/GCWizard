@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/enclosed_areas.dart';
@@ -37,18 +35,9 @@ class EnclosedAreasState extends State<EnclosedAreas> {
           },
         ),
         GCWDefaultOutput(
-            child: _buildOutput()
+          child: decodeEnclosedAreas(_currentInput, _currentMode == GCWSwitchPosition.left)
         )
       ],
     );
-  }
-
-  _buildOutput() {
-    if (_currentInput == null)
-      return '';
-
-    var out = decodeEnclosedAreas(_currentInput, _currentMode == GCWSwitchPosition.left) ;
-
-    return out;
   }
 }
