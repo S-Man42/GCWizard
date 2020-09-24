@@ -438,64 +438,62 @@ final Map<List<String>, String> _Segment16ToAZ = {
   [] : ' '
 };
 
-final Map<String, List<String>> _AZToCistercianSegment = {
-  '1' : ['z11','z2'],
-  '2' : ['z11','z10'],
-  '3' : ['z11','z8'],
-  '4' : ['z11','z7'],
-  '5' : ['z11','z2','z7'],
-  '6' : ['z11','z4'],
-  '7' : ['z11','z2','z4'],
-  '8' : ['z11','z10','z4'],
-  '9' : ['z11','z2','z4','z10'],
-  '10' : ['z11','z1'],
-  '20' : ['z11','z9'],
-  '30' : ['z11','z5'],
-  '40' : ['z11','z6'],
-  '50' : ['z11','z1','z6'],
-  '60' : ['z11','z3'],
-  '70' : ['z11','z1','z3'],
-  '80' : ['z11','z3','z9'],
-  '90' : ['z11','z1','z3','z9'],
-  '100' : ['z11','z21'],
-  '200' : ['z11','z13'],
-  '300' : ['z11','z18'],
-  '400' : ['z11','z19'],
-  '500' : ['z11','z21','z19'],
-  '600' : ['z11','z15'],
-  '700' : ['z11','z15','z21'],
-  '800' : ['z11','z15','z13'],
-  '900' : ['z11','z15','z13','z21'],
-  '1000' : ['z11','z20'],
-  '2000' : ['z11','z12'],
-  '3000' : ['z11','z17'],
-  '4000' : ['z11','z16'],
-  '5000' : ['z11','z16','z20'],
-  '6000' : ['z11','z14'],
-  '7000' : ['z11','z20','z14'],
-  '8000' : ['z11','z14','z12'],
-  '9000' : ['z11','z20','z14','z12'],
+final Map<int, List<String>> _AZToCistercianSegment = {
+  1 : ['z11','z2'],
+  2 : ['z11','z10'],
+  3 : ['z11','z8'],
+  4 : ['z11','z7'],
+  5 : ['z11','z2','z7'],
+  6 : ['z11','z4'],
+  7 : ['z11','z2','z4'],
+  8 : ['z11','z10','z4'],
+  9 : ['z11','z2','z4','z10'],
+  10 : ['z11','z1'],
+  20 : ['z11','z9'],
+  30 : ['z11','z5'],
+  40 : ['z11','z6'],
+  50 : ['z11','z1','z6'],
+  60 : ['z11','z3'],
+  70 : ['z11','z1','z3'],
+  80 : ['z11','z3','z9'],
+  90 : ['z11','z1','z3','z9'],
+  100 : ['z11','z21'],
+  200 : ['z11','z13'],
+  300 : ['z11','z18'],
+  400 : ['z11','z19'],
+  500 : ['z11','z21','z19'],
+  600 : ['z11','z15'],
+  700 : ['z11','z15','z21'],
+  800 : ['z11','z15','z13'],
+  900 : ['z11','z15','z13','z21'],
+  1000 : ['z11','z20'],
+  2000 : ['z11','z12'],
+  3000 : ['z11','z17'],
+  4000 : ['z11','z16'],
+  5000 : ['z11','z16','z20'],
+  6000 : ['z11','z14'],
+  7000 : ['z11','z20','z14'],
+  8000 : ['z11','z14','z12'],
+  9000 : ['z11','z20','z14','z12'],
 };
 
-final Map<List<String>, String> _SegmentCistercianToAZ = switchMapKeyValue(_AZToCistercianSegment);
+final Map<List<String>, int> _SegmentCistercianToAZ = switchMapKeyValue(_AZToCistercianSegment);
 
 
 List<List<String>> encodeCistercian(String input) {
   if (input == null || input == '')
     return [];
-
   var inputCharacters = input.split(RegExp(r'[^1234567890]')).toList();
   var output = <List<String>>[];
-
   var digit = 0;
-  var number = new List<String>();
+  var number; // = new List<String>();
 
   for (String character in inputCharacters) {
     var display; // = new List<String>();
     for (int i = 0; i < character.length; i++){
       digit = int.parse(character[i]) * pow(10, character.length - i - 1);
       if (digit != 0) {
-        number = _AZToCistercianSegment[digit.toString()];
+        number = _AZToCistercianSegment[digit];
         if (display == null){
           display = number;
         } else {
@@ -507,72 +505,6 @@ List<List<String>> encodeCistercian(String input) {
         }
       }
     }
-
-/*
-    switch (character.length) {
-      case 1 :
-        display = _AZToCistercianSegment[character];
-        break;
-      case 2 :
-        display = _AZToCistercianSegment[character[0] + '0'];
-        if (character[1] != '0') {
-          number = _AZToCistercianSegment[character[1]];
-          for (String character in number) {
-            if (!display.contains(character)) {
-              display.add(character);
-            }
-          }
-        }
-        break;
-      case 3 :
-        display = _AZToCistercianSegment[character[0] + '00'];
-        if (character[1] != '0') {
-          number = _AZToCistercianSegment[character[1] + '0'];
-          for (String character in number) {
-            if (!display.contains(character)) {
-              display.add(character);
-            }
-          }
-        }
-        if (character[2] != '0') {
-          number = _AZToCistercianSegment[character[2]];
-          for (String character in number) {
-            if (!display.contains(character)) {
-              display.add(character);
-            }
-          }
-        }
-        break;
-      case 4 :
-        display = _AZToCistercianSegment[character[0] + '000'];
-        if (character[1] != '0') {
-          number = _AZToCistercianSegment[character[1] + '00'];
-          for (String character in number) {
-            if (!display.contains(character)) {
-              display.add(character);
-            }
-          }
-        }
-        if (character[2] != '0') {
-          number = _AZToCistercianSegment[character[2] +'0'];
-          for (String character in number) {
-            if (!display.contains(character)) {
-              display.add(character);
-            }
-          }
-        }
-        if (character[3] != '0') {
-          number = _AZToCistercianSegment[character[3]];
-          for (String character in number) {
-            if (!display.contains(character)) {
-              display.add(character);
-            }
-          }
-        }
-        break;
-    }
-*/
-
     if (display != null) {
       display.sort();
       output.add(display);
@@ -699,6 +631,61 @@ Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType)
   return {'displays': displays, 'text': out};
 }
 
+
+Map<String, dynamic> decodeCistercian(String input, SegmentDisplayType segmentType) {
+  if (input == null || input == '')
+    return {'displays': [], 'text': ''};
+
+  var baseSegments = _baseSegmentsCistercianSegment;
+
+  input = input.toLowerCase();
+  var displays = <List<String>>[];
+  List<String> currentDisplay;
+
+  for (int i = 0; i < input.length; i++) {
+    var segment = input[i];
+    if (i + 1 < input.length && ['1', '2', 'p'].contains(input[i + 1])) {
+      i++;
+      segment += input[i];
+    }
+
+    if (!baseSegments.contains(segment)) {
+      if (currentDisplay != null) {
+        currentDisplay.sort();
+        displays.add(currentDisplay.toSet().toList());
+      }
+
+      currentDisplay = null;
+      continue;
+    }
+
+    if (currentDisplay == null)
+      currentDisplay = [];
+
+    currentDisplay.add(segment);
+  }
+
+  if (currentDisplay != null) {
+    currentDisplay.sort();
+    displays.add(currentDisplay.toSet().toList());
+  }
+
+  var out = displays.map((display) {
+
+    var segments = List<String>.from(display);
+
+    var character = _characterFromSegmentList(segmentType, segments);
+    if (character == null) {
+      return UNKNOWN_ELEMENT;
+    }
+
+    return character;
+  }).join();
+
+  return {'displays': displays, 'text': out};
+}
+
+
 _characterFromSegmentList(SegmentDisplayType type, List<String> segments) {
   Map<List<String>,String> segmentToAZ;
 
@@ -713,7 +700,7 @@ _characterFromSegmentList(SegmentDisplayType type, List<String> segments) {
       segmentToAZ = _Segment16ToAZ;
       break;
     case SegmentDisplayType.CISTERCIAN:
-      segmentToAZ = _SegmentCistercianToAZ;
+      segmentToAZ = _SegmentCistercianToAZ.cast<List<String>, String>();
       break;
   }
 

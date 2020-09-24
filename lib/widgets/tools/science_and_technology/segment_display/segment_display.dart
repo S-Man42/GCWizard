@@ -85,27 +85,27 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             },
           )
               : Container(),
-          _currentMode == GCWSwitchPosition.left
-              ? (
-              _currentEncryptMode == GCWSwitchPosition.left
+                _currentMode == GCWSwitchPosition.left
+                ? (
+                  _currentEncryptMode == GCWSwitchPosition.left
                   ? GCWTextField(
-                controller: _inputEncodeController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentEncodeInput = text;
-                  });
-                },
-              )
+                      controller: _inputEncodeController,
+                      onChanged: (text) {
+                        setState(() {
+                          _currentEncodeInput = text;
+                        });
+                      },
+                    )
                   : _buildVisualEncryption()
-          )
+                  )
               : GCWTextField(
-            controller: _inputDecodeController,
-            onChanged: (text) {
-              setState(() {
-                _currentDecodeInput = text;
-              });
-            },
-          ),
+                  controller: _inputDecodeController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentDecodeInput = text;
+                    });
+                  },
+                ),
           GCWTextDivider(
             text: i18n(context, 'segmentdisplay_displayoutput'),
             trailing: Row(

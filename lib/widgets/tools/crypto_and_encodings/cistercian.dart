@@ -30,8 +30,8 @@ class CistercianSegmentsState extends State<CistercianSegments> {
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
   var _currentDisplays = <List<String>>[];
-  var _currentMode = GCWSwitchPosition.left;
-  var _currentEncryptMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.left; //encrypt decrypt
+  var _currentEncryptMode = GCWSwitchPosition.left; //text  visual
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class CistercianSegmentsState extends State<CistercianSegments> {
         ? Prefs.get('symboltables_countcolumns_portrait')
         : Prefs.get('symboltables_countcolumns_landscape');
 
-    _currentEncryptMode == GCWSwitchPosition.left;
+    //_currentEncryptMode == GCWSwitchPosition.left;
       return Column(
           children: <Widget>[
             GCWTwoOptionsSwitch(
@@ -130,15 +130,12 @@ class CistercianSegmentsState extends State<CistercianSegments> {
     else
       currentDisplay = {};
 
-    var displayWidget;
-
     var onChanged = (Map<String, bool> d) {
       setState(() {
         var newSegments = <String>[];
         d.forEach((key, value) {
           if (!value)
             return;
-
           newSegments.add(key);
         });
 
@@ -156,11 +153,6 @@ class CistercianSegmentsState extends State<CistercianSegments> {
       });
     };
 
-    displayWidget = CistercianSegmentDisplay(
-      segments: currentDisplay,
-      onChanged: onChanged,
-    );
-
     return Column(
       children: <Widget>[
         Container(
@@ -172,7 +164,10 @@ class CistercianSegmentsState extends State<CistercianSegments> {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: displayWidget,
+                child: CistercianSegmentDisplay(
+                  segments: currentDisplay,
+                  onChanged: onChanged,
+                ),
               )
             ],
           ),
@@ -222,38 +217,34 @@ class CistercianSegmentsState extends State<CistercianSegments> {
   }
 
   _buildOutput(countColumns) {
+    var segments;
     if (_currentMode == GCWSwitchPosition.left) { //encode
-      var segments;
-      if (_currentEncryptMode == GCWSwitchPosition.left)
-        segments = encodeCistercian(_currentEncodeInput);
-      else
-        segments = _currentDisplays;
-
-//      var output = segments.map((character) {
-//            if (character == null)
-//              return UNKNOWN_ELEMENT;
-//            return character.join();
-//          }).join(' ');
-
-        return Column(
+      segments = encodeCistercian(_currentEncodeInput);
+      return
+        Column(
           children: <Widget>[
             _buildDigitalOutput(countColumns, segments),
-//            GCWDefaultOutput(
-//                child: output
-//            )
           ],
         );
     } else { //decode
-      var segments = decodeSegment(_currentDecodeInput, SegmentDisplayType.CISTERCIAN);
+        //_currentDecodeInput is the result of the buidlvisualencryption
+      var output =  _currentDisplays.map((character) {
+        if (character != null)
+          return character.join();
+      }).join(' ');
 
-      return Column(
-        children: <Widget>[
-          _buildDigitalOutput(countColumns, segments['displays']),
-          GCWDefaultOutput(
-              child: segments['text']
-          )
-        ],
-      );
+      segments = decodeCistercian(output, SegmentDisplayType.CISTERCIAN);
+
+      return
+        Column(
+          children: <Widget>[
+            _buildDigitalOutput(countColumns, segments['displays']),
+              GCWDefaultOutput(
+                //child: segments['text']
+                child: decodeSegment(segments['text'], SegmentDisplayType.CISTERCIAN)
+              )
+          ],
+        );
     }
   }
 }
