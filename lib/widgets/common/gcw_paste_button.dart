@@ -82,11 +82,9 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
     var popupList = <PopupMenuEntry>[
       PopupMenuItem(
         value: 0,
-        child: GCWText(
-          text: i18n(context, 'common_clipboard_fromdeviceclipboard'),
-          style: TextStyle(
-            color: themeColors().dialogText(),
-          ),
+        child: Text(
+          i18n(context, 'common_clipboard_fromdeviceclipboard'),
+          style: gcwTextStyle().copyWith(color: themeColors().dialogText())
         )
       ),
       PopupMenuDivider()
@@ -110,8 +108,8 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
               child: Column(
                 children: [
                   Align(
-                    child: GCWText(
-                      text: dateFormat.format(datetime) + ' ' + timeFormat.format(datetime),
+                    child: Text(
+                      dateFormat.format(datetime) + ' ' + timeFormat.format(datetime),
                       style: gcwTextStyle().copyWith(
                         color: themeColors().dialogText(),
                         fontSize: max(defaultFontSize() - 4, 10)

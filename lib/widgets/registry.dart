@@ -75,6 +75,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
@@ -204,6 +205,7 @@ class Registry {
   static final SEARCHSTRING_SEGMENTDISPLAY = 'led segments segmente display segmentanzeige ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
   static final SEARCHSTRING_SYMBOLTABLES_FREEMASONS = 'freemasons freimaurer ';
+  static final SEARCHSTRING_SYMBOLTABLES_HYLIAN = 'thelegendofzelda dielegendevonzelda hylian hylianisches hyrule ';
   static final SEARCHSTRING_SYMBOLTABLES_ILLUMINATI = SEARCHSTRING_SYMBOLTABLES_FREEMASONS + 'illuminati illuminatus illuminaten 23 ';
   static final SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER = 'lwl llk lichtwellenleiter lichtleitkabel opticalfiber glasfaserkabel ';
   static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
@@ -383,6 +385,12 @@ class Registry {
         i18nPrefix: 'duckspeak',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'entensprache duck speak nak entisch duckish'
+      ),
+      GCWToolWidget(
+        tool: EnclosedAreas(),
+        i18nPrefix: 'enclosedareas',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'enclosedareas eingeschlosseneflaechen countholes countingholes zaehleloecherzaehlen'
       ),
       GCWToolWidget(
         tool: ESelection(),
@@ -1417,6 +1425,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colortokki color-tokki farbcode woven carpet webteppich gewebter farben colors six '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'cyrillic', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_cyrillic',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'cyrillic/68.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'kyrillisch cyrillic russisch russian alphabet schrift font cyrl saloniki'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'daedric'),
         i18nPrefix: 'symboltables_daedric',
         iconPath: SYMBOLTABLES_ASSETPATH + 'daedric/72.png',
@@ -1612,13 +1626,25 @@ class Registry {
         tool: SymbolTable(symbolKey: 'hylian_skyward_sword'),
         i18nPrefix: 'symboltables_hylian_skyward_sword',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_skyward_sword/79.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hylianische skywardsword skywardschwert thelegendofzelda hyrule '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES_HYLIAN + 'skywardsword skywardschwert '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hylian_twilight_princess_gcn'),
+        i18nPrefix: 'symboltables_hylian_twilight_princess_gcn',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_twilight_princess_gcn/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES_HYLIAN + 'daemmerungsprinzessin twilightprincess gcn nintendo gamecube'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hylian_twilight_princess_wii'),
+        i18nPrefix: 'symboltables_hylian_twilight_princess_wii',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_twilight_princess_wii/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES_HYLIAN + 'daemmerungsprinzessin twilightprincess wii'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'hylian_wind_waker'),
         i18nPrefix: 'symboltables_hylian_wind_waker',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_wind_waker/gu.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'moderne modern hylianische thelegendofzelda thewindwaker hyrule'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES_HYLIAN + 'moderne modern thewindwaker'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'hymmnos', isCaseSensitive: true),
@@ -1915,10 +1941,22 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'thebanisches hexenalphabet onorius witches witchalphabet engelsschrift angels wikka wicca wicka'
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'tines'),
+        i18nPrefix: 'symboltables_tines',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'tines/be_quiet_pushy.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'gaunerzinken rotwelsch gaunersprache crook language tines prong fahrendes volk traveling people tramp'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'tomtom'),
         i18nPrefix: 'symboltables_tomtom',
         iconPath: SYMBOLTABLES_ASSETPATH + 'tomtom/80.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tomtom tom a-tom-tom tom-tom atomtom'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'ulog'),
+        i18nPrefix: 'symboltables_ulog',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'ulog/68.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'ulog universal language of the galaxy dark horizon'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'utopian'),
