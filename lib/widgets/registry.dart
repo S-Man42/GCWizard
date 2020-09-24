@@ -528,10 +528,10 @@ class Registry {
         searchStrings: 'railfence lattenzaun jaegerzaun zigzag redefence zig-zag palisadenzaun gartenzaun transposition'
       ),
       GCWToolWidget(
-          tool: RC4(),
-          i18nPrefix: 'rc4',
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'rc4 arc4 arcfour stream cipher stromverschluesselung https ssh ssl wep wpa'
+        tool: RC4(),
+        i18nPrefix: 'rc4',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'rc4 arc4 arcfour stream cipher stromverschluesselung https ssh ssl wep wpa'
       ),
       GCWToolWidget(
         tool: ResistorSelection(),

@@ -6,6 +6,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 
 class RC4 extends StatefulWidget {
   @override
@@ -152,13 +153,24 @@ class RC4State extends State<RC4> {
       return GCWDefaultOutput();
     }
 
-    var _currentOutput = useRC4(_currentInput, _currentInputFormat, _currentKey, _currentKeyFormat, _currentOutputFormat);
+    var _currentOutput = cryptRC4(_currentInput, _currentInputFormat, _currentKey, _currentKeyFormat, _currentOutputFormat);
 
-    if (_currentOutput == null || _currentOutput.errorCode != ErrorCode.OK) {
-      return GCWDefaultOutput(
-        // child: _currentOutput.errorCode.toString(),
-      );
-    }
+    if (_currentOutput == null)  {
+      return GCWDefaultOutput();
+    } else if ( _currentOutput.errorCode != ErrorCode.OK) {
+      switch (_currentOutput.errorCode) {
+        case ErrorCode.MISSING_KEY:
+          showToast(i18n(context, 'rc4_error_missing_key'));
+          break;
+        case ErrorCode.KEY_FORMAT:
+          showToast(i18n(context, 'rc4_error_key_format'));
+          break;
+        case ErrorCode.INPUT_FORMAT:
+          showToast(i18n(context, 'rc4_error_input_format'));
+          break;
+      }
+      return GCWDefaultOutput();
+    };
 
     return GCWDefaultOutput(
       child: _currentOutput.output,

@@ -12,39 +12,38 @@ class RC4Output {
   RC4Output(this.output, this.errorCode);
 }
 
-RC4Output useRC4(String input, InputFormat inputFormat, String key, InputFormat keyFormat, OutputFormat outputFormat){
+RC4Output cryptRC4(String input, InputFormat inputFormat, String key, InputFormat keyFormat, OutputFormat outputFormat){
   if (input == null || input == '')
-    return new RC4Output('', ErrorCode.OK);
+    return RC4Output('', ErrorCode.OK);
 
-  var inputList = convertInputToIntList(input, inputFormat);
+  var inputList = _convertInputToIntList(input, inputFormat);
   if (inputList == null || inputList.length == 0)
-    return new RC4Output('', ErrorCode.INPUT_FORMAT);
+    return RC4Output('', ErrorCode.INPUT_FORMAT);
 
   if (key == null || key == '')
-    return new RC4Output('', ErrorCode.MISSING_KEY);
+    return RC4Output('', ErrorCode.MISSING_KEY);
 
-  var keyList = convertInputToIntList(key, keyFormat);
+  var keyList = _convertInputToIntList(key, keyFormat);
   if (keyList == null || keyList.length == 0)
-    return new RC4Output('', ErrorCode.KEY_FORMAT);
+    return RC4Output('', ErrorCode.KEY_FORMAT);
 
-  var outList = rc4(inputList, keyList);
+  var outList = _rc4(inputList, keyList);
   var out ='';
 
   outList.forEach((item) {
     switch (outputFormat) {
       case OutputFormat.TEXT:
-        if (item <= pow(2, 16))
-          out += new String.fromCharCode(item);
-        else {
-          out += item.toString();
-          out += ' ';
-        }
+        item = item % pow(2,16);
+        if (item < 33 || (item > 126 && item < 161))
+          out += ".";
+        else
+          out += String.fromCharCode(item);
         break;
       case OutputFormat.HEX:
         if (out != '')
           out += ' ';
 
-        out += convertBase(item.toString(), 10, 16);
+        out += convertBase(item.toString(), 10, 16).padLeft(2,'0');
         break;
       case OutputFormat.BINARY:
         if (out != '')
@@ -66,9 +65,9 @@ RC4Output useRC4(String input, InputFormat inputFormat, String key, InputFormat 
   return new RC4Output(out, ErrorCode.OK);
 }
 
-List<int> rc4(List<int> input, List<int> key){
-  var s = new List<int>(256);
-  var out = new List<int>();
+List<int> _rc4(List<int> input, List<int> key){
+  var s = List<int>(256);
+  var out = List<int>();
   var i;
   for ( i = 0; i <= 255; ++i)
     s[i] = i;
@@ -100,7 +99,7 @@ List<int> rc4(List<int> input, List<int> key){
   return out;
 }
 
-List<int> convertInputToIntList(String input, InputFormat format) {
+List<int> _convertInputToIntList(String input, InputFormat format) {
   var out = new List<int>();
 
   if (input == null || input == '')
@@ -108,35 +107,19 @@ List<int> convertInputToIntList(String input, InputFormat format) {
 
   switch (format) {
     case InputFormat.AUTO:
-      out = convertInputToIntList(input, InputFormat.BINARY);
-      if (out.length == 0)
-        out = convertInputToIntList(input, InputFormat.ASCIIVALUES);
-      if (out.length == 0) {
-        out = convertInputToIntList(input, InputFormat.HEX);
-        if (out.length > 0) {
-          for (var item in out) {
-            // to large ?
-            if (item > pow(2, 16)) {
-              out.clear();
-              break;
-            }
-          }
-        }
-      }
-      if (out.length == 0)
-        out = convertInputToIntList(input,InputFormat.TEXT);
-    break;
+      return _convertInputToIntList(input, _autoType(input));
+      break;
     case InputFormat.TEXT:
       return input.codeUnits;
       break;
     case InputFormat.HEX:
-      out = _convertToIntList(input, 16);
+      out = convertToIntList(input, 16);
       break;
     case InputFormat.BINARY:
-      out = _convertToIntList(input, 2);
+      out = convertToIntList(input, 2);
       break;
     case InputFormat.ASCIIVALUES:
-      out = _convertToIntList(input, 10);
+      out = convertToIntList(input, 10);
       break;
     default:
       break;
@@ -145,7 +128,36 @@ List<int> convertInputToIntList(String input, InputFormat format) {
   return out;
 }
 
-List<int> _convertToIntList(String input, int base) {
+InputFormat _autoType (String input) {
+  String bin = input.replaceAll(RegExp("[ 01]"), "");
+  if (bin.length == 0)
+    return InputFormat.BINARY;
+
+  String hex = input.toUpperCase().replaceAll(RegExp("[0-9A-F][0-9A-F]"), "").replaceAll(" ", "");
+  if (hex.length == 0)
+    return InputFormat.HEX;
+
+  String ascii = input.replaceAll(RegExp("[ 0-9]"), "");
+  bool ok = true;
+  if (ascii.length == 0) {
+    input
+      .split(" ")
+      .forEach((text) {
+        if (int.tryParse(text) > 255)
+        {
+          ok = false;
+          return;
+        }
+      });
+
+    if (ok)
+      return InputFormat.ASCIIVALUES;
+  }
+
+  return InputFormat.TEXT;
+}
+
+List<int> convertToIntList(String input, int base) {
   var out= new List<int>();
 
   if (input.contains(' ')) {
