@@ -28,7 +28,7 @@ void main() {
       {'input' : '', 'expectedOutput' : ''},
 
       {'input' : 'ABCDEFGHIJKLMOPQRSTUVWXYZÄÖÜß', 'expectedOutput' : '10'},
-      {'input' : 'abcdefghijklmopqrstuvwxyzäöüß', 'expectedOutput' : '8'},
+      {'input' : 'abcdefghijklmopqrstuvwxyzäöüß', 'expectedOutput' : '9'},
       {'input' : '0123456789', 'expectedOutput' : '5'},
       {'input' : 'ABCDEFGHIJKLMOPQRSTUVWXYZÄÖÜß 0123456789', 'expectedOutput' : '10 5'},
       {'input' : '._*&%><', 'expectedOutput' : '4'},

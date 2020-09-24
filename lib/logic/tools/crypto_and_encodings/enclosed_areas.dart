@@ -3,7 +3,7 @@ final _AlphabetMap = {
   'A' : 1, 'B' : 2, 'D' : 1, 'O' : 1, 'P' : 1, 'Q' : 1, 'R' : 1,
   String.fromCharCode(196) : 1, //Ä
   String.fromCharCode(214) : 1, //Ö
-  'a' : 1, 'b' : 1, 'd' : 1, 'o' : 1, 'p' : 1, 'q' : 1,
+  'a' : 1, 'b' : 1, 'd' : 1, 'e' : 1, 'o' : 1, 'p' : 1, 'q' : 1,
   String.fromCharCode(228) : 1, //ä
   String.fromCharCode(246) : 1, //ö
   String.fromCharCode(37) : 2, //%
