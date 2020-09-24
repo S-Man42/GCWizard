@@ -63,6 +63,7 @@ void main() {
       {'input' : 'mmmmas', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'AMAS', 'caseSensitive' : true},
 
       {'input' : 'mpfapff', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'FAR', 'caseSensitive' : true},
+      {'input' : 'MpfaPFf', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'MPFAPFF', 'caseSensitive' : true},
       {'input' : 'Mfmfmffmp mfmmppppmmmmmmfmfpfmp!', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'MUIMP GEMACHT!', 'caseSensitive' : true},
 
       {'input' : null, 'expectedOutput' : '', 'caseSensitive' : false},
@@ -70,36 +71,36 @@ void main() {
       {'input' : 'A', 'replaceCharacters': null, 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : 'A', 'replaceCharacters': <String>[], 'expectedOutput' : '', 'caseSensitive' : false},
       {'input' : 'A', 'replaceCharacters': ['m', 'p'], 'expectedOutput' : '', 'caseSensitive' : false},
-      {'input' : 'mmm', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'A', 'caseSensitive' : false},
+      {'input' : 'Mmm', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'A', 'caseSensitive' : false},
       {'input' : 'mmm', 'replaceCharacters': ['m', 'p', 'f', 'a'], 'expectedOutput' : 'A', 'caseSensitive' : false},
 
       {'input' : 'm', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'M', 'caseSensitive' : false},
       {'input' : 'mm', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'MM', 'caseSensitive' : false},
       {'input' : 'mmm', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'A', 'caseSensitive' : false},
       {'input' : 'mmmp', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'AP', 'caseSensitive' : false},
-      {'input' : 'mmmpp', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'APP', 'caseSensitive' : false},
-      {'input' : 'mmmppp', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'AN', 'caseSensitive' : false},
+      {'input' : 'mmmPp', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'APP', 'caseSensitive' : false},
+      {'input' : 'mmMPpp', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'AN', 'caseSensitive' : false},
       {'input' : 'f', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'F', 'caseSensitive' : false},
-      {'input' : 'ff', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'FF', 'caseSensitive' : false},
-      {'input' : 'fff', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'FFF', 'caseSensitive' : false},
+      {'input' : 'FF', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'FF', 'caseSensitive' : false},
+      {'input' : 'Fff', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'FFF', 'caseSensitive' : false},
       {'input' : 'ma', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'MA', 'caseSensitive' : false},
       {'input' : 'mam', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'MAM', 'caseSensitive' : false},
       {'input' : 'mamm', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'MAMM', 'caseSensitive' : false},
 
       {'input' : 'mammm', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'MAA', 'caseSensitive' : false},
-      {'input' : 'm111mmm', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'M111A', 'caseSensitive' : false},
+      {'input' : 'm111mMM', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'M111A', 'caseSensitive' : false},
 
-      {'input' : 'mmmmmpmmfffp', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'ABCZ', 'caseSensitive' : false},
-      {'input' : 'mamamamamapbdmamaf1f1f1pbd', 'replaceCharacters': ['ma', 'pbd', 'f1'], 'expectedOutput' : 'ABCZ', 'caseSensitive' : false},
-      {'input' : 'pppmppmffppp pppppfmmfmfp pppmffmmfmfpfmp', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'NEIN NOCH NICHT', 'caseSensitive' : false},
+      {'input' : 'mmmmmpmMFffp', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'ABCZ', 'caseSensitive' : false},
+      {'input' : 'mamamamaMApbdmamaF1f1f1pbd', 'replaceCharacters': ['ma', 'pbd', 'f1'], 'expectedOutput' : 'ABCZ', 'caseSensitive' : false},
+      {'input' : 'pppmppmffppp pppppfmmfmfp ppPMffmmfmfPFMp', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'NEIN NOCH NICHT', 'caseSensitive' : false},
       {'input' : 'pspspsmfgpspsmfgfd1fd1pspsps pspspspspsfd1mfgmfgfd1mfgfd1ps pspspsmfgfd1fd1mfgmfgfd1mfgfd1psfd1mfgps', 'replaceCharacters': ['mfg', 'ps', 'fd1'], 'expectedOutput' : 'NEIN NOCH NICHT', 'caseSensitive' : false},
       {'input' : 'pmpmppppppppffm mmfppfmpmmpp mmmfmfmmfmfp fmmmmfmfpppfppp mpmpffmffppp?', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'KENNY CODE AUCH SCHON DRIN?', 'caseSensitive' : false},
       {'input' : 'mmmas', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'AAS', 'caseSensitive' : false},
       {'input' : 'mmmmas', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'AMAS', 'caseSensitive' : false},
 
-      {'input' : 'mpfapff', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'FAR', 'caseSensitive' : false},
+      {'input' : 'Mpfapff', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'FAR', 'caseSensitive' : false},
 
-      {'input' : 'Mfmfmffmp mfmmppppmmmmmmfmfpfmp!', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'GUT GEMACHT!', 'caseSensitive' : false},
+      {'input' : 'MfmFmffmp mfmmppppmmmmmmfmfpfmp!', 'replaceCharacters': ['m', 'p', 'f'], 'expectedOutput' : 'GUT GEMACHT!', 'caseSensitive' : false},
     ];
 
     _inputsToExpected.forEach((elem) {
