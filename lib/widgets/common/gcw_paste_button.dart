@@ -22,7 +22,6 @@ class GCWPasteButton extends StatefulWidget {
 }
 
 class GCWPasteButtonState extends State<GCWPasteButton> {
-
   final double _BUTTON_SIZE = 30;
 
   @override
