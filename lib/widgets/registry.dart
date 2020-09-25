@@ -391,7 +391,7 @@ class Registry {
         tool: EnclosedAreas(),
         i18nPrefix: 'enclosedareas',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'enclosedareas eingeschlosseneflaechen countholes countingholes zaehleloecherzaehlen'
+        searchStrings: 'enclosedareas eingeschlosseneflaechen countholes countingholes zaehleloecherzaehlen zaehleloch anzahlloecher numberholes'
       ),
       GCWToolWidget(
         tool: ESelection(),
