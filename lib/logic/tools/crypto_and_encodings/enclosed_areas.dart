@@ -51,7 +51,7 @@ final _AlphabetMap = {
   String.fromCharCode(248) : 2, //ø
   String.fromCharCode(367) : 1, //ů
   String.fromCharCode(254) : 1, //þ
-  
+
   '%' : 2,
   '&' : 2,
   '#' : 1,
@@ -83,6 +83,7 @@ String decodeEnclosedAreas(String input, bool with4) {
 
   return input
     .split(' ')
+    .where((block) => block != null && block.length > 0)
     .map((block) => _decodeEnclosedAreaBlock(block, alphabetMap))
     .join(' ');
 }
