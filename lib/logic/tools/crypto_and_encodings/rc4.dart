@@ -113,13 +113,13 @@ List<int> _convertInputToIntList(String input, InputFormat format) {
       return input.codeUnits;
       break;
     case InputFormat.HEX:
-      out = convertToIntList(input, 16);
+      out = _convertToIntList(input, 16);
       break;
     case InputFormat.BINARY:
-      out = convertToIntList(input, 2);
+      out = _convertToIntList(input, 2);
       break;
     case InputFormat.ASCIIVALUES:
-      out = convertToIntList(input, 10);
+      out = _convertToIntList(input, 10);
       break;
     default:
       break;
@@ -133,7 +133,7 @@ InputFormat _autoType (String input) {
   if (bin.length == 0)
     return InputFormat.BINARY;
 
-  String hex = input.toUpperCase().replaceAll(RegExp("[0-9A-F][0-9A-F]"), "").replaceAll(" ", "");
+  String hex = input.toUpperCase().replaceAll(RegExp("[0-9A-F]"), "").replaceAll(" ", "");
   if (hex.length == 0)
     return InputFormat.HEX;
 
@@ -157,7 +157,7 @@ InputFormat _autoType (String input) {
   return InputFormat.TEXT;
 }
 
-List<int> convertToIntList(String input, int base) {
+List<int> _convertToIntList(String input, int base) {
   var out= new List<int>();
 
   if (input.contains(' ')) {

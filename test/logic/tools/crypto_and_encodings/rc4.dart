@@ -17,8 +17,8 @@ void main() {
       {'input' : 'abcdefghijklmn', 'format' : InputFormat.TEXT, 'key' : 'xx', "keyFormat" : InputFormat.TEXT, 'expectedOutput' : 'eÌU|¢v4¾g.(b0U', 'outputFormat' : OutputFormat.TEXT, 'errorCode' : ErrorCode.OK},
       {'input' : 'abcdefghijklmn', 'format' : InputFormat.HEX, 'key' : 'xx', "keyFormat" : InputFormat.TEXT, 'expectedOutput' : '', 'outputFormat' : OutputFormat.TEXT, 'errorCode' : ErrorCode.INPUT_FORMAT},
 
-      {'input' : 'ABCDE', 'format' : InputFormat.AUTO, 'key' : 'FEDCBA', "keyFormat" : InputFormat.AUTO, 'expectedOutput' : './oÑß', 'outputFormat' : OutputFormat.TEXT, 'errorCode' : ErrorCode.OK},
-      {'input' : 'ABC', 'format' : InputFormat.AUTO, 'key' : '1234', "keyFormat" : InputFormat.AUTO, 'expectedOutput' : '09 9D B7', 'outputFormat' : OutputFormat.HEX, 'errorCode' : ErrorCode.OK},
+      {'input' : 'ABCDE', 'format' : InputFormat.AUTO, 'key' : 'FEDCBA', "keyFormat" : InputFormat.AUTO, 'expectedOutput' : '볠', 'outputFormat' : OutputFormat.TEXT, 'errorCode' : ErrorCode.OK},
+      {'input' : 'ABC', 'format' : InputFormat.AUTO, 'key' : '1234', "keyFormat" : InputFormat.AUTO, 'expectedOutput' : 'AF4', 'outputFormat' : OutputFormat.HEX, 'errorCode' : ErrorCode.OK},
 
       {'input' : 'ABCDEF', 'format' : InputFormat.AUTO, 'key' : 'FEDCBA', "keyFormat" : InputFormat.AUTO, 'expectedOutput' : 'ABCDD1', 'outputFormat' : OutputFormat.HEX, 'errorCode' : ErrorCode.OK},
       {'input' : 'ABCDEF', 'format' : InputFormat.AUTO, 'key' : 'FE', "keyFormat" : InputFormat.AUTO, 'expectedOutput' : 'ABCDDC', 'outputFormat' : OutputFormat.HEX, 'errorCode' : ErrorCode.OK},
