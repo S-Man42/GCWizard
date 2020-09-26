@@ -1377,6 +1377,17 @@
   "railfence_optionalpassword" : "Optionales Passwort",
   "railfence_offset" : "Verschiebung",
 
+  "rc4_title" : "RC4",
+  "rc4_description" : "Stromverschlüsselung (HTTPS, SSH 1, WEP, WPA)",
+  "rc4_example" : "abcdef → CD 14",
+  "rc4_format" : "Format",
+  "rc4_format_auto" : "Auto",
+  "rc4_format_text" : "Text",
+  "rc4_format_asciivalues" : "ASCII Werte",
+  "rc4_error_input_format" : "Eingabetyp passt nicht zur Eingabe!",
+  "rc4_error_key_format" : "Schlüsseltyp passt nicht zum Schlüssel!",
+  "rc4_error_missing_key" : "Bitte Schlüssel eingeben!",
+
   "resistor_selection_title" : "Widerstand",
   "resistor_selection_description" : "Elektrischer Widerstand",
   "resistor_colorcodecalculator_title" : "Widerstandsrechner",

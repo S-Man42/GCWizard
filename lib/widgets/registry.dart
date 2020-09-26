@@ -89,6 +89,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rc4.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers.dart';
@@ -534,6 +535,12 @@ class Registry {
         i18nPrefix: 'railfence',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'railfence lattenzaun jaegerzaun zigzag redefence zig-zag palisadenzaun gartenzaun transposition'
+      ),
+      GCWToolWidget(
+        tool: RC4(),
+        i18nPrefix: 'rc4',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'rc4 arc4 arcfour stream cipher stromverschluesselung https ssh ssl wep wpa'
       ),
       GCWToolWidget(
         tool: ResistorSelection(),
