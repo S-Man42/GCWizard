@@ -83,6 +83,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeralwords.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
@@ -461,10 +462,16 @@ class Registry {
         searchStrings: 'samuel morse morsecode morsen translators translate uebersetzen uebersetzer punkte striche dots dashes'
       ),
       GCWToolWidget(
-        tool: NumeralBases(),
-        i18nPrefix: 'numeralbases',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: SEARCHSTRING_BINARY + 'radix numeral systems basis basen zahlensysteme octal octenary oktal dual hexadecimal hexadezimal'
+        tool: NumeralWords(),
+        i18nPrefix: 'numeralwords',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'numeral words zahlwörter'
+      ),
+      GCWToolWidget(
+          tool: Tapir(),
+          i18nPrefix: 'tapir',
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: 'tapir ddr nva mfs stasi nationale volksarmee'
       ),
       GCWToolWidget(
         tool: OneTimePad(),

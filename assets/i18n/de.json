@@ -1053,6 +1053,17 @@
   "numeralbases_showfrequent" : "Zeige häufigste",
   "numeralbases_chooseoutput" : "Wählen",
 
+  "numeralwords_title" : "Numeral Words",
+  "numeralwords_description" : "Identifiziert Zahlwörter und übersetzt diese in Zahlen",
+  "numeralwords_example" : "eins → 1",
+  "numeralwords_language_de" : "Deutsch",
+  "numeralwords_language_fr" : "Fransösisch",
+  "numeralwords_language_en" : "Englisch",
+  "numeralwords_language_it" : "Italienisch",
+  "numeralwords_language_es" : "Spanisch",
+  "numeralwords_mode_left" : "Übersicht",
+  "numeralwords_mode_right" : "Decodieren",
+
   "onetimepad_title" : "One-Time Pad",
   "onetimepad_description" : "Einmalschlüssel: Addiere Schlüsselwort zu Text",
   "onetimepad_example" : "ABC + ABC → BDF",
