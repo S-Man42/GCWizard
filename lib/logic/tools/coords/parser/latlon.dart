@@ -45,7 +45,7 @@ final PATTERN_DEC =
     '[\\s°]?'                             //lon degree symbol
     '\\s*?';
 
-final PATTERN_DEG_TRAILINGSIGN =
+final PATTERN_DMM_TRAILINGSIGN =
     '^\\s*?'
     '(\\d{1,3})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
     '([0-5]?\\d)\\s*?'                     //lat minutes
@@ -62,7 +62,7 @@ final PATTERN_DEG_TRAILINGSIGN =
     '([EWO]$_LETTER*?|[\\+\\-])'          //lon sign;
     '\\s*?';
 
-final PATTERN_DEG =
+final PATTERN_DMM =
     '^\\s*?'
     '([NS]$_LETTER*?|[\\+\\-])?\\s*?'      //lat sign
     '(\\d{1,3})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
@@ -189,7 +189,7 @@ LatLng parseDEC(String text) {
   return null;
 }
 
-double _leftPadDEGMilliMinutes(String minutes, String milliMinutes) {
+double _leftPadDMMMilliMinutes(String minutes, String milliMinutes) {
   if (milliMinutes.length <= 3)
     return double.tryParse('$minutes.${milliMinutes.padLeft(3, '0')}');
 
@@ -199,9 +199,9 @@ double _leftPadDEGMilliMinutes(String minutes, String milliMinutes) {
   return double.tryParse('$minuteValue.${milliMinuteValue % 1000}');
 }
 
-LatLng _parseDEGTrailingSigns(String text, leftPadMilliMinutes) {
+LatLng _parseDMMTrailingSigns(String text, leftPadMilliMinutes) {
 
-  RegExp regex = RegExp(PATTERN_DEG_TRAILINGSIGN + regexEnd, caseSensitive: false);
+  RegExp regex = RegExp(PATTERN_DMM_TRAILINGSIGN + regexEnd, caseSensitive: false);
 
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
@@ -211,39 +211,39 @@ LatLng _parseDEGTrailingSigns(String text, leftPadMilliMinutes) {
     var latMinutes = 0.0;
     if (matches.group(3) != null) {
       if (leftPadMilliMinutes)
-        latMinutes = _leftPadDEGMilliMinutes(matches.group(2), matches.group(3));
+        latMinutes = _leftPadDMMMilliMinutes(matches.group(2), matches.group(3));
       else
         latMinutes = double.parse('${matches.group(2)}.${matches.group(3)}');
     } else {
       latMinutes = double.parse('${matches.group(2)}.0');
     }
-    var lat = DEGLatitude(latSign, latDegrees, latMinutes);
+    var lat = DMMLatitude(latSign, latDegrees, latMinutes);
 
     var lonSign = _sign(matches.group(8));
     var lonDegrees = lonSign * int.tryParse(matches.group(5));
     var lonMinutes = 0.0;
     if (matches.group(7) != null) {
       if (leftPadMilliMinutes)
-        lonMinutes = _leftPadDEGMilliMinutes(matches.group(6), matches.group(7));
+        lonMinutes = _leftPadDMMMilliMinutes(matches.group(6), matches.group(7));
       else
         lonMinutes = double.parse('${matches.group(6)}.${matches.group(7)}');
     } else {
       lonMinutes = double.parse('${matches.group(6)}.0');
     }
-    var lon = DEGLongitude(lonSign, lonDegrees, lonMinutes);
+    var lon = DMMLongitude(lonSign, lonDegrees, lonMinutes);
 
-    return DEG(lat, lon).toLatLng();
+    return DMM(lat, lon).toLatLng();
   }
 
   return null;
 }
 
-LatLng parseDEG(String text, {leftPadMilliMinutes: false}) {
-  var parsedTrailingSigns = _parseDEGTrailingSigns(text, leftPadMilliMinutes);
+LatLng parseDMM(String text, {leftPadMilliMinutes: false}) {
+  var parsedTrailingSigns = _parseDMMTrailingSigns(text, leftPadMilliMinutes);
   if (parsedTrailingSigns != null)
     return parsedTrailingSigns;
 
-  RegExp regex = RegExp(PATTERN_DEG + regexEnd, caseSensitive: false);
+  RegExp regex = RegExp(PATTERN_DMM + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
 
@@ -252,28 +252,28 @@ LatLng parseDEG(String text, {leftPadMilliMinutes: false}) {
     var latMinutes = 0.0;
     if (matches.group(4) != null) {
       if (leftPadMilliMinutes)
-        latMinutes = _leftPadDEGMilliMinutes(matches.group(3), matches.group(4));
+        latMinutes = _leftPadDMMMilliMinutes(matches.group(3), matches.group(4));
       else
         latMinutes = double.parse('${matches.group(3)}.${matches.group(4)}');
     } else {
       latMinutes = double.parse('${matches.group(3)}.0');
     }
-    var lat = DEGLatitude(latSign, latDegrees, latMinutes);
+    var lat = DMMLatitude(latSign, latDegrees, latMinutes);
 
     var lonSign = _sign(matches.group(5));
     var lonDegrees = int.tryParse(matches.group(6));
     var lonMinutes = 0.0;
     if (matches.group(8) != null) {
       if (leftPadMilliMinutes)
-        lonMinutes = _leftPadDEGMilliMinutes(matches.group(7), matches.group(8));
+        lonMinutes = _leftPadDMMMilliMinutes(matches.group(7), matches.group(8));
       else
         lonMinutes = double.parse('${matches.group(7)}.${matches.group(8)}');
     } else {
       lonMinutes = double.parse('${matches.group(7)}.0');
     }
-    var lon = DEGLongitude(lonSign, lonDegrees, lonMinutes);
+    var lon = DMMLongitude(lonSign, lonDegrees, lonMinutes);
 
-    return DEG(lat, lon).toLatLng();
+    return DMM(lat, lon).toLatLng();
   }
 
   return null;
@@ -362,9 +362,9 @@ Map<String, dynamic> parseLatLon(String text, [wholeString = false]) {
   if (coord != null)
     return {'format': keyCoordsDMS, 'coordinate': coord};
 
-  coord = parseDEG(text);
+  coord = parseDMM(text);
   if (coord != null)
-    return {'format': keyCoordsDEG, 'coordinate': coord};
+    return {'format': keyCoordsDMM, 'coordinate': coord};
 
   coord = parseDEC(text);
   if (coord != null)

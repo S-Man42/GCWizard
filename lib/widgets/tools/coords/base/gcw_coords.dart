@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_deg.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dmm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dms.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_gausskrueger.dart';
@@ -74,8 +74,8 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsDEG),
-        'widget': GCWCoordsDEG(
+        'coordFormat': getCoordinateFormatByKey(keyCoordsDMM),
+        'widget': GCWCoordsDMM(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -306,11 +306,11 @@ class GCWCoordsState extends State<GCWCoords> {
   _setPastedCoordsFormat() {
     switch(_currentCoordsFormat['format']) {
       case keyCoordsDEC:
-      case keyCoordsDEG:
+      case keyCoordsDMM:
       case keyCoordsDMS:
         break;
       default:
-        _currentCoordsFormat = {'format': keyCoordsDEG};
+        _currentCoordsFormat = {'format': keyCoordsDMM};
     }
   }
 

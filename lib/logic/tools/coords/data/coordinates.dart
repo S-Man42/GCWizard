@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 
 const keyCoordsDEC = 'coords_dec';
-const keyCoordsDEG = 'coords_deg';
+const keyCoordsDMM = 'coords_dmm';
 const keyCoordsDMS = 'coords_dms';
 const keyCoordsUTM = 'coords_utm';
 const keyCoordsMGRS = 'coords_mgrs';
@@ -34,7 +34,7 @@ class CoordinateFormat {
 
 List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsDEC, 'DEC: DD.DDD°'),
-  CoordinateFormat(keyCoordsDEG, 'DEG: DD° MM.MMM\''),
+  CoordinateFormat(keyCoordsDMM, 'DMM: DD° MM.MMM\''),
   CoordinateFormat(keyCoordsDMS, 'DMS: DD° MM\' SS.SSS"'),
   CoordinateFormat(keyCoordsUTM, 'UTM'),
   CoordinateFormat(keyCoordsMGRS, 'MGRS'),
@@ -63,7 +63,7 @@ CoordinateFormat getCoordinateFormatByKey(String key) {
 
 final defaultCoordinate = LatLng(0.0, 0.0);
 
-String _degAndDMSNumberFormat([int precision = 6]) {
+String _dmmAndDMSNumberFormat([int precision = 6]) {
   var formatString = '00.';
   if (precision == null)
     precision = 6;
@@ -122,15 +122,15 @@ class DEC {
   }
 }
 
-class DEGPart {
+class DMMPart {
   int sign;
   int degrees;
   double minutes;
 
-  DEGPart(this.sign, this.degrees, this.minutes);
+  DMMPart(this.sign, this.degrees, this.minutes);
 
   Map<String, dynamic> _formatParts(bool isLatitude, [int precision]) {
-    var _minutesStr = NumberFormat(_degAndDMSNumberFormat(precision)).format(minutes);
+    var _minutesStr = NumberFormat(_dmmAndDMSNumberFormat(precision)).format(minutes);
     var _degrees = degrees;
     var _sign = _getSignString(sign, isLatitude);
 
@@ -161,11 +161,11 @@ class DEGPart {
   }
 }
 
-class DEGLatitude extends DEGPart {
-  DEGLatitude(sign, degrees, minutes) : super(sign, degrees, minutes);
+class DMMLatitude extends DMMPart {
+  DMMLatitude(sign, degrees, minutes) : super(sign, degrees, minutes);
 
-  static DEGLatitude from(DEGPart degPart) {
-    return DEGLatitude(degPart.sign, degPart.degrees, degPart.minutes);
+  static DMMLatitude from(DMMPart dmmPart) {
+    return DMMLatitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);
   }
 
   Map<String, dynamic> formatParts([int precision]) {
@@ -177,11 +177,11 @@ class DEGLatitude extends DEGPart {
   }
 }
 
-class DEGLongitude extends DEGPart {
-  DEGLongitude(sign, degrees, minutes) : super(sign, degrees, minutes);
+class DMMLongitude extends DMMPart {
+  DMMLongitude(sign, degrees, minutes) : super(sign, degrees, minutes);
 
-  static DEGLongitude from(DEGPart degPart) {
-    return DEGLongitude(degPart.sign, degPart.degrees, degPart.minutes);
+  static DMMLongitude from(DMMPart dmmPart) {
+    return DMMLongitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);
   }
 
   Map<String, dynamic> formatParts([int precision]) {
@@ -193,26 +193,26 @@ class DEGLongitude extends DEGPart {
   }
 }
 
-class DEG {
-  DEGLatitude latitude;
-  DEGLongitude longitude;
+class DMM {
+  DMMLatitude latitude;
+  DMMLongitude longitude;
 
-  DEG(this.latitude, this.longitude);
+  DMM(this.latitude, this.longitude);
 
-  static DEG from(LatLng coord) {
-    return DECToDEG(DEC.from(coord));
+  static DMM from(LatLng coord) {
+    return DECToDMM(DEC.from(coord));
   }
 
   LatLng toLatLng() {
-    return DEGToDEC(this).toLatLng();
+    return DMMToDEC(this).toLatLng();
   }
 
   Map<String, String> format([int precision]) {
     return {'latitude': latitude.format(precision), 'longitude': longitude.format(precision)};
   }
 
-  DEG normalize() {
-    return DECToDEG(DEGToDEC(this));
+  DMM normalize() {
+    return DECToDMM(DMMToDEC(this));
   }
 
   @override
@@ -231,7 +231,7 @@ class DMSPart {
 
   Map<String, dynamic> _formatParts(bool isLatitude, [int precision]) {
     var _sign = _getSignString(sign, isLatitude);
-    var _secondsStr = NumberFormat(_degAndDMSNumberFormat(precision)).format(seconds);
+    var _secondsStr = NumberFormat(_dmmAndDMSNumberFormat(precision)).format(seconds);
     var _minutes = minutes;
 
     //Values like 59.999999999 may be rounded to 60.0. So in that case,

@@ -38,13 +38,13 @@ DEC normalizeDEC(DEC coord) {
   return DEC(normalizedLat, normalizedLon);
 }
 
-double _DEGPartToDouble(DEGPart degPart) {
-  return degPart.sign * (degPart.degrees.abs() + degPart.minutes / 60.0);
+double _DMMPartToDouble(DMMPart dmmPart) {
+  return dmmPart.sign * (dmmPart.degrees.abs() + dmmPart.minutes / 60.0);
 }
 
-DEC DEGToDEC(DEG coord) {
-  var lat = _DEGPartToDouble(coord.latitude);
-  var lon = _DEGPartToDouble(coord.longitude);
+DEC DMMToDEC(DMM coord) {
+  var lat = _DMMPartToDouble(coord.latitude);
+  var lon = _DMMPartToDouble(coord.longitude);
 
   return normalizeDEC(DEC(lat, lon));
 }
@@ -60,22 +60,22 @@ DEC DMSToDEC(DMS coord) {
   return normalizeDEC(DEC(lat, lon));
 }
 
-DEGPart _doubleToDEGPart(double value) {
+DMMPart _doubleToDMMPart(double value) {
   var _sign = coordinateSign(value);
 
   int _degrees = value.abs().floor();
   double _minutes = (value.abs() - _degrees) * 60.0;
 
-  return DEGPart(_sign, _degrees, _minutes);
+  return DMMPart(_sign, _degrees, _minutes);
 }
 
-DEG DECToDEG(DEC coord) {
+DMM DECToDMM(DEC coord) {
   var normalizedCoord = normalizeDEC(coord);
 
-  var lat = DEGLatitude.from(_doubleToDEGPart(normalizedCoord.latitude));
-  var lon = DEGLongitude.from(_doubleToDEGPart(normalizedCoord.longitude));
+  var lat = DMMLatitude.from(_doubleToDMMPart(normalizedCoord.latitude));
+  var lon = DMMLongitude.from(_doubleToDMMPart(normalizedCoord.longitude));
 
-  return DEG(lat, lon);
+  return DMM(lat, lon);
 }
 
 DMSPart _doubleToDMSPart(double value) {
