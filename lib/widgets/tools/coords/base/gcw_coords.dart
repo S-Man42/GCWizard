@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -22,7 +24,9 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:latlong/latlong.dart';
+import 'package:location/location.dart';
 
 class GCWCoords extends StatefulWidget {
   final Function onChanged;
@@ -43,6 +47,9 @@ class GCWCoordsState extends State<GCWCoords> {
   LatLng _pastedCoords;
 
   var _currentWidget;
+
+  bool _currentLocationPermissionGranted;
+  var _location = Location();
 
   @override
   void initState() {
@@ -229,9 +236,41 @@ class GCWCoordsState extends State<GCWCoords> {
         GCWTextDivider(
           text: widget.text,
           bottom: 0.0,
-          trailing: GCWPasteButton(
-            onSelected: _parseClipboardAndSetCoords
-          ),
+          trailing: Row(
+            children: [
+              Container(
+                child:  GCWIconButton(
+                  iconData: Icons.location_on,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    print('A');
+                    print(_currentLocationPermissionGranted);
+                    if (_currentLocationPermissionGranted == null) {
+                      checkLocationPermission(_location).then((value) {
+                        if (value == null || value == false) {
+                          showToast(i18n(context, 'coords_common_location_permissiondenied'));
+                          return;
+                        }
+
+                        setState(() {
+                          _currentLocationPermissionGranted = true;
+                          _setUserLocationCoords();
+                        });
+                      });
+                    } else if (_currentLocationPermissionGranted) {
+                      _setUserLocationCoords();
+                    } else if (!_currentLocationPermissionGranted) {
+                      showToast(i18n(context, 'coords_common_location_permissiondenied'));
+                    }
+                  },
+                ),
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+              ),
+              GCWPasteButton(
+                onSelected: _parseClipboardAndSetCoords
+              )
+            ],
+          )
         ),
         GCWCoordsFormatSelector(
           format: _currentCoordsFormat,
@@ -276,6 +315,13 @@ class GCWCoordsState extends State<GCWCoords> {
     if (_pastedCoords == null)
       return;
 
+    _setPastedCoordsFormat();
+    _currentValue = _pastedCoords;
+
+    _setCurrentValueAndEmitOnChange();
+  }
+
+  _setPastedCoordsFormat() {
     switch(_currentCoordsFormat['format']) {
       case keyCoordsDEC:
       case keyCoordsDEG:
@@ -284,8 +330,18 @@ class GCWCoordsState extends State<GCWCoords> {
       default:
         _currentCoordsFormat = {'format': keyCoordsDEG};
     }
+  }
 
-    _currentValue = _pastedCoords;
-    _setCurrentValueAndEmitOnChange();
+  _setUserLocationCoords() {
+    if (_currentLocationPermissionGranted == null || _currentLocationPermissionGranted == false)
+      return;
+
+    _location.getLocation().then((locationData) {
+      _pastedCoords = LatLng(locationData.latitude, locationData.longitude);
+      _currentValue = _pastedCoords;
+      _setPastedCoordsFormat();
+
+      _setCurrentValueAndEmitOnChange();
+    });
   }
 }

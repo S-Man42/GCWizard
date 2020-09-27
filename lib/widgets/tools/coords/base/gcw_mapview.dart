@@ -19,6 +19,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
@@ -50,12 +51,9 @@ class GCWMapViewState extends State<GCWMapView> {
   _LayerType _currentLayer = _LayerType.OPENSTREETMAP_MAPNIK;
   var _mapBoxToken;
 
-  // StreamSubscription<Position> _positionStreamSubscription;
-  // Position _currentPosition;
-  var _useUserPosition = true;
   var _currentLocationPermissionGranted;
   StreamSubscription<LocationData> _locationSubscription;
-  Location location = Location();
+  Location _location = Location();
   LatLng _currentPosition;
   double _currentAccuracy;
 
@@ -137,11 +135,11 @@ class GCWMapViewState extends State<GCWMapView> {
   }
 
   _toggleLocationListening() {
-    if (!_useUserPosition || _currentLocationPermissionGranted == false)
+    if (_currentLocationPermissionGranted == false)
       return;
 
     if (_locationSubscription == null) {
-      _locationSubscription = location.onLocationChanged
+      _locationSubscription = _location.onLocationChanged
         .handleError((error) {
           _cancelLocationSubscription();
         })
@@ -164,33 +162,13 @@ class GCWMapViewState extends State<GCWMapView> {
     });
   }
 
-  _checkLocationPermission() async {
-    var _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        _currentLocationPermissionGranted = false;
-        return;
-      }
-    }
-
-    var _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-
-    _currentLocationPermissionGranted = true;
-
-    _toggleLocationListening();
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (_useUserPosition && _currentLocationPermissionGranted == null) {
-      _checkLocationPermission();
+    if (_currentLocationPermissionGranted == null) {
+      checkLocationPermission(_location).then((value) {
+        _currentLocationPermissionGranted = value;
+        _toggleLocationListening();
+      });
     }
 
     var layer = _currentLayer == _LayerType.MAPBOX_SATELLITE && _mapBoxToken != null && _mapBoxToken != ''
@@ -266,9 +244,9 @@ class GCWMapViewState extends State<GCWMapView> {
     var layers = <LayerOptions>[];
 
     // build accuracy circle for user position
-    if (_useUserPosition
-        && _locationSubscription != null && !_locationSubscription.isPaused
-        && _currentAccuracy != null && _currentPosition != null
+    if (
+         _locationSubscription != null && !_locationSubscription.isPaused
+      && _currentAccuracy != null && _currentPosition != null
     ) {
       layers.add(
         CircleLayerOptions(
@@ -314,8 +292,8 @@ class GCWMapViewState extends State<GCWMapView> {
     var points = List<MapPoint>.from(widget.points);
 
     // Add User Position
-    if (_useUserPosition
-      && _locationSubscription != null && !_locationSubscription.isPaused
+    if (
+         _locationSubscription != null && !_locationSubscription.isPaused
       && _currentPosition != null
     ) {
       points.add(MapPoint(
@@ -387,9 +365,9 @@ class GCWMapViewState extends State<GCWMapView> {
       ),
     ];
 
-    if (_useUserPosition
-        && _currentLocationPermissionGranted != null && _currentLocationPermissionGranted
-        && _locationSubscription != null
+    if (
+         _currentLocationPermissionGranted != null && _currentLocationPermissionGranted
+      && _locationSubscription != null
     ) {
       buttons.add(
         GCWIconButton(

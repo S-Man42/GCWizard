@@ -709,6 +709,7 @@
   "coords_common_centerpoint": "Center Point",
   "coords_common_intersection": "Intersection",
   "coords_common_clipboard_nocoordsfound":  "No coordinates found within the paste data.",
+  "coords_common_location_permissiondenied":  "Access to position data denied.",
   "coords_show_on_map": "Show on map",
   "coords_mapview_osm": "© OpenStreetMap contributors",
   "coords_mapview_osm_url": "https://www.openstreetmap.org/copyright/en",
