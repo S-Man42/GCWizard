@@ -1,3 +1,4 @@
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 const AZToBacon = {
@@ -9,11 +10,11 @@ const AZToBacon = {
 // U has same code as V, so U replaces V in mapping; V will not occur in this map
 final BaconToAZ = switchMapKeyValue(AZToBacon);
 
-String encodeBacon(String input) {
+String encodeBacon(String input, bool inverse, bool binary) {
   if (input == null || input == '')
     return '';
 
-  return input
+  var out = input
       .toUpperCase()
       .split('')
       .map((character) {
@@ -21,13 +22,30 @@ String encodeBacon(String input) {
         return bacon != null ? bacon : '';
       })
       .join();
+
+  if (inverse)
+    out = _inverseString(out);
+
+  if (binary & (out != null)) {
+    out = substitution(out, {'A' : '0', 'B' : '1'});
+  }
+
+  return out;
 }
 
-String decodeBacon(String input) {
+String decodeBacon(String input, bool invers, bool binary) {
   if (input == null || input == '')
     return '';
 
+  if (binary) {
+    input = input.toUpperCase().replaceAll(RegExp('[A-B]'), '');
+    input = substitution(input, {'0' : 'A', '1' : 'B'});
+  }
+
   input = input.toUpperCase().replaceAll(RegExp(r'[^A-B]'), '');
+  if (invers)
+    input = _inverseString(input);
+
   input = input.substring(0, input.length - (input.length % 5));
 
   var out = '';
@@ -38,4 +56,8 @@ String decodeBacon(String input) {
   }
 
   return out;
+}
+
+String _inverseString(String text) {
+  return substitution(text, {'A' : 'B', 'B' : 'A'});
 }
