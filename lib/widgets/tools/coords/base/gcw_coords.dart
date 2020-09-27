@@ -48,8 +48,8 @@ class GCWCoordsState extends State<GCWCoords> {
 
   var _currentWidget;
 
-  bool _currentLocationPermissionGranted;
   var _location = Location();
+  bool _isOnLocationAccess = false;
 
   @override
   void initState() {
@@ -240,28 +240,10 @@ class GCWCoordsState extends State<GCWCoords> {
             children: [
               Container(
                 child:  GCWIconButton(
-                  iconData: Icons.location_on,
+                  iconData: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
                   size: IconButtonSize.SMALL,
                   onPressed: () {
-                    print('A');
-                    print(_currentLocationPermissionGranted);
-                    if (_currentLocationPermissionGranted == null) {
-                      checkLocationPermission(_location).then((value) {
-                        if (value == null || value == false) {
-                          showToast(i18n(context, 'coords_common_location_permissiondenied'));
-                          return;
-                        }
-
-                        setState(() {
-                          _currentLocationPermissionGranted = true;
-                          _setUserLocationCoords();
-                        });
-                      });
-                    } else if (_currentLocationPermissionGranted) {
-                      _setUserLocationCoords();
-                    } else if (!_currentLocationPermissionGranted) {
-                      showToast(i18n(context, 'coords_common_location_permissiondenied'));
-                    }
+                    _setUserLocationCoords();
                   },
                 ),
                 padding: EdgeInsets.only(right: DEFAULT_MARGIN),
@@ -333,15 +315,28 @@ class GCWCoordsState extends State<GCWCoords> {
   }
 
   _setUserLocationCoords() {
-    if (_currentLocationPermissionGranted == null || _currentLocationPermissionGranted == false)
-      return;
+    setState(() {
+      _isOnLocationAccess = true;
+    });
 
-    _location.getLocation().then((locationData) {
-      _pastedCoords = LatLng(locationData.latitude, locationData.longitude);
-      _currentValue = _pastedCoords;
-      _setPastedCoordsFormat();
+    checkLocationPermission(_location).then((value) {
+      if (value == null || value == false) {
+        setState(() {
+          _isOnLocationAccess = false;
+        });
+        showToast(i18n(context, 'coords_common_location_permissiondenied'));
 
-      _setCurrentValueAndEmitOnChange();
+        return;
+      }
+
+      _location.getLocation().then((locationData) {
+        _pastedCoords = LatLng(locationData.latitude, locationData.longitude);
+        _currentValue = _pastedCoords;
+        _setPastedCoordsFormat();
+
+        _isOnLocationAccess = false;
+        _setCurrentValueAndEmitOnChange();
+      });
     });
   }
 }
