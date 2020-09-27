@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeralwords.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -20,6 +19,7 @@ class NumeralWordsState extends State<NumeralWords> {
 
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
   var _currentLanguage = NumeralWordsLanguage.DE;
 
   @override
@@ -42,10 +42,25 @@ class NumeralWordsState extends State<NumeralWords> {
       NumeralWordsLanguage.FR : i18n(context, 'numeralwords_language_fr'),
       NumeralWordsLanguage.IT : i18n(context, 'numeralwords_language_it'),
       NumeralWordsLanguage.ES : i18n(context, 'numeralwords_language_es'),
+      NumeralWordsLanguage.ALL : i18n(context, 'numeralwords_language_all'),
     };
 
     return Column(
       children: <Widget>[
+        GCWDropDownButton(//choose language
+          value: _currentLanguage,
+          onChanged: (value) {
+            setState(() {
+              _currentLanguage = value;
+            });
+          },
+          items: NumeralWordsLanguageItems.entries.map((mode) {
+            return GCWDropDownMenuItem(
+              value: mode.key,
+              child: mode.value,
+            );
+          }).toList(),
+        ),
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'numeralwords_mode_left'),
           rightValue: i18n(context, 'numeralwords_mode_right'),
@@ -56,27 +71,26 @@ class NumeralWordsState extends State<NumeralWords> {
           },
         ),
         _currentMode == GCWSwitchPosition.left //show numeralwords for a specific language
-            ? GCWDropDownButton(
-                value: _currentLanguage,
-                onChanged: (value) {
-                  setState(() {
-                    _currentLanguage = value;
-                  });
-                },
-                items: NumeralWordsLanguageItems.entries.map((mode) {
-                  return GCWDropDownMenuItem(
-                    value: mode.key,
-                    child: mode.value,
-                  );
-                }).toList(),
-              )
-            : GCWTextField(
-                controller: _decodeController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentDecodeInput = text;
-                  });
-                },
+            ? Container()
+            : Column(
+                children: <Widget>[
+                  GCWTextField(
+                    controller: _decodeController,
+                    onChanged: (text) {
+                      setState(() {
+                        _currentDecodeInput = text;
+                      });
+                    },
+                  ),
+                  GCWTwoOptionsSwitch(
+                    leftValue: i18n(context, 'numeralwords_decodemode_left'),
+                    rightValue: i18n(context, 'numeralwords_decodemode_right'),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentDecodeMode = value;
+                      });
+                    },
+                  )                ],
               ),
         GCWTextDivider(
             text: i18n(context, 'common_output')
@@ -102,12 +116,18 @@ class NumeralWordsState extends State<NumeralWords> {
           break;
         case NumeralWordsLanguage.ES: words = NumeralToWordES;
           break;
+        case NumeralWordsLanguage.ALL:
+          return GCWOutputText(
+            text: i18n(context, 'numeralwords_language_all_not_feasible'),
+          );
+          break;
       }
-      for (int i = 0; i < 10; i++){
-        output = output + i.toString() + ' - ' + words[i.toString()] + '\n';
+      for (int i = 0; i < 100; i++){
+        if (words[i.toString()] != null)
+          output = output + i.toString() + ' - ' + words[i.toString()] + '\n';
       }
     } else
-      output = decodeNumeralwords(_currentDecodeInput);
+      output = decodeNumeralwords(_currentDecodeInput.toUpperCase(), _currentLanguage, _currentDecodeMode);
 
     return GCWOutputText(
         text: output,
