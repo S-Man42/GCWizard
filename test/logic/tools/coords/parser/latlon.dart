@@ -57,9 +57,10 @@ void main() {
     {'text': '92 Westen 0\nA: 1', 'expectedOutput': {'format': keyCoordsDEC, 'coordinate': LatLng(88.0, 180.0)}},
   ];
 
-  final List<Map<String, dynamic>> _inputsToExpectedDEG = [
+  final List<Map<String, dynamic>> _inputsToExpectedDMM = [
     {'text': '52° 12.312\' N 20° 12.312\' E', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.2052, 20.2052)}},
     {'text': '52° 12.312\' S 20° 12.312\' W', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(-52.2052, -20.2052)}},
+    {'text': ' 52°12.312′N 122°12.312′W', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.2052, -122.2052)}},
     {'text': '00° 12.312\' S 000° 12.312\' W', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(-0.2052, -0.2052)}},
     {'text': '52° 12.312\' North 20° 12.312\' Ost', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.2052, 20.2052)}},
     {'text': '52° 12.312\' South 20° 12.312\' West', 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(-52.2052, -20.2052)}},
@@ -183,8 +184,8 @@ void main() {
     });
   });
 
-  group("Parser.latlon.parseDEG:", () {
-    List<Map<String, dynamic>> _inputsToExpected = _inputsToExpectedDEG;
+  group("Parser.latlon.parseDMM:", () {
+    List<Map<String, dynamic>> _inputsToExpected = _inputsToExpectedDMM;
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
@@ -215,7 +216,7 @@ void main() {
 
   group("Parser.latlon.parseLatLon:", () {
     List<Map<String, dynamic>> _inputsToExpected = _inputsToExpectedDEC;
-    _inputsToExpected.addAll(_inputsToExpectedDEG);
+    _inputsToExpected.addAll(_inputsToExpectedDMM);
     _inputsToExpected.addAll(_inputsToExpectedDMS);
 
     _inputsToExpected
@@ -230,7 +231,7 @@ void main() {
       });
   });
 
-  group("Parser.latlon.parseDEGWithLeftPadMilliminutes:", () {
+  group("Parser.latlon.parseDMMWithLeftPadMilliminutes:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'text': '52 12\'N 20°12\'East', 'leftPadMilliMinutes': false, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.2, 20.2)}},
       {'text': '52 12.3\'N 20°12.4\'East', 'leftPadMilliMinutes': false, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.205, 20.206666666666)}},

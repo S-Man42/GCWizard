@@ -28,33 +28,34 @@ class CoordinateFormat {
   final key;
   String name;
   List<CoordinateFormat> subtypes;
+  String example;
 
-  CoordinateFormat(this.key, this.name, {this.subtypes});
+  CoordinateFormat(this.key, this.name, this.example, {this.subtypes});
 }
 
 List<CoordinateFormat> allCoordFormats = [
-  CoordinateFormat(keyCoordsDEC, 'DEC: DD.DDD°'),
-  CoordinateFormat(keyCoordsDMM, 'DMM: DD° MM.MMM\''),
-  CoordinateFormat(keyCoordsDMS, 'DMS: DD° MM\' SS.SSS"'),
-  CoordinateFormat(keyCoordsUTM, 'UTM'),
-  CoordinateFormat(keyCoordsMGRS, 'MGRS'),
-  CoordinateFormat(keyCoordsSwissGrid, 'SwissGrid (CH1903)'),
-  CoordinateFormat(keyCoordsSwissGridPlus, 'SwissGrid (CH1903+)'),
-  CoordinateFormat(keyCoordsGaussKrueger, 'coords_formatconverter_gausskrueger', subtypes: [
-    CoordinateFormat(keyCoordsGaussKruegerGK1, 'coords_formatconverter_gausskrueger_gk1'),
-    CoordinateFormat(keyCoordsGaussKruegerGK2, 'coords_formatconverter_gausskrueger_gk2'),
-    CoordinateFormat(keyCoordsGaussKruegerGK3, 'coords_formatconverter_gausskrueger_gk3'),
-    CoordinateFormat(keyCoordsGaussKruegerGK4, 'coords_formatconverter_gausskrueger_gk4'),
-    CoordinateFormat(keyCoordsGaussKruegerGK5, 'coords_formatconverter_gausskrueger_gk5'),
+  CoordinateFormat(keyCoordsDEC, 'DEC: DD.DDD°', ''),
+  CoordinateFormat(keyCoordsDMM, 'DMM: DD° MM.MMM\'', ''),
+  CoordinateFormat(keyCoordsDMS, 'DMS: DD° MM\' SS.SSS"', ''),
+  CoordinateFormat(keyCoordsUTM, 'UTM', ''),
+  CoordinateFormat(keyCoordsMGRS, 'MGRS', ''),
+  CoordinateFormat(keyCoordsSwissGrid, 'SwissGrid (CH1903)', ''),
+  CoordinateFormat(keyCoordsSwissGridPlus, 'SwissGrid (CH1903+)', ''),
+  CoordinateFormat(keyCoordsGaussKrueger, 'coords_formatconverter_gausskrueger', '', subtypes: [
+    CoordinateFormat(keyCoordsGaussKruegerGK1, 'coords_formatconverter_gausskrueger_gk1', ''),
+    CoordinateFormat(keyCoordsGaussKruegerGK2, 'coords_formatconverter_gausskrueger_gk2', ''),
+    CoordinateFormat(keyCoordsGaussKruegerGK3, 'coords_formatconverter_gausskrueger_gk3', ''),
+    CoordinateFormat(keyCoordsGaussKruegerGK4, 'coords_formatconverter_gausskrueger_gk4', ''),
+    CoordinateFormat(keyCoordsGaussKruegerGK5, 'coords_formatconverter_gausskrueger_gk5', ''),
   ]),
-  CoordinateFormat(keyCoordsMaidenhead, 'Maidenhead Locator (QTH)'),
-  CoordinateFormat(keyCoordsMercator, 'Mercator'),
-  CoordinateFormat(keyCoordsNaturalAreaCode, 'Natural Area Code (NAC)'),
-  CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles'),
-  CoordinateFormat(keyCoordsGeohash, 'Geohash'),
-  CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)'),
-  CoordinateFormat(keyCoordsQuadtree, 'Quadtree'),
-  CoordinateFormat(keyCoordsReverseWhereIGoWaldmeister, 'Reverse WhereIGo (Waldmeister)'),
+  CoordinateFormat(keyCoordsMaidenhead, 'Maidenhead Locator (QTH)', ''),
+  CoordinateFormat(keyCoordsMercator, 'Mercator', ''),
+  CoordinateFormat(keyCoordsNaturalAreaCode, 'Natural Area Code (NAC)', ''),
+  CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles', ''),
+  CoordinateFormat(keyCoordsGeohash, 'Geohash', ''),
+  CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)', ''),
+  CoordinateFormat(keyCoordsQuadtree, 'Quadtree', ''),
+  CoordinateFormat(keyCoordsReverseWhereIGoWaldmeister, 'Reverse WhereIGo (Waldmeister)', ''),
 ];
 
 CoordinateFormat getCoordinateFormatByKey(String key) {
