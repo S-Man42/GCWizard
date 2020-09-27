@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/units/unit.dart';
-import 'package:gc_wizard/logic/units/unit_category.dart';
 
 class Angle extends Unit {
   Function toDegree;
@@ -30,7 +29,28 @@ final ANGLE_RADIAN = Angle(
   inDegree: 180.0 / pi
 );
 
+final ANGLE_GON = Angle(
+  name: 'common_unit_angle_gon_name',
+  symbol: 'gon',
+  inDegree: 360.0 / 400.0
+);
+
+final ANGLE_MIL = Angle(
+  name: 'common_unit_angle_mil_name',
+  symbol: '\u00AF',
+  inDegree: 360.0 / 6400.0
+);
+
+final ANGLE_NAUTICALLINE = Angle(
+  name: 'common_unit_angle_nauticalline_name',
+  symbol: '"',
+  inDegree: 360.0 / 32.0
+);
+
 final List<Unit> angles = [
   ANGLE_DEGREE,
-  ANGLE_RADIAN
+  ANGLE_RADIAN,
+  ANGLE_GON,
+  ANGLE_NAUTICALLINE,
+  ANGLE_MIL,
 ];
