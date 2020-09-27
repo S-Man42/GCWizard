@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 1.2.0+57
+version: 1.2.0+59
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -27,6 +27,7 @@ dependencies:
   fluttertoast: ^7.0.4
   qr_flutter: ^3.2.0
   touchable: ^0.2.0
+  location: ^3.0.2
 
 dev_dependencies:
   flutter_test:

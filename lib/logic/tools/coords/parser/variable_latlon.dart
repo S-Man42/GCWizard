@@ -131,8 +131,8 @@ Map<String, LatLng> _parseCoordText(String text) {
 
   var out = <String, LatLng>{'coordinate': parsedCoord['coordinate']};
 
-  if (parsedCoord['format'] == keyCoordsDEG) {
-    out.putIfAbsent('leftPadCoordinate', () => parseDEG(text, leftPadMilliMinutes: true));
+  if (parsedCoord['format'] == keyCoordsDMM) {
+    out.putIfAbsent('leftPadCoordinate', () => parseDMM(text, leftPadMilliMinutes: true));
   }
 
   return out;

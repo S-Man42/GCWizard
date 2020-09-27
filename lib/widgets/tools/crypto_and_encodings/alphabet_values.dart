@@ -188,17 +188,6 @@ class AlphabetValuesState extends State<AlphabetValues> {
                         subtitle: _generateItemDescription(alphabet)
                       );
                     }).toList(),
-                    selectedItemBuilder: (context) {
-                      return _alphabets.map<Widget>((alphabet) {
-                        return Align(
-                          child: Text(
-                            alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
-                            style: gcwTextStyle(),
-                          ),
-                          alignment: Alignment.centerLeft,
-                        );
-                      }).toList();
-                    },
                     onChanged: (value) {
                       setState(() {
                         _currentAlphabetKey = value;
