@@ -315,6 +315,9 @@ class GCWCoordsState extends State<GCWCoords> {
   }
 
   _setUserLocationCoords() {
+    if (_isOnLocationAccess)
+      return;
+
     setState(() {
       _isOnLocationAccess = true;
     });
@@ -330,6 +333,9 @@ class GCWCoordsState extends State<GCWCoords> {
       }
 
       _location.getLocation().then((locationData) {
+        if (locationData.accuracy > 20)
+          showToast(i18n(context, 'coords_common_location_lowaccuracy', parameters: [locationData.accuracy]));
+
         _pastedCoords = LatLng(locationData.latitude, locationData.longitude);
         _currentValue = _pastedCoords;
         _setPastedCoordsFormat();
