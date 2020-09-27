@@ -62,6 +62,7 @@ flutter:
     - assets/symbol_tables/color_code/
     - assets/symbol_tables/color_honey/
     - assets/symbol_tables/color_tokki/
+    - assets/symbol_tables/cyrillic/
     - assets/symbol_tables/daedric/
     - assets/symbol_tables/dagger/
     - assets/symbol_tables/dancing_men/
@@ -95,6 +96,8 @@ flutter:
     - assets/symbol_tables/hobbit_runes/
     - assets/symbol_tables/hvd/
     - assets/symbol_tables/hylian_skyward_sword/
+    - assets/symbol_tables/hylian_twilight_princess_gcn/
+    - assets/symbol_tables/hylian_twilight_princess_wii/
     - assets/symbol_tables/hylian_wind_waker/
     - assets/symbol_tables/hymmnos/
     - assets/symbol_tables/illuminati_v1/
@@ -145,7 +148,9 @@ flutter:
     - assets/symbol_tables/tenctonese/
     - assets/symbol_tables/terzi/
     - assets/symbol_tables/theban/
+    - assets/symbol_tables/tines/
     - assets/symbol_tables/tomtom/
+    - assets/symbol_tables/ulog/
     - assets/symbol_tables/utopian/
     - assets/symbol_tables/visitor/
     - assets/symbol_tables/wakandan/

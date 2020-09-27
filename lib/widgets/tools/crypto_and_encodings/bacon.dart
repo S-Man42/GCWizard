@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/bacon.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 
 class Bacon extends StatefulWidget {
   @override
@@ -14,7 +16,9 @@ class BaconState extends State<Bacon> {
 
   var _currentInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  
+  GCWSwitchPosition _binaryMode = GCWSwitchPosition.left;
+  bool _inversMode = false;
+
   String _output = '';
 
   @override
@@ -48,6 +52,27 @@ class BaconState extends State<Bacon> {
             });
           },
         ),
+
+        GCWTwoOptionsSwitch(
+          title: i18n(context, 'bacon_coding'),
+          leftValue: i18n(context, 'alphabetvalues_letters'),
+          rightValue: i18n(context, 'common_numeralbase_binary'),
+          value: _binaryMode,
+          onChanged: (value) {
+            setState(() {
+              _binaryMode = value;
+            });
+          },
+        ),
+        GCWOnOffSwitch(
+          title: i18n(context, 'bacon_invers'),
+          value: _inversMode,
+          onChanged: (value) {
+            setState(() {
+              _inversMode = value;
+            });
+          },
+        ),
         _buildOutput()
       ],
     );
@@ -55,9 +80,9 @@ class BaconState extends State<Bacon> {
 
   _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      _output = encodeBacon(_currentInput);
+      _output = encodeBacon(_currentInput, _inversMode , _binaryMode == GCWSwitchPosition.right);
     } else {
-      _output = decodeBacon(_currentInput);
+      _output = decodeBacon(_currentInput,  _inversMode , _binaryMode == GCWSwitchPosition.right);
     }
 
     return GCWDefaultOutput(
