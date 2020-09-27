@@ -9,7 +9,7 @@ import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_bearing.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_angle.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
@@ -64,7 +64,7 @@ class ResectionState extends State<Resection> {
             });
           },
         ),
-        GCWBearing(
+        GCWAngle(
           hintText: i18n(context, "coords_resection_angle12"),
           onChanged: (value) {
             setState(() {
@@ -82,7 +82,7 @@ class ResectionState extends State<Resection> {
             });
           },
         ),
-        GCWBearing(
+        GCWAngle(
           hintText: i18n(context, "coords_resection_angle23"),
           onChanged: (value) {
             setState(() {
