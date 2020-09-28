@@ -716,7 +716,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     var alphabet = _getFinalAlphabet();
 
     if (_currentMode == GCWSwitchPosition.left) {
-      return intListToString(logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true), delimiter: ' | ');
+      return intListToString(logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true), delimiter: ' ');
     } else {
       return logic.AlphabetValues(alphabet: alphabet).valuesToText(List<int>.from(_currentDecodeInput['values']));
     }
