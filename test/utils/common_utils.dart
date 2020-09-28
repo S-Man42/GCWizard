@@ -248,4 +248,25 @@ void main() {
       });
     });
   });
+
+  group("CommonUtils.isUpperCase:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'letter' : null, 'expectedOutput' : false},
+      {'letter' : '', 'expectedOutput' : false},
+
+      {'letter' : 'A', 'expectedOutput' : true},
+      {'letter' : 'AA', 'expectedOutput' : true},
+
+      {'letter' : 'AAa', 'expectedOutput' : false},
+      {'letter' : 'a', 'expectedOutput' : false},
+      {'letter' : 'aA', 'expectedOutput' : false},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('letter: ${elem['letter']}', () {
+        var _actual = isUpperCase(elem['letter']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
 }

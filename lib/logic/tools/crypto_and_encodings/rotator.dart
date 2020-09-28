@@ -1,3 +1,5 @@
+import 'package:gc_wizard/utils/common_utils.dart';
+
 class Rotator {
   static const defaultAlphabetAlpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   static const defaultAlphabetDigits = '0123456789';
@@ -44,12 +46,11 @@ class Rotator {
     var alphabetLength = alphabet.length;
 
     return input.split('').map((char) {
-      var isUpperCase = char == char.toUpperCase();
       var index = alphabet.indexOf(char.toUpperCase());
 
       if (index >= 0) {
         var newIndex = (index + key) % alphabetLength;
-        return isUpperCase ? alphabet[newIndex] : alphabet[newIndex].toLowerCase();
+        return isUpperCase(char) ? alphabet[newIndex] : alphabet[newIndex].toLowerCase();
       }
 
       return removeUnknownChars ? '' : char;
