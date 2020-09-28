@@ -61,16 +61,6 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
               subtitle: entry.example
             );
           }).toList(),
-            // selectedItemBuilder: (context) {
-            //   return allCoordFormats.map((entry) {
-            //     return Align(
-            //       child: GCWText(
-            //         text: i18n(context, entry.name) ?? entry.name
-            //       ),
-            //       alignment: Alignment.centerLeft,
-            //     );
-            //   }).toList();
-            // }
         ),
         _buildSubtype()
       ],
