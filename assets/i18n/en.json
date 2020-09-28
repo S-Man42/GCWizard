@@ -854,6 +854,12 @@
   "crosssum_range_description" : "Finds all integers within a range with a specific digit sum",
   "crosssum_range_expected" : "Expected Cross Sum",
   "crosssum_range_range" : "Search Range (Start, End)",
+  "crosssum_range_alert_result_title" : "Warning: Many results!",
+  "crosssum_range_alert_result_text" : "You generated %s1 results.\n\nDo you really want to list them all?",
+  "crosssum_range_alert_input_title" : "Warning: Very large range!",
+  "crosssum_range_alert_input_text" : "The chosen range is very large: %s1 elements.\n\nSuch a calculation could take much time.\n\nAre you sure?",
+  "crosssum_range_iterated_title" : "Iterated Cross Sum (Digital Root) in Range",
+  "crosssum_range_iterated_description" : "Finds all integers within a range with a specific digital root",
 
   "crosstotal_title" : "Show Sums",
   "crosstotal_output" : "Sums, Cross Sums, Products",

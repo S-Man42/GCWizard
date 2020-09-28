@@ -854,6 +854,12 @@
   "crosssum_range_description" : "Findet alle Zahlen in einem Bereich mit einer bestimmten Quersumme",
   "crosssum_range_expected" : "Erwartete Quersumme",
   "crosssum_range_range" : "Bereichssuche (Start, Ende)",
+  "crosssum_range_alert_input_title" : "Warnung: Sehr großer Bereich!",
+  "crosssum_range_alert_input_text" : "Der gewählte Bereich ist sehr groß: %s1 Elemente.\n\nSolch eine Abfrage kann sehr lange dauern.\n\nBist du sicher?",
+  "crosssum_range_alert_result_title" : "Warnung: Sehr viele Ergebnisse!",
+  "crosssum_range_alert_result_text" : "Du hast %s1 Ergebnisse generiert.\n\nWillst du sie wirklich alle anzeigen?",
+  "crosssum_range_iterated_title" : "Iterierte Quersumme in Bereich",
+  "crosssum_range_iterated_description" : "Findet alle Zahlen in einem Bereich mit einer bestimmten iterierten Quersumme",
 
   "crosstotal_title" : "Zeige Summen",
   "crosstotal_output" : "Summen, Quersummen, Produkte",
