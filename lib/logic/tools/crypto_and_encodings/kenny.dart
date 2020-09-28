@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart'
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
-encryptKenny(String input, List<String> replaceCharacters) {
+encryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
   if (input == null || input.length == 0)
     return '';
 
@@ -26,9 +26,14 @@ encryptKenny(String input, List<String> replaceCharacters) {
     }
     var value = convertBase((alphabet_AZ[letter.toUpperCase()] - 1).toString(), 10, 3).padLeft(3, '0');
     value = substitution(value, substitutions);
+    if (caseSensitive) {
+      if (isUpperCase(letter))
+        value = value.substring(0,1).toUpperCase() + value.substring(1).toLowerCase();
+      else
+        value = value.toLowerCase();
+    }
     output += value;
   });
-
   return output;
 }
 
@@ -41,47 +46,78 @@ decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
 
   var replaceToCharacters = [String.fromCharCode(0), String.fromCharCode(1), String.fromCharCode(2)];
 
-  if (!caseSensitive) {
-    for (int i = 0; i < replaceCharacters.length; i++)
-      replaceCharacters[i] = replaceCharacters[i].toUpperCase();
-
-    input = input.toUpperCase();
-  }
-
   Map<String, String> substitutions = {};
+  Map<String, String> substitutionsSwitched = {};
   Map<String, String> integerSubstitutions = {};
   for (int i = 0; i <= 2; i++) {
     substitutions.putIfAbsent(replaceCharacters[i], () => replaceToCharacters[i]);
     integerSubstitutions.putIfAbsent(replaceToCharacters[i], () => i.toString());
   }
 
-  input = substitution(input, substitutions);
+  var _input = substitution(input, substitutions, caseSensitive: false);
+  int chunkStart = 0;
+  int chunkOffset = 0;
+  substitutionsSwitched = switchMapKeyValue(substitutions);
 
   var output = '';
-  while (input.length > 0) {
+  while (_input.length > 0) {
     var chunk = '';
-    while (chunk.length < 3 && input.length > 0) {
-      var character = input[0];
+    chunkStart += chunkOffset;
+    chunkOffset = 0;
+    while (chunk.length < 3 && _input.length > 0) {
+      var character = _input[0];
       if (replaceToCharacters.contains(character)) {
         chunk += character;
+        chunkOffset += substitutionsSwitched[character].length;
       } else {
-        output += chunk + character;
+        var outputTmp = restoreChunks(chunk + input[chunkStart+chunkOffset],input,chunkStart,substitutionsSwitched);
+        output += outputTmp;
         chunk = '';
+        chunkOffset = 0;
+        chunkStart += outputTmp.length;
       }
 
-      input = input.substring(1);
+      _input = _input.substring(1);
     }
 
     if (chunk.length == 3) {
       var index = int.tryParse(convertBase(substitution(chunk, integerSubstitutions), 3, 10));
       if (index < 26) {
-        output += alphabet_AZIndexes[index + 1];
+        var outputChar = alphabet_AZIndexes[index + 1];
+        if (caseSensitive) {
+          if (!isUpperCase(input[chunkStart]))
+            outputChar = outputChar.toLowerCase();
+        }
+        output += outputChar;
         continue;
       }
     }
 
-    output += chunk;
+    var outputTmp = substitution(chunk, substitutionsSwitched);
+    for (int i = 0; i < outputTmp.length; i++)
+      output += input[chunkStart + i];
   }
 
-  return substitution(output + input, switchMapKeyValue(substitutions)).toUpperCase();
+  output = restoreChunks(output + _input, input, 0 , substitutionsSwitched);
+
+  if (!caseSensitive)
+    output = output.toUpperCase();
+  return output;
+}
+
+String restoreChunks(String chunk , String input, int position, Map<String, String> substitutionsSwitched){
+  var output = '';
+  for (int i = 0; i < chunk.length; i++) {
+    if (substitutionsSwitched.containsKey(chunk[i])){
+      output +=  input.substring(position, position + substitutionsSwitched[chunk[i]].length) ;
+      position += substitutionsSwitched[chunk[i]].length;
+    } else
+      output += chunk[i];
+    position += chunk[i].length;
+  }
+  return output;
+}
+
+bool isUpperCase(String letter) {
+  return (letter.toUpperCase() == letter);
 }

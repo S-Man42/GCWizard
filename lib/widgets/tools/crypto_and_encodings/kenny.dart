@@ -121,8 +121,7 @@ class KennyState extends State<Kenny> {
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.right
-        ? GCWOnOffSwitch(
+        GCWOnOffSwitch(
           title: i18n(context, 'kenny_case_sensitive'),
           value: _currentCaseSensitive,
           onChanged: (value) {
@@ -130,8 +129,7 @@ class KennyState extends State<Kenny> {
               _currentCaseSensitive = value;
             });
           },
-        )
-       : Container(), //empty widget
+        ),
         GCWDefaultOutput(
           child: _buildOutput()
         )
@@ -147,6 +145,6 @@ class KennyState extends State<Kenny> {
       return '';
 
     var key = [_currentM, _currentP, _currentF];
-    return _currentMode == GCWSwitchPosition.left ? encryptKenny(_currentInput, key) : decryptKenny(_currentInput, key, _currentCaseSensitive);
+    return _currentMode == GCWSwitchPosition.left ? encryptKenny(_currentInput, key, _currentCaseSensitive) : decryptKenny(_currentInput, key, _currentCaseSensitive);
   }
 }
