@@ -44,7 +44,7 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
 
   switch (_outputFormat['format']) {
     case keyCoordsDEC: _formatted = DEC.from(_coords).format(); break;
-    case keyCoordsDEG: _formatted = DEG.from(_coords).format(); break;
+    case keyCoordsDMM: _formatted = DMM.from(_coords).format(); break;
     case keyCoordsDMS: _formatted = DMS.from(_coords).format(); break;
     case keyCoordsUTM: return latLonToUTMString(_coords, ells);
     case keyCoordsMGRS: return latLonToMGRSString(_coords, ells);
