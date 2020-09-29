@@ -61,7 +61,7 @@ class LicensesState extends State<Licenses> {
           children: columnedMultiLineOutput([
             ['myGeoTools', 'several'],
             ['Wikipedia', 'several'],
-            ['www.breitkopf.de', 'Solmination'],
+            ['www.breitkopf.de', 'Solmisation'],
           ]),
         ),
       ]

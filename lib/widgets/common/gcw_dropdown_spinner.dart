@@ -123,15 +123,17 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
             _setValueAndEmitOnChange(newValue);
           });
         },
-        items: widget.items.asMap().map((index, item) {
-          return MapEntry(
-            index,
-            GCWDropDownMenuItem(
-              value: index,
-              child: item
-            )
-          );
-        }).values.toList(),
+        items: (widget.items is List<GCWDropDownMenuItem>)
+          ? widget.items
+          : widget.items.asMap().map((index, item) {
+              return MapEntry(
+                index,
+                GCWDropDownMenuItem(
+                  value: index,
+                  child: item
+                )
+              );
+            }).values.toList(),
       ),
       padding: EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
     );
