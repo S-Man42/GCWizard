@@ -8,7 +8,6 @@ import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 
 class Solitaire extends StatefulWidget {
   @override
@@ -20,7 +19,6 @@ class SolitaireState extends State<Solitaire> {
   String _currentKey = '';
 
   var _currentMode = GCWSwitchPosition.left;
-  var _extendedOutput = false;
 
   @override
   Widget build(BuildContext context) {
@@ -54,15 +52,6 @@ class SolitaireState extends State<Solitaire> {
             });
           },
         ),
-        GCWOnOffSwitch(
-          title: i18n(context, 'solitaire_extended_output'),
-          value: _extendedOutput,
-          onChanged: (value) {
-            setState(() {
-              _extendedOutput = value;
-            });
-          },
-        ),
         _buildOutput(context)
       ],
     );
@@ -82,28 +71,22 @@ class SolitaireState extends State<Solitaire> {
     if (_currentOutput == null || _currentOutput.output.length == 0)
       return GCWDefaultOutput();
 
-    if (!_extendedOutput) {
-      return GCWDefaultOutput(
-        child: _currentOutput.output,
-      );
-    } else {
-      return GCWMultipleOutput(
-        children: [
-          _currentOutput.output,
-          GCWOutput(
-            title: i18n(context, 'solitaire_keystream'),
-            child: GCWOutputText(
-              text: _currentOutput.keyStream,
-            ),
+    return GCWMultipleOutput(
+      children: [
+        _currentOutput.output,
+        GCWOutput(
+          title: i18n(context, 'solitaire_keystream'),
+          child: GCWOutputText(
+            text: _currentOutput.keyStream,
           ),
-          GCWOutput(
-            title: i18n(context, 'solitaire_resultdeck'),
-            child: GCWOutputText(
-              text: _currentOutput.resultDeck,
-            ),
-          )
-        ],
-      );
-    }
+        ),
+        GCWOutput(
+          title: i18n(context, 'solitaire_resultdeck'),
+          child: GCWOutputText(
+            text: _currentOutput.resultDeck,
+          ),
+        )
+      ],
+    );
   }
 }

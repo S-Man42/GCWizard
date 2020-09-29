@@ -1447,9 +1447,8 @@
   "skytale_countcolumns" : "Columns",
 
   "solitaire_title" : "Solitaire",
-  "solitaire_description" : "From the book Cryptonomicon",
+  "solitaire_description" : "Stream cipher based on a card deck. From the book 'Cryptonomicon'",
   "solitaire_example" : "ABCDEF → ITHZU JIWGR",
-  "solitaire_extended_output" : "Extended output",
   "solitaire_keystream" : "Keystream",
   "solitaire_resultdeck" : "Resulting deck",
 

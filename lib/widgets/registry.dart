@@ -587,10 +587,10 @@ class Registry {
         searchStrings: 'scytale skytale stick stock stab transposition'
       ),
       GCWToolWidget(
-          tool: Solitaire(),
-          i18nPrefix: 'solitaire',
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'solitaire cryptonomicon pontifex bruce schneier stromchiffrierung stream encryption'
+        tool: Solitaire(),
+        i18nPrefix: 'solitaire',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'solitaire solitaer carddeck cardgame joker kartenspiel kartendeck cryptonomicon pontifex bruceschneier stromchiffrierung streamcipher nealstephenson'
       ),
       GCWToolWidget(
         tool: SpoonLanguage(),
