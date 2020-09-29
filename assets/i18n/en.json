@@ -1547,6 +1547,12 @@
   "skytale_stripwidth" : "Strip Width",
   "skytale_countcolumns" : "Columns",
 
+  "solitaire_title" : "Solitaire",
+  "solitaire_description" : "Stream cipher based on a card deck. From the book 'Cryptonomicon'",
+  "solitaire_example" : "ABCDEF → ITHZU JIWGR",
+  "solitaire_keystream" : "Keystream",
+  "solitaire_resultdeck" : "Resulting deck",
+
   "spoonlanguage_title" : "Spoon Language",
   "spoonlanguage_description" : "Game Language, Secret Language",
   "spoonlanguage_example" : "Spoon → spolewoolewon",
