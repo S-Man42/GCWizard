@@ -1582,6 +1582,9 @@
 
   "symboltables_selection_title" : "Symbol Tables",
   "symboltables_selection_description" : "Symbols that represent letters or numbers",
+  "symboltables_selection_download_dialog_title" : "Download Symbol Tables",
+  "symboltables_selection_download_dialog_text" : "Do you want to download all symbol tables as a PDF file (ca. 15 MB)?",
+  "symboltables_selection_download_link" : "https://misc.gcwizard.net/symboltables_en.pdf",
   "symboltables_showoverlay" : "Overlays",
   "symboltables_alchemy_title" : "Alchemy",
   "symboltables_alchemy_description" : "Alchemic symbols for antique and modern elements",

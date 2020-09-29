@@ -631,7 +631,8 @@ class Registry {
       GCWToolWidget(
         tool: SymbolTableSelection(),
         i18nPrefix: 'symboltables_selection',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES
+        searchStrings: SEARCHSTRING_SYMBOLTABLES,
+        titleTrailing: symboltablesDownloadButton(context),
       ),
       GCWToolWidget(
         tool: TapCode(),
