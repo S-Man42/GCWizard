@@ -2005,6 +2005,11 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'wakandanisches wakandisches blackpanther marvel chadwickboseman schwarzerpanther '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'window'),
+        i18nPrefix: 'symboltables_window',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fenster window johannes balthasar friderici cryptographia'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'yan_koryani'),
         i18nPrefix: 'symboltables_yan_koryani',
         iconPath: SYMBOLTABLES_ASSETPATH + 'yan_koryani/85.png',
