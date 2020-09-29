@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_deg.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dmm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dms.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_gausskrueger.dart';
@@ -22,7 +24,9 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:latlong/latlong.dart';
+import 'package:location/location.dart';
 
 class GCWCoords extends StatefulWidget {
   final Function onChanged;
@@ -43,6 +47,9 @@ class GCWCoordsState extends State<GCWCoords> {
   LatLng _pastedCoords;
 
   var _currentWidget;
+
+  var _location = Location();
+  bool _isOnLocationAccess = false;
 
   @override
   void initState() {
@@ -67,8 +74,8 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
-        'coordFormat': getCoordinateFormatByKey(keyCoordsDEG),
-        'widget': GCWCoordsDEG(
+        'coordFormat': getCoordinateFormatByKey(keyCoordsDMM),
+        'widget': GCWCoordsDMM(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -229,9 +236,23 @@ class GCWCoordsState extends State<GCWCoords> {
         GCWTextDivider(
           text: widget.text,
           bottom: 0.0,
-          trailing: GCWPasteButton(
-            onSelected: _parseClipboardAndSetCoords
-          ),
+          trailing: Row(
+            children: [
+              Container(
+                child:  GCWIconButton(
+                  iconData: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
+                  size: IconButtonSize.SMALL,
+                  onPressed: () {
+                    _setUserLocationCoords();
+                  },
+                ),
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+              ),
+              GCWPasteButton(
+                onSelected: _parseClipboardAndSetCoords
+              )
+            ],
+          )
         ),
         GCWCoordsFormatSelector(
           format: _currentCoordsFormat,
@@ -276,16 +297,52 @@ class GCWCoordsState extends State<GCWCoords> {
     if (_pastedCoords == null)
       return;
 
+    _setPastedCoordsFormat();
+    _currentValue = _pastedCoords;
+
+    _setCurrentValueAndEmitOnChange();
+  }
+
+  _setPastedCoordsFormat() {
     switch(_currentCoordsFormat['format']) {
       case keyCoordsDEC:
-      case keyCoordsDEG:
+      case keyCoordsDMM:
       case keyCoordsDMS:
         break;
       default:
-        _currentCoordsFormat = {'format': keyCoordsDEG};
+        _currentCoordsFormat = {'format': keyCoordsDMM};
     }
+  }
 
-    _currentValue = _pastedCoords;
-    _setCurrentValueAndEmitOnChange();
+  _setUserLocationCoords() {
+    if (_isOnLocationAccess)
+      return;
+
+    setState(() {
+      _isOnLocationAccess = true;
+    });
+
+    checkLocationPermission(_location).then((value) {
+      if (value == null || value == false) {
+        setState(() {
+          _isOnLocationAccess = false;
+        });
+        showToast(i18n(context, 'coords_common_location_permissiondenied'));
+
+        return;
+      }
+
+      _location.getLocation().then((locationData) {
+        if (locationData.accuracy > 20)
+          showToast(i18n(context, 'coords_common_location_lowaccuracy', parameters: [locationData.accuracy]));
+
+        _pastedCoords = LatLng(locationData.latitude, locationData.longitude);
+        _currentValue = _pastedCoords;
+        _setPastedCoordsFormat();
+
+        _isOnLocationAccess = false;
+        _setCurrentValueAndEmitOnChange();
+      });
+    });
   }
 }

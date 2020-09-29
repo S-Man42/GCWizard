@@ -7,10 +7,10 @@ void main() {
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
-      {'input' : 'ABCDEFGHIJKLMOPQRSTUVWXYZÄÖÜß', 'expectedOutput' : '10'},
-      {'input' : 'abcdefghijklmopqrstuvwxyzäöüß', 'expectedOutput' : '8'},
+      {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß', 'expectedOutput' : '10'},
+      {'input' : 'abcdefghijklmnopqrstuvwxyzäöüß', 'expectedOutput' : '10'},
       {'input' : '0123456789', 'expectedOutput' : '6'},
-      {'input' : 'ABCDEFGHIJKLMOPQRSTUVWXYZÄÖÜß 0123456789', 'expectedOutput' : '10 6'},
+      {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß 0123456789', 'expectedOutput' : '10 6'},
       {'input' : '._*&%><', 'expectedOutput' : '4'},
     ];
 
@@ -27,10 +27,10 @@ void main() {
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
-      {'input' : 'ABCDEFGHIJKLMOPQRSTUVWXYZÄÖÜß', 'expectedOutput' : '10'},
-      {'input' : 'abcdefghijklmopqrstuvwxyzäöüß', 'expectedOutput' : '8'},
+      {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß', 'expectedOutput' : '10'},
+      {'input' : 'abcdefghijklmnopqrstuvwxyzäöüß', 'expectedOutput' : '10'},
       {'input' : '0123456789', 'expectedOutput' : '5'},
-      {'input' : 'ABCDEFGHIJKLMOPQRSTUVWXYZÄÖÜß 0123456789', 'expectedOutput' : '10 5'},
+      {'input' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß 0123456789', 'expectedOutput' : '10 5'},
       {'input' : '._*&%><', 'expectedOutput' : '4'},
    ];
 
