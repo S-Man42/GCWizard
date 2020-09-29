@@ -1118,6 +1118,11 @@
   "kenny_example" : "pmpmffpmfpmf",
   "kenny_case_sensitive" : "Beachte Groß-/Kleinschreibung",
 
+  "licenses_title" : "Lizenzen",
+  "licenses_usedlibraries" : "Verwendete Code-Bibliotheken (Flutter/Dart)",
+  "licenses_additionalcode" : "Weiterer Code",
+  "licenses_symboltablesources" : "Quellen für Symboltabellen",
+
   "mainmenu_about_title" : "Über",
   "mainmenu_settings_title" : "Einstellungen",
   "mainmenu_changelog_title" : "Changelog",

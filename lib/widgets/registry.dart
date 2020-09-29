@@ -5,6 +5,7 @@ import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
+import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
@@ -1166,7 +1167,12 @@ class Registry {
       GCWToolWidget(
         tool: CallForContribution(),
         i18nPrefix: 'mainmenu_callforcontribution',
-        searchStrings: 'contributions mitarbeiten beitragen',
+        searchStrings: 'contributions mitarbeiten beitragen contribute',
+      ),
+      GCWToolWidget(
+        tool: Licenses(),
+        i18nPrefix: 'licenses',
+        searchStrings: 'licenses licences lizenzen library libraries bibliotheken',
       ),
 
       //Phi Selection **********************************************************************************************
