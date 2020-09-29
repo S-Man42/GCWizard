@@ -135,9 +135,13 @@ class AboutState extends State<About> {
         GCWDivider(),
         InkWell(
           child: Container(
-            child: Text(
-              'Used third-party code libraries and images',
-              style: gcwHyperlinkTextStyle(),
+            child: Align(
+              child: Text(
+                i18n(context, 'about_thirdparty'),
+                style: gcwHyperlinkTextStyle(),
+                textAlign: TextAlign.center,
+              ),
+              alignment: Alignment.center,
             ),
             padding: EdgeInsets.only(
               top: 15,

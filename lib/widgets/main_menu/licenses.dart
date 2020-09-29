@@ -48,7 +48,6 @@ class LicensesState extends State<Licenses> {
         ),
         Column(
           children: columnedMultiLineOutput([
-            ['Karl B.', 'Algorithms for Coordinate Functions'],
             ['moenk', 'Gauss-Krüger Code'],
             ['astronomie.info, jgiesen.de', 'Astronomy Functions'],
             ['flutter_hsvcolor_picker (minimized)', 'Color Picker'],
