@@ -28,7 +28,8 @@ encryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
     value = substitution(value, substitutions);
     if (caseSensitive) {
       if (isUpperCase(letter))
-        value = value.substring(0,1).toUpperCase() + value.substring(1).toLowerCase();
+        // first letter uppercase, the rest lowercase
+        value = value[0].toUpperCase() + value.substring(1).toLowerCase();
       else
         value = value.toLowerCase();
     }
@@ -55,8 +56,8 @@ decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
   }
 
   var _input = substitution(input, substitutions, caseSensitive: false);
-  int chunkStart = 0;
-  int chunkOffset = 0;
+  int chunkStart = 0; // start position of chunk in the original text
+  int chunkOffset = 0; // position in the chunk
   substitutionsSwitched = switchMapKeyValue(substitutions);
 
   var output = '';
@@ -68,12 +69,15 @@ decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
       var character = _input[0];
       if (replaceToCharacters.contains(character)) {
         chunk += character;
+        // add length of the key
         chunkOffset += substitutionsSwitched[character].length;
       } else {
-        var outputTmp = restoreChunks(chunk + input[chunkStart+chunkOffset],input,chunkStart,substitutionsSwitched);
+        // restore the chunk to the original text
+        var outputTmp = _restoreChunks(chunk + input[chunkStart + chunkOffset], input, chunkStart, substitutionsSwitched);
         output += outputTmp;
         chunk = '';
         chunkOffset = 0;
+        // note the position in the original text
         chunkStart += outputTmp.length;
       }
 
@@ -85,7 +89,9 @@ decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
       if (index < 26) {
         var outputChar = alphabet_AZIndexes[index + 1];
         if (caseSensitive) {
+          // first character in the original lower case ?
           if (!isUpperCase(input[chunkStart]))
+            // char to lower case
             outputChar = outputChar.toLowerCase();
         }
         output += outputChar;
@@ -97,27 +103,27 @@ decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
     for (int i = 0; i < outputTmp.length; i++)
       output += input[chunkStart + i];
   }
-
-  output = restoreChunks(output + _input, input, 0 , substitutionsSwitched);
+  // restore unused chunks to the original text
+  output = _restoreChunks(output + _input, input, 0, substitutionsSwitched);
 
   if (!caseSensitive)
     output = output.toUpperCase();
   return output;
 }
 
-String restoreChunks(String chunk , String input, int position, Map<String, String> substitutionsSwitched){
+String _restoreChunks(String chunk, String input, int position, Map<String, String> substitutionsSwitched){
   var output = '';
   for (int i = 0; i < chunk.length; i++) {
+    // key character ?
     if (substitutionsSwitched.containsKey(chunk[i])){
-      output +=  input.substring(position, position + substitutionsSwitched[chunk[i]].length) ;
+      // restore original text
+      output +=  input.substring(position, position + substitutionsSwitched[chunk[i]].length);
+      // note the position in the original text
       position += substitutionsSwitched[chunk[i]].length;
     } else
       output += chunk[i];
+    // note the position in the original text
     position += chunk[i].length;
   }
   return output;
-}
-
-bool isUpperCase(String letter) {
-  return (letter.toUpperCase() == letter);
 }

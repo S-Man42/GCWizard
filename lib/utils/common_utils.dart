@@ -231,6 +231,10 @@ bool isInteger(String text) {
   return BigInt.tryParse(text) != null;
 }
 
+bool isUpperCase(String letter) {
+  return (letter.toUpperCase() == letter);
+}
+
 // Copy from flutter/lib/foundation.dart;
 // it includes dart:ui; this shouldn't be referenced in logic; so extracted this method
 // for usage in logic
