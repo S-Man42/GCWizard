@@ -78,7 +78,7 @@ class SummersimmerIndexState extends State<SummersimmerIndex> {
     (_isMetric && _currentTemperature < 27)
         || (!_isMetric && _currentTemperature < 80)
     ) {
-      hintT = i18n(context, 'heatindex_hint_temperature', parameters: ['${_isMetric ? 27 : 80} $unit']);
+      hintT = i18n(context, 'heatindex_hint_temperature', parameters: ['${_isMetric ? 18 : 64} $unit']);
     }
 
     String hintH;
