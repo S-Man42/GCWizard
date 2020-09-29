@@ -49,8 +49,11 @@ void initDefaultSettings() {
     Prefs.setString('coord_default_ellipsoid_name', ELLIPSOID_NAME_WGS84);
   }
 
-  if (Prefs.get('coord_default_format') == null) {
-    Prefs.setString('coord_default_format', keyCoordsDEG);
+  if (
+       Prefs.get('coord_default_format') == null
+    || Prefs.get('coord_default_format') == 'coords_deg' //old name for DMM until v1.1.0
+  ) {
+    Prefs.setString('coord_default_format', keyCoordsDMM);
   }
 
   if (Prefs.get('coord_default_hemisphere_latitude') == null) {

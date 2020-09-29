@@ -1,32 +1,33 @@
 name: gc_wizard
 description: GC Wizard
-version: 1.2.0+57
+version: 1.2.0+59
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  base32: ^1.1.2
+  diacritic: ^0.1.1
   flutter:
     sdk: flutter
-  path: any
-  path_provider: any
-  flutter_map: ^0.10.1
-  flutter_map_marker_popup: ^0.1.4
   flutter_localizations:
     sdk: flutter
-  provider: any
-  intl: any
-  prefs: any
-  diacritic: ^0.1.1
-  base32: any
+  flutter_map: ^0.10.1+1
+  flutter_map_marker_popup: ^0.1.4
+  fluttertoast: ^7.1.1
+  intl: ^0.16.1
+  location: ^3.0.2
   mask_text_input_formatter: ^1.1.0
-  url_launcher: ^5.5.0
-  package_info: ^0.4.0+16
-  math_expressions: ^2.0.0
+  math_expressions: ^2.0.1
+  package_info: ^0.4.3
+  path: ^1.7.0
+  path_provider: ^1.6.18
   pointycastle: ^1.0.2
-  fluttertoast: ^7.0.4
+  prefs: ^3.2.1
+  provider: ^4.3.2+2
   qr_flutter: ^3.2.0
   touchable: ^0.2.0
+  url_launcher: ^5.5.0
 
 dev_dependencies:
   flutter_test:
@@ -155,6 +156,7 @@ flutter:
     - assets/symbol_tables/utopian/
     - assets/symbol_tables/visitor/
     - assets/symbol_tables/wakandan/
+    - assets/symbol_tables/window/
     - assets/symbol_tables/yan_koryani/
     - assets/symbol_tables/zentradi/
 
