@@ -10,18 +10,18 @@ class NumeralWordsOutput {
 
 enum NumeralWordsLanguage {DE, EN, FR, IT, ES, ALL}
 
-final WordToNumeralDE = {'ERSTER':'1', 'DRITTER':'2',
-                          'EIN':'1', 'EINS':'1', 'ZWEI':'2', 'DREI':'3', 'VIER':'4', 'FÜNF':'5', 'SECHS':'6', 'SIEBEN':'7', 'ACHT':'8', 'NEUN':'9', 'NULL':'0',
+final WordToNumeralDE = {'EINS':'1', 'ZWEI':'2', 'DREI':'3', 'VIER':'4', 'FÜNF':'5', 'SECHS':'6', 'SIEBEN':'7', 'ACHT':'8', 'NEUN':'9', 'NULL':'0',
                           'ZEHN':'10', 'ELF': '11', 'ZWÖLF':'12', 'DREIZEHN':'13', 'VIERZEHN':'14','FÜNFZEHN':'15', 'SECHZEHN':'16', 'SIEBZEHN':'17', 'ACHTZEHN':'18', 'NEUNZEHN':'19',
                           'ZWANZIG':'20','DREIßIG':'30', 'VIERZIG':'40', 'FÜNFZIG':'50', 'SECHZIG':'60', 'SIEBZIG':'70', 'ACHTZIG':'80', 'NEUNZIG':'90',
                           'NORD':'NORD', 'NORDEN':'NORD', 'NÖRDLICH':'NORD', 'OST':'OST', 'OSTEN':'OST', 'ÖSTLICH':'OST', 'WESTEN':'WEST','WEST':'WEST', 'WESTLICH':'WEST', 'SÜDEN':'SÜD','SÜD':'SÜD', 'SÜDLICH':'SÜD'};
-final WordToNumeralEN = {'FIRST':'1', 'SECOND':'2', 'THIRD':'3' , 'FOURTH':'4' , 'FIFTH':'5' , 'SIXTH':'6' , 'SEVENTH':'7' , 'EIGHTH':'8' , 'NINETH':'9',
-                          'ONE':'1', 'TWO':'2', 'THREE':'3', 'FOUR':'4', 'FIVE':'5', 'SIX':'6', 'SEVEN':'7', 'EIGHT':'8', 'NINE':'9', 'ZERO':'0',
+final WordToNumeralEN = { 'ONE':'1', 'TWO':'2', 'THREE':'3', 'FOUR':'4', 'FIVE':'5', 'SIX':'6', 'SEVEN':'7', 'EIGHT':'8', 'NINE':'9', 'ZERO':'0',
                           'NORTH':'', 'NORTH':'', 'NORTHERN':'NORTH', 'SOUTH':'SOUTH', 'SOUTHERN':'SOUTH', 'EAST':'EAST', 'EASTERN':'EAST', 'WEST':'WEST', 'WESTERN':'WEST',
                           'TEN':'10', 'ELEVEN':'11', 'TWELVE':'12' , 'THIRTEEN':'13' , 'FOURTEEN':'14' , 'FIFTEEN':'15' , 'SIXTEEN':'16' , 'SEVENTEEN':'17' , 'EIGHTEEN':'18', 'NINETEEN':'19',
                           'TWENTY':'20', 'THIRTY':'30', 'FOURTY':'40', 'FIFTY':'50', 'SIXTY':'60', 'SEVENTY':'70', 'EIGHTY':'80', 'NINETY':'90' };
-final WordToNumeralFR = {'UN':'1', 'DEUX':'2', 'TROIS':'3', 'QUATRE':'4', 'CINQ':'5', 'SIS':'6', 'SEPT':'7', 'HUIT':'8', 'NEUF':'9', 'ZERO':'0'};
-final WordToNumeralIT = {'UNO':'1', 'DUE':'2', 'TRE':'3', 'QUATTRO':'4', 'CINQUE':'5', 'SEI':'6', 'SETTE':'7', 'OTTO':'8', 'NOVE':'9', 'ZERO':'0'};
+final WordToNumeralFR = {'UN':'1', 'DEUX':'2', 'TROIS':'3', 'QUATRE':'4', 'CINQ':'5', 'SIS':'6', 'SEPT':'7', 'HUIT':'8', 'NEUF':'9', 'ZÉRO':'0'};
+final WordToNumeralIT = {'UNO':'1', 'DUE':'2', 'TRE':'3', 'QUATTRO':'4', 'CINQUE':'5', 'SEI':'6', 'SETTE':'7', 'OTTO':'8', 'NOVE':'9', 'ZERO':'0',
+                         'DIECI':'10', 'UNDICI':'11', 'DODICI':'12', 'TREDICI':'13', 'QUATTORDICI':'14', 'QUINDICI':'15', 'SEDICI':'16', 'DICIASETTE':'17', 'DICIOTTO':'18', 'DICIANNOVE':'19',
+                         'VENTI':'20', 'TRENTA':'30', 'QUARANTA':'40', 'CINQUANTA':'50', 'SESSANTA':'60', 'SETTANTA':'70', 'OTTANTA':'80', 'NOVANTA':'90'};
 final WordToNumeralES = {'UNO':'1', 'DOS':'2', 'TRES':'3', 'CUATRO':'4', 'CINCO':'5', 'SEIS':'6', 'SIETE':'7', 'OCHO':'8', 'NUEVE':'9', 'ZERO':'0'};
 
 final NumeralToWordDE = switchMapKeyValue(WordToNumeralDE);
@@ -41,14 +41,7 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
     switch (language){
       case NumeralWordsLanguage.DE :
         decodeText = input.replaceAll('OSTEN', 'OST')
-            .replaceAll('ERSTER', 'EINS')
-            .replaceAll('ERSTEN', 'EINS')
-            .replaceAll('DRITTEN', 'DREI')
-            .replaceAll('DRITTER', 'DREI')
-            .replaceAll('TEN', '')
-            .replaceAll('STE', '')
-            .replaceAll('TER', '')
-            .replaceAll('TE', '')
+            .replaceAll('EINHUNDERT', 'EINSHUNDERT')
             .split(RegExp(r'[^A-ZßÄÖÜ0-9]'));
         break;
       case NumeralWordsLanguage.EN :
@@ -65,7 +58,11 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
         decodeText = input.split(RegExp(r'[^A-Z0-9\-]'));
         break;
       case NumeralWordsLanguage.IT :
-        decodeText = input.split(RegExp(r'[^A-Z0-9\-]'));
+        decodeText = input.replaceAll('TRENTUNO', 'TRENTAUNO')
+                          .replaceAll('VENTUNO', 'VENTIUNO')
+                          .replaceAll('QUARANTUNO', 'QUARANTAUNO')
+                          .replaceAll('CENTUNO', 'CENTOUNO')
+                          .split(RegExp(r'[^A-Z0-9\-]'));
         break;
       case NumeralWordsLanguage.ES :
         decodeText = input.split(RegExp(r'[^A-Z0-9\-]'));
@@ -107,6 +104,7 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
   }
 }
 
+
 bool _isNumeral(String input){
   return (int.tryParse(input) != null );
 }
@@ -121,6 +119,7 @@ NumeralWordsOutput _isNumeralWordBelow100(String input, NumeralWordsLanguage lan
     case  NumeralWordsLanguage.EN:
       numeral = input.split('-');
       break;
+    default: numeral = input.split(RegExp(r'[^A-Z0-9\-]'));
   }
   switch (numeral.length){
     case 2:
@@ -132,14 +131,6 @@ NumeralWordsOutput _isNumeralWordBelow100(String input, NumeralWordsLanguage lan
       break;
     default: return NumeralWordsOutput(false, '');
   }
-  if (numeral.length == 2) {
-    if ((decodingTable[numeral[0]] != null) && (decodingTable[numeral[1]] != null)){
-      var digit = int.parse(decodingTable[numeral[1]]) + int.parse(decodingTable[numeral[0]]);
-      return NumeralWordsOutput(true,  digit.toString() );
-    } else
-      return NumeralWordsOutput(false, '');
-  } else
-    return NumeralWordsOutput(false, '');
 }
 
 NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage language, var decodingTable){
@@ -148,7 +139,7 @@ NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage la
     case NumeralWordsLanguage.DE :
       decodingTable = WordToNumeralDE;
       if (input.startsWith('HUNDERT'))
-        numeral = input.replaceFirst('HUNDERT', 'EINHUNDERT')
+        numeral = input.replaceFirst('HUNDERT', 'EINSHUNDERT')
                        .replaceAll('HUNDERTUND', 'HUNDERT')
                        .split('HUNDERT');
       else
@@ -170,6 +161,7 @@ NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage la
       decodingTable = WordToNumeralES;
       break;
   }
+
   switch (numeral.length) {
     case 1:
       switch (language){
@@ -193,11 +185,11 @@ NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage la
       break;
 
     case 2:
-//      if ((decodingTable[numeral[0]] != null) && (decodingTable[numeral[1]] == null)) {
-//        var digit = int.parse(decodingTable[numeral[0]]) * 100;
-//        return NumeralWordsOutput(true,  digit.toString());
-//      }
-//      else
+      if ((decodingTable[numeral[0]] != null) && (numeral[1] == '')) {
+        var digit = int.parse(decodingTable[numeral[0]]) * 100;
+        return NumeralWordsOutput(true,  digit.toString());
+      }
+      else
         if ((decodingTable[numeral[0]] != null) && (decodingTable[numeral[1]] != null)) {
         var digit = int.parse(decodingTable[numeral[0]]) * 100 + int.parse(decodingTable[numeral[1]]);
         return NumeralWordsOutput(true,  digit.toString());
@@ -211,6 +203,7 @@ NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage la
     default: return NumeralWordsOutput(false, '');
   }
 }
+
 
 NumeralWordsOutput _isNumeralWord(String input, NumeralWordsLanguage language){
   var numeral;
