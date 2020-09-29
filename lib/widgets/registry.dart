@@ -25,6 +25,7 @@ import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/roman_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
@@ -206,6 +207,7 @@ class Registry {
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
   static final SEARCHSTRING_RESISTOR = 'resistors widerstand widerstaende resistance ohm ';
   static final SEARCHSTRING_RESISTOR_COLORCODE = SEARCHSTRING_RESISTOR + 'colorcodes farben farbcodes colors ';
+  static final SEARCHSTRING_ROMAN_NUMBERS = 'roman numbers roemische zahlen ';
   static final SEARCHSTRING_ROTATION = 'rotate rotieren verschieben shift rotations rotx rotn rot-x rotationen ';
   static final SEARCHSTRING_RSA = SEARCHSTRING_PRIMES + 'rsa ronald rivest adi shamir leonard adleman asymmetry asymmetric asymmetrie asymmetrisches public private key oeffentlicher privater schluessel phi ';
   static final SEARCHSTRING_SEGMENTDISPLAY = 'led segments segmente display segmentanzeige ';
@@ -327,12 +329,6 @@ class Registry {
         i18nPrefix: 'chickenlanguage',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_GAMELANGUAGE + 'chickenlanguage huehnersprache huenersprache huhn'
-      ),
-      GCWToolWidget(
-        tool: Chronogram(),
-        i18nPrefix: 'chronogram',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'roman numbers roemische zahlen chronogram chronogramm'
       ),
       GCWToolWidget(
         tool: ColorPicker(),
@@ -571,10 +567,10 @@ class Registry {
         searchStrings: SEARCHSTRING_GAMELANGUAGE + 'robberlanguage raeubersprache rotwelsch astrid lindgren rovarspraket'
       ),
       GCWToolWidget(
-        tool: RomanNumbers(),
+        tool: RomanNumbersSelection(),
         i18nPrefix: 'romannumbers',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'roman numbers roemische zahlen'
+        searchStrings: SEARCHSTRING_ROMAN_NUMBERS + 'chronogram chronogramm'
       ),
       GCWToolWidget(
         tool: RotationSelection(),
@@ -1251,9 +1247,21 @@ class Registry {
         searchStrings: SEARCHSTRING_RESISTOR_COLORCODE
       ),
       GCWToolWidget(
-          tool: ResistorEIA96(),
-          i18nPrefix: 'resistor_eia96',
-          searchStrings: SEARCHSTRING_RESISTOR + 'eia96 eia-96'
+        tool: ResistorEIA96(),
+        i18nPrefix: 'resistor_eia96',
+        searchStrings: SEARCHSTRING_RESISTOR + 'eia96 eia-96'
+      ),
+
+      //RomanNumbersSelection **********************************************************************************************
+      GCWToolWidget(
+        tool: RomanNumbers(),
+        i18nPrefix: 'romannumbers',
+        searchStrings: SEARCHSTRING_ROMAN_NUMBERS
+      ),
+      GCWToolWidget(
+        tool: Chronogram(),
+        i18nPrefix: 'chronogram',
+        searchStrings: SEARCHSTRING_ROMAN_NUMBERS + 'chronogram chronogramm'
       ),
 
       //RotationSelection **********************************************************************************************
