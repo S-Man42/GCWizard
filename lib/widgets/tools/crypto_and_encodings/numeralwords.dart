@@ -102,19 +102,19 @@ class NumeralWordsState extends State<NumeralWords> {
 
   Widget _buildOutput(BuildContext context) {
     var output = '';
-    var words;
+    Map<String, String> words;
 
     if (_currentMode == GCWSwitchPosition.left) {//show numeral words for specific language
       switch (_currentLanguage) {
-        case NumeralWordsLanguage.DE: words = NumeralToWordDE;
+        case NumeralWordsLanguage.DE: words = NumToWordDE;
           break;
-        case NumeralWordsLanguage.EN: words = NumeralToWordEN;
+        case NumeralWordsLanguage.EN: words = NumToWordEN;
           break;
-        case NumeralWordsLanguage.FR: words = NumeralToWordFR;
+        case NumeralWordsLanguage.FR: words = NumToWordFR;
           break;
-        case NumeralWordsLanguage.IT: words = NumeralToWordIT;
+        case NumeralWordsLanguage.IT: words = NumToWordIT;
           break;
-        case NumeralWordsLanguage.ES: words = NumeralToWordES;
+        case NumeralWordsLanguage.ES: words = NumToWordES;
           break;
         case NumeralWordsLanguage.ALL:
           return GCWOutputText(
@@ -122,7 +122,7 @@ class NumeralWordsState extends State<NumeralWords> {
           );
           break;
       }
-      for (int i = 0; i < 100; i++){
+      for (int i = 0; i < words.length; i++){
         if (words[i.toString()] != null)
           output = output + i.toString() + ' - ' + words[i.toString()] + '\n';
       }
