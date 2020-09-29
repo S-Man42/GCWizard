@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
 
@@ -7,7 +6,6 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -35,7 +33,7 @@ class SymbolTableState extends State<SymbolTable> {
 
   String _output = '';
 
-  var _images = SplayTreeMap<String, Widget>();
+  var _images = <Map<String, Image>>[]; //SplayTreeMap<String, Widget>();
   var _currentMode = GCWSwitchPosition.right;
 
   var _currentShowOverlayedSymbols = true;
@@ -75,54 +73,54 @@ class SymbolTableState extends State<SymbolTable> {
       .toList();
 
     setState(() {
-      _images = SplayTreeMap.fromIterable(
-        imagePaths,
-        key: (filePath) {
-          var imageKey = filePath.split(pathKey)[1].split(imageSuffixes)[0];
+      _images = imagePaths
+        .map((filePath) {
+            var imageKey = filePath.split(pathKey)[1].split(imageSuffixes)[0];
 
-          var ascii = int.tryParse(imageKey.split('_')[0]);
-          return ascii == null ? _getSpecialText(imageKey) : String.fromCharCode(ascii);
-        },
-        value: (filePath) {
-          var imagePath = imageSuffixes.hasMatch(filePath) ? filePath : null;
-          return Image.asset(imagePath);
-        },
-        // first order all Numerals (numeral order),
-        // second alphabetical order all other characters/groups,
-        // finally special commands like "START, CORRECTION, ERROR, LETTER FOLLOWS"
-        compare: (a, b) {
-          var intA = int.tryParse(a);
-          var intB = int.tryParse(b);
+            var ascii = int.tryParse(imageKey.split('_')[0]);
+            String key = ascii == null ? _getSpecialText(imageKey) : String.fromCharCode(ascii);
 
-          if (intA == null) {
-            if (intB == null) {
-              if (a.startsWith(SPECIAL_MARKER)) {
-                if (b.startsWith(SPECIAL_MARKER)) {
-                  return a.compareTo(b);
-                } else {
-                  return 1;
-                }
+            var imagePath = imageSuffixes.hasMatch(filePath) ? filePath : null;
+            var value = Image.asset(imagePath);
+
+            return {key : value};
+          })
+        .where((element) => element.values.first != null)
+        .toList();
+
+      _images.sort((a, b) {
+        var keyA = a.keys.first;
+        var keyB = b.keys.first;
+
+        var intA = int.tryParse(keyA);
+        var intB = int.tryParse(keyB);
+
+        if (intA == null) {
+          if (intB == null) {
+            if (keyA.startsWith(SPECIAL_MARKER)) {
+              if (keyB.startsWith(SPECIAL_MARKER)) {
+                return keyA.compareTo(keyB);
               } else {
-                if (b.startsWith(SPECIAL_MARKER)) {
-                  return -1;
-                } else {
-                  return a.compareTo(b);
-                }
+                return 1;
               }
             } else {
-              return 1;
+              if (keyB.startsWith(SPECIAL_MARKER)) {
+                return -1;
+              } else {
+                return keyA.compareTo(keyB);
+              }
             }
           } else {
-            if (intB == null) {
-              return -1;
-            } else {
-              return intA.compareTo(intB);
-            }
+            return 1;
+          }
+        } else {
+          if (intB == null) {
+            return -1;
+          } else {
+            return intA.compareTo(intB);
           }
         }
-      );
-      //Remove non-image files
-      _images.removeWhere((key, value) => value == null);
+      });
     });
   }
 
@@ -324,8 +322,8 @@ class SymbolTableState extends State<SymbolTable> {
         var imageIndex = i * countColumns + j;
 
         if (imageIndex < _images.length) {
-          var symbolText = _images.keys.toList()[imageIndex].replaceAll(SPECIAL_MARKER, '');
-          var image = _images.values.toList()[imageIndex];
+          var symbolText = _images.map((element) => element.keys.first).toList()[imageIndex].replaceAll(SPECIAL_MARKER, '');
+          var image = _images.map((element) => element.values.first).toList()[imageIndex];
 
           if (symbolText.length > _maxSymbolTextLength)
             _maxSymbolTextLength = symbolText.length;

@@ -267,3 +267,10 @@ String applyAlphabetModification(String input, AlphabetModificationMode mode) {
 
   return input;
 }
+
+bool isUpperCase(String letter) {
+  if (letter == null || letter.length == 0)
+    return false;
+
+  return (letter.toUpperCase() == letter);
+}

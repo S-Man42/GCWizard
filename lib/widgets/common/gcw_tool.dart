@@ -25,6 +25,8 @@ class GCWToolWidget extends StatefulWidget {
   var description;
   var example;
 
+  Widget titleTrailing;
+
   GCWToolWidget({
     Key key,
     this.tool,
@@ -34,6 +36,7 @@ class GCWToolWidget extends StatefulWidget {
     this.autoScroll: true,
     this.iconPath,
     this.searchStrings: '',
+    this.titleTrailing
   }) : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
     this._isFavorite = Prefs.getStringList('favorites').contains('$_id');
@@ -74,7 +77,7 @@ class _GCWToolWidgetState extends State<GCWToolWidget> {
       appBar: AppBar(
         title: Text(widget.toolName),
         actions: <Widget>[
-          _buildHelpButton()
+          widget.titleTrailing ?? _buildHelpButton()
         ],
       ),
       body: _buildBody()
