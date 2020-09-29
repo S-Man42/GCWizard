@@ -142,19 +142,6 @@ class _GCWBearingState extends State<GCWBearing> {
                 style: gcwTextStyle().copyWith(fontSize: defaultFontSize() + 10 - 4 * level, fontWeight: fontweight)
               );
             }).toList(),
-            selectedItemBuilder: (context) {
-              return COMPASS_ROSE.map((direction) {
-                var text = direction['symbol'] == _NO_COMPASS_DIRECTION ? _NO_COMPASS_DIRECTION :  i18n(context, direction['symbol']);
-
-                return Align(
-                  child: Text(
-                    text,
-                    style: gcwTextStyle(),
-                  ),
-                  alignment: Alignment.centerLeft,
-                );
-              }).toList();
-            },
             onChanged: (value) {
               setState(() {
                 _currentCompassValue = value;

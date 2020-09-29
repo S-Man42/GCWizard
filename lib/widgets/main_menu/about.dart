@@ -4,7 +4,10 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/main_menu/gcw_mainmenuentry_stub.dart';
+import 'package:gc_wizard/widgets/main_menu/licenses.dart';
+import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -46,8 +49,8 @@ class AboutState extends State<About> {
           ),
           Expanded(
             child: InkWell(
-              child: GCWText(
-                text: i18n(context, 'about_${key}_url_text'),
+              child: Text(
+                i18n(context, 'about_${key}_url_text'),
                 style: gcwHyperlinkTextStyle(),
               ),
               onTap: () {
@@ -71,7 +74,7 @@ class AboutState extends State<About> {
       children: <Widget>[
         Text(
           'GC Wizard - Geocache Wizard',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: defaultFontSize()),
+          style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold)
         ),
         GCWDivider(),
         Container(
@@ -130,6 +133,28 @@ class AboutState extends State<About> {
         GCWDivider(),
         _buildUrl('privacypolicy'),
         GCWDivider(),
+        InkWell(
+          child: Container(
+            child: Align(
+              child: Text(
+                i18n(context, 'about_thirdparty'),
+                style: gcwHyperlinkTextStyle(),
+                textAlign: TextAlign.center,
+              ),
+              alignment: Alignment.center,
+            ),
+            padding: EdgeInsets.only(
+              top: 15,
+              bottom: 10
+            ),
+          ),
+          onTap: () {
+            Navigator.of(context).push(NoAnimationMaterialPageRoute(
+              builder: (context) => Registry.toolList.firstWhere((tool) => className(tool.tool) == className(Licenses())))
+            );
+          },
+        ),
+        GCWDivider(),
         Container(
           child: Column(
             children: <Widget>[
@@ -182,7 +207,7 @@ class AboutState extends State<About> {
                           '\'Geo-Link\' (Hardware & Symbol Tables)',
                           'Karl B. (Coords Algorithms)',
                           'Michael D. (Symbol Tables)',
-                          'Mike B. (Symbol Tables)',
+                          'Mike B. (Code & Symbol Tables)',
                           '\'moenk\' (GK Coords)',
                           '\'Schnatt\' (Symbol Tables)',
                           '\'TeamBirdy2404\' (Symbol Tables)',

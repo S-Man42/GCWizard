@@ -20,10 +20,8 @@ encryptPigLatin(String input) {
   return _decodeQQ(input.replaceAllMapped(
     RegExp(r'\b(\w*?)([aeiou]\w*)', caseSensitive: false),
     (match) {
-      var isUpperCase = match[0][0].toUpperCase() == match[0][0];
-
       var output = '${match[2]}-${match[1]}ay'.toLowerCase();
-      if (isUpperCase)
+      if (isUpperCase(match[0][0]))
         output = output[0].toUpperCase() + output.substring(1);
 
       return output;
@@ -38,9 +36,8 @@ decryptPigLatin(String input) {
   return input.replaceAllMapped(
     RegExp(r'\b(\w+)-(\w*)ay', caseSensitive: false),
     (match) {
-      var isUpperCase = match[1][0].toUpperCase() == match[1][0];
       var output = match[2] + match[1];
-      if (isUpperCase)
+      if (isUpperCase(match[1][0]))
         output = output[0].toUpperCase() + output.substring(1).toLowerCase();
 
       return output;

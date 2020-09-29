@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
 import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
@@ -180,8 +181,20 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     });
 
     var odd = true;
-    var rows = widget.group.formulas.map((formula) {
-      var calculated = formulaParser.parse(formula.formula, values);
+
+    var formulaResults = <String, String>{};
+
+    var rows = widget.group.formulas.asMap().map((index, formula) {
+      //TODO: In fact, this is for the recursive formulas... An therefore, this is part of
+      // the logic. It needs to be moved from the frontend part
+      var formulaToParse = substitution(formula.formula, formulaResults, caseSensitive: false);
+      var calculated = formulaParser.parse(formulaToParse, values);
+
+      var formulaResult = calculated['result'];
+      if (calculated['state'] != STATE_OK)
+        formulaResult = '($formulaResult)';
+
+      formulaResults.putIfAbsent('{f${index + 1}}', () => formulaResult);
 
       Widget output;
 
@@ -205,8 +218,20 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                   )
                 : Column(
                     children: <Widget>[
-                      GCWText (
-                        text: formula.formula
+                      Row(
+                        children: [
+                          Container(
+                            child: GCWText(
+                              text: (index + 1).toString() + '.'
+                            ),
+                            padding: EdgeInsets.only(right: 4 * DEFAULT_MARGIN),
+                          ),
+                          Flexible(
+                            child: GCWText (
+                              text: formula.formula
+                            ),
+                          )
+                        ],
                       ),
                       Row (
                         children: <Widget>[
@@ -220,10 +245,9 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                 color: _themeColors.accent(),
                               ),
                           Flexible(
-                            child:
-                              GCWText (
-                                text: calculated['result']
-                              ),
+                            child: GCWText (
+                              text: calculated['result']
+                            ),
                           )
                         ],
                       )
@@ -353,8 +377,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
       }
       odd = !odd;
 
-      return output;
-    }).toList();
+      return MapEntry(index, output);
+    }).values.toList();
 
     if (rows.length > 0) {
       rows.insert(0,
