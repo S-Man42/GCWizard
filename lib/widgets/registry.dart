@@ -2007,6 +2007,7 @@ class Registry {
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'window'),
         i18nPrefix: 'symboltables_window',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'window/67.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fenster window johannes balthasar friderici cryptographia'
       ),
       GCWToolWidget(
