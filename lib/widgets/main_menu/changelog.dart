@@ -50,7 +50,7 @@ class ChangelogState extends State<Changelog> {
     );
 
     return GCWMainMenuEntryStub(
-        content: content
+      content: content
     );
   }
 }

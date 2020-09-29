@@ -15,17 +15,31 @@ class GCWIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isNormalSize = this.size == IconButtonSize.NORMAL;
+    var containerWidth;
+    var buttonHeight;
+    var iconSize;
+    switch (this.size) {
+      case IconButtonSize.NORMAL:
+        containerWidth = 40.0;
+        buttonHeight = 38.0;
+        iconSize = null;
+        break;
+      case IconButtonSize.SMALL:
+        containerWidth = 32.0;
+        buttonHeight = 28.0;
+        iconSize = 20.0;
+        break;
+    }
 
     return Container(
-      width: isNormalSize ? 40 : 35,
+      width: containerWidth,
       child: ButtonTheme(
-        height: isNormalSize ? 38.0 : 30,
+        height: buttonHeight,
         child: OutlineButton(
           padding: EdgeInsets.zero,
           child: Icon(
             this.iconData,
-            size: isNormalSize ? null : 20,
+            size: iconSize,
             color: this.color ?? themeColors().mainFont()
           ) ?? this.image,
           onPressed: this.onPressed,

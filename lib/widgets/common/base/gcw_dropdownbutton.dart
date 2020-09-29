@@ -55,7 +55,19 @@ class _GCWDropDownButtonState extends State<GCWDropDownButton> {
           }).toList(),
           onChanged: widget.onChanged,
           style: TextStyle(fontSize: defaultFontSize()),
-          selectedItemBuilder: widget.selectedItemBuilder,
+          selectedItemBuilder: widget.selectedItemBuilder ?? (context) {
+            return widget.items.map((item) {
+              return Align(
+                child: item.child is Widget
+                  ? item.child
+                  : Text(
+                      item.child.toString(),
+                      style: gcwTextStyle(),
+                    ),
+                alignment: Alignment.centerLeft,
+              );
+            }).toList();
+          },
         )
       )
     );

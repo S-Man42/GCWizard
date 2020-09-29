@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 
 const keyCoordsDEC = 'coords_dec';
-const keyCoordsDEG = 'coords_deg';
+const keyCoordsDMM = 'coords_dmm';
 const keyCoordsDMS = 'coords_dms';
 const keyCoordsUTM = 'coords_utm';
 const keyCoordsMGRS = 'coords_mgrs';
@@ -28,33 +28,34 @@ class CoordinateFormat {
   final key;
   String name;
   List<CoordinateFormat> subtypes;
+  String example;
 
-  CoordinateFormat(this.key, this.name, {this.subtypes});
+  CoordinateFormat(this.key, this.name, this.example, {this.subtypes});
 }
 
 List<CoordinateFormat> allCoordFormats = [
-  CoordinateFormat(keyCoordsDEC, 'DEC: DD.DDD°'),
-  CoordinateFormat(keyCoordsDEG, 'DEG: DD° MM.MMM\''),
-  CoordinateFormat(keyCoordsDMS, 'DMS: DD° MM\' SS.SSS"'),
-  CoordinateFormat(keyCoordsUTM, 'UTM'),
-  CoordinateFormat(keyCoordsMGRS, 'MGRS'),
-  CoordinateFormat(keyCoordsSwissGrid, 'SwissGrid (CH1903)'),
-  CoordinateFormat(keyCoordsSwissGridPlus, 'SwissGrid (CH1903+)'),
-  CoordinateFormat(keyCoordsGaussKrueger, 'coords_formatconverter_gausskrueger', subtypes: [
-    CoordinateFormat(keyCoordsGaussKruegerGK1, 'coords_formatconverter_gausskrueger_gk1'),
-    CoordinateFormat(keyCoordsGaussKruegerGK2, 'coords_formatconverter_gausskrueger_gk2'),
-    CoordinateFormat(keyCoordsGaussKruegerGK3, 'coords_formatconverter_gausskrueger_gk3'),
-    CoordinateFormat(keyCoordsGaussKruegerGK4, 'coords_formatconverter_gausskrueger_gk4'),
-    CoordinateFormat(keyCoordsGaussKruegerGK5, 'coords_formatconverter_gausskrueger_gk5'),
+  CoordinateFormat(keyCoordsDEC, 'DEC: DD.DDD°', '45.29100, -122.41333'),
+  CoordinateFormat(keyCoordsDMM, 'DMM: DD° MM.MMM\'', 'N 45° 17.460\' W 122° 24.800\''),
+  CoordinateFormat(keyCoordsDMS, 'DMS: DD° MM\' SS.SSS"', 'N 45° 17\' 27.60" W 122° 24\' 48.00"'),
+  CoordinateFormat(keyCoordsUTM, 'UTM', '10 N 546003.6 5015445.0'),
+  CoordinateFormat(keyCoordsMGRS, 'MGRS', '10 T ER 46003.6 15445.0'),
+  CoordinateFormat(keyCoordsSwissGrid, 'SwissGrid (CH1903)', 'Y: 4295317.7, X: 1202252.3'),
+  CoordinateFormat(keyCoordsSwissGridPlus, 'SwissGrid (CH1903+)', 'Y: 6295317.7, X: 2202252.3'),
+  CoordinateFormat(keyCoordsGaussKrueger, 'coords_formatconverter_gausskrueger', 'R: 8837763.4, H: 5978799.1', subtypes: [
+    CoordinateFormat(keyCoordsGaussKruegerGK1, 'coords_formatconverter_gausskrueger_gk1', 'R: 8837763.4, H: 5978799.1'),
+    CoordinateFormat(keyCoordsGaussKruegerGK2, 'coords_formatconverter_gausskrueger_gk2', 'R: 8837739.4, H: 5978774.5'),
+    CoordinateFormat(keyCoordsGaussKruegerGK3, 'coords_formatconverter_gausskrueger_gk3', 'R: 8837734.7, H: 5978798.2'),
+    CoordinateFormat(keyCoordsGaussKruegerGK4, 'coords_formatconverter_gausskrueger_gk4', 'R: 8837790.8, H: 5978787.4'),
+    CoordinateFormat(keyCoordsGaussKruegerGK5, 'coords_formatconverter_gausskrueger_gk5', 'R: 8837696.4, H: 5978779.5'),
   ]),
-  CoordinateFormat(keyCoordsMaidenhead, 'Maidenhead Locator (QTH)'),
-  CoordinateFormat(keyCoordsMercator, 'Mercator'),
-  CoordinateFormat(keyCoordsNaturalAreaCode, 'Natural Area Code (NAC)'),
-  CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles'),
-  CoordinateFormat(keyCoordsGeohash, 'Geohash'),
-  CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)'),
-  CoordinateFormat(keyCoordsQuadtree, 'Quadtree'),
-  CoordinateFormat(keyCoordsReverseWhereIGoWaldmeister, 'Reverse WhereIGo (Waldmeister)'),
+  CoordinateFormat(keyCoordsMaidenhead, 'Maidenhead Locator (QTH)', 'CN85TG09JU'),
+  CoordinateFormat(keyCoordsMercator, 'Mercator', 'Y: 5667450.4, X: -13626989.9'),
+  CoordinateFormat(keyCoordsNaturalAreaCode, 'Natural Area Code (NAC)', 'X: 4RZ000, Y: QJFMGZ'),
+  CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles', 'Z: 15, X: 5241, Y: 11749'),
+  CoordinateFormat(keyCoordsGeohash, 'Geohash', 'c20cwkvr4'),
+  CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)', '84QV7HRP+CM3'),
+  CoordinateFormat(keyCoordsQuadtree, 'Quadtree', '021230223311203323'),
+  CoordinateFormat(keyCoordsReverseWhereIGoWaldmeister, 'Reverse WhereIGo (Waldmeister)', '042325, 436113, 935102'),
 ];
 
 CoordinateFormat getCoordinateFormatByKey(String key) {
@@ -63,7 +64,7 @@ CoordinateFormat getCoordinateFormatByKey(String key) {
 
 final defaultCoordinate = LatLng(0.0, 0.0);
 
-String _degAndDMSNumberFormat([int precision = 6]) {
+String _dmmAndDMSNumberFormat([int precision = 6]) {
   var formatString = '00.';
   if (precision == null)
     precision = 6;
@@ -122,15 +123,15 @@ class DEC {
   }
 }
 
-class DEGPart {
+class DMMPart {
   int sign;
   int degrees;
   double minutes;
 
-  DEGPart(this.sign, this.degrees, this.minutes);
+  DMMPart(this.sign, this.degrees, this.minutes);
 
   Map<String, dynamic> _formatParts(bool isLatitude, [int precision]) {
-    var _minutesStr = NumberFormat(_degAndDMSNumberFormat(precision)).format(minutes);
+    var _minutesStr = NumberFormat(_dmmAndDMSNumberFormat(precision)).format(minutes);
     var _degrees = degrees;
     var _sign = _getSignString(sign, isLatitude);
 
@@ -161,11 +162,11 @@ class DEGPart {
   }
 }
 
-class DEGLatitude extends DEGPart {
-  DEGLatitude(sign, degrees, minutes) : super(sign, degrees, minutes);
+class DMMLatitude extends DMMPart {
+  DMMLatitude(sign, degrees, minutes) : super(sign, degrees, minutes);
 
-  static DEGLatitude from(DEGPart degPart) {
-    return DEGLatitude(degPart.sign, degPart.degrees, degPart.minutes);
+  static DMMLatitude from(DMMPart dmmPart) {
+    return DMMLatitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);
   }
 
   Map<String, dynamic> formatParts([int precision]) {
@@ -177,11 +178,11 @@ class DEGLatitude extends DEGPart {
   }
 }
 
-class DEGLongitude extends DEGPart {
-  DEGLongitude(sign, degrees, minutes) : super(sign, degrees, minutes);
+class DMMLongitude extends DMMPart {
+  DMMLongitude(sign, degrees, minutes) : super(sign, degrees, minutes);
 
-  static DEGLongitude from(DEGPart degPart) {
-    return DEGLongitude(degPart.sign, degPart.degrees, degPart.minutes);
+  static DMMLongitude from(DMMPart dmmPart) {
+    return DMMLongitude(dmmPart.sign, dmmPart.degrees, dmmPart.minutes);
   }
 
   Map<String, dynamic> formatParts([int precision]) {
@@ -193,26 +194,26 @@ class DEGLongitude extends DEGPart {
   }
 }
 
-class DEG {
-  DEGLatitude latitude;
-  DEGLongitude longitude;
+class DMM {
+  DMMLatitude latitude;
+  DMMLongitude longitude;
 
-  DEG(this.latitude, this.longitude);
+  DMM(this.latitude, this.longitude);
 
-  static DEG from(LatLng coord) {
-    return DECToDEG(DEC.from(coord));
+  static DMM from(LatLng coord) {
+    return DECToDMM(DEC.from(coord));
   }
 
   LatLng toLatLng() {
-    return DEGToDEC(this).toLatLng();
+    return DMMToDEC(this).toLatLng();
   }
 
   Map<String, String> format([int precision]) {
     return {'latitude': latitude.format(precision), 'longitude': longitude.format(precision)};
   }
 
-  DEG normalize() {
-    return DECToDEG(DEGToDEC(this));
+  DMM normalize() {
+    return DECToDMM(DMMToDEC(this));
   }
 
   @override
@@ -231,7 +232,7 @@ class DMSPart {
 
   Map<String, dynamic> _formatParts(bool isLatitude, [int precision]) {
     var _sign = _getSignString(sign, isLatitude);
-    var _secondsStr = NumberFormat(_degAndDMSNumberFormat(precision)).format(seconds);
+    var _secondsStr = NumberFormat(_dmmAndDMSNumberFormat(precision)).format(seconds);
     var _minutes = minutes;
 
     //Values like 59.999999999 may be rounded to 60.0. So in that case,

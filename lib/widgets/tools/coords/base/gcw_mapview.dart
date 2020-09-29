@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/gestures.dart';
@@ -18,8 +19,10 @@ import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:latlong/latlong.dart';
+import 'package:location/location.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum _LayerType {OPENSTREETMAP_MAPNIK, MAPBOX_SATELLITE}
@@ -47,6 +50,12 @@ class GCWMapViewState extends State<GCWMapView> {
 
   _LayerType _currentLayer = _LayerType.OPENSTREETMAP_MAPNIK;
   var _mapBoxToken;
+
+  var _currentLocationPermissionGranted;
+  StreamSubscription<LocationData> _locationSubscription;
+  Location _location = Location();
+  LatLng _currentPosition;
+  double _currentAccuracy;
 
   //////////////////////////////////////////////////////////////////////////////
   // from: https://stackoverflow.com/a/58958668/3984221
@@ -110,52 +119,57 @@ class GCWMapViewState extends State<GCWMapView> {
   Future<String> _loadToken(String tokenName) async {
     return await rootBundle.loadString('assets/tokens/$tokenName');
   }
-  
+
   @override
-  void initState() {
-    super.initState();
+  void dispose() {
+    _cancelLocationSubscription();
+
+    super.dispose();
+  }
+
+  _cancelLocationSubscription() {
+    if (_locationSubscription != null) {
+      _locationSubscription.cancel();
+      _locationSubscription = null;
+    }
+  }
+
+  _toggleLocationListening() {
+    if (_currentLocationPermissionGranted == false)
+      return;
+
+    if (_locationSubscription == null) {
+      _locationSubscription = _location.onLocationChanged
+        .handleError((error) {
+          _cancelLocationSubscription();
+        })
+        .listen((LocationData currentLocation) {
+          setState(() {
+            _currentPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
+            _currentAccuracy = currentLocation.accuracy;
+          });
+        });
+
+      _locationSubscription.pause();
+    }
+
+    setState(() {
+      if (_locationSubscription.isPaused) {
+        _locationSubscription.resume();
+      } else {
+        _locationSubscription.pause();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    //Marker Shadow
-    List<Marker> _markers = widget.points.map((_point) {
-      return GCWMarker(
-        coordinateDescription: _buildPopupCoordinateDescription(_point),
-        coordinateText: _buildPopupCoordinateText(_point),
-        width: 28.3,
-        height: 28.3,
-        point: _point.point,
-        builder: (context) {
-          return Icon(
-            Icons.my_location,
-            size: 28.3,
-            color: COLOR_MAP_POINT_OUTLINE,
-          );
-        });
-    }).toList();
-
-    //colored Markers
-    _markers.addAll(widget.points.map((_point) {
-      return GCWMarker(
-        coordinateDescription: _buildPopupCoordinateDescription(_point),
-        coordinateText: _buildPopupCoordinateText(_point),
-        width: 25.0,
-        height: 25.0,
-        point: _point.point,
-        builder: (context) {
-          return Icon(
-            Icons.my_location,
-            size: 25.0,
-            color: _point.color,
-          );
-        });
-      }).toList()
-    );
-
-    List<Polyline> _polylines = _addPolylines();
-    List<Polyline> _circlePolylines = _addCircles();
-    _polylines.addAll(_circlePolylines);
+    if (_currentLocationPermissionGranted == null) {
+      checkLocationPermission(_location).then((value) {
+        _currentLocationPermissionGranted = value;
+        _toggleLocationListening();
+      });
+    }
 
     var layer = _currentLayer == _LayerType.MAPBOX_SATELLITE && _mapBoxToken != null && _mapBoxToken != ''
       ? TileLayerOptions(
@@ -172,21 +186,7 @@ class GCWMapViewState extends State<GCWMapView> {
         );
 
     var layers = <LayerOptions>[layer];
-
-    layers.addAll([
-      PolylineLayerOptions(
-        polylines: _polylines
-      ),
-      MarkerLayerOptions(
-        markers: _markers
-      ),
-      PopupMarkerLayerOptions(
-        markers: _markers,
-        popupSnap: PopupSnap.top,
-        popupController: _popupLayerController,
-        popupBuilder: (BuildContext _, Marker marker) => _buildPopups(marker)
-      ),
-    ]);
+    layers.addAll(_buildLinesAndMarkersLayers());
 
     return Listener(
       onPointerSignal: handleSignal,
@@ -204,25 +204,11 @@ class GCWMapViewState extends State<GCWMapView> {
             ),
             layers: layers,
           ),
-
           Positioned(
             top: 15.0,
             right: 15.0,
-            child: GCWIconButton(
-              iconData: Icons.layers,
-              onPressed: () {
-                _currentLayer = _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? _LayerType.MAPBOX_SATELLITE : _LayerType.OPENSTREETMAP_MAPNIK;
-
-                if (_currentLayer == _LayerType.MAPBOX_SATELLITE && (_mapBoxToken == null || _mapBoxToken == '')) {
-                  _loadToken('mapbox').then((token) {
-                    setState(() {
-                      _mapBoxToken = token;
-                    });
-                  });
-                } else {
-                  setState(() {});
-                }
-              }
+            child: Column(
+              children: _buildButtons()
             )
           ),
 
@@ -233,7 +219,6 @@ class GCWMapViewState extends State<GCWMapView> {
               child: Opacity(
                 child: Container(
                   color: COLOR_MAP_LICENSETEXT_BACKGROUND,
-                  //TODO: GCWText instead Text: Currently GCWText catches the hyperlink event
                   child: Text(
                     i18n(context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_TEXT : MAPBOX_SATELLITE_TEXT),
                     style: TextStyle(
@@ -253,6 +238,146 @@ class GCWMapViewState extends State<GCWMapView> {
         ],
       )
     );
+  }
+
+  List<LayerOptions> _buildLinesAndMarkersLayers() {
+    var layers = <LayerOptions>[];
+
+    // build accuracy circle for user position
+    if (
+         _locationSubscription != null && !_locationSubscription.isPaused
+      && _currentAccuracy != null && _currentPosition != null
+    ) {
+      layers.add(
+        CircleLayerOptions(
+          circles: [
+            CircleMarker(
+              point: _currentPosition,
+              borderStrokeWidth: 1,
+              useRadiusInMeter: true,
+              radius: _currentAccuracy,
+              color: Colors.white.withOpacity(0.0), // hack for: without color
+              borderColor: COLOR_MAP_USERPOSITION,
+            )
+          ]
+        )
+      );
+    }
+
+    List<Marker> _markers = _buildMarkers();
+
+    List<Polyline> _polylines = _addPolylines();
+    List<Polyline> _circlePolylines = _addCircles();
+    _polylines.addAll(_circlePolylines);
+
+    layers.addAll([
+      PolylineLayerOptions(
+          polylines: _polylines
+      ),
+      MarkerLayerOptions(
+          markers: _markers
+      ),
+      PopupMarkerLayerOptions(
+          markers: _markers,
+          popupSnap: PopupSnap.top,
+          popupController: _popupLayerController,
+          popupBuilder: (BuildContext _, Marker marker) => _buildPopups(marker)
+      ),
+    ]);
+
+    return layers;
+  }
+
+  _buildMarkers() {
+    var points = List<MapPoint>.from(widget.points);
+
+    // Add User Position
+    if (
+         _locationSubscription != null && !_locationSubscription.isPaused
+      && _currentPosition != null
+    ) {
+      points.add(MapPoint(
+        point: _currentPosition,
+        markerText: i18n(context, 'common_userposition'),
+        color: COLOR_MAP_USERPOSITION,
+        coordinateFormat: defaultCoordFormat()
+      ));
+    }
+
+    //Marker Outlines
+    List<Marker> markers = points.map((_point) {
+      return GCWMarker(
+        coordinateDescription: _buildPopupCoordinateDescription(_point),
+        coordinateText: _buildPopupCoordinateText(_point),
+        width: 28.3,
+        height: 28.3,
+        point: _point.point,
+        builder: (context) {
+          return Icon(
+            Icons.my_location,
+            size: 28.3,
+            color: COLOR_MAP_POINT_OUTLINE,
+          );
+        }
+      );
+    }).toList();
+
+    //colored Markers
+    markers.addAll(
+      points.map((_point) {
+        return GCWMarker(
+          coordinateDescription: _buildPopupCoordinateDescription(_point),
+          coordinateText: _buildPopupCoordinateText(_point),
+          width: 25.0,
+          height: 25.0,
+          point: _point.point,
+          builder: (context) {
+            return Icon(
+              Icons.my_location,
+              size: 25.0,
+              color: _point.color,
+            );
+          }
+        );
+      }).toList()
+    );
+
+    return markers;
+  }
+
+  _buildButtons() {
+    var buttons = [
+      GCWIconButton(
+        iconData: Icons.layers,
+        onPressed: () {
+          _currentLayer = _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? _LayerType.MAPBOX_SATELLITE : _LayerType.OPENSTREETMAP_MAPNIK;
+
+          if (_currentLayer == _LayerType.MAPBOX_SATELLITE && (_mapBoxToken == null || _mapBoxToken == '')) {
+            _loadToken('mapbox').then((token) {
+              setState(() {
+                _mapBoxToken = token;
+              });
+            });
+          } else {
+            setState(() {});
+          }
+        }
+      ),
+    ];
+
+    if (
+         _currentLocationPermissionGranted != null && _currentLocationPermissionGranted
+      && _locationSubscription != null
+    ) {
+      buttons.add(
+        GCWIconButton(
+          iconData: _locationSubscription.isPaused ? Icons.location_off : Icons.location_on,
+          onPressed: _toggleLocationListening,
+        )
+      );
+    }
+
+    return buttons;
   }
 
   // handle mouse wheel on web

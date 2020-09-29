@@ -5,6 +5,7 @@ import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
 import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
+import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
@@ -105,6 +106,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_e_checker.d
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/symbol_table.dart';
@@ -134,6 +136,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/com
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
@@ -182,7 +185,7 @@ class Registry {
   static final SEARCHSTRING_COMBINATORICS_PERMUTATION = SEARCHSTRING_COMBINATORICS + 'permutationen permutations anordnungen reihenfolgen arrangements orders ';
   static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
   static final SEARCHSTRING_COORDINATES_COMPASSROSE = 'compassrose kompassrose himmelsrichtungen windrichtungen intercardinaldirections ';
-  static final SEARCHSTRING_CROSSSUMS = 'crosssums digits alternated crosstotals iterated iteriert products quersummen produkte alternierend alterniert iterierend ';
+  static final SEARCHSTRING_CROSSSUMS = 'crosssums digits alternated crosstotals iterated iteriert products quersummen produkte alternierend alterniert iterierend digitalroot digitroot ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_DNA = 'code-sonne codesonne codesun dna mrna desoxyribonucleicacid desoxyribonukleinsaeure dns mrns genetisches genetik genetics genes genomes gattaca nucleotide nukleotid sequence sequenz thymine uracile cytosine adenine guanine ';
   static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
@@ -206,7 +209,7 @@ class Registry {
   static final SEARCHSTRING_ROTATION = 'rotate rotieren verschieben shift rotations rotx rotn rot-x rotationen ';
   static final SEARCHSTRING_RSA = SEARCHSTRING_PRIMES + 'rsa ronald rivest adi shamir leonard adleman asymmetry asymmetric asymmetrie asymmetrisches public private key oeffentlicher privater schluessel phi ';
   static final SEARCHSTRING_SEGMENTDISPLAY = 'led segments segmente display segmentanzeige ';
-  static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schrift buchstaben letters alphabet ';
+  static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schriften ';
   static final SEARCHSTRING_SYMBOLTABLES_FREEMASONS = 'freemasons freimaurer ';
   static final SEARCHSTRING_SYMBOLTABLES_HYLIAN = 'thelegendofzelda dielegendevonzelda hylian hylianisches hyrule ';
   static final SEARCHSTRING_SYMBOLTABLES_ILLUMINATI = SEARCHSTRING_SYMBOLTABLES_FREEMASONS + 'illuminati illuminatus illuminaten 23 ';
@@ -603,6 +606,12 @@ class Registry {
         searchStrings: 'scytale skytale stick stock stab transposition'
       ),
       GCWToolWidget(
+        tool: Solitaire(),
+        i18nPrefix: 'solitaire',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'solitaire solitaer carddeck cardgame joker kartenspiel kartendeck cryptonomicon pontifex bruceschneier stromchiffrierung streamcipher nealstephenson'
+      ),
+      GCWToolWidget(
         tool: SpoonLanguage(),
         i18nPrefix: 'spoonlanguage',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -629,7 +638,8 @@ class Registry {
       GCWToolWidget(
         tool: SymbolTableSelection(),
         i18nPrefix: 'symboltables_selection',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES
+        searchStrings: SEARCHSTRING_SYMBOLTABLES,
+        titleTrailing: symboltablesDownloadButton(context),
       ),
       GCWToolWidget(
         tool: TapCode(),
@@ -925,6 +935,11 @@ class Registry {
         i18nPrefix: 'crosssum_range',
         searchStrings: SEARCHSTRING_CROSSSUMS
       ),
+      GCWToolWidget(
+        tool: IteratedCrossSumRange(),
+        i18nPrefix: 'crosssum_range_iterated',
+        searchStrings: SEARCHSTRING_CROSSSUMS
+      ),
 
       //DatesSelection **********************************************************************************************
       GCWToolWidget(
@@ -1160,7 +1175,12 @@ class Registry {
       GCWToolWidget(
         tool: CallForContribution(),
         i18nPrefix: 'mainmenu_callforcontribution',
-        searchStrings: 'contributions mitarbeiten beitragen',
+        searchStrings: 'contributions mitarbeiten beitragen contribute',
+      ),
+      GCWToolWidget(
+        tool: Licenses(),
+        i18nPrefix: 'licenses',
+        searchStrings: 'licenses licences lizenzen library libraries bibliotheken',
       ),
 
       //Phi Selection **********************************************************************************************
@@ -1990,6 +2010,12 @@ class Registry {
         i18nPrefix: 'symboltables_wakandan',
         iconPath: SYMBOLTABLES_ASSETPATH + 'wakandan/78.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'wakandanisches wakandisches blackpanther marvel chadwickboseman schwarzerpanther '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'window'),
+        i18nPrefix: 'symboltables_window',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'window/67.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fenster window johannes balthasar friderici cryptographia'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'yan_koryani'),

@@ -188,17 +188,6 @@ class AlphabetValuesState extends State<AlphabetValues> {
                         subtitle: _generateItemDescription(alphabet)
                       );
                     }).toList(),
-                    selectedItemBuilder: (context) {
-                      return _alphabets.map<Widget>((alphabet) {
-                        return Align(
-                          child: Text(
-                            alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
-                            style: gcwTextStyle(),
-                          ),
-                          alignment: Alignment.centerLeft,
-                        );
-                      }).toList();
-                    },
                     onChanged: (value) {
                       setState(() {
                         _currentAlphabetKey = value;
@@ -727,7 +716,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     var alphabet = _getFinalAlphabet();
 
     if (_currentMode == GCWSwitchPosition.left) {
-      return intListToString(logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true), delimiter: ' | ');
+      return intListToString(logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true), delimiter: ' ');
     } else {
       return logic.AlphabetValues(alphabet: alphabet).valuesToText(List<int>.from(_currentDecodeInput['values']));
     }
