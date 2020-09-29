@@ -1,6 +1,8 @@
 import 'package:gc_wizard/utils/crosstotals.dart';
 
-List<int> crossSumRange(int rangeStart, int rangeEnd, int crossSumToFind) {
+enum CrossSumType {NORMAL, ITERATED}
+
+List<int> crossSumRange(int rangeStart, int rangeEnd, int crossSumToFind, {CrossSumType type: CrossSumType.NORMAL}) {
   if (rangeStart == null || rangeEnd == null || crossSumToFind == null)
     return [];
 
@@ -12,7 +14,13 @@ List<int> crossSumRange(int rangeStart, int rangeEnd, int crossSumToFind) {
 
   var out = <int>[];
   for (int i = rangeStart; i <= rangeEnd; i++) {
-    if (crossSum([i]).toInt() == crossSumToFind)
+    var crossSumResult;
+    switch (type) {
+      case CrossSumType.NORMAL: crossSumResult = crossSum([i]); break;
+      case CrossSumType.ITERATED: crossSumResult = crossSumIterated([i]); break;
+    }
+
+    if (crossSumResult.toInt() == crossSumToFind)
       out.add(i);
   }
 
