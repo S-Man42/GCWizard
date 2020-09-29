@@ -97,8 +97,11 @@ class HumidexState extends State<Humidex> {
     }
 
     String hintH;
-    if (_currentDewPoint < 40)
-      hintH = i18n(context, 'heatindex_hint_humidity');
+    if (_isHumidity){
+      if (_currentDewPoint < 40)
+        hintH = i18n(context, 'heatindex_hint_humidity');
+    } else
+       hintH = '';
 
     var hint = [hintT, hintH].where((element) => element != null && element.length > 0).join('\n');
 
