@@ -570,7 +570,7 @@ class Registry {
         tool: RomanNumbersSelection(),
         i18nPrefix: 'romannumbers',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_ROMAN_NUMBERS + 'chronogram chronogramm'
+        searchStrings: SEARCHSTRING_ROMAN_NUMBERS
       ),
       GCWToolWidget(
         tool: RotationSelection(),
