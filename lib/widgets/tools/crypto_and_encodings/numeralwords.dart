@@ -106,15 +106,15 @@ class NumeralWordsState extends State<NumeralWords> {
 
     if (_currentMode == GCWSwitchPosition.left) {//show numeral words for specific language
       switch (_currentLanguage) {
-        case NumeralWordsLanguage.DE: words = NumToWordDE;
+        case NumeralWordsLanguage.DE: words = WordToNumDE;
           break;
-        case NumeralWordsLanguage.EN: words = NumToWordEN;
+        case NumeralWordsLanguage.EN: words = WordToNumEN;
           break;
-        case NumeralWordsLanguage.FR: words = NumToWordFR;
+        case NumeralWordsLanguage.FR: words = WordToNumFR;
           break;
-        case NumeralWordsLanguage.IT: words = NumToWordIT;
+        case NumeralWordsLanguage.IT: words = WordToNumIT;
           break;
-        case NumeralWordsLanguage.ES: words = NumToWordES;
+        case NumeralWordsLanguage.ES: words = WordToNumES;
           break;
         case NumeralWordsLanguage.ALL:
           return GCWOutputText(
@@ -122,10 +122,10 @@ class NumeralWordsState extends State<NumeralWords> {
           );
           break;
       }
-      for (int i = 0; i < words.length; i++){
-        if (words[i.toString()] != null)
-          output = output + i.toString() + ' - ' + words[i.toString()] + '\n';
-      }
+      words.forEach((key, value) {
+        if (int.tryParse(value) != null)
+          output = output + value + ' - ' + key +'\n';
+      });
     } else
       output = decodeNumeralwords(_currentDecodeInput.toUpperCase(), _currentLanguage, _currentDecodeMode);
 

@@ -32,11 +32,13 @@ final Map<String, String> WordToNumFR = {'UN':'1', 'UNE': '1', 'DEUX':'2', 'TROI
   'DIX':'10', 'ONZE':'11', 'DOUZE':'12', 'TREIZE':'13', 'QUATORZE':'14', 'QUINZE':'15', 'SEIZE':'16', 'DIX-SEPT':'17', 'DIX-HUIT':'18', 'DIX-NEUF':'19',
   'VINGT':'20', 'TRENTE':'30', 'QUARANTE':'40', 'CINQANTE':'50', 'SOIXANTE':'60', 'SOIXANTE-DIX':'70', 'QUATRE-VINGT':'80', 'QUATRE-VINGT-DIX':'90', 'CENT':'100', 'MILLE':'1000' };
 
+/*
 final Map<String, String> NumToWordDE = switchMapKeyValue(WordToNumDE);
 final Map<String, String> NumToWordEN = switchMapKeyValue(WordToNumEN);
 final Map<String, String> NumToWordFR = switchMapKeyValue(WordToNumFR);
 final Map<String, String> NumToWordIT = switchMapKeyValue(WordToNumIT);
 final Map<String, String> NumToWordES = switchMapKeyValue(WordToNumES);
+*/
 
 
 bool _isNumeral(String input){
@@ -220,22 +222,43 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
     });
     return output;
   } else { // search also parts of words: weight => eight => 8
+      int maxLength = 0;
+      int jump = 0;
+      bool found = false;
       List <String> numWords = [];
-      decodingTable.forEach((key, value) {numWords.add(key);});
+      decodingTable.forEach((key, value) {
+        if (int.tryParse(value) != null)
+          if (int.tryParse(value) < 10) {
+            numWords.add(key);
+            if (key.length > maxLength)
+              maxLength = key.length;
+          }
+      });
       decodeText = input.replaceAll(' ', '')
-          .split(RegExp(r'[^A-Z0-9\-]'));
+          .split(RegExp(r'[^A-ZÄÖÜß0-9]'));
       decodeText.forEach((element) {
         if (_isNumeral(element)) {
           output = output + ' ' + element;
         } else {
-          for (int i = 0; i < decodingTable.length; i++){
-            if (element.contains(numWords[i]))
-              output = output + decodingTable[numWords[i]];
+          for (int i = 0; i < element.length - maxLength + 1; i++){
+            var checkWord = element.substring(i, i + maxLength);
+            found = false;
+            for (int j = 0; j < numWords.length; j++){
+              if (checkWord.contains(numWords[j])) {
+                output = output + decodingTable[numWords[j]];
+                jump = numWords[j].length;
+                j = numWords.length;
+                found = true;
+              }
+            }
+            if (found){
+              i = i + jump;
+            }
           }
         }
       });
       return output;
-// Wacht einsam während Vater und Mutter zweifelnd Sand sieben.
+// Susi wacht einsam während Vater und Mutter zweifelnd Sand sieben.
   }
 }
 
