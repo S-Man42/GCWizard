@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/roman_numbers.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/roman_numbers/roman_numbers.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -75,18 +75,16 @@ class RomanNumbersState extends State<RomanNumbers> {
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.left
-          ? GCWOnOffSwitch(
-              title: i18n(context, 'romannumbers_subtractionrule'),
-              value: _currentRomanNumbersTypeMode == RomanNumberType.USE_SUBTRACTION_RULE,
-              onChanged: (value) {
-                setState(() {
-                  _currentRomanNumbersTypeMode = value ? RomanNumberType.USE_SUBTRACTION_RULE : RomanNumberType.ONLY_ADDITION;
-                  _calculateOutput();
-                });
-              },
-            )
-          : Container(),
+        GCWOnOffSwitch(
+          title: i18n(context, 'romannumbers_subtractionrule'),
+          value: _currentRomanNumbersTypeMode == RomanNumberType.USE_SUBTRACTION_RULE,
+          onChanged: (value) {
+            setState(() {
+              _currentRomanNumbersTypeMode = value ? RomanNumberType.USE_SUBTRACTION_RULE : RomanNumberType.ONLY_ADDITION;
+              _calculateOutput();
+            });
+          },
+        ),
         GCWDefaultOutput(
           child: _output
         )
@@ -98,7 +96,7 @@ class RomanNumbersState extends State<RomanNumbers> {
     if (_currentMode == GCWSwitchPosition.left) {
       _output = encodeRomanNumbers(_currentEncodeInput['value'], type: _currentRomanNumbersTypeMode) ?? '';
     } else {
-      var value = decodeRomanNumbers(_currentDecodeInput);
+      var value = decodeRomanNumbers(_currentDecodeInput, type: _currentRomanNumbersTypeMode);
       _output = value == null ? '' : value.toString();
     }
   }

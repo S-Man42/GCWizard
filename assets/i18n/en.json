@@ -321,6 +321,13 @@
   "chickenlanguage_description" : "Game Language, Secret Language",
   "chickenlanguage_example" : "code → cohodefodehedefe",
 
+  "chronogram_title" : "Chronogram",
+  "chronogram_description" : "Finds and adds roman numerals in texts",
+  "chronogram_example" : "AMORE MATVRITAS → MMVI → 2006",
+  "chronogram_ju.to.iv" : "J,U → I,V",
+  "chronogram_y.to.ii" : "Y → II",
+  "chronogram_w.to.vv" : "W → VV",
+
   "colors_title" : "Colors",
   "colors_description" : "Color Picker and Color Space Converter",
   "colors_outputcolorspace" : "Output Color Space",

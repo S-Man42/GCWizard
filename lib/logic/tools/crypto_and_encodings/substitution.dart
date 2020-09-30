@@ -1,4 +1,4 @@
-import "dart:collection";
+import 'dart:collection';
 
 String substitution(String input, Map<String, String> substitutions, {bool caseSensitive: true}) {
   if (input == null || input.length == 0)
