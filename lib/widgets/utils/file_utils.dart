@@ -27,7 +27,7 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) 
     path = _appDocDirNewFolder.path;
   }
 
-  var filePath = '$path$fileName';
+  var filePath = '$path/$fileName';
   var file = File(filePath);
 
   if (! await file.exists())
