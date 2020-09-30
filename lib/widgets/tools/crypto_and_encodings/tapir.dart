@@ -73,14 +73,14 @@ class TapirState extends State<Tapir> {
         ),
         _currentOneTimePadMode
           ? GCWTextField(
-            inputFormatters: [_maskFormatter],
-            hintText: '12345 67890 12...',
-            onChanged: (value) {
-              setState(() {
-                _currentOneTimePad = value;
-              });
-            },
-          )
+              inputFormatters: [_maskFormatter],
+              hintText: '12345 67890 12...',
+              onChanged: (value) {
+                setState(() {
+                  _currentOneTimePad = value;
+                });
+              },
+            )
           : Container(),
         GCWDefaultOutput(
           child: _buildOutput()

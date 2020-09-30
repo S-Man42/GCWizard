@@ -56,23 +56,23 @@ class GrayState extends State<Gray> {
 
         _currentInputMode == GCWSwitchPosition.left
           ? GCWTextField(
-            controller: _inputDecimalController,
-            inputFormatters: [_decimalMaskFormatter],
-            onChanged: (text){
-              setState(() {
-                _currentDecimalInput = text;
-              });
-            }
-          )
+              controller: _inputDecimalController,
+              inputFormatters: [_decimalMaskFormatter],
+              onChanged: (text){
+                setState(() {
+                  _currentDecimalInput = text;
+                });
+              }
+            )
           : GCWTextField (
-            controller: _inputBinaryController,
-            inputFormatters: [_binaryDigitsMaskFormatter],
-            onChanged: (text){
-              setState(() {
-                _currentBinaryInput = text;
-              });
-            }
-          ),
+              controller: _inputBinaryController,
+              inputFormatters: [_binaryDigitsMaskFormatter],
+              onChanged: (text){
+                setState(() {
+                  _currentBinaryInput = text;
+                });
+              }
+            ),
 
         GCWTwoOptionsSwitch(
           title: i18n(context, 'gray_mode'),

@@ -159,21 +159,21 @@ class AlphabetValuesState extends State<AlphabetValues> {
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
           ? GCWTextField(
-            controller: _encodeController,
-            onChanged: (text) {
-              setState(() {
-                _currentEncodeInput = text;
-              });
-            },
-          )
+              controller: _encodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentEncodeInput = text;
+                });
+              },
+            )
           : GCWIntegerListTextField(
-            controller: _decodeController,
-            onChanged: (text) {
-              setState(() {
-                _currentDecodeInput = text;
-              });
-            },
-          ),
+              controller: _decodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentDecodeInput = text;
+                });
+              },
+            ),
         Column(
           children: [
             Row(
@@ -293,16 +293,16 @@ class AlphabetValuesState extends State<AlphabetValues> {
             Expanded(
               child: isCustomAlphabet
                 ? Container(
-                  child: GCWButton(
-                    text: i18n(context, 'alphabetvalues_edit_mode_customize_deletealphabet'),
-                    onPressed: () {
-                      _removeAlphabet();
-                    }
-                  ),
-                  padding: EdgeInsets.only(
-                    right: DEFAULT_MARGIN
-                  ),
-                )
+                    child: GCWButton(
+                      text: i18n(context, 'alphabetvalues_edit_mode_customize_deletealphabet'),
+                      onPressed: () {
+                        _removeAlphabet();
+                      }
+                    ),
+                    padding: EdgeInsets.only(
+                      right: DEFAULT_MARGIN
+                    ),
+                  )
                 : Container(),
               flex: isCustomAlphabet ? 2 : 1,
             ),
