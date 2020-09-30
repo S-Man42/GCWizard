@@ -1510,6 +1510,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'doremifalamiresisol notesystem musictheory musiktheorie solmisation notensystem tonstufen degrees octal oktal'
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'dragon_language'),
+        i18nPrefix: 'symboltables_dragon_language',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'dragon_language/51.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'theelderscrolls skyrim dragonish dragonlanguage drachenschrift dragontongue draconian simplydovah drachenschrift dragonsfont tamriel dragonborn dovahkiin dragonshouts fantasy'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'dragon_runes'),
         i18nPrefix: 'symboltables_dragon_runes',
         iconPath: SYMBOLTABLES_ASSETPATH + 'dragon_runes/71.png',
@@ -1630,6 +1636,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'griechisches greek zahlen ziffern numbers numerals zahlschrift'
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hazard', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_hazard',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hazard/34.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hazardsigns gefahren warningsigns gebotsschilder gebotszeichen verbotsschilder verbotszeichen warnschilder warnzeichen BGVA8 DINENISO7010 ASRA1.3'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'hebrew'),
         i18nPrefix: 'symboltables_hebrew',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hebrew/sh.png',
@@ -1696,6 +1708,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hymmnos artonelico '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'iching'),
+        i18nPrefix: 'symboltables_iching',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'iching/fourty.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'iching itsching chinese chinesisches hexagramm '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'illuminati_v1'),
         i18nPrefix: 'symboltables_illuminati_v1',
         iconPath: SYMBOLTABLES_ASSETPATH + 'illuminati_v1/86.png',
@@ -1714,6 +1732,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'intergalactical galaxy galaxies intergalaktisch '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'iokharic'),
+        i18nPrefix: 'symboltables_iokharic',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'iokharic/56.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'drachenrunen drachenschrift dungeons&dragons drachensprache dragonscript dragonlanguage mandarinstylizedrunictypeface dungeonsanddragons iokharic lokharic draconicgrates wizardsofthecoasts chromaticdragonsbook chinesischerstil runen elbisch)'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'japanese_numerals'),
         i18nPrefix: 'symboltables_japanese_numerals',
         iconPath: SYMBOLTABLES_ASSETPATH + 'japanese_numerals/57.png',
@@ -1723,7 +1747,13 @@ class Registry {
         tool: SymbolTable(symbolKey: 'klingon', isCaseSensitive: true),
         i18nPrefix: 'symboltables_klingon',
         iconPath: SYMBOLTABLES_ASSETPATH + 'klingon/106.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klingonisch klingonen klingons klingonlanguageinstitute '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klingonisch klingonen klingons klingonlanguageinstitute kli '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'klingon_klinzhai'),
+        i18nPrefix: 'symboltables_klingon_klinzhai',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'klingon_klinzhai/97.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klinzhai klingonen klingonisches mandelschrift ussenterprise u.s.s.enterprise officersmanual officer\'smanual'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'krempel'),
@@ -1908,8 +1938,8 @@ class Registry {
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'sarati'),
         i18nPrefix: 'symboltables_sarati',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'sarati/86.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sarati lautschrift spokenlanguage schriftsystem j.r.r. jrr tolkien rumil quenya elves elvish elbisches elben thelordoftherings derherrderringe'
+        iconPath: SYMBOLTABLES_ASSETPATH + 'sarati/118.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'thesaratiofrumil tirionsarati rumilofvalinor ardainthevalian thetengwarofrumil sarati lautschrift spokenlanguage schriftsystem j.r.r. jrr tolkien rumil quenya elves elvish elbisches elben thelordoftherings derherrderringe'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'semaphore'),
@@ -1922,6 +1952,12 @@ class Registry {
         i18nPrefix: 'symboltables_sign',
         iconPath: SYMBOLTABLES_ASSETPATH + 'sign/75.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sign language zeichensprache gebaerdensprache hearing loss taubstumme taub-stumme deafblind deaf-blind gehoerlose deaf-mute deafmute'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'skullz', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_skullz',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'skullz/70.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'skull skullz skulls totenkopf totenkoepfe schaedel'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'slash_and_pipe'),
@@ -1948,6 +1984,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'spintype boxes kaestchen kasten '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'suetterlin', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_suetterlin',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'suetterlin/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'suetterlin germanhandwritingscript schreibschrift ausgangsschrift kurrentschrift'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'sunuz'),
         i18nPrefix: 'symboltables_sunuz',
         iconPath: SYMBOLTABLES_ASSETPATH + 'sunuz/77.png',
@@ -1970,6 +2012,24 @@ class Registry {
         i18nPrefix: 'symboltables_tenctonese',
         iconPath: SYMBOLTABLES_ASSETPATH + 'tenctonese/75.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tenctonese aliennation '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'tengwar_beleriand'),
+        i18nPrefix: 'symboltables_tengwar_beleriand',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'tengwar_beleriand/118.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'thelordoftherings derherrderringe jrrtolkien j.r.r.tolkien quenya tengwar elben elves elbisches elvish mittelerde middleearth thirdera dritteszeitalter beleriand feanor'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'tengwar_classic'),
+        i18nPrefix: 'symboltables_tengwar_classic',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'tengwar_classic/ngw.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'thelordoftherings derherrderringe jrrtolkien j.r.r.tolkien quenya tengwar elben elves elbisches elvish mittelerde middleearth thirdera dritteszeitalter classices classic feabnor classical klassischer'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'tengwar_general'),
+        i18nPrefix: 'symboltables_tengwar_general',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'tengwar_general/98.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'thelordoftherings derherrderringe jrrtolkien j.r.r.tolkien quenya tengwar elben elves elbisches elvish mittelerde middleearth thirdera dritteszeitalter generale general feanor'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'terzi'),
@@ -2020,10 +2080,34 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'wakandanisches wakandisches blackpanther marvel chadwickboseman schwarzerpanther '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'webdings', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_webdings',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'webdings/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont webdings wingdings windings'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'window'),
         i18nPrefix: 'symboltables_window',
         iconPath: SYMBOLTABLES_ASSETPATH + 'window/76.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fenster windows johannes balthasar friderici cryptographia'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'wingdings', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_wingdings',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont symbole symbols haende hands zahlenimkreis numbersincircle clock arrows pfeile stars sterne wingdings windings'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'wingdings2', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_wingdings2',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings2/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift symbole buero haende hands zahlenimkreis numbersincircle clock stars sterne systemfont wingdings2 windings2'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'wingdings3', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_wingdings3',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings3/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont symbole symbols arrows pfeile wingdings3 windings3'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'yan_koryani'),

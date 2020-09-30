@@ -433,6 +433,9 @@ class SymbolTableState extends State<SymbolTable> {
 
         if (imageIndex < _images.length) {
           var symbolText = _images.map((element) => element.keys.first).toList()[imageIndex].replaceAll(SPECIAL_MARKER, '');
+          if (!isCaseSensitive)
+            symbolText = symbolText.toUpperCase();
+
           var image = _images.map((element) => element.values.first).toList()[imageIndex];
 
           if (symbolText.length > _maxSymbolTextLength)
