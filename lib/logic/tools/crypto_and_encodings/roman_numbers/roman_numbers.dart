@@ -32,7 +32,7 @@ String encodeRomanNumbers(int number, {var type: RomanNumberType.USE_SUBTRACTION
   return out;
 }
 
-int decodeRomanNumbers(String input) {
+int decodeRomanNumbers(String input, {var type: RomanNumberType.USE_SUBTRACTION_RULE}) {
   if (input == null)
     return null;
 
@@ -40,7 +40,10 @@ int decodeRomanNumbers(String input) {
   if (input.length == 0)
     return null;
 
-  var roman = substitution(input, switchMapKeyValue(_subtractionSubstitutions));
+  var roman = input;
+  if (type == RomanNumberType.USE_SUBTRACTION_RULE)
+    roman = substitution(input, switchMapKeyValue(_subtractionSubstitutions));
+
   var out = 0;
   roman.split('').forEach((character) => out += _romanToNumber[character]);
 
