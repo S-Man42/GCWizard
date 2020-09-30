@@ -34,6 +34,7 @@ class LicensesState extends State<Licenses> {
             ['package_info', 'BSD License'],
             ['path', 'BSD License'],
             ['path_provider', 'BSD License'],
+            ['permission_handler', 'MIT License'],
             ['pointycastle', 'MIT License'],
             ['prefs', 'Apache 3.0 License'],
             ['provider', 'MIT License'],
