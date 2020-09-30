@@ -81,6 +81,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
@@ -449,6 +450,12 @@ class Registry {
         i18nPrefix: 'hexadecimal',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'hexadecimal hexadezimalzahlen numbers dezimalzahlen decimal 16'
+      ),
+      GCWToolWidget(
+        tool: Homophon(),
+        i18nPrefix: 'homophon',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'homophon monoalphabetische verschluesselungsmethode mono-alphabetical encryption method'
       ),
       GCWToolWidget(
         tool: Kamasutra(),
