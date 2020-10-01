@@ -25,6 +25,7 @@ import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/roman_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
@@ -94,7 +95,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rc4.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/robber_language.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers/chronogram.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot13.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot18.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart';
@@ -206,6 +208,7 @@ class Registry {
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
   static final SEARCHSTRING_RESISTOR = 'resistors widerstand widerstaende resistance ohm ';
   static final SEARCHSTRING_RESISTOR_COLORCODE = SEARCHSTRING_RESISTOR + 'colorcodes farben farbcodes colors ';
+  static final SEARCHSTRING_ROMAN_NUMBERS = 'romannumbers roemischezahlen ';
   static final SEARCHSTRING_ROTATION = 'rotate rotieren verschieben shift rotations rotx rotn rot-x rotationen ';
   static final SEARCHSTRING_RSA = SEARCHSTRING_PRIMES + 'rsa ronald rivest adi shamir leonard adleman asymmetry asymmetric asymmetrie asymmetrisches public private key oeffentlicher privater schluessel phi ';
   static final SEARCHSTRING_SEGMENTDISPLAY = 'led segments segmente display segmentanzeige ';
@@ -571,10 +574,10 @@ class Registry {
         searchStrings: SEARCHSTRING_GAMELANGUAGE + 'robberlanguage raeubersprache rotwelsch astrid lindgren rovarspraket'
       ),
       GCWToolWidget(
-        tool: RomanNumbers(),
+        tool: RomanNumbersSelection(),
         i18nPrefix: 'romannumbers',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'roman numbers roemische zahlen'
+        searchStrings: SEARCHSTRING_ROMAN_NUMBERS
       ),
       GCWToolWidget(
         tool: RotationSelection(),
@@ -1251,9 +1254,21 @@ class Registry {
         searchStrings: SEARCHSTRING_RESISTOR_COLORCODE
       ),
       GCWToolWidget(
-          tool: ResistorEIA96(),
-          i18nPrefix: 'resistor_eia96',
-          searchStrings: SEARCHSTRING_RESISTOR + 'eia96 eia-96'
+        tool: ResistorEIA96(),
+        i18nPrefix: 'resistor_eia96',
+        searchStrings: SEARCHSTRING_RESISTOR + 'eia96 eia-96'
+      ),
+
+      //RomanNumbersSelection **********************************************************************************************
+      GCWToolWidget(
+        tool: RomanNumbers(),
+        i18nPrefix: 'romannumbers',
+        searchStrings: SEARCHSTRING_ROMAN_NUMBERS
+      ),
+      GCWToolWidget(
+        tool: Chronogram(),
+        i18nPrefix: 'chronogram',
+        searchStrings: SEARCHSTRING_ROMAN_NUMBERS + 'chronogram chronogramm'
       ),
 
       //RotationSelection **********************************************************************************************
@@ -1502,6 +1517,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'doremifalamiresisol notesystem musictheory musiktheorie solmisation notensystem tonstufen degrees octal oktal'
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'dragon_language'),
+        i18nPrefix: 'symboltables_dragon_language',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'dragon_language/51.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'theelderscrolls skyrim dragonish dragonlanguage drachenschrift dragontongue draconian simplydovah drachenschrift dragonsfont tamriel dragonborn dovahkiin dragonshouts fantasy'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'dragon_runes'),
         i18nPrefix: 'symboltables_dragon_runes',
         iconPath: SYMBOLTABLES_ASSETPATH + 'dragon_runes/71.png',
@@ -1622,6 +1643,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'griechisches greek zahlen ziffern numbers numerals zahlschrift'
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'hazard', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_hazard',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'hazard/34.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hazardsigns gefahren warningsigns gebotsschilder gebotszeichen verbotsschilder verbotszeichen warnschilder warnzeichen BGVA8 DINENISO7010 ASRA1.3'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'hebrew'),
         i18nPrefix: 'symboltables_hebrew',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hebrew/sh.png',
@@ -1688,6 +1715,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hymmnos artonelico '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'iching'),
+        i18nPrefix: 'symboltables_iching',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'iching/fourty.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'iching itsching chinese chinesisches hexagramm '
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'illuminati_v1'),
         i18nPrefix: 'symboltables_illuminati_v1',
         iconPath: SYMBOLTABLES_ASSETPATH + 'illuminati_v1/86.png',
@@ -1706,6 +1739,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'intergalactical galaxy galaxies intergalaktisch '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'iokharic'),
+        i18nPrefix: 'symboltables_iokharic',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'iokharic/56.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'drachenrunen drachenschrift dungeons&dragons drachensprache dragonscript dragonlanguage mandarinstylizedrunictypeface dungeonsanddragons iokharic lokharic draconicgrates wizardsofthecoasts chromaticdragonsbook chinesischerstil runen elbisch)'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'japanese_numerals'),
         i18nPrefix: 'symboltables_japanese_numerals',
         iconPath: SYMBOLTABLES_ASSETPATH + 'japanese_numerals/57.png',
@@ -1715,7 +1754,13 @@ class Registry {
         tool: SymbolTable(symbolKey: 'klingon', isCaseSensitive: true),
         i18nPrefix: 'symboltables_klingon',
         iconPath: SYMBOLTABLES_ASSETPATH + 'klingon/106.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klingonisch klingonen klingons klingonlanguageinstitute '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klingonisch klingonen klingons klingonlanguageinstitute kli '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'klingon_klinzhai'),
+        i18nPrefix: 'symboltables_klingon_klinzhai',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'klingon_klinzhai/97.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klinzhai klingonen klingonisches mandelschrift ussenterprise u.s.s.enterprise officersmanual officer\'smanual'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'krempel'),
@@ -1900,8 +1945,8 @@ class Registry {
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'sarati'),
         i18nPrefix: 'symboltables_sarati',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'sarati/86.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sarati lautschrift spokenlanguage schriftsystem j.r.r. jrr tolkien rumil quenya elves elvish elbisches elben thelordoftherings derherrderringe'
+        iconPath: SYMBOLTABLES_ASSETPATH + 'sarati/118.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'thesaratiofrumil tirionsarati rumilofvalinor ardainthevalian thetengwarofrumil sarati lautschrift spokenlanguage schriftsystem j.r.r. jrr tolkien rumil quenya elves elvish elbisches elben thelordoftherings derherrderringe'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'semaphore'),
@@ -1914,6 +1959,12 @@ class Registry {
         i18nPrefix: 'symboltables_sign',
         iconPath: SYMBOLTABLES_ASSETPATH + 'sign/75.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sign language zeichensprache gebaerdensprache hearing loss taubstumme taub-stumme deafblind deaf-blind gehoerlose deaf-mute deafmute'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'skullz', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_skullz',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'skullz/70.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'skull skullz skulls totenkopf totenkoepfe schaedel'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'slash_and_pipe'),
@@ -1940,6 +1991,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'spintype boxes kaestchen kasten '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'suetterlin', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_suetterlin',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'suetterlin/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'suetterlin germanhandwritingscript schreibschrift ausgangsschrift kurrentschrift'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'sunuz'),
         i18nPrefix: 'symboltables_sunuz',
         iconPath: SYMBOLTABLES_ASSETPATH + 'sunuz/77.png',
@@ -1962,6 +2019,24 @@ class Registry {
         i18nPrefix: 'symboltables_tenctonese',
         iconPath: SYMBOLTABLES_ASSETPATH + 'tenctonese/75.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tenctonese aliennation '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'tengwar_beleriand'),
+        i18nPrefix: 'symboltables_tengwar_beleriand',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'tengwar_beleriand/118.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'thelordoftherings derherrderringe jrrtolkien j.r.r.tolkien quenya tengwar elben elves elbisches elvish mittelerde middleearth thirdera dritteszeitalter beleriand feanor'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'tengwar_classic'),
+        i18nPrefix: 'symboltables_tengwar_classic',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'tengwar_classic/ngw.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'thelordoftherings derherrderringe jrrtolkien j.r.r.tolkien quenya tengwar elben elves elbisches elvish mittelerde middleearth thirdera dritteszeitalter classices classic feabnor classical klassischer'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'tengwar_general'),
+        i18nPrefix: 'symboltables_tengwar_general',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'tengwar_general/98.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'thelordoftherings derherrderringe jrrtolkien j.r.r.tolkien quenya tengwar elben elves elbisches elvish mittelerde middleearth thirdera dritteszeitalter generale general feanor'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'terzi'),
@@ -2012,10 +2087,34 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'wakandanisches wakandisches blackpanther marvel chadwickboseman schwarzerpanther '
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'webdings', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_webdings',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'webdings/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont webdings wingdings windings'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'window'),
         i18nPrefix: 'symboltables_window',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'window/67.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fenster window johannes balthasar friderici cryptographia'
+        iconPath: SYMBOLTABLES_ASSETPATH + 'window/76.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fenster windows johannes balthasar friderici cryptographia'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'wingdings', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_wingdings',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont symbole symbols haende hands zahlenimkreis numbersincircle clock arrows pfeile stars sterne wingdings windings'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'wingdings2', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_wingdings2',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings2/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift symbole buero haende hands zahlenimkreis numbersincircle clock stars sterne systemfont wingdings2 windings2'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'wingdings3', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_wingdings3',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings3/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont symbole symbols arrows pfeile wingdings3 windings3'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'yan_koryani'),

@@ -25,6 +25,7 @@ import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/roman_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
@@ -59,7 +60,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/robber_language.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
@@ -199,7 +199,7 @@ class _MainViewState extends State<MainView> {
           className(ResistorSelection()),
           className(Reverse()),
           className(RobberLanguage()),
-          className(RomanNumbers()),
+          className(RomanNumbersSelection()),
           className(RotationSelection()),
           className(RSASelection()),
           className(Scrabble()),

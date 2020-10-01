@@ -43,5 +43,9 @@
 	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
     <string>This app needs access to location when open.</string>
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <true/>
+    <key>UIFileSharingEnabled</key>
+    <true/>
 </dict>
 </plist>

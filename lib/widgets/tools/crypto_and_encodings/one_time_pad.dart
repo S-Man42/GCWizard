@@ -52,12 +52,12 @@ class OneTimePadState extends State<OneTimePad> {
           },
         ),
         GCWTwoOptionsSwitch(
-            value: _currentMode,
-            onChanged: (value) {
-              setState(() {
-                _currentMode = value;
-              });
-            }
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          }
         ),
         GCWDefaultOutput(
           child: _calculateOutput()
