@@ -11,7 +11,7 @@ class GCWABCSpinner extends StatefulWidget {
   final SpinnerLayout layout;
   final value;
 
-  const GCWABCSpinner({Key key, this.value: 1, this.onChanged, this.layout: SpinnerLayout.horizontal}) : super(key: key);
+  const GCWABCSpinner({Key key, this.value: 1, this.onChanged, this.layout: SpinnerLayout.HORIZONTAL}) : super(key: key);
 
   @override
   GCWABCSpinnerState createState() => GCWABCSpinnerState();

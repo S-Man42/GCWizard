@@ -140,6 +140,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
@@ -941,7 +942,12 @@ class Registry {
       GCWToolWidget(
         tool: DayCalculator(),
         i18nPrefix: 'dates_daycalculator',
-        searchStrings: SEARCHSTRING_DATES + 'tagesrechner tagerechner day calculator'
+        searchStrings: SEARCHSTRING_DATES + 'tagesrechner tagerechner daycalculator countdays'
+      ),
+      GCWToolWidget(
+        tool: TimeCalculator(),
+        i18nPrefix: 'dates_timecalculator',
+        searchStrings: 'uhrzeitrechner times timecalculator clockcalculator minutes hours seconds'
       ),
       GCWToolWidget(
         tool: Weekday(),

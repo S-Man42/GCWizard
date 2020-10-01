@@ -19,7 +19,7 @@ class GCWDropDownSpinner extends StatefulWidget {
     this.index,
     this.items,
     this.layout:
-    SpinnerLayout.horizontal
+    SpinnerLayout.HORIZONTAL
   }) : super(key: key);
 
   @override
@@ -45,7 +45,7 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
   Widget build(BuildContext context) {
     _currentIndex = widget.index ?? 0;
 
-    if (widget.layout == SpinnerLayout.horizontal) {
+    if (widget.layout == SpinnerLayout.HORIZONTAL) {
       return Row(
         children: <Widget>[
           _buildTitle(),

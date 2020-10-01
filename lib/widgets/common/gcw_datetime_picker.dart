@@ -142,7 +142,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
         Expanded(
           child: Padding(
             child: GCWIntegerSpinner(
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentYear,
               min: -5000,
               max: 5000,
@@ -167,7 +167,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           child: Padding(
             child: GCWIntegerSpinner(
               focusNode: _monthFocusNode,
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentMonth,
               min: 1,
               max: 12,
@@ -193,7 +193,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           child: Padding(
             child: GCWIntegerSpinner(
               focusNode: _dayFocusNode,
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentDay,
               min: 1,
               max: 31,
@@ -220,7 +220,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
         Expanded(
           child: Padding(
             child: GCWIntegerSpinner(
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentHour,
               min: 0,
               max: 23,
@@ -246,7 +246,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           child: Padding(
             child: GCWIntegerSpinner(
               focusNode: _minuteFocusNode,
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentMinute,
               min: 0,
               max: 59,
@@ -272,7 +272,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           child: Padding(
             child: GCWDoubleSpinner(
               focusNode: _secondFocusNode,
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentSecond,
               numberDecimalDigits: 4,
               min: 0.0,
