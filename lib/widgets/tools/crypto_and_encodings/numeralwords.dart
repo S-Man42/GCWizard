@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeralwords.dart';
@@ -105,27 +103,17 @@ class NumeralWordsState extends State<NumeralWords> {
     Map<String, String> words;
 
     if (_currentMode == GCWSwitchPosition.left) {//show numeral words for specific language
-      switch (_currentLanguage) {
-        case NumeralWordsLanguage.DE: words = WordToNumDE;
-          break;
-        case NumeralWordsLanguage.EN: words = WordToNumEN;
-          break;
-        case NumeralWordsLanguage.FR: words = WordToNumFR;
-          break;
-        case NumeralWordsLanguage.IT: words = WordToNumIT;
-          break;
-        case NumeralWordsLanguage.ES: words = WordToNumES;
-          break;
-        case NumeralWordsLanguage.ALL:
-          return GCWOutputText(
-            text: i18n(context, 'numeralwords_language_all_not_feasible'),
-          );
-          break;
+      if (_currentLanguage == NumeralWordsLanguage.ALL)
+        return GCWOutputText(
+          text: i18n(context, 'numeralwords_language_all_not_feasible'),
+        );
+      else {
+        words = numeralWordsMap(_currentLanguage);
+        words.forEach((key, value) {
+          if (int.tryParse(value) != null)
+            output = output + value + ' - ' + key + '\n';
+        });
       }
-      words.forEach((key, value) {
-        if (int.tryParse(value) != null)
-          output = output + value + ' - ' + key +'\n';
-      });
     } else
       output = decodeNumeralwords(_currentDecodeInput.toUpperCase(), _currentLanguage, _currentDecodeMode);
 

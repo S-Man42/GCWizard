@@ -481,10 +481,10 @@ class Registry {
         searchStrings: 'numeral words zahlwörter'
       ),
       GCWToolWidget(
-          tool: Tapir(),
-          i18nPrefix: 'tapir',
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'tapir ddr nva mfs stasi nationale volksarmee'
+        tool: Tapir(),
+        i18nPrefix: 'tapir',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'tapir ddr nva mfs stasi nationale volksarmee'
       ),
       GCWToolWidget(
         tool: OneTimePad(),
