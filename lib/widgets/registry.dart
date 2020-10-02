@@ -461,10 +461,10 @@ class Registry {
         searchStrings: 'hexadecimal hexadezimalzahlen numbers dezimalzahlen decimal 16'
       ),
       GCWToolWidget(
-          tool: Humidex(),
-          i18nPrefix: 'humidex',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          searchStrings: 'gefuehlte temperatur apparent temperature humidity luftfeuchtigkeit humidex'
+        tool: Humidex(),
+        i18nPrefix: 'humidex',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'gefuehlte temperatur apparent temperature humidity luftfeuchtigkeit humidex'
       ),
       GCWToolWidget(
         tool: Kamasutra(),
