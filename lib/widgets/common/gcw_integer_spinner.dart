@@ -27,7 +27,7 @@ class GCWIntegerSpinner extends StatefulWidget {
     this.min: -9007199254740991,
     this.max: 9007199254740992,
     this.controller,
-    this.layout: SpinnerLayout.horizontal,
+    this.layout: SpinnerLayout.HORIZONTAL,
     this.focusNode,
     this.suppressOverflow: false // TODO: Automatically true if this.min == null || this.max == null
   }) : super(key: key);
@@ -116,7 +116,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   }
 
   Widget _buildSpinner() {
-    if (widget.layout == SpinnerLayout.horizontal) {
+    if (widget.layout == SpinnerLayout.HORIZONTAL) {
       return Row(
         children: <Widget>[
           _buildTitle(),

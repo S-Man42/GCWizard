@@ -78,7 +78,7 @@ class BifidState extends State<Bifid> {
         ),
 
         GCWTextDivider(
-            text: i18n(context, 'common_alphabet')
+          text: i18n(context, 'common_alphabet')
         ),
 
         GCWDropDownButton(

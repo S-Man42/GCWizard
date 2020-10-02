@@ -654,7 +654,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
           ],
         ),
         margin: EdgeInsets.only(
-            left: 10
+          left: 10
         ),
       );
 
