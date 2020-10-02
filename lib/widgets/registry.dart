@@ -801,39 +801,39 @@ class Registry {
         searchStrings: SEARCHSTRING_BCD + 'Tompkins'
       ),
       GCWToolWidget(
-          tool: BCDHamming(),
-          i18nPrefix: 'bcd_hamming',
-          searchStrings: SEARCHSTRING_BCD + 'Hamming'
+        tool: BCDHamming(),
+        i18nPrefix: 'bcd_hamming',
+        searchStrings: SEARCHSTRING_BCD + 'Hamming'
       ),
       GCWToolWidget(
-          tool: BCDBiquinaer(),
-          i18nPrefix: 'bcd_biquinaer',
-          searchStrings: SEARCHSTRING_BCD + 'Biquinaer'
+        tool: BCDBiquinaer(),
+        i18nPrefix: 'bcd_biquinaer',
+        searchStrings: SEARCHSTRING_BCD + 'Biquinaer'
       ),
       GCWToolWidget(
-          tool: BCD2of5Planet(),
-          i18nPrefix: 'bcd_2of5planet',
-          searchStrings: SEARCHSTRING_BCD + 'Planet'
+        tool: BCD2of5Planet(),
+        i18nPrefix: 'bcd_2of5planet',
+        searchStrings: SEARCHSTRING_BCD + 'Planet'
       ),
       GCWToolWidget(
-          tool: BCD2of5Postnet(),
-          i18nPrefix: 'bcd_2of5postnet',
-          searchStrings: SEARCHSTRING_BCD + 'Postnet'
+        tool: BCD2of5Postnet(),
+        i18nPrefix: 'bcd_2of5postnet',
+        searchStrings: SEARCHSTRING_BCD + 'Postnet'
       ),
       GCWToolWidget(
-          tool: BCD2of5(),
-          i18nPrefix: 'bcd_2of5',
-          searchStrings: SEARCHSTRING_BCD + '2 of 5'
+        tool: BCD2of5(),
+        i18nPrefix: 'bcd_2of5',
+        searchStrings: SEARCHSTRING_BCD + '2 of 5'
       ),
       GCWToolWidget(
-          tool: BCD1of10(),
-          i18nPrefix: 'bcd_1of10',
-          searchStrings: SEARCHSTRING_BCD + 'Tompkins'
+        tool: BCD1of10(),
+        i18nPrefix: 'bcd_1of10',
+        searchStrings: SEARCHSTRING_BCD + 'Tompkins'
       ),
       GCWToolWidget(
-          tool: BCDGrayExcess(),
-          i18nPrefix: 'bcd_grayexcess',
-          searchStrings: SEARCHSTRING_BCD + 'Gray Excess'
+        tool: BCDGrayExcess(),
+        i18nPrefix: 'bcd_grayexcess',
+        searchStrings: SEARCHSTRING_BCD + 'Gray Excess'
       ),
 
       //Brainfk Selection **********************************************************************************************
