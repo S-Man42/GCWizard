@@ -89,10 +89,10 @@ class SummersimmerIndexState extends State<SummersimmerIndex> {
 
     String hintM;
     if (output > 51.7)
-      hintM = 'heatindex_index_51.7';
+      hintM = 'summersimmerindex_index_51.7';
     else
     if (output > 44.4)
-      hintM = 'heatindex_index_44.4';
+      hintM = 'summersimmerindex_index_44.4';
     else
     if (output > 37.8)
     hintM = 'summersimmerindex_index_37.8';
