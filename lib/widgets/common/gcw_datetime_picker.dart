@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
@@ -14,7 +15,7 @@ class TimeZone {
   TimeZone(this.offset, this.name);
 }
 
-final timeZones =  [
+final TIMEZONES =  [
   TimeZone(720, 'IDLW'),
   TimeZone(-660, ''),
   TimeZone(-600, 'HAST'),
@@ -84,6 +85,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
   var _currentMinute = 0;
   var _currentSecond = 0.0;
   var _currentTimezoneOffset = 0;
+  var _currentTimezoneOffsetIndex;
 
   var _monthFocusNode;
   var _dayFocusNode;
@@ -111,6 +113,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
 
     if (widget.withTimezones) {
       _currentTimezoneOffset = date.timeZoneOffset.inMinutes;
+      _currentTimezoneOffsetIndex = _timezoneOffsetToIndex(_currentTimezoneOffset);
     }
 
     _monthFocusNode = FocusNode();
@@ -139,7 +142,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
         Expanded(
           child: Padding(
             child: GCWIntegerSpinner(
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentYear,
               min: -5000,
               max: 5000,
@@ -164,7 +167,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           child: Padding(
             child: GCWIntegerSpinner(
               focusNode: _monthFocusNode,
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentMonth,
               min: 1,
               max: 12,
@@ -190,7 +193,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           child: Padding(
             child: GCWIntegerSpinner(
               focusNode: _dayFocusNode,
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentDay,
               min: 1,
               max: 31,
@@ -217,7 +220,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
         Expanded(
           child: Padding(
             child: GCWIntegerSpinner(
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentHour,
               min: 0,
               max: 23,
@@ -243,7 +246,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           child: Padding(
             child: GCWIntegerSpinner(
               focusNode: _minuteFocusNode,
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentMinute,
               min: 0,
               max: 59,
@@ -269,7 +272,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           child: Padding(
             child: GCWDoubleSpinner(
               focusNode: _secondFocusNode,
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentSecond,
               numberDecimalDigits: 4,
               min: 0.0,
@@ -322,14 +325,12 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     );
   }
 
-  _findFittingTimeZone() {
-    var offset = 0;
+  _indexToTimezoneOffset(int index) {
+    return TIMEZONES[index].offset;
+  }
 
-    try {
-      offset = timeZones.firstWhere((timezone) => timezone.offset == _currentTimezoneOffset).offset;
-    } catch(e) {}
-
-    return offset;
+  _timezoneOffsetToIndex(int offset) {
+    return TIMEZONES.indexWhere((timezone) => timezone.offset == offset);
   }
 
   _buildTimeZonesDropdownButton() {
@@ -340,23 +341,28 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
           flex: 1
         ),
         Expanded(
-          child: GCWDropDownButton(
-            value: _findFittingTimeZone(),
-            items: timeZones.map((timeZone) {
-              return GCWDropDownMenuItem(
-                value: timeZone.offset,
-                child: _buildTimeZoneItemText(timeZone)
+          child: GCWDropDownSpinner(
+            index: _currentTimezoneOffsetIndex,
+            items: TIMEZONES.asMap().map((index, timeZone) {
+              return MapEntry(
+                index,
+                GCWDropDownMenuItem(
+                  value: index,
+                  child: _buildTimeZoneItemText(timeZone),
+                  subtitle: timeZone.name ?? ''
+                )
               );
-            }).toList(),
+            }).values.toList(),
             onChanged: (value) {
               setState(() {
-                _currentTimezoneOffset = value;
+                _currentTimezoneOffsetIndex = value;
+                _currentTimezoneOffset = _indexToTimezoneOffset(value);
                 _setCurrentValueAndEmitOnChange();
               });
             },
           ),
           flex: 3
-        )
+        ),
       ],
     );
   }
@@ -370,10 +376,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
 
     var hoursStr = tzHours < 0 ? tzHours.toString() : '+$tzHours';
     var minutesStr = tzMinutes.toString().padLeft(2, '0');
-    var out = '$hoursStr:${minutesStr}h';
-
-    if (timeZone.name != null && timeZone.name.length > 0)
-      out += ' (${timeZone.name})';
+    var out = '$hoursStr:${minutesStr} h';
 
     return out;
   }

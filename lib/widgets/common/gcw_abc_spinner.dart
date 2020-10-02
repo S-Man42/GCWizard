@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
@@ -10,7 +11,7 @@ class GCWABCSpinner extends StatefulWidget {
   final SpinnerLayout layout;
   final value;
 
-  const GCWABCSpinner({Key key, this.value: 1, this.onChanged, this.layout: SpinnerLayout.horizontal}) : super(key: key);
+  const GCWABCSpinner({Key key, this.value: 1, this.onChanged, this.layout: SpinnerLayout.HORIZONTAL}) : super(key: key);
 
   @override
   GCWABCSpinnerState createState() => GCWABCSpinnerState();
@@ -25,7 +26,7 @@ class GCWABCSpinnerState extends State<GCWABCSpinner> {
       index: _currentValue ?? (widget.value != null ? widget.value - 1 : null) ?? 0,
       layout: widget.layout,
       items: alphabet_AZ.entries.map((entry) {
-        return GCWText(text: '${entry.key} (${entry.value})');
+        return Text('${entry.key} (${entry.value})', style: gcwTextStyle(),);
       }).toList(),
       onChanged: (value) {
         setState(() {

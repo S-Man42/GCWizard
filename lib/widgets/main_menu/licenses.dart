@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/main_menu/gcw_mainmenuentry_stub.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:intl/intl.dart';
 
 class Licenses extends StatefulWidget {
   @override
@@ -34,6 +32,7 @@ class LicensesState extends State<Licenses> {
             ['package_info', 'BSD License'],
             ['path', 'BSD License'],
             ['path_provider', 'BSD License'],
+            ['permission_handler', 'MIT License'],
             ['pointycastle', 'MIT License'],
             ['prefs', 'Apache 3.0 License'],
             ['provider', 'MIT License'],
@@ -61,7 +60,7 @@ class LicensesState extends State<Licenses> {
           children: columnedMultiLineOutput([
             ['myGeoTools', 'several'],
             ['Wikipedia', 'several'],
-            ['www.breitkopf.de', 'Solmination'],
+            ['www.breitkopf.de', 'Solmisation'],
           ]),
         ),
       ]
