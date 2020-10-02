@@ -634,10 +634,10 @@ class Registry {
         searchStrings: 'sudoku grid gitter'
       ),
       GCWToolWidget(
-          tool: SummersimmerIndex(),
-          i18nPrefix: 'summersimmerindex',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          searchStrings: 'gefuehlte temperatur apparent temperature humidity luftfeuchtigkeit summer simmer index'
+        tool: SummersimmerIndex(),
+        i18nPrefix: 'summersimmerindex',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'gefuehlte temperatur apparent temperature humidity luftfeuchtigkeit summer simmer index'
       ),
       GCWToolWidget(
         tool: SymbolTableSelection(),
