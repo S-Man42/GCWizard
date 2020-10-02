@@ -11,7 +11,7 @@ String className(Widget widget) {
   return widget.runtimeType.toString();
 }
 
-enum SpinnerLayout {horizontal, vertical}
+enum SpinnerLayout {HORIZONTAL, VERTICAL}
 
 String printErrorMessage(BuildContext context, String message) {
   return i18n(context, 'common_error') + ': ' + i18n(context, message);
