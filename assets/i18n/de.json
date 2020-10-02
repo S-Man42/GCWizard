@@ -1730,6 +1730,8 @@
   "symboltables_barbier_on" : "ON",
   "symboltables_barbier_ou" : "OU",
   "symboltables_barbier_un" : "UN",
+  "symboltables_barcode_title" : "Barcode 39",
+  "symboltables_barcode_description" : "Barcode 39",
   "symboltables_baudot_title" : "Baudot-Code",
   "symboltables_baudot_description" : "Fernschreibcode, CCITT-1",
   "symboltables_baudot_special_shift_to_sign_table" : "LEERZEICHEN, ZIFFERN FOLGEN",
