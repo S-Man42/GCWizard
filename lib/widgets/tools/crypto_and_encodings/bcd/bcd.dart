@@ -34,6 +34,16 @@ class BCDState extends State<BCD> {
     filter: {"#": RegExp(r'[01]')}
   );
 
+  var _decode7DigitsMaskFormatter = WrapperForMaskTextInputFormatter(
+      mask: '####### ' * 5000, // allow 5000 5-digit binary blocks, spaces will be set automatically after each block
+      filter: {"#": RegExp(r'[01]')}
+  );
+
+  var _decode10DigitsMaskFormatter = WrapperForMaskTextInputFormatter(
+      mask: '########## ' * 5000, // allow 5000 5-digit binary blocks, spaces will be set automatically after each block
+      filter: {"#": RegExp(r'[01]')}
+  );
+
   String _currentInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
 
@@ -65,15 +75,7 @@ class BCDState extends State<BCD> {
                 });
               }
             )
-          : GCWTextField (
-              controller: _decodeController,
-              inputFormatters: [widget.type == BCDType.LIBAWCRAIG ? _decode5DigitsMaskFormatter : _decode4DigitsMaskFormatter],
-              onChanged: (text){
-                setState(() {
-                  _currentInput = text;
-                });
-              }
-            ),
+          : _buildDecode(context),
         GCWTwoOptionsSwitch(
           onChanged: (value) {
             setState(() {
@@ -85,6 +87,59 @@ class BCDState extends State<BCD> {
       ],
     );
   }
+
+  Widget _buildDecode(BuildContext context) {
+    switch (widget.type) {
+      case BCDType.ONEOFTEN:
+        return GCWTextField(
+            controller: _decodeController,
+            inputFormatters: [_decode10DigitsMaskFormatter],
+            onChanged: (text) {
+              setState(() {
+                _currentInput = text;
+              });
+            }
+        );
+        break;
+      case BCDType.HAMMING:
+      case BCDType.BIQUINAER:
+        return GCWTextField(
+            controller: _decodeController,
+            inputFormatters: [_decode7DigitsMaskFormatter],
+            onChanged: (text) {
+              setState(() {
+                _currentInput = text;
+              });
+            }
+        );
+        break;
+      case BCDType.LIBAWCRAIG:
+      case BCDType.TWOOFFIVE:
+      case BCDType.PLANET:
+      case BCDType.POSTNET:
+        return GCWTextField(
+            controller: _decodeController,
+            inputFormatters: [_decode7DigitsMaskFormatter],
+            onChanged: (text) {
+              setState(() {
+                _currentInput = text;
+              });
+            }
+        );
+        break;
+      default :
+        return GCWTextField(
+            controller: _decodeController,
+            inputFormatters: [_decode4DigitsMaskFormatter],
+            onChanged: (text) {
+              setState(() {
+                _currentInput = text;
+              });
+            }
+        );
+    }
+  }
+
 
   Widget _buildOutput(BuildContext context) {
     var output = '';
