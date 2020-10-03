@@ -1462,6 +1462,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'chinesisches zahlen ziffern chinese numbers numerals'
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'cistercian'),
+        i18nPrefix: 'symboltables_cistercian',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'cistercian/56.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'cistercian zisterzienser'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'color_code'),
         i18nPrefix: 'symboltables_color_code',
         iconPath: SYMBOLTABLES_ASSETPATH + 'color_code/68.png',
