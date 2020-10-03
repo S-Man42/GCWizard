@@ -808,27 +808,27 @@ class Registry {
       GCWToolWidget(
         tool: BCDBiquinaer(),
         i18nPrefix: 'bcd_biquinaer',
-        searchStrings: SEARCHSTRING_BCD + 'Biquinaer'
+        searchStrings: SEARCHSTRING_BCD + 'Biquinaer biquinary'
       ),
       GCWToolWidget(
         tool: BCD2of5Planet(),
         i18nPrefix: 'bcd_2of5planet',
-        searchStrings: SEARCHSTRING_BCD + 'Planet'
+        searchStrings: SEARCHSTRING_BCD + 'Planet 2of5 2aus5 twooffive zweiausfuenf united states postal service usps barcode'
       ),
       GCWToolWidget(
         tool: BCD2of5Postnet(),
         i18nPrefix: 'bcd_2of5postnet',
-        searchStrings: SEARCHSTRING_BCD + 'Postnet'
+        searchStrings: SEARCHSTRING_BCD + 'Postnet 2of5 2aus5 twooffive zweiausfuenf united states postal service usps barcode'
       ),
       GCWToolWidget(
         tool: BCD2of5(),
         i18nPrefix: 'bcd_2of5',
-        searchStrings: SEARCHSTRING_BCD + '2 of 5'
+        searchStrings: SEARCHSTRING_BCD + '2of5 2aus5 twooffive zweiausfuenf'
       ),
       GCWToolWidget(
         tool: BCD1of10(),
         i18nPrefix: 'bcd_1of10',
-        searchStrings: SEARCHSTRING_BCD + 'Tompkins'
+        searchStrings: SEARCHSTRING_BCD + '1of10 1aus10 oneoften einsauszehn '
       ),
       GCWToolWidget(
         tool: BCDGrayExcess(),
