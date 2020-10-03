@@ -1402,6 +1402,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'charles barbier nachtschrift militär military army armee lautschrift dots points punkte tactiles blindenschrift'
       ),
       GCWToolWidget(
+          tool: SymbolTable(symbolKey: 'barcode39'),
+          i18nPrefix: 'symboltables_barcode',
+          iconPath: SYMBOLTABLES_ASSETPATH + 'barcode/65.png',
+          searchStrings: SEARCHSTRING_SYMBOLTABLES + 'barcode 39'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'baudot'),
         i18nPrefix: 'symboltables_baudot',
         iconPath: SYMBOLTABLES_ASSETPATH + 'baudot/58.png',
