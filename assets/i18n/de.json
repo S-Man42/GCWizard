@@ -2661,6 +2661,18 @@
   "windchill_system" : "System",
   "windchill_metricunit" : "v Einheit",
 
+  "bookchiffre_title" : "Buch Chiffre",
+  "bookchiffre_description" : "Ermittelt die Position eines Wortes oder das Wort an der angegebenen Position",
+  "bookchiffre_modus" : "Modus",
+  "bookchiffre_searchposition" : "Positionen",
+  "bookchiffre_searchword" : "Wort",
+  "bookchiffre_section" : "Absatz",
+  "bookchiffre_row" : "Zeile",
+  "bookchiffre_word" : "Wort",
+  "bookchiffre_letter" : "Buchstabe",
+  "bookchiffre_output_format": "Ausgabeformat",
+  "bookchiffre_input_format": "Positionsformat",
+
   "z22_title" : "Z22",
   "z22_description" : "Anwendung des CCITT-2-Codes",
   "z22_example" : "ABC → 00011 11001 01110"
