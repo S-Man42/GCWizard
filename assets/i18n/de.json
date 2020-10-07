@@ -2670,8 +2670,10 @@
   "bookchiffre_row" : "Zeile",
   "bookchiffre_word" : "Wort",
   "bookchiffre_letter" : "Buchstabe",
+  "bookchiffre_text" : "Text",
   "bookchiffre_output_format": "Ausgabeformat",
   "bookchiffre_input_format": "Positionsformat",
+  "bookchiffre_random_output_hint" : "Buchstaben werden zufällig ausgewählt",
 
   "z22_title" : "Z22",
   "z22_description" : "Anwendung des CCITT-2-Codes",

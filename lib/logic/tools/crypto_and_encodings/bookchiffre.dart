@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:tuple/tuple.dart';
 
 class _wordClass {
   int SectionIndex;
@@ -24,13 +25,20 @@ enum searchFormat {
   Letter,
 }
 
-enum outFormat {
+enum decodeOutFormat {
   SectionRowWord,
   RowWord,
   Word,
 }
 
-String searchWord(String input, String word, outFormat format, String sectionLabel, String rowLabel, String wordLabel){
+enum encodeOutFormat {
+  SectionRowWordLetter,
+  RowWordLetter,
+  WordLetter,
+  Letter
+}
+
+String decodeSearchWord(String input, String word, decodeOutFormat format, String sectionLabel, String rowLabel, String wordLabel){
   if (input == null || input.length == 0)
     return "";
   if (word == null || word.length == 0)
@@ -39,33 +47,28 @@ String searchWord(String input, String word, outFormat format, String sectionLab
   var wordList = _wordList(input);
   word = word.toUpperCase();
 
-  var x = wordList
-      .where((e) => e.Text.toUpperCase() == word);
-  var y = wordList
-      .where((e) => e.Text.toUpperCase() == word);
-
   var out = wordList
     .where((e) => e.Text.toUpperCase() == word)
     .map((e) {
       switch (format) {
-        case outFormat.SectionRowWord:
+        case decodeOutFormat.SectionRowWord:
           return sectionLabel + ": " + e.SectionIndex.toString() + ", " + rowLabel + ": " + e.RowIndex.toString() + ", " + wordLabel + ": " + e.WordIndex.toString();
-        case outFormat.RowWord:
+        case decodeOutFormat.RowWord:
           return rowLabel + ": " + _findRowIndex(e, wordList).toString() + ", " + wordLabel + ": " + e.WordIndex.toString();
-        case outFormat.Word:
+        case decodeOutFormat.Word:
           return wordLabel + ": " + _findWordIndex(e, wordList).toString();
       };
     })
     .join('\n');
 
-  /*
+/*
   wordList.forEach((e) {
     out += e.Text + ": " + e.SectionIndex.toString() + " " + e.RowIndex.toString() + " " + e.WordIndex.toString() + "\n";
   });*/
   return out;
 }
 
-String findWord(String input, String positions, searchFormat format){
+String decodeFindWord(String input, String positions, searchFormat format){
   if (input == null || input.length == 0)
     return "";
   if (positions == null || positions.length == 0)
@@ -133,6 +136,102 @@ String findWord(String input, String positions, searchFormat format){
       return e;
     })
     .join('\n');
+}
+
+String encodeText(String input, String text, encodeOutFormat format){
+  if (input == null || input.length == 0)
+    return "";
+  if (text == null || text.length == 0)
+    return "";
+
+  var out ='';
+  var wordList = _wordList(input);
+  var positionList = List<Tuple2<_wordClass, int>>();
+  text = _removeNonLetters(text);
+
+  text
+    .split('')
+    .forEach((letter) {
+      positionList.add(_selectRandomLetterPosition(letter, wordList));
+  });
+
+  positionList.forEach((element) {
+    var e = element.item1;
+    switch (format) {
+      case encodeOutFormat.SectionRowWordLetter:
+        if (e == null)
+          out += _createOutElement(true, -1, -1, -1, -1);
+        else
+          out += _createOutElement(false,
+              e.SectionIndex,
+              e.RowIndex,
+              e.WordIndex,
+              element.item2);
+        break;
+
+      case encodeOutFormat.RowWordLetter:
+        if (e == null)
+          out += _createOutElement(true, 0, -1, -1, -1);
+        else
+          out += _createOutElement(false,
+              0,
+              _findRowIndex(e, wordList),
+              e.WordIndex,
+              element.item2);
+        break;
+
+      case encodeOutFormat.WordLetter:
+        if (e == null)
+          out += _createOutElement(true, 0, 0, -1, -1);
+        else
+          out += _createOutElement(false,
+              0,
+              0,
+              _findWordIndex(e, wordList),
+              element.item2);
+        break;
+
+      case encodeOutFormat.Letter:
+        if (e == null)
+          out += _createOutElement(true, 0, 0, 0, -1);
+        else
+          out += _createOutElement(false,
+              0,
+              0,
+              0,
+              _globalLetterPosition(e, element.item2, wordList));
+        break;
+    }
+  });
+
+  return out.trim();
+}
+
+String _createOutElement(bool emptyElement, int number1, int number2, int number3, int number4){
+  var seperator = '.';
+  var out = '';
+
+  if (emptyElement) {
+    if (number1 != 0)
+      out += "?" + seperator;
+    if (number2 != 0)
+      out += "?" + seperator;
+    if (number3 != 0)
+      out += "?" + seperator;
+    if (number4 != 0)
+      out += "?";
+  } else {
+    if (number1 != 0)
+      out += number1.toString() + seperator;
+    if (number2 != 0)
+      out += number2.toString() + seperator;
+    if (number3 != 0)
+      out += number3.toString() + seperator;
+    if (number4 != 0)
+      out += number4.toString();
+  }
+
+  return out + " ";
 }
 
 int _findRowIndex(_wordClass word, List<_wordClass> wordList){
@@ -249,12 +348,85 @@ String _filterLetter(int index, List<_wordClass> wordList) {
   var text = "";
 
   wordList.forEach((item) {text += item.Text;});
-  text = text.replaceAll(RegExp(r"[!\W]"), "");
+  text = _removeNonLetters(text);
 
   if (index > 0 && index <= text.length)
     return text[index - 1];
 
   return "";
+}
+
+int _globalLetterPosition(_wordClass word, int letterPosition, List<_wordClass> wordList) {
+  var text = "";
+
+  for (var item in wordList) {
+    if (item == word )
+      break;
+    text += item.Text;
+  }
+
+  text = _removeNonLetters(text);
+
+  return text.length + letterPosition;
+}
+
+String _removeNonLetters(String text,{ bool startCharacter = false, bool lastCharacter = false}){
+  if (!startCharacter & !lastCharacter)
+    return text.replaceAll (RegExp(r"[!\W]"),'');
+  if (startCharacter)
+    text = text.replaceAll (RegExp(r"^[!\W]"),'');
+  if (lastCharacter)
+    text = text.replaceAll (RegExp(r"[!\W]$"),'');
+/*
+  if (!startCharacter & !lastCharacter)
+    return text.replaceAll (RegExp(r"[@#%&*"":_<>,;=~#°\/\^\!\'\.\+\/\^]"),'').replaceAll (RegExp(r"[\!\'\.\+\*\(\)\[\]\-\$\§\?\{\}\|\\]"),'');
+  if (startCharacter)
+    text = text.replaceAll (RegExp(r"^[@#%&*"":_<>,;=~#°\/\^\!\'\.\+\/\^]"),'').replaceAll (RegExp(r"^[\!\'\.\+\*\(\)\[\]\-\$\§\?\{\}\|\\]"),'');
+  if (lastCharacter)
+    text = text.replaceAll (RegExp(r"[@#%&*"":_<>,;=~#°\/\^\!\'\.\+\/\^]\$"),'').replaceAll (RegExp(r"[\!\'\.\+\*\(\)\[\]\-\$\§\?\{\}\|\\]\$"),'');
+ */
+  return text;
+}
+
+Tuple2<_wordClass, int> _selectRandomLetterPosition(String letter, List<_wordClass> wordList){
+  var letterCount = 0;
+  var letterCountTmp = 0;
+  var letterWordList = List<_wordClass>();
+  var letterPosition = 0;
+  var outWord = null;
+  var outLetterPosition = 0;
+
+  var regexp = RegExp(letter, caseSensitive: false);
+
+  wordList.forEach((element) {
+    letterCountTmp = regexp.allMatches(element.Text).length;
+    if (letterCountTmp > 0)
+      letterWordList.add(element);
+    letterCount += letterCountTmp;
+  });
+
+  if (letterCount > 0)  {
+    var randomIndex = Random().nextInt(letterCount);
+
+    letterCount = 0;
+    letterCountTmp = 0;
+    for(_wordClass word in letterWordList) {
+      if (outWord != null)
+        break;
+      letterPosition = 0;
+      regexp.allMatches(word.Text)
+        .forEach((element) {
+          letterPosition = word.Text.toUpperCase().indexOf(letter.toUpperCase(), letterPosition);
+          letterPosition += 1;
+          if (letterCountTmp == randomIndex){
+            outWord = word;
+            outLetterPosition = letterPosition;
+          }
+          letterCountTmp += 1;
+        });
+    };
+  }
+  return Tuple2<_wordClass, int>(outWord, outLetterPosition) ;
 }
 
 List<_wordClass> _wordList(String input) {
@@ -274,9 +446,10 @@ List<_wordClass> _wordList(String input) {
           rowIndex += 1;
           wordIndex = 0;
           row
-            .split(RegExp(r"\s"))
+            .split(RegExp(r"[\s]|[\.]|[,]|[!]|[\?]|[\\]"))
             .forEach((word) {
-              word = word.replaceAll(RegExp(r"^[!\W]|[!\W]$"), "");
+              // replace nonLetters at the beginning and at the end
+              word = _removeNonLetters (word, startCharacter : true, lastCharacter: true);
               if (word.length > 0) {
                 wordIndex += 1;
                 list.add(new _wordClass(sectionIndex, rowIndex, wordIndex, word));
