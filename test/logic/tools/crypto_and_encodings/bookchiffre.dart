@@ -42,6 +42,7 @@ void main() {
       {'input' : text3, 'text' : 'und', 'outFormat' : encodeOutFormat.RowWordLetter, 'expectedOutput' : '6.1.1 4.5.1 2.1.1'},
       {'input' : text3, 'text' : 'und', 'outFormat' : encodeOutFormat.WordLetter, 'expectedOutput' : '21.1 14.1 4.1'},
       {'input' : text3, 'text' : 'und', 'outFormat' : encodeOutFormat.Letter, 'expectedOutput' : '21 14 4'},
+      {'input' : 'AAAAAAAAAA', 'text' : 'M', 'outFormat' : encodeOutFormat.Letter, 'expectedOutput' : '?'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -86,12 +87,13 @@ void main() {
       {'input' : '', 'positions' : null, 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : ''},
       {'input' : '', 'positions' : 'und', 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : ''},
 
-
       {'input' : text1, 'positions' : '1-1-1', 'searchFormat' : searchFormat.SectionRowWord, 'expectedOutput' : 'Und'},
       {'input' : text1, 'positions' : '3-1-1', 'searchFormat' : searchFormat.SectionRowWord, 'expectedOutput' : ''},
       {'input' : text1, 'positions' : '7.2', 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : 'Christbaum-schmuck'},
       {'input' : text1, 'positions' : '6, 6', 'searchFormat' : searchFormat.RowWord, 'expectedOutput' : 'Weihnachtsmann'},
       {'input' : text1, 'positions' : '25', 'searchFormat' : searchFormat.Word, 'expectedOutput' : 'hilft'},
+      {'input' : text1, 'positions' : '0', 'searchFormat' : searchFormat.Word, 'expectedOutput' : ''},
+      {'input' : text1, 'positions' : '999', 'searchFormat' : searchFormat.Word, 'expectedOutput' : ''},
       {'input' : text1, 'positions' : '1-1-2 1', 'searchFormat' : searchFormat.SectionRowWordLetter, 'expectedOutput' : 'w'},
       {'input' : text1, 'positions' : '2 1 3 3', 'searchFormat' : searchFormat.SectionRowWordLetter, 'expectedOutput' : 'l'},
       {'input' : text1, 'positions' : '2 1 3 1 2 1 3 2 2 1 3 3 2 1 3 4 2 1 3 5', 'searchFormat' : searchFormat.SectionRowWordLetter, 'expectedOutput' : 'h\ni\nl\nf\nt'},

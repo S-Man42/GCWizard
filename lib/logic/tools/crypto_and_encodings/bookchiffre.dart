@@ -61,10 +61,6 @@ String decodeSearchWord(String input, String word, decodeOutFormat format, Strin
     })
     .join('\n');
 
-/*
-  wordList.forEach((e) {
-    out += e.Text + ": " + e.SectionIndex.toString() + " " + e.RowIndex.toString() + " " + e.WordIndex.toString() + "\n";
-  });*/
   return out;
 }
 
@@ -377,14 +373,7 @@ String _removeNonLetters(String text,{ bool startCharacter = false, bool lastCha
     text = text.replaceAll (RegExp(r"^[!\W]"),'');
   if (lastCharacter)
     text = text.replaceAll (RegExp(r"[!\W]$"),'');
-/*
-  if (!startCharacter & !lastCharacter)
-    return text.replaceAll (RegExp(r"[@#%&*"":_<>,;=~#°\/\^\!\'\.\+\/\^]"),'').replaceAll (RegExp(r"[\!\'\.\+\*\(\)\[\]\-\$\§\?\{\}\|\\]"),'');
-  if (startCharacter)
-    text = text.replaceAll (RegExp(r"^[@#%&*"":_<>,;=~#°\/\^\!\'\.\+\/\^]"),'').replaceAll (RegExp(r"^[\!\'\.\+\*\(\)\[\]\-\$\§\?\{\}\|\\]"),'');
-  if (lastCharacter)
-    text = text.replaceAll (RegExp(r"[@#%&*"":_<>,;=~#°\/\^\!\'\.\+\/\^]\$"),'').replaceAll (RegExp(r"[\!\'\.\+\*\(\)\[\]\-\$\§\?\{\}\|\\]\$"),'');
- */
+
   return text;
 }
 

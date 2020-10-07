@@ -88,14 +88,14 @@ class BookChiffreState extends State<BookChiffre> {
           ? Container()
           : _buildDecodeModusControl(context),
         _currentMode == GCWSwitchPosition.left
-            ? _buildEncodeInputControl(context)
-            : _buildDecodeInputControl(context),
+          ? _buildEncodeInputControl(context)
+          : _buildDecodeInputControl(context),
         _currentMode == GCWSwitchPosition.left
-            ? _buildEncodeFormatDividerControl(context)
-            : _buildDecodeFormatDividerControl(context),
+          ? _buildEncodeFormatDividerControl(context)
+          : _buildDecodeFormatDividerControl(context),
         _currentMode == GCWSwitchPosition.left
-            ? _buildEncodeFormatControl(context, _BookChiffredEncodeOutFormatItems)
-            : _buildDecodeFormatControl(context, _BookChiffredDecodeOutFormatItems, _BookChiffreSearchFormatItems),
+          ? _buildEncodeFormatControl(context, _BookChiffredEncodeOutFormatItems)
+          : _buildDecodeFormatControl(context, _BookChiffredDecodeOutFormatItems, _BookChiffreSearchFormatItems),
         GCWDefaultOutput(
           child: _buildOutput()
         )
