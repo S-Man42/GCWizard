@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/humidex.dart';
 import 'package:gc_wizard/logic/units/temperature.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
@@ -37,16 +38,18 @@ class HumidexState extends State<Humidex> {
           },
         ),
         GCWDoubleSpinner(
-            title: i18n(context, 'humidex_temperature'),
-            value: _currentTemperature,
-            onChanged: (value) {
-              setState(() {
-                _currentTemperature = value;
-              });
-            }
+          value: _currentTemperature,
+          onChanged: (value) {
+            setState(() {
+              _currentTemperature = value;
+            });
+          }
+        ),
+        Container(
+          child: GCWDivider(),
+          padding: EdgeInsets.only(top: 10),
         ),
         GCWTwoOptionsSwitch(
-          title: i18n(context, 'humidex_mode'),
           leftValue: i18n(context, 'humidex_mode_humidity'),
           rightValue: i18n(context, 'humidex_mode_dewpoint'),
           value: _isHumidity ? GCWSwitchPosition.left : GCWSwitchPosition.right,
@@ -62,15 +65,14 @@ class HumidexState extends State<Humidex> {
           },
         ),
         GCWDoubleSpinner(
-            title: i18n(context, mode),
-            value: _currentDewPoint,
-            min: 0.0,
-            max: 100.0,
-            onChanged: (value) {
-              setState(() {
-                _currentDewPoint = value;
-              });
-            }
+          value: _currentDewPoint,
+          min: 0.0,
+          max: 100.0,
+          onChanged: (value) {
+            setState(() {
+              _currentDewPoint = value;
+            });
+          }
         ),
         _buildOutput(context)
       ],
@@ -127,18 +129,18 @@ class HumidexState extends State<Humidex> {
 
     if (hint != null && hint.length > 0)
       outputs.add(
-          GCWOutput(
-              title: i18n(context, 'heatindex_hint'),
-              child: hint
-          )
+        GCWOutput(
+          title: i18n(context, 'heatindex_hint'),
+          child: hint
+        )
       );
 
     if (hintM != null && hintM.length > 0)
       outputs.add(
-          GCWOutput(
-            title: i18n(context, 'humidex_meaning'),
-            child: i18n(context, hintM),
-          )
+        GCWOutput(
+          title: i18n(context, 'humidex_meaning'),
+          child: i18n(context, hintM),
+        )
       );
 
     return GCWMultipleOutput(
