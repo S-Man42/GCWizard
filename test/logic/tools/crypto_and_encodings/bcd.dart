@@ -353,4 +353,237 @@ void main() {
     });
   }); // group
 
+
+  // Hamming -------------------------------------------------------------------
+
+  group("BCD.encodeHamming", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'input' : '19 68', 'expectedOutput' : '0000111 1001100 0110011 1001011'},
+      {'input' : '2ab2', 'expectedOutput' : '0011001 0011001'},
+      {'input' : 'Haus', 'expectedOutput' : ''},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = encodeBCD(elem['input'], BCDType.HAMMING);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("BCD.decodeHamming:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'expectedOutput' : '1968', 'input' : '0000111 1001100 0110011 1001011'},
+      {'expectedOutput' : '22', 'input' : '0011001 0011001'},
+      {'expectedOutput' : '', 'input' : 'Haus'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = decodeBCD(elem['input'], BCDType.HAMMING);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  }); // group
+
+
+  // Biquinaer -------------------------------------------------------------------
+
+  group("BCD.encodeBiquinaer", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'input' : '19 68', 'expectedOutput' : '1000010 0110000 0100010 0101000'},
+      {'input' : '2ab2', 'expectedOutput' : '1000100 1000100'},
+      {'input' : 'Haus', 'expectedOutput' : ''},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = encodeBCD(elem['input'], BCDType.BIQUINARY);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("BCD.decodeBiquinaer:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'expectedOutput' : '1968', 'input' : '1000010 0110000 0100010 0101000'},
+      {'expectedOutput' : '22', 'input' : '1000100 1000100'},
+      {'expectedOutput' : '', 'input' : 'Haus'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = decodeBCD(elem['input'], BCDType.BIQUINARY);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  }); // group
+
+
+  // 1of10 -------------------------------------------------------------------
+
+  group("BCD.encode1of10", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'input' : '19 68', 'expectedOutput' : '0000000010 1000000000 0001000000 0100000000'},
+      {'input' : '2ab2', 'expectedOutput' : '0000000100 0000000100'},
+      {'input' : 'Haus', 'expectedOutput' : ''},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = encodeBCD(elem['input'], BCDType.ONEOFTEN);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("BCD.decode1of10:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'expectedOutput' : '1968', 'input' : '0000000010 1000000000 0001000000 0100000000'},
+      {'expectedOutput' : '22', 'input' : '0000000100 0000000100'},
+      {'expectedOutput' : '', 'input' : 'Haus'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = decodeBCD(elem['input'], BCDType.ONEOFTEN);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  }); // group
+
+
+  // 2of5 -------------------------------------------------------------------
+
+  group("BCD.encode2of5", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'input' : '19 68', 'expectedOutput' : '00101 11000 10001 10100'},
+      {'input' : '2ab2', 'expectedOutput' : '00110 00110'},
+      {'input' : 'Haus', 'expectedOutput' : ''},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = encodeBCD(elem['input'], BCDType.TWOOFFIVE);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("BCD.decode2of5:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'expectedOutput' : '1968', 'input' : '00101 11000 10001 10100'},
+      {'expectedOutput' : '22', 'input' : '00110 00110'},
+      {'expectedOutput' : '', 'input' : 'Haus'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = decodeBCD(elem['input'], BCDType.TWOOFFIVE);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  }); // group
+
+
+  // 2of5Planet -------------------------------------------------------------------
+
+  group("BCD.encodePostnet", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'input' : '19 68', 'expectedOutput' : '00011 10100 01100 10010'},
+      {'input' : '2ab2', 'expectedOutput' : '00101 00101'},
+      {'input' : 'Haus', 'expectedOutput' : ''},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = encodeBCD(elem['input'], BCDType.POSTNET);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("BCD.decodePostnet:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'expectedOutput' : '1968', 'input' : '00011 10100 01100 10010'},
+      {'expectedOutput' : '22', 'input' : '00101 00101'},
+      {'expectedOutput' : '', 'input' : 'Haus'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = decodeBCD(elem['input'], BCDType.POSTNET);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  }); // group
+
+  // 2of5Postnet -------------------------------------------------------------------
+
+  group("BCD.encodePlanet", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'input' : '19 68', 'expectedOutput' : '11100 01011 10011 01101'},
+      {'input' : '2ab2', 'expectedOutput' : '11010 11010'},
+      {'input' : 'Haus', 'expectedOutput' : ''},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = encodeBCD(elem['input'], BCDType.PLANET);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("BCD.decodePlanet:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'expectedOutput' : '1968', 'input' : '11100 01011 10011 01101'},
+      {'expectedOutput' : '22', 'input' : '11010 11010'},
+      {'expectedOutput' : '', 'input' : 'Haus'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = decodeBCD(elem['input'], BCDType.PLANET);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  }); // group
+
 }

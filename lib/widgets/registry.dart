@@ -59,9 +59,16 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base64.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base85.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd1of10.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd20f5postnet.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdbiquinary.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdhamming.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2of5.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2of5planet.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdaiken.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdglixon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdgray.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdgrayexcess.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdlibawcraig.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdobrien.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdoriginal.dart';
@@ -763,42 +770,77 @@ class Registry {
       GCWToolWidget(
         tool: BCDAiken(),
         i18nPrefix: 'bcd_aiken',
-        searchStrings: SEARCHSTRING_BCD + 'Aiken'
+        searchStrings: SEARCHSTRING_BCD + 'aiken'
       ),
       GCWToolWidget(
         tool: BCDGlixon(),
         i18nPrefix: 'bcd_glixon',
-        searchStrings: SEARCHSTRING_BCD + 'Glixon'
+        searchStrings: SEARCHSTRING_BCD + 'glixon'
       ),
       GCWToolWidget(
         tool: BCDGray(),
         i18nPrefix: 'bcd_gray',
-        searchStrings: SEARCHSTRING_BCD + 'Gray'
+        searchStrings: SEARCHSTRING_BCD + 'gray'
       ),
       GCWToolWidget(
         tool: BCDLibawCraig(),
         i18nPrefix: 'bcd_libawcraig',
-        searchStrings: SEARCHSTRING_BCD + 'Libaw Craig'
+        searchStrings: SEARCHSTRING_BCD + 'libaw-craig libawcraig'
       ),
       GCWToolWidget(
         tool: BCDOBrien(),
         i18nPrefix: 'bcd_obrien',
-        searchStrings: SEARCHSTRING_BCD + 'O\'Brien'
+        searchStrings: SEARCHSTRING_BCD + 'o\'brien obrien'
       ),
       GCWToolWidget(
         tool: BCDPetherick(),
         i18nPrefix: 'bcd_petherick',
-        searchStrings: SEARCHSTRING_BCD + 'Petherick'
+        searchStrings: SEARCHSTRING_BCD + 'petherick'
       ),
       GCWToolWidget(
         tool: BCDStibitz(),
         i18nPrefix: 'bcd_stibitz',
-        searchStrings: SEARCHSTRING_BCD + 'Stibitz'
+        searchStrings: SEARCHSTRING_BCD + 'stibitz'
       ),
       GCWToolWidget(
         tool: BCDTompkins(),
         i18nPrefix: 'bcd_tompkins',
-        searchStrings: SEARCHSTRING_BCD + 'Tompkins'
+        searchStrings: SEARCHSTRING_BCD + 'tompkins'
+      ),
+      GCWToolWidget(
+        tool: BCDHamming(),
+        i18nPrefix: 'bcd_hamming',
+        searchStrings: SEARCHSTRING_BCD + 'hamming'
+      ),
+      GCWToolWidget(
+        tool: BCDBiquinary(),
+        i18nPrefix: 'bcd_biquinaer',
+        searchStrings: SEARCHSTRING_BCD + 'biquinaer biquinary'
+      ),
+      GCWToolWidget(
+        tool: BCD2of5Planet(),
+        i18nPrefix: 'bcd_2of5planet',
+        searchStrings: SEARCHSTRING_BCD + 'planet 2of5 2aus5 twooffive zweiausfuenf united states postal service usps barcode'
+      ),
+      GCWToolWidget(
+        tool: BCD2of5Postnet(),
+        i18nPrefix: 'bcd_2of5postnet',
+        searchStrings: SEARCHSTRING_BCD + 'postnet 2of5 2aus5 twooffive zweiausfuenf united states postal service usps barcode'
+      ),
+      GCWToolWidget(
+        tool: BCD2of5(),
+        i18nPrefix: 'bcd_2of5',
+        searchStrings: SEARCHSTRING_BCD + '2of5 2aus5 twooffive zweiausfuenf'
+      ),
+      GCWToolWidget(
+        tool: BCD1of10(),
+        i18nPrefix: 'bcd_1of10',
+        searchStrings: SEARCHSTRING_BCD + '1of10 1aus10 oneoften einsauszehn '
+      ),
+      GCWToolWidget(
+        tool: BCDGrayExcess(),
+        i18nPrefix: 'bcd_grayexcess',
+        searchStrings: SEARCHSTRING_BCD + 'grayexcess gray-excess'
       ),
 
       //Brainfk Selection **********************************************************************************************
