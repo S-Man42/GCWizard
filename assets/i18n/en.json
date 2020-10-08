@@ -331,6 +331,14 @@
   "changelog_0.0.4" : "[fix] Calculation of hours/minutes/seconds in 'Count Days'",
   "changelog_0.0.1" : "[new] Google PlayStore Initialisation",
 
+  "chao_title" : "Chao Cipher",
+  "chao_description" : "Invented by John Francis Byrne in 1918",
+  "chao_example" : "HELLO → STMLH",
+  "chao_alphabet_plain" : "Plaintext Alphabet",
+  "chao_alphabet_cipher" : "Chiffretext Alphabet",
+  "chao_alphabet_az" : "A-Z",
+  "chao_alphabet_za" : "Z-A",
+
   "chickenlanguage_title" : "Chicken Language",
   "chickenlanguage_description" : "Game Language, Secret Language",
   "chickenlanguage_example" : "code → cohodefodehedefe",
