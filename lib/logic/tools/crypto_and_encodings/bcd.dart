@@ -43,7 +43,7 @@ var BCD2of5PlanetToDigit = switchMapKeyValue(DigitToBCD2of5Planet);
 var BCD2of5PostnetToDigit = switchMapKeyValue(DigitToBCD2of5Postnet);
 var BCDBiquinaerToDigit = switchMapKeyValue(DigitToBCDBiquinaer);
 
-enum BCDType {ORIGINAL, AIKEN, STIBITZ, GRAY, GLIXON, OBRIEN, PETHERICK, TOMPKINS, LIBAWCRAIG, GRAYEXCESS, TWOOFFIVE, ONEOFTEN, PLANET, POSTNET, HAMMING, BIQUINAER}
+enum BCDType {ORIGINAL, AIKEN, STIBITZ, GRAY, GLIXON, OBRIEN, PETHERICK, TOMPKINS, LIBAWCRAIG, GRAYEXCESS, TWOOFFIVE, ONEOFTEN, PLANET, POSTNET, HAMMING, BIQUINARY}
 
 String encodeBCD(String input, BCDType type){
   if (input == null || input == '')
@@ -81,7 +81,7 @@ String encodeBCD(String input, BCDType type){
     break;
     case BCDType.HAMMING: bcdMap = DigitToBCDHamming;
     break;
-    case BCDType.BIQUINAER: bcdMap = DigitToBCDBiquinaer;
+    case BCDType.BIQUINARY: bcdMap = DigitToBCDBiquinaer;
     break;
   }
 
@@ -131,7 +131,7 @@ String decodeBCD(String input, BCDType type){
     break;
     case BCDType.HAMMING: bcdMap = BCDHammingToDigit;
     break;
-    case BCDType.BIQUINAER: bcdMap = BCDBiquinaerToDigit;
+    case BCDType.BIQUINARY: bcdMap = BCDBiquinaerToDigit;
     break;
   }
 

@@ -3,12 +3,12 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/bcd.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd.dart';
 
 
-class BCDBiquinaer extends BCD {
+class BCDBiquinary extends BCD {
 
-  BCDBiquinaer({Key key}) :
+  BCDBiquinary({Key key}) :
         super(
         key: key,
-        type: BCDType.BIQUINAER,
+        type: BCDType.BIQUINARY
       );
 }
 

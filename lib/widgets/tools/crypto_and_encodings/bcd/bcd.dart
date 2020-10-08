@@ -92,25 +92,25 @@ class BCDState extends State<BCD> {
     switch (widget.type) {
       case BCDType.ONEOFTEN:
         return GCWTextField(
-            controller: _decodeController,
-            inputFormatters: [_decode10DigitsMaskFormatter],
-            onChanged: (text) {
-              setState(() {
-                _currentInput = text;
-              });
-            }
+          controller: _decodeController,
+          inputFormatters: [_decode10DigitsMaskFormatter],
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
+            });
+          }
         );
         break;
       case BCDType.HAMMING:
-      case BCDType.BIQUINAER:
+      case BCDType.BIQUINARY:
         return GCWTextField(
-            controller: _decodeController,
-            inputFormatters: [_decode7DigitsMaskFormatter],
-            onChanged: (text) {
-              setState(() {
-                _currentInput = text;
-              });
-            }
+          controller: _decodeController,
+          inputFormatters: [_decode7DigitsMaskFormatter],
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
+            });
+          }
         );
         break;
       case BCDType.LIBAWCRAIG:
@@ -118,24 +118,24 @@ class BCDState extends State<BCD> {
       case BCDType.PLANET:
       case BCDType.POSTNET:
         return GCWTextField(
-            controller: _decodeController,
-            inputFormatters: [_decode7DigitsMaskFormatter],
-            onChanged: (text) {
-              setState(() {
-                _currentInput = text;
-              });
-            }
+          controller: _decodeController,
+          inputFormatters: [_decode5DigitsMaskFormatter],
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
+            });
+          }
         );
         break;
       default :
         return GCWTextField(
-            controller: _decodeController,
-            inputFormatters: [_decode4DigitsMaskFormatter],
-            onChanged: (text) {
-              setState(() {
-                _currentInput = text;
-              });
-            }
+          controller: _decodeController,
+          inputFormatters: [_decode4DigitsMaskFormatter],
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
+            });
+          }
         );
     }
   }

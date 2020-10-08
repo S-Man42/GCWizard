@@ -407,7 +407,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = encodeBCD(elem['input'], BCDType.BIQUINAER);
+        var _actual = encodeBCD(elem['input'], BCDType.BIQUINARY);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -425,7 +425,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = decodeBCD(elem['input'], BCDType.BIQUINAER);
+        var _actual = decodeBCD(elem['input'], BCDType.BIQUINARY);
         expect(_actual, elem['expectedOutput']);
       });
     });

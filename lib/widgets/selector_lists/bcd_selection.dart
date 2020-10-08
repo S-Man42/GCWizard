@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd20f5postnet.
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdhamming.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2of5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd2of5planet.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdbiquinaer.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdbiquinary.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdgrayexcess.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdoriginal.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdaiken.dart';
@@ -42,7 +42,7 @@ class BCDSelection extends GCWSelection {
         className(BCD2of5Postnet()),
         className(BCD2of5Planet()),
         className(BCDHamming()),
-        className(BCDBiquinaer()),
+        className(BCDBiquinary()),
         className(BCD1of10()),
       ].contains(className(element.tool));
     }).toList();
