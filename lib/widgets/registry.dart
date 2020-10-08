@@ -326,7 +326,7 @@ class Registry {
         tool: Chao(),
         i18nPrefix: 'chao',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'chao cipher chiffre john francis byrne'
+        searchStrings: 'chao john francis byrne'
       ),
       GCWToolWidget(
         tool: ChickenLanguage(),

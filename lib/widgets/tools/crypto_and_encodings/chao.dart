@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chao.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/reverse.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -51,12 +52,12 @@ class ChaoState extends State<Chao> {
     var ChaoPlainAlphabetItems = {
       ChaoAlphabet.AZ : i18n(context, 'chao_alphabet_az'),
       ChaoAlphabet.ZA : i18n(context, 'chao_alphabet_za'),
-      ChaoAlphabet.CUSTOM : i18n(context, 'chao_alphabet_custom'),
+      ChaoAlphabet.CUSTOM : i18n(context, 'common_custom'),
     };
     var ChaoChiffreAlphabetItems = {
       ChaoAlphabet.AZ : i18n(context, 'chao_alphabet_az'),
       ChaoAlphabet.ZA : i18n(context, 'chao_alphabet_za'),
-      ChaoAlphabet.CUSTOM : i18n(context, 'chao_alphabet_custom'),
+      ChaoAlphabet.CUSTOM : i18n(context, 'common_custom'),
     };
 
     return Column(
@@ -78,7 +79,7 @@ class ChaoState extends State<Chao> {
           },
         ),
         GCWTextDivider(
-          text: i18n(context, 'chao_alphabet_chiffre')
+          text: i18n(context, 'chao_alphabet_cipher')
         ),
         GCWDropDownButton(
           value: _currentAlphabetTypeChiffre,
@@ -133,9 +134,6 @@ class ChaoState extends State<Chao> {
           },
         )
           : Container(),
-        GCWTextDivider(
-          text: i18n(context, 'common_output')
-        ),
         _buildOutput()
       ],
     );
@@ -143,20 +141,23 @@ class ChaoState extends State<Chao> {
 
   _buildOutput() {
     if (_currentInput == null || _currentInput.length == 0)
-      return GCWDefaultOutput(child: '');
+      return GCWDefaultOutput();
 
     var alphabetChiffre = '';
     var alphabetPlain = '';
 
+    var alphabetAZ = alphabet_AZ.keys.join();
+    var alphabetZA = reverse(alphabetAZ);
+
     switch (_currentAlphabetTypePlain){
-      case ChaoAlphabet.AZ: alphabetPlain = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; break;
-      case ChaoAlphabet.ZA: alphabetPlain = 'ZYXWVUTSRQPONMLKJIHGFEDCBA'; break;
+      case ChaoAlphabet.AZ: alphabetPlain = alphabetAZ; break;
+      case ChaoAlphabet.ZA: alphabetPlain = alphabetZA; break;
       case ChaoAlphabet.CUSTOM: alphabetPlain = _currentAlphabetPlain.toUpperCase(); break;
     }
 
     switch (_currentAlphabetTypeChiffre){
-      case ChaoAlphabet.AZ: alphabetChiffre = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; break;
-      case ChaoAlphabet.ZA: alphabetChiffre = 'ZYXWVUTSRQPONMLKJIHGFEDCBA'; break;
+      case ChaoAlphabet.AZ: alphabetChiffre = alphabetAZ; break;
+      case ChaoAlphabet.ZA: alphabetChiffre = alphabetZA; break;
       case ChaoAlphabet.CUSTOM: alphabetChiffre = _currentAlphabetChiffre.toUpperCase(); break;
     }
 
@@ -165,8 +166,9 @@ class ChaoState extends State<Chao> {
     } else {
       _currentOutput = decryptChao(_currentInput, alphabetPlain, alphabetChiffre);
     }
-    return GCWOutputText(
-              text: _currentOutput,
-            );
+
+    return GCWDefaultOutput(
+      child: _currentOutput,
+    );
   }
 }

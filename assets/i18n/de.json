@@ -317,14 +317,13 @@
   "changelog_0.0.4" : "[fix] Berechnung von Stunden/Minuten/Sekunden in 'Anzahl Tage'",
   "changelog_0.0.1" : "[new] Google PlayStore Initialisierung",
 
-  "chao_title" : "Chao Cipher",
+  "chao_title" : "Chao Chiffre",
   "chao_description" : "Symmetrisches Verschlüsselungsverfahren, das 1918 von John Francis Byrne entwickelt wurde ",
   "chao_example" : "HALLO → SYMLH",
   "chao_alphabet_plain" : "Klartext Alphabet",
-  "chao_alphabet_chiffre" : "Chiffretext Alphabet",
+  "chao_alphabet_cipher" : "Chiffretext Alphabet",
   "chao_alphabet_az" : "A-Z",
   "chao_alphabet_za" : "Z-A",
-  "chao_alphabet_custom" : "Benutzerdefiniert",
 
   "chickenlanguage_title" : "Hühnersprache",
   "chickenlanguage_description" : "Spielsprache, Geheimsprache",
