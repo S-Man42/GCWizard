@@ -79,6 +79,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
@@ -182,6 +183,7 @@ class _MainViewState extends State<MainView> {
           className(HeatIndex()),
           className(HashSelection()),
           className(Hexadecimal()),
+          className(Humidex()),
           className(Kamasutra()),
           className(Kenny()),
           className(Morse()),
