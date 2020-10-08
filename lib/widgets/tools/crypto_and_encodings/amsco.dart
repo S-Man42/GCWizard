@@ -1,0 +1,116 @@
+import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/amsco.dart';
+import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlydigitsandspace_textinputformatter.dart';
+
+class Amsco extends StatefulWidget {
+  @override
+  AmscoState createState() => AmscoState();
+}
+
+class AmscoState extends State<Amsco> {
+  var _inputController;
+  var _keyController;
+
+  String _currentInput = '';
+  String _currentKey = '';
+
+  AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
+
+  var _currentMode = GCWSwitchPosition.left;
+
+  @override
+  void initState() {
+    super.initState();
+    _inputController = TextEditingController(text: _currentInput);
+    _keyController = TextEditingController(text: _currentKey);
+  }
+
+  @override
+  void dispose() {
+    _inputController.dispose();
+    _keyController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        GCWTextField(
+          controller: _inputController,
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
+            });
+          },
+        ),
+        GCWTwoOptionsSwitch(
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'common_key')
+        ),
+        GCWTextField(
+          hintText: i18n(context, 'amsco_key_hint'),
+          maxLength: 9,
+          inputFormatters: [TextOnlyDigitsAndSpaceInputFormatter()],
+          controller: _keyController,
+          onChanged: (text) {
+            setState(() {
+              _currentKey = text;
+            });
+          },
+        ),
+        _buildOutput(context)
+      ],
+    );
+  }
+
+  Widget _buildOutput(BuildContext context) {
+    var _currentOutput;
+    if (_currentMode == GCWSwitchPosition.left) {
+      _currentOutput = encryptAmsco(_currentInput, _currentKey);
+    } else {
+      _currentOutput = decryptAmsco(_currentInput, _currentKey);
+    }
+
+    if (_currentOutput == null)  {
+      return GCWDefaultOutput();
+    } else if ( _currentOutput.errorCode != ErrorCode.OK) {
+      switch (_currentOutput.errorCode) {
+        case ErrorCode.Key:
+          showToast(i18n(context, 'amsco_error_key'));
+          break;
+      }
+      return GCWDefaultOutput();
+    };
+
+    return GCWMultipleOutput(
+      children: [
+        _currentOutput.output,
+        GCWOutput(
+          title: i18n(context, 'amsco_usedgrid'),
+          child: GCWOutputText(
+            text: _currentOutput.grid,
+            isMonotype: true,
+          ),
+        )
+      ],
+    );
+  }
+}
