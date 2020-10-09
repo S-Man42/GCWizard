@@ -1112,7 +1112,7 @@
   "hashes_tiger192_title" : "Tiger (192 bits)",
   "hashes_whirlpool512_title" : "Whirlpool (512 bits)",
 
-  "heatindex_title" : "Heat index",
+  "heatindex_title" : "Heat Index",
   "heatindex_description" : "Apparent Temperature",
   "heatindex_temperature" : "Temperature",
   "heatindex_humidity" : "Humidity [%]",
@@ -1134,7 +1134,7 @@
   "hexadecimal_example" : "2A → 42",
 
   "humidex_title" : "Humidex",
-  "humidex_description" : "Calculates the humidity index",
+  "humidex_description" : "Apparent Temperature",
   "humidex_example" : "30°C, 15°C  →  34",
   "humidex_unit" : "Temperature",
   "humidex_unit_celsius" : "Celsius",

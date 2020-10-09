@@ -479,7 +479,7 @@ class Registry {
         tool: Humidex(),
         i18nPrefix: 'humidex',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'gefuehlte temperatur apparent temperature humidity luftfeuchtigkeit canadian canada humidex dewpoint'
+        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit canadian canada humidex dewpoint'
       ),
       GCWToolWidget(
         tool: Kamasutra(),
