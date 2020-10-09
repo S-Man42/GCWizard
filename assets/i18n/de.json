@@ -1090,7 +1090,7 @@
   "hashes_whirlpool512_title" : "Whirlpool (512 Bit)",
 
   "heatindex_title" : "Hitze-Index",
-  "heatindex_description" : "Berechnen des Hitze-Index",
+  "heatindex_description" : "Gefühlte Temperatur",
   "heatindex_temperature" : "Temperatur",
   "heatindex_humidity" : "Luftfeuchtigkeit [%]",
   "heatindex_unit" : "Einheit",
@@ -1593,7 +1593,7 @@
   "sudokusolver_error" : "Konnte nicht gelöst werden.",
 
   "summersimmerindex_title" : "Summer-Simmer-Index",
-  "summersimmerindex_description" : "Berechnet den Summer-Simmer-Index",
+  "summersimmerindex_description" : "Gefühlte Temperatur",
   "summersimmerindex_index_21.3" : "Etwas kühl. Die meisten Personen fühlen sich wohl.",
   "summersimmerindex_index_25.0" : "Optimal. Fast jeder fühlt sich wohl.",
   "summersimmerindex_index_28.3" : "Etwas heiß. Die meisten Personen fühlen sich wohl.",

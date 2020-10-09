@@ -1090,7 +1090,7 @@
   "hashes_whirlpool512_title" : "Whirlpool (512 bits)",
 
   "heatindex_title" : "Heat index",
-  "heatindex_description" : "Calculating heat indices",
+  "heatindex_description" : "Apparent Temperature",
   "heatindex_temperature" : "Temperature",
   "heatindex_humidity" : "Humidity [%]",
   "heatindex_unit" : "Unit",
@@ -1593,7 +1593,7 @@
   "sudokusolver_error" : "Could not be solved.",
 
   "summersimmerindex_title" : "Summer Simmer Index",
-  "summersimmerindex_description" : "Calculating the Summer Simmer index",
+  "summersimmerindex_description" : "Apparent Temperature",
   "summersimmerindex_index_21.3" : "Slightly cool – most people feel well.",
   "summersimmerindex_index_25.0" : "Almost everybody feels well.",
   "summersimmerindex_index_28.3" : "Slightly hot –  most people feel well.",

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/summersimmer.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/summer_simmer.dart';
 import 'package:gc_wizard/logic/units/temperature.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
@@ -66,10 +66,10 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
 
     double output;
     if (_isMetric) {
-      output = calculateSummersimmerIndex(_currentTemperature, _currentHumidity, TEMPERATURE_CELSIUS);
+      output = calculateSummerSimmerIndex(_currentTemperature, _currentHumidity, TEMPERATURE_CELSIUS);
       unit = TEMPERATURE_CELSIUS.symbol;
     } else {
-      output = calculateSummersimmerIndex(_currentTemperature, _currentHumidity, TEMPERATURE_FAHRENHEIT);
+      output = calculateSummerSimmerIndex(_currentTemperature, _currentHumidity, TEMPERATURE_FAHRENHEIT);
       unit = TEMPERATURE_FAHRENHEIT.symbol;
     }
 

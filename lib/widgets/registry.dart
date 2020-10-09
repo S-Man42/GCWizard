@@ -165,7 +165,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/summersimmer.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/summer_simmer.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 
@@ -452,7 +452,7 @@ class Registry {
         tool: HeatIndex(),
         i18nPrefix: 'heatindex',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'gefuehlte temperatur apparent temperature humidity luftfeuchtigkeit hitzeindex heatindex'
+        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit hitzeindex heatindex'
       ),
       GCWToolWidget(
         tool: Hexadecimal(),
@@ -634,10 +634,10 @@ class Registry {
         searchStrings: 'sudoku grid gitter'
       ),
       GCWToolWidget(
-        tool: SummersimmerIndex(),
+        tool: SummerSimmerIndex(),
         i18nPrefix: 'summersimmerindex',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'gefuehlte temperatur apparent temperature humidity luftfeuchtigkeit ssi summersimmerindex'
+        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit ssi summersimmerindex'
       ),
       GCWToolWidget(
         tool: SymbolTableSelection(),
@@ -691,7 +691,7 @@ class Registry {
         tool: Windchill(),
         i18nPrefix: 'windchill',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'windchill gefuehlte temperatur apparent temperature windgeschwindigkeit wind speed'
+        searchStrings: 'windchill gefuehltetemperatur apparenttemperature windgeschwindigkeit wind speed'
       ),
       GCWToolWidget(
         tool: Z22(),
