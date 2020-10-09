@@ -88,3 +88,5 @@ web
 *.gz
 *.toc
 howtocode/
+lib/logic/tools/crypto_and_encodings/chao.dart
+lib/widgets/tools/crypto_and_encodings/chao.dart
