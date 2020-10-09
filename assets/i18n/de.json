@@ -1113,7 +1113,7 @@
   "hashes_whirlpool512_title" : "Whirlpool (512 Bit)",
 
   "heatindex_title" : "Hitze-Index",
-  "heatindex_description" : "Berechnen des Hitze-Index",
+  "heatindex_description" : "Gefühlte Temperatur",
   "heatindex_temperature" : "Temperatur",
   "heatindex_humidity" : "Luftfeuchtigkeit [%]",
   "heatindex_unit" : "Einheit",
@@ -1631,6 +1631,16 @@
   "sudokusolver_clearcalculated" : "Lösche Ergebnis",
   "sudokusolver_clearall" : "Alles löschen",
   "sudokusolver_error" : "Konnte nicht gelöst werden.",
+
+  "summersimmerindex_title" : "Summer-Simmer-Index",
+  "summersimmerindex_description" : "Gefühlte Temperatur",
+  "summersimmerindex_index_21.3" : "Etwas kühl. Die meisten Personen fühlen sich wohl.",
+  "summersimmerindex_index_25.0" : "Optimal. Fast jeder fühlt sich wohl.",
+  "summersimmerindex_index_28.3" : "Etwas heiß. Die meisten Personen fühlen sich wohl.",
+  "summersimmerindex_index_32.8" : "Heiß. Teilweises Unwohlsein.",
+  "summersimmerindex_index_37.8" : "Gut heiß. Unwohlsein. Gefahr von Hitzeschlag.",
+  "summersimmerindex_index_44.4" : "Sehr heiß. Gefahr von Hitzeschlag.",
+  "summersimmerindex_index_51.7" : "Extrem Heiß. Sehr große Gefahr eines Hitzeschlages.",
 
   "symboltables_selection_title" : "Symboltabellen",
   "symboltables_selection_description" : "Symbole, die Zahlen und Buchstaben repräsentieren",

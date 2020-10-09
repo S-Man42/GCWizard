@@ -1113,7 +1113,7 @@
   "hashes_whirlpool512_title" : "Whirlpool (512 bits)",
 
   "heatindex_title" : "Heat index",
-  "heatindex_description" : "Calculating heat indices",
+  "heatindex_description" : "Apparent Temperature",
   "heatindex_temperature" : "Temperature",
   "heatindex_humidity" : "Humidity [%]",
   "heatindex_unit" : "Unit",
@@ -1631,6 +1631,16 @@
   "sudokusolver_clearcalculated" : "Clear Calculation",
   "sudokusolver_clearall" : "Clear all",
   "sudokusolver_error" : "Could not be solved.",
+
+  "summersimmerindex_title" : "Summer Simmer Index",
+  "summersimmerindex_description" : "Apparent Temperature",
+  "summersimmerindex_index_21.3" : "Slightly cool – most people feel well.",
+  "summersimmerindex_index_25.0" : "Almost everybody feels well.",
+  "summersimmerindex_index_28.3" : "Slightly hot –  most people feel well.",
+  "summersimmerindex_index_32.8" : "Hot - some discomfort.",
+  "summersimmerindex_index_37.8" : "Medium hot - discomfort, continuing activity could result in heat stroke.",
+  "summersimmerindex_index_44.4" : "Very hot - heat stroke is probable with continued activity.",
+  "summersimmerindex_index_51.7" : "Extremely hot - heat stroke is imminent.",
 
   "symboltables_selection_title" : "Symbol Tables",
   "symboltables_selection_description" : "Symbols that represent letters or numbers",
