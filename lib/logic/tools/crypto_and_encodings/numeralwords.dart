@@ -8,7 +8,7 @@ class NumeralWordsOutput {
   NumeralWordsOutput(this.state, this.output);
 }
 
-enum NumeralWordsLanguage {DE, EN, FR, IT, ES, ALL}
+enum NumeralWordsLanguage {DE, DK, EN, ES, FR, IT, ALL}
 
 final Map<String, String> WordToNumDE = { 'NULL':'0', 'EINS':'1', 'ZWEI':'2', 'DREI':'3', 'VIER':'4', 'FÜNF':'5', 'SECHS':'6', 'SIEBEN':'7', 'ACHT':'8', 'NEUN':'9',
   'ZEHN':'10', 'ELF': '11', 'ZWÖLF':'12', 'DREIZEHN':'13', 'VIERZEHN':'14','FÜNFZEHN':'15', 'SECHZEHN':'16', 'SIEBZEHN':'17', 'ACHTZEHN':'18', 'NEUNZEHN':'19',
@@ -32,6 +32,9 @@ final Map<String, String> WordToNumFR = {'ZÉRO':'0', 'UN':'1', 'UNE': '1', 'DEU
   'DIX':'10', 'ONZE':'11', 'DOUZE':'12', 'TREIZE':'13', 'QUATORZE':'14', 'QUINZE':'15', 'SEIZE':'16', 'DIX-SEPT':'17', 'DIX-HUIT':'18', 'DIX-NEUF':'19',
   'VINGT':'20', 'TRENTE':'30', 'QUARANTE':'40', 'CINQANTE':'50', 'SOIXANTE':'60', 'SOIXANTE-DIX':'70', 'QUATRE-VINGT':'80', 'QUATRE-VINGT-DIX':'90', 'CENT':'100', 'MILLE':'1000' };
 
+final Map<String, String> WordToNumDK = {'NUL':'0', 'EN':'1', 'TO':'2', 'TRE':'3', 'FIRE':'4', 'FEM':'5', 'SEKS':'6', 'SYVE':'7', 'OTTE':'8', 'NI':'9',
+  'TI':'10', 'ELLEVE':'11', 'TOLV':'12', 'RETTEN':'13', 'FJORTEN':'14', 'FEMTEN':'15', 'SEKSTEN':'16', 'SYTTEN':'17', 'ATTEN':'18', 'NITTEN':'19',
+  'TYVE':'20', 'TREDIVE':'30', 'FYRRE':'40', 'HALVTREDS':'50', 'TRES':'60', 'HALVFJERDS':'70', 'FIRS':'80', 'HALVFEMS':'90', 'HUNDREDE':'100', 'TUSIND':'1000' };
 
 bool _isNumeral(String input){
   return (int.tryParse(input) != null );
@@ -46,6 +49,7 @@ Map<String, String> numeralWordsMap(NumeralWordsLanguage currentLanguage){
     case NumeralWordsLanguage.FR: return WordToNumFR;  break;
     case NumeralWordsLanguage.IT: return WordToNumIT;  break;
     case NumeralWordsLanguage.ES: return WordToNumES;  break;
+    case NumeralWordsLanguage.DK: return WordToNumDK;  break;
     case NumeralWordsLanguage.ALL :
       table = WordToNumDE;
       table.addAll(WordToNumEN);
@@ -177,7 +181,7 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
   if (input == null || input == '')
     return '';
 
-  var output = '';
+  List<String> output = List<String>();
   var decodeText;
   Map<String, String> decodingTable = numeralWordsMap(language);
 
@@ -204,12 +208,12 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
     }
     decodeText.forEach((element) {
       if (_isNumeral(element)) {
-        output = output + ' ' + element;
+        output.add(element);
       } else if (_isNumeralWord(element, language, decodingTable).state) {
-        output = output + ' ' + _isNumeralWord(element, language, decodingTable).output;
+        output.add(_isNumeralWord(element, language, decodingTable).output);
       }
     });
-    return output;
+    return output.join(' ');
   } else { // search parts of words: weight => eight => 8
       int maxLength = 0;
       int jump = 0;
@@ -230,14 +234,14 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
 
       decodeText.forEach((element) {
         if (_isNumeral(element)) {
-          output = output + ' ' + element;
+          output.add(element);
         } else {
           for (int i = 0; i < element.length - maxLength + 1; i++){
             var checkWord = element.substring(i, i + maxLength);
             found = false;
             for (int j = 0; j < numWords.length; j++){
               if (checkWord.contains(numWords[j])) {
-                output = output + ' ' + decodingTable[numWords[j]];
+                output.add(decodingTable[numWords[j]]);
                 jump = numWords[j].length;
                 j = numWords.length;
                 found = true;
@@ -249,7 +253,7 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
           }
         }
       });
-      return output;
+      return output.join(' ');
   }
 }
 

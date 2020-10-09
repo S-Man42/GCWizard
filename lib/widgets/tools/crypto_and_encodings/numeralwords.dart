@@ -39,6 +39,7 @@ class NumeralWordsState extends State<NumeralWords> {
       NumeralWordsLanguage.EN : i18n(context, 'numeralwords_language_en'),
       NumeralWordsLanguage.FR : i18n(context, 'numeralwords_language_fr'),
       NumeralWordsLanguage.IT : i18n(context, 'numeralwords_language_it'),
+      NumeralWordsLanguage.DK : i18n(context, 'numeralwords_language_dk'),
       NumeralWordsLanguage.ES : i18n(context, 'numeralwords_language_es'),
       NumeralWordsLanguage.ALL : i18n(context, 'numeralwords_language_all'),
     };
