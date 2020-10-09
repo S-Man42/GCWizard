@@ -11,6 +11,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class DTMF extends StatefulWidget {
   @override
@@ -119,11 +120,7 @@ class DTMFState extends State<DTMF> {
                   onPressed: () {
                     setState(() {
                       var input = ' [$_currentDecryptLowFrequency, $_currentDecryptHighFrequency] ';
-                      var cursorPosition = max(_decodeController.selection.end, 0);
-
-                      _currentDecodeInput = _currentDecodeInput.substring(0, cursorPosition) + input + _currentDecodeInput.substring(cursorPosition);
-                      _decodeController.text = _currentDecodeInput;
-                      _decodeController.selection = TextSelection.collapsed(offset: cursorPosition + input.length);
+                      _currentDecodeInput = insertText(input, _currentDecodeInput, _decodeController);
                     });
                   },
                 )
