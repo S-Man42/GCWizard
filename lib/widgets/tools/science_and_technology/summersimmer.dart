@@ -7,12 +7,12 @@ import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class SummersimmerIndex extends StatefulWidget {
+class SummerSimmerIndex extends StatefulWidget {
   @override
-  SummersimmerIndexState createState() => SummersimmerIndexState();
+  SummerSimmerIndexState createState() => SummerSimmerIndexState();
 }
 
-class SummersimmerIndexState extends State<SummersimmerIndex> {
+class SummerSimmerIndexState extends State<SummerSimmerIndex> {
 
   double _currentTemperature = 0.0;
   double _currentHumidity = 0.0;
@@ -75,8 +75,8 @@ class SummersimmerIndexState extends State<SummersimmerIndex> {
 
     String hintT;
     if (
-    (_isMetric && _currentTemperature < 27)
-        || (!_isMetric && _currentTemperature < 80)
+    (_isMetric && _currentTemperature < 18)
+        || (!_isMetric && _currentTemperature < 64)
     ) {
       hintT = i18n(context, 'heatindex_hint_temperature', parameters: ['${_isMetric ? 18 : 64} $unit']);
     }
@@ -95,19 +95,19 @@ class SummersimmerIndexState extends State<SummersimmerIndex> {
       hintM = 'summersimmerindex_index_44.4';
     else
     if (output > 37.8)
-    hintM = 'summersimmerindex_index_37.8';
+      hintM = 'summersimmerindex_index_37.8';
     else
     if (output > 32.8)
-    hintM = 'summersimmerindex_index_32.8';
+      hintM = 'summersimmerindex_index_32.8';
     else
     if (output > 28.3)
-    hintM = 'summersimmerindex_index_28.3';
+      hintM = 'summersimmerindex_index_28.3';
     else
     if (output > 25.0)
-    hintM = 'summersimmerindex_index_25.0';
+      hintM = 'summersimmerindex_index_25.0';
     else
     if (output > 21.3)
-    hintM = 'summersimmerindex_index_21.3';
+      hintM = 'summersimmerindex_index_21.3';
 
     var outputs = [
       GCWOutput(
@@ -118,18 +118,18 @@ class SummersimmerIndexState extends State<SummersimmerIndex> {
 
     if (hint != null && hint.length > 0)
       outputs.add(
-          GCWOutput(
-              title: i18n(context, 'heatindex_hint'),
-              child: hint
-          )
+        GCWOutput(
+          title: i18n(context, 'heatindex_hint'),
+          child: hint
+        )
       );
 
     if (hintM != null && hintM.length > 0)
       outputs.add(
-          GCWOutput(
-              title: i18n(context, 'heatindex_meaning'),
-              child: i18n(context, hintM)
-          )
+        GCWOutput(
+          title: i18n(context, 'heatindex_meaning'),
+          child: i18n(context, hintM)
+        )
       );
 
     return GCWMultipleOutput(

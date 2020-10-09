@@ -637,7 +637,7 @@ class Registry {
         tool: SummersimmerIndex(),
         i18nPrefix: 'summersimmerindex',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'gefuehlte temperatur apparent temperature humidity luftfeuchtigkeit summer simmer index'
+        searchStrings: 'gefuehlte temperatur apparent temperature humidity luftfeuchtigkeit ssi summersimmerindex'
       ),
       GCWToolWidget(
         tool: SymbolTableSelection(),
