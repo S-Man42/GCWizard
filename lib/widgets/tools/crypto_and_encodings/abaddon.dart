@@ -168,7 +168,7 @@ class AbaddonState extends State<Abaddon> {
             iconData: Icons.backspace,
             onPressed: () {
               setState(() {
-                _currentInput = backSpace(_currentInput, _inputController);
+                _currentInput = textControllerDoBackSpace(_currentInput, _inputController);
               });
             },
           ),
@@ -177,7 +177,7 @@ class AbaddonState extends State<Abaddon> {
   }
 
   _addCharacter(String input) {
-    _currentInput = insertText(input, _currentInput, _inputController);
+    _currentInput = textControllerInsertText(input, _currentInput, _inputController);
   }
 
   _buildOutput() {

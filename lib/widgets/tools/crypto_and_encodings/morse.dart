@@ -121,7 +121,7 @@ class MorseState extends State<Morse> {
           iconData: Icons.backspace,
           onPressed: () {
             setState(() {
-              _currentDecodeInput = backSpace(_currentDecodeInput, _decodeController);
+              _currentDecodeInput = textControllerDoBackSpace(_currentDecodeInput, _decodeController);
             });
           },
         ),
@@ -130,7 +130,7 @@ class MorseState extends State<Morse> {
   }
 
   _addCharacter(String input) {
-    _currentDecodeInput = insertText(input, _currentDecodeInput, _decodeController);
+    _currentDecodeInput = textControllerInsertText(input, _currentDecodeInput, _decodeController);
   }
 
   Widget _buildOutput(BuildContext context) {

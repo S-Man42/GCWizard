@@ -937,6 +937,7 @@
   "dates_timecalculator_starttime" : "Startzeit (Tage, Stunden, Min., Sek.)",
   "dates_timecalculator_endtime" : "Endzeit (Tag, Stunde, Min., Sek.)",
   "dates_timecalculator_operation" : "Operation",
+  "dates_timecalculator_resulttoinput" : "Ergebnis als neue Eingabe",
   "dates_weekday_title" : "Wochentag",
   "dates_weekday_description" : "Wochentag eines bestimmten Datums",
   "dates_weekday_date" : "Datum (Jahr, Monat, Tag)",

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -28,7 +24,7 @@ class TimeCalculator extends StatefulWidget {
 class TimeCalculatorState extends State<TimeCalculator> {
   var _currentMode = GCWSwitchPosition.left;
 
-  var _startDays = _WrapperForInt(0);
+  var _startDays = _WrapperForInt(5);
   var _startHours = _WrapperForInt(0);
   var _startMinutes = _WrapperForInt(0);
   var _startSeconds = _WrapperForInt(0);
@@ -102,8 +98,6 @@ class TimeCalculatorState extends State<TimeCalculator> {
   }
 
   _buildOutput() {
-    print(_startHours);
-
     var startTime = Duration(
       days: _startDays.value,
       hours: _startHours.value,
@@ -139,6 +133,23 @@ class TimeCalculatorState extends State<TimeCalculator> {
       ':${format.format(minutes)}'
       ':${format.format(seconds)}';
 
-    return output;
+    return Column(
+      children: [
+        GCWOutputText(
+          text: output,
+        ),
+        GCWButton(
+          text: i18n(context, 'dates_timecalculator_resulttoinput'),
+          onPressed: () {
+            setState(() {
+              _startDays.value = days;
+              _startHours.value = hours;
+              _startMinutes.value = minutes;
+              _startSeconds.value = seconds;
+            });
+          },
+        )
+      ],
+    );
   }
 }

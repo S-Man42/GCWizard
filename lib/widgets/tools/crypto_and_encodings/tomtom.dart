@@ -177,7 +177,7 @@ class TomTomState extends State<TomTom> {
           iconData: Icons.backspace,
           onPressed: () {
             setState(() {
-              _currentInputDecrypt = backSpace(_currentInputDecrypt, _inputDecryptController);
+              _currentInputDecrypt = textControllerDoBackSpace(_currentInputDecrypt, _inputDecryptController);
             });
           },
         ),
@@ -186,7 +186,7 @@ class TomTomState extends State<TomTom> {
   }
 
   _addCharacter(String input) {
-    _currentInputDecrypt = insertText(input, _currentInputDecrypt, _inputDecryptController);
+    _currentInputDecrypt = textControllerInsertText(input, _currentInputDecrypt, _inputDecryptController);
   }
 
   _buildOutput() {

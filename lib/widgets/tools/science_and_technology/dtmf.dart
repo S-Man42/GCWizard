@@ -120,7 +120,7 @@ class DTMFState extends State<DTMF> {
                   onPressed: () {
                     setState(() {
                       var input = ' [$_currentDecryptLowFrequency, $_currentDecryptHighFrequency] ';
-                      _currentDecodeInput = insertText(input, _currentDecodeInput, _decodeController);
+                      _currentDecodeInput = textControllerInsertText(input, _currentDecodeInput, _decodeController);
                     });
                   },
                 )

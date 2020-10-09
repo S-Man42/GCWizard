@@ -390,7 +390,7 @@ class Registry {
         tool: DTMF(),
         i18nPrefix: 'dtmf',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'dual tone multi frequency mehrfrequenzwahlverfahren tonwahl dtmf'
+        searchStrings: 'dual-tone multi-frequency dualtonemultifrequency touchtone mehrfrequenzwahlverfahren mfwv mfv tonwahl dtmf mehrfrequenzton tonwahlverfahren mfc mf4'
       ),
       GCWToolWidget(
         tool: Decabit(),

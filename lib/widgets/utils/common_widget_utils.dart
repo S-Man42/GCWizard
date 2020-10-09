@@ -115,7 +115,7 @@ buildPopupItem(BuildContext context, IconData icon, String i18nKey) {
   );
 }
 
-String insertText(String input, String currentText, TextEditingController textController) {
+String textControllerInsertText(String input, String currentText, TextEditingController textController) {
   var cursorPosition = max(textController.selection.end, 0);
 
   currentText = currentText.substring(0, cursorPosition) + input + currentText.substring(cursorPosition);
@@ -125,7 +125,7 @@ String insertText(String input, String currentText, TextEditingController textCo
   return currentText;
 }
 
-String backSpace(String currentText, TextEditingController textController) {
+String textControllerDoBackSpace(String currentText, TextEditingController textController) {
   var cursorPosition = max(textController.selection.end, 0);
   if (cursorPosition == 0)
     return currentText;

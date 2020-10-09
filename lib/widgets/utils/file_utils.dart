@@ -6,7 +6,6 @@ import 'package:permission_handler/permission_handler.dart';
 
 Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) async {
   var status = await Permission.storage.request();
-  print(status);
   if (status != PermissionStatus.granted) {
     return null;
   }

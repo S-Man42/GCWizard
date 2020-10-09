@@ -151,7 +151,7 @@ class DecabitState extends State<Decabit> {
             iconData: Icons.backspace,
             onPressed: () {
               setState(() {
-                _currentInput = backSpace(_currentInput, _inputController);
+                _currentInput = textControllerDoBackSpace(_currentInput, _inputController);
               });
             },
           ),
@@ -160,7 +160,7 @@ class DecabitState extends State<Decabit> {
   }
 
   _addCharacter(String input) {
-    _currentInput = insertText(input, _currentInput, _inputController);
+    _currentInput = textControllerInsertText(input, _currentInput, _inputController);
   }
 
   _buildOutput() {
