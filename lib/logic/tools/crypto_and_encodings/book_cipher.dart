@@ -129,9 +129,9 @@ String decodeFindWord(String input, String positions, searchFormat format){
 
   return out
     .map((e) {
-      return e;
+      return e.toUpperCase();
     })
-    .join('\n');
+    .join();
 }
 
 String encodeText(String input, String text, encodeOutFormat format){
