@@ -1466,9 +1466,9 @@ class Registry {
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'barcode39'),
-        i18nPrefix: 'symboltables_barcode',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'barcode/65.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'barcode 39'
+        i18nPrefix: 'symboltables_barcode39',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'barcode39/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'barcode39'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'baudot'),
@@ -1501,16 +1501,16 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'brahmi indisches indian zahlen ziffern numbers numerals aramaeisch kharoshthi hieratisch hieratic aramaic'
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'chappe'),
-        i18nPrefix: 'symboltables_chappe',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'chappe/72.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'optical telegraph visual visueller optischer telegraf claude chappe '
+        tool: SymbolTable(symbolKey: 'chappe_v1'),
+        i18nPrefix: 'symboltables_chappe_v1',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'chappe_v1/72.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'opticaltelegraph visual visueller optischertelegraf claude chappe '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'chappe_v2'),
         i18nPrefix: 'symboltables_chappe_v2',
         iconPath: SYMBOLTABLES_ASSETPATH + 'chappe_v2/72.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'optical telegraph visual visueller optischer telegraf claude chappe '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'opticaltelegraph visual visueller optischertelegraf claude chappe '
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'cherokee'),
