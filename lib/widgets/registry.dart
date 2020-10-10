@@ -87,6 +87,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
@@ -438,6 +439,12 @@ class Registry {
         tool: GamesSelection(),
         i18nPrefix: 'games_selection',
         searchStrings: 'games spiele'
+      ),
+      GCWToolWidget(
+        tool: Gade(),
+        i18nPrefix: 'gade',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'gade'
       ),
       GCWToolWidget(
         tool: GCCode(),
