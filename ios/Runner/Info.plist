@@ -47,15 +47,6 @@
     <true/>
     <key>UIFileSharingEnabled</key>
     <true/>
-    <key>NSContactsUsageDescription</key>
-    <string>Not used by app but requested by Apple Review Process (because plugin permission_handler *COULD* use it theoretically)</string>
-    <key>NSCalendarsUsageDescription</key>
-    <string>Not used by app but requested by Apple Review Process (because plugin permission_handler *COULD* use it theoretically)</string>
-    <key>NSAppleMusicUsageDescription</key>
-    <string>Not used by app but requested by Apple Review Process (because plugin permission_handler *COULD* use it theoretically)</string>
-    <key>NSMotionUsageDescription</key>
-    <string>Not used by app but requested by Apple Review Process (because plugin permission_handler *COULD* use it theoretically)</string>
-    <key>NSSpeechRecognitionUsageDescription</key>
-    <string>Not used by app but requested by Apple Review Process (because plugin permission_handler *COULD* use it theoretically)</string>
+
 </dict>
 </plist>
