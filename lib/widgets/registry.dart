@@ -76,6 +76,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdpetherick.da
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
@@ -311,6 +312,12 @@ class Registry {
         i18nPrefix: 'bifid',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'bifid felix delastelle polybios polybius transposition'
+      ),
+      GCWToolWidget(
+        tool: Book_Cipher(),
+        i18nPrefix: 'book_cipher',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'book buch word wort position zeile row line absatz section letter buchstabe'
       ),
       GCWToolWidget(
         tool: BrainfkSelection(),
