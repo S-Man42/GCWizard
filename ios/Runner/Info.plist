@@ -42,10 +42,20 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-    <string>This app needs access to location when open.</string>
+    <string>Used by coordinate functions as location input and by MapView for showing current position</string>
     <key>LSSupportsOpeningDocumentsInPlace</key>
     <true/>
     <key>UIFileSharingEnabled</key>
     <true/>
+    <key>NSContactsUsageDescription</key>
+    <string>Not used by app but requested by Apple Review Process (because plugin permission_handler *COULD* use it theoretically)</string>
+    <key>NSCalendarsUsageDescription</key>
+    <string>Not used by app but requested by Apple Review Process (because plugin permission_handler *COULD* use it theoretically)</string>
+    <key>NSAppleMusicUsageDescription</key>
+    <string>Not used by app but requested by Apple Review Process (because plugin permission_handler *COULD* use it theoretically)</string>
+    <key>NSMotionUsageDescription</key>
+    <string>Not used by app but requested by Apple Review Process (because plugin permission_handler *COULD* use it theoretically)</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>Not used by app but requested by Apple Review Process (because plugin permission_handler *COULD* use it theoretically)</string>
 </dict>
 </plist>
