@@ -223,6 +223,7 @@ class Registry {
   static final SEARCHSTRING_RSA = SEARCHSTRING_PRIMES + 'rsa ronald rivest adi shamir leonard adleman asymmetry asymmetric asymmetrie asymmetrisches public private key oeffentlicher privater schluessel phi ';
   static final SEARCHSTRING_SEGMENTDISPLAY = 'led segments segmente display segmentanzeige ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schriften ';
+  static final SEARCHSTRING_SYMBOLTABLES_CHAPPE = 'opticaltelegraph visual visueller optischertelegraf claude chappe ';
   static final SEARCHSTRING_SYMBOLTABLES_FREEMASONS = 'freemasons freimaurer ';
   static final SEARCHSTRING_SYMBOLTABLES_HYLIAN = 'thelegendofzelda dielegendevonzelda hylian hylianisches hyrule ';
   static final SEARCHSTRING_SYMBOLTABLES_ILLUMINATI = SEARCHSTRING_SYMBOLTABLES_FREEMASONS + 'illuminati illuminatus illuminaten 23 ';
@@ -1504,13 +1505,19 @@ class Registry {
         tool: SymbolTable(symbolKey: 'chappe_v1'),
         i18nPrefix: 'symboltables_chappe_v1',
         iconPath: SYMBOLTABLES_ASSETPATH + 'chappe_v1/72.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'opticaltelegraph visual visueller optischertelegraf claude chappe '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_CHAPPE
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'chappe_v2'),
         i18nPrefix: 'symboltables_chappe_v2',
         iconPath: SYMBOLTABLES_ASSETPATH + 'chappe_v2/72.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'opticaltelegraph visual visueller optischertelegraf claude chappe '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_CHAPPE
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'chappe_v3'),
+        i18nPrefix: 'symboltables_chappe_v3',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'chappe_v3/56.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_CHAPPE
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'cherokee'),
