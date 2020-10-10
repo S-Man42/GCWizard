@@ -76,6 +76,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdpetherick.da
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
@@ -87,6 +88,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
@@ -313,6 +315,12 @@ class Registry {
         searchStrings: 'bifid felix delastelle polybios polybius transposition'
       ),
       GCWToolWidget(
+        tool: Book_Cipher(),
+        i18nPrefix: 'book_cipher',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'book buch word wort position zeile row line absatz section letter buchstabe'
+      ),
+      GCWToolWidget(
         tool: BrainfkSelection(),
         i18nPrefix: 'brainfk',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -439,6 +447,12 @@ class Registry {
         tool: GamesSelection(),
         i18nPrefix: 'games_selection',
         searchStrings: 'games spiele'
+      ),
+      GCWToolWidget(
+        tool: Gade(),
+        i18nPrefix: 'gade',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'gade'
       ),
       GCWToolWidget(
         tool: GCCode(),
