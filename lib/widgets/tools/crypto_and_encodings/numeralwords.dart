@@ -4,8 +4,10 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeralwords.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class NumeralWords extends StatefulWidget {
   @override
@@ -46,6 +48,8 @@ class NumeralWordsState extends State<NumeralWords> {
       NumeralWordsLanguage.POL : i18n(context, 'numeralwords_language_pol'),
       NumeralWordsLanguage.POR : i18n(context, 'numeralwords_language_por'),
       NumeralWordsLanguage.RUS : i18n(context, 'numeralwords_language_rus'),
+      NumeralWordsLanguage.SWE : i18n(context, 'numeralwords_language_swe'),
+      NumeralWordsLanguage.KYR : i18n(context, 'numeralwords_language_kyr'),
       NumeralWordsLanguage.ALL : i18n(context, 'numeralwords_language_all'),
     };
 
@@ -106,7 +110,9 @@ class NumeralWordsState extends State<NumeralWords> {
 
   Widget _buildOutput(BuildContext context) {
     var output = '';
+/*
     Map<String, String> words;
+*/
 
     if (_currentMode == GCWSwitchPosition.left) {//show numeral words for specific language
       if (_currentLanguage == NumeralWordsLanguage.ALL)
@@ -114,11 +120,23 @@ class NumeralWordsState extends State<NumeralWords> {
           text: i18n(context, 'numeralwords_language_all_not_feasible'),
         );
       else {
+/*
         words = numeralWordsMap(_currentLanguage);
         words.forEach((key, value) {
           if (int.tryParse(value) != null)
             output = output + value + ' - ' + key + '\n';
         });
+*/
+        return GCWDefaultOutput(
+          child: Column(
+            children: columnedMultiLineOutput(
+                numeralWordsMap(_currentLanguage).entries.map((entry) {
+                  if (int.tryParse(entry.value) != null)
+                    return [entry.key, entry.value];
+                }).toList()
+            ),
+          ),
+        );
       }
     } else
       output = decodeNumeralwords(_currentDecodeInput.toUpperCase(), _currentLanguage, _currentDecodeMode);
