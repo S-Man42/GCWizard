@@ -8,7 +8,7 @@ class NumeralWordsOutput {
   NumeralWordsOutput(this.state, this.output);
 }
 
-enum NumeralWordsLanguage {DE, DK, EN, ES, FR, IT, ALL}
+enum NumeralWordsLanguage {DEU, DNK, ENG, ESP, FRA, ITA, NLD, NOR, POL, POR, RUS, ALL}
 
 final Map<String, String> WordToNumDE = { 'NULL':'0', 'EINS':'1', 'ZWEI':'2', 'DREI':'3', 'VIER':'4', 'FÜNF':'5', 'SECHS':'6', 'SIEBEN':'7', 'ACHT':'8', 'NEUN':'9',
   'ZEHN':'10', 'ELF': '11', 'ZWÖLF':'12', 'DREIZEHN':'13', 'VIERZEHN':'14','FÜNFZEHN':'15', 'SECHZEHN':'16', 'SIEBZEHN':'17', 'ACHTZEHN':'18', 'NEUNZEHN':'19',
@@ -44,12 +44,12 @@ bool _isNumeral(String input){
 Map<String, String> numeralWordsMap(NumeralWordsLanguage currentLanguage){
   Map<String, String> table;
   switch (currentLanguage) {
-    case NumeralWordsLanguage.DE: return WordToNumDE;  break;
-    case NumeralWordsLanguage.EN: return WordToNumEN;  break;
-    case NumeralWordsLanguage.FR: return WordToNumFR;  break;
-    case NumeralWordsLanguage.IT: return WordToNumIT;  break;
-    case NumeralWordsLanguage.ES: return WordToNumES;  break;
-    case NumeralWordsLanguage.DK: return WordToNumDK;  break;
+    case NumeralWordsLanguage.DEU: return WordToNumDE;  break;
+    case NumeralWordsLanguage.ENG: return WordToNumEN;  break;
+    case NumeralWordsLanguage.FRA: return WordToNumFR;  break;
+    case NumeralWordsLanguage.ITA: return WordToNumIT;  break;
+    case NumeralWordsLanguage.ESP: return WordToNumES;  break;
+    case NumeralWordsLanguage.DNK: return WordToNumDK;  break;
     case NumeralWordsLanguage.ALL :
       table = WordToNumDE;
       table.addAll(WordToNumEN);
@@ -65,10 +65,10 @@ Map<String, String> numeralWordsMap(NumeralWordsLanguage currentLanguage){
 NumeralWordsOutput _isNumeralWordBelow100(String input, NumeralWordsLanguage language, var decodingTable){
   var numeral;
   switch (language) {
-    case NumeralWordsLanguage.DE:
+    case NumeralWordsLanguage.DEU:
       numeral = input.split('UND');
       break;
-    case  NumeralWordsLanguage.EN:
+    case  NumeralWordsLanguage.ENG:
       numeral = input.split('-');
       break;
     default: numeral = input.split(RegExp(r'[^A-Z0-9\-]'));
@@ -89,8 +89,7 @@ NumeralWordsOutput _isNumeralWordBelow100(String input, NumeralWordsLanguage lan
 NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage language, var decodingTable){
   var numeral;
   switch (language){
-    case NumeralWordsLanguage.DE :
-    //decodingTable = WordToNumDE;
+    case NumeralWordsLanguage.DEU :
       if (input.startsWith('HUNDERT'))
         numeral = input.replaceFirst('HUNDERT', 'EINSHUNDERT')
             .replaceAll('HUNDERTUND', 'HUNDERT')
@@ -99,30 +98,21 @@ NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage la
         numeral = input.replaceAll('HUNDERTUND', 'HUNDERT')
             .split('HUNDERT');
       break;
-    case NumeralWordsLanguage.EN :
-    //decodingTable = WordToNumEN;
+    case NumeralWordsLanguage.ENG :
       numeral = input.replaceAll('HUNDREDAND','HUNDRED ')
           .split('HUNDRED ');
       break;
-    case NumeralWordsLanguage.FR :
-    //decodingTable = WordToNumFR;
-      numeral = input.split(RegExp(r'[^A-Z0-9\-]'));
-      break;
-    case NumeralWordsLanguage.IT :
-    //decodingTable = WordToNumIT;
-      numeral = input.split(RegExp(r'[^A-Z0-9\-]'));
-      break;
-    case NumeralWordsLanguage.ES :
-    //decodingTable = WordToNumES;
-      numeral = input.split(RegExp(r'[^A-Z0-9\-]'));
-      break;
+    case NumeralWordsLanguage.FRA :
+    case NumeralWordsLanguage.ITA :
+    case NumeralWordsLanguage.ESP :
     case NumeralWordsLanguage.ALL :
       numeral = input.split(RegExp(r'[^A-Z0-9\-]'));
+      break;
   }
   switch (numeral.length) {
     case 1:
       switch (language){
-        case NumeralWordsLanguage.EN:
+        case NumeralWordsLanguage.ENG:
           if (numeral[0] == 'HUNDRED')
             return NumeralWordsOutput(true, '100');
           else {
@@ -189,12 +179,12 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
     var helpText;
 
     switch (language){
-      case NumeralWordsLanguage.DE :
+      case NumeralWordsLanguage.DEU :
         decodeText = input.replaceAll('OSTEN', 'OST')
             .replaceAll('EINHUNDERT', 'EINSHUNDERT')
             .split(RegExp(r'[^A-ZßÄÖÜ0-9]'));
         break;
-      case NumeralWordsLanguage.EN :
+      case NumeralWordsLanguage.ENG :
         if (input.startsWith('A HUNDRED'))
           helpText = input.replaceFirst('A HUNDRED', ' A HUNDRED');
         else

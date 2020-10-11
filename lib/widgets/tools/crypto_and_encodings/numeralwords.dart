@@ -18,7 +18,7 @@ class NumeralWordsState extends State<NumeralWords> {
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
-  var _currentLanguage = NumeralWordsLanguage.DE;
+  var _currentLanguage = NumeralWordsLanguage.DEU;
 
   @override
   void initState() {
@@ -35,12 +35,17 @@ class NumeralWordsState extends State<NumeralWords> {
   @override
   Widget build(BuildContext context) {
     var NumeralWordsLanguageItems = {
-      NumeralWordsLanguage.DE : i18n(context, 'numeralwords_language_de'),
-      NumeralWordsLanguage.EN : i18n(context, 'numeralwords_language_en'),
-      NumeralWordsLanguage.FR : i18n(context, 'numeralwords_language_fr'),
-      NumeralWordsLanguage.IT : i18n(context, 'numeralwords_language_it'),
-      NumeralWordsLanguage.DK : i18n(context, 'numeralwords_language_dk'),
-      NumeralWordsLanguage.ES : i18n(context, 'numeralwords_language_es'),
+      NumeralWordsLanguage.DEU : i18n(context, 'numeralwords_language_deu'),
+      NumeralWordsLanguage.ENG : i18n(context, 'numeralwords_language_eng'),
+      NumeralWordsLanguage.FRA : i18n(context, 'numeralwords_language_fra'),
+      NumeralWordsLanguage.ITA : i18n(context, 'numeralwords_language_ita'),
+      NumeralWordsLanguage.DNK : i18n(context, 'numeralwords_language_dnk'),
+      NumeralWordsLanguage.ESP : i18n(context, 'numeralwords_language_esp'),
+      NumeralWordsLanguage.NLD : i18n(context, 'numeralwords_language_nld'),
+      NumeralWordsLanguage.NOR : i18n(context, 'numeralwords_language_nor'),
+      NumeralWordsLanguage.POL : i18n(context, 'numeralwords_language_pol'),
+      NumeralWordsLanguage.POR : i18n(context, 'numeralwords_language_por'),
+      NumeralWordsLanguage.RUS : i18n(context, 'numeralwords_language_rus'),
       NumeralWordsLanguage.ALL : i18n(context, 'numeralwords_language_all'),
     };
 
