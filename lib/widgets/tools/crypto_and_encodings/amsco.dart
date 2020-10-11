@@ -24,9 +24,8 @@ class AmscoState extends State<Amsco> {
   String _currentInput = '';
   String _currentKey = '';
 
-  AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
-
   var _currentMode = GCWSwitchPosition.left;
+  var _currentOneCharStart = GCWSwitchPosition.left;
 
   @override
   void initState() {
@@ -62,6 +61,17 @@ class AmscoState extends State<Amsco> {
             });
           },
         ),
+        GCWTwoOptionsSwitch(
+          title:  i18n(context, 'amsco_mode'),
+          leftValue: i18n(context, 'amsco_mode_left'),
+          rightValue: i18n(context, 'amsco_mode_right'),
+          value: _currentOneCharStart,
+          onChanged: (value) {
+            setState(() {
+              _currentOneCharStart = value;
+            });
+          },
+        ),
         GCWTextDivider(
           text: i18n(context, 'common_key')
         ),
@@ -84,19 +94,21 @@ class AmscoState extends State<Amsco> {
   Widget _buildOutput(BuildContext context) {
     var _currentOutput;
     if (_currentMode == GCWSwitchPosition.left) {
-      _currentOutput = encryptAmsco(_currentInput, _currentKey);
+      _currentOutput = encryptAmsco(_currentInput, _currentKey, _currentOneCharStart == GCWSwitchPosition.left);
     } else {
-      _currentOutput = decryptAmsco(_currentInput, _currentKey);
+      _currentOutput = decryptAmsco(_currentInput, _currentKey, _currentOneCharStart == GCWSwitchPosition.left);
     }
 
     if (_currentOutput == null)  {
       return GCWDefaultOutput();
-    } else if ( _currentOutput.errorCode != ErrorCode.OK) {
+    } else if (_currentOutput.errorCode != ErrorCode.OK) {
       switch (_currentOutput.errorCode) {
         case ErrorCode.Key:
           showToast(i18n(context, 'amsco_error_key'));
           break;
       }
+      return GCWDefaultOutput();
+    } else if (_currentOutput.output == '') {
       return GCWDefaultOutput();
     };
 

@@ -101,9 +101,12 @@
   "alphabetvalues_edit_mode_customize_deleteletter_remove" : "Löschen",
   "alphabetvalues_edit_mode_customize_deleteletter_removeandadjust" : "Löschen &\nAnpassen",
 
-  "amsco_title" : "Amsco Chiffre",
+  "amsco_title" : "AMSCO Chiffre",
   "amsco_description" : "Spaltentausch-Chiffre",
   "amsco_example" : "Beispiel → iielspBe",
+  "amsco_mode" : "Erster Eintrag",
+  "amsco_mode_left" : "ein Buchstabe",
+  "amsco_mode_right" : "zwei Buchstaben",
   "amsco_key_hint" : "fortlaufenden Ziffern von 1 bis 9",
   "amsco_error_key" : "Schlüssel fehlerhaft!",
   "amsco_usedgrid" : "Verwendete Matrix",

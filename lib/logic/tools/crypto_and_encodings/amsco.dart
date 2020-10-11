@@ -42,8 +42,11 @@ String _cleanKey(String key){
   return key.replaceAll(' ', '');
 }
 
-Map<String, List<String>> _createAmscoGrid(String input, String key, bool decrypt) {
+Map<String, List<String>> _createAmscoGrid(String input, String key, bool oneCharStart, bool decrypt) {
   var grid = Map<String, List<String>>();
+
+  input = input.replaceAll(' ', '');
+  input = input.toUpperCase();
 
   for (int i = 0; i < key.toString().length; i++) {
     grid.addAll({key[i]: List<String>()});
@@ -54,7 +57,7 @@ Map<String, List<String>> _createAmscoGrid(String input, String key, bool decryp
   while (i < input.length) {
     grid.keys.forEach((_key) {
       if (i < input.length) {
-        twoChar = (key.indexOf(_key) % 2) == 0;
+        twoChar = (key.indexOf(_key) % 2) == (oneCharStart ? 1 : 0);
         if (key.length % 2 == 1) {
           if (grid[_key].length % 2 == 1)
             twoChar = !twoChar;
@@ -81,7 +84,7 @@ Map<String, List<String>> _createAmscoGrid(String input, String key, bool decryp
   return grid;
 }
 
-AmscoOutput encryptAmsco (String input, String key) {
+AmscoOutput encryptAmsco (String input, String key, bool oneCharStart) {
   if (input == null || key == null || input == '' || key == '')
     return AmscoOutput('', '', ErrorCode.OK);
 
@@ -89,7 +92,7 @@ AmscoOutput encryptAmsco (String input, String key) {
   if (!_validKey(key))
     return AmscoOutput('', '', ErrorCode.Key);
 
-  var grid = _createAmscoGrid(input, key , false);
+  var grid = _createAmscoGrid(input, key, oneCharStart, false);
   var sortedKeys = grid.keys.toList();
   var output = '';
 
@@ -104,7 +107,7 @@ AmscoOutput encryptAmsco (String input, String key) {
 }
 
 
-AmscoOutput decryptAmsco (String input, String key) {
+AmscoOutput decryptAmsco (String input, String key, bool oneCharStart) {
   if (input == null || key == null || input == '' || key == '')
     return AmscoOutput('', '', ErrorCode.OK);
 
@@ -112,7 +115,7 @@ AmscoOutput decryptAmsco (String input, String key) {
   if (!_validKey(key))
     return AmscoOutput('', '', ErrorCode.Key);
 
-  var grid = _createAmscoGrid(input, key, true);
+  var grid = _createAmscoGrid(input, key, oneCharStart, true);
   var row = 0;
   var finish = false;
   var output = '';
