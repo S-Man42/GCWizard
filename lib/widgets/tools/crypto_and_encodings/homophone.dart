@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/homophon.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
@@ -14,12 +14,12 @@ import 'package:gc_wizard/widgets/common/gcw_output.dart';
 
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class Homophon extends StatefulWidget {
+class Homophone extends StatefulWidget {
   @override
-  HomophonState createState() => HomophonState();
+  HomophoneState createState() => HomophoneState();
 }
 
-class HomophonState extends State<Homophon> {
+class HomophoneState extends State<Homophone> {
   var _currentMode = GCWSwitchPosition.left;
 
   var _currentRotationController;
@@ -49,17 +49,17 @@ class HomophonState extends State<Homophon> {
   @override
   Widget build(BuildContext context) {
     var HomophoneKeyTypeItems = {
-      KeyType.GENERATED : i18n(context, 'homophon_keytype_generated'),
-      KeyType.OWN : i18n(context, 'homophon_keytype_own'),
+      KeyType.GENERATED : i18n(context, 'homophone_keytype_generated'),
+      KeyType.OWN : i18n(context, 'homophone_keytype_own'),
     };
 
     var HomophoneAlphabetItems = {
-      Alphabet.alphabetGerman1 : i18n(context, 'alphabet_name_german1'),
-      Alphabet.alphabetEnglish1 : i18n(context, 'homophon_alphabetEnglish1'),
-      Alphabet.alphabetSpanish2 : i18n(context, 'alphabet_name_spanish2'),
-      Alphabet.alphabetPolish1 : i18n(context, 'alphabet_name_polish1'),
-      Alphabet.alphabetGreek1 : i18n(context, 'alphabet_name_greek1'),
-      Alphabet.alphabetRussian1 : i18n(context, 'alphabet_name_russian1'),
+      Alphabet.alphabetGerman1 : i18n(context, 'homophone_alphabetGerman1'),
+      Alphabet.alphabetEnglish1 : i18n(context, 'homophone_alphabetEnglish1'),
+      Alphabet.alphabetSpanish2 : i18n(context, 'homophone_alphabetSpanish2'),
+      Alphabet.alphabetPolish1 : i18n(context, 'homophone_alphabetPolish1'),
+      Alphabet.alphabetGreek1 : i18n(context, 'homophone_alphabetGreek1'),
+      Alphabet.alphabetRussian1 : i18n(context, 'homophone_alphabetRussian1'),
     };
 
     return Column(
@@ -75,7 +75,7 @@ class HomophonState extends State<Homophon> {
           children: <Widget>[
             Expanded(
               child: GCWText(
-                text: i18n(context, 'homophon_keytype') + ':'
+                text: i18n(context, 'homophone_keytype') + ':'
               ),
               flex: 1
             ),
@@ -104,7 +104,7 @@ class HomophonState extends State<Homophon> {
           children: <Widget>[
             Expanded(
               child: GCWText(
-                text: i18n(context, 'homophon_rotation') + ':'
+                text: i18n(context, 'homophone_rotation') + ':'
               ),
               flex: 1
             ),
@@ -129,7 +129,7 @@ class HomophonState extends State<Homophon> {
           children: <Widget>[
             Expanded(
               child: GCWText(
-                text: i18n(context, 'homophon_multiplier') + ':'
+                text: i18n(context, 'homophone_multiplier') + ':'
               ),
               flex: 1
             ),
@@ -160,7 +160,7 @@ class HomophonState extends State<Homophon> {
           children: <Widget>[
             Expanded(
               child: GCWText(
-                  text: i18n(context, 'homophon_alphabet') + ':'
+                  text: i18n(context, 'homophone_alphabet') + ':'
               ),
               flex: 1
             ),
@@ -227,7 +227,7 @@ class HomophonState extends State<Homophon> {
     if (_currentOutput.errorCode != ErrorCode.OK) {
       switch (_currentOutput.errorCode) {
         case  ErrorCode.OWNKEYCOUNT:
-          showToast(i18n(context, "homophon_error_own_keys"));
+          showToast(i18n(context, "homophone_error_own_keys"));
       }
       return GCWDefaultOutput(child: '');
     }
@@ -236,7 +236,7 @@ class HomophonState extends State<Homophon> {
       children: [
         _currentOutput.output,
         GCWOutput(
-          title: i18n(context, 'homophon_used_key'),
+          title: i18n(context, 'homophone_used_key'),
           child: GCWOutputText(
             text: _currentOutput.grid,
             isMonotype: true,
