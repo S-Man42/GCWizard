@@ -1,12 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class GCWIntegerSpinner extends StatefulWidget {
   final Function onChanged;
@@ -27,7 +25,7 @@ class GCWIntegerSpinner extends StatefulWidget {
     this.min: -9007199254740991,
     this.max: 9007199254740992,
     this.controller,
-    this.layout: SpinnerLayout.horizontal,
+    this.layout: SpinnerLayout.HORIZONTAL,
     this.focusNode,
     this.suppressOverflow: false // TODO: Automatically true if this.min == null || this.max == null
   }) : super(key: key);
@@ -37,7 +35,7 @@ class GCWIntegerSpinner extends StatefulWidget {
 }
 
 class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
-  var _controller;
+  TextEditingController _controller;
   var _currentValue = 1;
 
   @override
@@ -63,6 +61,11 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.value != null) {
+      _currentValue = widget.value;
+      _controller.text = _currentValue.toString();
+    }
+
     return _buildSpinner();
   }
 
@@ -116,7 +119,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   }
 
   Widget _buildSpinner() {
-    if (widget.layout == SpinnerLayout.horizontal) {
+    if (widget.layout == SpinnerLayout.HORIZONTAL) {
       return Row(
         children: <Widget>[
           _buildTitle(),

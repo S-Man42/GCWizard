@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -11,7 +12,7 @@ String className(Widget widget) {
   return widget.runtimeType.toString();
 }
 
-enum SpinnerLayout {horizontal, vertical}
+enum SpinnerLayout {HORIZONTAL, VERTICAL}
 
 String printErrorMessage(BuildContext context, String message) {
   return i18n(context, 'common_error') + ': ' + i18n(context, message);
@@ -112,4 +113,26 @@ buildPopupItem(BuildContext context, IconData icon, String i18nKey) {
       )
     ],
   );
+}
+
+String textControllerInsertText(String input, String currentText, TextEditingController textController) {
+  var cursorPosition = max(textController.selection.end, 0);
+
+  currentText = currentText.substring(0, cursorPosition) + input + currentText.substring(cursorPosition);
+  textController.text = currentText;
+  textController.selection = TextSelection.collapsed(offset: cursorPosition + input.length);
+
+  return currentText;
+}
+
+String textControllerDoBackSpace(String currentText, TextEditingController textController) {
+  var cursorPosition = max(textController.selection.end, 0);
+  if (cursorPosition == 0)
+    return currentText;
+
+  currentText = currentText.substring(0, cursorPosition - 1) + currentText.substring(cursorPosition);
+  textController.text = currentText;
+  textController.selection = TextSelection.collapsed(offset: cursorPosition - 1);
+
+  return currentText;
 }

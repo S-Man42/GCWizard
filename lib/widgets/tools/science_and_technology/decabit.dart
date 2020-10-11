@@ -1,7 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/decabit.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -54,6 +60,7 @@ class DecabitState extends State<Decabit> {
             });
           },
         ),
+        _buildInputButtons(context),
         GCWTextDivider(
           text: i18n(context, 'common_key')
         ),
@@ -115,6 +122,45 @@ class DecabitState extends State<Decabit> {
         )
       ],
     );
+  }
+
+  Widget _buildInputButtons(BuildContext context) {
+    if (_currentMode == GCWSwitchPosition.left)
+      return Container();
+
+    return GCWToolBar(
+        children: [
+          GCWButton(
+            text: _currentA,
+            onPressed: () {
+              setState(() {
+                _addCharacter(_currentA);
+              });
+            },
+          ),
+          GCWButton(
+            text: _currentB,
+            onPressed: () {
+              setState(() {
+                _addCharacter(_currentB);
+              });
+            },
+          ),
+
+          GCWIconButton(
+            iconData: Icons.backspace,
+            onPressed: () {
+              setState(() {
+                _currentInput = textControllerDoBackSpace(_currentInput, _inputController);
+              });
+            },
+          ),
+        ]
+    );
+  }
+
+  _addCharacter(String input) {
+    _currentInput = textControllerInsertText(input, _currentInput, _inputController);
   }
 
   _buildOutput() {

@@ -25,6 +25,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
 
@@ -334,7 +335,7 @@ class GCWCoordsState extends State<GCWCoords> {
 
       _location.getLocation().then((locationData) {
         if (locationData.accuracy > 20)
-          showToast(i18n(context, 'coords_common_location_lowaccuracy', parameters: [locationData.accuracy]));
+          showToast(i18n(context, 'coords_common_location_lowaccuracy', parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
 
         _pastedCoords = LatLng(locationData.latitude, locationData.longitude);
         _currentValue = _pastedCoords;

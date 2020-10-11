@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
@@ -120,13 +121,7 @@ class MorseState extends State<Morse> {
           iconData: Icons.backspace,
           onPressed: () {
             setState(() {
-              var cursorPosition = max<int>(_decodeController.selection.end, 0);
-              if (cursorPosition == 0)
-                return;
-
-              _currentDecodeInput = _currentDecodeInput.substring(0, cursorPosition - 1) + _currentDecodeInput.substring(cursorPosition);
-              _decodeController.text = _currentDecodeInput;
-              _decodeController.selection = TextSelection.collapsed(offset: cursorPosition - 1);
+              _currentDecodeInput = textControllerDoBackSpace(_currentDecodeInput, _decodeController);
             });
           },
         ),
@@ -135,11 +130,7 @@ class MorseState extends State<Morse> {
   }
 
   _addCharacter(String input) {
-    var cursorPosition = max(_decodeController.selection.end, 0);
-
-    _currentDecodeInput = _currentDecodeInput.substring(0, cursorPosition) + input + _currentDecodeInput.substring(cursorPosition);
-    _decodeController.text = _currentDecodeInput;
-    _decodeController.selection = TextSelection.collapsed(offset: cursorPosition + input.length);
+    _currentDecodeInput = textControllerInsertText(input, _currentDecodeInput, _decodeController);
   }
 
   Widget _buildOutput(BuildContext context) {

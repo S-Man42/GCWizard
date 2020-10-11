@@ -112,6 +112,8 @@ class AlphabetValuesState extends State<AlphabetValues> {
   _setAlphabet() {
     _currentAlphabet = _getAlphabetByKey(_currentAlphabetKey).alphabet;
     _currentIsEditingAlphabet = false;
+    _currentOffset = 0;
+    _currentReverseAlphabet = GCWSwitchPosition.left;
     _currentCustomizeAlphabet = GCWSwitchPosition.left;
 
     Prefs.setString('alphabetvalues_default_alphabet', _currentAlphabetKey);
@@ -654,7 +656,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
           ],
         ),
         margin: EdgeInsets.only(
-            left: 10
+          left: 10
         ),
       );
 
@@ -680,13 +682,11 @@ class AlphabetValuesState extends State<AlphabetValues> {
 
   _getFinalAlphabet() {
     var alphabet = _currentAlphabet;
-    if (_currentIsEditingAlphabet) {
-      if (_currentCustomizeAlphabet == GCWSwitchPosition.right) {
-        alphabet = _currentCustomizedAlphabet;
-      } else {
-        alphabet = _setOffset(alphabet);
-        alphabet = _setReverse(alphabet);
-      }
+    if (_currentCustomizeAlphabet == GCWSwitchPosition.right) {
+      alphabet = _currentCustomizedAlphabet;
+    } else {
+      alphabet = _setOffset(alphabet);
+      alphabet = _setReverse(alphabet);
     }
 
     return alphabet;
