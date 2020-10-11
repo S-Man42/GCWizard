@@ -236,7 +236,12 @@ class SymbolTableState extends State<SymbolTable> {
                                 )
                               ],
                             ),
-                            []
+                            [
+                              GCWDialogButton(
+                                text: i18n(context, 'common_ok'),
+                              )
+                            ],
+                            cancelButton: false
                           );
                         });
                       },
