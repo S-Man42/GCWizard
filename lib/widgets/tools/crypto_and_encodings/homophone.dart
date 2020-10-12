@@ -59,6 +59,7 @@ class HomophoneState extends State<Homophone> {
       Alphabet.alphabetSpanish2 : i18n(context, 'homophone_alphabetSpanish2'),
       Alphabet.alphabetPolish1 : i18n(context, 'homophone_alphabetPolish1'),
       Alphabet.alphabetGreek1 : i18n(context, 'homophone_alphabetGreek1'),
+      Alphabet.alphabetGreek2 : i18n(context, 'homophone_alphabetGreek2'),
       Alphabet.alphabetRussian1 : i18n(context, 'homophone_alphabetRussian1'),
     };
 
@@ -176,6 +177,7 @@ class HomophoneState extends State<Homophone> {
                   return GCWDropDownMenuItem(
                     value: alphabet.key,
                     child: alphabet.value,
+                    subtitle: _generateItemDescription(alphabet.key),
                   );
                 }).toList(),
               ),
@@ -244,5 +246,18 @@ class HomophoneState extends State<Homophone> {
         )
       ],
     );
+  }
+
+  _generateItemDescription(Alphabet alphabet) {
+    switch (alphabet) {
+      case Alphabet.alphabetGreek1:
+        return i18n(context, 'homophone_alphabetGreek1_description');
+        break;
+      case Alphabet.alphabetGreek2:
+        return i18n(context, 'homophone_alphabetGreek2_description');
+        break;
+    }
+
+    return null;
   }
 }

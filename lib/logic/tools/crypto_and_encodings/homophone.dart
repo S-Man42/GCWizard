@@ -11,7 +11,7 @@ class HomophonOutput {
 }
 
 enum KeyType { OWN, GENERATED }
-enum Alphabet { alphabetGerman1, alphabetEnglish1, alphabetSpanish2, alphabetPolish1, alphabetGreek1, alphabetRussian1 }
+enum Alphabet { alphabetGerman1, alphabetEnglish1, alphabetSpanish2, alphabetPolish1, alphabetGreek1, alphabetGreek2, alphabetRussian1 }
 enum ErrorCode{OK, TABLE, OWNKEYCOUNT}
 
 final letterFrequency_alphabetGerman1 = { 'A': 6 , 'B': 2 , 'C': 2 , 'D': 5 , 'E': 17 , 'F': 2 , 'G': 3 , 'H': 5 , 'I': 8 , 'J': 1 , 'K': 1 , 'L': 3 , 'M': 2 , 'N': 10 , 'O': 2 , 'P': 1 , 'Q': 1 , 'R': 7 , 'S': 7 , 'T': 6 , 'U': 4 , 'V': 1 , 'W': 1 , 'X': 1 , 'Y': 1 , 'Z': 1 } ;
@@ -129,6 +129,9 @@ Map<String, List<int>> _getTable(Alphabet alphabet, KeyType keyType, int rotatio
       break;
     case Alphabet.alphabetGreek1:
       languageTable = letterFrequency_alphabetGreek1;
+      break;
+    case Alphabet.alphabetGreek2:
+      languageTable = letterFrequency_alphabetGreek2;
       break;
     case Alphabet.alphabetRussian1:
       languageTable = letterFrequency_alphabetRussian1;
