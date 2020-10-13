@@ -52,6 +52,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/amsco.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
@@ -93,6 +94,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
@@ -260,6 +262,12 @@ class Registry {
         i18nPrefix: 'alphabetvalues',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'alphabet russian russisch kyrillisch cyrillic greek griechisch spanish spanisch deutsch german polish polnisch alphanumeric letter values checksums crosssums digits alternate products buchstabenwerte quersummen alphanumerisch produkt alternierend'
+      ),
+      GCWToolWidget(
+        tool: Amsco(),
+        i18nPrefix: 'amsco',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'amsco transposition spaltentausch swap columns'
       ),
       GCWToolWidget(
         tool: ASCIIValues(),
@@ -490,6 +498,12 @@ class Registry {
         i18nPrefix: 'hexadecimal',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'hexadecimal hexadezimalzahlen numbers dezimalzahlen decimal 16'
+      ),
+      GCWToolWidget(
+        tool: Homophone(),
+        i18nPrefix: 'homophone',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'homophone monoalphabetische monoalphabetical letterfrequency buchstabenhaeufigkeiten'
       ),
       GCWToolWidget(
         tool: Humidex(),
@@ -1653,6 +1667,12 @@ class Registry {
         i18nPrefix: 'symboltables_enochian',
         iconPath: SYMBOLTABLES_ASSETPATH + 'enochian/75.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'enochian henochisch john dee magische sprache magie language edward kelley henoic'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'eurythmy'),
+        i18nPrefix: 'symboltables_eurythmy',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'eurythmy/65.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'eurythmy eurythmie waldorf anthroposophie anthroposophy anthroposophisches anthroposophic marievonsivers rudolfsteiner movementart motionart bewegungskunst'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'fakoo'),
