@@ -1250,7 +1250,7 @@
   "numeralwords_description" : "Identifiziert Zahlwörter und übersetzt diese in Zahlen",
   "numeralwords_example" : "eins → 1",
   "numeralwords_language_deu" : "Deutsch",
-  "numeralwords_language_fra" : "Fransösisch",
+  "numeralwords_language_fra" : "Französisch",
   "numeralwords_language_eng" : "Englisch",
   "numeralwords_language_ita" : "Italienisch",
   "numeralwords_language_esp" : "Spanisch",
