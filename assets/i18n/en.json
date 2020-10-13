@@ -48,7 +48,7 @@
   "adfgvx_key_transposition" : "Transposition Key",
 
   "affine_title" : "Affine Cipher",
-  "affine_description" : "A substitution chipher",
+  "affine_description" : "A substitution cipher",
   "affine_example" : "HELLO → LMBBA",
   "affine_key_a" : "Key A",
   "affine_key_b" : "Key B",
@@ -100,6 +100,16 @@
   "alphabetvalues_edit_mode_customize_deleteletter_text" : "Do you really want to remove the letter '%s1' from the current alphabet?\n\nChose 'Remove' for simple removing. Chose 'Remove and adjust' to adjust all following values with -1.",
   "alphabetvalues_edit_mode_customize_deleteletter_remove" : "Remove",
   "alphabetvalues_edit_mode_customize_deleteletter_removeandadjust" : "Remove\n& Adjust",
+
+  "amsco_title" : "AMSCO Cipher",
+  "amsco_description" : "Column swap cipher",
+  "amsco_example" : "Example → LAEMPEX",
+  "amsco_mode" : "First entry",
+  "amsco_mode_left" : "One character",
+  "amsco_mode_right" : "Two characters",
+  "amsco_key_hint" : "Consecutive digits from 1 to 9",
+  "amsco_error_key" : "Bad key!",
+  "amsco_usedgrid" : "Used Grid",
 
   "asciivalues_title" : "ASCII and Unicode (UTF-8)",
   "asciivalues_description" : "ASCII and UTF-8/Unicode character codes",
