@@ -502,7 +502,7 @@ class Registry {
         tool: Homophone(),
         i18nPrefix: 'homophone',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'homophon monoalphabetische verschluesselungsmethode mono-alphabetical encryption method'
+        searchStrings: 'homophone monoalphabetische monoalphabetical letterfrequency buchstabenhaeufigkeiten'
       ),
       GCWToolWidget(
         tool: Humidex(),
