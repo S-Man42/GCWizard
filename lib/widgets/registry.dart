@@ -533,7 +533,7 @@ class Registry {
         tool: NumeralWords(),
         i18nPrefix: 'numeralwords',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'numeral words zahlwörter'
+        searchStrings: 'numeralwords zahlwoerter numberwords zaehlwort zahlwort zaehlwoerter'
       ),
       GCWToolWidget(
         tool: Tapir(),
