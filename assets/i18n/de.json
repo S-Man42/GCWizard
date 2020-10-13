@@ -103,10 +103,10 @@
 
   "amsco_title" : "AMSCO Chiffre",
   "amsco_description" : "Spaltentausch-Chiffre",
-  "amsco_example" : "Beispiel → iielspBe",
+  "amsco_example" : "Beispiel → IIELSPBE",
   "amsco_mode" : "Erster Eintrag",
-  "amsco_mode_left" : "ein Buchstabe",
-  "amsco_mode_right" : "zwei Buchstaben",
+  "amsco_mode_left" : "Ein Zeichen",
+  "amsco_mode_right" : "Zwei Zeichen",
   "amsco_key_hint" : "fortlaufenden Ziffern von 1 bis 9",
   "amsco_error_key" : "Schlüssel fehlerhaft!",
   "amsco_usedgrid" : "Verwendete Matrix",
