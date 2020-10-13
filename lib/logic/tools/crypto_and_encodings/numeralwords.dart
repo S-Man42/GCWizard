@@ -136,13 +136,13 @@ NumeralWordsOutput _isNumeralWordBelow100(String input, NumeralWordsLanguage lan
   var numeral;
   switch (language) {
     case NumeralWordsLanguage.DEU:
-      numeral = input.split('UND');
+      numeral = input.split('und');
       break;
     case  NumeralWordsLanguage.ENG:
       numeral = input.split('-');
       break;
     case NumeralWordsLanguage.ALL:
-      numeral = input.split(RegExp(r'[]'));
+      numeral = input.split(RegExp(r'[(und)-]'));
       break;
     default: numeral = input.split(RegExp(r'[^a-z0-9\-]'));
   }
@@ -194,11 +194,13 @@ NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage la
         numeral = input.replaceFirst('hundert', 'einshundert')
             .replaceAll('hundertund', 'hundert')
             .replaceAll('hundredand','hundred ')
-            .split('hundert'); //oder .split('hundred ');
+            .split(RegExp('(hundert|hundred)'));
+            //.split('hundert'); //oder .split('hundred ');
       else
         numeral = input.replaceAll('hundertund', 'hundert')
             .replaceAll('hundredand','hundred ')
-            .split('hundert'); //oder .split('hundred ');
+            .split(RegExp('(hundert|hundred)'));
+            //.split('hundert'); //oder .split('hundred ');
       break;
   }
   switch (numeral.length) {
@@ -280,7 +282,7 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
                              .replaceAll(' hundred and ', 'hundredand')
                              .replaceAll(' hundred ', 'hundred ')
                              .replaceAll('einhundert', 'einshundert')
-                             .split(RegExp(r'[^a-zäöüąęśćàâæçèéêëîïôœùûüÿøæåñ0-9\-]'));
+                             .split(RegExp(r'[^a-zàáâãçéêíóôõúäöüąęśćàâæçèéêëîïôœùûüÿøæåñłńóźżčšабвгґѓдђеѐёєжзѕиѝіїйјкќлљмнњопрстћуўфхцчџшщъыьэюя0-9\-]'));
         break;
       case NumeralWordsLanguage.DEU:
         decodeText = input.replaceAll('einhundert', 'einshundert')
@@ -310,17 +312,18 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
         decodeText = input.split(RegExp(r'[^a-zøæå0-9\-]'));
         break;
       case NumeralWordsLanguage.POR:
-        decodeText = input.split(RegExp(r'[^a-z0-9\-]'));
+        decodeText = input.split(RegExp(r'[^a-zàáâãçéêíóôõú0-9\-]'));
+        break;
+      case NumeralWordsLanguage.KYR:
+        decodeText = input.split(RegExp(r'[^абвгґѓдђеѐёєжзѕиѝіїйјкќлљмнњопрстћуўфхцчџшщъыьэюя0-9\-]'));
         break;
       case NumeralWordsLanguage.RUS:
-        decodeText = input.split(RegExp(r'[^a-z0-9\-]'));
+        decodeText = input.split(RegExp(r'[^a-zčš0-9’\-]'));
         break;
       case NumeralWordsLanguage.POL:
-        decodeText = input.split(RegExp(r'[^a-ząęść0-9\-]'));
+        decodeText = input.split(RegExp(r'[^a-ząęśćłńóźż0-9\-]'));
         break;
       // RUS
-      // POL     Ł, Ń, Ó, Ź und Ż
-      // POR
       case NumeralWordsLanguage.VOL:
         decodeText = input.split(RegExp(r'[^a-zäöü0-9\-]'));
         break;
