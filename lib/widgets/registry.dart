@@ -1651,7 +1651,7 @@ class Registry {
         tool: SymbolTable(symbolKey: 'eurythmy'),
         i18nPrefix: 'symboltables_eurythmy',
         iconPath: SYMBOLTABLES_ASSETPATH + 'eurythmy/65.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'eurythmy eurythmie walddorf motion art'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'eurythmy eurythmie waldorf motion art marievonsivers rudolfsteiner movementart motionart bewegungskunst'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'fakoo'),
