@@ -1162,7 +1162,7 @@
   "hexadecimal_example" : "2A → 42",
 
   "homophone_title" : "Homophon",
-  "homophone_description" : "Monoalphabetische Verschlüsselungsmethode",
+  "homophone_description" : "Monoalphabetische Verschlüsselungsmethode basierend auf Buchstabenhäufigkeiten",
   "homophone_example" : "ABC → 07 09 12",
   "homophone_alphabet" : "Alphabet",
   "homophone_alphabetGerman1" : "Deutsch",
