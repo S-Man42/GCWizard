@@ -93,8 +93,6 @@ class NumeralWordsState extends State<NumeralWords> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    var output = '';
-
     if (_currentMode == GCWSwitchPosition.left) {
       if (_currentLanguage == NumeralWordsLanguage.ALL)
         return GCWOutputText(
@@ -113,11 +111,9 @@ class NumeralWordsState extends State<NumeralWords> {
         );
       }
     } else
-print(_currentLanguage) ;
-      output = decodeNumeralwords(_currentDecodeInput.toLowerCase(), _currentLanguage, (_currentDecodeMode == GCWSwitchPosition.left));
-
-    return GCWOutputText(
-        text: output,
-    );
+      return GCWOutputText(
+        text: decodeNumeralwords(_currentDecodeInput.toLowerCase(), _currentLanguage, (_currentDecodeMode == GCWSwitchPosition.left)),
+        isMonotype: true,
+      );
   }
 }

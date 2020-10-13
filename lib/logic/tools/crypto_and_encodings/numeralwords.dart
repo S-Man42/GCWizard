@@ -261,6 +261,7 @@ NumeralWordsOutput _isNumeralWord(String input, NumeralWordsLanguage language, v
 
 
 String decodeNumeralwords(String input, NumeralWordsLanguage language, var decodeMode) {
+
   if (input == null || input == '')
     return '';
 
@@ -330,12 +331,15 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
     }
     decodeText.forEach((element) {
       if (_isNumeral(element)) {
-        output.add(element);
-      } else if (_isNumeralWord(element, language, decodingTable).state) {
-        output.add(_isNumeralWord(element, language, decodingTable).output);
+        output.add(StringFormat(element, 5) + ' - ' + element);
+      } else {
+        var result = _isNumeralWord(element, language, decodingTable);
+        if (result.state) {
+          output.add(StringFormat(result.output, 5) + ' - ' + element);
+        }
       }
     });
-    return output.join(' ');
+    return output.join('\n');
   } else { // search parts of words: weight => eight => 8
       int maxLength = 0;
       int jump = 0;
@@ -356,14 +360,14 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
 
       decodeText.forEach((element) {
         if (_isNumeral(element)) {
-          output.add(element);
+          output.add(StringFormat(element, 5) + ' - ' + element);
         } else {
           for (int i = 0; i < element.length - maxLength + 1; i++){
             var checkWord = element.substring(i, i + maxLength);
             found = false;
             for (int j = 0; j < numWords.length; j++){
               if (checkWord.contains(numWords[j])) {
-                output.add(decodingTable[numWords[j]]);
+                output.add(StringFormat(decodingTable[numWords[j]], 5) + ' - ' + numWords[j]);
                 jump = numWords[j].length;
                 j = numWords.length;
                 found = true;
@@ -375,8 +379,15 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
           }
         }
       });
-      return output.join(' ');
+      return output.join('\n');
   }
+}
+
+String StringFormat(String input, int spaces){
+  String helpString = '';
+  for (int i = 0; i < spaces - input.length; i++)
+    helpString = helpString + ' ';
+  return helpString + input;
 }
 
 
