@@ -1,5 +1,4 @@
-import 'package:gc_wizard/utils/common_utils.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 
 class NumeralWordsOutput {
   final bool state;
@@ -8,99 +7,128 @@ class NumeralWordsOutput {
   NumeralWordsOutput(this.state, this.output);
 }
 
-enum NumeralWordsLanguage {DEU, DNK, ENG, ESP, FRA, ITA, KYR, NLD, NOR, POL, POR, RUS, SWE, ALL}
+enum NumeralWordsLanguage {DEU, DNK, ENG, ESP, FRA, ITA, KYR, NLD, NOR, POL, POR, RUS, SWE, VOL, ALL}
 
-final Map<String, String> WordToNumDEU = { 'NULL' : '0', 'EINS' : '1', 'ZWEI' : '2', 'DREI' : '3', 'VIER' : '4', 'FÜNF' : '5', 'SECHS' : '6', 'SIEBEN' : '7', 'ACHT' : '8', 'NEUN' : '9',
-  'ZEHN' : '10', 'ELF' : '11', 'ZWÖLF' : '12', 'DREIZEHN' : '13', 'VIERZEHN' : '14','FÜNFZEHN' : '15', 'SECHZEHN' : '16', 'SIEBZEHN' : '17', 'ACHTZEHN' : '18', 'NEUNZEHN' : '19',
-  'ZWANZIG' : '20','DREIßIG' : '30', 'VIERZIG' : '40', 'FÜNFZIG' : '50', 'SECHZIG' : '60', 'SIEBZIG' : '70', 'ACHTZIG' : '80', 'NEUNZIG' : '90',
-  'NORD' : 'NORD', 'NORDEN' : 'NORD', 'NÖRDLICH' : 'NORD', 'OST' : 'OST', 'OSTEN' : 'OST', 'ÖSTLICH' : 'OST', 'WESTEN' : 'WEST','WEST' : 'WEST', 'WESTLICH' : 'WEST', 'SÜDEN' : 'SÜD','SÜD' : 'SÜD', 'SÜDLICH' : 'SÜD'};
+final Map<String, String> DEUWordToNum = { 'null' : '0', 'eins' : '1', 'zwei' : '2', 'drei' : '3', 'vier' : '4', 'fünf' : '5', 'sechs' : '6', 'sieben' : '7', 'acht' : '8', 'neun' : '9',
+  'zehn' : '10', 'elf' : '11', 'zwölf' : '12', 'dreizehn' : '13', 'vierzehn' : '14','fünfzehn' : '15', 'sechzehn' : '16', 'siebzehn' : '17', 'achtzehn' : '18', 'neunzehn' : '19',
+  'zwanzig' : '20','dreißig' : '30', 'vierzig' : '40', 'fünfzig' : '50', 'sechzig' : '60', 'siebzig' : '70', 'achtzig' : '80', 'neunzig' : '90',
+  'nord' : 'NORD', 'norden' : 'NORD', 'nördlich' : 'NORD', 'ost' : 'OST', 'osten' : 'OST', 'östlich' : 'OST', 'westen' : 'WEST','west' : 'WEST', 'westlich' : 'WEST', 'süden' : 'SÜD','süd' : 'SÜD', 'südlich' : 'SÜD'};
 
-final Map<String, String> WordToNumENG = {'ZERO' : '0', 'ONE' : '1', 'TWO' : '2', 'THREE' : '3', 'FOUR' : '4', 'FIVE' : '5', 'SIX' : '6', 'SEVEN' : '7', 'EIGHT' : '8', 'NINE' : '9',
-  'NORTH' : '', 'NORTH' : '', 'NORTHERN' : 'NORTH', 'SOUTH' : 'SOUTH', 'SOUTHERN' : 'SOUTH', 'EAST' : 'EAST', 'EASTERN' : 'EAST', 'WEST' : 'WEST', 'WESTERN' : 'WEST',
-  'TEN' : '10', 'ELEVEN' : '11', 'TWELVE' : '12' , 'THIRTEEN' : '13' , 'FOURTEEN' : '14' , 'FIFTEEN' : '15' , 'SIXTEEN' : '16' , 'SEVENTEEN' : '17' , 'EIGHTEEN' : '18', 'NINETEEN' : '19',
-  'TWENTY' : '20', 'THIRTY' : '30', 'FOURTY' : '40', 'FIFTY' : '50', 'SIXTY' : '60', 'SEVENTY' : '70', 'EIGHTY' : '80', 'NINETY' : '90' };
+final Map<String, String> ENGWordToNum = {'zero' : '0', 'one' : '1', 'two' : '2', 'three' : '3', 'four' : '4', 'five' : '5', 'six' : '6', 'seven' : '7', 'eight' : '8', 'nine' : '9',
+  'north' : '', 'NORTH' : '', 'northern' : 'NORTH', 'south' : 'SOUTH', 'southern' : 'SOUTH', 'east' : 'EAST', 'eastern' : 'EAST', 'west' : 'WEST', 'western' : 'WEST',
+  'ten' : '10', 'eleven' : '11', 'twelve' : '12' , 'thirteen' : '13' , 'fourteen' : '14' , 'fifteen' : '15' , 'sixteen' : '16' , 'seventeen' : '17' , 'eighteen' : '18', 'nineteen' : '19',
+  'twenty' : '20', 'thirty' : '30', 'fourty' : '40', 'fifty' : '50', 'sixty' : '60', 'seventy' : '70', 'eighty' : '80', 'ninety' : '90' };
 
-final Map<String, String> WordToNumITA = {'ZERO' : '0', 'UNO' : '1', 'DUE' : '2', 'TRE' : '3', 'QUATTRO' : '4', 'CINQUE' : '5', 'SEI' : '6', 'SETTE' : '7', 'OTTO' : '8', 'NOVE' : '9',
-  'DIECI' : '10', 'UNDICI' : '11', 'DODICI' : '12', 'TREDICI' : '13', 'QUATTORDICI' : '14', 'QUINDICI' : '15', 'SEDICI' : '16', 'DICIASETTE' : '17', 'DICIOTTO' : '18', 'DICIANNOVE' : '19',
-  'VENTI' : '20', 'TRENTA' : '30', 'QUARANTA' : '40', 'CINQUANTA' : '50', 'SESSANTA' : '60', 'SETTANTA' : '70', 'OTTANTA' : '80', 'NOVANTA' : '90', 'CENTO' : '100', 'MILLE' : '1000' };
+final Map<String, String> DNKWordToNum = {'nul' : '0', 'en' : '1', 'to' : '2', 'tre' : '3', 'fire' : '4', 'fem' : '5', 'seks' : '6', 'syve' : '7', 'otte' : '8', 'ni' : '9',
+  'ti' : '10', 'elleve' : '11', 'tolv' : '12', 'tretten' : '13', 'fjorten' : '14', 'femten' : '15', 'seksten' : '16', 'sytten' : '17', 'atten' : '18', 'nitten' : '19',
+  'tyve' : '20', 'tredive' : '30', 'fyrre' : '40', 'halvtreds' : '50', 'tres' : '60', 'halvfjerds' : '70', 'firs' : '80', 'halvfems' : '90', 'hundrede' : '100', 'tusind' : '1000' };
 
-final Map<String, String> WordToNumESP = {'CERO' : '0', 'UNO' : '1', 'UNA': '1', 'DOS' : '2', 'TRES' : '3', 'CUATRO' : '4', 'CINCO' : '5', 'SEIS' : '6', 'SIETE' : '7', 'OCHO' : '8', 'NUEVE' : '9',
-  'DIEZ' : '10', 'ONCE' : '11', 'DOCE' : '12', 'TRECE' : '13', 'CATORCE' : '14', 'QUINCE' : '15', 'DIECISÉIS' : '16', 'DIECISIETE' : '17', 'DIECIOCHO' : '18', 'DIECINUEVE' : '19',
-  'VEINTE' : '20', 'TREINTA' : '30', 'CUARANTA' : '40', 'CINCUENTA' : '50', 'SESENTA' : '60', 'SETENTA' : '70', 'OCHENTA' : '80', 'NOVENTA' : '90', 'CIEN' : '100', 'MIL' : '1000' };
+final Map<String, String> NLDWordToNum = { 'nul' : '0', 'een' : '1', 'zwee' : '2', 'trie' : '3', 'vier' : '4', 'vijf' : '5', 'zes' : '6', 'zeven' : '7', 'acht' : '8', 'negen' : '9',
+  'tien' : '10', 'elf': '11', 'twaalf' : '12', 'dertien' : '13', 'veerteen' : '14','vijfteen' : '15', 'zestien' : '16', 'zeventien' : '17', 'achttien' : '18', 'negentien' : '19',
+  'twintig' : '20','dertig' : '30', 'veertig' : '40', 'vijftig' : '50', 'testig' : '60', 'zeventig' : '70', 'tachtig' : '80', 'negentig' : '90', 'honderd' : '100', 'duizend' : '1000'};
 
-final Map<String, String> WordToNumFRA = {'ZÉRO' : '0', 'UN' : '1', 'UNE': '1', 'DEUX' : '2', 'TROIS' : '3', 'QUATRE' : '4', 'CINQ' : '5', 'SIS' : '6', 'SEPT' : '7', 'HUIT' : '8', 'NEUF' : '9',
-  'DIX' : '10', 'ONZE' : '11', 'DOUZE' : '12', 'TREIZE' : '13', 'QUATORZE' : '14', 'QUINZE' : '15', 'SEIZE' : '16', 'DIX-SEPT' : '17', 'DIX-HUIT' : '18', 'DIX-NEUF' : '19',
-  'VINGT' : '20', 'TRENTE' : '30', 'QUARANTE' : '40', 'CINQANTE' : '50', 'SOIXANTE' : '60', 'SOIXANTE-DIX' : '70', 'QUATRE-VINGT' : '80', 'QUATRE-VINGT-DIX' : '90', 'CENT' : '100', 'MILLE' : '1000' };
+final Map<String, String> SWEWordToNum = {'noll' : '0', 'en' : '1', 'ett' : '1', 'två' : '2', 'tre' : '3', 'fyra' : '4', 'fem' : '5', 'sex' : '6', 'sju' : '7', 'åtta' : '8', 'nio' : '9',
+  'tio' : '10', 'elva' : '11', 'tolv' : '12', 'tretton' : '13', 'fjorton' : '14', 'femton' : '15', 'sexton' : '16', 'sjutton' : '17', 'arton' : '18', 'nitton' : '19',
+  'tjugo' : '20', 'trettio' : '30', 'fyrtio' : '40', 'femtio' : '50', 'sextio' : '60', 'sjuttio' : '70', 'åttio' : '80', 'nittio' : '90', 'hundra' : '100', 'tusen' : '1000' };
 
-final Map<String, String> WordToNumDNK = {'NUL' : '0', 'EN' : '1', 'TO' : '2', 'TRE' : '3', 'FIRE' : '4', 'FEM' : '5', 'SEKS' : '6', 'SYVE' : '7', 'OTTE' : '8', 'NI' : '9',
-  'TI' : '10', 'ELLEVE' : '11', 'TOLV' : '12', 'TRETTEN' : '13', 'FJORTEN' : '14', 'FEMTEN' : '15', 'SEKSTEN' : '16', 'SYTTEN' : '17', 'ATTEN' : '18', 'NITTEN' : '19',
-  'TYVE' : '20', 'TREDIVE' : '30', 'FYRRE' : '40', 'HALVTREDS' : '50', 'TRES' : '60', 'HALVFJERDS' : '70', 'FIRS' : '80', 'HALVFEMS' : '90', 'HUNDREDE' : '100', 'TUSIND' : '1000' };
+final Map<String, String> NORWordToNum = {'nul' : '0', 'en' : '1', 'ett' : '1', 'to' : '2', 'tre' : '3', 'fire' : '4', 'fem' : '5', 'seks' : '6', 'sju' : '7','syv' : '7', 'åtte' : '8', 'ni' : '9',
+  'ti' : '10', 'elleve' : '11', 'tolv' : '12', 'tretten' : '13', 'fjorten' : '14', 'femten' : '15', 'seksten' : '16', 'sytten' : '17', 'atten' : '18', 'nitten' : '19',
+  'tjue' : '20', 'tretti' : '30', 'førti' : '40', 'femti' : '50', 'seksti' : '60', 'sytti' : '70', 'åtti' : '80', 'nitti' : '90', 'hundre' : '100', 'tusen' : '1000'};
 
-final Map<String, String> WordToNumNLD = { 'NUL' : '0', 'EEN' : '1', 'ZWEE' : '2', 'TRIE' : '3', 'VIER' : '4', 'VIJF' : '5', 'ZES' : '6', 'ZEVEN' : '7', 'ACHT' : '8', 'NEGEN' : '9',
-  'TIEN' : '10', 'ELF': '11', 'TWAALF' : '12', 'DERTIEN' : '13', 'VEERTIEN' : '14','VIJFTIEN' : '15', 'ZESTIEN' : '16', 'ZEVENTIEN' : '17', 'ACTTIEN' : '18', 'NEGENTIEN' : '19',
-  'TWINTIG' : '20','DERTIG' : '30', 'VEERTIG' : '40', 'VIJFTIG' : '50', 'TESTIG' : '60', 'ZEVENTIG' : '70', 'TACHTIG' : '80', 'NEGENTIG' : '90', 'HONDERD' : '100', 'DUIZEND' : '1000'};
+final Map<String, String> ITAWordToNum = {'zero' : '0', 'uno' : '1', 'due' : '2', 'tre' : '3', 'quattro' : '4', 'cinque' : '5', 'sei' : '6', 'sette' : '7', 'otto' : '8', 'nove' : '9',
+  'dieci' : '10', 'undici' : '11', 'dodici' : '12', 'tredici' : '13', 'quattordici' : '14', 'quindici' : '15', 'sedici' : '16', 'diciasette' : '17', 'diciotto' : '18', 'diciannove' : '19',
+  'venti' : '20', 'trenta' : '30', 'quaranta' : '40', 'cinquanta' : '50', 'sessanta' : '60', 'settanta' : '70', 'ottanta' : '80', 'novanta' : '90', 'cento' : '100', 'mille' : '1000' };
 
-final Map<String, String> WordToNumSWE = {'NOLL' : '0', 'EN' : '1', 'ETT' : '1', 'TVA' : '2', 'TRE' : '3', 'FYRA' : '4', 'FEM' : '5', 'SEX' : '6', 'SJU' : '7', 'ATTE' : '8', 'NIO' : '9',
-  'TIO' : '10', 'ELVA' : '11', 'TOLV' : '12', 'TRETTON' : '13', 'FJORTON' : '14', 'FEMTON' : '15', 'SEXTON' : '16', 'SJUTTON' : '17', 'ARTON' : '18', 'NITTON' : '19',
-  'TJUGO' : '20', 'TRETTIO' : '30', 'FYRTIO' : '40', 'FEMTIO' : '50', 'SEXTIO' : '60', 'SJUTTIO' : '70', 'ATTIO' : '80', 'NITTIO' : '90', 'HUNDRA' : '100', 'TUSEN' : '1000' };
+final Map<String, String> FRAWordToNum = {'zéro' : '0', 'un' : '1', 'une': '1', 'deux' : '2', 'trois' : '3', 'quatre' : '4', 'cinq' : '5', 'sis' : '6', 'sept' : '7', 'huit' : '8', 'neuf' : '9',
+  'dix' : '10', 'onze' : '11', 'douze' : '12', 'treize' : '13', 'quatorze' : '14', 'quinze' : '15', 'seize' : '16', 'dix-sept' : '17', 'dix-huit' : '18', 'dix-neuf' : '19',
+  'vingt' : '20', 'trente' : '30', 'quarante' : '40', 'cinqante' : '50', 'soixante' : '60', 'soixante-dix' : '70', 'quatre-vingt' : '80', 'quatre-vingt-dix' : '90', 'cent' : '100', 'mille' : '1000' };
 
-final Map<String, String> WordToNumNOR = {'NUL' : '0', 'EN' : '1', 'ETT' : '1', 'TO' : '2', 'TRE' : '3', 'FIRE' : '4', 'FEM' : '5', 'SEKS' : '6', 'SJU' : '7','SYV' : '7', 'ATTE' : '8', 'NI' : '9',
-  'TI' : '10', 'ELLEVE' : '11', 'TOLV' : '12', 'TRETTEN' : '13', 'FJORTEN' : '14', 'FEMTEN' : '15', 'SEKSTEN' : '16', 'SYTTEN' : '17', 'ATTEN' : '18', 'NITTEN' : '19',
-  'TJUE' : '20', 'TRETTI' : '30', 'FORTI' : '40', 'FEMTI' : '50', 'SEKSTI' : '60', 'SYTTI' : '70', 'ATTI' : '80', 'NITTI' : '90', 'HUNDRE' : '100', 'TUSEN' : '1000'};
+final Map<String, String> ESPWordToNum = {'cero' : '0', 'uno' : '1', 'una': '1', 'dos' : '2', 'tres' : '3', 'cuatro' : '4', 'cinco' : '5', 'seis' : '6', 'siete' : '7', 'ocho' : '8', 'nueve' : '9',
+  'diez' : '10', 'once' : '11', 'doce' : '12', 'trece' : '13', 'catorce' : '14', 'quince' : '15', 'dieciséis' : '16', 'diecisiete' : '17', 'dieciocho' : '18', 'diecinueve' : '19',
+  'viente' : '20', 'treinta' : '30', 'cuaranta' : '40', 'cincuenta' : '50', 'sesenta' : '60', 'setenta' : '70', 'ochenta' : '80', 'noventa' : '90', 'cien' : '100', 'mil' : '1000' };
 
-final Map<String, String> WordToNumPOR = {'ZERO' : '0', 'UM' : '1', 'DOIS' : '2', 'DUAS' : '2', 'TRES' : '3', 'QUATRO' : '4', 'CINCO' : '5', 'SEIS' : '6', 'SETE' : '7', 'OITO' : '8', 'NOVE' : '9',
-  'DEZ' : '10', 'ONZE' : '11', 'DOZE' : '12', 'TREZE' : '13', 'CATORZE' : '14', 'QUINZE' : '15', 'DEZASSEIS' : '16', 'DEZASSETE' : '17', 'DEZOITO' : '18', 'DEZANOVE' : '19',
-  'VINTE' : '20', 'TRINTA' : '30', 'QUARENTA' : '40', 'CINQUENTA' : '50', 'SESSENTA' : '60', 'SETENTA' : '70', 'OITENTA' : '80', 'NOVENTA' : '90', 'CEM' : '100', 'CENTO' : '100', 'MIL' : '1000' };
+final Map<String, String> PORWordToNum = {'zero' : '0', 'um' : '1', 'dois' : '2', 'duas' : '2', 'tres' : '3', 'quatro' : '4', 'cinco' : '5', 'seis' : '6', 'sete' : '7', 'oito' : '8', 'nove' : '9',
+  'dez' : '10', 'onze' : '11', 'doze' : '12', 'treze' : '13', 'catorze' : '14', 'quinze' : '15', 'dezasseis' : '16', 'dezassete' : '17', 'dezoito' : '18', 'dezanove' : '19',
+  'vinte' : '20', 'trinta' : '30', 'quaranta' : '40', 'cinquenta' : '50', 'sessenta' : '60', 'setenta' : '70', 'oitenta' : '80', 'noventa' : '90', 'cem' : '100', 'cento' : '100', 'mil' : '1000' };
 
-final Map<String, String> WordToNumPOL = {'ZERO' : '0', 'JEDEN' : '1', 'JEDNA' : '1', 'JEDNO' : '1', 'DWA' : '2', 'DWIE' : '2', 'TRZY' : '3', 'CZTERY' : '4', 'PIEC' : '5', 'SZESC' : '6', 'SIEDEM' : '7', 'OSIEM' : '8', 'DZIEWIEC' : '9',
-  'DZIESIEC' : '10', 'JEDENASCIE' : '11', 'DWANASCIE' : '12', 'TRZYNASCIE' : '13', 'CZTERNASCIE' : '14', 'PIETNASCIE' : '15', 'SZESNASCIE' : '16', 'SIEDEMNASCIE' : '17', 'OSIEMNASCIE' : '18', 'DZIEWIETNASCIE' : '19',
-  'DWADZIESCIA' : '20', 'TRZYDZIESCI' : '30', 'CZTERDZIESCI' : '40', 'PIECDZIESIAT' : '50', 'SZESCDZIESIAT' : '60', 'SIEDEMDZIESIAT' : '70', 'OSIEMDZIESIAT' : '80', 'DZIEWIECDZIESIAT' : '90', 'STO' : '100', 'TYSIAC' : '1000'};
+final Map<String, String> POLWordToNum = {'zero' : '0', 'jeden' : '1', 'jedna' : '1', 'jedno' : '1', 'dwa' : '2', 'dwie' : '2', 'trzy' : '3', 'cztery' : '4', 'pięć' : '5', 'sześć' : '6', 'siedem' : '7', 'osiem' : '8', 'dziewięć' : '9',
+  'dziesięć' : '10', 'jedenaście' : '11', 'dwanaście' : '12', 'trzynaście' : '13', 'czternaście' : '14', 'piętnaście' : '15', 'szesnaście' : '16', 'siedemnaście' : '17', 'osiemnaście' : '18', 'dziewiętnaście' : '19',
+  'dwadzieścia' : '20', 'trzydzieści' : '30', 'czterdzieści' : '40', 'pięćdziesiąt' : '50', 'sześćdziesiąt' : '60', 'siedemdziesiąt' : '70', 'osiemdziesiąt' : '80', 'dziewięćdziesiąt' : '90', 'STO' : '100', 'tysiąc' : '1000'};
 
-final Map<String, String> WordToNumRUS = {'NOL’' : '0', 'NUL’' : '0', 'ODNA' : '1', 'ODNO' : '1', 'ODNO' : '1', 'DVA' : '2', 'DVE' : '2', 'TRI' : '3', 'čETYRE' : '4', 'P’AT’' : '5', 'SEST' : '6', 'SEM’' : '7', 'VOSEM’' : '8', 'DEVJAT’' : '9',
-  'DESJAT’' : '10', 'ODINNATCAT’' : '11', 'DVENADCAT’' : '12', 'TRINADCAT’' : '13', 'CETYRNADCAT’' : '14', 'P’ATNADCAT’' : '15', 'SESTNADCAT’' : '16', 'SEMNADCAT’' : '17', 'WOSEMNADCAT’' : '18', 'DEV’ATNADCAT’' : '19',
-  'DVADCAT’' : '20', 'TRIDCAT’' : '30', 'SOROK' : '40', 'P’AT’DESJAT' : '50', 'SEST’DESJAT	' : '60', 'SEM’DESJAT' : '70', 'VOSEM’DESJAT' : '80', 'DEVIANOSTO' : '90', 'STO' : '100', 'TYSJACA' : '1000'};
+final Map<String, String> RUSWordToNum = {'nol’' : '0', 'nul’' : '0', 'odna' : '1', 'odno' : '1', 'odin' : '1', 'dvs' : '2', 'dve' : '2', 'tri' : '3', 'četyre' : '4', 'p’at’' : '5', 'šest' : '6', 'sem’' : '7', 'vosem’' : '8', 'devjat’' : '9',
+  'desjat’' : '10', 'odinnadcat’' : '11', 'dvenadcat’' : '12', 'trinadcat’' : '13', 'četyrnadca’' : '14', 'p’atnadcat’' : '15', 'šestnadcat’' : '16', 'semnadcat’' : '17', 'wosemnadcat’' : '18', 'dev’atnadcat’' : '19',
+  'dvadcat’' : '20', 'tridcat’' : '30', 'sorok' : '40', 'p’at’desjat' : '50', 'šest’desjat' : '60', 'sem’desjat' : '70', 'vosem’desjat' : '80', 'devianosto' : '90', 'sto' : '100', 'tysjača' : '1000'};
 
-final Map<String, String> WordToNumKYR = {'ноль' : '0', 'нуль' : '0', 'один' : '1', 'одна' : '1', 'одно' : '1', 'два' : '2', 'две' : '2', 'три' : '3', 'четыре' : '4', 'пять' : '5', 'шесть' : '6', 'семь' : '7', 'восемь' : '8', 'девять' : '9',
+final Map<String, String> KYRWordToNum = {'ноль' : '0', 'нуль' : '0', 'один' : '1', 'одна' : '1', 'одно' : '1', 'два' : '2', 'две' : '2', 'три' : '3', 'четыре' : '4', 'пять' : '5', 'шесть' : '6', 'семь' : '7', 'восемь' : '8', 'девять' : '9',
   'десять' : '10', 'одиннадцать' : '11', 'двенадцать' : '12', 'тринадцать' : '13', 'четырнадцать' : '14', 'пятнадцать' : '15', 'шестнадцать' : '16', 'семнадцать' : '17', 'восемнадцать' : '18', 'девятнадцать' : '19',
   'двадцать' : '20', 'тридцать' : '30', 'сорок' : '40', 'пятьдесят' : '50', 'шестьдесят' : '60', 'семьдесят' : '70', 'восемьдесят' : '80', 'девяносто' : '90', 'сто' : '100', 'тысяча' : '1000'};
+
+final Map<String, String> VOLWordToNum = {'ser' : '0', 'bal' : '1', 'tel' : '2', 'til' : '3', 'fol' : '4', 'lul' : '5', 'mäl' : '6', 'vel' : '7', 'jöl' : '8', 'zül' : '9',
+  'deg' : '10', 'degbal' : '11', 'degtel' : '12', 'degtil' : '13', 'degfol' : '14', 'deglul' : '15', 'degmäl' : '16', 'degvel' : '17', 'degjöl' : '18', 'degzül' : '19',
+  'teldeg' : '20', 'tildeg' : '30', 'foldeg' : '40', 'luldeg' : '50', 'mäldeg' : '60', 'veldeg' : '70', 'jöldeg' : '80', 'züldeg' : '90', 'tum' : '100', 'mil' : '1000' };
+
+
+
+Map languageList(context) {
+  var languageList = {
+    NumeralWordsLanguage.DEU : i18n(context, 'numeralwords_language_deu'),
+    NumeralWordsLanguage.ENG : i18n(context, 'numeralwords_language_eng'),
+    NumeralWordsLanguage.FRA : i18n(context, 'numeralwords_language_fra'),
+    NumeralWordsLanguage.ITA : i18n(context, 'numeralwords_language_ita'),
+    NumeralWordsLanguage.DNK : i18n(context, 'numeralwords_language_dnk'),
+    NumeralWordsLanguage.ESP : i18n(context, 'numeralwords_language_esp'),
+    NumeralWordsLanguage.NLD : i18n(context, 'numeralwords_language_nld'),
+    NumeralWordsLanguage.NOR : i18n(context, 'numeralwords_language_nor'),
+    NumeralWordsLanguage.POL : i18n(context, 'numeralwords_language_pol'),
+    NumeralWordsLanguage.POR : i18n(context, 'numeralwords_language_por'),
+    NumeralWordsLanguage.RUS : i18n(context, 'numeralwords_language_rus'),
+    NumeralWordsLanguage.SWE : i18n(context, 'numeralwords_language_swe'),
+    NumeralWordsLanguage.KYR : i18n(context, 'numeralwords_language_kyr'),
+    NumeralWordsLanguage.VOL : i18n(context, 'numeralwords_language_vol'),
+    NumeralWordsLanguage.ALL : i18n(context, 'numeralwords_language_all'),
+  };
+  return languageList;
+}
 
 bool _isNumeral(String input){
   return (int.tryParse(input) != null );
 }
 
-
 Map<String, String> numeralWordsMap(NumeralWordsLanguage currentLanguage){
-  Map<String, String> table;
+print('numeralWordsMap')  ;
+  Map<String, String> table = new Map<String, String>();
   switch (currentLanguage) {
-    case NumeralWordsLanguage.DEU: return WordToNumDEU;  break;
-    case NumeralWordsLanguage.ENG: return WordToNumENG;  break;
-    case NumeralWordsLanguage.FRA: return WordToNumFRA;  break;
-    case NumeralWordsLanguage.ITA: return WordToNumITA;  break;
-    case NumeralWordsLanguage.ESP: return WordToNumESP;  break;
-    case NumeralWordsLanguage.DNK: return WordToNumDNK;  break;
-    case NumeralWordsLanguage.NLD: return WordToNumNLD;  break;
-    case NumeralWordsLanguage.NOR: return WordToNumNOR;  break;
-    case NumeralWordsLanguage.POL: return WordToNumPOL;  break;
-    case NumeralWordsLanguage.POR: return WordToNumPOR;  break;
-    case NumeralWordsLanguage.RUS: return WordToNumRUS;  break;
-    case NumeralWordsLanguage.KYR: return WordToNumKYR;  break;
-    case NumeralWordsLanguage.SWE: return WordToNumSWE;  break;
-    case NumeralWordsLanguage.ALL :
-      table = WordToNumDEU;
-      table.addAll(WordToNumENG);
-      table.addAll(WordToNumFRA);
-      table.addAll(WordToNumITA);
-      table.addAll(WordToNumESP);
-      table.addAll(WordToNumSWE);
-      table.addAll(WordToNumNOR);
-      table.addAll(WordToNumNLD);
-      table.addAll(WordToNumPOR);
-      table.addAll(WordToNumPOL);
-      table.addAll(WordToNumRUS);
-      table.addAll(WordToNumKYR);
-      return table;
+    case NumeralWordsLanguage.DEU:  table = DEUWordToNum;      break;
+    case NumeralWordsLanguage.ENG:  table = ENGWordToNum;      break;
+    case NumeralWordsLanguage.FRA:  table = FRAWordToNum;      break;
+    case NumeralWordsLanguage.ITA:  table = ITAWordToNum;      break;
+    case NumeralWordsLanguage.ESP:  table = ESPWordToNum;      break;
+    case NumeralWordsLanguage.DNK:  table = DNKWordToNum;      break;
+    case NumeralWordsLanguage.NLD:  table = NLDWordToNum;      break;
+    case NumeralWordsLanguage.NOR:  table = NORWordToNum;      break;
+    case NumeralWordsLanguage.POL:  table = POLWordToNum;      break;
+    case NumeralWordsLanguage.POR:  table = PORWordToNum;      break;
+    case NumeralWordsLanguage.RUS:  table = RUSWordToNum;      break;
+    case NumeralWordsLanguage.KYR:  table = KYRWordToNum;      break;
+    case NumeralWordsLanguage.SWE:  table = SWEWordToNum;      break;
+    case NumeralWordsLanguage.VOL:  table = VOLWordToNum;      break;
+    case NumeralWordsLanguage.ALL:
+      table = DEUWordToNum;
+      table.addAll(ENGWordToNum);
+      table.addAll(FRAWordToNum);
+      table.addAll(ITAWordToNum);
+      table.addAll(ESPWordToNum);
+      table.addAll(SWEWordToNum);
+      table.addAll(NORWordToNum);
+      table.addAll(NLDWordToNum);
+      table.addAll(PORWordToNum);
+      table.addAll(POLWordToNum);
+      table.addAll(RUSWordToNum);
+      table.addAll(KYRWordToNum);
+      table.addAll(VOLWordToNum);
       break;
   }
+  return table;
 }
 
 
@@ -113,7 +141,10 @@ NumeralWordsOutput _isNumeralWordBelow100(String input, NumeralWordsLanguage lan
     case  NumeralWordsLanguage.ENG:
       numeral = input.split('-');
       break;
-    default: numeral = input.split(RegExp(r'[^A-Z0-9\-]'));
+    case NumeralWordsLanguage.ALL:
+      numeral = input.split(RegExp(r'[]'));
+      break;
+    default: numeral = input.split(RegExp(r'[^a-z0-9\-]'));
   }
   switch (numeral.length){
     case 2:
@@ -129,20 +160,20 @@ NumeralWordsOutput _isNumeralWordBelow100(String input, NumeralWordsLanguage lan
 
 
 NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage language, var decodingTable){
-  var numeral;
+  List<String> numeral = new List<String>();
   switch (language){
     case NumeralWordsLanguage.DEU :
-      if (input.startsWith('HUNDERT'))
-        numeral = input.replaceFirst('HUNDERT', 'EINSHUNDERT')
-            .replaceAll('HUNDERTUND', 'HUNDERT')
-            .split('HUNDERT');
+      if (input.startsWith('hundert'))
+        numeral = input.replaceFirst('hundert', 'einshundert')
+            .replaceAll('hundertund', 'hundert')
+            .split('hundert');
       else
-        numeral = input.replaceAll('HUNDERTUND', 'HUNDERT')
-            .split('HUNDERT');
+        numeral = input.replaceAll('hundertund', 'hundert')
+            .split('hundert');
       break;
     case NumeralWordsLanguage.ENG :
-      numeral = input.replaceAll('HUNDREDAND','HUNDRED ')
-          .split('HUNDRED ');
+      numeral = input.replaceAll('hundredand','hundred ')
+          .split('hundred ');
       break;
     case NumeralWordsLanguage.FRA :
     case NumeralWordsLanguage.ITA :
@@ -154,23 +185,30 @@ NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage la
     case NumeralWordsLanguage.RUS :
     case NumeralWordsLanguage.SWE :
     case NumeralWordsLanguage.DNK :
-      numeral = input.split(RegExp(r'[^A-Z0-9\-]'));
-      break;
     case NumeralWordsLanguage.KYR :
-      numeral = input.split(RegExp(r'[^A-Z0-9\-]'));
+    case NumeralWordsLanguage.VOL :
+      numeral.add(input);
       break;
     case NumeralWordsLanguage.ALL :
-      numeral = input.split(RegExp(r'[^A-Z0-9\-]'));
+      if (input.startsWith('hundert'))
+        numeral = input.replaceFirst('hundert', 'einshundert')
+            .replaceAll('hundertund', 'hundert')
+            .replaceAll('hundredand','hundred ')
+            .split('hundert'); //oder .split('hundred ');
+      else
+        numeral = input.replaceAll('hundertund', 'hundert')
+            .replaceAll('hundredand','hundred ')
+            .split('hundert'); //oder .split('hundred ');
       break;
   }
   switch (numeral.length) {
     case 1:
       switch (language){
         case NumeralWordsLanguage.ENG:
-          if (numeral[0] == 'HUNDRED')
+          if (numeral[0] == 'hundred')
             return NumeralWordsOutput(true, '100');
           else {
-            var digits = numeral[0].split('HUNDRED');
+            var digits = numeral[0].split('hundred');
             if (decodingTable[digits[0]] != null)
               return NumeralWordsOutput(true, decodingTable[digits[0]] + '00');
             else
@@ -209,7 +247,7 @@ NumeralWordsOutput _isNumeralWordBelow1000(String input, NumeralWordsLanguage la
 NumeralWordsOutput _isNumeralWord(String input, NumeralWordsLanguage language, var decodingTable){
   var numeral;
   numeral = decodingTable[input];
-  if (numeral != null){ // 0 .. 19, 20, 30, 40, 50, 60, 70, 80, 90
+  if (numeral != null){
     return NumeralWordsOutput(true, numeral);
   } else if (_isNumeralWordBelow100(input, language, decodingTable).state) {
     return NumeralWordsOutput(true, _isNumeralWordBelow100(input, language, decodingTable).output);
@@ -217,7 +255,6 @@ NumeralWordsOutput _isNumeralWord(String input, NumeralWordsLanguage language, v
     return NumeralWordsOutput(true, _isNumeralWordBelow1000(input, language, decodingTable).output);
   }
   return NumeralWordsOutput(false, '');
-
 }
 
 
@@ -225,30 +262,68 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
   if (input == null || input == '')
     return '';
 
-  List<String> output = List<String>();
+  List<String> output = new List<String>();
   var decodeText;
-  Map<String, String> decodingTable = numeralWordsMap(language);
+  Map<String, String> decodingTable = new Map<String, String>();
+  decodingTable = numeralWordsMap(language);
 
-  if (decodeMode == GCWSwitchPosition.left) { // search only whole words
+  if (decodeMode) { // search only whole words
     var helpText;
 
     switch (language){
-      case NumeralWordsLanguage.DEU :
-        decodeText = input.replaceAll('OSTEN', 'OST')
-            .replaceAll('EINHUNDERT', 'EINSHUNDERT')
-            .split(RegExp(r'[^A-ZßÄÖÜ0-9]'));
-        break;
-      case NumeralWordsLanguage.ENG :
-        if (input.startsWith('A HUNDRED'))
-          helpText = input.replaceFirst('A HUNDRED', ' A HUNDRED');
+      case NumeralWordsLanguage.ALL:
+        if (input.startsWith('a hundred'))
+          helpText = input.replaceFirst('a hundred', ' a hundred');
         else
           helpText = input;
-          decodeText = helpText.replaceAll(' A HUNDRED', ' ONE HUNDRED')
-            .replaceAll(' HUNDRED AND ', 'HUNDREDAND')
-            .replaceAll(' HUNDRED ', 'HUNDRED ')
-            .split(RegExp(r'[^A-Z0-9\-]'));
+        decodeText = helpText.replaceAll(' a hundred', ' one hundred')
+                             .replaceAll(' hundred and ', 'hundredand')
+                             .replaceAll(' hundred ', 'hundred ')
+                             .replaceAll('einhundert', 'einshundert')
+                             .split(RegExp(r'[^a-zäöüąęśćàâæçèéêëîïôœùûüÿøæåñ0-9\-]'));
         break;
-      default : decodeText = input.split(RegExp(r'[^A-Z0-9\-]'));
+      case NumeralWordsLanguage.DEU:
+        decodeText = input.replaceAll('einhundert', 'einshundert')
+                          .split(RegExp(r'[^a-zßäöü0-9]'));
+        break;
+      case NumeralWordsLanguage.ENG:
+        if (input.startsWith('a hundred'))
+          helpText = input.replaceFirst('a hundred', ' a hundred');
+        else
+          helpText = input;
+        decodeText = helpText.replaceAll(' a hundred', ' one hundred')
+                             .replaceAll(' hundred and ', 'hundredand')
+                             .replaceAll(' hundred ', 'hundred ')
+                             .split(RegExp(r'[^a-z0-9\-]'));
+        break;
+      case NumeralWordsLanguage.FRA:
+        decodeText = input.split(RegExp(r'[^a-zàâæçèéêëîïôœùûüÿ0-9\-]'));
+        break;
+      case NumeralWordsLanguage.ESP:
+        decodeText = input.split(RegExp(r'[^a-zñ0-9\-]'));
+        break;
+      case NumeralWordsLanguage.SWE:
+        decodeText = input.split(RegExp(r'[^a-zaöå0-9\-]'));
+        break;
+      case NumeralWordsLanguage.DNK:
+      case NumeralWordsLanguage.NOR:
+        decodeText = input.split(RegExp(r'[^a-zøæå0-9\-]'));
+        break;
+      case NumeralWordsLanguage.POR:
+        decodeText = input.split(RegExp(r'[^a-z0-9\-]'));
+        break;
+      case NumeralWordsLanguage.RUS:
+        decodeText = input.split(RegExp(r'[^a-z0-9\-]'));
+        break;
+      case NumeralWordsLanguage.POL:
+        decodeText = input.split(RegExp(r'[^a-ząęść0-9\-]'));
+        break;
+      // RUS
+      // POL     Ł, Ń, Ó, Ź und Ż
+      // POR
+      case NumeralWordsLanguage.VOL:
+        decodeText = input.split(RegExp(r'[^a-zäöü0-9\-]'));
+        break;
     }
     decodeText.forEach((element) {
       if (_isNumeral(element)) {
@@ -274,7 +349,7 @@ String decodeNumeralwords(String input, NumeralWordsLanguage language, var decod
       });
 
       decodeText = input.replaceAll(' ', '')
-          .split(RegExp(r'[^A-ZÄÖÜß0-9]'));
+          .split(RegExp(r'[^a-zäöüąęśćàâæçèéêëîïôœùûüÿøæåñ0-9\-]'));
 
       decodeText.forEach((element) {
         if (_isNumeral(element)) {

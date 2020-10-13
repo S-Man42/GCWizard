@@ -36,33 +36,17 @@ class NumeralWordsState extends State<NumeralWords> {
 
   @override
   Widget build(BuildContext context) {
-    var NumeralWordsLanguageItems = {
-      NumeralWordsLanguage.DEU : i18n(context, 'numeralwords_language_deu'),
-      NumeralWordsLanguage.ENG : i18n(context, 'numeralwords_language_eng'),
-      NumeralWordsLanguage.FRA : i18n(context, 'numeralwords_language_fra'),
-      NumeralWordsLanguage.ITA : i18n(context, 'numeralwords_language_ita'),
-      NumeralWordsLanguage.DNK : i18n(context, 'numeralwords_language_dnk'),
-      NumeralWordsLanguage.ESP : i18n(context, 'numeralwords_language_esp'),
-      NumeralWordsLanguage.NLD : i18n(context, 'numeralwords_language_nld'),
-      NumeralWordsLanguage.NOR : i18n(context, 'numeralwords_language_nor'),
-      NumeralWordsLanguage.POL : i18n(context, 'numeralwords_language_pol'),
-      NumeralWordsLanguage.POR : i18n(context, 'numeralwords_language_por'),
-      NumeralWordsLanguage.RUS : i18n(context, 'numeralwords_language_rus'),
-      NumeralWordsLanguage.SWE : i18n(context, 'numeralwords_language_swe'),
-      NumeralWordsLanguage.KYR : i18n(context, 'numeralwords_language_kyr'),
-      NumeralWordsLanguage.ALL : i18n(context, 'numeralwords_language_all'),
-    };
 
     return Column(
       children: <Widget>[
-        GCWDropDownButton(//choose language
+        GCWDropDownButton(
           value: _currentLanguage,
           onChanged: (value) {
             setState(() {
               _currentLanguage = value;
             });
           },
-          items: NumeralWordsLanguageItems.entries.map((mode) {
+          items: languageList(context).entries.map((mode) {
             return GCWDropDownMenuItem(
               value: mode.key,
               child: mode.value,
@@ -98,7 +82,7 @@ class NumeralWordsState extends State<NumeralWords> {
                         _currentDecodeMode = value;
                       });
                     },
-                  )                ],
+                  )],
               ),
         GCWTextDivider(
             text: i18n(context, 'common_output')
@@ -110,36 +94,27 @@ class NumeralWordsState extends State<NumeralWords> {
 
   Widget _buildOutput(BuildContext context) {
     var output = '';
-/*
-    Map<String, String> words;
-*/
 
-    if (_currentMode == GCWSwitchPosition.left) {//show numeral words for specific language
+    if (_currentMode == GCWSwitchPosition.left) {
       if (_currentLanguage == NumeralWordsLanguage.ALL)
         return GCWOutputText(
           text: i18n(context, 'numeralwords_language_all_not_feasible'),
         );
       else {
-/*
-        words = numeralWordsMap(_currentLanguage);
-        words.forEach((key, value) {
-          if (int.tryParse(value) != null)
-            output = output + value + ' - ' + key + '\n';
-        });
-*/
         return GCWDefaultOutput(
           child: Column(
             children: columnedMultiLineOutput(
-                numeralWordsMap(_currentLanguage).entries.map((entry) {
-                  if (int.tryParse(entry.value) != null)
-                    return [entry.key, entry.value];
-                }).toList()
+              numeralWordsMap(_currentLanguage).entries.map((entry) {
+                if (int.tryParse(entry.value) != null)
+                  return [entry.key, entry.value];
+              }).toList()
             ),
           ),
         );
       }
     } else
-      output = decodeNumeralwords(_currentDecodeInput.toUpperCase(), _currentLanguage, _currentDecodeMode);
+print(_currentLanguage) ;
+      output = decodeNumeralwords(_currentDecodeInput.toLowerCase(), _currentLanguage, (_currentDecodeMode == GCWSwitchPosition.left));
 
     return GCWOutputText(
         text: output,
