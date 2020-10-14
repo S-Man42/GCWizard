@@ -67,7 +67,22 @@ final Map<String, String> VOLWordToNum = {'ser' : '0', 'bal' : '1', 'tel' : '2',
   'deg' : '10', 'degbal' : '11', 'degtel' : '12', 'degtil' : '13', 'degfol' : '14', 'deglul' : '15', 'degmäl' : '16', 'degvel' : '17', 'degjöl' : '18', 'degzül' : '19',
   'teldeg' : '20', 'tildeg' : '30', 'foldeg' : '40', 'luldeg' : '50', 'mäldeg' : '60', 'veldeg' : '70', 'jöldeg' : '80', 'züldeg' : '90', 'tum' : '100', 'mil' : '1000' };
 
-
+final Map WordToNum = {
+  NumeralWordsLanguage.DEU : DEUWordToNum,
+  NumeralWordsLanguage.ENG : ENGWordToNum,
+  NumeralWordsLanguage.NLD : NLDWordToNum,
+  NumeralWordsLanguage.SWE : SWEWordToNum,
+  NumeralWordsLanguage.NOR : NORWordToNum,
+  NumeralWordsLanguage.DNK : DNKWordToNum,
+  NumeralWordsLanguage.RUS : RUSWordToNum,
+  NumeralWordsLanguage.POL : POLWordToNum,
+  NumeralWordsLanguage.KYR : KYRWordToNum,
+  NumeralWordsLanguage.VOL : VOLWordToNum,
+  NumeralWordsLanguage.FRA : FRAWordToNum,
+  NumeralWordsLanguage.ITA : ITAWordToNum,
+  NumeralWordsLanguage.ESP : ESPWordToNum,
+  NumeralWordsLanguage.POR : PORWordToNum,
+};
 
 Map languageList(context) {
   var languageList = {
@@ -95,8 +110,16 @@ bool _isNumeral(String input){
 }
 
 Map<String, String> numeralWordsMap(NumeralWordsLanguage currentLanguage){
-print('numeralWordsMap')  ;
+  print(currentLanguage.toString());
   Map<String, String> table = new Map<String, String>();
+  if (currentLanguage == NumeralWordsLanguage.ALL) {
+    WordToNum.forEach((key, value) {
+      table.addAll(value);
+    });
+  }else {
+    table = WordToNum[currentLanguage];
+  }
+/*
   switch (currentLanguage) {
     case NumeralWordsLanguage.DEU:  table = DEUWordToNum;      break;
     case NumeralWordsLanguage.ENG:  table = ENGWordToNum;      break;
@@ -128,6 +151,7 @@ print('numeralWordsMap')  ;
       table.addAll(VOLWordToNum);
       break;
   }
+*/
   return table;
 }
 
