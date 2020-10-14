@@ -1,4 +1,4 @@
-import 'package:gc_wizard/i18n/app_localizations.dart';
+
 
 class NumeralWordsOutput {
   final bool state;
@@ -67,59 +67,32 @@ final Map<String, String> VOLWordToNum = {'ser' : '0', 'bal' : '1', 'tel' : '2',
   'deg' : '10', 'degbal' : '11', 'degtel' : '12', 'degtil' : '13', 'degfol' : '14', 'deglul' : '15', 'degmäl' : '16', 'degvel' : '17', 'degjöl' : '18', 'degzül' : '19',
   'teldeg' : '20', 'tildeg' : '30', 'foldeg' : '40', 'luldeg' : '50', 'mäldeg' : '60', 'veldeg' : '70', 'jöldeg' : '80', 'züldeg' : '90', 'tum' : '100', 'mil' : '1000' };
 
-final Map WordToNum = {
-  NumeralWordsLanguage.DEU : DEUWordToNum,
-  NumeralWordsLanguage.ENG : ENGWordToNum,
-  NumeralWordsLanguage.NLD : NLDWordToNum,
-  NumeralWordsLanguage.SWE : SWEWordToNum,
-  NumeralWordsLanguage.NOR : NORWordToNum,
-  NumeralWordsLanguage.DNK : DNKWordToNum,
-  NumeralWordsLanguage.RUS : RUSWordToNum,
-  NumeralWordsLanguage.POL : POLWordToNum,
-  NumeralWordsLanguage.KYR : KYRWordToNum,
-  NumeralWordsLanguage.VOL : VOLWordToNum,
-  NumeralWordsLanguage.FRA : FRAWordToNum,
-  NumeralWordsLanguage.ITA : ITAWordToNum,
-  NumeralWordsLanguage.ESP : ESPWordToNum,
-  NumeralWordsLanguage.POR : PORWordToNum,
-};
 
-Map languageList(context) {
-  var languageList = {
-    NumeralWordsLanguage.DEU : i18n(context, 'numeralwords_language_deu'),
-    NumeralWordsLanguage.ENG : i18n(context, 'numeralwords_language_eng'),
-    NumeralWordsLanguage.FRA : i18n(context, 'numeralwords_language_fra'),
-    NumeralWordsLanguage.ITA : i18n(context, 'numeralwords_language_ita'),
-    NumeralWordsLanguage.DNK : i18n(context, 'numeralwords_language_dnk'),
-    NumeralWordsLanguage.ESP : i18n(context, 'numeralwords_language_esp'),
-    NumeralWordsLanguage.NLD : i18n(context, 'numeralwords_language_nld'),
-    NumeralWordsLanguage.NOR : i18n(context, 'numeralwords_language_nor'),
-    NumeralWordsLanguage.POL : i18n(context, 'numeralwords_language_pol'),
-    NumeralWordsLanguage.POR : i18n(context, 'numeralwords_language_por'),
-    NumeralWordsLanguage.RUS : i18n(context, 'numeralwords_language_rus'),
-    NumeralWordsLanguage.SWE : i18n(context, 'numeralwords_language_swe'),
-    NumeralWordsLanguage.KYR : i18n(context, 'numeralwords_language_kyr'),
-    NumeralWordsLanguage.VOL : i18n(context, 'numeralwords_language_vol'),
-    NumeralWordsLanguage.ALL : i18n(context, 'numeralwords_language_all'),
-  };
-  return languageList;
-}
+
+Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
+  NumeralWordsLanguage.DEU : 'numeralwords_language_deu',
+  NumeralWordsLanguage.ENG : 'numeralwords_language_eng',
+  NumeralWordsLanguage.FRA : 'numeralwords_language_fra',
+  NumeralWordsLanguage.ITA : 'numeralwords_language_ita',
+  NumeralWordsLanguage.DNK : 'numeralwords_language_dnk',
+  NumeralWordsLanguage.ESP : 'numeralwords_language_esp',
+  NumeralWordsLanguage.NLD : 'numeralwords_language_nld',
+  NumeralWordsLanguage.NOR : 'numeralwords_language_nor',
+  NumeralWordsLanguage.POL : 'numeralwords_language_pol',
+  NumeralWordsLanguage.POR : 'numeralwords_language_por',
+  NumeralWordsLanguage.SWE : 'numeralwords_language_swe',
+  NumeralWordsLanguage.RUS : 'numeralwords_language_rus',
+  NumeralWordsLanguage.KYR : 'numeralwords_language_kyr',
+  NumeralWordsLanguage.VOL : 'numeralwords_language_vol',
+  NumeralWordsLanguage.ALL : 'numeralwords_language_all',
+};
 
 bool _isNumeral(String input){
   return (int.tryParse(input) != null );
 }
 
 Map<String, String> numeralWordsMap(NumeralWordsLanguage currentLanguage){
-  print(currentLanguage.toString());
   Map<String, String> table = new Map<String, String>();
-  if (currentLanguage == NumeralWordsLanguage.ALL) {
-    WordToNum.forEach((key, value) {
-      table.addAll(value);
-    });
-  }else {
-    table = WordToNum[currentLanguage];
-  }
-/*
   switch (currentLanguage) {
     case NumeralWordsLanguage.DEU:  table = DEUWordToNum;      break;
     case NumeralWordsLanguage.ENG:  table = ENGWordToNum;      break;
@@ -131,12 +104,12 @@ Map<String, String> numeralWordsMap(NumeralWordsLanguage currentLanguage){
     case NumeralWordsLanguage.NOR:  table = NORWordToNum;      break;
     case NumeralWordsLanguage.POL:  table = POLWordToNum;      break;
     case NumeralWordsLanguage.POR:  table = PORWordToNum;      break;
+    case NumeralWordsLanguage.SWE:  table = SWEWordToNum;      break;
     case NumeralWordsLanguage.RUS:  table = RUSWordToNum;      break;
     case NumeralWordsLanguage.KYR:  table = KYRWordToNum;      break;
-    case NumeralWordsLanguage.SWE:  table = SWEWordToNum;      break;
     case NumeralWordsLanguage.VOL:  table = VOLWordToNum;      break;
     case NumeralWordsLanguage.ALL:
-      table = DEUWordToNum;
+      table = Map<String, String>.from(DEUWordToNum);
       table.addAll(ENGWordToNum);
       table.addAll(FRAWordToNum);
       table.addAll(ITAWordToNum);
@@ -151,7 +124,6 @@ Map<String, String> numeralWordsMap(NumeralWordsLanguage currentLanguage){
       table.addAll(VOLWordToNum);
       break;
   }
-*/
   return table;
 }
 
