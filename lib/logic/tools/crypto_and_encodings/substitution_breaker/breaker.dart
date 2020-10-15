@@ -18,9 +18,9 @@ import 'dart:io';
 import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/key.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
-//import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/EN.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/EN.dart';
 
-
+enum BreakerAlphabet{English, German}
 
 class BreakerResult{
 /*
@@ -152,8 +152,22 @@ class BreakerInfo{
       _key = null;
     }
 
+BreakerResult break_cipher(String input, BreakerAlphabet alphabet) {
 
-    //@staticmethod
+      switch (alphabet){
+        case BreakerAlphabet.English:
+          Breaker(EN());
+          break;
+        case BreakerAlphabet.German:
+          return null;
+          break;
+      }
+
+     return  _break_cipher(input);
+}
+
+
+//@staticmethod
      Iterable<int>  _text_iterator(String txt, String alphabet) sync*  {
     /*
         """Implements an iterator for a given text string
@@ -236,16 +250,12 @@ class BreakerInfo{
                 for (var idx2 = idx1 + 1; idx2 < key_len; idx2++) {
                   ch1 = key[idx1];
                   ch2 = key[idx2];
-                  char_positions[ch1].forEach((idx) {
-                    plaintext[idx] = idx2;
-                  });
-                  char_positions[ch2].forEach((idx) {
-                    plaintext[idx] = idx1;
-                  });
+                  char_positions[ch1].forEach((idx) { plaintext[idx] = idx2;});
+                  char_positions[ch2].forEach((idx) {plaintext[idx] = idx1;});
                   nbr_keys += 1;
                   tmp_fitness = 0;
-                  quad_idx =
-                      (plaintext[0] << 10) + (plaintext[1] << 5) + plaintext[2];
+                  quad_idx = (plaintext[0] << 10) + (plaintext[1] << 5) + plaintext[2];
+
                   for (var char = 3; char < plaintext.length; char++) {
                     quad_idx = ((quad_idx & 0x7FFF) << 5) + char;
                     tmp_fitness += quadgram[quad_idx];
@@ -256,12 +266,8 @@ class BreakerInfo{
                     key[idx1] = ch2;
                     key[idx2] = ch1;
                   } else {
-                    char_positions[ch1].forEach((idx) {
-                      plaintext[idx] = idx1;
-                    });
-                    char_positions[ch2].forEach((idx) {
-                      plaintext[idx] = idx2;
-                    });
+                    char_positions[ch1].forEach((idx) {plaintext[idx] = idx1;});
+                    char_positions[ch2].forEach((idx) {plaintext[idx] = idx2;});
                   }
                 }
             }
@@ -269,7 +275,7 @@ class BreakerInfo{
         return Tuple2<int,int>(max_fitness, nbr_keys);
     }
 
-    BreakerResult break_cipher(String ciphertext, {int maxRounds = 10000, int consolidate = 3}){
+    BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int consolidate = 3}){
      /*   """Breaks a given cipher text
 
         :param str ciphertext: the ciphertext to break
@@ -281,10 +287,10 @@ class BreakerInfo{
         """
         */
 
-        if (!((1 <= maxRounds) & (maxRounds <= 10000)))
+        if (!((1 <= maxRounds) | (maxRounds <= 10000)))
             //raise ValueError("maximum number of rounds not in the valid range 1..10000")
           return null;
-        if (!((1 <= consolidate) & (consolidate <= 30)))
+        if (!((1 <= consolidate) | (consolidate <= 30)))
             //raise ValueError("consolidate parameter out of valid range 1..30")
             return null;
         var start_time = DateTime.now();
@@ -302,14 +308,12 @@ class BreakerInfo{
             var i = 0;
             cipher_bin
               .forEach((x) {
-                if (x == idx)
-                  posList.add(i);
+                if (x == idx) posList.add(i);
                 i += 1;
               });
             char_positions.add(posList);
           };
 
-        var key_len = _alphabet.length;
         var local_maximum = 0;
         var local_maximum_hit = 1;
         var key = List<int>();
@@ -323,8 +327,8 @@ class BreakerInfo{
 
             var tuple = _hill_climbing(key, cipher_bin, char_positions);
             var fitness = tuple.item1;
-            var tmp_nbr_keys = tuple.item2;
-            nbr_keys += tmp_nbr_keys;
+            nbr_keys += tuple.item2;
+
             if (fitness > local_maximum){
               local_maximum = fitness;
               local_maximum_hit = 1;
@@ -332,12 +336,12 @@ class BreakerInfo{
               best_key.addAll(key);
             } else if (fitness == local_maximum){
               local_maximum_hit += 1;
-              if (local_maximum_hit == consolidate)
-                break;
+              if (local_maximum_hit == consolidate) break;
             }
             var key_str = best_key.map((x) => _alphabet[x]).join();
             _key = Key(key_str, alphabet:_alphabet);
             var seconds = (DateTime.now().difference(start_time)).inSeconds;
+
             return BreakerResult(
               ciphertext,
               _key.decode(ciphertext),
@@ -350,10 +354,13 @@ class BreakerInfo{
               seconds.toDouble(),
             );
           }
-
+/*
           double sum(List<double> list) {
             double sum = 0;
             list.forEach((val) { sum += val;});
             return sum;
+
+
           }
-        }
+          */
+    }

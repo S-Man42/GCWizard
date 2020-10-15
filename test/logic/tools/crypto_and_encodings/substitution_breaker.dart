@@ -3,7 +3,7 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/key.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/generate_quadgrams.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 import 'dart:async';
 
 void main() {
@@ -103,24 +103,9 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
-        var directory = Directory.current.toString().replaceAll(r"'", "");
-        //directory += r"/lib/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/";
-                directory += r"\lib\logic\tools\crypto_and_encodings\substitution_breaker\quadgrams\";
-        directory =  directory.replaceAll(r"/", r"\");
-
-
-        var fileIn = File(r"D:\tmp\GitHub\GC WIzard 1.2.0 - Kopie\GCWizard\lib\logic\tools\crypto_and_encodings\substitution_breaker\quadgrams\quadgram_corpus.txt");
-        //var fileIn = File(directory + r"quadgram_corpus.txt");
-        var fileOut= File(directory + "xxx.txt");
-
-
-
-//for a directory: await Directory(savePath).exists();
-        if (await fileIn.exists()) {
-        print("File exists " + fileIn.path);
-        } else {
-        print("File don't exists " + fileIn.path);
-        }
+        var filePath = path.current + "/lib/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/";
+        var fileIn = File(path.normalize(filePath +'quadgram_corpus.txt'));
+        var fileOut= File(path.normalize(filePath + 'xxx.txt'));
 
         var _actual = generate_quadgrams(fileIn, fileOut);
         expect(_actual, elem['expectedOutput']);

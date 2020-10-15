@@ -53,7 +53,7 @@ generate_quadgrams(File corpus_fh, File quadgram_fh, {String alphabet = DEFAULT_
     //raise AlphabetInvalid("Alphabet must have less or equal than 32 characters")
     return null;
   }
-  var iterator = _file_iterator(corpus_fh, _alphabet);
+
 
   /*
         var quadgram_val = iterator.iterator.current;
@@ -72,15 +72,22 @@ generate_quadgrams(File corpus_fh, File quadgram_fh, {String alphabet = DEFAULT_
           quadgrams[quadgram_val] += 1;
         });
         */
+  var iterator = _file_iterator(corpus_fh, _alphabet);
   var quadgrams = List<double>(32 * 32 * 32 * 32);
   var quadgram_val=0;
   try {
-    iterator.iterator.moveNext();
-    quadgram_val = iterator.iterator.current;
-    iterator.iterator.moveNext();
-    quadgram_val = (quadgram_val << 5) + iterator.iterator.current;
-    iterator.iterator.moveNext();
-    quadgram_val = (quadgram_val << 5) + iterator.iterator.current;
+    if (iterator.iterator.moveNext()) {
+      quadgram_val = iterator.elementAt(0); // iterator.iterator.current;
+      if (iterator.iterator.moveNext()) {
+        quadgram_val = (quadgram_val << 5) + iterator.elementAt(1); //iterator.iterator.current;
+        if (iterator.iterator.moveNext()) {
+          quadgram_val = (quadgram_val << 5) + iterator.elementAt(2); iterator.iterator.current;
+        } else
+          return null;
+      } else
+          return null;
+    } else
+      return null;
   } on Exception {
     //except StopIteration:
     //"More than three characters from the given alphabet are required"
@@ -94,13 +101,17 @@ generate_quadgrams(File corpus_fh, File quadgram_fh, {String alphabet = DEFAULT_
 
   iterator.forEach((numerical_char) {
     quadgram_val = ((quadgram_val & 0x7FFF) << 5) + numerical_char;
-    quadgrams[quadgram_val] += 1;
+    if (quadgrams[quadgram_val] == null)
+      quadgrams[quadgram_val] = 1;
+    else
+      quadgrams[quadgram_val] += 1;
   });
 
-  double quadgram_sum = quadgrams.map((e) => BigInt.from(e)).reduce((a, b) => a + b).toDouble();
+  double quadgram_sum = 0; //quadgrams.map((e) => BigInt.from(e)).reduce((a, b) => a + b).toDouble();
   double quadgram_min = 10000000;
   quadgrams.forEach((val){
     if (val != null) {
+      quadgram_sum += val;
       quadgram_min = min(quadgram_min, val);
     }
   });
@@ -120,8 +131,11 @@ generate_quadgrams(File corpus_fh, File quadgram_fh, {String alphabet = DEFAULT_
     idx += 1;
   });
 
+  idx = 0;
   quadgrams.forEach((quadgram) {
-    quadgram =  (quadgram / norm * 1000).round().toDouble();
+    if (quadgram != null)
+      quadgrams[idx] = (quadgram / norm * 1000).round().toDouble();
+    idx += 1;
   });
 
   // Just for curiosity: determine the most frequent quadgram
@@ -129,16 +143,16 @@ generate_quadgrams(File corpus_fh, File quadgram_fh, {String alphabet = DEFAULT_
   var max_idx = 0;
   double max_val = 0;
   quadgrams
-      .forEach((val) {
-    if (val > max_val){
-      max_val = val;
-      max_idx = idx;
-    };
-    idx += 1;
-  });
+    .forEach((val) {
+      if (val != null && val > max_val){
+        max_val = val;
+        max_idx = idx;
+      };
+      idx += 1;
+    });
 
   // now construct the ASCII representation from the index
-  var max_chars = [];
+  var max_chars = List<String>();
   idx = max_idx;
   /*        for _ in range(4){
             max_chars = [alphabet[index & 0x1F]] + max_chars;
@@ -146,10 +160,44 @@ generate_quadgrams(File corpus_fh, File quadgram_fh, {String alphabet = DEFAULT_
 				};
 				*/
   for (int i = 0; i < 4; i++) {
-    max_chars = [alphabet[idx & 0x1F]] + max_chars;
+    max_chars.insert(0,alphabet[idx & 0x1F] ); //+ max_chars ??????
     idx >>= 5;
   }
 
+  var sb = new StringBuffer();
+  sb.write("import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';\n");
+  sb.write("\n");
+  sb.write("class XXX implements Quadgrams {\n");
+  sb.write("\n");
+  sb.write("XXX(){}\n");
+  sb.write("\n");
+  sb.write("final String alphabet = '" +  alphabet + "';\n");
+  sb.write("final int nbr_quadgrams = " + quadgram_sum.round().toString() +";\n");
+  sb.write("final String most_frequent_quadgram = '" +max_chars.join() + "';\n");
+  sb.write("final int max_fitness = " +  max_val.round().toString() + ";\n");
+  sb.write("final double average_fitness = " + (quadgram_sum / pow(alphabet.length, 4 )).toString() + ";\n");
+  sb.write("final List<int> quadgrams = [");
+  sb.write("\n");
+
+  bool first = true;
+  idx  = 0;
+  String out ='';
+  quadgrams.forEach((val) {
+    if (first) first = false;
+    else sb.write(',');
+    out = val.toString();
+    if (val == null) out ='0';
+    sb.write(out);
+    idx += out.length + 1;
+    if (idx > 230) {
+      sb.write("\n");
+      idx = 0;
+    }
+  });
+  sb.write("\n]\n");
+  sb.write("}\n");
+
+  quadgram_fh.writeAsStringSync(sb.toString());
 /*
 json.dump(
             {
@@ -271,7 +319,7 @@ calc_fitness(String txt) {
 }
 
 //@staticmethod
-Iterable<int> _file_iterator(File file_fh, String alphabet) sync*  {
+Iterable<int> _file_iterator(File file_fh, String alphabet)  sync*  {
   /*
         """Implements an iterator for a given file based text file
 
@@ -298,8 +346,8 @@ Iterable<int> _file_iterator(File file_fh, String alphabet) sync*  {
         }
 */
   String text = file_fh.readAsStringSync();
-  //file_fh.readAsString().then((String txt) {
-    //iterateText(txt, alphabet);
+  //file_fh.readAsString().then((String text) {
+    //iterateText(text, alphabet);
   // });
 
   var trans = alphabet.toLowerCase();
@@ -311,6 +359,7 @@ Iterable<int> _file_iterator(File file_fh, String alphabet) sync*  {
     if (index >= 0)
       yield index;
   }
+
 }
 
 double calc_fitness_file(File cleartext_fh){
