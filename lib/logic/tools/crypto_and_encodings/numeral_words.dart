@@ -109,6 +109,7 @@ Map NumWords = {
   NumeralWordsLanguage.VOL : VOLWordToNum,
 };
 
+
 bool _isNumeral(String input){
   return (int.tryParse(input) != null );
 }
@@ -235,7 +236,6 @@ NumeralWordsDecodeOutput decodeNumeralwords(String input, NumeralWordsLanguage l
   if (input == null || input == '')
     return NumeralWordsDecodeOutput(emptyList, emptyList, emptyListLanguage);
 
-  List<String> output = new List<String>();
   List<String> outputNumbers = new List<String>();
   List<String> outputWords = new List<String>();
   List<String> outputLanguages = new List<String>();
@@ -248,16 +248,22 @@ NumeralWordsDecodeOutput decodeNumeralwords(String input, NumeralWordsLanguage l
 
   if (decodeMode) { // search only whole words
     String helpText;
+    String helpText1;
     String inputToDecode;
 
-    if (input.startsWith('a hundred'))
-      helpText = input.replaceFirst('a hundred', 'onehundred');
-    else if (input.startsWith('a thousand'))
-      helpText = input.replaceFirst('a thousand', ' a thousand');
-    else if (input.startsWith('tausend'))
-      helpText = input.replaceFirst('tausend', ' tausend');
+    RegExp expr = RegExp('(one|two|three|four|five|six|seven|eight|nine)[ ](hundred)');
+    if (expr.hasMatch(input))
+      helpText1 = input.replaceAllMapped(expr, (Match m) {return m.group(0).replaceAll(' ','');});
     else
-      helpText = input;
+      helpText1 = input;
+    if (helpText1.startsWith('a hundred'))
+      helpText = helpText1.replaceFirst('a hundred', 'onehundred');
+    else if (helpText1.startsWith('a thousand'))
+      helpText = helpText1.replaceFirst('a thousand', ' a thousand');
+    else if (helpText1.startsWith('tausend'))
+      helpText = helpText1.replaceFirst('tausend', ' tausend');
+    else
+      helpText = helpText1;
     inputToDecode = helpText.replaceAll('hundred and ', 'hundredand')
         .replaceAll(' a hundred', ' onehundred')
         .replaceAll(' hundred ', 'hundred ')
