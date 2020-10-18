@@ -146,7 +146,7 @@ void main(){
 
       {'input' : 'huit cinq seize sis one two eins', 'language' : NumeralWordsLanguage.ALL, 'decodeMode' : false, 'expectedOutput' : NumeralWordsDecodeOutput(['8','5','16','6','1','2','1'],
       ['huit', 'cinq', 'seize', 'sis', 'one', 'two', 'eins'],
-      ['numeralwords_language_fra', 'numeralwords_language_fra', 'numeralwords_language_fra', 'numeralwords_language_fra', 'numeralwords_language_en', 'numeralwords_language_en','numeralwords_language_du']},
+      ['numeralwords_language_fra', 'numeralwords_language_fra', 'numeralwords_language_fra', 'numeralwords_language_fra', 'numeralwords_language_en', 'numeralwords_language_en','numeralwords_language_du'])},
     ];
 
     _inputsToExpected.forEach((elem) {
