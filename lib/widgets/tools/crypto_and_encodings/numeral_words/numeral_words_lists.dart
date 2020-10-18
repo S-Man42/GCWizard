@@ -15,7 +15,8 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
   TextEditingController _decodeController;
 
   var _currentDecodeInput = '';
-  var _currentLanguage = NumeralWordsLanguage.ENG;
+  var _currentLanguage = NumeralWordsLanguage.DEU;
+  Map<NumeralWordsLanguage, String> _languageList;
 
   @override
   void initState() {
@@ -31,7 +32,6 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWDropDownButton(
@@ -54,22 +54,25 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
   }
 
   Widget _buildOutput(BuildContext context) {
+
     if (_currentLanguage == NumeralWordsLanguage.ALL)
       return GCWDefaultOutput(
         child: GCWOutputText(
           text: i18n(context, 'numeralwords_language_all_not_feasible')
         )
       );
-    else
+    else {
+      Map<String, String> numeralWordsOverview = new Map<String, String>();
+      numeralWordsOverview = NumWords[_currentLanguage];
       return GCWDefaultOutput(
         child: Column(
           children: columnedMultiLineOutput(
-            NumWords[_currentLanguage].entries.map((entry) {
-              if (int.tryParse(entry.value) != null)
-                return [entry.key, entry.value];
-            }).toList()
+              numeralWordsOverview.entries.map((entry) {
+                  return [entry.key, entry.value];
+              }).toList()
           ),
         ),
       );
+    }
   }
 }
