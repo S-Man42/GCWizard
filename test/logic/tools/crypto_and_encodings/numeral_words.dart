@@ -1,12 +1,12 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 void main(){
   group("NumeralWords.decodeNumeralwordsEntireWords:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : '', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : true, 'expectedOutput' : ''},
-      {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : true, 'expectedOutput' : '25'},
+      {'input' : null, 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : true, 'expectedOutput' : NumeralWordsDecodeOutput([''], [''], ['numeralwords_language_empty'])},
+      {'input' : '', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : true, 'expectedOutput' : NumeralWordsDecodeOutput([''], [''], ['numeralwords_language_empty'])},
+      {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : true, 'expectedOutput' : NumeralWordsDecodeOutput(['25'], ['fünfundzwanzig'], ['numeralwords_language_empty'])},
 
       {'input' : 'hundert', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : true, 'expectedOutput' : '100'},
       {'input' : 'hunderteins', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : true, 'expectedOutput' : '101'},
@@ -82,7 +82,7 @@ void main(){
   group("NumeralWords.decodeNumeralwordsEntireWordsAsParts:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : '', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false, 'expectedOutput' : ''},
-      {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false, 'expectedOutput' : '25'},
+      {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false, 'expectedOutput' : {{'25'},{'fünfundzwanzig'},{''}}},
 
       {'input' : 'hundert', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false, 'expectedOutput' : '100'},
       {'input' : 'hunderteins', 'language' : NumeralWordsLanguage.DEU, 'decodeMode' : false, 'expectedOutput' : '101'},
