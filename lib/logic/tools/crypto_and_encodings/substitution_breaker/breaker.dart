@@ -21,6 +21,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/EN.dart';
 
 enum BreakerAlphabet{English, German}
+enum ErrorCode{OK, MAX_ROUNDS_PARAMETER, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, ALPHABET_TOO_LONG, WRONG_GENERATE_TEXT}
 
 class BreakerResult{
 /*
@@ -48,6 +49,7 @@ class BreakerResult{
         int nbr_rounds=0;
         double keys_per_second=0;
         double seconds=0;
+        ErrorCode erroroCode;
 
         BreakerResult(
           String ciphertext,
@@ -59,18 +61,20 @@ class BreakerResult{
           int nbr_rounds,
           double keys_per_second,
           double seconds,
+          ErrorCode erroroCode
     ){
         //"""Instantiation method
         //"""
-        ciphertext = ciphertext;
-        plaintext = plaintext;
-        key = key;
-        alphabet = alphabet;
-        fitness = fitness;
-        nbr_keys = nbr_keys;
-        nbr_rounds = nbr_rounds;
-        keys_per_second = keys_per_second;
-        seconds = seconds;
+        this.ciphertext = ciphertext;
+        this.plaintext = plaintext;
+        this.key = key;
+        this.alphabet = alphabet;
+        this.fitness = fitness;
+        this.nbr_keys = nbr_keys;
+        this.nbr_rounds = nbr_rounds;
+        this.keys_per_second = keys_per_second;
+        this.seconds = seconds;
+        this.erroroCode =erroroCode;
 }
      toString(){
         return "key = {}"; //.format(_key)
@@ -117,58 +121,56 @@ class BreakerInfo{
 }
 
 /*
-    """Class to represent the breaker implementation based on quadgrams
+"""Class to represent the breaker implementation based on quadgrams
 
-    :ivar info: a :class:`BreakerInfo` object
-    :type info: :class:`BreakerInfo` object
-    :ivar key: a :class:`Key` object with the key found when breaking a cipher
-    :type key: :class:`Key`
-    :param quadgram_fh: file handle (i.e., a read()-supporting file like object)
-        to read the quadgrams from.
-    :type quadgram_fh: file handle
-    """
+:ivar info: a :class:`BreakerInfo` object
+:type info: :class:`BreakerInfo` object
+:ivar key: a :class:`Key` object with the key found when breaking a cipher
+:type key: :class:`Key`
+:param quadgram_fh: file handle (i.e., a read()-supporting file like object)
+    to read the quadgrams from.
+:type quadgram_fh: file handle
+"""
 */
-    const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-    String  _alphabet=null;
-    int _alphabet_len = 0;
-    List<int> _quadgrams = null;
-    BreakerInfo _info = null;
-    Key _key = null;
+const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+String  _alphabet=null;
+int _alphabet_len = 0;
+List<int> _quadgrams = null;
+BreakerInfo _info = null;
+Key _key = null;
 
-    Breaker(Quadgrams languageQuadgrams) {
-      /*"""Init the instance
-        """
-        */
-      _alphabet = languageQuadgrams.alphabet;
-      _alphabet_len = _alphabet.length;
-      _quadgrams = languageQuadgrams.quadgrams;
-      _info = BreakerInfo(
-          languageQuadgrams.alphabet,
-          languageQuadgrams.nbr_quadgrams,
-          languageQuadgrams.most_frequent_quadgram,
-          languageQuadgrams.average_fitness / 10,
-          languageQuadgrams.max_fitness / 10
-      );
-      _key = null;
-    }
 
 BreakerResult break_cipher(String input, BreakerAlphabet alphabet) {
-
-      switch (alphabet){
-        case BreakerAlphabet.English:
-          Breaker(EN());
-          break;
-        case BreakerAlphabet.German:
-          return null;
-          break;
-      }
-
-     return  _break_cipher(input);
+  switch (alphabet){
+    case BreakerAlphabet.English:
+      _initBreaker(EN());
+      break;
+    case BreakerAlphabet.German:
+      return null;
+      break;
+  }
+  return  _break_cipher(input);
 }
 
+_initBreaker(Quadgrams languageQuadgrams) {
+  /*"""Init the instance
+    """
+    */
+  _alphabet = languageQuadgrams.alphabet;
+  _alphabet_len = _alphabet.length;
+  _quadgrams = languageQuadgrams.quadgrams;
+  _info = BreakerInfo(
+      languageQuadgrams.alphabet,
+      languageQuadgrams.nbr_quadgrams,
+      languageQuadgrams.most_frequent_quadgram,
+      languageQuadgrams.average_fitness / 10,
+      languageQuadgrams.max_fitness / 10
+  );
+  _key = null;
+}
 
 //@staticmethod
-     Iterable<int>  _text_iterator(String txt, String alphabet) sync*  {
+Iterable<int>  _text_iterator(String text, String alphabet) sync*  {
     /*
         """Implements an iterator for a given text string
 
@@ -180,19 +182,21 @@ BreakerResult break_cipher(String input, BreakerAlphabet alphabet) {
         :return: an iterator which iterates over all characters of the text string
             which are present in the alphabet.
         """
+*/
+  var trans = alphabet.toLowerCase();
+  int index = -1;
 
-        trans = {val: key for key, val in enumerate(alphabet.lower())};
-        for char in txt.lower(){
-            val = trans.get(char);
-            if val is not None{
-                yield val;
-            }
-        }
-        */
-      iterateText (txt, alphabet);
+  text = text.toLowerCase();
+  for (int i = 0; i < text.length; i++) {
+    index = trans.indexOf(text[i]);
+    if (index >= 0)
+      yield index;
+  }
+
+      //iterateText (txt, alphabet);
 }
 
-  Iterable<int> iterateText(String text, String alphabet) sync* {
+Iterable<int> iterateText(String text, String alphabet) sync* {
   var trans = alphabet.toLowerCase();
   int index = -1;
 
@@ -205,7 +209,7 @@ BreakerResult break_cipher(String input, BreakerAlphabet alphabet) {
 }
 
 
-    Tuple2<int,int> _hill_climbing(List<int> key, List<int> cipher_bin, List<List<int>>  char_positions){
+Tuple2<int,int> _hill_climbing(List<int> key, List<int> cipher_bin, List<List<int>>  char_positions){
  /*       """Basic hill climbing function
 
         Starting from the given key two charters are swapped, hoping the mutated key
@@ -234,7 +238,7 @@ BreakerResult break_cipher(String input, BreakerAlphabet alphabet) {
         """
    */
         var plaintext = List<int>();
-        cipher_bin.map((idx) => plaintext.add(key.indexOf(cipher_bin[idx])));
+        cipher_bin.forEach((idx) => plaintext.add(key.indexOf(cipher_bin[idx])));
         var quadgram = _quadgrams;
         var key_len = _alphabet_len;
         var nbr_keys = 0;
@@ -275,7 +279,7 @@ BreakerResult break_cipher(String input, BreakerAlphabet alphabet) {
         return Tuple2<int,int>(max_fitness, nbr_keys);
     }
 
-    BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int consolidate = 3}){
+BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int consolidate = 3}){
      /*   """Breaks a given cipher text
 
         :param str ciphertext: the ciphertext to break
@@ -287,12 +291,12 @@ BreakerResult break_cipher(String input, BreakerAlphabet alphabet) {
         """
         */
 
-        if (!((1 <= maxRounds) | (maxRounds <= 10000)))
+        if (!((1 < maxRounds) | (maxRounds > 10000)))
             //raise ValueError("maximum number of rounds not in the valid range 1..10000")
-          return null;
-        if (!((1 <= consolidate) | (consolidate <= 30)))
+          return BreakerResult('','','','',0,0,0,0,0,ErrorCode.MAX_ROUNDS_PARAMETER);
+        if (!((1 < consolidate) | (consolidate > 30)))
             //raise ValueError("consolidate parameter out of valid range 1..30")
-            return null;
+            return BreakerResult('','','','',0,0,0,0,0,ErrorCode.CONSOLIDATE_PARAMETER);
         var start_time = DateTime.now();
         var nbr_keys = 0;
         var cipher_bin = List<int>();
@@ -300,7 +304,7 @@ BreakerResult break_cipher(String input, BreakerAlphabet alphabet) {
 
         if (cipher_bin.length < 4)
             //raise ValueError("ciphertext is too short")
-          return null;
+          return BreakerResult('','','','',0,0,0,0,0,ErrorCode.TEXT_TOO_SHORT);
 
         var char_positions = List<List<int>>();
         for (int idx = 0; idx < _alphabet.length; idx++) {
@@ -316,51 +320,45 @@ BreakerResult break_cipher(String input, BreakerAlphabet alphabet) {
 
         var local_maximum = 0;
         var local_maximum_hit = 1;
+        var round_cntr =0;
         var key = List<int>();
         var best_key = List<int>();
         for (int idx = 0; idx < _alphabet.length; idx++) {
           key.add(idx);
           best_key.add(idx);
         }
-        for (int round_cntr = 0; round_cntr < maxRounds; round_cntr++) {
-            key.shuffle();
+        for (round_cntr = 0; round_cntr < maxRounds; round_cntr++) {
+          key.shuffle();
 
-            var tuple = _hill_climbing(key, cipher_bin, char_positions);
-            var fitness = tuple.item1;
-            nbr_keys += tuple.item2;
+          var tuple = _hill_climbing(key, cipher_bin, char_positions);
+          var fitness = tuple.item1;
+          nbr_keys += tuple.item2;
 
-            if (fitness > local_maximum){
-              local_maximum = fitness;
-              local_maximum_hit = 1;
-              best_key.clear();
-              best_key.addAll(key);
-            } else if (fitness == local_maximum){
-              local_maximum_hit += 1;
-              if (local_maximum_hit == consolidate) break;
-            }
-            var key_str = best_key.map((x) => _alphabet[x]).join();
-            _key = Key(key_str, alphabet:_alphabet);
-            var seconds = (DateTime.now().difference(start_time)).inSeconds;
-
-            return BreakerResult(
-              ciphertext,
-              _key.decode(ciphertext),
-              key_str,
-              _alphabet,
-              local_maximum / ((cipher_bin.length) - 3) / 10,
-              nbr_keys,
-              round_cntr,
-              (nbr_keys / seconds),
-              seconds.toDouble(),
-            );
+          if (fitness > local_maximum) {
+            local_maximum = fitness;
+            local_maximum_hit = 1;
+            best_key.clear();
+            best_key.addAll(key);
+          } else if (fitness == local_maximum) {
+            local_maximum_hit += 1;
+            if (local_maximum_hit == consolidate) break;
           }
-/*
-          double sum(List<double> list) {
-            double sum = 0;
-            list.forEach((val) { sum += val;});
-            return sum;
+        }
+        var key_str = best_key.map((x) => _alphabet[x]).join();
+        _key = Key(key_str, alphabet: _alphabet);
+        var seconds = (DateTime.now().difference(start_time)).inMilliseconds / 1000;
 
+        return BreakerResult(
+          ciphertext,
+          _key.decode(ciphertext),
+          key_str,
+          _alphabet,
+          local_maximum / ((cipher_bin.length) - 3) / 10,
+          nbr_keys,
+          round_cntr,
+          (nbr_keys / seconds),
+          seconds,
+          ErrorCode.OK
+        );
 
-          }
-          */
     }

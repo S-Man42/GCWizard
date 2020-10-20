@@ -122,17 +122,18 @@ static String check_key(String key, String alphabet){
     if ((key == null) || (key == ''))
         return null;
     key = key.toLowerCase();
-    var key_set = _set(key) ; // remove double characters
-    if (key.length != key_set.length) //??? kann doch nie zutreffen
+    if (key.length != _set(key).length) 
         //raise KeyInvalid("key characters must be unique");
         return null;
 
     if (key.length != alphabet.length)
         //raise KeyInvalid("key must be as long as the alphabet");
         return null;
-    if (key_set != _set(alphabet)) // remove double characters
+    bool result = true;
+    key.split('').map((char) =>  result & alphabet.contains(char));
+    if (!result)
        // raise KeyInvalid("key must use the same set of characters than the alphabet");
-        return null;
+       return null;
     return key;
 }
 
@@ -237,8 +238,8 @@ static Map<String,String> _maketrans(List<String> keyList, List<String> valueLis
     }
     return map;
 }
-
-static _set(String text) {
+// remove double characters
+static String _set(String text) {
    return text.split('').toSet().join(); // remove double characters
 }
 }
