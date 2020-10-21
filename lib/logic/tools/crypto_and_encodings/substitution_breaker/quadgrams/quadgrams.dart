@@ -3,14 +3,23 @@ import 'dart:math';
 class Quadgrams {
   static const int maxAlphabetLength = 32;
 
-  final String  alphabet = null;
-  final int nbr_quadgrams = 0;
-  final String most_frequent_quadgram = null;
-  final int max_fitness = 0;
-  final double average_fitness = 0;
-  final int quadgramsSize = 0;
-  final List<int> quadgrams = null;
-  final Map<int, List<int>> quadgramsCompressed = null;
+  String  alphabet = null;
+  int nbr_quadgrams = 0;
+  String most_frequent_quadgram = null;
+  int max_fitness = 0;
+  double average_fitness ;
+  int quadgramsSize = 0;
+  List<int> _quadgrams = null;
+  Map<int, List<int>> quadgramsCompressed = null;
+
+  List<int> quadgrams() {
+    if (_quadgrams != null)
+      return _quadgrams;
+
+    _quadgrams = decompressQuadgrams(quadgramsCompressed, pow(Quadgrams.maxAlphabetLength, 3) * 32); // alphabet.length
+    quadgramsCompressed = null;
+    return _quadgrams;
+  }
 
 
   static Map<int, List<int>> compressQuadgrams (List<int> quadgrams) {
@@ -22,10 +31,13 @@ class Quadgrams {
         blockStart = i;
 
       if (blockStart >= 0) {
-        // if 0 follows twice => new list
+        // if five 0 => new list
         if (((i + 2 < quadgrams.length) &&
             (quadgrams[i+1] == 0) | (quadgrams[i+1] == null) &&
-            (quadgrams[i+2] == 0) | (quadgrams[i+2] == null)) ||
+            (quadgrams[i+2] == 0) | (quadgrams[i+2] == null) &&
+            (quadgrams[i+3] == 0) | (quadgrams[i+3] == null) &&
+            (quadgrams[i+4] == 0) | (quadgrams[i+4] == null) &&
+            (quadgrams[i+5] == 0) | (quadgrams[i+5] == null)) ||
           (i + 2 >= quadgrams.length)) {
           var quadgramList = List<int>();
           quadgramList.addAll(quadgrams.getRange(blockStart, min(i + 1, quadgrams.length)));
@@ -40,10 +52,12 @@ class Quadgrams {
   static List<int> decompressQuadgrams (Map<int, List<int>> quadgramsCompressed, int size) {
     var list = List<int>(size);
 
-    list.fillRange(0, list.length -1, 0);
+    list.fillRange(0, list.length , 0);
 
     quadgramsCompressed.forEach((idx, values) {
-      list.replaceRange(idx, idx + values.length, values);
+      for (int i = idx; i < idx + values.length; i++) {
+        list[i] = values[i - idx];
+      }
     });
     return list;
   }

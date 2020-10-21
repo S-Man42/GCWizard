@@ -121,6 +121,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution_breaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/symbol_table.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
@@ -662,6 +663,12 @@ class Registry {
         i18nPrefix: 'substitution',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'substitution ersetzen alphabet change austauschen change switch'
+      ),
+      GCWToolWidget(
+          tool: SubstitutionBreaker(),
+          i18nPrefix: 'substitution_breaker',
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: 'substitution ersetzen alphabet change austauschen change switch solver loeser breaker'
       ),
       GCWToolWidget(
         tool: SudokuSolver(),

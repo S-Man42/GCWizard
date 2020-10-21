@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/breaker.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/reverse.dart';
-import 'package:gc_wizard/utils/alphabets.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+
 
 class SubstitutionBreaker extends StatefulWidget {
   @override
@@ -18,14 +19,14 @@ class SubstitutionBreaker extends StatefulWidget {
 class SubstitutionBreakerState extends State<SubstitutionBreaker> {
 
   String _currentInput = '';
-  BreakerAlphabet _currentAlphabet = BreakerAlphabet.English;
+  BreakerAlphabet _currentAlphabet = BreakerAlphabet.German;
 
 
   @override
   Widget build(BuildContext context) {
     var BreakerAlphabetItems = {
-      BreakerAlphabet.English : i18n(context, 'chao_alphabet_az'),
-      BreakerAlphabet.English : i18n(context, 'chao_alphabet_za'),
+      BreakerAlphabet.English : i18n(context, 'substitution_breaker_alphabet_german'),
+      BreakerAlphabet.German : i18n(context, 'substitution_breaker_alphabet_english'),
     };
 
     return Column(
@@ -38,7 +39,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
           },
         ),
         GCWTextDivider(
-          text: i18n(context, 'chao_alphabet_cipher')
+          text: i18n(context, 'common_alphabet')
         ),
         GCWDropDownButton(
           value: _currentAlphabet,
@@ -54,8 +55,14 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
             );
           }).toList(),
         ),
-
-        _buildOutput()
+        GCWButton(
+          text: i18n(context, 'substitution_breaker_start'),
+          onPressed: () {
+            setState(() {
+              _buildOutput();
+            });
+          },
+        ),
       ],
     );
   }
@@ -67,9 +74,28 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     var _currentOutput = break_cipher(_currentInput, _currentAlphabet);
     if (_currentOutput == null)
       return GCWDefaultOutput();
+    if (_currentOutput.errorCode != ErrorCode.OK)
+      return GCWDefaultOutput(child: _currentOutput.errorCode.toString());
 
-    return GCWDefaultOutput(
-      child: _currentOutput.plaintext,
+    return GCWMultipleOutput(
+      children: [
+        _currentOutput.plaintext,
+        GCWOutput(
+          title: i18n(context, 'common_key'),
+          child: GCWOutputText(
+
+            text:
+            _currentOutput.alphabet +'\n' + _currentOutput.key
+            + '\n'
+            + 'keys/s: ' + _currentOutput.keys_per_second.toString() + '\n'
+            + 'keys: ' + _currentOutput.nbr_keys.toString() + '\n'
+            + 'rounds: ' + _currentOutput.nbr_rounds .toString() + '\n'
+            + 'seconds: ' + _currentOutput.seconds .toString() + 's'
+            ,
+            isMonotype: true,
+          ),
+        )
+      ],
     );
   }
 }
