@@ -64,18 +64,11 @@ String  _alphabet=null;
 int _alphabet_len = 0;
 List<int> _quadgrams = null;
 
-Future<BreakerResult> break_cipher(String input, BreakerAlphabet alphabet) async {
+Future<BreakerResult> break_cipher(String input, Quadgrams quadgrams) async {
   if (input == null || input == '')
     return BreakerResult(errorCode: ErrorCode.OK);
 
-  switch (alphabet){
-    case BreakerAlphabet.English:
-      _initBreaker(english_quadgrams());
-      break;
-    case BreakerAlphabet.German:
-      _initBreaker(german_quadgrams());
-      break;
-  }
+  _initBreaker(quadgrams);
   return  _break_cipher(input);
 }
 

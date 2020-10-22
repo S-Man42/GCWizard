@@ -25,6 +25,7 @@ class Quadgrams {
   int quadgramsSize = 0;
   List<int> _quadgrams = null;
   Map<int, List<int>> quadgramsCompressed = null;
+  String assetLocation;
 
   List<int> quadgrams() {
     if (_quadgrams != null)
@@ -34,7 +35,6 @@ class Quadgrams {
     quadgramsCompressed = null;
     return _quadgrams;
   }
-
 
   static Map<int, List<int>> compressQuadgrams (List<int> quadgrams) {
     var map = Map<int, List<int>>();
