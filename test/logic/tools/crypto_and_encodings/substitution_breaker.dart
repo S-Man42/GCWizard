@@ -167,8 +167,8 @@ void main() {
 
   group("substitution_breaker.breaker:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      //{'input' : null, 'expectedOutput' : ''},
-      //{'input' : '', 'expectedOutput' : ''},
+      {'input' : null, 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      {'input' : '', 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
 
       {'input' : text10, 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : text11},
     ];
