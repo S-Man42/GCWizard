@@ -123,8 +123,7 @@ BreakerResult _generateFile(File quadgram_fh, String className, String alphabet,
   sb.write("most_frequent_quadgram = '" + max_chars + "';\n");
   sb.write("max_fitness = " + max_val.round().toString() + ";\n");
   sb.write("average_fitness = " + (quadgrams_sum.toDouble() / pow(alphabet.length, 4 )).toString() + ";\n");
-  sb.write("final double quadgrams_sum = " + quadgrams_sum.toString() + ";\n");
-  sb.write("Map<int, List<int>> _quadgramsCompressed = ");
+  sb.write("quadgramsCompressed = ");
   sb.write("\n");
   sb.write(Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(quadgramsInt)));
   sb.write(";\n");

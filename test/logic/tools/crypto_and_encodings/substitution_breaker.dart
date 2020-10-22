@@ -174,9 +174,9 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}', () {
+      test('input: ${elem['input']}', () async {
 
-        var _actual = break_cipher(elem['input'], elem['alphabet']);
+        var _actual = await break_cipher(elem['input'], elem['alphabet']);
         expect(_actual.plaintext, elem['expectedOutput']);
         expect(_actual.errorCode, elem['errorCode']);
       });
