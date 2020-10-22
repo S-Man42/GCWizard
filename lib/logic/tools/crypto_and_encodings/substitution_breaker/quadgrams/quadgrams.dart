@@ -1,4 +1,18 @@
+import 'dart:convert';
 import 'dart:math';
+import 'dart:io';
+import 'package:path/path.dart' as path;
+import 'package:archive/archive.dart' as arc;
+import 'dart:convert' as conv;
+
+
+
+
+/*
+import 'json_objects.dart';
+import "package:zipio/zipio.dart" show readZip, ZipEntity, ZipEntry, ZipMethod;
+*/
+
 
 class Quadgrams {
   static const int maxAlphabetLength = 32;
@@ -16,7 +30,7 @@ class Quadgrams {
     if (_quadgrams != null)
       return _quadgrams;
 
-    _quadgrams = decompressQuadgrams(quadgramsCompressed, pow(Quadgrams.maxAlphabetLength, 3) * 32); // alphabet.length
+    _quadgrams = decompressQuadgrams(quadgramsCompressed, pow(Quadgrams.maxAlphabetLength, 3) * alphabet.length);
     quadgramsCompressed = null;
     return _quadgrams;
   }
@@ -125,4 +139,34 @@ class Quadgrams {
     });
     return sb.toString();
   }
+
+/*
+  createZipFile(String path, Quadgrams quadram) async {
+    var bytes = utf8.encode(conv.jsonEncode(quadram));
+    var encoder = arc.ZipDecoder().decodeBytes(bytes);
+
+
+    encoder.encode(new arc.Archive());
+    encoder.addFile(File(selectedAdharFile));
+    encoder.addFile(File(selectedIncomeFile));
+    encoder.close();
+
+  }
+
+  Quadgrams readZipFile(String path) {
+    final bytes = new File(path).readAsBytesSync();
+    final archive = new arc.ZipDecoder().decodeBytes(bytes);
+
+
+    for (var file in archive) {
+
+      if (file.isFile) {
+        file.decompress();
+
+
+        return  conv.jsonDecode(file);;
+      }
+    }
+  }
+  */
 }

@@ -191,7 +191,18 @@ double _calc_fitness(Iterable<int> iterator){
 ///          Lower values indicate more random text, while values significantly
 ///          greater than 100 indicate (nonsense) text with too much frequently used
 ///          quadgrams (e.g., ``tionioningatheling``).
-double calc_fitness(String txt) {
+double calc_fitness(String txt, {String alphabet = DEFAULT_ALPHABET, List<int> quadgrams = null}) {
+  if (txt == null || txt == '')
+    return 0;
+
+  if (alphabet != null)
+    _alphabet = alphabet;
+  if (_alphabet == null)
+    _alphabet = DEFAULT_ALPHABET;
+
+  if (quadgrams != null)
+    _quadgrams = quadgrams;
+
   return _calc_fitness(iterateText(txt, _alphabet));
 }
 
@@ -222,6 +233,14 @@ Iterable<int> _file_iterator(File file_fh, String alphabet) sync* {
 ///          Lower values indicate more random text, while values significantly
 ///          greater than 100 indicate (nonsense) text with too much frequently used
 ///          quadgrams (e.g., ``tionioningatheling``).
-double calc_fitness_file(File cleartext_fh){
+double calc_fitness_file(File cleartext_fh, {String alphabet = DEFAULT_ALPHABET, List<int> quadgrams = null}){
+  if (alphabet != null)
+    _alphabet = alphabet;
+  if (_alphabet == null)
+    _alphabet = DEFAULT_ALPHABET;
+
+  if (quadgrams != null)
+    _quadgrams = quadgrams;
+
   return _calc_fitness(_file_iterator(cleartext_fh, _alphabet));
 }

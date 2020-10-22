@@ -1,12 +1,11 @@
 /// Class to represent the breaker implementation based on quadgrams
-/// https://gitlab.com/guballa/SubstitutionBreaker
+/// ported from https://gitlab.com/guballa/SubstitutionBreaker
 
-import 'dart:math';
-import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/key.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/english_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/german_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
+import 'package:tuple/tuple.dart';
 
 
 enum BreakerAlphabet{English, German}
@@ -117,7 +116,7 @@ Iterable<int> iterateText(String text, String alphabet) sync* {
 /// :return: tuple of the max_fitness and the number of keys evaluated
 Tuple2<int,int> _hill_climbing(List<int> key, List<int> cipher_bin, List<List<int>> char_positions){
   var plaintext = List<int>();
-  cipher_bin.forEach((idx) => plaintext.add(key.indexOf(cipher_bin[idx])));
+  cipher_bin.forEach((idx) => plaintext.add(key.indexOf(idx)));
   var key_len = _alphabet_len;
   var nbr_keys = 0;
   var max_fitness = 0;
@@ -161,10 +160,10 @@ Tuple2<int,int> _hill_climbing(List<int> key, List<int> cipher_bin, List<List<in
 /// :return: an BreakerResult object
 BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int consolidate = 3}) {
 
-  if ((( maxRounds < 1) || (maxRounds > 10000)))
+  if (( maxRounds < 1) || (maxRounds > 10000))
       //raise ValueError("maximum number of rounds not in the valid range 1..10000")
     return BreakerResult(errorCode: ErrorCode.MAX_ROUNDS_PARAMETER);
-  if (((consolidate < 1) || (consolidate > 30)))
+  if ((consolidate < 1) || (consolidate > 30))
       //raise ValueError("consolidate parameter out of valid range 1..30")
       return BreakerResult(errorCode: ErrorCode.CONSOLIDATE_PARAMETER);
 

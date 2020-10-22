@@ -1,9 +1,14 @@
+/// Class to represent the breaker implementation based on quadgrams
+/// ported from https://gitlab.com/guballa/SubstitutionBreaker
+
 import 'dart:io';
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/key.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/generate_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/english_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/german_quadgrams.dart';
 import 'package:path/path.dart' as path;
 
 void main() {
@@ -19,7 +24,7 @@ void main() {
 
       /// generate test-quadgram- file ( Source file from https://gitlab.com/guballa/SubstitutionBreaker/-/blob/development/tests/fixturefiles/quadgram_corpus.txt)
       //{'input' : 'quadgram_corpus.txt', 'fileOut' : 'quadgram_test.dart', 'className' : 'english_quadgrams', 'alphabet' : DEFAULT_ALPHABET, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
-      /// generate German quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/deu_news_2015_1M.tar.gz -> deu_news_2015_1M-sentences.txt.txt)
+      /// generate German quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/deu_news_2015_1M.tar.gz -> deu_news_2015_1M-sentences.txt)
       //{'input' : 'de_corpus.txt', 'fileOut' : 'de_quadgrams.dart', 'className' : 'german_quadgrams', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
     ];
 
@@ -112,10 +117,7 @@ void main() {
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : quadgrams, 'errorCode' : ErrorCode.OK, 'expectedOutput' : '{3:[747],10:[11,12,13],16:[17]}'},
-      //{'input' : en, 'errorCode' : ErrorCode.OK, 'expectedOutput' : '{3:[747],10:[11,12,13],16:[17]}'},
     ];
-    //var en = EnglishQuadgrams().quadgrams;
-    //var _actual = Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(en));
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
@@ -143,27 +145,26 @@ void main() {
 
 
 
-
-  var cipherText ="Rbo rpktigo vcrb bwucja wj kloj hcjd, km sktpqo, cq rbwr loklgo "
-      "vcgg cjqcqr kj skhcja wgkja wjd rpycja rk ltr rbcjaq cj cr."
-      "-- Roppy Lpwrsborr";
-  var text1 = "The museum will be a lasting physical testament to his hard work and "
-      "vision, and will house the prestigious collection he cared so deeply about, "
-      "for many years to come.";
-  var text2 = "Heute ist jeder Autohersteller in der Lage starke Motoren zu bauen, doch "
-      "alles hat seine Grenzen, sonst waeren ja alle anderen die sich ans Gesetz "
-      "halten die Dummen.";
-  var text3 = "Agl qrxlrq okii bl t itxakhj ugexknti alxatqlha ad gkx gtsm odsy thm "
-      "pkxkdh, thm okii gdrxl agl uslxakjkdrx ndiilnakdh gl ntslm xd mlluie tbdra, "
-      "vds qthe eltsx ad ndql.";
-
   var text10 = '''Rbo rpktigo vcrb bwucja wj kloj hcjd, km sktpqo, cq rbwr loklgo 
   vcgg cjqcqr kj skhcja wgkja wjd rpycja rk ltr rbcjaq cj cr.
   -- Roppy Lpwrsborr''';
-
   var text11 = '''The trouble with having an open mind, of course, is that people 
   will insist on coming along and trying to put things in it.
   -- Terry Pratchett''';
+
+  var text12 = "Yvlkv zjk avuvi Rlkfyvijkvccvi ze uvi Crxv jkribv Dfkfive ql srlve, ufty "
+      "rccvj yrk jvzev Xiveqve, jfejk nrvive ar rccv reuvive uzv jzty rej Xvjvkq "
+      "yrckve uzv Ulddve.";
+  var text13 = "Heute ist jeder Autohersteller in der Lage starke Motoren zu bauen, doch "
+      "alles hat seine Grenzen, sonst waeren ja alle anderen die sich ans Gesetz "
+      "halten die Dummen.";
+
+  var text14 = "Agl qrxlrq okii bl t itxakhj ugexknti alxatqlha ad gkx gtsm odsy thm "
+      "pkxkdh, thm okii gdrxl agl uslxakjkdrx ndiilnakdh gl ntslm xd mlluie tbdra, "
+      "vds qthe eltsx ad ndql.";
+  var text15 = "The museum will be a lasting physical testament to his hard work and "
+      "vision, and will house the prestigious collection he cared so deeply about, "
+      "for many years to come.";
 
   group("substitution_breaker.breaker:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
@@ -171,6 +172,8 @@ void main() {
       {'input' : '', 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
 
       {'input' : text10, 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : text11},
+      {'input' : text12, 'alphabet' : BreakerAlphabet.German, 'errorCode' : ErrorCode.OK, 'expectedOutput' : text13},
+      {'input' : text14, 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : text15},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -179,6 +182,31 @@ void main() {
         var _actual = await break_cipher(elem['input'], elem['alphabet']);
         expect(_actual.plaintext, elem['expectedOutput']);
         expect(_actual.errorCode, elem['errorCode']);
+      });
+    });
+  });
+
+  group("substitution_breaker.calc_fitness:", () {
+    var en = english_quadgrams();
+    var de = german_quadgrams();
+
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : 0},
+      {'input' : '', 'expectedOutput' : 0},
+
+
+      {'input' : text15, 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 103},
+      {'input' : text13, 'alphabet' : de.alphabet, 'quadgrams' : de.quadgrams(), 'expectedOutput' : 103},
+      {'input' : text14, 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 27},
+      {'input' : 'tion', 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 136},
+      {'input' : 'ti', 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 0},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+
+        var _actual = calc_fitness(elem['input'], alphabet: elem['alphabet'], quadgrams: elem['quadgrams']);
+        expect(_actual.round(), elem['expectedOutput']);
       });
     });
   });
