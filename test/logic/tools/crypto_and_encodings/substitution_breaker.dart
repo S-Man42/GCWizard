@@ -5,22 +5,22 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/generate_quadgrams.dart';
 import 'package:path/path.dart' as path;
-import 'dart:async';
 
 void main() {
 
 
   /// Link for corpus files (for other languages)
   /// https://guballa.gitlab.io/SubstitutionBreaker/cli_explained.html#adding-more-languages
+  /// https://wortschatz.uni-leipzig.de/de/download/german#deu_newscrawl-public_2018
   group("substitution_breaker.generate_quadgrams:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
 
       // Attention: a file is done during execution
 
       /// generate test-quadgram- file ( Source file from https://gitlab.com/guballa/SubstitutionBreaker/-/blob/development/tests/fixturefiles/quadgram_corpus.txt)
-      //{'input' : 'quadgram_corpus.txt', 'fileOut' : 'quadgram_test.dart', 'alphabet' : DEFAULT_ALPHABET, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
-      /// generate German quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/deu_mixed-typical_2011_1M.tar.gz -> deu_mixed-typical_2011_1M-sentences.txt)
-      //{'input' : 'de_corpus.txt', 'fileOut' : 'de_quadgrams.dart', 'alphabet' : "abcdefghijklmnopqrstuvwxyzäöüß", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      //{'input' : 'quadgram_corpus.txt', 'fileOut' : 'quadgram_test.dart', 'className' : 'english_quadgrams', 'alphabet' : DEFAULT_ALPHABET, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      /// generate German quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/deu_news_2015_1M.tar.gz -> deu_news_2015_1M-sentences.txt.txt)
+      //{'input' : 'de_corpus.txt', 'fileOut' : 'de_quadgrams.dart', 'className' : 'german_quadgrams', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -29,7 +29,7 @@ void main() {
         var fileIn = File(path.normalize(filePath + elem['input']));
         var fileOut= File(path.normalize(filePath + elem['fileOut']));
 
-        var _actual = await generate_quadgrams(fileIn, fileOut, elem['alphabet']);
+        var _actual = await generate_quadgrams(fileIn, fileOut, elem['className'], elem['alphabet']);
         expect(_actual.errorCode, elem['errorCode']);
       });
     });

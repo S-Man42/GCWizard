@@ -65,7 +65,7 @@ String  _alphabet=null;
 int _alphabet_len = 0;
 List<int> _quadgrams = null;
 
-BreakerResult break_cipher(String input, BreakerAlphabet alphabet) {
+Future<BreakerResult> break_cipher(String input, BreakerAlphabet alphabet) async {
   if (input == null || input == '')
     return BreakerResult(errorCode: ErrorCode.OK);
 

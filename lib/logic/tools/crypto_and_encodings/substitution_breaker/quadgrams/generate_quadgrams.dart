@@ -11,8 +11,9 @@ List<int> _quadgrams = null;
 /// method to generate quadgrams from a text file
 /// :param corpus_fh: the file handle of the text corpus file to process
 /// :param quadgram_fh: the file handle where the quadgrams will be saaved
+/// :param className: name of the generated class.
 /// :param alphabet: the alphabet to apply with this text file.
-Future<BreakerResult> generate_quadgrams(File corpus_fh, File quadgram_fh, String alphabet) async {
+Future<BreakerResult> generate_quadgrams(File corpus_fh, File quadgram_fh, String className, String alphabet) async {
 
   _alphabet = Key.check_alphabet(alphabet);
   if (_alphabet.length > Quadgrams.maxAlphabetLength){
@@ -100,10 +101,10 @@ Future<BreakerResult> generate_quadgrams(File corpus_fh, File quadgram_fh, Strin
     idx >>= 5;
   }
 
-  return _generateFile(quadgram_fh, alphabet, quadgram_sum, max_chars.join(), max_val, quadgrams);
+  return _generateFile(quadgram_fh, className, alphabet, quadgram_sum, max_chars.join(), max_val, quadgrams);
 }
 
-BreakerResult _generateFile(File quadgram_fh, String alphabet, double quadgram_sum, String max_chars, double max_val, List<double> quadgrams){
+BreakerResult _generateFile(File quadgram_fh, String className, String alphabet, double quadgram_sum, String max_chars, double max_val, List<double> quadgrams){
   var sb = new StringBuffer();
   var quadgrams_sum = 0;
   var quadgramsInt = List<int>(quadgrams.length);
@@ -113,9 +114,9 @@ BreakerResult _generateFile(File quadgram_fh, String alphabet, double quadgram_s
   }
   sb.write("import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';\n");
   sb.write("\n");
-  sb.write("class XXX extends Quadgrams {\n");
+  sb.write("class " + className + " extends Quadgrams {\n");
   sb.write("\n");
-  sb.write("XXX() {\n");
+  sb.write(className + "() {\n");
   sb.write("\n");
   sb.write("alphabet = '" + alphabet + "';\n");
   sb.write("nbr_quadgrams = " + quadgram_sum.round().toString() +";\n");
@@ -132,7 +133,10 @@ BreakerResult _generateFile(File quadgram_fh, String alphabet, double quadgram_s
 
   quadgram_fh.writeAsStringSync(sb.toString());
 
-  return BreakerResult(alphabet: alphabet, fitness: max_val, errorCode: ErrorCode.OK);
+  if (quadgrams_sum == 0 || max_val == 0)
+    return BreakerResult(alphabet: alphabet, fitness: max_val, errorCode: ErrorCode.WRONG_GENERATE_TEXT);
+  else
+    return BreakerResult(alphabet: alphabet, fitness: max_val, errorCode: ErrorCode.OK);
 }
 
 /// Calculate the fitness from the characters provided by the iterator
@@ -198,8 +202,7 @@ double calc_fitness(String txt) {
 /// :return: an iterator which iterates over all characters of the text file which are present in the alphabet.
 Iterable<int> _file_iterator(File file_fh, String alphabet) sync* {
   String text = file_fh.readAsStringSync();
-   iterateText(text, alphabet);
-  /*
+
   var trans = alphabet.toLowerCase();
   int index = -1;
 
@@ -209,8 +212,6 @@ Iterable<int> _file_iterator(File file_fh, String alphabet) sync* {
     if (index >= 0)
       yield index;
   }
-  */
-
 }
 
 /// Method to calculate the fitness of the given file contents

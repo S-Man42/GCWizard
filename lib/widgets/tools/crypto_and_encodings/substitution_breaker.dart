@@ -9,7 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 
 class SubstitutionBreaker extends StatefulWidget {
   @override
@@ -75,8 +75,26 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
 
     if (_currentOutput == null)
       return GCWDefaultOutput();
-    if (_currentOutput.errorCode != ErrorCode.OK)
-      return GCWDefaultOutput(child: _currentOutput.errorCode.toString());
+    if (_currentOutput.errorCode != ErrorCode.OK){
+      switch (_currentOutput.errorCode) {
+        case ErrorCode.MAX_ROUNDS_PARAMETER:
+          showToast("maximum number of rounds not in the valid range 1..10000");
+          break;
+        case ErrorCode.MAX_ROUNDS_PARAMETER:
+          showToast("consolidate parameter out of valid range 1..30");
+          break;
+        case ErrorCode.TEXT_TOO_SHORT:
+          showToast("ciphertext is too short");
+          break;
+        case ErrorCode.WRONG_GENERATE_TEXT:
+          showToast("More than three characters from the given alphabet are required");
+          break;
+        case ErrorCode.ALPHABET_TOO_LONG:
+          showToast("Alphabet must have less or equal than 32 characters");
+          break;
+      }
+      return GCWDefaultOutput();
+    }
 
     return GCWMultipleOutput(
       children: [
@@ -100,11 +118,11 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     );
   }
 
-  _calcOutput(){
+  _calcOutput() async {
     if (_currentInput == null || _currentInput.length == 0)
       return GCWDefaultOutput();
 
     _currentOutput = null;
-    _currentOutput = break_cipher(_currentInput, _currentAlphabet);
+    _currentOutput = await break_cipher(_currentInput, _currentAlphabet);
   }
 }
