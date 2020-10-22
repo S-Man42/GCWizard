@@ -20,13 +20,13 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
 
   String _currentInput = '';
   BreakerAlphabet _currentAlphabet = BreakerAlphabet.German;
-
+  BreakerResult _currentOutput = null;
 
   @override
   Widget build(BuildContext context) {
     var BreakerAlphabetItems = {
-      BreakerAlphabet.English : i18n(context, 'substitution_breaker_alphabet_german'),
-      BreakerAlphabet.German : i18n(context, 'substitution_breaker_alphabet_english'),
+      BreakerAlphabet.English : i18n(context, 'substitution_breaker_alphabet_english'),
+      BreakerAlphabet.German : i18n(context, 'substitution_breaker_alphabet_german'),
     };
 
     return Column(
@@ -59,19 +59,20 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
           text: i18n(context, 'substitution_breaker_start'),
           onPressed: () {
             setState(() {
-              _buildOutput();
+              _calcOutput();
             });
           },
         ),
+
+        _buildOutput(context),
       ],
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput(BuildContext context) {
     if (_currentInput == null || _currentInput.length == 0)
       return GCWDefaultOutput();
 
-    var _currentOutput = break_cipher(_currentInput, _currentAlphabet);
     if (_currentOutput == null)
       return GCWDefaultOutput();
     if (_currentOutput.errorCode != ErrorCode.OK)
@@ -85,7 +86,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
           child: GCWOutputText(
 
             text:
-            _currentOutput.alphabet +'\n' + _currentOutput.key
+            _currentOutput.alphabet +'\n' + _currentOutput.key + '\n'
             + '\n'
             + 'keys/s: ' + _currentOutput.keys_per_second.toString() + '\n'
             + 'keys: ' + _currentOutput.nbr_keys.toString() + '\n'
@@ -97,5 +98,13 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
         )
       ],
     );
+  }
+
+  _calcOutput(){
+    if (_currentInput == null || _currentInput.length == 0)
+      return GCWDefaultOutput();
+
+    _currentOutput = null;
+    _currentOutput = break_cipher(_currentInput, _currentAlphabet);
   }
 }
