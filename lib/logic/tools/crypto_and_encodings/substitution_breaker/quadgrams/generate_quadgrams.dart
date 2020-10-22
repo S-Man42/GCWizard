@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:io';
 import 'dart:async';
-import 'package:gc_wizard/utils/crosstotals.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/key.dart';
@@ -9,16 +8,16 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/
 String  _alphabet = null;
 List<int> _quadgrams = null;
 
-//// method to generate quadgrams from a text file
-//// :param corpus_fh: the file handle of the text corpus file to process
-//// :param quadgram_fh: the file handle where the quadgrams will be saaved
-//// :param alphabet: the alphabet to apply with this text file.
+/// method to generate quadgrams from a text file
+/// :param corpus_fh: the file handle of the text corpus file to process
+/// :param quadgram_fh: the file handle where the quadgrams will be saaved
+/// :param alphabet: the alphabet to apply with this text file.
 Future<BreakerResult> generate_quadgrams(File corpus_fh, File quadgram_fh, String alphabet) async {
 
   _alphabet = Key.check_alphabet(alphabet);
   if (_alphabet.length > Quadgrams.maxAlphabetLength){
     //raise AlphabetInvalid("Alphabet must have less or equal than 32 characters")
-    return BreakerResult('','','',_alphabet,0,0,0,0,0,ErrorCode.ALPHABET_TOO_LONG);;
+    return BreakerResult(alphabet: _alphabet, errorCode: ErrorCode.ALPHABET_TOO_LONG);;
   }
 
   var iterator = _file_iterator(corpus_fh, _alphabet);
@@ -45,7 +44,7 @@ Future<BreakerResult> generate_quadgrams(File corpus_fh, File quadgram_fh, Strin
     });
   } on Exception {
     //"More than three characters from the given alphabet are required"
-    return BreakerResult('','','','',0,0,0,0,0,ErrorCode.WRONG_GENERATE_TEXT);
+    return BreakerResult(errorCode: ErrorCode.WRONG_GENERATE_TEXT);
   }
 
   double quadgram_sum = 0;
@@ -133,18 +132,18 @@ BreakerResult _generateFile(File quadgram_fh, String alphabet, double quadgram_s
 
   quadgram_fh.writeAsStringSync(sb.toString());
 
-  return BreakerResult('','','',alphabet,max_val,0,0,0,0,ErrorCode.OK);
+  return BreakerResult(alphabet: alphabet, fitness: max_val, errorCode: ErrorCode.OK);
 }
 
-//// Calculate the fitness from the characters provided by the iterator
-//// :param iterator: iterator which provides the characters relevant for calculating the fitness
-//// :return: the fitness of the text. A value close to 100 means, the
-////          text is probably in the same language than the language used to generate
-////          the quadgrams. The more the value differs from 100, the lesser the
-////          probability that the examined text corresponds to the quadgram language.
-////          Lower values indicate more random text, while values significantly
-////          greater than 100 indicate (nonsense) text with too much frequently used
-////          quadgrams (e.g., ``tionioningatheling``).
+/// Calculate the fitness from the characters provided by the iterator
+/// :param iterator: iterator which provides the characters relevant for calculating the fitness
+/// :return: the fitness of the text. A value close to 100 means, the
+///          text is probably in the same language than the language used to generate
+///          the quadgrams. The more the value differs from 100, the lesser the
+///          probability that the examined text corresponds to the quadgram language.
+///          Lower values indicate more random text, while values significantly
+///          greater than 100 indicate (nonsense) text with too much frequently used
+///          quadgrams (e.g., ``tionioningatheling``).
 double _calc_fitness(Iterable<int> iterator){
   var quadgrams = _quadgrams;
   var fitness = 0;
@@ -197,9 +196,10 @@ double calc_fitness(String txt) {
 /// :param file_fh: the file handle of the text file
 /// :param alphabet: the alphabet to apply with this text file.
 /// :return: an iterator which iterates over all characters of the text file which are present in the alphabet.
-Iterable<int> _file_iterator(File file_fh, String alphabet)  sync*  {
+Iterable<int> _file_iterator(File file_fh, String alphabet) sync* {
   String text = file_fh.readAsStringSync();
-
+   iterateText(text, alphabet);
+  /*
   var trans = alphabet.toLowerCase();
   int index = -1;
 
@@ -209,6 +209,8 @@ Iterable<int> _file_iterator(File file_fh, String alphabet)  sync*  {
     if (index >= 0)
       yield index;
   }
+  */
+
 }
 
 /// Method to calculate the fitness of the given file contents

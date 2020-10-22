@@ -22,42 +22,43 @@ enum ErrorCode{OK, MAX_ROUNDS_PARAMETER, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, 
 /// :param nbr_rounds: the number of hill climbings performed, starting with a random key
 /// :param float keys_per_second: the number of keys tried per second
 /// :param float seconds: the time in seconds used to break the cipher
-class BreakerResult{
-        String ciphertext=null;
-        String  plaintext=null;
-        String  key=null;
-        String  alphabet=null;
-        double fitness=0;
-        int nbr_keys=0;
-        int nbr_rounds=0;
-        double keys_per_second=0;
-        double seconds=0;
-        ErrorCode errorCode;
+class BreakerResult {
+  String ciphertext= '';
+  String plaintext= '';
+  String key = '';
+  String alphabet= '';
+  double fitness = 0;
+  int nbr_keys = 0;
+  int nbr_rounds = 0;
+  double keys_per_second = 0;
+  double seconds = 0;
+  ErrorCode errorCode = ErrorCode.OK;
 
-  BreakerResult(
-    String ciphertext,
-    String  plaintext,
-    String  key,
-    String  alphabet,
-    double fitness,
-    int nbr_keys,
-    int nbr_rounds,
-    double keys_per_second,
-    double seconds,
-    ErrorCode errorCode
-    ){
-      this.ciphertext = ciphertext;
-      this.plaintext = plaintext;
-      this.key = key;
-      this.alphabet = alphabet;
-      this.fitness = fitness;
-      this.nbr_keys = nbr_keys;
-      this.nbr_rounds = nbr_rounds;
-      this.keys_per_second = keys_per_second;
-      this.seconds = seconds;
-      this.errorCode =errorCode;
-    }
+  BreakerResult({
+    String ciphertext = '',
+    String plaintext = '',
+    String key = '',
+    String alphabet = '',
+    double fitness = 0,
+    int nbr_keys = 0,
+    int nbr_rounds = 0,
+    double keys_per_second = 0,
+    double seconds = 0,
+    ErrorCode errorCode = ErrorCode.OK
+  })
+  {
+    this.ciphertext = ciphertext;
+    this.plaintext = plaintext;
+    this.key = key;
+    this.alphabet = alphabet;
+    this.fitness = fitness;
+    this.nbr_keys = nbr_keys;
+    this.nbr_rounds = nbr_rounds;
+    this.keys_per_second = keys_per_second;
+    this.seconds = seconds;
+    this.errorCode = errorCode;
   }
+}
 
 const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 String  _alphabet=null;
@@ -66,7 +67,7 @@ List<int> _quadgrams = null;
 
 BreakerResult break_cipher(String input, BreakerAlphabet alphabet) {
   if (input == null || input == '')
-    return BreakerResult('','','','',0,0,0,0,0,ErrorCode.OK);
+    return BreakerResult(errorCode: ErrorCode.OK);
 
   switch (alphabet){
     case BreakerAlphabet.English:
@@ -90,19 +91,6 @@ _initBreaker(Quadgrams languageQuadgrams) {
 /// :param str txt: the text string to process
 /// :param str alphabet: the alphabet to apply with this text string
 /// :return: an iterator which iterates over all characters of the text string which are present in the alphabet.
-Iterable<int> _text_iterator(String text, String alphabet) sync*  {
-  var trans = alphabet.toLowerCase();
-  int index = -1;
-
-  text = text.toLowerCase();
-  for (int i = 0; i < text.length; i++) {
-    index = trans.indexOf(text[i]);
-    if (index >= 0)
-      yield index;
-  }
-      //iterateText (txt, alphabet);
-}
-
 Iterable<int> iterateText(String text, String alphabet) sync* {
   var trans = alphabet.toLowerCase();
   int index = -1;
@@ -114,7 +102,6 @@ Iterable<int> iterateText(String text, String alphabet) sync* {
       yield index;
   }
 }
-
 
 /// Basic hill climbing function
 /// :param key: the key to start with. The key is represented as a list where each
@@ -176,19 +163,19 @@ BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int conso
 
   if ((( maxRounds < 1) || (maxRounds > 10000)))
       //raise ValueError("maximum number of rounds not in the valid range 1..10000")
-    return BreakerResult('','','','',0,0,0,0,0,ErrorCode.MAX_ROUNDS_PARAMETER);
+    return BreakerResult(errorCode: ErrorCode.MAX_ROUNDS_PARAMETER);
   if (((consolidate < 1) || (consolidate > 30)))
       //raise ValueError("consolidate parameter out of valid range 1..30")
-      return BreakerResult('','','','',0,0,0,0,0,ErrorCode.CONSOLIDATE_PARAMETER);
+      return BreakerResult(errorCode: ErrorCode.CONSOLIDATE_PARAMETER);
 
   var start_time = DateTime.now();
   var nbr_keys = 0;
   var cipher_bin = List<int>();
-  _text_iterator(ciphertext, _alphabet).forEach((char) {cipher_bin.add(char);});
+  iterateText(ciphertext, _alphabet).forEach((char) {cipher_bin.add(char);});
 
   if (cipher_bin.length < 4)
       //raise ValueError("ciphertext is too short")
-    return BreakerResult('','','','',0,0,0,0,0,ErrorCode.TEXT_TOO_SHORT);
+    return BreakerResult(errorCode: ErrorCode.TEXT_TOO_SHORT);
 
   var char_positions = List<List<int>>();
   for (int idx = 0; idx < _alphabet.length; idx++) {
@@ -234,15 +221,15 @@ BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int conso
   var seconds = (DateTime.now().difference(start_time)).inMilliseconds / 1000;
 
   return BreakerResult(
-    ciphertext,
-    _key.decode(ciphertext),
-    key_str,
-    _alphabet,
-    local_maximum / ((cipher_bin.length) - 3) / 10,
-    nbr_keys,
-    round_cntr,
-    (nbr_keys / seconds),
-    seconds,
-    ErrorCode.OK
+    ciphertext: ciphertext,
+    plaintext: _key.decode(ciphertext),
+    key: key_str,
+    alphabet: _alphabet,
+    fitness: local_maximum / ((cipher_bin.length) - 3) / 10,
+    nbr_keys: nbr_keys,
+    nbr_rounds: round_cntr,
+    keys_per_second: (nbr_keys / seconds),
+    seconds: seconds,
+    errorCode: ErrorCode.OK
   );
 }
