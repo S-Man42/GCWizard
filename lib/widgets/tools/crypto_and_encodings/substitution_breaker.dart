@@ -1,17 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/breaker.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/english_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/german_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/spanish_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/polish_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/greek_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/france_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/russian_quadgrams.dart';
 
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -33,16 +23,8 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
   BreakerAlphabet _currentAlphabet = BreakerAlphabet.German;
   BreakerResult _currentOutput = null;
 
-  var _quadgrams = Map<BreakerAlphabet, Quadgrams>();
-  var _isLoading = false;
   var _isStarted = false;
 
-  @override
-  void initState() {
-    super.initState();
-
-    _loadQuadgramsAssets();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +55,6 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
           onChanged: (value) {
             setState(() {
               _currentAlphabet = value;
-              _loadQuadgramsAssets();
             });
           },
           items: BreakerAlphabetItems.entries.map((alphabet) {
@@ -146,65 +127,15 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     );
   }
 
-  Future<void> _loadQuadgramsAssets() async {
-    while (_isLoading) {}
-
-    if (_quadgrams.containsKey(_currentAlphabet))
-      return;
-
-    _isLoading = true;
-
-    Quadgrams quadgrams;
-    switch (_currentAlphabet) {
-      case BreakerAlphabet.English:
-        quadgrams = EnglishQuadgrams();
-        break;
-      case BreakerAlphabet.German:
-        quadgrams = GermanQuadgrams();
-        break;
-      case BreakerAlphabet.Spanish:
-        quadgrams = SpanishQuadgrams();
-        break;
-      case BreakerAlphabet.Polish:
-        quadgrams = PolishQuadgrams();
-        break;
-      case BreakerAlphabet.Greek:
-        quadgrams = GreekQuadgrams();
-        break;
-      case BreakerAlphabet.France:
-        quadgrams = FranceQuadgrams();
-        break;
-      case BreakerAlphabet.Russian:
-        quadgrams = RussianQuadgrams();
-        break;
-      default:
-        return null;
-    }
-
-    String data = await DefaultAssetBundle.of(context).loadString(quadgrams.assetLocation);
-    Map<String, dynamic> jsonData = jsonDecode(data);
-    quadgrams.quadgramsCompressed = Map<int, List<int>>();
-    jsonData.entries.forEach((entry) {
-      quadgrams.quadgramsCompressed.putIfAbsent(
-        int.tryParse(entry.key),
-          () => List<int>.from(entry.value)
-      );
-    });
-
-    _quadgrams.putIfAbsent(_currentAlphabet, () => quadgrams);
-
-    _isLoading = false;
-  }
-
   _calcOutput() async {
-    if (_currentInput == null || _currentInput.length == 0  || _isStarted)
+    if (_currentInput == null || _currentInput.length == 0 || _isStarted)
       return;
 
     try {
       _isStarted = true;
-      while (_isLoading){}
 
-      _currentOutput = await break_cipher(_currentInput, _quadgrams[_currentAlphabet]);
+      _currentOutput = await break_cipher(_currentInput, _currentAlphabet);
+      this.setState(() {});
     }
     finally {_isStarted = false;}
   }

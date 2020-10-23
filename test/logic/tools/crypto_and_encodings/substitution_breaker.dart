@@ -3,15 +3,18 @@
 
 import 'dart:io';
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/key.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/SubstitutionsKey.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/generate_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/english_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/german_quadgrams.dart';
 import 'package:path/path.dart' as path;
+import 'package:synchronized/synchronized.dart';
 
 void main() {
+
+  var lock = new Lock();
 
 
   /// Link for corpus files (for other languages)
@@ -40,21 +43,22 @@ void main() {
       //{'input' : 'ell_newscrawl_2017_1M-sentences.txt', 'fileOut' : 'greek_quadgrams.dart', 'className' : 'GreekQuadgrams', 'assetName' : 'gr.json', 'alphabet' : "αβγδεζηθικλμνξοπρστυφχψω", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
     ];
 
-    _inputsToExpected.forEach((elem) {
-      while (_isStarted) {}
-      _isStarted = true;
-      test('input: ${elem['input']}', () async {
+    _inputsToExpected.forEach((elem) async {
+      await lock.synchronized(() async {
+        test('input: ${elem['input']}', () async {
+          var filePath = path.current +
+              "/lib/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/";
+          var fileIn = File(path.normalize(filePath + elem['input']));
+          var fileOut = File(path.normalize(filePath + elem['fileOut']));
+          filePath = path.current + "/assets/quadgrams/";
+          var fileAsset = File(path.normalize(filePath + elem['assetName']));
 
-        var filePath = path.current + "/lib/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/";
-        var fileIn = File(path.normalize(filePath + elem['input']));
-        var fileOut= File(path.normalize(filePath + elem['fileOut']));
-        filePath = path.current + "/assets/quadgrams/";
-        var fileAsset= File(path.normalize(filePath + elem['assetName']));
-
-        var _actual = await generateQuadgrams(fileIn, fileOut,fileAsset, elem['className'], elem['assetName'], elem['alphabet']);
-        expect(_actual.errorCode, elem['errorCode']);
-     });
-      _isStarted = false;
+          var _actual = await generateQuadgrams(
+              fileIn, fileOut, fileAsset, elem['className'], elem['assetName'],
+              elem['alphabet']);
+          expect(_actual.errorCode, elem['errorCode']);
+        });
+      });
     });
   });
 
@@ -70,7 +74,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = Key.check_alphabet(elem['input']);
+        var _actual = SubstitutionsKey.check_alphabet(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -90,7 +94,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = Key.check_key(elem['input'], elem['alphabet']);
+        var _actual = SubstitutionsKey.check_key(elem['input'], elem['alphabet']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -106,7 +110,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var key = Key('abcdefghijklmnopqrstuvwxyz');
+        var key = SubstitutionsKey('abcdefghijklmnopqrstuvwxyz');
         var _actual = key.decode(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
@@ -123,7 +127,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var key = Key('abcdefghijklmnopqrstuvwxyz');
+        var key = SubstitutionsKey('abcdefghijklmnopqrstuvwxyz');
         var _actual = key.encode(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
@@ -138,12 +142,14 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) {
+
       test('input: ${elem['input']}', () async {
         var _actual = Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(elem['input']));
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
+
 
   group("substitution_breaker.decompressQuadgrams:", () {
     final List<int> quadgrams = [0,0,0,747,0,0,0,0,0,0,11,12,13,0,0,0,17];
@@ -155,13 +161,14 @@ void main() {
       {'input' : quadgramsCpmpressed1, 'size' : 17, 'errorCode' : ErrorCode.OK, 'expectedOutput' : quadgrams},
     ];
 
-    _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}', () async {
+    _inputsToExpected.forEach((elem) async {
+       test('input: ${elem['input']}', () async {
         var _actual = Quadgrams.decompressQuadgrams(elem['input'], elem['size']);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
+
 
 
 
@@ -196,12 +203,14 @@ void main() {
       {'input' : text14, 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : text15},
     ];
 
-    _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}', () async {
+    _inputsToExpected.forEach((elem) async {
+      await lock.synchronized(() async {
+        test('input: ${elem['input']}', () async {
 
-        var _actual = await break_cipher(elem['input'], elem['alphabet']);
-        expect(_actual.plaintext, elem['expectedOutput']);
-        expect(_actual.errorCode, elem['errorCode']);
+          var _actual = await break_cipher(elem['input'], elem['alphabet']);
+          expect(_actual.plaintext, elem['expectedOutput']);
+          expect(_actual.errorCode, elem['errorCode']);
+        });
       });
     });
   });
@@ -211,9 +220,9 @@ void main() {
     var de = GermanQuadgrams();
 
     List<Map<String, dynamic>> _inputsToExpected = [
+
       {'input' : null, 'expectedOutput' : null},
       {'input' : '', 'expectedOutput' : null},
-
 
       {'input' : text15, 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 103},
       {'input' : text13, 'alphabet' : de.alphabet, 'quadgrams' : de.quadgrams(), 'expectedOutput' : 103},
@@ -222,11 +231,14 @@ void main() {
       {'input' : 'ti', 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : null},
     ];
 
-    _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}', () {
-
-        var _actual = calc_fitness(elem['input'], alphabet: elem['alphabet'], quadgrams: elem['quadgrams']);
-        expect(_actual != null ? _actual.round() : _actual, elem['expectedOutput']);
+    _inputsToExpected.forEach((elem) async {
+      await lock.synchronized(() async {
+        test('input: ${elem['input']}', () async {
+          print( elem['expectedOutput'] );
+          var _actual = calc_fitness(elem['input'], alphabet: elem['alphabet'], quadgrams: await en.quadgrams()); // elem['quadgrams']
+          print( elem['expectedOutput'] + " " + _actual);
+          expect(_actual != null ? _actual.round() : _actual, elem['expectedOutput']);
+        });
       });
     });
   });

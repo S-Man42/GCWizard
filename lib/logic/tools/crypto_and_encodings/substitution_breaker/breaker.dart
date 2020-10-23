@@ -1,14 +1,9 @@
 /// Class to represent the breaker implementation based on quadgrams
 /// ported from https://gitlab.com/guballa/SubstitutionBreaker
 
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/key.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/SubstitutionsKey.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:tuple/tuple.dart';
-
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart'; // is required
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/english_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/german_quadgrams.dart';
@@ -74,20 +69,59 @@ const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 String  _alphabet = null;
 int _alphabet_len = 0;
 List<int> _quadgrams = null;
+BreakerAlphabet _currentAlphabet = null;
+var _quadgramsMap = Map<BreakerAlphabet, Quadgrams>();
 
-Future<BreakerResult> break_cipher(String input, Quadgrams quadgrams) async {
+Future<BreakerResult> break_cipher(String input, BreakerAlphabet alphabet) async {
   if (input == null || input == '')
     return BreakerResult(errorCode: ErrorCode.OK);
 
-  _initBreaker(quadgrams);
+  if (_currentAlphabet != alphabet) {
+    Quadgrams quadgrams;
+    if (!_quadgramsMap.containsKey(alphabet)) {
+      switch (alphabet) {
+        case BreakerAlphabet.English:
+          quadgrams = EnglishQuadgrams();
+          break;
+        case BreakerAlphabet.German:
+          quadgrams = GermanQuadgrams();
+          break;
+        case BreakerAlphabet.Spanish:
+          quadgrams = SpanishQuadgrams();
+          break;
+        case BreakerAlphabet.Polish:
+          quadgrams = PolishQuadgrams();
+          break;
+        case BreakerAlphabet.Greek:
+          quadgrams = GreekQuadgrams();
+          break;
+        case BreakerAlphabet.France:
+          quadgrams = FranceQuadgrams();
+          break;
+        case BreakerAlphabet.Russian:
+          quadgrams = RussianQuadgrams();
+          break;
+        default:
+          return null;
+      }
+    } else {
+      quadgrams = _quadgramsMap[alphabet];
+    }
+
+    _currentAlphabet = alphabet;
+    _quadgramsMap.putIfAbsent(alphabet, () => quadgrams);
+
+    await _initBreaker(quadgrams);
+  }
+
   return  _break_cipher(input);
 }
 
 /// Init the instance
-_initBreaker(Quadgrams languageQuadgrams) {
+_initBreaker(Quadgrams languageQuadgrams) async {
   _alphabet = languageQuadgrams.alphabet;
   _alphabet_len = _alphabet.length;
-  _quadgrams = languageQuadgrams.quadgrams();
+  _quadgrams = await languageQuadgrams.quadgrams();
 }
 
 /// Implements an iterator for a given text string
@@ -220,7 +254,7 @@ BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int conso
     }
   }
   var key_str = best_key.map((x) => _alphabet[x]).join();
-  var _key = Key(key_str, alphabet: _alphabet);
+  var _key = SubstitutionsKey(key_str, alphabet: _alphabet);
   var seconds = (DateTime.now().difference(start_time)).inMilliseconds / 1000;
 
   return BreakerResult(
@@ -236,69 +270,4 @@ BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int conso
     errorCode: ErrorCode.OK
   );
 }
-
-var _quadgramsList = Map<BreakerAlphabet, Quadgrams>();
-var _isLoading = false;
-
-
-
-Future<void> loadCountryData() async {
-  try {
-    // we can access builtin asset bundle with rootBundle
-    final data = await rootBundle.loadString("assets/data/countries.json");
-    _countries = json.decode(data);
-  } catch (e) {
-    print(e);
-  }
-}
-
-Future<void> _loadQuadgramsAssets(BreakerAlphabet _currentAlphabet) async {
-  while (_isLoading) {}
-
-  if (_quadgramsList.containsKey(_currentAlphabet))
-    return;
-
-  _isLoading = true;
-
-  Quadgrams quadgrams;
-  switch (_currentAlphabet) {
-    case BreakerAlphabet.English:
-      quadgrams = EnglishQuadgrams();
-      break;
-    case BreakerAlphabet.German:
-      quadgrams = GermanQuadgrams();
-      break;
-    case BreakerAlphabet.Spanish:
-      quadgrams = SpanishQuadgrams();
-      break;
-    case BreakerAlphabet.Polish:
-      quadgrams = PolishQuadgrams();
-      break;
-    case BreakerAlphabet.Greek:
-      quadgrams = GreekQuadgrams();
-      break;
-    case BreakerAlphabet.France:
-      quadgrams = FranceQuadgrams();
-      break;
-    case BreakerAlphabet.Russian:
-      quadgrams = RussianQuadgrams();
-      break;
-    default:
-      return null;
-  }
-
-
-  String data = await rootBundle.loadString('assets/quadgrams/'+ quadgrams.assetLocation);
-  Map<String, dynamic> jsonData = jsonDecode(data);
-  quadgrams.quadgramsCompressed = Map<int, List<int>>();
-  jsonData.entries.forEach((entry) {
-    quadgrams.quadgramsCompressed.putIfAbsent(
-        int.tryParse(entry.key),
-            () => List<int>.from(entry.value)
-    );
-  });
-
-  _quadgramsList.putIfAbsent(_currentAlphabet, () => quadgrams);
-
-  _isLoading = false;
 

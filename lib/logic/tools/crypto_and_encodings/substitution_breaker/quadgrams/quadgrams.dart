@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 
 class Quadgrams {
   static const int maxAlphabetLength = 32;
@@ -13,11 +15,24 @@ class Quadgrams {
   Map<int, List<int>> quadgramsCompressed = null;
   String assetLocation;
 
-  List<int> quadgrams() {
+  Future<List<int>> quadgrams() async {
     if (_quadgrams != null)
       return _quadgrams;
 
-    if (quadgramsCompressed != null)
+    // add this, and it should be the first line in main method
+    // WidgetsFlutterBinding.ensureInitialized();
+
+    String data = await rootBundle.loadString(assetLocation);
+    Map<String, dynamic> jsonData = jsonDecode(data);
+    quadgramsCompressed = Map<int, List<int>>();
+    jsonData.entries.forEach((entry) {
+      quadgramsCompressed.putIfAbsent(
+          int.tryParse(entry.key),
+              () => List<int>.from(entry.value)
+      );
+    });
+
+    if (quadgramsCompressed == null)
       return null;
 
     _quadgrams = decompressQuadgrams(quadgramsCompressed, pow(Quadgrams.maxAlphabetLength, 3) * alphabet.length);
