@@ -200,8 +200,8 @@ void main() {
   });
 
   group("substitution_breaker.calc_fitness:", () {
-    var en = english_quadgrams();
-    var de = german_quadgrams();
+    var en = EnglishQuadgrams();
+    var de = GermanQuadgrams();
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'expectedOutput' : null},

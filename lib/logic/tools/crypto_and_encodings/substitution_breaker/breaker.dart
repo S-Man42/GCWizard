@@ -63,23 +63,12 @@ const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 String  _alphabet=null;
 int _alphabet_len = 0;
 List<int> _quadgrams = null;
-BreakerAlphabet currentAlphabet = null;
 
-Future<BreakerResult> break_cipher(String input, BreakerAlphabet alphabet) async {
+Future<BreakerResult> break_cipher(String input, Quadgrams quadgrams) async {
   if (input == null || input == '')
     return BreakerResult(errorCode: ErrorCode.OK);
 
-  if (currentAlphabet != alphabet) {
-    switch (alphabet) {
-      case BreakerAlphabet.English:
-        _initBreaker(english_quadgrams());
-        break;
-      case BreakerAlphabet.German:
-        _initBreaker(german_quadgrams());
-        break;
-    }
-    currentAlphabet = alphabet;
-  }
+  _initBreaker(quadgrams);
   return  _break_cipher(input);
 }
 
@@ -165,9 +154,11 @@ Tuple2<int,int> _hill_climbing(List<int> key, List<int> cipher_bin, List<List<in
 BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int consolidate = 3}) {
 
   if (( maxRounds < 1) || (maxRounds > 10000))
-     return BreakerResult(errorCode: ErrorCode.MAX_ROUNDS_PARAMETER);
+      //raise ValueError("maximum number of rounds not in the valid range 1..10000")
+    return BreakerResult(errorCode: ErrorCode.MAX_ROUNDS_PARAMETER);
   if ((consolidate < 1) || (consolidate > 30))
-    return BreakerResult(errorCode: ErrorCode.CONSOLIDATE_PARAMETER);
+      //raise ValueError("consolidate parameter out of valid range 1..30")
+      return BreakerResult(errorCode: ErrorCode.CONSOLIDATE_PARAMETER);
 
   var start_time = DateTime.now();
   var nbr_keys = 0;
@@ -175,6 +166,7 @@ BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int conso
   iterateText(ciphertext, _alphabet).forEach((char) {cipher_bin.add(char);});
 
   if (cipher_bin.length < 4)
+      //raise ValueError("ciphertext is too short")
     return BreakerResult(errorCode: ErrorCode.TEXT_TOO_SHORT);
 
   var char_positions = List<List<int>>();
