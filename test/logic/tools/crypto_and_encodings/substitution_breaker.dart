@@ -34,8 +34,8 @@ void main() {
       //{'input' : 'pol_newscrawl_2018_1M-sentences.txt', 'fileOut' : 'polish_quadgrams.dart', 'className' : 'polish_quadgrams', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
       /// generate Spanish quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/spa_newscrawl_2015_1M.tar.gz -> spa_newscrawl_2015_1M-sentences.txt)
       //{'input' : 'spa_newscrawl_2015_1M-sentences.txt', 'fileOut' : 'spanish_quadgrams.dart', 'className' : 'spanish_quadgrams', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
-      /// generate Greek quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/ell_newscrawl_2017_1M.tar.gz -> deu_news_2015_1M-sentences.txt)
-      //{'input' : 'deu_news_2015_1M-sentences.txt', 'fileOut' : 'greek_quadgrams.dart', 'className' : 'greek_quadgrams', 'alphabet' : "αβγδεζηθικλμνξοπρστυφχψω", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      /// generate Greek quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/ell_newscrawl_2017_1M.tar.gz -> ell_newscrawl_2017_1M-sentences.txt)
+      //{'input' : 'ell_newscrawl_2017_1M-sentences.txt', 'fileOut' : 'greek_quadgrams.dart', 'className' : 'greek_quadgrams', 'alphabet' : "αβγδεζηθικλμνξοπρστυφχψω", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
 
     ];
 

@@ -1643,7 +1643,7 @@
 
   "substitution_breaker_title" : "Substitution Solver",
   "substitution_breaker_description" : "Substitutions-Chiffren lösen",
-  "substitution_breaker_example" : "Autv → test",
+  "substitution_breaker_example" : "Butb → test",
   "substitution_breaker_alphabet_german" : "Deutsch",
   "substitution_breaker_alphabet_english" : "Englisch",
   "substitution_breaker_start" : "Start",
