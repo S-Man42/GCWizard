@@ -13,7 +13,7 @@ List<int> _quadgrams = null;
 /// :param quadgram_fh: the file handle where the quadgrams will be saaved
 /// :param className: name of the generated class.
 /// :param alphabet: the alphabet to apply with this text file.
-Future<BreakerResult> generate_quadgrams(File corpus_fh, File quadgram_fh, String className, String alphabet) async {
+Future<BreakerResult> generateQuadgrams(File corpus_fh, File quadgram_fh, File asset_fh, String className, String assetName, String alphabet) async {
 
   _alphabet = Key.check_alphabet(alphabet);
   if (_alphabet.length > Quadgrams.maxAlphabetLength){
@@ -101,10 +101,10 @@ Future<BreakerResult> generate_quadgrams(File corpus_fh, File quadgram_fh, Strin
     idx >>= 5;
   }
 
-  return _generateFile(quadgram_fh, className, alphabet, quadgram_sum, max_chars.join(), max_val, quadgrams);
+  return _generateFiles(quadgram_fh, asset_fh, className, assetName, alphabet, quadgram_sum, max_chars.join(), max_val, quadgrams);
 }
 
-BreakerResult _generateFile(File quadgram_fh, String className, String alphabet, double quadgram_sum, String max_chars, double max_val, List<double> quadgrams){
+BreakerResult _generateFiles(File quadgram_fh, File asset_fh, String className, String assetName, String alphabet, double quadgram_sum, String max_chars, double max_val, List<double> quadgrams){
   var sb = new StringBuffer();
   var quadgrams_sum = 0;
   var quadgramsInt = List<int>(quadgrams.length);
@@ -116,21 +116,20 @@ BreakerResult _generateFile(File quadgram_fh, String className, String alphabet,
   sb.write("\n");
   sb.write("class " + className + " extends Quadgrams {\n");
   sb.write("\n");
-  sb.write(className + "() {\n");
+  sb.write("  " + className + "() {\n");
   sb.write("\n");
-  sb.write("alphabet = '" + alphabet + "';\n");
-  sb.write("nbr_quadgrams = " + quadgram_sum.round().toString() +";\n");
-  sb.write("most_frequent_quadgram = '" + max_chars + "';\n");
-  sb.write("max_fitness = " + max_val.round().toString() + ";\n");
-  sb.write("average_fitness = " + (quadgrams_sum.toDouble() / pow(alphabet.length, 4 )).toString() + ";\n");
-  sb.write("quadgramsCompressed = ");
-  sb.write("\n");
-  sb.write(Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(quadgramsInt)));
-  sb.write(";\n");
-  sb.write("}\n");
+  sb.write("    alphabet = '" + alphabet + "';\n");
+  sb.write("    nbr_quadgrams = " + quadgram_sum.round().toString() +";\n");
+  sb.write("    most_frequent_quadgram = '" + max_chars + "';\n");
+  sb.write("    max_fitness = " + max_val.round().toString() + ";\n");
+  sb.write("    average_fitness = " + (quadgrams_sum.toDouble() / pow(alphabet.length, 4 )).toString() + ";\n");
+  sb.write("    assetLocation = " + '"assets/quadgrams/"' + assetName + '";\n');
+  sb.write("  }\n");
   sb.write("}\n");
 
   quadgram_fh.writeAsStringSync(sb.toString());
+
+  asset_fh.writeAsStringSync(Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(quadgramsInt)));
 
   if (quadgrams_sum == 0 || max_val == 0)
     return BreakerResult(alphabet: alphabet, fitness: max_val, errorCode: ErrorCode.WRONG_GENERATE_TEXT);

@@ -1646,6 +1646,11 @@
   "substitution_breaker_example" : "Butb → test",
   "substitution_breaker_alphabet_german" : "German",
   "substitution_breaker_alphabet_english" : "English",
+  "substitution_breaker_alphabet_spanish" : "Spanish",
+  "substitution_breaker_alphabet_polish" : "Polish",
+  "substitution_breaker_alphabet_greek" : "Greek",
+  "substitution_breaker_alphabet_france" : "France",
+  "substitution_breaker_alphabet_russian" : "Russian",
   "substitution_breaker_start" : "Start",
 
   "sudokusolver_title" : "Sudoku Solver",

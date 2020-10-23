@@ -17,6 +17,9 @@ class Quadgrams {
     if (_quadgrams != null)
       return _quadgrams;
 
+    if (quadgramsCompressed != null)
+      return null;
+
     _quadgrams = decompressQuadgrams(quadgramsCompressed, pow(Quadgrams.maxAlphabetLength, 3) * alphabet.length);
     quadgramsCompressed = null;
     return _quadgrams;
@@ -52,6 +55,8 @@ class Quadgrams {
   }
 
   static List<int> decompressQuadgrams (Map<int, List<int>> quadgramsCompressed, int size) {
+    if (quadgramsCompressed == null)
+      return null;
     var list = List<int>(size);
 
     list.fillRange(0, list.length , 0);
@@ -127,4 +132,5 @@ class Quadgrams {
     });
     return sb.toString();
   }
+
 }

@@ -2,13 +2,24 @@
 /// ported from https://gitlab.com/guballa/SubstitutionBreaker
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/key.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/english_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/german_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:tuple/tuple.dart';
 
+import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart'; // is required
 
-enum BreakerAlphabet{English, German}
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/english_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/german_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/spanish_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/polish_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/greek_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/france_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/russian_quadgrams.dart';
+
+
+enum BreakerAlphabet{English, German, Spanish, Polish, Greek, France, Russian}
 enum ErrorCode{OK, MAX_ROUNDS_PARAMETER, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, ALPHABET_TOO_LONG, WRONG_GENERATE_TEXT}
 
 /// Class representing the result for breaking a substitution cipher
@@ -60,7 +71,7 @@ class BreakerResult {
 }
 
 const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-String  _alphabet=null;
+String  _alphabet = null;
 int _alphabet_len = 0;
 List<int> _quadgrams = null;
 
@@ -154,10 +165,10 @@ Tuple2<int,int> _hill_climbing(List<int> key, List<int> cipher_bin, List<List<in
 BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int consolidate = 3}) {
 
   if (( maxRounds < 1) || (maxRounds > 10000))
-      //raise ValueError("maximum number of rounds not in the valid range 1..10000")
+      // maximum number of rounds not in the valid range 1..10000"
     return BreakerResult(errorCode: ErrorCode.MAX_ROUNDS_PARAMETER);
   if ((consolidate < 1) || (consolidate > 30))
-      //raise ValueError("consolidate parameter out of valid range 1..30")
+      // consolidate parameter out of valid range 1..30"
       return BreakerResult(errorCode: ErrorCode.CONSOLIDATE_PARAMETER);
 
   var start_time = DateTime.now();
@@ -225,3 +236,69 @@ BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int conso
     errorCode: ErrorCode.OK
   );
 }
+
+var _quadgramsList = Map<BreakerAlphabet, Quadgrams>();
+var _isLoading = false;
+
+
+
+Future<void> loadCountryData() async {
+  try {
+    // we can access builtin asset bundle with rootBundle
+    final data = await rootBundle.loadString("assets/data/countries.json");
+    _countries = json.decode(data);
+  } catch (e) {
+    print(e);
+  }
+}
+
+Future<void> _loadQuadgramsAssets(BreakerAlphabet _currentAlphabet) async {
+  while (_isLoading) {}
+
+  if (_quadgramsList.containsKey(_currentAlphabet))
+    return;
+
+  _isLoading = true;
+
+  Quadgrams quadgrams;
+  switch (_currentAlphabet) {
+    case BreakerAlphabet.English:
+      quadgrams = EnglishQuadgrams();
+      break;
+    case BreakerAlphabet.German:
+      quadgrams = GermanQuadgrams();
+      break;
+    case BreakerAlphabet.Spanish:
+      quadgrams = SpanishQuadgrams();
+      break;
+    case BreakerAlphabet.Polish:
+      quadgrams = PolishQuadgrams();
+      break;
+    case BreakerAlphabet.Greek:
+      quadgrams = GreekQuadgrams();
+      break;
+    case BreakerAlphabet.France:
+      quadgrams = FranceQuadgrams();
+      break;
+    case BreakerAlphabet.Russian:
+      quadgrams = RussianQuadgrams();
+      break;
+    default:
+      return null;
+  }
+
+
+  String data = await rootBundle.loadString('assets/quadgrams/'+ quadgrams.assetLocation);
+  Map<String, dynamic> jsonData = jsonDecode(data);
+  quadgrams.quadgramsCompressed = Map<int, List<int>>();
+  jsonData.entries.forEach((entry) {
+    quadgrams.quadgramsCompressed.putIfAbsent(
+        int.tryParse(entry.key),
+            () => List<int>.from(entry.value)
+    );
+  });
+
+  _quadgramsList.putIfAbsent(_currentAlphabet, () => quadgrams);
+
+  _isLoading = false;
+

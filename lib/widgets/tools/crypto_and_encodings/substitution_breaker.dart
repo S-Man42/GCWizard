@@ -5,6 +5,12 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/english_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/german_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/spanish_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/polish_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/greek_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/france_quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/russian_quadgrams.dart';
+
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
@@ -29,6 +35,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
 
   var _quadgrams = Map<BreakerAlphabet, Quadgrams>();
   var _isLoading = false;
+  var _isStarted = false;
 
   @override
   void initState() {
@@ -42,6 +49,11 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     var BreakerAlphabetItems = {
       BreakerAlphabet.English : i18n(context, 'substitution_breaker_alphabet_english'),
       BreakerAlphabet.German : i18n(context, 'substitution_breaker_alphabet_german'),
+      BreakerAlphabet.Spanish : i18n(context, 'substitution_breaker_alphabet_spanish'),
+      BreakerAlphabet.Polish : i18n(context, 'substitution_breaker_alphabet_polish'),
+      BreakerAlphabet.Greek : i18n(context, 'substitution_breaker_alphabet_greek'),
+      BreakerAlphabet.France : i18n(context, 'substitution_breaker_alphabet_france'),
+      BreakerAlphabet.Russian : i18n(context, 'substitution_breaker_alphabet_russian'),
     };
 
     return Column(
@@ -135,8 +147,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
   }
 
   Future<void> _loadQuadgramsAssets() async {
-    while (_isLoading) {
-    }
+    while (_isLoading) {}
 
     if (_quadgrams.containsKey(_currentAlphabet))
       return;
@@ -150,6 +161,21 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
         break;
       case BreakerAlphabet.German:
         quadgrams = GermanQuadgrams();
+        break;
+      case BreakerAlphabet.Spanish:
+        quadgrams = SpanishQuadgrams();
+        break;
+      case BreakerAlphabet.Polish:
+        quadgrams = PolishQuadgrams();
+        break;
+      case BreakerAlphabet.Greek:
+        quadgrams = GreekQuadgrams();
+        break;
+      case BreakerAlphabet.France:
+        quadgrams = FranceQuadgrams();
+        break;
+      case BreakerAlphabet.Russian:
+        quadgrams = RussianQuadgrams();
         break;
       default:
         return null;
@@ -171,11 +197,15 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
   }
 
   _calcOutput() async {
-    if (_currentInput == null || _currentInput.length == 0)
-      return GCWDefaultOutput();
+    if (_currentInput == null || _currentInput.length == 0  || _isStarted)
+      return;
 
-    while (_isLoading){}
+    try {
+      _isStarted = true;
+      while (_isLoading){}
 
-    _currentOutput = await break_cipher(_currentInput, _quadgrams[_currentAlphabet]);
+      _currentOutput = await break_cipher(_currentInput, _quadgrams[_currentAlphabet]);
+    }
+    finally {_isStarted = false;}
   }
 }

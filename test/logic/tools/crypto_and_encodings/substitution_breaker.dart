@@ -17,37 +17,44 @@ void main() {
   /// Link for corpus files (for other languages)
   /// https://guballa.gitlab.io/SubstitutionBreaker/cli_explained.html#adding-more-languages
   /// https://wortschatz.uni-leipzig.de/de/download/german#deu_newscrawl-public_2018
-  group("substitution_breaker.generate_quadgrams:", () {
+  group("substitution_breaker.generateQuadgrams:", () {
+
+    bool _isStarted = false;
     List<Map<String, dynamic>> _inputsToExpected = [
 
       // Attention: a file is done during execution
 
       /// generate test-quadgram- file ( Source file from https://gitlab.com/guballa/SubstitutionBreaker/-/blob/development/tests/fixturefiles/quadgram_corpus.txt)
-      //{'input' : 'quadgram_corpus.txt', 'fileOut' : 'quadgram_test.dart', 'className' : 'english_quadgrams', 'alphabet' : DEFAULT_ALPHABET, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      //{'input' : 'quadgram_corpus.txt', 'fileOut' : 'quadgram_test.dart', 'className' : 'EnglishQuadgrams', 'assetName' : 'en.json', 'alphabet' : DEFAULT_ALPHABET, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
       /// generate German quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/deu_news_2015_1M.tar.gz -> deu_news_2015_1M-sentences.txt)
-      //{'input' : 'deu_news_2015_1M-sentences.txt', 'fileOut' : 'german_quadgrams.dart', 'className' : 'german_quadgrams', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
-      /// generate France quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/fra_mixed_2009_1M.tar.gz -> deu_news_2015_1M-sentences.txt)
-      //{'input' : 'deu_news_2015_1M-sentences.txt', 'fileOut' : 'france_quadgrams.dart', 'className' : 'france_quadgrams', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      //{'input' : 'deu_news_2015_1M-sentences.txt', 'fileOut' : 'german_quadgrams.dart', 'className' : 'GermanQuadgrams', 'assetName' : 'de.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      /// generate France quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/fra_mixed_2009_1M.tar.gz -> fra_mixed_2009_1M-sentences.txt)
+      //{'input' : 'fra_mixed_2009_1M-sentences.txt', 'fileOut' : 'france_quadgrams.dart', 'className' : 'FranceQuadgrams', 'assetName' : 'fr.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
       /// generate Russian quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/rus_newscrawl-public_2018_1M.tar.gz -> rus_newscrawl-public_2018_1M-sentences.txt)
-      //{'input' : 'rus_newscrawl-public_2018_1M-sentences.txt', 'fileOut' : 'russian_quadgrams.dart', 'className' : 'russian_quadgrams', 'alphabet' : "абвгдежзиклмнопрстуфхцчшэюя", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      //{'input' : 'rus_newscrawl-public_2018_1M-sentences.txt', 'fileOut' : 'russian_quadgrams.dart', 'className' : 'RussianQuadgrams', 'assetName' : 'ru.json', 'alphabet' : "абвгдежзиклмнопрстуфхцчшэюя", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
       /// generate Polish quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/pol_newscrawl_2018_1M.tar.gz -> pol_newscrawl_2018_1M-sentences.txt)
-      //{'input' : 'pol_newscrawl_2018_1M-sentences.txt', 'fileOut' : 'polish_quadgrams.dart', 'className' : 'polish_quadgrams', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      //{'input' : 'pol_newscrawl_2018_1M-sentences.txt', 'fileOut' : 'polish_quadgrams.dart', 'className' : 'PolishQuadgrams', 'assetName' : 'pl.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
       /// generate Spanish quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/spa_newscrawl_2015_1M.tar.gz -> spa_newscrawl_2015_1M-sentences.txt)
-      //{'input' : 'spa_newscrawl_2015_1M-sentences.txt', 'fileOut' : 'spanish_quadgrams.dart', 'className' : 'spanish_quadgrams', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      //{'input' : 'spa_newscrawl_2015_1M-sentences.txt', 'fileOut' : 'spanish_quadgrams.dart', 'className' : 'SpanishQuadgrams', 'assetName' : 'es.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
       /// generate Greek quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/ell_newscrawl_2017_1M.tar.gz -> ell_newscrawl_2017_1M-sentences.txt)
-      //{'input' : 'ell_newscrawl_2017_1M-sentences.txt', 'fileOut' : 'greek_quadgrams.dart', 'className' : 'greek_quadgrams', 'alphabet' : "αβγδεζηθικλμνξοπρστυφχψω", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
-
+      //{'input' : 'ell_newscrawl_2017_1M-sentences.txt', 'fileOut' : 'greek_quadgrams.dart', 'className' : 'GreekQuadgrams', 'assetName' : 'gr.json', 'alphabet' : "αβγδεζηθικλμνξοπρστυφχψω", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
     ];
 
     _inputsToExpected.forEach((elem) {
+      while (_isStarted) {}
+      _isStarted = true;
       test('input: ${elem['input']}', () async {
+
         var filePath = path.current + "/lib/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/";
         var fileIn = File(path.normalize(filePath + elem['input']));
         var fileOut= File(path.normalize(filePath + elem['fileOut']));
+        filePath = path.current + "/assets/quadgrams/";
+        var fileAsset= File(path.normalize(filePath + elem['assetName']));
 
-        var _actual = await generate_quadgrams(fileIn, fileOut, elem['className'], elem['alphabet']);
+        var _actual = await generateQuadgrams(fileIn, fileOut,fileAsset, elem['className'], elem['assetName'], elem['alphabet']);
         expect(_actual.errorCode, elem['errorCode']);
-      });
+     });
+      _isStarted = false;
     });
   });
 
