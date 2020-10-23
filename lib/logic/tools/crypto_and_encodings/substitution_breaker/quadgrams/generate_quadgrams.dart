@@ -193,7 +193,7 @@ double _calc_fitness(Iterable<int> iterator){
 ///          quadgrams (e.g., ``tionioningatheling``).
 double calc_fitness(String txt, {String alphabet = DEFAULT_ALPHABET, List<int> quadgrams = null}) {
   if (txt == null || txt == '')
-    return 0;
+    return null;
 
   if (alphabet != null)
     _alphabet = alphabet;

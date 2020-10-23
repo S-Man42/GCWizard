@@ -21,6 +21,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
   String _currentInput = '';
   BreakerAlphabet _currentAlphabet = BreakerAlphabet.German;
   BreakerResult _currentOutput = null;
+  bool started = false;
 
   @override
   Widget build(BuildContext context) {
@@ -119,10 +120,17 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
   }
 
   _calcOutput() async {
-    if (_currentInput == null || _currentInput.length == 0)
-      return GCWDefaultOutput();
+    if (_currentInput == null || _currentInput.length == 0 || started)
+      return;
 
     _currentOutput = null;
-    _currentOutput = await break_cipher(_currentInput, _currentAlphabet);
+    started = true;
+    try {
+      _currentOutput = await break_cipher(_currentInput, _currentAlphabet);
+    }
+    finally {started = false;}
+
+
+
   }
 }

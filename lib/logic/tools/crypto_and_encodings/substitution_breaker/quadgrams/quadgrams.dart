@@ -1,18 +1,4 @@
-import 'dart:convert';
 import 'dart:math';
-import 'dart:io';
-import 'package:path/path.dart' as path;
-import 'package:archive/archive.dart' as arc;
-import 'dart:convert' as conv;
-
-
-
-
-/*
-import 'json_objects.dart';
-import "package:zipio/zipio.dart" show readZip, ZipEntity, ZipEntry, ZipMethod;
-*/
-
 
 class Quadgrams {
   static const int maxAlphabetLength = 32;
@@ -39,6 +25,7 @@ class Quadgrams {
   static Map<int, List<int>> compressQuadgrams (List<int> quadgrams) {
     var map = Map<int, List<int>>();
     var blockStart = -1;
+    const int zeroCount = 5;
 
     for (int i = 0; i < quadgrams.length; i++) {
       if ((blockStart < 0) && (quadgrams[i] != 0) )
@@ -46,16 +33,17 @@ class Quadgrams {
 
       if (blockStart >= 0) {
         // if five 0 => new list
-        if (((i + 2 < quadgrams.length) &&
-            (quadgrams[i+1] == 0) | (quadgrams[i+1] == null) &&
-            (quadgrams[i+2] == 0) | (quadgrams[i+2] == null) &&
-            (quadgrams[i+3] == 0) | (quadgrams[i+3] == null) &&
-            (quadgrams[i+4] == 0) | (quadgrams[i+4] == null) &&
-            (quadgrams[i+5] == 0) | (quadgrams[i+5] == null)) ||
-          (i + 2 >= quadgrams.length)) {
+        if (((i + zeroCount < quadgrams.length) &&
+          (quadgrams[i+1] == 0) | (quadgrams[i+1] == null) &&
+          (quadgrams[i+2] == 0) | (quadgrams[i+2] == null) &&
+          (quadgrams[i+3] == 0) | (quadgrams[i+3] == null) &&
+          (quadgrams[i+4] == 0) | (quadgrams[i+4] == null) &&
+          (quadgrams[i+5] == 0) | (quadgrams[i+5] == null)) ||
+          (i + zeroCount >= quadgrams.length)) {
           var quadgramList = List<int>();
-          quadgramList.addAll(quadgrams.getRange(blockStart, min(i + 1, quadgrams.length)));
+          quadgramList.addAll(quadgrams.getRange(blockStart, (i + zeroCount >= quadgrams.length) ? quadgrams.length : min(i + 1, quadgrams.length)));
           map.addAll({blockStart : quadgramList});
+          i += zeroCount;
           blockStart = -1;
         }
       }
@@ -139,34 +127,4 @@ class Quadgrams {
     });
     return sb.toString();
   }
-
-/*
-  createZipFile(String path, Quadgrams quadram) async {
-    var bytes = utf8.encode(conv.jsonEncode(quadram));
-    var encoder = arc.ZipDecoder().decodeBytes(bytes);
-
-
-    encoder.encode(new arc.Archive());
-    encoder.addFile(File(selectedAdharFile));
-    encoder.addFile(File(selectedIncomeFile));
-    encoder.close();
-
-  }
-
-  Quadgrams readZipFile(String path) {
-    final bytes = new File(path).readAsBytesSync();
-    final archive = new arc.ZipDecoder().decodeBytes(bytes);
-
-
-    for (var file in archive) {
-
-      if (file.isFile) {
-        file.decompress();
-
-
-        return  conv.jsonDecode(file);;
-      }
-    }
-  }
-  */
 }

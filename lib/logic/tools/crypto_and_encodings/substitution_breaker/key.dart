@@ -53,11 +53,11 @@ class Key{
   ///      null -> alphabet is invalid
   static String check_alphabet(String alphabet) {
     if ((alphabet == null) || (alphabet == ''))
-        return null;
+      return null;
     alphabet = alphabet.toLowerCase();
     if (alphabet.length != _set(alphabet).length)
-        //raise AlphabetInvalid("alphabet characters must be unique")
-        return null;
+      // alphabet characters must be unique
+      return null;
     return alphabet;
   }
 
@@ -72,16 +72,17 @@ class Key{
       return null;
     key = key.toLowerCase();
     if (key.length != _set(key).length)
-      //raise KeyInvalid("key characters must be unique");
+      //key characters must be unique
       return null;
 
     if (key.length != alphabet.length)
-      //raise KeyInvalid("key must be as long as the alphabet");
+      //key must be as long as the alphabet
       return null;
+
     bool result = true;
     key.split('').map((char) =>  result & alphabet.contains(char));
     if (!result)
-      /// raise KeyInvalid("key must use the same set of characters than the alphabet");
+      //key must use the same set of characters than the alphabet"
       return null;
 
     return key;
@@ -119,20 +120,20 @@ class Key{
     plaintext
       .split('\n')
       .forEach((line) {
-          ciphertext_fh.writeAsString(this.encode(line));
+        ciphertext_fh.writeAsString(this.encode(line));
       });
   }
 
   static Map<String,String> _maketrans(List<String> keyList, List<String> valueList) {
     Map<String, String> map = {};
     for (int i = keyList.length -1; i >= 0; i--)
-        map.putIfAbsent(keyList[i], () => valueList[i]);
+      map.putIfAbsent(keyList[i], () => valueList[i]);
 
     return map;
   }
 
   /// remove double characters
   static String _set(String text) {
-     return text.split('').toSet().join();
+    return text.split('').toSet().join();
   }
 }

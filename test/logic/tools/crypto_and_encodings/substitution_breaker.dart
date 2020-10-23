@@ -25,7 +25,18 @@ void main() {
       /// generate test-quadgram- file ( Source file from https://gitlab.com/guballa/SubstitutionBreaker/-/blob/development/tests/fixturefiles/quadgram_corpus.txt)
       //{'input' : 'quadgram_corpus.txt', 'fileOut' : 'quadgram_test.dart', 'className' : 'english_quadgrams', 'alphabet' : DEFAULT_ALPHABET, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
       /// generate German quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/deu_news_2015_1M.tar.gz -> deu_news_2015_1M-sentences.txt)
-      //{'input' : 'de_corpus.txt', 'fileOut' : 'de_quadgrams.dart', 'className' : 'german_quadgrams', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      //{'input' : 'deu_news_2015_1M-sentences.txt', 'fileOut' : 'german_quadgrams.dart', 'className' : 'german_quadgrams', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      /// generate France quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/fra_mixed_2009_1M.tar.gz -> deu_news_2015_1M-sentences.txt)
+      //{'input' : 'deu_news_2015_1M-sentences.txt', 'fileOut' : 'france_quadgrams.dart', 'className' : 'france_quadgrams', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      /// generate Russian quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/rus_newscrawl-public_2018_1M.tar.gz -> rus_newscrawl-public_2018_1M-sentences.txt)
+      //{'input' : 'rus_newscrawl-public_2018_1M-sentences.txt', 'fileOut' : 'russian_quadgrams.dart', 'className' : 'russian_quadgrams', 'alphabet' : "абвгдежзиклмнопрстуфхцчшэюя", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      /// generate Polish quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/pol_newscrawl_2018_1M.tar.gz -> pol_newscrawl_2018_1M-sentences.txt)
+      //{'input' : 'pol_newscrawl_2018_1M-sentences.txt', 'fileOut' : 'polish_quadgrams.dart', 'className' : 'polish_quadgrams', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      /// generate Spanish quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/spa_newscrawl_2015_1M.tar.gz -> spa_newscrawl_2015_1M-sentences.txt)
+      //{'input' : 'spa_newscrawl_2015_1M-sentences.txt', 'fileOut' : 'spanish_quadgrams.dart', 'className' : 'spanish_quadgrams', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+      /// generate Greek quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/ell_newscrawl_2017_1M.tar.gz -> deu_news_2015_1M-sentences.txt)
+      //{'input' : 'deu_news_2015_1M-sentences.txt', 'fileOut' : 'greek_quadgrams.dart', 'className' : 'greek_quadgrams', 'alphabet' : "αβγδεζηθικλμνξοπρστυφχψω", 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -116,7 +127,7 @@ void main() {
     final List<int> quadgrams = [0,0,0,747,0,0,0,0,0,0,11,12,13,0,0,0,17];
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : quadgrams, 'errorCode' : ErrorCode.OK, 'expectedOutput' : '{3:[747],10:[11,12,13],16:[17]}'},
+      {'input' : quadgrams, 'errorCode' : ErrorCode.OK, 'expectedOutput' : '{3:[747],10:[11,12,13,0,0,0,17]}'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -129,10 +140,12 @@ void main() {
 
   group("substitution_breaker.decompressQuadgrams:", () {
     final List<int> quadgrams = [0,0,0,747,0,0,0,0,0,0,11,12,13,0,0,0,17];
-    final Map<int, List<int>> quadgramsCpmpressed = {3:[747],10:[11,12,13],16:[17]};
+    final Map<int, List<int>> quadgramsCpmpressed = {3:[747],10:[11,12,13,0,0,0,17]};
+    final Map<int, List<int>> quadgramsCpmpressed1 = {3:[747],10:[11,12,13],16:[17]};
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : quadgramsCpmpressed, 'size' : 17, 'errorCode' : ErrorCode.OK, 'expectedOutput' : quadgrams},
+      {'input' : quadgramsCpmpressed1, 'size' : 17, 'errorCode' : ErrorCode.OK, 'expectedOutput' : quadgrams},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -191,22 +204,22 @@ void main() {
     var de = german_quadgrams();
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'expectedOutput' : 0},
-      {'input' : '', 'expectedOutput' : 0},
+      {'input' : null, 'expectedOutput' : null},
+      {'input' : '', 'expectedOutput' : null},
 
 
       {'input' : text15, 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 103},
       {'input' : text13, 'alphabet' : de.alphabet, 'quadgrams' : de.quadgrams(), 'expectedOutput' : 103},
       {'input' : text14, 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 27},
       {'input' : 'tion', 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 136},
-      {'input' : 'ti', 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 0},
+      {'input' : 'ti', 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : null},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
 
         var _actual = calc_fitness(elem['input'], alphabet: elem['alphabet'], quadgrams: elem['quadgrams']);
-        expect(_actual.round(), elem['expectedOutput']);
+        expect(_actual != null ? _actual.round() : _actual, elem['expectedOutput']);
       });
     });
   });
