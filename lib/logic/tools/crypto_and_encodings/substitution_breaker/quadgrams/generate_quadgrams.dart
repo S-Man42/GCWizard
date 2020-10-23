@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/breaker.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/SubstitutionsKey.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/Key.dart';
 
 String  _alphabet = null;
 List<int> _quadgrams = null;
@@ -11,13 +11,15 @@ List<int> _quadgrams = null;
 /// method to generate quadgrams from a text file
 /// :param corpus_fh: the file handle of the text corpus file to process
 /// :param quadgram_fh: the file handle where the quadgrams will be saaved
+/// :param asset_fh: the file handle where the quadgram map will be saaved
 /// :param className: name of the generated class.
+/// :param assetName: name of the asset file.
 /// :param alphabet: the alphabet to apply with this text file.
 Future<BreakerResult> generateQuadgrams(File corpus_fh, File quadgram_fh, File asset_fh, String className, String assetName, String alphabet) async {
 
-  _alphabet = SubstitutionsKey.check_alphabet(alphabet);
+  _alphabet = KeyS.check_alphabet(alphabet);
   if (_alphabet.length > Quadgrams.maxAlphabetLength){
-    //raise AlphabetInvalid("Alphabet must have less or equal than 32 characters")
+    // Alphabet must have less or equal than 32 characters
     return BreakerResult(alphabet: _alphabet, errorCode: ErrorCode.ALPHABET_TOO_LONG);;
   }
 
@@ -44,7 +46,7 @@ Future<BreakerResult> generateQuadgrams(File corpus_fh, File quadgram_fh, File a
       idx += 1;
     });
   } on Exception {
-    //"More than three characters from the given alphabet are required"
+    // More than three characters from the given alphabet are required
     return BreakerResult(errorCode: ErrorCode.WRONG_GENERATE_TEXT);
   }
 
@@ -123,7 +125,7 @@ BreakerResult _generateFiles(File quadgram_fh, File asset_fh, String className, 
   sb.write("    most_frequent_quadgram = '" + max_chars + "';\n");
   sb.write("    max_fitness = " + max_val.round().toString() + ";\n");
   sb.write("    average_fitness = " + (quadgrams_sum.toDouble() / pow(alphabet.length, 4 )).toString() + ";\n");
-  sb.write("    assetLocation = " + '"assets/quadgrams/"' + assetName + '";\n');
+  sb.write("    assetLocation = " + '"assets/quadgrams/' + assetName + '";\n');
   sb.write("  }\n");
   sb.write("}\n");
 
@@ -170,18 +172,18 @@ double _calc_fitness(Iterable<int> iterator){
       idx += 1;
     });
   } on Exception {
-    //// More than three characters from the given alphabet are required"
+    // More than three characters from the given alphabet are required"
     return null;
   }
 
   if (nbr_quadgrams == 0){
-    //// More than three characters from the given alphabet are required")
+    // More than three characters from the given alphabet are required")
     return null;
   }
   return fitness / nbr_quadgrams / 10;
 }
 
-//// Method to calculate the fitness for the given text string
+/// Method to calculate the fitness for the given text string
 /// :param txt: the text string for which the fitness shall be determined
 /// :return: the fitness of the text. A value close to 100 means, the
 ///          text is probably in the same language than the language used to generate

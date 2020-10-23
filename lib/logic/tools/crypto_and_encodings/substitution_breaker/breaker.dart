@@ -1,7 +1,7 @@
 /// Class to represent the breaker implementation based on quadgrams
 /// ported from https://gitlab.com/guballa/SubstitutionBreaker
 
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/SubstitutionsKey.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/Key.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:tuple/tuple.dart';
 
@@ -12,7 +12,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/greek_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/france_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/russian_quadgrams.dart';
-
 
 enum BreakerAlphabet{English, German, Spanish, Polish, Greek, France, Russian}
 enum ErrorCode{OK, MAX_ROUNDS_PARAMETER, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, ALPHABET_TOO_LONG, WRONG_GENERATE_TEXT}
@@ -69,59 +68,50 @@ const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 String  _alphabet = null;
 int _alphabet_len = 0;
 List<int> _quadgrams = null;
-BreakerAlphabet _currentAlphabet = null;
-var _quadgramsMap = Map<BreakerAlphabet, Quadgrams>();
 
-Future<BreakerResult> break_cipher(String input, BreakerAlphabet alphabet) async {
+
+Future<BreakerResult> break_cipher(String input, Quadgrams quadgrams) async {
   if (input == null || input == '')
     return BreakerResult(errorCode: ErrorCode.OK);
 
-  if (_currentAlphabet != alphabet) {
-    Quadgrams quadgrams;
-    if (!_quadgramsMap.containsKey(alphabet)) {
-      switch (alphabet) {
-        case BreakerAlphabet.English:
-          quadgrams = EnglishQuadgrams();
-          break;
-        case BreakerAlphabet.German:
-          quadgrams = GermanQuadgrams();
-          break;
-        case BreakerAlphabet.Spanish:
-          quadgrams = SpanishQuadgrams();
-          break;
-        case BreakerAlphabet.Polish:
-          quadgrams = PolishQuadgrams();
-          break;
-        case BreakerAlphabet.Greek:
-          quadgrams = GreekQuadgrams();
-          break;
-        case BreakerAlphabet.France:
-          quadgrams = FranceQuadgrams();
-          break;
-        case BreakerAlphabet.Russian:
-          quadgrams = RussianQuadgrams();
-          break;
-        default:
-          return null;
-      }
-    } else {
-      quadgrams = _quadgramsMap[alphabet];
-    }
-
-    _currentAlphabet = alphabet;
-    _quadgramsMap.putIfAbsent(alphabet, () => quadgrams);
-
-    await _initBreaker(quadgrams);
-  }
+  _initBreaker(quadgrams);
 
   return  _break_cipher(input);
 }
 
 /// Init the instance
-_initBreaker(Quadgrams languageQuadgrams) async {
+_initBreaker(Quadgrams languageQuadgrams) {
   _alphabet = languageQuadgrams.alphabet;
   _alphabet_len = _alphabet.length;
-  _quadgrams = await languageQuadgrams.quadgrams();
+  _quadgrams = languageQuadgrams.quadgrams();
+}
+
+Quadgrams getQuadgrams(BreakerAlphabet alphabet){
+  switch (alphabet) {
+    case BreakerAlphabet.English:
+      return  EnglishQuadgrams();
+      break;
+    case BreakerAlphabet.German:
+      return  GermanQuadgrams();
+      break;
+    case BreakerAlphabet.Spanish:
+      return  SpanishQuadgrams();
+      break;
+    case BreakerAlphabet.Polish:
+      return  PolishQuadgrams();
+      break;
+    case BreakerAlphabet.Greek:
+      return  GreekQuadgrams();
+      break;
+    case BreakerAlphabet.France:
+      return  FranceQuadgrams();
+      break;
+    case BreakerAlphabet.Russian:
+      return RussianQuadgrams();
+      break;
+    default:
+      return null;
+  }
 }
 
 /// Implements an iterator for a given text string
@@ -254,7 +244,7 @@ BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int conso
     }
   }
   var key_str = best_key.map((x) => _alphabet[x]).join();
-  var _key = SubstitutionsKey(key_str, alphabet: _alphabet);
+  var _key = KeyS(key_str, alphabet: _alphabet);
   var seconds = (DateTime.now().difference(start_time)).inMilliseconds / 1000;
 
   return BreakerResult(

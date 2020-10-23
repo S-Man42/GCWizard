@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/
 
 
 /// Basic functions for encoding/decoding substitution ciphers with a given key
-class SubstitutionsKey{
+class KeyS{
   /*
    The first character of the alphabet corresponds to the first character of the
   key, the second character of the alphabet to the second character of the key,
@@ -32,7 +32,7 @@ class SubstitutionsKey{
   /// :param key: The key to use. Must have the same length than alphabet. (It is case insensitive.)
   /// :param str alphabet: The set of characters which define the alphabet.
   ///         Characters which are not in the alphabet will be ignored when transcoding.
-  SubstitutionsKey (String key, {String alphabet=DEFAULT_ALPHABET}) {
+  KeyS (String key, {String alphabet=DEFAULT_ALPHABET}) {
 
     this._alphabet = check_alphabet(alphabet);
     if (this._alphabet == null)

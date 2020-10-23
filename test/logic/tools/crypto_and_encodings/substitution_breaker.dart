@@ -2,19 +2,54 @@
 /// ported from https://gitlab.com/guballa/SubstitutionBreaker
 
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/SubstitutionsKey.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/Key.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/generate_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/english_quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/german_quadgrams.dart';
 import 'package:path/path.dart' as path;
-import 'package:synchronized/synchronized.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 
 void main() {
 
-  var lock = new Lock();
+  var _quadgrams = Map<BreakerAlphabet, Quadgrams>();
+  bool _isStarted = false;
+
+
+  Future<Quadgrams> loadQuadgrams(Quadgrams quadgrams) async {
+    if (quadgrams.quadgrams() != null)
+      return quadgrams;
+
+    // add this, and it should be the first line in main method
+    WidgetsFlutterBinding.ensureInitialized();
+
+    String data = await rootBundle.loadString(quadgrams.assetLocation);
+    Map<String, dynamic> jsonData = jsonDecode(data);
+    quadgrams.quadgramsCompressed = Map<int, List<int>>();
+    jsonData.entries.forEach((entry) {
+      quadgrams.quadgramsCompressed.putIfAbsent(
+          int.tryParse(entry.key),
+              () => List<int>.from(entry.value)
+      );
+    });
+
+    return quadgrams;
+  }
+
+  Future<Quadgrams> getQuadgram(BreakerAlphabet alphabet) async {
+    if (_quadgrams.containsKey(alphabet))
+      return _quadgrams[alphabet];
+
+    var quad = getQuadgrams(alphabet);
+    quad = await loadQuadgrams(quad);
+    _quadgrams.addAll({alphabet : quad});
+
+    return quad;
+  }
 
 
   /// Link for corpus files (for other languages)
@@ -22,7 +57,6 @@ void main() {
   /// https://wortschatz.uni-leipzig.de/de/download/german#deu_newscrawl-public_2018
   group("substitution_breaker.generateQuadgrams:", () {
 
-    bool _isStarted = false;
     List<Map<String, dynamic>> _inputsToExpected = [
 
       // Attention: a file is done during execution
@@ -44,21 +78,22 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) async {
-      await lock.synchronized(() async {
-        test('input: ${elem['input']}', () async {
-          var filePath = path.current +
-              "/lib/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/";
-          var fileIn = File(path.normalize(filePath + elem['input']));
-          var fileOut = File(path.normalize(filePath + elem['fileOut']));
-          filePath = path.current + "/assets/quadgrams/";
-          var fileAsset = File(path.normalize(filePath + elem['assetName']));
+      while(_isStarted){};
+      _isStarted = true;
 
-          var _actual = await generateQuadgrams(
-              fileIn, fileOut, fileAsset, elem['className'], elem['assetName'],
-              elem['alphabet']);
-          expect(_actual.errorCode, elem['errorCode']);
-        });
+      test('input: ${elem['input']}', () async {
+        var filePath = path.current + "/lib/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/";
+        var fileIn = File(path.normalize(filePath + elem['input']));
+        var fileOut = File(path.normalize(filePath + elem['fileOut']));
+        filePath = path.current + "/assets/quadgrams/";
+        var fileAsset = File(path.normalize(filePath + elem['assetName']));
+
+        var _actual = await generateQuadgrams(
+            fileIn, fileOut, fileAsset, elem['className'], elem['assetName'],
+            elem['alphabet']);
+        expect(_actual.errorCode, elem['errorCode']);
       });
+      _isStarted = false;
     });
   });
 
@@ -74,7 +109,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = SubstitutionsKey.check_alphabet(elem['input']);
+        var _actual = KeyS.check_alphabet(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -94,7 +129,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = SubstitutionsKey.check_key(elem['input'], elem['alphabet']);
+        var _actual = KeyS.check_key(elem['input'], elem['alphabet']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -110,7 +145,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var key = SubstitutionsKey('abcdefghijklmnopqrstuvwxyz');
+        var key = KeyS('abcdefghijklmnopqrstuvwxyz');
         var _actual = key.decode(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
@@ -127,7 +162,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var key = SubstitutionsKey('abcdefghijklmnopqrstuvwxyz');
+        var key = KeyS('abcdefghijklmnopqrstuvwxyz');
         var _actual = key.encode(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
@@ -204,14 +239,17 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) async {
-      await lock.synchronized(() async {
-        test('input: ${elem['input']}', () async {
+      while(_isStarted){};
+      _isStarted = true;
 
-          var _actual = await break_cipher(elem['input'], elem['alphabet']);
-          expect(_actual.plaintext, elem['expectedOutput']);
-          expect(_actual.errorCode, elem['errorCode']);
-        });
+      test('input: ${elem['input']}', () async {
+
+        var quad = await getQuadgram(elem['alphabet']);
+        var _actual = await break_cipher(elem['input'], quad);
+        expect(_actual.plaintext, elem['expectedOutput']);
+        expect(_actual.errorCode, elem['errorCode']);
       });
+      _isStarted = false;
     });
   });
 
@@ -232,13 +270,9 @@ void main() {
     ];
 
     _inputsToExpected.forEach((elem) async {
-      await lock.synchronized(() async {
-        test('input: ${elem['input']}', () async {
-          print( elem['expectedOutput'] );
-          var _actual = calc_fitness(elem['input'], alphabet: elem['alphabet'], quadgrams: await en.quadgrams()); // elem['quadgrams']
-          print( elem['expectedOutput'] + " " + _actual);
-          expect(_actual != null ? _actual.round() : _actual, elem['expectedOutput']);
-        });
+      test('input: ${elem['input']}', () async {
+        var _actual = calc_fitness(elem['input'], alphabet: elem['alphabet'], quadgrams: await en.quadgrams()); // elem['quadgrams']
+        expect(_actual != null ? _actual.round() : _actual, elem['expectedOutput']);
       });
     });
   });

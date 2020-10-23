@@ -1,6 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/breaker.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
+
+
 
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
@@ -23,8 +27,16 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
   BreakerAlphabet _currentAlphabet = BreakerAlphabet.German;
   BreakerResult _currentOutput = null;
 
+  var _quadgrams = Map<BreakerAlphabet, Quadgrams>();
+  var _isLoading = false;
   var _isStarted = false;
 
+  @override
+  void initState() {
+    super.initState();
+
+   // _loadQuadgramsAssets();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,16 +139,44 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     );
   }
 
+  Future<void> _loadQuadgramsAssets() async {
+    while (_isLoading) {}
+
+    if (_quadgrams.containsKey(_currentAlphabet))
+      return;
+
+    _isLoading = true;
+
+    Quadgrams quadgrams = getQuadgrams(_currentAlphabet);
+
+    String data = await DefaultAssetBundle.of(context).loadString(quadgrams.assetLocation);
+    Map<String, dynamic> jsonData = jsonDecode(data);
+    quadgrams.quadgramsCompressed = Map<int, List<int>>();
+    jsonData.entries.forEach((entry) {
+      quadgrams.quadgramsCompressed.putIfAbsent(
+          int.tryParse(entry.key),
+              () => List<int>.from(entry.value)
+      );
+    });
+
+    _quadgrams.putIfAbsent(_currentAlphabet, () => quadgrams);
+
+    _isLoading = false;
+  }
+
   _calcOutput() async {
     if (_currentInput == null || _currentInput.length == 0 || _isStarted)
       return;
 
-    try {
-      _isStarted = true;
+    _isStarted = true;
 
-      _currentOutput = await break_cipher(_currentInput, _currentAlphabet);
+    await _loadQuadgramsAssets();
+    var _currentOutputFuture = break_cipher(_currentInput, _quadgrams[_currentAlphabet]);
+    _currentOutputFuture.then((output) {
+      _currentOutput = output;
+      _isStarted = false;
       this.setState(() {});
-    }
-    finally {_isStarted = false;}
+    });
+    this.setState(() {});
   }
 }
