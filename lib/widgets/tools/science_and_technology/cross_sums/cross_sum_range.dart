@@ -43,7 +43,9 @@ class CrossSumRangeState extends State<CrossSumRange> {
           min: widget.type == CrossSumType.ITERATED ? -9 : null,
           max: widget.type == CrossSumType.ITERATED ? 9 : null,
           onChanged: (value) {
-            _currentCrossSum = value;
+            setState(() {
+              _currentCrossSum = value;
+            });
           },
         ),
         GCWTextDivider(
@@ -52,13 +54,17 @@ class CrossSumRangeState extends State<CrossSumRange> {
         GCWIntegerSpinner(
           value: _currentRangeStart,
           onChanged: (value) {
-            _currentRangeStart = value;
+            setState(() {
+              _currentRangeStart = value;
+            });
           },
         ),
         GCWIntegerSpinner(
           value: _currentRangeEnd,
           onChanged: (value) {
-            _currentRangeEnd = value;
+            setState(() {
+              _currentRangeEnd = value;
+            });
           },
         ),
         GCWSubmitFlatButton(

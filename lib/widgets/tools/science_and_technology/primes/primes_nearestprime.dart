@@ -11,7 +11,7 @@ class NearestPrime extends StatefulWidget {
 }
 
 class NearestPrimeState extends State<NearestPrime> {
-  var _currentPrimes = [2];
+  var _currentNumber = 1;
 
   @override
   void initState() {
@@ -23,10 +23,10 @@ class NearestPrimeState extends State<NearestPrime> {
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
-          value: 1,
+          value: _currentNumber,
           onChanged: (value) {
             setState(() {
-              _currentPrimes = getNearestPrime(value);
+              _currentNumber = value;
             });
           },
         ),
@@ -36,11 +36,8 @@ class NearestPrimeState extends State<NearestPrime> {
   }
 
   Widget _buildOutput() {
-    if (_currentPrimes == null)
-      _currentPrimes = [];
-
     return GCWMultipleOutput(
-      children: _currentPrimes
+      children: getNearestPrime(_currentNumber) ?? []
     );
   }
 }

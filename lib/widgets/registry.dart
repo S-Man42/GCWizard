@@ -675,7 +675,7 @@ class Registry {
         tool: Substitution(),
         i18nPrefix: 'substitution',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'substitution ersetzen alphabet change austauschen change switch'
+        searchStrings: 'substitution ersetzen replacements alphabet change austauschen change switch'
       ),
       GCWToolWidget(
         tool: SudokuSolver(),

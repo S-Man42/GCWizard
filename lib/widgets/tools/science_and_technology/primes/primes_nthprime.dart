@@ -9,7 +9,7 @@ class NthPrime extends StatefulWidget {
 }
 
 class NthPrimeState extends State<NthPrime> {
-  String _output = '2';
+  var _currentNumber = 1;
 
   @override
   void initState() {
@@ -21,17 +21,17 @@ class NthPrimeState extends State<NthPrime> {
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
-          value: 1,
+          value: _currentNumber,
           min: 1,
           max: 78499,
           onChanged: (value) {
             setState(() {
-              _output = getNthPrime(value).toString();
+              _currentNumber = value;
             });
           },
         ),
         GCWDefaultOutput(
-          child: _output
+          child: getNthPrime(_currentNumber)
         )
       ],
     );

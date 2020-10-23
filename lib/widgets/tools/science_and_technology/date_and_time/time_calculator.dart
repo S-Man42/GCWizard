@@ -24,7 +24,7 @@ class TimeCalculator extends StatefulWidget {
 class TimeCalculatorState extends State<TimeCalculator> {
   var _currentMode = GCWSwitchPosition.left;
 
-  var _startDays = _WrapperForInt(5);
+  var _startDays = _WrapperForInt(0);
   var _startHours = _WrapperForInt(0);
   var _startMinutes = _WrapperForInt(0);
   var _startSeconds = _WrapperForInt(0);
@@ -33,6 +33,21 @@ class TimeCalculatorState extends State<TimeCalculator> {
   var _endHours = _WrapperForInt(0);
   var _endMinutes = _WrapperForInt(0);
   var _endSeconds = _WrapperForInt(0);
+
+  TextEditingController _startDaysController;
+  TextEditingController _startHoursController;
+  TextEditingController _startMinutesController;
+  TextEditingController _startSecondsController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _startDaysController = TextEditingController(text: _startDays.value.toString());
+    _startHoursController = TextEditingController(text: _startHours.value.toString());
+    _startMinutesController = TextEditingController(text: _startMinutes.value.toString());
+    _startSecondsController = TextEditingController(text: _startSeconds.value.toString());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +58,10 @@ class TimeCalculatorState extends State<TimeCalculator> {
         ),
         Row(
           children: [
-            _buildIntegerSpinner(_startDays),
-            _buildIntegerSpinner(_startHours),
-            _buildIntegerSpinner(_startMinutes),
-            _buildIntegerSpinner(_startSeconds),
+            _buildIntegerSpinner(_startDays, controller: _startDaysController),
+            _buildIntegerSpinner(_startHours, max: 23, controller: _startHoursController),
+            _buildIntegerSpinner(_startMinutes, max: 59, controller: _startMinutesController),
+            _buildIntegerSpinner(_startSeconds, max: 59, controller: _startSecondsController),
           ],
         ),
         GCWTwoOptionsSwitch(
@@ -66,9 +81,9 @@ class TimeCalculatorState extends State<TimeCalculator> {
         Row(
           children: [
             _buildIntegerSpinner(_endDays),
-            _buildIntegerSpinner(_endHours),
-            _buildIntegerSpinner(_endMinutes),
-            _buildIntegerSpinner(_endSeconds),
+            _buildIntegerSpinner(_endHours, max: 23),
+            _buildIntegerSpinner(_endMinutes, max: 59),
+            _buildIntegerSpinner(_endSeconds, max: 59),
           ],
         ),
         GCWDefaultOutput(
@@ -78,13 +93,15 @@ class TimeCalculatorState extends State<TimeCalculator> {
     );
   }
 
-  _buildIntegerSpinner(_value) {
+  _buildIntegerSpinner(_value, {int max, TextEditingController controller}) {
     return Expanded(
       child: Container(
         child: GCWIntegerSpinner(
           value: _value.value,
           min: 0,
-          suppressOverflow: true,
+          max: max,
+          overflow: max == null ? SpinnerOverflowType.SUPPRESS_OVERFLOW : SpinnerOverflowType.OVERFLOW_MIN,
+          controller: controller,
           layout: SpinnerLayout.VERTICAL,
           onChanged: (value) {
             setState(() {
@@ -146,6 +163,11 @@ class TimeCalculatorState extends State<TimeCalculator> {
               _startHours.value = hours;
               _startMinutes.value = minutes;
               _startSeconds.value = seconds;
+
+              _startDaysController.text = _startDays.value.toString();
+              _startHoursController.text = _startHours.value.toString();
+              _startMinutesController.text = _startMinutes.value.toString();
+              _startSecondsController.text = _startSeconds.value.toString();
             });
           },
         )

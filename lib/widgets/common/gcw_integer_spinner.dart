@@ -6,6 +6,13 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
+enum SpinnerOverflowType {
+  SUPPRESS_OVERFLOW, // stop spinning at min and max
+  ALLOW_OVERFLOW, // overflow at min and max: when x < min -> max; when x > max -> min
+  OVERFLOW_MIN, // overflow only on min: when x < min -> max; when x > max: ok
+  OVERFLOW_MAX // overflow only on max: when x < min: ok; when x > max -> min
+}
+
 class GCWIntegerSpinner extends StatefulWidget {
   final Function onChanged;
   final title;
@@ -15,19 +22,19 @@ class GCWIntegerSpinner extends StatefulWidget {
   final controller;
   final SpinnerLayout layout;
   final focusNode;
-  final suppressOverflow;
+  final SpinnerOverflowType overflow;
 
   const GCWIntegerSpinner({
     Key key,
     this.onChanged,
     this.title,
-    this.value: 0,
+    this.value,
     this.min: -9007199254740991,
     this.max: 9007199254740992,
     this.controller,
     this.layout: SpinnerLayout.HORIZONTAL,
     this.focusNode,
-    this.suppressOverflow: false // TODO: Automatically true if this.min == null || this.max == null
+    this.overflow: SpinnerOverflowType.ALLOW_OVERFLOW // TODO: Automatically true if this.min == null || this.max == null
   }) : super(key: key);
 
   @override
@@ -36,7 +43,7 @@ class GCWIntegerSpinner extends StatefulWidget {
 
 class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   TextEditingController _controller;
-  var _currentValue = 1;
+  var _currentValue = 0;
 
   @override
   void initState() {
@@ -61,19 +68,19 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.value != null) {
+    if (widget.value != null)
       _currentValue = widget.value;
-      _controller.text = _currentValue.toString();
-    }
 
     return _buildSpinner();
   }
 
   _decreaseValue() {
     setState(() {
-      if (widget.min == null || _currentValue > widget.min) {
+      if (widget.min == null || _currentValue > widget.min || widget.overflow == SpinnerOverflowType.OVERFLOW_MAX) {
         _currentValue--;
-      } else if (!widget.suppressOverflow && _currentValue == widget.min && widget.max != null) {
+      } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MIN].contains(widget.overflow)
+          && _currentValue == widget.min && widget.max != null
+      ) {
         _currentValue = widget.max;
       }
 
@@ -83,11 +90,17 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _increaseValue() {
     setState(() {
-      if (widget.max == null || _currentValue < widget.max) {
+      print(_currentValue);
+
+      if (widget.max == null || _currentValue < widget.max || widget.overflow == SpinnerOverflowType.OVERFLOW_MIN) {
         _currentValue++;
-      } else if (!widget.suppressOverflow && _currentValue == widget.max && widget.min != null) {
+      } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MAX].contains(widget.overflow)
+          && _currentValue == widget.max && widget.min != null
+      ) {
         _currentValue = widget.min;
       }
+
+      print(_currentValue);
 
       _setCurrentValueAndEmitOnChange(setTextFieldText: true);
     });
@@ -106,8 +119,8 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   Widget _buildTextField() {
     return GCWIntegerTextField(
       focusNode: widget.focusNode,
-      min: widget.min,
-      max: widget.max,
+      min: widget.overflow == SpinnerOverflowType.OVERFLOW_MAX ? null : widget.min,
+      max: widget.overflow == SpinnerOverflowType.OVERFLOW_MIN ? null : widget.max,
       controller: _controller,
       onChanged: (ret) {
         setState(() {
@@ -180,8 +193,9 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   }
 
   _setCurrentValueAndEmitOnChange({setTextFieldText: false}) {
-    if (setTextFieldText)
+    if (setTextFieldText) {
       _controller.text = _currentValue.toString();
+    }
 
     widget.onChanged(_currentValue);
   }
