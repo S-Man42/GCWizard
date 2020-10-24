@@ -2,10 +2,13 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:prefs/prefs.dart';
 
 String className(Widget widget) {
@@ -34,7 +37,7 @@ defaultFontSize() {
   return fontSize;
 }
 
-List<Widget> columnedMultiLineOutput(List<List<dynamic>> data, {List<int> flexValues = const []}) {
+List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data, {List<int> flexValues = const [], int copyColumn}) {
   var odd = true;
   return data.where((row) => row != null).map((rowData) {
     Widget output;
@@ -44,16 +47,39 @@ List<Widget> columnedMultiLineOutput(List<List<dynamic>> data, {List<int> flexVa
         index,
         Expanded(
           child: GCWText(
-              text: column.toString()
+            text: column.toString()
           ),
           flex: index < flexValues.length ? flexValues[index] : 1
         )
       );
     }).values.toList();
 
+    if (copyColumn == null)
+      copyColumn = rowData.length - 1;
+    var copyText = rowData[copyColumn].toString();
+
     var row = Container(
       child: Row(
-        children: columns
+        children: [
+          Expanded(
+            child: Row(
+              children: columns
+            ),
+          ),
+          context == null ? Container()
+            : Container(
+              child: GCWIconButton(
+                iconData: Icons.content_copy,
+                size: IconButtonSize.TINY,
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: copyText));
+                  showToast(i18n(context, 'common_clipboard_copied') + ':\n' + copyText);
+                },
+              ),
+              width: 25,
+              height: 22,
+            )
+        ],
       ),
       margin: EdgeInsets.only(
         top : 6,

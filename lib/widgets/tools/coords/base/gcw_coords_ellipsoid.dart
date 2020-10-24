@@ -178,7 +178,7 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
       [i18n(context, 'coords_ellipsoid_inverseflattening'), _currentEllipsoid.invf],
     ];
 
-    var rows = columnedMultiLineOutput(ellipsoidData);
+    var rows = columnedMultiLineOutput(context, ellipsoidData);
 
     return Padding(
       child: Column(

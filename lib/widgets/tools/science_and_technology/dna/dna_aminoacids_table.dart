@@ -45,7 +45,7 @@ class DNAAminoAcidsTableState extends State<DNAAminoAcidsTable> {
     acids.sort((a, b) => a[0].compareTo(b[0]));
 
     return Column(
-      children: columnedMultiLineOutput(acids, flexValues: [3, 1, 1, 2]),
+      children: columnedMultiLineOutput(context, acids, flexValues: [3, 1, 1, 2]),
     );
   }
 }

@@ -65,7 +65,7 @@ class _GCWCrosstotalOutputState extends State<GCWCrosstotalOutput> {
     ];
 
     return Column(
-      children: columnedMultiLineOutput(crosstotalValues, flexValues: [2, 1])
+      children: columnedMultiLineOutput(context, crosstotalValues, flexValues: [2, 1])
     );
   }
 }

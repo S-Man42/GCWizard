@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 
-enum IconButtonSize {NORMAL, SMALL}
+enum IconButtonSize {NORMAL, SMALL, TINY}
 
 class GCWIconButton extends StatelessWidget {
   final Function onPressed;
@@ -29,6 +29,11 @@ class GCWIconButton extends StatelessWidget {
         buttonHeight = 28.0;
         iconSize = 20.0;
         break;
+      case IconButtonSize.TINY:
+        containerWidth = 21.0;
+        buttonHeight = 18.0;
+        iconSize = 17.0;
+        break;
     }
 
     return Container(
@@ -51,7 +56,7 @@ class GCWIconButton extends StatelessWidget {
       ),
       padding: EdgeInsets.only(
         left: 2,
-        right: 2,
+        right: 2
       ),
     );
   }

@@ -78,7 +78,7 @@ class SunPositionState extends State<SunPosition> {
       [i18n(context, 'astronomy_position_astrologicalsign'), i18n(context, getAstrologicalSign(sunPosition.astrologicalSign))],
     ];
 
-    var rowsSunData = columnedMultiLineOutput(outputsSun);
+    var rowsSunData = columnedMultiLineOutput(context, outputsSun);
 
     rowsSunData.insert(0,
       GCWTextDivider(
@@ -93,7 +93,7 @@ class SunPositionState extends State<SunPosition> {
       [i18n(context, 'astronomy_position_lmst'), formatHoursToHHmmss(sunPosition.localSiderealTime)]
     ];
 
-    var rowsJDData = columnedMultiLineOutput(outputsJD);
+    var rowsJDData = columnedMultiLineOutput(context, outputsJD);
 
     rowsJDData.insert(0,
       GCWTextDivider(

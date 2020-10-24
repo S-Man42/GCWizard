@@ -85,7 +85,7 @@ class DayCalculatorState extends State<DayCalculator> {
       return GCWDefaultOutput();
     }
 
-    var rows = columnedMultiLineOutput([
+    var rows = columnedMultiLineOutput(context, [
       [i18n(context, 'dates_daycalculator_days'), outputData.days],
       [i18n(context, 'dates_daycalculator_hours'), outputData.hours],
       [i18n(context, 'dates_daycalculator_minutes'), outputData.minutes],

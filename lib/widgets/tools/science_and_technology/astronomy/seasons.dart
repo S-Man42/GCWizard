@@ -55,7 +55,7 @@ class SeasonsState extends State<Seasons> {
           + i18n(context, 'astronomy_seasons_distance') + ' = ' + NumberFormat('0.0000000').format(aphel['distance']) + ' AU'],
     ];
 
-    var rowsData = columnedMultiLineOutput(outputs, flexValues: [1, 2]);
+    var rowsData = columnedMultiLineOutput(context, outputs, flexValues: [1, 2]);
 
     rowsData.insert(0,
       GCWTextDivider(

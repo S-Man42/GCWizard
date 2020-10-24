@@ -73,7 +73,7 @@ class SunRiseSetState extends State<SunRiseSet> {
       [i18n(context, 'astronomy_riseset_astronomicalevening'), sunRise.astronomicalEvening.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.astronomicalEvening)],
     ];
 
-    var rows = columnedMultiLineOutput(outputs);
+    var rows = columnedMultiLineOutput(context, outputs);
 
     rows.insert(0,
       GCWTextDivider(
