@@ -50,6 +50,7 @@ class LicensesState extends State<Licenses> {
             ['moenk', 'Gauss-Krüger Code'],
             ['astronomie.info, jgiesen.de', 'Astronomy Functions'],
             ['flutter_hsvcolor_picker (minimized)', 'Color Picker'],
+            ['Jens Guballa (guballa.de)', 'Universal Code Breaker'],
           ]),
         ),
 
