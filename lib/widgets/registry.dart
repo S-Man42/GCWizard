@@ -666,9 +666,9 @@ class Registry {
       ),
       GCWToolWidget(
           tool: SubstitutionBreaker(),
-          i18nPrefix: 'substitution_breaker',
+          i18nPrefix: 'substitutionbreaker',
           category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'substitution ersetzen alphabet change austauschen change switch solver loeser breaker'
+          searchStrings: 'substitution ersetzen replacements alphabet change austauschen change switch solver loeser universal universeller codebreaker codebrecher codeknacker cracker '
       ),
       GCWToolWidget(
         tool: SudokuSolver(),

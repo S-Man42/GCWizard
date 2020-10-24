@@ -3,7 +3,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/
 class PolishQuadgrams extends Quadgrams {
 
   PolishQuadgrams() {
-
     alphabet = 'abcdefghijklmnopqrstuvwxyz';
     nbr_quadgrams = 80053472;
     most_frequent_quadgram = 'prze';

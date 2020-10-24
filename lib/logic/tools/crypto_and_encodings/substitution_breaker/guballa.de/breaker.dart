@@ -1,19 +1,7 @@
-/// Class to represent the breaker implementation based on quadgrams
-/// ported from https://gitlab.com/guballa/SubstitutionBreaker
-
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/Key.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/guballa.de/Key.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/guballa.de/quadgrams.dart';
 import 'package:tuple/tuple.dart';
 
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/english_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/german_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/spanish_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/polish_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/greek_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/france_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/russian_quadgrams.dart';
-
-enum BreakerAlphabet{English, German, Spanish, Polish, Greek, France, Russian}
 enum ErrorCode{OK, MAX_ROUNDS_PARAMETER, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, ALPHABET_TOO_LONG, WRONG_GENERATE_TEXT}
 
 /// Class representing the result for breaking a substitution cipher
@@ -27,41 +15,29 @@ enum ErrorCode{OK, MAX_ROUNDS_PARAMETER, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, 
 /// :param float keys_per_second: the number of keys tried per second
 /// :param float seconds: the time in seconds used to break the cipher
 class BreakerResult {
-  String ciphertext= '';
-  String plaintext= '';
-  String key = '';
-  String alphabet= '';
-  double fitness = 0;
-  int nbr_keys = 0;
-  int nbr_rounds = 0;
-  double keys_per_second = 0;
-  double seconds = 0;
-  ErrorCode errorCode = ErrorCode.OK;
+  String ciphertext;
+  String plaintext;
+  String key;
+  String alphabet;
+  double fitness;
+  int nbr_keys;
+  int nbr_rounds;
+  double keys_per_second;
+  double seconds;
+  ErrorCode errorCode;
 
   BreakerResult({
-    String ciphertext = '',
-    String plaintext = '',
-    String key = '',
-    String alphabet = '',
-    double fitness = 0,
-    int nbr_keys = 0,
-    int nbr_rounds = 0,
-    double keys_per_second = 0,
-    double seconds = 0,
-    ErrorCode errorCode = ErrorCode.OK
-  })
-  {
-    this.ciphertext = ciphertext;
-    this.plaintext = plaintext;
-    this.key = key;
-    this.alphabet = alphabet;
-    this.fitness = fitness;
-    this.nbr_keys = nbr_keys;
-    this.nbr_rounds = nbr_rounds;
-    this.keys_per_second = keys_per_second;
-    this.seconds = seconds;
-    this.errorCode = errorCode;
-  }
+    this.ciphertext = '',
+    this.plaintext = '',
+    this.key = '',
+    this.alphabet = '',
+    this.fitness = 0,
+    this.nbr_keys = 0,
+    this.nbr_rounds = 0,
+    this.keys_per_second = 0,
+    this.seconds = 0,
+    this.errorCode = ErrorCode.OK
+  });
 }
 
 const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
@@ -69,49 +45,11 @@ String  _alphabet = null;
 int _alphabet_len = 0;
 List<int> _quadgrams = null;
 
-
-Future<BreakerResult> break_cipher(String input, Quadgrams quadgrams) async {
-  if (input == null || input == '')
-    return BreakerResult(errorCode: ErrorCode.OK);
-
-  _initBreaker(quadgrams);
-
-  return  _break_cipher(input);
-}
-
 /// Init the instance
 _initBreaker(Quadgrams languageQuadgrams) {
   _alphabet = languageQuadgrams.alphabet;
   _alphabet_len = _alphabet.length;
   _quadgrams = languageQuadgrams.quadgrams();
-}
-
-Quadgrams getQuadgrams(BreakerAlphabet alphabet){
-  switch (alphabet) {
-    case BreakerAlphabet.English:
-      return  EnglishQuadgrams();
-      break;
-    case BreakerAlphabet.German:
-      return  GermanQuadgrams();
-      break;
-    case BreakerAlphabet.Spanish:
-      return  SpanishQuadgrams();
-      break;
-    case BreakerAlphabet.Polish:
-      return  PolishQuadgrams();
-      break;
-    case BreakerAlphabet.Greek:
-      return  GreekQuadgrams();
-      break;
-    case BreakerAlphabet.France:
-      return  FranceQuadgrams();
-      break;
-    case BreakerAlphabet.Russian:
-      return RussianQuadgrams();
-      break;
-    default:
-      return null;
-  }
 }
 
 /// Implements an iterator for a given text string
@@ -186,7 +124,9 @@ Tuple2<int,int> _hill_climbing(List<int> key, List<int> cipher_bin, List<List<in
 /// :param max_rounds: the maximum of hill climbing rounds to execute
 /// :param consolidate: the number of times the best local maximum must be reached before it is considers the overall best solution
 /// :return: an BreakerResult object
-BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int consolidate = 3}) {
+BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRounds = 10000, int consolidate = 3}) {
+
+  _initBreaker(quadgrams);
 
   if (( maxRounds < 1) || (maxRounds > 10000))
       // maximum number of rounds not in the valid range 1..10000"

@@ -1,9 +1,10 @@
-import 'dart:math';
-import 'dart:io';
 import 'dart:async';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/breaker.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/Key.dart';
+import 'dart:io';
+import 'dart:math';
+
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/guballa.de/Key.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/guballa.de/breaker.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/guballa.de/quadgrams.dart';
 
 String  _alphabet = null;
 List<int> _quadgrams = null;

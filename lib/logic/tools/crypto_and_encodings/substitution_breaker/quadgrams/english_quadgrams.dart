@@ -1,6 +1,7 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 
 class EnglishQuadgrams extends Quadgrams {
+
   EnglishQuadgrams() {
     alphabet= "abcdefghijklmnopqrstuvwxyz";
     nbr_quadgrams= 93609337;

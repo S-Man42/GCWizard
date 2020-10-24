@@ -1,9 +1,8 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 
-class FranceQuadgrams extends Quadgrams {
+class FrenchQuadgrams extends Quadgrams {
 
-  FranceQuadgrams() {
-
+  FrenchQuadgrams() {
     alphabet = 'abcdefghijklmnopqrstuvwxyz';
     nbr_quadgrams = 91273991;
     most_frequent_quadgram = 'tion';

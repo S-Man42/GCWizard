@@ -3,7 +3,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/
 class SpanishQuadgrams extends Quadgrams {
 
   SpanishQuadgrams() {
-
     alphabet = 'abcdefghijklmnopqrstuvwxyz';
     nbr_quadgrams = 107111503;
     most_frequent_quadgram = 'dela';
