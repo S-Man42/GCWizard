@@ -44,7 +44,6 @@ class AlphabetValuesState extends State<AlphabetValues> {
   var _currentEncodeInput = '';
   var _currentDecodeInput = defaultIntegerListText;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  bool _currentCrosstotalMode = true;
 
   var _currentAlphabetKey;
   Map<String, String> _currentAlphabet;
@@ -217,13 +216,6 @@ class AlphabetValuesState extends State<AlphabetValues> {
           onChanged: (value) {
             setState(() {
               _currentMode = value;
-            });
-          },
-        ),
-        GCWCrosstotalSwitch(
-          onChanged: (value) {
-            setState(() {
-              _currentCrosstotalMode = value;
             });
           },
         ),
@@ -693,9 +685,6 @@ class AlphabetValuesState extends State<AlphabetValues> {
   }
 
   _buildCrossTotals() {
-    if (!_currentCrosstotalMode)
-      return Container();
-
     var alphabet = _getFinalAlphabet();
 
     if (_currentMode == GCWSwitchPosition.left) {
