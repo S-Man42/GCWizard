@@ -244,7 +244,7 @@ BreakerResult _break_cipher(String ciphertext, {int maxRounds = 10000, int conso
     }
   }
   var key_str = best_key.map((x) => _alphabet[x]).join();
-  var _key = KeyS(key_str, alphabet: _alphabet);
+  var _key = Key(key_str, alphabet: _alphabet);
   var seconds = (DateTime.now().difference(start_time)).inMilliseconds / 1000;
 
   return BreakerResult(

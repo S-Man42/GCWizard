@@ -17,7 +17,7 @@ List<int> _quadgrams = null;
 /// :param alphabet: the alphabet to apply with this text file.
 Future<BreakerResult> generateQuadgrams(File corpus_fh, File quadgram_fh, File asset_fh, String className, String assetName, String alphabet) async {
 
-  _alphabet = KeyS.check_alphabet(alphabet);
+  _alphabet = Key.check_alphabet(alphabet);
   if (_alphabet.length > Quadgrams.maxAlphabetLength){
     // Alphabet must have less or equal than 32 characters
     return BreakerResult(alphabet: _alphabet, errorCode: ErrorCode.ALPHABET_TOO_LONG);;

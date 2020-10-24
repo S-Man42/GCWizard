@@ -2,54 +2,17 @@
 /// ported from https://gitlab.com/guballa/SubstitutionBreaker
 
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/Key.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/generate_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/english_quadgrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/german_quadgrams.dart';
 import 'package:path/path.dart' as path;
-import 'dart:convert';
-import 'package:flutter/services.dart';
+
 
 void main() {
 
-  var _quadgrams = Map<BreakerAlphabet, Quadgrams>();
   bool _isStarted = false;
-
-
-  Future<Quadgrams> loadQuadgrams(Quadgrams quadgrams) async {
-    if (quadgrams.quadgrams() != null)
-      return quadgrams;
-
-    // add this, and it should be the first line in main method
-    WidgetsFlutterBinding.ensureInitialized();
-
-    String data = await rootBundle.loadString(quadgrams.assetLocation);
-    Map<String, dynamic> jsonData = jsonDecode(data);
-    quadgrams.quadgramsCompressed = Map<int, List<int>>();
-    jsonData.entries.forEach((entry) {
-      quadgrams.quadgramsCompressed.putIfAbsent(
-          int.tryParse(entry.key),
-              () => List<int>.from(entry.value)
-      );
-    });
-
-    return quadgrams;
-  }
-
-  Future<Quadgrams> getQuadgram(BreakerAlphabet alphabet) async {
-    if (_quadgrams.containsKey(alphabet))
-      return _quadgrams[alphabet];
-
-    var quad = getQuadgrams(alphabet);
-    quad = await loadQuadgrams(quad);
-    _quadgrams.addAll({alphabet : quad});
-
-    return quad;
-  }
 
 
   /// Link for corpus files (for other languages)
@@ -109,7 +72,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = KeyS.check_alphabet(elem['input']);
+        var _actual = Key.check_alphabet(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -129,7 +92,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = KeyS.check_key(elem['input'], elem['alphabet']);
+        var _actual = Key.check_key(elem['input'], elem['alphabet']);
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -145,7 +108,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var key = KeyS('abcdefghijklmnopqrstuvwxyz');
+        var key = Key('abcdefghijklmnopqrstuvwxyz');
         var _actual = key.decode(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
@@ -162,7 +125,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var key = KeyS('abcdefghijklmnopqrstuvwxyz');
+        var key = Key('abcdefghijklmnopqrstuvwxyz');
         var _actual = key.encode(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
@@ -173,7 +136,7 @@ void main() {
     final List<int> quadgrams = [0,0,0,747,0,0,0,0,0,0,11,12,13,0,0,0,17];
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : quadgrams, 'errorCode' : ErrorCode.OK, 'expectedOutput' : '{3:[747],10:[11,12,13,0,0,0,17]}'},
+      {'input' : quadgrams, 'errorCode' : ErrorCode.OK, 'expectedOutput' : '{"3":[747],"10":[11,12,13,0,0,0,17]}'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -207,73 +170,73 @@ void main() {
 
 
 
-  var text10 = '''Rbo rpktigo vcrb bwucja wj kloj hcjd, km sktpqo, cq rbwr loklgo 
-  vcgg cjqcqr kj skhcja wgkja wjd rpycja rk ltr rbcjaq cj cr.
-  -- Roppy Lpwrsborr''';
-  var text11 = '''The trouble with having an open mind, of course, is that people 
-  will insist on coming along and trying to put things in it.
-  -- Terry Pratchett''';
+  // var text10 = '''Rbo rpktigo vcrb bwucja wj kloj hcjd, km sktpqo, cq rbwr loklgo
+  // vcgg cjqcqr kj skhcja wgkja wjd rpycja rk ltr rbcjaq cj cr.
+  // -- Roppy Lpwrsborr''';
+  // var text11 = '''The trouble with having an open mind, of course, is that people
+  // will insist on coming along and trying to put things in it.
+  // -- Terry Pratchett''';
 
-  var text12 = "Yvlkv zjk avuvi Rlkfyvijkvccvi ze uvi Crxv jkribv Dfkfive ql srlve, ufty "
-      "rccvj yrk jvzev Xiveqve, jfejk nrvive ar rccv reuvive uzv jzty rej Xvjvkq "
-      "yrckve uzv Ulddve.";
-  var text13 = "Heute ist jeder Autohersteller in der Lage starke Motoren zu bauen, doch "
-      "alles hat seine Grenzen, sonst waeren ja alle anderen die sich ans Gesetz "
-      "halten die Dummen.";
+  // var text12 = "Yvlkv zjk avuvi Rlkfyvijkvccvi ze uvi Crxv jkribv Dfkfive ql srlve, ufty "
+  //     "rccvj yrk jvzev Xiveqve, jfejk nrvive ar rccv reuvive uzv jzty rej Xvjvkq "
+  //     "yrckve uzv Ulddve.";
+  // var text13 = "Heute ist jeder Autohersteller in der Lage starke Motoren zu bauen, doch "
+  //     "alles hat seine Grenzen, sonst waeren ja alle anderen die sich ans Gesetz "
+  //     "halten die Dummen.";
 
-  var text14 = "Agl qrxlrq okii bl t itxakhj ugexknti alxatqlha ad gkx gtsm odsy thm "
-      "pkxkdh, thm okii gdrxl agl uslxakjkdrx ndiilnakdh gl ntslm xd mlluie tbdra, "
-      "vds qthe eltsx ad ndql.";
-  var text15 = "The museum will be a lasting physical testament to his hard work and "
-      "vision, and will house the prestigious collection he cared so deeply about, "
-      "for many years to come.";
+  // var text14 = "Agl qrxlrq okii bl t itxakhj ugexknti alxatqlha ad gkx gtsm odsy thm "
+  //     "pkxkdh, thm okii gdrxl agl uslxakjkdrx ndiilnakdh gl ntslm xd mlluie tbdra, "
+  //     "vds qthe eltsx ad ndql.";
+  // var text15 = "The museum will be a lasting physical testament to his hard work and "
+  //     "vision, and will house the prestigious collection he cared so deeply about, "
+  //     "for many years to come.";
 
-  group("substitution_breaker.breaker:", () {
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
-      {'input' : '', 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+  // group("substitution_breaker.breaker:", () {
+  //   List<Map<String, dynamic>> _inputsToExpected = [
+  //     {'input' : null, 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
+  //     {'input' : '', 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : ''},
 
-      {'input' : text10, 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : text11},
-      {'input' : text12, 'alphabet' : BreakerAlphabet.German, 'errorCode' : ErrorCode.OK, 'expectedOutput' : text13},
-      {'input' : text14, 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : text15},
-    ];
+  //     {'input' : text10, 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : text11},
+  //     {'input' : text12, 'alphabet' : BreakerAlphabet.German, 'errorCode' : ErrorCode.OK, 'expectedOutput' : text13},
+  //     {'input' : text14, 'alphabet' : BreakerAlphabet.English, 'errorCode' : ErrorCode.OK, 'expectedOutput' : text15},
+  //   ];
 
-    _inputsToExpected.forEach((elem) async {
-      while(_isStarted){};
-      _isStarted = true;
+  //   _inputsToExpected.forEach((elem) async {
+  //     while(_isStarted){};
+  //     _isStarted = true;
 
-      test('input: ${elem['input']}', () async {
+  //     test('input: ${elem['input']}', () async {
 
-        var quad = await getQuadgram(elem['alphabet']);
-        var _actual = await break_cipher(elem['input'], quad);
-        expect(_actual.plaintext, elem['expectedOutput']);
-        expect(_actual.errorCode, elem['errorCode']);
-      });
-      _isStarted = false;
-    });
-  });
+  //       var quad = await getQuadgram(elem['alphabet']);
+  //       var _actual = await break_cipher(elem['input'], quad);
+  //       expect(_actual.plaintext, elem['expectedOutput']);
+  //       expect(_actual.errorCode, elem['errorCode']);
+  //     });
+  //     _isStarted = false;
+  //   });
+  // });
 
-  group("substitution_breaker.calc_fitness:", () {
-    var en = EnglishQuadgrams();
-    var de = GermanQuadgrams();
+  // group("substitution_breaker.calc_fitness:", () {
+  //   var en = EnglishQuadgrams();
+  //   var de = GermanQuadgrams();
 
-    List<Map<String, dynamic>> _inputsToExpected = [
+  //   List<Map<String, dynamic>> _inputsToExpected = [
 
-      {'input' : null, 'expectedOutput' : null},
-      {'input' : '', 'expectedOutput' : null},
+  //     {'input' : null, 'expectedOutput' : null},
+  //     {'input' : '', 'expectedOutput' : null},
 
-      {'input' : text15, 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 103},
-      {'input' : text13, 'alphabet' : de.alphabet, 'quadgrams' : de.quadgrams(), 'expectedOutput' : 103},
-      {'input' : text14, 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 27},
-      {'input' : 'tion', 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 136},
-      {'input' : 'ti', 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : null},
-    ];
+  //     {'input' : text15, 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 103},
+  //     {'input' : text13, 'alphabet' : de.alphabet, 'quadgrams' : de.quadgrams(), 'expectedOutput' : 103},
+  //     {'input' : text14, 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 27},
+  //     {'input' : 'tion', 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : 136},
+  //     {'input' : 'ti', 'alphabet' : en.alphabet, 'quadgrams' : en.quadgrams(), 'expectedOutput' : null},
+  //   ];
 
-    _inputsToExpected.forEach((elem) async {
-      test('input: ${elem['input']}', () async {
-        var _actual = calc_fitness(elem['input'], alphabet: elem['alphabet'], quadgrams: await en.quadgrams()); // elem['quadgrams']
-        expect(_actual != null ? _actual.round() : _actual, elem['expectedOutput']);
-      });
-    });
-  });
+  //   _inputsToExpected.forEach((elem) async {
+  //     test('input: ${elem['input']}', () async {
+  //       var _actual = calc_fitness(elem['input'], alphabet: elem['alphabet'], quadgrams: await en.quadgrams()); // elem['quadgrams']
+  //       expect(_actual != null ? _actual.round() : _actual, elem['expectedOutput']);
+  //     });
+  //   });
+  // });
 }
