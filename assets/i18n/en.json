@@ -1649,7 +1649,7 @@
   "substitutionbreaker_alphabet_spanish" : "Spanish",
   "substitutionbreaker_alphabet_polish" : "Polish",
   "substitutionbreaker_alphabet_greek" : "Greek",
-  "substitutionbreaker_alphabet_french" : "France",
+  "substitutionbreaker_alphabet_french" : "French",
   "substitutionbreaker_alphabet_russian" : "Russian",
   "substitutionbreaker_start" : "Solve",
   "substitutionbreaker_error" : "An error occured: %s1",
