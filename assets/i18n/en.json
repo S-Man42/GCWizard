@@ -34,7 +34,7 @@
   "about_privacypolicy_url_text" : "legal.gcwizard.net/privacy_policy.html",
   "about_thirdparty" : "Used third-party code libraries and images",
   "about_specialthanks" : "Special Thanks",
-  "about_specialsupport" : "Special Support",
+  "about_specialsupport" : "Team",
   "about_contributors" : "Contributors",
   "about_testers" : "Testers",
   "about_notfornazis" : "Not for nazis, racists and fascists!",
@@ -371,7 +371,7 @@
   "chronogram_title" : "Chronogram",
   "chronogram_description" : "Finds and adds roman numerals in texts",
   "chronogram_example" : "AMORE MATVRITAS → MMVI → 2006",
-  "chronogram_ju.to.iv" : "J,U → I,V",
+  "chronogram_ju.to.iv" : "J, U → I, V",
   "chronogram_y.to.ii" : "Y → II",
   "chronogram_w.to.vv" : "W → VV",
 
