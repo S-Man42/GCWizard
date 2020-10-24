@@ -5,16 +5,16 @@
 // import "package:flutter_test/flutter_test.dart";
 //
 // void main() {
-  var text10 = '''Rbo rpktigo vcrb bwucja wj kloj hcjd, km sktpqo, cq rbwr loklgo
-  vcgg cjqcqr kj skhcja wgkja wjd rpycja rk ltr rbcjaq cj cr.
-  -- Roppy Lpwrsborr''';
+//   var text10 = '''Rbo rpktigo vcrb bwucja wj kloj hcjd, km sktpqo, cq rbwr loklgo
+//   vcgg cjqcqr kj skhcja wgkja wjd rpycja rk ltr rbcjaq cj cr.
+//   -- Roppy Lpwrsborr''';
 //   var text11 = '''The trouble with having an open mind, of course, is that people
 //   will insist on coming along and trying to put things in it.
 //   -- Terry Pratchett''';
 //
-  var text12 = "Yvlkv zjk avuvi Rlkfyvijkvccvi ze uvi Crxv jkribv Dfkfive ql srlve, ufty "
-      "rccvj yrk jvzev Xiveqve, jfejk nrvive ar rccv reuvive uzv jzty rej Xvjvkq "
-      "yrckve uzv Ulddve.";
+//   var text12 = "Yvlkv zjk avuvi Rlkfyvijkvccvi ze uvi Crxv jkribv Dfkfive ql srlve, ufty "
+//       "rccvj yrk jvzev Xiveqve, jfejk nrvive ar rccv reuvive uzv jzty rej Xvjvkq "
+//       "yrckve uzv Ulddve.";
 //   var text13 = "Heute ist jeder Autohersteller in der Lage starke Motoren zu bauen, doch "
 //       "alles hat seine Grenzen, sonst waeren ja alle anderen die sich ans Gesetz "
 //       "halten die Dummen.";
