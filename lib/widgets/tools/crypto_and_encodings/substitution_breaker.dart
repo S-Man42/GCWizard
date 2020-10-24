@@ -125,13 +125,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
           child: GCWOutputText(
 
             text:
-            _currentOutput.alphabet +'\n' + _currentOutput.key + '\n'
-            + '\n'
-            + 'keys/s: ' + _currentOutput.keys_per_second.toString() + '\n'
-            + 'keys: ' + _currentOutput.nbr_keys.toString() + '\n'
-            + 'rounds: ' + _currentOutput.nbr_rounds .toString() + '\n'
-            + 'seconds: ' + _currentOutput.seconds .toString() + 's'
-            ,
+            _currentOutput.alphabet +'\n' + _currentOutput.key + '\n',
             isMonotype: true,
           ),
         )
