@@ -181,7 +181,7 @@ class ColorPickerState extends State<ColorPicker> {
         break;
     }
 
-    var rows = columnedMultiLineOutput(colorSpaceOutputs);
+    var rows = columnedMultiLineOutput(context, colorSpaceOutputs);
 
     rows.insert(0,
       GCWTextDivider(

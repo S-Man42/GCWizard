@@ -163,12 +163,15 @@ class AboutState extends State<About> {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: i18n(context, 'about_specialthanks') + '\n',
+                      text: i18n(context, 'about_team') + '\n',
                       style: boldTextStyle
                     ),
                     TextSpan(
-                      text: 'Daniel \'Eisbehr\' K. (Maintainer GCC)'
-                        + '\n'
+                      text: [
+                        'Andy \'Puma66\'',
+                        'Mike B. (Code & Symbol Tables)',
+                        'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
+                      ].join('\n') + '\n'
                     )
                   ],
                   style: gcwTextStyle()
@@ -177,17 +180,17 @@ class AboutState extends State<About> {
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: i18n(context, 'about_specialsupport') + '\n',
-                      style: boldTextStyle
-                    ),
-                    TextSpan(
-                      text: 'Andy \'Puma66\''
-                        + '\n'
-                    )
-                  ],
-                  style: gcwTextStyle()
+                    children: [
+                      TextSpan(
+                          text: i18n(context, 'about_specialthanks') + '\n',
+                          style: boldTextStyle
+                      ),
+                      TextSpan(
+                          text: 'Daniel \'Eisbehr\' K. (Maintainer GCC)'
+                              + '\n'
+                      )
+                    ],
+                    style: gcwTextStyle()
                 ),
               ),
               RichText(
@@ -207,11 +210,9 @@ class AboutState extends State<About> {
                           '\'Geo-Link\' (Hardware & Symbol Tables)',
                           'Karl B. (Coords Algorithms)',
                           'Michael D. (Symbol Tables)',
-                          'Mike B. (Code & Symbol Tables)',
                           '\'moenk\' (GK Coords)',
                           '\'Schnatt\' (Symbol Tables)',
                           '\'TeamBirdy2404\' (Symbol Tables)',
-                          'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
                           'Udo J. (Code)',
                           '\'wollpirat\' (Food, Tea & more)'
                         ].join('\n') + '\n'
@@ -231,18 +232,22 @@ class AboutState extends State<About> {
                     TextSpan(
                       text:
                         [
+                          '\'4-Everus\'',
                           'Andreas E.',
                           '\'Headbanger-Berlin\'',
                           'Felix Z.',
                           '\'Filu - Aye, Käppn! - 43\' & \'Stormi - Aaarrh - 2061\'',
                           'Frank \'Wizardland\' (podKst.de)',
                           'Franz K.',
+                          '\'Freakyfinder\'',
                           'Johannes C.',
+                          'Jonas M.',
                           '\'Klumpenkukuk\'',
                           '\'LupiMus\'',
                           '\'mahoplus\'',
                           'Martin Sch.',
-                          '\'Schnatt\'',
+                          '\'mgo\'',
+                          'Niki R.',
                           'Palk \'geogedoens.de\'',
                           '\'Pamakaru\'',
                           'Paweł B.',
@@ -252,6 +257,7 @@ class AboutState extends State<About> {
                           'Stefan J.',
                           '\'tebarius\'',
                           '\'tomcat06\'',
+                          '\'Vyrembi\''
                         ].join(', ')
                     )
                   ],

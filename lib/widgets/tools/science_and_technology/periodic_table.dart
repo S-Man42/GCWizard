@@ -439,7 +439,7 @@ class PeriodicTableState extends State<PeriodicTable> {
         break;
     }
 
-    var rows = columnedMultiLineOutput(outputData, flexValues: flexValues);
+    var rows = columnedMultiLineOutput(context, outputData, flexValues: flexValues, copyColumn: 1);
 
     rows.insert(0,
       GCWTextDivider(

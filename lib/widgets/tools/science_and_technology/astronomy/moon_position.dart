@@ -82,7 +82,7 @@ class MoonPositionState extends State<MoonPosition> {
       [i18n(context, 'astronomy_position_astrologicalsign'), i18n(context, getAstrologicalSign(moonPosition.astrologicalSign))],
     ];
 
-    var rowsSunData = columnedMultiLineOutput(outputsMoon);
+    var rowsSunData = columnedMultiLineOutput(context, outputsMoon);
 
     rowsSunData.insert(0,
       GCWTextDivider(
@@ -97,7 +97,7 @@ class MoonPositionState extends State<MoonPosition> {
       [i18n(context, 'astronomy_position_lmst'), formatHoursToHHmmss(moonPosition.localSiderealTime)]
     ];
 
-    var rowsJDData = columnedMultiLineOutput(outputsJD);
+    var rowsJDData = columnedMultiLineOutput(context, outputsJD);
 
     rowsJDData.insert(0,
       GCWTextDivider(

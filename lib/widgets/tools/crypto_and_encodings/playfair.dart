@@ -6,7 +6,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_alphabetmodification_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlyspaceandletters_textinputformatter.dart';
 
 class Playfair extends StatefulWidget {
   @override
@@ -50,7 +49,6 @@ class PlayfairState extends State<Playfair> {
           },
         ),
         GCWTextField(
-          inputFormatters: [TextOnlySpaceAndLettersInputFormatter()],
           hintText: i18n(context, 'common_key'),
           controller: _keyController,
           onChanged: (text) {

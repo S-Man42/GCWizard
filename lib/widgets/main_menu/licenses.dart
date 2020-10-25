@@ -19,7 +19,7 @@ class LicensesState extends State<Licenses> {
           text: i18n(context, 'licenses_usedlibraries')
         ),
         Column(
-          children: columnedMultiLineOutput([
+          children: columnedMultiLineOutput(null, [
             ['base32', 'MIT License'],
             ['diacritic', 'BSD License'],
             ['flutter_map', 'BSD License'],
@@ -46,10 +46,11 @@ class LicensesState extends State<Licenses> {
           text: i18n(context, 'licenses_additionalcode')
         ),
         Column(
-          children: columnedMultiLineOutput([
+          children: columnedMultiLineOutput(null, [
             ['moenk', 'Gauss-Krüger Code'],
             ['astronomie.info, jgiesen.de', 'Astronomy Functions'],
             ['flutter_hsvcolor_picker (minimized)', 'Color Picker'],
+            ['Jens Guballa (guballa.de)', 'Universal Code Breaker'],
           ]),
         ),
 
@@ -57,7 +58,7 @@ class LicensesState extends State<Licenses> {
           text: i18n(context, 'licenses_symboltablesources')
         ),
         Column(
-          children: columnedMultiLineOutput([
+          children: columnedMultiLineOutput(null, [
             ['myGeoTools', 'several'],
             ['Wikipedia', 'several'],
             ['www.breitkopf.de', 'Solmisation'],

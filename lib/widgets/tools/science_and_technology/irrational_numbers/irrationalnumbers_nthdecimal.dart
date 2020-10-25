@@ -28,7 +28,7 @@ class IrrationalNumbersNthDecimalState extends State<IrrationalNumbersNthDecimal
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
-          value: 1,
+          value: _currentValue,
           min: 1,
           max: widget.irrationalNumber.decimalPart.length,
           onChanged: (value) {

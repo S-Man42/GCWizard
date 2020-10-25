@@ -40,6 +40,7 @@ class GadeState extends State<Gade> {
         GCWDefaultOutput(
           child: Column(
             children: columnedMultiLineOutput(
+              null,
               buildGade(_currentGadeInput).entries.map((entry) {
                 return [entry.key, entry.value];
               }).toList()

@@ -6,7 +6,6 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlyletters_textinputformatter.dart';
 
 class Vigenere extends StatefulWidget {
   @override
@@ -50,7 +49,6 @@ class VigenereState extends State<Vigenere> {
           },
         ),
         GCWTextField(
-          inputFormatters: [TextOnlyLettersInputFormatter()],
           hintText: i18n(context, 'common_key'),
           controller: _keyController,
           onChanged: (text) {
