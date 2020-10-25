@@ -4,7 +4,8 @@ import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/guballa.de/Key.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/guballa.de/breaker.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/guballa.de/quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/generate_quadgrams.dart';
 
 String  _alphabet = null;
 List<int> _quadgrams = null;
@@ -104,40 +105,7 @@ Future<BreakerResult> generateQuadgrams(File corpus_fh, File quadgram_fh, File a
     idx >>= 5;
   }
 
-  return _generateFiles(quadgram_fh, asset_fh, className, assetName, alphabet, quadgram_sum, max_chars.join(), max_val, quadgrams);
-}
-
-BreakerResult _generateFiles(File quadgram_fh, File asset_fh, String className, String assetName, String alphabet, double quadgram_sum, String max_chars, double max_val, List<double> quadgrams){
-  var sb = new StringBuffer();
-  var quadgrams_sum = 0;
-  var quadgramsInt = List<int>(quadgrams.length);
-  for (int i = 0; i < quadgrams.length; i++) {
-    quadgramsInt[i] = quadgrams[i].round();
-    quadgrams_sum += quadgramsInt[i];
-  }
-  sb.write("import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';\n");
-  sb.write("\n");
-  sb.write("class " + className + " extends Quadgrams {\n");
-  sb.write("\n");
-  sb.write("  " + className + "() {\n");
-  sb.write("\n");
-  sb.write("    alphabet = '" + alphabet + "';\n");
-  sb.write("    nbr_quadgrams = " + quadgram_sum.round().toString() +";\n");
-  sb.write("    most_frequent_quadgram = '" + max_chars + "';\n");
-  sb.write("    max_fitness = " + max_val.round().toString() + ";\n");
-  sb.write("    average_fitness = " + (quadgrams_sum.toDouble() / pow(alphabet.length, 4 )).toString() + ";\n");
-  sb.write("    assetLocation = " + '"assets/quadgrams/' + assetName + '";\n');
-  sb.write("  }\n");
-  sb.write("}\n");
-
-  quadgram_fh.writeAsStringSync(sb.toString());
-
-  asset_fh.writeAsStringSync(Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(quadgramsInt)));
-
-  if (quadgrams_sum == 0 || max_val == 0)
-    return BreakerResult(alphabet: alphabet, fitness: max_val, errorCode: ErrorCode.WRONG_GENERATE_TEXT);
-  else
-    return BreakerResult(alphabet: alphabet, fitness: max_val, errorCode: ErrorCode.OK);
+  return generateFiles(quadgram_fh, asset_fh, className, assetName, alphabet, quadgram_sum, max_chars.join(), max_val, quadgrams);
 }
 
 /// Calculate the fitness from the characters provided by the iterator
