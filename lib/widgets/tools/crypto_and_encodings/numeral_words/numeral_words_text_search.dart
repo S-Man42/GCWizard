@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -20,14 +21,12 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
 
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
-  var _currentLanguage = NumeralWordsLanguage.ALL;
+  var _currentLanguage = NumeralWordsLanguage.DEU;
   Map<NumeralWordsLanguage, String> _languageList;
 
   @override
   void initState() {
     super.initState();
-    //_languageList = {NumeralWordsLanguage.ALL : 'numeralwords_language_all'};
-    //_languageList.addAll(NUMERALWORDS_LANGUAGES);
     _decodeController = TextEditingController(text: _currentDecodeInput);
   }
 
@@ -85,68 +84,88 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     );
   }
 
-  List<Widget> _columnedDetailedOutput(BuildContext context, List<String> numbers, List<String> numWords, List<String> languages){
-    var odd = true;
-    List<Widget> outputList = new List<Widget>();
-    Widget outputRow;
+  List<Widget> _columnedDetailedOutput(BuildContext context, List<NumeralWordsDecodeOutput> data){
+    if (data != null) {
+      var odd = true;
+      List<Widget> outputList = new List<Widget>();
+      Widget outputRow;
 
-    for (int i = 0; i < numbers.length; i++) {
-      var row = Container(
-        child: Row(
-            children: <Widget>[
-              Expanded(
-                  child: GCWText(
-                      text: numbers[i]
-                  ),
-                  flex: 1
-              ),
-              Expanded(
-                  child: GCWText(
-                      text: numWords[i]
-                  ),
-                  flex: 4
-              ),
-              Expanded(
-                  child: GCWText(
-                      text: i18n(context, languages[i])
-                  ),
-                  flex: 1
-              )
-            ]
-        ),
-        margin: EdgeInsets.only(
-            top : 6,
-            bottom: 6
-        ),
-      );
+      for (int i = 0; i < data.length; i++) {
+        var row = Container(
+          child: Row(
+              children: <Widget>[
+                Expanded(
+                    child: GCWText(
+                      //text: numbers[i]
+                        text: data[i].number
+                    ),
+                    flex: 1
+                ),
+                Expanded(
+                    child: GCWText(
+                      //text: numWords[i]
+                        text: data[i].numWord
+                    ),
+                    flex: 4
+                ),
+                Expanded(
+                    child: GCWText(
+                      //text: i18n(context, languages[i])
+                        text: _currentLanguage == NumeralWordsLanguage.ALL
+                            ? i18n(context, data[i].language)
+                            : ''
+                    ),
+                    flex: 1
+                )
+              ]
+          ),
+          margin: EdgeInsets.only(
+              top: 6,
+              bottom: 6
+          ),
+        );
 
-      if (odd) {
-        outputRow = Container(
-            color: themeColors().outputListOddRows(),
-            child: row
-        );
-      } else {
-        outputRow = Container(
-            child: row
-        );
+        if (odd) {
+          outputRow = Container(
+              color: themeColors().outputListOddRows(),
+              child: row
+          );
+        } else {
+          outputRow = Container(
+              child: row
+          );
+        }
+        odd = !odd;
+        outputList.add(outputRow);
       }
-      odd = !odd;
-      outputList.add(outputRow);
-    }
-    return outputList;
+      return outputList;
+    } else
+      return [Container()];
   }
 
   Widget _buildOutput(BuildContext context) {
-    var detailedOutput = decodeNumeralwords(_currentDecodeInput.toLowerCase(), _currentLanguage, (_currentDecodeMode == GCWSwitchPosition.left));
+    var detailedOutput;
+    String output = '';
+    if (_currentLanguage != NumeralWordsLanguage.KYR) {
+       detailedOutput = decodeNumeralwords(removeAccents(_currentDecodeInput.toLowerCase()), _currentLanguage,
+          (_currentDecodeMode == GCWSwitchPosition.left));
+      for (int i = 0; i < detailedOutput.length; i++) {
+        if (detailedOutput[i].number != '')
+          output = output + ' ' + detailedOutput[i].number;
+      }
+    } else {
+      output = i18n(context, 'numeralwords_language_not_implemented');
+      detailedOutput = null;
+    }
     return Column(
       children: <Widget>[
         GCWOutputText(
-          text: detailedOutput.numbers.join(' '),
+          text: output,
         ),
         GCWOutput(
           title: i18n(context, 'common_outputdetail'),
           child: Column(
-            children: _columnedDetailedOutput(context, detailedOutput.numbers, detailedOutput.numWords, detailedOutput.languages)
+            children: _columnedDetailedOutput(context, detailedOutput)
           ),
         ),
       ],
