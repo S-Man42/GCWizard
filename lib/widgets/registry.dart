@@ -2185,6 +2185,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tomtom tom a-tom-tom tom-tom atomtom'
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'traffic_signs'),
+        i18nPrefix: 'symboltables_traffic_signs',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'traffic_signs/101.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'traffic signs verkehrszeichen'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'ulog'),
         i18nPrefix: 'symboltables_ulog',
         iconPath: SYMBOLTABLES_ASSETPATH + 'ulog/68.png',
