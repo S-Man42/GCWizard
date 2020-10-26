@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/Vigenere_breaker/bigrams/bigrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/vigenere_breaker.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
@@ -55,8 +56,8 @@ class VigenereBreakerState extends State<VigenereBreaker> {
   @override
   Widget build(BuildContext context) {
     var BreakerAlphabetItems = {
-      VigenereBreakerAlphabet.ENGLISH : i18n(context, 'common_language_english'),
-      VigenereBreakerAlphabet.GERMAN : i18n(context, 'common_language_german'),
+      VigenereBreakerAlphabet.ENGLISH : i18n(context, 'substitutionbreaker_alphabet_english'),
+      VigenereBreakerAlphabet.GERMAN : i18n(context, 'substitutionbreaker_alphabet_german'),
     };
 
     return Column(
@@ -97,7 +98,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
                   child: GCWIntegerSpinner(
                     controller: _minKeyLengthController,
                     min: 1,
-                    max: 999,
+                    max: _maxKeyLength,
                     onChanged: (value) {
                       setState(() {
                         _minKeyLength = value;
@@ -120,7 +121,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
               Expanded(
                   child: GCWIntegerSpinner(
                     controller: _maxKeyLengthController,
-                    min: 1,
+                    min: _minKeyLength,
                     max: 999,
                     onChanged: (value) {
                       setState(() {
@@ -168,12 +169,26 @@ class VigenereBreakerState extends State<VigenereBreaker> {
               title: i18n(context, 'common_key'),
               child: GCWOutputText(
                 text:
-                  _currentOutput.key + '\n' +
-                   '\n' +
-                  'fitness: ' + _currentOutput.fitness.toStringAsFixed(2),
-                  //isMonotype: true,
+                _currentOutput.alphabet.toUpperCase() +'\n'
+                  + _currentOutput.key.toUpperCase(),
+                isMonotype: true,
               ),
             ),
+            GCWButton(
+              text: i18n(context, 'substitutionbreaker_exporttosubstition'),
+              onPressed: () {
+                Map<String, String> substitutions = {};
+                for (int i = 0; i < _currentOutput.alphabet.length; i++)
+                  substitutions.putIfAbsent(_currentOutput.key[i], () => _currentOutput.alphabet[i]);
+
+                Navigator.push(context, NoAnimationMaterialPageRoute(
+                  builder: (context) => GCWToolWidget(
+                    tool: Substitution(input: _currentOutput.ciphertext, substitutions: substitutions),
+                    toolName: i18n(context, 'substitution_title')
+                  )
+                ));
+              },
+            )
           ],
         )
       ],
@@ -187,12 +202,11 @@ class VigenereBreakerState extends State<VigenereBreaker> {
 
     _isStarted = true;
 
-    var _currentOutputFuture = break_cipher(_currentInput, VigenereBreakerType.VIGENERE, _currentAlphabet, _minKeyLength, _maxKeyLength);
+    var _currentOutputFuture = break_cipher(_currentInput, VigenereBreakerType.VIGENERE, _currentAlphabet, 3, 30);
     _currentOutputFuture.then((output) {
       _currentOutput = output;
       _isStarted = false;
       this.setState(() {});
     });
   }
-
 }
