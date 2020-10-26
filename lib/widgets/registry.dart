@@ -169,6 +169,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isprime.dart';
@@ -531,6 +532,12 @@ class Registry {
         i18nPrefix: 'morse',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'samuel morse morsecode morsen translators translate uebersetzen uebersetzer punkte striche dots dashes'
+      ),
+      GCWToolWidget(
+        tool: NumeralBases(),
+        i18nPrefix: 'numeralbases',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: SEARCHSTRING_BINARY + 'radix numeral systems basis basen zahlensysteme octal octenary oktal dual hexadecimal hexadezimal'
       ),
       GCWToolWidget(
         tool: NumeralWordsSelection(),
