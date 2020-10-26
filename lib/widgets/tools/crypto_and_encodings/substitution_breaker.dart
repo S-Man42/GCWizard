@@ -161,8 +161,6 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
 
     _quadgrams.putIfAbsent(_currentAlphabet, () => quadgrams);
 
-    print('Loaded: $_currentAlphabet');
-
     _isLoading = false;
   }
 

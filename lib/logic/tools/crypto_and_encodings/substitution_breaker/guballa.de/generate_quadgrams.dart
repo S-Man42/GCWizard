@@ -70,7 +70,7 @@ Future<BreakerResult> generateQuadgrams(File corpus_fh, File quadgram_fh, File a
     if (val != 0) {
       prop = val / quadgram_sum;
       new_val = log(prop) - offset;
-      quadgrams[idx] = new_val; //??
+      quadgrams[idx] = new_val;
       norm += prop * new_val;
     }
     idx += 1;
@@ -83,10 +83,10 @@ Future<BreakerResult> generateQuadgrams(File corpus_fh, File quadgram_fh, File a
     idx += 1;
   });
 
-  //// Just for curiosity: determine the most frequent quadgram
+  // Just for curiosity: determine the most frequent quadgram
   idx = 0;
   var max_idx = 0;
-  var max_val = 0.0; //??
+  var max_val = 0.0;
   quadgrams
     .forEach((val) {
       if (val > max_val){
@@ -96,7 +96,7 @@ Future<BreakerResult> generateQuadgrams(File corpus_fh, File quadgram_fh, File a
       idx += 1;
     });
 
-  //// now construct the ASCII representation from the index
+  // now construct the ASCII representation from the index
   var max_chars = List<String>();
   idx = max_idx;
 
