@@ -21,6 +21,7 @@ import 'package:gc_wizard/widgets/selector_lists/dna_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
@@ -194,6 +195,7 @@ class _MainViewState extends State<MainView> {
           className(Kenny()),
           className(Morse()),
           className(NumeralBases()),
+          className(NumeralWordsSelection()),
           className(OneTimePad()),
           className(PeriodicTable()),
           className(PhiSelection()),

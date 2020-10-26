@@ -90,8 +90,6 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _increaseValue() {
     setState(() {
-      print(_currentValue);
-
       if (widget.max == null || _currentValue < widget.max || widget.overflow == SpinnerOverflowType.OVERFLOW_MIN) {
         _currentValue++;
       } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MAX].contains(widget.overflow)
@@ -99,8 +97,6 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
       ) {
         _currentValue = widget.min;
       }
-
-      print(_currentValue);
 
       _setCurrentValueAndEmitOnChange(setTextFieldText: true);
     });
