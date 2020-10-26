@@ -7,6 +7,8 @@ import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class NumeralWordsLists extends StatefulWidget {
   @override
@@ -54,77 +56,18 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
     );
   }
 
-
-  List<Widget> _columnedDetailedOutput(var data){
-    var odd = true;
-    List<Widget> outputList = new List<Widget>();
-    Widget outputRow;
-
-    for (int i = 0; i < data.length; i++) {
-      var row = Container(
-        child: Row(
-            children: <Widget>[
-              Expanded(
-                  child: GCWText(
-                      text: data[i][0]
-                  ),
-                  flex: 2
-              ),
-              Expanded(
-                  child: GCWText(
-                      text: removeAccents(data[i][0])
-                  ),
-                  flex: 2
-              ),
-              Expanded(
-                  child: GCWText(
-                      text: data[i][1]
-                  ),
-                  flex: 1
-              )
-            ]
-        ),
-        margin: EdgeInsets.only(
-            top : 6,
-            bottom: 6
-        ),
-      );
-
-      if (odd) {
-        outputRow = Container(
-            color: themeColors().outputListOddRows(),
-            child: row
-        );
-      } else {
-        outputRow = Container(
-            child: row
-        );
-      }
-      odd = !odd;
-      outputList.add(outputRow);
-    }
-    return outputList;
-  }
-
-
   Widget _buildOutput(BuildContext context) {
+    Map<String, String> numeralWordsOverview = new Map<String, String>();
+    numeralWordsOverview = NumWords[_currentLanguage];
 
-    if (_currentLanguage == NumeralWordsLanguage.ALL)
-      return GCWDefaultOutput(
-        child: GCWOutputText(
-          text: i18n(context, 'numeralwords_language_all_not_feasible')
-        )
-      );
-    else {
-      Map<String, String> numeralWordsOverview = new Map<String, String>();
-      numeralWordsOverview = NumWords[_currentLanguage];
-      return GCWDefaultOutput(
-        child: Column(
-          //children: columnedMultiLineOutput(numeralWordsOverview.entries.map((entry) {return [entry.key, entry.value];}).toList()
-          children: _columnedDetailedOutput(numeralWordsOverview.entries.map((entry) {return [entry.key, entry.value];}).toList()
-          ),
+    return GCWDefaultOutput(
+      child: Column(
+        children: columnedMultiLineOutput(
+          context,
+          numeralWordsOverview.entries.map((entry) {return [entry.value, entry.key];}).toList(),
+          flexValues: [1, 3]
         ),
-      );
-    }
+      )
+    );
   }
 }

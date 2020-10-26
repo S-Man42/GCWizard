@@ -54,13 +54,13 @@ class HomophoneState extends State<Homophone> {
     };
 
     var HomophoneAlphabetItems = {
-      Alphabet.alphabetGerman1 : i18n(context, 'homophone_alphabetGerman1'),
-      Alphabet.alphabetEnglish1 : i18n(context, 'homophone_alphabetEnglish1'),
-      Alphabet.alphabetSpanish2 : i18n(context, 'homophone_alphabetSpanish2'),
-      Alphabet.alphabetPolish1 : i18n(context, 'homophone_alphabetPolish1'),
+      Alphabet.alphabetGerman1 : i18n(context, 'common_language_german'),
+      Alphabet.alphabetEnglish1 : i18n(context, 'common_language_english'),
+      Alphabet.alphabetSpanish2 : i18n(context, 'common_language_spanish'),
+      Alphabet.alphabetPolish1 : i18n(context, 'common_language_polish'),
       Alphabet.alphabetGreek1 : i18n(context, 'homophone_alphabetGreek1'),
       Alphabet.alphabetGreek2 : i18n(context, 'homophone_alphabetGreek2'),
-      Alphabet.alphabetRussian1 : i18n(context, 'homophone_alphabetRussian1'),
+      Alphabet.alphabetRussian1 : i18n(context, 'common_language_russian'),
     };
 
     return Column(
@@ -161,7 +161,7 @@ class HomophoneState extends State<Homophone> {
           children: <Widget>[
             Expanded(
               child: GCWText(
-                  text: i18n(context, 'homophone_alphabet') + ':'
+                  text: i18n(context, 'common_alphabet') + ':'
               ),
               flex: 1
             ),

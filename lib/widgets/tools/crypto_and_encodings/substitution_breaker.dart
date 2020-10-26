@@ -42,13 +42,13 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
   @override
   Widget build(BuildContext context) {
     var BreakerAlphabetItems = {
-      SubstitutionBreakerAlphabet.ENGLISH : i18n(context, 'substitutionbreaker_alphabet_english'),
-      SubstitutionBreakerAlphabet.GERMAN : i18n(context, 'substitutionbreaker_alphabet_german'),
-      SubstitutionBreakerAlphabet.SPANISH : i18n(context, 'substitutionbreaker_alphabet_spanish'),
-      SubstitutionBreakerAlphabet.POLISH : i18n(context, 'substitutionbreaker_alphabet_polish'),
-      SubstitutionBreakerAlphabet.GREEK : i18n(context, 'substitutionbreaker_alphabet_greek'),
-      SubstitutionBreakerAlphabet.FRENCH : i18n(context, 'substitutionbreaker_alphabet_french'),
-      SubstitutionBreakerAlphabet.RUSSIAN : i18n(context, 'substitutionbreaker_alphabet_russian'),
+      SubstitutionBreakerAlphabet.ENGLISH : i18n(context, 'common_language_english'),
+      SubstitutionBreakerAlphabet.GERMAN : i18n(context, 'common_language_german'),
+      SubstitutionBreakerAlphabet.SPANISH : i18n(context, 'common_language_spanish'),
+      SubstitutionBreakerAlphabet.POLISH : i18n(context, 'common_language_polish'),
+      SubstitutionBreakerAlphabet.GREEK : i18n(context, 'common_language_greek'),
+      SubstitutionBreakerAlphabet.FRENCH : i18n(context, 'common_language_french'),
+      SubstitutionBreakerAlphabet.RUSSIAN : i18n(context, 'common_language_russian'),
     };
 
     return Column(
@@ -160,8 +160,6 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     });
 
     _quadgrams.putIfAbsent(_currentAlphabet, () => quadgrams);
-
-    print('Loaded: $_currentAlphabet');
 
     _isLoading = false;
   }

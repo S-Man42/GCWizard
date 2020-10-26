@@ -10,6 +10,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class NumeralWordsTextSearch extends StatefulWidget {
   @override
@@ -21,13 +22,17 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
 
   var _currentDecodeInput = '';
   GCWSwitchPosition _currentDecodeMode = GCWSwitchPosition.left;
-  var _currentLanguage = NumeralWordsLanguage.DEU;
+  var _currentLanguage = NumeralWordsLanguage.ALL;
+
   Map<NumeralWordsLanguage, String> _languageList;
 
   @override
   void initState() {
     super.initState();
     _decodeController = TextEditingController(text: _currentDecodeInput);
+
+    _languageList = {NumeralWordsLanguage.ALL: 'numeralwords_language_all'};
+    _languageList.addAll(NUMERALWORDS_LANGUAGES);
   }
 
   @override
@@ -48,7 +53,7 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
               _currentLanguage = value;
             });
           },
-          items: NUMERALWORDS_LANGUAGES.entries.map((mode) {
+          items: _languageList.entries.map((mode) {
             return GCWDropDownMenuItem(
               value: mode.key,
               child: i18n(context, mode.value),
@@ -84,67 +89,8 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     );
   }
 
-  List<Widget> _columnedDetailedOutput(BuildContext context, List<NumeralWordsDecodeOutput> data){
-    if (data != null) {
-      var odd = true;
-      List<Widget> outputList = new List<Widget>();
-      Widget outputRow;
-
-      for (int i = 0; i < data.length; i++) {
-        var row = Container(
-          child: Row(
-              children: <Widget>[
-                Expanded(
-                    child: GCWText(
-                      //text: numbers[i]
-                        text: data[i].number
-                    ),
-                    flex: 1
-                ),
-                Expanded(
-                    child: GCWText(
-                      //text: numWords[i]
-                        text: data[i].numWord
-                    ),
-                    flex: 4
-                ),
-                Expanded(
-                    child: GCWText(
-                      //text: i18n(context, languages[i])
-                        text: _currentLanguage == NumeralWordsLanguage.ALL
-                            ? i18n(context, data[i].language)
-                            : ''
-                    ),
-                    flex: 1
-                )
-              ]
-          ),
-          margin: EdgeInsets.only(
-              top: 6,
-              bottom: 6
-          ),
-        );
-
-        if (odd) {
-          outputRow = Container(
-              color: themeColors().outputListOddRows(),
-              child: row
-          );
-        } else {
-          outputRow = Container(
-              child: row
-          );
-        }
-        odd = !odd;
-        outputList.add(outputRow);
-      }
-      return outputList;
-    } else
-      return [Container()];
-  }
-
   Widget _buildOutput(BuildContext context) {
-    var detailedOutput;
+    List<NumeralWordsDecodeOutput> detailedOutput;
     String output = '';
     if (_currentLanguage != NumeralWordsLanguage.KYR) {
        detailedOutput = decodeNumeralwords(removeAccents(_currentDecodeInput.toLowerCase()), _currentLanguage,
@@ -157,15 +103,26 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
       output = i18n(context, 'numeralwords_language_not_implemented');
       detailedOutput = null;
     }
+
+    var columnData;
+    var flexData;
+    if (_currentLanguage == NumeralWordsLanguage.ALL) {
+      columnData = detailedOutput.map((entry) => [entry.number, entry.numWord, i18n(context, entry.language)]).toList();
+      flexData = [1, 3, 1];
+    } else {
+      columnData = detailedOutput.map((entry) => [entry.number, entry.numWord]).toList();
+      flexData = [1, 2];
+    }
+
     return Column(
       children: <Widget>[
         GCWOutputText(
           text: output,
         ),
-        GCWOutput(
+        output.length == 0 ? Container() : GCWOutput(
           title: i18n(context, 'common_outputdetail'),
           child: Column(
-            children: _columnedDetailedOutput(context, detailedOutput)
+            children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)
           ),
         ),
       ],
