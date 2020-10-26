@@ -2050,7 +2050,7 @@ class Registry {
         tool: SymbolTable(symbolKey: 'rhesus_a', isCaseSensitive: true),
         i18nPrefix: 'symboltables_rhesus_a',
         iconPath: SYMBOLTABLES_ASSETPATH + 'rhesus_a/67.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'rhesusa tintenkleckse blutspritzer inkblots bloodsplatter blutgruppen bloodgroup bloodtype',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'rhesusa tintenkleckse farbkleckse farbspritzer blutspritzer inkblots bloodsplatter blutgruppen bloodgroup bloodtype bluttropfen blutstropfen farbtropfen',
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'romulan', isCaseSensitive: true),
@@ -2183,6 +2183,12 @@ class Registry {
         i18nPrefix: 'symboltables_tomtom',
         iconPath: SYMBOLTABLES_ASSETPATH + 'tomtom/80.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tomtom tom a-tom-tom tom-tom atomtom'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'trafficsigns_germany'),
+        i18nPrefix: 'symboltables_trafficsigns_germany',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'trafficsigns_germany/z101.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'trafficsigns germany deutschland verkehrszeichen verkehrsschilder roadsigns strassenschilder'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'ulog'),
