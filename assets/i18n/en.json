@@ -2667,6 +2667,10 @@
   "whitespace_language_start" : "Start",
   "whitespace_language_readable_code" : "Readable Code",
 
+  "vigenere_breaker_title" : "Vigenère Code Breaker",
+  "vigenere_breaker_description" : "Chance, automatisch einen polyalphabetischen Code zu knacken",
+  "vigenere_breaker_example" : "ABC mit Schlüssel DEF → DFH",
+
   "windchill_title": "Windchill",
   "windchill_description" : "Apparent Temperature",
   "windchill_temperature" : "Temperature",
