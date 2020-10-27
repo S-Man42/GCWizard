@@ -54,6 +54,8 @@ class SymbolTableState extends State<SymbolTable> {
   var _alphabetMap = <String, String>{};
   var _maxSymbolTextLength = 0;
 
+  var _currentIgnoreSpaces = false;
+
   @override
   void initState() {
     super.initState();
@@ -203,6 +205,15 @@ class SymbolTableState extends State<SymbolTable> {
                     });
                   },
                 ),
+                GCWOnOffSwitch(
+                  value: _currentIgnoreSpaces,
+                  title: i18n(context, 'symboltables_ignorespaces'),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentIgnoreSpaces = value;
+                    });
+                  },
+                ),
                 GCWTextDivider(
                   text: i18n(context, 'common_output'),
                   trailing: _buildZoomButtons(mediaQueryData, countColumns)
@@ -286,8 +297,9 @@ class SymbolTableState extends State<SymbolTable> {
     while (_text.length > 0) {
       var imagePath;
       int i;
+      String chunk;
       for (i = min(_maxSymbolTextLength, _text.length); i > 0; i--) {
-        var chunk = _text.substring(0, i);
+        chunk = _text.substring(0, i);
 
         if (isCaseSensitive) {
           if (_alphabetMap.containsKey(chunk)) {
@@ -302,7 +314,8 @@ class SymbolTableState extends State<SymbolTable> {
         }
       }
 
-      imagePaths.add(imagePath);
+      if ((_currentIgnoreSpaces && chunk.replaceAll(RegExp(r'[\s]'), '').length > 0) || !_currentIgnoreSpaces)
+        imagePaths.add(imagePath);
 
       if (imagePath == null)
         _text = _text.substring(1, _text.length);
@@ -315,9 +328,9 @@ class SymbolTableState extends State<SymbolTable> {
 
   _buildEncryptionOutput(countColumns, isCaseSensitive) {
     var rows = <Widget>[];
-    var countRows = (_currentInput.length / countColumns).floor();
 
     var images = _getImages(isCaseSensitive);
+    var countRows = (images.length / countColumns).floor();
 
     for (var i = 0; i <= countRows; i++) {
       var columns = <Widget>[];
@@ -371,8 +384,9 @@ class SymbolTableState extends State<SymbolTable> {
   Future<Map<String, dynamic>> _exportEncryption(int countColumns, isCaseSensitive) async {
     final sizeSymbol = 150.0;
 
-    var countRows = (_currentInput.length / countColumns).floor();
-    if (countRows * countColumns < _currentInput.length)
+    var images = _getImages(isCaseSensitive);
+    var countRows = (images.length / countColumns).floor();
+    if (countRows * countColumns < images.length)
       countRows++;
 
     var width =  countColumns * sizeSymbol;
@@ -389,8 +403,6 @@ class SymbolTableState extends State<SymbolTable> {
       ..style = PaintingStyle.fill;
 
     canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
-
-    var images = _getImages(isCaseSensitive);
 
     for (var i = 0; i <= countRows; i++) {
       for (var j = 0; j < countColumns; j++) {
