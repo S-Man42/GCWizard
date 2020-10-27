@@ -73,17 +73,17 @@ class Key{
       return null;
     key = key.toLowerCase();
     if (key.length != _set(key).length)
-      //key characters must be unique
+      // key characters must be unique
       return null;
 
     if (key.length != alphabet.length)
-      //key must be as long as the alphabet
+      // key must be as long as the alphabet
       return null;
 
     bool result = true;
     key.split('').map((char) =>  result & alphabet.contains(char));
     if (!result)
-      //key must use the same set of characters than the alphabet"
+      // key must use the same set of characters than the alphabet
       return null;
 
     return key;

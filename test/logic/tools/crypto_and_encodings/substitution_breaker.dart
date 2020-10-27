@@ -1,3 +1,117 @@
+import "package:flutter_test/flutter_test.dart";
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/guballa.de/Key.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/guballa.de/breaker.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
+
+
+void main() {
+  group("substitution_breaker.check_alphabet:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : null},
+      {'input' : '', 'expectedOutput' : null},
+
+      {'input' : 'ABc', 'expectedOutput' : 'abc'},
+      {'input' : 'aba', 'expectedOutput' : null},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = Key.check_alphabet(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("substitution_breaker.check_key:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'alphabet' : '', 'expectedOutput' : null},
+      {'input' : '', 'alphabet' : '', 'expectedOutput' : null},
+
+      {'input' : 'AbC', 'alphabet' : 'abc', 'expectedOutput' : 'abc'},
+      {'input' : 'abca', 'alphabet' : 'abcd', 'expectedOutput' : null},
+      {'input' : 'ab', 'alphabet' : 'abc', 'expectedOutput' : null},
+      {'input' : 'abcd', 'alphabet' : 'abc', 'expectedOutput' : null},
+      {'input' : 'abcd', 'alphabet' : 'abc', 'expectedOutput' : null},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = Key.check_key(elem['input'], elem['alphabet']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("substitution_breaker.keydecode:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'input' : 'Hallo 23', 'expectedOutput' : 'Hallo 23'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var key = Key('abcdefghijklmnopqrstuvwxyz');
+        var _actual = key.decode(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("substitution_breaker.keyencode:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : ''},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'input' : 'Hallo 23', 'expectedOutput' : 'Hallo 23'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var key = Key('abcdefghijklmnopqrstuvwxyz');
+        var _actual = key.encode(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("substitution_breaker.compressQuadgrams:", () {
+    final List<int> quadgrams = [0,0,0,747,0,0,0,0,0,0,11,12,13,0,0,0,17];
+
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : quadgrams, 'errorCode' : ErrorCode.OK, 'expectedOutput' : '{"3":[747],"10":[11,12,13,0,0,0,17]}'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+
+      test('input: ${elem['input']}', () async {
+        var _actual = Quadgrams.quadgramsMapToString(Quadgrams.compressQuadgrams(elem['input']));
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+
+  group("substitution_breaker.decompressQuadgrams:", () {
+    final List<int> quadgrams = [0,0,0,747,0,0,0,0,0,0,11,12,13,0,0,0,17];
+    final Map<int, List<int>> quadgramsCpmpressed = {3:[747],10:[11,12,13,0,0,0,17]};
+    final Map<int, List<int>> quadgramsCpmpressed1 = {3:[747],10:[11,12,13],16:[17]};
+
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : quadgramsCpmpressed, 'size' : 17, 'errorCode' : ErrorCode.OK, 'expectedOutput' : quadgrams},
+      {'input' : quadgramsCpmpressed1, 'size' : 17, 'errorCode' : ErrorCode.OK, 'expectedOutput' : quadgrams},
+    ];
+
+    _inputsToExpected.forEach((elem) async {
+      test('input: ${elem['input']}', () async {
+        var _actual = Quadgrams.decompressQuadgrams(elem['input'], elem['size']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+
 //TODO: Problem: The word lists are assets. Currently there're certain problems to load the assets in the tests
 // Either: Get loading working
 // Or: Do tests with a hand-written minimum word list
@@ -79,3 +193,4 @@
 //     });
 //   });
 // }
+}

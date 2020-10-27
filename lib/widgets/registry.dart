@@ -690,9 +690,9 @@ class Registry {
       ),
       GCWToolWidget(
           tool: SubstitutionBreaker(),
-          i18nPrefix: 'substitutionbreaker',
-          category: ToolCategory.CRYPTOGRAPHY,
-          searchStrings: 'substitution ersetzen replacements alphabet change austauschen change switch solver loeser universal universeller codebreaker codebrecher codeknacker cracker '
+        i18nPrefix: 'substitutionbreaker',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'substitution monoalphabetische monoalphabetic ersetzen replacements alphabet change austauschen change switch solver loeser universal universeller codebreaker codebrecher codeknacker cracker '
       ),
       GCWToolWidget(
         tool: SudokuSolver(),

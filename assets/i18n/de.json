@@ -1693,7 +1693,7 @@
   "substitution_case_sensitive" : "Beachte Groß-/Kleinschreibung",
 
   "substitutionbreaker_title" : "Universeller Codeknacker",
-  "substitutionbreaker_description" : "Chance, automatisch einen monoalphabetische Code zu knacken",
+  "substitutionbreaker_description" : "Chance, automatisch einen monoalphabetischen Code zu knacken",
   "substitutionbreaker_example" : "QFRQ → TEST",
   "substitutionbreaker_start" : "Berechne",
   "substitutionbreaker_error" : "Ein Fehler trat auf: %s1",

@@ -1,5 +1,5 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/guballa.de/Key.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/guballa.de/quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:tuple/tuple.dart';
 
 enum ErrorCode{OK, MAX_ROUNDS_PARAMETER, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, ALPHABET_TOO_LONG, WRONG_GENERATE_TEXT}
@@ -128,7 +128,7 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
 
   _initBreaker(quadgrams);
 
-  if (( maxRounds < 1) || (maxRounds > 10000))
+  if ((maxRounds < 1) || (maxRounds > 10000))
       // maximum number of rounds not in the valid range 1..10000"
     return BreakerResult(errorCode: ErrorCode.MAX_ROUNDS_PARAMETER);
   if ((consolidate < 1) || (consolidate > 30))
@@ -141,7 +141,7 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
   iterateText(ciphertext, _alphabet).forEach((char) {cipher_bin.add(char);});
 
   if (cipher_bin.length < 4)
-      //raise ValueError("ciphertext is too short")
+      // ciphertext is too short
     return BreakerResult(errorCode: ErrorCode.TEXT_TOO_SHORT);
 
   var char_positions = List<List<int>>();
@@ -158,7 +158,7 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
 
   var local_maximum = 0;
   var local_maximum_hit = 1;
-  var round_cntr =0;
+  var round_cntr = 0;
   var key = List<int>();
   var best_key = List<int>();
 
