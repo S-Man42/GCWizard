@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 1.2.0+59
+version: 1.2.0+63
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -22,6 +22,7 @@ dependencies:
   package_info: ^0.4.3
   path: ^1.7.0
   path_provider: ^1.6.18
+  permission_handler: ^5.0.1+1
   pointycastle: ^1.0.2
   prefs: ^3.2.1
   provider: ^4.3.2+2
@@ -40,6 +41,7 @@ flutter:
     - assets/i18n/
     - assets/logo/
     - assets/coordinates/
+    - assets/quadgrams/
     - assets/tokens/
     - assets/symbol_tables/
     - assets/symbol_tables/alchemy/
@@ -51,13 +53,15 @@ flutter:
     - assets/symbol_tables/aurebesh/
     - assets/symbol_tables/babylonian_numerals/
     - assets/symbol_tables/barbier/
+    - assets/symbol_tables/barcode39/
     - assets/symbol_tables/baudot/
     - assets/symbol_tables/birds_on_a_wire/
     - assets/symbol_tables/blox/
     - assets/symbol_tables/brahmi_numerals/
     - assets/symbol_tables/braille/
-    - assets/symbol_tables/chappe/
+    - assets/symbol_tables/chappe_v1/
     - assets/symbol_tables/chappe_v2/
+    - assets/symbol_tables/chappe_v3/
     - assets/symbol_tables/cherokee/
     - assets/symbol_tables/chinese_numerals/
     - assets/symbol_tables/cistercian/
@@ -71,11 +75,13 @@ flutter:
     - assets/symbol_tables/deafblind/
     - assets/symbol_tables/devanagari_numerals/
     - assets/symbol_tables/doremi/
+    - assets/symbol_tables/dragon_language/
     - assets/symbol_tables/dragon_runes/
     - assets/symbol_tables/eastern_arabic_indian_numerals/
     - assets/symbol_tables/egyptian_numerals/
     - assets/symbol_tables/elia/
     - assets/symbol_tables/enochian/
+    - assets/symbol_tables/eurythmy/
     - assets/symbol_tables/fakoo/
     - assets/symbol_tables/finger/
     - assets/symbol_tables/flags/
@@ -91,6 +97,7 @@ flutter:
     - assets/symbol_tables/glagolitic/
     - assets/symbol_tables/gnommish/
     - assets/symbol_tables/greek_numerals/
+    - assets/symbol_tables/hazard/
     - assets/symbol_tables/hebrew/
     - assets/symbol_tables/hebrew_v2/
     - assets/symbol_tables/hexahue/
@@ -102,11 +109,14 @@ flutter:
     - assets/symbol_tables/hylian_twilight_princess_wii/
     - assets/symbol_tables/hylian_wind_waker/
     - assets/symbol_tables/hymmnos/
+    - assets/symbol_tables/iching/
     - assets/symbol_tables/illuminati_v1/
     - assets/symbol_tables/illuminati_v2/
     - assets/symbol_tables/intergalactic/
+    - assets/symbol_tables/iokharic/
     - assets/symbol_tables/japanese_numerals/
     - assets/symbol_tables/klingon/
+    - assets/symbol_tables/klingon_klinzhai/
     - assets/symbol_tables/krempel/
     - assets/symbol_tables/krypton/
     - assets/symbol_tables/lorm/
@@ -140,23 +150,33 @@ flutter:
     - assets/symbol_tables/sarati/
     - assets/symbol_tables/semaphore/
     - assets/symbol_tables/sign/
+    - assets/symbol_tables/skullz/
     - assets/symbol_tables/slash_and_pipe/
     - assets/symbol_tables/solmisation/
     - assets/symbol_tables/space_invaders/
     - assets/symbol_tables/spintype/
+    - assets/symbol_tables/suetterlin/
     - assets/symbol_tables/sunuz/
     - assets/symbol_tables/tamil_numerals/
     - assets/symbol_tables/templers/
     - assets/symbol_tables/tenctonese/
+    - assets/symbol_tables/tengwar_beleriand/
+    - assets/symbol_tables/tengwar_classic/
+    - assets/symbol_tables/tengwar_general/
     - assets/symbol_tables/terzi/
     - assets/symbol_tables/theban/
     - assets/symbol_tables/tines/
     - assets/symbol_tables/tomtom/
+    - assets/symbol_tables/trafficsigns_germany/
     - assets/symbol_tables/ulog/
     - assets/symbol_tables/utopian/
     - assets/symbol_tables/visitor/
     - assets/symbol_tables/wakandan/
+    - assets/symbol_tables/webdings/
     - assets/symbol_tables/window/
+    - assets/symbol_tables/wingdings/
+    - assets/symbol_tables/wingdings2/
+    - assets/symbol_tables/wingdings3/
     - assets/symbol_tables/yan_koryani/
     - assets/symbol_tables/zentradi/
 

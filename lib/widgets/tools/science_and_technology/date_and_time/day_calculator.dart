@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -78,21 +80,17 @@ class DayCalculatorState extends State<DayCalculator> {
   }
 
   Widget _buildOutput() {
-    Duration difference = _currentEndDate.difference(_currentStartDate);
+    var outputData = calculateDayDifferences(_currentStartDate, _currentEndDate, countStart: _currentCountStart, countEnd: _currentCountEnd);
+    if (outputData == null) {
+      return GCWDefaultOutput();
+    }
 
-    if (!_currentCountStart)
-      difference -= Duration(days: 1);
-    if (_currentCountEnd)
-      difference += Duration(days: 1);
-
-    var outputData = [
-      [i18n(context, 'dates_daycalculator_days'), difference.inDays],
-      [i18n(context, 'dates_daycalculator_hours'), difference.inHours],
-      [i18n(context, 'dates_daycalculator_minutes'), difference.inMinutes],
-      [i18n(context, 'dates_daycalculator_seconds'), difference.inSeconds]
-    ];
-
-    var rows = columnedMultiLineOutput(outputData);
+    var rows = columnedMultiLineOutput(context, [
+      [i18n(context, 'dates_daycalculator_days'), outputData.days],
+      [i18n(context, 'dates_daycalculator_hours'), outputData.hours],
+      [i18n(context, 'dates_daycalculator_minutes'), outputData.minutes],
+      [i18n(context, 'dates_daycalculator_seconds'), outputData.seconds]
+    ]);
 
     rows.insert(0,
       GCWTextDivider(

@@ -10,7 +10,7 @@ class IsPrime extends StatefulWidget {
 }
 
 class IsPrimeState extends State<IsPrime> {
-  String _output = '';
+  var _currentNumber = 1;
 
   @override
   void initState() {
@@ -22,15 +22,15 @@ class IsPrimeState extends State<IsPrime> {
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
-          value: 1,
+          value: _currentNumber,
           onChanged: (value) {
             setState(() {
-              _output = isPrime(BigInt.from(value)) ? i18n(context, 'primes_isprime_isprime') : i18n(context, 'primes_noprime');
+              _currentNumber = value;
             });
           },
         ),
         GCWDefaultOutput(
-          child: _output
+          child: isPrime(BigInt.from(_currentNumber)) ? i18n(context, 'primes_isprime_isprime') : i18n(context, 'primes_noprime')
         )
       ],
     );

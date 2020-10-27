@@ -60,7 +60,7 @@ class CombinationPermutationState extends State<CombinationPermutation> {
       })
       .toList();
 
-    var rows = columnedMultiLineOutput(outputData, flexValues: [1, 3]);
+    var rows = columnedMultiLineOutput(context, outputData, flexValues: [1, 3]);
 
     rows.insert(0, GCWOutputText(
       text: '${i18n(context, 'common_count')}: $count',

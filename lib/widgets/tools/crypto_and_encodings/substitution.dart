@@ -10,6 +10,11 @@ import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
 class Substitution extends StatefulWidget {
+  final String input;
+  final Map<String, String> substitutions;
+
+  const Substitution({Key key, this.input, this.substitutions}) : super(key: key);
+
   @override
   SubstitutionState createState() => SubstitutionState();
 }
@@ -24,13 +29,21 @@ class SubstitutionState extends State<Substitution> {
   var _currentToInput = '';
   var _currentCaseSensitive = false;
 
-  Map<String, String> _currentSubstitutions = {};
+  Map<String, String> _currentSubstitutions;
 
   String _output = '';
 
   @override
   void initState() {
     super.initState();
+
+    _currentSubstitutions = widget.substitutions != null ? Map<String, String>.from(widget.substitutions) : {};
+
+    if (widget.input != null) {
+      _currentInput = widget.input;
+      _calculateOutput();
+    }
+
     _inputController = TextEditingController(text: _currentInput);
     _fromController = TextEditingController(text: _currentFromInput);
     _toController = TextEditingController(text: _currentToInput);

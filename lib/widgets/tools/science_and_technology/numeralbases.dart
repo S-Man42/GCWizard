@@ -125,7 +125,7 @@ class NumeralBasesState extends State<NumeralBases> {
         outputValues.add([calculateableToBases[i], values[i]]);
       }
 
-      var rows = columnedMultiLineOutput(outputValues, flexValues: [1,3]);
+      var rows = columnedMultiLineOutput(context, outputValues, flexValues: [1,3]);
       rows.insert(0,
         GCWTextDivider(
           text: i18n(context, 'common_output')
