@@ -5,6 +5,10 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:path/path.dart' as path;
 
+// main() {
+//   generate_quadgram();
+// }
+
 /// Link for corpus files (for other languages)
 /// https://guballa.gitlab.io/SubstitutionBreaker/cli_explained.html#adding-more-languages
 /// https://wortschatz.uni-leipzig.de/de/download/german#deu_newscrawl-public_2018
