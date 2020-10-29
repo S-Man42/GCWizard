@@ -9,8 +9,9 @@ import 'package:path/path.dart' as path;
  main() {
    generate_bigram();
  }
-/// https://www.guballa.de/implementierung-eines-vigenere-solvers
+
 /// Link for bigram files (for other languages)
+/// https://www.guballa.de/implementierung-eines-vigenere-solvers
 /// http://practicalcryptography.com/cryptanalysis/letter-frequencies-various-languages/
 
 /// method to generate then bigrams files from a text file
@@ -21,16 +22,20 @@ bool generate_bigram() {
 
     // Attention: a file is done during execution
 
-    /// generate English-bigrams- file ( Source file from http://practicalcryptography.com/media/cryptanalysis/files/english_bigrams.txt)
-    //{'input' : 'english_bigrams.txt', 'fileOut' : 'english_bigrams.dart', 'className' : 'EnglishBigrams', 'replacementList' : null, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
-    /// generate German bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/german_bigrams.txt)
-    //{'input' : 'german_bigrams.txt', 'fileOut' : 'german_bigrams.dart', 'className' : 'GermanBigrams', 'replacementList' : {'ä': 'ae', 'ö': 'oe', 'ü': 'ue', 'ß': 'ss'}, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
-    /// generate France bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/french_bigrams.txt)
-    //{'input' : 'french_bigrams.txt', 'fileOut' : 'french_bigrams.dart', 'className' : 'FrenchBigrams', 'replacementList' : {'æ': 'ae', 'à': 'a' , 'â': 'a', 'ç': 'c', 'è': 'e', 'é': 'e', 'ë': 'e', 'ê': 'e', 'î': 'i', 'ï': 'i', 'ô': 'o', 'œ': 'oe', 'ü': 'ue', 'û': 'u', 'ù': 'u', 'ÿ': 'ye', 'û': 'u'}, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
-    /// generate Polish bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/polish_bigrams.txt)
-    //{'input' : 'polish_bigrams.txt', 'fileOut' : 'polish_bigrams.dart', 'className' : 'PolishBigrams', 'replacementList' : null, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
-    /// generate Spanish bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/spanish_bigrams.txt)
-    //{'input' : 'spanish_bigrams.txt', 'fileOut' : 'spanish_bigrams.dart', 'className' : 'SpanishBigrams', 'replacementList' : {'ñ': 'n'}, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    /// generate English-Bigrams- file ( Source file from http://practicalcryptography.com/media/cryptanalysis/files/english_bigrams.txt)
+    {'input' : 'english_bigrams.txt', 'fileOut' : 'english_bigrams.dart', 'className' : 'EnglishBigrams', 'replacementList' : null, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    /// generate German Bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/german_bigrams.txt)
+    {'input' : 'german_bigrams.txt', 'fileOut' : 'german_bigrams.dart', 'className' : 'GermanBigrams', 'replacementList' : {'ä': 'ae', 'ö': 'oe', 'ü': 'ue', 'ß': 'ss'}, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    /// generate France Bigrams file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/fra_mixed_2009_1M.tar.gz -> fra_mixed_2009_1M-sentences.txt)
+    //{'input' : 'fra_mixed_2009_1M-sentences.txt', 'fileOut' : 'france_bigrams.dart', 'className' : 'FranceBigrams', 'replacementList' : 'fr.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    /// generate Russian Bigrams file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/rus_newscrawl-public_2018_1M.tar.gz -> rus_newscrawl-public_2018_1M-sentences.txt)
+    //{'input' : 'rus_newscrawl-public_2018_1M-sentences.txt', 'fileOut' : 'russian_bigrams.dart', 'className' : 'RussianBigrams', 'replacementList' : 'ru.json', 'alphabet' : "абвгдежзиклмнопрстуфхцчшэюя", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    /// generate Polish quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/pol_newscrawl_2018_1M.tar.gz -> pol_newscrawl_2018_1M-sentences.txt)
+    //{'input' : 'pol_newscrawl_2018_1M-sentences.txt', 'fileOut' : 'polish_bigrams.dart', 'className' : 'PolishBigrams', 'replacementList' : 'pl.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    /// generate Spanish quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/spa_newscrawl_2015_1M.tar.gz -> spa_newscrawl_2015_1M-sentences.txt)
+    //{'input' : 'spa_newscrawl_2015_1M-sentences.txt', 'fileOut' : 'spanish_bigrams.dart', 'className' : 'SpanishBigrams', 'replacementList' : 'es.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    /// generate Greek quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/ell_newscrawl_2017_1M.tar.gz -> ell_newscrawl_2017_1M-sentences.txt)
+    //{'input' : 'ell_newscrawl_2017_1M-sentences.txt', 'fileOut' : 'greek_bigrams.dart', 'className' : 'GreekBigrams', 'replacementList' : 'gr.json', 'alphabet' : "αβγδεζηθικλμνξοπρστυφχψω", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
   ];
 
   _inputsToExpected.forEach((elem) async {
@@ -62,7 +67,7 @@ VigenereBreakerResult _generateFile(File bigrams_fh, String className, String al
   var sb = new StringBuffer();
   var replacementListString = "null";
   var first = true;
-  if (replacementList != null && replacementList.length > 0){
+  if (replacementList != null && replacementList.length >0){
     var sb = new StringBuffer();
     sb.write("{");
     replacementList.forEach((key, value) {
@@ -127,7 +132,7 @@ String bigramsListToString(List<List<int>> bigrams, String alphabet){
     sb.write("\n");
     idx += 1;
   });
-  sb.write("    ]");
+  sb.write("]");
 
   return sb.toString();
 }
@@ -149,18 +154,12 @@ Map<String, int> _replaceBigramEntrys(Map<String, int> bigramsSource, String alp
     return bigramsSource;
 
   for (var i = bigramsSource.length -1; i >= 0; i--) {
-    if (replacementList.keys.contains(bigramsSource.keys.elementAt(i)[0]) || replacementList.keys.contains(bigramsSource.keys.elementAt(i)[1])) {
+    if (replacementList.keys.contains(bigramsSource.keys.elementAt(i)[0]) || (replacementList.keys.contains(bigramsSource.keys.elementAt(i)[0]) )) {
       var entry = substitution(bigramsSource.keys.elementAt(i), replacementList);
-      var lastKey = '';
       for (var x = 0; x < entry.length - 1; x++) {
         var key = entry[x] + entry[x+1];
-        if (bigramsSource.containsKey(key)) {
-          if (lastKey != key)
-            bigramsSource[key] += bigramsSource.values.elementAt(i);
-          lastKey = key;
-        }
-        else
-          print("Error generate bigram: " + entry + " ->" + key +' (missing key)');
+        if (bigramsSource.containsKey(key))
+          bigramsSource[key] += bigramsSource.values.elementAt(i);
       }
       bigramsSource.remove(bigramsSource.keys.elementAt(i));
     }
@@ -181,8 +180,6 @@ List<List<int>> _fillBigramArray(Map<String, int> bigramsSource, String alphabet
     var column = _charIndex(key[1], alphabet);
     if ((row >= 0) && (column >= 0))
       bigrams[row][column] += value;
-    else
-      print("Error generate bigram: " + key+ ' (bigram not valid)');
   });
   return bigrams;
 }
@@ -195,9 +192,6 @@ List<List<int>> _scaleBigrams(List<List<int>> bigrams) {
 
   for (var row = 0; row < bigrams.length; row++) {
     for (var column = 0; column < bigrams[row].length; column++) {
-      if (bigrams[row][column] == 0)
-        bigrams[row][column] = 1;
-
       maxValue = max(maxValue, bigrams[row][column]);
       minValue = min(minValue, bigrams[row][column]);
       sum += bigrams[row][column];
@@ -210,7 +204,7 @@ List<List<int>> _scaleBigrams(List<List<int>> bigrams) {
 
   for (var row = 0; row < bigrams.length; row++) {
     for (var column = 0; column < bigrams.length; column++) {
-      bigrams[row][column] = ((log(bigrams[row][column] / sum) - minValueD) * scale).floor();
+      bigrams[row][column] = ((log(bigrams[row][column] / sum) - minValueD) * scale).round();
     }
   }
   return bigrams;

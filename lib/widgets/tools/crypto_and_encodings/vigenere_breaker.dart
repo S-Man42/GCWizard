@@ -98,7 +98,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
                   child: GCWIntegerSpinner(
                     controller: _minKeyLengthController,
                     min: 1,
-                    max: _maxKeyLength,
+                    max: 999,
                     onChanged: (value) {
                       setState(() {
                         _minKeyLength = value;
@@ -121,7 +121,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
               Expanded(
                   child: GCWIntegerSpinner(
                     controller: _maxKeyLengthController,
-                    min: _minKeyLength,
+                    min: 1,
                     max: 999,
                     onChanged: (value) {
                       setState(() {
@@ -202,7 +202,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
 
     _isStarted = true;
 
-    var _currentOutputFuture = break_cipher(_currentInput, VigenereBreakerType.VIGENERE, _currentAlphabet, 3, 30);
+    var _currentOutputFuture = break_cipher(_currentInput, VigenereBreakerType.VIGENERE, _currentAlphabet, _minKeyLength, _maxKeyLength);
     _currentOutputFuture.then((output) {
       _currentOutput = output;
       _isStarted = false;

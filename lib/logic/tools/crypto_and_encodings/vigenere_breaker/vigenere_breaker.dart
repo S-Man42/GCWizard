@@ -1,7 +1,8 @@
-import 'package:tuple/tuple.dart';
+import 'dart:math';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/guballa.de/breaker.dart' as guballa;
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/bigrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/german_bigrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/english_bigrams.dart';
 
 enum VigenereBreakerType{VIGENERE, AUTOKEYVIGENERE, BEAUFORT}
 enum VigenereBreakerAlphabet{ENGLISH, GERMAN}
@@ -31,10 +32,10 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
     // key length not in the valid range 1..1000"
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_LENGTH);
 
-  var vigenereSquare = _createVigenereSquare(vigenereBreakerType == VigenereBreakerType.BEAUFORT);
   var bigrams = getBigrams(alphabet);
+  var vigenereSquare = _createVigenereSquare(bigrams.alphabet.length, vigenereBreakerType == VigenereBreakerType.BEAUFORT);
   var cipher_bin = List<int>();
-  VigenereBreakerResult bestResult =null;
+  var resultList = List <guballa.BreakerResult>();
   VigenereBreakerResult currentResult = null;
   guballa.BreakerResult best_result = null;
 
@@ -43,61 +44,118 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
   String out ='';
   for (int keyLength = keyLengthMin; keyLength <= keyLengthMax; keyLength++) {
     var breakerResult = guballa.break_vigenere(cipher_bin, keyLength, vigenereSquare, bigrams.bigrams);
+    resultList.add(breakerResult);
     if (best_result == null || breakerResult.fitness > best_result.fitness)
       best_result = breakerResult;
 
     out = out + '\n' + breakerResult.fitness.toString() + ' ' +  breakerResult.key.map((x) => bigrams.alphabet[x]).join()  ;
   }
+  best_result= bestSolution(resultList);
 
   var key_str = best_result.key.map((x) => bigrams.alphabet[x]).join();
 
   return VigenereBreakerResult(plaintext: key_str, key: out, errorCode: VigenereBreakerErrorCode.OK );
 }
 
+guballa.BreakerResult bestSolution(List<guballa.BreakerResult> keyList){
+  if (keyList == null || keyList.length == 0)
+    return null;
 
-List<List<int>> _createVigenereSquare(bool beaufortVariant){
-  var vigenereSquare = List<List<int>>(26);
+  keyList.sort((a, b) => a.fitness.compareTo(b.fitness));
+  // var median = _quantile(keyList, 50);
+  var lowerQuantile = _quantile(keyList, 25);
+  var upperQuantile = _quantile(keyList, 75);
+  var quantileDiff = (upperQuantile - lowerQuantile) / 2;
+  var antennas = quantileDiff * 3;
+  // var lowerAntennas = lowerQuantile - antennas;
+  var upperAntennas = upperQuantile + antennas;
+  var antennasList = List<guballa.BreakerResult>();
+
+  keyList.forEach((element) {
+    if (element.fitness > upperAntennas)
+      antennasList.add(element);
+  });
+
+  guballa.BreakerResult bestFitness = null;
+  if (antennasList.length == 0) {
+    keyList.forEach((element) {
+      if (bestFitness == null || element.fitness > bestFitness.fitness)
+        bestFitness = element;
+    });
+  } else {
+    antennasList.forEach((element) {
+      if (bestFitness == null || element.fitness > bestFitness.fitness)
+        bestFitness = element;
+    });
+  }
+
+  return bestFitness;
+}
+
+double _quantile(List<guballa.BreakerResult> keyList, int percentage) {
+
+  var position = (keyList.length + 1) * percentage / 100.0;
+  var leftNumber = 0.0;
+  var rightNumber = 0.0;
+
+  var n = percentage / 100.0 * (keyList.length - 1) + 1;
+
+  if (position >= 1) {
+    leftNumber = keyList[n.floor() - 1].fitness;
+    rightNumber = keyList[n.floor()].fitness;
+  } else {
+    leftNumber = keyList[0].fitness; // first data
+    rightNumber = keyList[1].fitness; // first data
+  }
+
+  if (leftNumber == rightNumber)
+    return leftNumber;
+  else {
+    var part = n - n.floor();
+    return leftNumber + part * (rightNumber - leftNumber);
+  }
+}
+
+List<List<int>> _createVigenereSquare(int size, bool beaufortVariant){
+  var vigenereSquare = List<List<int>>(size);
   var rowList = List<int>();
 
   for (int i = 0; i < vigenereSquare.length; i++) {
     rowList.add(i);
   }
 
-  if (beaufortVariant) {
-    for (int row = vigenereSquare.length - 1; row >= 0 ; row--) {
-      vigenereSquare[row] = rowList;
-      rowList= createRowList(rowList);
-    }
-  } else {
-    for (int row = 0; row < vigenereSquare.length; row++) {
-      vigenereSquare[row] = rowList;
-      rowList = createRowList(rowList);
-    }
+  for (int row = 0; row < vigenereSquare.length; row++) {
+    vigenereSquare[row] = rowList;
+    rowList = createRowList(rowList);
   }
+
+  if (beaufortVariant)
+    vigenereSquare = vigenereSquare.reversed;
+
   return vigenereSquare;
 }
 
 Bigrams getBigrams(VigenereBreakerAlphabet alphabet){
   switch (alphabet) {
-//    case SubstitutionBreakerAlphabet.ENGLISH:
-//      return EnglishBigrams();
-//      break;
+    case VigenereBreakerAlphabet.ENGLISH:
+      return EnglishBigrams();
+      break;
     case VigenereBreakerAlphabet.GERMAN:
       return  GermanBigrams();
       break;
-//    case SubstitutionBreakerAlphabet.SPANISH:
+//    case VigenereBreakerAlphabet.SPANISH:
 //      return SpanishQuadgrams();
 //      break;
-//    case SubstitutionBreakerAlphabet.POLISH:
+//    case VigenereBreakerAlphabet.POLISH:
 //      return PolishQuadgrams();
 //      break;
-//    case SubstitutionBreakerAlphabet.GREEK:
+//    case VigenereBreakerAlphabet.GREEK:
 //      return GreekQuadgrams();
 //      break;
-//    case SubstitutionBreakerAlphabet.FRENCH:
+//    case VigenereBreakerAlphabet.FRENCH:
 //      return FrenchQuadgrams();
 //      break;
-//    case SubstitutionBreakerAlphabet.RUSSIAN:
+//    case VigenereBreakerAlphabet.RUSSIAN:
 //      return RussianQuadgrams();
 //      break;
     default:
