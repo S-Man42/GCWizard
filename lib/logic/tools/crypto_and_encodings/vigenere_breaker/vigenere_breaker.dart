@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/guballa.de/breaker.dart' as guballa;
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/bigrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/german_bigrams.dart';
@@ -9,16 +10,16 @@ enum VigenereBreakerAlphabet{ENGLISH, GERMAN}
 enum VigenereBreakerErrorCode{OK, KEY_LENGTH, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, ALPHABET_TOO_LONG, WRONG_GENERATE_TEXT}
 
 class VigenereBreakerResult {
-  final String ciphertext;
   final String plaintext;
   final String key;
+  final double fitness;
   final String alphabet;
   final VigenereBreakerErrorCode errorCode;
 
   VigenereBreakerResult({
-    this.ciphertext = '',
     this.plaintext = '',
     this.key = '',
+    this.fitness = 0.0,
     this.alphabet = '',
     this.errorCode = VigenereBreakerErrorCode.OK
   });
@@ -28,33 +29,42 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
   if (input == null || input == '')
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
 
-  if (((keyLengthMin < 1) || (keyLengthMin > 1000)) || ((keyLengthMax < 1) || (keyLengthMax > 1000)))
-    // key length not in the valid range 1..1000"
+  if (((keyLengthMin < 3) || (keyLengthMin > 1000)) || ((keyLengthMax < 1) || (keyLengthMax > 1000)))
+    // key length not in the valid range 3..1000"
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_LENGTH);
 
   var bigrams = getBigrams(alphabet);
   var vigenereSquare = _createVigenereSquare(bigrams.alphabet.length, vigenereBreakerType == VigenereBreakerType.BEAUFORT);
   var cipher_bin = List<int>();
   var resultList = List <guballa.BreakerResult>();
-  VigenereBreakerResult currentResult = null;
   guballa.BreakerResult best_result = null;
-
+  String out1 = '';
+try {
   _iterateText(input, bigrams.alphabet).forEach((char) {cipher_bin.add(char);});
+  keyLengthMax = min(keyLengthMax, cipher_bin.length);
 
-  String out ='';
+  if (cipher_bin.length < 3)
+    return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.TEXT_TOO_SHORT);
+
   for (int keyLength = keyLengthMin; keyLength <= keyLengthMax; keyLength++) {
     var breakerResult = guballa.break_vigenere(cipher_bin, keyLength, vigenereSquare, bigrams.bigrams);
     resultList.add(breakerResult);
     if (best_result == null || breakerResult.fitness > best_result.fitness)
       best_result = breakerResult;
 
-    out = out + '\n' + breakerResult.fitness.toString() + ' ' +  breakerResult.key.map((x) => bigrams.alphabet[x]).join()  ;
+    out1 = out1 + '\n' + breakerResult.fitness.toString() + ' ' +
+        breakerResult.key.map((x) => bigrams.alphabet[x]).join();
   }
-  best_result= bestSolution(resultList);
-
+  best_result = bestSolution(resultList);
+} on Exception
+  {
+    return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.WRONG_GENERATE_TEXT);
+  };
   var key_str = best_result.key.map((x) => bigrams.alphabet[x]).join();
 
-  return VigenereBreakerResult(plaintext: key_str, key: out, errorCode: VigenereBreakerErrorCode.OK );
+  var out = encryptVigenere(input, key_str, false);
+
+  return VigenereBreakerResult(plaintext: out, key: key_str +'\n' + out1, fitness: best_result.fitness, errorCode: VigenereBreakerErrorCode.OK );
 }
 
 guballa.BreakerResult bestSolution(List<guballa.BreakerResult> keyList){
@@ -93,6 +103,10 @@ guballa.BreakerResult bestSolution(List<guballa.BreakerResult> keyList){
 }
 
 double _quantile(List<guballa.BreakerResult> keyList, int percentage) {
+  if (keyList == null || keyList.length == 0)
+    return 0;
+  if (keyList.length == 1)
+    return keyList[0].fitness;
 
   var position = (keyList.length + 1) * percentage / 100.0;
   var leftNumber = 0.0;

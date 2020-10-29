@@ -2672,8 +2672,8 @@
   "vigenere_breaker_example" : "ABC with key DEF → DFH",
 
   "vigenere_breaker_title" : "Vigenère Code Breaker",
-  "vigenere_breaker_description" : "Chance, automatisch einen polyalphabetischen Code zu knacken",
-  "vigenere_breaker_example" : "ABC mit Schlüssel DEF → DFH",
+  "vigenere_breaker_description" : "Chance to automatically break polyalphabetic ciphers",
+  "vigenere_breaker_example" : "ABC with key DEF → DFH",
 
   "windchill_title": "Windchill",
   "windchill_description" : "Apparent Temperature",

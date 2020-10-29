@@ -9,9 +9,8 @@ import 'package:path/path.dart' as path;
  main() {
    generate_bigram();
  }
-
-/// Link for bigram files (for other languages)
 /// https://www.guballa.de/implementierung-eines-vigenere-solvers
+/// Link for bigram files (for other languages)
 /// http://practicalcryptography.com/cryptanalysis/letter-frequencies-various-languages/
 
 /// method to generate then bigrams files from a text file
@@ -23,9 +22,9 @@ bool generate_bigram() {
     // Attention: a file is done during execution
 
     /// generate English-Bigrams- file ( Source file from http://practicalcryptography.com/media/cryptanalysis/files/english_bigrams.txt)
-    {'input' : 'english_bigrams.txt', 'fileOut' : 'english_bigrams.dart', 'className' : 'EnglishBigrams', 'replacementList' : null, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    //{'input' : 'english_bigrams.txt', 'fileOut' : 'english_bigrams.dart', 'className' : 'EnglishBigrams', 'replacementList' : null, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
     /// generate German Bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/german_bigrams.txt)
-    {'input' : 'german_bigrams.txt', 'fileOut' : 'german_bigrams.dart', 'className' : 'GermanBigrams', 'replacementList' : {'ä': 'ae', 'ö': 'oe', 'ü': 'ue', 'ß': 'ss'}, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    //{'input' : 'german_bigrams.txt', 'fileOut' : 'german_bigrams.dart', 'className' : 'GermanBigrams', 'replacementList' : {'ä': 'ae', 'ö': 'oe', 'ü': 'ue', 'ß': 'ss'}, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
     /// generate France Bigrams file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/fra_mixed_2009_1M.tar.gz -> fra_mixed_2009_1M-sentences.txt)
     //{'input' : 'fra_mixed_2009_1M-sentences.txt', 'fileOut' : 'france_bigrams.dart', 'className' : 'FranceBigrams', 'replacementList' : 'fr.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
     /// generate Russian Bigrams file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/rus_newscrawl-public_2018_1M.tar.gz -> rus_newscrawl-public_2018_1M-sentences.txt)
@@ -132,7 +131,7 @@ String bigramsListToString(List<List<int>> bigrams, String alphabet){
     sb.write("\n");
     idx += 1;
   });
-  sb.write("]");
+  sb.write("    ]");
 
   return sb.toString();
 }
@@ -154,12 +153,14 @@ Map<String, int> _replaceBigramEntrys(Map<String, int> bigramsSource, String alp
     return bigramsSource;
 
   for (var i = bigramsSource.length -1; i >= 0; i--) {
-    if (replacementList.keys.contains(bigramsSource.keys.elementAt(i)[0]) || (replacementList.keys.contains(bigramsSource.keys.elementAt(i)[0]) )) {
+    if (replacementList.keys.contains(bigramsSource.keys.elementAt(i)[0]) || (replacementList.keys.contains(bigramsSource.keys.elementAt(i)[0]))) {
       var entry = substitution(bigramsSource.keys.elementAt(i), replacementList);
       for (var x = 0; x < entry.length - 1; x++) {
         var key = entry[x] + entry[x+1];
         if (bigramsSource.containsKey(key))
           bigramsSource[key] += bigramsSource.values.elementAt(i);
+        else
+          print("Error generate bigram: " + entry + " ->" + key);
       }
       bigramsSource.remove(bigramsSource.keys.elementAt(i));
     }
