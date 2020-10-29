@@ -88,3 +88,6 @@ web
 *.gz
 *.toc
 howtocode/
+lib/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/german_bigramsOrg.dart
+lib/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/german_bigrams.txt
+lib/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/english_bigrams.txt

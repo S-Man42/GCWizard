@@ -26,8 +26,8 @@ BreakerResult break_vigenere (List<int> cipher_bin, int keyLength, List<List<int
     max_fitness = 0;
     var best_key_ch1 = 0;
     best_key_ch2 = 0;
-    for (var key_ch1 = 0; key_ch1 < 26; key_ch1++) {
-      for (var key_ch2 = 0; key_ch2 < 26; key_ch2++) {
+    for (var key_ch1 = 0; key_ch1 < vigenereSquare.length; key_ch1++) {
+      for (var key_ch2 = 0; key_ch2 < vigenereSquare.length; key_ch2++) {
         var fitness = 0;
         for (var text_idx = key_idx; text_idx < (cipher_bin.length - 1); text_idx += keyLength) {
           var clear_ch1 = vigenereSquare[cipher_bin[text_idx  ]][key_ch1];
