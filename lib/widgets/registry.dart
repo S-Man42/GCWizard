@@ -1691,12 +1691,6 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'enochian henochisch john dee magische sprache magie language edward kelley henoic'
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'eurythmy'),
-        i18nPrefix: 'symboltables_eurythmy',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'eurythmy/65.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'eurythmy eurythmie waldorf anthroposophie anthroposophy anthroposophisches anthroposophic marievonsivers rudolfsteiner movementart motionart bewegungskunst'
-      ),
-      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'fakoo'),
         i18nPrefix: 'symboltables_fakoo',
         iconPath: SYMBOLTABLES_ASSETPATH + 'fakoo/167.png',
