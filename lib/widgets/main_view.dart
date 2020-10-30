@@ -66,6 +66,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/robber_language.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution_breaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
@@ -216,6 +217,7 @@ class _MainViewState extends State<MainView> {
           className(Skytale()),
           className(SpoonLanguage()),
           className(Substitution()),
+          className(SubstitutionBreaker()),
           className(SudokuSolver()),
           className(SummerSimmerIndex()),
           className(SymbolTableSelection()),

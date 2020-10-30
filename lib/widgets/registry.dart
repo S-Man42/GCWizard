@@ -331,7 +331,7 @@ class Registry {
         tool: Book_Cipher(),
         i18nPrefix: 'book_cipher',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'book buch word wort position zeile row line absatz section letter buchstabe'
+        searchStrings: 'bookcipher buchcode word wort position zeile row line absatz section letter buchstabe buechercode buchchiffre buecherchiffre'
       ),
       GCWToolWidget(
         tool: BrainfkSelection(),
