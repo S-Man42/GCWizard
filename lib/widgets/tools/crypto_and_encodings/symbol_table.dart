@@ -54,7 +54,8 @@ class SymbolTableState extends State<SymbolTable> {
   var _alphabetMap = <String, String>{};
   var _maxSymbolTextLength = 0;
 
-  var _currentIgnoreSpaces = false;
+  var _currentIgnoreUnknown = false;
+  var _encryptionHasImages = false;
 
   @override
   void initState() {
@@ -206,11 +207,11 @@ class SymbolTableState extends State<SymbolTable> {
                   },
                 ),
                 GCWOnOffSwitch(
-                  value: _currentIgnoreSpaces,
-                  title: i18n(context, 'symboltables_ignorespaces'),
+                  value: _currentIgnoreUnknown,
+                  title: i18n(context, 'symboltables_ignoreunknown'),
                   onChanged: (value) {
                     setState(() {
-                      _currentIgnoreSpaces = value;
+                      _currentIgnoreUnknown = value;
                     });
                   },
                 ),
@@ -219,7 +220,7 @@ class SymbolTableState extends State<SymbolTable> {
                   trailing: _buildZoomButtons(mediaQueryData, countColumns)
                 ),
                 _buildEncryptionOutput(countColumns, widget.isCaseSensitive),
-                !kIsWeb && _currentInput.length > 0 // TODO: save is currently not support on web
+                !kIsWeb && _encryptionHasImages // TODO: save is currently not support on web
                   ? GCWButton(
                       text: i18n(context, 'symboltables_exportimage'),
                       onPressed: () {
@@ -314,7 +315,7 @@ class SymbolTableState extends State<SymbolTable> {
         }
       }
 
-      if ((_currentIgnoreSpaces && chunk.replaceAll(RegExp(r'[\s]'), '').length > 0) || !_currentIgnoreSpaces)
+      if ((_currentIgnoreUnknown && imagePath != null) || !_currentIgnoreUnknown)
         imagePaths.add(imagePath);
 
       if (imagePath == null)
@@ -330,6 +331,10 @@ class SymbolTableState extends State<SymbolTable> {
     var rows = <Widget>[];
 
     var images = _getImages(isCaseSensitive);
+    _encryptionHasImages = images.length > 0;
+    if (!_encryptionHasImages)
+      return Container();
+
     var countRows = (images.length / countColumns).floor();
 
     for (var i = 0; i <= countRows; i++) {
@@ -385,6 +390,7 @@ class SymbolTableState extends State<SymbolTable> {
     final sizeSymbol = 150.0;
 
     var images = _getImages(isCaseSensitive);
+
     var countRows = (images.length / countColumns).floor();
     if (countRows * countColumns < images.length)
       countRows++;

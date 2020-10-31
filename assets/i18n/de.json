@@ -1728,7 +1728,7 @@
   "symboltables_exportimage_saved" : "Bild gespeichert",
   "symboltables_exportimage_savepath" : "Bild gespeichert unter\n\n%s1",
   "symboltables_nowritepermission" : "Berechtigung zum Schreiben von Dateien verwehrt.",
-  "symboltables_ignorespaces" : "Ignoriere Leerzeichen",
+  "symboltables_ignoreunknown" : "Ignoriere Unbekanntes",
   "symboltables_alchemy_title" : "Alchemie",
   "symboltables_alchemy_description" : "Alchemische Zeichen für antike und moderne Elemente",
   "symboltables_alchemy_air" : "LUFT",

@@ -1728,7 +1728,7 @@
   "symboltables_exportimage_saved" : "Image saved",
   "symboltables_exportimage_savepath" : "Image saved as\n\n%s1",
   "symboltables_nowritepermission" : "Permission for writing files denied.",
-  "symboltables_ignorespaces" : "Ignore Spaces",
+  "symboltables_ignoreunknown" : "Ignore unknown",
   "symboltables_alchemy_title" : "Alchemy",
   "symboltables_alchemy_description" : "Alchemic symbols for antique and modern elements",
   "symboltables_alchemy_air" : "AIR",
