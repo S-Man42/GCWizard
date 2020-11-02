@@ -955,7 +955,7 @@
   "crosstotal_product" : "Produkt",
   "crosstotal_product_alternated" : "Produkt alterniert",
   "crosstotal_product_crosssum" : "Quersumme des Produkts",
-  "crosstotal_product_crosssum_iterated" : "Iterierte QS des Produkts iteriert",
+  "crosstotal_product_crosssum_iterated" : "Iterierte QS des Produkts",
   "crosstotal_product_crosssum_alternated_back" : "Altern. QS (rückw.) des Produkts",
   "crosstotal_product_crosssum_alternated_forward" : "Altern. QS (vorw.) des Produkts",
   "crosstotal_crossproduct" : "Querprodukt",
