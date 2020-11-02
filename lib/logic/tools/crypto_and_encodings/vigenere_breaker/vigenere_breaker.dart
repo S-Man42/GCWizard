@@ -7,7 +7,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigr
 
 enum VigenereBreakerType{VIGENERE, AUTOKEYVIGENERE, BEAUFORT}
 enum VigenereBreakerAlphabet{ENGLISH, GERMAN}
-enum VigenereBreakerErrorCode{OK, KEY_LENGTH, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, ALPHABET_TOO_LONG, WRONG_GENERATE_TEXT}
+enum VigenereBreakerErrorCode{OK, KEY_LENGTH, KEY_TOO_LONG, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, ALPHABET_TOO_LONG, WRONG_GENERATE_TEXT}
 
 class VigenereBreakerResult {
   final String plaintext;
@@ -25,6 +25,8 @@ class VigenereBreakerResult {
   });
 }
 
+const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+
 Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vigenereBreakerType, VigenereBreakerAlphabet alphabet, int keyLengthMin, int keyLengthMax) async {
   if (input == null || input == '')
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
@@ -32,6 +34,8 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
   if (((keyLengthMin < 3) || (keyLengthMin > 1000)) || ((keyLengthMax < 1) || (keyLengthMax > 1000)))
     // key length not in the valid range 3..1000"
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_LENGTH);
+
+
 
   var bigrams = getBigrams(alphabet);
   var vigenereSquare = _createVigenereSquare(bigrams.alphabet.length, vigenereBreakerType == VigenereBreakerType.BEAUFORT);
@@ -41,10 +45,17 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
   String out1 = '';
 try {
   _iterateText(input, bigrams.alphabet).forEach((char) {cipher_bin.add(char);});
-  keyLengthMax = min(keyLengthMax, cipher_bin.length);
 
   if (cipher_bin.length < 3)
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.TEXT_TOO_SHORT);
+
+  if ((keyLengthMin > cipher_bin.length) && (keyLengthMax >  cipher_bin.length))
+    // Minimum key length must be equal or greater than the length of the ciphertext
+    return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_TOO_LONG);
+
+  keyLengthMax = min(keyLengthMax, cipher_bin.length);
+
+
 
   for (int keyLength = keyLengthMin; keyLength <= keyLengthMax; keyLength++) {
     var breakerResult = guballa.break_vigenere(cipher_bin, keyLength, vigenereSquare, bigrams.bigrams);
@@ -52,8 +63,13 @@ try {
     if (best_result == null || breakerResult.fitness > best_result.fitness)
       best_result = breakerResult;
 
-    out1 = out1 + '\n' + breakerResult.fitness.toString() + ' ' +
-        breakerResult.key.map((x) => bigrams.alphabet[x]).join();
+    var key_str = breakerResult.key.map((x) => bigrams.alphabet[x]).join();
+    key_str = decryptVigenere(''.padRight(key_str.length, bigrams.alphabet[0]), key_str, false);
+
+    var fitness = calc_fitness(decryptVigenere(input, key_str, false), bigrams);
+
+    out1 = out1 + '\n' + breakerResult.fitness.toStringAsFixed(2) + ' ' + fitness.toStringAsFixed(2) + ' ' +
+        key_str;
   }
   best_result = bestSolution(resultList);
 } on Exception
@@ -61,10 +77,37 @@ try {
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.WRONG_GENERATE_TEXT);
   };
   var key_str = best_result.key.map((x) => bigrams.alphabet[x]).join();
+  key_str = decryptVigenere(''.padRight(key_str.length, bigrams.alphabet[0]), key_str, false);
 
-  var out = encryptVigenere(input, key_str, false);
+  //var out = encryptVigenere(input, key_str, false);
+  var out = decryptVigenere(input, key_str, false);
 
   return VigenereBreakerResult(plaintext: out, key: key_str +'\n' + out1, fitness: best_result.fitness, errorCode: VigenereBreakerErrorCode.OK );
+}
+
+double calc_fitness(String txt, Bigrams bigrams) {
+  if (txt == null || txt == '')
+    return null;
+
+  if ((bigrams == null) || (bigrams.alphabet == null) || (bigrams.bigrams == null))
+    return null;
+
+  var fitness = 0;
+  var plain_bin = List<int>();
+
+  _iterateText(txt, bigrams.alphabet).forEach((char) {plain_bin.add(char);});
+
+  if (plain_bin.length < 2)
+    // More than two characters from the given alphabet are required
+    return null;
+
+  for (var idx = 0; idx < (plain_bin.length - 1); idx++) {
+    var ch1 = plain_bin[idx  ];
+    var ch2 = plain_bin[idx+1];
+    fitness += bigrams.bigrams[ch1][ch2];
+  };
+
+  return fitness / (plain_bin.length - 1) / 1000;
 }
 
 guballa.BreakerResult bestSolution(List<guballa.BreakerResult> keyList){

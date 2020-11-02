@@ -57,7 +57,7 @@ BreakerResult break_vigenere (List<int> cipher_bin, int keyLength, List<List<int
 
   return BreakerResult(
       key: key,
-      fitness: best_score_0  / 10000 // / max(cipher_bin.length-1, 1)
+      fitness: best_score_0 / ((cipher_bin.length - 1) / keyLength).floor() / 1000 //, best_score_0  / 10000 // / max(cipher_bin.length-1, 1)
   );
 }
 
