@@ -21,20 +21,18 @@ bool generate_bigram() {
 
     // Attention: a file is done during execution
 
-    /// generate English-Bigrams- file ( Source file from http://practicalcryptography.com/media/cryptanalysis/files/english_bigrams.txt)
+    /// generate English-bigrams- file ( Source file from http://practicalcryptography.com/media/cryptanalysis/files/english_bigrams.txt)
     //{'input' : 'english_bigrams.txt', 'fileOut' : 'english_bigrams.dart', 'className' : 'EnglishBigrams', 'replacementList' : null, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
-    /// generate German Bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/german_bigrams.txt)
+    /// generate German bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/german_bigrams.txt)
     //{'input' : 'german_bigrams.txt', 'fileOut' : 'german_bigrams.dart', 'className' : 'GermanBigrams', 'replacementList' : {'ä': 'ae', 'ö': 'oe', 'ü': 'ue', 'ß': 'ss'}, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
-    /// generate France Bigrams file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/fra_mixed_2009_1M.tar.gz -> fra_mixed_2009_1M-sentences.txt)
-    //{'input' : 'fra_mixed_2009_1M-sentences.txt', 'fileOut' : 'france_bigrams.dart', 'className' : 'FranceBigrams', 'replacementList' : 'fr.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
-    /// generate Russian Bigrams file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/rus_newscrawl-public_2018_1M.tar.gz -> rus_newscrawl-public_2018_1M-sentences.txt)
-    //{'input' : 'rus_newscrawl-public_2018_1M-sentences.txt', 'fileOut' : 'russian_bigrams.dart', 'className' : 'RussianBigrams', 'replacementList' : 'ru.json', 'alphabet' : "абвгдежзиклмнопрстуфхцчшэюя", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
-    /// generate Polish quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/pol_newscrawl_2018_1M.tar.gz -> pol_newscrawl_2018_1M-sentences.txt)
-    //{'input' : 'pol_newscrawl_2018_1M-sentences.txt', 'fileOut' : 'polish_bigrams.dart', 'className' : 'PolishBigrams', 'replacementList' : 'pl.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
-    /// generate Spanish quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/spa_newscrawl_2015_1M.tar.gz -> spa_newscrawl_2015_1M-sentences.txt)
-    //{'input' : 'spa_newscrawl_2015_1M-sentences.txt', 'fileOut' : 'spanish_bigrams.dart', 'className' : 'SpanishBigrams', 'replacementList' : 'es.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
-    /// generate Greek quadgram file (Source file from https://pcai056.informatik.uni-leipzig.de/downloads/corpora/ell_newscrawl_2017_1M.tar.gz -> ell_newscrawl_2017_1M-sentences.txt)
-    //{'input' : 'ell_newscrawl_2017_1M-sentences.txt', 'fileOut' : 'greek_bigrams.dart', 'className' : 'GreekBigrams', 'replacementList' : 'gr.json', 'alphabet' : "αβγδεζηθικλμνξοπρστυφχψω", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    /// generate France bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/french_bigrams.txt)
+    //{'input' : 'french_bigrams.txt', 'fileOut' : 'france_bigrams.dart', 'className' : 'FranceBigrams', 'replacementList' : 'fr.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    /// generate Russian bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/russian_bigrams.txt)
+    //{'input' : 'russian_bigrams.txt', 'fileOut' : 'russian_bigrams.dart', 'className' : 'RussianBigrams', 'replacementList' : 'ru.json', 'alphabet' : "абвгдежзиклмнопрстуфхцчшэюя", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    /// generate Polish bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/polish_bigrams.txt)
+    //{'input' : 'polish_bigrams.txt', 'fileOut' : 'polish_bigrams.dart', 'className' : 'PolishBigrams', 'replacementList' : 'pl.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    /// generate Spanish bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/spanish_bigrams.txt)
+    //{'input' : 'spanish_bigrams.txt', 'fileOut' : 'spanish_bigrams.dart', 'className' : 'SpanishBigrams', 'replacementList' : 'es.json', 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
   ];
 
   _inputsToExpected.forEach((elem) async {
