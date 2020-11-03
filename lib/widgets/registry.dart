@@ -1535,6 +1535,12 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_CCITT + 'ccitt-1 ccitt1 baudot-code'
       ),
       GCWToolWidget(
+          tool: SymbolTable(symbolKey: 'beaufort'),
+          i18nPrefix: 'symboltables_beaufort',
+          iconPath: SYMBOLTABLES_ASSETPATH + 'beaufort/55.png',
+          searchStrings: SEARCHSTRING_SYMBOLTABLES + 'beaufort wind force windstärke'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'birds_on_a_wire'),
         i18nPrefix: 'symboltables_birds_on_a_wire',
         iconPath: SYMBOLTABLES_ASSETPATH + 'birds_on_a_wire/80.png',
