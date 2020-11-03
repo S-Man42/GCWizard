@@ -484,30 +484,34 @@ List<List<String>> encodeCistercian(String input) {
   if (input == null || input == '')
     return [];
   var inputCharacters = input.split(RegExp(r'[^1234567890]')).toList();
+  print(inputCharacters);
   var output = <List<String>>[];
   var digit = 0;
   var number; // = new List<String>();
 
   for (String character in inputCharacters) {
-    var display; // = new List<String>();
-    for (int i = 0; i < character.length; i++){
-      digit = int.parse(character[i]) * pow(10, character.length - i - 1);
-      if (digit != 0) {
-        number = _AZToCistercianSegment[digit];
-        if (display == null){
-          display = number;
-        } else {
-          for (String charElem in number) {
-            if (!display.contains(charElem)) {
-              display.add(charElem);
+    int encodeNumber = int.tryParse(character);
+    if (encodeNumber != null && encodeNumber < 10000) {
+      var display; // = new List<String>();
+      for (int i = 0; i < character.length; i++){
+        digit = int.parse(character[i]) * pow(10, character.length - i - 1);
+        if (digit != 0) {
+          number = _AZToCistercianSegment[digit];
+          if (display == null){
+            display = number;
+          } else {
+            for (String charElem in number) {
+              if (!display.contains(charElem)) {
+                display.add(charElem);
+              }
             }
           }
         }
       }
-    }
-    if (display != null) {
-      display.sort();
-      output.add(display);
+      if (display != null) {
+        display.sort();
+        output.add(display);
+      }
     }
   }
   return output;

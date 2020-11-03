@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/utils/constants.dart';
+//import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
@@ -87,7 +87,6 @@ class CistercianSegmentsState extends State<CistercianSegments> {
                     onPressed: () {
                       setState(() {
                         int newCountColumn = max(countColumns - 1, 1);
-
                         mediaQueryData.orientation == Orientation.portrait
                             ? Prefs.setInt('symboltables_countcolumns_portrait',
                             newCountColumn)
@@ -140,11 +139,11 @@ class CistercianSegmentsState extends State<CistercianSegments> {
         });
 
         //sort with dot to end
-        var containsDot = newSegments.contains('dp');
-        newSegments.remove('dp');
+        //var containsDot = newSegments.contains('dp');
+        //newSegments.remove('dp');
         newSegments.sort();
-        if (containsDot)
-          newSegments.add('dp');
+        //if (containsDot)
+        //  newSegments.add('dp');
 
         if (_currentDisplays.length == 0)
           _currentDisplays.add([]);
@@ -227,7 +226,7 @@ class CistercianSegmentsState extends State<CistercianSegments> {
           ],
         );
     } else { //decode
-        //_currentDecodeInput is the result of the buidlvisualencryption
+        //_currentDecodeInput is the result of the buildvisualencryption
       var output =  _currentDisplays.map((character) {
         if (character != null)
           return character.join();

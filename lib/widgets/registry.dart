@@ -1596,17 +1596,10 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'chinesisches zahlen ziffern chinese numbers numerals'
       ),
       GCWToolWidget(
-<<<<<<< HEAD
-          tool: SymbolTable(symbolKey: 'cistercian'),
-          i18nPrefix: 'symboltables_cistercian',
-          iconPath: SYMBOLTABLES_ASSETPATH + 'cistercian/55.png',
-          searchStrings: 'cistercian Zisterzienser '
-=======
         tool: SymbolTable(symbolKey: 'cistercian'),
         i18nPrefix: 'symboltables_cistercian',
         iconPath: SYMBOLTABLES_ASSETPATH + 'cistercian/56.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'cistercian zisterzienser'
->>>>>>> 11be272aaf5e1358c0207dd28827233b2ce017ce
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'color_code'),

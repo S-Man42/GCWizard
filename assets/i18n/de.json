@@ -365,17 +365,15 @@
   "chickenlanguage_description" : "Spielsprache, Geheimsprache",
   "chickenlanguage_example" : "Huhn → huhudefuhn",
 
-<<<<<<< HEAD
   "cistercian_title" : "Zisterzienser",
   "cistercian_description" : "Zahlensystem der Zisterzienser",
-=======
+
   "chronogram_title" : "Chronogramm",
   "chronogram_description" : "Finded und addiert römische Zahlen in Texten",
   "chronogram_example" : "AMORE MATVRITAS → MMVI → 2006",
   "chronogram_ju.to.iv" : "J, U → I, V",
   "chronogram_y.to.ii" : "Y → II",
   "chronogram_w.to.vv" : "W → VV",
->>>>>>> 11be272aaf5e1358c0207dd28827233b2ce017ce
 
   "colors_title" : "Farben",
   "colors_description" : "Farbwähler und Farbraum-Konvertierer",
@@ -1983,10 +1981,6 @@
   "symboltables_chinese_numerals_hundred" : "100",
   "symboltables_chinese_numerals_thousand" : "1000",
   "symboltables_chinese_numerals_tenthousand" : "10000",
-<<<<<<< HEAD
-  "symboltables_cistercian_title" : "Zisterzienser",
-  "symboltables_cistercian_description" : "Zahlensystem der Zisterzienser",
-=======
   "symboltables_cistercian_title" : "Zisterzienser Zahlen",
   "symboltables_cistercian_description" : "Zahlensystem des Zisterzienser-Ordens",
   "symboltables_cistercian_ten" : "10",
@@ -2016,7 +2010,6 @@
   "symboltables_cistercian_seventhousand" : "7000",
   "symboltables_cistercian_eightthousand" : "8000",
   "symboltables_cistercian_ninethousand" : "9000",
->>>>>>> 11be272aaf5e1358c0207dd28827233b2ce017ce
   "symboltables_color_code_title" : "Farbcode",
   "symboltables_color_honey_title" : "Color-Honey",
   "symboltables_color_honey_description" : "Sechs-Farben-Code, Bienenwaben",
