@@ -26,6 +26,7 @@ void main() {
       {'input' : 'AB 12 AB', 'expectedOutput' : '4 9 8 4 2 16 4 9'},
       {'input' : 'A B1 2', 'expectedOutput' : '4 16 9 8 4 8 2'},
       {'input' : 'A B 1 2', 'expectedOutput' : '4 16 9 8 4 8 2'},
+      {'input' : 'ABC ABC ABC ABC', 'expectedOutput' : '4 9 13 16 4 9 13 16 4 9 13 16 4 9 13'},
 
       {'input' : 'A-', 'expectedOutput' : '4 20'},
       {'input' : '2-', 'expectedOutput' : '8 2 25'},
@@ -63,6 +64,7 @@ void main() {
       {'expectedOutput' : '12 AB 12', 'input' : [8, 4, 2, 16, 4, 9, 8, 4, 2]},
       {'expectedOutput' : 'AB 12 AB', 'input' : [4, 9, 8, 4, 2, 16, 4, 9]},
       {'expectedOutput' : 'A B 1 2', 'input' : [4, 16, 9, 8, 4, 8, 2]},
+      {'expectedOutput' : 'ABC ABC ABC ABC', 'input' : [4, 9, 13, 16, 4, 9, 13, 16, 4, 9, 13, 16, 4, 9, 13]},
     ];
 
     _inputsToExpected.forEach((elem) {
