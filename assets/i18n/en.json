@@ -242,6 +242,7 @@
   "bcd_biquinaer_title" : "BCD (Biquinary)",
   "bcd_biquinaer_example" : "19 → 1000010 0110000",
 
+  "beaufort_selection_title" : "Wind Force (Beaufort)",
   "beaufort_title" : "Wind Force (Beaufort)",
   "beaufort_description" : "Converts wind speed into Beaufort value (Scale up to Bft. 17)",
   "beaufort_example" : "42 kn → Bft. 9",
@@ -326,11 +327,17 @@
   "callforcontribution_24" : "Contact\n\n",
   "callforcontribution_25" : "Let GC Wizard become a community project!",
 
+  "ccitt1_selection_title" : "CCITT-1",
+  "ccitt1_selection_description" : "Baudot Code",
+  "ccitt1_selection_example" : "ABC → 00100 01001 01101",
   "ccitt1_title" : "CCITT-1",
   "ccitt1_description" : "Baudot Code",
   "ccitt1_example" : "ABC → 00100 01001 01101",
   "ccitt1_numeralbase" : "Coding",
 
+  "ccitt2_selection_title" : "CCITT-2",
+  "ccitt2_selection_description" : "Baudot Murray Code; Binary Punched Tape Encoding ",
+  "ccitt2_selection_example" : "ABC → 00011 11001 01110",
   "ccitt2_title" : "CCITT-2",
   "ccitt2_description" : "Baudot Murray Code; Binary Punched Tape Encoding ",
   "ccitt2_example" : "ABC → 00011 11001 01110",
@@ -3080,6 +3087,8 @@
   "tapir_example" : "ABCDEFG → 05052 55565 78383",
   "tapir_onetimepad" : "OTP Key",
 
+  "tomtom_selection_title" : "TomTom Code",
+  "tomtom_selection_example" : "A → /, D → ////, E → /\\",
   "tomtom_title" : "TomTom Code",
   "tomtom_example" : "A → /, D → ////, E → /\\",
 
