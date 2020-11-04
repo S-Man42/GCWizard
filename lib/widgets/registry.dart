@@ -200,7 +200,7 @@ class Registry {
   static final SEARCHSTRING_ASTRONOMY_POSITION = 'declination position stand rektaszension zodiac astrology astrologischeszeichen astrologie astrologicalsign tierkreiszeichen sternzeichen azimuth altitude diameter durchmesser hoehe rightascension distance entfernung distanz observer beobachter juliandate julianischesdatum sternzeit siderealtime gmst lmst eclipticlongitude ekliptischelaenge ';
   static final SEARCHSTRING_BASE = 'base encode decode encoding decoding dekodierung dekodieren ';
   static final SEARCHSTRING_BCD = SEARCHSTRING_BINARY + 'bcd binary coded decimal binaer codierte dezimalzahlen hamming distance hamming-distanz';
-  static final SEARCHSTRING_BEAUFORT = 'beaufort wind force scale beaufort-skala windstaerke windspeed knots knoten ';
+  static final SEARCHSTRING_BEAUFORT = 'beaufortskala windforce beaufortscale beaufort-skala windstaerke windspeed knots knoten storm hurricanes orkane windboeen brisen ';
   static final SEARCHSTRING_BINARY = 'dezimalzahlen binaerzahlen dualzahlen binary numbers decimal ';
   static final SEARCHSTRING_BRAINFK = SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'brainf**k ';
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
@@ -2266,13 +2266,13 @@ class Registry {
         tool: SymbolTable(symbolKey: 'windforce_beaufort'),
         i18nPrefix: 'symboltables_windforce_beaufort',
         iconPath: SYMBOLTABLES_ASSETPATH + 'windforce_beaufort/55.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'beaufort wind force windstärke'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_BEAUFORT
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'windforce_knots'),
         i18nPrefix: 'symboltables_windforce_knots',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'windforce_knots/hundred.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'knots knoten wind force speed windgeschwindigkeit windstärke'
+        iconPath: SYMBOLTABLES_ASSETPATH + 'windforce_knots/seventy-five.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_BEAUFORT
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'window'),
