@@ -2263,6 +2263,18 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont webdings wingdings windings'
       ),
       GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'windforce_beaufort'),
+        i18nPrefix: 'symboltables_windforce_beaufort',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'windforce_beaufort/55.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'beaufort wind force windstärke'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'windforce_knots'),
+        i18nPrefix: 'symboltables_windforce_knots',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'windforce_knots/hundred.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'knots knoten wind force speed windgeschwindigkeit windstärke'
+      ),
+      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'window'),
         i18nPrefix: 'symboltables_window',
         iconPath: SYMBOLTABLES_ASSETPATH + 'window/76.png',
