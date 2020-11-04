@@ -242,6 +242,7 @@
   "bcd_biquinaer_title" : "BCD (Biquinär)",
   "bcd_biquinaer_example" : "19 → 1000010 0110000",
 
+  "beaufort_selection_title" : "Windstärke (Beaufort)",
   "beaufort_title" : "Windstärke (Beaufort)",
   "beaufort_description" : "Berechnet den Beaufortwert für eine Windstärke (Skala bis Bft. 17)",
   "beaufort_example" : "42 kn → Bft. 9",
@@ -326,11 +327,17 @@
   "callforcontribution_24" : "Kontakt\n\n",
   "callforcontribution_25" : "Lass GC Wizard ein Community-Projekt werden!",
 
+  "ccitt1_selection_title" : "CCITT-1",
+  "ccitt1_selection_description" : "Baudot-Code",
+  "ccitt1_selection_example" : "ABC → 00100 01001 01101",
   "ccitt1_title" : "CCITT-1",
   "ccitt1_description" : "Baudot-Code",
   "ccitt1_example" : "ABC → 00100 01001 01101",
   "ccitt1_numeralbase" : "Kodierung",
 
+  "ccitt2_selection_title" : "CCITT-2",
+  "ccitt2_selection_description" : "Baudot-Murray-Code; Binärer Lochkartencode",
+  "ccitt2_selection_example" : "ABC → 00011 11001 01110",
   "ccitt2_title" : "CCITT-2",
   "ccitt2_description" : "Baudot-Murray-Code; Binärer Lochkartencode",
   "ccitt2_example" : "ABC → 00011 11001 01110",
@@ -955,7 +962,7 @@
   "crosstotal_product" : "Produkt",
   "crosstotal_product_alternated" : "Produkt alterniert",
   "crosstotal_product_crosssum" : "Quersumme des Produkts",
-  "crosstotal_product_crosssum_iterated" : "Iterierte QS des Produkts",
+  "crosstotal_product_crosssum_iterated" : "Iterierte QS des Produkts iteriert",
   "crosstotal_product_crosssum_alternated_back" : "Altern. QS (rückw.) des Produkts",
   "crosstotal_product_crosssum_alternated_forward" : "Altern. QS (vorw.) des Produkts",
   "crosstotal_crossproduct" : "Querprodukt",
@@ -3088,6 +3095,8 @@
   "tapir_example" : "ABCDEFG → 05052 55565 78383",
   "tapir_onetimepad" : "OTP Schlüssel",
 
+  "tomtom_selection_title" : "TomTom Code",
+  "tomtom_selection_example" : "A → /, D → ////, E → /\\",
   "tomtom_title" : "TomTom Code",
   "tomtom_example" : "A → /, D → ////, E → /\\",
 

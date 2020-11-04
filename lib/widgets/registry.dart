@@ -10,7 +10,10 @@ import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/crosssum_selection.dart';
@@ -32,6 +35,7 @@ import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
@@ -196,9 +200,11 @@ class Registry {
   static final SEARCHSTRING_ASTRONOMY_POSITION = 'declination position stand rektaszension zodiac astrology astrologischeszeichen astrologie astrologicalsign tierkreiszeichen sternzeichen azimuth altitude diameter durchmesser hoehe rightascension distance entfernung distanz observer beobachter juliandate julianischesdatum sternzeit siderealtime gmst lmst eclipticlongitude ekliptischelaenge ';
   static final SEARCHSTRING_BASE = 'base encode decode encoding decoding dekodierung dekodieren ';
   static final SEARCHSTRING_BCD = SEARCHSTRING_BINARY + 'bcd binary coded decimal binaer codierte dezimalzahlen hamming distance hamming-distanz';
+  static final SEARCHSTRING_BEAUFORT = 'beaufort wind force scale beaufort-skala windstaerke windspeed knots knoten ';
   static final SEARCHSTRING_BINARY = 'dezimalzahlen binaerzahlen dualzahlen binary numbers decimal ';
   static final SEARCHSTRING_BRAINFK = SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'brainf**k ';
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
+  static final SEARCHSTRING_CCITT1 = SEARCHSTRING_CCITT + 'ccitt1 ccitt-1 baudot-code baudotcode ';
   static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen lochkarten konrad zuse z-22 z22 punchedpapertape cards baudot-murray-code ';
   static final SEARCHSTRING_COMBINATORICS = 'mathematics mathematik kombinatorik combinatorics ';
   static final SEARCHSTRING_COMBINATORICS_COMBINATION = SEARCHSTRING_COMBINATORICS + 'combinations kombinationen untergruppen subgroups ';
@@ -237,6 +243,7 @@ class Registry {
   static final SEARCHSTRING_SYMBOLTABLES_HYLIAN = 'thelegendofzelda dielegendevonzelda hylian hylianisches hyrule ';
   static final SEARCHSTRING_SYMBOLTABLES_ILLUMINATI = SEARCHSTRING_SYMBOLTABLES_FREEMASONS + 'illuminati illuminatus illuminaten 23 ';
   static final SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER = 'lwl llk lichtwellenleiter lichtleitkabel opticalfiber glasfaserkabel ';
+  static final SEARCHSTRING_TOMTOM = 'a-tom-tom atomtom ';
   static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
   static final SEARCHSTRING_VIGENERE = SEARCHSTRING_ROTATION + 'vigenere ';
 
@@ -310,10 +317,10 @@ class Registry {
         searchStrings: SEARCHSTRING_BCD
       ),
       GCWToolWidget(
-        tool: Beaufort(),
-        i18nPrefix: 'beaufort',
+        tool: BeaufortSelection(),
+        i18nPrefix: 'beaufort_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'beaufort wind force scale beaufort-skala windstaerke windspeed '
+        searchStrings: SEARCHSTRING_BEAUFORT
       ),
       GCWToolWidget(
         tool: Binary(),
@@ -346,14 +353,14 @@ class Registry {
         searchStrings: SEARCHSTRING_ROTATION + 'caesar'
       ),
       GCWToolWidget(
-        tool: CCITT1(),
-        i18nPrefix: 'ccitt1',
+        tool: CCITT1Selection(),
+        i18nPrefix: 'ccitt1_selection',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_CCITT + 'ccitt1 ccitt-1 baudot-code '
+        searchStrings: SEARCHSTRING_CCITT1
       ),
       GCWToolWidget(
-        tool: CCITT2(),
-        i18nPrefix: 'ccitt2',
+        tool: CCITT2Selection(),
+        i18nPrefix: 'ccitt2_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_CCITT2
       ),
@@ -725,10 +732,10 @@ class Registry {
         searchStrings: 'tapir ddr nva mfs stasi nationale volksarmee'
       ),
       GCWToolWidget(
-        tool: TomTom(),
-        i18nPrefix: 'tomtom',
+        tool: TomTomSelection(),
+        i18nPrefix: 'tomtom_selection',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'tomtom tom a-tom-tom tom-tom atomtom'
+        searchStrings: SEARCHSTRING_TOMTOM
       ),
       GCWToolWidget(
         tool: Trithemius(),
@@ -903,6 +910,13 @@ class Registry {
         searchStrings: SEARCHSTRING_BCD + 'grayexcess gray-excess'
       ),
 
+      // Beaufort Selection *******************************************************************************************
+      GCWToolWidget(
+        tool: Beaufort(),
+        i18nPrefix: 'beaufort',
+        searchStrings: SEARCHSTRING_BEAUFORT
+      ),
+
       //Brainfk Selection **********************************************************************************************
       GCWToolWidget(
         tool: Brainfk(),
@@ -913,6 +927,18 @@ class Registry {
         tool: Ook(),
         i18nPrefix: 'brainfk_ook',
         searchStrings: SEARCHSTRING_BRAINFK + 'ook terry pratchett monkeys apes'
+      ),
+
+      //CCITT*Selection **********************************************************************************************
+      GCWToolWidget(
+        tool: CCITT1(),
+        i18nPrefix: 'ccitt1',
+        searchStrings: SEARCHSTRING_CCITT1
+      ),
+      GCWToolWidget(
+        tool: CCITT2(),
+        i18nPrefix: 'ccitt2',
+        searchStrings: SEARCHSTRING_CCITT2
       ),
 
       //CombinatoricsSelection ***************************************************************************************
@@ -1532,7 +1558,7 @@ class Registry {
         tool: SymbolTable(symbolKey: 'baudot'),
         i18nPrefix: 'symboltables_baudot',
         iconPath: SYMBOLTABLES_ASSETPATH + 'baudot/58.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_CCITT + 'ccitt-1 ccitt1 baudot-code'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_CCITT1
       ),
       GCWToolWidget(
           tool: SymbolTable(symbolKey: 'beaufort'),
@@ -2204,7 +2230,7 @@ class Registry {
         tool: SymbolTable(symbolKey: 'tomtom'),
         i18nPrefix: 'symboltables_tomtom',
         iconPath: SYMBOLTABLES_ASSETPATH + 'tomtom/80.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tomtom tom a-tom-tom tom-tom atomtom'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_TOMTOM
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'trafficsigns_germany'),
@@ -2277,6 +2303,13 @@ class Registry {
         i18nPrefix: 'symboltables_zentradi',
         iconPath: SYMBOLTABLES_ASSETPATH + 'zentradi/70.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'zentradi zentraedi robotech macross '
+      ),
+
+      // TomTomSelection *********************************************************************************************
+      GCWToolWidget(
+        tool: TomTom(),
+        i18nPrefix: 'tomtom',
+        searchStrings: SEARCHSTRING_TOMTOM
       ),
 
       //VanitySelection **********************************************************************************************

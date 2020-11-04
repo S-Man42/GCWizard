@@ -12,7 +12,10 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
@@ -32,6 +35,7 @@ import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
@@ -42,8 +46,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
@@ -69,14 +71,12 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution_breaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
@@ -162,13 +162,13 @@ class _MainViewState extends State<MainView> {
           className(Bacon()),
           className(BaseSelection()),
           className(BCDSelection()),
-          className(Beaufort()),
+          className(BeaufortSelection()),
           className(Bifid()),
           className(Binary()),
           className(BrainfkSelection()),
           className(Caesar()),
-          className(CCITT1()),
-          className(CCITT2()),
+          className(CCITT1Selection()),
+          className(CCITT2Selection()),
           className(Chao()),
           className(ChickenLanguage()),
           className(CoordsSelection()),
@@ -223,7 +223,7 @@ class _MainViewState extends State<MainView> {
           className(SymbolTableSelection()),
           className(TapCode()),
           className(Tapir()),
-          className(TomTom()),
+          className(TomTomSelection()),
           className(Trithemius()),
           className(UnitConverter()),
           className(VanitySelection()),
