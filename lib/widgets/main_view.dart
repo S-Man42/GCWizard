@@ -41,20 +41,24 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/amsco.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
@@ -63,9 +67,11 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rc4.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution_breaker.dart';
@@ -156,6 +162,7 @@ class _MainViewState extends State<MainView> {
           className(ADFGVX()),
           className(Affine()),
           className(AlphabetValues()),
+          className(Amsco()),
           className(ASCIIValues()),
           className(AstronomySelection()),
           className(Atbash()),
@@ -165,6 +172,7 @@ class _MainViewState extends State<MainView> {
           className(BeaufortSelection()),
           className(Bifid()),
           className(Binary()),
+          className(BookCipher()),
           className(BrainfkSelection()),
           className(Caesar()),
           className(CCITT1Selection()),
@@ -180,6 +188,7 @@ class _MainViewState extends State<MainView> {
           className(DTMF()),
           className(DNASelection()),
           className(DuckSpeak()),
+          className(EnclosedAreas()),
           className(Enigma()),
           className(ESelection()),
           className(FormulaSolverFormulaGroups()),
@@ -191,6 +200,7 @@ class _MainViewState extends State<MainView> {
           className(HeatIndex()),
           className(HashSelection()),
           className(Hexadecimal()),
+          className(Homophone()),
           className(Humidex()),
           className(Kamasutra()),
           className(Kenny()),
@@ -206,6 +216,7 @@ class _MainViewState extends State<MainView> {
           className(Polybios()),
           className(PrimesSelection()),
           className(RailFence()),
+          className(RC4()),
           className(ResistorSelection()),
           className(Reverse()),
           className(RobberLanguage()),
@@ -215,6 +226,7 @@ class _MainViewState extends State<MainView> {
           className(Scrabble()),
           className(SegmentDisplaySelection()),
           className(Skytale()),
+          className(Solitaire()),
           className(SpoonLanguage()),
           className(Substitution()),
           className(SubstitutionBreaker()),

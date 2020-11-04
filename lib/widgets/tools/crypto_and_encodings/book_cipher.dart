@@ -7,12 +7,12 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class Book_Cipher extends StatefulWidget {
+class BookCipher extends StatefulWidget {
   @override
-  Book_CipherState createState() => Book_CipherState();
+  BookCipherState createState() => BookCipherState();
 }
 
-class Book_CipherState extends State<Book_Cipher> {
+class BookCipherState extends State<BookCipher> {
   var _currentInput = '';
   var _currentMode = GCWSwitchPosition.left;
   var _currentDecodeMode = GCWSwitchPosition.left;

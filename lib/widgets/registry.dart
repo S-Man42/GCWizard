@@ -335,7 +335,7 @@ class Registry {
         searchStrings: 'bifid felix delastelle polybios polybius transposition'
       ),
       GCWToolWidget(
-        tool: Book_Cipher(),
+        tool: BookCipher(),
         i18nPrefix: 'book_cipher',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'bookcipher buchcode word wort position zeile row line absatz section letter buchstabe buechercode buchchiffre buecherchiffre'
