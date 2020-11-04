@@ -14,11 +14,11 @@ class BeaufortSelection extends GCWSelection {
     final List<GCWToolWidget> _toolList =
       Registry.toolList.where((element) {
         if (className(element.tool) == className(SymbolTable())
-          && (element.tool as SymbolTable).symbolKey == 'beaufort_beaufort')
+          && (element.tool as SymbolTable).symbolKey == 'windforce_beaufort')
           return true;
 
         if (className(element.tool) == className(SymbolTable())
-            && (element.tool as SymbolTable).symbolKey == 'beaufort_knots')
+            && (element.tool as SymbolTable).symbolKey == 'windforce_knots')
           return true;
 
         return [
