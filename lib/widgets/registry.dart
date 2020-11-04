@@ -1561,12 +1561,6 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_CCITT1
       ),
       GCWToolWidget(
-          tool: SymbolTable(symbolKey: 'beaufort'),
-          i18nPrefix: 'symboltables_beaufort',
-          iconPath: SYMBOLTABLES_ASSETPATH + 'beaufort/55.png',
-          searchStrings: SEARCHSTRING_SYMBOLTABLES + 'beaufort wind force windstärke'
-      ),
-      GCWToolWidget(
         tool: SymbolTable(symbolKey: 'birds_on_a_wire'),
         i18nPrefix: 'symboltables_birds_on_a_wire',
         iconPath: SYMBOLTABLES_ASSETPATH + 'birds_on_a_wire/80.png',
@@ -2267,6 +2261,18 @@ class Registry {
         i18nPrefix: 'symboltables_webdings',
         iconPath: SYMBOLTABLES_ASSETPATH + 'webdings/65.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont webdings wingdings windings'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'windforce_beaufort'),
+        i18nPrefix: 'symboltables_windforce_beaufort',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'windforce_beaufort/55.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'beaufort wind force windstärke'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'windforce_knots'),
+        i18nPrefix: 'symboltables_windforce_knots',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'windforce_knots/hundred.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'knots knoten wind force speed windgeschwindigkeit windstärke'
       ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'window'),
