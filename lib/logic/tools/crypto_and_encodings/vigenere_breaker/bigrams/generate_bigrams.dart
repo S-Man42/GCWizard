@@ -62,7 +62,7 @@ VigenereBreakerResult _generateFile(File bigrams_fh, String className, String al
   var sb = new StringBuffer();
   var replacementListString = "null";
   var first = true;
-  if (replacementList != null && replacementList.length >0){
+  if (replacementList != null && replacementList.length > 0){
     var sb = new StringBuffer();
     sb.write("{");
     replacementList.forEach((key, value) {
@@ -149,7 +149,7 @@ Map<String, int> _replaceBigramEntrys(Map<String, int> bigramsSource, String alp
     return bigramsSource;
 
   for (var i = bigramsSource.length -1; i >= 0; i--) {
-    if (replacementList.keys.contains(bigramsSource.keys.elementAt(i)[0]) || (replacementList.keys.contains(bigramsSource.keys.elementAt(i)[1]))) {
+    if (replacementList.keys.contains(bigramsSource.keys.elementAt(i)[0]) || replacementList.keys.contains(bigramsSource.keys.elementAt(i)[1])) {
       var entry = substitution(bigramsSource.keys.elementAt(i), replacementList);
       var lastKey = '';
       for (var x = 0; x < entry.length - 1; x++) {
@@ -160,7 +160,7 @@ Map<String, int> _replaceBigramEntrys(Map<String, int> bigramsSource, String alp
           lastKey = key;
         }
         else
-          print("Error generate bigram: " + entry + " ->" + key +' (missin key)');
+          print("Error generate bigram: " + entry + " ->" + key +' (missing key)');
       }
       bigramsSource.remove(bigramsSource.keys.elementAt(i));
     }

@@ -71,7 +71,7 @@ IFTAN IMPIO USHAN DTOTH ECROW NONTH ORNST HESET HINGS ANDDE EDSAR EDIAM ETRIC AL
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}}', () {
-        var _actual = calc_fitness(elem['input'], getBigrams(elem['alphabet']));
+        var _actual = calc_fitnessBigrams(elem['input'], getBigrams(elem['alphabet']));
         expect(_actual, elem['expectedOutput']);
       });
     });

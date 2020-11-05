@@ -55,8 +55,8 @@ class VigenereBreakerState extends State<VigenereBreaker> {
   @override
   Widget build(BuildContext context) {
     var BreakerAlphabetItems = {
-      VigenereBreakerAlphabet.ENGLISH : i18n(context, 'substitutionbreaker_alphabet_english'),
-      VigenereBreakerAlphabet.GERMAN : i18n(context, 'substitutionbreaker_alphabet_german'),
+      VigenereBreakerAlphabet.ENGLISH : i18n(context, 'common_language_english'),
+      VigenereBreakerAlphabet.GERMAN : i18n(context, 'common_language_german'),
     };
 
     return Column(
