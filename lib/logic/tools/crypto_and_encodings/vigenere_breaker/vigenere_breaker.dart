@@ -4,9 +4,14 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/guba
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/bigrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/german_bigrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/english_bigrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/french_bigrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/spanish_bigrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/trigrams/trigrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/trigrams/german_trigrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/trigrams/english_trigrams.dart';
 
 enum VigenereBreakerType{VIGENERE, AUTOKEYVIGENERE, BEAUFORT}
-enum VigenereBreakerAlphabet{ENGLISH, GERMAN}
+enum VigenereBreakerAlphabet{ENGLISH, GERMAN, SPANISH, FRENCH}
 enum VigenereBreakerErrorCode{OK, KEY_LENGTH, KEY_TOO_LONG, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, ALPHABET_TOO_LONG, WRONG_GENERATE_TEXT}
 
 class VigenereBreakerResult {
@@ -32,12 +37,14 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
 
   if (((keyLengthMin < 3) || (keyLengthMin > 1000)) || ((keyLengthMax < 1) || (keyLengthMax > 1000)))
-    // key length not in the valid range 3..1000"
+    // key length not in the valid range 3..1000
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_LENGTH);
 
 
 
   var bigrams = getBigrams(alphabet);
+  var trigrams = getTrigrams(alphabet);
+
   var vigenereSquare = _createVigenereSquare(bigrams.alphabet.length, vigenereBreakerType == VigenereBreakerType.BEAUFORT);
   var cipher_bin = List<int>();
   var resultList = List <guballa.BreakerResult>();
@@ -55,8 +62,6 @@ try {
 
   keyLengthMax = min(keyLengthMax, cipher_bin.length);
 
-
-
   for (int keyLength = keyLengthMin; keyLength <= keyLengthMax; keyLength++) {
     var breakerResult = guballa.break_vigenere(cipher_bin, keyLength, vigenereSquare, bigrams.bigrams);
     resultList.add(breakerResult);
@@ -66,10 +71,13 @@ try {
     var key_str = breakerResult.key.map((x) => bigrams.alphabet[x]).join();
     key_str = decryptVigenere(''.padRight(key_str.length, bigrams.alphabet[0]), key_str, false);
 
-    var fitness = calc_fitness(decryptVigenere(input, key_str, false), bigrams);
+    var txt = decryptVigenere(input, key_str, false);
+    var fitness = calc_fitnessBigrams(txt, bigrams);
+    var fitness1 = calc_fitnessTrigrams(txt, trigrams);
 
-    out1 = out1 + '\n' + breakerResult.fitness.toStringAsFixed(2) + ' ' + fitness.toStringAsFixed(2) + ' ' +
-        key_str;
+    out1 = out1 + '\n' + fitness.toStringAsFixed(2) + '\t' + fitness1.toStringAsFixed(2) + '\t' +
+        key_str  + '\n' +  txt;
+
   }
   best_result = bestSolution(resultList);
 } on Exception
@@ -85,7 +93,7 @@ try {
   return VigenereBreakerResult(plaintext: out, key: key_str +'\n' + out1, fitness: best_result.fitness, errorCode: VigenereBreakerErrorCode.OK );
 }
 
-double calc_fitness(String txt, Bigrams bigrams) {
+double calc_fitnessBigrams(String txt, Bigrams bigrams) {
   if (txt == null || txt == '')
     return null;
 
@@ -108,6 +116,35 @@ double calc_fitness(String txt, Bigrams bigrams) {
   };
 
   return fitness / (plain_bin.length - 1) / 1000;
+}
+
+double calc_fitnessTrigrams(String txt, Trigrams trigrams) {
+  if (txt == null || txt == '')
+    return null;
+
+  var trigramsList = trigrams.trigrams();
+  if ((trigrams == null) || (trigrams.alphabet == null) || (trigramsList == null))
+    return null;
+
+  var fitness = 0;
+  var plain_bin = List<int>();
+  var trigram_val = 0;
+
+  _iterateText(txt, trigrams.alphabet).forEach((char) {plain_bin.add(char);});
+
+  if (plain_bin.length < 3)
+    // More than two characters from the given alphabet are required
+    return null;
+
+  for (var idx = 0; idx < (plain_bin.length - 2); idx++) {
+    trigram_val = plain_bin[idx];
+    trigram_val = (trigram_val << 5) + plain_bin[idx+1];
+    trigram_val = ((trigram_val & 0x3FF) << 5) + plain_bin[idx+2];
+
+    fitness += trigramsList[trigram_val];
+  };
+
+  return fitness / (plain_bin.length - 2) / 1000;
 }
 
 guballa.BreakerResult bestSolution(List<guballa.BreakerResult> keyList){
@@ -200,20 +237,48 @@ Bigrams getBigrams(VigenereBreakerAlphabet alphabet){
     case VigenereBreakerAlphabet.GERMAN:
       return  GermanBigrams();
       break;
-//    case VigenereBreakerAlphabet.SPANISH:
-//      return SpanishQuadgrams();
+    case VigenereBreakerAlphabet.SPANISH:
+      return SpanishBigrams();
 //      break;
 //    case VigenereBreakerAlphabet.POLISH:
-//      return PolishQuadgrams();
+//      return PolishBigrams();
 //      break;
 //    case VigenereBreakerAlphabet.GREEK:
 //      return GreekQuadgrams();
 //      break;
-//    case VigenereBreakerAlphabet.FRENCH:
-//      return FrenchQuadgrams();
+    case VigenereBreakerAlphabet.FRENCH:
+      return FrenchBigrams();
 //      break;
 //    case VigenereBreakerAlphabet.RUSSIAN:
-//      return RussianQuadgrams();
+//      return RussianBigrams();
+//      break;
+    default:
+      return null;
+  }
+}
+
+Trigrams getTrigrams(VigenereBreakerAlphabet alphabet){
+  switch (alphabet) {
+    case VigenereBreakerAlphabet.ENGLISH:
+      return EnglishTrigrams();
+      break;
+    case VigenereBreakerAlphabet.GERMAN:
+      return  GermanTrigrams();
+      break;
+    case VigenereBreakerAlphabet.SPANISH:
+      //return SpanishBigrams();
+//      break;
+//    case VigenereBreakerAlphabet.POLISH:
+//      return PolishBigrams();
+//      break;
+//    case VigenereBreakerAlphabet.GREEK:
+//      return GreekQuadgrams();
+//      break;
+    case VigenereBreakerAlphabet.FRENCH:
+      //return FrenchBigrams();
+//      break;
+//    case VigenereBreakerAlphabet.RUSSIAN:
+//      return RussianBigrams();
 //      break;
     default:
       return null;
