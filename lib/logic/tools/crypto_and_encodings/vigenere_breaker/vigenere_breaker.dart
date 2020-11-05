@@ -4,9 +4,11 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/guba
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/bigrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/german_bigrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/english_bigrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/french_bigrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/spanish_bigrams.dart';
 
 enum VigenereBreakerType{VIGENERE, AUTOKEYVIGENERE, BEAUFORT}
-enum VigenereBreakerAlphabet{ENGLISH, GERMAN}
+enum VigenereBreakerAlphabet{ENGLISH, GERMAN, SPANISH, FRENCH}
 enum VigenereBreakerErrorCode{OK, KEY_LENGTH, KEY_TOO_LONG, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, ALPHABET_TOO_LONG, WRONG_GENERATE_TEXT}
 
 class VigenereBreakerResult {
@@ -32,7 +34,7 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
 
   if (((keyLengthMin < 3) || (keyLengthMin > 1000)) || ((keyLengthMax < 1) || (keyLengthMax > 1000)))
-    // key length not in the valid range 3..1000"
+    // key length not in the valid range 3..1000
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_LENGTH);
 
 
@@ -200,20 +202,20 @@ Bigrams getBigrams(VigenereBreakerAlphabet alphabet){
     case VigenereBreakerAlphabet.GERMAN:
       return  GermanBigrams();
       break;
-//    case VigenereBreakerAlphabet.SPANISH:
-//      return SpanishQuadgrams();
+    case VigenereBreakerAlphabet.SPANISH:
+      return SpanishBigrams();
 //      break;
 //    case VigenereBreakerAlphabet.POLISH:
-//      return PolishQuadgrams();
+//      return PolishBigrams();
 //      break;
 //    case VigenereBreakerAlphabet.GREEK:
 //      return GreekQuadgrams();
 //      break;
-//    case VigenereBreakerAlphabet.FRENCH:
-//      return FrenchQuadgrams();
+    case VigenereBreakerAlphabet.FRENCH:
+      return FrenchBigrams();
 //      break;
 //    case VigenereBreakerAlphabet.RUSSIAN:
-//      return RussianQuadgrams();
+//      return RussianBigrams();
 //      break;
     default:
       return null;

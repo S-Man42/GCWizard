@@ -19,6 +19,9 @@ WYMOF XQPSH IGSOH GMVXC ITPKW YZXAH JVRSK ZWGXT RMTXW AGFDV IQGTK SVXEM OMFWN OF
 IRSTI SNOTT OASSA ILTHE LASTT OPLUC KTHEM ASKFR OMTHE NACEO FTHEP HARIS EEISN OTTOL 
 IFTAN IMPIO USHAN DTOTH ECROW NONTH ORNST HESET HINGS ANDDE EDSAR EDIAM ETRIC ALLY''';
 
+    var text18 = 'elseavexomypjnhewmmoezsphzrqllnfszwgiepmjjpcmifxjdt';
+    var text19 = 'daswirdmoeglichweilderalgorithmusrechtperformantist';
+
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
@@ -31,6 +34,7 @@ IFTAN IMPIO USHAN DTOTH ECROW NONTH ORNST HESET HINGS ANDDE EDSAR EDIAM ETRIC AL
       {'input' : text12, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'quark', 'expectedOutput' : text13},
       {'input' : text14, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'blaire', 'expectedOutput' : text15},
       {'input' : text16, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 99, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'theverywallkhaveearssotakegreatcarenottospeaktooloud', 'expectedOutput' : text17},
+      {'input' : text18, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'blaise', 'expectedOutput' : text19},
     ];
 
     _inputsToExpected.forEach((elem) {
