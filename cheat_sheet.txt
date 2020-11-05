@@ -15,7 +15,6 @@ Gold Version:
 - Android (change package name to gc_wizard_gold):
     1. in file: android/app/src/main/AndroidManifest.xml
     2. in file: android/app/build.gradle -> defaultConfig
-    3. path and in file: android/app/src/main/kotlin/de/sman42/gc_wizard/MainActivity.kt
 - iOS:
     1. change bundle identifier in XCode/Info.plist in ios/Runner to de.sman42.gcWizardGold
     2. change Display Name to GC Wizard Gold
