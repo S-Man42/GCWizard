@@ -1,14 +1,11 @@
 import 'dart:math';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/guballa.de/breaker.dart' as guballa;
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/guballa.de/breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/bigrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/german_bigrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/english_bigrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/french_bigrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/spanish_bigrams.dart';
+
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/trigrams/trigrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/trigrams/german_trigrams.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/trigrams/english_trigrams.dart';
+
 
 enum VigenereBreakerType{VIGENERE, AUTOKEYVIGENERE, BEAUFORT}
 enum VigenereBreakerAlphabet{ENGLISH, GERMAN, SPANISH, FRENCH}
@@ -40,8 +37,6 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
     // key length not in the valid range 3..1000
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_LENGTH);
 
-
-
   var bigrams = getBigrams(alphabet);
   var trigrams = getTrigrams(alphabet);
 
@@ -51,7 +46,7 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
   guballa.BreakerResult best_result = null;
   String out1 = '';
 try {
-  _iterateText(input, bigrams.alphabet).forEach((char) {cipher_bin.add(char);});
+  iterateText(input, bigrams.alphabet).forEach((char) {cipher_bin.add(char);});
 
   if (cipher_bin.length < 3)
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.TEXT_TOO_SHORT);
@@ -91,60 +86,6 @@ try {
   var out = decryptVigenere(input, key_str, false);
 
   return VigenereBreakerResult(plaintext: out, key: key_str +'\n' + out1, fitness: best_result.fitness, errorCode: VigenereBreakerErrorCode.OK );
-}
-
-double calc_fitnessBigrams(String txt, Bigrams bigrams) {
-  if (txt == null || txt == '')
-    return null;
-
-  if ((bigrams == null) || (bigrams.alphabet == null) || (bigrams.bigrams == null))
-    return null;
-
-  var fitness = 0;
-  var plain_bin = List<int>();
-
-  _iterateText(txt, bigrams.alphabet).forEach((char) {plain_bin.add(char);});
-
-  if (plain_bin.length < 2)
-    // More than two characters from the given alphabet are required
-    return null;
-
-  for (var idx = 0; idx < (plain_bin.length - 1); idx++) {
-    var ch1 = plain_bin[idx  ];
-    var ch2 = plain_bin[idx+1];
-    fitness += bigrams.bigrams[ch1][ch2];
-  };
-
-  return fitness / (plain_bin.length - 1) / 1000;
-}
-
-double calc_fitnessTrigrams(String txt, Trigrams trigrams) {
-  if (txt == null || txt == '')
-    return null;
-
-  var trigramsList = trigrams.trigrams();
-  if ((trigrams == null) || (trigrams.alphabet == null) || (trigramsList == null))
-    return null;
-
-  var fitness = 0;
-  var plain_bin = List<int>();
-  var trigram_val = 0;
-
-  _iterateText(txt, trigrams.alphabet).forEach((char) {plain_bin.add(char);});
-
-  if (plain_bin.length < 3)
-    // More than two characters from the given alphabet are required
-    return null;
-
-  for (var idx = 0; idx < (plain_bin.length - 2); idx++) {
-    trigram_val = plain_bin[idx];
-    trigram_val = (trigram_val << 5) + plain_bin[idx+1];
-    trigram_val = ((trigram_val & 0x3FF) << 5) + plain_bin[idx+2];
-
-    fitness += trigramsList[trigram_val];
-  };
-
-  return fitness / (plain_bin.length - 2) / 1000;
 }
 
 guballa.BreakerResult bestSolution(List<guballa.BreakerResult> keyList){
@@ -214,75 +155,24 @@ List<List<int>> _createVigenereSquare(int size, bool beaufortVariant){
   var vigenereSquare = List<List<int>>(size);
   var rowList = List<int>();
 
-  for (int i = 0; i < vigenereSquare.length; i++) {
+  for (int i = 0; i < vigenereSquare.length; i++)
     rowList.add(i);
-  }
 
-  for (int row = 0; row < vigenereSquare.length; row++) {
-    vigenereSquare[row] = rowList;
+  if (beaufortVariant) {
+    vigenereSquare[0] = rowList;
     rowList = createRowList(rowList);
+    for (int row = vigenereSquare.length - 1; row > 0 ; row--) {
+      vigenereSquare[row] = rowList;
+      rowList = createRowList(rowList);
+    }
+  } else {
+    for (int row = 0; row < vigenereSquare.length; row++) {
+      vigenereSquare[row] = rowList;
+      rowList = createRowList(rowList);
+    }
   }
-
-  if (beaufortVariant)
-    vigenereSquare = vigenereSquare.reversed;
 
   return vigenereSquare;
-}
-
-Bigrams getBigrams(VigenereBreakerAlphabet alphabet){
-  switch (alphabet) {
-    case VigenereBreakerAlphabet.ENGLISH:
-      return EnglishBigrams();
-      break;
-    case VigenereBreakerAlphabet.GERMAN:
-      return  GermanBigrams();
-      break;
-    case VigenereBreakerAlphabet.SPANISH:
-      return SpanishBigrams();
-//      break;
-//    case VigenereBreakerAlphabet.POLISH:
-//      return PolishBigrams();
-//      break;
-//    case VigenereBreakerAlphabet.GREEK:
-//      return GreekQuadgrams();
-//      break;
-    case VigenereBreakerAlphabet.FRENCH:
-      return FrenchBigrams();
-//      break;
-//    case VigenereBreakerAlphabet.RUSSIAN:
-//      return RussianBigrams();
-//      break;
-    default:
-      return null;
-  }
-}
-
-Trigrams getTrigrams(VigenereBreakerAlphabet alphabet){
-  switch (alphabet) {
-    case VigenereBreakerAlphabet.ENGLISH:
-      return EnglishTrigrams();
-      break;
-    case VigenereBreakerAlphabet.GERMAN:
-      return  GermanTrigrams();
-      break;
-    case VigenereBreakerAlphabet.SPANISH:
-      //return SpanishBigrams();
-//      break;
-//    case VigenereBreakerAlphabet.POLISH:
-//      return PolishBigrams();
-//      break;
-//    case VigenereBreakerAlphabet.GREEK:
-//      return GreekQuadgrams();
-//      break;
-    case VigenereBreakerAlphabet.FRENCH:
-      //return FrenchBigrams();
-//      break;
-//    case VigenereBreakerAlphabet.RUSSIAN:
-//      return RussianBigrams();
-//      break;
-    default:
-      return null;
-  }
 }
 
 List<int> createRowList(List<int> sourceList) {
@@ -291,17 +181,5 @@ List<int> createRowList(List<int> sourceList) {
   rowList.add(sourceList[0]);
 
   return rowList;
-}
-
-Iterable<int> _iterateText(String text, String alphabet) sync* {
-  var trans = alphabet.toLowerCase();
-  int index = -1;
-
-  text = text.toLowerCase();
-  for (int i = 0; i < text.length; i++) {
-    index = trans.indexOf(text[i]);
-    if (index >= 0)
-      yield index;
-  }
 }
 

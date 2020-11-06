@@ -1,5 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/vigenere_breaker.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/bigrams.dart';
 
 void main() {
   group("vigenere_breaker.encrypt:", () {
@@ -42,7 +43,7 @@ IFTAN IMPIO USHAN DTOTH ECROW NONTH ORNST HESET HINGS ANDDE EDSAR EDIAM ETRIC AL
         var _actual = await break_cipher(elem['input'], elem['VigenereBreakerType'], elem['alphabet'], elem['keyLengthMin'], elem['keyLengthMax']);
         expect(_actual.plaintext, elem['expectedOutput']);
         expect(_actual.key, elem['key']);
-        expect(_actual.errorCode, elem['expectedOutput']);
+        expect(_actual.errorCode, elem['errorCode']);
       });
     });
   });

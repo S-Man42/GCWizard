@@ -3,13 +3,14 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/trigrams/trigrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/vigenere_breaker.dart';
 import 'package:path/path.dart' as path;
 
- main() {
-   generate_trigram();
- }
+ //main() {
+//   generate_trigram();
+// }
 /// https://www.guballa.de/implementierung-eines-vigenere-solvers
 /// Link for trigram files (for other languages)
 /// http://practicalcryptography.com/cryptanalysis/letter-frequencies-various-languages/
@@ -83,7 +84,7 @@ VigenereBreakerResult _generateFile(File trigrams_fh, String className, String a
   sb.write("\n");
   sb.write("    alphabet = '" + alphabet + "';\n");
   sb.write("    replacementList = " + replacementListString + ";\n");;
-  sb.write("    trigramsCompressed = " + Trigrams.trigramsMapToString(Trigrams.compressTrigrams(trigrams)) + ";\n");
+  sb.write("    trigramsCompressed = " + Trigrams.trigramsMapToString(Quadgrams.compressQuadgrams(trigrams)) + ";\n");
   sb.write("  }\n");
   sb.write("}\n");
 
@@ -142,7 +143,7 @@ List<int> _fillTrigramList(Map<String, int> trigramsSource, String alphabet) {
     trigram_val = (trigram_val << 5) + _charIndex(key[1], alphabet);
     trigram_val = ((trigram_val & 0x3FF) << 5) + _charIndex(key[2], alphabet);
 
-      trigrams[trigram_val] += value;
+    trigrams[trigram_val] += value;
   });
   return trigrams;
 }

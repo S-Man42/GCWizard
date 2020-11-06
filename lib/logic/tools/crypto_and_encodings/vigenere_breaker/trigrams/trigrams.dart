@@ -1,5 +1,9 @@
 import 'dart:math';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/guballa.de/breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/vigenere_breaker.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/trigrams/german_trigrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/trigrams/english_trigrams.dart';
 
 class Trigrams {
   static const int maxAlphabetLength = 32;
@@ -19,57 +23,9 @@ class Trigrams {
     if (trigramsCompressed == null)
       return null;
 
-    _trigrams = decompressTrigrams(trigramsCompressed,
-        pow(Trigrams.maxAlphabetLength, 2) * alphabet.length);
+    _trigrams = Quadgrams.decompressQuadgrams(trigramsCompressed, pow(Trigrams.maxAlphabetLength, 2) * alphabet.length);
     trigramsCompressed = null;
     return _trigrams;
-  }
-
-  static Map<int, List<int>> compressTrigrams(List<int> trigrams) {
-    var map = Map<int, List<int>>();
-    var blockStart = -1;
-    const int zeroCount = 5;
-
-    for (int i = 0; i < trigrams.length; i++) {
-      if ((blockStart < 0) && (trigrams[i] != 0))
-        blockStart = i;
-
-      if (blockStart >= 0) {
-        // if five 0 => new list
-        if (((i + zeroCount < trigrams.length) &&
-            (trigrams[i + 1] == 0) | (trigrams[i + 1] == null) &&
-            (trigrams[i + 2] == 0) | (trigrams[i + 2] == null) &&
-            (trigrams[i + 3] == 0) | (trigrams[i + 3] == null) &&
-            (trigrams[i + 4] == 0) | (trigrams[i + 4] == null) &&
-            (trigrams[i + 5] == 0) | (trigrams[i + 5] == null)) ||
-            (i + zeroCount >= trigrams.length)) {
-          var quadgramList = List<int>();
-          quadgramList.addAll(trigrams.getRange(blockStart,
-              (i + zeroCount >= trigrams.length) ? trigrams.length : min(
-                  i + 1, trigrams.length)));
-          map.addAll({blockStart: quadgramList});
-          i += zeroCount;
-          blockStart = -1;
-        }
-      }
-    }
-    return map;
-  }
-
-  static List<int> decompressTrigrams(Map<int, List<int>> trigramsCompressed,
-      int size) {
-    if (trigramsCompressed == null)
-      return null;
-    var list = List<int>(size);
-
-    list.fillRange(0, list.length, 0);
-
-    trigramsCompressed.forEach((idx, values) {
-      for (int i = idx; i < idx + values.length; i++) {
-        list[i] = values[i - idx];
-      }
-    });
-    return list;
   }
 
   static String trigramsMapToString(Map<int, List<int>> trigramsCompressed) {
@@ -116,5 +72,60 @@ class Trigrams {
         .join();
 
     return out;
+  }
+}
+
+double calc_fitnessTrigrams(String txt, Trigrams trigrams) {
+  if (txt == null || txt == '')
+    return null;
+
+  var trigramsList = trigrams.trigrams();
+  if ((trigrams == null) || (trigrams.alphabet == null) || (trigramsList == null))
+    return null;
+
+  var fitness = 0;
+  var plain_bin = List<int>();
+  var trigram_val = 0;
+
+  iterateText(txt, trigrams.alphabet).forEach((char) {plain_bin.add(char);});
+
+  if (plain_bin.length < 3)
+    // More than two characters from the given alphabet are required
+    return null;
+
+  for (var idx = 0; idx < (plain_bin.length - 2); idx++) {
+    trigram_val = ((((plain_bin[idx] << 5) + plain_bin[idx+1]) & 0x3FF) << 5) + plain_bin[idx+2];
+
+    fitness += trigramsList[trigram_val];
+  };
+
+  return fitness / 10000 / (plain_bin.length - 2);
+}
+
+Trigrams getTrigrams(VigenereBreakerAlphabet alphabet){
+  switch (alphabet) {
+    case VigenereBreakerAlphabet.ENGLISH:
+      return EnglishTrigrams();
+      break;
+    case VigenereBreakerAlphabet.GERMAN:
+      return  GermanTrigrams();
+      break;
+    case VigenereBreakerAlphabet.SPANISH:
+    //return SpanishBigrams();
+//      break;
+//    case VigenereBreakerAlphabet.POLISH:
+//      return PolishBigrams();
+//      break;
+//    case VigenereBreakerAlphabet.GREEK:
+//      return GreekQuadgrams();
+//      break;
+    case VigenereBreakerAlphabet.FRENCH:
+    //return FrenchBigrams();
+//      break;
+//    case VigenereBreakerAlphabet.RUSSIAN:
+//      return RussianBigrams();
+//      break;
+    default:
+      return null;
   }
 }

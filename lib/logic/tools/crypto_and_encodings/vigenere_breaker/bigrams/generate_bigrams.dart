@@ -22,9 +22,9 @@ bool generate_bigram() {
     // Attention: a file is done during execution
 
     /// generate English-bigrams- file ( Source file from http://practicalcryptography.com/media/cryptanalysis/files/english_bigrams.txt)
-    //{'input' : 'english_bigrams.txt', 'fileOut' : 'english_bigrams.dart', 'className' : 'EnglishBigrams', 'replacementList' : null, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    {'input' : 'english_bigrams.txt', 'fileOut' : 'english_bigrams.dart', 'className' : 'EnglishBigrams', 'replacementList' : null, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
     /// generate German bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/german_bigrams.txt)
-    //{'input' : 'german_bigrams.txt', 'fileOut' : 'german_bigrams.dart', 'className' : 'GermanBigrams', 'replacementList' : {'ä': 'ae', 'ö': 'oe', 'ü': 'ue', 'ß': 'ss'}, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
+    {'input' : 'german_bigrams.txt', 'fileOut' : 'german_bigrams.dart', 'className' : 'GermanBigrams', 'replacementList' : {'ä': 'ae', 'ö': 'oe', 'ü': 'ue', 'ß': 'ss'}, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
     /// generate France bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/french_bigrams.txt)
     //{'input' : 'french_bigrams.txt', 'fileOut' : 'french_bigrams.dart', 'className' : 'FrenchBigrams', 'replacementList' : {'æ': 'ae', 'à': 'a' , 'â': 'a', 'ç': 'c', 'è': 'e', 'é': 'e', 'ë': 'e', 'ê': 'e', 'î': 'i', 'ï': 'i', 'ô': 'o', 'œ': 'oe', 'ü': 'ue', 'û': 'u', 'ù': 'u', 'ÿ': 'ye', 'û': 'u'}, 'alphabet' : "abcdefghijklmnopqrstuvwxyz", 'errorCode' : VigenereBreakerErrorCode.OK, 'expectedOutput' : ''},
     /// generate Polish bigrams file (Source file from http://practicalcryptography.com/media/cryptanalysis/files/polish_bigrams.txt)
@@ -53,12 +53,24 @@ Future<VigenereBreakerResult> generateBigrams(File source_fh, File bigrams_fh, S
   var list = _fillSourceList(source_fh);
   list = _replaceBigramEntrys(list, alphabet, replacementList);
   var bigrams = _fillBigramArray(list, alphabet);
+  int nbr_bigrams = 0;
+  int min_bigrams = 1000000;
+  int max_bigrams = 0;
+  for (var row = 0; row < bigrams.length; row++) {
+    for (var column = 0; column < bigrams[row].length; column++) {
+      if (bigrams[row][column] != 0) {
+        nbr_bigrams += bigrams[row][column];
+        min_bigrams = min(min_bigrams, bigrams[row][column]);
+        max_bigrams = max(max_bigrams, bigrams[row][column]);
+      }
+    };
+  };
   bigrams = _scaleBigrams(bigrams);
 
-  return _generateFile(bigrams_fh, className, alphabet, replacementList, bigrams);
+  return _generateFile(bigrams_fh, className, alphabet, replacementList, bigrams, nbr_bigrams, min_bigrams, max_bigrams);
 }
 
-VigenereBreakerResult _generateFile(File bigrams_fh, String className, String alphabet,  Map<String, String> replacementList, List<List<int>> bigrams) {
+VigenereBreakerResult _generateFile(File bigrams_fh, String className, String alphabet,  Map<String, String> replacementList, List<List<int>> bigrams, int nbr_bigrams, int min_bigrams, int max_bigrams) {
   var sb = new StringBuffer();
   var replacementListString = "null";
   var first = true;
@@ -82,7 +94,10 @@ VigenereBreakerResult _generateFile(File bigrams_fh, String className, String al
   sb.write("  " + className + "() {\n");
   sb.write("\n");
   sb.write("    alphabet = '" + alphabet + "';\n");
-  sb.write("    replacementList = " + replacementListString + ";\n");;
+  sb.write("    replacementList = " + replacementListString + ";\n");
+  sb.write("    nbr_bigrams = " + nbr_bigrams.toString() + ";\n");
+  sb.write("    min_bigrams = " + min_bigrams.toString() + ";\n");
+  sb.write("    max_bigrams = " + max_bigrams.toString() + ";\n");
   sb.write("    bigrams = " + bigramsListToString(bigrams, alphabet) + ";\n");
   sb.write("  }\n");
   sb.write("}\n");
@@ -186,6 +201,59 @@ List<List<int>> _fillBigramArray(Map<String, int> bigramsSource, String alphabet
       print("Error generate bigram: " + key+ ' (bigram not valid)');
 
   });
+  return bigrams;
+}
+
+List<List<int>> _scaleBigramsX(List<List<int>> bigrams) {
+  double quadgram_sum = 0;
+  double quadgram_min = 10000000;
+
+  List<List<double>> _bigrams = List<List<double>>();
+  for (var row = 0; row < bigrams.length; row++) {
+    _bigrams.add(List<double>(bigrams[row].length));
+    for (var column = 0; column < bigrams[row].length; column++) {
+      _bigrams[row][column]  = bigrams[row][column].toDouble();
+    }
+  }
+
+  for (var row = 0; row < _bigrams.length; row++) {
+    for (var column = 0; column < _bigrams[row].length; column++) {
+      if (_bigrams[row][column] != 0) {
+        quadgram_sum += _bigrams[row][column];
+        quadgram_min = min(quadgram_min, _bigrams[row][column]);
+      }
+    };
+  };
+  var offset = log(quadgram_min / 10 / quadgram_sum);
+
+  double prop = 0;
+  double new_val = 0;
+  double norm = 0;
+
+  for (var row = 0; row < _bigrams.length; row++) {
+    for (var column = 0; column < _bigrams[row].length; column++) {
+      if (_bigrams[row][column] != 0) {
+        prop = _bigrams[row][column] / quadgram_sum; // in Prozent
+        new_val = log(prop) - offset;
+        _bigrams[row][column] = new_val;
+        norm += prop * new_val;
+      }
+    };
+  };
+
+  for (var row = 0; row < _bigrams.length; row++) {
+    for (var column = 0; column < _bigrams[row].length; column++) {
+      if (_bigrams[row][column] != 0)
+        _bigrams[row][column] = (_bigrams[row][column] / norm * 1000);
+    };
+  };
+
+  for (var row = 0; row < bigrams.length; row++) {
+    for (var column = 0; column < bigrams[row].length; column++) {
+      bigrams[row][column]  = _bigrams[row][column].floor();
+    }
+  }
+
   return bigrams;
 }
 
