@@ -36,8 +36,10 @@ String encodeCCITT1(String input) {
     if (isLetterMode) {
       var code = AZToCCITT1[character];
       if (code != null) {
-        if (cachedSpace)
+        if (cachedSpace)  {
           out.add(_LETTERS_FOLLOW);
+          cachedSpace = false;
+        }
         return out.add(code);
       }
 
@@ -51,8 +53,10 @@ String encodeCCITT1(String input) {
     } else {
       var code = NumbersToCCITT1[character];
       if (code != null) {
-        if (cachedSpace)
+        if (cachedSpace) {
           out.add(_NUMBERS_FOLLOW);
+          cachedSpace = false;
+        }
         return out.add(code);
       }
 

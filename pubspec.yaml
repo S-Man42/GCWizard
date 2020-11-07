@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 1.2.0+63
+version: 1.2.0+69
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -55,6 +55,7 @@ flutter:
     - assets/symbol_tables/barbier/
     - assets/symbol_tables/barcode39/
     - assets/symbol_tables/baudot/
+    - assets/symbol_tables/windforce_beaufort/
     - assets/symbol_tables/birds_on_a_wire/
     - assets/symbol_tables/blox/
     - assets/symbol_tables/brahmi_numerals/
@@ -81,7 +82,6 @@ flutter:
     - assets/symbol_tables/egyptian_numerals/
     - assets/symbol_tables/elia/
     - assets/symbol_tables/enochian/
-    - assets/symbol_tables/eurythmy/
     - assets/symbol_tables/fakoo/
     - assets/symbol_tables/finger/
     - assets/symbol_tables/flags/
@@ -173,6 +173,8 @@ flutter:
     - assets/symbol_tables/visitor/
     - assets/symbol_tables/wakandan/
     - assets/symbol_tables/webdings/
+    - assets/symbol_tables/windforce_beaufort/
+    - assets/symbol_tables/windforce_knots/
     - assets/symbol_tables/window/
     - assets/symbol_tables/wingdings/
     - assets/symbol_tables/wingdings2/
