@@ -369,6 +369,17 @@
   "chao_alphabet_az" : "A-Z",
   "chao_alphabet_za" : "Z-A",
 
+  "chef_title" : "Chef",
+  "chef_description" : "Esoteric Programming language looking like a recipe",
+  "chef_interpret" : "Interpreter",
+  "chef_generate" : "Generator",
+  "chef_code" : "Code",
+  "chef_input" : "Input",
+  "chef_recipetitle" : "Title",
+  "chef_remark" : "Remark",
+  "chef_time" : "Cooking time",
+  "chef_temperature" : "Oven Temperature",
+
   "chickenlanguage_title" : "Chicken Language",
   "chickenlanguage_description" : "Game Language, Secret Language",
   "chickenlanguage_example" : "code → cohodefodehedefe",

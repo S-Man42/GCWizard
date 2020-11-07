@@ -49,6 +49,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chef.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
@@ -178,6 +179,7 @@ class _MainViewState extends State<MainView> {
           className(CCITT1Selection()),
           className(CCITT2Selection()),
           className(Chao()),
+          className(Chef()),
           className(ChickenLanguage()),
           className(CoordsSelection()),
           className(ColorPicker()),
