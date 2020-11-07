@@ -1200,7 +1200,7 @@
   "hexadecimal_example" : "2A → 42",
 
   "homophone_title" : "Homophone",
-  "homophone_description" : "Mono-alphabetical encryption methodm based on letter frequencies",
+  "homophone_description" : "Mono-alphabetical encryption method based on letter frequencies",
   "homophone_example" : "ABC → 07 09 12",
   "homophone_alphabetGreek1" : "Greek, Version 1",
   "homophone_alphabetGreek1_description" : "23 Letters",
