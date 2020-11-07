@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/tomtom.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -176,13 +177,7 @@ class TomTomState extends State<TomTom> {
           iconData: Icons.backspace,
           onPressed: () {
             setState(() {
-              var cursorPosition = max<int>(_inputDecryptController.selection.end, 0);
-              if (cursorPosition == 0)
-                return;
-
-              _currentInputDecrypt = _currentInputDecrypt.substring(0, cursorPosition - 1) + _currentInputDecrypt.substring(cursorPosition);
-              _inputDecryptController.text = _currentInputDecrypt;
-              _inputDecryptController.selection = TextSelection.collapsed(offset: cursorPosition - 1);
+              _currentInputDecrypt = textControllerDoBackSpace(_currentInputDecrypt, _inputDecryptController);
             });
           },
         ),
@@ -191,11 +186,7 @@ class TomTomState extends State<TomTom> {
   }
 
   _addCharacter(String input) {
-    var cursorPosition = max<int>(_inputDecryptController.selection.end, 0);
-
-    _currentInputDecrypt = _currentInputDecrypt.substring(0, cursorPosition) + input + _currentInputDecrypt.substring(cursorPosition);
-    _inputDecryptController.text = _currentInputDecrypt;
-    _inputDecryptController.selection = TextSelection.collapsed(offset: cursorPosition + input.length);
+    _currentInputDecrypt = textControllerInsertText(input, _currentInputDecrypt, _inputDecryptController);
   }
 
   _buildOutput() {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 
-enum IconButtonSize {NORMAL, SMALL}
+enum IconButtonSize {NORMAL, SMALL, TINY}
 
 class GCWIconButton extends StatelessWidget {
   final Function onPressed;
@@ -14,21 +15,40 @@ class GCWIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isNormalSize = this.size == IconButtonSize.NORMAL;
+    var containerWidth;
+    var buttonHeight;
+    var iconSize;
+    switch (this.size) {
+      case IconButtonSize.NORMAL:
+        containerWidth = 40.0;
+        buttonHeight = 38.0;
+        iconSize = null;
+        break;
+      case IconButtonSize.SMALL:
+        containerWidth = 32.0;
+        buttonHeight = 28.0;
+        iconSize = 20.0;
+        break;
+      case IconButtonSize.TINY:
+        containerWidth = 21.0;
+        buttonHeight = 18.0;
+        iconSize = 17.0;
+        break;
+    }
 
     return Container(
-      width: isNormalSize ? 40 : 35,
+      width: containerWidth,
       child: ButtonTheme(
-        height: isNormalSize ? 38.0 : 30,
+        height: buttonHeight,
         child: OutlineButton(
           padding: EdgeInsets.zero,
           child: Icon(
             this.iconData,
-            size: isNormalSize ? null : 20,
-            color: this.color ?? Colors.white
+            size: iconSize,
+            color: this.color ?? themeColors().mainFont()
           ) ?? this.image,
           onPressed: this.onPressed,
-          borderSide: BorderSide(color: Theme.of(context).accentColor),
+          borderSide: BorderSide(color: themeColors().accent()),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(roundedBorderRadius),
           )
@@ -36,7 +56,7 @@ class GCWIconButton extends StatelessWidget {
       ),
       padding: EdgeInsets.only(
         left: 2,
-        right: 2,
+        right: 2
       ),
     );
   }

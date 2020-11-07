@@ -17,6 +17,7 @@ class GCWDoubleSpinner extends StatefulWidget {
   final numberDecimalDigits;
   final SpinnerLayout layout;
   final focusNode;
+  final suppressOverflow;
 
   GCWDoubleSpinner({
     Key key,
@@ -26,8 +27,9 @@ class GCWDoubleSpinner extends StatefulWidget {
     this.min,
     this.max,
     this.numberDecimalDigits: 2,
-    this.layout: SpinnerLayout.horizontal,
-    this.focusNode
+    this.layout: SpinnerLayout.HORIZONTAL,
+    this.focusNode,
+    this.suppressOverflow: false
   }) : super(key: key);
 
   @override
@@ -88,7 +90,7 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
         }
 
         _currentValue = widget.min == null ? newValue : max(widget.min, newValue);
-      } else if (_currentValue == widget.min && widget.max != null) {
+      } else if (!widget.suppressOverflow && _currentValue == widget.min && widget.max != null) {
         _currentValue = widget.max;
       }
 
@@ -107,7 +109,7 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
         }
 
         _currentValue = widget.max == null ? newValue : min(widget.max, newValue);
-      } else if (_currentValue == widget.max && widget.min != null) {
+      } else if (!widget.suppressOverflow && _currentValue == widget.max && widget.min != null) {
         _currentValue = widget.min;
       }
 
@@ -145,7 +147,7 @@ class GCWDoubleSpinnerState extends State<GCWDoubleSpinner> {
   }
 
   Widget _buildSpinner() {
-    if (widget.layout == SpinnerLayout.horizontal) {
+    if (widget.layout == SpinnerLayout.HORIZONTAL) {
       return Row(
         children: <Widget>[
           _buildTitle(),

@@ -117,7 +117,7 @@ class RSAState extends State<RSA> {
         )
       ];
 
-      outputChildren.addAll(columnedMultiLineOutput([
+      outputChildren.addAll(columnedMultiLineOutput(context, [
         [i18n(context, 'rsa_n'), N(p, q)],
         [i18n(context, 'rsa_phi'), phi(p, q)],
         d != null ? [i18n(context, 'rsa_d'), d] : null

@@ -12,7 +12,7 @@ class IntegerFactorization extends StatefulWidget {
 }
 
 class IntegerFactorizationState extends State<IntegerFactorization> {
-  List<BigInt> _currentFactors = [BigInt.one];
+  var _currentNumber = 1;
 
   @override
   void initState() {
@@ -24,11 +24,11 @@ class IntegerFactorizationState extends State<IntegerFactorization> {
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
-          value: 1,
+          value: _currentNumber,
           min: 1,
           onChanged: (value) {
             setState(() {
-              _currentFactors = integerFactorization(value);
+              _currentNumber = value;
             });
           },
         ),
@@ -39,7 +39,7 @@ class IntegerFactorizationState extends State<IntegerFactorization> {
 
   Widget _buildOutput() {
     return GCWMultipleOutput(
-      children: _currentFactors
+      children: integerFactorization(_currentNumber)
     );
   }
 }

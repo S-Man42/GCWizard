@@ -56,7 +56,7 @@ class SkytaleState extends State<Skytale> {
         GCWIntegerSpinner(
           title: i18n(context, "skytale_perimeter"),
           min: 1,
-          suppressOverflow: true,
+          overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
           value: _currentPerimeter,
           onChanged: (value) {
             setState(() {
@@ -68,7 +68,7 @@ class SkytaleState extends State<Skytale> {
           title: i18n(context, "skytale_countcolumns"),
           controller: _columnController,
           min: _currentCountColumnsMin,
-          suppressOverflow: true,
+          overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
           value: _currentCountColumns,
           onChanged: (value) {
             setState(() {
@@ -80,7 +80,7 @@ class SkytaleState extends State<Skytale> {
         GCWIntegerSpinner(
           title: i18n(context, "skytale_stripwidth"),
           min: 1,
-          suppressOverflow: true,
+          overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
           value: _currentStripWidth,
           onChanged: (value) {
             setState(() {

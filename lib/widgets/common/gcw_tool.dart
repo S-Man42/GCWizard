@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
@@ -25,6 +25,8 @@ class GCWToolWidget extends StatefulWidget {
   var description;
   var example;
 
+  Widget titleTrailing;
+
   GCWToolWidget({
     Key key,
     this.tool,
@@ -34,15 +36,14 @@ class GCWToolWidget extends StatefulWidget {
     this.autoScroll: true,
     this.iconPath,
     this.searchStrings: '',
+    this.titleTrailing
   }) : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
     this._isFavorite = Prefs.getStringList('favorites').contains('$_id');
 
     if (iconPath != null) {
-      this.icon = Container(
-        child: Image.asset(iconPath, width: DEFAULT_LISTITEM_SIZE),
-        padding: EdgeInsets.all(2),
-        color: ThemeColors.symbolTableIconBackground,
+      this.icon = GCWSymbolContainer(
+        symbol: Image.asset(iconPath, width: DEFAULT_LISTITEM_SIZE),
       );
     }
   }
@@ -76,7 +77,7 @@ class _GCWToolWidgetState extends State<GCWToolWidget> {
       appBar: AppBar(
         title: Text(widget.toolName),
         actions: <Widget>[
-          _buildHelpButton()
+          widget.titleTrailing ?? _buildHelpButton()
         ],
       ),
       body: _buildBody()
@@ -111,10 +112,7 @@ class _GCWToolWidgetState extends State<GCWToolWidget> {
     return SingleChildScrollView(
       child: Padding(
         child: widget.tool,
-        padding: EdgeInsets.only(
-          left: 10,
-          right: 10
-        ),
+        padding: EdgeInsets.all(10)
       )
     );
   }

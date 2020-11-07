@@ -1,32 +1,34 @@
 name: gc_wizard
 description: GC Wizard
-version: 1.1.0+55
+version: 1.2.0+69
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  base32: ^1.1.2
+  diacritic: ^0.1.1
   flutter:
     sdk: flutter
-  path: any
-  path_provider: any
-  flutter_map: ^0.10.1
-  flutter_map_marker_popup: ^0.1.4
   flutter_localizations:
     sdk: flutter
-  provider: any
-  intl: any
-  prefs: any
-  diacritic: ^0.1.1
-  base32: any
+  flutter_map: ^0.10.1+1
+  flutter_map_marker_popup: ^0.1.4
+  fluttertoast: ^7.1.1
+  intl: ^0.16.1
+  location: ^3.0.2
   mask_text_input_formatter: ^1.1.0
-  url_launcher: ^5.5.0
-  package_info: ^0.4.0+16
-  math_expressions: ^2.0.0
+  math_expressions: ^2.0.1
+  package_info: ^0.4.3
+  path: ^1.7.0
+  path_provider: ^1.6.18
+  permission_handler: ^5.0.1+1
   pointycastle: ^1.0.2
-  fluttertoast: ^7.0.4
+  prefs: ^3.2.1
+  provider: ^4.3.2+2
   qr_flutter: ^3.2.0
   touchable: ^0.2.0
+  url_launcher: ^5.5.0
 
 dev_dependencies:
   flutter_test:
@@ -39,6 +41,7 @@ flutter:
     - assets/i18n/
     - assets/logo/
     - assets/coordinates/
+    - assets/quadgrams/
     - assets/tokens/
     - assets/symbol_tables/
     - assets/symbol_tables/alchemy/
@@ -50,24 +53,30 @@ flutter:
     - assets/symbol_tables/aurebesh/
     - assets/symbol_tables/babylonian_numerals/
     - assets/symbol_tables/barbier/
+    - assets/symbol_tables/barcode39/
     - assets/symbol_tables/baudot/
+    - assets/symbol_tables/windforce_beaufort/
     - assets/symbol_tables/birds_on_a_wire/
     - assets/symbol_tables/blox/
     - assets/symbol_tables/brahmi_numerals/
     - assets/symbol_tables/braille/
-    - assets/symbol_tables/chappe/
+    - assets/symbol_tables/chappe_v1/
     - assets/symbol_tables/chappe_v2/
+    - assets/symbol_tables/chappe_v3/
     - assets/symbol_tables/cherokee/
     - assets/symbol_tables/chinese_numerals/
+    - assets/symbol_tables/cistercian/
     - assets/symbol_tables/color_code/
     - assets/symbol_tables/color_honey/
     - assets/symbol_tables/color_tokki/
+    - assets/symbol_tables/cyrillic/
     - assets/symbol_tables/daedric/
     - assets/symbol_tables/dagger/
     - assets/symbol_tables/dancing_men/
     - assets/symbol_tables/deafblind/
     - assets/symbol_tables/devanagari_numerals/
     - assets/symbol_tables/doremi/
+    - assets/symbol_tables/dragon_language/
     - assets/symbol_tables/dragon_runes/
     - assets/symbol_tables/eastern_arabic_indian_numerals/
     - assets/symbol_tables/egyptian_numerals/
@@ -88,6 +97,7 @@ flutter:
     - assets/symbol_tables/glagolitic/
     - assets/symbol_tables/gnommish/
     - assets/symbol_tables/greek_numerals/
+    - assets/symbol_tables/hazard/
     - assets/symbol_tables/hebrew/
     - assets/symbol_tables/hebrew_v2/
     - assets/symbol_tables/hexahue/
@@ -95,13 +105,18 @@ flutter:
     - assets/symbol_tables/hobbit_runes/
     - assets/symbol_tables/hvd/
     - assets/symbol_tables/hylian_skyward_sword/
+    - assets/symbol_tables/hylian_twilight_princess_gcn/
+    - assets/symbol_tables/hylian_twilight_princess_wii/
     - assets/symbol_tables/hylian_wind_waker/
     - assets/symbol_tables/hymmnos/
+    - assets/symbol_tables/iching/
     - assets/symbol_tables/illuminati_v1/
     - assets/symbol_tables/illuminati_v2/
     - assets/symbol_tables/intergalactic/
+    - assets/symbol_tables/iokharic/
     - assets/symbol_tables/japanese_numerals/
     - assets/symbol_tables/klingon/
+    - assets/symbol_tables/klingon_klinzhai/
     - assets/symbol_tables/krempel/
     - assets/symbol_tables/krypton/
     - assets/symbol_tables/lorm/
@@ -135,20 +150,35 @@ flutter:
     - assets/symbol_tables/sarati/
     - assets/symbol_tables/semaphore/
     - assets/symbol_tables/sign/
+    - assets/symbol_tables/skullz/
     - assets/symbol_tables/slash_and_pipe/
     - assets/symbol_tables/solmisation/
     - assets/symbol_tables/space_invaders/
     - assets/symbol_tables/spintype/
+    - assets/symbol_tables/suetterlin/
     - assets/symbol_tables/sunuz/
     - assets/symbol_tables/tamil_numerals/
     - assets/symbol_tables/templers/
     - assets/symbol_tables/tenctonese/
+    - assets/symbol_tables/tengwar_beleriand/
+    - assets/symbol_tables/tengwar_classic/
+    - assets/symbol_tables/tengwar_general/
     - assets/symbol_tables/terzi/
     - assets/symbol_tables/theban/
+    - assets/symbol_tables/tines/
     - assets/symbol_tables/tomtom/
+    - assets/symbol_tables/trafficsigns_germany/
+    - assets/symbol_tables/ulog/
     - assets/symbol_tables/utopian/
     - assets/symbol_tables/visitor/
     - assets/symbol_tables/wakandan/
+    - assets/symbol_tables/webdings/
+    - assets/symbol_tables/windforce_beaufort/
+    - assets/symbol_tables/windforce_knots/
+    - assets/symbol_tables/window/
+    - assets/symbol_tables/wingdings/
+    - assets/symbol_tables/wingdings2/
+    - assets/symbol_tables/wingdings3/
     - assets/symbol_tables/yan_koryani/
     - assets/symbol_tables/zentradi/
 

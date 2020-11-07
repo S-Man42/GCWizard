@@ -228,7 +228,7 @@ final Alphabet alphabetSpanish2 = Alphabet(
 );
 
 final Alphabet alphabetPolish1 = Alphabet(
-  key: 'alphabet_name_polish1',
+  key: 'common_language_polish',
   type: AlphabetType.STANDARD,
   alphabet: {
     'A' : '1',
@@ -252,7 +252,7 @@ final Alphabet alphabetPolish1 = Alphabet(
 );
 
 final Alphabet alphabetGreek1 = Alphabet(
-  key: 'alphabet_name_greek1',
+  key: 'common_language_greek',
   type: AlphabetType.STANDARD,
   alphabet: {
     String.fromCharCode(913) : '1', // Α
@@ -283,7 +283,7 @@ final Alphabet alphabetGreek1 = Alphabet(
 );
 
 final Alphabet alphabetRussian1 = Alphabet(
-  key: 'alphabet_name_russian1',
+  key: 'common_language_russian',
   type: AlphabetType.STANDARD,
   alphabet: {
     String.fromCharCode(1040) : '1', // А

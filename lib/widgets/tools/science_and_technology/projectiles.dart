@@ -61,9 +61,9 @@ class ProjectilesState extends State<Projectiles> {
             });
           },
           items: _calculateProjectilesModeItems.entries.map((mode) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: mode.key,
-              child: Text(i18n(context, mode.value)),
+              child: i18n(context, mode.value)
             );
           }).toList(),
         ),

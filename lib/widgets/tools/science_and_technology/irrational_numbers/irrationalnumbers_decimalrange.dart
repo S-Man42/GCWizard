@@ -34,7 +34,7 @@ class IrrationalNumbersDecimalRangeState extends State<IrrationalNumbersDecimalR
           text: i18n(context, 'irrationalnumbers_decimalrange_start'),
         ),
         GCWIntegerSpinner(
-          value: 1,
+          value: _currentStart,
           min: 1,
           max: widget.irrationalNumber.decimalPart.length,
           onChanged: (value) {
@@ -47,7 +47,7 @@ class IrrationalNumbersDecimalRangeState extends State<IrrationalNumbersDecimalR
           text: i18n(context, 'irrationalnumbers_decimalrange_length'),
         ),
         GCWIntegerSpinner(
-          value: 1,
+          value: _currentLength,
           min: -widget.irrationalNumber.decimalPart.length,
           max: widget.irrationalNumber.decimalPart.length,
           onChanged: (value) {

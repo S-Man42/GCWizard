@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
 import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart' as var_coords_provider;
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart' as var_coords_model;
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -38,6 +39,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   var _currentEditedFormula = '';
   var _currentEditId;
 
+  ThemeColors _themeColors;
+
   @override
   void initState() {
     super.initState();
@@ -57,6 +60,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
   @override
   Widget build(BuildContext context) {
+    _themeColors = themeColors();
+
     var formulaTool = GCWToolWidget(
       tool: FormulaSolverFormulaValues(group: widget.group),
       toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
@@ -176,8 +181,20 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     });
 
     var odd = true;
-    var rows = widget.group.formulas.map((formula) {
-      var calculated = formulaParser.parse(formula.formula, values);
+
+    var formulaResults = <String, String>{};
+
+    var rows = widget.group.formulas.asMap().map((index, formula) {
+      //TODO: In fact, this is for the recursive formulas... An therefore, this is part of
+      // the logic. It needs to be moved from the frontend part
+      var formulaToParse = substitution(formula.formula, formulaResults, caseSensitive: false);
+      var calculated = formulaParser.parse(formulaToParse, values);
+
+      var formulaResult = calculated['result'];
+      if (calculated['state'] != STATE_OK)
+        formulaResult = '($formulaResult)';
+
+      formulaResults.putIfAbsent('{f${index + 1}}', () => formulaResult);
 
       Widget output;
 
@@ -201,25 +218,36 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                   )
                 : Column(
                     children: <Widget>[
-                      GCWText (
-                        text: formula.formula
+                      Row(
+                        children: [
+                          Container(
+                            child: GCWText(
+                              text: (index + 1).toString() + '.'
+                            ),
+                            padding: EdgeInsets.only(right: 4 * DEFAULT_MARGIN),
+                          ),
+                          Flexible(
+                            child: GCWText (
+                              text: formula.formula
+                            ),
+                          )
+                        ],
                       ),
                       Row (
                         children: <Widget>[
                           calculated['state'] == STATE_OK
                             ? Icon(
                                 Icons.check,
-                                color: ThemeColors.gray,
+                                color: _themeColors.mainFont(),
                               )
                             : Icon(
                                 Icons.priority_high,
-                                color: ThemeColors.accent,
+                                color: _themeColors.accent(),
                               ),
                           Flexible(
-                            child:
-                              GCWText (
-                                text: calculated['result']
-                              ),
+                            child: GCWText (
+                              text: calculated['result']
+                            ),
                           )
                         ],
                       )
@@ -250,14 +278,14 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                   borderRadius: BorderRadius.circular(roundedBorderRadius),
                   side:  BorderSide(
                     width: 1,
-                    color: ThemeColors.accent,
+                    color: _themeColors.accent(),
                   ),
                 ),
               ),
               child: PopupMenuButton(
                 offset: Offset(0, DEFAULT_POPUPBUTTON_SIZE),
-                icon: Icon(Icons.settings, color: Colors.white),
-                color: ThemeColors.accent,
+                icon: Icon(Icons.settings, color: _themeColors.mainFont()),
+                color: _themeColors.accent(),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(roundedBorderRadius),
                 ),
@@ -339,7 +367,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
       if (odd) {
         output = Container(
-          color: ThemeColors.oddRows,
+          color: _themeColors.outputListOddRows(),
           child: row
         );
       } else {
@@ -349,8 +377,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
       }
       odd = !odd;
 
-      return output;
-    }).toList();
+      return MapEntry(index, output);
+    }).values.toList();
 
     if (rows.length > 0) {
       rows.insert(0,

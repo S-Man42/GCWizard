@@ -6,7 +6,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlyletters_textinputformatter.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
 class RailFence extends StatefulWidget {
   @override
@@ -20,6 +20,11 @@ class RailFenceState extends State<RailFence> {
   var _currentOffset = 0;
 
   var _currentMode = GCWSwitchPosition.left;
+
+  var _maskInputFormatter = WrapperForMaskTextInputFormatter(
+    mask: '#' * 10000,
+    filter: {"#": RegExp(r'[A-Za-z]')}
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +57,7 @@ class RailFenceState extends State<RailFence> {
             Expanded(
               child: GCWTextField(
                 maxLength: _currentKey,
-                inputFormatters: [TextOnlyLettersInputFormatter()],
+                inputFormatters: [_maskInputFormatter],
                 onChanged: (text) {
                   setState(() {
                     _currentPassword = text;

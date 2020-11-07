@@ -10,7 +10,7 @@ class PrimeIndex extends StatefulWidget {
 }
 
 class PrimeIndexState extends State<PrimeIndex> {
-  String _output = '';
+  var _currentNumber = 1;
 
   @override
   void initState() {
@@ -22,20 +22,24 @@ class PrimeIndexState extends State<PrimeIndex> {
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
-          value: 1,
+          value: _currentNumber,
           min: 1,
           max: 1000003,
           onChanged: (value) {
             setState(() {
-              var index = getPrimeIndex(value);
-              _output = index >= 1 ? index.toString() : i18n(context, 'primes_noprime');
+              _currentNumber = value;
             });
           },
         ),
         GCWDefaultOutput(
-          child: _output
+          child: _buildOutput()
         )
       ],
     );
+  }
+
+  _buildOutput() {
+    var index = getPrimeIndex(_currentNumber);
+    return index >= 1 ? index.toString() : i18n(context, 'primes_noprime');
   }
 }

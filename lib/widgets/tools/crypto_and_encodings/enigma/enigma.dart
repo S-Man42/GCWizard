@@ -9,7 +9,6 @@ import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/gcw_enigma_rotor_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlyspaceandletters_textinputformatter.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
 class Enigma extends StatefulWidget {
@@ -65,7 +64,6 @@ class EnigmaState extends State<Enigma> {
         ),
         GCWTextField(
           controller: _inputController,
-          inputFormatters: [TextOnlySpaceAndLettersInputFormatter()],
           onChanged: (text) {
             setState(() {
               _isTextChange = true;

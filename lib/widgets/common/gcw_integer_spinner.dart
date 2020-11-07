@@ -1,12 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
+enum SpinnerOverflowType {
+  SUPPRESS_OVERFLOW, // stop spinning at min and max
+  ALLOW_OVERFLOW, // overflow at min and max: when x < min -> max; when x > max -> min
+  OVERFLOW_MIN, // overflow only on min: when x < min -> max; when x > max: ok
+  OVERFLOW_MAX // overflow only on max: when x < min: ok; when x > max -> min
+}
 
 class GCWIntegerSpinner extends StatefulWidget {
   final Function onChanged;
@@ -17,19 +22,19 @@ class GCWIntegerSpinner extends StatefulWidget {
   final controller;
   final SpinnerLayout layout;
   final focusNode;
-  final suppressOverflow;
+  final SpinnerOverflowType overflow;
 
   const GCWIntegerSpinner({
     Key key,
     this.onChanged,
     this.title,
-    this.value: 0,
+    this.value,
     this.min: -9007199254740991,
     this.max: 9007199254740992,
     this.controller,
-    this.layout: SpinnerLayout.horizontal,
+    this.layout: SpinnerLayout.HORIZONTAL,
     this.focusNode,
-    this.suppressOverflow: false // TODO: Automatically true if this.min == null || this.max == null
+    this.overflow: SpinnerOverflowType.ALLOW_OVERFLOW // TODO: Automatically true if this.min == null || this.max == null
   }) : super(key: key);
 
   @override
@@ -37,8 +42,8 @@ class GCWIntegerSpinner extends StatefulWidget {
 }
 
 class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
-  var _controller;
-  var _currentValue = 1;
+  TextEditingController _controller;
+  var _currentValue = 0;
 
   @override
   void initState() {
@@ -63,14 +68,19 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.value != null)
+      _currentValue = widget.value;
+
     return _buildSpinner();
   }
 
   _decreaseValue() {
     setState(() {
-      if (widget.min == null || _currentValue > widget.min) {
+      if (widget.min == null || _currentValue > widget.min || widget.overflow == SpinnerOverflowType.OVERFLOW_MAX) {
         _currentValue--;
-      } else if (!widget.suppressOverflow && _currentValue == widget.min && widget.max != null) {
+      } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MIN].contains(widget.overflow)
+          && _currentValue == widget.min && widget.max != null
+      ) {
         _currentValue = widget.max;
       }
 
@@ -80,9 +90,11 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _increaseValue() {
     setState(() {
-      if (widget.max == null || _currentValue < widget.max) {
+      if (widget.max == null || _currentValue < widget.max || widget.overflow == SpinnerOverflowType.OVERFLOW_MIN) {
         _currentValue++;
-      } else if (!widget.suppressOverflow && _currentValue == widget.max && widget.min != null) {
+      } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MAX].contains(widget.overflow)
+          && _currentValue == widget.max && widget.min != null
+      ) {
         _currentValue = widget.min;
       }
 
@@ -103,8 +115,8 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   Widget _buildTextField() {
     return GCWIntegerTextField(
       focusNode: widget.focusNode,
-      min: widget.min,
-      max: widget.max,
+      min: widget.overflow == SpinnerOverflowType.OVERFLOW_MAX ? null : widget.min,
+      max: widget.overflow == SpinnerOverflowType.OVERFLOW_MIN ? null : widget.max,
       controller: _controller,
       onChanged: (ret) {
         setState(() {
@@ -116,7 +128,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   }
 
   Widget _buildSpinner() {
-    if (widget.layout == SpinnerLayout.horizontal) {
+    if (widget.layout == SpinnerLayout.HORIZONTAL) {
       return Row(
         children: <Widget>[
           _buildTitle(),
@@ -177,8 +189,9 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   }
 
   _setCurrentValueAndEmitOnChange({setTextFieldText: false}) {
-    if (setTextFieldText)
+    if (setTextFieldText) {
       _controller.text = _currentValue.toString();
+    }
 
     widget.onChanged(_currentValue);
   }

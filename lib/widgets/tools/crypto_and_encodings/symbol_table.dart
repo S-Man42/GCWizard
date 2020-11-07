@@ -1,18 +1,28 @@
-import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
+import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
 
 final SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
@@ -33,7 +43,7 @@ class SymbolTableState extends State<SymbolTable> {
 
   String _output = '';
 
-  var _images = SplayTreeMap<String, Widget>();
+  var _images = <Map<String, String>>[]; //SplayTreeMap<String, Widget>();
   var _currentMode = GCWSwitchPosition.right;
 
   var _currentShowOverlayedSymbols = true;
@@ -41,8 +51,11 @@ class SymbolTableState extends State<SymbolTable> {
   var _currentInput = '';
   var _inputController;
 
-  var _alphabetMap = <String, Image>{};
+  var _alphabetMap = <String, String>{};
   var _maxSymbolTextLength = 0;
+
+  var _currentIgnoreUnknown = false;
+  var _encryptionHasImages = false;
 
   @override
   void initState() {
@@ -73,55 +86,86 @@ class SymbolTableState extends State<SymbolTable> {
       .toList();
 
     setState(() {
-      _images = SplayTreeMap.fromIterable(
-        imagePaths,
-        key: (filePath) {
-          var imageKey = filePath.split(pathKey)[1].split(imageSuffixes)[0];
+      _images = imagePaths
+        .map((filePath) {
+            var imageKey = filePath.split(pathKey)[1].split(imageSuffixes)[0];
 
-          var ascii = int.tryParse(imageKey.split('_')[0]);
-          return ascii == null ? _getSpecialText(imageKey) : String.fromCharCode(ascii);
-        },
-        value: (filePath) {
-          var imagePath = imageSuffixes.hasMatch(filePath) ? filePath : null;
-          return Image.asset(imagePath);
-        },
-        // first order all Numerals (numeral order),
-        // second alphabetical order all other characters/groups,
-        // finally special commands like "START, CORRECTION, ERROR, LETTER FOLLOWS"
-        compare: (a, b) {
-          var intA = int.tryParse(a);
-          var intB = int.tryParse(b);
+            var ascii = int.tryParse(imageKey.split('_')[0]);
+            String key = ascii == null ? _getSpecialText(imageKey) : String.fromCharCode(ascii);
 
-          if (intA == null) {
-            if (intB == null) {
-              if (a.startsWith(SPECIAL_MARKER)) {
-                if (b.startsWith(SPECIAL_MARKER)) {
-                  return a.compareTo(b);
-                } else {
-                  return 1;
-                }
+            var imagePath = imageSuffixes.hasMatch(filePath) ? filePath : null;
+            var value = imagePath;
+
+            return {key : value};
+          })
+        .where((element) => element.values.first != null)
+        .toList();
+
+      _images.sort((a, b) {
+        var keyA = a.keys.first;
+        var keyB = b.keys.first;
+
+        var intA = int.tryParse(keyA);
+        var intB = int.tryParse(keyB);
+
+        if (intA == null) {
+          if (intB == null) {
+            if (keyA.startsWith(SPECIAL_MARKER)) {
+              if (keyB.startsWith(SPECIAL_MARKER)) {
+                return keyA.compareTo(keyB);
               } else {
-                if (b.startsWith(SPECIAL_MARKER)) {
-                  return -1;
-                } else {
-                  return a.compareTo(b);
-                }
+                return 1;
               }
             } else {
-              return 1;
+              if (keyB.startsWith(SPECIAL_MARKER)) {
+                return -1;
+              } else {
+                return keyA.compareTo(keyB);
+              }
             }
           } else {
-            if (intB == null) {
-              return -1;
-            } else {
-              return intA.compareTo(intB);
-            }
+            return 1;
+          }
+        } else {
+          if (intB == null) {
+            return -1;
+          } else {
+            return intA.compareTo(intB);
           }
         }
-      );
-      //Remove non-image files
-      _images.removeWhere((key, value) => value == null);
+      });
     });
+  }
+
+  _buildZoomButtons(mediaQueryData, countColumns) {
+    return Row(
+      children: [
+        GCWIconButton(
+          iconData: Icons.zoom_in,
+          onPressed: () {
+            setState(() {
+              int newCountColumn = max(countColumns - 1, 1);
+
+              mediaQueryData.orientation == Orientation.portrait
+                ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+            });
+          },
+        ),
+        GCWIconButton(
+          iconData: Icons.zoom_out,
+          onPressed: () {
+            setState(() {
+              int newCountColumn = countColumns + 1;
+
+              mediaQueryData.orientation == Orientation.portrait
+                ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+            });
+          },
+        )
+      ],
+    );
   }
 
   @override
@@ -162,9 +206,59 @@ class SymbolTableState extends State<SymbolTable> {
                     });
                   },
                 ),
-                GCWDefaultOutput(
-                  child: _buildEncryptionOutput(countColumns, widget.isCaseSensitive)
+                GCWOnOffSwitch(
+                  value: _currentIgnoreUnknown,
+                  title: i18n(context, 'symboltables_ignoreunknown'),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentIgnoreUnknown = value;
+                    });
+                  },
                 ),
+                GCWTextDivider(
+                  text: i18n(context, 'common_output'),
+                  trailing: _buildZoomButtons(mediaQueryData, countColumns)
+                ),
+                _buildEncryptionOutput(countColumns, widget.isCaseSensitive),
+                !kIsWeb && _encryptionHasImages // TODO: save is currently not support on web
+                  ? GCWButton(
+                      text: i18n(context, 'symboltables_exportimage'),
+                      onPressed: () {
+                        _exportEncryption(countColumns, widget.isCaseSensitive).then((value) {
+                          if (value == null) {
+                            showToast(i18n(context, 'symboltables_nowritepermission'));
+                            return;
+                          }
+
+                          showGCWDialog(
+                            context,
+                            i18n(context, 'symboltables_exportimage_saved'),
+                            Column(
+                              children: [
+                                GCWText(
+                                  text: i18n(context, 'symboltables_exportimage_savepath', parameters: [value['path']]),
+                                  style: gcwTextStyle().copyWith(color: themeColors().dialogText()),
+                                ),
+                                Container(
+                                  child: Image.file(value['file']),
+                                  margin: EdgeInsets.only(top: 25),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: themeColors().dialogText())
+                                  ),
+                                )
+                              ],
+                            ),
+                            [
+                              GCWDialogButton(
+                                text: i18n(context, 'common_ok'),
+                              )
+                            ],
+                            cancelButton: false
+                          );
+                        });
+                      },
+                    )
+                  : Container()
               ],
             )
           //Decryption
@@ -184,30 +278,7 @@ class SymbolTableState extends State<SymbolTable> {
                       ),
                       flex: 4
                     ),
-                    GCWIconButton(
-                      iconData: Icons.zoom_in,
-                      onPressed: () {
-                        setState(() {
-                          int newCountColumn = max(countColumns - 1, 1);
-
-                          mediaQueryData.orientation == Orientation.portrait
-                            ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                            : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                        });
-                      },
-                    ),
-                    GCWIconButton(
-                      iconData: Icons.zoom_out,
-                      onPressed: () {
-                        setState(() {
-                          int newCountColumn = countColumns + 1;
-
-                          mediaQueryData.orientation == Orientation.portrait
-                            ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                            : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                        });
-                      },
-                    )
+                    _buildZoomButtons(mediaQueryData, countColumns)
                   ],
                 ),
                 _buildDecryptionButtonMatrix(countColumns, widget.isCaseSensitive),
@@ -220,15 +291,16 @@ class SymbolTableState extends State<SymbolTable> {
     );
   }
 
-  List<Image> _getImagePaths(bool isCaseSensitive) {
+  List<String> _getImages(bool isCaseSensitive) {
     var _text = _currentInput;
-    var imagePaths = <Image>[];
+    var imagePaths = <String>[];
 
     while (_text.length > 0) {
       var imagePath;
       int i;
+      String chunk;
       for (i = min(_maxSymbolTextLength, _text.length); i > 0; i--) {
-        var chunk = _text.substring(0, i);
+        chunk = _text.substring(0, i);
 
         if (isCaseSensitive) {
           if (_alphabetMap.containsKey(chunk)) {
@@ -243,7 +315,8 @@ class SymbolTableState extends State<SymbolTable> {
         }
       }
 
-      imagePaths.add(imagePath);
+      if ((_currentIgnoreUnknown && imagePath != null) || !_currentIgnoreUnknown)
+        imagePaths.add(imagePath);
 
       if (imagePath == null)
         _text = _text.substring(1, _text.length);
@@ -256,9 +329,13 @@ class SymbolTableState extends State<SymbolTable> {
 
   _buildEncryptionOutput(countColumns, isCaseSensitive) {
     var rows = <Widget>[];
-    var countRows = (_currentInput.length / countColumns).floor();
 
-    var images = _getImagePaths(isCaseSensitive);
+    var images = _getImages(isCaseSensitive);
+    _encryptionHasImages = images.length > 0;
+    if (!_encryptionHasImages)
+      return Container();
+
+    var countRows = (images.length / countColumns).floor();
 
     for (var i = 0; i <= countRows; i++) {
       var columns = <Widget>[];
@@ -268,16 +345,15 @@ class SymbolTableState extends State<SymbolTable> {
         var imageIndex = i * countColumns + j;
 
         if (imageIndex < images.length) {
-          var image = images[imageIndex];
-
-          if (image == null) {
+          var image;
+          if (images[imageIndex] == null) {
             image = Image.asset(_SYMBOL_NOT_FOUND_PATH);
+          } else {
+            image = Image.asset(images[imageIndex]);
           }
 
-          widget = Container(
-            child: image,
-            color: ThemeColors.symbolTableIconBackground,
-            padding: EdgeInsets.all(2),
+          widget = GCWSymbolContainer(
+            symbol: image,
           );
 
         } else {
@@ -302,6 +378,61 @@ class SymbolTableState extends State<SymbolTable> {
     );
   }
 
+  Future<ui.Image> _loadImage(String asset) async {
+    ByteData data = await rootBundle.load(asset);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
+    ui.FrameInfo fi = await codec.getNextFrame();
+
+    return fi.image;
+  }
+
+  Future<Map<String, dynamic>> _exportEncryption(int countColumns, isCaseSensitive) async {
+    final sizeSymbol = 150.0;
+
+    var images = _getImages(isCaseSensitive);
+
+    var countRows = (images.length / countColumns).floor();
+    if (countRows * countColumns < images.length)
+      countRows++;
+
+    var width =  countColumns * sizeSymbol;
+    var height = countRows * sizeSymbol;
+
+    final canvasRecorder = ui.PictureRecorder();
+    final canvas = Canvas(
+      canvasRecorder,
+      Rect.fromLTWH(0, 0, width, height)
+    );
+
+    final paint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+
+    canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
+
+    for (var i = 0; i <= countRows; i++) {
+      for (var j = 0; j < countColumns; j++) {
+        var imageIndex = i * countColumns + j;
+
+        if (imageIndex < images.length) {
+          var image;
+          if (images[imageIndex] == null) {
+            image = await _loadImage(_SYMBOL_NOT_FOUND_PATH);
+          } else {
+            image = await _loadImage(images[imageIndex]);
+          }
+
+          canvas.drawImage(image, Offset(j * sizeSymbol, i * sizeSymbol), paint);
+        }
+      }
+    }
+
+    final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
+    final data = await img.toByteData(format: ui.ImageByteFormat.png);
+
+    return await saveByteDataToFile(data, widget.symbolKey + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+  }
+
   _getSpecialText(String key) {
     return (key.startsWith('special_') ? SPECIAL_MARKER : '') + i18n(context, 'symboltables_' + widget.symbolKey + '_' + key);
   }
@@ -314,6 +445,8 @@ class SymbolTableState extends State<SymbolTable> {
     var rows = <Widget>[];
     var countRows = (_images.length / countColumns).floor();
 
+    ThemeColors colors = themeColors();
+
     for (var i = 0; i <= countRows; i++) {
       var columns = <Widget>[];
 
@@ -322,8 +455,11 @@ class SymbolTableState extends State<SymbolTable> {
         var imageIndex = i * countColumns + j;
 
         if (imageIndex < _images.length) {
-          var symbolText = _images.keys.toList()[imageIndex].replaceAll(SPECIAL_MARKER, '');
-          var image = _images.values.toList()[imageIndex];
+          var symbolText = _images.map((element) => element.keys.first).toList()[imageIndex].replaceAll(SPECIAL_MARKER, '');
+          if (!isCaseSensitive)
+            symbolText = symbolText.toUpperCase();
+
+          var image = _images.map((element) => element.values.first).toList()[imageIndex];
 
           if (symbolText.length > _maxSymbolTextLength)
             _maxSymbolTextLength = symbolText.length;
@@ -337,25 +473,23 @@ class SymbolTableState extends State<SymbolTable> {
             child: Stack(
               overflow: Overflow.clip,
               children: <Widget>[
-                Container(
-                  child: image,
-                  color: ThemeColors.symbolTableIconBackground,
-                  padding: EdgeInsets.all(2),
+                GCWSymbolContainer(
+                  symbol: Image.asset(image),
                 ),
                 _currentShowOverlayedSymbols
                   ? Opacity(
                       child:  Container(
+                        //TODO: Using GCWText instead: Currently it would expand the textfield width to max.
                         child: Text(
                           _showSpaceSymbolInOverlay(symbolText),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: defaultFontSize()
+                          style: gcwTextStyle().copyWith(
+                            color: colors.dialogText(),
+                            fontWeight: FontWeight.bold
                           ),
                         ),
                         height: defaultFontSize() + 5,
                         decoration: ShapeDecoration(
-                          color: ThemeColors.accent,
+                          color: colors.dialog(),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius)),
                           )

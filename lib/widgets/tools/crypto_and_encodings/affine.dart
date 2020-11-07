@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/affine.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -78,7 +79,7 @@ class AffineState extends State<Affine> {
         GCWDropDownSpinner(
           title: i18n(context, 'affine_key_a'),
           index: _currentKeyAIndex,
-          items: aKeys.map((item) => GCWText(text: item.toString())).toList(),
+          items: aKeys.map((item) => Text(item.toString(), style: gcwTextStyle())).toList(),
           onChanged: (value) {
             setState(() {
               _currentKeyAIndex = value;

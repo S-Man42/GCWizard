@@ -14,6 +14,7 @@ class ChangelogState extends State<Changelog> {
   @override
   Widget build(BuildContext context) {
     var changelogs = {
+      '1.2.0' : DateTime(2020, 11, 4),
       '1.1.0' : DateTime(2020, 9, 8),
       '1.0.0' : DateTime(2020, 7, 21),
       '0.8.1' : DateTime(2020, 6, 4),
@@ -50,7 +51,7 @@ class ChangelogState extends State<Changelog> {
     );
 
     return GCWMainMenuEntryStub(
-        content: content
+      content: content
     );
   }
 }

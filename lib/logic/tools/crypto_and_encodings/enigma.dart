@@ -167,9 +167,8 @@ class EnigmaKey {
 }
 
 _normalizeInput(String input) {
-  input = input.replaceAll(' ', '');
   input = normalizeUmlauts(input).toUpperCase();
-  input = input.replaceAll(RegExp(r'[\W_]'), 'X');
+  input = input.replaceAll(RegExp(r'[^A-Z]'), '');
   return input;
 }
 
@@ -205,10 +204,12 @@ _rotorConfigurations(EnigmaKey key) {
 }
 
 Map<String, dynamic> calculateEnigma(String input, EnigmaKey key) {
-  if (input == null || input.length == 0 || _standardRotorConfigurations(key).length == 0)
+  if (input == null || _standardRotorConfigurations(key).length == 0)
     return {'text': '', 'rotorSettingAfter': _rotorConfigurations(key)};
 
   input = _normalizeInput(input);
+  if (input.length == 0)
+    return {'text': '', 'rotorSettingAfter': _rotorConfigurations(key)};
 
   var output = '';
 
@@ -222,7 +223,6 @@ Map<String, dynamic> calculateEnigma(String input, EnigmaKey key) {
     int rotorNumber = 0;
     while (rotorNumber < key.rotorConfigurations.length) {
       var rotor = key.rotorConfigurations[rotorNumber];
-
       // rotor (alphabet) rotated by value of setting
       var letterIndex = (alphabet_AZ[letter] - 1 + rotor.settingWithOffset) % 26;
       // mapping alphabet to rotor alphabet

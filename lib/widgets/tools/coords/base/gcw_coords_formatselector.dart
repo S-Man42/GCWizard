@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:intl/intl.dart';
 
@@ -53,9 +55,10 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
             });
           },
           items: allCoordFormats.map((entry) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: entry.key,
-              child: Text(i18n(context, entry.name) ?? entry.name),
+              child: i18n(context, entry.name) ?? entry.name,
+              subtitle: entry.example
             );
           }).toList(),
         ),
@@ -70,9 +73,9 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
         return GCWDropDownButton(
           value: _currentSubtype,
           items: getCoordinateFormatByKey(keyCoordsGaussKrueger).subtypes.map((subtype) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: subtype.key,
-              child: Text(i18n(context, subtype.name)),
+              child: i18n(context, subtype.name),
             );
           }).toList(),
           onChanged: (value) {

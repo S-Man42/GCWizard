@@ -53,7 +53,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
         Expanded(
           child: Padding(
             child: GCWIntegerSpinner(
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentYear,
               min: -5000,
               max: 5000,
@@ -77,7 +77,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
           child: Padding(
             child: GCWIntegerSpinner(
               focusNode: _monthFocusNode,
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentMonth,
               min: 1,
               max: 12,
@@ -102,7 +102,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
           child: Padding(
             child: GCWIntegerSpinner(
               focusNode: _dayFocusNode,
-              layout: SpinnerLayout.vertical,
+              layout: SpinnerLayout.VERTICAL,
               value: _currentDay,
               min: 1,
               max: 31,

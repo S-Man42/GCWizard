@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -12,7 +12,10 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
@@ -21,34 +24,41 @@ import 'package:gc_wizard/widgets/selector_lists/dna_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/roman_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/amsco.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
@@ -57,36 +67,39 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rc4.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/robber_language.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution_breaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/summer_simmer.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 
 class MainView extends StatefulWidget {
   @override
@@ -149,19 +162,22 @@ class _MainViewState extends State<MainView> {
           className(ADFGVX()),
           className(Affine()),
           className(AlphabetValues()),
+          className(Amsco()),
           className(ASCIIValues()),
           className(AstronomySelection()),
           className(Atbash()),
           className(Bacon()),
           className(BaseSelection()),
           className(BCDSelection()),
-          className(Beaufort()),
+          className(BeaufortSelection()),
           className(Bifid()),
           className(Binary()),
+          className(BookCipher()),
           className(BrainfkSelection()),
           className(Caesar()),
-          className(CCITT1()),
-          className(CCITT2()),
+          className(CCITT1Selection()),
+          className(CCITT2Selection()),
+          className(Chao()),
           className(ChickenLanguage()),
           className(CoordsSelection()),
           className(ColorPicker()),
@@ -172,9 +188,11 @@ class _MainViewState extends State<MainView> {
           className(DTMF()),
           className(DNASelection()),
           className(DuckSpeak()),
+          className(EnclosedAreas()),
           className(Enigma()),
           className(ESelection()),
           className(FormulaSolverFormulaGroups()),
+          className(Gade()),
           className(GCCode()),
           className(Gray()),
           className(Projectiles()),
@@ -182,10 +200,13 @@ class _MainViewState extends State<MainView> {
           className(HeatIndex()),
           className(HashSelection()),
           className(Hexadecimal()),
+          className(Homophone()),
+          className(Humidex()),
           className(Kamasutra()),
           className(Kenny()),
           className(Morse()),
           className(NumeralBases()),
+          className(NumeralWordsSelection()),
           className(OneTimePad()),
           className(PeriodicTable()),
           className(PhiSelection()),
@@ -195,22 +216,26 @@ class _MainViewState extends State<MainView> {
           className(Polybios()),
           className(PrimesSelection()),
           className(RailFence()),
+          className(RC4()),
           className(ResistorSelection()),
           className(Reverse()),
           className(RobberLanguage()),
-          className(RomanNumbers()),
+          className(RomanNumbersSelection()),
           className(RotationSelection()),
           className(RSASelection()),
           className(Scrabble()),
           className(SegmentDisplaySelection()),
           className(Skytale()),
+          className(Solitaire()),
           className(SpoonLanguage()),
           className(Substitution()),
+          className(SubstitutionBreaker()),
           className(SudokuSolver()),
+          className(SummerSimmerIndex()),
           className(SymbolTableSelection()),
           className(TapCode()),
           className(Tapir()),
-          className(TomTom()),
+          className(TomTomSelection()),
           className(Trithemius()),
           className(UnitConverter()),
           className(VanitySelection()),
@@ -314,7 +339,7 @@ class _MainViewState extends State<MainView> {
           controller: _searchController,
           icon: Icon(
             Icons.search,
-            color: ThemeColors.gray
+            color: themeColors().mainFont()
           ),
           hintText: i18n(context, 'common_search_hint')
         )

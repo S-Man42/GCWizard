@@ -16,13 +16,11 @@ import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/logic/units/unit_prefix.dart';
 import 'package:gc_wizard/logic/units/velocity.dart';
 import 'package:gc_wizard/logic/units/volume.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/units/gcw_unit_prefix_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_units.dart';
 import 'package:intl/intl.dart';
 
@@ -86,11 +84,9 @@ class UnitConverterState extends State<UnitConverter> {
         GCWDropDownButton(
           value: _currentCategory,
           items: _categories.map((category) {
-            return DropdownMenuItem(
+            return GCWDropDownMenuItem(
               value: category,
-              child: Text(
-                i18n(context, category['category'].key)
-              ),
+              child: i18n(context, category['category'].key)
             );
           }).toList(),
           onChanged: (value) {

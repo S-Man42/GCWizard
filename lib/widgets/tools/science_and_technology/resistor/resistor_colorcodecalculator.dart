@@ -252,7 +252,7 @@ class ResistorColorCodeCalculatorState extends State<ResistorColorCodeCalculator
           [i18n(context, 'resistor_temperaturecoefficient'), formatResistorTemperatureCoefficient(resistorValue.temperatureCoefficient)] : null
       ];
 
-      rows = columnedMultiLineOutput(outputs, flexValues: [2,3]);
+      rows = columnedMultiLineOutput(context, outputs, flexValues: [2,3]);
     }
 
     rows.insert(0,

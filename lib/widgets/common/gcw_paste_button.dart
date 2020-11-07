@@ -4,8 +4,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
@@ -21,27 +22,26 @@ class GCWPasteButton extends StatefulWidget {
 }
 
 class GCWPasteButtonState extends State<GCWPasteButton> {
-
-  final double _BUTTON_SIZE = 30;
-
   @override
   Widget build(BuildContext context) {
+    ThemeColors colors = themeColors();
+
     return Container(
-      width: _BUTTON_SIZE,
-      height: _BUTTON_SIZE,
+      width: 29,
+      height: 29,
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(roundedBorderRadius),
           side: BorderSide(
             width: 1,
-            color: ThemeColors.accent,
+            color: colors.accent(),
           ),
         ),
       ),
       child: PopupMenuButton(
-        offset: Offset(0, _BUTTON_SIZE),
-        icon: Icon(Icons.content_paste, color: Colors.white, size: 20),
-        color: ThemeColors.accent,
+        offset: Offset(0, 30),
+        icon: Icon(Icons.content_paste, color: themeColors().mainFont(), size: 20),
+        color: colors.accent(),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(roundedBorderRadius),
         ),
@@ -69,9 +69,10 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
         itemBuilder: (context) => _buildPopupList(),
         padding: EdgeInsets.all(0),
       ),
-      margin: EdgeInsets.only(
-        bottom: DEFAULT_MARGIN * 2
-      )
+      padding: EdgeInsets.only(
+        left: 2,
+        right: 2,
+      ),
     );
   }
 
@@ -81,9 +82,7 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
         value: 0,
         child: Text(
           i18n(context, 'common_clipboard_fromdeviceclipboard'),
-          style: TextStyle(
-            color: Colors.black,
-          ),
+          style: gcwTextStyle().copyWith(color: themeColors().dialogText())
         )
       ),
       PopupMenuDivider()
@@ -98,7 +97,6 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
         var dateFormat = DateFormat('yMd', Localizations.localeOf(context).toString());
         var timeFormat = DateFormat('Hms', Localizations.localeOf(context).toString());
 
-
         return MapEntry(
           index,
           PopupMenuItem(
@@ -109,9 +107,9 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
                   Align(
                     child: Text(
                       dateFormat.format(datetime) + ' ' + timeFormat.format(datetime),
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: max(defaultFontSize() - 4, 10)
+                      style: gcwTextStyle().copyWith(
+                        color: themeColors().dialogText(),
+                        fontSize: max(defaultFontSize() - 4, 10)
                       ),
                     ),
                     alignment: Alignment.centerLeft
@@ -119,8 +117,8 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
                   Align(
                     child: Text(
                       item['text'],
-                      style: TextStyle(
-                        color: Colors.black,
+                      style: gcwTextStyle().copyWith(
+                        color: themeColors().dialogText(),
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,

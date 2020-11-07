@@ -67,7 +67,7 @@ class MoonRiseSetState extends State<MoonRiseSet> {
       [i18n(context, 'astronomy_riseset_set'), moonRise.set.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(moonRise.set)],
     ];
 
-    var rows = columnedMultiLineOutput(outputs);
+    var rows = columnedMultiLineOutput(context, outputs);
 
     rows.insert(0,
       GCWTextDivider(

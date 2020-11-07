@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -8,12 +7,11 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class DTMF extends StatefulWidget {
   @override
@@ -81,9 +79,9 @@ class DTMFState extends State<DTMF> {
                     child: GCWDropDownButton(
                       value: _currentDecryptLowFrequency,
                       items: DTMF_FREQUENCIES_LOW.map((frequency) {
-                        return DropdownMenuItem(
+                        return GCWDropDownMenuItem(
                           value: frequency,
-                          child: Text(frequency.toString()),
+                          child: frequency.toString(),
                         );
                       }).toList(),
                       onChanged: (value) {
@@ -100,9 +98,9 @@ class DTMFState extends State<DTMF> {
                     child: GCWDropDownButton(
                       value: _currentDecryptHighFrequency,
                       items: DTMF_FREQUENCIES_HIGH.map((frequency) {
-                        return DropdownMenuItem(
+                        return GCWDropDownMenuItem(
                           value: frequency,
-                          child: Text(frequency.toString()),
+                          child: frequency.toString(),
                         );
                       }).toList(),
                       onChanged: (value) {
@@ -122,11 +120,7 @@ class DTMFState extends State<DTMF> {
                   onPressed: () {
                     setState(() {
                       var input = ' [$_currentDecryptLowFrequency, $_currentDecryptHighFrequency] ';
-                      var cursorPosition = max(_decodeController.selection.end, 0);
-
-                      _currentDecodeInput = _currentDecodeInput.substring(0, cursorPosition) + input + _currentDecodeInput.substring(cursorPosition);
-                      _decodeController.text = _currentDecodeInput;
-                      _decodeController.selection = TextSelection.collapsed(offset: cursorPosition + input.length);
+                      _currentDecodeInput = textControllerInsertText(input, _currentDecodeInput, _decodeController);
                     });
                   },
                 )

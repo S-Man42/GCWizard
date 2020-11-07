@@ -1,39 +1,43 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:prefs/prefs.dart';
 
 String className(Widget widget) {
   return widget.runtimeType.toString();
 }
 
-enum SpinnerLayout {horizontal, vertical}
+enum SpinnerLayout {HORIZONTAL, VERTICAL}
 
 String printErrorMessage(BuildContext context, String message) {
   return i18n(context, 'common_error') + ': ' + i18n(context, message);
 }
 
 defaultFontSize() {
-  var fontSize = Prefs.get('font_size');
+  var fontSize = Prefs.get('theme_font_size');
 
   if (fontSize < FONT_SIZE_MIN) {
-    Prefs.setDouble('font_size', FONT_SIZE_MIN.toDouble());
+    Prefs.setDouble('theme_font_size', FONT_SIZE_MIN.toDouble());
     return FONT_SIZE_MIN;
   }
 
   if (fontSize > FONT_SIZE_MAX) {
-    Prefs.setDouble('font_size', FONT_SIZE_MAX.toDouble());
+    Prefs.setDouble('theme_font_size', FONT_SIZE_MAX.toDouble());
     return FONT_SIZE_MAX;
   }
 
   return fontSize;
 }
 
-List<Widget> columnedMultiLineOutput(List<List<dynamic>> data, {List<int> flexValues = const []}) {
+List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data, {List<int> flexValues = const [], int copyColumn}) {
   var odd = true;
   return data.where((row) => row != null).map((rowData) {
     Widget output;
@@ -43,16 +47,39 @@ List<Widget> columnedMultiLineOutput(List<List<dynamic>> data, {List<int> flexVa
         index,
         Expanded(
           child: GCWText(
-              text: column.toString()
+            text: column.toString()
           ),
           flex: index < flexValues.length ? flexValues[index] : 1
         )
       );
     }).values.toList();
 
+    if (copyColumn == null)
+      copyColumn = rowData.length - 1;
+    var copyText = rowData[copyColumn].toString();
+
     var row = Container(
       child: Row(
-        children: columns
+        children: [
+          Expanded(
+            child: Row(
+              children: columns
+            ),
+          ),
+          context == null ? Container()
+            : Container(
+              child: GCWIconButton(
+                iconData: Icons.content_copy,
+                size: IconButtonSize.TINY,
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: copyText));
+                  showToast(i18n(context, 'common_clipboard_copied') + ':\n' + copyText);
+                },
+              ),
+              width: 25,
+              height: 22,
+            )
+        ],
       ),
       margin: EdgeInsets.only(
         top : 6,
@@ -62,7 +89,7 @@ List<Widget> columnedMultiLineOutput(List<List<dynamic>> data, {List<int> flexVa
 
     if (odd) {
       output = Container(
-        color: ThemeColors.oddRows,
+        color: themeColors().outputListOddRows(),
         child: row
       );
     } else {
@@ -94,7 +121,7 @@ insertIntoGCWClipboard(String text) {
 }
 
 buildPopupItem(BuildContext context, IconData icon, String i18nKey) {
-  var color = ThemeColors.popupItemText;
+  var color = themeColors().dialogText();
 
   return  Row(
     children: [
@@ -112,4 +139,26 @@ buildPopupItem(BuildContext context, IconData icon, String i18nKey) {
       )
     ],
   );
+}
+
+String textControllerInsertText(String input, String currentText, TextEditingController textController) {
+  var cursorPosition = max(textController.selection.end, 0);
+
+  currentText = currentText.substring(0, cursorPosition) + input + currentText.substring(cursorPosition);
+  textController.text = currentText;
+  textController.selection = TextSelection.collapsed(offset: cursorPosition + input.length);
+
+  return currentText;
+}
+
+String textControllerDoBackSpace(String currentText, TextEditingController textController) {
+  var cursorPosition = max(textController.selection.end, 0);
+  if (cursorPosition == 0)
+    return currentText;
+
+  currentText = currentText.substring(0, cursorPosition - 1) + currentText.substring(cursorPosition);
+  textController.text = currentText;
+  textController.selection = TextSelection.collapsed(offset: cursorPosition - 1);
+
+  return currentText;
 }

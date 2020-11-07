@@ -3,7 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/theme/colors.dart';
+import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
@@ -55,40 +55,21 @@ class WaypointProjectionState extends State<WaypointProjection> {
             });
           },
         ),
-        Row(
-          children: [
-            Expanded(
-              flex: 8,
-              child: GCWBearing(
-                onChanged: (value) {
-                  setState(() {
-                    _currentBearing = value;
-                  });
-                },
-              ),
-            ),
-            Expanded(
-              flex: 4,
-              child: Container(
-                child: GCWText(
-                  text: i18n(context, 'coords_waypointprojection_reverse') + ':',
-                ),
-                margin: EdgeInsets.only(left: 15),
-              )
-            ),
-            Expanded(
-              flex: 3,
-              child: GCWOnOffSwitch(
-                value: _currentReverse,
-                notitle: true,
-                onChanged: (value) {
-                  setState(() {
-                    _currentReverse = value;
-                  });
-                },
-              )
-            )
-          ],
+        GCWBearing(
+          onChanged: (value) {
+            setState(() {
+              _currentBearing = value;
+            });
+          },
+        ),
+        GCWOnOffSwitch(
+          value: _currentReverse,
+          title: i18n(context, 'coords_waypointprojection_reverse'),
+          onChanged: (value) {
+            setState(() {
+              _currentReverse = value;
+            });
+          },
         ),
         GCWCoordsOutputFormat(
           coordFormat: _currentOutputFormat,
@@ -136,7 +117,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
         _currentMapPoints.add(
           MapPoint(
             point: projection,
-            color: ThemeColors.mapCalculatedPoint,
+            color: COLOR_MAP_CALCULATEDPOINT,
             markerText: i18n(context, 'coords_waypointprojection_end'),
             coordinateFormat: _currentOutputFormat
           )
@@ -160,7 +141,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
         ),
         MapPoint(
           point: _currentValues[0],
-          color: ThemeColors.mapCalculatedPoint,
+          color: COLOR_MAP_CALCULATEDPOINT,
           markerText: i18n(context, 'coords_waypointprojection_end'),
           coordinateFormat: _currentOutputFormat
         )

@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/alphabet_values.dart' as logic;
-import 'package:gc_wizard/theme/colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -44,7 +44,6 @@ class AlphabetValuesState extends State<AlphabetValues> {
   var _currentEncodeInput = '';
   var _currentDecodeInput = defaultIntegerListText;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  bool _currentCrosstotalMode = true;
 
   var _currentAlphabetKey;
   Map<String, String> _currentAlphabet;
@@ -112,6 +111,8 @@ class AlphabetValuesState extends State<AlphabetValues> {
   _setAlphabet() {
     _currentAlphabet = _getAlphabetByKey(_currentAlphabetKey).alphabet;
     _currentIsEditingAlphabet = false;
+    _currentOffset = 0;
+    _currentReverseAlphabet = GCWSwitchPosition.left;
     _currentCustomizeAlphabet = GCWSwitchPosition.left;
 
     Prefs.setString('alphabetvalues_default_alphabet', _currentAlphabetKey);
@@ -182,40 +183,12 @@ class AlphabetValuesState extends State<AlphabetValues> {
                   child: GCWDropDownButton(
                     value: _currentAlphabetKey,
                     items: _alphabets.map((Alphabet alphabet) {
-                      return DropdownMenuItem(
+                      return GCWDropDownMenuItem(
                         value: alphabet.key,
-                        child: Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
-                              ),
-                              Container(
-                                child: Text(
-                                  _generateItemDescription(alphabet),
-                                  style: gcwDescriptionTextStyle(),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                padding: EdgeInsets.only(left: 10)
-                              ),
-                            ]
-                          ),
-                          padding: EdgeInsets.only(bottom: 10),
-                        )
+                        child: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
+                        subtitle: _generateItemDescription(alphabet)
                       );
                     }).toList(),
-                    selectedItemBuilder: (context) {
-                      return _alphabets.map<Widget>((alphabet) {
-                        return Align(
-                          child: Text(
-                            alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
-                          ),
-                          alignment: Alignment.centerLeft,
-                        );
-                      }).toList();
-                    },
                     onChanged: (value) {
                       setState(() {
                         _currentAlphabetKey = value;
@@ -243,13 +216,6 @@ class AlphabetValuesState extends State<AlphabetValues> {
           onChanged: (value) {
             setState(() {
               _currentMode = value;
-            });
-          },
-        ),
-        GCWCrosstotalSwitch(
-          onChanged: (value) {
-            setState(() {
-              _currentCrosstotalMode = value;
             });
           },
         ),
@@ -370,7 +336,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
               ),
               Icon(
                 Icons.arrow_forward,
-                color: ThemeColors.gray,
+                color: themeColors().mainFont(),
               ),
               Expanded(
                 child: GCWTextField(
@@ -649,6 +615,8 @@ class AlphabetValuesState extends State<AlphabetValues> {
     var rows = _currentCustomizedAlphabet.entries.map((entry) {
       Widget output;
 
+      ThemeColors colors = themeColors();
+
       var row = Container(
         child: Row (
           children: <Widget>[
@@ -660,7 +628,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
             ),
             Icon(
               Icons.arrow_forward,
-              color: ThemeColors.gray,
+              color: colors.mainFont(),
             ),
             Expanded(
               child: GCWText (
@@ -680,13 +648,13 @@ class AlphabetValuesState extends State<AlphabetValues> {
           ],
         ),
         margin: EdgeInsets.only(
-            left: 10
+          left: 10
         ),
       );
 
       if (odd) {
         output = Container(
-          color: ThemeColors.oddRows,
+          color: colors.outputListOddRows(),
           child: row
         );
       } else {
@@ -706,22 +674,17 @@ class AlphabetValuesState extends State<AlphabetValues> {
 
   _getFinalAlphabet() {
     var alphabet = _currentAlphabet;
-    if (_currentIsEditingAlphabet) {
-      if (_currentCustomizeAlphabet == GCWSwitchPosition.right) {
-        alphabet = _currentCustomizedAlphabet;
-      } else {
-        alphabet = _setOffset(alphabet);
-        alphabet = _setReverse(alphabet);
-      }
+    if (_currentCustomizeAlphabet == GCWSwitchPosition.right) {
+      alphabet = _currentCustomizedAlphabet;
+    } else {
+      alphabet = _setOffset(alphabet);
+      alphabet = _setReverse(alphabet);
     }
 
     return alphabet;
   }
 
   _buildCrossTotals() {
-    if (!_currentCrosstotalMode)
-      return Container();
-
     var alphabet = _getFinalAlphabet();
 
     if (_currentMode == GCWSwitchPosition.left) {
@@ -742,7 +705,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     var alphabet = _getFinalAlphabet();
 
     if (_currentMode == GCWSwitchPosition.left) {
-      return intListToString(logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true), delimiter: ' | ');
+      return intListToString(logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true), delimiter: ' ');
     } else {
       return logic.AlphabetValues(alphabet: alphabet).valuesToText(List<int>.from(_currentDecodeInput['values']));
     }
