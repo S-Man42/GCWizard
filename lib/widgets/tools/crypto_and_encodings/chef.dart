@@ -138,6 +138,7 @@ class ChefState extends State<Chef> {
         outputInterpret = interpretChef(_currentText.toLowerCase(), _currentInput);
         output = '';
         outputInterpret.forEach((element) {
+print('output => '+element);
           if (element.startsWith('chef_')) {
             output = output + i18n(context, element) + ' ';
           } else

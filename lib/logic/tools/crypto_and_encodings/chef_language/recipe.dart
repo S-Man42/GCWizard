@@ -32,36 +32,36 @@ class Recipe {
   }
 
   void setComments(String comment) {
-    print('recipe.dart setComments ' + comment);
     this.comment = comment;
   }
 
   void setMethod(String method) {//throws ChefException
     this.methods = List<Method>();
-    //method = method.replaceAll("\n", "").replaceAll(". ",".");
-    //method = method.replaceAll("\\. ",".");
-    //var scanner =  RegExp(r"\\.");
+    // method = method.replaceAll("\n", "");
+    // method = method.replaceAll(". ",".");
+    // method = method.replaceAll("\\. ",".");
+    // var scanner =  RegExp(r"\\.");
     List<String> scanner = method.replaceAll("\n", "").replaceAll(". ",".").split('.');
-    var i = 0;
-    scanner.forEach((meth) {
+print(scanner);
+    for(int i = 1; i < scanner.length - 1; i++){
+      this.methods.add(new Method(scanner[i], i));
+    };
+    //var i = 0;
+    //scanner.forEach((meth) {
     //Clearing the 'Method.' header
     //scanner.allMatches(method).forEach((meth) {
       //this.methods.add(new Method(method.substring(meth.start, meth.end), i));
-      if (i > 0)
-        this.methods.add(new Method(meth, i));
-      i++;
-    });
+      //if ((i > 0) && (i < scanner.length))
+      //  this.methods.add(new Method(meth, i));
+      //i++;
+    //});
   }
 
   void setCookingTime(String cookingtime) {
-    print('recipe.dart setCookingTime ' + cookingtime);
-
     this.cookingtime = int.parse(cookingtime.split(" ")[2]);
   }
 
   void setOvenTemp(String oventemp) {
-    print('recipe.dart setoventemp ' + oventemp);
-
     this.oventemp = int.parse(oventemp.split(" ")[3]);
     if (oventemp.contains("gas mark")) {
       String mark = oventemp.split(" ")[8];
@@ -70,8 +70,6 @@ class Recipe {
   }
 
   void setServes(String serves) {
-    print('recipe.dart setServes ' + serves);
-
     this.serves = int.parse(serves.substring(("Serves ").length, serves.length-1));
   }
 

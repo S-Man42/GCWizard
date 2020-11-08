@@ -39,7 +39,8 @@ class Ingredient {
       i++;
     }
     if (_name == "") {
-      throw  ChefException.Contructor1(ChefException.INGREDIENT, tokens, "ingredient name missing");
+      _name = 'what you ever you want';
+      //throw  ChefException.Contructor1(ChefException.INGREDIENT, tokens, "ingredient name missing");
     }
   }
 

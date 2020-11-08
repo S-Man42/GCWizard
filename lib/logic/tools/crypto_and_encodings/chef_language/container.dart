@@ -6,12 +6,6 @@ class Container {
 
   List<Component> _contents;
 
-/*
-  Container() {
-    _contents = new List<Component>();
-  }
-*/
-
   Container(Container container) {
     _contents = new List<Component>();
     if (container != null)
@@ -27,8 +21,9 @@ class Container {
   }
 
   Component pop()  { //throws ChefException
-    if (_contents.length == 0)
-      throw new ChefException(ChefException.LOCAL, "Folded from empty container");
+    if (_contents.length != 0)
+      // TO DO
+      // throw new ChefException(ChefException.LOCAL, "Folded from empty container");
     return _contents.removeAt(_contents.length-1);
   }
 
@@ -53,14 +48,26 @@ class Container {
   String serve() {
     String result = "";
     for (int i = _contents.length-1; i >= 0; i--) {
+print('conatiner.serve content '+i.toString()+' - '+_contents[i].getValue().toString()) ;
       if (_contents[i].getState() == State.Dry) {
-        result += _contents[i].getValue().toString() + " ";
+        result = result + _contents[i].getValue().toString() + ' ';
       }
-      else {
-        result += (_contents[i].getValue() % 1112064).toString()[0];
+      else {// in charCodes umwandeln
+        //result += (_contents[i].getValue() % 1112064).toString()[0];
+        //result = result + (_contents[i].getValue()).toString() + ' ';
+        result = result + String.fromCharCode(_contents[i].getValue()) ;
       }
     }
+print('container.serve ' + result);
     return result;
+  }
+
+  List<String> getContent(){
+    List<String> out = new List<String>();
+    for (int i = _contents.length-1; i >= 0; i--) {
+      out.add(_contents[i].getValue().toString());
+    }
+    return out;
   }
 
   void shuffle() {

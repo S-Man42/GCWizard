@@ -82,7 +82,7 @@ class Kitchen {
             error.add('chef_error_recipe_method');
             error.add('chef_error_recipe_method_recipe');
             error.add(recipe.title);
-            error.add('chef_error_recipe_step');
+            error.add('chef_error_recipe_method_step');
             error.add(m.n.toString());
             error.add(m.type.toString());
             error.add('chef_error_recipe_ingredient_not_found');
@@ -90,11 +90,14 @@ class Kitchen {
             return null;
           } //("Method error, recipe "+recipe.getTitle()+", step "+(step+1).toString()+": "+method+" ("+error+
             //                                  int type,             recipe, step, method,            error
-            throw new ChefException.Contructor3(ChefException.METHOD, recipe, m.n, m.type.toString(), "Ingredient not found: "+m.ingredient);
+            //throw new ChefException.Contructor3(ChefException.METHOD, recipe, m.n, m.type.toString(), "Ingredient not found: "+m.ingredient);
       }
+print('kitchen ' + m.type.toString());
       switch (m.type) {
         case Type.Take :
-          if (ingredientIndex <= input.length - 1) {
+print(input);
+          if ((input.join('') != '') && (ingredientIndex <= input.length - 1)) {
+print('isnotempty ' + ingredientIndex.toString() + ' ' + input.length.toString());
             ingredients[m.ingredient].setAmount(int.parse(input[ingredientIndex]));
             ingredientIndex++;
           } else {
@@ -104,6 +107,7 @@ class Kitchen {
           }
           break;
         case Type.Put :
+print('        put ' + ingredients[m.ingredient].getName() + ' ' + ingredients[m.ingredient].getAmount().toString());
           mixingbowls[m.mixingbowl].push( Component.Contructor1(ingredients[m.ingredient]));
           break;
         case Type.Fold :
@@ -112,7 +116,7 @@ class Kitchen {
             error.add('chef_error_recipe_method');
             error.add('chef_error_recipe_method_recipe');
             error.add(recipe.title);
-            error.add('chef_error_recipe_step');
+            error.add('chef_error_recipe_method_step');
             error.add(m.n.toString());
             error.add(m.type.toString());
             error.add('chef_error_recipe_folded_from_empty_mixing_bowl');
@@ -152,6 +156,8 @@ class Kitchen {
           ingredients[m.ingredient].liquefy();
           break;
         case Type.LiquefyBowl :
+String out = ''; mixingbowls[m.mixingbowl].getContent().forEach((element){out = out+ element + ' ';});
+print('        liquefy bowl '+m.mixingbowl.toString() + '=> ' + out) ;
           mixingbowls[m.mixingbowl].liquefy();
           break;
         case Type.Stir :
@@ -167,7 +173,10 @@ class Kitchen {
           mixingbowls[m.mixingbowl].clean();
           break;
         case Type.Pour :
+print('       pour mixingbowl ' + m.mixingbowl.toString() + ' into bakingdish ' + m.bakingdish.toString());
           bakingdishes[m.bakingdish].combine(mixingbowls[m.mixingbowl]);
+String out = ''; bakingdishes[m.bakingdish].getContent().forEach((element){out = out+ element + ' ';});
+print('        bakingdish '+m.bakingdish.toString() + '=> ' + out) ;
           break;
         case Type.Verb :
           int end = i+1;
@@ -176,8 +185,10 @@ class Kitchen {
               break;
           if (end == methods.length) {
             valid = false;
-            error.add('');
-
+            error.add('chef_error_recipe_method');
+            error.add(m.n.toString());
+            error.add(m.type.toString());
+            error.add('chef_error_recipe_method_loop');
             return null;
           }
             //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Loop end statement not found.");
@@ -189,16 +200,30 @@ class Kitchen {
             loops.insertAll(0,{_LoopData(i, end, m.verb)});
           break;
         case Type.VerbUntil :
-          if (!_sameVerb(loops[0].verb, m.verb))
-            throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Wrong loop end statement found.");
+          if (!_sameVerb(loops[0].verb, m.verb)){
+            valid = false;
+            error.add('chef_error_recipe_method');
+            error.add(m.n.toString());
+            error.add(m.type.toString());
+            error.add('chef_error_recipe_method_loop_end');
+            return null;
+          }
+            //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Wrong loop end statement found.");
           if (ingredients[m.ingredient] != null)
             ingredients[m.ingredient].setAmount(ingredients[m.ingredient].getAmount() - 1);
           i = loops[0].from;
           loops.removeAt(0);
           continue methodloop;
         case Type.SetAside :
-          if (loops.length == 0)
-            throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Cannot set aside when not inside loop.");
+          if (loops.length == 0){
+            valid = false;
+            error.add('chef_error_recipe_method');
+            error.add(m.n.toString());
+            error.add(m.type.toString());
+            error.add('chef_error_recipe_method_loop_aside');
+            return null;
+          }
+            //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Cannot set aside when not inside loop.");
           else {
             i = loops[0].to + 1;
             loops.removeAt(0);
@@ -206,8 +231,16 @@ class Kitchen {
           }
           break;
         case Type.Serve :
-          if (recipes[m.auxrecipe.toLowerCase()] == null)
-            throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Unavailable recipe: "+m.auxrecipe);
+          if (recipes[m.auxrecipe.toLowerCase()] == null){
+            valid = false;
+            error.add('chef_error_recipe_method');
+            error.add(m.n.toString());
+            error.add(m.type.toString());
+            error.add('chef_error_recipe_method_aux_recipe');
+            error.add(m.auxrecipe);
+            return null;
+          }
+            //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Unavailable recipe: "+m.auxrecipe);
           Kitchen k = new Kitchen(recipes, recipes[m.auxrecipe.toLowerCase()], mixingbowls, bakingdishes);
           Container con = k.cook(additionalIngredients);
           mixingbowls[0].combine(con);
@@ -219,8 +252,15 @@ class Kitchen {
           break;
         case Type.Remember :
           break;
-        default :
-          throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Unsupported method found!");
+        default :{
+          valid = false;
+          error.add('chef_error_recipe_method');
+          error.add(m.n.toString());
+          error.add(m.type.toString());
+          error.add('chef_error_recipe_method_unsupported');
+          return null;
+        }
+          //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Unsupported method found!");
       }
       i++;
     }
@@ -247,7 +287,8 @@ class Kitchen {
 
   void _serve(int n) {
     for (int i = 0; i < n && i < bakingdishes.length; i++) {
-      print(bakingdishes[i].serve());
+      //print(bakingdishes[i].serve());
+      meal.add(bakingdishes[i].serve());
     }
   }
 }
