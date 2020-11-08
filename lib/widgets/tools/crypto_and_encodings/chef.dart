@@ -128,13 +128,24 @@ class ChefState extends State<Chef> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    var output = '';
+    String output = '';
+    List<String>outputInterpret = new List<String>();
 
     if (_currentMode == GCWSwitchPosition.right) {
       output = generateChef(_currentText, _currentRemark, _currentTime, _currentTemperature, _currentInput);
-    } else
-      output = interpretChef(_currentText.toLowerCase(), _currentInput);
-
+    } else {
+      if (isValid(_currentInput)) {
+        outputInterpret = interpretChef(_currentText.toLowerCase(), _currentInput);
+        output = '';
+        outputInterpret.forEach((element) {
+          if (element.startsWith('chef_')) {
+            output = output + i18n(context, element) + ' ';
+          } else
+            output = output + element + ' ';
+        });
+      } else
+        output = i18n(context, 'chef_invalid_intput');
+    }
     return GCWOutputText(
         text: output,
         isMonotype: true,

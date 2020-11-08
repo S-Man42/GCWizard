@@ -379,6 +379,7 @@
   "chef_remark" : "Kommentar",
   "chef_time" : "Kochzeit",
   "chef_temperature" : "Ofentemperatur",
+  "chef_invalid_intput" : "Fehler: ungültige Eingabe: nur Zahlen sind erlaubt",
 
   "chickenlanguage_title" : "Hühnersprache",
   "chickenlanguage_description" : "Spielsprache, Geheimsprache",
