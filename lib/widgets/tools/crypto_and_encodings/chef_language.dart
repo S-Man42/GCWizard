@@ -135,7 +135,7 @@ class ChefState extends State<Chef> {
       output = generateChef(_currentText, _currentRemark, _currentTime, _currentTemperature, _currentInput);
     } else {
       if (isValid(_currentInput)) {
-        outputInterpret = interpretChef(_currentText.toLowerCase(), _currentInput);
+        outputInterpret = interpretChef(_currentText.toLowerCase().replaceAll('-', ' '), _currentInput);
         output = '';
         outputInterpret.forEach((element) {
 print('output => '+element);
@@ -148,7 +148,7 @@ print('output => '+element);
         output = i18n(context, 'chef_invalid_intput');
     }
     return GCWOutputText(
-        text: output,
+        text: output.trim(),
         isMonotype: true,
     );
   }
