@@ -1,4 +1,3 @@
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chefException.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/method.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/ingredient.dart';
 
@@ -45,6 +44,8 @@ class Recipe {
 print(scanner);
     for(int i = 1; i < scanner.length - 1; i++){
       this.methods.add(new Method(scanner[i], i));
+      // check for invalid Method added
+
     };
     //var i = 0;
     //scanner.forEach((meth) {
@@ -70,7 +71,11 @@ print(scanner);
   }
 
   void setServes(String serves) {
-    this.serves = int.parse(serves.substring(("Serves ").length, serves.length-1));
+//print('SetServes: ' + serves + ' => '+ serves.substring(("Serves ").length, serves.length-1)) ;
+print('SetServes: ' + serves + ' => '+ RegExp(r'(serves )(\d*)(\.)*').firstMatch(serves).group(2)) ;
+    this.serves = int.parse(RegExp(r'(serves )(\d*)(\.)*').firstMatch(serves).group(2));
+    //this.serves = int.parse(serves.substring(("Serves ").length, serves.length-1));
+print('SetServes: '+serves+' => '+this.serves.toString());
   }
 
   int getServes() {

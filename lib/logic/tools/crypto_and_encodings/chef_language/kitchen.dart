@@ -67,6 +67,13 @@ class Kitchen {
     methodloop: while (i < methods.length && !deepfrozen) {
       Method m = methods[i];
       switch (m.type) {
+        case Type.Invalid:
+          valid = false;
+          error.add('chef_error_recipe_method');
+          error.add(m.ingredient);
+          error.add('chef_error_recipe_method_unsupported');
+          return null;
+          break;
         case Type.Take :
         case Type.Put :
         case Type.Fold :

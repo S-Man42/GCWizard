@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 */
 enum Type {Take, Put, Fold, Add, Remove, Combine, Divide, AddDry, Liquefy, LiquefyBowl, Stir, StirInto,
-  Mix, Clean, Pour, Verb, VerbUntil, SetAside, Serve, Refrigerate, Remember}
+  Mix, Clean, Pour, Verb, VerbUntil, SetAside, Serve, Refrigerate, Remember, Invalid}
 
 class Method {
 
@@ -25,7 +25,7 @@ class Method {
       RegExp(r"^take ([a-zA-Z ]+) from refrigerator"),
       RegExp(r"^(put|fold) ([a-zA-Z ]+) into( the)?( (\\d+)(nd|rd|th|st))? mixing bowl"),
       RegExp(r"^add dry ingredients( to( (\\d+)(nd|rd|th|st))? mixing bowl)?"),
-      RegExp(r"^(add|remove|combine|divide) ([a-zA-Z ]+?)( (to|into|from)( (\\d+)(nd|rd|th|st))? mixing bowl)?"),
+      RegExp(r"^(add|remove|combine|divide) ([a-zA-Z ]+)( (to|into|from)( (\\d+)(nd|rd|th|st))? mixing bowl)?"),
       RegExp(r"^liquefy contents of the( (\\d+)(nd|rd|th|st))? mixing bowl"),
       RegExp(r"^liquefy ([a-zA-Z ]+)"),
       RegExp(r"^stir( the( (\\d+)(nd|rd|th|st))? mixing bowl)? for (\\d+) minutes"),
@@ -54,9 +54,16 @@ class Method {
       mixingbowl = (matchers[2].firstMatch(line).group(3) == null ? 1 : int.parse(matchers[2].firstMatch(line).group(3))) - 1;
     }
     else if (matchers[3].hasMatch(line)) {// add | remove | combine | divide
-      type = matchers[3].firstMatch(line).group(1)==("add") ? Type.Add : (matchers[3].firstMatch(line).group(1)==("Remove") ? Type.Remove : (matchers[3].firstMatch(line).group(1)==("Combine") ? Type.Combine : Type.Divide));
+      switch (matchers[3].firstMatch(line).group(1)) {
+        case 'add':  type = Type.Add; break;
+        case 'remove':  type = Type.Remove; break;
+        case 'combine':  type = Type.Combine; break;
+        case 'divide':  type = Type.Divide; break;
+      }
+      //type = matchers[3].firstMatch(line).group(1)==("add") ? Type.Add : (matchers[3].firstMatch(line).group(1)==("Remove") ? Type.Remove : (matchers[3].firstMatch(line).group(1)==("Combine") ? Type.Combine : Type.Divide));
       ingredient = matchers[3].firstMatch(line).group(2);
       mixingbowl = (matchers[3].firstMatch(line).group(6) == null ? 1 : int.parse(matchers[3].firstMatch(line).group(6))) - 1;
+print(line + ' => '+ingredient);
     }
     else if (matchers[4].hasMatch(line)) {//liquefy contents
       type = Type.LiquefyBowl;
@@ -104,17 +111,22 @@ class Method {
     else if (matchers[14].hasMatch(line)) {// suggestion
       type = Type.Remember;
     }
-    else if (matchers[15].hasMatch(line)) {
+    else if (matchers[15].hasMatch(line)) {// xxx th xxx until
       type = Type.VerbUntil;
       verb = matchers[15].firstMatch(line).group(4);
       ingredient = matchers[15].firstMatch(line).group(3);
+      print('method type.verbuntil '+verb+' '+ingredient);
     }
-    else if (matchers[16].hasMatch(line)) {
+    else if (matchers[16].hasMatch(line)) {// xxx the xxx
       type = Type.Verb;
       verb = matchers[16].firstMatch(line).group(1);
       ingredient = matchers[16].firstMatch(line).group(2);
+print('method type.verb '+verb+' '+ingredient);
     }
-    //else
+    else {
+      type = Type.Invalid;
+      ingredient = line;
       //throw ChefException.Contructor2(ChefException.METHOD, n, line, "Unsupported method found!");
+    }
   }
 }

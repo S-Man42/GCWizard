@@ -1,8 +1,6 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chefException.dart';
 
-enum State {
-  Dry, Liquid
-}
+enum State {Dry, Liquid}
 
 class Ingredient {
 
@@ -12,39 +10,43 @@ class Ingredient {
 
   Ingredient(String ingredient)  { //throws ChefException
     var tokens = ingredient.split(" ");
+    // token[0] = amount
+    // token[1] = measurement or name
+print(tokens);
     int i = 0;
     _state = State.Dry;
-    if (RegExp(r"^\d*$").hasMatch(tokens[i])) {
+    if (RegExp(r"\d*$").hasMatch(tokens[i])) {
       _amount = int.parse(tokens[i]);
       i++;
-      if (RegExp(r"heaped|level").hasMatch(tokens[i])) {
+      if (RegExp(r"^heaped|^level").hasMatch(tokens[i])) {
         _state = State.Dry;
         i++;
-      }
-      if (RegExp(r"^g|kg|pinch(es)?").hasMatch(tokens[i])) {
+      } else if (RegExp(r"^g$|^kg$|^pinch(es)?").hasMatch(tokens[i])) {
         _state = State.Dry;
         i++;
-      }
-      else if (RegExp(r"^ml|l|dash(es)?").hasMatch(tokens[i])) {
+        print(tokens[i-1]+i.toString());
+      } else if (RegExp(r"^ml$|^l$|^dash(es)?").hasMatch(tokens[i])) {
         _state = State.Liquid;
         i++;
-      }
-      else if (RegExp(r"^cup(s)?|teaspoon(s)?|tablespoon(s)?").hasMatch(tokens[i])) {
+      } else if (RegExp(r"^cup(s)?|^teaspoon(s)?|^tablespoon(s)?").hasMatch(tokens[i])) {
         i++;
       }
     }
     _name = "";
+print('get name '+i.toString()+'.'+tokens.length.toString());
     while (i < tokens.length) {
-      _name += tokens[i] + (i == tokens.length-1 ? "" : " ");
+      _name = _name + tokens[i] + (i == tokens.length-1 ? "" : " ");
       i++;
     }
     if (_name == "") {
       _name = 'what you ever you want';
       //throw  ChefException.Contructor1(ChefException.INGREDIENT, tokens, "ingredient name missing");
     }
+print('ingredient found '+_name+'.'+_amount.toString());
   }
 
   Ingredient.Contructor1(int n, State s, String name) {
+print('ingredient.constructor '+n.toString()+' '+name+s.toString());
     this._amount = n;
     this._state = s;
     this._name = name;

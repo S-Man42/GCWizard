@@ -266,8 +266,14 @@ class Chef {
 
 	void bake(String additionalIngredients) {
 		Kitchen k = new Kitchen(this.recipes, this.mainrecipe, null, null);
-		if (k.valid)
+		if (k.valid) {
+			String out = 'ingredients ';
+			this.mainrecipe.ingredients.forEach((key, value) {
+				out = out + '['+key+','+value.getName()+'.'+value.getAmount().toString()+'] ';
+			});
+			print(out);
 			k.cook(additionalIngredients);
+		}
     this.valid = k.valid;
     this.meal = k.meal;
     this.error = k.error;
