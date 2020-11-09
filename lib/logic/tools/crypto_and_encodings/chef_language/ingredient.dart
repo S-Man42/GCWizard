@@ -8,11 +8,11 @@ class Ingredient {
   int _amount;
   State _state;
 
-  Ingredient(String ingredient)  { //throws ChefException
-    var tokens = ingredient.split(" ");
+  Ingredient(String ingredient)  {
+    var tokens = ingredient.replaceAll('-', ' ').split(" ");
     // token[0] = amount
     // token[1] = measurement or name
-print(tokens);
+print('analyse INGREDIENT ['+tokens.join('.')+']');
     int i = 0;
     _state = State.Dry;
     if (RegExp(r"\d*$").hasMatch(tokens[i])) {
@@ -24,7 +24,6 @@ print(tokens);
       } else if (RegExp(r"^g$|^kg$|^pinch(es)?").hasMatch(tokens[i])) {
         _state = State.Dry;
         i++;
-        print(tokens[i-1]+i.toString());
       } else if (RegExp(r"^ml$|^l$|^dash(es)?").hasMatch(tokens[i])) {
         _state = State.Liquid;
         i++;
@@ -33,20 +32,18 @@ print(tokens);
       }
     }
     _name = "";
-print('get name '+i.toString()+'.'+tokens.length.toString());
     while (i < tokens.length) {
       _name = _name + tokens[i] + (i == tokens.length-1 ? "" : " ");
       i++;
     }
     if (_name == "") {
-      _name = 'what you ever you want';
+      _name = 'INVALID';
       //throw  ChefException.Contructor1(ChefException.INGREDIENT, tokens, "ingredient name missing");
     }
 print('ingredient found '+_name+'.'+_amount.toString());
   }
 
   Ingredient.Contructor1(int n, State s, String name) {
-print('ingredient.constructor '+n.toString()+' '+name+s.toString());
     this._amount = n;
     this._state = s;
     this._name = name;

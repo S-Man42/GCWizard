@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chefException.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/container.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/component.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/ingredient.dart';
@@ -15,10 +14,6 @@ class Kitchen {
   bool valid;
   List<String> error;
   List<String> meal;
-
-  //Kitchen(Map<String, Recipe> recipes, Recipe mainrecipe) {
-  //  Kitchen.Contructor(recipes, mainrecipe, null, null);
-  //}
 
   Kitchen(Map<String, Recipe> recipes, Recipe mainrecipe, List<Container> mbowls, List<Container> bdishes) {
     this.valid = true;
@@ -102,9 +97,8 @@ class Kitchen {
 print('kitchen ' + m.type.toString());
       switch (m.type) {
         case Type.Take :
-print(input);
+print('        take '+input.join('.'));
           if ((input.join('') != '') && (ingredientIndex <= input.length - 1)) {
-print('isnotempty ' + ingredientIndex.toString() + ' ' + input.length.toString());
             ingredients[m.ingredient].setAmount(int.parse(input[ingredientIndex]));
             ingredientIndex++;
           } else {

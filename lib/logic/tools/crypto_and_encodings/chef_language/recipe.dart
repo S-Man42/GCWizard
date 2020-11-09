@@ -11,9 +11,11 @@ class Recipe {
   int gasmark;
   List<Method> methods;
   int serves;
+  bool error;
 
   Recipe(String title) {
     this.title = title;
+    this.error = false;
   }
 
   void setIngredients(String ingredients) {//throws ChefException
@@ -23,8 +25,17 @@ class Recipe {
     ingredients.split("\n").forEach((ingredient) {
       //Clearing the 'Ingredients.' header
       if (i > 0) {
+print('RECIPE setIngredient '+ingredient);
         Ingredient ing = new Ingredient(ingredient);
-        this.ingredients.addAll({ing.getName().toLowerCase(): ing});
+print('       => '+ing.getName()+'.'+ing.getAmount().toString());
+        if (ing.getName() == 'INVALID') {
+print('       => error = true => return');
+          error = true;
+          return;
+        } else {
+          error = false;
+          this.ingredients.addAll({ing.getName().toLowerCase(): ing});
+        }
       }
       i++;
     });
@@ -34,28 +45,14 @@ class Recipe {
     this.comment = comment;
   }
 
-  void setMethod(String method) {//throws ChefException
+  void setMethod(String method) {
     this.methods = List<Method>();
-    // method = method.replaceAll("\n", "");
-    // method = method.replaceAll(". ",".");
-    // method = method.replaceAll("\\. ",".");
-    // var scanner =  RegExp(r"\\.");
     List<String> scanner = method.replaceAll("\n", "").replaceAll(". ",".").split('.');
-print(scanner);
     for(int i = 1; i < scanner.length - 1; i++){
-      this.methods.add(new Method(scanner[i], i));
-      // check for invalid Method added
-
+      var m = new Method(scanner[i], i);
+      if (m.type != Type.Invalid)
+        this.methods.add(m);
     };
-    //var i = 0;
-    //scanner.forEach((meth) {
-    //Clearing the 'Method.' header
-    //scanner.allMatches(method).forEach((meth) {
-      //this.methods.add(new Method(method.substring(meth.start, meth.end), i));
-      //if ((i > 0) && (i < scanner.length))
-      //  this.methods.add(new Method(meth, i));
-      //i++;
-    //});
   }
 
   void setCookingTime(String cookingtime) {
@@ -71,11 +68,7 @@ print(scanner);
   }
 
   void setServes(String serves) {
-//print('SetServes: ' + serves + ' => '+ serves.substring(("Serves ").length, serves.length-1)) ;
-print('SetServes: ' + serves + ' => '+ RegExp(r'(serves )(\d*)(\.)*').firstMatch(serves).group(2)) ;
     this.serves = int.parse(RegExp(r'(serves )(\d*)(\.)*').firstMatch(serves).group(2));
-    //this.serves = int.parse(serves.substring(("Serves ").length, serves.length-1));
-print('SetServes: '+serves+' => '+this.serves.toString());
   }
 
   int getServes() {

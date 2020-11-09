@@ -7,116 +7,87 @@ void main() {
 
 
 
-  Ingredients.
+
+Ingredients.
 
 
-  Method.
-
-  Liquefy contents of the mixing bowl.
-  Pour contents of the mixing bowl into the baking dish.
-
-  Serves 1.
-  ''';
-
-  String testTitle = '''Marks marvellous must have 
-
- 
-
-Ingredients. 
-
-
-Method. 
+Method.
 
 Liquefy contents of the mixing bowl.
-Pour contents of the mixing bowl into the baking dish. 
+Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
 ''';
-
-  String testTitleComments = '''Marks marvellous must have 
-
-to be a wizard 
-
-Ingredients. 
+  String testTitle = '''Marks marvellous must have
 
 
-Method. 
+
+Ingredients.
+
+
+Method.
 
 Liquefy contents of the mixing bowl.
-Pour contents of the mixing bowl into the baking dish. 
+Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
 ''';
+  String testTitleComments = '''Marks marvellous must have
 
-  String testTitleCommentsTime = '''Marks marvellous must have 
+to be a wizard
 
-to be a wizard 
+Ingredients.
 
-Ingredients. 
+
+Method.
+
+Liquefy contents of the mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.
+''';
+  String testTitleCommentsTime = '''Marks marvellous must have
+
+to be a wizard
+
+Ingredients.
 
 
 Cooking time: 50 minutes.
 
-Method. 
+Method.
 
 Liquefy contents of the mixing bowl.
-Pour contents of the mixing bowl into the baking dish. 
+Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
 ''';
+  String testTitleCommentsTimeTemp = '''Marks marvellous must have
 
-  String testTitleCommentsTimeTemp = '''Marks marvellous must have 
+to be a wizard
 
-to be a wizard 
-
-Ingredients. 
+Ingredients.
 
 
 Cooking time: 50 minutes.
 
 Pre-heat oven to 180 degrees Celsius.
 
-Method. 
+Method.
 
 Liquefy contents of the mixing bowl.
-Pour contents of the mixing bowl into the baking dish. 
+Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
 ''';
 
   group("chef_language.generateChef", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-/*
-      {'input' : null, 'title' : null, 'remark' : null, 'time' : null, 'temperature' : null, 'expectedOutput' : testNull},
-      {'input' : null, 'title' : null, 'remark' : null, 'time' : null, 'temperature' : '', 'expectedOutput' : ''},
-      {'input' : null, 'title' : null, 'remark' : null, 'time' : '',   'temperature' : null, 'expectedOutput' : ''},
-      {'input' : null, 'title' : null, 'remark' : null, 'time' : '',   'temperature' : '', 'expectedOutput' : ''},
-      {'input' : null, 'title' : null, 'remark' : '',   'time' : null, 'temperature' : null, 'expectedOutput' : ''},
-      {'input' : null, 'title' : null, 'remark' : '',   'time' : null, 'temperature' : '', 'expectedOutput' : ''},
-      {'input' : null, 'title' : null, 'remark' : '',   'time' : '',   'temperature' : null, 'expectedOutput' : ''},
-      {'input' : null, 'title' : null, 'remark' : '',   'time' : '',   'temperature' : '', 'expectedOutput' : ''},
-      {'input' : null, 'title' : '',   'remark' : null, 'time' : null, 'temperature' : null, 'expectedOutput' : ''},
-      {'input' : null, 'title' : '',   'remark' : null, 'time' : null, 'temperature' : '', 'expectedOutput' : ''},
-      {'input' : null, 'title' : '', 'remark' : null, 'time' : '',   'temperature' : null, 'expectedOutput' : ''},
-      {'input' : null, 'title' : '', 'remark' : null, 'time' : '',   'temperature' : '', 'expectedOutput' : ''},
-      {'input' : null, 'title' : '', 'remark' : '',   'time' : null, 'temperature' : null, 'expectedOutput' : ''},
-      {'input' : null, 'title' : '', 'remark' : '',   'time' : null, 'temperature' : '', 'expectedOutput' : ''},
-      {'input' : null, 'title' : '', 'remark' : '',   'time' : '',   'temperature' : null, 'expectedOutput' : ''},
-      {'input' : null, 'title' : '', 'remark' : '',   'time' : '',   'temperature' : '', 'expectedOutput' : ''},
-      {'input' : '', 'title' : null, 'remark' : null, 'time' : null, 'temperature' : null, 'expectedOutput' : ''},
-      {'input' : '', 'title' : null, 'remark' : null, 'time' : null, 'temperature' : '', 'expectedOutput' : ''},
-      {'input' : '', 'title' : null, 'remark' : null, 'time' : '',   'temperature' : null, 'expectedOutput' : ''},
-      {'input' : '', 'title' : null, 'remark' : null, 'time' : '',   'temperature' : '', 'expectedOutput' : ''},
-      {'input' : '', 'title' : null, 'remark' : '',   'time' : null, 'temperature' : null, 'expectedOutput' : ''},
-      {'input' : '', 'title' : null, 'remark' : '',   'time' : null, 'temperature' : '', 'expectedOutput' : ''},
-      */
-      {'input' : '', 'title' : '',   'remark' : '', 'time' : '', '  temperature' : '', 'expectedOutput' : testNull},
-      {'input' : '', 'title' : 'Marks marvellous must have', 'remark' : 'to be a wizard',   'time' : '',   'temperature' : '', 'expectedOutput' : testTitleComments},
-      {'input' : '', 'title' : 'Marks marvellous must have',   'remark' : 'to be a wizard', 'time' : '50', 'temperature' : '', 'expectedOutput' : testTitleCommentsTime},
-      {'input' : '', 'title' : 'Marks marvellous must have',   'remark' : 'to be a wizard', 'time' : '50', 'temperature' : '180', 'expectedOutput' : testTitleCommentsTimeTemp},
-      {'input' : '', 'title' : 'Marks marvellous must have',   'remark' : '', 'time' : '',   'temperature' : '', 'expectedOutput' : testTitle},
-
-      //{'input' : 'Koordinaten', 'title' : 'Mum Heides delicious quiche',   'remark' : '', 'time' : '', '  temperature' : '', 'expectedOutput' : test1},
+      {'language' : 'ENG', 'input' : '', 'title' : '',   'remark' : '', 'time' : '', 'temperature' : '', 'expectedOutput' : testNull},
+      {'language' : 'ENG', 'input' : '', 'title' : 'Marks marvellous must have', 'remark' : 'to be a wizard',   'time' : '',   'temperature' : '', 'expectedOutput' : testTitleComments},
+      {'language' : 'ENG', 'input' : '', 'title' : 'Marks marvellous must have',   'remark' : 'to be a wizard', 'time' : '50', 'temperature' : '', 'expectedOutput' : testTitleCommentsTime},
+      {'language' : 'ENG', 'input' : '', 'title' : 'Marks marvellous must have',   'remark' : 'to be a wizard', 'time' : '50', 'temperature' : '180', 'expectedOutput' : testTitleCommentsTimeTemp},
+      {'language' : 'ENG', 'input' : '', 'title' : 'Marks marvellous must have',   'remark' : '', 'time' : '',   'temperature' : '', 'expectedOutput' : testTitle},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -128,6 +99,7 @@ Serves 1.
   });
 
   group("chef_language.interpretChef:", () {
+    // Hello World Souffle
     var test1 = '''Hello World Souffle
 
 This recipe prints the immortal words "Hello world!", in a basically brute force way. It also makes a lot of food for one person.
@@ -162,6 +134,7 @@ Pour contents of the mixing bowl into the baking dish.
 Serves 1.
 
 ''';
+    // Bubbled and Baked Bacon
     var test2 = '''Bubbled and Baked Bacon
 
 A tasty bacon recipe, leaving it all baked and bubbled with a little decorative flag skewer on top.
@@ -232,6 +205,7 @@ Whisk the corn starch.
 	Add milk.
 	Set aside.
 Whisk until whisked.''';
+    // Factorial and Fish
     var test3 = '''Factorial and Fish
 
 A salty recipe for a fine fish. A tad raw, but definitely salty.
@@ -249,6 +223,7 @@ Shake the salt until spreaded.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
+    // Fibonacc Du Fromage
     var test4 = '''Fibonacci Du Fromage
 
 An improvement on the Fibonacci with Caramel Sauce recipe. Much less for the sweettooths, much more correct.
@@ -292,6 +267,7 @@ Fold pepper into mixing bowl.
 Clean mixing bowl.
 Put salt into mixing bowl.
 Add pepper.''';
+    // Fibonacci Numbers with Caramel Sauce.
     var test5 = '''Fibonacci Numbers with Caramel Sauce.
 
 This recipe prints the first 100 Fibonacci numbers. It uses an auxiliary recipe for caramel sauce to define Fibonacci numbers recursively. This results in an awful lot of caramel sauce! Definitely one for the sweet-tooths.
@@ -347,6 +323,7 @@ Put white sugar into mixing bowl.
 Add vanilla bean.
 Serve with caramel sauce.
 Add brown sugar.''';
+    // Fruit Loops
     var test6 = '''Fruit Loops
 
 Do we need to have 280 brands of breakfast cereal? No, probably not. But we have them for a reason - because some people like them.
@@ -371,6 +348,7 @@ Add fruit.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
+    // Greatest Common Dijon Mustard => Input
     var test7 = '''Greatest Common Dijon Mustard
 
 Ingredients.
@@ -396,6 +374,7 @@ Put mustard seeds into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
+    // Hello World Souffle => aux Recipe
     var test8 = '''Hello World Souffle
 
 This recipe prints the immortal words "Hello world!", by getting one souschef to make the souffle and another to brew the sauce.
@@ -446,6 +425,7 @@ Put lard into the mixing bowl.
 Put red salmon into the mixing bowl.
 Put oil into the mixing bowl.
 Put water into the mixing bowl.''';
+    // Pas and Power => Input Input
     var test9 = '''Peas and Power
 
 Ingredients.
@@ -463,6 +443,7 @@ Shake the carrots until shaken.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
+    // Turings Tasty Tortillas => 9 x Input
     var test10 = '''Turings Tasty Tortillas
 
 This delicious mexican recipe takes forever to prepare.
@@ -579,6 +560,7 @@ Heat the corn until roasted.
 Pour contents of the 2nd mixing bowl into the baking dish.
 
 Serves 1.''';
+    // Turings Tortillas => 8 x Input
     var test11 = '''Turings Tortillas
 
 This is a universal turing machine in Chef. What? Yeah, really. It is. Just make sure you deliver a large enough tape.
@@ -714,6 +696,7 @@ Verb the tapepos until verbed.
 Pour contents of the 2nd mixing bowl into the baking dish.
 
 Serves 1.''';
+    // SELFMADE Mum Heides delicious quiche.
     var test12 = '''Mum Heides delicious quiche.
 
 Find some own words to descripe the recipe. Keep it funny.
@@ -740,6 +723,7 @@ Put eggs into mixing bowl. Put flour into mixing bowl. Put milk into mixing bowl
 Serves 1.
 
 ''';
+    // SELFMADE A mysterious marmelade cake.
     var test13 = '''A mysterious marmelade cake. 
 
 Giving power to the brain while waiting for an idea.
@@ -773,42 +757,34 @@ Pour contents of the mixing bowl into the baking dish.
 Serves 1.
 ''';
 
-
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : '',   'recipe' : '', 'isValid' : false, 'expectedOutput' : ''},
-
-      {'input' : '',   'recipe' : test1,   'isValid' : true, 'expectedOutput' : 'Hello world!'},
-      {'input' : '',   'recipe' : test2,   'isValid' : true, 'expectedOutput' : '?'},
-      {'input' : '5',   'recipe' : test3,   'isValid' : true, 'expectedOutput' : '120'},
-      {'input' : '',   'recipe' : test4,   'isValid' : true, 'expectedOutput' : '?'},
-      {'input' : '',   'recipe' : test5,   'isValid' : true, 'expectedOutput' : '?'},
-      {'input' : '',   'recipe' : test6,   'isValid' : true, 'expectedOutput' : '400'},
-      {'input' : '',   'recipe' : test7,   'isValid' : true, 'expectedOutput' : '?'},
-      {'input' : '',   'recipe' : test8,   'isValid' : true, 'expectedOutput' : '?'},
-      {'input' : '2 4',   'recipe' : test9,   'isValid' : true, 'expectedOutput' : '16'},
-      {'input' : '',   'recipe' : test10,   'isValid' : true, 'expectedOutput' : '?'},
-      {'input' : '',   'recipe' : test11,   'isValid' : true, 'expectedOutput' : '?'},
-      {'input' : '',   'recipe' : test12,   'isValid' : true, 'expectedOutput' : 'Koordinaten'},
-      {'input' : '',   'recipe' : test13,   'isValid' : true, 'expectedOutput' : 'n 432 e 708'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : '', 'isValid' : false, 'expectedOutput' : ''},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test1,   'isValid' : true, 'expectedOutput' : 'Hello world!'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test2,   'isValid' : true, 'expectedOutput' : '?'},
+      {'language' : 'ENG', 'input' : '5',   'recipe' : test3,   'isValid' : true, 'expectedOutput' : '120'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test3,   'isValid' : true, 'expectedOutput' : 'chef_error_runtime_missing_input'},
+      {'language' : 'ENG', 'input' : '20',   'recipe' : test4,   'isValid' : true, 'expectedOutput' : ''},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test4,   'isValid' : true, 'expectedOutput' : 'chef_error_runtime_missing_input'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test5,   'isValid' : true, 'expectedOutput' : '?'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test6,   'isValid' : true, 'expectedOutput' : '400'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test7,   'isValid' : true, 'expectedOutput' : '?'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test8,   'isValid' : true, 'expectedOutput' : '?'},
+      {'language' : 'ENG', 'input' : '2 4','recipe' : test9,   'isValid' : true, 'expectedOutput' : '16'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test10,   'isValid' : true, 'expectedOutput' : '?'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test11,   'isValid' : true, 'expectedOutput' : '?'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test12,   'isValid' : true, 'expectedOutput' : 'Koordinaten'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test13,   'isValid' : true, 'expectedOutput' : 'n 432 e 708'},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         var output = '';
-/*
-        if (isValid(elem['input'])) {
-          expect(true, elem['isValid']);
-*/
         var outputInterpret = interpretChef(elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
-          output = '';
-          outputInterpret.forEach((element) {
-            output = output + element + ' ';
-          });
-/*        } else {
-          expect(false, elem['isValid']);
-        }
-*/
-        expect(output, elem['expectedOutput']);
+        output = '';
+        outputInterpret.forEach((element) {
+          output = output + element + ' ';
+        });
+        expect(output.trim(), elem['expectedOutput']);
       });
     });
   }); // group

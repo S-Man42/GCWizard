@@ -25,7 +25,7 @@ final itemList = [
 ];
 
 String generateChef(String title, String remark, String time, String temperature, String outputToGenerate){
-  String output ="";
+  var output = StringBuffer();
   var ingredients;
   List<String> methodList = new List<String>();
   List<String> ingredientList = new List<String>();
@@ -52,29 +52,28 @@ String generateChef(String title, String remark, String time, String temperature
       methodList.add('Put ' + amount[value] + ' into the mixing bowl.');
     }
   });
-
-  output = output + title + ' \n';
-  output = output + '\n';
-  output = output + remark + ' \n';
-  output = output + '\n';
-  output = output + 'Ingredients.' + ' \n';
-  output = output + ingredientList.join('\n') + '\n';
-  output = output + '\n';
-  if (int.tryParse(time) != null) {
-    output = output + 'Cooking time: ' + time + ' minutes.' + '\n';
-    output = output + '\n';
-  }
-  if (int.tryParse(temperature) != null) {
-    output = output + 'Pre-heat oven to ' + temperature + ' degrees Celsius.' + '\n';
-    output = output + '\n';
-  }
-  output = output + 'Method.' + ' \n';
-  output = output + methodList.join('\n') + '\n';
-  output = output + 'Liquefy contents of the mixing bowl.' + '\n';
-  output = output + 'Pour contents of the mixing bowl into the baking dish.' + ' \n';
-  output = output + '\n';
-  output = output + 'Serves 1.' + '\n';
-  return output;
+	output.write(title + '\n');
+	output.write('\n');
+	output.write(remark + '\n');
+	output.write('\n');
+	output.write('Ingredients.' + '\n');
+	output.write(ingredientList.join('\n') + '\n');
+	output.write('\n');
+	if (int.tryParse(time) != null) {
+		output.write('Cooking time: ' + time + ' minutes.' + '\n');
+		output.write('\n');
+	}
+	if (int.tryParse(temperature) != null) {
+		output.write('Pre-heat oven to ' + temperature + ' degrees Celsius.' + '\n');
+		output.write('\n');
+	}
+	output.write('Method.' + '\n');
+	output.write(methodList.join('\n') + '\n');
+	output.write('Liquefy contents of the mixing bowl.' + '\n');
+	output.write('Pour contents of the mixing bowl into the baking dish.' + '\n');
+	output.write('\n');
+	output.write('Serves 1.' + '\n');
+	return output.toString();
 }
 
 
@@ -92,7 +91,7 @@ bool isValid(String input){
 }
 
 
-List<String> interpretChef(String recipe, String input) {
+List<String> interpretChef(String recipe, input) {
 	if (recipe == null || recipe == '')
 		return new List<String>();
 
@@ -100,7 +99,7 @@ List<String> interpretChef(String recipe, String input) {
 }
 
 
-List<String> decodeChefLanguage(String recipe, additionalIngredients)  { //throws Exception
+List<String> decodeChefLanguage(String recipe, additionalIngredients)  {
 	Chef interpreter = Chef(recipe);
 	if (interpreter.valid) {
 		interpreter.bake(additionalIngredients);
@@ -133,79 +132,55 @@ class Chef {
 				if (line.startsWith("ingredients")) {
 					if (progress > 3) {
 						valid = false;
-						error.add('chef_error_recipe_structural');
-						error.add('chef_error_recipe_read_unexpected');
-						error.add(_progressToExpected(2));
-						error.add('chef_error_recipe_expecting');
-						error.add(_progressToExpected(progress));
+						_addError(2, progress);
 						return '';
 					}
-						//throw new ChefException(ChefException.STRUCTURAL,
-						//		"Read unexpected " + _progressToExpected(2) + ". Expecting " + _progressToExpected(progress));
 					progress = 3;
 					r.setIngredients(line);
+					if (r.error) {
+						error.add('chef_error_recipe_ingredient_name');
+						valid = false;
+						return '';
+					}
 				} else if (line.startsWith("cooking time")) {
 					if (progress > 4) {
 						valid = false;
-						error.add('chef_error_recipe_structural');
-						error.add('chef_error_recipe_read_unexpected');
-						error.add(_progressToExpected(3));
-						error.add('chef_error_recipe_expecting');
-						error.add(_progressToExpected(progress));
+						_addError(3, progress);
 						return '';
 					}
-						//throw new ChefException(ChefException.STRUCTURAL,
-						//		"Read unexpected " + _progressToExpected(3) + ". Expecting " + _progressToExpected(progress));
 					progress = 4;
 					r.setCookingTime(line);
 				} else if (line.startsWith("pre-heat oven")) {
 					if (progress > 5) {
 						valid = false;
-						error.add('chef_error_recipe_structural');
-						error.add('chef_error_recipe_read_unexpected');
-						error.add(_progressToExpected(4));
-						error.add('chef_error_recipe_expecting');
-						error.add(_progressToExpected(progress));
+						_addError(4, progress);
 						return '';
 					}
-						//throw new ChefException(ChefException.STRUCTURAL,
-						//		"Read unexpected " + _progressToExpected(4) + ". Expecting " + _progressToExpected(progress));
 					progress = 5;
 					r.setOvenTemp(line);
 				} else if (line.startsWith("method")) {
 					if (progress > 5){
 						valid = false;
-						error.add('chef_error_recipe_structural');
-						error.add('chef_error_recipe_read_unexpected');
-						error.add(_progressToExpected(5));
-						error.add('chef_error_recipe_expecting');
-						error.add(_progressToExpected(progress));
+						_addError(5, progress);
 						return '';
 					}
-						//throw new ChefException(ChefException.STRUCTURAL,
-						//		"Read unexpected " + _progressToExpected(5) + ". Expecting " + _progressToExpected(progress));
 					progress = 6;
 					r.setMethod(line);
 				} else if (line.startsWith("serves")) {
 					if (progress != 6) {
 						valid = false;
-						error.add('chef_error_recipe_structural');
-						error.add('chef_error_recipe_read_unexpected');
-						error.add(_progressToExpected(6));
-						error.add('chef_error_recipe_expecting');
-						error.add(_progressToExpected(progress));
+						_addError(6, progress);
 						return '';
 					}
-						//throw new ChefException(ChefException.STRUCTURAL,
-						//		"Read unexpected " + _progressToExpected(6) + ". Expecting " + _progressToExpected(progress));
 					progress = 0;
 					r.setServes(line);
 				} else {
 					if (progress == 0 || progress >= 6) {
 						title = _parseTitle(line);
-						r = new Recipe(title);
-						if (mainrecipe == null)
+						r = new Recipe(line);
+						if (mainrecipe == null) {
 							mainrecipe = r;
+						}
 						progress = 1;
 						recipes.addAll({title : r});
 					} else if (progress == 1) {
@@ -219,28 +194,38 @@ class Chef {
 						error.add('chef_hint_recipe_hint');
 						error.add(_structHint(progress));
 						return '';
-						//throw new ChefException(ChefException.STRUCTURAL,
-						//		"Read unexpected comments/title. Expecting " + _progressToExpected(progress) + " Hint:" + _structHint(progress));
 					}
 				}
 		});
-		recipes.addAll({_parseTitle(title): r});
 		if (mainrecipe == null) {
 			valid = false;
 			error.add('chef_error_recipe_structural');
 			error.add('chef_error_recipe_empty_mising_title');
 			return;
 		}
-			//throw new ChefException(
-			//		ChefException.STRUCTURAL, "Recipe empty or title missing!");
 	}
-
 
 	String _parseTitle(String title) {
 		if (title.endsWith('.')) {
 			title = title.substring(0, title.length - 1);
 		}
 		return title.toLowerCase();
+	}
+
+	void _addError(int progressToExpected, int progress) {
+
+		error.add('chef_error_recipe_structural');
+		if (progressToExpected >= 0) {
+			error.add('chef_error_recipe_read_unexpected');
+			error.add(_progressToExpected(progressToExpected));
+			error.add('chef_error_recipe_expecting');
+			error.add(_progressToExpected(progress));
+		} else {
+			error.add('chef_error_recipe_read_unexpected_comments_title');
+			error.add(_progressToExpected(progress));
+			error.add('chef_hint_recipe_hint');
+			error.add(_structHint(progress));
+		}
 	}
 
 	String _structHint(int progress) {
