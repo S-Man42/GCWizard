@@ -101,6 +101,7 @@ List<String> interpretChef(String recipe, input) {
 
 List<String> decodeChefLanguage(String recipe, additionalIngredients)  {
 	Chef interpreter = Chef(recipe);
+print('');print('Rezept ist eingelesen');print('');
 	if (interpreter.valid) {
 		interpreter.bake(additionalIngredients);
 		if (interpreter.valid)

@@ -42,10 +42,12 @@ print('       => error = true => return');
   }
 
   void setComments(String comment) {
+print('RECIPE setComments '+comment);
     this.comment = comment;
   }
 
   void setMethod(String method) {
+print('RECIPE setMethods '+method);
     this.methods = List<Method>();
     List<String> scanner = method.replaceAll("\n", "").replaceAll(". ",".").split('.');
     for(int i = 1; i < scanner.length - 1; i++){
@@ -69,6 +71,7 @@ print('       => error = true => return');
 
   void setServes(String serves) {
     this.serves = int.parse(RegExp(r'(serves )(\d*)(\.)*').firstMatch(serves).group(2));
+print('RECIPE setServes '+this.serves.toString());
   }
 
   int getServes() {

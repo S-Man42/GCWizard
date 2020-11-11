@@ -12,20 +12,22 @@ class Container {
   }
 
   void push(Component c) {
-print('        CONTAINER push '+c.toString()+' = ['+c.getName()+'.'+c.getValue().toString()+'.'+c.getState().toString()+']');
+print('        CONTAINER push ['+c.getName()+'.'+c.getValue().toString()+'.'+c.getState().toString()+']');
     _contents.add(c);
   }
 
   Component peek() {
-print('        CONTAINER peek '+_contents[_contents.length-1].toString());
-    return _contents[_contents.length-1];
+    var c = _contents[_contents.length-1];
+print('        CONTAINER peek ['+c.getName()+'.'+c.getValue().toString()+'.'+c.getState().toString()+']');
+    return c;
   }
 
   Component pop()  { //throws ChefException
     if (_contents.length != 0) {
+      var c = _contents.removeAt(_contents.length - 1);
       // TO DO throw new ChefException(ChefException.LOCAL, "Folded from empty container");
-print('        CONTAINER pop at position '+ _contents.length.toString());
-      return _contents.removeAt(_contents.length - 1);
+print('        CONTAINER pop ['+c.getName()+'.'+c.getValue().toString()+'.'+c.getState().toString()+']');
+      return c;
     }
   }
 
@@ -34,6 +36,8 @@ print('        CONTAINER pop at position '+ _contents.length.toString());
   }
 
   void combine(Container c) {
+String inhalt = ''; for (int i=0;i<c._contents.length;i++){inhalt=inhalt+c._contents[i].getName()+'.'+c._contents[i].getValue().toString();};
+print('       CONTAINER combine ['+inhalt+']');
     _contents.addAll(c._contents);
   }
 

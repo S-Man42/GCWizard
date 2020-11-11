@@ -1,8 +1,5 @@
-// package interpreter;
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/ingredient.dart';
-/*
-import interpreter.Ingredient.State;
-*/
+
 class Component {
 
   State _state;

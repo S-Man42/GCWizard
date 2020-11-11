@@ -19,18 +19,18 @@ print('analyse METHOD '+n.toString()+' '+line);
     this.n = n;
     List<RegExp> matchers = [
       RegExp(r"^take ([a-zA-Z ]+) from refrigerator$"),
-      RegExp(r"^(put|fold) ([a-zA-Z ]+) into( the)?( (\\d+)(nd|rd|th|st))? mixing bowl$"),
-      RegExp(r"^add dry ingredients( to( (\\d+)(nd|rd|th|st))? mixing bowl)?$"),
-      RegExp(r"^^(add|remove|combine|divide) ([a-zA-Z ]+?)( (to|into|from)( (\d+)(nd|rd|th|st))? mixing bowl)?$"),
-      RegExp(r"^liquefy contents of the( (\\d+)(nd|rd|th|st))? mixing bowl$"),
+      RegExp(r"^(put|fold) ([a-zA-Z ]+) into( the)?( (\d+)(nd|rd|th|st))? mixing bowl$"),
+      RegExp(r"^add dry ingredients( to( (\d+)(nd|rd|th|st))? mixing bowl)?$"),
+      RegExp(r"^(add|remove|combine|divide) ([a-zA-Z ]+?)( (to|into|from)( (\d+)(nd|rd|th|st))? mixing bowl)?$"),
+      RegExp(r"^liquefy contents of the( (\d+)(nd|rd|th|st))? mixing bowl$"),
       RegExp(r"^liquefy ([a-zA-Z ]+)$"),
-      RegExp(r"^stir( the( (\\d+)(nd|rd|th|st))? mixing bowl)? for (\\d+) minutes$"),
-      RegExp(r"^stir ([a-zA-Z ]+) into the( (\\d+)(nd|rd|th|st))? mixing bowl$"),
-      RegExp(r"^mix( the( (\\d+)(nd|rd|th|st))? mixing bowl)? well$"),
-      RegExp(r"^clean( (\\d+)(nd|rd|th|st))? mixing bowl$"),
-      RegExp(r"^pour contents of the( (\\d+)(nd|rd|th|st))? mixing bowl into the( (\\d+)(nd|rd|th|st))? baking dish$"),
+      RegExp(r"^stir( the( (\d+)(nd|rd|th|st))? mixing bowl)? for (\\d+) minutes$"),
+      RegExp(r"^stir ([a-zA-Z ]+) into the( (\d+)(nd|rd|th|st))? mixing bowl$"),
+      RegExp(r"^mix( the( (\d+)(nd|rd|th|st))? mixing bowl)? well$"),
+      RegExp(r"^clean( (\d+)(nd|rd|th|st))? mixing bowl$"),
+      RegExp(r"^pour contents of the( (\d+)(nd|rd|th|st))? mixing bowl into the( (\d+)(nd|rd|th|st))? baking dish$"),
       RegExp(r"^set aside$"),
-      RegExp(r"^refrigerate( for (\\d+) hours)?$"),
+      RegExp(r"^refrigerate( for (\d+) hours)?$"),
       RegExp(r"^serve with ([a-zA-Z ]+)$"),
       RegExp(r"^suggestion: (.*)$"),
       RegExp(r"^([a-zA-Z]+?)( the ([a-zA-Z ]+))? until ([a-zA-Z]+)$"),
@@ -49,6 +49,9 @@ print('               => '+matchers[1].firstMatch(line).group(1)+'.'+matchers[1]
         type = Type.AddDry;
         mixingbowl = (matchers[2].firstMatch(line).group(3) == null ? 1 : int.parse(matchers[2].firstMatch(line).group(3))) - 1;
     } else if (matchers[3].hasMatch(line)) {// add | remove | combine | divide
+      // group 1  type
+      // group 2 ingredient
+      // group 6 nr mixing bowl
 print('anaylse METHOD '+line);
         switch (matchers[3].firstMatch(line).group(1)) {
           case 'add':  type = Type.Add; break;
@@ -57,7 +60,7 @@ print('anaylse METHOD '+line);
           case 'divide':  type = Type.Divide; break;
         }
         ingredient = matchers[3].firstMatch(line).group(2);
-        mixingbowl = (matchers[3].firstMatch(line).group(7) == null ? 1 : int.parse(matchers[3].firstMatch(line).group(7))) - 1;
+        mixingbowl = (matchers[3].firstMatch(line).group(6) == null ? 1 : int.parse(matchers[3].firstMatch(line).group(6))) - 1;
 print('anaylse METHOD '+line + ' => '+matchers[3].firstMatch(line).group(1)+'.'+matchers[3].firstMatch(line).group(2)+'.'+mixingbowl.toString());
     } else if (matchers[4].hasMatch(line)) {//liquefy contents
         type = Type.LiquefyBowl;
@@ -94,9 +97,11 @@ print('anaylse METHOD '+line + ' => '+matchers[3].firstMatch(line).group(1)+'.'+
     } else if (matchers[14].hasMatch(line)) {// suggestion
         type = Type.Remember;
     } else if (matchers[15].hasMatch(line)) {// xxx the ingredient until yyyed
+      // group 3 ingredient
+      // group 4 verb ed
         type = Type.VerbUntil;
         verb = matchers[15].firstMatch(line).group(4);
-        if (matchers[15].firstMatch(line).group(4) != null) {
+        if (matchers[15].firstMatch(line).group(3) != null) {
           ingredient = matchers[15].firstMatch(line).group(3);
           print('method type.verbuntil '+verb+' '+ingredient);
         } else

@@ -98,7 +98,7 @@ print('\n'+'-------- KITCHEN starting method loop');
 print('kitchen Step '+ (i+1).toString() +' '+ m.type.toString());
       switch (m.type) {
         case Type.Take :
-print('        TAKE '+input.join('.'));
+print('        TAKE '+input.join('.')+' => '+ m.ingredient +' := '+ input[ingredientIndex]);
           if ((input.join('') != '') && (ingredientIndex <= input.length - 1)) {
             ingredients[m.ingredient].setAmount(int.parse(input[ingredientIndex]));
             ingredientIndex++;
@@ -145,11 +145,13 @@ print('        REMOVE '+ingredients[m.ingredient].getAmount().toString()+' FROM 
           break;
         case Type.Combine :
           c = mixingbowls[m.mixingbowl].peek();
+print('        COMBINE ' + c.getValue().toString()+' * '+ingredients[m.ingredient].getAmount().toString());
           c.setValue(c.getValue() * ingredients[m.ingredient].getAmount());
           break;
         case Type.Divide :
           c = mixingbowls[m.mixingbowl].peek();
-          c.setValue((c.getValue() / ingredients[m.ingredient].getAmount()).round());
+print('        DIVIDE ' + c.getValue().toString()+' / '+ingredients[m.ingredient].getAmount().toString());
+          c.setValue((c.getValue() ~/ ingredients[m.ingredient].getAmount()).round());
           break;
         case Type.AddDry :
           int sum = 0;
@@ -249,7 +251,9 @@ print('        bakingdish '+m.bakingdish.toString() + '=> ' + out) ;
           }
             //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Unavailable recipe: "+m.auxrecipe);
           Kitchen k = new Kitchen(recipes, recipes[m.auxrecipe.toLowerCase()], mixingbowls, bakingdishes);
+print('         executing auxiliary recipe');
           Container con = k.cook(additionalIngredients);
+print('         auxiliary recipe is finished');
           mixingbowls[0].combine(con);
           break;
         case Type.Refrigerate :

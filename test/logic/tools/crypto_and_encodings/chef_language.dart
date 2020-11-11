@@ -758,6 +758,124 @@ Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
 ''';
+    // https://metacpan.org/source/SMUELLER/Acme-Chef-1.01/examples/stdin.chef
+    var test14 = '''STDIN stew.
+ 
+Read flour from STDIN and output it.
+ 
+Ingredients.
+flour
+ 
+Method.
+Take flour from refrigerator.
+Put flour into mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+Refrigerate for 1 hour.''';
+    // https://metacpan.org/source/SMUELLER/Acme-Chef-1.01/examples/japh.chef
+    var test15 = '''JAPH Souffle.
+ 
+Ingredients.
+44 potatoes
+114 onions
+101 g flour
+107 kg salt
+99 bottles of beer
+97 cups acid
+72 l oil
+32 pins
+8 l urine
+108 pines
+101 laptops
+80 mouses
+47 keyboards
+102 idiots
+104 hackers
+67 voodoo puppets
+116 crackpipes
+111 megawatts
+110 numbers
+97 commas
+115 dweebs
+117 sheep
+74 creeps
+ 
+Method.
+Put potatoes into the mixing bowl. Put onions into the mixing bowl. Put
+flour into the mixing bowl. Put salt into the mixing bowl. Put bottles
+of beer into the mixing bowl. Put acid into the mixing bowl. Put oil into
+the mixing bowl. Put pins into the mixing bowl. Put pines into the
+mixing bowl. Put onions into the mixing bowl. Put laptops into the mixing
+bowl. Put mouses into the mixing bowl. Put keyboards into the mixing
+bowl. Put idiots into the mixing bowl. Put flour into the mixing bowl.
+Put hackers into the mixing bowl. Put voodoo puppets into the mixing
+bowl. Put pins into the mixing bowl. Put onions into the mixing bowl. Put
+flour into the mixing bowl. Put hackers into the mixing bowl. Put
+crackpipes into the mixing bowl. Put megawatts into the mixing bowl. Put
+numbers into the mixing bowl. Put commas into the mixing bowl. Put pins
+into the mixing bowl. Put crackpipes into the mixing bowl. Put dweebs into
+the mixing bowl. Put sheep into the mixing bowl. Put creeps into the
+mixing bowl. Liquify contents of the mixing bowl. Pour contents of the
+mixing bowl into the baking dish.
+ 
+Serves 1.''';
+    // https://metacpan.org/source/SMUELLER/Acme-Chef-1.01/examples/exp.chef
+    var test16 = '''Exponentiation cake.
+ 
+Calculate exponentiation: sugar ^ flour.
+ 
+Ingredients.
+3 kg flour
+2 g sugar
+1 egg
+ 
+Method.
+Put flour into mixing bowl.
+Bake flour.
+Remove egg.
+Fold flour into mixing bowl.
+Put sugar into mixing bowl.
+Cool flour.
+Combine sugar.
+Water flour until cooled.
+Pour contents of the mixing bowl into the baking dish.
+Refrigerate for 1 hour.
+Heat until baked.
+Clean mixing bowl.
+Put egg into mixing bowl.
+Stir for 2 minutes.
+Pour contents of the mixing bowl into the baking dish.
+Refrigerate for 1 hour.
+
+Serves 1.''';
+    // https://metacpan.org/source/SMUELLER/Acme-Chef-1.01/examples/fac.chef
+    var test17 = '''Factorial.
+ 
+Ingredients.
+12 cups vodka
+1 bucket
+1 toilet
+ 
+Method.
+Waste vodka. Put vodka into mixing bowl. Serve with drug coctail. Fold
+toilet into mixing bowl. Clean mixing bowl. Put toilet into mixing bowl.
+Pour contents of the mixing bowl into the baking dish. Puke vodka until
+wasted.
+ 
+Serves 1.
+ 
+ 
+Drug coctail.
+ 
+Ingredients.
+300 cigarettes
+1 kg cannabis
+ 
+Method.
+Fold cigarettes into the mixing bowl. Put the cannabis into the mixing bowl.
+Smoke the cigarettes. Combine cigarettes. Breathe the cigarettes until smoked.
+Fold cigarettes into the mixing bowl. Clean mixing bowl. Put cigarettes into
+mixing bowl.''';
+
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',   'recipe' : test0, 'isValid' : false, 'expectedOutput' : ''},
@@ -776,6 +894,10 @@ Serves 1.
       {'language' : 'ENG', 'input' : '',   'recipe' : test11,   'isValid' : true, 'expectedOutput' : '?'},
       {'language' : 'ENG', 'input' : '',   'recipe' : test12,   'isValid' : true, 'expectedOutput' : 'Koordinaten'},
       {'language' : 'ENG', 'input' : '',   'recipe' : test13,   'isValid' : true, 'expectedOutput' : 'n 432 e 708'},
+      {'language' : 'ENG', 'input' : '5',   'recipe' : test14,   'isValid' : true, 'expectedOutput' : '5'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test15,   'isValid' : true, 'expectedOutput' : 'n 432 e 708'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test16,   'isValid' : true, 'expectedOutput' : 'n 432 e 708'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test17,   'isValid' : true, 'expectedOutput' : 'n 432 e 708'},
     ];
 
     _inputsToExpected.forEach((elem) {
