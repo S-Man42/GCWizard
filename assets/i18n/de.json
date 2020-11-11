@@ -1062,6 +1062,16 @@
   "duckspeak_description" : "Eine Spaß-Sprache die aus 'Nak'-Lauten besteht",
   "duckspeak_example" : "Ente → Nak? nak? Naknak nak. Naknaknak Nak? Naknak nak?",
 
+  "dvorak_title" : "Dvorak",
+  "dvorak_description" : "Konvertiert zwischen Tastaturlayouts vom Typ QWERTZ und DVORAK(L|R)",
+  "dvorak_example" : "QWERTZ → Ü;:PY",
+  "dvorak_keyboard_from" : "Konvertiert von",
+  "dvorak_keyboard_to" : "Konvertiert nach",
+  "dvorak_keyboard_mode_qwertz_t1" : "QWERTZ DEU T1",
+  "dvorak_keyboard_mode_qwerty_us_int" : "QWERTY US int",
+  "dvorak_keyboard_mode_dvorak" : "DVORAK",
+  "dvorak_keyboard_mode_dvorak_II" : "DVORAK Typ II German",
+
   "e_selection_title" : "e (e = 2,7182818...)",
   "e_selection_description" : "Mathematische Konstante: Eulers Zahl",
 
