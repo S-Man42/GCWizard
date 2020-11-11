@@ -182,9 +182,11 @@ class ChefState extends State<Chef> {
     String output = '';
     List<String>outputInterpret = new List<String>();
 
-    String language = '';
+    String language = 'ENG';
+    if (_currentLanguage == GCWSwitchPosition.left)
+      language = 'DEU';
     if (_currentMode == GCWSwitchPosition.right) {
-      output = generateChef(_currentTitle, _currentRemark, _currentTime, _currentTemperature, _currentInput);
+      output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature, _currentInput);
     } else {
       if (isValid(_currentInput)) {
         outputInterpret = interpretChef(_currentRecipe.toLowerCase(), _currentInput);

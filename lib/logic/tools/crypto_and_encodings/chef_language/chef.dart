@@ -8,7 +8,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chefExc
 // character: liquid  ml l dash(es)
 // indefinite: cup(s) teaspoon(s) tablespoon(s) => liquefy or
 //['', '']
-final itemList = [
+final itemListENG = [
   ['g','flour'], ['g', 'white sugar'], ['pinch', 'salt'], ['pinches', 'baking soda'], ['g', 'butter'],
   ['', 'vanilla bean'], ['tablespoon', 'brown sugar'], ['pinch', 'pepper'], ['', 'eggs'], ['g', 'haricot beans'],
   ['g', 'red salmon'], ['ml', 'milk'], ['ml', 'water'], ['ml', 'oil'], ['ml', 'water'],
@@ -24,17 +24,82 @@ final itemList = [
 	['g', 'peas'], ['g', 'carrots'], ['g', 'raisins'],['teaspoon', 'mexican spices'],['', 'banana']
 ];
 
-String generateChef(String title, String remark, String time, String temperature, String outputToGenerate){
-  var output = StringBuffer();
+final itemListDEU = [
+	['g', 'Mehl'], ['g', 'weißer Zucker'], ['Prise', 'Salz'], ['Prisen', 'Backsoda'], ['g', 'Butter'] ,
+	['', 'Vanilleschote'], ['Esslöffel', 'brauner Zucker'], ['Prise', 'Pfeffer'], ['', 'Eier'], ['g', 'Bohnen'],
+	['g', 'roter Lachs'], ['ml', 'Milch'], ['ml', 'Wasser'], ['ml', 'Öl'], ['ml', 'Wasser'] ,
+	['Tropfen', 'flüssige Vanille'], ['Spritzer', 'Zitronensaft'], ['Teeelöffel', 'Puderzucker'], ['', 'Mandeln'], ['', 'Zwiebeln' ],
+	['', 'Knoblauchzehen'], ['', 'Zimt'], ['', 'Eigelb'], ['', 'Eiweiß'], ['Prisen', 'Kümmel'],
+	['Prisen', 'Anis'], ['ml', 'Amaretto'], ['Esslöffel', 'Espresso'], ['', 'Sahne'], ['', 'saure Sahne'],
+	['', 'Frischkäse'], ['Tassen', 'Käse'], ['ml', 'Weißwein'], ['ml', 'Rotwein'], ['gr', 'Kürbis' ],
+	['g', 'Gurke'], ['g', 'Kartoffeln'], ['gr', 'Süßkartoffeln'], ['g', 'Apfelstücke'], ['', 'Garnelen'] ,
+	['g', 'Guacamole'], ['g', 'Vollkornmehl'], ['g', 'Tofu'], ['Teeelöffel', 'Chili'], ['Teeelöffel', 'Curry'] ,
+	['Spritzer', 'Tabasco'], ['g', 'Senf'], ['Esslöffel', 'Marmelade'], ['g', 'gemischte Früchte'], ['Spritzer', 'Calvados'] ,
+	['g', 'Zucchini'], ['g', 'schmalz'], ['tischlöffel', 'Maisstärke'], ['Scheiben', 'Brot'], ['g', 'Speck' ],
+	['g', 'dunkle Schokolade'], ['g', 'Milchschokolade'], ['ml', 'Doppelcreme'], ['g', 'Kakaopulver'], ['ml', ' geschlagene Eier'],
+	['g', 'Erbsen'], ['g', 'Karotten'], ['g', 'Rosinen'], ['Teeelöffel', 'mexikanische Gewürze'], ['', 'Banane']
+];
+
+
+
+enum textId {
+	Put_into_the_mixing_bowl,
+	Ingredients,
+	Cooking_time,
+	Pre_heat_oven,
+	Method,
+	Liquefy_contents,
+	Pour_contents,
+	Serves
+}
+
+String _getText(textId id, String parameter, language) {
+	var text ='';
+	switch (id) {
+		case textId.Put_into_the_mixing_bowl:
+			if (language == 'ENG') text = 'Put %1 into the mixing bowl.'; else text = 'Gib %1 in die Rührschüssel';
+			break;
+		case textId.Ingredients:
+			if (language == 'ENG') text = 'Ingredients.'; else text = 'Zutaten.';
+			break;
+		case textId.Cooking_time:
+			if (language == 'ENG') text = 'Cooking time: %1 minutes.'; else text = 'Kochzeit: %1 minuten.';
+			break;
+		case textId.Pre_heat_oven:
+			if (language == 'ENG') text = 'Pre-heat oven to %1 degrees Celsius.'; else text = 'Vorheizen des Ofens auf %1 Grad Celsius';
+			break;
+		case textId.Method:
+			if (language == 'ENG') text = 'Method.'; else text = 'Anweisungen.';
+			break;
+		case textId.Liquefy_contents:
+			if (language == 'ENG') text = 'Liquefy contents of the mixing bowl.'; else text = '';
+			break;
+		case textId.Pour_contents:
+			if (language == 'ENG') text = 'Pour contents of the mixing bowl into the baking dish.'; else text = 'Gieße die Inhalte der Rührschüssel in die Servierschüssel.';
+			break;
+		case textId.Serves:
+			if (language == 'ENG') text = 'Serves 1.'; else text = 'Portionen 1';
+			break;
+	}
+
+	return text.replaceAll('%1', parameter);
+}
+
+
+String generateChef(String language, title, String remark, String time, String temperature, String outputToGenerate){
+	var output = StringBuffer();
   var ingredients;
   List<String> methodList = new List<String>();
   List<String> ingredientList = new List<String>();
   Map<int, String> amount = new Map<int, String>();
   Map<String, String> ingredientListed = new Map<String, String>();
   int value = 0;
-  var item;
+	var itemList;
+	var item;
 
   Random random = new Random();
+
+  if (language == 'ENG') itemList = itemListENG; else itemList = itemListDEU;
 
   ingredients = outputToGenerate.split('').reversed;
   ingredients.forEach((element) {
@@ -47,32 +112,32 @@ String generateChef(String title, String remark, String time, String temperature
       ingredientListed[item.elementAt(1)] = item.elementAt(1);
       ingredientList.add(value.toString() + ' ' + item.elementAt(0) + ' ' + item.elementAt(1));
       amount[value] = item.elementAt(1);
-      methodList.add('Put ' + amount[value] + ' into the mixing bowl.');
+      methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[value], language));
     } else {
-      methodList.add('Put ' + amount[value] + ' into the mixing bowl.');
+      methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[value], language));
     }
   });
 	output.write(title + '\n');
 	output.write('\n');
 	output.write(remark + '\n');
 	output.write('\n');
-	output.write('Ingredients.' + '\n');
+	output.write(_getText(textId.Ingredients, '', language)  + '\n');
 	output.write(ingredientList.join('\n') + '\n');
 	output.write('\n');
 	if (int.tryParse(time) != null) {
-		output.write('Cooking time: ' + time + ' minutes.' + '\n');
+		output.write(_getText(textId.Cooking_time, time, language) + '\n');
 		output.write('\n');
 	}
 	if (int.tryParse(temperature) != null) {
-		output.write('Pre-heat oven to ' + temperature + ' degrees Celsius.' + '\n');
+		output.write(_getText(textId.Pre_heat_oven, temperature, language) + '\n');
 		output.write('\n');
 	}
-	output.write('Method.' + '\n');
+	output.write(_getText(textId.Method, '', language) + '\n');
 	output.write(methodList.join('\n') + '\n');
-	output.write('Liquefy contents of the mixing bowl.' + '\n');
-	output.write('Pour contents of the mixing bowl into the baking dish.' + '\n');
+	output.write(_getText(textId.Liquefy_contents, '', language) + '\n');
+	output.write(_getText(textId.Pour_contents, '', language) + '\n');
 	output.write('\n');
-	output.write('Serves 1.' + '\n');
+	output.write(_getText(textId.Serves, '', language) + '\n');
 	return output.toString();
 }
 
