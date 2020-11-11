@@ -59,6 +59,7 @@ class Kitchen {
     Component c;
     int i = 0;
     bool deepfrozen = false;
+print('\n'+'-------- KITCHEN starting method loop');
     methodloop: while (i < methods.length && !deepfrozen) {
       Method m = methods[i];
       switch (m.type) {
@@ -94,10 +95,10 @@ class Kitchen {
             //                                  int type,             recipe, step, method,            error
             //throw new ChefException.Contructor3(ChefException.METHOD, recipe, m.n, m.type.toString(), "Ingredient not found: "+m.ingredient);
       }
-print('kitchen ' + m.type.toString());
+print('kitchen Step '+ (i+1).toString() +' '+ m.type.toString());
       switch (m.type) {
         case Type.Take :
-print('        take '+input.join('.'));
+print('        TAKE '+input.join('.'));
           if ((input.join('') != '') && (ingredientIndex <= input.length - 1)) {
             ingredients[m.ingredient].setAmount(int.parse(input[ingredientIndex]));
             ingredientIndex++;
@@ -108,7 +109,7 @@ print('        take '+input.join('.'));
           }
           break;
         case Type.Put :
-print('        put ' + ingredients[m.ingredient].getName() + ' ' + ingredients[m.ingredient].getAmount().toString());
+print('        PUT ' + ingredients[m.ingredient].getName() + ' ' + ingredients[m.ingredient].getAmount().toString());
           mixingbowls[m.mixingbowl].push( Component.Contructor1(ingredients[m.ingredient]));
           break;
         case Type.Fold :
@@ -125,16 +126,21 @@ print('        put ' + ingredients[m.ingredient].getName() + ' ' + ingredients[m
             return null;
           }
             //throw new ChefException.Contructor3(ChefException.METHOD, recipe, m.n, m.type.toString(), "Folded from empty mixing bowl: "+(m.mixingbowl + 1).toString());
+print('        FOLD into mixing bowl '+m.mixingbowl.toString());
           c = mixingbowls[m.mixingbowl].pop();
+print('         got bowl '+c.getValue.toString());
           ingredients[m.ingredient].setAmount(c.getValue());
           ingredients[m.ingredient].setState(c.getState());
           break;
         case Type.Add :
+print('        ADD '+m.ingredient + '.'+ m.mixingbowl.toString()+'.['+mixingbowls.join(',')+']');
           c = mixingbowls[m.mixingbowl].peek();
           c.setValue(c.getValue() + ingredients[m.ingredient].getAmount());
           break;
-        case Type.Remove :
-          c = mixingbowls[m.mixingbowl].peek();
+        case Type.Remove : // ingredient.amount from mixingbowl
+print('        REMOVE '+m.ingredient + '.'+ m.mixingbowl.toString()+'.['+mixingbowls.join(',')+']');
+          c = mixingbowls[m.mixingbowl].peek(); // returns top of m.mixingbowl
+print('        REMOVE '+ingredients[m.ingredient].getAmount().toString()+' FROM '+c.getValue().toString());
           c.setValue(c.getValue() - ingredients[m.ingredient].getAmount());
           break;
         case Type.Combine :
@@ -151,14 +157,14 @@ print('        put ' + ingredients[m.ingredient].getName() + ' ' + ingredients[m
             if (value.getstate() == State.Dry)
               sum += value.getAmount();
           });
-          mixingbowls[m.mixingbowl].push(new Component(sum, State.Dry));
+          mixingbowls[m.mixingbowl].push(new Component(sum, State.Dry, ''));
           break;
         case Type.Liquefy :
           ingredients[m.ingredient].liquefy();
           break;
         case Type.LiquefyBowl :
 String out = ''; mixingbowls[m.mixingbowl].getContent().forEach((element){out = out+ element + ' ';});
-print('        liquefy bowl '+m.mixingbowl.toString() + '=> ' + out) ;
+print('       LIQUEFY bowl '+m.mixingbowl.toString() + '=> ' + out) ;
           mixingbowls[m.mixingbowl].liquefy();
           break;
         case Type.Stir :
@@ -174,7 +180,7 @@ print('        liquefy bowl '+m.mixingbowl.toString() + '=> ' + out) ;
           mixingbowls[m.mixingbowl].clean();
           break;
         case Type.Pour :
-print('       pour mixingbowl ' + m.mixingbowl.toString() + ' into bakingdish ' + m.bakingdish.toString());
+print('       POUR mixingbowl ' + m.mixingbowl.toString() + ' into bakingdish ' + m.bakingdish.toString());
           bakingdishes[m.bakingdish].combine(mixingbowls[m.mixingbowl]);
 String out = ''; bakingdishes[m.bakingdish].getContent().forEach((element){out = out+ element + ' ';});
 print('        bakingdish '+m.bakingdish.toString() + '=> ' + out) ;

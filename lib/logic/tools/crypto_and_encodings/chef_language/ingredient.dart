@@ -1,4 +1,3 @@
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chefException.dart';
 
 enum State {Dry, Liquid}
 
@@ -61,6 +60,10 @@ print('ingredient found '+_name+'.'+_amount.toString());
     return _state;
   }
 
+  void setState(State s) {
+    _state = s;
+  }
+
   void liquefy() {
     _state = State.Liquid;
   }
@@ -73,7 +76,8 @@ print('ingredient found '+_name+'.'+_amount.toString());
     return _name;
   }
 
-  void setState(State s) {
-    _state = s;
+  void setName(String n){
+    _name = n;
   }
+
 }

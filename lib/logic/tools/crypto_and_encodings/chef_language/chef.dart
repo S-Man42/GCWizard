@@ -252,11 +252,14 @@ class Chef {
 	void bake(String additionalIngredients) {
 		Kitchen k = new Kitchen(this.recipes, this.mainrecipe, null, null);
 		if (k.valid) {
-			String out = 'ingredients ';
-			this.mainrecipe.ingredients.forEach((key, value) {
-				out = out + '['+key+','+value.getName()+'.'+value.getAmount().toString()+'] ';
-			});
-			print(out);
+print('\nkitchen is prepared with mixing bowls and baking dishes');	String out = '';
+out = '- ingredients ';this.mainrecipe.ingredients.forEach((key, value) {out = out + '['+key+','+value.getName()+'.'+value.getAmount().toString()+'] ';});	print(out);
+out = '- methods     ';for (int i=0; i<this.mainrecipe.methods.length;i++) {
+	out=out+'['+this.mainrecipe.methods[i].type.toString() +']';
+};print(out);
+out = '- mixin bowls '+k.mixingbowls.length.toString()+' each';print(out);
+out = '- bakin dishs '+k.bakingdishes.length.toString()+' each';print(out);
+print('');
 			k.cook(additionalIngredients);
 		}
     this.valid = k.valid;

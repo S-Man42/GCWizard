@@ -6,24 +6,27 @@ import interpreter.Ingredient.State;
 class Component {
 
   State _state;
-  int value;
+  int _value;
+  String _name;
 
-  Component(int n, State s) {
-    value = n;
+  Component(int n, State s, String name) {
+    _value = n;
     _state = s;
+    _name = name;
   }
 
   Component.Contructor1(Ingredient ingredient) {
-    value = ingredient.getAmount();
+    _value = ingredient.getAmount();
     _state = ingredient.getstate();
+    _name = ingredient.getName();
   }
 
   int getValue() {
-    return value;
+    return _value;
   }
 
   void setValue(int n) {
-    value = n;
+    _value = n;
   }
 
   State getState() {
@@ -34,9 +37,17 @@ class Component {
     _state = s;
   }
 
+  String getName() {
+    return _name;
+  }
+
+  void setName(String n) {
+    _name = n;
+  }
+
   //@Override
   Component clone() {
-    return Component(value, _state);
+    return Component(_value, _state,_name);
   }
 
   void liquefy() {

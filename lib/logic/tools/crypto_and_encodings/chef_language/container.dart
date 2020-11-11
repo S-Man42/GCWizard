@@ -1,5 +1,4 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/ingredient.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chefException.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/component.dart';
 
 class Container {
@@ -13,18 +12,21 @@ class Container {
   }
 
   void push(Component c) {
+print('        CONTAINER push '+c.toString()+' = ['+c.getName()+'.'+c.getValue().toString()+'.'+c.getState().toString()+']');
     _contents.add(c);
   }
 
   Component peek() {
+print('        CONTAINER peek '+_contents[_contents.length-1].toString());
     return _contents[_contents.length-1];
   }
 
   Component pop()  { //throws ChefException
-    if (_contents.length != 0)
-      // TO DO
-      // throw new ChefException(ChefException.LOCAL, "Folded from empty container");
-    return _contents.removeAt(_contents.length-1);
+    if (_contents.length != 0) {
+      // TO DO throw new ChefException(ChefException.LOCAL, "Folded from empty container");
+print('        CONTAINER pop at position '+ _contents.length.toString());
+      return _contents.removeAt(_contents.length - 1);
+    }
   }
 
   int size() {

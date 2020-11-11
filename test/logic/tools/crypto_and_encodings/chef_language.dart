@@ -99,6 +99,8 @@ Serves 1.
   });
 
   group("chef_language.interpretChef:", () {
+    // Empty recipe
+    var test0 = '';
     // Hello World Souffle
     var test1 = '''Hello World Souffle
 
@@ -205,7 +207,7 @@ Whisk the corn starch.
 	Add milk.
 	Set aside.
 Whisk until whisked.''';
-    // Factorial and Fish
+    // Factorial and Fish => Input
     var test3 = '''Factorial and Fish
 
 A salty recipe for a fine fish. A tad raw, but definitely salty.
@@ -758,7 +760,7 @@ Serves 1.
 ''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '',   'recipe' : '', 'isValid' : false, 'expectedOutput' : ''},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test0, 'isValid' : false, 'expectedOutput' : ''},
       {'language' : 'ENG', 'input' : '',   'recipe' : test1,   'isValid' : true, 'expectedOutput' : 'Hello world!'},
       {'language' : 'ENG', 'input' : '',   'recipe' : test2,   'isValid' : true, 'expectedOutput' : '?'},
       {'language' : 'ENG', 'input' : '5',   'recipe' : test3,   'isValid' : true, 'expectedOutput' : '120'},
@@ -767,7 +769,7 @@ Serves 1.
       {'language' : 'ENG', 'input' : '',   'recipe' : test4,   'isValid' : true, 'expectedOutput' : 'chef_error_runtime_missing_input'},
       {'language' : 'ENG', 'input' : '',   'recipe' : test5,   'isValid' : true, 'expectedOutput' : '?'},
       {'language' : 'ENG', 'input' : '',   'recipe' : test6,   'isValid' : true, 'expectedOutput' : '400'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test7,   'isValid' : true, 'expectedOutput' : '?'},
+      {'language' : 'ENG', 'input' : '8 12',   'recipe' : test7,   'isValid' : true, 'expectedOutput' : '12'},
       {'language' : 'ENG', 'input' : '',   'recipe' : test8,   'isValid' : true, 'expectedOutput' : '?'},
       {'language' : 'ENG', 'input' : '2 4','recipe' : test9,   'isValid' : true, 'expectedOutput' : '16'},
       {'language' : 'ENG', 'input' : '',   'recipe' : test10,   'isValid' : true, 'expectedOutput' : '?'},

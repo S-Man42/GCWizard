@@ -76,8 +76,8 @@ class ChefState extends State<Chef> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'chef_language_DEU'),
-          rightValue: i18n(context, 'chef_language_ENG'),
+          leftValue: i18n(context, 'common_language_german'),
+          rightValue: i18n(context, 'common_language_english'),
           value: _currentLanguage,
           onChanged: (value) {
             setState(() {
