@@ -189,7 +189,7 @@ class ChefState extends State<Chef> {
       output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature, _currentInput);
     } else {
       if (isValid(_currentInput)) {
-        outputInterpret = interpretChef(_currentRecipe.toLowerCase(), _currentInput);
+        outputInterpret = interpretChef(language, _currentRecipe.toLowerCase(), _currentInput);
         output = '';
         outputInterpret.forEach((element) {
           if (element.startsWith('chef_')) {

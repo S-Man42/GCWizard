@@ -15,7 +15,7 @@ class Kitchen {
   List<String> error;
   List<String> meal;
 
-  Kitchen(Map<String, Recipe> recipes, Recipe mainrecipe, List<Container> mbowls, List<Container> bdishes) {
+  Kitchen(Map<String, Recipe> recipes, Recipe mainrecipe, List<Container> mbowls, List<Container> bdishes, String language) {
     this.valid = true;
     this.meal = new List<String>();
     this.error = new List<String>();
@@ -49,7 +49,7 @@ class Kitchen {
     }
   }
 
-  Container cook(String additionalIngredients)  { //throws ChefException
+  Container cook(String additionalIngredients, String language)  { //throws ChefException
     int ingredientIndex = 0;
     List<String> input = additionalIngredients.split(' ');
 
@@ -250,7 +250,7 @@ print('        bakingdish '+m.bakingdish.toString() + '=> ' + out) ;
             return null;
           }
             //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Unavailable recipe: "+m.auxrecipe);
-          Kitchen k = new Kitchen(recipes, recipes[m.auxrecipe.toLowerCase()], mixingbowls, bakingdishes);
+          Kitchen k = new Kitchen(recipes, recipes[m.auxrecipe.toLowerCase()], mixingbowls, bakingdishes, language);
 print('         executing auxiliary recipe');
           Container con = k.cook(additionalIngredients);
 print('         auxiliary recipe is finished');

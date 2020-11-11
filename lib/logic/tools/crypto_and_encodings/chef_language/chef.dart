@@ -156,19 +156,19 @@ bool isValid(String input){
 }
 
 
-List<String> interpretChef(String recipe, input) {
+List<String> interpretChef(String language, recipe, input) {
 	if (recipe == null || recipe == '')
 		return new List<String>();
 
-  return decodeChefLanguage(recipe, input);
+  return decodeChef(language, recipe, input);
 }
 
 
-List<String> decodeChefLanguage(String recipe, additionalIngredients)  {
+List<String> decodeChef(String language, recipe, additionalIngredients)  {
 	Chef interpreter = Chef(recipe);
 print('');print('Rezept ist eingelesen');print('');
 	if (interpreter.valid) {
-		interpreter.bake(additionalIngredients);
+		interpreter.bake(language, additionalIngredients);
 		if (interpreter.valid)
 			return interpreter.meal;
 		else
@@ -195,7 +195,7 @@ class Chef {
 		String title = '';
 		readRecipe.split("\n\n")
 			.forEach((line) {
-				if (line.startsWith("ingredients")) {
+				if (line.startsWith("ingredients") || line.startsWith("zutaten")) {
 					if (progress > 3) {
 						valid = false;
 						_addError(2, progress);
@@ -208,7 +208,7 @@ class Chef {
 						valid = false;
 						return '';
 					}
-				} else if (line.startsWith("cooking time")) {
+				} else if (line.startsWith("cooking time") || line.startsWith("kochzeit")) {
 					if (progress > 4) {
 						valid = false;
 						_addError(3, progress);
@@ -216,7 +216,7 @@ class Chef {
 					}
 					progress = 4;
 					r.setCookingTime(line);
-				} else if (line.startsWith("pre-heat oven")) {
+				} else if (line.startsWith("pre-heat oven") || line.startsWith("vorheizen ofen")) {
 					if (progress > 5) {
 						valid = false;
 						_addError(4, progress);
@@ -224,7 +224,7 @@ class Chef {
 					}
 					progress = 5;
 					r.setOvenTemp(line);
-				} else if (line.startsWith("method")) {
+				} else if (line.startsWith("method") || line.startsWith("anweisung")) {
 					if (progress > 5){
 						valid = false;
 						_addError(5, progress);
@@ -232,7 +232,7 @@ class Chef {
 					}
 					progress = 6;
 					r.setMethod(line);
-				} else if (line.startsWith("serves")) {
+				} else if (line.startsWith("serves") || line.startsWith("portionen")) {
 					if (progress != 6) {
 						valid = false;
 						_addError(6, progress);
@@ -315,8 +315,8 @@ class Chef {
 		return null;
 	}
 
-	void bake(String additionalIngredients) {
-		Kitchen k = new Kitchen(this.recipes, this.mainrecipe, null, null);
+	void bake(String language, additionalIngredients) {
+		Kitchen k = new Kitchen(this.recipes, this.mainrecipe, null, null, language);
 		if (k.valid) {
 print('\nkitchen is prepared with mixing bowls and baking dishes');	String out = '';
 out = '- ingredients ';this.mainrecipe.ingredients.forEach((key, value) {out = out + '['+key+','+value.getName()+'.'+value.getAmount().toString()+'] ';});	print(out);
@@ -326,7 +326,7 @@ out = '- methods     ';for (int i=0; i<this.mainrecipe.methods.length;i++) {
 out = '- mixin bowls '+k.mixingbowls.length.toString()+' each';print(out);
 out = '- bakin dishs '+k.bakingdishes.length.toString()+' each';print(out);
 print('');
-			k.cook(additionalIngredients);
+			k.cook(additionalIngredients, language);
 		}
     this.valid = k.valid;
     this.meal = k.meal;
