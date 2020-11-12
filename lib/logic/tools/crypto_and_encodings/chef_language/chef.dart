@@ -57,7 +57,7 @@ String _getText(textId id, String parameter, language) {
 	var text ='';
 	switch (id) {
 		case textId.Put_into_the_mixing_bowl:
-			if (language == 'ENG') text = 'Put %1 into the mixing bowl.'; else text = 'Gib %1 in die Rührschüssel';
+			if (language == 'ENG') text = 'Put %1 into the mixing bowl.'; else text = 'Gib %1 in die Rührschüssel.';
 			break;
 		case textId.Ingredients:
 			if (language == 'ENG') text = 'Ingredients.'; else text = 'Zutaten.';
@@ -66,19 +66,19 @@ String _getText(textId id, String parameter, language) {
 			if (language == 'ENG') text = 'Cooking time: %1 minutes.'; else text = 'Kochzeit: %1 minuten.';
 			break;
 		case textId.Pre_heat_oven:
-			if (language == 'ENG') text = 'Pre-heat oven to %1 degrees Celsius.'; else text = 'Vorheizen des Ofens auf %1 Grad Celsius';
+			if (language == 'ENG') text = 'Pre-heat oven to %1 degrees Celsius.'; else text = 'Vorheizen des Ofens auf %1 Grad Celsius.';
 			break;
 		case textId.Method:
 			if (language == 'ENG') text = 'Method.'; else text = 'Anweisungen.';
 			break;
 		case textId.Liquefy_contents:
-			if (language == 'ENG') text = 'Liquefy contents of the mixing bowl.'; else text = '';
+			if (language == 'ENG') text = 'Liquefy contents of the mixing bowl.'; else text = 'Verflüssige Inhalte der Rührschüssel.';
 			break;
 		case textId.Pour_contents:
 			if (language == 'ENG') text = 'Pour contents of the mixing bowl into the baking dish.'; else text = 'Gieße die Inhalte der Rührschüssel in die Servierschüssel.';
 			break;
 		case textId.Serves:
-			if (language == 'ENG') text = 'Serves 1.'; else text = 'Portionen 1';
+			if (language == 'ENG') text = 'Serves 1.'; else text = 'Portionen 1.';
 			break;
 	}
 
@@ -88,7 +88,7 @@ String _getText(textId id, String parameter, language) {
 
 String generateChef(String language, title, String remark, String time, String temperature, String outputToGenerate){
 	var output = StringBuffer();
-  var ingredients;
+  List<String> outputElements;
   List<String> methodList = new List<String>();
   List<String> ingredientList = new List<String>();
   Map<int, String> amount = new Map<int, String>();
@@ -100,9 +100,13 @@ String generateChef(String language, title, String remark, String time, String t
   Random random = new Random();
 
   if (language == 'ENG') itemList = itemListENG; else itemList = itemListDEU;
-
-  ingredients = outputToGenerate.split('').reversed;
-  ingredients.forEach((element) {
+	outputElements = outputToGenerate.split('');
+	for(int i = 0; i < outputElements.length/2; i++ ) {
+		var temp = outputElements[i];
+		outputElements[i] = outputElements[outputElements.length-1-i];
+		outputElements[outputElements.length-1-i] = temp;
+	}
+	outputElements.forEach((element) {
     value = element.codeUnitAt(0);
     if (amount[value] == null) {
       item = itemList.elementAt(random.nextInt(itemList.length));
@@ -117,7 +121,7 @@ String generateChef(String language, title, String remark, String time, String t
       methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[value], language));
     }
   });
-	output.write(title + '\n');
+	output.write(title + '.\n');
 	output.write('\n');
 	output.write(remark + '\n');
 	output.write('\n');
@@ -193,8 +197,10 @@ class Chef {
 		int progress = 0;
 		Recipe r = null;
 		String title = '';
+		String line = '';
 		readRecipe.split("\n\n")
-			.forEach((line) {
+			.forEach((element) {
+				line = element.trim();
 				if (line.startsWith("ingredients") || line.startsWith("zutaten")) {
 					if (progress > 3) {
 						valid = false;
@@ -244,6 +250,7 @@ class Chef {
 					if (progress == 0 || progress >= 6) {
 						title = _parseTitle(line);
 						r = new Recipe(line);
+						//r.setServes('serves 0.');
 						if (mainrecipe == null) {
 							mainrecipe = r;
 						}
@@ -266,7 +273,7 @@ class Chef {
 		if (mainrecipe == null) {
 			valid = false;
 			error.add('chef_error_recipe_structural');
-			error.add('chef_error_recipe_empty_mising_title');
+			error.add('chef_error_recipe_empty_missing_title');
 			return;
 		}
 	}

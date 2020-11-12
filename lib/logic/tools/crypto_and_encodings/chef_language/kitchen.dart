@@ -49,7 +49,7 @@ class Kitchen {
     }
   }
 
-  Container cook(String additionalIngredients, String language)  { //throws ChefException
+  Container cook(String additionalIngredients, String language)  {
     int ingredientIndex = 0;
     List<String> input = additionalIngredients.split(' ');
 
@@ -128,7 +128,7 @@ print('        PUT ' + ingredients[m.ingredient].getName() + ' ' + ingredients[m
             //throw new ChefException.Contructor3(ChefException.METHOD, recipe, m.n, m.type.toString(), "Folded from empty mixing bowl: "+(m.mixingbowl + 1).toString());
 print('        FOLD into mixing bowl '+m.mixingbowl.toString());
           c = mixingbowls[m.mixingbowl].pop();
-print('         got bowl '+c.getValue.toString());
+print('         got bowl '+c.getName());
           ingredients[m.ingredient].setAmount(c.getValue());
           ingredients[m.ingredient].setState(c.getState());
           break;
@@ -252,7 +252,7 @@ print('        bakingdish '+m.bakingdish.toString() + '=> ' + out) ;
             //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Unavailable recipe: "+m.auxrecipe);
           Kitchen k = new Kitchen(recipes, recipes[m.auxrecipe.toLowerCase()], mixingbowls, bakingdishes, language);
 print('         executing auxiliary recipe');
-          Container con = k.cook(additionalIngredients);
+          Container con = k.cook(additionalIngredients, language);
 print('         auxiliary recipe is finished');
           mixingbowls[0].combine(con);
           break;
@@ -274,13 +274,20 @@ print('         auxiliary recipe is finished');
           //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Unsupported method found!");
       }
       i++;
-    }
-    if (recipe.getServes() > 0 && !deepfrozen)
+    } // end of MethodLoop - all is done
+print('');    print('END OF COOKING');
+    if (recipe.getServes() > 0 && !deepfrozen) {
+print('there is something to serve');
       _serve(recipe.getServes());
-    if (mixingbowls.length > 0)
+    }
+print('dishes were served - if available');
+    if (mixingbowls.length > 0) {
+print('and there is a mixing bowl to return');
       return mixingbowls[0];
-    return null;
-  }
+    } // end of auxiliary recipe
+print('return null');
+    return null;  // end of mainrecipe
+  } // cook
 
   bool _sameVerb(String imp, String verb) {
     if (verb == null || imp == null)

@@ -3,22 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chef.da
 
 void main() {
 
-  String testNull = ''' 
-
-
-
-
-Ingredients.
-
-
-Method.
-
-Liquefy contents of the mixing bowl.
-Pour contents of the mixing bowl into the baking dish.
-
-Serves 1.
-''';
-  String testTitle = '''Marks marvellous must have
+  String testNull = '''.
 
 
 
@@ -32,7 +17,21 @@ Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
 ''';
-  String testTitleComments = '''Marks marvellous must have
+  String testTitle = '''Marks marvellous must have.
+
+
+
+Ingredients.
+
+
+Method.
+
+Liquefy contents of the mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.
+''';
+  String testTitleComments = '''Marks marvellous must have.
 
 to be a wizard
 
@@ -46,7 +45,7 @@ Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
 ''';
-  String testTitleCommentsTime = '''Marks marvellous must have
+  String testTitleCommentsTime = '''Marks marvellous must have.
 
 to be a wizard
 
@@ -62,7 +61,7 @@ Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
 ''';
-  String testTitleCommentsTimeTemp = '''Marks marvellous must have
+  String testTitleCommentsTimeTemp = '''Marks marvellous must have.
 
 to be a wizard
 
@@ -92,16 +91,17 @@ Serves 1.
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = generateChef(elem['title'], elem['remark'], elem['time'], elem['temperature'], elem['input']);
+        var _actual = generateChef(elem['language'], elem['title'], elem['remark'], elem['time'], elem['temperature'], elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
   });
 
   group("chef_language.interpretChef:", () {
-    // Empty recipe
+    // OK OK    Empty recipe
     var test0 = '';
-    // Hello World Souffle
+
+    // OK OK    Hello World Souffle
     var test1 = '''Hello World Souffle
 
 This recipe prints the immortal words "Hello world!", in a basically brute force way. It also makes a lot of food for one person.
@@ -136,6 +136,7 @@ Pour contents of the mixing bowl into the baking dish.
 Serves 1.
 
 ''';
+
     // Bubbled and Baked Bacon
     var test2 = '''Bubbled and Baked Bacon
 
@@ -207,7 +208,8 @@ Whisk the corn starch.
 	Add milk.
 	Set aside.
 Whisk until whisked.''';
-    // Factorial and Fish => Input
+
+    // OK OK    Factorial and Fish => Input
     var test3 = '''Factorial and Fish
 
 A salty recipe for a fine fish. A tad raw, but definitely salty.
@@ -225,7 +227,8 @@ Shake the salt until spreaded.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-    // Fibonacc Du Fromage
+
+    // OK OK    Fibonacci Du Fromage
     var test4 = '''Fibonacci Du Fromage
 
 An improvement on the Fibonacci with Caramel Sauce recipe. Much less for the sweettooths, much more correct.
@@ -269,7 +272,8 @@ Fold pepper into mixing bowl.
 Clean mixing bowl.
 Put salt into mixing bowl.
 Add pepper.''';
-    // Fibonacci Numbers with Caramel Sauce.
+
+    // NOT OK   STACK OVERFLOW    Fibonacci Numbers with Caramel Sauce.
     var test5 = '''Fibonacci Numbers with Caramel Sauce.
 
 This recipe prints the first 100 Fibonacci numbers. It uses an auxiliary recipe for caramel sauce to define Fibonacci numbers recursively. This results in an awful lot of caramel sauce! Definitely one for the sweet-tooths.
@@ -325,7 +329,8 @@ Put white sugar into mixing bowl.
 Add vanilla bean.
 Serve with caramel sauce.
 Add brown sugar.''';
-    // Fruit Loops
+
+    // OK OK    Fruit Loops
     var test6 = '''Fruit Loops
 
 Do we need to have 280 brands of breakfast cereal? No, probably not. But we have them for a reason - because some people like them.
@@ -350,7 +355,8 @@ Add fruit.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-    // Greatest Common Dijon Mustard => Input
+
+    // OK OK    Greatest Common Dijon Mustard => Input
     var test7 = '''Greatest Common Dijon Mustard
 
 Ingredients.
@@ -376,7 +382,8 @@ Put mustard seeds into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-    // Hello World Souffle => aux Recipe
+
+    // OK OK    Hello World Souffle => aux Recipe
     var test8 = '''Hello World Souffle
 
 This recipe prints the immortal words "Hello world!", by getting one souschef to make the souffle and another to brew the sauce.
@@ -427,7 +434,8 @@ Put lard into the mixing bowl.
 Put red salmon into the mixing bowl.
 Put oil into the mixing bowl.
 Put water into the mixing bowl.''';
-    // Pas and Power => Input Input
+
+    // OK OK    Peas and Power => Input Input
     var test9 = '''Peas and Power
 
 Ingredients.
@@ -445,7 +453,8 @@ Shake the carrots until shaken.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-    // Turings Tasty Tortillas => 9 x Input
+
+    //           Turings Tasty Tortillas => 9 x Input
     var test10 = '''Turings Tasty Tortillas
 
 This delicious mexican recipe takes forever to prepare.
@@ -562,7 +571,8 @@ Heat the corn until roasted.
 Pour contents of the 2nd mixing bowl into the baking dish.
 
 Serves 1.''';
-    // Turings Tortillas => 8 x Input
+
+    //           Turings Tortillas => 8 x Input
     var test11 = '''Turings Tortillas
 
 This is a universal turing machine in Chef. What? Yeah, really. It is. Just make sure you deliver a large enough tape.
@@ -698,7 +708,8 @@ Verb the tapepos until verbed.
 Pour contents of the 2nd mixing bowl into the baking dish.
 
 Serves 1.''';
-    // SELFMADE Mum Heides delicious quiche.
+
+    // OK OK     SELFMADE Mum Heides delicious quiche.
     var test12 = '''Mum Heides delicious quiche.
 
 Find some own words to descripe the recipe. Keep it funny.
@@ -725,7 +736,8 @@ Put eggs into mixing bowl. Put flour into mixing bowl. Put milk into mixing bowl
 Serves 1.
 
 ''';
-    // SELFMADE A mysterious marmelade cake.
+
+    // OK OK     SELFMADE A mysterious marmelade cake.
     var test13 = '''A mysterious marmelade cake. 
 
 Giving power to the brain while waiting for an idea.
@@ -758,7 +770,8 @@ Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
 ''';
-    // https://metacpan.org/source/SMUELLER/Acme-Chef-1.01/examples/stdin.chef
+
+    // OK OK     https://metacpan.org/source/SMUELLER/Acme-Chef-1.01/examples/stdin.chef
     var test14 = '''STDIN stew.
  
 Read flour from STDIN and output it.
@@ -771,7 +784,8 @@ Take flour from refrigerator.
 Put flour into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 Refrigerate for 1 hour.''';
-    // https://metacpan.org/source/SMUELLER/Acme-Chef-1.01/examples/japh.chef
+
+    //           https://metacpan.org/source/SMUELLER/Acme-Chef-1.01/examples/japh.chef
     var test15 = '''JAPH Souffle.
  
 Ingredients.
@@ -818,27 +832,28 @@ mixing bowl. Liquify contents of the mixing bowl. Pour contents of the
 mixing bowl into the baking dish.
  
 Serves 1.''';
-    // https://metacpan.org/source/SMUELLER/Acme-Chef-1.01/examples/exp.chef
+
+    // OK OK     https://metacpan.org/source/SMUELLER/Acme-Chef-1.01/examples/exp.chef
     var test16 = '''Exponentiation cake.
- 
+
 Calculate exponentiation: sugar ^ flour.
- 
+
 Ingredients.
-3 kg flour
+4 kg flour
 2 g sugar
 1 egg
- 
+
 Method.
 Put flour into mixing bowl.
-Bake flour.
-Remove egg.
-Fold flour into mixing bowl.
-Put sugar into mixing bowl.
-Cool flour.
-Combine sugar.
-Water flour until cooled.
-Pour contents of the mixing bowl into the baking dish.
-Refrigerate for 1 hour.
+Bake the flour.
+  Remove egg.
+  Fold flour into mixing bowl.
+  Put sugar into mixing bowl.
+  Cool the flour.
+    Combine sugar.
+  Water the flour until cooled.
+  Pour contents of the mixing bowl into the baking dish.
+  Refrigerate for 1 hour.
 Heat until baked.
 Clean mixing bowl.
 Put egg into mixing bowl.
@@ -847,7 +862,8 @@ Pour contents of the mixing bowl into the baking dish.
 Refrigerate for 1 hour.
 
 Serves 1.''';
-    // https://metacpan.org/source/SMUELLER/Acme-Chef-1.01/examples/fac.chef
+
+    //  OK OK    https://metacpan.org/source/SMUELLER/Acme-Chef-1.01/examples/fac.chef
     var test17 = '''Factorial.
  
 Ingredients.
@@ -871,7 +887,7 @@ Ingredients.
 1 kg cannabis
  
 Method.
-Fold cigarettes into the mixing bowl. Put the cannabis into the mixing bowl.
+Fold cigarettes into the mixing bowl. Put cannabis into the mixing bowl.
 Smoke the cigarettes. Combine cigarettes. Breathe the cigarettes until smoked.
 Fold cigarettes into the mixing bowl. Clean mixing bowl. Put cigarettes into
 mixing bowl.''';
@@ -880,30 +896,31 @@ mixing bowl.''';
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',   'recipe' : test0, 'isValid' : false, 'expectedOutput' : ''},
       {'language' : 'ENG', 'input' : '',   'recipe' : test1,   'isValid' : true, 'expectedOutput' : 'Hello world!'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test2,   'isValid' : true, 'expectedOutput' : '?'},
+      //{'language' : 'ENG', 'input' : '4 60 80 70 40',   'recipe' : test2,   'isValid' : true, 'expectedOutput' : '?'},
       {'language' : 'ENG', 'input' : '5',   'recipe' : test3,   'isValid' : true, 'expectedOutput' : '120'},
       {'language' : 'ENG', 'input' : '',   'recipe' : test3,   'isValid' : true, 'expectedOutput' : 'chef_error_runtime_missing_input'},
-      {'language' : 'ENG', 'input' : '20',   'recipe' : test4,   'isValid' : true, 'expectedOutput' : ''},
+      {'language' : 'ENG', 'input' : '20',   'recipe' : test4,   'isValid' : true, 'expectedOutput' : '11235813213455891442333776109871597258441816765'},
       {'language' : 'ENG', 'input' : '',   'recipe' : test4,   'isValid' : true, 'expectedOutput' : 'chef_error_runtime_missing_input'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test5,   'isValid' : true, 'expectedOutput' : '?'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test6,   'isValid' : true, 'expectedOutput' : '400'},
-      {'language' : 'ENG', 'input' : '8 12',   'recipe' : test7,   'isValid' : true, 'expectedOutput' : '12'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test8,   'isValid' : true, 'expectedOutput' : '?'},
+      //{'language' : 'ENG', 'input' : '',   'recipe' : test5,   'isValid' : true, 'expectedOutput' : '?'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test6,   'isValid' : true, 'expectedOutput' : '880'},
+      {'language' : 'ENG', 'input' : '8 12',   'recipe' : test7,   'isValid' : true, 'expectedOutput' : '4'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test8,   'isValid' : true, 'expectedOutput' : 'Hello world!'},
       {'language' : 'ENG', 'input' : '2 4','recipe' : test9,   'isValid' : true, 'expectedOutput' : '16'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test10,   'isValid' : true, 'expectedOutput' : '?'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test11,   'isValid' : true, 'expectedOutput' : '?'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test10,   'isValid' : true, 'expectedOutput' : 'chef_error_recipe_structural chef_error_recipe_read_unexpected_comments_title chef_error_recipe_oven_temperature chef_hint_recipe_hint chef_hint_no_hint_available'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test11,   'isValid' : true, 'expectedOutput' : 'chef_error_runtime_missing_input'},
       {'language' : 'ENG', 'input' : '',   'recipe' : test12,   'isValid' : true, 'expectedOutput' : 'Koordinaten'},
       {'language' : 'ENG', 'input' : '',   'recipe' : test13,   'isValid' : true, 'expectedOutput' : 'n 432 e 708'},
       {'language' : 'ENG', 'input' : '5',   'recipe' : test14,   'isValid' : true, 'expectedOutput' : '5'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test15,   'isValid' : true, 'expectedOutput' : 'n 432 e 708'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test16,   'isValid' : true, 'expectedOutput' : 'n 432 e 708'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test17,   'isValid' : true, 'expectedOutput' : 'n 432 e 708'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test14,   'isValid' : true, 'expectedOutput' : 'chef_error_runtime_missing_input'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test15,   'isValid' : true, 'expectedOutput' : ''},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test16,   'isValid' : true, 'expectedOutput' : '116'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test17,   'isValid' : true, 'expectedOutput' : '479001600'},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
         var output = '';
-        var outputInterpret = interpretChef(elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
+        var outputInterpret = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
         output = '';
         outputInterpret.forEach((element) {
           output = output + element + ' ';

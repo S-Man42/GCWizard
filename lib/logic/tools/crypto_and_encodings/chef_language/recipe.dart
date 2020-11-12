@@ -15,18 +15,21 @@ class Recipe {
 
   Recipe(String title) {
     this.title = title;
+    this.comment = '';
+    this.serves = 0;
     this.error = false;
   }
 
-  void setIngredients(String ingredients) {//throws ChefException
+  void setIngredients(String Input) {
+print('RECIPE setIngredients [' + Input+']');
     this.ingredients = Map<String, Ingredient>();
     var i=0;
-
-    ingredients.split("\n").forEach((ingredient) {
+    List<String> ingredientsInput = Input.split('\n');
+    ingredientsInput.forEach((ingredientLine) {
+print('line ' + i.toString()+' ' + ingredientLine);
       //Clearing the 'Ingredients.' header
       if (i > 0) {
-print('RECIPE setIngredient '+ingredient);
-        Ingredient ing = new Ingredient(ingredient);
+        Ingredient ing = new Ingredient(ingredientLine);
 print('       => '+ing.getName()+'.'+ing.getAmount().toString());
         if (ing.getName() == 'INVALID') {
 print('       => error = true => return');

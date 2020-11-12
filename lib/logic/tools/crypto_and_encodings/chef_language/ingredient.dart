@@ -14,7 +14,7 @@ class Ingredient {
 print('analyse INGREDIENT ['+tokens.join('.')+']');
     int i = 0;
     _state = State.Dry;
-    if (RegExp(r"\d*$").hasMatch(tokens[i])) {
+    if (RegExp(r"^[0-9]+").hasMatch(tokens[i])) {
       _amount = int.parse(tokens[i]);
       i++;
       if (RegExp(r"^heaped|^level").hasMatch(tokens[i])) {
@@ -29,6 +29,9 @@ print('analyse INGREDIENT ['+tokens.join('.')+']');
       } else if (RegExp(r"^cup(s)?|^teaspoon(s)?|^tablespoon(s)?").hasMatch(tokens[i])) {
         i++;
       }
+    } else {
+      _amount = 0;
+      _state = State.Dry;
     }
     _name = "";
     while (i < tokens.length) {
