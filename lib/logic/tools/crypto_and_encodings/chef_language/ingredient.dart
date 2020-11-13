@@ -59,7 +59,7 @@ print('ingredient found '+_name+'.'+_amount.toString());
     _amount = n;
   }
 
-  State getstate() {
+  State getState() {
     return _state;
   }
 
@@ -68,7 +68,9 @@ print('ingredient found '+_name+'.'+_amount.toString());
   }
 
   void liquefy() {
+print(_name + '.'+_state.toString());
     _state = State.Liquid;
+print(_name + '.'+_state.toString());
   }
 
   void dry() {

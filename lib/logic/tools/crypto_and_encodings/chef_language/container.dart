@@ -54,13 +54,11 @@ print('       CONTAINER combine ['+inhalt+']');
   String serve() {
     String result = "";
     for (int i = _contents.length-1; i >= 0; i--) {
-print('container.serve content '+i.toString()+' - '+_contents[i].getValue().toString()) ;
+print('container.serve content '+i.toString()+' - '+_contents[i].getValue().toString()+'.'+_contents[i].getState().toString()) ;
       if (_contents[i].getState() == State.Dry) {
         result = result + _contents[i].getValue().toString() + '';
       }
-      else {// in charCodes umwandeln
-        //result += (_contents[i].getValue() % 1112064).toString()[0];
-        //result = result + (_contents[i].getValue()).toString() + ' ';
+      else {// return charCodes
         result = result + String.fromCharCode(_contents[i].getValue()) ;
       }
     }

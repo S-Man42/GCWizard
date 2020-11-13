@@ -156,13 +156,15 @@ print('        DIVIDE ' + c.getValue().toString()+' / '+ingredients[m.ingredient
         case Type.AddDry :
           int sum = 0;
           ingredients.forEach((key, value) {
-            if (value.getstate() == State.Dry)
+            if (value.getState() == State.Dry)
               sum += value.getAmount();
           });
           mixingbowls[m.mixingbowl].push(new Component(sum, State.Dry, ''));
           break;
         case Type.Liquefy :
+print('       LIQUEFY '+ingredients[m.ingredient].getName());
           ingredients[m.ingredient].liquefy();
+String out=''; ingredients.forEach((key, value) {out=out+value.getName()+value.getState().toString()+'.'; });    print('          '+out);
           break;
         case Type.LiquefyBowl :
 String out = ''; mixingbowls[m.mixingbowl].getContent().forEach((element){out = out+ element + ' ';});

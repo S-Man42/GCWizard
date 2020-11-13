@@ -24,7 +24,7 @@ print('analyse METHOD '+n.toString()+' '+line);
       RegExp(r"^(add|remove|combine|divide) ([a-zA-Z ]+?)( (to|into|from)( (\d+)(nd|rd|th|st))? mixing bowl)?$"),
       RegExp(r"^liquefy contents of the( (\d+)(nd|rd|th|st))? mixing bowl$"),
       RegExp(r"^liquefy ([a-zA-Z ]+)$"),
-      RegExp(r"^stir( the( (\d+)(nd|rd|th|st))? mixing bowl)? for (\\d+) minutes$"),
+      RegExp(r"^stir( the( (\d+)(nd|rd|th|st))? mixing bowl)? for (\d+) minutes$"),
       RegExp(r"^stir ([a-zA-Z ]+) into the( (\d+)(nd|rd|th|st))? mixing bowl$"),
       RegExp(r"^mix( the( (\d+)(nd|rd|th|st))? mixing bowl)? well$"),
       RegExp(r"^clean( (\d+)(nd|rd|th|st))? mixing bowl$"),
@@ -68,6 +68,7 @@ print('anaylse METHOD '+line + ' => '+matchers[3].firstMatch(line).group(1)+'.'+
     } else if (matchers[5].hasMatch(line)) {//liquefy
         type = Type.Liquefy;
         ingredient = matchers[5].firstMatch(line).group(1);
+print('anaylse METHOD '+line + ' => '+matchers[5].firstMatch(line).group(1));
     } else if (matchers[6].hasMatch(line)) {// stir the
         type = Type.Stir;
         mixingbowl = (matchers[6].firstMatch(line).group(3) == null ? 1 : int.parse(matchers[6].firstMatch(line).group(3))) - 1;

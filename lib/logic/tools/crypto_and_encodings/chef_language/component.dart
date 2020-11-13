@@ -14,7 +14,7 @@ class Component {
 
   Component.Contructor1(Ingredient ingredient) {
     _value = ingredient.getAmount();
-    _state = ingredient.getstate();
+    _state = ingredient.getState();
     _name = ingredient.getName();
   }
 

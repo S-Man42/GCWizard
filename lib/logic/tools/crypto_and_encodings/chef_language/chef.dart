@@ -57,28 +57,52 @@ String _getText(textId id, String parameter, language) {
 	var text ='';
 	switch (id) {
 		case textId.Put_into_the_mixing_bowl:
-			if (language == 'ENG') text = 'Put %1 into the mixing bowl.'; else text = 'Gib %1 in die Rührschüssel.';
+			if (language == 'ENG')
+				text = 'Put %1 into the mixing bowl.';
+			else
+				text = 'Gib %1 in die Rührschüssel.';
 			break;
 		case textId.Ingredients:
-			if (language == 'ENG') text = 'Ingredients.'; else text = 'Zutaten.';
+			if (language == 'ENG')
+				text = 'Ingredients.';
+			else
+				text = 'Zutaten.';
 			break;
 		case textId.Cooking_time:
-			if (language == 'ENG') text = 'Cooking time: %1 minutes.'; else text = 'Kochzeit: %1 minuten.';
+			if (language == 'ENG')
+				text = 'Cooking time: %1 minutes.';
+			else
+				text = 'Kochzeit: %1 minuten.';
 			break;
 		case textId.Pre_heat_oven:
-			if (language == 'ENG') text = 'Pre-heat oven to %1 degrees Celsius.'; else text = 'Vorheizen des Ofens auf %1 Grad Celsius.';
+			if (language == 'ENG')
+				text = 'Pre-heat oven to %1 degrees Celsius.';
+			else
+				text = 'Vorheizen des Ofens auf %1 Grad Celsius.';
 			break;
 		case textId.Method:
-			if (language == 'ENG') text = 'Method.'; else text = 'Anweisungen.';
+			if (language == 'ENG')
+				text = 'Method.';
+			else
+				text = 'Anweisungen.';
 			break;
 		case textId.Liquefy_contents:
-			if (language == 'ENG') text = 'Liquefy contents of the mixing bowl.'; else text = 'Verflüssige Inhalte der Rührschüssel.';
+			if (language == 'ENG')
+				text = 'Liquefy contents of the mixing bowl.';
+			else
+					text = 'Verflüssige Inhalte der Rührschüssel.';
 			break;
 		case textId.Pour_contents:
-			if (language == 'ENG') text = 'Pour contents of the mixing bowl into the baking dish.'; else text = 'Gieße die Inhalte der Rührschüssel in die Servierschüssel.';
+			if (language == 'ENG')
+				text = 'Pour contents of the mixing bowl into the baking dish.';
+			else
+					text = 'Gieße die Inhalte der Rührschüssel in die Servierschüssel.';
 			break;
 		case textId.Serves:
-			if (language == 'ENG') text = 'Serves 1.'; else text = 'Portionen 1.';
+			if (language == 'ENG')
+				text = 'Serves 1.';
+			else
+				text = 'Portionen 1.';
 			break;
 	}
 
@@ -123,18 +147,15 @@ String generateChef(String language, title, String remark, String time, String t
   });
 	output.write(title + '.\n');
 	output.write('\n');
-	output.write(remark + '\n');
-	output.write('\n');
+	if (remark != '') output.write(remark + '\n\n');
 	output.write(_getText(textId.Ingredients, '', language)  + '\n');
 	output.write(ingredientList.join('\n') + '\n');
 	output.write('\n');
 	if (int.tryParse(time) != null) {
-		output.write(_getText(textId.Cooking_time, time, language) + '\n');
-		output.write('\n');
+		output.write(_getText(textId.Cooking_time, time, language) + '\n\n');
 	}
 	if (int.tryParse(temperature) != null) {
-		output.write(_getText(textId.Pre_heat_oven, temperature, language) + '\n');
-		output.write('\n');
+		output.write(_getText(textId.Pre_heat_oven, temperature, language) + '\n\n');
 	}
 	output.write(_getText(textId.Method, '', language) + '\n');
 	output.write(methodList.join('\n') + '\n');
@@ -276,6 +297,7 @@ class Chef {
 			error.add('chef_error_recipe_empty_missing_title');
 			return;
 		}
+		// TODO Catch Error in recipe
 	}
 
 	String _parseTitle(String title) {

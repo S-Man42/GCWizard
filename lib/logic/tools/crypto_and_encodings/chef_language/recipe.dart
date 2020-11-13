@@ -57,6 +57,11 @@ print('RECIPE setMethods '+method);
       var m = new Method(scanner[i], i);
       if (m.type != Type.Invalid)
         this.methods.add(m);
+      else {
+        // TODO Syntax Error
+        this.error = true;
+
+      }
     };
   }
 
