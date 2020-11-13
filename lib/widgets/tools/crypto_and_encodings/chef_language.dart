@@ -186,13 +186,12 @@ class ChefState extends State<Chef> {
     if (_currentLanguage == GCWSwitchPosition.left)
       language = 'DEU';
 
-    if (_currentMode == GCWSwitchPosition.right) {
+    if (_currentMode == GCWSwitchPosition.right) { // generate chef
       if (_currentTitle == '') {
         output = buildOutputText(
             [i18n(context, 'chef_error_structure_recipe'),
             i18n(context, 'chef_error_structure_recipe_missing_title')]);
-      }
-      else
+      } else
         output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature, _currentOutput);
     } else {
       if (isValid(_currentInput)) {

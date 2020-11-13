@@ -93,6 +93,8 @@ Serves 1.
       });
     });
   });
+
+
   group("chef_language.interpretChef:", () {
     // OK OK    Empty recipe
     var test0 = '';
@@ -598,43 +600,41 @@ Put cigarettes into mixing bowl.''';
 
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '',   'recipe' : test0, 'isValid' : false, 'expectedOutput' : ''},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test1,   'isValid' : true, 'expectedOutput' : 'Hello world!'},
-      {'language' : 'ENG', 'input' : '5',   'recipe' : test3,   'isValid' : true, 'expectedOutput' : '120'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test3,   'isValid' : true, 'expectedOutput' : 'chef_error_runtime_missing_input'},
-      {'language' : 'ENG', 'input' : '20',   'recipe' : test4,   'isValid' : true, 'expectedOutput' : '11235813213455891442333776109871597258441816765'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test4,   'isValid' : true, 'expectedOutput' : 'chef_error_runtime_missing_input'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test6,   'isValid' : true, 'expectedOutput' : '880'},
-      {'language' : 'ENG', 'input' : '8 12',   'recipe' : test7,   'isValid' : true, 'expectedOutput' : '4'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test8,   'isValid' : true, 'expectedOutput' : 'Hello world!'},
-      {'language' : 'ENG', 'input' : '2 4','recipe' : test9,   'isValid' : true, 'expectedOutput' : '16'},
-      {'language' : 'ENG', 'input' : '4 5 7 6 8',   'recipe' : test10,   'isValid' : true, 'expectedOutput' : '5678'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test12,   'isValid' : true, 'expectedOutput' : 'Koordinaten'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test13,   'isValid' : true, 'expectedOutput' : 'n 432 e 708'},
-      {'language' : 'ENG', 'input' : '5',   'recipe' : test14,   'isValid' : true, 'expectedOutput' : '5'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test14,   'isValid' : true, 'expectedOutput' : 'chef_error_runtime_missing_input'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test15,   'isValid' : true, 'expectedOutput' : 'Just another Chef/Perl Hacker,'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test16,   'isValid' : true, 'expectedOutput' : '18'},
-      {'language' : 'ENG', 'input' : '5',   'recipe' : test17,   'isValid' : true, 'expectedOutput' : '479001600'},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test0, 'isValid' : false, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test1,   'isValid' : true, 'expectedOutput' : ['Hello world!']},
+      {'language' : 'ENG', 'input' : '5',   'recipe' : test3,   'isValid' : true, 'expectedOutput' : ['120']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test3,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime_missing_input']},
+      {'language' : 'ENG', 'input' : '20',   'recipe' : test4,   'isValid' : true, 'expectedOutput' : ['11235813213455891442333776109871597258441816765']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test4,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime_missing_input']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test6,   'isValid' : true, 'expectedOutput' : ['880']},
+      {'language' : 'ENG', 'input' : '8 12',   'recipe' : test7,   'isValid' : true, 'expectedOutput' : ['4']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test8,   'isValid' : true, 'expectedOutput' : ['Hello world!']},
+      {'language' : 'ENG', 'input' : '2 4','recipe' : test9,   'isValid' : true, 'expectedOutput' : ['16']},
+      {'language' : 'ENG', 'input' : '4 5 7 6 8',   'recipe' : test10,   'isValid' : true, 'expectedOutput' : ['5678']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test12,   'isValid' : true, 'expectedOutput' : ['Koordinaten']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test13,   'isValid' : true, 'expectedOutput' : ['n 432 e 708']},
+      {'language' : 'ENG', 'input' : '5',   'recipe' : test14,   'isValid' : true, 'expectedOutput' : ['5']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test14,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime_missing_input']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test15,   'isValid' : true, 'expectedOutput' : ['Just another Chef/Perl Hacker,']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test16,   'isValid' : true, 'expectedOutput' : ['18']},
+      {'language' : 'ENG', 'input' : '5',   'recipe' : test17,   'isValid' : true, 'expectedOutput' : ['479001600']},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var output = '';
-        var outputInterpret = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
-        output = '';
-        outputInterpret.forEach((element) {
-          output = output + element + ' ';
-        });
-        expect(output.trim(), elem['expectedOutput']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i], elem['expectedOutput'][i]);
+        }
       });
     });
   }); // group
 
 
-  // take
   group("chef_language.MethodExamples", () {
 
+    // take
     var take = '''Test TAKE.
 
 Ingredients.
@@ -918,35 +918,353 @@ Refrigerate 0.
 Serves 1.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '5',  'recipe' : take, 'isValid' : false, 'expectedOutput' : '5'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : put,   'isValid' : true, 'expectedOutput' : '10'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : fold,   'isValid' : true, 'expectedOutput' : '1010'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : add,   'isValid' : true, 'expectedOutput' : '2010'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : remove,   'isValid' : true, 'expectedOutput' : '010'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : combine,   'isValid' : true, 'expectedOutput' : '10010'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : divide,   'isValid' : true, 'expectedOutput' : '110'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : addry,   'isValid' : true, 'expectedOutput' : '20'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : liquefyingredient,   'isValid' : true, 'expectedOutput' : 'A8065'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : liquefybowl,   'isValid' : true, 'expectedOutput' : 'PA'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : stir,   'isValid' : true, 'expectedOutput' : '546321'},
-      {'language' : 'ENG', 'input' : '2654321',   'recipe' : stiringredient,   'isValid' : true, 'expectedOutput' : '6524321'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : clean,   'isValid' : true, 'expectedOutput' : ''},
-      {'language' : 'ENG', 'input' : '',   'recipe' : loop,   'isValid' : true, 'expectedOutput' : '2560'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : serve,   'isValid' : true, 'expectedOutput' : '55555555555555555555555555555555'},
-      {'language' : 'ENG', 'input' : '',   'recipe' : refrigerate,   'isValid' : true, 'expectedOutput' : ''},
-      {'language' : 'ENG', 'input' : '',   'recipe' : refrigeratenumber,   'isValid' : true, 'expectedOutput' : 'PA'},
+      {'language' : 'ENG', 'input' : '5',  'recipe' : take, 'isValid' : false, 'expectedOutput' : ['5']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : take, 'isValid' : false, 'expectedOutput' : ['chef_error_runtime_missing_input']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : put,   'isValid' : true, 'expectedOutput' : ['10']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : fold,   'isValid' : true, 'expectedOutput' : ['1010']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : add,   'isValid' : true, 'expectedOutput' : ['2010']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : remove,   'isValid' : true, 'expectedOutput' : ['010']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : combine,   'isValid' : true, 'expectedOutput' : ['10010']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : divide,   'isValid' : true, 'expectedOutput' : ['110']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : addry,   'isValid' : true, 'expectedOutput' : ['20']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : liquefyingredient,   'isValid' : true, 'expectedOutput' : ['A8065']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : liquefybowl,   'isValid' : true, 'expectedOutput' : ['PA']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : stir,   'isValid' : true, 'expectedOutput' : ['546321']},
+      {'language' : 'ENG', 'input' : '2654321',   'recipe' : stiringredient,   'isValid' : true, 'expectedOutput' : ['6524321']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : clean,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : loop,   'isValid' : true, 'expectedOutput' : ['2560']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : serve,   'isValid' : true, 'expectedOutput' : ['55555555555555555555555555555555']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : refrigerate,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : refrigeratenumber,   'isValid' : true, 'expectedOutput' : ['PA']},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var output = '';
-        var outputInterpret = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
-        output = '';
-        outputInterpret.forEach((element) {
-          output = output + element + ' ';
-        });
-        expect(output.trim(), elem['expectedOutput']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i], elem['expectedOutput'][i]);
+        }
       });
     });
   });
+
+
+  group("chef_language.testErrors", () {
+
+    // take
+    var take = '''Test TAKE.
+
+Ingredients.
+input
+
+Method.
+Take input from refrigerator.
+Put input into mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // put
+    var put = '''Test PUT.
+
+Ingredients.
+10 salt
+
+Method.
+Put salt into mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // fold
+    var fold = '''Test FOLD.
+
+Ingredients.
+10 salt
+pepper
+
+Method.
+Put salt into mixing bowl.
+Fold pepper into mixing bowl.
+Put pepper into mixing bowl.
+Put pepper into mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // add
+    var add = '''Test ADD.
+
+Ingredients.
+10 salt
+10 pepper
+
+Method.
+Put salt into mixing bowl.
+Put salt into mixing bowl.
+Add pepper into mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // remove
+    var remove = '''Test REMOVE.
+
+Ingredients.
+10 salt
+10 pepper
+
+Method.
+Put salt into mixing bowl.
+Put salt into mixing bowl.
+Remove pepper into mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // combine
+    var combine = '''Test COMBINE.
+
+Ingredients.
+10 salt
+10 pepper
+
+Method.
+Put salt into mixing bowl.
+Put salt into mixing bowl.
+Combine pepper into mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // divide
+    var divide = '''Test DIVIDE.
+
+Ingredients.
+10 salt
+10 pepper
+
+Method.
+Put salt into mixing bowl.
+Put salt into mixing bowl.
+Divide pepper into mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // addry
+    var addry = '''Test ADDRY.
+
+Ingredients.
+10 salt
+10 pepper
+
+Method.
+Add dry ingredients to mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // liquefyingredient
+    var liquefyingredient = '''Test LIQUEFYINGREDIENT.
+
+Ingredients.
+65 salt
+80 pepper
+
+Method.
+Put salt into mixing bowl.
+Put pepper into mixing bowl.
+Liquefy salt.
+Put salt into mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // liquefybowl
+    var liquefybowl = '''Test LIQUEFYBOWL.
+
+Ingredients.
+65 salt
+80 pepper
+
+Method.
+Put salt into mixing bowl.
+Put pepper into mixing bowl.
+Liquefy contents of the mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // stir
+    var stir = '''Test STIR.
+
+Ingredients.
+1 sugar
+2 salt
+3 salmon
+4 pepper
+5 wine
+6 wodka
+
+Method.
+Put sugar into mixing bowl.
+Put salt into mixing bowl.
+Put salmon into mixing bowl.
+Put pepper into mixing bowl.
+Put wine into mixing bowl.
+Put wodka into mixing bowl.
+Stir for 2 minutes.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // stiringredient 2654321 => 6524321
+    var stiringredient = '''Test STIRINGREDIENT INTO THE MIXING BOWL
+
+Ingredients.
+1 sugar
+2 salt
+3 salmon
+4 pepper
+5 wine
+6 wodka
+
+Method.
+Put sugar into mixing bowl.
+Put salt into mixing bowl.
+Put salmon into mixing bowl.
+Put pepper into mixing bowl.
+Put wine into mixing bowl.
+Put wodka into mixing bowl.
+Put salt into mixing bowl.
+Stir salt into the mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // clean
+    var clean = '''Test CLEAN.
+
+Ingredients.
+65 salt
+80 pepper
+
+Method.
+Put salt into mixing bowl.
+Put pepper into mixing bowl.
+Clean mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // loop
+    var loop = '''Test LOOP.
+
+Ingredients.
+5 g salt
+80 g pepper
+
+Method.
+Count the salt.
+   Put pepper into mixing bowl.
+   Add pepper into mixing bowl.
+   Fold pepper into mixing bowl.
+Count the salt until counted.
+Put pepper into mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // serve
+    var serve = '''Test SERVE.
+
+Ingredients.
+5 g salt
+80 g pepper
+0 air
+
+Method.
+Put air into mixing bowl.
+Count the salt.
+   Serve with chili.
+Count the salt until counted.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.
+
+
+chili.
+
+Ingredients.
+1 g harissa
+
+Method.
+Add harissa into mixing bowl.''';
+
+    // refrigerate
+    var refrigerate = '''Test REFRIGERATE.
+
+Ingredients.
+65 salt
+80 pepper
+
+Method.
+Put salt into mixing bowl.
+Put pepper into mixing bowl.
+Liquefy contents of the mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+Refrigerate.
+
+Serves 1.''';
+
+    // refrigeratenumber
+    var refrigeratenumber = '''Test REFRIGERATE.
+
+Ingredients.
+65 salt
+80 pepper
+
+Method.
+Put salt into mixing bowl.
+Put pepper into mixing bowl.
+Liquefy contents of the mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+Refrigerate 0.
+
+Serves 1.''';
+
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'language' : 'ENG', 'input' : '5',  'recipe' : take, 'isValid' : false, 'expectedOutput' : ['5']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : put,   'isValid' : true, 'expectedOutput' : ['10']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : fold,   'isValid' : true, 'expectedOutput' : ['1010']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : add,   'isValid' : true, 'expectedOutput' : ['2010']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : remove,   'isValid' : true, 'expectedOutput' : ['010']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : combine,   'isValid' : true, 'expectedOutput' : ['10010']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : divide,   'isValid' : true, 'expectedOutput' : ['110']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : addry,   'isValid' : true, 'expectedOutput' : ['20']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : liquefyingredient,   'isValid' : true, 'expectedOutput' : ['A8065']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : liquefybowl,   'isValid' : true, 'expectedOutput' : ['PA']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : stir,   'isValid' : true, 'expectedOutput' : ['546321']},
+      {'language' : 'ENG', 'input' : '2654321',   'recipe' : stiringredient,   'isValid' : true, 'expectedOutput' : ['6524321']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : clean,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : loop,   'isValid' : true, 'expectedOutput' : ['2560']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : serve,   'isValid' : true, 'expectedOutput' : ['55555555555555555555555555555555']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : refrigerate,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : refrigeratenumber,   'isValid' : true, 'expectedOutput' : ['PA']},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i], elem['expectedOutput'][i]);
+        }
+      });
+    });
+  });
+
+
 }
