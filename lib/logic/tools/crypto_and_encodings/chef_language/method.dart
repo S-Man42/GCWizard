@@ -38,23 +38,23 @@ print('analyse METHOD '+n.toString()+' '+line);
       RegExp(r"^([a-zA-Z]+) the ([a-zA-Z ]+)$")
     ];
     List<RegExp> matchersDEU = [
-      RegExp(r"^take ([a-zA-Z ]+) from refrigerator$"),
-      RegExp(r"^(put|fold) ([a-zA-Z ]+) into( the)?( (\d+)(nd|rd|th|st))? mixing bowl$"),
-      RegExp(r"^add dry ingredients( to( (\d+)(nd|rd|th|st))? mixing bowl)?$"),
-      RegExp(r"^(add|remove|combine|divide) ([a-zA-Z ]+?)( (to|into|from)( (\d+)(nd|rd|th|st))? mixing bowl)?$"),
-      RegExp(r"^liquefy contents of the( (\d+)(nd|rd|th|st))? mixing bowl$"),
-      RegExp(r"^liquefy ([a-zA-Z ]+)$"),
-      RegExp(r"^stir( the( (\d+)(nd|rd|th|st))? mixing bowl)? for (\d+) minutes$"),
-      RegExp(r"^stir ([a-zA-Z ]+) into the( (\d+)(nd|rd|th|st))? mixing bowl$"),
-      RegExp(r"^mix( the( (\d+)(nd|rd|th|st))? mixing bowl)? well$"),
-      RegExp(r"^clean( (\d+)(nd|rd|th|st))? mixing bowl$"),
-      RegExp(r"^pour contents of the( (\d+)(nd|rd|th|st))? mixing bowl into the( (\d+)(nd|rd|th|st))? baking dish$"),
-      RegExp(r"^set aside$"),
-      RegExp(r"^refrigerate( for (\d+) hours)?$"),
-      RegExp(r"^serve with ([a-zA-Z ]+)$"),
-      RegExp(r"^suggestion: (.*)$"),
-      RegExp(r"^([a-zA-Z]+?)( the ([a-zA-Z ]+))? until ([a-zA-Z]+)$"),
-      RegExp(r"^([a-zA-Z]+) the ([a-zA-Z ]+)$")
+      RegExp(r"^nehme ([a-zA-Z ]+) aus dem kühlschrank$"),
+      RegExp(r"^(gebe|unterhebe) ([a-zA-Z ]+) in( die)?( (\d+)(te))? Rührschüssel$"),
+      RegExp(r"^füge hinzu feste zutaten( zur( (\d+)(ten))? Rührschüssel)?$"),
+      RegExp(r"^(füge hinzu|entferne|kombiniere|teile) ([a-zA-Z ]+?)( (zu|mit|aus)( (\d+)(ten))? Rührschüssel)?$"),
+      RegExp(r"^verflüssige inhalt der( (\d+)(ten))? Rührschüssel$"),
+      RegExp(r"^verflüssige ([a-zA-Z ]+)$"),
+      RegExp(r"^rühre( die( (\d+)(te))? Rührschüssel)? für (\d+) Minuten$"),
+      RegExp(r"^rühre ([a-zA-Z ]+) in die( (\d+)(te))? Rührschüssel$"),
+      RegExp(r"^mische( die( (\d+)(te))? Rührschüssel)? well$"),
+      RegExp(r"^säubere die( (\d+)(te))? Rührschüssel$"),
+      RegExp(r"^gieße die inhalte der( (\d+)(ten))? Rührschüssel auf die( (\d+)(te))? servierplatte$"),
+      RegExp(r"^stelle beiseite"),
+      RegExp(r"^gefriere( für (\d+) stunden)?$"),
+      RegExp(r"^serviere mit ([a-zA-Z ]+)$"),
+      RegExp(r"^vorschlag: (.*)$"),
+      RegExp(r"^([a-zA-Z]+?)( (das|den|die) ([a-zA-Z ]+))? bis ([a-zA-Z]+)$"),
+      RegExp(r"^([a-zA-Z]+) (das|den|die) ([a-zA-Z ]+)$")
     ];
     if (language == 'ENG')
       matchers = matchersENG;
