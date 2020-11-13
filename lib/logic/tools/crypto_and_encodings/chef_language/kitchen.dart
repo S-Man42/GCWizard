@@ -65,9 +65,9 @@ print('\n'+'-------- KITCHEN starting method loop');
       switch (m.type) {
         case Type.Invalid:
           valid = false;
-          error.add('chef_error_recipe_method');
+          error.add('chef_error_syntax_method');
           error.add(m.ingredient);
-          error.add('chef_error_recipe_method_unsupported');
+          error.add('chef_error_syntax_method_unsupported');
           return null;
           break;
         case Type.Take :
@@ -82,14 +82,10 @@ print('\n'+'-------- KITCHEN starting method loop');
         case Type.Verb :
           if (ingredients[m.ingredient] == null){
             valid = false;
-            error.add('chef_error_recipe_method');
-            error.add('chef_error_recipe_method_recipe');
-            error.add(recipe.title);
-            error.add('chef_error_recipe_method_step');
-            error.add(m.n.toString());
-            error.add(m.type.toString());
-            error.add('chef_error_recipe_ingredient_not_found');
-            error.add(m.ingredient);
+            error.add('chef_error_runtime');
+            error.add('chef_error_runtime_ingredient_not_found');
+            error.add('chef_error_runtime_method_step');
+            error.add(m.n.toString() + '.' + m.type.toString() + '.' + m.ingredient);
             return null;
           } //("Method error, recipe "+recipe.getTitle()+", step "+(step+1).toString()+": "+method+" ("+error+
             //                                  int type,             recipe, step, method,            error
@@ -115,14 +111,10 @@ print('        PUT ' + ingredients[m.ingredient].getName() + ' ' + ingredients[m
         case Type.Fold :
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
-            error.add('chef_error_recipe_method');
-            error.add('chef_error_recipe_method_recipe');
-            error.add(recipe.title);
-            error.add('chef_error_recipe_method_step');
-            error.add(m.n.toString());
-            error.add(m.type.toString());
-            error.add('chef_error_recipe_folded_from_empty_mixing_bowl');
-            error.add((m.mixingbowl + 1).toString());
+            error.add('chef_error_runtime');
+            error.add('chef_error_runtime_folded_from_empty_mixing_bowl');
+            error.add('chef_error_runtime_method_step');
+            error.add(m.n.toString() + '.' + m.type.toString() + '.' + (m.mixingbowl + 1).toString());
             return null;
           }
             //throw new ChefException.Contructor3(ChefException.METHOD, recipe, m.n, m.type.toString(), "Folded from empty mixing bowl: "+(m.mixingbowl + 1).toString());
@@ -133,22 +125,54 @@ print('         got bowl '+c.getName());
           ingredients[m.ingredient].setState(c.getState());
           break;
         case Type.Add :
+          if (mixingbowls[m.mixingbowl].size() == 0) {
+            valid = false;
+            error.add('chef_error_runtime');
+            error.add('chef_error_runtime_add_to_empty_mixing_bowl');
+            error.add('chef_error_runtime_method_step');
+            error.add(m.n.toString() + '.' + m.type.toString() + '.' + (m.mixingbowl + 1).toString());
+            return null;
+          }
 print('        ADD '+m.ingredient + '.'+ m.mixingbowl.toString()+'.['+mixingbowls.join(',')+']');
           c = mixingbowls[m.mixingbowl].peek();
           c.setValue(c.getValue() + ingredients[m.ingredient].getAmount());
           break;
         case Type.Remove : // ingredient.amount from mixingbowl
+          if (mixingbowls[m.mixingbowl].size() == 0) {
+            valid = false;
+            error.add('chef_error_runtime');
+            error.add('chef_error_runtime_remove_from_empty_mixing_bowl');
+            error.add('chef_error_runtime_method_step');
+            error.add(m.n.toString() + '.' + m.type.toString() + '.' + (m.mixingbowl + 1).toString());
+            return null;
+          }
 print('        REMOVE '+m.ingredient + '.'+ m.mixingbowl.toString()+'.['+mixingbowls.join(',')+']');
           c = mixingbowls[m.mixingbowl].peek(); // returns top of m.mixingbowl
 print('        REMOVE '+ingredients[m.ingredient].getAmount().toString()+' FROM '+c.getValue().toString());
           c.setValue(c.getValue() - ingredients[m.ingredient].getAmount());
           break;
         case Type.Combine :
+          if (mixingbowls[m.mixingbowl].size() == 0) {
+            valid = false;
+            error.add('chef_error_runtime');
+            error.add('chef_error_runtime_combine_with_empty_mixing_bowl');
+            error.add('chef_error_runtime_method_step');
+            error.add(m.n.toString() + '.' + m.type.toString() + '.' + (m.mixingbowl + 1).toString());
+            return null;
+          }
           c = mixingbowls[m.mixingbowl].peek();
 print('        COMBINE ' + c.getValue().toString()+' * '+ingredients[m.ingredient].getAmount().toString());
           c.setValue(c.getValue() * ingredients[m.ingredient].getAmount());
           break;
         case Type.Divide :
+          if (mixingbowls[m.mixingbowl].size() == 0) {
+            valid = false;
+            error.add('chef_error_runtime');
+            error.add('chef_error_runtime_divide_from_empty_mixing_bowl');
+            error.add('chef_error_runtime_method_step');
+            error.add(m.n.toString() + '.' + m.type.toString() + '.' + (m.mixingbowl + 1).toString());
+            return null;
+          }
           c = mixingbowls[m.mixingbowl].peek();
 print('        DIVIDE ' + c.getValue().toString()+' / '+ingredients[m.ingredient].getAmount().toString());
           c.setValue((c.getValue() ~/ ingredients[m.ingredient].getAmount()).round());
@@ -172,12 +196,36 @@ print('       LIQUEFY bowl '+m.mixingbowl.toString() + '=> ' + out) ;
           mixingbowls[m.mixingbowl].liquefy();
           break;
         case Type.Stir :
+          if (mixingbowls[m.mixingbowl].size() == 0) {
+            valid = false;
+            error.add('chef_error_runtime');
+            error.add('chef_error_runtime_stir_empty_mixing_bowl');
+            error.add('chef_error_runtime_method_step');
+            error.add(m.n.toString() + '.' + m.type.toString() + '.' + (m.mixingbowl + 1).toString());
+            return null;
+          }
           mixingbowls[m.mixingbowl].stir(m.time);
           break;
         case Type.StirInto :
+          if (mixingbowls[m.mixingbowl].size() == 0) {
+            valid = false;
+            error.add('chef_error_runtime');
+            error.add('chef_error_runtime_stir_in_empty_mixing_bowl');
+            error.add('chef_error_runtime_method_step');
+            error.add(m.n.toString() + '.' + m.type.toString() + '.' + (m.mixingbowl + 1).toString());
+            return null;
+          }
           mixingbowls[m.mixingbowl].stir(ingredients[m.ingredient].getAmount());
           break;
         case Type.Mix :
+          if (mixingbowls[m.mixingbowl].size() == 0) {
+            valid = false;
+            error.add('chef_error_runtime');
+            error.add('chef_error_runtime_mix_empty_mixing_bowl');
+            error.add('chef_error_runtime_method_step');
+            error.add(m.n.toString() + '.' + m.type.toString() + '.' + (m.mixingbowl + 1).toString());
+            return null;
+          }
           mixingbowls[m.mixingbowl].shuffle();
           break;
         case Type.Clean :
@@ -196,10 +244,9 @@ print('        bakingdish '+m.bakingdish.toString() + '=> ' + out) ;
               break;
           if (end == methods.length) {
             valid = false;
-            error.add('chef_error_recipe_method');
-            error.add(m.n.toString());
-            error.add(m.type.toString());
-            error.add('chef_error_recipe_method_loop');
+            error.add('chef_error_runtime');
+            error.add('chef_error_runtime_method_loop');
+            error.add(m.n.toString() + '.' + m.type.toString());
             return null;
           }
             //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Loop end statement not found.");
@@ -213,10 +260,9 @@ print('        bakingdish '+m.bakingdish.toString() + '=> ' + out) ;
         case Type.VerbUntil :
           if (!_sameVerb(loops[0].verb, m.verb)){
             valid = false;
-            error.add('chef_error_recipe_method');
-            error.add(m.n.toString());
-            error.add(m.type.toString());
-            error.add('chef_error_recipe_method_loop_end');
+            error.add('chef_error_runtime');
+            error.add('chef_error_runtime_method_loop_end');
+            error.add(m.n.toString() + '.' + m.type.toString());
             return null;
           }
             //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Wrong loop end statement found.");
@@ -228,10 +274,9 @@ print('        bakingdish '+m.bakingdish.toString() + '=> ' + out) ;
         case Type.SetAside :
           if (loops.length == 0){
             valid = false;
-            error.add('chef_error_recipe_method');
-            error.add(m.n.toString());
-            error.add(m.type.toString());
-            error.add('chef_error_recipe_method_loop_aside');
+            error.add('chef_error_runtime');
+            error.add('chef_error_runtime_method_loop_aside');
+            error.add(m.n.toString() + '.' + m.type.toString());
             return null;
           }
             //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Cannot set aside when not inside loop.");
@@ -244,11 +289,9 @@ print('        bakingdish '+m.bakingdish.toString() + '=> ' + out) ;
         case Type.Serve :
           if (recipes[m.auxrecipe.toLowerCase()] == null){
             valid = false;
-            error.add('chef_error_recipe_method');
-            error.add(m.n.toString());
-            error.add(m.type.toString());
-            error.add('chef_error_recipe_method_aux_recipe');
-            error.add(m.auxrecipe);
+            error.add('chef_error_runtime');
+            error.add('chef_error_runtime_method_aux_recipe');
+            error.add(m.n.toString() + '.' + m.type.toString() + '.' + m.auxrecipe);
             return null;
           }
             //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Unavailable recipe: "+m.auxrecipe);
@@ -267,10 +310,9 @@ print('         auxiliary recipe is finished');
           break;
         default :{
           valid = false;
-          error.add('chef_error_recipe_method');
-          error.add(m.n.toString());
-          error.add(m.type.toString());
-          error.add('chef_error_recipe_method_unsupported');
+          error.add('chef_error_runtime');
+          error.add('chef_error_syntax_method_unsupported');
+          error.add(m.n.toString() + '.' + m.type.toString());
           return null;
         }
           //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Unsupported method found!");
@@ -298,11 +340,12 @@ print('return null');
     imp = imp.toLowerCase();
     int L = imp.length;
     return verb==imp || //A = A
-        verb==(imp+"n") || //shake ~ shaken
-        verb==(imp+"d") || //prepare ~ prepared
-        verb==(imp+"ed") || //monitor ~ monitored
-        verb==(imp+(imp[L-1])+"ed") || //stir ~ stirred
-        (imp[L-1] == 'y' && verb==(imp.substring(0, L-1)+"ied")); //carry ~ carried
+        verb == ('ge' + imp.substring(0, L - 1) + 't') || // suche  ~ gesucht   füttere ~ gefüttert
+        verb==(imp + "n") || //shake ~ shaken
+        verb==(imp + "d") || //prepare ~ prepared
+        verb==(imp + "ed") || //monitor ~ monitored
+        verb==(imp + (imp[L - 1]) + "ed") || //stir ~ stirred
+        (imp[L - 1] == 'y' && verb == (imp.substring(0, L - 1) + "ied")); //carry ~ carried
   }
 
   void _serve(int n) {

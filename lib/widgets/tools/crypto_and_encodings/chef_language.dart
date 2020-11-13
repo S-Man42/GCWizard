@@ -185,28 +185,38 @@ class ChefState extends State<Chef> {
     String language = 'ENG';
     if (_currentLanguage == GCWSwitchPosition.left)
       language = 'DEU';
+
     if (_currentMode == GCWSwitchPosition.right) {
-      if (_currentTitle == '')
-        output = i18n(context, 'chef_error_recipe_missing_title');
+      if (_currentTitle == '') {
+        output = buildOutputText(
+            [i18n(context, 'chef_error_structure_recipe'),
+            i18n(context, 'chef_error_structure_recipe_missing_title')]);
+      }
       else
         output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature, _currentOutput);
     } else {
       if (isValid(_currentInput)) {
-        outputInterpret = interpretChef(language, _currentRecipe.toLowerCase(), _currentInput);
-        output = '';
-        outputInterpret.forEach((element) {
-          if (element.startsWith('chef_')) {
-            output = output + i18n(context, element) + ' ';
-          } else
-            output = output + element + ' ';
-        });
+        output = buildOutputText([interpretChef(language, _currentRecipe.toLowerCase(), _currentInput)]);
       } else
-        output = i18n(context, 'chef_invalid_input');
+        output = buildOutputText(
+            [i18n(context, 'chef_error_runtime'),
+              i18n(context, 'chef_error_runtime_invalid_input')]);
     }
     return GCWOutputText(
         text: output.trim(),
         isMonotype: true,
     );
+  }
+
+  String buildOutputText(var outputList){
+    String output = '';
+    outputList.forEach((element) {
+      if (element.startsWith('chef_')) {
+        output = output + i18n(context, element) + '\n';
+      } else
+        output = output + element + '\n';
+    });
+    return output;
   }
 
 }

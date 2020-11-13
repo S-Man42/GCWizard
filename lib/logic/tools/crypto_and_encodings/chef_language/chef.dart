@@ -12,7 +12,7 @@ final itemListENG = [
   ['g','flour'], ['g', 'white sugar'], ['pinch', 'salt'], ['pinches', 'baking soda'], ['g', 'butter'],
   ['', 'vanilla bean'], ['tablespoon', 'brown sugar'], ['pinch', 'pepper'], ['', 'eggs'], ['g', 'haricot beans'],
   ['g', 'red salmon'], ['ml', 'milk'], ['ml', 'water'], ['ml', 'oil'], ['ml', 'water'],
-  ['drips', 'liquid vanilla'], ['dashes', 'lemon juice'], ['teaspoon', 'powdered-sugar'], ['', 'almonds'], ['', 'onions'],
+  ['dashes', 'liquid vanilla'], ['dashes', 'lemon juice'], ['teaspoon', 'powdered-sugar'], ['', 'almonds'], ['', 'onions'],
   ['', 'garlic cloves'], ['', 'cinnamon'], ['', 'egg yolk'], ['', 'egg white'], ['pinches', 'kummel'],
   ['pinches', 'aniseed'], ['ml', 'amaretto'], ['tablespoon', 'espresso'], ['', 'cream'], ['', 'sour cream'],
   ['', 'cream cheese'], ['cups', 'cheese'], ['ml', 'white wine'], ['ml', 'red wine'], ['gr', 'pumpkin'],
@@ -25,19 +25,19 @@ final itemListENG = [
 ];
 
 final itemListDEU = [
-	['g', 'Mehl'], ['g', 'weißer Zucker'], ['Prise', 'Salz'], ['Prisen', 'Backsoda'], ['g', 'Butter'] ,
-	['', 'Vanilleschote'], ['Esslöffel', 'brauner Zucker'], ['Prise', 'Pfeffer'], ['', 'Eier'], ['g', 'Bohnen'],
+	['g', 'Mehl'], ['g', 'weißer Zucker'], ['Prise', 'Salz'], ['Prise(n)', 'Backsoda'], ['g', 'Butter'] ,
+	['', 'Vanilleschote'], ['Esslöffel', 'brauner Zucker'], ['Prise(m)', 'Pfeffer'], ['', 'Eier'], ['g', 'Bohnen'],
 	['g', 'roter Lachs'], ['ml', 'Milch'], ['ml', 'Wasser'], ['ml', 'Öl'], ['ml', 'Wasser'] ,
-	['Tropfen', 'flüssige Vanille'], ['Spritzer', 'Zitronensaft'], ['Teeelöffel', 'Puderzucker'], ['', 'Mandeln'], ['', 'Zwiebeln' ],
-	['', 'Knoblauchzehen'], ['', 'Zimt'], ['', 'Eigelb'], ['', 'Eiweiß'], ['Prisen', 'Kümmel'],
+	['Tropfen', 'flüssige Vanille'], ['Spritzer', 'Zitronensaft'], ['Teelöffel', 'Puderzucker'], ['', 'Mandeln'], ['', 'Zwiebeln' ],
+	['', 'Knoblauchzehen'], ['', 'Zimt'], ['', 'Eigelb'], ['', 'Eiweiß'], ['Prise(n)', 'Kümmel'],
 	['Prisen', 'Anis'], ['ml', 'Amaretto'], ['Esslöffel', 'Espresso'], ['', 'Sahne'], ['', 'saure Sahne'],
 	['', 'Frischkäse'], ['Tassen', 'Käse'], ['ml', 'Weißwein'], ['ml', 'Rotwein'], ['gr', 'Kürbis' ],
 	['g', 'Gurke'], ['g', 'Kartoffeln'], ['gr', 'Süßkartoffeln'], ['g', 'Apfelstücke'], ['', 'Garnelen'] ,
-	['g', 'Guacamole'], ['g', 'Vollkornmehl'], ['g', 'Tofu'], ['Teeelöffel', 'Chili'], ['Teeelöffel', 'Curry'] ,
+	['g', 'Guacamole'], ['g', 'Vollkornmehl'], ['g', 'Tofu'], ['Teelöffel', 'Chili'], ['Teeelöffel', 'Curry'] ,
 	['Spritzer', 'Tabasco'], ['g', 'Senf'], ['Esslöffel', 'Marmelade'], ['g', 'gemischte Früchte'], ['Spritzer', 'Calvados'] ,
-	['g', 'Zucchini'], ['g', 'schmalz'], ['tischlöffel', 'Maisstärke'], ['Scheiben', 'Brot'], ['g', 'Speck' ],
-	['g', 'dunkle Schokolade'], ['g', 'Milchschokolade'], ['ml', 'Doppelcreme'], ['g', 'Kakaopulver'], ['ml', ' geschlagene Eier'],
-	['g', 'Erbsen'], ['g', 'Karotten'], ['g', 'Rosinen'], ['Teeelöffel', 'mexikanische Gewürze'], ['', 'Banane']
+	['g', 'Zucchini'], ['g', 'schmalz'], ['Esslöffel', 'Maisstärke'], ['Scheiben', 'Brot'], ['g', 'Speck' ],
+	['g', 'dunkle Schokolade'], ['g', 'Milchschokolade'], ['ml', 'Schmand'], ['g', 'Kakaopulver'], ['ml', ' geschlagene Eier'],
+	['g', 'Erbsen'], ['g', 'Karotten'], ['g', 'Rosinen'], ['Teelöffel', 'mexikanische Gewürze'], ['', 'Banane']
 ];
 
 
@@ -190,7 +190,7 @@ List<String> interpretChef(String language, recipe, input) {
 
 
 List<String> decodeChef(String language, recipe, additionalIngredients)  {
-	Chef interpreter = Chef(recipe);
+	Chef interpreter = Chef(recipe, language);
 print('');print('Rezept ist eingelesen');print('');
 	if (interpreter.valid) {
 		interpreter.bake(language, additionalIngredients);
@@ -211,7 +211,7 @@ class Chef {
 	bool valid;
 	List<String> meal;
 
-	Chef(String readRecipe) {
+	Chef(String readRecipe, language) {
 		this.meal = new List<String>();		valid = true;
 		error = new List<String>();
 		recipes = new Map<String, Recipe>();
@@ -231,7 +231,9 @@ class Chef {
 					progress = 3;
 					r.setIngredients(line);
 					if (r.error) {
-						error.add('chef_error_recipe_ingredient_name');
+						error.add('chef_error_syntax');
+						error.add('chef_error_syntax_ingredient_name');
+						error.add(line);
 						valid = false;
 						return '';
 					}
@@ -258,7 +260,12 @@ class Chef {
 						return '';
 					}
 					progress = 6;
-					r.setMethod(line);
+					r.setMethod(line, language);
+					if (r.error){
+						this.valid = false;
+						this.error.addAll(r.errorList);
+						return '';
+					}
 				} else if (line.startsWith("serves") || line.startsWith("portionen")) {
 					if (progress != 6) {
 						valid = false;
@@ -267,6 +274,14 @@ class Chef {
 					}
 					progress = 0;
 					r.setServes(line);
+					if (r.error){
+						error.add('chef_error_syntax');
+						error.add('chef_error_syntax_serves');
+						error.add('chef_error_syntax_serves_without_number');
+						error.add(line);
+						valid = false;
+						return '';
+					}
 				} else {
 					if (progress == 0 || progress >= 6) {
 						title = _parseTitle(line);
@@ -282,7 +297,7 @@ class Chef {
 						r.setComments(line);
 					} else {
 						valid = false;
-						error.add('chef_error_recipe_structural');
+						error.add('chef_error_structure_recipe');
 						error.add('chef_error_recipe_read_unexpected_comments_title');
 						error.add(_progressToExpected(progress));
 						error.add('chef_hint_recipe_hint');
@@ -293,8 +308,8 @@ class Chef {
 		});
 		if (mainrecipe == null) {
 			valid = false;
-			error.add('chef_error_recipe_structural');
-			error.add('chef_error_recipe_empty_missing_title');
+			error.add('chef_error_structure_recipe');
+			error.add('chef_error_structure_recipe_empty_missing_title');
 			return;
 		}
 		// TODO Catch Error in recipe
@@ -309,14 +324,14 @@ class Chef {
 
 	void _addError(int progressToExpected, int progress) {
 
-		error.add('chef_error_recipe_structural');
+		error.add('chef_error_structure_recipe');
 		if (progressToExpected >= 0) {
-			error.add('chef_error_recipe_read_unexpected');
+			error.add('chef_error_structure_recipe_read_unexpected');
 			error.add(_progressToExpected(progressToExpected));
-			error.add('chef_error_recipe_expecting');
+			error.add('chef_error_structure_recipe_expecting');
 			error.add(_progressToExpected(progress));
 		} else {
-			error.add('chef_error_recipe_read_unexpected_comments_title');
+			error.add('chef_error_structure_recipe_read_unexpected_comments_title');
 			error.add(_progressToExpected(progress));
 			error.add('chef_hint_recipe_hint');
 			error.add(_structHint(progress));
@@ -333,13 +348,13 @@ class Chef {
 
 	String _progressToExpected(int progress) {
 		switch (progress) {
-			case 0 :	return 'chef_error_recipe_title';
-			case 1 :	return 'chef_error_recipe_comments';
-			case 2 :	return 'chef_error_recipe_ingredient_list';
-			case 3 :	return 'chef_error_recipe_cooking_time';
-			case 4 :	return 'chef_error_recipe_oven_temperature';
-			case 5 :	return 'chef_error_recipe_methods';
-			case 6 :	return 'chef_error_recipe_serve_amount';
+			case 0 :	return 'chef_error_structure_recipe_title';
+			case 1 :	return 'chef_error_structure_recipe_comments';
+			case 2 :	return 'chef_error_structure_recipe_ingredient_list';
+			case 3 :	return 'chef_error_structure_recipe_cooking_time';
+			case 4 :	return 'chef_error_structure_recipe_oven_temperature';
+			case 5 :	return 'chef_error_structure_recipe_methods';
+			case 6 :	return 'chef_error_structure_recipe_serve_amount';
 		}
 		return null;
 	}

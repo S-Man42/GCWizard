@@ -13,11 +13,12 @@ class Method {
   Type type;
   int n;
 
-  Method(String line, int n) {
+  Method(String line, int n, language) {
 print('analyse METHOD '+n.toString()+' '+line);
     line = line.trim();
     this.n = n;
-    List<RegExp> matchers = [
+    List<RegExp> matchers = new List<RegExp>();
+    List<RegExp> matchersENG = [
       RegExp(r"^take ([a-zA-Z ]+) from refrigerator$"),
       RegExp(r"^(put|fold) ([a-zA-Z ]+) into( the)?( (\d+)(nd|rd|th|st))? mixing bowl$"),
       RegExp(r"^add dry ingredients( to( (\d+)(nd|rd|th|st))? mixing bowl)?$"),
@@ -36,6 +37,29 @@ print('analyse METHOD '+n.toString()+' '+line);
       RegExp(r"^([a-zA-Z]+?)( the ([a-zA-Z ]+))? until ([a-zA-Z]+)$"),
       RegExp(r"^([a-zA-Z]+) the ([a-zA-Z ]+)$")
     ];
+    List<RegExp> matchersDEU = [
+      RegExp(r"^take ([a-zA-Z ]+) from refrigerator$"),
+      RegExp(r"^(put|fold) ([a-zA-Z ]+) into( the)?( (\d+)(nd|rd|th|st))? mixing bowl$"),
+      RegExp(r"^add dry ingredients( to( (\d+)(nd|rd|th|st))? mixing bowl)?$"),
+      RegExp(r"^(add|remove|combine|divide) ([a-zA-Z ]+?)( (to|into|from)( (\d+)(nd|rd|th|st))? mixing bowl)?$"),
+      RegExp(r"^liquefy contents of the( (\d+)(nd|rd|th|st))? mixing bowl$"),
+      RegExp(r"^liquefy ([a-zA-Z ]+)$"),
+      RegExp(r"^stir( the( (\d+)(nd|rd|th|st))? mixing bowl)? for (\d+) minutes$"),
+      RegExp(r"^stir ([a-zA-Z ]+) into the( (\d+)(nd|rd|th|st))? mixing bowl$"),
+      RegExp(r"^mix( the( (\d+)(nd|rd|th|st))? mixing bowl)? well$"),
+      RegExp(r"^clean( (\d+)(nd|rd|th|st))? mixing bowl$"),
+      RegExp(r"^pour contents of the( (\d+)(nd|rd|th|st))? mixing bowl into the( (\d+)(nd|rd|th|st))? baking dish$"),
+      RegExp(r"^set aside$"),
+      RegExp(r"^refrigerate( for (\d+) hours)?$"),
+      RegExp(r"^serve with ([a-zA-Z ]+)$"),
+      RegExp(r"^suggestion: (.*)$"),
+      RegExp(r"^([a-zA-Z]+?)( the ([a-zA-Z ]+))? until ([a-zA-Z]+)$"),
+      RegExp(r"^([a-zA-Z]+) the ([a-zA-Z ]+)$")
+    ];
+    if (language == 'ENG')
+      matchers = matchersENG;
+    else
+      matchers = matchersDEU;
     if (matchers[0].hasMatch(line)) {// take
         ingredient = matchers[0].firstMatch(line).group(1);
         type = Type.Take;

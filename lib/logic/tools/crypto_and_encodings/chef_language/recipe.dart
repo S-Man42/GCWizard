@@ -12,6 +12,7 @@ class Recipe {
   List<Method> methods;
   int serves;
   bool error;
+  List<String> errorList;
 
   Recipe(String title) {
     this.title = title;
@@ -49,18 +50,19 @@ print('RECIPE setComments '+comment);
     this.comment = comment;
   }
 
-  void setMethod(String method) {
+  void setMethod(String method, language) {
 print('RECIPE setMethods '+method);
     this.methods = List<Method>();
     List<String> scanner = method.replaceAll("\n", "").replaceAll(". ",".").split('.');
     for(int i = 1; i < scanner.length - 1; i++){
-      var m = new Method(scanner[i], i);
+      var m = new Method(scanner[i], i, language);
       if (m.type != Type.Invalid)
         this.methods.add(m);
       else {
-        // TODO Syntax Error
         this.error = true;
-
+        this.errorList.add('chef_error_syntax');
+        this.errorList.add('chef_error_syntax_method');
+        this.errorList.add(scanner[i]);
       }
     };
   }
@@ -78,7 +80,11 @@ print('RECIPE setMethods '+method);
   }
 
   void setServes(String serves) {
-    this.serves = int.parse(RegExp(r'(serves )(\d*)(\.)*').firstMatch(serves).group(2));
+    if (RegExp(r'(serves |portionen )(\d*)(\.)$').hasMatch(serves)) {
+      this.serves = int.parse(RegExp(r'(serves |portionen )(\d*)(\.)$').firstMatch(serves).group(2));
+    } else {
+      this.error = true;
+    }
 print('RECIPE setServes '+this.serves.toString());
   }
 

@@ -93,7 +93,6 @@ Serves 1.
       });
     });
   });
-
   group("chef_language.interpretChef:", () {
     // OK OK    Empty recipe
     var test0 = '';
@@ -634,7 +633,7 @@ Put cigarettes into mixing bowl.''';
 
 
   // take
-  group("chef_language.examples", () {
+  group("chef_language.MethodExamples", () {
 
     var take = '''Test TAKE.
 
