@@ -17,7 +17,7 @@ class SymbolTableSelection extends GCWSelection {
       Registry.toolList.where((element) {
         return [
           className(SymbolTable()),
-        ].contains(className(element.tool));
+        ].contains(className(element.tool)) && element.i18nPrefix == 'symboltables_semaphore';
       }).toList();
 
     _toolList.sort((a, b){
