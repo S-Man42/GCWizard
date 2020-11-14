@@ -60,7 +60,7 @@ String _getText(textId id, String parameter, language) {
 			if (language == 'ENG')
 				text = 'Put %1 into the mixing bowl.';
 			else
-				text = 'Gib %1 in die Rührschüssel.';
+				text = 'Gebe %1 in die Rührschüssel.';
 			break;
 		case textId.Ingredients:
 			if (language == 'ENG')
@@ -84,7 +84,7 @@ String _getText(textId id, String parameter, language) {
 			if (language == 'ENG')
 				text = 'Method.';
 			else
-				text = 'Anweisungen.';
+				text = 'Zubereitung.';
 			break;
 		case textId.Liquefy_contents:
 			if (language == 'ENG')
@@ -231,9 +231,7 @@ class Chef {
 					progress = 3;
 					r.setIngredients(line);
 					if (r.error) {
-						error.add('chef_error_syntax');
-						error.add('chef_error_syntax_ingredient_name');
-						error.add(line);
+						this.error.addAll(r.errorList);
 						valid = false;
 						return '';
 					}
@@ -253,7 +251,7 @@ class Chef {
 					}
 					progress = 5;
 					r.setOvenTemp(line);
-				} else if (line.startsWith("method") || line.startsWith("anweisung")) {
+				} else if (line.startsWith("method") || line.startsWith("zubereitung")) {
 					if (progress > 5){
 						valid = false;
 						_addError(5, progress);
@@ -275,18 +273,14 @@ class Chef {
 					progress = 0;
 					r.setServes(line);
 					if (r.error){
-						error.add('chef_error_syntax');
-						error.add('chef_error_syntax_serves');
-						error.add('chef_error_syntax_serves_without_number');
-						error.add(line);
-						valid = false;
+						this.error.addAll(r.errorList);
+						this.valid = false;
 						return '';
 					}
 				} else {
 					if (progress == 0 || progress >= 6) {
 						title = _parseTitle(line);
 						r = new Recipe(line);
-						//r.setServes('serves 0.');
 						if (mainrecipe == null) {
 							mainrecipe = r;
 						}
@@ -298,10 +292,11 @@ class Chef {
 					} else {
 						valid = false;
 						error.add('chef_error_structure_recipe');
-						error.add('chef_error_recipe_read_unexpected_comments_title');
+						error.add('chef_error_structure_recipe_read_unexpected_comments_title');
 						error.add(_progressToExpected(progress));
 						error.add('chef_hint_recipe_hint');
 						error.add(_structHint(progress));
+						error.add('');
 						return '';
 					}
 				}
@@ -310,6 +305,7 @@ class Chef {
 			valid = false;
 			error.add('chef_error_structure_recipe');
 			error.add('chef_error_structure_recipe_empty_missing_title');
+			error.add('');
 			return;
 		}
 		// TODO Catch Error in recipe
@@ -323,7 +319,6 @@ class Chef {
 	}
 
 	void _addError(int progressToExpected, int progress) {
-
 		error.add('chef_error_structure_recipe');
 		if (progressToExpected >= 0) {
 			error.add('chef_error_structure_recipe_read_unexpected');
@@ -336,6 +331,7 @@ class Chef {
 			error.add('chef_hint_recipe_hint');
 			error.add(_structHint(progress));
 		}
+		error.add('');
 	}
 
 	String _structHint(int progress) {

@@ -470,7 +470,7 @@ Take flour from refrigerator.
 Put flour into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
-Serves 1''';
+Serves 1.''';
 
     // OK OK     https://metacpan.org/source/SMUELLER/Acme-Chef-1.01/examples/japh.chef
     var test15 = '''JAPH Souffle.
@@ -570,14 +570,14 @@ Ingredients.
 1 toilet
 
 Method.
-Waste vodka.
+Waste the bucket.
   Put vodka into mixing bowl.
   Serve with drug coctail.
   Fold toilet into mixing bowl.
   Clean mixing bowl.
   Put toilet into mixing bowl.
-  Pour contents of the mixing bowl into the baking dish.
-Puke vodka until wasted.
+Puke the bucket until wasted.
+Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
 
@@ -592,7 +592,7 @@ Method.
 Fold cigarettes into the mixing bowl.
 Put cannabis into the mixing bowl.
 Smoke the cigarettes.
-Combine cigarettes.
+  Combine cigarettes.
 Breathe the cigarettes until smoked.
 Fold cigarettes into the mixing bowl.
 Clean mixing bowl.
@@ -600,23 +600,23 @@ Put cigarettes into mixing bowl.''';
 
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '',   'recipe' : test0, 'isValid' : false, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test0, 'isValid' : false, 'expectedOutput' : []},
       {'language' : 'ENG', 'input' : '',   'recipe' : test1,   'isValid' : true, 'expectedOutput' : ['Hello world!']},
       {'language' : 'ENG', 'input' : '5',   'recipe' : test3,   'isValid' : true, 'expectedOutput' : ['120']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test3,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime_missing_input']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test3,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
       {'language' : 'ENG', 'input' : '20',   'recipe' : test4,   'isValid' : true, 'expectedOutput' : ['11235813213455891442333776109871597258441816765']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test4,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime_missing_input']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test4,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
       {'language' : 'ENG', 'input' : '',   'recipe' : test6,   'isValid' : true, 'expectedOutput' : ['880']},
       {'language' : 'ENG', 'input' : '8 12',   'recipe' : test7,   'isValid' : true, 'expectedOutput' : ['4']},
       {'language' : 'ENG', 'input' : '',   'recipe' : test8,   'isValid' : true, 'expectedOutput' : ['Hello world!']},
       {'language' : 'ENG', 'input' : '2 4','recipe' : test9,   'isValid' : true, 'expectedOutput' : ['16']},
       {'language' : 'ENG', 'input' : '4 5 7 6 8',   'recipe' : test10,   'isValid' : true, 'expectedOutput' : ['5678']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test12,   'isValid' : true, 'expectedOutput' : ['Koordinaten']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test12,   'isValid' : true, 'expectedOutput' : ['Koordinaten\r\n\r\n\r\n\r\n\r\n']},
       {'language' : 'ENG', 'input' : '',   'recipe' : test13,   'isValid' : true, 'expectedOutput' : ['n 432 e 708']},
       {'language' : 'ENG', 'input' : '5',   'recipe' : test14,   'isValid' : true, 'expectedOutput' : ['5']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test14,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime_missing_input']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test14,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input','']},
       {'language' : 'ENG', 'input' : '',   'recipe' : test15,   'isValid' : true, 'expectedOutput' : ['Just another Chef/Perl Hacker,']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : test16,   'isValid' : true, 'expectedOutput' : ['18']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : test16,   'isValid' : true, 'expectedOutput' : ['8']},
       {'language' : 'ENG', 'input' : '5',   'recipe' : test17,   'isValid' : true, 'expectedOutput' : ['479001600']},
     ];
 
@@ -913,7 +913,7 @@ Put salt into mixing bowl.
 Put pepper into mixing bowl.
 Liquefy contents of the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
-Refrigerate 0.
+Refrigerate for 1 hours.
 
 Serves 1.''';
 
@@ -934,7 +934,7 @@ Serves 1.''';
       {'language' : 'ENG', 'input' : '',   'recipe' : clean,   'isValid' : true, 'expectedOutput' : ['']},
       {'language' : 'ENG', 'input' : '',   'recipe' : loop,   'isValid' : true, 'expectedOutput' : ['2560']},
       {'language' : 'ENG', 'input' : '',   'recipe' : serve,   'isValid' : true, 'expectedOutput' : ['55555555555555555555555555555555']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : refrigerate,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : refrigerate,   'isValid' : true, 'expectedOutput' : []},
       {'language' : 'ENG', 'input' : '',   'recipe' : refrigeratenumber,   'isValid' : true, 'expectedOutput' : ['PA']},
     ];
 
@@ -952,8 +952,8 @@ Serves 1.''';
 
   group("chef_language.testErrors", () {
 
-    // take
-    var take = '''Test TAKE.
+    // NO INPUT
+    var testNoInput = '''Test NO INPUT.
 
 Ingredients.
 input
@@ -966,10 +966,10 @@ Pour contents of the mixing bowl into the baking dish.
 Serves 1.''';
 
     // put
-    var put = '''Test PUT.
+    var testPutNoInput = '''Test PUT.
 
 Ingredients.
-10 salt
+10 gr salt
 
 Method.
 Put salt into mixing bowl.
@@ -977,88 +977,77 @@ Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
 
-    // fold
-    var fold = '''Test FOLD.
+    // fold into empty bowl
+    var testFoldEmptyBow = '''Test FOLD empty bowl.
 
 Ingredients.
-10 salt
-pepper
+10 g salt
+10 g pepper
 
 Method.
-Put salt into mixing bowl.
 Fold pepper into mixing bowl.
-Put pepper into mixing bowl.
-Put pepper into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
 
-    // add
-    var add = '''Test ADD.
+    // add to empty bowl
+    var testAddEmptyBowl = '''Test ADD empty bowl.
 
 Ingredients.
-10 salt
-10 pepper
+10 g salt
+10 g pepper
 
 Method.
-Put salt into mixing bowl.
-Put salt into mixing bowl.
 Add pepper into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
 
-    // remove
-    var remove = '''Test REMOVE.
+    // remove from empty bol
+    var testRemoveEmptyBowl = '''Test REMOVE empty bowl.
 
 Ingredients.
-10 salt
-10 pepper
+10 g salt
+10 g pepper
 
 Method.
-Put salt into mixing bowl.
-Put salt into mixing bowl.
 Remove pepper into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
 
-    // combine
-    var combine = '''Test COMBINE.
+    // combine with empty bowl
+    var testCombineEmptyBowl = '''Test COMBINE with empty bowl.
 
 Ingredients.
-10 salt
-10 pepper
+10 g salt
+10 g pepper
 
 Method.
-Put salt into mixing bowl.
-Put salt into mixing bowl.
 Combine pepper into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
 
-    // divide
-    var divide = '''Test DIVIDE.
+    // divide into empty bowl
+    var testDivideEmptyBowl = '''Test DIVIDE into empry bowl.
 
 Ingredients.
-10 salt
-10 pepper
+10 g salt
+10 g pepper
 
 Method.
-Put salt into mixing bowl.
-Put salt into mixing bowl.
 Divide pepper into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
 
     // addry
-    var addry = '''Test ADDRY.
+    var testAddryNoIngredients = '''Test ADDRY.
 
 Ingredients.
-10 salt
-10 pepper
+10 ml salt
+10 ml pepper
 
 Method.
 Add dry ingredients to mixing bowl.
@@ -1066,39 +1055,21 @@ Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
 
-    // liquefyingredient
-    var liquefyingredient = '''Test LIQUEFYINGREDIENT.
+    // liquefybowl empty bowl
+    var testLiquefyEmptyBowl = '''Test LIQUEFY empty bowl.
 
 Ingredients.
-65 salt
-80 pepper
+65 g salt
+80 g pepper
 
 Method.
-Put salt into mixing bowl.
-Put pepper into mixing bowl.
-Liquefy salt.
-Put salt into mixing bowl.
-Pour contents of the mixing bowl into the baking dish.
-
-Serves 1.''';
-
-    // liquefybowl
-    var liquefybowl = '''Test LIQUEFYBOWL.
-
-Ingredients.
-65 salt
-80 pepper
-
-Method.
-Put salt into mixing bowl.
-Put pepper into mixing bowl.
 Liquefy contents of the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
 
-    // stir
-    var stir = '''Test STIR.
+    // stir emptyBowl
+    var testStirEmptyBowl = '''Test STIR empty bowl.
 
 Ingredients.
 1 sugar
@@ -1120,8 +1091,8 @@ Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
 
-    // stiringredient 2654321 => 6524321
-    var stiringredient = '''Test STIRINGREDIENT INTO THE MIXING BOWL
+    // stiringredient
+    var testStirNoIngredient = '''Test STIRINGREDIENT INTO THE MIXING BOWL
 
 Ingredients.
 1 sugar
@@ -1144,23 +1115,8 @@ Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
 
-    // clean
-    var clean = '''Test CLEAN.
-
-Ingredients.
-65 salt
-80 pepper
-
-Method.
-Put salt into mixing bowl.
-Put pepper into mixing bowl.
-Clean mixing bowl.
-Pour contents of the mixing bowl into the baking dish.
-
-Serves 1.''';
-
     // loop
-    var loop = '''Test LOOP.
+    var testLoopWrongEnd = '''Test LOOP.
 
 Ingredients.
 5 g salt
@@ -1178,7 +1134,7 @@ Pour contents of the mixing bowl into the baking dish.
 Serves 1.''';
 
     // serve
-    var serve = '''Test SERVE.
+    var testServeNoRecipe = '''Test SERVE.
 
 Ingredients.
 5 g salt
@@ -1203,56 +1159,20 @@ Ingredients.
 Method.
 Add harissa into mixing bowl.''';
 
-    // refrigerate
-    var refrigerate = '''Test REFRIGERATE.
-
-Ingredients.
-65 salt
-80 pepper
-
-Method.
-Put salt into mixing bowl.
-Put pepper into mixing bowl.
-Liquefy contents of the mixing bowl.
-Pour contents of the mixing bowl into the baking dish.
-Refrigerate.
-
-Serves 1.''';
-
-    // refrigeratenumber
-    var refrigeratenumber = '''Test REFRIGERATE.
-
-Ingredients.
-65 salt
-80 pepper
-
-Method.
-Put salt into mixing bowl.
-Put pepper into mixing bowl.
-Liquefy contents of the mixing bowl.
-Pour contents of the mixing bowl into the baking dish.
-Refrigerate 0.
-
-Serves 1.''';
-
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '5',  'recipe' : take, 'isValid' : false, 'expectedOutput' : ['5']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : put,   'isValid' : true, 'expectedOutput' : ['10']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : fold,   'isValid' : true, 'expectedOutput' : ['1010']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : add,   'isValid' : true, 'expectedOutput' : ['2010']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : remove,   'isValid' : true, 'expectedOutput' : ['010']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : combine,   'isValid' : true, 'expectedOutput' : ['10010']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : divide,   'isValid' : true, 'expectedOutput' : ['110']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : addry,   'isValid' : true, 'expectedOutput' : ['20']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : liquefyingredient,   'isValid' : true, 'expectedOutput' : ['A8065']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : liquefybowl,   'isValid' : true, 'expectedOutput' : ['PA']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : stir,   'isValid' : true, 'expectedOutput' : ['546321']},
-      {'language' : 'ENG', 'input' : '2654321',   'recipe' : stiringredient,   'isValid' : true, 'expectedOutput' : ['6524321']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : clean,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : loop,   'isValid' : true, 'expectedOutput' : ['2560']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : serve,   'isValid' : true, 'expectedOutput' : ['55555555555555555555555555555555']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : refrigerate,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : refrigeratenumber,   'isValid' : true, 'expectedOutput' : ['PA']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : testNoInput, 'isValid' : false, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testPutNoInput,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testFoldEmptyBow,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testAddEmptyBowl,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testRemoveEmptyBowl,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testCombineEmptyBowl,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testDivideEmptyBowl,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testAddryNoIngredients,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testLiquefyEmptyBowl,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testStirEmptyBowl,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testStirNoIngredient,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testLoopWrongEnd,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoRecipe,   'isValid' : true, 'expectedOutput' : ['']},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -1265,6 +1185,5 @@ Serves 1.''';
       });
     });
   });
-
 
 }

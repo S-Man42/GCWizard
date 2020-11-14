@@ -31,7 +31,7 @@ print('analyse METHOD '+n.toString()+' '+line);
       RegExp(r"^clean( (\d+)(nd|rd|th|st))? mixing bowl$"),
       RegExp(r"^pour contents of the( (\d+)(nd|rd|th|st))? mixing bowl into the( (\d+)(nd|rd|th|st))? baking dish$"),
       RegExp(r"^set aside$"),
-      RegExp(r"^refrigerate( for (\d+) hours)?$"),
+      RegExp(r"^refrigerate( for (\d+) hour(s)?)?$"),
       RegExp(r"^serve with ([a-zA-Z ]+)$"),
       RegExp(r"^suggestion: (.*)$"),
       RegExp(r"^([a-zA-Z]+?)( the ([a-zA-Z ]+))? until ([a-zA-Z]+)$"),

@@ -44,8 +44,8 @@ class ChefState extends State<Chef> {
       filter: {"#": RegExp(r'[0-9] ')}
   );
 
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
-  GCWSwitchPosition _currentLanguage = GCWSwitchPosition.right;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;    // inetrpret
+  GCWSwitchPosition _currentLanguage = GCWSwitchPosition.right; // english
 
   @override
   void initState() {
@@ -180,7 +180,6 @@ class ChefState extends State<Chef> {
 
   Widget _buildOutput(BuildContext context) {
     String output = '';
-    List<String>outputInterpret = new List<String>();
 
     String language = 'ENG';
     if (_currentLanguage == GCWSwitchPosition.left)
@@ -189,17 +188,17 @@ class ChefState extends State<Chef> {
     if (_currentMode == GCWSwitchPosition.right) { // generate chef
       if (_currentTitle == '') {
         output = buildOutputText(
-            [i18n(context, 'chef_error_structure_recipe'),
-            i18n(context, 'chef_error_structure_recipe_missing_title')]);
+            ['chef_error_structure_recipe',
+            'chef_error_structure_recipe_missing_title']);
       } else
         output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature, _currentOutput);
-    } else {
+    } else { // interpret chef
       if (isValid(_currentInput)) {
-        output = buildOutputText([interpretChef(language, _currentRecipe.toLowerCase(), _currentInput)]);
+        output = buildOutputText(interpretChef(language, _currentRecipe.toLowerCase(), _currentInput));
       } else
         output = buildOutputText(
-            [i18n(context, 'chef_error_runtime'),
-              i18n(context, 'chef_error_runtime_invalid_input')]);
+            ['chef_error_runtime',
+              'chef_error_runtime_invalid_input']);
     }
     return GCWOutputText(
         text: output.trim(),
@@ -207,9 +206,10 @@ class ChefState extends State<Chef> {
     );
   }
 
-  String buildOutputText(var outputList){
+  String buildOutputText(List<String> outputList){
     String output = '';
     outputList.forEach((element) {
+print(element);
       if (element.startsWith('chef_')) {
         output = output + i18n(context, element) + '\n';
       } else

@@ -6,33 +6,49 @@ class Ingredient {
   String _name;
   int _amount;
   State _state;
+  bool _error;
+  List<String> _errorList;
 
   Ingredient(String ingredient)  {
+    _errorList = new List<String>();
+
     var tokens = ingredient.replaceAll('-', ' ').split(" ");
     // token[0] = amount
     // token[1] = measurement or name
 print('analyse INGREDIENT ['+tokens.join('.')+']');
     int i = 0;
     _state = State.Dry;
-    if (RegExp(r"^[0-9]+").hasMatch(tokens[i])) {
-      _amount = int.parse(tokens[i]);
+    if (RegExp(r"^([0-9]+)[ a-z]*").hasMatch(tokens[i])) {
+print(tokens[i]);
+      //_amount = int.parse(tokens[i].group(1));
+      _amount = int.parse(RegExp(r"^([0-9]+)[ a-z]*").firstMatch(tokens[i]).group(1));
       i++;
-      if (RegExp(r"^heaped|^level|^gestrichen|^gehäuft").hasMatch(tokens[i])) {
-        _state = State.Dry;
-        i++;
-      } else if (RegExp(r"^g$|^kg$|^pinch(es)?|^prise(n)?").hasMatch(tokens[i])) {
-        _state = State.Dry;
-        i++;
-      } else if (RegExp(r"^ml$|^l$|^dash(es)?|^spritzer").hasMatch(tokens[i])) {
-        _state = State.Liquid;
-        i++;
-      } else if (RegExp(r"^cup(s)?|^teaspoon(s)?|^tablespoon(s)?|^teelöffel|^esslöffel").hasMatch(tokens[i])) {
-        i++;
+      if (i < tokens.length) {
+        if (RegExp(r"^heaped|^level|^gestrichen|^gehäuft").hasMatch(
+            tokens[i])) {
+          _state = State.Dry;
+          i++;
+        } else
+        if (RegExp(r"^g$|^kg$|^pinch(es)?|^prise(n)?").hasMatch(tokens[i])) {
+          _state = State.Dry;
+          i++;
+        } else
+        if (RegExp(r"^ml$|^l$|^dash(es)?|^spritzer").hasMatch(tokens[i])) {
+          _state = State.Liquid;
+          i++;
+        } else if (RegExp(
+            r"^cup(s)?|^teaspoon(s)?|^tablespoon(s)?|^teelöffel|^esslöffel")
+            .hasMatch(tokens[i])) {
+          i++;
+        }
+      } else {
+        _name = 'INVALID';
       }
-    } else {
+    } else { // no amount
       _amount = 0;
       _state = State.Dry;
     }
+print('i ist ' + i.toString());
     _name = "";
     while (i < tokens.length) {
       _name = _name + tokens[i] + (i == tokens.length-1 ? "" : " ");
@@ -40,17 +56,19 @@ print('analyse INGREDIENT ['+tokens.join('.')+']');
     }
     if (_name == "") {
       _name = 'INVALID';
-      //throw  ChefException.Contructor1(ChefException.INGREDIENT, tokens, "ingredient name missing");
     }
-print('ingredient found '+_name+'.'+_amount.toString());
+print('ingredient found '+_name+'.'+_amount.toString()+'.'+_state.toString());
   }
 
-  Ingredient.Contructor1(int n, State s, String name) {
+/*
+  Ingredient.Contructor(int n, State s, String name) {
     this._amount = n;
     this._state = s;
     this._name = name;
+    this._errorList = new List<String>();
   }
 
+*/
   int getAmount() {
     return _amount;
   }
@@ -85,4 +103,11 @@ print(_name + '.'+_state.toString());
     _name = n;
   }
 
+  bool isValid(){
+    return _error;
+  }
+
+  List<String> getError(){
+    return _errorList;
+  }
 }

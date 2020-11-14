@@ -1,5 +1,6 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/method.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/ingredient.dart';
+import 'package:intl/intl.dart';
 
 class Recipe {
 
@@ -19,9 +20,11 @@ class Recipe {
     this.comment = '';
     this.serves = 0;
     this.error = false;
+    this.errorList = new List<String>();
   }
 
   void setIngredients(String Input) {
+    var f = new NumberFormat('###');
 print('RECIPE setIngredients [' + Input+']');
     this.ingredients = Map<String, Ingredient>();
     var i=0;
@@ -35,6 +38,11 @@ print('       => '+ing.getName()+'.'+ing.getAmount().toString());
         if (ing.getName() == 'INVALID') {
 print('       => error = true => return');
           error = true;
+          this.errorList.add('chef_error_syntax');
+          this.errorList.add('chef_error_syntax_ingredient');
+          this.errorList.add('chef_error_syntax_ingredient_name');
+          this.errorList.add(f.format(i).toString() + ' : ' + ingredientLine);
+          this.errorList.add('');
           return;
         } else {
           error = false;
@@ -51,6 +59,7 @@ print('RECIPE setComments '+comment);
   }
 
   void setMethod(String method, language) {
+    var f = new NumberFormat('###');
 print('RECIPE setMethods '+method);
     this.methods = List<Method>();
     List<String> scanner = method.replaceAll("\n", "").replaceAll(". ",".").split('.');
@@ -62,7 +71,8 @@ print('RECIPE setMethods '+method);
         this.error = true;
         this.errorList.add('chef_error_syntax');
         this.errorList.add('chef_error_syntax_method');
-        this.errorList.add(scanner[i]);
+        this.errorList.add(f.format(i).toString() + ' : ' + scanner[i]);
+        this.errorList.add('');
       }
     };
   }
@@ -84,6 +94,11 @@ print('RECIPE setMethods '+method);
       this.serves = int.parse(RegExp(r'(serves |portionen )(\d*)(\.)$').firstMatch(serves).group(2));
     } else {
       this.error = true;
+      errorList.add('chef_error_syntax');
+      errorList.add('chef_error_syntax_serves');
+      errorList.add('chef_error_syntax_serves_without_number');
+      errorList.add(serves);
+      errorList.add('');
     }
 print('RECIPE setServes '+this.serves.toString());
   }
