@@ -65,22 +65,16 @@ print('analyse '+language+' METHOD '+n.toString()+' '+line);
         ingredient = matchers[0].firstMatch(line).group(1);
         type = Type.Take;
     } else if (matchers[1].hasMatch(line)) {// put | fold | gebe | unterhebe
-print('anaylse METHOD '+line);
         if (matchers[1].firstMatch(line).group(1) == 'put' || matchers[1].firstMatch(line).group(1) == "gebe" )
           type = Type.Put;
         else
           type = Type.Fold;
         ingredient = matchers[1].firstMatch(line).group(2);
         mixingbowl = (matchers[1].firstMatch(line).group(5) == null ? 1 : int.parse(matchers[1].firstMatch(line).group(5))) - 1;
-print('               => '+matchers[1].firstMatch(line).group(1)+'.'+matchers[1].firstMatch(line).group(2)+'.'+mixingbowl.toString());
     } else if (matchers[2].hasMatch(line)) {// add dry ingredients
         type = Type.AddDry;
         mixingbowl = (matchers[2].firstMatch(line).group(3) == null ? 1 : int.parse(matchers[2].firstMatch(line).group(3))) - 1;
     } else if (matchers[3].hasMatch(line)) {// add | remove | combine | divide |füge hinzu |entferne | kombiniere | teile
-      // group 1  type
-      // group 2 ingredient
-      // group 6 nr mixing bowl
-print('anaylse METHOD '+line);
         switch (matchers[3].firstMatch(line).group(1)) {
           case 'füge hinzu':
           case 'add':  type = Type.Add; break;
@@ -98,14 +92,12 @@ print('anaylse METHOD '+line);
         else
           group = 8;
           mixingbowl = (matchers[3].firstMatch(line).group(group) == null ? 1 : int.parse(matchers[3].firstMatch(line).group(group))) - 1;
-print('anaylse METHOD '+line + ' => '+matchers[3].firstMatch(line).group(1)+'.'+matchers[3].firstMatch(line).group(2)+'.'+mixingbowl.toString());
     } else if (matchers[4].hasMatch(line)) {//liquefy contents
         type = Type.LiquefyBowl;
         mixingbowl = (matchers[4].firstMatch(line).group(2) == null ? 1 : int.parse(matchers[4].firstMatch(line).group(2))) - 1;
     } else if (matchers[5].hasMatch(line)) {//liquefy
         type = Type.Liquefy;
         ingredient = matchers[5].firstMatch(line).group(1);
-print('anaylse METHOD '+line + ' => '+matchers[5].firstMatch(line).group(1));
     } else if (matchers[6].hasMatch(line)) {// stir the
         type = Type.Stir;
         mixingbowl = (matchers[6].firstMatch(line).group(3) == null ? 1 : int.parse(matchers[6].firstMatch(line).group(3))) - 1;
@@ -135,23 +127,17 @@ print('anaylse METHOD '+line + ' => '+matchers[5].firstMatch(line).group(1));
     } else if (matchers[14].hasMatch(line)) {// suggestion
         type = Type.Remember;
     } else if (matchers[15].hasMatch(line)) {// xxx the ingredient until yyyed
-      // group 3 ingredient | Zutat 4
-      // group 4 verb ed   | partizip 5
         type = Type.VerbUntil;
         if (language == 'ENG') {
           verb = matchers[15].firstMatch(line).group(4);
           if (matchers[15].firstMatch(line).group(3) != null) {
             ingredient = matchers[15].firstMatch(line).group(3);
-            print('method type.verbuntil '+verb+' '+ingredient);
-          } else
-            print('method type.verbuntil '+verb);
+          }
         } else {
           verb = matchers[15].firstMatch(line).group(5);
           if (matchers[15].firstMatch(line).group(4) != null) {
             ingredient = matchers[15].firstMatch(line).group(4);
-            print('method type.verbuntil '+verb+' '+ingredient);
-          } else
-            print('method type.verbuntil '+verb);
+          }
         }
     } else if (matchers[16].hasMatch(line)) {// yyy the ingredient
         type = Type.Verb;
@@ -161,7 +147,6 @@ print('anaylse METHOD '+line + ' => '+matchers[5].firstMatch(line).group(1));
         } else {
           ingredient = matchers[16].firstMatch(line).group(3);
         }
-print('method type.verb '+verb+' '+ingredient);
     } else { // invalid method
         type = Type.Invalid;
         ingredient = line;

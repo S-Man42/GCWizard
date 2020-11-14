@@ -12,21 +12,17 @@ class Container {
   }
 
   void push(Component c) {
-print('        CONTAINER push ['+c.getName()+'.'+c.getValue().toString()+'.'+c.getState().toString()+']');
     _contents.add(c);
   }
 
   Component peek() {
-    var c = _contents[_contents.length-1];
-print('        CONTAINER peek ['+c.getName()+'.'+c.getValue().toString()+'.'+c.getState().toString()+']');
+    var c = _contents[_contents.length - 1];
     return c;
   }
 
-  Component pop()  { //throws ChefException
+  Component pop()  {
     if (_contents.length != 0) {
       var c = _contents.removeAt(_contents.length - 1);
-      // TO DO throw new ChefException(ChefException.LOCAL, "Folded from empty container");
-print('        CONTAINER pop ['+c.getName()+'.'+c.getValue().toString()+'.'+c.getState().toString()+']');
       return c;
     }
   }
@@ -36,8 +32,6 @@ print('        CONTAINER pop ['+c.getName()+'.'+c.getValue().toString()+'.'+c.ge
   }
 
   void combine(Container c) {
-String inhalt = ''; for (int i=0;i<c._contents.length;i++){inhalt=inhalt+c._contents[i].getName()+'.'+c._contents[i].getValue().toString();};
-print('       CONTAINER combine ['+inhalt+']');
     _contents.addAll(c._contents);
   }
 
@@ -53,8 +47,7 @@ print('       CONTAINER combine ['+inhalt+']');
 
   String serve() {
     String result = "";
-    for (int i = _contents.length-1; i >= 0; i--) {
-print('container.serve content '+i.toString()+' - '+_contents[i].getValue().toString()+'.'+_contents[i].getState().toString()) ;
+    for (int i = _contents.length - 1; i >= 0; i--) {
       if (_contents[i].getState() == State.Dry) {
         result = result + _contents[i].getValue().toString() + '';
       }
@@ -62,13 +55,12 @@ print('container.serve content '+i.toString()+' - '+_contents[i].getValue().toSt
         result = result + String.fromCharCode(_contents[i].getValue()) ;
       }
     }
-print('container.serve ' + result);
     return result;
   }
 
   List<String> getContent(){
     List<String> out = new List<String>();
-    for (int i = _contents.length-1; i >= 0; i--) {
+    for (int i = _contents.length - 1; i >= 0; i--) {
       out.add(_contents[i].getValue().toString());
     }
     return out;
@@ -79,10 +71,10 @@ print('container.serve ' + result);
   }
 
   void stir(int time) {
-    for (int i = 0; i < time && i + 1< _contents.length; i++) {
-      var tmp = _contents[_contents.length-i-1];
-      _contents[_contents.length-i-1] = _contents[_contents.length-i-2];
-      _contents[_contents.length-i-2] = tmp;
+    for (int i = 0; i < time && i + 1 < _contents.length; i++) {
+      var tmp = _contents[_contents.length - i - 1];
+      _contents[_contents.length - i - 1] = _contents[_contents.length - i - 2];
+      _contents[_contents.length - i - 2] = tmp;
     }
   }
 }

@@ -1,13 +1,7 @@
 import 'dart:math';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/kitchen.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/recipe.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chefException.dart';
 
-// 10 items (0-9)  26 items (a-z)  5 items (.,;!?) > 41 items
-// number: dry        g kg pinch(es)
-// character: liquid  ml l dash(es)
-// indefinite: cup(s) teaspoon(s) tablespoon(s) => liquefy or
-//['', '']
 final itemListENG = [
   ['g','flour'], ['g', 'white sugar'], ['pinch', 'salt'], ['pinches', 'baking soda'], ['g', 'butter'],
   ['', 'vanilla bean'], ['tablespoon', 'brown sugar'], ['pinch', 'pepper'], ['', 'eggs'], ['g', 'haricot beans'],
@@ -191,16 +185,13 @@ List<String> interpretChef(String language, recipe, input) {
 
 List<String> decodeChef(String language, recipe, additionalIngredients)  {
 	Chef interpreter = Chef(recipe, language);
-print('');print('Rezept ist eingelesen');print('');
 	if (interpreter.valid) {
 		interpreter.bake(language, additionalIngredients);
-print('bake is done');
 		if (interpreter.valid)
 			return interpreter.meal;
 		else
 			return interpreter.error;
 	} else {
-print('rezept ist fehlerhaft');
 		return interpreter.error;
 	}
 }
@@ -320,7 +311,6 @@ class Chef {
 			error.add('');
 			return;
 		}
-		// TODO Catch Error in recipe
 	}
 
 	String _parseTitle(String title) {
@@ -348,8 +338,8 @@ class Chef {
 
 	String _structHint(int progress) {
 		switch (progress) {
-			case 2 :	return 'chef_hint_recipe_ingredients'; //"did you specify 'Ingredients.' above the ingredient list?";
-			case 3 :	return 'chef_hint_recipe_methods'; //"did you specify 'Methods.' above the methods?";
+			case 2 :	return 'chef_hint_recipe_ingredients';
+			case 3 :	return 'chef_hint_recipe_methods';
 		}
 		return "chef_hint_no_hint_available";
 	}
@@ -370,14 +360,6 @@ class Chef {
 	void bake(String language, additionalIngredients) {
 		Kitchen k = new Kitchen(this.recipes, this.mainrecipe, null, null, language);
 		if (k.valid) {
-print('\nkitchen is prepared with mixing bowls and baking dishes');	String out = '';
-out = '- ingredients ';this.mainrecipe.ingredients.forEach((key, value) {out = out + '['+key+','+value.getName()+'.'+value.getAmount().toString()+'] ';});	print(out);
-out = '- methods     ';for (int i=0; i<this.mainrecipe.methods.length;i++) {
-	out=out+'['+this.mainrecipe.methods[i].type.toString() +']';
-};print(out);
-out = '- mixin bowls '+k.mixingbowls.length.toString()+' each';print(out);
-out = '- bakin dishs '+k.bakingdishes.length.toString()+' each';print(out);
-print('');
 			k.cook(additionalIngredients, language);
 		}
     this.valid = k.valid;

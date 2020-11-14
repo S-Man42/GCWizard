@@ -25,18 +25,14 @@ class Recipe {
 
   void setIngredients(String Input) {
     var f = new NumberFormat('###');
-print('RECIPE setIngredients [' + Input+']');
     this.ingredients = Map<String, Ingredient>();
     var i=0;
     List<String> ingredientsInput = Input.split('\n');
     ingredientsInput.forEach((ingredientLine) {
-print('line ' + i.toString()+' ' + ingredientLine);
       //Clearing the 'Ingredients.' header
       if (i > 0) {
         Ingredient ing = new Ingredient(ingredientLine);
-print('       => '+ing.getName()+'.'+ing.getAmount().toString());
         if (ing.getName() == 'INVALID') {
-print('       => error = true => return');
           error = true;
           this.errorList.add('chef_error_syntax');
           this.errorList.add('chef_error_syntax_ingredient');
@@ -54,13 +50,11 @@ print('       => error = true => return');
   }
 
   void setComments(String comment) {
-print('RECIPE setComments '+comment);
     this.comment = comment;
   }
 
   void setMethod(String method, language) {
     var f = new NumberFormat('###');
-print('RECIPE setMethods '+method);
     this.methods = List<Method>();
     List<String> scanner = method.replaceAll("\n", "").replaceAll(". ",".").split('.');
     for(int i = 1; i < scanner.length - 1; i++){
@@ -78,7 +72,6 @@ print('RECIPE setMethods '+method);
   }
 
   void setCookingTime(String cookingtime) {
-print(cookingtime.split(' '));
     RegExp expr = new RegExp(r'^(cooking time: |kochzeit: )(\d*)( minute(s)?| minute(n)?| hour(s)?| stunde(n)?)\.$');
     if (expr.hasMatch(cookingtime)) {
       this.serves = int.parse(expr.firstMatch(cookingtime).group(2));
@@ -92,7 +85,6 @@ print(cookingtime.split(' '));
   }
 
   void setOvenTemp(String oventemp) {
-print(oventemp.split(' '));
     RegExp expr = new RegExp(r'^(pre-heat oven to |vorheizen des ofens auf )(\d*)( (grad|degrees) celsius)?( gas (mark|skala) (\d*))?\.$');
     if (expr.hasMatch(oventemp)) {
       this.serves = int.parse(expr.firstMatch(oventemp).group(2));
@@ -119,7 +111,6 @@ print(oventemp.split(' '));
       errorList.add(serves);
       errorList.add('');
     }
-print('RECIPE setServes '+this.serves.toString());
   }
 
   int getServes() {

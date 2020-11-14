@@ -59,7 +59,6 @@ class Kitchen {
     Component c;
     int i = 0;
     bool deepfrozen = false;
-print('\n'+'-------- KITCHEN starting method loop');
     methodloop: while (i < methods.length && !deepfrozen) {
       Method m = methods[i];
       switch (m.type) {
@@ -89,14 +88,10 @@ print('\n'+'-------- KITCHEN starting method loop');
             error.add(m.ingredient);
             error.add('');
             return null;
-          } //("Method error, recipe "+recipe.getTitle()+", step "+(step+1).toString()+": "+method+" ("+error+
-            //                                  int type,             recipe, step, method,            error
-            //throw new ChefException.Contructor3(ChefException.METHOD, recipe, m.n, m.type.toString(), "Ingredient not found: "+m.ingredient);
+          }
       }
-print('kitchen Step '+ (i+1).toString() +' '+ m.type.toString());
       switch (m.type) {
         case Type.Take :
-print('        TAKE '+input.join('.')+' => '+ m.ingredient +' := '+ input[ingredientIndex]);
           if ((input.join('') != '') && (ingredientIndex <= input.length - 1)) {
             ingredients[m.ingredient].setAmount(int.parse(input[ingredientIndex]));
             ingredientIndex++;
@@ -109,7 +104,6 @@ print('        TAKE '+input.join('.')+' => '+ m.ingredient +' := '+ input[ingred
           }
           break;
         case Type.Put :
-print('        PUT ' + ingredients[m.ingredient].getName() + ' ' + ingredients[m.ingredient].getAmount().toString());
           mixingbowls[m.mixingbowl].push( Component.Contructor1(ingredients[m.ingredient]));
           break;
         case Type.Fold :
@@ -122,10 +116,7 @@ print('        PUT ' + ingredients[m.ingredient].getName() + ' ' + ingredients[m
             error.add('');
             return null;
           }
-            //throw new ChefException.Contructor3(ChefException.METHOD, recipe, m.n, m.type.toString(), "Folded from empty mixing bowl: "+(m.mixingbowl + 1).toString());
-print('        FOLD into mixing bowl '+m.mixingbowl.toString());
           c = mixingbowls[m.mixingbowl].pop();
-print('         got bowl '+c.getName());
           ingredients[m.ingredient].setAmount(c.getValue());
           ingredients[m.ingredient].setState(c.getState());
           break;
@@ -139,7 +130,6 @@ print('         got bowl '+c.getName());
             error.add('');
             return null;
           }
-print('        ADD '+m.ingredient + '.'+ m.mixingbowl.toString()+'.['+mixingbowls.join(',')+']');
           c = mixingbowls[m.mixingbowl].peek();
           c.setValue(c.getValue() + ingredients[m.ingredient].getAmount());
           break;
@@ -153,9 +143,7 @@ print('        ADD '+m.ingredient + '.'+ m.mixingbowl.toString()+'.['+mixingbowl
             error.add('');
             return null;
           }
-print('        REMOVE '+m.ingredient + '.'+ m.mixingbowl.toString()+'.['+mixingbowls.join(',')+']');
           c = mixingbowls[m.mixingbowl].peek(); // returns top of m.mixingbowl
-print('        REMOVE '+ingredients[m.ingredient].getAmount().toString()+' FROM '+c.getValue().toString());
           c.setValue(c.getValue() - ingredients[m.ingredient].getAmount());
           break;
         case Type.Combine :
@@ -169,7 +157,6 @@ print('        REMOVE '+ingredients[m.ingredient].getAmount().toString()+' FROM 
             return null;
           }
           c = mixingbowls[m.mixingbowl].peek();
-print('        COMBINE ' + c.getValue().toString()+' * '+ingredients[m.ingredient].getAmount().toString());
           c.setValue(c.getValue() * ingredients[m.ingredient].getAmount());
           break;
         case Type.Divide :
@@ -183,7 +170,6 @@ print('        COMBINE ' + c.getValue().toString()+' * '+ingredients[m.ingredien
             return null;
           }
           c = mixingbowls[m.mixingbowl].peek();
-print('        DIVIDE ' + c.getValue().toString()+' / '+ingredients[m.ingredient].getAmount().toString());
           c.setValue((c.getValue() ~/ ingredients[m.ingredient].getAmount()).round());
           break;
         case Type.AddDry :
@@ -195,13 +181,9 @@ print('        DIVIDE ' + c.getValue().toString()+' / '+ingredients[m.ingredient
           mixingbowls[m.mixingbowl].push(new Component(sum, State.Dry, ''));
           break;
         case Type.Liquefy :
-print('       LIQUEFY '+ingredients[m.ingredient].getName());
           ingredients[m.ingredient].liquefy();
-String out=''; ingredients.forEach((key, value) {out=out+value.getName()+value.getState().toString()+'.'; });    print('          '+out);
           break;
         case Type.LiquefyBowl :
-String out = ''; mixingbowls[m.mixingbowl].getContent().forEach((element){out = out+ element + ' ';});
-print('       LIQUEFY bowl '+m.mixingbowl.toString() + '=> ' + out) ;
           mixingbowls[m.mixingbowl].liquefy();
           break;
         case Type.Stir :
@@ -244,10 +226,7 @@ print('       LIQUEFY bowl '+m.mixingbowl.toString() + '=> ' + out) ;
           mixingbowls[m.mixingbowl].clean();
           break;
         case Type.Pour :
-print('       POUR mixingbowl ' + m.mixingbowl.toString() + ' into bakingdish ' + m.bakingdish.toString());
           bakingdishes[m.bakingdish].combine(mixingbowls[m.mixingbowl]);
-String out = ''; bakingdishes[m.bakingdish].getContent().forEach((element){out = out+ element + ' ';});
-print('        bakingdish '+m.bakingdish.toString() + '=> ' + out) ;
           break;
         case Type.Verb :
           int end = i+1;
@@ -262,7 +241,6 @@ print('        bakingdish '+m.bakingdish.toString() + '=> ' + out) ;
             error.add('');
             return null;
           }
-            //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Loop end statement not found.");
           if (ingredients[m.ingredient].getAmount() <= 0) {
             i = end + 1;
             continue methodloop;
@@ -279,7 +257,6 @@ print('        bakingdish '+m.bakingdish.toString() + '=> ' + out) ;
             error.add('');
             return null;
           }
-            //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Wrong loop end statement found.");
           if (ingredients[m.ingredient] != null)
             ingredients[m.ingredient].setAmount(ingredients[m.ingredient].getAmount() - 1);
           i = loops[0].from;
@@ -294,7 +271,6 @@ print('        bakingdish '+m.bakingdish.toString() + '=> ' + out) ;
             error.add('');
             return null;
           }
-            //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Cannot set aside when not inside loop.");
           else {
             i = loops[0].to + 1;
             loops.removeAt(0);
@@ -310,11 +286,8 @@ print('        bakingdish '+m.bakingdish.toString() + '=> ' + out) ;
             error.add('');
             return null;
           }
-            //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Unavailable recipe: "+m.auxrecipe);
           Kitchen k = new Kitchen(recipes, recipes[m.auxrecipe.toLowerCase()], mixingbowls, bakingdishes, language);
-print('         executing auxiliary recipe');
           Container con = k.cook(additionalIngredients, language);
-print('         auxiliary recipe is finished');
           mixingbowls[0].combine(con);
           break;
         case Type.Refrigerate :
@@ -332,21 +305,15 @@ print('         auxiliary recipe is finished');
           error.add('');
           return null;
         }
-          //throw new ChefException.Contructor2(ChefException.METHOD, m.n, m.type.toString(), "Unsupported method found!");
       }
       i++;
     } // end of MethodLoop - all is done
-print('');    print('END OF COOKING');
     if (recipe.getServes() > 0 && !deepfrozen) {
-print('there is something to serve');
       _serve(recipe.getServes());
     }
-print('dishes were served - if available');
     if (mixingbowls.length > 0) {
-print('and there is a mixing bowl to return');
       return mixingbowls[0];
     } // end of auxiliary recipe
-print('return null');
     return null;  // end of mainrecipe
   } // cook
 
@@ -367,7 +334,6 @@ print('return null');
 
   void _serve(int n) {
     for (int i = 0; i < n && i < bakingdishes.length; i++) {
-      //print(bakingdishes[i].serve());
       meal.add(bakingdishes[i].serve());
     }
   }
