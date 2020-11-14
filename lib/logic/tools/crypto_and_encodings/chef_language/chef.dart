@@ -194,12 +194,15 @@ List<String> decodeChef(String language, recipe, additionalIngredients)  {
 print('');print('Rezept ist eingelesen');print('');
 	if (interpreter.valid) {
 		interpreter.bake(language, additionalIngredients);
+print('bake is done');
 		if (interpreter.valid)
 			return interpreter.meal;
 		else
 			return interpreter.error;
-	} else
+	} else {
+print('rezept ist fehlerhaft');
 		return interpreter.error;
+	}
 }
 
 
@@ -261,7 +264,6 @@ class Chef {
 					r.setMethod(line, language);
 					if (r.error){
 						this.valid = false;
-						this.error.addAll(r.errorList);
 						return '';
 					}
 				} else if (line.startsWith("serves") || line.startsWith("portionen")) {

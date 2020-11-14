@@ -919,7 +919,7 @@ Serves 1.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '5',  'recipe' : take, 'isValid' : false, 'expectedOutput' : ['5']},
-      {'language' : 'ENG', 'input' : '',  'recipe' : take, 'isValid' : false, 'expectedOutput' : ['chef_error_runtime_missing_input']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : take, 'isValid' : false, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
       {'language' : 'ENG', 'input' : '',   'recipe' : put,   'isValid' : true, 'expectedOutput' : ['10']},
       {'language' : 'ENG', 'input' : '',   'recipe' : fold,   'isValid' : true, 'expectedOutput' : ['1010']},
       {'language' : 'ENG', 'input' : '',   'recipe' : add,   'isValid' : true, 'expectedOutput' : ['2010']},
@@ -1080,12 +1080,6 @@ Ingredients.
 6 wodka
 
 Method.
-Put sugar into mixing bowl.
-Put salt into mixing bowl.
-Put salmon into mixing bowl.
-Put pepper into mixing bowl.
-Put wine into mixing bowl.
-Put wodka into mixing bowl.
 Stir for 2 minutes.
 Pour contents of the mixing bowl into the baking dish.
 
@@ -1104,12 +1098,30 @@ Ingredients.
 
 Method.
 Put sugar into mixing bowl.
-Put salt into mixing bowl.
 Put salmon into mixing bowl.
 Put pepper into mixing bowl.
 Put wine into mixing bowl.
-Put wodka into mixing bowl.
-Put salt into mixing bowl.
+Stir salt into the mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // stiringredient
+    var testStirEmptyIngredient = '''Test STIRINGREDIENT INTO THE MIXING BOWL
+
+Ingredients.
+1 sugar
+salt
+3 salmon
+4 pepper
+5 wine
+6 wodka
+
+Method.
+Put sugar into mixing bowl.
+Put salmon into mixing bowl.
+Put pepper into mixing bowl.
+Put wine into mixing bowl.
 Stir salt into the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
@@ -1124,6 +1136,24 @@ Ingredients.
 
 Method.
 Count the salt.
+   Put pepper into mixing bowl.
+   Add pepper into mixing bowl.
+   Fold pepper into mixing bowl.
+Count salt until counted.
+Put pepper into mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    // loop
+    var testLoopWrongStart = '''Test LOOP.
+
+Ingredients.
+5 g salt
+80 g pepper
+
+Method.
+Count salt.
    Put pepper into mixing bowl.
    Add pepper into mixing bowl.
    Fold pepper into mixing bowl.
@@ -1144,7 +1174,7 @@ Ingredients.
 Method.
 Put air into mixing bowl.
 Count the salt.
-   Serve with chili.
+   Serve chili.
 Count the salt until counted.
 Pour contents of the mixing bowl into the baking dish.
 
@@ -1159,20 +1189,39 @@ Ingredients.
 Method.
 Add harissa into mixing bowl.''';
 
+    // serve
+    var testServeNoNumber = '''Test SERVE.
+
+Ingredients.
+5 g salt
+80 g pepper
+0 air
+
+Method.
+Put air into mixing bowl.
+Add pepper into mixing bowl.
+Combine salt into mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves.''';
+
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '',  'recipe' : testNoInput, 'isValid' : false, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testPutNoInput,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testFoldEmptyBow,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testAddEmptyBowl,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testRemoveEmptyBowl,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testCombineEmptyBowl,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testDivideEmptyBowl,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testAddryNoIngredients,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : testNoInput, 'isValid' : false, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testPutNoInput,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_method_step','1 : Type.Put','chef_error_runtime_ingredient_not_found']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testFoldEmptyBow,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_folded_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Fold => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testAddEmptyBowl,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_add_to_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Add => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testRemoveEmptyBowl,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_remove_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Remove => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testCombineEmptyBowl,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_combine_with_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Combine => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testDivideEmptyBowl,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_divide_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Divide => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testAddryNoIngredients,   'isValid' : true, 'expectedOutput' : ['0']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testLiquefyEmptyBowl,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testStirEmptyBowl,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testStirNoIngredient,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testLoopWrongEnd,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoRecipe,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testStirEmptyBowl,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_stir_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Stir => 1']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testStirNoIngredient,   'isValid' : true, 'expectedOutput' : ['4351']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testStirEmptyIngredient,   'isValid' : true, 'expectedOutput' : ['5431']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testLoopWrongEnd,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax','chef_error_syntax_method','5 : count salt until counted',]},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testLoopWrongStart,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax','chef_error_syntax_method','1 : count salt',]},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoRecipe,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax','chef_error_syntax_method','3 :   serve chili']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testServeNoNumber,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax','chef_error_syntax_serves','chef_error_syntax_serves_without_number','serves.']},
     ];
 
     _inputsToExpected.forEach((elem) {

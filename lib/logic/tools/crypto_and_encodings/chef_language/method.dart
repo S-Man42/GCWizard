@@ -60,6 +60,7 @@ print('analyse METHOD '+n.toString()+' '+line);
       matchers = matchersENG;
     else
       matchers = matchersDEU;
+
     if (matchers[0].hasMatch(line)) {// take
         ingredient = matchers[0].firstMatch(line).group(1);
         type = Type.Take;
