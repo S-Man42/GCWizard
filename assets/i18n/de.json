@@ -403,6 +403,8 @@
   "chef_error_syntax_method_unsupported" : "Nicht-unterstützte Anweisungen gefunden",
   "chef_error_syntax_serves" : "Ungültige Portionen",
   "chef_error_syntax_serves_without_number" : "Fehlende Nummer",
+  "chef_error_syntax_cooking_time" : "Fehlerhafte Anweisung für die Kochzeit",
+  "chef_error_syntax_oven_temperature" : "Fehlerhafte Anweisung für das Vorheizen des Ofens",
   "chef_error_runtime" : "LAUFZEIT FEHLER",
   "chef_error_runtime_invalid_input" : "Ungültige Eingabe: nur Nummern sind erlaubt",
   "chef_error_runtime_ingredient_not_found" : "Zutat nicht gefunden",

@@ -401,6 +401,8 @@
   "chef_error_syntax_method" : "Invalid method",
   "chef_error_syntax_method_unsupported" : "Unsupported method found",
   "chef_error_syntax_serves" : "Invalid serves",
+  "chef_error_syntax_cooking_time" : "Invalid instruction for cooking time",
+  "chef_error_syntax_oven_temperature" : "Invalid instruction for pre-heat oven",
   "chef_error_syntax_serves_without_number" : "Missing number",
   "chef_error_runtime" : "RUNTIME ERROR",
   "chef_error_runtime_invalid_input" : "Invalid Input: only numbers are allowed",

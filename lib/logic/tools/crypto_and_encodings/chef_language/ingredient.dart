@@ -21,7 +21,7 @@ print('analyse INGREDIENT ['+tokens.join('.')+']');
     if (RegExp(r"^([0-9]+)[ a-z]*").hasMatch(tokens[i])) {
 print(tokens[i]);
       //_amount = int.parse(tokens[i].group(1));
-      _amount = int.parse(RegExp(r"^([0-9]+)[ a-z]*").firstMatch(tokens[i]).group(1));
+      _amount = int.parse(RegExp(r"^([0-9]+)[ a-zäöüß]*").firstMatch(tokens[i]).group(1));
       i++;
       if (i < tokens.length) {
         if (RegExp(r"^heaped|^level|^gestrichen|^gehäuft").hasMatch(
@@ -29,7 +29,7 @@ print(tokens[i]);
           _state = State.Dry;
           i++;
         } else
-        if (RegExp(r"^g$|^kg$|^pinch(es)?|^prise(n)?").hasMatch(tokens[i])) {
+        if (RegExp(r"^g(r)?$|^kg$|^pinch(es)?|^prise(n)|^scheibe(n)?").hasMatch(tokens[i])) {
           _state = State.Dry;
           i++;
         } else

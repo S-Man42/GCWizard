@@ -184,7 +184,7 @@ class ChefState extends State<Chef> {
     String language = 'ENG';
     if (_currentLanguage == GCWSwitchPosition.left)
       language = 'DEU';
-
+print(language);
     if (_currentMode == GCWSwitchPosition.right) { // generate chef
       if (_currentTitle == '') {
         output = buildOutputText(
@@ -194,7 +194,7 @@ class ChefState extends State<Chef> {
         output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature, _currentOutput);
     } else { // interpret chef
       if (isValid(_currentInput)) {
-        output = buildOutputText(interpretChef(language, _currentRecipe.toLowerCase(), _currentInput));
+        output = buildOutputText(interpretChef(language, _currentRecipe.toLowerCase().replaceAll('  ', ' '), _currentInput));
       } else
         output = buildOutputText(
             ['chef_error_runtime',

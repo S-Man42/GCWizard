@@ -90,13 +90,13 @@ String _getText(textId id, String parameter, language) {
 			if (language == 'ENG')
 				text = 'Liquefy contents of the mixing bowl.';
 			else
-					text = 'Verflüssige Inhalte der Rührschüssel.';
+					text = 'Verflüssige die Inhalte der Rührschüssel.';
 			break;
 		case textId.Pour_contents:
 			if (language == 'ENG')
 				text = 'Pour contents of the mixing bowl into the baking dish.';
 			else
-					text = 'Gieße die Inhalte der Rührschüssel in die Servierschüssel.';
+					text = 'Gieße die Inhalte der Rührschüssel auf die Servierplatte.';
 			break;
 		case textId.Serves:
 			if (language == 'ENG')
@@ -246,7 +246,12 @@ class Chef {
 					}
 					progress = 4;
 					r.setCookingTime(line);
-				} else if (line.startsWith("pre-heat oven") || line.startsWith("vorheizen ofen")) {
+					if (r.error){
+						this.error.addAll(r.errorList);
+						this.valid = false;
+						return '';
+					}
+				} else if (line.startsWith("pre-heat oven") || line.startsWith("vorheizen des ofens")) {
 					if (progress > 5) {
 						valid = false;
 						_addError(4, progress);
@@ -254,6 +259,11 @@ class Chef {
 					}
 					progress = 5;
 					r.setOvenTemp(line);
+					if (r.error){
+						this.error.addAll(r.errorList);
+						this.valid = false;
+						return '';
+					}
 				} else if (line.startsWith("method") || line.startsWith("zubereitung")) {
 					if (progress > 5){
 						valid = false;

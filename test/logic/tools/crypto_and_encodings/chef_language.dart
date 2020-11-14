@@ -631,7 +631,6 @@ Put cigarettes into mixing bowl.''';
     });
   }); // group
 
-
   group("chef_language.MethodExamples", () {
 
     // take
@@ -949,7 +948,6 @@ Serves 1.''';
     });
   });
 
-
   group("chef_language.testErrors", () {
 
     // NO INPUT
@@ -972,7 +970,7 @@ Ingredients.
 10 gr salt
 
 Method.
-Put salt into mixing bowl.
+Put into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
@@ -1207,7 +1205,7 @@ Serves.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',  'recipe' : testNoInput, 'isValid' : false, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : testPutNoInput,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_method_step','1 : Type.Put','chef_error_runtime_ingredient_not_found']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : testPutNoInput,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax','chef_error_syntax_method','1 : put into mixing bowl','']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testFoldEmptyBow,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_folded_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Fold => 1']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testAddEmptyBowl,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_add_to_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Add => 1']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testRemoveEmptyBowl,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_remove_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Remove => 1']},
@@ -1234,5 +1232,377 @@ Serves.''';
       });
     });
   });
+
+  group("chef_language.deuRecipes", () {
+
+      var testDEUgenerated = '''Testrezept in Deutsch.
+
+Nur mal so zum probieren
+
+Zutaten.
+56 Spritzer Zitronensaft
+48 g Kartoffeln
+55 Zwiebeln
+32 ml geschlagene Eier
+69 Scheiben Brot
+50 g Milchschokolade
+51 ml Rotwein
+52 gr Süßkartoffeln
+78 ml Milch
+
+Kochzeit: 50 minuten.
+
+Vorheizen des Ofens auf 160 Grad Celsius.
+
+Zubereitung.
+Gebe Zitronensaft in die Rührschüssel.
+Gebe Kartoffeln in die Rührschüssel.
+Gebe Zwiebeln in die Rührschüssel.
+Gebe geschlagene Eier in die Rührschüssel.
+Gebe Brot in die Rührschüssel.
+Gebe geschlagene Eier in die Rührschüssel.
+Gebe Milchschokolade in die Rührschüssel.
+Gebe Rotwein in die Rührschüssel.
+Gebe Süßkartoffeln in die Rührschüssel.
+Gebe geschlagene Eier in die Rührschüssel.
+Gebe Milch in die Rührschüssel.
+Verflüssige die Inhalte der Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+      List<Map<String, dynamic>> _inputsToExpected = [
+      {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgenerated, 'isValid' : false, 'expectedOutput' : ['N 432 E 708']},
+      ];
+
+      _inputsToExpected.forEach((elem) {
+        test('input: ${elem['input']}', () {
+          var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
+          var length = elem['expectedOutput'].length;
+          for (int i = 0; i < length; i++) {
+            expect(_actual[i], elem['expectedOutput'][i]);
+          }
+        });
+      });
+  });
+
+  group("chef_language.deuAnweisungen", () {
+
+
+    // take
+    var nehme = '''Test TAKE.
+
+Zutaten.
+inGebe
+
+Zubereitung.
+Nehme inGebe aus dem Kühlschrank.
+Gebe inGebe in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+    // Gebe
+    var gebe = '''Test Gebe.
+
+Zutaten.
+10 salz
+
+Zubereitung.
+Gebe Salz in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+    // fold
+    var unterhebe = '''Test FOLD.
+
+Zutaten.
+10 Salz
+Pfeffer
+
+Zubereitung.
+Gebe Salz in die Rührschüssel.
+Unterhebe Pfeffer in die Rührschüssel.
+Gebe Pfeffer in die Rührschüssel.
+Gebe Pfeffer in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+    // add
+    var fuegehinzu = '''Test ADD.
+
+Zutaten.
+10 Salz
+10 Pfeffer
+
+Zubereitung.
+Gebe Salz in die Rührschüssel.
+Gebe Salz in die Rührschüssel.
+Füge hinzu Pfeffer in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+    // remove
+    var entferne = '''Test REMOVE.
+
+Zutaten.
+10 Salz
+10 Pfeffer
+
+Zubereitung.
+Gebe Salz in die Rührschüssel.
+Gebe Salz in die Rührschüssel.
+Entferne Pfeffer in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+    // combine
+    var kombiniere = '''Test COMBINE.
+
+Zutaten.
+10 Salz
+10 Pfeffer
+
+Zubereitung.
+Gebe Salz in die Rührschüssel.
+Gebe Salz in die Rührschüssel.
+Kombiniere Pfeffer in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+    // divide
+    var teile = '''Test DIVIDE.
+
+Zutaten.
+10 Salz
+10 Pfeffer
+
+Zubereitung.
+Gebe Salz in die Rührschüssel.
+Gebe Salz in die Rührschüssel.
+Teile Pfeffer in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+    // addry
+    var fuegeHinzuTrockeneZutaten = '''Test ADDRY.
+
+Zutaten.
+10 Salz
+10 Pfeffer
+
+Zubereitung.
+Füge hinzu feste Zutaten zur Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+    // liquefyingredient
+    var verfluessigeZutat = '''Test LIQUEFYINGREDIENT.
+
+Zutaten.
+65 Salz
+80 Pfeffer
+
+Zubereitung.
+Gebe Salz in die Rührschüssel.
+Gebe Pfeffer in die Rührschüssel.
+Verflüssige Salz.
+Gebe Salz in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+    // liquefybowl
+    var verfluessigeSchuessel = '''Test LIQUEFYBOWL.
+
+Zutaten.
+65 Salz
+80 Pfeffer
+
+Zubereitung.
+Gebe Salz in die Rührschüssel.
+Gebe Pfeffer in die Rührschüssel.
+Verflüssige die Inhalte der Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+    // stir
+    var ruehre = '''Test STIR.
+
+Zutaten.
+1 sugar
+2 Salz
+3 salmon
+4 Pfeffer
+5 wine
+6 wodka
+
+Zubereitung.
+Gebe sugar in die Rührschüssel.
+Gebe Salz in die Rührschüssel.
+Gebe salmon in die Rührschüssel.
+Gebe Pfeffer in die Rührschüssel.
+Gebe wine in die Rührschüssel.
+Gebe wodka in die Rührschüssel.
+Rühre für 2 Minuten.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+    // stiringredient 2654321 => 6524321
+    var ruehreZutat = '''Test STIRINGREDIENT INTO THE Rührschüssel
+
+Zutaten.
+1 sugar
+2 Salz
+3 salmon
+4 Pfeffer
+5 wine
+6 wodka
+
+Zubereitung.
+Gebe sugar in die Rührschüssel.
+Gebe Salz in die Rührschüssel.
+Gebe salmon in die Rührschüssel.
+Gebe Pfeffer in die Rührschüssel.
+Gebe wine in die Rührschüssel.
+Gebe wodka in die Rührschüssel.
+Gebe Salz in die Rührschüssel.
+Rühre Salz in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+    // clean
+    var saeubere = '''Test CLEAN.
+
+Zutaten.
+65 Salz
+80 Pfeffer
+
+Zubereitung.
+Gebe Salz in die Rührschüssel.
+Gebe Pfeffer in die Rührschüssel.
+Säubere die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+    // loop
+    var schleife = '''Test LOOP.
+
+Zutaten.
+5 g Salz
+80 g Pfeffer
+
+Zubereitung.
+Zähle das Salz.
+   Gebe Pfeffer in die Rührschüssel.
+   Füge hinzu Pfeffer in die Rührschüssel.
+   Unterhebe Pfeffer in die Rührschüssel.
+prüfe das Salz bis gezählt.
+Gebe Pfeffer in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.''';
+
+    // serve
+    var serviere = '''Test SERVE.
+
+Zutaten.
+5 g Salz
+80 g Pfeffer
+0 air
+
+Zubereitung.
+Gebe air in die Rührschüssel.
+zähle das Salz.
+   Serviere mit chili.
+zähle das Salz bis gezählt.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.
+
+
+chili.
+
+Zutaten.
+1 g Harissa
+
+Zubereitung.
+Füge hinzu harissa in die Rührschüssel.''';
+
+    // Gefriere
+    var gefriere = '''Test Gefriere.
+
+Zutaten.
+65 Salz
+80 Pfeffer
+
+Zubereitung.
+Gebe Salz in die Rührschüssel.
+Gebe Pfeffer in die Rührschüssel.
+Verflüssige die Inhalte der Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Gefriere.
+
+Portionen 1.''';
+
+    // Gefrierenumber
+    var gefriereNummer = '''Test Gefriere.
+
+Zutaten.
+65 Salz
+80 Pfeffer
+
+Zubereitung.
+Gebe Salz in die Rührschüssel.
+Gebe Pfeffer in die Rührschüssel.
+Verflüssige die Inhalte der Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Gefriere für 1 Stunde.
+
+Portionen 1.''';
+
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'language' : 'DEU', 'input' : '5',  'recipe' : nehme, 'isValid' : false, 'expectedOutput' : ['5']},
+      {'language' : 'DEU', 'input' : '',  'recipe' : nehme, 'isValid' : false, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : gebe,   'isValid' : true, 'expectedOutput' : ['10']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : unterhebe,   'isValid' : true, 'expectedOutput' : ['1010']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : fuegehinzu,   'isValid' : true, 'expectedOutput' : ['2010']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : entferne,   'isValid' : true, 'expectedOutput' : ['010']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : kombiniere,   'isValid' : true, 'expectedOutput' : ['10010']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : teile,   'isValid' : true, 'expectedOutput' : ['110']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : fuegeHinzuTrockeneZutaten,   'isValid' : true, 'expectedOutput' : ['20']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : verfluessigeZutat,   'isValid' : true, 'expectedOutput' : ['A8065']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : verfluessigeSchuessel,   'isValid' : true, 'expectedOutput' : ['PA']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : ruehre,   'isValid' : true, 'expectedOutput' : ['546321']},
+      {'language' : 'DEU', 'input' : '2654321',   'recipe' : ruehreZutat,   'isValid' : true, 'expectedOutput' : ['6524321']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : saeubere,   'isValid' : true, 'expectedOutput' : ['']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : schleife,   'isValid' : true, 'expectedOutput' : ['2560']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : serviere,   'isValid' : true, 'expectedOutput' : ['55555555555555555555555555555555']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : gefriere,   'isValid' : true, 'expectedOutput' : []},
+      {'language' : 'DEU', 'input' : '',   'recipe' : gefriereNummer,   'isValid' : true, 'expectedOutput' : ['PA']},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i], elem['expectedOutput'][i]);
+        }
+      });
+    });
+  });
+
 
 }

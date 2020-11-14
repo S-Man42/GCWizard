@@ -78,14 +78,33 @@ print('RECIPE setMethods '+method);
   }
 
   void setCookingTime(String cookingtime) {
-    this.cookingtime = int.parse(cookingtime.split(" ")[2]);
+print(cookingtime.split(' '));
+    RegExp expr = new RegExp(r'^(cooking time: |kochzeit: )(\d*)( minute(s)?| minute(n)?| hour(s)?| stunde(n)?)\.$');
+    if (expr.hasMatch(cookingtime)) {
+      this.serves = int.parse(expr.firstMatch(cookingtime).group(2));
+    } else {
+      this.error = true;
+      errorList.add('chef_error_syntax');
+      errorList.add('chef_error_syntax_cooking_time');
+      errorList.add(cookingtime);
+      errorList.add('');
+    }
   }
 
   void setOvenTemp(String oventemp) {
-    this.oventemp = int.parse(oventemp.split(" ")[3]);
-    if (oventemp.contains("gas mark")) {
-      String mark = oventemp.split(" ")[8];
-      this.gasmark = int.parse(mark.substring(0, mark.length-1));
+print(oventemp.split(' '));
+    RegExp expr = new RegExp(r'^(pre-heat oven to |vorheizen des ofens auf )(\d*)( (grad|degrees) celsius)?( gas (mark|skala) (\d*))?\.$');
+    if (expr.hasMatch(oventemp)) {
+      this.serves = int.parse(expr.firstMatch(oventemp).group(2));
+      if (expr.firstMatch(oventemp).group(7)!= null) {
+        this.gasmark = int.parse(expr.firstMatch(oventemp).group(7));
+      }
+    } else {
+      this.error = true;
+      errorList.add('chef_error_syntax');
+      errorList.add('chef_error_syntax_oven_temperature');
+      errorList.add(oventemp);
+      errorList.add('');
     }
   }
 
