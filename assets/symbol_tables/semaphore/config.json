@@ -3,5 +3,4 @@
 	"special_mappings" : {"32" : " "},
 	"translate" : ["cancel", "correct", "error", "attention", "letters_following", "numerals_following", "rest"],
 	"same_character" : [],
-	"same_symbol" : []
 }
