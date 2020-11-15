@@ -1,40 +1,63 @@
 import 'dart:math';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/kitchen.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/recipe.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/primes/primes.dart';
 
-final itemListENG = [
+final List<List<String>> itemListLiquidENG = [
+	['ml', 'milk'], ['ml', 'water'], ['ml', 'oil'], ['dashes', 'liquid vanilla'], ['ml', 'amaretto'],
+	['tablespoon', 'espresso'], ['', 'cream'], ['', 'sour cream'], ['ml', 'white wine'], ['ml', 'red wine'],
+	['dashes', 'tabasco'], ['ml', 'wodka'], ['ml', 'calvados'], ['ml', 'whisky'], ['dashes', 'grand darnier'],
+	['ml', 'grenadine'], ['ml', 'ouzo'], ['ml', 'gin'], ['ml', 'rum'], ['ml', 'tonic'], ['ml', 'raki'],
+	['', 'egg yolk'], ['', 'egg white'],
+];
+
+final List<List<String>> itemListDryENG = [
   ['g','flour'], ['g', 'white sugar'], ['pinch', 'salt'], ['pinches', 'baking soda'], ['g', 'butter'],
   ['', 'vanilla bean'], ['tablespoon', 'brown sugar'], ['pinch', 'pepper'], ['', 'eggs'], ['g', 'haricot beans'],
-  ['g', 'red salmon'], ['ml', 'milk'], ['ml', 'water'], ['ml', 'oil'], ['ml', 'water'],
-  ['dashes', 'liquid vanilla'], ['dashes', 'lemon juice'], ['teaspoon', 'powdered-sugar'], ['', 'almonds'], ['', 'onions'],
-  ['', 'garlic cloves'], ['', 'cinnamon'], ['', 'egg yolk'], ['', 'egg white'], ['pinches', 'kummel'],
-  ['pinches', 'aniseed'], ['ml', 'amaretto'], ['tablespoon', 'espresso'], ['', 'cream'], ['', 'sour cream'],
-  ['', 'cream cheese'], ['cups', 'cheese'], ['ml', 'white wine'], ['ml', 'red wine'], ['gr', 'pumpkin'],
-  ['g', 'cucumber'], ['g', 'potatoes'], ['gr', 'sweet potatoes'], ['g', 'apple pieces '], ['', 'shrimps'],
-  ['g', 'guacamole'], ['g', 'wholemeal flour'], ['g', 'tofu'], ['teaspoon', 'chili'], ['teaspoon', 'curry'],
-  ['dashes', 'tabasco'], ['g', 'mustard'], ['tablespoon', 'jam'], ['g', 'mixed fruits'], ['dashes', 'calvados'],
+  ['g', 'red salmon'], ['dashes', 'lemon juice'], ['teaspoon', 'powdered-sugar'], ['', 'almonds'], ['', 'onions'],
+  ['', 'garlic cloves'], ['', 'cinnamon'], ['pinches', 'kummel'],   ['pinches', 'aniseed'], ['', 'cream cheese'],
+	['cups', 'cheese'], ['gr', 'pumpkin'], ['g', 'cucumber'], ['g', 'potatoes'], ['gr', 'sweet potatoes'],
+	['g', 'apple pieces '], ['', 'shrimps'], ['g', 'guacamole'], ['g', 'wholemeal flour'], ['g', 'tofu'],
+	['teaspoon', 'chili'], ['teaspoon', 'curry'], ['g', 'mustard'], ['tablespoon', 'jam'], ['g', 'mixed fruits'],
 	['g', 'zucchini'], ['g', 'lard'], ['table spoon', 'corn starch'], ['slices', 'bread'], ['g', 'bacon'],
 	['g', 'dark chocolate'],['g', 'milk chocolate'], ['ml', 'double cream'], ['g', 'cocoa powder'], ['ml', 'beaten eggs'],
-	['g', 'peas'], ['g', 'carrots'], ['g', 'raisins'],['teaspoon', 'mexican spices'],['', 'banana']
+	['g', 'peas'], ['g', 'carrots'], ['g', 'raisins'], ['teaspoon', 'mexican spices'],['', 'banana']
 ];
 
-final itemListDEU = [
-	['g', 'Mehl'], ['g', 'weißer Zucker'], ['Prise', 'Salz'], ['Prise(n)', 'Backsoda'], ['g', 'Butter'] ,
-	['', 'Vanilleschote'], ['Esslöffel', 'brauner Zucker'], ['Prise(m)', 'Pfeffer'], ['', 'Eier'], ['g', 'Bohnen'],
-	['g', 'roter Lachs'], ['ml', 'Milch'], ['ml', 'Wasser'], ['ml', 'Öl'], ['ml', 'Wasser'] ,
-	['Tropfen', 'flüssige Vanille'], ['Spritzer', 'Zitronensaft'], ['Teelöffel', 'Puderzucker'], ['', 'Mandeln'], ['', 'Zwiebeln' ],
-	['', 'Knoblauchzehen'], ['', 'Zimt'], ['', 'Eigelb'], ['', 'Eiweiß'], ['Prise(n)', 'Kümmel'],
-	['Prisen', 'Anis'], ['ml', 'Amaretto'], ['Esslöffel', 'Espresso'], ['', 'Sahne'], ['', 'saure Sahne'],
-	['', 'Frischkäse'], ['Tassen', 'Käse'], ['ml', 'Weißwein'], ['ml', 'Rotwein'], ['gr', 'Kürbis' ],
+final List<List<String>> itemListDryDEU = [
+	['g', 'Mehl'], ['g', 'weißer Zucker'], ['Prise', 'Salz'], ['Prise(n)', 'Backsoda'], ['g', 'Butter'], 	['', 'Vanilleschote'],
+	['Esslöffel', 'brauner Zucker'], ['Prise(n)', 'Pfeffer'], ['', 'Eier'], ['g', 'Bohnen'], 	['g', 'roter Lachs'],
+	['Teelöffel', 'Puderzucker'], ['', 'Mandeln'], ['', 'Zwiebeln' ], 	['', 'Knoblauchzehen'], ['', 'Zimt'],
+	['Prise(n)', 'Kümmel'], ['Prisen', 'Anis'], ['', 'Frischkäse'], ['Tassen', 'Käse'], ['gr', 'Kürbis' ],
 	['g', 'Gurke'], ['g', 'Kartoffeln'], ['gr', 'Süßkartoffeln'], ['g', 'Apfelstücke'], ['', 'Garnelen'] ,
 	['g', 'Guacamole'], ['g', 'Vollkornmehl'], ['g', 'Tofu'], ['Teelöffel', 'Chili'], ['Teeelöffel', 'Curry'] ,
-	['Spritzer', 'Tabasco'], ['g', 'Senf'], ['Esslöffel', 'Marmelade'], ['g', 'gemischte Früchte'], ['Spritzer', 'Calvados'] ,
-	['g', 'Zucchini'], ['g', 'schmalz'], ['Esslöffel', 'Maisstärke'], ['Scheiben', 'Brot'], ['g', 'Speck' ],
-	['g', 'dunkle Schokolade'], ['g', 'Milchschokolade'], ['ml', 'Schmand'], ['g', 'Kakaopulver'], ['ml', ' geschlagene Eier'],
-	['g', 'Erbsen'], ['g', 'Karotten'], ['g', 'Rosinen'], ['Teelöffel', 'mexikanische Gewürze'], ['', 'Banane']
+	['g', 'Senf'], ['Esslöffel', 'Marmelade'], ['g', 'gemischte Früchte'], ['g', 'Zucchini'], ['g', 'schmalz'],
+	['Esslöffel', 'Maisstärke'], ['Scheiben', 'Brot'], ['g', 'Speck' ],	['g', 'dunkle Schokolade'], ['g', 'Milchschokolade'],
+	['g', 'Kakaopulver'], ['ml', ' geschlagene Eier'], ['g', 'Erbsen'], ['g', 'Karotten'], ['g', 'Rosinen'],
+	['Teelöffel', 'mexikanische Gewürze'], ['', 'Banane']
 ];
 
+final List<List<String>> itemListLiquidDEU = [
+	['ml', 'Milch'], ['ml', 'Wasser'], ['ml', 'Öl'], ['Tropfen', 'flüssige Vanille'], ['Spritzer', 'Zitronensaft'],
+	['', 'Eigelb'], ['', 'Eiweiß'], ['ml', 'Amaretto'], ['Esslöffel', 'Espresso'], ['ml', 'Sahne'], ['ml', 'saure Sahne'],
+	['ml', 'Weißwein'], ['ml', 'Rotwein'], ['Spritzer', 'Tabasco'], ['ml', 'Schmand'], ['ml', 'Bier'], ['ml', 'Korn'],
+	['ml', 'Wodka'], ['ml', 'Calvados'], ['ml', 'Whisky'], ['ml', 'Grand Marnier'], ['ml', 'Grenadine'], ['ml', 'Ouzo'],
+	['ml', 'Gin'], ['ml', 'Rum'], ['ml', 'Tonic'], ['ml', 'Raki']
+];
 
+final List<List<String>> itemListAuxiliaryDEU = [
+	['fluffige ', 'leichte ', 'cremige ', 'schwere '],
+	['bittere ', 'sauere ', 'süße ', 'scharfe ', 'salzige '],
+	['Honig', 'Senf', 'Ketchup', 'Curry'],
+	['sauce', 'dressing', 'topping', 'chips']
+];
+
+final List<List<String>> itemListAuxiliaryENG = [
+	['fluffy ', 'light ', 'creamy ', 'heavy '],
+	['bitter ', 'sour ', 'sweet ', 'hot ', 'salty '],
+	['honey', 'mustard', 'ketchup', 'curry'],
+	['sauce', 'dressing', 'topping', 'chips']
+];
 
 enum textId {
 	Put_into_the_mixing_bowl,
@@ -43,8 +66,13 @@ enum textId {
 	Pre_heat_oven,
 	Method,
 	Liquefy_contents,
+	Liquefy,
 	Pour_contents,
-	Serves
+	Serves,
+	Serve_with,
+	Clean,
+	Add,
+	Combine
 }
 
 String _getText(textId id, String parameter, language) {
@@ -55,6 +83,18 @@ String _getText(textId id, String parameter, language) {
 				text = 'Put %1 into the mixing bowl.';
 			else
 				text = 'Gebe %1 in die Rührschüssel.';
+			break;
+		case textId.Add:
+			if (language == 'ENG')
+				text = 'Add %1 into the mixing bowl.';
+			else
+				text = 'Füge hinzu %1 in die Rührschüssel.';
+			break;
+		case textId.Combine:
+			if (language == 'ENG')
+				text = 'Combine %1 into the mixing bowl.';
+			else
+				text = 'Kombiniere %1 in die Rührschüssel.';
 			break;
 		case textId.Ingredients:
 			if (language == 'ENG')
@@ -82,9 +122,15 @@ String _getText(textId id, String parameter, language) {
 			break;
 		case textId.Liquefy_contents:
 			if (language == 'ENG')
+				text = 'Liquefy %1.';
+			else
+					text = 'Verflüssige %1.';
+			break;
+		case textId.Liquefy:
+			if (language == 'ENG')
 				text = 'Liquefy contents of the mixing bowl.';
 			else
-					text = 'Verflüssige die Inhalte der Rührschüssel.';
+				text = 'Verflüssige die Inhalte der Rührschüssel.';
 			break;
 		case textId.Pour_contents:
 			if (language == 'ENG')
@@ -98,66 +144,242 @@ String _getText(textId id, String parameter, language) {
 			else
 				text = 'Portionen 1.';
 			break;
+		case textId.Serve_with:
+			if (language == 'ENG')
+				text = 'Serve with %1.';
+			else
+				text = 'Serviere mit %1.';
+			break;
+			break;
+		case textId.Clean:
+			if (language == 'ENG')
+				text = 'Clean %1 mixing bowl.';
+			else
+				text = 'Säubere die %1 Rührschüssel.';
+			break;
+			break;
 	}
 
 	return text.replaceAll('%1', parameter);
 }
 
 
-String generateChef(String language, title, String remark, String time, String temperature, String outputToGenerate){
+List<String> _getAuxiliaryRecipe(String name, int value, List<String> ingredientOne, ingredientTwo, String language){
+	List<String> output = new List<String>();
+	bool combine = true;
+	List<BigInt> nList = new List<BigInt>();
+	int nOne = 0;
+	int nTwo = 0;
+
+	if (isPrime(BigInt.from(value))) {
+		combine = false;
+		nOne = value ~/ 5 * 2;
+		nTwo = value - nOne;
+	} else {
+		combine = true;
+		nList = integerFactorization(value);
+		if (nList.length != 2) {
+			nOne = 1;
+			for (int i = 0; i < nList.length -1; i++)
+				nOne = nOne * nList[i].toInt();
+			nTwo = value ~/ nOne;
+		} else {
+			nOne = nList[0].toInt();
+			nTwo = nList[1].toInt();
+		}
+	}
+	output.add(name);
+	output.add('');
+	output.add(_getText(textId.Ingredients, '', language));
+	output.add(nOne.toString() + ' ' + ingredientOne[0] + ' ' + ingredientOne[1]);
+	output.add(nTwo.toString() + ' ' + ingredientTwo[0] + ' ' + ingredientTwo[1]);
+	output.add('');
+	output.add(_getText(textId.Method, '', language));
+	output.add(_getText(textId.Clean, '', language));
+	output.add(_getText(textId.Put_into_the_mixing_bowl, ingredientOne[1], language));
+	if (combine)
+		output.add(_getText(textId.Combine, ingredientTwo[1], language));
+	else
+		output.add(_getText(textId.Add, ingredientTwo[1], language));
+	return output;
+}
+
+String generateChef(String language, title, String remark, String time, String temperature, String outputToGenerate, bool auxiliary){
 	var output = StringBuffer();
   List<String> outputElements;
   List<String> methodList = new List<String>();
   List<String> ingredientList = new List<String>();
+  Map <String, List<String>> auxiliaryRecipes = new Map <String, List<String>>();
   Map<int, String> amount = new Map<int, String>();
   Map<String, String> ingredientListed = new Map<String, String>();
   int value = 0;
-	var itemList;
+  int i = 0;
+	List<List<String>> itemList = new List<List<String>>();
+	List<List<String>> itemListLiquid= new List<List<String>>();
+	List<List<String>> itemListDry = new List<List<String>>();
+	List<List<String>> itemListAuxiliary = new List<List<String>>();
 	var item;
+	String auxiliaryName = '';
+	List<String> ingredientOne = new List<String>();
+	List<String> ingredientTwo = new List<String>();
+
 
   Random random = new Random();
 
-  if (language == 'ENG') itemList = itemListENG; else itemList = itemListDEU;
-	outputElements = outputToGenerate.split('');
-	for(int i = 0; i < outputElements.length/2; i++ ) {
-		var temp = outputElements[i];
-		outputElements[i] = outputElements[outputElements.length-1-i];
-		outputElements[outputElements.length-1-i] = temp;
+  if (language == 'ENG') {
+  	itemListDry.addAll(itemListDryENG);
+		itemListLiquid.addAll(itemListLiquidENG);
+		itemListAuxiliary.addAll(itemListAuxiliaryENG);
+	} else {
+		itemListDry.addAll(itemListDryDEU);
+		itemListLiquid.addAll(itemListLiquidDEU);
+		itemListAuxiliary.addAll(itemListAuxiliaryDEU);
+  }
+
+  if (auxiliary) { // build auxilay recipes
+		if (language == 'ENG'){
+			amount[32] = 'ambergris';
+			ingredientList.add(32.toString() + ' ml ambergris');
+		} else {
+			amount[32] = 'ambra';
+			ingredientList.add(32.toString() + ' ml ambra');
+		}
+
+		outputElements = outputToGenerate.split(' ');
+		for (i = 0; i < outputElements.length / 2; i++) {
+			var temp = outputElements[i];
+			outputElements[i] = outputElements[outputElements.length - 1 - i];
+			outputElements[outputElements.length - 1 - i] = temp;
+		}
+		i = 0;
+	  outputElements.forEach((element) {
+	  	if (int.tryParse(element) != null) { // element is a number
+	  		value = int.parse(element);
+	  		if (value < 10) { // => 48 - 57
+					value = element.codeUnitAt(0);
+					if (amount[value] == null) {
+						item = itemListLiquid.elementAt(random.nextInt(itemListLiquid.length));
+						while (ingredientListed[item.elementAt(1)] != null) {
+							item = itemListLiquid.elementAt(random.nextInt(itemList.length));
+						}
+						ingredientListed[item.elementAt(1)] = item.elementAt(1);
+						ingredientList.add(value.toString() + ' ' + item.elementAt(0) + ' ' +	item.elementAt(1));
+						amount[value] = item.elementAt(1);
+						methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+					} else {
+						methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+					}
+				} else if (value < 100) { // => number
+					if (amount[value] == null) {
+						item = itemListDry.elementAt(random.nextInt(itemListDry.length));
+						while (ingredientListed[item.elementAt(1)] != null) {
+							item = itemListDry.elementAt(random.nextInt(itemList.length));
+						}
+						ingredientListed[item.elementAt(1)] = item.elementAt(1);
+						ingredientList.add(value.toString() + ' ' + item.elementAt(0) + ' ' +
+								item.elementAt(1));
+						amount[value] = item.elementAt(1);
+						methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+					} else {
+						methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+					}
+				} else { // => auxiliary recipe to provide number: pour, clean, serve with, pour
+						auxiliaryName = itemListAuxiliary[0][random.nextInt(4)] + itemListAuxiliary[1][random.nextInt(4)] + itemListAuxiliary[2][random.nextInt(4)] + itemListAuxiliary[3][random.nextInt(4)];
+						while (auxiliaryRecipes[auxiliaryName] != null) {
+	  				  auxiliaryName = itemListAuxiliary[0][random.nextInt(4)] + itemListAuxiliary[1][random.nextInt(4)] + itemListAuxiliary[2][random.nextInt(4)] + itemListAuxiliary[3][random.nextInt(4)];
+						}
+						ingredientOne = itemListDry.elementAt(random.nextInt(itemListDry.length));
+						ingredientTwo = itemListDry.elementAt(random.nextInt(itemListDry.length));
+						while (ingredientTwo.join('') == ingredientOne.join('')) {
+							ingredientTwo = itemListDry.elementAt(random.nextInt(itemListDry.length));
+						}
+						auxiliaryRecipes[auxiliaryName] = _getAuxiliaryRecipe(auxiliaryName, value, ingredientOne, ingredientTwo, language);
+						methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[0], language));
+						methodList.add(_getText(textId.Serve_with, auxiliaryName, language));
+						methodList.add(_getText(textId.Pour_contents, '', language));
+						methodList.add(_getText(textId.Clean, '', language));
+				}
+			} else { // element is a char or a combination of characters and numbers => Liquid
+				List<String> Elements = element.split('');
+				Elements.forEach((element) {
+					value = element.codeUnitAt(0);
+					if (amount[value] == null) {
+						item = itemListLiquid.elementAt(random.nextInt(itemListLiquid.length));
+						while (ingredientListed[item.elementAt(1)] != null) {
+							item = itemListLiquid.elementAt(random.nextInt(itemListLiquid.length));
+						}
+						ingredientListed[item.elementAt(1)] = item.elementAt(1);
+						ingredientList.add(value.toString() + ' ' + item.elementAt(0) + ' ' +
+								item.elementAt(1));
+						amount[value] = item.elementAt(1);
+						methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+					} else {
+						methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+					}
+				});
+			}
+	  	i++;
+	  	if (i < outputElements.length) {
+				methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[32], language));
+			};
+		}); // outputElements.forEach((element)
+	} else { // build "normal" linear recipe
+		itemList.addAll(itemListDry);
+		itemList.addAll(itemListLiquid);
+
+		outputElements = outputToGenerate.split('');
+		for (int i = 0; i < outputElements.length / 2; i++) {
+			var temp = outputElements[i];
+			outputElements[i] = outputElements[outputElements.length - 1 - i];
+			outputElements[outputElements.length - 1 - i] = temp;
+		}
+		outputElements.forEach((element) {
+			value = element.codeUnitAt(0);
+			if (amount[value] == null) {
+				item = itemList.elementAt(random.nextInt(itemList.length));
+				while (ingredientListed[item.elementAt(1)] != null) {
+					item = itemList.elementAt(random.nextInt(itemList.length));
+				}
+				ingredientListed[item.elementAt(1)] = item.elementAt(1);
+				ingredientList.add(value.toString() + ' ' + item.elementAt(0) + ' ' +
+						item.elementAt(1));
+				amount[value] = item.elementAt(1);
+				methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+			} else {
+				methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+			}
+		});
 	}
-	outputElements.forEach((element) {
-    value = element.codeUnitAt(0);
-    if (amount[value] == null) {
-      item = itemList.elementAt(random.nextInt(itemList.length));
-      while(ingredientListed[item.elementAt(1)] != null) {
-        item = itemList.elementAt(random.nextInt(itemList.length));
-      }
-      ingredientListed[item.elementAt(1)] = item.elementAt(1);
-      ingredientList.add(value.toString() + ' ' + item.elementAt(0) + ' ' + item.elementAt(1));
-      amount[value] = item.elementAt(1);
-      methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[value], language));
-    } else {
-      methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[value], language));
-    }
-  });
-	output.write(title + '.\n');
-	output.write('\n');
-	if (remark != '') output.write(remark + '\n\n');
-	output.write(_getText(textId.Ingredients, '', language)  + '\n');
-	output.write(ingredientList.join('\n') + '\n');
-	output.write('\n');
+
+	output.writeln(title + '.');
+	output.writeln('');
+	if (remark != '') output.writeln(remark + '\n');
+	output.writeln(_getText(textId.Ingredients, '', language) );
+	output.writeln(ingredientList.join('\n'));
+	output.writeln('');
 	if (int.tryParse(time) != null) {
-		output.write(_getText(textId.Cooking_time, time, language) + '\n\n');
+		output.writeln(_getText(textId.Cooking_time, time, language) + '\n');
 	}
 	if (int.tryParse(temperature) != null) {
-		output.write(_getText(textId.Pre_heat_oven, temperature, language) + '\n\n');
+		output.writeln(_getText(textId.Pre_heat_oven, temperature, language) + '\n');
 	}
-	output.write(_getText(textId.Method, '', language) + '\n');
-	output.write(methodList.join('\n') + '\n');
-	output.write(_getText(textId.Liquefy_contents, '', language) + '\n');
-	output.write(_getText(textId.Pour_contents, '', language) + '\n');
-	output.write('\n');
-	output.write(_getText(textId.Serves, '', language) + '\n');
-	return output.toString();
+	output.writeln(_getText(textId.Method, '', language));
+	output.writeln(methodList.join('\n'));
+	if (!auxiliary)
+		output.writeln(_getText(textId.Liquefy_contents, '', language));
+	output.writeln(_getText(textId.Pour_contents, '', language));
+	output.writeln('');
+	output.writeln(_getText(textId.Serves, '', language));
+
+	auxiliaryRecipes.forEach((key, value) {
+		output.writeln('\n');
+		for (int i = 0; i < value.length; i++){
+			output.writeln(value[i]);
+		}
+	});
+	if (auxiliaryRecipes.length > 0) {
+	}
+	return output.toString().replaceAll('  ', ' ');
 }
 
 
