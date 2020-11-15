@@ -1,0 +1,16 @@
+{
+	"case_sensitive" : false,
+	"special_mappings" : {
+		"amp" : "&",
+		"add_h" : "+H",
+		"J_" : "J",
+		"N_" : "N",
+		"E_" : "E",
+		"S_" : "S",
+		"U_" : "U",
+		"gh_" : "GH",
+		"ow_" : "OW",
+		"U_macron" : "Ū",
+		"UE_" : "Ü",
+	}
+}

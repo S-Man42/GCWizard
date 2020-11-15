@@ -1,6 +1,5 @@
 {
 	"case_sensitive" : false,
-	"special_mappings" : {"32" : " "},
-	"translate" : ["cancel", "correct", "error", "attention", "letters_following", "numerals_following", "rest"],
-	"same_character" : [],
+	"special_mappings" : {"space" : " "},
+	"translate" : ["cancel", "correct", "error", "attention", "letters_following", "numerals_following", "rest"]
 }
