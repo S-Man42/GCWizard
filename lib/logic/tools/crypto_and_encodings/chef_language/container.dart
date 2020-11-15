@@ -32,11 +32,7 @@ class Container {
   }
 
   void combine(Container c) {
-    if (c._contents != null) {
-      if (_contents == null)
-        _contents = new List<Component>();
-      _contents.addAll(c._contents);
-    }
+    _contents.addAll(c._contents);
   }
 
   void liquefy() {

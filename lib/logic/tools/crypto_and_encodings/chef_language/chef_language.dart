@@ -31,7 +31,7 @@ final List<List<String>> itemListDryDEU = [
 	['Prise(n)', 'Kümmel'], ['Prisen', 'Anis'], ['', 'Frischkäse'], ['Tassen', 'Käse'], ['gr', 'Kürbis' ],
 	['g', 'Gurke'], ['g', 'Kartoffeln'], ['gr', 'Süßkartoffeln'], ['g', 'Apfelstücke'], ['', 'Garnelen'] ,
 	['g', 'Guacamole'], ['g', 'Vollkornmehl'], ['g', 'Tofu'], ['Teelöffel', 'Chili'], ['Teeelöffel', 'Curry'] ,
-	['g', 'Senf'], ['Esslöffel', 'Marmelade'], ['g', 'gemischte Früchte'], ['g', 'Zucchini'], ['g', 'schmalz'],
+	['g', 'Senf'], ['Esslöffel', 'Marmelade'], ['g', 'gemischte Früchte'], ['g', 'Zucchini'], ['g', 'Schmalz'],
 	['Esslöffel', 'Maisstärke'], ['Scheiben', 'Brot'], ['g', 'Speck' ],	['g', 'dunkle Schokolade'], ['g', 'Milchschokolade'],
 	['g', 'Kakaopulver'], ['ml', ' geschlagene Eier'], ['g', 'Erbsen'], ['g', 'Karotten'], ['g', 'Rosinen'],
 	['Teelöffel', 'mexikanische Gewürze'], ['', 'Banane']
@@ -195,7 +195,7 @@ List<String> _getAuxiliaryRecipe(String name, int value, List<String> ingredient
 	output.add(nTwo.toString() + ' ' + ingredientTwo[0] + ' ' + ingredientTwo[1]);
 	output.add('');
 	output.add(_getText(textId.Method, '', language));
-	output.add(_getText(textId.Clean, '', language));
+	//output.add(_getText(textId.Clean, '', language));
 	output.add(_getText(textId.Put_into_the_mixing_bowl, ingredientOne[1], language));
 	if (combine)
 		output.add(_getText(textId.Combine, ingredientTwo[1], language));
@@ -294,10 +294,14 @@ String generateChef(String language, title, String remark, String time, String t
 							ingredientTwo = itemListDry.elementAt(random.nextInt(itemListDry.length));
 						}
 						auxiliaryRecipes[auxiliaryName] = _getAuxiliaryRecipe(auxiliaryName, value, ingredientOne, ingredientTwo, language);
-						methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[0], language));
+						//methodList.add(_getText(textId.Put_into_the_mixing_bowl, amount[0], language));
+						if (i > 0) {
+							methodList.add(_getText(textId.Pour_contents, '', language));
+							methodList.add(_getText(textId.Clean, '', language));
+						}
 						methodList.add(_getText(textId.Serve_with, auxiliaryName, language));
-						methodList.add(_getText(textId.Pour_contents, '', language));
-						methodList.add(_getText(textId.Clean, '', language));
+						//methodList.add(_getText(textId.Pour_contents, '', language));
+						//methodList.add(_getText(textId.Clean, '', language));
 				}
 			} else { // element is a char or a combination of characters and numbers => Liquid
 				List<String> Elements = element.split('');

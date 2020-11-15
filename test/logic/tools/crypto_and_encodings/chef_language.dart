@@ -598,6 +598,73 @@ Fold cigarettes into the mixing bowl.
 Clean mixing bowl.
 Put cigarettes into mixing bowl.''';
 
+    var test20 = '''Demo.
+
+Gibt aus N 437 E 708 magnetisch
+
+Zutaten.
+32 ml ambra
+109 Spritzer Zitronensaft
+97 Eigelb
+103 ml Öl
+110 ml Calvados
+101 ml Ouzo
+116 saure Sahne
+105 ml Bier
+115 ml Korn
+99 Tropfen flüssige Vanille
+104 Spritzer Tabasco
+69 Sahne
+78 ml Whisky
+
+Zubereitung.
+Gebe Zitronensaft in die Rührschüssel.
+Gebe Eigelb in die Rührschüssel.
+Gebe Öl in die Rührschüssel.
+Gebe Calvados in die Rührschüssel.
+Gebe Ouzo in die Rührschüssel.
+Gebe saure Sahne in die Rührschüssel.
+Gebe Bier in die Rührschüssel.
+Gebe Korn in die Rührschüssel.
+Gebe flüssige Vanille in die Rührschüssel.
+Gebe Tabasco in die Rührschüssel.
+Gebe ambra in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Säubere die Rührschüssel.
+Serviere mit cremige bittere Currychips.
+Gebe ambra in die Rührschüssel.
+Gebe Sahne in die Rührschüssel.
+Gebe ambra in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Säubere die Rührschüssel.
+Serviere mit schwere scharfe Currydressing.
+Gebe ambra in die Rührschüssel.
+Gebe Whisky in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.
+
+
+cremige bittere Currychips
+
+Zutaten.
+12 g schmalz
+59 Prise(n) Kümmel
+
+Zubereitung.
+Gebe schmalz in die Rührschüssel.
+Kombiniere Kümmel in die Rührschüssel.
+
+
+schwere scharfe Currydressing
+
+Zutaten.
+19 Prisen Anis
+23 Esslöffel Marmelade
+
+Zubereitung.
+Gebe Anis in die Rührschüssel.
+Kombiniere Marmelade in die Rührschüssel.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',   'recipe' : test0, 'isValid' : false, 'expectedOutput' : []},
@@ -618,6 +685,7 @@ Put cigarettes into mixing bowl.''';
       {'language' : 'ENG', 'input' : '',   'recipe' : test15,   'isValid' : true, 'expectedOutput' : ['Just another Chef/Perl Hacker,']},
       {'language' : 'ENG', 'input' : '',   'recipe' : test16,   'isValid' : true, 'expectedOutput' : ['8']},
       {'language' : 'ENG', 'input' : '5',   'recipe' : test17,   'isValid' : true, 'expectedOutput' : ['479001600']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : test17,   'isValid' : true, 'expectedOutput' : ['N 437 E 708 magnetisch']},
     ];
 
     _inputsToExpected.forEach((elem) {

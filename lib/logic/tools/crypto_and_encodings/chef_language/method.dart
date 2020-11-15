@@ -14,7 +14,6 @@ class Method {
   int n;
 
   Method(String line, int n, language) {
-print('analyse '+language+' METHOD '+n.toString()+' '+line);
     line = line.trim();
     this.n = n;
     List<RegExp> matchers = new List<RegExp>();

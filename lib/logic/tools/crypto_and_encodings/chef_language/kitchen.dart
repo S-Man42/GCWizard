@@ -23,29 +23,39 @@ class Kitchen {
     //start with at least 1 mixing bowl.
     int maxbowl = 0, maxdish = -1;
     this.recipe = mainrecipe;
-    this.recipe.getMethods().forEach((m) {
-      if (m.bakingdish != null && m.bakingdish > maxdish)
-        maxdish = m.bakingdish;
-      if (m.mixingbowl != null && m.mixingbowl > maxbowl)
-        maxbowl = m.mixingbowl;
-    });
+    if (this.recipe.getMethods() != null) {
+      this.recipe.getMethods().forEach((m) {
+        if (m.bakingdish != null && m.bakingdish > maxdish)
+          maxdish = m.bakingdish;
+        if (m.mixingbowl != null && m.mixingbowl > maxbowl)
+          maxbowl = m.mixingbowl;
+      });
 
-    this.mixingbowls = new List<Container>(mbowls == null ? maxbowl + 1 : max(maxbowl + 1, mbowls.length));
-    for (int i = 0; i < this.mixingbowls.length; i++)
-      this.mixingbowls[i] = new Container(null);
-    if (mbowls != null) {
-      for (int i = 0; i < mbowls.length; i++) {
-        this.mixingbowls[i] = new Container(mbowls[i]);
+      this.mixingbowls = new List<Container>(
+          mbowls == null ? maxbowl + 1 : max(maxbowl + 1, mbowls.length));
+      for (int i = 0; i < this.mixingbowls.length; i++)
+        this.mixingbowls[i] = new Container(null);
+      if (mbowls != null) {
+        for (int i = 0; i < mbowls.length; i++) {
+          this.mixingbowls[i] = new Container(mbowls[i]);
+        }
       }
-    }
 
-    this.bakingdishes = new List<Container>(bdishes == null ? maxdish + 1 : max(maxdish + 1, bdishes.length));
-    for (int i = 0; i < this.bakingdishes.length; i++)
-      this.bakingdishes[i] = new Container(null);
-    if (bdishes != null) {
-      for (int i = 0; i < bdishes.length; i++) {
-        this.bakingdishes[i] = new Container(bdishes[i]);
+      this.bakingdishes = new List<Container>(
+          bdishes == null ? maxdish + 1 : max(maxdish + 1, bdishes.length));
+      for (int i = 0; i < this.bakingdishes.length; i++)
+        this.bakingdishes[i] = new Container(null);
+      if (bdishes != null) {
+        for (int i = 0; i < bdishes.length; i++) {
+          this.bakingdishes[i] = new Container(bdishes[i]);
+        }
       }
+    } else {
+      valid = false;
+      error.add('chef_error_structure_recipe');
+      error.add('chef_error_structure_recipe_methods');
+      error.add('chef_error_syntax_method');
+      error.add('');
     }
   }
 

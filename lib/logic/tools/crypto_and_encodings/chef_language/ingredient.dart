@@ -28,7 +28,7 @@ class Ingredient {
           _state = State.Dry;
           i++;
         } else
-        if (RegExp(r"^ml$|^l$|^dash(es)?|^spritzer").hasMatch(tokens[i])) {
+        if (RegExp(r"^ml$|^l$|^dash(es)?^drop(s)?|^spritzer|^tropfen").hasMatch(tokens[i])) {
           _state = State.Liquid;
           i++;
         } else if (RegExp(
