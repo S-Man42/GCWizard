@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chef.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chef_language.dart';
 
 void main() {
 
@@ -79,16 +79,16 @@ Serves 1.
 ''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '', 'title' : '',   'remark' : '', 'time' : '', 'temperature' : '', 'expectedOutput' : testNull},
-      {'language' : 'ENG', 'input' : '', 'title' : 'Marks marvellous must have',   'remark' : '', 'time' : '',   'temperature' : '', 'expectedOutput' : testTitle},
-      {'language' : 'ENG', 'input' : '', 'title' : 'Marks marvellous must have', 'remark' : 'to be a wizard',   'time' : '',   'temperature' : '', 'expectedOutput' : testTitleComments},
-      {'language' : 'ENG', 'input' : '', 'title' : 'Marks marvellous must have',   'remark' : 'to be a wizard', 'time' : '50', 'temperature' : '', 'expectedOutput' : testTitleCommentsTime},
-      {'language' : 'ENG', 'input' : '', 'title' : 'Marks marvellous must have',   'remark' : 'to be a wizard', 'time' : '50', 'temperature' : '180', 'expectedOutput' : testTitleCommentsTimeTemp},
+      {'language' : 'ENG', 'auxilary' : false, 'input' : '', 'title' : '',   'remark' : '', 'time' : '', 'temperature' : '', 'expectedOutput' : testNull},
+      {'language' : 'ENG', 'auxilary' : false, 'input' : '', 'title' : 'Marks marvellous must have',   'remark' : '', 'time' : '',   'temperature' : '', 'expectedOutput' : testTitle},
+      {'language' : 'ENG', 'auxilary' : false, 'input' : '', 'title' : 'Marks marvellous must have', 'remark' : 'to be a wizard',   'time' : '',   'temperature' : '', 'expectedOutput' : testTitleComments},
+      {'language' : 'ENG', 'auxilary' : false, 'input' : '', 'title' : 'Marks marvellous must have',   'remark' : 'to be a wizard', 'time' : '50', 'temperature' : '', 'expectedOutput' : testTitleCommentsTime},
+      {'language' : 'ENG', 'auxilary' : false, 'input' : '', 'title' : 'Marks marvellous must have',   'remark' : 'to be a wizard', 'time' : '50', 'temperature' : '180', 'expectedOutput' : testTitleCommentsTimeTemp},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = generateChef(elem['language'], elem['title'], elem['remark'], elem['time'], elem['temperature'], elem['input']);
+        var _actual = generateChef(elem['language'], elem['title'], elem['remark'], elem['time'], elem['temperature'], elem['input'], elem['auxilary']);
         expect(_actual, elem['expectedOutput']);
       });
     });
