@@ -382,6 +382,7 @@
   "chef_output" : "Output",
   "chef_language_DEU" : "German",
   "chef_language_ENG" : "English",
+  "chef_generate_auxiliary_recipe" : "Use auxiliary recipes",
   "chef_error_structure_recipe" : "STRUCTURAL ERROR",
   "chef_error_structure_recipe_title" : "Recipe-part 'Title'",
   "chef_error_structure_recipe_missing_title" : "Title is missing",

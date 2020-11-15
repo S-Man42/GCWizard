@@ -383,6 +383,7 @@
   "chef_invalid_input" : "Fehler: ungültige Eingabe: nur Zahlen sind erlaubt",
   "chef_language_DEU" : "Deutsch",
   "chef_language_ENG" : "Englisch",
+  "chef_generate_auxiliary_recipe" : "Benutze Beilagen",
   "chef_error_structure_recipe" : "STRUKTUR FEHLER",
   "chef_error_structure_recipe_title" : "Rezept-Abschnitt 'Titel'",
   "chef_error_structure_recipe_missing_title" : "Titel fehlt",
