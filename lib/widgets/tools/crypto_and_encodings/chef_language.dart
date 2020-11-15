@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chef.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chef_language.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
@@ -44,8 +45,9 @@ class ChefState extends State<Chef> {
       filter: {"#": RegExp(r'[0-9] ')}
   );
 
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;    // inetrpret
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;    // interpret
   GCWSwitchPosition _currentLanguage = GCWSwitchPosition.right; // english
+  bool _auxilaryRecipes= false;
 
   @override
   void initState() {
@@ -95,7 +97,7 @@ class ChefState extends State<Chef> {
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.right
+        _currentMode == GCWSwitchPosition.right // generate Chef-programm
         ? Column(
             children: <Widget>[
               GCWTextField(
@@ -144,6 +146,16 @@ class ChefState extends State<Chef> {
                     _currentOutput = text;
                   });
                 },
+              ),
+              GCWOnOffSwitch(
+                notitle: false,
+                title: i18n(context, 'chef_generate_auxilary_recipe'),
+                value: _auxilaryRecipes,
+                onChanged: (value) {
+                  setState(() {
+                    _auxilaryRecipes = value;
+                  });
+                },
               )
             ],
           )
@@ -184,14 +196,13 @@ class ChefState extends State<Chef> {
     String language = 'ENG';
     if (_currentLanguage == GCWSwitchPosition.left)
       language = 'DEU';
-print(language);
     if (_currentMode == GCWSwitchPosition.right) { // generate chef
       if (_currentTitle == '') {
         output = buildOutputText(
             ['chef_error_structure_recipe',
             'chef_error_structure_recipe_missing_title']);
       } else
-        output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature, _currentOutput);
+        output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature, _currentOutput, _auxilaryRecipes);
     } else { // interpret chef
       if (isValid(_currentInput)) {
         output = buildOutputText(interpretChef(language, _currentRecipe.toLowerCase().replaceAll('  ', ' '), _currentInput));
