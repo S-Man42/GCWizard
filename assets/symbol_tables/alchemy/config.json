@@ -1,5 +1,4 @@
 {
-	"case_sensitive" : false,
 	"translate" : [
 		"air",
 		"alum",
@@ -7,14 +6,12 @@
 		"antimony",
 		"aqua_regia",
 		"arsenic",
-		"arsenic_2",
 		"ashes",
 		"bismuth",
 		"borax",
 		"cadmium",
 		"coal",
 		"cobalt",
-		"cobalt_2",
 		"copper",
 		"earth",
 		"element",

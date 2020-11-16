@@ -39,4 +39,11 @@ flutter clean
 
 flutter config --enable-web
 
+---------------------------
 
+Enable case sensitive filenames for Windows10 folders:
+1. Open PowerShell in Admin mode
+2. Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+3. git config --unset-all core.ignorecase (maybe in GitBash)
+4. git config --system core.ignorecase false
+5. For every folder that requires case sensitivity: fsutil.exe file setCaseSensitiveInfo "C:\path\to\folder" enable

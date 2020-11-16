@@ -1,7 +1,3 @@
 {
-	"case_sensitive" : false,
-	"special_mappings" : {
-		"dot_" : "."
-	},
 	"translate" : ["capital_follows", "number_follows"]
 }

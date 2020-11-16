@@ -63,10 +63,15 @@ final Map<String, String> _CONFIG_SPECIAL_CHARS = {
   "brace_close" : "}",
   "bracket_open" : "[",
   "bracket_close" : "]",
+  "ampersand" : "&",
+  "hashtag" : "#",
+  "web_at" : "@",
+  "paragraph" : "§",
 
-  "AE" : "Ä",
-  "OE" : "Ö",
-  "UE" : "Ü",
+  "AE_umlaut" : "Ä",
+  "OE_umlaut" : "Ö",
+  "UE_umlaut" : "Ü",
+  "SZ_umlaut" : "ß",
   "A_acute" : "Á",
   "A_grave" : "À",
   "A_circumflex" : "Â",
@@ -174,6 +179,7 @@ class SymbolTableState extends State<SymbolTable> {
         .map((filePath) {
             var setTranslateable = false;
             var imageKey = filePath.split(pathKey)[1].split(imageSuffixes)[0];
+            imageKey = imageKey.replaceAll(RegExp(r'(^_*|_*$)'), '');
 
             String key;
             if (_config != null && _config[_CONFIG_SPECIALMAPPINGS] != null && _config[_CONFIG_SPECIALMAPPINGS].containsKey(imageKey)) {

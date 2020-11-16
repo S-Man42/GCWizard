@@ -1584,196 +1584,196 @@ class Registry {
         iconPath: SYMBOLTABLES_ASSETPATH + 'braille/H.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tactiles blindenschrift braille dots points punkte '
       ),
-      // GCWToolWidget(
-      //   tool: SymbolTable(symbolKey: 'chappe_v1'),
-      //   i18nPrefix: 'symboltables_chappe_v1',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'chappe_v1/72.png',
-      //   searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_CHAPPE
-      // ),
-      // GCWToolWidget(
-      //   tool: SymbolTable(symbolKey: 'chappe_v2'),
-      //   i18nPrefix: 'symboltables_chappe_v2',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'chappe_v2/72.png',
-      //   searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_CHAPPE
-      // ),
-      // GCWToolWidget(
-      //   tool: SymbolTable(symbolKey: 'chappe_v3'),
-      //   i18nPrefix: 'symboltables_chappe_v3',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'chappe_v3/56.png',
-      //   searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_CHAPPE
-      // ),
-      // GCWToolWidget(
-      //   tool: SymbolTable(symbolKey: 'cherokee'),
-      //   i18nPrefix: 'symboltables_cherokee',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'cherokee/83.png',
-      //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'cherokee nation silbenschrift syllabary indianer indians'
-      // ),
-      // GCWToolWidget(
-      //   tool: SymbolTable(symbolKey: 'chinese_numerals'),
-      //   i18nPrefix: 'symboltables_chinese_numerals',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'chinese_numerals/54.png',
-      //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'chinesisches zahlen ziffern chinese numbers numerals'
-      // ),
-      // GCWToolWidget(
-      //   tool: SymbolTable(symbolKey: 'cistercian'),
-      //   i18nPrefix: 'symboltables_cistercian',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'cistercian/56.png',
-      //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'cistercian zisterzienser'
-      // ),
-      // GCWToolWidget(
-      //   tool: SymbolTable(symbolKey: 'color_code'),
-      //   i18nPrefix: 'symboltables_color_code',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'color_code/68.png',
-      //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colorcode rgb farbcode farben colors red green blue rot gruen blau '
-      // ),
-      // GCWToolWidget(
-      //   tool: SymbolTable(symbolKey: 'color_honey'),
-      //   i18nPrefix: 'symboltables_color_honey',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'color_honey/72.png',
-      //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colorhoney color-honey farbcode farben colors six bees honeycombs bienenwaben '
-      // ),
-      // GCWToolWidget(
-      //   tool: SymbolTable(symbolKey: 'color_tokki'),
-      //   i18nPrefix: 'symboltables_color_tokki',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'color_tokki/72.png',
-      //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colortokki color-tokki farbcode woven carpet webteppich gewebter farben colors six '
-      // ),
-      // GCWToolWidget(
-      //   tool: SymbolTable(symbolKey: 'cyrillic', isCaseSensitive: true),
-      //   i18nPrefix: 'symboltables_cyrillic',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'cyrillic/68.png',
-      //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'kyrillisch cyrillic russisch russian alphabet schrift font cyrl saloniki'
-      // ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'chappe_v1'),
+        i18nPrefix: 'symboltables_chappe_v1',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'chappe_v1/H.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_CHAPPE
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'chappe_v2'),
+        i18nPrefix: 'symboltables_chappe_v2',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'chappe_v2/H.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_CHAPPE
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'chappe_v3'),
+        i18nPrefix: 'symboltables_chappe_v3',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'chappe_v3/8.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_CHAPPE
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'cherokee'),
+        i18nPrefix: 'symboltables_cherokee',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'cherokee/S.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'cherokee nation silbenschrift syllabary indianer indians'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'chinese_numerals'),
+        i18nPrefix: 'symboltables_chinese_numerals',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'chinese_numerals/6.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'chinesisches zahlen ziffern chinese numbers numerals'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'cistercian'),
+        i18nPrefix: 'symboltables_cistercian',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'cistercian/80.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'cistercian zisterzienser'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'color_code'),
+        i18nPrefix: 'symboltables_color_code',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'color_code/D.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colorcode rgb farbcode farben colors red green blue rot gruen blau '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'color_honey'),
+        i18nPrefix: 'symboltables_color_honey',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'color_honey/H.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colorhoney color-honey farbcode farben colors six bees honeycombs bienenwaben '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'color_tokki'),
+        i18nPrefix: 'symboltables_color_tokki',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'color_tokki/H.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colortokki color-tokki farbcode woven carpet webteppich gewebter farben colors six '
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'cyrillic', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_cyrillic',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'cyrillic/D.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'kyrillisch cyrillic russisch russian alphabet schrift font cyrl saloniki'
+      ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'daedric'),
       //   i18nPrefix: 'symboltables_daedric',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'daedric/72.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'daedric/H.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'daedric theelderscrolls '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'dagger'),
       //   i18nPrefix: 'symboltables_dagger',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'dagger/85.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'dagger/U.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dagger degen dolche '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'dancing_men'),
       //   i18nPrefix: 'symboltables_dancing_men',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'dancing_men/73.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'dancing_men/I.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dancingmen tanzende strichmaennchen sherlockholmes matchstickman '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'deafblind'),
       //   i18nPrefix: 'symboltables_deafblind',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'deafblind/82.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'deafblind/R.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'deafmute deaf-mute deafblind hearing loss deaf-blind taub-stumme taubstumme gehoerlose sign language hands haende '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'devanagari_numerals'),
       //   i18nPrefix: 'symboltables_devanagari_numerals',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'devanagari_numerals/51.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'devanagari_numerals/3.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'devanagari indisches indian indien sanskrit prakrit hindi marathi zahlen ziffern numbers numerals'
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'doremi'),
       //   i18nPrefix: 'symboltables_doremi',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'doremi/54.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'doremi/6.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'doremifalamiresisol notesystem musictheory musiktheorie solmisation notensystem tonstufen degrees octal oktal'
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'dragon_language'),
       //   i18nPrefix: 'symboltables_dragon_language',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'dragon_language/51.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'dragon_language/hashtag.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'theelderscrolls skyrim dragonish dragonlanguage drachenschrift dragontongue draconian simplydovah drachenschrift dragonsfont tamriel dragonborn dovahkiin dragonshouts fantasy'
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'dragon_runes'),
       //   i18nPrefix: 'symboltables_dragon_runes',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'dragon_runes/71.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'dragon_runes/G.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dragonrunes drachenrunen dragonlords drunes d-runes drunen d-runen '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'eastern_arabic_indian_numerals'),
       //   i18nPrefix: 'symboltables_eastern_arabic_indian_numerals',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'eastern_arabic_indian_numerals/52.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'eastern_arabic_indian_numerals/4.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'oestliche ostarabische ostarabisch-indische eastern arabische indische arabic arabian arabien indian indien persisch persian urdu zahlen ziffern numbers numerals'
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'egyptian_numerals'),
       //   i18nPrefix: 'symboltables_egyptian_numerals',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'egyptian_numerals/hundred.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'egyptian_numerals/100.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'altaegyptische eyptian numerals zahlen ziffern numbers hieroglyphs hieroglyphen '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'elia'),
       //   i18nPrefix: 'symboltables_elia',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'elia/56.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'elia/8.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'elia blindenschrift blinde eyeless relief taktile tactiles'
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'enochian'),
       //   i18nPrefix: 'symboltables_enochian',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'enochian/75.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'enochian/K.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'enochian henochisch john dee magische sprache magie language edward kelley henoic'
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'fakoo'),
       //   i18nPrefix: 'symboltables_fakoo',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'fakoo/167.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'fakoo/SZ_umlaut.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fakoo alphabet blinde eyeless relief'
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'finger'),
       //   i18nPrefix: 'symboltables_finger',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'finger/72.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'finger/H.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fingers fingeralphabet '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'flags'),
       //   i18nPrefix: 'symboltables_flags',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'flags/71.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'flags/G.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen flaggenalphabet flagalphabet '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'flags_german_kriegsmarine'),
       //   i18nPrefix: 'symboltables_flags_german_kriegsmarine',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'flags_german_kriegsmarine/70.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'flags_german_kriegsmarine/F.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen deutsche kriegsmarine german warnavy flaggenalphabet flagalphabet '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'flags_nato'),
       //   i18nPrefix: 'symboltables_flags_nato',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'flags_nato/54.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'flags_nato/6.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'flags flaggen wimpel fahnen nato army armee flaggenalphabet flagalphabet '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'fonic'),
       //   i18nPrefix: 'symboltables_fonic',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'fonic/86.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'fonic/V.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fonic talesoftheabyss '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'freemason'),
       //   i18nPrefix: 'symboltables_freemason',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'freemason/81.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'freemason/Q.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'freemasons freimaurer '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'freemason_v2'),
       //   i18nPrefix: 'symboltables_freemason_v2',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'freemason_v2/81.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'freemason_v2/Q.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'freemasons freimaurer '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'futurama'),
       //   i18nPrefix: 'symboltables_futurama',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'futurama/79.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'futurama/O.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'futurama matt groening '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'gallifreyan'),
       //   i18nPrefix: 'symboltables_gallifreyan',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'gallifreyan/77.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'gallifreyan/M.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'doctorwho timelords gallifreyan gallifreyisch drwho'
       // ),
       // GCWToolWidget(
@@ -1785,25 +1785,25 @@ class Registry {
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'genreich'),
       //   i18nPrefix: 'symboltables_genreich',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'genreich/79.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'genreich/O.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'genreich genrich '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'glagolitic'),
       //   i18nPrefix: 'symboltables_glagolitic',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'glagolitic/66.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'glagolitic/B.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'glagolitic glagolitisch glagoliza glagolitsa slawische slavic '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'gnommish'),
       //   i18nPrefix: 'symboltables_gnommish',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'gnommish/83.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'gnommish/S.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'gnommish gnomisch eoincolfer artemisfowl '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'greek_numerals'),
       //   i18nPrefix: 'symboltables_greek_numerals',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'greek_numerals/eighty.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'greek_numerals/80.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'griechisches greek zahlen ziffern numbers numerals zahlschrift'
       // ),
       // GCWToolWidget(
