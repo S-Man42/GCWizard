@@ -91,7 +91,7 @@ String _getText(textId id, String parameter, language) {
 			break;
 		case textId.Combine:
 			if (language == 'ENG')
-				text = 'Combine %1 into the mixing bowl.';
+				text = 'Combine %1 into mixing bowl.';
 			else
 				text = 'Kombiniere %1 in die Rührschüssel.';
 			break;

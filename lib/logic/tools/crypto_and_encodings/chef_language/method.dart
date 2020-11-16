@@ -85,12 +85,11 @@ class Method {
           case 'divide':  type = Type.Divide; break;
         }
         ingredient = matchers[3].firstMatch(line).group(2);
-        int group = 0;
         if (language == 'ENG')
-          group = 6;
+          mixingbowl = (matchers[3].firstMatch(line).group(6) == null ? 1 : int.parse(matchers[3].firstMatch(line).group(6))) - 1;
         else
-          group = 8;
-          mixingbowl = (matchers[3].firstMatch(line).group(group) == null ? 1 : int.parse(matchers[3].firstMatch(line).group(group))) - 1;
+          mixingbowl = (matchers[3].firstMatch(line).group(8) == null ? 1 : int.parse(matchers[3].firstMatch(line).group(8))) - 1;
+
     } else if (matchers[4].hasMatch(line)) {//liquefy contents
         type = Type.LiquefyBowl;
         mixingbowl = (matchers[4].firstMatch(line).group(2) == null ? 1 : int.parse(matchers[4].firstMatch(line).group(2))) - 1;
