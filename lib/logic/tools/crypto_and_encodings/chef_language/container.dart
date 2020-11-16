@@ -12,7 +12,8 @@ class Container {
   }
 
   void push(Component c) {
-    _contents.add(c);
+    if (c != null)
+      _contents.add(c);
   }
 
   Component peek() {
@@ -32,7 +33,9 @@ class Container {
   }
 
   void combine(Container c) {
-    _contents.addAll(c._contents);
+    if (c != null)
+      if (c._contents != null)
+        _contents.addAll(c._contents);
   }
 
   void liquefy() {
