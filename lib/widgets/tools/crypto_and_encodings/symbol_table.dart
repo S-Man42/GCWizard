@@ -33,6 +33,58 @@ final _CONFIG_SPECIALMAPPINGS = 'special_mappings';
 final _CONFIG_TRANSLATE = 'translate';
 final _CONFIG_CASESENSITIVE = 'case_sensitive';
 
+final Map<String, String> _CONFIG_SPECIAL_CHARS = {
+  "space" : " ",
+  "asterisk" : "*",
+  "dash" : "-",
+  "colon" : ":",
+  "semicolon" : ";",
+  "dot" : ".",
+  "slash" : "/",
+  "apostrophe" : "'",
+  "apostrophe_in" : "'",
+  "apostrophe_out" : "'",
+  "parentheses_open" : "(",
+  "parentheses_close" : ")",
+  "quotation" : "\"",
+  "quotation_in" : "\"",
+  "quotation_out" : "\"",
+  "dollar" : "\$",
+  "percent" : "%",
+  "plus" : "+",
+  "question" : "?",
+  "exclamation" : "!",
+  "backslash" : "\\",
+  "copyright" : "©",
+  "comma" : ",",
+  "pound" : "£",
+  "equals" : "=",
+  "brace_open" : "{",
+  "brace_close" : "}",
+  "bracket_open" : "[",
+  "bracket_close" : "]",
+
+  "AE" : "Ä",
+  "OE" : "Ö",
+  "UE" : "Ü",
+  "A_acute" : "Á",
+  "A_grave" : "À",
+  "A_circumflex" : "Â",
+  "C_cedille" : "Ç",
+  "E_acute" : "É",
+  "E_grave" : "È",
+  "E_circumflex" : "Ê",
+  "E_trema" : "Ë",
+  "I_circumflex" : "Î",
+  "I_trema" : "Ï",
+  "O_acute" : "Ó",
+  "O_grave" : "Ò",
+  "O_circumflex" : "Ô",
+  "U_acute" : "Ú",
+  "U_grave" : "Ù",
+  "U_circumflex" : "Û"
+};
+
 class SymbolTable extends StatefulWidget {
   final String symbolKey;
   final bool isCaseSensitive;
@@ -79,15 +131,36 @@ class SymbolTableState extends State<SymbolTable> {
     super.dispose();
   }
 
+  Future<Map<String, dynamic>> _loadConfig(String pathKey) async {
+    var file;
+    try {
+      file = await DefaultAssetBundle.of(context).loadString(pathKey + _CONFIG_FILENAME);
+    } catch (e) {}
+
+    if (file == null)
+      file = '{}';
+
+    Map<String, dynamic> config = json.decode(file);
+
+    if (config[_CONFIG_SPECIALMAPPINGS] == null)
+      config.putIfAbsent(_CONFIG_SPECIALMAPPINGS, () => Map<String, String>());
+
+    _CONFIG_SPECIAL_CHARS.entries.forEach((element) {
+      config[_CONFIG_SPECIALMAPPINGS].putIfAbsent(element.key, () => element.value);
+    });
+
+    return config;
+  }
+
   Future _initImages() async {
-    //AssetManifest.json keeps the information about all asset files
+    //AssetManifest.json holds the information about all asset files
     final manifestContent = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
 
     var pathKey = SYMBOLTABLES_ASSETPATH + widget.symbolKey + '/';
     var imageSuffixes = RegExp(r'\.(png|jpg|bmp|gif)', caseSensitive: false);
 
-    _config = json.decode(await DefaultAssetBundle.of(context).loadString(pathKey + _CONFIG_FILENAME));
+    _config = await _loadConfig(pathKey);
 
     final imagePaths = manifestMap.keys
       .where((String key) => key.contains(pathKey))
@@ -103,16 +176,16 @@ class SymbolTableState extends State<SymbolTable> {
             var imageKey = filePath.split(pathKey)[1].split(imageSuffixes)[0];
 
             String key;
-            if (_config[_CONFIG_SPECIALMAPPINGS] != null && _config[_CONFIG_SPECIALMAPPINGS].containsKey(imageKey)) {
+            if (_config != null && _config[_CONFIG_SPECIALMAPPINGS] != null && _config[_CONFIG_SPECIALMAPPINGS].containsKey(imageKey)) {
               key = _config[_CONFIG_SPECIALMAPPINGS][imageKey];
-            } else if (_config[_CONFIG_TRANSLATE] != null && _config[_CONFIG_TRANSLATE].contains(imageKey)) {
+            } else if (_config != null && _config[_CONFIG_TRANSLATE] != null && _config[_CONFIG_TRANSLATE].contains(imageKey)) {
               key = _getSpecialText(imageKey);
               setTranslateable = true;
             } else {
               key = imageKey;
             }
 
-            if (_config[_CONFIG_CASESENSITIVE] != null && _config[_CONFIG_CASESENSITIVE] == false)
+            if (_config != null && _config[_CONFIG_CASESENSITIVE] != null && _config[_CONFIG_CASESENSITIVE] == false)
               key = key.toUpperCase();
 
             if (setTranslateable)
