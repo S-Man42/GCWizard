@@ -94,7 +94,6 @@ Serves 1.
     });
   });
 
-
   group("chef_language.interpretChef:", () {
     // OK OK    Empty recipe
     var test0 = '';
@@ -1301,7 +1300,7 @@ Serves.''';
     });
   });
 
-  group("chef_language.deuRecipes", () {
+  group("chef_language.generatedRecipes", () {
 
       var testDEUgenerated = '''Testrezept in Deutsch.
 
@@ -1339,8 +1338,121 @@ Gieße die Inhalte der Rührschüssel auf die Servierplatte.
 
 Portionen 1.''';
 
+      var testDEUgeneratedAux = '''Demo .
+
+n 437 e 708 r2d2
+
+Zutaten.
+32 ml ambra
+50 ml Rum
+100 ml Espresso
+114 ml Calvados
+101 Spritzer Zitronensaft
+110 Tropfen flüssige Vanille
+
+Zubereitung.
+Gebe Rum in die Rührschüssel.
+Gebe Espresso in die Rührschüssel.
+Gebe Rum in die Rührschüssel.
+Gebe Calvados in die Rührschüssel.
+Gebe ambra in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Säubere die Rührschüssel.
+Serviere mit leichte bittere Honigchips.
+Gebe Ambra in die Rührschüssel.
+Gebe Zitronensaft in die Rührschüssel.
+Gebe ambra in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Säubere die Rührschüssel.
+Serviere mit fluffige süße Ketchupdressing.
+Gebe Ambra in die Rührschüssel.
+Gebe flüssige Vanille in die Rührschüssel.
+Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+
+Portionen 1.
+
+
+leichte bittere Honigchips
+
+Zutaten.
+12 g Süßkartoffeln
+59 g Kakaopulver
+
+Zubereitung.
+Gebe Süßkartoffeln in die Rührschüssel.
+Kombiniere Kakaopulver in die Rührschüssel.
+
+
+fluffige süße Ketchupdressing
+
+Zutaten.
+19 Teelöffel Chili
+23 Prisen Anis
+
+Zubereitung.
+Gebe Chili in die Rührschüssel.
+Kombiniere Anis in die Rührschüssel.
+''';
+
+      var testENGgeneratedAux = '''Demo .
+
+n 437 e 708 r2d2
+
+Ingredients.
+32 ml ambergris
+50 ml raki
+100 ml calvados
+114 ml gin
+101 ml sour cream
+110 ml water
+
+Method.
+Put raki into the mixing bowl.
+Put calvados into the mixing bowl.
+Put raki into the mixing bowl.
+Put gin into the mixing bowl.
+Put ambergris into the mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+Clean mixing bowl.
+Serve with heavy hot ketchupsauce.
+Put ambergris into the mixing bowl.
+Put sour cream into the mixing bowl.
+Put ambergris into the mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+Clean mixing bowl.
+Serve with creamy sour honeydressing.
+Put ambergris into the mixing bowl.
+Put water into the mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.
+
+
+heavy hot ketchupsauce
+
+Ingredients.
+12 g shrimps
+59 g zucchini
+
+Method.
+Put shrimps into the mixing bowl.
+Combine zucchini into mixing bowl.
+
+
+creamy sour honeydressing
+
+Ingredients.
+19 g cocoa powder
+23 g mixed fruits
+
+Method.
+Put cocoa powder into the mixing bowl.
+Combine mixed fruits into mixing bowl.''';
+
       List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgenerated, 'isValid' : false, 'expectedOutput' : ['N 432 E 708']},
+        {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgenerated, 'isValid' : false, 'expectedOutput' : ['N 432 E 708']},
+        {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgeneratedAux, 'isValid' : false, 'expectedOutput' : ['n 437 e 708 r2d2']},
+        {'language' : 'ENG', 'input' : '',  'recipe' : testENGgeneratedAux, 'isValid' : false, 'expectedOutput' : ['n 437 e 708 r2d2']},
       ];
 
       _inputsToExpected.forEach((elem) {
