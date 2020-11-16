@@ -67,6 +67,13 @@ final Map<String, String> _CONFIG_SPECIAL_CHARS = {
   "hashtag" : "#",
   "web_at" : "@",
   "paragraph" : "§",
+  "caret" : "^",
+  "underscore" : "_",
+  "backtick" : "`",
+  "pipe" : "|",
+  "tilde" : "~",
+  "lessthan" : "<",
+  "greaterthan" : ">",
 
   "AE_umlaut" : "Ä",
   "OE_umlaut" : "Ö",

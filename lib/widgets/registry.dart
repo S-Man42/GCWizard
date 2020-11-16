@@ -1809,7 +1809,7 @@ class Registry {
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'hazard', isCaseSensitive: true),
       //   i18nPrefix: 'symboltables_hazard',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hazard/34.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hazard/quotation.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hazardsigns gefahren warningsigns gebotsschilder gebotszeichen verbotsschilder verbotszeichen warnschilder warnzeichen BGVA8 DINENISO7010 ASRA1.3'
       // ),
       // GCWToolWidget(
@@ -1821,49 +1821,49 @@ class Registry {
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'hebrew_v2'),
       //   i18nPrefix: 'symboltables_hebrew_v2',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hebrew_v2/65.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hebrew_v2/A.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hebrew hebraeisches jews juden'
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'hexahue'),
       //   i18nPrefix: 'symboltables_hexahue',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hexahue/81.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hexahue/Q.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colours colors colorcodes colourcodes hexahue farben farbcodes pixel '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'hieratic_numerals'),
       //   i18nPrefix: 'symboltables_hieratic_numerals',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hieratic_numerals/eightthousand.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hieratic_numerals/8000.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hieratic numbers numerals zahlen ziffern hieratische altaegyptische egyptian hieroglyphs hieroglyphen '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'hobbit_runes'),
       //   i18nPrefix: 'symboltables_hobbit_runes',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hobbit_runes/80.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hobbit_runes/P.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hobbits halblinge dwarf dwarves zwerge altenglisch old english erebor mondrunen moonrunes derherrderringe thelordoftherings j.r.r. jrr tolkien'
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'hvd'),
       //   i18nPrefix: 'symboltables_hvd',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hvd/81.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hvd/Q.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hvd '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'hylian_skyward_sword'),
       //   i18nPrefix: 'symboltables_hylian_skyward_sword',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_skyward_sword/79.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_skyward_sword/O.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES_HYLIAN + 'skywardsword skywardschwert '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'hylian_twilight_princess_gcn'),
       //   i18nPrefix: 'symboltables_hylian_twilight_princess_gcn',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_twilight_princess_gcn/65.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_twilight_princess_gcn/A.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES_HYLIAN + 'daemmerungsprinzessin twilightprincess gcn nintendo gamecube'
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'hylian_twilight_princess_wii'),
       //   i18nPrefix: 'symboltables_hylian_twilight_princess_wii',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_twilight_princess_wii/65.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hylian_twilight_princess_wii/A.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES_HYLIAN + 'daemmerungsprinzessin twilightprincess wii'
       // ),
       // GCWToolWidget(
@@ -1875,43 +1875,43 @@ class Registry {
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'hymmnos', isCaseSensitive: true),
       //   i18nPrefix: 'symboltables_hymmnos',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hymmnos/74.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'hymmnos/J.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hymmnos artonelico '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'iching'),
       //   i18nPrefix: 'symboltables_iching',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'iching/fourty.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'iching/40.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'iching itsching chinese chinesisches hexagramm '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'illuminati_v1'),
       //   i18nPrefix: 'symboltables_illuminati_v1',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'illuminati_v1/86.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'illuminati_v1/V.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_ILLUMINATI
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'illuminati_v2'),
       //   i18nPrefix: 'symboltables_illuminati_v2',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'illuminati_v2/86.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'illuminati_v2/V.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_ILLUMINATI
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'intergalactic'),
       //   i18nPrefix: 'symboltables_intergalactic',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'intergalactic/81.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'intergalactic/Q.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'intergalactical galaxy galaxies intergalaktisch '
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'iokharic'),
       //   i18nPrefix: 'symboltables_iokharic',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'iokharic/56.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'iokharic/8.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'drachenrunen drachenschrift dungeons&dragons drachensprache dragonscript dragonlanguage mandarinstylizedrunictypeface dungeonsanddragons iokharic lokharic draconicgrates wizardsofthecoasts chromaticdragonsbook chinesischerstil runen elbisch)'
       // ),
       // GCWToolWidget(
       //   tool: SymbolTable(symbolKey: 'japanese_numerals'),
       //   i18nPrefix: 'symboltables_japanese_numerals',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'japanese_numerals/57.png',
+      //   iconPath: SYMBOLTABLES_ASSETPATH + 'japanese_numerals/9.png',
       //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'japanese japanisches zahlen ziffern numbers'
       // ),
       // GCWToolWidget(
