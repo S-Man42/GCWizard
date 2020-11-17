@@ -2262,12 +2262,12 @@ class Registry {
         iconPath: SYMBOLTABLES_ASSETPATH + 'wakandan/N.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'wakandanisches wakandisches blackpanther marvel chadwickboseman schwarzerpanther '
       ),
-      // GCWToolWidget(
-      //   tool: SymbolTable(symbolKey: 'webdings', isCaseSensitive: true),
-      //   i18nPrefix: 'symboltables_webdings',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'webdings/65.png',
-      //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont webdings wingdings windings'
-      // ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'webdings', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_webdings',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'webdings/A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont webdings wingdings windings'
+      ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'windforce_beaufort'),
         i18nPrefix: 'symboltables_windforce_beaufort',
@@ -2286,24 +2286,24 @@ class Registry {
         iconPath: SYMBOLTABLES_ASSETPATH + 'window/L.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fenster windows johannes balthasar friderici cryptographia'
       ),
-      // GCWToolWidget(
-      //   tool: SymbolTable(symbolKey: 'wingdings', isCaseSensitive: true),
-      //   i18nPrefix: 'symboltables_wingdings',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings/65.png',
-      //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont symbole symbols haende hands zahlenimkreis numbersincircle clock arrows pfeile stars sterne wingdings windings'
-      // ),
-      // GCWToolWidget(
-      //   tool: SymbolTable(symbolKey: 'wingdings2', isCaseSensitive: true),
-      //   i18nPrefix: 'symboltables_wingdings2',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings2/65.png',
-      //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift symbole buero haende hands zahlenimkreis numbersincircle clock stars sterne systemfont wingdings2 windings2'
-      // ),
-      // GCWToolWidget(
-      //   tool: SymbolTable(symbolKey: 'wingdings3', isCaseSensitive: true),
-      //   i18nPrefix: 'symboltables_wingdings3',
-      //   iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings3/65.png',
-      //   searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont symbole symbols arrows pfeile wingdings3 windings3'
-      // ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'wingdings', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_wingdings',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings/A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont symbole symbols haende hands zahlenimkreis numbersincircle clock arrows pfeile stars sterne wingdings windings'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'wingdings2', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_wingdings2',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings2/A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift symbole buero haende hands zahlenimkreis numbersincircle clock stars sterne systemfont wingdings2 windings2'
+      ),
+      GCWToolWidget(
+        tool: SymbolTable(symbolKey: 'wingdings3', isCaseSensitive: true),
+        i18nPrefix: 'symboltables_wingdings3',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings3/A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont symbole symbols arrows pfeile wingdings3 windings3'
+      ),
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'yan_koryani'),
         i18nPrefix: 'symboltables_yan_koryani',
