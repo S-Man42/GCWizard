@@ -2001,7 +2001,7 @@ class Registry {
       GCWToolWidget(
         tool: SymbolTable(symbolKey: 'murraybaudot'),
         i18nPrefix: 'symboltables_murraybaudot',
-        iconPath: SYMBOLTABLES_ASSETPATH + 'murraybaudot/74.png',
+        iconPath: SYMBOLTABLES_ASSETPATH + 'murraybaudot/J.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_CCITT2
       ),
       GCWToolWidget(
