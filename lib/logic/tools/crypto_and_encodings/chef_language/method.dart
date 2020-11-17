@@ -1,4 +1,6 @@
 
+import 'chef_international.dart';
+
 enum Type {Take, Put, Fold, Add, Remove, Combine, Divide, AddDry, Liquefy, LiquefyBowl, Stir, StirInto,
   Mix, Clean, Pour, Verb, VerbUntil, SetAside, Serve, Refrigerate, Remember, Invalid}
 
@@ -17,44 +19,6 @@ class Method {
     line = line.trim();
     this.n = n;
     List<RegExp> matchers = new List<RegExp>();
-    List<RegExp> matchersENG = [
-      RegExp(r"^take ([a-zA-Z ]+) from refrigerator$"),
-      RegExp(r"^(put|fold) ([a-zA-Z ]+) into( the)?( (\d+)(nd|rd|th|st))? mixing bowl$"),
-      RegExp(r"^add dry ingredients( to( (\d+)(nd|rd|th|st))? mixing bowl)?$"),
-      RegExp(r"^(add|remove|combine|divide) ([a-zA-Z ]+?)( (to|into|from)( (\d+)(nd|rd|th|st))? mixing bowl)?$"),
-      RegExp(r"^liquefy contents of the( (\d+)(nd|rd|th|st))? mixing bowl$"),
-      RegExp(r"^liquefy ([a-zA-Z ]+)$"),
-      RegExp(r"^stir( the( (\d+)(nd|rd|th|st))? mixing bowl)? for (\d+) minutes$"),
-      RegExp(r"^stir ([a-zA-Z ]+) into the( (\d+)(nd|rd|th|st))? mixing bowl$"),
-      RegExp(r"^mix( the( (\d+)(nd|rd|th|st))? mixing bowl)? well$"),
-      RegExp(r"^clean( (\d+)(nd|rd|th|st))? mixing bowl$"),
-      RegExp(r"^pour contents of the( (\d+)(nd|rd|th|st))? mixing bowl into the( (\d+)(nd|rd|th|st))? baking dish$"),
-      RegExp(r"^set aside$"),
-      RegExp(r"^refrigerate( for (\d+) hour(s)?)?$"),
-      RegExp(r"^serve with ([a-zA-Z ]+)$"),
-      RegExp(r"^suggestion: (.*)$"),
-      RegExp(r"^([a-zA-Z]+?)( the ([a-zA-Z ]+))? until ([a-zA-Z]+)$"),
-      RegExp(r"^([a-zA-Z]+) the ([a-zA-Z ]+)$")
-    ];
-    List<RegExp> matchersDEU = [
-      RegExp(r"^nehme ([a-zäöüß ]+) aus dem kühlschrank$"),
-      RegExp(r"^(gebe|unterhebe) ([a-zäöüß ]+) in( die)?( (\d+)(te))? rührschüssel$"),
-      RegExp(r"^füge hinzu feste zutaten( zur( (\d+)(ten))? rührschüssel)?$"),
-      RegExp(r"^(füge hinzu|entferne|kombiniere|teile) ([a-zäöüß ]+?) (zu|mit( der)?|aus( der)?|in( die)?)( (\d+)(te(n)?))? rührschüssel$"),
-      RegExp(r"^verflüssige die inhalte der( (\d+)(ten))? rührschüssel$"),
-      RegExp(r"^verflüssige ([a-zäöüß ]+)$"),
-      RegExp(r"^rühre( die( (\d+)(te))? rührschüssel)? für (\d+) minuten$"),
-      RegExp(r"^rühre ([a-zäöüß ]+) in die( (\d+)(te))? rührschüssel$"),
-      RegExp(r"^mische( die( (\d+)(te))? rührschüssel)? well$"),
-      RegExp(r"^säubere die( (\d+)(te))? rührschüssel$"),
-      RegExp(r"^gieße die inhalte der( (\d+)(ten))? rührschüssel auf die( (\d+)(te))? servierplatte$"),
-      RegExp(r"^stelle beiseite"),
-      RegExp(r"^gefriere( für (\d+) stunde(n)?)?$"),
-      RegExp(r"^serviere mit ([a-zäöüß ]+)$"),
-      RegExp(r"^vorschlag: (.*)$"),
-      RegExp(r"^([a-zäöüß]+?)( (das|den|die) ([a-zäöüß ]+))? bis ([a-zäöüß]+)$"),
-      RegExp(r"^([a-zäöüß]+) (das|den|die) ([a-zäöüß ]+)$")
-    ];
     if (language == 'ENG')
       matchers = matchersENG;
     else

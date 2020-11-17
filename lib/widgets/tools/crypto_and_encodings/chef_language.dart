@@ -33,16 +33,21 @@ class ChefState extends State<Chef> {
   var _currentOutput = '';
 
   var TimeInputFormatter = WrapperForMaskTextInputFormatter(
-      mask: '#' * 10000, // allow 10000 characters input
+      mask: '#' * 3, // allow 3 characters input
       filter: {"#": RegExp(r'[0-9]')}
   );
   var TemperatureInputFormatter = WrapperForMaskTextInputFormatter(
-      mask: '#' * 10000, // allow 10000 characters input
+      mask: '#' * 3, // allow 3 characters input
       filter: {"#": RegExp(r'[0-9]')}
   );
   var DigitSpacesInputFormatter  = WrapperForMaskTextInputFormatter(
-      mask: '#' * 10000, // allow 10000 characters input
+      mask: '#' * 1000, // allow 1000 characters input
       filter: {"#": RegExp(r'[0-9] ')}
+  );
+  var GeneratedOutputFormatter  = WrapperForMaskTextInputFormatter(
+      mask: '#' * 1000, // allow 1000 characters input
+      //filter: {"#": RegExp(r'[A-Z0-9] ,;.:!?()+-*/#<>')}
+      filter: {"#": RegExp(r'[A-Z0-9 ;,:.-_*+<>()/!]')}
   );
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;    // interpret
@@ -140,6 +145,7 @@ class ChefState extends State<Chef> {
               ),
               GCWTextField(
                 controller: _outputController,
+                inputFormatters: [GeneratedOutputFormatter],
                 hintText: i18n(context, 'chef_output'),
                 onChanged: (text) {
                   setState(() {
@@ -220,7 +226,6 @@ class ChefState extends State<Chef> {
   String buildOutputText(List<String> outputList){
     String output = '';
     outputList.forEach((element) {
-print(element);
       if (element.startsWith('chef_')) {
         output = output + i18n(context, element) + '\n';
       } else

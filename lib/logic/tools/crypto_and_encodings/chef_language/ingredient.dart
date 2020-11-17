@@ -1,3 +1,4 @@
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chef_international.dart';
 
 enum State {Dry, Liquid}
 
@@ -15,25 +16,22 @@ class Ingredient {
     var tokens = ingredient.replaceAll('-', ' ').split(' ');
     int i = 0;
     _state = State.Dry;
-    if (RegExp(r"^([0-9]+)[ a-z]*").hasMatch(tokens[i])) {
-      _amount = int.parse(RegExp(r"^([0-9]+)[ a-zäöüß]*").firstMatch(tokens[i]).group(1));
+    if (RegExp(r'^([0-9]+)[ a-z]*').hasMatch(tokens[i])) {
+      _amount = int.parse(RegExp(r'^([0-9]+)[ a-zäöüß]*').firstMatch(tokens[i]).group(1));
       i++;
       if (i < tokens.length) {
-        if (RegExp(r"^heaped|^level|^gestrichen|^gehäuft").hasMatch(
-            tokens[i])) {
+        if (MeasureType.hasMatch(tokens[i])) {
           _state = State.Dry;
           i++;
         } else
-        if (RegExp(r"^g(r)?$|^kg$|^pinch(es)?|^prise(n)|^scheibe(n)?").hasMatch(tokens[i])) {
+        if (MeasureDry.hasMatch(tokens[i])) {
           _state = State.Dry;
           i++;
         } else
-        if (RegExp(r"^ml$|^l$|^dash(es)?^drop(s)?|^spritzer|^tropfen").hasMatch(tokens[i])) {
+        if (MeasureLiquid.hasMatch(tokens[i])) {
           _state = State.Liquid;
           i++;
-        } else if (RegExp(
-            r"^cup(s)?|^teaspoon(s)?|^tablespoon(s)?|^teelöffel|^esslöffel")
-            .hasMatch(tokens[i])) {
+        } else if (MeasureElse.hasMatch(tokens[i])) {
           i++;
         }
       } else {
@@ -48,7 +46,7 @@ class Ingredient {
       _name = _name + tokens[i] + (i == tokens.length - 1 ? '' : ' ');
       i++;
     }
-    if (_name == "") {
+    if (_name == '') {
       _name = 'INVALID';
     }
   }

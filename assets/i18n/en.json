@@ -415,6 +415,7 @@
   "chef_error_runtime_method_loop_end" : "Wrong loop end statement found",
   "chef_error_runtime_method_loop_aside" : "Cannot set aside when not inside loop",
   "chef_error_runtime_method_aux_recipe" : "Unavailable auxiliary recipe",
+  "chef_error_runtime_method_aux_recipe_return" : "Sous-Chef with no mixing bowl",
   "chef_error_runtime_add_to_empty_mixing_bowl" : "Add to empty mixing bowl",
   "chef_error_runtime_remove_from_empty_mixing_bowl" : "Remove from empty mixing bowl",
   "chef_error_runtime_combine_with_empty_mixing_bowl" : "Combine with empty mixing bowl",

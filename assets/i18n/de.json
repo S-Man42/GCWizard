@@ -416,6 +416,7 @@
   "chef_error_runtime_method_loop_end" : "Falsche Anweisung für Schleifenende",
   "chef_error_runtime_method_loop_aside" : "Versuch, außerhalb der Schleife beiseite zu stellen",
   "chef_error_runtime_method_aux_recipe" : "Beilagenrezept ist nicht vorhanden",
+  "chef_error_runtime_method_aux_recipe_return" : "Beilagenrezept lieferte kein Ergebnis",
   "chef_error_runtime_add_to_empty_mixing_bowl" : "Versuch, aus leerer Rührschüssel zu addieren",
   "chef_error_runtime_remove_from_empty_mixing_bowl" : "Versuch, aus leerer Rührschüssel zu entfernen",
   "chef_error_runtime_combine_with_empty_mixing_bowl" : "Versuch, aus leerer Rührschüssel zu kombinieren",
