@@ -20,7 +20,7 @@ List<String> _getAuxiliaryRecipe(String name, int value, List<String> ingredient
 		nList = integerFactorization(value);
 		if (nList.length != 2) {
 			nOne = value;
-			for (int i = nList.length - 1; i > 0; i--){
+			for (int i = 0; i < nList.length - 1; i++){
 				if (nOne > sqrt(value))
 					nOne = nOne ~/ nList[i].toInt();
 				else
@@ -163,7 +163,7 @@ String generateChef(String language, title, String remark, String time, String t
 						}
 						ingredientOne = [itemListMeasuresDry.elementAt(random.nextInt(itemListMeasuresDry.length)), itemListDry.elementAt(random.nextInt(itemListDry.length))];
 						ingredientTwo = [itemListMeasuresDry.elementAt(random.nextInt(itemListMeasuresDry.length)), itemListDry.elementAt(random.nextInt(itemListDry.length))];
-						while (ingredientTwo.join('') == ingredientOne.join('')) {
+						while (ingredientTwo.elementAt(1) == ingredientOne.elementAt(1)) {
 							ingredientTwo = [itemListMeasuresDry.elementAt(random.nextInt(itemListMeasuresDry.length)), itemListDry.elementAt(random.nextInt(itemListDry.length))];
 						}
 						auxiliaryRecipes[auxiliaryName] = _getAuxiliaryRecipe(auxiliaryName, value, ingredientOne, ingredientTwo, language);
