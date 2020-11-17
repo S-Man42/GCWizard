@@ -74,6 +74,7 @@ final Map<String, String> _CONFIG_SPECIAL_CHARS = {
   "tilde" : "~",
   "lessthan" : "<",
   "greaterthan" : ">",
+  "euro" : "€",
 
   "AE_umlaut" : "Ä",
   "OE_umlaut" : "Ö",
@@ -82,6 +83,7 @@ final Map<String, String> _CONFIG_SPECIAL_CHARS = {
   "A_acute" : "Á",
   "A_grave" : "À",
   "A_circumflex" : "Â",
+  "AE_together" : "Æ",
   "C_cedille" : "Ç",
   "E_acute" : "É",
   "E_grave" : "È",
@@ -89,12 +91,17 @@ final Map<String, String> _CONFIG_SPECIAL_CHARS = {
   "E_trema" : "Ë",
   "I_circumflex" : "Î",
   "I_trema" : "Ï",
+  "N_tilde" : "Ñ",
   "O_acute" : "Ó",
   "O_grave" : "Ò",
   "O_circumflex" : "Ô",
   "U_acute" : "Ú",
   "U_grave" : "Ù",
-  "U_circumflex" : "Û"
+  "U_circumflex" : "Û",
+
+  "ae_umlaut" : "ä",
+  "oe_umlaut" : "ö",
+  "ue_umlaut" : "ü",
 };
 
 class SymbolTable extends StatefulWidget {
