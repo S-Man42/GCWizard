@@ -24,16 +24,33 @@ Map DVORAK_II_DEUtoNormal = {
   'ä' : '401u', 'ö' : '402u', 'q' : '403u', 'j' : '404u', 'k'  : '405u', 'x' : '406u', 'b' : '407u', 'm' : '408u', 'w' : '409u', 'v' : '410u', "'" : '411u',
   ' ' : '501',  ''  : ''
 };
+Map DVORAK_I_DEU1toNormal = {
+  '°' : '101o', '!' : '102o', '"' : '103o', '§' : '104o', '\$' : '105o', '%' : '106o', '&' : '107o', '/' : '108o', '(' : '109o', ')' : '110o', '=' : '111o', '*' :  '112o', '>' : '113o',
+  '^' : '101u', '1' : '102u', '2' : '103u', '3' : '104u', '4'  : '105u', '5' : '106u', '6' : '107u', '7' : '108u', '8' : '109u', '9' : '110u', '0' : '111u', '+' :  '112u', '<`>' : '113u',
+  'Ä' : '201o', ';' : '202o', ':' : '203o', 'P' : '204o', 'Y'  : '205o', 'F' : '206o', 'G' : '207o', 'C' : '208o', 'R' : '209o', 'L' : '210o', 'Q' : '211o', '/' :  '212o',
+  'ä' : "201u", ',' : '202u', '.' : '203u', 'p' : '204u', 'y'  : '205u', 'f' : '206u', 'g' : '207u', 'c' : '208u', 'r' : '209u', 'l' : '210u', 'q' : '211u', '\\' : '212u',
+  'A' : '301o', 'O' : '302o', 'E' : '303o', 'U' : '304o', 'I'  : '305o', 'D' : '306o', 'H' : '307o', 'T' : '308o', 'N' : '309o', 'S' : '310o', '?' : '311o', "Q'" : '312o',
+  'a' : '301u', 'o' : '302u', 'e' : '303u', 'u' : '304u', 'i'  : '305u', 'd' : '306u', 'h' : '307u', 't' : '308u', 'n' : '309u', 's' : '310u', 'ß' : '311u', 'q' : '312u',
+  '_' : '401o', 'Ö' : '402o', 'Ü' : '403o', 'J' : '404o', 'K'  : '405o', 'X' : '406o', 'B' : '407o', 'M' : '408o', 'W' : '409o', 'V' : '410o', 'Z' : '411o',
+  '-' : '401u', 'ö' : '402u', 'ü' : '403u', 'j' : '404u', 'k'  : '405u', 'x' : '406u', 'b' : '407u', 'm' : '408u', 'w' : '409u', 'v' : '410u', "z" : '411u',
+  ' ' : '501',  ''  : ''
+};
+Map DVORAK_I_DEU2toNormal = {
+  '°' : '101o', '!' : '102o', '"' : '103o', '§' : '104o', '\$' : '105o', '%' : '106o', '&' : '107o', '/' : '108o', '(' : '109o', ')' : '110o', '=' : '111o', '*' :  '112o', '>' : '113o',
+  '^' : '101u', '1' : '102u', '2' : '103u', '3' : '104u', '4'  : '105u', '5' : '106u', '6' : '107u', '7' : '108u', '8' : '109u', '9' : '110u', '0' : '111u', '+' :  '112u', '<`>' : '113u',
+  'Ö' : '201o', 'Ü' : '202o', 'Ä' : '203o', 'P' : '204o', 'Y'  : '205o', 'F' : '206o', 'G' : '207o', 'C' : '208o', 'R' : '209o', 'L' : '210o', 'Q' : '211o', '/' :  '212o',
+  'ö' : "201u", 'ü' : '202u', 'ä' : '203u', 'p' : '204u', 'y'  : '205u', 'f' : '206u', 'g' : '207u', 'c' : '208u', 'r' : '209u', 'l' : '210u', 'q' : '211u', '\\' : '212u',
+  'A' : '301o', 'O' : '302o', 'E' : '303o', 'U' : '304o', 'I'  : '305o', 'D' : '306o', 'H' : '307o', 'T' : '308o', 'N' : '309o', 'S' : '310o', '?' : '311o', "Q'" : '312o',
+  'a' : '301u', 'o' : '302u', 'e' : '303u', 'u' : '304u', 'i'  : '305u', 'd' : '306u', 'h' : '307u', 't' : '308u', 'n' : '309u', 's' : '310u', 'ß' : '311u', 'q' : '312u',
+  '_' : '401o', ':' : '402o', ';' : '403o', 'J' : '404o', 'K'  : '405o', 'X' : '406o', 'B' : '407o', 'M' : '408o', 'W' : '409o', 'V' : '410o', 'Z' : '411o',
+  '-' : '401u', '.' : '402u', ',' : '403u', 'j' : '404u', 'k'  : '405u', 'x' : '406u', 'b' : '407u', 'm' : '408u', 'w' : '409u', 'v' : '410u', "z" : '411u',
+  ' ' : '501',  ''  : ''
+};
+
 Map NeoToNormal = {
 
 };
 Map RistomeToNormal = {
-
-};
-Map DVORAK_I_DEU1toNormal = {
-
-};
-Map DVORAK_I_DEU2toNormal = {
 
 };
 
@@ -55,15 +72,15 @@ Map ColemakToNormal = {
 
 };
 
-Map NormaltoQWERTZ_T1 = switchMapKeyValue(QWERTZ_T1toNormal);
-Map NormaltoQWERTY_US_INT = switchMapKeyValue(QWERTY_US_INTtoNormal);
-Map NormaltoDVORAK = switchMapKeyValue(DVORAKtoNormal);
-Map NormaltoDVORAK_II_DEU = switchMapKeyValue(DVORAK_II_DEUtoNormal);
-Map NormaltoDVORAK_I_DEU1 = switchMapKeyValue(DVORAK_I_DEU1toNormal);
-Map NormaltoDVORAK_I_DEU2 = switchMapKeyValue(DVORAK_I_DEU2toNormal);
-Map NormaltoRistome = switchMapKeyValue(RistomeToNormal);
-Map NormaltoColemak = switchMapKeyValue(ColemakToNormal);
-Map NormaltoNeo = switchMapKeyValue(NeoToNormal);
+Map NormalToQWERTZ_T1 = switchMapKeyValue(QWERTZ_T1toNormal);
+Map NormalToQWERTY_US_INT = switchMapKeyValue(QWERTY_US_INTtoNormal);
+Map NormalToDVORAK = switchMapKeyValue(DVORAKtoNormal);
+Map NormalToDVORAK_II_DEU = switchMapKeyValue(DVORAK_II_DEUtoNormal);
+Map NormalToDVORAK_I_DEU1 = switchMapKeyValue(DVORAK_I_DEU1toNormal);
+Map NormalToDVORAK_I_DEU2 = switchMapKeyValue(DVORAK_I_DEU2toNormal);
+Map NormalToRistome = switchMapKeyValue(RistomeToNormal);
+Map NormalToColemak = switchMapKeyValue(ColemakToNormal);
+Map NormalToNeo = switchMapKeyValue(NeoToNormal);
 
 
 String encodeDvorak(String input, DvorakMode keyboardFrom, keyboardTo){
@@ -73,6 +90,7 @@ String encodeDvorak(String input, DvorakMode keyboardFrom, keyboardTo){
   if (input == null || input == '')
     return '' ;
 
+/*
   QWERTZ_T1toNormal['@'] = '';
   QWERTZ_T1toNormal['€'] = '';
   QWERTZ_T1toNormal['|'] = '';
@@ -94,6 +112,7 @@ String encodeDvorak(String input, DvorakMode keyboardFrom, keyboardTo){
   DVORAK_II_DEUtoNormal['`'] = '';
   DVORAK_II_DEUtoNormal['@'] = '';
   DVORAK_II_DEUtoNormal['€'] = '';
+*/
 
 
   switch (keyboardFrom) {
@@ -108,15 +127,15 @@ String encodeDvorak(String input, DvorakMode keyboardFrom, keyboardTo){
     case DvorakMode.NEO : mapFrom = NeoToNormal; break;
   }
   switch (keyboardTo) {
-    case DvorakMode.RISTOME : mapTo = RistomeToNormal; break;
-    case DvorakMode.DVORAK_II_DEU : mapTo = DVORAK_II_DEUtoNormal; break;
-    case DvorakMode.DVORAK : mapTo = DVORAKtoNormal; break;
-    case DvorakMode.QWERTY_US_INT : mapTo = QWERTY_US_INTtoNormal; break;
-    case DvorakMode.QWERTZ_T1 : mapTo = QWERTZ_T1toNormal; break;
-    case DvorakMode.COLEMAK : mapTo = ColemakToNormal; break;
-    case DvorakMode.DVORAK_I_DEU1 : mapTo = DVORAK_I_DEU2toNormal; break;
-    case DvorakMode.DVORAK_I_DEU2 : mapTo = DVORAK_I_DEU1toNormal; break;
-    case DvorakMode.NEO : mapTo = NeoToNormal; break;
+    case DvorakMode.RISTOME : mapTo = NormalToRistome; break;
+    case DvorakMode.DVORAK_II_DEU : mapTo = NormalToDVORAK_II_DEU; break;
+    case DvorakMode.DVORAK : mapTo = NormalToDVORAK; break;
+    case DvorakMode.QWERTY_US_INT : mapTo = NormalToQWERTY_US_INT; break;
+    case DvorakMode.QWERTZ_T1 : mapTo = NormalToQWERTZ_T1; break;
+    case DvorakMode.COLEMAK : mapTo = NormalToColemak; break;
+    case DvorakMode.DVORAK_I_DEU1 : mapTo = NormalToDVORAK_I_DEU2; break;
+    case DvorakMode.DVORAK_I_DEU2 : mapTo = NormalToDVORAK_I_DEU1; break;
+    case DvorakMode.NEO : mapTo = NormalToNeo; break;
   }
 
   return input.split('')
