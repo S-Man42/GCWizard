@@ -604,29 +604,29 @@ Gibt aus N 437 E 708 magnetisch
 Zutaten.
 32 ml ambra
 109 Spritzer Zitronensaft
-97 Eigelb
+97 ml Eigelb
 103 ml Öl
 110 ml Calvados
 101 ml Ouzo
-116 saure Sahne
+116 ml saure Sahne
 105 ml Bier
 115 ml Korn
 99 Tropfen flüssige Vanille
 104 Spritzer Tabasco
-69 Sahne
+69 ml Sahne
 78 ml Whisky
 
 Zubereitung.
-Gebe Zitronensaft in die Rührschüssel.
-Gebe Eigelb in die Rührschüssel.
-Gebe Öl in die Rührschüssel.
-Gebe Calvados in die Rührschüssel.
-Gebe Ouzo in die Rührschüssel.
-Gebe saure Sahne in die Rührschüssel.
-Gebe Bier in die Rührschüssel.
-Gebe Korn in die Rührschüssel.
-Gebe flüssige Vanille in die Rührschüssel.
 Gebe Tabasco in die Rührschüssel.
+Gebe flüssige Vanille in die Rührschüssel.
+Gebe Korn in die Rührschüssel.
+Gebe Bier in die Rührschüssel.
+Gebe saure Sahne in die Rührschüssel.
+Gebe Ouzo in die Rührschüssel.
+Gebe Calvados in die Rührschüssel.
+Gebe Öl in die Rührschüssel.
+Gebe Eigelb in die Rührschüssel.
+Gebe Zitronensaft in die Rührschüssel.
 Gebe ambra in die Rührschüssel.
 Gieße die Inhalte der Rührschüssel auf die Servierplatte.
 Säubere die Rührschüssel.
@@ -648,7 +648,7 @@ cremige bittere Currychips
 
 Zutaten.
 12 g schmalz
-59 Prise(n) Kümmel
+59 Prisen Kümmel
 
 Zubereitung.
 Gebe schmalz in die Rührschüssel.
@@ -659,7 +659,7 @@ schwere scharfe Currydressing
 
 Zutaten.
 19 Prisen Anis
-23 Esslöffel Marmelade
+23 g Marmelade
 
 Zubereitung.
 Gebe Anis in die Rührschüssel.
