@@ -3,6 +3,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/dvorak.dart';
 
 void main() {
   String inputString = '1234567890abcdefghijklmnopqrstuvwxyz!"§'+'\$'+'%&/()=?^´°`*+'+"'"+'#;,:._-';
+
   group("Dvorak.encode:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'from' : DvorakMode.DVORAK, 'to' : DvorakMode.QWERTZ_T1, 'expectedOutput' : null},

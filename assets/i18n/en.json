@@ -1070,7 +1070,12 @@
   "dvorak_keyboard_mode_qwertz_t1" : "QWERTZ DEU T1",
   "dvorak_keyboard_mode_qwerty_us_int" : "QWERTY US int",
   "dvorak_keyboard_mode_dvorak" : "DVORAK",
+  "dvorak_keyboard_mode_dvorak_I1" : "DVORAK Typ 1 German Ä,.",
+  "dvorak_keyboard_mode_dvorak_I2" : "DVORAK Typ 2 German ÄÖÜ",
   "dvorak_keyboard_mode_dvorak_II" : "DVORAK Typ II German",
+  "dvorak_keyboard_mode_colemak" : "Colemak",
+  "dvorak_keyboard_mode_ristome" : "RiStoMe",
+  "dvorak_keyboard_mode_neo" : "Neo",
 
   "e_selection_title" : "e (e = 2.7182818...)",
   "e_selection_description" : "Mathematical constant: Euler's Number",

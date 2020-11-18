@@ -44,12 +44,22 @@ class DvorakState extends State<Dvorak> {
       DvorakMode.QWERTY_US_INT : i18n(context, 'dvorak_keyboard_mode_qwerty_us_int'),
       DvorakMode.DVORAK : i18n(context, 'dvorak_keyboard_mode_dvorak'),
       DvorakMode.DVORAK_II_DEU : i18n(context, 'dvorak_keyboard_mode_dvorak_II'),
+      DvorakMode.DVORAK_I_DEU1 : i18n(context, 'dvorak_keyboard_mode_dvorak_I1'),
+      DvorakMode.DVORAK_I_DEU2 : i18n(context, 'dvorak_keyboard_mode_dvorak_I2'),
+      DvorakMode.COLEMAK : i18n(context, 'dvorak_keyboard_mode_colemak'),
+      DvorakMode.RISTOME : i18n(context, 'dvorak_keyboard_mode_ristome'),
+      DvorakMode.NEO : i18n(context, 'dvorak_keyboard_mode_neo'),
     };
     var DvorakModeItemsTo = {
       DvorakMode.QWERTZ_T1 : i18n(context, 'dvorak_keyboard_mode_qwertz_t1'),
       DvorakMode.QWERTY_US_INT : i18n(context, 'dvorak_keyboard_mode_qwerty_us_int'),
       DvorakMode.DVORAK : i18n(context, 'dvorak_keyboard_mode_dvorak'),
       DvorakMode.DVORAK_II_DEU : i18n(context, 'dvorak_keyboard_mode_dvorak_II'),
+      DvorakMode.DVORAK_I_DEU1 : i18n(context, 'dvorak_keyboard_mode_dvorak_I1'),
+      DvorakMode.DVORAK_I_DEU2 : i18n(context, 'dvorak_keyboard_mode_dvorak_I2'),
+      DvorakMode.COLEMAK : i18n(context, 'dvorak_keyboard_mode_colemak'),
+      DvorakMode.RISTOME : i18n(context, 'dvorak_keyboard_mode_ristome'),
+      DvorakMode.NEO : i18n(context, 'dvorak_keyboard_mode_neo'),
     };
 
     return Column(
@@ -62,39 +72,60 @@ class DvorakState extends State<Dvorak> {
             });
           },
         ),
-        GCWTextDivider(
-            text: i18n(context, 'dvorak_keyboard_from')
+        Row(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: GCWTextDivider(
+                  text: i18n(context, 'dvorak_keyboard_from')
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: GCWTextDivider(
+                  text: i18n(context, 'dvorak_keyboard_to')
+              ),
+            ),
+          ],
         ),
-        GCWDropDownButton(
-          value: _currentDvorakModeFrom,
-          onChanged: (value) {
-            setState(() {
-              _currentDvorakModeFrom = value;
-            });
-          },
-          items: DvorakModeItemsFrom.entries.map((mode) {
-            return GCWDropDownMenuItem(
-              value: mode.key,
-              child: mode.value,
-            );
-          }).toList(),
-        ),
-        GCWTextDivider(
-            text: i18n(context, 'dvorak_keyboard_to')
-        ),
-        GCWDropDownButton(
-          value: _currentDvorakModeTo,
-          onChanged: (value) {
-            setState(() {
-              _currentDvorakModeTo = value;
-            });
-          },
-          items: DvorakModeItemsTo.entries.map((mode) {
-            return GCWDropDownMenuItem(
-              value: mode.key,
-              child: mode.value,
-            );
-          }).toList(),
+        Row(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: GCWDropDownButton(
+                value: _currentDvorakModeFrom,
+                onChanged: (value) {
+                  setState(() {
+                    _currentDvorakModeFrom = value;
+                  });
+                },
+                items: DvorakModeItemsFrom.entries.map((mode) {
+                  return GCWDropDownMenuItem(
+                    value: mode.key,
+                    child: mode.value,
+                  );
+                }).toList(),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child:         GCWDropDownButton(
+                value: _currentDvorakModeTo,
+                onChanged: (value) {
+                  setState(() {
+                    _currentDvorakModeTo = value;
+                  });
+                },
+                items: DvorakModeItemsTo.entries.map((mode) {
+                  return GCWDropDownMenuItem(
+                    value: mode.key,
+                    child: mode.value,
+                  );
+                }).toList(),
+              ),
+
+            )
+          ],
         ),
 
         _buildOutput()
