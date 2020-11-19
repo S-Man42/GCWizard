@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/dvorak.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/keyboard.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
@@ -11,19 +11,19 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
-class Dvorak extends StatefulWidget {
+class Keyboard extends StatefulWidget {
   @override
-  DvorakState createState() => DvorakState();
+  KeyboardState createState() => KeyboardState();
 }
 
-class DvorakState extends State<Dvorak> {
+class KeyboardState extends State<Keyboard> {
   var _inputController;
 
 
   String _currentInput = '';
 
-  DvorakMode _currentDvorakModeFrom = DvorakMode.QWERTZ_T1;
-  DvorakMode _currentDvorakModeTo = DvorakMode.DVORAK;
+  KeyboardMode _currentKeyboardModeFrom = KeyboardMode.QWERTZ_T1;
+  KeyboardMode _currentKeyboardModeTo = KeyboardMode.Dvorak;
 
   @override
   void initState() {
@@ -39,27 +39,27 @@ class DvorakState extends State<Dvorak> {
 
   @override
   Widget build(BuildContext context) {
-    var DvorakModeItemsFrom = {
-      DvorakMode.QWERTZ_T1 : i18n(context, 'dvorak_keyboard_mode_qwertz_t1'),
-      DvorakMode.QWERTY_US_INT : i18n(context, 'dvorak_keyboard_mode_qwerty_us_int'),
-      DvorakMode.DVORAK : i18n(context, 'dvorak_keyboard_mode_dvorak'),
-      DvorakMode.DVORAK_II_DEU : i18n(context, 'dvorak_keyboard_mode_dvorak_II'),
-      DvorakMode.DVORAK_I_DEU1 : i18n(context, 'dvorak_keyboard_mode_dvorak_I1'),
-      DvorakMode.DVORAK_I_DEU2 : i18n(context, 'dvorak_keyboard_mode_dvorak_I2'),
-      DvorakMode.COLEMAK : i18n(context, 'dvorak_keyboard_mode_colemak'),
-      DvorakMode.RISTOME : i18n(context, 'dvorak_keyboard_mode_ristome'),
-      DvorakMode.NEO : i18n(context, 'dvorak_keyboard_mode_neo'),
+    var KeyboardModeItemsFrom = {
+      KeyboardMode.QWERTZ_T1 : i18n(context, 'keyboard_mode_qwertz_t1'),
+      KeyboardMode.QWERTY_US_INT : i18n(context, 'keyboard_mode_qwerty_us_int'),
+      KeyboardMode.Dvorak : i18n(context, 'keyboard_mode_dvorak'),
+      KeyboardMode.Dvorak_II_DEU : i18n(context, 'keyboard_mode_dvorak_II'),
+      KeyboardMode.Dvorak_I_DEU1 : i18n(context, 'keyboard_mode_dvorak_I1'),
+      KeyboardMode.Dvorak_I_DEU2 : i18n(context, 'keyboard_mode_dvorak_I2'),
+      KeyboardMode.COLEMAK : i18n(context, 'keyboard_mode_colemak'),
+      KeyboardMode.RISTOME : i18n(context, 'keyboard_mode_ristome'),
+      KeyboardMode.NEO : i18n(context, 'keyboard_mode_neo'),
     };
-    var DvorakModeItemsTo = {
-      DvorakMode.QWERTZ_T1 : i18n(context, 'dvorak_keyboard_mode_qwertz_t1'),
-      DvorakMode.QWERTY_US_INT : i18n(context, 'dvorak_keyboard_mode_qwerty_us_int'),
-      DvorakMode.DVORAK : i18n(context, 'dvorak_keyboard_mode_dvorak'),
-      DvorakMode.DVORAK_II_DEU : i18n(context, 'dvorak_keyboard_mode_dvorak_II'),
-      DvorakMode.DVORAK_I_DEU1 : i18n(context, 'dvorak_keyboard_mode_dvorak_I1'),
-      DvorakMode.DVORAK_I_DEU2 : i18n(context, 'dvorak_keyboard_mode_dvorak_I2'),
-      DvorakMode.COLEMAK : i18n(context, 'dvorak_keyboard_mode_colemak'),
-      DvorakMode.RISTOME : i18n(context, 'dvorak_keyboard_mode_ristome'),
-      DvorakMode.NEO : i18n(context, 'dvorak_keyboard_mode_neo'),
+    var KeyboardModeItemsTo = {
+      KeyboardMode.QWERTZ_T1 : i18n(context, 'keyboard_mode_qwertz_t1'),
+      KeyboardMode.QWERTY_US_INT : i18n(context, 'keyboard_mode_qwerty_us_int'),
+      KeyboardMode.Dvorak : i18n(context, 'keyboard_mode_dvorak'),
+      KeyboardMode.Dvorak_II_DEU : i18n(context, 'keyboard_mode_dvorak_II'),
+      KeyboardMode.Dvorak_I_DEU1 : i18n(context, 'keyboard_mode_dvorak_I1'),
+      KeyboardMode.Dvorak_I_DEU2 : i18n(context, 'keyboard_mode_dvorak_I2'),
+      KeyboardMode.COLEMAK : i18n(context, 'keyboard_mode_colemak'),
+      KeyboardMode.RISTOME : i18n(context, '_keyboard_mode_ristome'),
+      KeyboardMode.NEO : i18n(context, 'keyboard_mode_neo'),
     };
 
     return Column(
@@ -77,13 +77,13 @@ class DvorakState extends State<Dvorak> {
             Expanded(
               flex: 1,
               child: GCWTextDivider(
-                  text: i18n(context, 'dvorak_keyboard_from')
+                  text: i18n(context, 'keyboard_from')
               ),
             ),
             Expanded(
               flex: 1,
               child: GCWTextDivider(
-                  text: i18n(context, 'dvorak_keyboard_to')
+                  text: i18n(context, 'keyboard_to')
               ),
             ),
           ],
@@ -93,13 +93,13 @@ class DvorakState extends State<Dvorak> {
             Expanded(
               flex: 1,
               child: GCWDropDownButton(
-                value: _currentDvorakModeFrom,
+                value: _currentKeyboardModeFrom,
                 onChanged: (value) {
                   setState(() {
-                    _currentDvorakModeFrom = value;
+                    _currentKeyboardModeFrom = value;
                   });
                 },
-                items: DvorakModeItemsFrom.entries.map((mode) {
+                items: KeyboardModeItemsFrom.entries.map((mode) {
                   return GCWDropDownMenuItem(
                     value: mode.key,
                     child: mode.value,
@@ -110,13 +110,13 @@ class DvorakState extends State<Dvorak> {
             Expanded(
               flex: 1,
               child:         GCWDropDownButton(
-                value: _currentDvorakModeTo,
+                value: _currentKeyboardModeTo,
                 onChanged: (value) {
                   setState(() {
-                    _currentDvorakModeTo = value;
+                    _currentKeyboardModeTo = value;
                   });
                 },
-                items: DvorakModeItemsTo.entries.map((mode) {
+                items: KeyboardModeItemsTo.entries.map((mode) {
                   return GCWDropDownMenuItem(
                     value: mode.key,
                     child: mode.value,
@@ -136,7 +136,7 @@ class DvorakState extends State<Dvorak> {
   _buildOutput() {
     return GCWDefaultOutput(
       child: GCWOutputText(
-          text: encodeDvorak(_currentInput, _currentDvorakModeFrom, _currentDvorakModeTo),
+          text: encodeKeyboard(_currentInput, _currentKeyboardModeFrom, _currentKeyboardModeTo),
       )
     );
   }

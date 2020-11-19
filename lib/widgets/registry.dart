@@ -92,7 +92,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/dvorak.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/keyboard.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
@@ -442,10 +442,10 @@ class Registry {
         searchStrings: 'entensprache duck speak nak entisch duckish'
       ),
       GCWToolWidget(
-        tool: Dvorak(),
-        i18nPrefix: 'dvorak',
+        tool: Keyboard(),
+        i18nPrefix: 'keyboard',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'dvorak keyboard tastatur layout qwertz'
+        searchStrings: 'dvorak keyboard tastatur layout qwertz qwerty neo colemak ristome'
     ),
       GCWToolWidget(
         tool: EnclosedAreas(),
