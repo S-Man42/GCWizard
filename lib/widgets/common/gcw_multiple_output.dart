@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+
 
 class GCWMultipleOutput extends StatefulWidget {
   final List<dynamic> children;
   final bool suppressDefaultTitle;
-  final bool showExportButton;
+  final Widget trailing;
   final Function onExportCoordinates;
 
   const GCWMultipleOutput({
@@ -16,7 +15,7 @@ class GCWMultipleOutput extends StatefulWidget {
     @required
     this.children,
     this.suppressDefaultTitle: false,
-    this.showExportButton = false,
+    this.trailing,
     this.onExportCoordinates
   }) : super(key: key);
 
@@ -38,26 +37,10 @@ class _GCWMultipleOutputState extends State<GCWMultipleOutput> {
     }).toList();
 
     if (!widget.suppressDefaultTitle)
-        children.insert(0,widget.showExportButton ?
+      children.insert(0,
         GCWTextDivider(
           text: i18n(context, 'common_output'),
-          trailing: Row(
-            children: [
-              Container(
-                child: GCWIconButton(
-                  iconData: Icons.file_upload,
-                  size: IconButtonSize.SMALL,
-                  onPressed: () {
-                    widget.onExportCoordinates();
-                  },
-                ),
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
-              ),
-            ],
-          ),
-        )
-            : GCWTextDivider(
-            text: i18n(context, 'common_output')
+          trailing: widget.trailing
         )
       );
 

@@ -50,7 +50,7 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
   if (path == null)
     return null;
   var filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
-  var file = File(filePath);
+  var file = await File(filePath).create(recursive: true);
 
   if (! await file.exists())
     file.create();
