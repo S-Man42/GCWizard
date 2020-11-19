@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) async {
+Future<String> MainPath() async {
   var status = await Permission.storage.request();
   if (status != PermissionStatus.granted) {
     return null;
@@ -25,7 +25,14 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) 
     final Directory _appDocDirNewFolder = await _appDocDirFolder.create(recursive: true);
     path = _appDocDirNewFolder.path;
   }
+  return path;
+}
 
+Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) async {
+
+  var path = await MainPath();
+  if (path == null)
+    return null;
   var filePath = '$path/$fileName';
   var file = File(filePath);
 
@@ -33,6 +40,22 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) 
     file.create();
 
   await file.writeAsBytes(data.buffer.asUint8List());
+
+  return {'path': filePath, 'file': file};
+}
+
+Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {String subDirectory}) async {
+
+  var path = await MainPath();
+  if (path == null)
+    return null;
+  var filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
+  var file = File(filePath);
+
+  if (! await file.exists())
+    file.create();
+
+  await file.writeAsString(data);
 
   return {'path': filePath, 'file': file};
 }

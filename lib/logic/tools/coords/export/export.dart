@@ -4,11 +4,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
-import 'package:path/path.dart' as path;
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 
 
 
-Future<String> exportCoordinates(String name, List<MapPoint> points, {bool kmlFormat = false}) async {
+Future<Map<String, dynamic>> exportCoordinates(String name, List<MapPoint> points, {bool kmlFormat = false}) async {
   String xml;
   if (kmlFormat)
     xml = _KmlWriter().asString(name, points);
@@ -22,14 +22,10 @@ Future<String> exportCoordinates(String name, List<MapPoint> points, {bool kmlFo
   return _exportFile(xml, kmlFormat : kmlFormat);
 }
 
-Future<String> _exportFile(String xml, {bool kmlFormat = false}) async {
+Future<Map<String, dynamic>> _exportFile(String xml, {bool kmlFormat = false}) async {
   try {
-    var directory = await getExternalStorageDirectory();
-    var filePath = directory.path + '/' + 'gc_wizard' + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + (kmlFormat ? '.kml' : '.gpx'); //directory.path + '/'
-    var file = new File(filePath);
-    file.writeAsStringSync(xml);
-
-    return filePath;
+    var fileName = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '_' + 'coordinates' + (kmlFormat ? '.kml' : '.gpx');
+    return saveStringToFile(xml, fileName,  subDirectory : 'coordinate_export');
   } on Exception {
     return null;
   }
