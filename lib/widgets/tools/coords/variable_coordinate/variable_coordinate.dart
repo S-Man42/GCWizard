@@ -19,6 +19,7 @@ import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
@@ -37,7 +38,7 @@ class VariableCoordinate extends StatefulWidget {
 }
 
 class VariableCoordinateState extends State<VariableCoordinate> {
-  Widget _output;
+  Widget _output = GCWDefaultOutput();
   GCWSwitchPosition _currentCoordMode = GCWSwitchPosition.left;
 
   final MAX_COUNT_COORDINATES = 100;
@@ -169,16 +170,13 @@ class VariableCoordinateState extends State<VariableCoordinate> {
               _currentOutputFormat = value;
             });
           },
-          onExportCoordinates: () {
-            exportCoordinates(widget.formula.name, _currentMapPoints);
-          },
         ),
         GCWSubmitFlatButton(
           onPressed: () {
             _calculateOutput(context);
           },
         ),
-        _output ?? Container()
+        _output ?? Container(),
       ],
     );
   }
@@ -519,7 +517,10 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         GCWCoordsOutput(
           mapButtonTop: true,
           outputs: _currentOutput,
-          points: _currentMapPoints
+          points: _currentMapPoints,
+          onExportCoordinates: () {
+            GCWCoordsOutput().exportCoordinates(context, widget.formula.name, _currentMapPoints);
+          },
         )
       ]
     );
