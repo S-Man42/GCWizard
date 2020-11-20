@@ -58,7 +58,7 @@ class KeyboardState extends State<Keyboard> {
       KeyboardMode.Dvorak_I_DEU1 : i18n(context, 'keyboard_mode_dvorak_I1'),
       KeyboardMode.Dvorak_I_DEU2 : i18n(context, 'keyboard_mode_dvorak_I2'),
       KeyboardMode.COLEMAK : i18n(context, 'keyboard_mode_colemak'),
-      KeyboardMode.RISTOME : i18n(context, '_keyboard_mode_ristome'),
+      KeyboardMode.RISTOME : i18n(context, 'keyboard_mode_ristome'),
       KeyboardMode.NEO : i18n(context, 'keyboard_mode_neo'),
     };
 

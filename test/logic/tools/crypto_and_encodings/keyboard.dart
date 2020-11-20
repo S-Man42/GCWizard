@@ -2,7 +2,7 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/keyboard.dart';
 
 void main() {
-  String inputString = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!"§\$%&/()=?^´°`*+#;,:._-'+"'";
+  String inputString = 'abcdefghijklmnopqrstuvwxyz';
 
   group("Keyboard.encode:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
@@ -10,14 +10,14 @@ void main() {
       {'input' : '', 'from' : KeyboardMode.Dvorak, 'to' : KeyboardMode.QWERTZ_T1, 'expectedOutput' : ''},
 
       {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.QWERTZ_T1, 'expectedOutput' : inputString},
-      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.QWERTY_US_INT, 'expectedOutput' : ''},
-      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.Dvorak, 'expectedOutput' : ''},
-      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.Dvorak_II_DEU, 'expectedOutput' : ''},
-      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.Dvorak_I_DEU1, 'expectedOutput' : ''},
-      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.Dvorak_I_DEU2, 'expectedOutput' : ''},
-      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.RISTOME, 'expectedOutput' : ''},
-      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.COLEMAK, 'expectedOutput' : ''},
-      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.NEO, 'expectedOutput' : ''},
+      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.QWERTY_US_INT, 'expectedOutput' : 'abcdefghijklmnopqrstuvwxzy'},
+      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.Dvorak, 'expectedOutput' : 'axje.uidchtnmbrlnullpoygk,q;f'},
+      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.Dvorak_II_DEU, 'expectedOutput' : 'axje.iuhcdrnmbtzüpoygk,qöf'},
+      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.Dvorak_I_DEU1, 'expectedOutput' : 'axjeüuidchtnmbrläpoygkö,.f'},
+      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.Dvorak_I_DEU2, 'expectedOutput' : 'axje.uidchtnmbrläpoygk,üöf'},
+      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.RISTOME, 'expectedOutput' : 'zkgarniudehsüäwnullqolctmpvxb'},
+      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.COLEMAK, 'expectedOutput' : 'abcsftdhuneimky;qprglvwxzj'},
+      {'input' : inputString, 'from' : KeyboardMode.QWERTZ_T1, 'to' : KeyboardMode.NEO, 'expectedOutput' : 'uzäaleosgnrtmbfqxciwhpvöük'},
 
       {'input' : inputString, 'from' : KeyboardMode.QWERTY_US_INT, 'to' : KeyboardMode.QWERTZ_T1, 'expectedOutput' : ''},
       {'input' : inputString, 'from' : KeyboardMode.QWERTY_US_INT, 'to' : KeyboardMode.QWERTY_US_INT, 'expectedOutput' : inputString},
