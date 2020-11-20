@@ -16,19 +16,20 @@ dependencies:
   flutter_map_marker_popup: ^0.1.4
   fluttertoast: ^7.1.1
   intl: ^0.16.1
-  location: ^3.1.0
+  location: ^3.0.2
   mask_text_input_formatter: ^1.1.0
   math_expressions: ^2.0.1
-  package_info: ^0.4.3+2
+  package_info: ^0.4.3
   path: ^1.7.0
-  path_provider: ^1.6.24
+  path_provider: ^1.6.18
   permission_handler: ^5.0.1+1
   pointycastle: ^1.0.2
   prefs: ^3.2.1
   provider: ^4.3.2+2
   qr_flutter: ^3.2.0
   touchable: ^0.2.0
-  url_launcher: ^5.7.10
+  url_launcher: ^5.5.0
+  share_extend: "^1.1.9"
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +56,7 @@ flutter:
     - assets/symbol_tables/barbier/
     - assets/symbol_tables/barcode39/
     - assets/symbol_tables/baudot/
+    - assets/symbol_tables/windforce_beaufort/
     - assets/symbol_tables/birds_on_a_wire/
     - assets/symbol_tables/blox/
     - assets/symbol_tables/brahmi_numerals/
@@ -169,8 +171,7 @@ flutter:
     - assets/symbol_tables/trafficsigns_germany/
     - assets/symbol_tables/ulog/
     - assets/symbol_tables/utopian/
-    - assets/symbol_tables/visitor_1984/
-    - assets/symbol_tables/visitor_2009/
+    - assets/symbol_tables/visitor/
     - assets/symbol_tables/wakandan/
     - assets/symbol_tables/webdings/
     - assets/symbol_tables/windforce_beaufort/
