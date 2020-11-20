@@ -1,8 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:share_extend/share_extend.dart';
 
 Future<String> MainPath() async {
   var status = await Permission.storage.request();
@@ -58,4 +58,9 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
   await file.writeAsString(data);
 
   return {'path': filePath, 'file': file};
+}
+
+void shareFile(String path) {
+  //Share.shareFiles(path);
+  ShareExtend.share(path, "file");
 }

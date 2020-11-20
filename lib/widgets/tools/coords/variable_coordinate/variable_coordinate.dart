@@ -38,7 +38,7 @@ class VariableCoordinate extends StatefulWidget {
 }
 
 class VariableCoordinateState extends State<VariableCoordinate> {
-  Widget _output = GCWDefaultOutput();
+  Widget _output = GCWCoordsOutput();
   GCWSwitchPosition _currentCoordMode = GCWSwitchPosition.left;
 
   final MAX_COUNT_COORDINATES = 100;
@@ -518,9 +518,6 @@ class VariableCoordinateState extends State<VariableCoordinate> {
           mapButtonTop: true,
           outputs: _currentOutput,
           points: _currentMapPoints,
-          //onExportCoordinates: () {
-          //  GCWCoordsOutput().exportCoordinates(context, widget.formula.name, _currentMapPoints);
-          //},
         )
       ]
     );

@@ -1,28 +1,23 @@
+import 'dart:ui';
 import 'package:xml/xml.dart';
-import 'package:latlong/latlong.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:intl/intl.dart';
-import 'dart:io';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:flutter_map/flutter_map.dart';
 
 
 
-Future<Map<String, dynamic>> exportCoordinates(String name, List<MapPoint> points, {bool kmlFormat = false}) async {
+Future<Map<String, dynamic>> exportCoordinates(String name, List<MapPoint> points, List<MapGeodetic> geodetics, List<MapCircle> circles, {bool kmlFormat = false}) async {
   String xml;
+
+  if ((points == null || points.length == 0) && (geodetics == null || geodetics.length == 0) && (circles == null || circles.length == 0))
+    return null;
+
   if (kmlFormat)
-    xml = _KmlWriter().asString(name, points);
+    xml = _KmlWriter().asString(name, points, geodetics, convertCircles(circles));
   else
-    xml = _GpxWriter().asString(name, points);
+    xml = _GpxWriter().asString(name, points, geodetics, convertCircles(circles));
 
-  // ToDo nur testweise drin
-  var xmlTmp = _KmlWriter().asString(name, points);
-  _exportFile(xmlTmp, kmlFormat : !kmlFormat);
-
-  return _exportFile(xml, kmlFormat : kmlFormat);
-}
-
-Future<Map<String, dynamic>> _exportFile(String xml, {bool kmlFormat = false}) async {
   try {
     var fileName = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '_' + 'coordinates' + (kmlFormat ? '.kml' : '.gpx');
     return saveStringToFile(xml, fileName,  subDirectory : 'coordinate_export');
@@ -31,19 +26,33 @@ Future<Map<String, dynamic>> _exportFile(String xml, {bool kmlFormat = false}) a
   }
 }
 
+List<Polyline> convertCircles(List<MapCircle> circles) {
+
+  List<Polyline> _polylines =  circles.map((_circle) {
+    return Polyline(
+      points: _circle.shape,
+      strokeWidth: 3.0,
+      color: _circle.color,
+    );
+  }).toList();
+
+  return _polylines;
+}
 
 
 /// Convert points into GPX
 class _GpxWriter {
   /// Convert points into GPX XML (v1.0) as String
-  String asString(String name, List<MapPoint> points) => _build(name, points).toXmlString();
+  String asString(String name, List<MapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles).toXmlString(pretty: true, indent: '\t');
 
   /// Convert Gpx into GPX XML (v1.0) as XmlNode
-  XmlNode asXml(String name, List<MapPoint> points) => _build(name, points);
+  XmlNode asXml(String name, List<MapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles);
 
 
-  XmlNode _build(String name, List<MapPoint> points) {
-    final builder = XmlBuilder();
+  XmlNode _build(String name, List<MapPoint> points, List<MapGeodetic> geodetics, List<Polyline> circles) {final builder = XmlBuilder();
+
+    if ((points == null || points.length == 0) && (geodetics == null || geodetics.length == 0)  && (circles == null || circles.length == 0))
+      return null;
 
     builder.processing('xml', 'version="1.0" encoding="UTF-8"');
     builder.element('gpx', nest: () {
@@ -63,6 +72,18 @@ class _GpxWriter {
             _writePoint(builder, false, name, 'S' + i.toString(), points[i]);
           _writePoint(builder, true, name, 'S' + i.toString(), points[i]);
         }
+      }
+
+      if (circles != null) {
+        circles.forEach((circle) {
+          _writeCircle(builder, name, circle);
+        });
+      }
+
+      if (geodetics != null) {
+        geodetics.forEach((geodetic) {
+          _writeGeodetic(builder, name, geodetic);
+        });
       }
     });
 
@@ -87,13 +108,13 @@ class _GpxWriter {
 
             _writeElement(builder, 'groundspeak:name', cacheName);
             _writeElement(builder, 'groundspeak:placed_by', 'You');
-            _writeElement(builder, 'groundspeak:owner', '');
+            //_writeElement(builder, 'groundspeak:owner', '');
             _writeElement(builder, 'groundspeak:type', 'User defined cache');
             _writeElement(builder, 'groundspeak:container', 'Unknown');
-            _writeElement(builder, 'groundspeak:difficulty', 0);
-            _writeElement(builder, 'groundspeak:terrain', 0);
-            _writeElement(builder, 'groundspeak:country', '');
-            _writeElement(builder, 'groundspeak:state', '');
+            //_writeElement(builder, 'groundspeak:difficulty', 0);
+            //_writeElement(builder, 'groundspeak:terrain', 0);
+            //_writeElement(builder, 'groundspeak:country', '');
+            //_writeElement(builder, 'groundspeak:state', '');
             builder.element('groundspeak:short_description', nest: () {
               _writeAttribute(builder, 'html', 'False');
             });
@@ -117,23 +138,29 @@ class _GpxWriter {
     }
   }
 
-  void _writeStage(XmlBuilder builder, String parentName, String tagName, String name, MapPoint wpt) {
-    if (wpt != null) {
-      builder.element(tagName, nest: () {
-        _writeAttribute(builder, 'lat', wpt.point.latitude);
-        _writeAttribute(builder, 'lon', wpt.point.longitude);
-
-        _writeElement(builder, 'name', tagName);
-        _writeElement(builder, 'cmt', '');
-        _writeElement(builder, 'desc', wpt.markerText);
-        _writeElement(builder, 'sym', 'Virtual Stage');
-        _writeElement(builder, 'type', 'Waypoint|Virtual Stage');
+  void _writeCircle(XmlBuilder builder, String cacheName, Polyline circle) {
+    if (circle != null) {
+      builder.element('trk', nest: () {
+        _writeElement(builder, 'name', 'circle');
         builder.element('gsak:wptExtension', nest: () {
-          _writeAttribute(builder, 'gsak:Parent', parentName);
+          _writeElement(builder, 'gsak:Parent', cacheName);
+        });
+        circle.points.forEach((point) {
+          builder.element('trkpt', nest: () {
+            _writeAttribute(builder, 'lat', point.latitude);
+            _writeAttribute(builder, 'lon', point.longitude);
+          });
         });
       });
     }
   }
+
+  void _writeGeodetic(XmlBuilder builder, String cacheName, MapGeodetic geodetic) {
+    if (geodetic != null) {
+      _writeCircle(builder, cacheName, Polyline(points: List.from([geodetic.start, geodetic.end])));
+    }
+  }
+
   void _writeElement(XmlBuilder builder, String tagName, value) {
     if (value != null) {
       builder.element(tagName, nest: value);
@@ -146,224 +173,130 @@ class _GpxWriter {
     }
   }
 
-  void _writeElementWithTime(
-      XmlBuilder builder, String tagName, DateTime value) {
-    if (value != null) {
-      builder.element(tagName, nest: value.toUtc().toIso8601String());
-    }
-  }
-/*
-  void _writeMetadata(XmlBuilder builder, Metadata metadata) {
-    builder.element(GpxTagV11.metadata, nest: () {
-      _writeElement(builder, GpxTagV11.name, metadata.name);
-      _writeElement(builder, GpxTagV11.desc, metadata.desc);
-
-      _writeElement(builder, GpxTagV11.keywords, metadata.keywords);
-
-      if (metadata.author != null) {
-        builder.element(GpxTagV11.author, nest: () {
-          _writeElement(builder, GpxTagV11.name, metadata.author.name);
-
-          if (metadata.author.email != null) {
-            builder.element(GpxTagV11.email, nest: () {
-              _writeAttribute(builder, GpxTagV11.id, metadata.author.email.id);
-              _writeAttribute(
-                  builder, GpxTagV11.domain, metadata.author.email.domain);
-            });
-          }
-
-          _writeLinks(builder, [metadata.author.link]);
-        });
-      }
-
-      if (metadata.copyright != null) {
-        builder.element(GpxTagV11.copyright, nest: () {
-          _writeAttribute(builder, GpxTagV11.author, metadata.copyright.author);
-
-          _writeElement(builder, GpxTagV11.year, metadata.copyright.year);
-          _writeElement(builder, GpxTagV11.license, metadata.copyright.license);
-        });
-      }
-
-      _writeLinks(builder, metadata.links);
-
-      _writeElementWithTime(builder, GpxTagV11.time, metadata.time);
-
-      if (metadata.bounds != null) {
-        builder.element(GpxTagV11.bounds, nest: () {
-          _writeAttribute(
-              builder, GpxTagV11.minLatitude, metadata.bounds.minlat);
-          _writeAttribute(
-              builder, GpxTagV11.minLongitude, metadata.bounds.minlon);
-          _writeAttribute(
-              builder, GpxTagV11.maxLatitude, metadata.bounds.maxlat);
-          _writeAttribute(
-              builder, GpxTagV11.maxLongitude, metadata.bounds.maxlon);
-        });
-      }
-
-      _writeExtensions(builder, metadata.extensions);
-    });
-  }
-
-  void _writeRoute(XmlBuilder builder, Rte rte) {
-    builder.element(GpxTagV11.route, nest: () {
-      _writeElement(builder, GpxTagV11.name, rte.name);
-      _writeElement(builder, GpxTagV11.desc, rte.desc);
-      _writeElement(builder, GpxTagV11.comment, rte.cmt);
-      _writeElement(builder, GpxTagV11.type, rte.type);
-
-      _writeElement(builder, GpxTagV11.src, rte.src);
-      _writeElement(builder, GpxTagV11.number, rte.number);
-
-      _writeExtensions(builder, rte.extensions);
-
-      for (final wpt in rte.rtepts) {
-        _writePoint(builder, GpxTagV11.routePoint, wpt);
-      }
-
-      _writeLinks(builder, rte.links);
-    });
-  }
-
-  void _writeTrack(XmlBuilder builder, Trk trk) {
-    builder.element(GpxTagV11.track, nest: () {
-      _writeElement(builder, GpxTagV11.name, trk.name);
-      _writeElement(builder, GpxTagV11.desc, trk.desc);
-      _writeElement(builder, GpxTagV11.comment, trk.cmt);
-      _writeElement(builder, GpxTagV11.type, trk.type);
-
-      _writeElement(builder, GpxTagV11.src, trk.src);
-      _writeElement(builder, GpxTagV11.number, trk.number);
-
-      _writeExtensions(builder, trk.extensions);
-
-      for (final trkseg in trk.trksegs) {
-        builder.element(GpxTagV11.trackSegment, nest: () {
-          for (final wpt in trkseg.trkpts) {
-            _writePoint(builder, GpxTagV11.trackPoint, wpt);
-          }
-
-          _writeExtensions(builder, trkseg.extensions);
-        });
-      }
-
-      _writeLinks(builder, trk.links);
-    });
-  }
-
-
-
-  void _writeExtensions(XmlBuilder builder, Map<String, String> value) {
-    if (value != null && value.isNotEmpty) {
-      builder.element(GpxTagV11.extensions, nest: () {
-        value.forEach((k, v) {
-          _writeElement(builder, k, v);
-        });
-      });
-    }
-  }
-
-  void _writeLinks(XmlBuilder builder, List<Link> value) {
-    if (value != null) {
-      for (final link in value.where((link) => link != null)) {
-        builder.element(GpxTagV11.link, nest: () {
-          _writeAttribute(builder, GpxTagV11.href, link.href);
-
-          _writeElement(builder, GpxTagV11.text, link.text);
-          _writeElement(builder, GpxTagV11.type, link.type);
-        });
-      }
-    }
-  }
-
-
-
-
-
-
-  */
-
 }
 
 /// Convert Gpx into KML
 class _KmlWriter {
   /// Convert points into KML as String
-  String asString(String name, List<MapPoint> points) =>
-      _build(name, points).toXmlString();
+  String asString(String name, List<MapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles).toXmlString(pretty: true, indent: '\t');
 
   /// Convert points into KML as XmlNode
-  XmlNode asXml(String name, List<MapPoint> points) => _build(name, points);
+  XmlNode asXml(String name, List<MapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles);
 
-  XmlNode _build(String name, List<MapPoint> points) {
+  XmlNode _build(String name, List<MapPoint> points, List<MapGeodetic> geodetics, List<Polyline> circles) {
     final builder = XmlBuilder();
 
+    if ((points == null || points.length == 0) && (geodetics == null || geodetics.length == 0)  && (circles == null || circles.length == 0))
+    return null;
+
     builder.processing('xml', 'version="1.0" encoding="UTF-8"');
-    builder.element(KmlTagV22.kml, nest: () {
+    builder.element('kml', nest: () {
       builder.attribute('xmlns', 'http://www.opengis.net/kml/2.2');
 
-      builder.element(KmlTagV22.document, nest: () {
+      builder.element('Document', nest: () {
+        _writeElement(builder, 'name', 'GC Wizard');
 
-        if (points != null) {
-          for (final wpt in points) {
-            _writePoint(builder, KmlTagV22.placemark, name, wpt);
+        // Normal waypoint style
+        builder.element('Style', nest: () {
+          builder.attribute('id', 'waypoint_n');
+          builder.element('IconStyle', nest: () {
+            builder.element('Icon', nest: () {
+              _writeElement(builder, 'href', 'https://maps.google.com/mapfiles/kml/pal4/icon61.png');
+            });
+          });
+        });
+/*
+        // Highlighted waypoint style
+        builder.element('Style', nest: () {
+          builder.attribute('id', 'waypoint_h');
+          builder.element('IconStyle', nest: () {
+           // _writeElement(builder, 'scale', 1.2);
+            builder.element('Icon', nest: () {
+              _writeElement(builder, 'href', 'https://maps.google.com/mapfiles/kml/pal4/icon61.png');
+            });
+          });
+        });
+*/
+        builder.element('StyleMap', nest: () {
+          builder.attribute('id', 'waypoint');
+          builder.element('Pair', nest: () {
+            _writeElement(builder, 'key', 'normal');
+            _writeElement(builder, 'styleUrl', '#waypoint_n');
+          });
+          builder.element('Pair', nest: () {
+            _writeElement(builder, 'key', 'highlight');
+            _writeElement(builder, 'styleUrl', '#waypoint_h');
+          });
+        });
+
+        builder.element('Folder', nest: () {
+          _writeElement(builder, 'name', 'Waypoints');
+          if (points != null) {
+            for (var i=0; i < points.length; i++) {
+              if (i==0)
+                _writePoint(builder, false, name, 'S' + i.toString(), points[i]);
+              _writePoint(builder, true, name, 'S' + i.toString(), points[i]);
+            }
           }
+        });
+
+        if (circles != null) {
+          circles.forEach((circle) {
+            _writeCircle(builder, 'circle', circle.color, circle);
+          });
         }
 
-        /*
-        if (gpx.rtes != null) {
-          for (final rte in gpx.rtes) {
-            _writeRoute(builder, rte);
-          }
+        if (geodetics != null && geodetics.length > 0) {
+          geodetics.forEach((geodetic) {
+            _writeGeodetic(builder, 'line', geodetic.color, geodetic);
+          });
         }
-
-        if (gpx.trks != null) {
-          for (final trk in gpx.trks) {
-            _writeTrack(builder, trk);
-          }
-        }
-
-         */
       });
     });
 
     return builder.buildDocument();
   }
 
-  void _writePoint(XmlBuilder builder, String tagName, String name, MapPoint wpt) {
+  void _writePoint(XmlBuilder builder, bool waypoint, String cacheName, String stageName, MapPoint wpt) {
     if (wpt != null) {
-      builder.element(tagName, nest: () {
-        _writeElement(builder, 'name', name);
-        _writeElement(builder, 'desc', wpt.markerText);
-
-        //_writeElementWithTime(builder, DateTime.now());
-
-        //_writeAtomLinks(builder, wpt.links);
-/*
-        builder.element(KmlTagV22.extendedData, nest: () {
-          _writeExtendedElement(builder, GpxTagV11.magVar, wpt.magvar);
-
-          _writeExtendedElement(builder, GpxTagV11.sat, wpt.sat);
-          _writeExtendedElement(builder, GpxTagV11.src, wpt.src);
-
-          _writeExtendedElement(builder, GpxTagV11.hDOP, wpt.hdop);
-          _writeExtendedElement(builder, GpxTagV11.vDOP, wpt.vdop);
-          _writeExtendedElement(builder, GpxTagV11.pDOP, wpt.pdop);
-
-          _writeExtendedElement(
-              builder, GpxTagV11.geoidHeight, wpt.geoidheight);
-          _writeExtendedElement(
-              builder, GpxTagV11.ageOfData, wpt.ageofdgpsdata);
-          _writeExtendedElement(builder, GpxTagV11.dGPSId, wpt.dgpsid);
-
-          _writeExtendedElement(builder, GpxTagV11.comment, wpt.cmt);
-          _writeExtendedElement(builder, GpxTagV11.type, wpt.type);
-        });
-*/
+      builder.element('Placemark', nest: () {
+        if (!waypoint) {
+          _writeElement(builder, 'name', cacheName);
+        } else {
+          _writeElement(builder, 'description', wpt.markerText);
+        }
+        _writeElement(builder, 'styleUrl', '#waypoint');
+        _writeElement(builder, 'altitudeMode', 'absolute');
         builder.element('Point', nest: () {
-          _writeElement(builder, 'coordinates', [wpt.point.longitude, wpt.point.longitude, 0].join(','));
+          _writeElement(builder, 'coordinates', [wpt.point.longitude, wpt.point.latitude].join(','));
         });
       });
+    }
+  }
+
+  void _writeCircle(XmlBuilder builder, String name, Color color, Polyline circle) {
+    if (circle != null) {
+      builder.element('Placemark', nest: () {
+        _writeElement(builder, 'name', name);
+        _writeElement(builder, 'visibility', 1);
+
+        builder.element('Style', nest: () {
+          _writeElement(builder, 'geomColor', color.value.toRadixString(16)); //.substring(2)
+        });
+
+        builder.element('LineString', nest: () {
+          _writeElement(builder, 'tesselerate', 1);
+          _writeElement(builder, 'altitudeMode', 'absolute');
+          _writeElement(builder, 'coordinates',
+            circle.points.map((point) => [point.longitude, point.latitude].join(',') + ' \n'));
+        });
+      });
+    }
+  }
+
+  void _writeGeodetic(XmlBuilder builder, String name, Color color, MapGeodetic geodetic) {
+    if (geodetic != null) {
+      _writeCircle(builder, name, color, Polyline(points: List.from([geodetic.start, geodetic.end])));
     }
   }
 
@@ -372,196 +305,4 @@ class _KmlWriter {
       builder.element(tagName, nest: value);
     }
   }
-
-  void _writeExtendedElement(XmlBuilder builder, String tagName, value) {
-    if (value != null) {
-      builder.element('Data', nest: () {
-        builder.attribute('name', tagName);
-        builder.element('value', nest: value);
-      });
-    }
-  }
-
-  void _writeElementWithTime(XmlBuilder builder, DateTime value) {
-    if (value != null) {
-      builder.element('timestamp', nest: () {
-        builder.element('when', nest: value.toUtc().toIso8601String());
-      });
-    }
-  }
-/*
-  void _writeMetadata(XmlBuilder builder, Metadata metadata) {
-    _writeElement(builder, KmlTagV22.name, metadata.name);
-    _writeElement(builder, KmlTagV22.desc, metadata.desc);
-
-    if (metadata.author != null) {
-      builder.element('atom:author', nest: () {
-        _writeElement(builder, 'atom:name', metadata.author.name);
-        _writeElement(builder, 'atom:email',
-            '${metadata.author.email.id}@${metadata.author.email.domain}');
-
-        _writeElement(builder, 'atom:uri', metadata.author.link.href);
-      });
-    }
-
-    builder.element(KmlTagV22.extendedData, nest: () {
-      _writeExtendedElement(builder, GpxTagV11.keywords, metadata.keywords);
-
-      if (metadata.time != null) {
-        _writeExtendedElement(
-            builder, GpxTagV11.time, metadata.time.toIso8601String());
-      }
-
-      if (metadata.copyright != null) {
-        _writeExtendedElement(builder, GpxTagV11.copyright,
-            '${metadata.copyright.author}, ${metadata.copyright.year}');
-      }
-    });
-  }
-
-  void _writeRoute(XmlBuilder builder, Rte rte) {
-    builder.element(KmlTagV22.placemark, nest: () {
-      _writeElement(builder, GpxTagV11.name, rte.name);
-      _writeElement(builder, GpxTagV11.desc, rte.desc);
-      _writeAtomLinks(builder, rte.links);
-
-      builder.element(KmlTagV22.extendedData, nest: () {
-        _writeExtendedElement(builder, GpxTagV11.comment, rte.cmt);
-        _writeExtendedElement(builder, GpxTagV11.type, rte.type);
-
-        _writeExtendedElement(builder, GpxTagV11.src, rte.src);
-        _writeExtendedElement(builder, GpxTagV11.number, rte.number);
-      });
-
-      builder.element(KmlTagV22.track, nest: () {
-        _writeElement(builder, KmlTagV22.extrude, 1);
-        _writeElement(builder, KmlTagV22.tessellate, 1);
-        _writeElement(builder, KmlTagV22.altitudeMode, 'absolute');
-
-        _writeElement(
-            builder,
-            KmlTagV22.coordinates,
-            rte.rtepts
-                .map((wpt) => [wpt.lon, wpt.lat, wpt.ele ?? 0].join(','))
-                .join('\n'));
-      });
-    });
-  }
-
-  void _writeTrack(XmlBuilder builder, Trk trk) {
-    builder.element(KmlTagV22.placemark, nest: () {
-      _writeElement(builder, KmlTagV22.name, trk.name);
-      _writeElement(builder, KmlTagV22.desc, trk.desc);
-      _writeAtomLinks(builder, trk.links);
-
-      builder.element(KmlTagV22.extendedData, nest: () {
-        _writeExtendedElement(builder, GpxTagV11.comment, trk.cmt);
-        _writeExtendedElement(builder, GpxTagV11.type, trk.type);
-
-        _writeExtendedElement(builder, GpxTagV11.src, trk.src);
-        _writeExtendedElement(builder, GpxTagV11.number, trk.number);
-      });
-
-      builder.element(KmlTagV22.track, nest: () {
-        _writeElement(builder, KmlTagV22.extrude, 1);
-        _writeElement(builder, KmlTagV22.tessellate, 1);
-        _writeElement(builder, KmlTagV22.altitudeMode, 'absolute');
-
-        _writeElement(
-            builder,
-            KmlTagV22.coordinates,
-            trk.trksegs
-                .expand((trkseg) => trkseg.trkpts)
-                .map((wpt) => [wpt.lon, wpt.lat, wpt.ele ?? 0].join(','))
-                .join('\n'));
-      });
-    });
-  }
-*/
-
-}
-
-/// GPX tags names.
-class GpxTagV11 {
-  static const gpx = 'gpx';
-  static const version = 'version';
-  static const creator = 'creator';
-  static const metadata = 'metadata';
-  static const wayPoint = 'wpt';
-  static const route = 'rte';
-  static const routePoint = 'rtept';
-  static const track = 'trk';
-  static const trackSegment = 'trkseg';
-  static const trackPoint = 'trkpt';
-  static const latitude = 'lat';
-  static const longitude = 'lon';
-  static const elevation = 'ele';
-  static const time = 'time';
-  static const name = 'name';
-  static const desc = 'desc';
-  static const comment = 'cmt';
-  static const src = 'src';
-  static const link = 'link';
-  static const sym = 'sym';
-  static const number = 'number';
-  static const type = 'type';
-  static const fix = 'fix';
-  static const text = 'text';
-  static const author = 'author';
-  static const copyright = 'copyright';
-  static const keywords = 'keywords';
-  static const bounds = 'bounds';
-  static const extensions = 'extensions';
-  static const minLatitude = 'minlat';
-  static const minLongitude = 'minlon';
-  static const maxLatitude = 'maxlat';
-  static const maxLongitude = 'maxlon';
-  static const href = 'href';
-  static const year = 'year';
-  static const license = 'license';
-  static const email = 'email';
-  static const id = 'id';
-  static const domain = 'domain';
-
-  static const hDOP = 'hdop';
-  static const vDOP = 'vdop';
-  static const pDOP = 'pdop';
-
-  static const magVar = 'magvar';
-
-  static const sat = 'sat';
-
-  static const geoidHeight = 'geoidheight';
-  static const ageOfData = 'ageofdgpsdata';
-  static const dGPSId = 'dgpsid';
-}
-
-/// KML tags names.
-class KmlTagV22 {
-  static const kml = 'kml';
-
-  static const document = 'Document';
-
-  static const placemark = 'Placemark';
-  static const name = 'name';
-  static const desc = 'description';
-
-  static const point = 'Point';
-  static const track = 'LineString';
-  static const coordinates = 'coordinates';
-
-  static const extendedData = 'ExtendedData';
-  static const data = 'Data';
-
-  static const value = 'value';
-
-  static const altitudeMode = 'altitudeMode';
-  static const extrude = 'extrude';
-  static const tessellate = 'tessellate';
-
-  static const timestamp = 'timestamp';
-  static const when = 'when';
-
-// <altitudeMode>absolute</altitudeMode>
-
 }
