@@ -54,12 +54,12 @@ class Method {
         else
           mixingbowl = (matchers[3].firstMatch(line).group(8) == null ? 1 : int.parse(matchers[3].firstMatch(line).group(8))) - 1;
 
-    } else if (matchers[4].hasMatch(line)) {//liquefy contents
+    } else if (matchers[4].hasMatch(line)) {//liqu(i|e)fy contents
         type = Type.LiquefyBowl;
-        mixingbowl = (matchers[4].firstMatch(line).group(2) == null ? 1 : int.parse(matchers[4].firstMatch(line).group(2))) - 1;
-    } else if (matchers[5].hasMatch(line)) {//liquefy
+        mixingbowl = (matchers[4].firstMatch(line).group(3) == null ? 1 : int.parse(matchers[4].firstMatch(line).group(3))) - 1;
+    } else if (matchers[5].hasMatch(line)) {//liqu(i|e)fy
         type = Type.Liquefy;
-        ingredient = matchers[5].firstMatch(line).group(1);
+        ingredient = matchers[5].firstMatch(line).group(2);
     } else if (matchers[6].hasMatch(line)) {// stir the
         type = Type.Stir;
         mixingbowl = (matchers[6].firstMatch(line).group(3) == null ? 1 : int.parse(matchers[6].firstMatch(line).group(3))) - 1;
