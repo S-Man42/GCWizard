@@ -37,6 +37,7 @@ import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequence_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
@@ -205,6 +206,7 @@ class _MainViewState extends State<MainView> {
           className(Kamasutra()),
           className(Kenny()),
           className(Morse()),
+          className(NumberSequenceSelection()),
           className(NumeralBases()),
           className(NumeralWordsSelection()),
           className(OneTimePad()),

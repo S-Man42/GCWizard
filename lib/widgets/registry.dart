@@ -174,6 +174,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_number
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_nthnumber.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isprime.dart';
@@ -228,6 +230,7 @@ class Registry {
   static final SEARCHSTRING_HASHES_SHA3 = SEARCHSTRING_HASHES_SHA + 'sha3 sha-3 ';
   static final SEARCHSTRING_IRRATIONALNUMBERS = 'irrational number irrationale zahlen fraction decimal digit nachkommastelle ';
   static final SEARCHSTRING_NUMERALWORDS = 'numeralwords zahlwoerter numberwords zaehlwort zahlwort zaehlwoerter numerals';
+  static final SEARCHSTRING_NUMBERSEQUENCES = 'zahlenfolgen number sequences lucas fibonacci fermat mersenne jacobsthal pell';
   static final SEARCHSTRING_PHI = SEARCHSTRING_IRRATIONALNUMBERS + 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PI = SEARCHSTRING_IRRATIONALNUMBERS + 'pi circle kreis 3,1415926535 3.1415926535 ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
@@ -1352,6 +1355,18 @@ class Registry {
         tool: PiSearch(),
         i18nPrefix: 'irrationalnumbers_search',
         searchStrings: SEARCHSTRING_PI + 'occurrence vorkommen vorhanden contains containing enthaelt enthalten '
+      ),
+
+      //NumberSeuenquenceSelection ****************************************************************************************
+      GCWToolWidget(
+        tool: NumberSequenceNthNumber(),
+        i18nPrefix: 'numbersequences_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceRange(),
+        i18nPrefix: 'numbersequences_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
 
       //NumeralWordsSelection ****************************************************************************************
