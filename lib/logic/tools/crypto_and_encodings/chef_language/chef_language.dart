@@ -360,6 +360,7 @@ class Chef {
 					progress = 6;
 					r.setMethod(line, language);
 					if (r.error){
+						this.error.addAll(r.errorList);
 						this.valid = false;
 						return '';
 					}
