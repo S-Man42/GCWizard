@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 
 class NumberSequenceRange extends StatefulWidget {
@@ -19,27 +13,41 @@ class NumberSequenceRange extends StatefulWidget {
 }
 
 class NumberSequenceRangeState extends State<NumberSequenceRange> {
-  var _inputController;
-  var _alphabetController;
+  var _inputControllerStart;
+  var _inputControllerStop;
+  var _inputControllerU;
+  var _inputControllerV;
+  var _inputControllerP;
+  var _inputControllerQ;
 
-  var _currentMode = GCWSwitchPosition.left;
-
-  String _currentInput = '';
-  String _currentAlphabet = '';
+  String _currentInputStop = '';
+  String _currentInputStart = '';
+  String _currentInputU = '';
+  String _currentInputV = '';
+  String _currentInputP = '';
+  String _currentInputQ = '';
 
   NumberSequencesMode _currentNumberSequenceMode = NumberSequencesMode.FIBONACCI;
-  AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
 
   @override
   void initState() {
     super.initState();
-    _inputController = TextEditingController(text: _currentInput);
+    _inputControllerStart = TextEditingController(text: _currentInputStart);
+    _inputControllerStop = TextEditingController(text: _currentInputStop);
+    _inputControllerU = TextEditingController(text: _currentInputU);
+    _inputControllerV = TextEditingController(text: _currentInputV);
+    _inputControllerP = TextEditingController(text: _currentInputP);
+    _inputControllerQ = TextEditingController(text: _currentInputQ);
   }
 
   @override
   void dispose() {
-    _inputController.dispose();
-    _alphabetController.dispose();
+    _inputControllerStart.dispose();
+    _inputControllerStop.dispose();
+    _inputControllerU.dispose();
+    _inputControllerV.dispose();
+    _inputControllerP.dispose();
+    _inputControllerQ.dispose();
 
     super.dispose();
   }
@@ -53,31 +61,40 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
       NumberSequencesMode.FERMAT : i18n(context, 'numbersequence_mode_fermat'),
       NumberSequencesMode.JACOBSTAHL : i18n(context, 'numbersequence_mode_jacobsthal'),
       NumberSequencesMode.JACOBSTHALLUCAS : i18n(context, 'numbersequence_mode_jacobsthal'),
+      NumberSequencesMode.PELL : i18n(context, 'numbersequence_mode_pell'),
+      NumberSequencesMode.PELLLUCAS : i18n(context, 'numbersequence_mode_pelllucas'),
       NumberSequencesMode.CUSTOM : i18n(context, 'numbersequence_mode_custom'),
     };
 
     return Column(
       children: <Widget>[
-        GCWTextField(
-          controller: _inputController,
+        GCWIntegerSpinner(
+          title: i18n(context, 'numbersequence_inputstart'),
+          value: 1,
+          min: 0,
+          max: 1000,
+          controller: _inputControllerStart,
           onChanged: (text) {
             setState(() {
-              _currentInput = text;
+              _currentInputStart = text;
             });
           },
         ),
-
-        GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
+        GCWIntegerSpinner(
+          title: i18n(context, 'numbersequence_inputstop'),
+          value: 1,
+          min: 0,
+          max: 1000,
+          controller: _inputControllerStop,
+          onChanged: (text) {
             setState(() {
-              _currentMode = value;
+              _currentInputStop = text;
             });
           },
         ),
 
         GCWTextDivider(
-            text: i18n(context, 'common_alphabet')
+            text: i18n(context, 'numbersequence_mode')
         ),
 
         GCWDropDownButton(
@@ -95,39 +112,60 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
           }).toList(),
         ),
 
-        _currentNumberSequenceMode == PolybiosMode.CUSTOM
-            ? GCWTextField(
-          hintText: i18n(context, 'common_alphabet'),
-          controller: _alphabetController,
-          onChanged: (text) {
-            setState(() {
-              _currentAlphabet = text;
-            });
-          },
+        _currentNumberSequenceMode == NumberSequencesMode.CUSTOM
+            ? Column(
+            children: <Widget>[
+              GCWIntegerSpinner(
+                title: i18n(context, 'numbersequence_inputp'),
+                value: 1,
+                min: -10,
+                max: 10,
+                controller: _inputControllerP,
+                onChanged: (text) {
+                  setState(() {
+                    _currentInputP = text;
+                  });
+                },
+              ),
+              GCWIntegerSpinner(
+                title: i18n(context, 'numbersequence_inputq'),
+                value: 1,
+                min: -10,
+                max: 10,
+                controller: _inputControllerQ,
+                onChanged: (text) {
+                  setState(() {
+                    _currentInputQ = text;
+                  });
+                },
+              ),
+              GCWIntegerSpinner(
+                title: i18n(context, 'numbersequence_inputu'),
+                value: 1,
+                min: -10,
+                max: 10,
+                controller: _inputControllerU,
+                onChanged: (text) {
+                  setState(() {
+                    _currentInputU = text;
+                  });
+                },
+              ),
+              GCWIntegerSpinner(
+                title: i18n(context, 'numbersequence_inputv'),
+                value: 1,
+                min: -10,
+                max: 10,
+                controller: _inputControllerV,
+                onChanged: (text) {
+                  setState(() {
+                    _currentInputV = text;
+                  });
+                },
+              ),
+            ]
         )
             : Container(),
-
-        GCWTwoOptionsSwitch(
-          title: i18n(context, 'NumberSequence_matrix'),
-          leftValue: i18n(context, 'NumberSequence_mode_5x5'),
-          rightValue: i18n(context, 'NumberSequence_mode_6x6'),
-          onChanged: (value) {
-            setState(() {
-              _currentMatrixMode = value;
-            });
-          },
-        ),
-
-        _currentMatrixMode == GCWSwitchPosition.left
-            ? GCWAlphabetModificationDropDownButton(
-          value: _currentModificationMode,
-          onChanged: (value) {
-            setState(() {
-              _currentModificationMode = value;
-            });
-          },
-        )
-            : Container(), //empty widget
 
         _buildOutput()
       ],
@@ -135,51 +173,13 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
   }
 
   _buildOutput() {
-    var key;
-    if (_currentMatrixMode == GCWSwitchPosition.left) {
-      key = "12345";
-    } else {
-      key = "123456";
-    }
+    String _currentOutput = buildSequence(_currentNumberSequenceMode, _currentInputStart, _currentInputStop, _currentInputU, _currentInputV, _currentInputP, _currentInputQ);
 
-    if (_currentInput == null || _currentInput.length == 0)
-      return GCWDefaultOutput(child: '');
-
-    var _currentOutput = NumberSequenceOutput('', '', '');
-    if (_currentMode == GCWSwitchPosition.left) {
-      _currentOutput = encryptNumberSequence(
-          _currentInput,
-          key,
-          mode: _currentNumberSequenceMode,
-          alphabet: _currentAlphabet,
-          alphabetMode: _currentModificationMode
-      );
-    } else {
-      _currentOutput = decryptNumberSequence(
-          _currentInput,
-          key,
-          mode: _currentNumberSequenceMode,
-          alphabet: _currentAlphabet,
-          alphabetMode: _currentModificationMode
-      );
-    }
-
-    if (_currentOutput.state == 'ERROR') {
-      showToast(i18n(context, _currentOutput.output));
-      return GCWDefaultOutput(child: '');
-    }
-
-    return GCWMultipleOutput(
-      children: [
-        _currentOutput.output,
-        GCWOutput(
-            title: i18n(context, 'NumberSequence_usedgrid'),
-            child: GCWOutputText(
-              text: _currentOutput.grid,
-              isMonotype: true,
-            )
+    return GCWOutput(
+        title: i18n(context, 'common_ouput'),
+        child: GCWOutputText(
+          text: _currentOutput,
         )
-      ],
     );
   }
 }

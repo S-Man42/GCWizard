@@ -1,11 +1,13 @@
 // https://de.wikipedia.org/wiki/Lucas-Folge
 
-enum NumberSequencesMode {LUCAS, FIBONACCI, MERSENNE, FERMAT, JACOBSTAHL, JACOBSTHALLUCAS, PELL, CUSTOM}
+enum NumberSequencesMode {LUCAS, FIBONACCI, MERSENNE, FERMAT, JACOBSTAHL, JACOBSTHALLUCAS, PELL, PELLLUCAS, CUSTOM}
 
-int buildNumber(NumberSequencesMode sequence, int number, u, v, p, q){
+String buildNumber(NumberSequencesMode sequence, String number, u, v, p, q){
 
+ return 0.toString();
 }
 
-List<int> buildSequence(NumberSequencesMode sequence, int start, stop, u, v, p, q){
+String buildSequence(NumberSequencesMode sequence, String start, stop, u, v, p, q){
 
+  return [0,0].join(', ');
 }

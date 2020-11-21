@@ -1357,15 +1357,15 @@ class Registry {
         searchStrings: SEARCHSTRING_PI + 'occurrence vorkommen vorhanden contains containing enthaelt enthalten '
       ),
 
-      //NumberSeuenquenceSelection ****************************************************************************************
+      //NumberSequenceSelection ****************************************************************************************
       GCWToolWidget(
         tool: NumberSequenceNthNumber(),
-        i18nPrefix: 'numbersequences_nth',
+        i18nPrefix: 'numbersequence_nth',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
       ),
       GCWToolWidget(
         tool: NumberSequenceRange(),
-        i18nPrefix: 'numbersequences_range',
+        i18nPrefix: 'numbersequence_range',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
 
