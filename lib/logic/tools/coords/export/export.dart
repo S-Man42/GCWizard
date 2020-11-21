@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:flutter_map/flutter_map.dart';
-
+import 'package:latlong/latlong.dart';
 
 
 Future<Map<String, dynamic>> exportCoordinates(String name, List<MapPoint> points, List<MapGeodetic> geodetics, List<MapCircle> circles, {bool kmlFormat = false}) async {
@@ -14,9 +14,9 @@ Future<Map<String, dynamic>> exportCoordinates(String name, List<MapPoint> point
     return null;
 
   if (kmlFormat)
-    xml = _KmlWriter().asString(name, points, geodetics, convertCircles(circles));
+    xml = _KmlWriter().asString(name, points, geodetics, circles);
   else
-    xml = _GpxWriter().asString(name, points, geodetics, convertCircles(circles));
+    xml = _GpxWriter().asString(name, points, geodetics, circles);
 
   try {
     var fileName = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '_' + 'coordinates' + (kmlFormat ? '.kml' : '.gpx');
@@ -25,20 +25,6 @@ Future<Map<String, dynamic>> exportCoordinates(String name, List<MapPoint> point
     return null;
   }
 }
-
-List<Polyline> convertCircles(List<MapCircle> circles) {
-
-  List<Polyline> _polylines =  circles.map((_circle) {
-    return Polyline(
-      points: _circle.shape,
-      strokeWidth: 3.0,
-      color: _circle.color,
-    );
-  }).toList();
-
-  return _polylines;
-}
-
 
 /// Convert points into GPX
 class _GpxWriter {
@@ -49,7 +35,7 @@ class _GpxWriter {
   XmlNode asXml(String name, List<MapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles);
 
 
-  XmlNode _build(String name, List<MapPoint> points, List<MapGeodetic> geodetics, List<Polyline> circles) {final builder = XmlBuilder();
+  XmlNode _build(String name, List<MapPoint> points, List<MapGeodetic> geodetics, List<MapCircle> circles) {final builder = XmlBuilder();
 
     if ((points == null || points.length == 0) && (geodetics == null || geodetics.length == 0)  && (circles == null || circles.length == 0))
       return null;
@@ -63,7 +49,6 @@ class _GpxWriter {
       builder.attribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
       builder.attribute('xmlns:groundspeak', 'http://www.groundspeak.com/cache/1/0/1');
       builder.attribute('xmlns:gsak', 'http://www.gsak.net/xmlv1/6');
-      //builder.attribute('xmlns:cgeo', 'http://www.cgeo.org/wptext/1/0');
 
 
       if (points != null) {
@@ -76,13 +61,13 @@ class _GpxWriter {
 
       if (circles != null) {
         circles.forEach((circle) {
-          _writeCircle(builder, name, circle);
+          _writeLines(builder, name, 'circle', circle.shape);
         });
       }
 
       if (geodetics != null) {
         geodetics.forEach((geodetic) {
-          _writeGeodetic(builder, name, geodetic);
+          _writeLines(builder, name, 'line', geodetic.shape);
         });
       }
     });
@@ -102,27 +87,13 @@ class _GpxWriter {
           _writeElement(builder, 'sym', 'Geocache');
           _writeElement(builder, 'type', 'Geocache|User defined cache');
           builder.element('groundspeak:cache', nest: () {
-            _writeAttribute(builder, 'id', '');
-            _writeAttribute(builder, 'available', 'True');
-            _writeAttribute(builder, 'archived', 'False');
-
             _writeElement(builder, 'groundspeak:name', cacheName);
             _writeElement(builder, 'groundspeak:placed_by', 'You');
-            //_writeElement(builder, 'groundspeak:owner', '');
             _writeElement(builder, 'groundspeak:type', 'User defined cache');
             _writeElement(builder, 'groundspeak:container', 'Unknown');
-            //_writeElement(builder, 'groundspeak:difficulty', 0);
-            //_writeElement(builder, 'groundspeak:terrain', 0);
-            //_writeElement(builder, 'groundspeak:country', '');
-            //_writeElement(builder, 'groundspeak:state', '');
             builder.element('groundspeak:short_description', nest: () {
               _writeAttribute(builder, 'html', 'False');
             });
-            builder.element('groundspeak:long_description', nest: () {
-              //_writeAttribute(builder, 'text', 'Userdefinied Cache');
-              _writeAttribute(builder, 'html', 'False');
-            });
-            _writeElement(builder, 'groundspeak:encoded_hints', '');
           });
         } else {
           _writeElement(builder, 'name', stageName);
@@ -138,26 +109,20 @@ class _GpxWriter {
     }
   }
 
-  void _writeCircle(XmlBuilder builder, String cacheName, Polyline circle) {
-    if (circle != null) {
+  void _writeLines(XmlBuilder builder, String cacheName, String tagName, List<LatLng> shapes) {
+    if (shapes != null) {
       builder.element('trk', nest: () {
-        _writeElement(builder, 'name', 'circle');
-        builder.element('gsak:wptExtension', nest: () {
-          _writeElement(builder, 'gsak:Parent', cacheName);
-        });
-        circle.points.forEach((point) {
-          builder.element('trkpt', nest: () {
-            _writeAttribute(builder, 'lat', point.latitude);
-            _writeAttribute(builder, 'lon', point.longitude);
+        _writeElement(builder, 'name', tagName);
+
+        builder.element('trkseg', nest: () {
+          shapes.forEach((point) {
+            builder.element('trkpt', nest: () {
+              _writeAttribute(builder, 'lat', point.latitude);
+              _writeAttribute(builder, 'lon', point.longitude);
+            });
           });
         });
       });
-    }
-  }
-
-  void _writeGeodetic(XmlBuilder builder, String cacheName, MapGeodetic geodetic) {
-    if (geodetic != null) {
-      _writeCircle(builder, cacheName, Polyline(points: List.from([geodetic.start, geodetic.end])));
     }
   }
 
@@ -183,7 +148,7 @@ class _KmlWriter {
   /// Convert points into KML as XmlNode
   XmlNode asXml(String name, List<MapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles);
 
-  XmlNode _build(String name, List<MapPoint> points, List<MapGeodetic> geodetics, List<Polyline> circles) {
+  XmlNode _build(String name, List<MapPoint> points, List<MapGeodetic> geodetics, List<MapCircle> circles) {
     final builder = XmlBuilder();
 
     if ((points == null || points.length == 0) && (geodetics == null || geodetics.length == 0)  && (circles == null || circles.length == 0))
@@ -205,18 +170,7 @@ class _KmlWriter {
             });
           });
         });
-/*
-        // Highlighted waypoint style
-        builder.element('Style', nest: () {
-          builder.attribute('id', 'waypoint_h');
-          builder.element('IconStyle', nest: () {
-           // _writeElement(builder, 'scale', 1.2);
-            builder.element('Icon', nest: () {
-              _writeElement(builder, 'href', 'https://maps.google.com/mapfiles/kml/pal4/icon61.png');
-            });
-          });
-        });
-*/
+
         builder.element('StyleMap', nest: () {
           builder.attribute('id', 'waypoint');
           builder.element('Pair', nest: () {
@@ -242,13 +196,13 @@ class _KmlWriter {
 
         if (circles != null) {
           circles.forEach((circle) {
-            _writeCircle(builder, 'circle', circle.color, circle);
+            _writeLines(builder, 'circle', circle.color, circle.shape);
           });
         }
 
         if (geodetics != null && geodetics.length > 0) {
           geodetics.forEach((geodetic) {
-            _writeGeodetic(builder, 'line', geodetic.color, geodetic);
+            _writeLines(builder, 'line', geodetic.color, geodetic.shape);
           });
         }
       });
@@ -274,8 +228,8 @@ class _KmlWriter {
     }
   }
 
-  void _writeCircle(XmlBuilder builder, String name, Color color, Polyline circle) {
-    if (circle != null) {
+  void _writeLines(XmlBuilder builder, String name, Color color, List<LatLng> shapes) {
+    if (shapes != null) {
       builder.element('Placemark', nest: () {
         _writeElement(builder, 'name', name);
         _writeElement(builder, 'visibility', 1);
@@ -288,15 +242,9 @@ class _KmlWriter {
           _writeElement(builder, 'tesselerate', 1);
           _writeElement(builder, 'altitudeMode', 'absolute');
           _writeElement(builder, 'coordinates',
-            circle.points.map((point) => [point.longitude, point.latitude].join(',') + ' \n'));
+              shapes.map((point) => [point.longitude, point.latitude].join(',') + ' \n'));
         });
       });
-    }
-  }
-
-  void _writeGeodetic(XmlBuilder builder, String name, Color color, MapGeodetic geodetic) {
-    if (geodetic != null) {
-      _writeCircle(builder, name, color, Polyline(points: List.from([geodetic.start, geodetic.end])));
     }
   }
 

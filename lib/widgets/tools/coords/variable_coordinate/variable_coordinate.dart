@@ -19,14 +19,13 @@ import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
-import 'package:gc_wizard/logic/tools/coords/export/export.dart';
+
 
 class VariableCoordinate extends StatefulWidget {
   final Formula formula;
@@ -38,7 +37,7 @@ class VariableCoordinate extends StatefulWidget {
 }
 
 class VariableCoordinateState extends State<VariableCoordinate> {
-  Widget _output = GCWCoordsOutput();
+  Widget _output = GCWCoordsOutput(outputs : List<dynamic>());
   GCWSwitchPosition _currentCoordMode = GCWSwitchPosition.left;
 
   final MAX_COUNT_COORDINATES = 100;
