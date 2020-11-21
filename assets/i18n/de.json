@@ -297,6 +297,12 @@
   "brainfk_error_loopnotopened" : "Schleife nicht geöffnet",
   "brainfk_ook_title" : "Ook",
 
+  "burrowswheeler_title" : "Burrows-Wheeler Transformation",
+  "burrowswheeler_burrowswheeler_index" : "Indexsymbol",
+  "burrowswheeler_burrowswheeler_inputplain" : "Klartext",
+  "burrowswheeler_burrowswheeler_inputchiffre" : "Chiffretext",
+  "burrowswheeler_burrowswheeler_error" : "Der Index fehlt",
+
   "caesar_title" : "Caesar Chiffre",
   "caesar_description" : "Verschiebt Buchstaben im Alphabet um 13 Stellen (ROT-13)",
   "caesar_example" : "ABC → NOP",

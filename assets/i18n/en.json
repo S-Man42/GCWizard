@@ -297,6 +297,12 @@
   "book_cipher_input_format": "Positions Format",
   "book_cipher_random_output_hint" : "Letters are chosen randomly",
 
+  "burrowswheeler_title" : "Burrows-Wheeler Transformation",
+  "burrowswheeler_burrowswheeler_index" : "Index-symbol",
+  "burrowswheeler_burrowswheeler_inputplain" : "Plaintext",
+  "burrowswheeler_burrowswheeler_inputchiffre" : "Chiffretext",
+  "burrowswheeler_burrowswheeler_error" : "Index is missing",
+
   "caesar_title" : "Caesar Cipher",
   "caesar_description" : "Shifts letters on standard alphabet by 13 p(ROT-13)",
   "caesar_example" : "ABC → NOP",
