@@ -798,6 +798,7 @@
   "coords_export_saved" : "File saved",
   "coords_export_savedpath" : "File saved as\n\n%s1",
   "coords_export_nowritepermission" : "Permission for writing files denied.",
+  "coords_export_openfile" : "Open file",
   "coords_show_on_map": "Show on map",
   "coords_mapview_osm": "© OpenStreetMap contributors",
   "coords_mapview_osm_url": "https://www.openstreetmap.org/copyright/en",

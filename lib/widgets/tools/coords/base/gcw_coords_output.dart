@@ -109,25 +109,25 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
 
   _showFilePath(Map<String, dynamic> value) {
     showGCWDialog(
-        context,
-        i18n(context, 'coords_export_saved'),
-        Column(
-          children: [
-            Text(i18n(context, 'coords_export_savedpath', parameters: [value['path']])),
-          ],
-        ),
-        [
-          GCWDialogButton(
-            text: i18n(context, 'coords_show_on_map'),
-            onPressed: () async {
-              shareFile(value['path']);
-            },
-          ),
-          GCWDialogButton(
-            text: i18n(context, 'common_ok'),
-          )
+      context,
+      i18n(context, 'coords_export_saved'),
+      Column(
+        children: [
+          Text(i18n(context, 'coords_export_savedpath', parameters: [value['path']])),
         ],
-        cancelButton: false
+      ),
+      [
+        GCWDialogButton(
+          text: i18n(context, 'coords_export_openfile'),
+          onPressed: () async {
+            shareFile(value['path']);
+          },
+        ),
+        GCWDialogButton(
+          text: i18n(context, 'common_ok'),
+        )
+      ],
+      cancelButton: false
     );
   }
 }
