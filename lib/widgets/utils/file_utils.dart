@@ -60,7 +60,6 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
   return {'path': filePath, 'file': file};
 }
 
-void shareFile(String path) {
-  //Share.shareFiles(path);
+shareFile(String path) {
   ShareExtend.share(path, "file");
 }

@@ -150,6 +150,7 @@ class _KmlWriter {
 
   XmlNode _build(String name, List<MapPoint> points, List<MapGeodetic> geodetics, List<MapCircle> circles) {
     final builder = XmlBuilder();
+    var i = 0;
 
     if ((points == null || points.length == 0) && (geodetics == null || geodetics.length == 0)  && (circles == null || circles.length == 0))
     return null;
@@ -161,49 +162,97 @@ class _KmlWriter {
       builder.element('Document', nest: () {
         _writeElement(builder, 'name', 'GC Wizard');
 
-        // Normal waypoint style
-        builder.element('Style', nest: () {
-          builder.attribute('id', 'waypoint_n');
-          builder.element('IconStyle', nest: () {
-            builder.element('Icon', nest: () {
-              _writeElement(builder, 'href', 'https://maps.google.com/mapfiles/kml/pal4/icon61.png');
-            });
-          });
-        });
+        if (points != null) {
+          for (i=0; i < points.length; i++) {
+            builder.element('StyleMap', nest: () {
+              builder.attribute('id', 'waypoint' + i.toString());
 
-        builder.element('StyleMap', nest: () {
-          builder.attribute('id', 'waypoint');
-          builder.element('Pair', nest: () {
-            _writeElement(builder, 'key', 'normal');
-            _writeElement(builder, 'styleUrl', '#waypoint_n');
-          });
-          builder.element('Pair', nest: () {
-            _writeElement(builder, 'key', 'highlight');
-            _writeElement(builder, 'styleUrl', '#waypoint_h');
-          });
-        });
+              builder.element('Pair', nest: () {
+                _writeElement(builder, 'key', 'normal');
+                _writeElement(builder, 'styleUrl', '#waypoint' + i.toString());
+              });
+            });
+          }
+          for (i=0; i < points.length; i++) {
+            builder.element('Style', nest: () {
+              builder.attribute('id', 'waypoint' + i.toString());
+              _writeElement(builder, 'color', ColorCode(points[i].color));
+              builder.element('IconStyle', nest: () {
+                builder.element('Icon', nest: () {
+                  _writeElement(builder, 'href', 'https://maps.google.com/mapfiles/kml/pal4/icon61.png');
+                });
+              });
+            });
+          }
+        }
+
+        if (circles != null) {
+          for (i=0; i < circles.length; i++) {
+            builder.element('StyleMap', nest: () {
+              builder.attribute('id', 'circle' + i.toString());
+
+              builder.element('Pair', nest: () {
+                _writeElement(builder, 'key', 'normal');
+                _writeElement(builder, 'styleUrl', '#circle' + i.toString());
+              });
+            });
+          }
+          for (i=0; i < circles.length; i++) {
+            builder.element('Style', nest: () {
+              builder.attribute('id', 'circle' + i.toString());
+              builder.element('LineStyle', nest: () {
+                _writeElement(builder, 'color', ColorCode(circles[i].color));
+                _writeElement(builder, 'width', 3);
+              });
+              _writeElement(builder, 'color', ColorCode(circles[i].color));
+            });
+          }
+        }
+
+        if (geodetics != null) {
+          for (var i=0; i < geodetics.length; i++) {
+            builder.element('StyleMap', nest: () {
+              builder.attribute('id', 'geodetic' + i.toString());
+
+              builder.element('Pair', nest: () {
+                _writeElement(builder, 'key', 'normal');
+                _writeElement(builder, 'styleUrl', '#geodetic' + i.toString());
+              });
+            });
+          }
+          for (var i=0; i < geodetics.length; i++) {
+            builder.element('Style', nest: () {
+              builder.attribute('id', 'geodetic' + i.toString());
+              builder.element('LineStyle', nest: () {
+                _writeElement(builder, 'color', ColorCode(geodetics[i].color));
+                _writeElement(builder, 'width', 3);
+              });
+              _writeElement(builder, 'color', ColorCode(geodetics[i].color));
+            });
+          }
+        }
 
         builder.element('Folder', nest: () {
           _writeElement(builder, 'name', 'Waypoints');
           if (points != null) {
-            for (var i=0; i < points.length; i++) {
+            for (i=0; i < points.length; i++) {
               if (i==0)
-                _writePoint(builder, false, name, 'S' + i.toString(), points[i]);
-              _writePoint(builder, true, name, 'S' + i.toString(), points[i]);
+                _writePoint(builder, false, name, 'S' + i.toString(), points[i], '#waypoint' + i.toString());
+              _writePoint(builder, true, name, 'S' + i.toString(), points[i], '#waypoint' + i.toString());
             }
           }
         });
 
         if (circles != null) {
-          circles.forEach((circle) {
-            _writeLines(builder, 'circle', circle.color, circle.shape);
-          });
+          for (i=0; i < circles.length; i++) {
+            _writeLines(builder, 'circle', circles[i].color, circles[i].shape, '#circle' + i.toString());
+          }
         }
 
         if (geodetics != null && geodetics.length > 0) {
-          geodetics.forEach((geodetic) {
-            _writeLines(builder, 'line', geodetic.color, geodetic.shape);
-          });
+          for (i=0; i < circles.length; i++) {
+            _writeLines(builder, 'line', geodetics[i].color, geodetics[i].shape, '#geodetic' + i.toString());
+          }
         }
       });
     });
@@ -211,7 +260,7 @@ class _KmlWriter {
     return builder.buildDocument();
   }
 
-  void _writePoint(XmlBuilder builder, bool waypoint, String cacheName, String stageName, MapPoint wpt) {
+  void _writePoint(XmlBuilder builder, bool waypoint, String cacheName, String stageName, MapPoint wpt, String styleId) {
     if (wpt != null) {
       builder.element('Placemark', nest: () {
         if (!waypoint) {
@@ -221,6 +270,7 @@ class _KmlWriter {
         }
         _writeElement(builder, 'styleUrl', '#waypoint');
         _writeElement(builder, 'altitudeMode', 'absolute');
+        _writeElement(builder, 'styleUrl', styleId);
         builder.element('Point', nest: () {
           _writeElement(builder, 'coordinates', [wpt.point.longitude, wpt.point.latitude].join(','));
         });
@@ -228,15 +278,12 @@ class _KmlWriter {
     }
   }
 
-  void _writeLines(XmlBuilder builder, String name, Color color, List<LatLng> shapes) {
+  void _writeLines(XmlBuilder builder, String name, Color color, List<LatLng> shapes, String styleId) {
     if (shapes != null) {
       builder.element('Placemark', nest: () {
         _writeElement(builder, 'name', name);
         _writeElement(builder, 'visibility', 1);
-
-        builder.element('Style', nest: () {
-          _writeElement(builder, 'geomColor', color.value.toRadixString(16)); //.substring(2)
-        });
+        _writeElement(builder, 'styleUrl', styleId);
 
         builder.element('LineString', nest: () {
           _writeElement(builder, 'tesselerate', 1);
@@ -252,5 +299,11 @@ class _KmlWriter {
     if (value != null) {
       builder.element(tagName, nest: value);
     }
+  }
+
+  String ColorCode(Color color){
+    var s = color.value.toRadixString(16);
+    //little endian -> big endian
+    return s.substring(0,2) + s.substring(6,8) + s.substring(4,6) +s.substring(2,4) ;
   }
 }
