@@ -210,7 +210,7 @@ class _KmlWriter {
         }
 
         if (geodetics != null) {
-          for (var i=0; i < geodetics.length; i++) {
+          for (i=0; i < geodetics.length; i++) {
             builder.element('StyleMap', nest: () {
               builder.attribute('id', 'geodetic' + i.toString());
 
@@ -220,7 +220,7 @@ class _KmlWriter {
               });
             });
           }
-          for (var i=0; i < geodetics.length; i++) {
+          for (i=0; i < geodetics.length; i++) {
             builder.element('Style', nest: () {
               builder.attribute('id', 'geodetic' + i.toString());
               builder.element('LineStyle', nest: () {
@@ -245,13 +245,13 @@ class _KmlWriter {
 
         if (circles != null) {
           for (i=0; i < circles.length; i++) {
-            _writeLines(builder, 'circle', circles[i].color, circles[i].shape, '#circle' + i.toString());
+            _writeLines(builder, 'circle', circles[i].shape, '#circle' + i.toString());
           }
         }
 
         if (geodetics != null && geodetics.length > 0) {
-          for (i=0; i < circles.length; i++) {
-            _writeLines(builder, 'line', geodetics[i].color, geodetics[i].shape, '#geodetic' + i.toString());
+          for (i=0; i < geodetics.length; i++) {
+            _writeLines(builder, 'line', geodetics[i].shape, '#geodetic' + i.toString());
           }
         }
       });
@@ -278,7 +278,7 @@ class _KmlWriter {
     }
   }
 
-  void _writeLines(XmlBuilder builder, String name, Color color, List<LatLng> shapes, String styleId) {
+  void _writeLines(XmlBuilder builder, String name, List<LatLng> shapes, String styleId) {
     if (shapes != null) {
       builder.element('Placemark', nest: () {
         _writeElement(builder, 'name', name);
