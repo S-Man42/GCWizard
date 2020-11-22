@@ -5,9 +5,11 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_nthnumber.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_range.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_digits.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_check.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-class NumberSequenceSelection extends GCWSelection {
+class NumberSequenceFibonacciSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
 
@@ -16,6 +18,8 @@ class NumberSequenceSelection extends GCWSelection {
       return [
         className(NumberSequenceNthNumber()),
         className(NumberSequenceRange()),
+        className(NumberSequenceDigits()),
+        className(NumberSequenceCheckNumber()),
       ].contains(className(element.tool));
     }).toList();
 

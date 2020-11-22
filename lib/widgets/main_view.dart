@@ -24,6 +24,15 @@ import 'package:gc_wizard/widgets/selector_lists/dna_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencelucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencefibonacci_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencemersenne_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencefermat_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencepell_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencejacobsthal_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencepelllucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencejacobsthallucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
@@ -37,7 +46,6 @@ import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequence_selection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/affine.dart';
@@ -207,6 +215,14 @@ class _MainViewState extends State<MainView> {
           className(Kenny()),
           className(Morse()),
           className(NumberSequenceSelection()),
+          className(NumberSequenceLucasSelection()),
+          className(NumberSequenceFibonacciSelection()),
+          className(NumberSequenceFermatSelection()),
+          className(NumberSequenceMersenneSelection()),
+          className(NumberSequencePellSelection()),
+          className(NumberSequenceJacobsthalSelection()),
+          className(NumberSequencePellLucasSelection()),
+          className(NumberSequenceJacobsthalLucasSelection()),
           className(NumeralBases()),
           className(NumeralWordsSelection()),
           className(OneTimePad()),

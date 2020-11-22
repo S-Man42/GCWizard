@@ -24,6 +24,15 @@ import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/easter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencelucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencefibonacci_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencemersenne_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencefermat_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencepell_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencejacobsthal_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencepelllucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencejacobsthallucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
@@ -176,6 +185,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_number
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_nthnumber.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_range.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_check.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_digits.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isprime.dart';
@@ -542,6 +553,12 @@ class Registry {
         i18nPrefix: 'morse',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'samuel morse morsecode morsen translators translate uebersetzen uebersetzer punkte striche dots dashes'
+      ),
+      GCWToolWidget(
+         tool: NumberSequenceSelection(),
+         i18nPrefix: 'numbersequence',
+         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+         searchStrings: SEARCHSTRING_NUMBERSEQUENCES
       ),
       GCWToolWidget(
         tool: NumeralBases(),
@@ -1359,13 +1376,163 @@ class Registry {
 
       //NumberSequenceSelection ****************************************************************************************
       GCWToolWidget(
-        tool: NumberSequenceNthNumber(),
+        tool: NumberSequenceFermatNthNumber(),
         i18nPrefix: 'numbersequence_nth',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
       ),
       GCWToolWidget(
-        tool: NumberSequenceRange(),
+        tool: NumberSequenceFermatRange(),
         i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceFermatCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceFermatDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceLucasNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceLucasRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceLucasCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceLucasDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceFibonacciNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceFibonacciRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceFibonacciCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceFibonacciDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceMersenneNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceMersenneRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceMersenneCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceMersenneDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequencePellNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequencePellRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequencePellCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequencePellDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequencePellLucasNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequencePellLucasRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequencePellLucasCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequencePellLucasDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceJacobsthalNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceJacobsthalRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceJacobsthalCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceJacobsthalDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceJacobsthalLucasNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceJacobsthalLucasRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceJacobsthalLucasCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceJacobsthalLucasDigits(),
+        i18nPrefix: 'numbersequence_digits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
 

@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-class NumberSequenceRange extends StatefulWidget {
+class NumberSequenceDigits extends StatefulWidget {
   final NumberSequencesMode mode;
-  const NumberSequenceRange({Key key, this.mode}) : super(key: key);
+  const NumberSequenceDigits({Key key, this.mode}) : super(key: key);
 
   @override
-
-  NumberSequenceRangeState createState() => NumberSequenceRangeState();
+  NumberSequenceDigitsState createState() => NumberSequenceDigitsState();
 }
 
-class NumberSequenceRangeState extends State<NumberSequenceRange> {
-  int _currentInputStop = 0;
-  int _currentInputStart = 0;
+class NumberSequenceDigitsState extends State<NumberSequenceDigits> {
 
-  NumberSequencesMode _currentNumberSequenceMode = NumberSequencesMode.FIBONACCI;
+  int _currentInputN = 0;
 
   @override
   void initState() {
@@ -48,24 +45,13 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
-          title: i18n(context, 'numbersequence_inputstart'),
-          value: _currentInputStart,
-          min: 0,
-          max: 1000,
+          title: i18n(context, 'numbersequence_inputd'),
+          value: _currentInputN,
+          min: 1,
+          max: 500,
           onChanged: (value) {
             setState(() {
-              _currentInputStart = value;
-            });
-          },
-        ),
-        GCWIntegerSpinner(
-          title: i18n(context, 'numbersequence_inputstop'),
-          value: _currentInputStop,
-          min: 0,
-          max: 1000,
-          onChanged: (value) {
-            setState(() {
-              _currentInputStop = value;
+              _currentInputN = value;
             });
           },
         ),
@@ -88,6 +74,7 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
             );
           }).toList(),
         ),
+
         GCWTextDivider(
             text: i18n(context, 'common_ouput')
         ),
@@ -97,8 +84,14 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
   }
 
   _buildOutput() {
-    return GCWOutputText(
-          text: getRange(widget.mode, _currentInputStart, _currentInputStop),
+    List<List<String>> columnData = new List<List<String>>();
+    getDigits(widget.mode, _currentInputN).forEach((element) {
+      columnData.add([element]);
+    });
+    return GCWOutput(
+          child: Column(
+              children: columnedMultiLineOutput(context, columnData)
+          )
         );
-  }
+    }
 }
