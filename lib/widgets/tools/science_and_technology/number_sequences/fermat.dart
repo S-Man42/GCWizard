@@ -4,8 +4,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_nthnumber.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 
-class NumberSequenceFermatCheck extends NumberSequenceCheckNumber {
-  NumberSequenceFermatCheck() : super(mode: NumberSequencesMode.FERMAT);
+class NumberSequenceFermatCheckNumber extends NumberSequenceCheckNumber {
+  NumberSequenceFermatCheckNumber() : super(mode: NumberSequencesMode.FERMAT);
 }
 
 class NumberSequenceFermatDigits extends NumberSequenceDigits {

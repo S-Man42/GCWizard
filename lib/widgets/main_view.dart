@@ -215,6 +215,7 @@ class _MainViewState extends State<MainView> {
           className(Kenny()),
           className(Morse()),
           className(NumberSequenceSelection()),
+/*
           className(NumberSequenceLucasSelection()),
           className(NumberSequenceFibonacciSelection()),
           className(NumberSequenceFermatSelection()),
@@ -223,6 +224,7 @@ class _MainViewState extends State<MainView> {
           className(NumberSequenceJacobsthalSelection()),
           className(NumberSequencePellLucasSelection()),
           className(NumberSequenceJacobsthalLucasSelection()),
+*/
           className(NumeralBases()),
           className(NumeralWordsSelection()),
           className(OneTimePad()),

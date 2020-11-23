@@ -4,8 +4,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_nthnumber.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 
-class NumberSequenceLucasCheck extends NumberSequenceCheckNumber {
-  NumberSequenceLucasCheck() : super(mode: NumberSequencesMode.LUCAS);
+class NumberSequenceLucasCheckNumber extends NumberSequenceCheckNumber {
+  NumberSequenceLucasCheckNumber() : super(mode: NumberSequencesMode.LUCAS);
 }
 
 class NumberSequenceLucasDigits extends NumberSequenceDigits {

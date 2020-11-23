@@ -4,8 +4,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_nthnumber.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 
-class NumberSequenceMersenneCheck extends NumberSequenceCheckNumber {
-  NumberSequenceMersenneCheck() : super(mode: NumberSequencesMode.MERSENNE);
+class NumberSequenceMersenneCheckNumber extends NumberSequenceCheckNumber {
+  NumberSequenceMersenneCheckNumber() : super(mode: NumberSequencesMode.MERSENNE);
 }
 
 class NumberSequenceMersenneDigits extends NumberSequenceDigits {

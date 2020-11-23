@@ -20,8 +20,6 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
   int _currentInputStop = 0;
   int _currentInputStart = 0;
 
-  NumberSequencesMode _currentNumberSequenceMode = NumberSequencesMode.FIBONACCI;
-
   @override
   void initState() {
     super.initState();
@@ -34,19 +32,12 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
 
   @override
   Widget build(BuildContext context) {
-    var NumberSequenceModeItems = {
-      NumberSequencesMode.LUCAS : i18n(context, 'numbersequence_mode_lucas'),
-      NumberSequencesMode.FIBONACCI : i18n(context, 'numbersequence_mode_fibonacci'),
-      NumberSequencesMode.MERSENNE : i18n(context, 'numbersequence_mode_mersenne'),
-      NumberSequencesMode.FERMAT : i18n(context, 'numbersequence_mode_fermat'),
-      NumberSequencesMode.JACOBSTAHL : i18n(context, 'numbersequence_mode_jacobsthal'),
-      NumberSequencesMode.JACOBSTHALLUCAS : i18n(context, 'numbersequence_mode_jacobsthal'),
-      NumberSequencesMode.PELL : i18n(context, 'numbersequence_mode_pell'),
-      NumberSequencesMode.PELLLUCAS : i18n(context, 'numbersequence_mode_pelllucas'),
-    };
 
     return Column(
       children: <Widget>[
+        GCWTextDivider(
+            text: i18n(context, NumberSequencesName[widget.mode])
+        ),
         GCWIntegerSpinner(
           title: i18n(context, 'numbersequence_inputstart'),
           value: _currentInputStart,
@@ -70,24 +61,6 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
           },
         ),
 
-        GCWTextDivider(
-            text: i18n(context, 'numbersequence_mode')
-        ),
-
-        GCWDropDownButton(
-          value: _currentNumberSequenceMode,
-          onChanged: (value) {
-            setState(() {
-              _currentNumberSequenceMode = value;
-            });
-          },
-          items: NumberSequenceModeItems.entries.map((mode) {
-            return GCWDropDownMenuItem(
-              value: mode.key,
-              child: mode.value,
-            );
-          }).toList(),
-        ),
         GCWTextDivider(
             text: i18n(context, 'common_ouput')
         ),

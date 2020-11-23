@@ -183,10 +183,14 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_number
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_nthnumber.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_range.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_check.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_digits.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fermat.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fibonacci.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthallucas.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pelllucas.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lucas.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isprime.dart';
@@ -1376,6 +1380,48 @@ class Registry {
 
       //NumberSequenceSelection ****************************************************************************************
       GCWToolWidget(
+        tool: NumberSequenceFermatSelection(),
+        i18nPrefix: 'numbersequence_fermat',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceFibonacciSelection(),
+        i18nPrefix: 'numbersequence_fibonacci',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceMersenneSelection(),
+        i18nPrefix: 'numbersequence_mersenne',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceLucasSelection(),
+        i18nPrefix: 'numbersequence_lucas',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequencePellSelection(),
+        i18nPrefix: 'numbersequence_pell',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceJacobsthalSelection(),
+        i18nPrefix: 'numbersequence_jacobsthal',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequencePellLucasSelection(),
+        i18nPrefix: 'numbersequence_pelllucas',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceJacobsthalLucasSelection(),
+        i18nPrefix: 'numbersequence_jacobsthallucas',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+      ),
+
+      //NumberSequenceSelection Fermat ****************************************************************************************
+      GCWToolWidget(
         tool: NumberSequenceFermatNthNumber(),
         i18nPrefix: 'numbersequence_nth',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
@@ -1395,6 +1441,8 @@ class Registry {
         i18nPrefix: 'numbersequence_digits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
+
+      //NumberSequenceSelection Lucas ****************************************************************************************
       GCWToolWidget(
         tool: NumberSequenceLucasNthNumber(),
         i18nPrefix: 'numbersequence_nth',
@@ -1415,6 +1463,8 @@ class Registry {
         i18nPrefix: 'numbersequence_digits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
+
+      //NumberSequenceSelection Fibonacci ****************************************************************************************
       GCWToolWidget(
         tool: NumberSequenceFibonacciNthNumber(),
         i18nPrefix: 'numbersequence_nth',
@@ -1435,6 +1485,8 @@ class Registry {
         i18nPrefix: 'numbersequence_digits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
+
+      //NumberSequenceSelection Mersenn ****************************************************************************************
       GCWToolWidget(
         tool: NumberSequenceMersenneNthNumber(),
         i18nPrefix: 'numbersequence_nth',
@@ -1455,6 +1507,8 @@ class Registry {
         i18nPrefix: 'numbersequence_digits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
+
+      //NumberSequenceSelection Pell ****************************************************************************************
       GCWToolWidget(
         tool: NumberSequencePellNthNumber(),
         i18nPrefix: 'numbersequence_nth',
@@ -1475,6 +1529,8 @@ class Registry {
         i18nPrefix: 'numbersequence_digits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
+
+      //NumberSequenceSelection Pell-Lucas ****************************************************************************************
       GCWToolWidget(
         tool: NumberSequencePellLucasNthNumber(),
         i18nPrefix: 'numbersequence_nth',
@@ -1495,6 +1551,8 @@ class Registry {
         i18nPrefix: 'numbersequence_digits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
+
+      //NumberSequenceSelection Jacobsthal ****************************************************************************************
       GCWToolWidget(
         tool: NumberSequenceJacobsthalNthNumber(),
         i18nPrefix: 'numbersequence_nth',
@@ -1515,6 +1573,8 @@ class Registry {
         i18nPrefix: 'numbersequence_digits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
+
+      //NumberSequenceSelection Jacobsthal-Lucas ****************************************************************************************
       GCWToolWidget(
         tool: NumberSequenceJacobsthalLucasNthNumber(),
         i18nPrefix: 'numbersequence_nth',

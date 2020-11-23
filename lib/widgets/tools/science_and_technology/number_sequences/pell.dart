@@ -4,8 +4,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_nthnumber.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 
-class NumberSequencePellCheck extends NumberSequenceCheckNumber {
-  NumberSequencePellCheck() : super(mode: NumberSequencesMode.PELL);
+class NumberSequencePellCheckNumber extends NumberSequenceCheckNumber {
+  NumberSequencePellCheckNumber() : super(mode: NumberSequencesMode.PELL);
 }
 
 class NumberSequencePellDigits extends NumberSequenceDigits {

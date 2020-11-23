@@ -12,6 +12,17 @@ import 'dart:math';
 
 enum NumberSequencesMode {LUCAS, FIBONACCI, MERSENNE, FERMAT, JACOBSTAHL, JACOBSTHALLUCAS, PELL, PELLLUCAS}
 
+final Map<NumberSequencesMode, String> NumberSequencesName = {
+  NumberSequencesMode.LUCAS : 'numbersequence_mode_lucas',
+  NumberSequencesMode.FIBONACCI : 'numbersequence_mode_fibonacci',
+  NumberSequencesMode.MERSENNE : 'numbersequence_mode_mersenne',
+  NumberSequencesMode.FERMAT : 'numbersequence_mode_fermat',
+  NumberSequencesMode.JACOBSTAHL : 'numbersequence_mode_jacobsthal',
+  NumberSequencesMode.JACOBSTHALLUCAS : 'numbersequence_mode_jacobsthallucas',
+  NumberSequencesMode.PELL : 'numbersequence_mode_pell',
+  NumberSequencesMode.PELLLUCAS : 'numbersequence_mode_pelllucas',
+};
+
 final Zero = BigInt.zero;
 final One = BigInt.one;
 final Two = BigInt.two;
@@ -150,33 +161,152 @@ String getRange(NumberSequencesMode sequence, int start, stop){
   return [0,0].join(', ');
 }
 
-String checkNumber(NumberSequencesMode sequence, int number){
+String checkNumber(NumberSequencesMode sequence, String check){
+  if (check == null || check == '')
+    return '-1';
+
+  BigInt checkNumber = BigInt.parse(check);
+  BigInt number = BigInt.from(-1);
+
+  double sqrt5 = sqrt(5);
+  BigInt pn0 = Zero;
+  BigInt pn1 = One;
+  bool found = false;
+  int index = 1;
 
   switch (sequence){
     case NumberSequencesMode.FERMAT:
-
+      number = One;
+      BigInt fermatNumber = One;
+      while (fermatNumber < checkNumber + One && !found) {
+        number = number * Two;
+        fermatNumber = number + One;
+        if (fermatNumber == checkNumber) {
+          number = BigInt.from(index + 1);
+          found = true;
+        } else
+          index++;
+      }
       break;
     case NumberSequencesMode.FIBONACCI:
-      break;
-    case NumberSequencesMode.MERSENNE:
+      number = Zero;
+      while (number < checkNumber + One && !found) {
+        number = BigInt.from(1 / sqrt5*(pow((1 + sqrt5)/2, index) - pow((1 - sqrt5)/2, index)));
+        if (number == checkNumber) {
+          number = BigInt.from(index + 1);
+          found = true;
+        } else
+          index++;
+      }
       break;
     case NumberSequencesMode.LUCAS:
+      number = Zero;
+      while (number < checkNumber + One && !found) {
+        number = BigInt.from(pow((1 + sqrt5)/2, index) + pow((1 - sqrt5)/2, index));
+        if (number == checkNumber) {
+          number = BigInt.from(index);
+          found = true;
+        } else
+          index++;
+      }
+      break;
+    case NumberSequencesMode.MERSENNE:
+      number = One;
+      BigInt mersenneNumber = One;
+      while (mersenneNumber < checkNumber + One && !found) {
+        number = number * Two;
+        mersenneNumber = number - One;
+        if (mersenneNumber == checkNumber) {
+          number = BigInt.from(index + 1);
+          found = true;
+        } else
+          index++;
+      }
       break;
     case NumberSequencesMode.JACOBSTAHL:
+      pn0 = Zero;
+      pn1 = One;
+      number = pn1;
+      if (checkNumber == One || checkNumber == Zero) {
+        number = checkNumber;
+        found = true;
+      }
+      while (number < checkNumber + One && !found) {
+        number = pn1 + Two * pn0;
+        pn0 = pn1;
+        pn1 = number;
+        if (number == checkNumber) {
+          number = BigInt.from(index + 1);
+          found = true;
+        } else
+          index++;
+      }
       break;
     case NumberSequencesMode.JACOBSTHALLUCAS:
+      pn0 = Two;
+      pn1 = One;
+      number = pn1;
+      if (checkNumber == One || checkNumber == Zero) {
+        number = checkNumber;
+        found = true;
+      }
+      while (number < checkNumber + One && !found) {
+        number = pn1 + Two * pn0;
+        pn0 = pn1;
+        pn1 = number;
+        if (number == checkNumber) {
+          number = BigInt.from(index + 1);
+          found = true;
+        } else
+          index++;
+      }
       break;
     case NumberSequencesMode.PELL:
+      pn0 = Zero;
+      pn1 = One;
+      number = pn1;
+      if (checkNumber == One || checkNumber == Zero) {
+        number = checkNumber;
+        found = true;
+      }
+      while (number < checkNumber + One && !found) {
+        number = Two * pn1 + pn0;
+        pn0 = pn1;
+        pn1 = number;
+        if (number == checkNumber) {
+          number = BigInt.from(index + 1);
+          found = true;
+        } else
+          index++;
+      }
       break;
     case NumberSequencesMode.PELLLUCAS:
+      pn0 = Two;
+      pn1 = Two;
+      number = pn1;
+      if (checkNumber == One || checkNumber == Zero) {
+        number = checkNumber;
+        found = true;
+      }
+      while (number < checkNumber + One && !found) {
+        number = Two * pn1 + pn0;
+        pn0 = pn1;
+        pn1 = number;
+        if (number == checkNumber) {
+          number = BigInt.from(index + 1);
+          found = true;
+        } else
+          index++;
+      }
       break;
   }
-
-  return [true,0].toString();
+  if (found)
+    return number.toString();
+  else
+    return '-1';
 }
 
 List getDigits(NumberSequencesMode sequence, int digits){
-
   if (digits == null)
     return [];
 
@@ -227,12 +357,68 @@ List getDigits(NumberSequencesMode sequence, int digits){
       }
       break;
     case NumberSequencesMode.JACOBSTAHL:
+      pn0 = Zero;
+      pn1 = One;
+      if (digits == 1) {
+        numberList.add(pn0.toString());
+        numberList.add(pn1.toString());
+      }
+      number = pn1;
+      while (number.toString().length < digits + 1) {
+          number = pn1 + Two * pn0;
+          pn0 = pn1;
+          pn1 = number;
+          if (number.toString().length == digits)
+            numberList.add(number.toString());
+        }
       break;
     case NumberSequencesMode.JACOBSTHALLUCAS:
+      pn0 = Two;
+      pn1 = One;
+      if (digits == 1) {
+        numberList.add(pn0.toString());
+        numberList.add(pn1.toString());
+      }
+      number = pn1;
+      while (number.toString().length < digits + 1) {
+          number = pn1 + Two * pn0;
+          pn0 = pn1;
+          pn1 = number;
+          if (number.toString().length == digits)
+            numberList.add(number.toString());
+        }
       break;
     case NumberSequencesMode.PELL:
+      pn0 = Zero;
+      pn1 = One;
+      if (digits == 1) {
+        numberList.add(pn0.toString());
+        numberList.add(pn1.toString());
+      }
+      number = pn1;
+      while (number.toString().length < digits + 1) {
+          number = Two * pn1 + pn0;
+          pn0 = pn1;
+          pn1 = number;
+          if (number.toString().length == digits)
+            numberList.add(number.toString());
+        }
       break;
     case NumberSequencesMode.PELLLUCAS:
+      pn0 = Two;
+      pn1 = Two;
+      if (digits == 1) {
+        numberList.add(pn0.toString());
+        numberList.add(pn1.toString());
+      }
+      number = pn1;
+      while (number.toString().length < digits + 1) {
+          number = Two * pn1 + pn0;
+          pn0 = pn1;
+          pn1 = number;
+          if (number.toString().length == digits)
+            numberList.add(number.toString());
+        }
       break;
   }
   return numberList;

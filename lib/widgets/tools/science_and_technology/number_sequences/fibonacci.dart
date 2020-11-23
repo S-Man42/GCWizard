@@ -4,8 +4,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_nthnumber.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 
-class NumberSequenceFibonacciCheck extends NumberSequenceCheckNumber {
-  NumberSequenceFibonacciCheck() : super(mode: NumberSequencesMode.FIBONACCI);
+class NumberSequenceFibonacciCheckNumber extends NumberSequenceCheckNumber {
+  NumberSequenceFibonacciCheckNumber() : super(mode: NumberSequencesMode.FIBONACCI);
 }
 
 class NumberSequenceFibonacciDigits extends NumberSequenceDigits {

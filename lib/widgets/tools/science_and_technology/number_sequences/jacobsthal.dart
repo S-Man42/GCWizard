@@ -4,8 +4,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_nthnumber.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 
-class NumberSequenceJacobsthalCheck extends NumberSequenceCheckNumber {
-  NumberSequenceJacobsthalCheck() : super(mode: NumberSequencesMode.JACOBSTAHL);
+class NumberSequenceJacobsthalCheckNumber extends NumberSequenceCheckNumber {
+  NumberSequenceJacobsthalCheckNumber() : super(mode: NumberSequencesMode.JACOBSTAHL);
 }
 
 class NumberSequenceJacobsthalDigits extends NumberSequenceDigits {
