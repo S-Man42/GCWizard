@@ -3,7 +3,6 @@ import 'package:xml/xml.dart';
 import 'package:intl/intl.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 
 
@@ -176,7 +175,7 @@ class _KmlWriter {
           for (i=0; i < points.length; i++) {
             builder.element('Style', nest: () {
               builder.attribute('id', 'waypoint' + i.toString());
-              _writeElement(builder, 'color', ColorCode(points[i].color));
+              _writeElement(builder, 'color', _ColorCode(points[i].color));
               builder.element('IconStyle', nest: () {
                 builder.element('Icon', nest: () {
                   _writeElement(builder, 'href', 'https://maps.google.com/mapfiles/kml/pal4/icon61.png');
@@ -201,10 +200,10 @@ class _KmlWriter {
             builder.element('Style', nest: () {
               builder.attribute('id', 'circle' + i.toString());
               builder.element('LineStyle', nest: () {
-                _writeElement(builder, 'color', ColorCode(circles[i].color));
+                _writeElement(builder, 'color', _ColorCode(circles[i].color));
                 _writeElement(builder, 'width', 3);
               });
-              _writeElement(builder, 'color', ColorCode(circles[i].color));
+              _writeElement(builder, 'color', _ColorCode(circles[i].color));
             });
           }
         }
@@ -224,10 +223,10 @@ class _KmlWriter {
             builder.element('Style', nest: () {
               builder.attribute('id', 'geodetic' + i.toString());
               builder.element('LineStyle', nest: () {
-                _writeElement(builder, 'color', ColorCode(geodetics[i].color));
+                _writeElement(builder, 'color', _ColorCode(geodetics[i].color));
                 _writeElement(builder, 'width', 3);
               });
-              _writeElement(builder, 'color', ColorCode(geodetics[i].color));
+              _writeElement(builder, 'color', _ColorCode(geodetics[i].color));
             });
           }
         }
@@ -289,7 +288,7 @@ class _KmlWriter {
           _writeElement(builder, 'tesselerate', 1);
           _writeElement(builder, 'altitudeMode', 'absolute');
           _writeElement(builder, 'coordinates',
-              shapes.map((point) => [point.longitude, point.latitude].join(',') + ' \n'));
+            shapes.map((point) => [point.longitude, point.latitude].join(',') + ' \n'));
         });
       });
     }
@@ -301,9 +300,8 @@ class _KmlWriter {
     }
   }
 
-  String ColorCode(Color color){
+  String _ColorCode(Color color){
     var s = color.value.toRadixString(16);
-    //little endian -> big endian
-    return s.substring(0,2) + s.substring(6,8) + s.substring(4,6) +s.substring(2,4) ;
+    return s.substring(0,2) + s.substring(6,8) + s.substring(4,6) + s.substring(2,4) ;
   }
 }
