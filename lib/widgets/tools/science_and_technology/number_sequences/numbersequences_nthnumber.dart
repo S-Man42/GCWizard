@@ -38,7 +38,7 @@ class NumberSequenceNthNumberState extends State<NumberSequenceNthNumber> {
         GCWIntegerSpinner(
           title: i18n(context, 'numbersequence_inputn'),
           min: 0,
-          max: 1111,
+          max: 111111,
           value: _currentInputN,
           onChanged: (value) {
             setState(() {

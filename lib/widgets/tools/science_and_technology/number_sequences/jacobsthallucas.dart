@@ -19,3 +19,7 @@ class NumberSequenceJacobsthalLucasRange extends NumberSequenceRange {
 class NumberSequenceJacobsthalLucasNthNumber extends NumberSequenceNthNumber {
   NumberSequenceJacobsthalLucasNthNumber() : super(mode: NumberSequencesMode.JACOBSTHALLUCAS);
 }
+
+class NumberSequenceJacobsthalLucasContains extends NumberSequenceNthNumber {
+  NumberSequenceJacobsthalLucasContains() : super(mode: NumberSequencesMode.JACOBSTHALLUCAS);
+}

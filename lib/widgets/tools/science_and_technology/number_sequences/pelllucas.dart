@@ -19,3 +19,7 @@ class NumberSequencePellLucasRange extends NumberSequenceRange {
 class NumberSequencePellLucasNthNumber extends NumberSequenceNthNumber {
   NumberSequencePellLucasNthNumber() : super(mode: NumberSequencesMode.PELLLUCAS);
 }
+
+class NumberSequencePellLucasContains extends NumberSequenceNthNumber {
+  NumberSequencePellLucasContains() : super(mode: NumberSequencesMode.PELLLUCAS);
+}

@@ -17,6 +17,7 @@ class NumberSequenceMersenneSelection extends GCWSelection {
         className(NumberSequenceMersenneRange()),
         className(NumberSequenceMersenneDigits()),
         className(NumberSequenceMersenneCheckNumber()),
+        className(NumberSequenceMersenneContains()),
       ].contains(className(element.tool));
     }).toList();
 

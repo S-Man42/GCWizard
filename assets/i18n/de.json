@@ -1285,6 +1285,8 @@
   "numbersequence_check_description" : "Zahlenfolgen sind Fibonacci, Lucas, Mersenne, Fermat, Pell, Jacobsthal und Custom",
   "numbersequence_digits_title" : "Sucht Zahlen einer bestimmten Länge einer spezifischen Zahlenfolge",
   "numbersequence_digits_description" : "Zahlenfolgen sind Fibonacci, Lucas, Mersenne, Fermat, Pell, Jacobsthal und Custom",
+  "numbersequence_contains_title" : "Prüft, ob eine Ziffernfolge in einer Zahl einer spezifischen Zahlenfolge vorkommt",
+  "numbersequence_contains_description" : "Zahlenfolgen sind Fibonacci, Lucas, Mersenne, Fermat, Pell, Jacobsthal und Custom",
   "numbersequence_inputd" : "Anzahl der Ziffern",
   "numbersequence_inputc" : "Zu prüfende Zahl",
   "numbersequence_inputn" : "Position der Folge",

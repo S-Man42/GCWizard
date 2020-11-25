@@ -19,3 +19,7 @@ class NumberSequencePellRange extends NumberSequenceRange {
 class NumberSequencePellNthNumber extends NumberSequenceNthNumber {
   NumberSequencePellNthNumber() : super(mode: NumberSequencesMode.PELL);
 }
+
+class NumberSequencePellContains extends NumberSequenceNthNumber {
+  NumberSequencePellContains() : super(mode: NumberSequencesMode.PELL);
+}

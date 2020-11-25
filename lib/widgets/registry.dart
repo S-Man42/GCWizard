@@ -1441,6 +1441,11 @@ class Registry {
         i18nPrefix: 'numbersequence_digits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
+      GCWToolWidget(
+        tool: NumberSequenceFermatContains(),
+        i18nPrefix: 'numbersequence_contains',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
 
       //NumberSequenceSelection Lucas ****************************************************************************************
       GCWToolWidget(
@@ -1461,6 +1466,11 @@ class Registry {
       GCWToolWidget(
         tool: NumberSequenceLucasDigits(),
         i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceLucasContains(),
+        i18nPrefix: 'numbersequence_contains',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
 
@@ -1485,8 +1495,13 @@ class Registry {
         i18nPrefix: 'numbersequence_digits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
+      GCWToolWidget(
+        tool: NumberSequenceFibonacciContains(),
+        i18nPrefix: 'numbersequence_contains',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
 
-      //NumberSequenceSelection Mersenn ****************************************************************************************
+      //NumberSequenceSelection Mersenne ****************************************************************************************
       GCWToolWidget(
         tool: NumberSequenceMersenneNthNumber(),
         i18nPrefix: 'numbersequence_nth',
@@ -1505,6 +1520,11 @@ class Registry {
       GCWToolWidget(
         tool: NumberSequenceMersenneDigits(),
         i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceMersenneContains(),
+        i18nPrefix: 'numbersequence_contains',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
 
@@ -1529,6 +1549,11 @@ class Registry {
         i18nPrefix: 'numbersequence_digits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
+      GCWToolWidget(
+        tool: NumberSequencePellContains(),
+        i18nPrefix: 'numbersequence_contains',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
 
       //NumberSequenceSelection Pell-Lucas ****************************************************************************************
       GCWToolWidget(
@@ -1549,6 +1574,11 @@ class Registry {
       GCWToolWidget(
         tool: NumberSequencePellLucasDigits(),
         i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequencePellLucasContains(),
+        i18nPrefix: 'numbersequence_contains',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
 
@@ -1573,6 +1603,11 @@ class Registry {
         i18nPrefix: 'numbersequence_digits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
+      GCWToolWidget(
+        tool: NumberSequenceJacobsthalContains(),
+        i18nPrefix: 'numbersequence_contains',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
 
       //NumberSequenceSelection Jacobsthal-Lucas ****************************************************************************************
       GCWToolWidget(
@@ -1593,6 +1628,11 @@ class Registry {
       GCWToolWidget(
         tool: NumberSequenceJacobsthalLucasDigits(),
         i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+      ),
+      GCWToolWidget(
+        tool: NumberSequenceJacobsthalLucasContains(),
+        i18nPrefix: 'numbersequence_contains',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
       ),
 

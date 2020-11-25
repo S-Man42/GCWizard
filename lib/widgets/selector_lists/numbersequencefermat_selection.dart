@@ -17,6 +17,7 @@ class NumberSequenceFermatSelection extends GCWSelection {
         className(NumberSequenceFermatRange()),
         className(NumberSequenceFermatDigits()),
         className(NumberSequenceFermatCheckNumber()),
+        className(NumberSequenceFermatContains()),
       ].contains(className(element.tool));
     }).toList();
 

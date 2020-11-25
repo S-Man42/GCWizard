@@ -19,3 +19,7 @@ class NumberSequenceFibonacciRange extends NumberSequenceRange {
 class NumberSequenceFibonacciNthNumber extends NumberSequenceNthNumber {
   NumberSequenceFibonacciNthNumber() : super(mode: NumberSequencesMode.FIBONACCI);
 }
+
+class NumberSequenceFibonacciContains extends NumberSequenceRange {
+  NumberSequenceFibonacciContains() : super(mode: NumberSequencesMode.FIBONACCI);
+}

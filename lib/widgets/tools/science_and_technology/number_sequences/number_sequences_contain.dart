@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-class NumberSequenceRange extends StatefulWidget {
+class NumberSequenceContain extends StatefulWidget {
   final NumberSequencesMode mode;
-  const NumberSequenceRange({Key key, this.mode}) : super(key: key);
+  const NumberSequenceContain({Key key, this.mode}) : super(key: key);
 
   @override
 
-  NumberSequenceRangeState createState() => NumberSequenceRangeState();
+  NumberSequenceContainState createState() => NumberSequenceContainState();
 }
 
-class NumberSequenceRangeState extends State<NumberSequenceRange> {
-  int _currentInputStop = 0;
-  int _currentInputStart = 0;
+class NumberSequenceContainState extends State<NumberSequenceContain> {
+  String _currentInputN = '0';
+  TextEditingController _inputController;
 
   @override
   void initState() {
@@ -37,25 +37,11 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
         GCWTextDivider(
             text: i18n(context, NumberSequencesName[widget.mode])
         ),
-        GCWIntegerSpinner(
-          title: i18n(context, 'numbersequence_inputstart'),
-          value: _currentInputStart,
-          min: 0,
-          max: 1000,
-          onChanged: (value) {
+        GCWIntegerTextField(
+          controller: _inputController,
+          onChanged: (text) {
             setState(() {
-              _currentInputStart = value;
-            });
-          },
-        ),
-        GCWIntegerSpinner(
-          title: i18n(context, 'numbersequence_inputstop'),
-          value: _currentInputStop,
-          min: 0,
-          max: 1000,
-          onChanged: (value) {
-            setState(() {
-              _currentInputStop = value;
+              _currentInputN = text;
             });
           },
         ),
@@ -70,7 +56,8 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
 
   _buildOutput() {
     List<List<String>> columnData = new List<List<String>>();
-    getRange(widget.mode, _currentInputStart, _currentInputStop).forEach((element) {
+    getPosition(widget.mode, _currentInputN).forEach((element) {
+print(element);
       columnData.add([element]);
     });
     return GCWOutput(

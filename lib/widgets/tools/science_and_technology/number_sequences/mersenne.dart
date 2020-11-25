@@ -19,3 +19,7 @@ class NumberSequenceMersenneRange extends NumberSequenceRange {
 class NumberSequenceMersenneNthNumber extends NumberSequenceNthNumber {
   NumberSequenceMersenneNthNumber() : super(mode: NumberSequencesMode.MERSENNE);
 }
+
+class NumberSequenceMersenneContains extends NumberSequenceNthNumber {
+  NumberSequenceMersenneContains() : super(mode: NumberSequencesMode.MERSENNE);
+}
