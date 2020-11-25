@@ -196,16 +196,19 @@ class SymbolTableState extends State<SymbolTable> {
             imageKey = imageKey.replaceAll(RegExp(r'(^_*|_*$)'), '');
 
             String key;
-            if (_config != null && _config[_CONFIG_SPECIALMAPPINGS] != null && _config[_CONFIG_SPECIALMAPPINGS].containsKey(imageKey)) {
+            if (_config[_CONFIG_SPECIALMAPPINGS].containsKey(imageKey)) {
               key = _config[_CONFIG_SPECIALMAPPINGS][imageKey];
-            } else if (_config != null && _config[_CONFIG_TRANSLATE] != null && _config[_CONFIG_TRANSLATE].contains(imageKey)) {
+            } else if (_config[_CONFIG_TRANSLATE] != null && _config[_CONFIG_TRANSLATE].contains(imageKey)) {
               key = _getSpecialText(imageKey);
               setTranslateable = true;
             } else {
               key = imageKey;
             }
 
-            if (_config != null && _config[_CONFIG_CASESENSITIVE] != null && _config[_CONFIG_CASESENSITIVE] == false)
+            if (
+                   _config[_CONFIG_CASESENSITIVE] == null
+                || (_config[_CONFIG_CASESENSITIVE] != null && _config[_CONFIG_CASESENSITIVE] == false)
+            )
               key = key.toUpperCase();
 
             if (setTranslateable)
