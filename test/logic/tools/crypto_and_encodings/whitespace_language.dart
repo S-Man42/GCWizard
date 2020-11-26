@@ -838,10 +838,10 @@ that many one number per line.
 ''';
 
     var helloWorldTextGerman ='''lllullltlltllluttlllltulllttlltltuttlllltlulllttlttlluttllllttulllttlttlluttllll
-tllulllttlttttuttlllltltullltlttlluttllllttlullltllllluttlllltttullltttltttuttll
-lltlllulllttlttttuttlllltlltullltttlltluttlllltltlulllttlttlluttlllltlttulllttll
-tlluttllllttllullltlllltuttllllttltulllttltuttlllltttlullltltluttllllttttullllut
-tllllluulllltulultttlulutlltlutullllltutlllululltuullltluuuu''';
+ tllulllttlttttuttlllltltullltlttlluttllllttlullltllllluttlllltttullltttltttuttll
+ lltlllulllttlttttuttlllltlltullltttlltluttlllltltlulllttlttlluttlllltlttulllttll
+ tlluttllllttllullltlllltuttllllttltulllttltuttlllltttlullltltluttllllttttullllut
+ tllllluulllltulultttlulutlltlutullllltutlllululltuullltluuuu''';
 
     var helloWorldTextEnglish = '''SSSLSSSTSSTSSSLTTSSSSTLSSSTTSSTSTLTTSSSSTSLSSSTTSTTSSLTTSSSSTTLSSSTTSTTSSLTTSSSS
 TSSLSSSTTSTTTTLTTSSSSTSTLSSSTSTTSSLTTSSSSTTSLSSSTSSSSSLTTSSSSTTTLSSSTTTSTTTLTTSS
@@ -974,15 +974,16 @@ TSSSSSLLSSSSTLSLSTTTSLSLTSSTSLTLSSSSSTLTSSSLSLSSTLLSSSTSLLLL''';
 
       {'input' : ' ', 'numberForSpace': '1', 'expectedOutput' : '1'},
       {'input' : ' ', 'numberForSpace': '0', 'expectedOutput' : '0'},*/
-      {'input' : fibonacci_whitespace, 'para': '5', 'plainText': false, 'error': false, 'expectedOutput' : 'How many?'},
-      //{'input' : helloWorld, 'para': '', 'plainText': false, 'error': false, 'expectedOutput' : 'Hello, world!??'},
-      //{'input' : helloWorldTextEnglish, 'para': '', 'plainText': true, 'error': false, 'expectedOutput' : 'Hello, world!'},
-      //{'input' : helloWorld2, 'para': '', 'plainText': false, 'error': false, 'expectedOutput' : 'Hello, world of spaces!'},
+      {'input' : fibonacci_whitespace, 'para': '5', 'error': false, 'expectedOutput' : 'How many? 1\n1\n'},
+      {'input' : helloWorld, 'para': '', 'error': false, 'expectedOutput' : 'Hello, world!??'},
+      {'input' : helloWorldTextGerman, 'para': '', 'error': false, 'expectedOutput' : 'Hello, world!\r\n'},
+      {'input' : helloWorldTextEnglish, 'para': '', 'error': false, 'expectedOutput' : 'Hello, world!\r\n'},
+      {'input' : helloWorld2, 'para': '', 'error': false, 'expectedOutput' : 'Hello, world of spaces!'},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
-        var _actual = await decodeWhitespace(elem['input'], elem['para'], plainTextFormat : elem['plainText']);
+        var _actual = await decodeWhitespace(elem['input'], elem['para']);
         expect(_actual.output, elem['expectedOutput'] );
         expect(_actual.error, elem['error']);
       });
