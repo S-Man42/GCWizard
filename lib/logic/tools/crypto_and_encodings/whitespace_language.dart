@@ -16,7 +16,7 @@ class WhitespaceResult {
   });
 }
 
-Future<WhitespaceResult> decodeWhitespace(String code, String inp, {plainTextFormat = false}) async {
+Future<WhitespaceResult> decodeWhitespace(String code, String inp) async {
   try {
     if (code == null || code.length == 0) return WhitespaceResult();
 
@@ -36,23 +36,23 @@ Future<WhitespaceResult> decodeWhitespace(String code, String inp, {plainTextFor
       plainTextCharacter = plainTextCharacterEnglish;
       var result = await encodeWhitespace(codeEnglish);
       code = result.output;
-      if (debug) print('Code: ' + codeEnglish);
+      if (_debug) print('Code: ' + codeEnglish);
     } else if (codeGerman.length > codeWhite.length &&
         codeGerman.length > codeEnglish.length) {
       plainTextCharacter = plainTextCharacterGerman;
       var result = await encodeWhitespace(codeGerman);
       code = result.output;
-      if (debug) print('Code: ' + codeGerman);
+      if (_debug) print('Code: ' + codeGerman);
     } else
       code = codeWhite;
 
     var interpreter = _Interpreter(code, inp);
     interpreter.run();
-    //if (debug) print('Output: ' + _output);
+    //if (_debug) print('Output: ' + _output);
     return WhitespaceResult(output: _output, code: _clean(_code));
   } catch (err) {
-    if (debug) print(err.toString());
-    if (debug) print(_clean(_code));
+    if (_debug) print(err.toString());
+    if (_debug) print(_clean(_code));
     return WhitespaceResult(
         output: _output,
         code: _clean(_code),
@@ -93,7 +93,7 @@ var _output = '';
 var _loading = true;
 var _instruction = '';
 var _command = '';
-var debug = true;
+var _debug = true;
 
 const plainTextCharacterGerman = 'ltu';
 const plainTextCharacterEnglish = 'stl';
@@ -139,8 +139,8 @@ class _Interpreter {
       throw new Exception('SyntaxError: Unclean termination of program');
     }
     if (_loading) {
-      //if (debug) print('Code: ' + _clean(_code));
-      //if (debug) print('Input: ' + _input.join() );
+      //if (_debug) print('Code: ' + _clean(_code));
+      //if (_debug) print('Input: ' + _input.join() );
     }
     while (_pos + 1 <= _code_length) {
       var token = _code.substring(_pos, _pos + 1);
@@ -151,11 +151,11 @@ class _Interpreter {
       if (_IMP.containsKey(token)) {
         _instruction = _IMP[token];
       } else {
-        if (debug) print(_clean(_code));
+        if (_debug) print(_clean(_code));
         throw new Exception('Unknown instruction ' + _instruction);
       }
       if (!_loading) {
-        //if (debug) print('('+ _pos.toString() + ') Instruction: '+ _instruction + ' - Stack: ' + _stack.toString() + ' - Heap: ' + _heap.toString());
+        //if (_debug) print('('+ _pos.toString() + ') Instruction: '+ _instruction + ' - Stack: ' + _stack.toString() + ' - Heap: ' + _heap.toString());
       }
       _pos += token.length;
       switch (_instruction) {
@@ -178,7 +178,7 @@ class _Interpreter {
       ;
     }
     if (_loading) {
-      if (debug) print('Finished marking labels. Starting program sequence...');
+      if (_debug) print('Finished marking labels. Starting program sequence...');
       _pos = 0;
       _loading = false;
       run();
@@ -214,12 +214,13 @@ class _Stack {
   /// Parses the next stack IMP.
   void parse() {
     _get_command(_STACK_IMP);
+
     if (_command == 'push_num') {
       var parameter = _num_parameter();
       var index = parameter.item1;
       var item = parameter.item2;
       if (!_loading) {
-        debugOutput(_command, item.toString());
+        // debugOutput(_command, item.toString());
         _push_num(item);
       }
       _pos = index + 1;
@@ -260,7 +261,7 @@ class _Stack {
   }
 
   void _push_num(int item) {
-    //if (debug) print('push: ' + item.toString());
+    //if (_debug) print('push num: ' + item.toString());
     _stack_append(item);
   }
 
@@ -334,13 +335,13 @@ class _IO {
   void _output_char() {
     var char = new String.fromCharCode(_stack_pop());
     _output += char;
-    if (debug) print('>>> {char}');
+    if (_debug) print('>>> {char}');
   }
 
   void _output_num() {
     var num = _stack_pop();
     _output += num.toString();
-    if (debug) print('>>> output_num ' + num.toString());
+    if (_debug) print('>>> output_num ' + num.toString());
   }
 
   void _input_char() {
@@ -349,7 +350,7 @@ class _IO {
 
     //_heap.add(a.codeUnits[0]);
     _heap.addAll({b: a.codeUnits[0]});
-    if (debug) print('>>> input_char ' + a);
+    if (_debug) print('>>> input_char ' + a);
   }
 
   void _input_num() {
@@ -407,10 +408,10 @@ class _FlowControl {
       var index = parameter.item1;
       var label = parameter.item2;
       if (_loading) {
-        debugOutput(_command, _clean(label));
+        debugOutput(_command, _clean(label) + ' index:' + index.toString());
         _mark_label(label);
       } else {
-        if (debug) print('Ignoring label marker');
+        if (_debug) print('Ignoring label marker');
       }
       _pos = index;
     } else if (_command == 'jump') {
@@ -471,7 +472,7 @@ class _FlowControl {
   }
 
   void _exit() {
-    if (debug) print('Program terminated.');
+    if (_debug) print('Program terminated.');
     _pos = 9999999;
   }
 
@@ -532,7 +533,6 @@ class _Arithmetic {
 
   /// Parses the next arithmetic IMP.
   void parse() {
-    //Arithmetic = self.Arithmetic
     _get_command(_ARITHMETIC_IMP);
     if (_loading) {
       return;
@@ -602,7 +602,6 @@ class _Heap {
 
   /// Parses the next heap IMP.
   void parse() {
-    //var Heap = this.Heap;
     _get_command(_HEAP_IMP);
     if (_loading) return;
     if (_command == 'store') {
@@ -617,16 +616,15 @@ class _Heap {
   void _store() {
     var a = _stack_pop();
     var b = _stack_pop();
-    _heap[a] = b;
-    //_heap.add(b);
-    // if (debug) print('push: ' + _heap[b].toString());
+    _heap[b] = a;
+    debugOutput('store heap', _heap[b].toString());
   }
 
   void _push() {
     var a = _stack_pop();
     //_stack_append(_heap[0]);
     _stack_append(_heap[a]);
-    // if (debug) print('push: ' + _heap[a].toString());
+    debugOutput('push heap', _heap[a].toString());
   }
 }
 
@@ -655,18 +653,15 @@ String _uncomment(String s) {
 }
 
 void _stack_append(int item) {
-  //if (debug) print('append ' + item.toString());
-  //_stack.insert(0,item);
-  _stack.add(item);
+  debugOutput('append stack', item.toString());
+  _stack.insert(0,item);
 }
 
 int _stack_pop() {
   if (_stack.length == 0) return null;
-  //var item = _stack.last;
-  //_stack.removeLast();
   var item = _stack.first;
   _stack.removeAt(0);
-  //if (debug) print('pull ' + item.toString());
+  debugOutput('pop stack', item.toString());
   return item;
 }
 
@@ -685,9 +680,9 @@ void _get_command(Map<String, String> imp) {
     _pos += token.length;
   } else {
     throw new Exception('KeyError: No IMP found for token: ' +
-        token +
-        '(pos:) ' +
-        _pos.toString());
+      token +
+      '(pos:) ' +
+      _pos.toString());
   }
 }
 
@@ -707,48 +702,32 @@ Tuple2<int, int> _num_parameter() {
   }
 
   var item = _WhitespaceInt.from_whitespace(_code.substring(_pos, index));
-  //if (debug) print('num_parameter >>>>>' +  index.toString() +" " + item.toString());
+  //if (_debug) print('num_parameter >>>>>' +  index.toString() +" " + item.toString());
   return Tuple2<int, int>(index, item);
 }
 
 /// Sets a label in the sequence if possible.
 Tuple2<int, String> _label_parameter() {
-  /*
-  Format of a label:
+  /*Format of a label:
   name - terminator
   *name: any number of [space] and [tab]
   terminator: \n
   *Must be unique.
   */
-
-  //var code  = this.code;
   var index = _code.indexOf('\n', _pos) + 1;
   // Empty string is a valid label
   var name = _code.substring(_pos, index);
-  //if (debug) print('label_parameter >>>>>' +  index.toString() +" " + name.toString());
   return Tuple2<int, String>(index, name);
 }
 
-var debugtPos = 0;
-String debugCode = null;
+
 var counter = 1;
 void debugOutput(String command, String label) {
-  if (debug) {
-    try {
-      //debugCode = _clean(_code.substring(min(debugtPos, _code.length-1), min(_pos, _code.length -1)));
-      label = label != null ? ' (' + label + ')' : '';
-      print(counter.toString() +
-          ' Command: ' +
-          command +
-          label +
-          ' stack: ' +
-          _stack.toString() +
-          ' heap: ' +
-          _heap.toString());
-      debugtPos = _pos + 1;
-      counter += 1;
-    } on Exception {
-      debugtPos = _pos;
-    }
+  if (_debug) {
+    label = label != null ? ' (' + label + ')' : '';
+    print(counter.toString() +
+        ' Command: ' +
+        command +
+        label);
   }
 }
