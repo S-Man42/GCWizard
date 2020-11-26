@@ -89,6 +89,8 @@ final Map<String, String> _CONFIG_SPECIAL_CHARS = {
   "E_grave" : "È",
   "E_circumflex" : "Ê",
   "E_trema" : "Ë",
+  "I_acute" : "Í",
+  "I_grave" : "Ì",
   "I_circumflex" : "Î",
   "I_trema" : "Ï",
   "N_tilde" : "Ñ",
