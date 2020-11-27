@@ -104,7 +104,8 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
               });
             },
           )
-        ]);
+        ]
+    );
   }
 
   _showFilePath(Map<String, dynamic> value) {
@@ -120,7 +121,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
         GCWDialogButton(
           text: i18n(context, 'coords_export_openfile'),
           onPressed: () async {
-            shareFile(value['path']);
+            openFile(value['path']);
           },
         ),
         GCWDialogButton(
