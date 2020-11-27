@@ -19,9 +19,11 @@ class WhitespaceResult {
   });
 }
 
-Future<WhitespaceResult> decodeWhitespace(String code, String inp) async {
+Future<WhitespaceResult> decodeWhitespace(String code, String inp, {int timeOut = 30000}) async {
   try {
     if (code == null || code.length == 0) return WhitespaceResult();
+
+    _timeOut = max(timeOut, 100);
 
     code = code.toLowerCase();
     var codeWhite = _uncomment(code);
@@ -93,8 +95,8 @@ var _loading = true;
 var _instruction = '';
 var _command = '';
 var _input_required = false;
-var _debug = true;
-const _timeOut = 300000;
+var _debug = false;
+var _timeOut = 30000;
 
 
 const plainTextCharacterGerman = 'ltu';
@@ -141,7 +143,7 @@ class _Interpreter {
   /// Main loop of the program goes through each instruction.
   void run() {
     if (_code_length == 0) {
-      throw new Exception('SyntaxError: Unclean termination of program');
+      throw new Exception('SyntaxError: No program');
     }
 
     start_time = DateTime.now();
@@ -159,8 +161,8 @@ class _Interpreter {
       if (_IMP.containsKey(token)) {
         _instruction = _IMP[token];
       } else {
-        if (_debug) print(_clean(_code));
-        throw new Exception('Unknown instruction ' + _instruction);
+        if (!_loading)
+          throw new Exception('Unknown instruction ' + _instruction);
       }
 
       _pos += token.length;
@@ -189,9 +191,11 @@ class _Interpreter {
       _loading = false;
       run();
     } else if ((_return_positions.length > 0) && (_pos != 9999999)) {
-      throw new Exception('SyntaxError: Subroutine does not properly exit or return');
+      if (!_loading)
+        throw new Exception('SyntaxError: Subroutine does not properly exit or return');
     } else if (_pos == _code_length) {
-      throw new Exception('RuntimeError: Unclean termination');
+      if (!_loading)
+        throw new Exception('RuntimeError: Unclean termination');
     }
   }
 }
@@ -270,9 +274,11 @@ class _Stack {
 
   void _duplicate_nth(int n) {
     if (n > _stack.length - 1) {
-      throw new Exception('ValueError: Cannot duplicate - Value exceeds stack size limit');
+      if (!_loading)
+        Exception('ValueError: Cannot duplicate - Value exceeds stack size limit');
     } else if (n < 0) {
-      throw new Exception('IndexError: Cannot duplicate negative stack index');
+      if (!_loading)
+        throw new Exception('IndexError: Cannot duplicate negative stack index');
     }
     var item = _stack[n]; //-n - 1
     _stack_append(item);
@@ -481,7 +487,8 @@ class _FlowControl {
 
   void _mark_label(String label) {
     if (_labels.containsKey(label)) {
-      throw new Exception('ValueError: Label already exists');
+      if (!_loading)
+        throw new Exception('ValueError: Label already exists');
     }
     _labels[label] = _pos + label.length;
   }
@@ -494,7 +501,8 @@ class _FlowControl {
     if (_return_positions.length > 0) {
       _pos = _return_positions_pop();
     } else {
-      throw new Exception('SyntaxError: Return outside of subroutine');
+      if (!_loading)
+        throw new Exception('SyntaxError: Return outside of subroutine');
     }
   }
 
@@ -580,7 +588,11 @@ class _Arithmetic {
   void _floordiv() {
     var a = _stack_pop();
     var b = _stack_pop();
-    if (a == 0) throw new Exception('ZeroDivisionError: Cannot divide by zero');
+    if (a == 0)
+      if (!_loading)
+        throw new Exception('ZeroDivisionError: Cannot divide by zero');
+      else
+        a = 999999999999;
     var c = (b / a).floor();
     _stack_append(c);
   }
@@ -588,7 +600,11 @@ class _Arithmetic {
   void _mod() {
     var a = _stack_pop();
     var b = _stack_pop();
-    if (a == 0) throw new Exception('ZeroDivisionError: Cannot divide by zero');
+    if (a == 0)
+      if (!_loading)
+        throw new Exception('ZeroDivisionError: Cannot divide by zero');
+      else
+        a = 999999999999;
     var c = b % a;
     _stack_append(c);
   }
@@ -663,7 +679,8 @@ void _get_command(Map<String, String> imp) {
     _command = imp[token];
     _pos += token.length;
   } else {
-    throw new Exception('KeyError: No IMP found for token: ' + token);
+    if (!_loading)
+      throw new Exception('KeyError: No IMP found for token: ' + token);
   }
 }
 
@@ -678,7 +695,8 @@ Tuple2<int, int> _num_parameter() {
   var index = _code.indexOf('\n', _pos);
   // Only including a terminal causes an error
   if (index == _pos) {
-    throw new Exception('SyntaxError: Number must include more than just the terminal.');
+    if (!_loading)
+      Exception('SyntaxError: Number must include more than just the terminal.');
   }
 
   var item = _whitespaceToInt(_code.substring(_pos, index));
