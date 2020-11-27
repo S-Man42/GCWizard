@@ -3157,7 +3157,7 @@
   "vigenere_example" : "ABC mit Schlüssel DEF → DFH",
   "vigenere_autokey" : "Autokey",
 
-  "whitespace_language_title" : "Whithespace",
+  "whitespace_language_title" : "Whitespace",
   "whitespace_language_description" : "Esoterische Programmiersprache aus 3 Zeichen (Leerzeichen, Tab, Enter)",
   "whitespace_language_example" : "      → DFH",
   "whitespace_language_start" : "Start",
