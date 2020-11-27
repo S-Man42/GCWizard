@@ -968,27 +968,28 @@ TSSSSSLLSSSSTLSLSTTTSLSLTSSTSLTLSSSSSTLTSSSLSLSSTLLSSSTSLLLL''';
     var truthMachine = 'lllulultutttttutlluulltullltutultulutuulllulllutultuuu';
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : null, 'para': null, 'error': false, 'expectedOutput' : ''},
-      {'input' : '', 'para': null, 'error': false, 'expectedOutput' : ''},
-      {'input' : '', 'para': '', 'error': false, 'expectedOutput' : ''},
-      {'input' : null, 'para': '', 'error': false, 'expectedOutput' : ''},
+      {'input' : null, 'para': null, 'timeOut': 30000, 'error': false, 'expectedOutput' : ''},
+      {'input' : '', 'para': null, 'timeOut': 30000, 'error': false, 'expectedOutput' : ''},
+      {'input' : '', 'para': '', 'timeOut': 30000, 'error': false, 'expectedOutput' : ''},
+      {'input' : null, 'para': '', 'timeOut': 30000, 'error': false, 'expectedOutput' : ''},
 
 
-      {'input' : fibonacci_whitespace, 'para': '5', 'error': true, 'expectedOutput' : 'How many? 1\n1\n'},
-      {'input' : helloWorld, 'para': '', 'error': false, 'expectedOutput' : 'Hello, world!??'},
-      {'input' : helloWorldTextGerman, 'para': '', 'error': false, 'expectedOutput' : 'Hello, world!\r\n'},
-      {'input' : helloWorldTextEnglish, 'para': '', 'error': false, 'expectedOutput' : 'Hello, world!\r\n'},
-      {'input' : helloWorld2, 'para': '', 'error': false, 'expectedOutput' : 'Hello, world of spaces!'},
-      {'input' : cat_program, 'para': 'Test', 'error': false, 'expectedOutput' : 'Test'},
-      {'input' : helloWorld3, 'para': '', 'error': false, 'expectedOutput' : '?'},
-      {'input' : truthMachine, 'para': '0', 'error': false, 'expectedOutput' : '0'},
-      {'input' : truthMachine, 'para': '1', 'error': true, 'expectedOutput' : '111111111111111111111111111111111111111111111111111111111'},
+      {'input' : fibonacci_whitespace, 'para': '5', 'timeOut': 30000, 'error': true, 'expectedOutput' : 'How many? 1\n1\n'},
+      {'input' : helloWorld, 'para': '', 'timeOut': 30000, 'error': false, 'expectedOutput' : 'Hello, world!??'},
+      {'input' : helloWorldTextGerman, 'para': '', 'timeOut': 30000, 'error': false, 'expectedOutput' : 'Hello, world!\r\n'},
+      {'input' : helloWorldTextEnglish, 'para': '', 'timeOut': 30000, 'error': false, 'expectedOutput' : 'Hello, world!\r\n'},
+      {'input' : helloWorld2, 'para': '', 'timeOut': 30000, 'error': false, 'expectedOutput' : 'Hello, world of spaces!'},
+      {'input' : cat_program, 'para': 'Test', 'timeOut': 30000, 'error': false, 'expectedOutput' : 'Test'},
+      {'input' : helloWorld3, 'para': '', 'timeOut': 30000, 'error': false, 'expectedOutput' : '?'},
+      {'input' : truthMachine, 'para': '0', 'timeOut': 30000, 'error': false, 'expectedOutput' : '0'},
+      //timeout test
+      //{'input' : truthMachine, 'para': '1', 'timeOut': 100, 'error': true, 'expectedOutput' : '111111111111111111111111111111111111111111111111111111111'},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
-        var _actual = await decodeWhitespace(elem['input'], elem['para']);
-        expect(_actual.output, elem['expectedOutput'] );
+        var _actual = await decodeWhitespace(elem['input'], elem['para'], timeOut : elem['timeOut']);
+        expect(_actual.output, elem['expectedOutput']);
         expect(_actual.error, elem['error']);
       });
     });
