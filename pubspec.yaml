@@ -29,7 +29,8 @@ dependencies:
   qr_flutter: ^3.2.0
   touchable: ^0.2.0
   url_launcher: ^5.5.0
-  share_extend: "^1.1.9"
+  share_extend: ^1.1.9
+  open_file: ^3.0.3
 
 dev_dependencies:
   flutter_test:
