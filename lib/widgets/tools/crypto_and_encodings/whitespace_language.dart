@@ -38,17 +38,23 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
           },
         ),
 
-        GCWTextDivider(
-          text: i18n(context, 'common_input')
-        ),
-        GCWTextField(
-          hintText: i18n(context, 'common_input'),
-          onChanged: (text) {
-            setState(() {
-              _currentKey = text;
-            });
-          },
-        ),
+        _currentMode ==  GCWSwitchPosition.left ?
+          Container()
+        :
+          GCWTextDivider(
+            text: i18n(context, 'common_input')
+          ),
+        _currentMode ==  GCWSwitchPosition.left ?
+          Container()
+        :
+          GCWTextField(
+            hintText: i18n(context, 'common_input'),
+            onChanged: (text) {
+              setState(() {
+                _currentKey = text;
+              });
+            },
+          ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -78,6 +84,9 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
     if (_currentOutput == null)
       return GCWDefaultOutput();
 
+    if (_currentMode ==  GCWSwitchPosition.left)
+      return GCWDefaultOutput(child: _currentOutput.output);
+
     return GCWMultipleOutput(
       children: [
         _currentOutput.output,
@@ -96,6 +105,7 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
       ],
     );
   }
+
 
   _calcOutput() async {
     if (_currentInput == null || _currentInput.length == 0 || _isStarted)

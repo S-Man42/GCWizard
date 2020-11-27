@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:tuple/tuple.dart';
 // ported from https://github.com/adapap/whitespace-interpreter/blob/master/whitespace_interpreter.py#L1
-// decoder https://naokikp.github.io/wsi/whitespace.html
+// decoder with debug https://naokikp.github.io/wsi/whitespace.html
 
 class WhitespaceResult {
   final String output;
@@ -25,29 +25,7 @@ Future<WhitespaceResult> decodeWhitespace(String code, String inp, {int timeOut 
 
     _timeOut = max(timeOut, 100);
 
-    code = code.toLowerCase();
-    var codeWhite = _uncomment(code);
-    var codeEnglish =
-        code.replaceAll(RegExp(r'[^' + plainTextCharacterEnglish + ']'), '');
-    var codeGerman =
-        code.replaceAll(RegExp(r'[^' + plainTextCharacterGerman + ']'), '');
-
-    if (codeWhite.length > codeEnglish.length &&
-        codeWhite.length > codeGerman.length) {
-      plainTextCharacter = plainTextCharacterEnglish;
-      code = codeWhite;
-    } else if (codeEnglish.length > codeWhite.length &&
-        codeEnglish.length > codeGerman.length) {
-      plainTextCharacter = plainTextCharacterEnglish;
-      var result = await encodeWhitespace(codeEnglish);
-      code = result.output;
-    } else if (codeGerman.length > codeWhite.length &&
-        codeGerman.length > codeEnglish.length) {
-      plainTextCharacter = plainTextCharacterGerman;
-      var result = await encodeWhitespace(codeGerman);
-      code = result.output;
-    } else
-      code = codeWhite;
+    code = _transformCode(code);
 
     var interpreter = _Interpreter(code, inp);
     interpreter.run();
@@ -63,14 +41,45 @@ Future<WhitespaceResult> decodeWhitespace(String code, String inp, {int timeOut 
   }
 }
 
-Future<WhitespaceResult> encodeWhitespace(String s) async {
-  s = s.toLowerCase();
-  s = s.replaceAll(RegExp(r'[^' + plainTextCharacter + ']'), '');
-  s = s
+
+Future<WhitespaceResult> encodeWhitespace(String code) async {
+  if (code == null)
+    code = '';
+
+  code = code = _transformCode(code);
+
+  return WhitespaceResult(output: code);
+}
+
+String _transformCode(String code) {
+  code = code.toLowerCase();
+  var codeWhite = _uncomment(code);
+  var codeEnglish = code.replaceAll(RegExp(r'[^' + plainTextCharacterEnglish + ']'), '');
+  var codeGerman = code.replaceAll(RegExp(r'[^' + plainTextCharacterGerman + ']'), '');
+
+  if (codeWhite.length > codeEnglish.length && codeWhite.length > codeGerman.length) {
+    plainTextCharacter = plainTextCharacterEnglish;
+    code = codeWhite;
+  } else if (codeEnglish.length > codeWhite.length && codeEnglish.length > codeGerman.length) {
+    plainTextCharacter = plainTextCharacterEnglish;
+    code =  _codeSubstitution(codeEnglish);
+  } else if (codeGerman.length > codeWhite.length && codeGerman.length > codeEnglish.length) {
+    plainTextCharacter = plainTextCharacterGerman;
+    code =  _codeSubstitution(codeGerman);
+  } else
+    code = codeWhite;
+
+  return code;
+}
+
+String _codeSubstitution(String code) {
+  code = code.replaceAll(RegExp(r'[^' + plainTextCharacter + ']'), '');
+
+  code = code
       .replaceAll(plainTextCharacter[0], ' ')
       .replaceAll(plainTextCharacter[1], '\t')
       .replaceAll(plainTextCharacter[2], '\n');
-  return WhitespaceResult(output: s);
+  return code;
 }
 
 /// Returns a readable string representation of whitespace.
@@ -96,6 +105,7 @@ var _instruction = '';
 var _command = '';
 var _input_required = false;
 var _debug = false;
+var _debugCounter = 1;
 var _timeOut = 30000;
 
 
@@ -147,6 +157,7 @@ class _Interpreter {
     }
 
     start_time = DateTime.now();
+    _debugCounter = 1;
 
     while (_pos + 1 <= _code_length) {
       if ((DateTime.now().difference(start_time)).inMilliseconds > _timeOut) {
@@ -734,14 +745,13 @@ Tuple2<int, String> _label_parameter() {
 }
 
 
-var counter = 1;
 void _debugOutput(String command, String label) {
   if (_debug) {
     label = label != null ? ' (' + label + ')' : '';
-    print('[' + counter.toString() + '] ' +
+    print('[' + _debugCounter.toString() + '] ' +
         'Command: ' +
         command +
         label);
-    counter += 1;
+    _debugCounter += 1;
   }
 }
