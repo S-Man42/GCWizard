@@ -961,24 +961,28 @@ TSSSSSLLSSSSTLSLSTTTSLSLTSSTSLTLSSSSSTLTSSSLSLSSTLLSSSTSLLLL''';
 	
 ''';
 
+    var cat_program = 'ulllullltututlllltuttttullllltuutltuululuulltuuuu';
+
+    var helloWorld3 = 'lltlltlllutulllllttlltltutulllllttlttllutulllllttlttllutulllllttlttttutullllltlttllutullllltlllllutullllltttltttutulllllttlttttutullllltttlltlutulllllttlttllutulllllttlltllutulluuu';
+
+    var truthMachine = 'lllulultutttttutlluulltullltutultulutuulllulllutultuuu';
+
     List<Map<String, dynamic>> _inputsToExpected = [
-     /* {'input' : null, 'expectedOutput' : ''},
-      {'input' : '', 'expectedOutput' : ''},
+      {'input' : null, 'para': null, 'error': false, 'expectedOutput' : ''},
+      {'input' : '', 'para': null, 'error': false, 'expectedOutput' : ''},
+      {'input' : '', 'para': '', 'error': false, 'expectedOutput' : ''},
+      {'input' : null, 'para': '', 'error': false, 'expectedOutput' : ''},
 
-      {'input' : 'ABCXYZ', 'expectedOutput' : '222999'},
-      {'input' : 'AbcxyZ', 'expectedOutput' : '222999'},
-      {'input' : 'ABC123XYZ', 'expectedOutput' : '222123999'},
-      {'input' : 'ÄÖÜß', 'expectedOutput' : '2687'},
-      {'input' : '*%&/', 'expectedOutput' : '*%&/'},
-      {'input' : 'ABC*%&/', 'expectedOutput' : '222*%&/'},
 
-      {'input' : ' ', 'numberForSpace': '1', 'expectedOutput' : '1'},
-      {'input' : ' ', 'numberForSpace': '0', 'expectedOutput' : '0'},*/
-      {'input' : fibonacci_whitespace, 'para': '5', 'error': false, 'expectedOutput' : 'How many? 1\n1\n'},
+      {'input' : fibonacci_whitespace, 'para': '5', 'error': true, 'expectedOutput' : 'How many? 1\n1\n'},
       {'input' : helloWorld, 'para': '', 'error': false, 'expectedOutput' : 'Hello, world!??'},
       {'input' : helloWorldTextGerman, 'para': '', 'error': false, 'expectedOutput' : 'Hello, world!\r\n'},
       {'input' : helloWorldTextEnglish, 'para': '', 'error': false, 'expectedOutput' : 'Hello, world!\r\n'},
       {'input' : helloWorld2, 'para': '', 'error': false, 'expectedOutput' : 'Hello, world of spaces!'},
+      {'input' : cat_program, 'para': 'Test', 'error': false, 'expectedOutput' : 'Test'},
+      {'input' : helloWorld3, 'para': '', 'error': false, 'expectedOutput' : '?'},
+      {'input' : truthMachine, 'para': '0', 'error': false, 'expectedOutput' : '0'},
+      {'input' : truthMachine, 'para': '1', 'error': true, 'expectedOutput' : '111111111111111111111111111111111111111111111111111111111'},
     ];
 
     _inputsToExpected.forEach((elem) {

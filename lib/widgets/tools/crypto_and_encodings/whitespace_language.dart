@@ -39,10 +39,10 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
         ),
 
         GCWTextDivider(
-          text: i18n(context, 'common_key')
+          text: i18n(context, 'common_input')
         ),
         GCWTextField(
-          hintText: i18n(context, 'common_key'),
+          hintText: i18n(context, 'common_input'),
           onChanged: (text) {
             setState(() {
               _currentKey = text;
@@ -59,7 +59,7 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
         ),
 
         GCWButton(
-          text: i18n(context, 'substitutionbreaker_start'),
+          text: i18n(context, 'whitespace_language_start'),
           onPressed: () {
             setState(() {
               _calcOutput();
@@ -82,15 +82,15 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
       children: [
         _currentOutput.output,
         GCWOutput(
-          title: i18n(context, 'solitaire_keystream'),
+          title: i18n(context, 'whitespace_language_readable_code'),
           child: GCWOutputText(
-            text: _currentOutput.output,
+            text: _currentOutput.code,
           ),
         ),
         GCWOutput(
-          title: i18n(context, 'solitaire_resultdeck'),
+          title: i18n(context, 'whitespace_language_info'),
           child: GCWOutputText(
-            text: _currentOutput.error ? _currentOutput.errorText + '\n' : '' + _currentOutput.code,
+            text: (_currentOutput.input_expected ? i18n(context, 'whitespace_language_input_expected') + '\n' : '') + (_currentOutput.error ? _currentOutput.errorText + '\n' : ''),
           ),
         )
       ],

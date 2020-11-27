@@ -1,16 +1,19 @@
 import 'dart:math';
 import 'package:tuple/tuple.dart';
 // ported from https://github.com/adapap/whitespace-interpreter/blob/master/whitespace_interpreter.py#L1
+// decoder https://naokikp.github.io/wsi/whitespace.html
 
 class WhitespaceResult {
   final String output;
   final String code;
+  final bool input_expected;
   final bool error;
   final String errorText;
 
   WhitespaceResult({
     this.output = '',
     this.code = '',
+    this.input_expected = false,
     this.error = false,
     this.errorText = '',
   });
@@ -36,28 +39,25 @@ Future<WhitespaceResult> decodeWhitespace(String code, String inp) async {
       plainTextCharacter = plainTextCharacterEnglish;
       var result = await encodeWhitespace(codeEnglish);
       code = result.output;
-      if (_debug) print('Code: ' + codeEnglish);
     } else if (codeGerman.length > codeWhite.length &&
         codeGerman.length > codeEnglish.length) {
       plainTextCharacter = plainTextCharacterGerman;
       var result = await encodeWhitespace(codeGerman);
       code = result.output;
-      if (_debug) print('Code: ' + codeGerman);
     } else
       code = codeWhite;
 
     var interpreter = _Interpreter(code, inp);
     interpreter.run();
-    //if (_debug) print('Output: ' + _output);
-    return WhitespaceResult(output: _output, code: _clean(_code));
+
+    return WhitespaceResult(output: _output, input_expected: _input_required, code: _clean(_code));
   } catch (err) {
-    if (_debug) print(err.toString());
-    if (_debug) print(_clean(_code));
     return WhitespaceResult(
         output: _output,
         code: _clean(_code),
+        input_expected: _input_required,
         error: true,
-        errorText: err.toString());
+        errorText: err.toString() + (' (Position: ' + _pos.toString() + ')'));
   }
 }
 
@@ -79,12 +79,11 @@ String _clean(String s) {
       .replaceAll('\n', plainTextCharacter[2]);
 }
 
+List<String> _input;
 var _stack = List<int>();
 var _return_positions = List<int>();
 var _heap = Map<int, int>();
-//var _heap = List<int>();
 var _labels = Map<String, int>();
-List<String> _input;
 var _pos = 0;
 var _code = '';
 var _code_length = 0;
@@ -93,7 +92,10 @@ var _output = '';
 var _loading = true;
 var _instruction = '';
 var _command = '';
+var _input_required = false;
 var _debug = true;
+const _timeOut = 300000;
+
 
 const plainTextCharacterGerman = 'ltu';
 const plainTextCharacterEnglish = 'stl';
@@ -101,6 +103,8 @@ var plainTextCharacter = plainTextCharacterEnglish;
 
 /// The main interpreter for the program handles our state and responds to input.
 class _Interpreter {
+  DateTime start_time;
+
   /*Instruction Modification Parameters (IMPs)
   [space]: Stack Manipulation
   [tab][space]: Arithmetic
@@ -131,6 +135,7 @@ class _Interpreter {
     _command = '';
     _labels.clear();
     _return_positions.clear();
+    _input_required = false;
   }
 
   /// Main loop of the program goes through each instruction.
@@ -138,11 +143,14 @@ class _Interpreter {
     if (_code_length == 0) {
       throw new Exception('SyntaxError: Unclean termination of program');
     }
-    if (_loading) {
-      //if (_debug) print('Code: ' + _clean(_code));
-      //if (_debug) print('Input: ' + _input.join() );
-    }
+
+    start_time = DateTime.now();
+
     while (_pos + 1 <= _code_length) {
+      if ((DateTime.now().difference(start_time)).inMilliseconds > _timeOut) {
+        throw new Exception('TimeOut: Program runs too long');
+      }
+
       var token = _code.substring(_pos, _pos + 1);
       if (!_IMP.containsKey(token) && _pos + 2 <= _code.length) {
         token = _code.substring(_pos, _pos + 2);
@@ -154,9 +162,7 @@ class _Interpreter {
         if (_debug) print(_clean(_code));
         throw new Exception('Unknown instruction ' + _instruction);
       }
-      if (!_loading) {
-        //if (_debug) print('('+ _pos.toString() + ') Instruction: '+ _instruction + ' - Stack: ' + _stack.toString() + ' - Heap: ' + _heap.toString());
-      }
+
       _pos += token.length;
       switch (_instruction) {
         case 'Stack':
@@ -183,8 +189,7 @@ class _Interpreter {
       _loading = false;
       run();
     } else if ((_return_positions.length > 0) && (_pos != 9999999)) {
-      throw new Exception(
-          'SyntaxError: Subroutine does not properly exit or return');
+      throw new Exception('SyntaxError: Subroutine does not properly exit or return');
     } else if (_pos == _code_length) {
       throw new Exception('RuntimeError: Unclean termination');
     }
@@ -220,7 +225,6 @@ class _Stack {
       var index = parameter.item1;
       var item = parameter.item2;
       if (!_loading) {
-        // debugOutput(_command, item.toString());
         _push_num(item);
       }
       _pos = index + 1;
@@ -229,7 +233,7 @@ class _Stack {
       var index = parameter.item1;
       var item = parameter.item2;
       if (!_loading) {
-        debugOutput(_command, item.toString());
+        _debugOutput(_command, item.toString());
         _duplicate_nth(item);
       }
       _pos = index + 1;
@@ -238,37 +242,35 @@ class _Stack {
       var index = parameter.item1;
       var item = parameter.item2;
       if (!_loading) {
-        debugOutput(_command, item.toString());
+        _debugOutput(_command, item.toString());
         _discard_n(item);
       }
       _pos = index + 1;
     } else if (_command == 'duplicate_top') {
       if (!_loading) {
-        debugOutput(_command, null);
+        _debugOutput(_command, null);
         _duplicate_nth(0);
       }
     } else if (_command == 'swap') {
       if (!_loading) {
-        debugOutput(_command, null);
+        _debugOutput(_command, null);
         _swap();
       }
     } else if (_command == 'discard_top') {
       if (!_loading) {
-        debugOutput(_command, null);
+        _debugOutput(_command, null);
         _discard_top();
       }
     }
   }
 
   void _push_num(int item) {
-    //if (_debug) print('push num: ' + item.toString());
     _stack_append(item);
   }
 
   void _duplicate_nth(int n) {
     if (n > _stack.length - 1) {
-      throw new Exception(
-          'ValueError: Cannot duplicate - Value exceeds stack size limit');
+      throw new Exception('ValueError: Cannot duplicate - Value exceeds stack size limit');
     } else if (n < 0) {
       throw new Exception('IndexError: Cannot duplicate negative stack index');
     }
@@ -302,11 +304,11 @@ class _Stack {
 ///Handles input/output operations.
 class _IO {
   /*Instructions
-        [space][space]: Pop a value off the stack and output it as a character.
-        [space][tab]: Pop a value off the stack and output it as a number.
-        [tab][space]: Read a character from input, a, Pop a value off the stack, b, then store the ASCII value of a at heap address b.
-        [tab][tab]: Read a number from input, a, Pop a value off the stack, b, then store a at heap address b.
-        */
+  [space][space]: Pop a value off the stack and output it as a character.
+  [space][tab]: Pop a value off the stack and output it as a number.
+  [tab][space]: Read a character from input, a, Pop a value off the stack, b, then store the ASCII value of a at heap address b.
+  [tab][tab]: Read a number from input, a, Pop a value off the stack, b, then store a at heap address b.
+  */
   final Map<String, String> _IO_IMP = {
     '  ': 'output_char',
     ' \t': 'output_num',
@@ -320,7 +322,7 @@ class _IO {
     if (_loading) {
       return;
     }
-    debugOutput(_command, null);
+    _debugOutput(_command, null);
     if (_command == 'output_char') {
       _output_char();
     } else if (_command == 'output_num') {
@@ -335,25 +337,26 @@ class _IO {
   void _output_char() {
     var char = new String.fromCharCode(_stack_pop());
     _output += char;
-    if (_debug) print('>>> {char}');
+    _debugOutput('output char', char);
   }
 
   void _output_num() {
     var num = _stack_pop();
     _output += num.toString();
-    if (_debug) print('>>> output_num ' + num.toString());
+    _debugOutput('output num', num.toString());
   }
 
   void _input_char() {
     var a = _input_pop(0);
     var b = _stack_pop();
+    _input_required = true;
 
-    //_heap.add(a.codeUnits[0]);
     _heap.addAll({b: a.codeUnits[0]});
-    if (_debug) print('>>> input_char ' + a);
+    _debugOutput('input_char', a);
   }
 
   void _input_num() {
+    _input_required = true;
     var b = _stack_pop();
     var index = _input.indexOf('\n');
     if (index < 0) index = _input.indexOf(' ');
@@ -363,11 +366,11 @@ class _IO {
       _input = _input.sublist(min(index + 1, _input.length - 1));
 
       _heap.addAll({b : int.parse(num)});
-      //_heap.add(int.parse(num));
     }
   }
 
   String _input_pop(int index) {
+    _input_required = true;
     var item = _input[index];
     _input.removeAt(index);
     return item;
@@ -400,7 +403,7 @@ class _FlowControl {
     _get_command(_FLOW_IMP);
     if (_command == 'exit') {
       if (!_loading) {
-        debugOutput(_command, null);
+        _debugOutput(_command, null);
         _exit();
       }
     } else if (_command == 'mark_label') {
@@ -408,7 +411,7 @@ class _FlowControl {
       var index = parameter.item1;
       var label = parameter.item2;
       if (_loading) {
-        debugOutput(_command, _clean(label) + ' index:' + index.toString());
+        _debugOutput(_command, _clean(label) + ' index:' + index.toString());
         _mark_label(label);
       } else {
         if (_debug) print('Ignoring label marker');
@@ -419,7 +422,7 @@ class _FlowControl {
       var index = parameter.item1;
       var label = parameter.item2;
       if (!_loading) {
-        debugOutput(_command, _clean(label));
+        _debugOutput(_command, _clean(label));
         _jump(label);
       } else {
         _pos = index;
@@ -429,7 +432,7 @@ class _FlowControl {
       var index = parameter.item1;
       var label = parameter.item2;
       if (!_loading) {
-        debugOutput(_command, _clean(label));
+        _debugOutput(_command, _clean(label));
         var num = _stack_pop();
         if (num == 0) {
           _jump(label);
@@ -444,7 +447,7 @@ class _FlowControl {
       var index = parameter.item1;
       var label = parameter.item2;
       if (!_loading) {
-        debugOutput(_command, _clean(label));
+        _debugOutput(_command, _clean(label));
         var num = _stack_pop();
         if (num < 0) {
           _jump(label);
@@ -456,7 +459,7 @@ class _FlowControl {
       }
     } else if (_command == 'exit_subroutine') {
       if (!_loading) {
-        debugOutput(_command, null);
+        _debugOutput(_command, null);
         _exit_subroutine();
       }
     } else if (_command == 'call_subroutine') {
@@ -465,7 +468,7 @@ class _FlowControl {
       var label = parameter.item2;
       _pos = index;
       if (!_loading) {
-        debugOutput(_command, _clean(label));
+        _debugOutput(_command, _clean(label));
         _call_subroutine(label);
       }
     }
@@ -501,13 +504,12 @@ class _FlowControl {
   }
 
   void _return_positions_append(int item) {
-    //_return_positions.insert(0, item);
-    _return_positions.add(item);
+    _return_positions.insert(0, item);
   }
 
   int _return_positions_pop() {
-    var item = _return_positions.last;
-    _return_positions.removeLast();
+    var item = _return_positions.first;
+    _return_positions.removeAt(0);
     return item;
   }
 }
@@ -537,19 +539,19 @@ class _Arithmetic {
     if (_loading) {
       return;
     } else if (_command == 'add') {
-      debugOutput(_command, null);
+      _debugOutput(_command, null);
       add();
     } else if (_command == 'sub') {
-      debugOutput(_command, null);
+      _debugOutput(_command, null);
       _sub();
     } else if (_command == 'mul') {
-      debugOutput(_command, null);
+      _debugOutput(_command, null);
       _mul();
     } else if (_command == 'floordiv') {
-      debugOutput(_command, null);
+      _debugOutput(_command, null);
       _floordiv();
     } else if (_command == 'mod') {
-      debugOutput(_command, null);
+      _debugOutput(_command, null);
       _mod();
     }
   }
@@ -605,10 +607,10 @@ class _Heap {
     _get_command(_HEAP_IMP);
     if (_loading) return;
     if (_command == 'store') {
-      debugOutput(_command, null);
+      _debugOutput(_command, null);
       _store();
     } else if (_command == 'push') {
-      debugOutput(_command, null);
+      _debugOutput(_command, null);
       _push();
     }
   }
@@ -617,35 +619,17 @@ class _Heap {
     var a = _stack_pop();
     var b = _stack_pop();
     _heap[b] = a;
-    debugOutput('store heap', _heap[b].toString());
+    _debugOutput('heap store', _heap[b].toString());
   }
 
   void _push() {
     var a = _stack_pop();
-    //_stack_append(_heap[0]);
     _stack_append(_heap[a]);
-    debugOutput('push heap', _heap[a].toString());
+    _debugOutput('heap push', _heap[a].toString());
   }
 }
 
-/// Helper class to manage integers in Whitespace.
-class _WhitespaceInt {
-  ///Converts the Whitespace representation of a number to an integer.
-  static int from_whitespace(String code) {
-    var num = 0;
-    if (code.length == 1) {
-      num = 0;
-      return num;
-    }
-    final List<String> keys = [' ', '\t'];
-    var sign = 2 * (1 - keys.indexOf(code[0])) - 1;
-    var binary = '';
-    for (var x = 1; x < code.length; x++)
-      binary += keys.indexOf(code[x]).toString();
-    num = int.parse(binary, radix: 2) * sign;
-    return num;
-  }
-}
+
 
 /// Removes extranneous characters from the code input.
 String _uncomment(String s) {
@@ -653,7 +637,7 @@ String _uncomment(String s) {
 }
 
 void _stack_append(int item) {
-  debugOutput('append stack', item.toString());
+  _debugOutput('stack append', item.toString());
   _stack.insert(0,item);
 }
 
@@ -661,7 +645,7 @@ int _stack_pop() {
   if (_stack.length == 0) return null;
   var item = _stack.first;
   _stack.removeAt(0);
-  debugOutput('pop stack', item.toString());
+  _debugOutput('stack pop', item.toString());
   return item;
 }
 
@@ -679,10 +663,7 @@ void _get_command(Map<String, String> imp) {
     _command = imp[token];
     _pos += token.length;
   } else {
-    throw new Exception('KeyError: No IMP found for token: ' +
-      token +
-      '(pos:) ' +
-      _pos.toString());
+    throw new Exception('KeyError: No IMP found for token: ' + token);
   }
 }
 
@@ -697,13 +678,27 @@ Tuple2<int, int> _num_parameter() {
   var index = _code.indexOf('\n', _pos);
   // Only including a terminal causes an error
   if (index == _pos) {
-    throw new Exception(
-        'SyntaxError: Number must include more than just the terminal.');
+    throw new Exception('SyntaxError: Number must include more than just the terminal.');
   }
 
-  var item = _WhitespaceInt.from_whitespace(_code.substring(_pos, index));
-  //if (_debug) print('num_parameter >>>>>' +  index.toString() +" " + item.toString());
+  var item = _whitespaceToInt(_code.substring(_pos, index));
   return Tuple2<int, int>(index, item);
+}
+
+/// Converts the Whitespace representation of a number to an integer.
+int _whitespaceToInt(String code) {
+  var num = 0;
+  if (code.length == 1) {
+    num = 0;
+    return num;
+  }
+  final List<String> keys = [' ', '\t'];
+  var sign = 2 * (1 - keys.indexOf(code[0])) - 1;
+  var binary = '';
+  for (var x = 1; x < code.length; x++)
+    binary += keys.indexOf(code[x]).toString();
+  num = int.parse(binary, radix: 2) * sign;
+  return num;
 }
 
 /// Sets a label in the sequence if possible.
@@ -722,12 +717,13 @@ Tuple2<int, String> _label_parameter() {
 
 
 var counter = 1;
-void debugOutput(String command, String label) {
+void _debugOutput(String command, String label) {
   if (_debug) {
     label = label != null ? ' (' + label + ')' : '';
-    print(counter.toString() +
-        ' Command: ' +
+    print('[' + counter.toString() + '] ' +
+        'Command: ' +
         command +
         label);
+    counter += 1;
   }
 }

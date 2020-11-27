@@ -3158,8 +3158,12 @@
   "vigenere_autokey" : "Autokey",
 
   "whitespace_language_title" : "Whithespace",
-  "whitespace_language_description" : "Esoterische Programmiersprache aus 3 Zeichen (Leerzeichen, Tab, Enter)",
+  "whitespace_language_description" : "Esoteric Programming language with 3 characters (Space, Tab, Enter)",
   "whitespace_language_example" : "      → DFH",
+  "whitespace_language_start" : "Start",
+  "whitespace_language_readable_code" : "Readable Code",
+  "whitespace_language_info" : "Info",
+  "whitespace_language_input_expected" : "Input expected",
 
   "windchill_title": "Windchill",
   "windchill_description" : "Apparent Temperature",
