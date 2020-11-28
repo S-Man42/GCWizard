@@ -71,9 +71,18 @@ openFile(String path, String type) {
     ".kml": "application/vnd.google-earth.kml+xml",
     ".kmz": "application/vnd.google-earth.kmz",
   };
+  Map<String, String> knowUtiExtensions = {
+    ".gpx": "com.topografix.gpx",
+    ".kml": "com.google.earth.kml",
+  };
 
-  if ((Platform.isAndroid) && (type != null) && knowExtensions.containsKey(type.toLowerCase()))
-    OpenFile.open(path, type: knowExtensions[type.toLowerCase()]);
+  if ((Platform.isAndroid) && (type != null) ) {
+    type = type.toLowerCase();
+    OpenFile.open(path,
+        type: knowExtensions.containsKey(type) ? knowExtensions[type] : null,
+        uti: knowUtiExtensions.containsKey(type) ? knowUtiExtensions[type] : null
+    );
+  }
   else
     OpenFile.open(path);
 
