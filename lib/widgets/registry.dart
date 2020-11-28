@@ -131,7 +131,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution_breaker.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/symbol_table.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
@@ -189,6 +188,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/s
 import 'package:gc_wizard/widgets/tools/science_and_technology/summer_simmer.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
 
 class Registry {
   static List<GCWToolWidget> toolList;
@@ -1639,7 +1640,7 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colortokki color-tokki farbcode woven carpet webteppich gewebter farben colors six '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'cyrillic', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'cyrillic'),
         i18nPrefix: 'symboltables_cyrillic',
         iconPath: SYMBOLTABLES_ASSETPATH + 'cyrillic/D.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'kyrillisch cyrillic russisch russian alphabet schrift font cyrl saloniki'
@@ -1807,7 +1808,7 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'griechisches greek zahlen ziffern numbers numerals zahlschrift'
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'hazard', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'hazard'),
         i18nPrefix: 'symboltables_hazard',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hazard/quotation.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hazardsigns gefahren warningsigns gebotsschilder gebotszeichen verbotsschilder verbotszeichen warnschilder warnzeichen BGVA8 DINENISO7010 ASRA1.3'
@@ -1873,7 +1874,7 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES_HYLIAN + 'moderne modern thewindwaker'
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'hymmnos', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'hymmnos'),
         i18nPrefix: 'symboltables_hymmnos',
         iconPath: SYMBOLTABLES_ASSETPATH + 'hymmnos/J.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hymmnos artonelico '
@@ -1915,7 +1916,7 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'japanese japanisches zahlen ziffern numbers'
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'klingon', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'klingon'),
         i18nPrefix: 'symboltables_klingon',
         iconPath: SYMBOLTABLES_ASSETPATH + 'klingon/_j.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klingonisch klingonen klingons klingonlanguageinstitute kli '
@@ -2089,13 +2090,13 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_RESISTOR_COLORCODE
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'rhesus_a', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'rhesus_a'),
         i18nPrefix: 'symboltables_rhesus_a',
         iconPath: SYMBOLTABLES_ASSETPATH + 'rhesus_a/C.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'rhesusa tintenkleckse farbkleckse farbspritzer blutspritzer inkblots bloodsplatter blutgruppen bloodgroup bloodtype bluttropfen blutstropfen farbtropfen',
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'romulan', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'romulan'),
         i18nPrefix: 'symboltables_romulan',
         iconPath: SYMBOLTABLES_ASSETPATH + 'romulan/9.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek romulans romulaner romulanisch '
@@ -2125,7 +2126,7 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sign language zeichensprache gebaerdensprache hearing loss taubstumme taub-stumme deafblind deaf-blind gehoerlose deaf-mute deafmute'
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'skullz', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'skullz'),
         i18nPrefix: 'symboltables_skullz',
         iconPath: SYMBOLTABLES_ASSETPATH + 'skullz/F.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'skull skullz skulls totenkopf totenkoepfe schaedel pirates piraten'
@@ -2143,7 +2144,7 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'doremifalamiresisol notesystem musictheory musiktheorie solmisation notensystem tonstufen degrees octal oktal'
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'space_invaders', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'space_invaders'),
         i18nPrefix: 'symboltables_space_invaders',
         iconPath: SYMBOLTABLES_ASSETPATH + 'space_invaders/C.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'space invaders '
@@ -2155,7 +2156,7 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'spintype boxes kaestchen kasten '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'suetterlin', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'suetterlin'),
         i18nPrefix: 'symboltables_suetterlin',
         iconPath: SYMBOLTABLES_ASSETPATH + 'suetterlin/A.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'suetterlin germanhandwritingscript schreibschrift ausgangsschrift kurrentschrift'
@@ -2179,7 +2180,7 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'templers tempelritter templeknights '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'tenctonese', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'tenctonese'),
         i18nPrefix: 'symboltables_tenctonese',
         iconPath: SYMBOLTABLES_ASSETPATH + 'tenctonese/K.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tenctonese aliennation '
@@ -2257,13 +2258,13 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'visitor die besucher v aliens ausserirdische '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'wakandan', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'wakandan'),
         i18nPrefix: 'symboltables_wakandan',
         iconPath: SYMBOLTABLES_ASSETPATH + 'wakandan/N.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'wakandanisches wakandisches blackpanther marvel chadwickboseman schwarzerpanther '
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'webdings', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'webdings'),
         i18nPrefix: 'symboltables_webdings',
         iconPath: SYMBOLTABLES_ASSETPATH + 'webdings/A.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont webdings wingdings windings'
@@ -2287,19 +2288,19 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fenster windows johannes balthasar friderici cryptographia'
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'wingdings', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'wingdings'),
         i18nPrefix: 'symboltables_wingdings',
         iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings/A.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont symbole symbols haende hands zahlenimkreis numbersincircle clock arrows pfeile stars sterne wingdings windings'
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'wingdings2', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'wingdings2'),
         i18nPrefix: 'symboltables_wingdings2',
         iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings2/A.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift symbole buero haende hands zahlenimkreis numbersincircle clock stars sterne systemfont wingdings2 windings2'
       ),
       GCWToolWidget(
-        tool: SymbolTable(symbolKey: 'wingdings3', isCaseSensitive: true),
+        tool: SymbolTable(symbolKey: 'wingdings3'),
         i18nPrefix: 'symboltables_wingdings3',
         iconPath: SYMBOLTABLES_ASSETPATH + 'wingdings3/A.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'microsoftwindows ms systemschrift systemfont symbole symbols arrows pfeile wingdings3 windings3'
