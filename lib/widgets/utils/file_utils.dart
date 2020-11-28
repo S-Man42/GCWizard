@@ -61,10 +61,21 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
   return {'path': filePath, 'file': file};
 }
 
-shareFile(String path) {
+shareFile(String path, String type) {
   ShareExtend.share(path, "file");
 }
 
-openFile(String path) {
-   OpenFile.open(path);
+openFile(String path, String type) {
+  Map<String, String> knowExtensions = {
+    ".gpx": "application/gpx+xml",
+    ".kml": "application/vnd.google-earth.kml+xml",
+    ".kmz": "application/vnd.google-earth.kmz",
+  };
+
+  if ((Platform.isAndroid) && (type != null) && knowExtensions.containsKey(type.toLowerCase()))
+    OpenFile.open(path, type: knowExtensions[type.toLowerCase()]);
+  else
+    OpenFile.open(path);
+
+
 }

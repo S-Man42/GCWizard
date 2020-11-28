@@ -92,7 +92,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
             text: 'GPX',
             onPressed: () async {
               coordinatesExport.exportCoordinates(name, points, geodetics, circles).then((value) {
-                _showFilePath(value);
+                _showFilePath(value, '.gpx');
               });
             },
           ),
@@ -100,7 +100,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
             text: 'KML',
             onPressed: () async {
               coordinatesExport.exportCoordinates(name, points, geodetics, circles, kmlFormat: true).then((value) {
-                _showFilePath(value);
+                _showFilePath(value, '.kml');
               });
             },
           )
@@ -108,7 +108,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
     );
   }
 
-  _showFilePath(Map<String, dynamic> value) {
+  _showFilePath(Map<String, dynamic> value, String type) {
     showGCWDialog(
       context,
       i18n(context, 'coords_export_saved'),
@@ -119,9 +119,16 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
       ),
       [
         GCWDialogButton(
+          text: i18n(context, 'coords_export_sharefile'),
+          onPressed: () async {
+            shareFile(value['path'], type);
+          },
+        ),
+
+        GCWDialogButton(
           text: i18n(context, 'coords_export_openfile'),
           onPressed: () async {
-            openFile(value['path']);
+            openFile(value['path'], type);
           },
         ),
         GCWDialogButton(
