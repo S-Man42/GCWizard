@@ -38,5 +38,3 @@ flutter pub cache repair
 flutter clean
 
 flutter config --enable-web
-
-
