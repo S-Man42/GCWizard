@@ -11,7 +11,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class CrossSumSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWToolWidget> _toolList = Registry.toolList.where((element) {
+    final List<GCWTool> _toolList = Registry.toolList.where((element) {
       return [
         className(CrossSum()),
         className(CrossSumRange()),

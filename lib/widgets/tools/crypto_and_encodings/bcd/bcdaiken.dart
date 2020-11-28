@@ -6,9 +6,9 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd.dart';
 class BCDAiken extends BCD {
 
   BCDAiken({Key key}) :
-        super(
-        key: key,
-        type: BCDType.AIKEN,
-      );
+    super(
+      key: key,
+      type: BCDType.AIKEN,
+    );
 }
 

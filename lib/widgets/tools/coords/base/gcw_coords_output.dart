@@ -49,7 +49,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
       child: GCWButton (
         text: i18n(context, 'coords_show_on_map'),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => GCWToolWidget(
+          Navigator.push(context, MaterialPageRoute(builder: (context) => GCWTool(
             tool: GCWMapView(
               points: widget.points,
               geodetics: widget.geodetics,

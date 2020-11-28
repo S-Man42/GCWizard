@@ -571,6 +571,12 @@
   "common_compassrose_nbw_symbol" : "NzW",
   "common_compassrose_nbw_name" : "Nord zu West",
 
+  "common_exportfile_saved" : "Datei gespeichert",
+  "common_exportfile_savepath" : "Datei gespeichert unter\n\n%s1",
+  "common_exportfile_nowritepermission" : "Berechtigung zum Schreiben von Dateien verwehrt.",
+  "common_exportfile_sharefile" : "Datei teilen",
+  "common_exportfile_openfile" : "Datei öffnen",
+
   "common_language_czech" : "Tschechisch",
   "common_language_danish" : "Dänisch",
   "common_language_dutch" : "Niederländisch",
@@ -1732,9 +1738,6 @@
   "symboltables_selection_download_link" : "https://misc.gcwizard.net/symboltables_de.pdf",
   "symboltables_showoverlay" : "Overlays",
   "symboltables_exportimage" : "Ausgabe speichern",
-  "symboltables_exportimage_saved" : "Bild gespeichert",
-  "symboltables_exportimage_savepath" : "Bild gespeichert unter\n\n%s1",
-  "symboltables_nowritepermission" : "Berechtigung zum Schreiben von Dateien verwehrt.",
   "symboltables_ignoreunknown" : "Ignoriere Unbekanntes",
   "symboltables_alchemy_title" : "Alchemie",
   "symboltables_alchemy_description" : "Alchemische Zeichen für antike und moderne Elemente",
