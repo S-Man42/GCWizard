@@ -76,7 +76,7 @@ openFile(String path, String type) {
     ".kml": "com.google.earth.kml",
   };
 
-  if ((Platform.isAndroid) && (type != null) ) {
+  if (type != null) {
     type = type.toLowerCase();
     OpenFile.open(path,
         type: knowExtensions.containsKey(type) ? knowExtensions[type] : null,
