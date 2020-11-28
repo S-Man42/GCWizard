@@ -2,6 +2,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_digits.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_nthnumber.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/numbersequences_contain.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 
 class NumberSequenceJacobsthalLucasCheckNumber extends NumberSequenceCheckNumber {
@@ -20,6 +21,6 @@ class NumberSequenceJacobsthalLucasNthNumber extends NumberSequenceNthNumber {
   NumberSequenceJacobsthalLucasNthNumber() : super(mode: NumberSequencesMode.JACOBSTHALLUCAS);
 }
 
-class NumberSequenceJacobsthalLucasContains extends NumberSequenceNthNumber {
+class NumberSequenceJacobsthalLucasContains extends NumberSequenceContains {
   NumberSequenceJacobsthalLucasContains() : super(mode: NumberSequencesMode.JACOBSTHALLUCAS);
 }

@@ -542,8 +542,6 @@ List getPosition(NumberSequencesMode sequence, String check){
       while (index < maxSearch + 1 && !found) {
         number = Two.pow(index) + One;
         numberString = number.toString();
-print(index);
-print(number);
         if (numberString.contains(check)) {
           int j = 0;
           while (!numberString.substring(j).startsWith(check))

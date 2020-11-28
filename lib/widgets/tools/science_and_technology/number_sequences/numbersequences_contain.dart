@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-class NumberSequenceContain extends StatefulWidget {
+class NumberSequenceContains extends StatefulWidget {
   final NumberSequencesMode mode;
-  const NumberSequenceContain({Key key, this.mode}) : super(key: key);
+  const NumberSequenceContains({Key key, this.mode}) : super(key: key);
 
   @override
 
-  NumberSequenceContainState createState() => NumberSequenceContainState();
+  NumberSequenceContainsState createState() => NumberSequenceContainsState();
 }
 
-class NumberSequenceContainState extends State<NumberSequenceContain> {
+class NumberSequenceContainsState extends State<NumberSequenceContains> {
   String _currentInputN = '0';
   TextEditingController _inputController;
 
@@ -57,7 +57,6 @@ class NumberSequenceContainState extends State<NumberSequenceContain> {
   _buildOutput() {
     List<List<String>> columnData = new List<List<String>>();
     getPosition(widget.mode, _currentInputN).forEach((element) {
-print(element);
       columnData.add([element]);
     });
     return GCWOutput(
