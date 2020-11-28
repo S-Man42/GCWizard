@@ -6,9 +6,9 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd.dart';
 class BCDStibitz extends BCD {
 
   BCDStibitz({Key key}) :
-        super(
-        key: key,
-        type: BCDType.STIBITZ,
-      );
+    super(
+      key: key,
+      type: BCDType.STIBITZ,
+    );
 }
 

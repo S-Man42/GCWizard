@@ -12,7 +12,7 @@ class ResistorSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
 
-    final List<GCWToolWidget> _toolList =
+    final List<GCWTool> _toolList =
       Registry.toolList.where((element) {
         if (className(element.tool) == className(SymbolTable())
           && (element.tool as SymbolTable).symbolKey == 'resistor')

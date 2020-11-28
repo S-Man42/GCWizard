@@ -41,8 +41,6 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
   Widget build(BuildContext context) {
     _data = widget.data;
 
-    print('build decrypt');
-
     return Column(
       children: <Widget>[
         Row(
@@ -108,7 +106,7 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
                   symbol: Image.asset(image),
                 ),
                 _currentShowOverlayedSymbols
-                    ? Opacity(
+                  ? Opacity(
                     child:  Container(
                       //TODO: Using GCWText instead: Currently it would expand the textfield width to max.
                       child: Text(
@@ -127,8 +125,8 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
                       ),
                     ),
                     opacity: 0.85
-                )
-                    : Container()
+                  )
+                : Container()
               ],
             ),
             onTap: () {

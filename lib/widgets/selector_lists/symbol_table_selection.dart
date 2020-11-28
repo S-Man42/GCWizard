@@ -13,7 +13,7 @@ class SymbolTableSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
 
-    List<GCWToolWidget> _toolList =
+    List<GCWTool> _toolList =
       Registry.toolList.where((element) {
         return [
           className(SymbolTable()),

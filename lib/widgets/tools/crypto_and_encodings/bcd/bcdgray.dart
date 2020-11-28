@@ -6,9 +6,9 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd.dart';
 class BCDGray extends BCD {
 
   BCDGray({Key key}) :
-        super(
-        key: key,
-        type: BCDType.GRAY,
-      );
+    super(
+      key: key,
+      type: BCDType.GRAY,
+    );
 }
 

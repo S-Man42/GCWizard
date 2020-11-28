@@ -5,13 +5,11 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -42,6 +40,7 @@ class GCWSymbolTableEncryption extends StatefulWidget {
 
 class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
   final _SYMBOL_NOT_FOUND_PATH = SYMBOLTABLES_ASSETPATH + '404.png';
+  final _EXPORT_SYMBOL_SIZE = 150.0;
 
   var _currentEncryptionInput = '';
   var _encryptionInputController;
@@ -108,34 +107,20 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
           onPressed: () {
             _exportEncryption(widget.countColumns, _data.isCaseSensitive()).then((value) {
               if (value == null) {
-                showToast(i18n(context, 'symboltables_nowritepermission'));
+                showToast(i18n(context, 'common_exportfile_nowritepermission'));
                 return;
               }
 
-              showGCWDialog(
-                  context,
-                  i18n(context, 'symboltables_exportimage_saved'),
-                  Column(
-                    children: [
-                      GCWText(
-                        text: i18n(context, 'symboltables_exportimage_savepath', parameters: [value['path']]),
-                        style: gcwTextStyle().copyWith(color: themeColors().dialogText()),
-                      ),
-                      Container(
-                        child: Image.file(value['file']),
-                        margin: EdgeInsets.only(top: 25),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: themeColors().dialogText())
-                        ),
-                      )
-                    ],
+              showExportedFileDialog(
+                context,
+                value['path'],
+                contentWidget: Container(
+                  child: Image.file(value['file']),
+                  margin: EdgeInsets.only(top: 25),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: themeColors().dialogText())
                   ),
-                  [
-                    GCWDialogButton(
-                      text: i18n(context, 'common_ok'),
-                    )
-                  ],
-                  cancelButton: false
+                )
               );
             });
           },
@@ -220,10 +205,10 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
         }
 
         columns.add(Expanded(
-            child: Container(
-              child: widget,
-              padding: EdgeInsets.all(3),
-            )
+          child: Container(
+            child: widget,
+            padding: EdgeInsets.all(3),
+          )
         ));
       }
 
@@ -246,16 +231,14 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
   }
 
   Future<Map<String, dynamic>> _exportEncryption(int countColumns, isCaseSensitive) async {
-    final sizeSymbol = 150.0;
-
     var images = _getImages(isCaseSensitive);
 
     var countRows = (images.length / countColumns).floor();
     if (countRows * countColumns < images.length)
       countRows++;
 
-    var width =  countColumns * sizeSymbol;
-    var height = countRows * sizeSymbol;
+    var width =  countColumns * _EXPORT_SYMBOL_SIZE;
+    var height = countRows * _EXPORT_SYMBOL_SIZE;
 
     final canvasRecorder = ui.PictureRecorder();
     final canvas = Canvas(
@@ -281,7 +264,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
             image = await _loadImage(images[imageIndex]);
           }
 
-          canvas.drawImage(image, Offset(j * sizeSymbol, i * sizeSymbol), paint);
+          canvas.drawImage(image, Offset(j * _EXPORT_SYMBOL_SIZE, i * _EXPORT_SYMBOL_SIZE), paint);
         }
       }
     }

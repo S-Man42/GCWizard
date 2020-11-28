@@ -571,6 +571,12 @@
   "common_compassrose_nbw_symbol" : "NbW",
   "common_compassrose_nbw_name" : "North by West",
 
+  "common_exportfile_saved" : "File saved",
+  "common_exportfile_savepath" : "File saved as\n\n%s1",
+  "common_exportfile_nowritepermission" : "Permission for writing files denied.",
+  "common_exportfile_sharefile" : "Share file",
+  "common_exportfile_openfile" : "Open file",
+
   "common_language_czech" : "Czech",
   "common_language_danish" : "Danish",
   "common_language_dutch" : "Dutch",
@@ -1732,9 +1738,6 @@
   "symboltables_selection_download_link" : "https://misc.gcwizard.net/symboltables_en.pdf",
   "symboltables_showoverlay" : "Overlays",
   "symboltables_exportimage" : "Save Output",
-  "symboltables_exportimage_saved" : "Image saved",
-  "symboltables_exportimage_savepath" : "Image saved as\n\n%s1",
-  "symboltables_nowritepermission" : "Permission for writing files denied.",
   "symboltables_ignoreunknown" : "Ignore unknown",
   "symboltables_alchemy_title" : "Alchemy",
   "symboltables_alchemy_description" : "Alchemic symbols for antique and modern elements",
