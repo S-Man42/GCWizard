@@ -28,6 +28,84 @@ import 'package:prefs/prefs.dart';
 final SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
 final _SYMBOL_NOT_FOUND_PATH = SYMBOLTABLES_ASSETPATH + '404.png';
 
+final _CONFIG_FILENAME = 'config.json';
+final _CONFIG_SPECIALMAPPINGS = 'special_mappings';
+final _CONFIG_TRANSLATE = 'translate';
+final _CONFIG_CASESENSITIVE = 'case_sensitive';
+
+final Map<String, String> _CONFIG_SPECIAL_CHARS = {
+  "space" : " ",
+  "asterisk" : "*",
+  "dash" : "-",
+  "colon" : ":",
+  "semicolon" : ";",
+  "dot" : ".",
+  "slash" : "/",
+  "apostrophe" : "'",
+  "apostrophe_in" : "'",
+  "apostrophe_out" : "'",
+  "parentheses_open" : "(",
+  "parentheses_close" : ")",
+  "quotation" : "\"",
+  "quotation_in" : "\"",
+  "quotation_out" : "\"",
+  "dollar" : "\$",
+  "percent" : "%",
+  "plus" : "+",
+  "question" : "?",
+  "exclamation" : "!",
+  "backslash" : "\\",
+  "copyright" : "©",
+  "comma" : ",",
+  "pound" : "£",
+  "equals" : "=",
+  "brace_open" : "{",
+  "brace_close" : "}",
+  "bracket_open" : "[",
+  "bracket_close" : "]",
+  "ampersand" : "&",
+  "hashtag" : "#",
+  "web_at" : "@",
+  "paragraph" : "§",
+  "caret" : "^",
+  "underscore" : "_",
+  "backtick" : "`",
+  "pipe" : "|",
+  "tilde" : "~",
+  "lessthan" : "<",
+  "greaterthan" : ">",
+  "euro" : "€",
+
+  "AE_umlaut" : "Ä",
+  "OE_umlaut" : "Ö",
+  "UE_umlaut" : "Ü",
+  "SZ_umlaut" : "ß",
+  "A_acute" : "Á",
+  "A_grave" : "À",
+  "A_circumflex" : "Â",
+  "AE_together" : "Æ",
+  "C_cedille" : "Ç",
+  "E_acute" : "É",
+  "E_grave" : "È",
+  "E_circumflex" : "Ê",
+  "E_trema" : "Ë",
+  "I_acute" : "Í",
+  "I_grave" : "Ì",
+  "I_circumflex" : "Î",
+  "I_trema" : "Ï",
+  "N_tilde" : "Ñ",
+  "O_acute" : "Ó",
+  "O_grave" : "Ò",
+  "O_circumflex" : "Ô",
+  "U_acute" : "Ú",
+  "U_grave" : "Ù",
+  "U_circumflex" : "Û",
+
+  "ae_umlaut" : "ä",
+  "oe_umlaut" : "ö",
+  "ue_umlaut" : "ü",
+};
+
 class SymbolTable extends StatefulWidget {
   final String symbolKey;
   final bool isCaseSensitive;
@@ -44,6 +122,8 @@ class SymbolTableState extends State<SymbolTable> {
   String _output = '';
 
   var _images = <Map<String, String>>[]; //SplayTreeMap<String, Widget>();
+  Map<String, dynamic> _config;
+
   var _currentMode = GCWSwitchPosition.right;
 
   var _currentShowOverlayedSymbols = true;
@@ -72,32 +152,75 @@ class SymbolTableState extends State<SymbolTable> {
     super.dispose();
   }
 
+  Future<Map<String, dynamic>> _loadConfig(String pathKey) async {
+    var file;
+    try {
+      file = await DefaultAssetBundle.of(context).loadString(pathKey + _CONFIG_FILENAME);
+    } catch (e) {}
+
+    if (file == null)
+      file = '{}';
+
+    Map<String, dynamic> config = json.decode(file);
+
+    if (config[_CONFIG_SPECIALMAPPINGS] == null)
+      config.putIfAbsent(_CONFIG_SPECIALMAPPINGS, () => Map<String, String>());
+
+    _CONFIG_SPECIAL_CHARS.entries.forEach((element) {
+      config[_CONFIG_SPECIALMAPPINGS].putIfAbsent(element.key, () => element.value);
+    });
+
+    return config;
+  }
+
   Future _initImages() async {
-    //AssetManifest.json keeps the information about all asset files
+    //AssetManifest.json holds the information about all asset files
     final manifestContent = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
 
     var pathKey = SYMBOLTABLES_ASSETPATH + widget.symbolKey + '/';
     var imageSuffixes = RegExp(r'\.(png|jpg|bmp|gif)', caseSensitive: false);
-    
+
+    _config = await _loadConfig(pathKey);
+
     final imagePaths = manifestMap.keys
       .where((String key) => key.contains(pathKey))
       .where((String key) => imageSuffixes.hasMatch(key))
       .toList();
 
     setState(() {
+      var _translateables = [];
+
       _images = imagePaths
         .map((filePath) {
+            var setTranslateable = false;
             var imageKey = filePath.split(pathKey)[1].split(imageSuffixes)[0];
+            imageKey = imageKey.replaceAll(RegExp(r'(^_*|_*$)'), '');
 
-            var ascii = int.tryParse(imageKey.split('_')[0]);
-            String key = ascii == null ? _getSpecialText(imageKey) : String.fromCharCode(ascii);
+            String key;
+            if (_config[_CONFIG_SPECIALMAPPINGS].containsKey(imageKey)) {
+              key = _config[_CONFIG_SPECIALMAPPINGS][imageKey];
+            } else if (_config[_CONFIG_TRANSLATE] != null && _config[_CONFIG_TRANSLATE].contains(imageKey)) {
+              key = _getSpecialText(imageKey);
+              setTranslateable = true;
+            } else {
+              key = imageKey;
+            }
+
+            if (
+                   _config[_CONFIG_CASESENSITIVE] == null
+                || (_config[_CONFIG_CASESENSITIVE] != null && _config[_CONFIG_CASESENSITIVE] == false)
+            )
+              key = key.toUpperCase();
+
+            if (setTranslateable)
+              _translateables.add(key);
 
             var imagePath = imageSuffixes.hasMatch(filePath) ? filePath : null;
             var value = imagePath;
 
             return {key : value};
-          })
+        })
         .where((element) => element.values.first != null)
         .toList();
 
@@ -110,14 +233,14 @@ class SymbolTableState extends State<SymbolTable> {
 
         if (intA == null) {
           if (intB == null) {
-            if (keyA.startsWith(SPECIAL_MARKER)) {
-              if (keyB.startsWith(SPECIAL_MARKER)) {
+            if (_translateables.contains(keyA)) {
+              if (_translateables.contains(keyB)) {
                 return keyA.compareTo(keyB);
               } else {
                 return 1;
               }
             } else {
-              if (keyB.startsWith(SPECIAL_MARKER)) {
+              if (_translateables.contains(keyB)) {
                 return -1;
               } else {
                 return keyA.compareTo(keyB);
