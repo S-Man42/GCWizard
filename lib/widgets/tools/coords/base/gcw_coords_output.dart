@@ -8,9 +8,10 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_mapview.dart';
-import 'package:gc_wizard/widgets/utils/file_utils.dart';
+
 
 class GCWCoordsOutput extends StatefulWidget {
   final List<dynamic> outputs;
@@ -54,7 +55,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
       child: GCWButton (
         text: i18n(context, 'coords_show_on_map'),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => GCWTool(
+          Navigator.push(context, MaterialPageRoute(builder: (context) => GCWTool (
             tool: GCWMapView(
               points: widget.points,
               geodetics: widget.geodetics,
@@ -92,7 +93,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
             text: 'GPX',
             onPressed: () async {
               coordinatesExport.exportCoordinates(name, points, geodetics, circles).then((value) {
-                _showFilePath(value, '.gpx');
+                _showExportedFileDialog(value, '.gpx');
               });
             },
           ),
@@ -100,7 +101,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
             text: 'KML',
             onPressed: () async {
               coordinatesExport.exportCoordinates(name, points, geodetics, circles, kmlFormat: true).then((value) {
-                _showFilePath(value, '.kml');
+                _showExportedFileDialog(value, '.kml');
               });
             },
           )
@@ -108,34 +109,11 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
     );
   }
 
-  _showFilePath(Map<String, dynamic> value, String type) {
-    showGCWDialog(
-      context,
-      i18n(context, 'coords_export_saved'),
-      Column(
-        children: [
-          Text(i18n(context, 'coords_export_savedpath', parameters: [value['path']])),
-        ],
-      ),
-      [
-        GCWDialogButton(
-          text: i18n(context, 'coords_export_sharefile'),
-          onPressed: () async {
-            shareFile(value['path'], type);
-          },
-        ),
-
-        GCWDialogButton(
-          text: i18n(context, 'coords_export_openfile'),
-          onPressed: () async {
-            openFile(value['path'], type);
-          },
-        ),
-        GCWDialogButton(
-          text: i18n(context, 'common_ok'),
-        )
-      ],
-      cancelButton: false
+  _showExportedFileDialog(Map<String, dynamic> value, String type) {
+    showExportedFileDialog(
+        context,
+        value['path'],
+        fileType: type
     );
   }
 }

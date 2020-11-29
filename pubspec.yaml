@@ -28,7 +28,7 @@ dependencies:
   provider: ^4.3.2+2
   qr_flutter: ^3.2.0
   touchable: ^0.2.0
-  url_launcher: ^5.5.0
+  url_launcher: ^5.7.10
   share_extend: ^1.1.9
   open_file: ^3.0.3
 
@@ -172,7 +172,8 @@ flutter:
     - assets/symbol_tables/trafficsigns_germany/
     - assets/symbol_tables/ulog/
     - assets/symbol_tables/utopian/
-    - assets/symbol_tables/visitor/
+    - assets/symbol_tables/visitor_1984/
+    - assets/symbol_tables/visitor_2009/
     - assets/symbol_tables/wakandan/
     - assets/symbol_tables/webdings/
     - assets/symbol_tables/windforce_beaufort/

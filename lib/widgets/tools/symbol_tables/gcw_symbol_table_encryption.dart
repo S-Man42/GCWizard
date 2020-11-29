@@ -120,7 +120,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
                   decoration: BoxDecoration(
                     border: Border.all(color: themeColors().dialogText())
                   ),
-                )
+                ),
               );
             });
           },
