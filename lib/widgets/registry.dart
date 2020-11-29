@@ -138,6 +138,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vanity_multiplenumbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vanity_singlenumbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
@@ -760,6 +761,12 @@ class Registry {
         i18nPrefix: 'vigenere',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_VIGENERE + 'autokey'
+      ),
+      GCWTool(
+        tool: WhitespaceLanguage(),
+        i18nPrefix: 'whitespace_language',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'whitespace'
       ),
       GCWTool(
         tool: Windchill(),
