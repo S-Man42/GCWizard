@@ -12,11 +12,10 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/cistercian_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:prefs/prefs.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 
 class CistercianSegments extends StatefulWidget {
-
-  CistercianSegments({Key key}) : super(key: key);
 
   @override
   CistercianSegmentsState createState() => CistercianSegmentsState();
@@ -218,14 +217,23 @@ class CistercianSegmentsState extends State<CistercianSegments> {
     var segments;
     if (_currentMode == GCWSwitchPosition.left) { //encode
       segments = encodeCistercian(_currentEncodeInput);
-      return
-        Column(
-          children: <Widget>[
-            _buildDigitalOutput(countColumns, segments),
-          ],
-        );
+      var output =  segments.map((character) {
+        if (character == null)
+          return UNKNOWN_ELEMENT;
+
+        return character.join();
+      }).join(' ');
+
+      return Column(
+        children: <Widget>[
+          _buildDigitalOutput(countColumns, segments),
+          GCWDefaultOutput(
+              child: output
+          )
+        ],
+      );
     } else { //decode
-        //_currentDecodeInput is the result of the buildvisualencryption
+        //_currentDisplays is the result of the buildvisualencryption
       var output =  _currentDisplays.map((character) {
         if (character != null)
           return character.join();
