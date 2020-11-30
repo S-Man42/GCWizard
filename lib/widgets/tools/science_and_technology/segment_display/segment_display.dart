@@ -69,43 +69,43 @@ class SegmentDisplayState extends State<SegmentDisplay> {
               });
             },
           ),
-          _currentMode == GCWSwitchPosition.left
+          _currentMode == GCWSwitchPosition.left // encrypt
               ? GCWTwoOptionsSwitch(
-            value: _currentEncryptMode,
-            title: i18n(context, 'segmentdisplay_encodemode'),
-            leftValue: i18n(context, 'segmentdisplay_encodemode_text'),
-            rightValue: i18n(context, 'segmentdisplay_encodemode_visualsegments'),
-            onChanged: (value) {
-              setState(() {
-                _currentEncryptMode = value;
-                if (_currentEncryptMode == GCWSwitchPosition.right) {
-                  _currentDisplays = encodeSegment(_currentEncodeInput, widget.type);
-                }
-              });
-            },
-          )
-              : Container(),
-                _currentMode == GCWSwitchPosition.left
-                ? (
-                  _currentEncryptMode == GCWSwitchPosition.left
-                  ? GCWTextField(
-                      controller: _inputEncodeController,
-                      onChanged: (text) {
-                        setState(() {
-                          _currentEncodeInput = text;
-                        });
-                      },
-                    )
-                  : _buildVisualEncryption()
-                  )
-              : GCWTextField(
-                  controller: _inputDecodeController,
-                  onChanged: (text) {
+                  value: _currentEncryptMode,
+                  title: i18n(context, 'segmentdisplay_encodemode'),
+                  leftValue: i18n(context, 'segmentdisplay_encodemode_text'),
+                  rightValue: i18n(context, 'segmentdisplay_encodemode_visualsegments'),
+                  onChanged: (value) {
                     setState(() {
-                      _currentDecodeInput = text;
+                      _currentEncryptMode = value;
+                      if (_currentEncryptMode == GCWSwitchPosition.right) {
+                        _currentDisplays = encodeSegment(_currentEncodeInput, widget.type);
+                      }
                     });
                   },
-                ),
+                )
+              : Container(),
+          _currentMode == GCWSwitchPosition.left // encrypt
+          ? (
+            _currentEncryptMode == GCWSwitchPosition.left
+            ? GCWTextField(
+                controller: _inputEncodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
+            : _buildVisualEncryption()
+            )
+          : GCWTextField(
+            controller: _inputDecodeController,
+            onChanged: (text) {
+              setState(() {
+                _currentDecodeInput = text;
+              });
+            },
+          ),
           GCWTextDivider(
             text: i18n(context, 'segmentdisplay_displayoutput'),
             trailing: Row(

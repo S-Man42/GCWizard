@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
 import 'package:gc_wizard/theme/theme.dart';
-//import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
@@ -67,7 +66,7 @@ class CistercianSegmentsState extends State<CistercianSegments> {
                 });
               },
             ),
-            _currentMode == GCWSwitchPosition.left
+            _currentMode == GCWSwitchPosition.left  // encrypt: input number => output segment
                 ? GCWTextField(
                     controller: _inputEncodeController,
                     onChanged: (text) {
@@ -76,7 +75,7 @@ class CistercianSegmentsState extends State<CistercianSegments> {
                       });
                     },
                   )
-                : _buildVisualEncryption(),
+                : _buildVisualEncryption(), // decrpyt: input segment => output number
             GCWTextDivider(
               text: i18n(context, 'segmentdisplay_displayoutput'),
               trailing: Row(
