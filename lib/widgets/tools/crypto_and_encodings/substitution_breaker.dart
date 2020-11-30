@@ -126,7 +126,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
                   substitutions.putIfAbsent(_currentOutput.key[i], () => _currentOutput.alphabet[i]);
 
                 Navigator.push(context, NoAnimationMaterialPageRoute(
-                  builder: (context) => GCWToolWidget(
+                  builder: (context) => GCWTool(
                     tool: Substitution(input: _currentOutput.ciphertext, substitutions: substitutions),
                     toolName: i18n(context, 'substitution_title')
                   )

@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 enum ToolCategory {CRYPTOGRAPHY, COORDINATES, FORMULA_SOLVER, GAMES, SCIENCE_AND_TECHNOLOGY, SYMBOL_TABLES}
 
-class GCWToolWidget extends StatefulWidget {
+class GCWTool extends StatefulWidget {
   final Widget tool;
   final String i18nPrefix;
   final ToolCategory category;
@@ -27,7 +27,7 @@ class GCWToolWidget extends StatefulWidget {
 
   Widget titleTrailing;
 
-  GCWToolWidget({
+  GCWTool({
     Key key,
     this.tool,
     this.toolName,
@@ -66,10 +66,10 @@ class GCWToolWidget extends StatefulWidget {
   }
 
   @override
-  _GCWToolWidgetState createState() => _GCWToolWidgetState();
+  _GCWToolState createState() => _GCWToolState();
 }
 
-class _GCWToolWidgetState extends State<GCWToolWidget> {
+class _GCWToolState extends State<GCWTool> {
 
   @override
   Widget build(BuildContext context) {
