@@ -102,7 +102,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
   _buildFormulaList(BuildContext context) {
     var odd = true;
     var rows = formulas.map((formula) {
-      var formulaTool = GCWToolWidget(
+      var formulaTool = GCWTool(
         tool: VariableCoordinate(formula: formula),
         toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
         i18nPrefix: 'coords_variablecoordinate', // for calling the help of Variable Coordinates
