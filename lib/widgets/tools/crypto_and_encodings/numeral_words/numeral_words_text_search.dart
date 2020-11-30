@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -104,13 +102,30 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
       detailedOutput = null;
     }
 
-    var columnData;
+    List<List<String>> columnData = new List<List<String>>();
     var flexData;
+    String  columnDataRowNumber;
+    String  columnDataRowNumWord;
+    String  columnDataRowLanguage;
     if (_currentLanguage == NumeralWordsLanguage.ALL) {
-      columnData = detailedOutput.map((entry) => [entry.number, entry.numWord, i18n(context, entry.language)]).toList();
+      for (int i = 0; i< detailedOutput.length; i++) {
+        columnDataRowNumber = detailedOutput[i].number;
+        columnDataRowNumWord = detailedOutput[i].numWord;
+        columnDataRowLanguage = i18n(context, detailedOutput[i].language);
+        int j = i+1;
+        while (j < detailedOutput.length && detailedOutput[j].number == '') {
+          columnDataRowNumber = columnDataRowNumber + '\n' + '';
+          columnDataRowNumWord = columnDataRowNumWord + '\n' + detailedOutput[j].numWord;
+          columnDataRowLanguage = columnDataRowLanguage + '\n' + i18n(context, detailedOutput[j].language);
+          j++;
+        }
+        i = j - 1;
+        columnData.add([columnDataRowNumber, columnDataRowNumWord, columnDataRowLanguage]);
+      }
       flexData = [1, 3, 1];
     } else {
-      columnData = detailedOutput.map((entry) => [entry.number, entry.numWord]).toList();
+      columnData = detailedOutput.map((entry) => [entry.number, entry.numWord])
+                                 .toList();
       flexData = [1, 2];
     }
 

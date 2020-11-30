@@ -8,7 +8,7 @@ class GamesSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
 
-    final List<GCWToolWidget> _toolList = Registry.toolList.where((element) => element.category == ToolCategory.GAMES).toList();
+    final List<GCWTool> _toolList = Registry.toolList.where((element) => element.category == ToolCategory.GAMES).toList();
     _toolList.sort((a, b){
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });

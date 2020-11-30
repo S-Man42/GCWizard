@@ -62,7 +62,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   Widget build(BuildContext context) {
     _themeColors = themeColors();
 
-    var formulaTool = GCWToolWidget(
+    var formulaTool = GCWTool(
       tool: FormulaSolverFormulaValues(group: widget.group),
       toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
       i18nPrefix: 'formulasolver', // for calling the help of the formulasolver
@@ -167,7 +167,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
   _openInVariableCoordinate(var_coords_model.Formula formula) {
     Navigator.push(context, NoAnimationMaterialPageRoute(
-      builder: (context) => GCWToolWidget(
+      builder: (context) => GCWTool(
         tool: VariableCoordinate(formula: formula),
         toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}'
       )

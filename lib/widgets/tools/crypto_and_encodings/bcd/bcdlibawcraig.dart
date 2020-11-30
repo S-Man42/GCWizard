@@ -6,9 +6,9 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd.dart';
 class BCDLibawCraig extends BCD {
 
   BCDLibawCraig({Key key}) :
-        super(
-        key: key,
-        type: BCDType.LIBAWCRAIG,
-      );
+    super(
+      key: key,
+      type: BCDType.LIBAWCRAIG,
+    );
 }
 
