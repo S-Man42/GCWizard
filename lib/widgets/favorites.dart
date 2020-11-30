@@ -6,9 +6,9 @@ enum FavoriteChangeStatus {
 }
 
 class Favorites {
-  static List<GCWToolWidget> toolList;
+  static List<GCWTool> toolList;
 
-  static update(GCWToolWidget _tool, FavoriteChangeStatus change) {
+  static update(GCWTool _tool, FavoriteChangeStatus change) {
     switch (change) {
       case FavoriteChangeStatus.add:
         toolList.add(_tool);

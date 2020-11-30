@@ -1,0 +1,27 @@
+{
+	"case_sensitive" : true,
+	"special_mappings" : {
+		"J" : "Y",
+		"j" : "y",
+		"CHE" : "Č",
+		"che" : "č",
+		"DJE" : "Ð",
+		"dje" : "đ",
+		"DZE" : "S",
+		"dze" : "s",
+		"DZHE" : "DŽ",
+		"dzhe" : "dž",
+		"JUS" : "A",
+		"jus" : "a",
+		"KJE" : "K",
+		"kje" : "k",
+		"SHA" : "Š",
+		"sha" : "š",
+		"SHCHA" : "ŠT",
+		"shcha" : "št",
+		"TSHE" : "Ć",
+		"tshe" : "ć",
+		"ZHE" : "Ž",
+		"zhe" : "ž"		
+	}
+}

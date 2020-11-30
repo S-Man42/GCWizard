@@ -156,7 +156,7 @@ class _MainViewState extends State<MainView> {
     Registry.initialize(context);
     Favorites.initialize();
 
-    final List<GCWToolWidget> _toolList =
+    final List<GCWTool> _toolList =
       Registry.toolList.where((element) {
         return [
           className(Abaddon()),
@@ -251,7 +251,7 @@ class _MainViewState extends State<MainView> {
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });
 
-    final List<GCWToolWidget> _categoryList =
+    final List<GCWTool> _categoryList =
     Registry.toolList.where((element) {
       return [
         className(CoordsSelection()),
@@ -359,7 +359,7 @@ class _MainViewState extends State<MainView> {
     );
   }
 
-  List<GCWToolWidget> _getSearchedList(List<GCWToolWidget> list) {
+  List<GCWTool> _getSearchedList(List<GCWTool> list) {
     list = list.where((tool) {
       if (tool.searchStrings == null || tool.searchStrings.length == 0)
         return false;

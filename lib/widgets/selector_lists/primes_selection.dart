@@ -14,7 +14,7 @@ class PrimesSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
 
-    final List<GCWToolWidget> _toolList =
+    final List<GCWTool> _toolList =
       Registry.toolList.where((element) {
         return [
           className(NthPrime()),
