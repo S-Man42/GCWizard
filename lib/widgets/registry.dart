@@ -217,7 +217,7 @@ class Registry {
   static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
   static final SEARCHSTRING_EASTER = 'eastersunday ostern ostersonntag ';
   static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterische programmiersprache esoteric programming language ';
-  static final SEARCHSTRING_FORMULASOLVER = 'formula solver formelrechner ';
+  static final SEARCHSTRING_FORMULASOLVER = 'formulasolver formelrechner formelsolver ';
   static final SEARCHSTRING_GAMELANGUAGE = 'spielsprachen game languages secret languages geheimsprachen ';
   static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschluesselungen ';
   static final SEARCHSTRING_HASHES_BLAKE2B = SEARCHSTRING_HASHES_SHA3 + 'blake2b ';
@@ -963,7 +963,7 @@ class Registry {
         tool: WaypointProjection(),
         i18nPrefix: 'coords_waypointprojection',
         iconPath: 'assets/coordinates/icon_waypoint_projection.png',
-        searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_COORDINATES_COMPASSROSE + 'winkel angles waypointprojections bearings wegpunktprojektionen wegpunktpeilungen directions richtungen reverse projections rueckwaertspeilung'
+        searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_COORDINATES_COMPASSROSE + 'winkel angles waypointprojections bearings wegpunktprojektionen wegpunktpeilungen cardinaldirections richtungen reverse projections rueckwaertspeilung kompassrose compassrose himmelsrichtungen '
       ),
       GCWTool(
         tool: DistanceBearing(),
@@ -975,7 +975,7 @@ class Registry {
         tool: FormatConverter(),
         i18nPrefix: 'coords_formatconverter',
         iconPath: 'assets/coordinates/icon_format_converter.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'converter converting konverter konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gauss kruger krueger gauue mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
+        searchStrings: SEARCHSTRING_COORDINATES + 'coordinateformatconverter converting koordinatenformatkonverter formate konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
       ),
       GCWTool(
         tool: VariableCoordinateFormulas(),
@@ -2087,7 +2087,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'terzi',
         iconFilename: 'Z.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'francesco lana di terzi alphabet square dots punkte points quadrat alphabet blindenschrift braille eyeless relief taktil tactiles'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'francesco lana de terzi alphabet square dots punkte points quadrat alphabet blindenschrift braille eyeless relief taktil tactiles'
       ),
       GCWSymbolTableTool(
         symbolKey: 'theban',
@@ -2117,7 +2117,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'utopian',
         iconFilename: 'L.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'utopian utopisch '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'utopian utopisch utopiensiumalphabetum thomasmore vtopiensiumalphabetum'
       ),
       GCWSymbolTableTool(
         symbolKey: 'visitor_1984',
