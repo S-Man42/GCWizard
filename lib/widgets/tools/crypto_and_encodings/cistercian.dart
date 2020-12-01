@@ -15,13 +15,12 @@ import 'package:prefs/prefs.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 
-class CistercianSegments extends StatefulWidget {
-
+class CistercianNumbers extends StatefulWidget {
   @override
-  CistercianSegmentsState createState() => CistercianSegmentsState();
+  CistercianNumbersState createState() => CistercianNumbersState();
 }
 
-class CistercianSegmentsState extends State<CistercianSegments> {
+class CistercianNumbersState extends State<CistercianNumbers> {
 
   var _inputEncodeController;
   var _inputDecodeController;
@@ -136,12 +135,7 @@ class CistercianSegmentsState extends State<CistercianSegments> {
           newSegments.add(key);
         });
 
-        //sort with dot to end
-        //var containsDot = newSegments.contains('dp');
-        //newSegments.remove('dp');
         newSegments.sort();
-        //if (containsDot)
-        //  newSegments.add('dp');
 
         if (_currentDisplays.length == 0)
           _currentDisplays.add([]);
@@ -238,16 +232,15 @@ class CistercianSegmentsState extends State<CistercianSegments> {
         if (character != null)
           return character.join();
       }).join(' ');
-
-      segments = decodeCistercian(output, SegmentDisplayType.CISTERCIAN);
+print('output:'+output);
+      segments = decodeCistercian(output);
 
       return
         Column(
           children: <Widget>[
             _buildDigitalOutput(countColumns, segments['displays']),
               GCWDefaultOutput(
-                //child: segments['text']
-                child: decodeSegment(segments['text'], SegmentDisplayType.CISTERCIAN)
+                child: segments['text']
               )
           ],
         );

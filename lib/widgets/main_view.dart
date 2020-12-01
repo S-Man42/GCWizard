@@ -180,7 +180,7 @@ class _MainViewState extends State<MainView> {
           className(CCITT2Selection()),
           className(Chao()),
           className(ChickenLanguage()),
-          className(CistercianSegments()),
+          className(CistercianNumbers()),
           className(CoordsSelection()),
           className(ColorPicker()),
           className(CombinatoricsSelection()),

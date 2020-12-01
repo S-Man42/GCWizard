@@ -378,7 +378,7 @@ class Registry {
         searchStrings: SEARCHSTRING_GAMELANGUAGE + 'chickenlanguage huehnersprache huenersprache huhn'
       ),
       GCWTool(
-        tool: CistercianSegments(),
+        tool: CistercianNumbers(),
         i18nPrefix: 'cistercian',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'cistercian numbers Zisterzienser'
