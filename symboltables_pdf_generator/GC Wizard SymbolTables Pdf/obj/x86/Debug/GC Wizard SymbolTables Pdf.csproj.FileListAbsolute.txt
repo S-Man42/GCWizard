@@ -40,3 +40,4 @@ D:\tmp\GitHub\GC WIzard 1.2.0 - Kopie\GCWizard\symboltables_pdf_generator\GC Wiz
 D:\tmp\GitHub\GC WIzard 1.2.0 - Kopie\GCWizard\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC_Wizard_SymbolTables_Pdf.mainForm.resources
 D:\tmp\GitHub\GC WIzard 1.2.0 - Kopie\GCWizard\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC_Wizard_SymbolTables_Pdf.Properties.Resources.resources
 D:\tmp\GitHub\GC WIzard 1.2.0 - Kopie\GCWizard\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.csproj.GenerateResource.Cache
+D:\tmp\GitHub\GC WIzard 1.2.0 - Kopie\GCWizard\symboltables_pdf_generator\GC Wizard SymbolTables Pdf\obj\x86\Debug\GC Wizard SymbolTables Pdf.csprojResolveAssemblyReference.cache

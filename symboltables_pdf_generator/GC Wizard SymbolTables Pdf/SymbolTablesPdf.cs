@@ -393,7 +393,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             var path = Path.Combine(ProjectPath, @"lib\widgets\tools\symbol_tables\symbol_table_data.dart");
             if (File.Exists(path))
             {
-     
+
                 try
                 {
                     var fileContent = File.ReadAllText(path);
@@ -409,7 +409,10 @@ namespace GC_Wizard_SymbolTables_Pdf
                             var match2 = regex2.Match(line);
                             if (match2.Success)
                             {
-                                list2.Add(match2.Groups[1].Value, match2.Groups[3].Value);
+                                var value = match2.Groups[3].Value;
+                                if (value.StartsWith(@"\"))
+                                    value = value.Substring(1);
+                                list2.Add(match2.Groups[1].Value, value);
                             }
                         }
                         list = list2;
