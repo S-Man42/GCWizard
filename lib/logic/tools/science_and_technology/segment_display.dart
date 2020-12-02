@@ -483,11 +483,12 @@ final Map<List<String>, int> _SegmentCistercianToAZ = switchMapKeyValue(_AZToCis
 List<List<String>> encodeCistercian(String input) {
   if (input == null || input == '')
     return [];
-  var inputCharacters = input.split(RegExp(r'[^1234567890]')).toList();
+
+  List<String> inputCharacters = input.split(RegExp(r'[^1234567890]')).toList();
   print(inputCharacters);
   var output = <List<String>>[];
   var digit = 0;
-  var number; // = new List<String>();
+  var segmentList; // = new List<String>();
 
   for (String character in inputCharacters) {
     int encodeNumber = int.tryParse(character);
@@ -496,18 +497,18 @@ List<List<String>> encodeCistercian(String input) {
       for (int i = 0; i < character.length; i++){
         digit = int.parse(character[i]) * pow(10, character.length - i - 1);
         if (digit != 0) {
-          number = _AZToCistercianSegment[digit];
+          segmentList = _AZToCistercianSegment[digit];
           if (display == null){
-            display = number;
+            display = segmentList;
           } else {
-            for (String charElem in number) {
+            for (String charElem in segmentList) {
               if (!display.contains(charElem)) {
                 display.add(charElem);
               }
             }
           }
         }
-      }
+      } // end scanning number
       if (display != null) {
         display.sort();
         output.add(display);
@@ -648,10 +649,10 @@ Map<String, dynamic> decodeCistercian(String input) {
 
   for (int i = 0; i < input.length; i++) {
     var segment = input[i];
-    if (i + 1 < input.length && ['1', '2', 'p'].contains(input[i + 1])) {
-      i++;
-      segment += input[i];
-    }
+    //if (i + 1 < input.length && ['1', '2', 'p'].contains(input[i + 1])) {
+    //  i++;
+    //  segment += input[i];
+    //}
 
     if (!baseSegments.contains(segment)) {
       if (currentDisplay != null) {
