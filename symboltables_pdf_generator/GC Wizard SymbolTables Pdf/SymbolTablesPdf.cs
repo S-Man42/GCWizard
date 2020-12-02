@@ -242,9 +242,26 @@ namespace GC_Wizard_SymbolTables_Pdf
             var _path = symbolTablesDirectory(path);
             _path = Path.Combine(_path, folder);
 
+            var configFilePath = Path.Combine(_path, "config.json");
+            List<String> translateList = null;
+            Dictionary<String, String> mappingList = null;
+            bool caseSensitive = false;
+
+            if (File.Exists(Path.Combine(configFilePath)))
+            {
+                var fileContent = File.ReadAllText(configFilePath);
+                translateList = parseTranslateConfig(fileContent);
+                mappingList = parseMappingConfig(fileContent);
+                caseSensitive = parseCaseSesitiveConfig(fileContent);
+
+            }
+            else
+                mappingList = parseMappingConfig(null);
+
+
             foreach (var symbol in Directory.GetFiles(_path, "*.png"))
             {
-                overlay = symbolOverlay(symbol, folder, languagefile);
+                overlay = symbolOverlay(symbol, folder, languagefile, translateList, mappingList, caseSensitive);
 
                 list.Add(symbol, overlay);
             }
@@ -255,22 +272,157 @@ namespace GC_Wizard_SymbolTables_Pdf
             return listSorted;
         }
 
-        private String symbolOverlay(String symbolPath, String folder, String languagefile)
+        private List<String> parseTranslateConfig(String fileContent)
+        {
+            var regex = new Regex(@"(translate)(.*?)(\[)(.*?)(\])", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            var regex2 = new Regex(@"\""(.*?)\""");
+            var list = new List<String>();
+
+            if (fileContent != null)
+            {
+                var match = regex.Match(fileContent);
+                if (match.Success)
+                {
+                    var matches = regex2.Matches(match.Groups[4].Value);
+                    foreach (Match match2 in matches)
+                        list.Add(match2.Groups[1].Value);
+                }
+            }
+            return list;
+        }
+
+        private Dictionary<String, String> parseMappingConfig(String fileContent)
+        {
+            var regex = new Regex(@"(special_mappings)(.*?)(\{)(.*?)(\})", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            var regex2 = new Regex(@"\""(.*?)\""(\s*:\s*)\""(.*?)\""");
+            var list = new Dictionary<String, String> {
+                { "space" , " "},
+    { "asterisk" , "*"},
+    { "dash" , "-"},
+    { "colon" , ","},
+    { "semicolon" , ","},
+    { "dot" , "."},
+    { "slash" , "/"},
+    { "apostrophe" , "'"},
+    { "apostrophe_in" , "'"},
+    { "apostrophe_out" , "'"},
+    { "parentheses_open" , "("},
+    { "parentheses_close" , ")"},
+    { "quotation" , "\""},
+    { "quotation_in" , "\""},
+    { "quotation_out" , "\""},
+    { "dollar" , "$"},
+    { "percent" , "%"},
+    { "plus" , "+"},
+    { "question" , "?"},
+    { "exclamation" , "!"},
+    { "backslash" , "\\"},
+    { "copyright" , "©"},
+    { "comma" , "},"},
+    { "pound" , "£"},
+    { "equals" , "="},
+    { "brace_open" , "{"},
+    { "brace_close" , "}"},
+    { "bracket_open" , "["},
+    { "bracket_close" , "]"},
+    { "ampersand" , "&"},
+    { "hashtag" , "#"},
+    { "web_at" , "@"},
+    { "paragraph" , "§"},
+    { "caret" , "^"},
+    { "underscore" , "_"},
+    { "backtick" , "`"},
+    { "pipe" , "|"},
+    { "tilde" , "~"},
+    { "lessthan" , "<"},
+    { "greaterthan" , ">"},
+    { "euro" , "€"},
+    { "AE_umlaut" , "Ä"},
+    { "OE_umlaut" , "Ö"},
+    { "UE_umlaut" , "Ü"},
+    { "SZ_umlaut" , "ß"},
+    { "A_acute" , "Á"},
+    { "A_grave" , "À"},
+    { "A_circumflex" , "Â"},
+    { "AE_together" , "Æ"},
+    { "C_cedille" , "Ç"},
+    { "E_acute" , "É"},
+    { "E_grave" , "È"},
+    { "E_circumflex" , "Ê"},
+    { "E_trema" , "Ë"},
+    { "I_acute" , "Í"},
+    { "I_grave" , "Ì"},
+    { "I_circumflex" , "Î"},
+    { "I_trema" , "Ï"},
+    { "N_tilde" , "Ñ"},
+    { "O_acute" , "Ó"},
+    { "O_grave" , "Ò"},
+    { "O_circumflex" , "Ô"},
+    { "U_acute" , "Ú"},
+    { "U_grave" , "Ù"},
+    { "U_circumflex" , "Û"},
+
+    { "ae_umlaut" , "ä"},
+    { "oe_umlaut" , "ö"},
+    { "ue_umlaut" , "ü"},
+  };
+
+            if (fileContent != null)
+            {
+                var match = regex.Match(fileContent);
+                if (match.Success)
+                {
+                    foreach (string line in match.Groups[4].Value.Split('\n'))
+                    {
+                        var match2 = regex2.Match(line);
+                        if (match2.Success)
+                        {
+                            list.Add(match2.Groups[1].Value, match2.Groups[3].Value);
+                        }
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        private bool parseCaseSesitiveConfig(String fileContent)
+        {
+            var regex = new Regex(@"(\""case_sensitive\""\s *:)\s(true)");
+            bool value = false;
+
+            if (fileContent != null)
+            {
+                var match = regex.Match(fileContent);
+                value = match.Success;
+            }
+            return value;
+        }
+
+
+        private String symbolOverlay(String symbolPath, String folder, String languagefile, List<String> translateList, Dictionary<String, String> mappingList, bool caseSensitive)
         {
             var fileName = Path.GetFileNameWithoutExtension(symbolPath);
-            var overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + fileName);
-
-            if (overlay == null)
+            var overlay = fileName;
+            var lowerCase = false;
+            if (overlay.StartsWith("_"))
             {
-                Byte asciiCode;
-                while (fileName.EndsWith("_"))
-                    fileName = fileName.Substring(0, fileName.Length - 1);
-
-                if (Byte.TryParse(fileName, out asciiCode))
-                    overlay = Convert.ToChar(asciiCode).ToString();
-                else
-                    overlay = String.Empty;
+                lowerCase = true;
+                overlay = overlay.Substring(1);
             }
+
+            if (translateList != null && translateList.Contains(fileName))
+                overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + fileName);
+            else if (mappingList != null && mappingList.ContainsKey(fileName))
+                overlay = mappingList[fileName];
+
+            while (overlay.EndsWith("_"))
+                overlay = overlay.Substring(0, overlay.Length - 1);
+
+            if (caseSensitive && lowerCase)
+                overlay = overlay.ToLower();
+            else
+                overlay = overlay.ToUpper();
 
             return overlay;
         }
@@ -510,7 +662,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 var match = regex.Match(line);
                 if (match.Success)
                 {
-                    value = match.Groups[2].Value.ToString();
+                    value = match.Groups[2].Value;
                     break;
                 }
             }
@@ -534,7 +686,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 var match = regex.Match(line);
                 if (match.Success)
                 {
-                    value = "Version: " + match.Groups[2].Value.ToString() + " (Build: " + match.Groups[4].Value.ToString() + ")";
+                    value = "Version: " + match.Groups[2].Value + " (Build: " + match.Groups[4].Value + ")";
                     break;
                 }
             }
