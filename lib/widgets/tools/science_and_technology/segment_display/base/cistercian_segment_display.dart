@@ -3,9 +3,9 @@ import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 
 const _INITIAL_SEGMENTS = <String, bool>{
-  'z1': false, 'z2': false, 'z3': false, 'z4': false, 'z5': false, 'z6': false, 'z7': false,
-  'z8': false, 'z9': false, 'z10': false, 'z11': false, 'z12': false, 'z13': false, 'z14': false,
-  'z15': false, 'z16': false, 'z17': false, 'z18': false, 'z19': false, 'z20': false, 'z21': false
+  'a': false, 'b': false, 'c': false, 'd': false, 'e': false, 'f': false, 'g': false,
+  'h': false, 'i': false, 'j': false, 'k': false, 'l': false, 'm': false, 'n': false,
+  'o': false, 'p': false, 'q': false, 'r': false, 's': false, 't': false, 'u': false
 };
 
 class CistercianSegmentDisplay extends NSegmentDisplay {

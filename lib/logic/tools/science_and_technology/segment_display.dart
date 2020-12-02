@@ -9,7 +9,7 @@ enum SegmentDisplayType{SEVEN, FOURTEEN, SIXTEEN, CISTERCIAN}
 final _baseSegments7Segment = ['a','b','c','d','e','f','g','dp'];
 final _baseSegments14Segment = ['a','b','c','d','e','f','g1','g2','h','i','j','k','l','m','dp'];
 final _baseSegments16Segment = ['a1','a2','b','c','d1','d2','e','f','g1','g2','h','i','j','k','l','m','dp'];
-final _baseSegmentsCistercianSegment = ['z1','z2','z3','z4','z5','z6','z7','z8','z9','z10','z11','z12','z13','z14','z15','16','z17','z18','z19','z20','z21'];
+final _baseSegmentsCistercianSegment = ['a','b','c','d','e','f','g','h','i','a0','k','l','m','n','o','p','q','r','s','t','u'];
 
 final Map<String, List<String>> _AZTo16Segment = {
   '1'  : ['b','c','j'],
@@ -439,42 +439,42 @@ final Map<List<String>, String> _Segment16ToAZ = {
 };
 
 final Map<int, List<String>> _AZToCistercianSegment = {
-  1 : ['z2','z11'],
-  2 : ['z10','z11'],
-  3 : ['z8','z11'],
-  4 : ['z7','z11'],
-  5 : ['z2','z7','z11'],
-  6 : ['z4','z11'],
-  7 : ['z2','z4','z11'],
-  8 : ['z4','z10','z11'],
-  9 : ['z2','z4','z10','z11'],
-  10 : ['z1','z11'],
-  20 : ['z9','z11'],
-  30 : ['z5','z11'],
-  40 : ['z6','z11'],
-  50 : ['z1','z6','z11'],
-  60 : ['z3','z11'],
-  70 : ['z1','z3','z11'],
-  80 : ['z3','z9','z11'],
-  90 : ['z1','z3','z9','z11'],
-  100 : ['z11','z21'],
-  200 : ['z11','z13'],
-  300 : ['z11','z18'],
-  400 : ['z11','z19'],
-  500 : ['z11','z19','z21'],
-  600 : ['z11','z15'],
-  700 : ['z11','z15','z21'],
-  800 : ['z11','z13','z15'],
-  900 : ['z11','z13','z15','z21'],
-  1000 : ['z11','z20'],
-  2000 : ['z11','z12'],
-  3000 : ['z11','z17'],
-  4000 : ['z11','z16'],
-  5000 : ['z11','z16','z20'],
-  6000 : ['z11','z14'],
-  7000 : ['z11','z14','z20'],
-  8000 : ['z11','z12','z14'],
-  9000 : ['z11','z12','z14','z20'],
+  1 : ['b','k'],
+  2 : ['j','k'],
+  3 : ['h','k'],
+  4 : ['g','k'],
+  5 : ['b','g','k'],
+  6 : ['d','k'],
+  7 : ['b','d','k'],
+  8 : ['d','j','k'],
+  9 : ['b','d','j','k'],
+  10 : ['a','k'],
+  20 : ['i','k'],
+  30 : ['e','k'],
+  40 : ['f','k'],
+  50 : ['a','f','k'],
+  60 : ['c','k'],
+  70 : ['a','c','k'],
+  80 : ['c','i','k'],
+  90 : ['a','c','i','k'],
+  100 : ['k','u'],
+  200 : ['k','m'],
+  300 : ['k','r'],
+  400 : ['k','s'],
+  500 : ['k','s','u'],
+  600 : ['k','o'],
+  700 : ['k','o','u'],
+  800 : ['k','m','o'],
+  900 : ['k','m','o','u'],
+  1000 : ['k','t'],
+  2000 : ['k','l'],
+  3000 : ['k','q'],
+  4000 : ['k','p'],
+  5000 : ['k','p','t'],
+  6000 : ['k','n'],
+  7000 : ['k','n','t'],
+  8000 : ['k','l','n'],
+  9000 : ['k','l','n','t'],
 };
 
 final Map<List<String>, int> _SegmentCistercianToAZ = switchMapKeyValue(_AZToCistercianSegment);
@@ -648,10 +648,10 @@ Map<String, dynamic> decodeCistercian(String input) {
 
   for (int i = 0; i < input.length; i++) {
     var segment = input[i];
-    //if (i + 1 < input.length && ['1', '2', 'p'].contains(input[i + 1])) {
-    //  i++;
-    //  segment += input[i];
-    //}
+    if (i + 1 < input.length && ['1', '2', 'p'].contains(input[i + 1])) {
+      i++;
+      segment += input[i];
+    }
 
     if (!baseSegments.contains(segment)) {
       if (currentDisplay != null) {
@@ -684,136 +684,136 @@ print(i.toString()+'.'+tokens[i]);
     unknownToken = true;
     digit = 0;
     // segments contains all segments - these have to split into numbers
-    //   1000 - 9000    z11   z12 z14 z16 z17 z20
-    //    100 -  900    z11   z21 z13 z18 z19 z15
-    //     10 -   90    z11   z1  z9  z5  z6  z3
-    //      1 -    9    z11   z2  z10 z8  z7  z4
+    //   1000 - 9000    k   l n p q t
+    //    100 -  900    k   u m r s o
+    //     10 -   90    k   a  i  e  f  c
+    //      1 -    9    k   b  a0 h  g  d
     // to return number.toString()
     // or return UNKNOWN_ELEMENT
 
-    if (tokens[i].contains('z11')) {
-      tokens[i] = tokens[i].replaceAll('z11', '');
+    if (tokens[i].contains('k')) {
+      tokens[i] = tokens[i].replaceAll('k', '');
       // check numbers 100 - 900
       print('check 100 - 900');
-      if (tokens[i].contains('z21') && tokens[i].contains('z13') && tokens[i].contains('z15')) { // 900
+      if (tokens[i].contains('u') && tokens[i].contains('m') && tokens[i].contains('o')) { // 900
         digit = digit + 900;
-        tokens[i] = tokens[i].replaceAll('z21', ''); tokens[i] = tokens[i].replaceAll('z13', ''); tokens[i] = tokens[i].replaceAll('z15', '');
-      } else if (tokens[i].contains('z13') && tokens[i].contains('z15')) { // 800
+        tokens[i] = tokens[i].replaceAll('u', ''); tokens[i] = tokens[i].replaceAll('m', ''); tokens[i] = tokens[i].replaceAll('o', '');
+      } else if (tokens[i].contains('m') && tokens[i].contains('o')) { // 800
         digit = digit + 800;
-        tokens[i] = tokens[i].replaceAll('z13', ''); tokens[i] = tokens[i].replaceAll('z15', '');
-      } else if (tokens[i].contains('z21') && tokens[i].contains('z17')) { // 700
+        tokens[i] = tokens[i].replaceAll('m', ''); tokens[i] = tokens[i].replaceAll('o', '');
+      } else if (tokens[i].contains('u') && tokens[i].contains('q')) { // 700
         digit = digit + 700;
-        tokens[i] = tokens[i].replaceAll('z21', ''); tokens[i] = tokens[i].replaceAll('z17', '');
-      } else if (tokens[i].contains('z15')) { // 600
+        tokens[i] = tokens[i].replaceAll('u', ''); tokens[i] = tokens[i].replaceAll('q', '');
+      } else if (tokens[i].contains('o')) { // 600
         digit = digit + 600;
-        tokens[i].replaceAll('z15', '');
-      } else if (tokens[i].contains('z21') && tokens[i].contains('z19')) { // 500
+        tokens[i].replaceAll('o', '');
+      } else if (tokens[i].contains('u') && tokens[i].contains('s')) { // 500
         digit = digit + 500;
-        tokens[i] = tokens[i].replaceAll('z21', ''); tokens[i] = tokens[i].replaceAll('z19', '');
-      } else if (tokens[i].contains('z19')) { // 400
+        tokens[i] = tokens[i].replaceAll('u', ''); tokens[i] = tokens[i].replaceAll('s', '');
+      } else if (tokens[i].contains('s')) { // 400
         digit = digit + 400;
-        tokens[i] = tokens[i].replaceAll('z19', '');
-      } else if ( tokens[i].contains('z18')) { // 300
+        tokens[i] = tokens[i].replaceAll('s', '');
+      } else if ( tokens[i].contains('r')) { // 300
         digit = digit + 300;
-        tokens[i] = tokens[i].replaceAll('z18', '');
-      } else if (tokens[i].contains('z13')) { // 200
+        tokens[i] = tokens[i].replaceAll('r', '');
+      } else if (tokens[i].contains('m')) { // 200
         digit = digit + 200;
-        tokens[i] = tokens[i].replaceAll('z13', '');
-      } else if (tokens[i].contains('z21')) { // 100
+        tokens[i] = tokens[i].replaceAll('m', '');
+      } else if (tokens[i].contains('u')) { // 100
         digit = digit + 100;
-        tokens[i] = tokens[i].replaceAll('z21', '');
+        tokens[i] = tokens[i].replaceAll('u', '');
       }
 
       // check numbers 1000 - 9000
       print('check 100 - 900');
-      if (tokens[i].contains('z20') && tokens[i].contains('z14') && tokens[i].contains('z12')) { // 9000
+      if (tokens[i].contains('t') && tokens[i].contains('n') && tokens[i].contains('l')) { // 9000
         digit = digit + 9000;
-        tokens[i] = tokens[i].replaceAll('z20', ''); tokens[i] = tokens[i].replaceAll('z14', ''); tokens[i] = tokens[i].replaceAll('z12', '');
-      } else if (tokens[i].contains('z14') && tokens[i].contains('z12')) { // 8000
+        tokens[i] = tokens[i].replaceAll('t', ''); tokens[i] = tokens[i].replaceAll('n', ''); tokens[i] = tokens[i].replaceAll('l', '');
+      } else if (tokens[i].contains('n') && tokens[i].contains('l')) { // 8000
         digit = digit + 8000;
-        tokens[i] = tokens[i].replaceAll('z14', ''); tokens[i] = tokens[i].replaceAll('z12', '');
-      } else if (tokens[i].contains('z20') && tokens[i].contains('z14')) { // 7000
+        tokens[i] = tokens[i].replaceAll('n', ''); tokens[i] = tokens[i].replaceAll('l', '');
+      } else if (tokens[i].contains('t') && tokens[i].contains('n')) { // 7000
         digit = digit + 7000;
-        tokens[i] = tokens[i].replaceAll('z20', ''); tokens[i] = tokens[i].replaceAll('z14', '');
-      } else if (tokens[i].contains('z14')) { // 6000
+        tokens[i] = tokens[i].replaceAll('t', ''); tokens[i] = tokens[i].replaceAll('n', '');
+      } else if (tokens[i].contains('n')) { // 6000
         digit = digit + 6000;
-        tokens[i].replaceAll('z14', '');
-      } else if (tokens[i].contains('z20') && tokens[i].contains('z16')) { // 5000
+        tokens[i].replaceAll('n', '');
+      } else if (tokens[i].contains('t') && tokens[i].contains('p')) { // 5000
         digit = digit + 5000;
-        tokens[i] = tokens[i].replaceAll('z20', ''); tokens[i] = tokens[i].replaceAll('z16', '');
-      } else if (tokens[i].contains('z16')) { // 4000
+        tokens[i] = tokens[i].replaceAll('t', ''); tokens[i] = tokens[i].replaceAll('p', '');
+      } else if (tokens[i].contains('p')) { // 4000
         digit = digit + 4000;
-        tokens[i] = tokens[i].replaceAll('z16', '');
-      } else if ( tokens[i].contains('z17')) { // 3000
+        tokens[i] = tokens[i].replaceAll('p', '');
+      } else if ( tokens[i].contains('q')) { // 3000
         digit = digit + 3000;
-        tokens[i] = tokens[i].replaceAll('z17', '');
-      } else if (tokens[i].contains('z12')) { // 2000
+        tokens[i] = tokens[i].replaceAll('q', '');
+      } else if (tokens[i].contains('l')) { // 2000
         digit = digit + 2000;
-        tokens[i] = tokens[i].replaceAll('z12', '');
-      } else if (tokens[i].contains('z20')) { // 1000
+        tokens[i] = tokens[i].replaceAll('l', '');
+      } else if (tokens[i].contains('t')) { // 1000
         digit = digit + 1000;
-        tokens[i] = tokens[i].replaceAll('z20', '');
+        tokens[i] = tokens[i].replaceAll('t', '');
       }
 
       // check numbers 1 - 10
-      if (tokens[i].contains('z10') && tokens[i].contains('z2') && tokens[i].contains('z4')) { // 9
+      if (tokens[i].contains('a0') && tokens[i].contains('b') && tokens[i].contains('d')) { // 9
         digit = digit + 9;
-        tokens[i] = tokens[i].replaceAll('z10', ''); tokens[i] = tokens[i].replaceAll('z2', ''); tokens[i] = tokens[i].replaceAll('z4', '');
-      } else if (tokens[i].contains('z10') && tokens[i].contains('z4')) { // 8
+        tokens[i] = tokens[i].replaceAll('a0', ''); tokens[i] = tokens[i].replaceAll('b', ''); tokens[i] = tokens[i].replaceAll('d', '');
+      } else if (tokens[i].contains('a0') && tokens[i].contains('d')) { // 8
         digit = digit + 8;
-        tokens[i] = tokens[i].replaceAll('z10', ''); tokens[i] = tokens[i].replaceAll('z4', '');
-      } else if (tokens[i].contains('z2') && tokens[i].contains('z4')) { // 7
+        tokens[i] = tokens[i].replaceAll('a0', ''); tokens[i] = tokens[i].replaceAll('d', '');
+      } else if (tokens[i].contains('b') && tokens[i].contains('d')) { // 7
         digit = digit + 7;
-        tokens[i] = tokens[i].replaceAll('z2', ''); tokens[i] = tokens[i].replaceAll('z4', '');
-      } else if (tokens[i].contains('z4')) { // 6
+        tokens[i] = tokens[i].replaceAll('b', ''); tokens[i] = tokens[i].replaceAll('d', '');
+      } else if (tokens[i].contains('d')) { // 6
         digit = digit + 6;
-        tokens[i].replaceAll('z4', '');
-      } else if (tokens[i].contains('z2') && tokens[i].contains('z7')) { // 5
+        tokens[i].replaceAll('d', '');
+      } else if (tokens[i].contains('b') && tokens[i].contains('g')) { // 5
         digit = digit + 5;
-        tokens[i] = tokens[i].replaceAll('z2', ''); tokens[i] = tokens[i].replaceAll('z7', '');
-      } else if (tokens[i].contains('z7')) { // 4
+        tokens[i] = tokens[i].replaceAll('b', ''); tokens[i] = tokens[i].replaceAll('g', '');
+      } else if (tokens[i].contains('g')) { // 4
         digit = digit + 4;
-        tokens[i] = tokens[i].replaceAll('z7', '');
-      } else if ( tokens[i].contains('z8')) { // 3
+        tokens[i] = tokens[i].replaceAll('g', '');
+      } else if ( tokens[i].contains('h')) { // 3
         digit = digit + 3;
-        tokens[i] = tokens[i].replaceAll('z8', '');
-      } else if (tokens[i].contains('z10')) { // 2
+        tokens[i] = tokens[i].replaceAll('h', '');
+      } else if (tokens[i].contains('a0')) { // 2
         digit = digit + 2;
-        tokens[i] = tokens[i].replaceAll('z10', '');
-      } else if (tokens[i].contains('z2')) { // 1
+        tokens[i] = tokens[i].replaceAll('a0', '');
+      } else if (tokens[i].contains('b')) { // 1
         digit = digit + 1;
-        tokens[i] = tokens[i].replaceAll('z2', '');
+        tokens[i] = tokens[i].replaceAll('b', '');
       }
 
       // check numbers 10 - 90
       print('check 10 - 90');
-      if (tokens[i].contains('z1') && tokens[i].contains('z3') && tokens[i].contains('z9')) { // 90
+      if (tokens[i].contains('a') && tokens[i].contains('c') && tokens[i].contains('i')) { // 90
         digit = digit + 90;
-        tokens[i] = tokens[i].replaceAll('z1', ''); tokens[i] = tokens[i].replaceAll('z3', ''); tokens[i] = tokens[i].replaceAll('z9', '');
-      } else if (tokens[i].contains('z3') && tokens[i].contains('z9')) { // 80
+        tokens[i] = tokens[i].replaceAll('a', ''); tokens[i] = tokens[i].replaceAll('c', ''); tokens[i] = tokens[i].replaceAll('i', '');
+      } else if (tokens[i].contains('c') && tokens[i].contains('i')) { // 80
         digit = digit + 80;
-        tokens[i] = tokens[i].replaceAll('z3', ''); tokens[i] = tokens[i].replaceAll('z9', '');
-      } else if (tokens[i].contains('z1') && tokens[i].contains('z3')) { // 70
+        tokens[i] = tokens[i].replaceAll('c', ''); tokens[i] = tokens[i].replaceAll('i', '');
+      } else if (tokens[i].contains('a') && tokens[i].contains('c')) { // 70
         digit = digit + 70;
-        tokens[i] = tokens[i].replaceAll('z1', ''); tokens[i] = tokens[i].replaceAll('z3', '');
-      } else if (tokens[i].contains('z3')) { // 60
+        tokens[i] = tokens[i].replaceAll('a', ''); tokens[i] = tokens[i].replaceAll('c', '');
+      } else if (tokens[i].contains('c')) { // 60
         digit = digit + 60;
-        tokens[i].replaceAll('z3', '');
-      } else if (tokens[i].contains('z1') && tokens[i].contains('z6')) { // 50
+        tokens[i].replaceAll('c', '');
+      } else if (tokens[i].contains('a') && tokens[i].contains('f')) { // 50
         digit = digit + 50;
-        tokens[i] = tokens[i].replaceAll('z1', ''); tokens[i] = tokens[i].replaceAll('z6', '');
-      } else if (tokens[i].contains('z6')) { // 40
+        tokens[i] = tokens[i].replaceAll('a', ''); tokens[i] = tokens[i].replaceAll('f', '');
+      } else if (tokens[i].contains('f')) { // 40
         digit = digit + 40;
-        tokens[i] = tokens[i].replaceAll('z6', '');
-      } else if ( tokens[i].contains('z5')) { // 30
+        tokens[i] = tokens[i].replaceAll('f', '');
+      } else if ( tokens[i].contains('e')) { // 30
         digit = digit + 30;
-        tokens[i] = tokens[i].replaceAll('z5', '');
-      } else if (tokens[i].contains('z9')) { // 20
+        tokens[i] = tokens[i].replaceAll('e', '');
+      } else if (tokens[i].contains('i')) { // 20
         digit = digit + 20;
-        tokens[i] = tokens[i].replaceAll('z9', '');
-      } else if (tokens[i].contains('z1')) { // 10
+        tokens[i] = tokens[i].replaceAll('i', '');
+      } else if (tokens[i].contains('a')) { // 10
         digit = digit + 10;
-        tokens[i] = tokens[i].replaceAll('z1', '');
+        tokens[i] = tokens[i].replaceAll('a', '');
       }
 
 print('finally =>'+tokens[i]+'<');

@@ -39,320 +39,320 @@ class SegmentDisplayPainter extends CustomPainter {
 
     var paint = _segmentPaint();
 
-    paint.color = segments['z1'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ1 = Path();
-    pathZ1.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, 0);
-    pathZ1.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, 0);
-    pathZ1.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
-    pathZ1.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
-    pathZ1.close();
+    paint.color = segments['a'] ? _COLOR_ON : _COLOR_OFF;
+    var pathA = Path();
+    pathA.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, 0);
+    pathA.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, 0);
+    pathA.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
+    pathA.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
+    pathA.close();
 
-    _touchCanvas.drawPath(pathZ1, paint, onTapDown: (tapDetail) {
-      setSegmentState('z1', !segments['z1']);
+    _touchCanvas.drawPath(pathA, paint, onTapDown: (tapDetail) {
+      setSegmentState('a', !segments['a']);
     });
 
-    paint.color = segments['z2'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ2 = Path();
-    pathZ2.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, 0);
-    pathZ2.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, 0);
-    pathZ2.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
-    pathZ2.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
-    pathZ2.close();
+    paint.color = segments['b'] ? _COLOR_ON : _COLOR_OFF;
+    var pathB = Path();
+    pathB.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, 0);
+    pathB.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, 0);
+    pathB.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
+    pathB.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
+    pathB.close();
 
-    _touchCanvas.drawPath(pathZ2, paint, onTapDown: (tapDetail) {
-      setSegmentState('z2', !segments['z2']);
+    _touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
+      setSegmentState('b', !segments['b']);
     });
 
-    paint.color = segments['z3'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ3 = Path();
-    pathZ3.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, size.height / RELATIVE_DISPLAY_HEIGHT * 0);
-    pathZ3.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
-    pathZ3.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
-    pathZ3.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, size.height / RELATIVE_DISPLAY_HEIGHT * 30);
-    pathZ3.close();
+    paint.color = segments['c'] ? _COLOR_ON : _COLOR_OFF;
+    var pathC = Path();
+    pathC.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, size.height / RELATIVE_DISPLAY_HEIGHT * 0);
+    pathC.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
+    pathC.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
+    pathC.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, size.height / RELATIVE_DISPLAY_HEIGHT * 30);
+    pathC.close();
 
-    _touchCanvas.drawPath(pathZ3, paint, onTapDown: (tapDetail) {
-      setSegmentState('z3', !segments['z3']);
+    _touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
+      setSegmentState('c', !segments['c']);
     });
 
-    paint.color = segments['z4'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ4 = Path();
-    pathZ4.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
-    pathZ4.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, size.height / RELATIVE_DISPLAY_HEIGHT * 0);
-    pathZ4.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, size.height / RELATIVE_DISPLAY_HEIGHT * 30);
-    pathZ4.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
-    pathZ4.close();
+    paint.color = segments['d'] ? _COLOR_ON : _COLOR_OFF;
+    var pathD = Path();
+    pathD.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
+    pathD.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, size.height / RELATIVE_DISPLAY_HEIGHT * 0);
+    pathD.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, size.height / RELATIVE_DISPLAY_HEIGHT * 30);
+    pathD.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
+    pathD.close();
 
-    _touchCanvas.drawPath(pathZ4, paint, onTapDown: (tapDetail) {
-      setSegmentState('z4', !segments['z4']);
+    _touchCanvas.drawPath(pathD, paint, onTapDown: (tapDetail) {
+      setSegmentState('d', !segments['d']);
     });
 
-    paint.color = segments['z5'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ5 = Path();
-    pathZ5.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
-    pathZ5.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 22);
-    pathZ5.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 12, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ5.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ5.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 12);
-    pathZ5.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 22, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
-    pathZ5.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
-    pathZ5.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 8);
-    pathZ5.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 18, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ5.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ5.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 18);
-    pathZ5.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 8, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
-    pathZ5.close();
+    paint.color = segments['e'] ? _COLOR_ON : _COLOR_OFF;
+    var pathE = Path();
+    pathE.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
+    pathE.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 22);
+    pathE.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 12, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathE.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathE.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 12);
+    pathE.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 22, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
+    pathE.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
+    pathE.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 8);
+    pathE.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 18, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathE.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathE.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 18);
+    pathE.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 8, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
+    pathE.close();
 
-    _touchCanvas.drawPath(pathZ5, paint, onTapDown: (tapDetail) {
-      setSegmentState('z5', !segments['z5']);
+    _touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
+      setSegmentState('e', !segments['e']);
     });
 
-    paint.color = segments['z6'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ6 = Path();
-    pathZ6.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
-    pathZ6.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 8, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
-    pathZ6.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 12);
-    pathZ6.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ6.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 18, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ6.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 22);
-    pathZ6.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
-    pathZ6.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 22, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
-    pathZ6.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 18);
-    pathZ6.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ6.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 12, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ6.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 8);
-    pathZ6.close();
+    paint.color = segments['f'] ? _COLOR_ON : _COLOR_OFF;
+    var pathF = Path();
+    pathF.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
+    pathF.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 8, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
+    pathF.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 12);
+    pathF.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathF.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 18, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathF.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 22);
+    pathF.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
+    pathF.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 22, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
+    pathF.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 18);
+    pathF.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathF.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 12, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathF.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 8);
+    pathF.close();
 
-    _touchCanvas.drawPath(pathZ6, paint, onTapDown: (tapDetail) {
-      setSegmentState('z6', !segments['z6']);
+    _touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
+      setSegmentState('f', !segments['f']);
     });
 
-    paint.color = segments['z7'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ7 = Path();
-    pathZ7.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
-    pathZ7.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 22);
-    pathZ7.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 37, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ7.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ7.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 12);
-    pathZ7.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 47, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
-    pathZ7.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
-    pathZ7.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 8);
-    pathZ7.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 43, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ7.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ7.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 18);
-    pathZ7.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 33, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
-    pathZ7.close();
+    paint.color = segments['g'] ? _COLOR_ON : _COLOR_OFF;
+    var pathG = Path();
+    pathG.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
+    pathG.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 22);
+    pathG.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 37, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathG.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathG.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 12);
+    pathG.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 47, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
+    pathG.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
+    pathG.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 8);
+    pathG.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 43, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathG.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathG.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 18);
+    pathG.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 33, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
+    pathG.close();
 
-    _touchCanvas.drawPath(pathZ7, paint, onTapDown: (tapDetail) {
-      setSegmentState('z7', !segments['z7']);
+    _touchCanvas.drawPath(pathG, paint, onTapDown: (tapDetail) {
+      setSegmentState('g', !segments['g']);
     });
 
-    paint.color = segments['z8'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ8 = Path();
-    pathZ8.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
-    pathZ8.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 33, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
-    pathZ8.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 12);
-    pathZ8.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ8.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 43, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ8.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 22);
-    pathZ8.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
-    pathZ8.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 47, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
-    pathZ8.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 18);
-    pathZ8.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ8.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 37, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
-    pathZ8.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 8);
-    pathZ8.close();
+    paint.color = segments['h'] ? _COLOR_ON : _COLOR_OFF;
+    var pathH = Path();
+    pathH.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
+    pathH.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 33, size.height / RELATIVE_DISPLAY_HEIGHT * 5);
+    pathH.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 12);
+    pathH.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathH.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 43, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathH.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 22);
+    pathH.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
+    pathH.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 47, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
+    pathH.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 18);
+    pathH.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathH.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 37, size.height / RELATIVE_DISPLAY_HEIGHT * 15);
+    pathH.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 8);
+    pathH.close();
 
-    _touchCanvas.drawPath(pathZ8, paint, onTapDown: (tapDetail) {
-      setSegmentState('z8', !segments['z8']);
+    _touchCanvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
+      setSegmentState('h', !segments['h']);
     });
 
-    paint.color = segments['z9'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ9 = Path();
-    pathZ9.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
-    pathZ9.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
-    pathZ9.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 30);
-    pathZ9.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, size.height / RELATIVE_DISPLAY_HEIGHT * 30);
-    pathZ9.close();
+    paint.color = segments['i'] ? _COLOR_ON : _COLOR_OFF;
+    var pathI = Path();
+    pathI.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
+    pathI.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
+    pathI.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 30);
+    pathI.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, size.height / RELATIVE_DISPLAY_HEIGHT * 30);
+    pathI.close();
 
-    _touchCanvas.drawPath(pathZ9, paint, onTapDown: (tapDetail) {
-      setSegmentState('z9', !segments['z9']);
+    _touchCanvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
+      setSegmentState('i', !segments['i']);
     });
 
-    paint.color = segments['z10'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ10 = Path();
-    pathZ10.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
-    pathZ10.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
-    pathZ10.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, size.height / RELATIVE_DISPLAY_HEIGHT * 30);
-    pathZ10.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 30);
-    pathZ10.close();
+    paint.color = segments['j'] ? _COLOR_ON : _COLOR_OFF;
+    var pathJ = Path();
+    pathJ.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
+    pathJ.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 25);
+    pathJ.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, size.height / RELATIVE_DISPLAY_HEIGHT * 30);
+    pathJ.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 30);
+    pathJ.close();
 
-    _touchCanvas.drawPath(pathZ10, paint, onTapDown: (tapDetail) {
-      setSegmentState('z10', !segments['z10']);
+    _touchCanvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
+      setSegmentState('j', !segments['j']);
     });
 
-    paint.color = segments['z11'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ11 = Path();
-    pathZ11.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 0);
-    pathZ11.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 0);
-    pathZ11.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
-    pathZ11.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
-    pathZ11.close();
+    paint.color = segments['k'] ? _COLOR_ON : _COLOR_OFF;
+    var pathK = Path();
+    pathK.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 0);
+    pathK.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 0);
+    pathK.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
+    pathK.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
+    pathK.close();
 
-    _touchCanvas.drawPath(pathZ11, paint, onTapDown: (tapDetail) {
-      setSegmentState('z11', !segments['z11']);
+    _touchCanvas.drawPath(pathK, paint, onTapDown: (tapDetail) {
+      setSegmentState('k', !segments['k']);
     });
 
-    paint.color = segments['z12'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ12 = Path();
-    pathZ12.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, size.height / RELATIVE_DISPLAY_HEIGHT * 50);
-    pathZ12.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 50);
-    pathZ12.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
-    pathZ12.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
-    pathZ12.close();
+    paint.color = segments['l'] ? _COLOR_ON : _COLOR_OFF;
+    var pathL = Path();
+    pathL.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, size.height / RELATIVE_DISPLAY_HEIGHT * 50);
+    pathL.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 50);
+    pathL.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
+    pathL.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
+    pathL.close();
 
-    _touchCanvas.drawPath(pathZ12, paint, onTapDown: (tapDetail) {
-      setSegmentState('z12', !segments['z12']);
+    _touchCanvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
+      setSegmentState('l', !segments['l']);
     });
 
-    paint.color = segments['z13'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ13 = Path();
-    pathZ13.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 50);
-    pathZ13.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, size.height / RELATIVE_DISPLAY_HEIGHT * 50);
-    pathZ13.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
-    pathZ13.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
-    pathZ13.close();
+    paint.color = segments['m'] ? _COLOR_ON : _COLOR_OFF;
+    var pathM = Path();
+    pathM.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 50);
+    pathM.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, size.height / RELATIVE_DISPLAY_HEIGHT * 50);
+    pathM.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
+    pathM.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
+    pathM.close();
 
-    _touchCanvas.drawPath(pathZ13, paint, onTapDown: (tapDetail) {
-      setSegmentState('z13', !segments['z13']);
+    _touchCanvas.drawPath(pathM, paint, onTapDown: (tapDetail) {
+      setSegmentState('m', !segments['m']);
     });
 
-    paint.color = segments['z14'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ14 = Path();
-    pathZ14.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, size.height / RELATIVE_DISPLAY_HEIGHT * 50);
-    pathZ14.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
-    pathZ14.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
-    pathZ14.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, size.height / RELATIVE_DISPLAY_HEIGHT *80);
-    pathZ14.close();
+    paint.color = segments['n'] ? _COLOR_ON : _COLOR_OFF;
+    var pathN = Path();
+    pathN.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, size.height / RELATIVE_DISPLAY_HEIGHT * 50);
+    pathN.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
+    pathN.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
+    pathN.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, size.height / RELATIVE_DISPLAY_HEIGHT *80);
+    pathN.close();
 
-    _touchCanvas.drawPath(pathZ14, paint, onTapDown: (tapDetail) {
-      setSegmentState('z14', !segments['z14']);
+    _touchCanvas.drawPath(pathN, paint, onTapDown: (tapDetail) {
+      setSegmentState('n', !segments['n']);
     });
 
-    paint.color = segments['z15'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ15 = Path();
-    pathZ15.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
-    pathZ15.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, size.height / RELATIVE_DISPLAY_HEIGHT * 50);
-    pathZ15.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
-    pathZ15.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
-    pathZ15.close();
+    paint.color = segments['o'] ? _COLOR_ON : _COLOR_OFF;
+    var pathO = Path();
+    pathO.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
+    pathO.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, size.height / RELATIVE_DISPLAY_HEIGHT * 50);
+    pathO.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
+    pathO.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
+    pathO.close();
 
-    _touchCanvas.drawPath(pathZ15, paint, onTapDown: (tapDetail) {
-      setSegmentState('z15', !segments['z15']);
+    _touchCanvas.drawPath(pathO, paint, onTapDown: (tapDetail) {
+      setSegmentState('o', !segments['o']);
     });
 
-    paint.color = segments['z16'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ16 = Path();
-    pathZ16.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
-    pathZ16.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 72);
-    pathZ16.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 12, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ16.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ16.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 62);
-    pathZ16.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 22, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
-    pathZ16.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
-    pathZ16.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 58);
-    pathZ16.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 18, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ16.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ16.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 68);
-    pathZ16.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 8, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
-    pathZ16.close();
+    paint.color = segments['p'] ? _COLOR_ON : _COLOR_OFF;
+    var pathP = Path();
+    pathP.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
+    pathP.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 72);
+    pathP.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 12, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathP.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathP.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 62);
+    pathP.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 22, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
+    pathP.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
+    pathP.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 58);
+    pathP.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 18, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathP.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathP.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 68);
+    pathP.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 8, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
+    pathP.close();
 
-    _touchCanvas.drawPath(pathZ16, paint, onTapDown: (tapDetail) {
-      setSegmentState('z16', !segments['z16']);
+    _touchCanvas.drawPath(pathP, paint, onTapDown: (tapDetail) {
+      setSegmentState('p', !segments['p']);
     });
 
-    paint.color = segments['z17'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ17 = Path();
-    pathZ17.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
-    pathZ17.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 8, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
-    pathZ17.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 62);
-    pathZ17.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ17.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 18, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ17.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 72);
-    pathZ17.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
-    pathZ17.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 22, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
-    pathZ17.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 68);
-    pathZ17.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ17.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 12, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ17.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 58);
-    pathZ17.close();
+    paint.color = segments['q'] ? _COLOR_ON : _COLOR_OFF;
+    var pathQ = Path();
+    pathQ.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
+    pathQ.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 8, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
+    pathQ.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 62);
+    pathQ.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathQ.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 18, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathQ.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 72);
+    pathQ.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
+    pathQ.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 22, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
+    pathQ.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 68);
+    pathQ.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 15, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathQ.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 12, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathQ.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 58);
+    pathQ.close();
 
-    _touchCanvas.drawPath(pathZ17, paint, onTapDown: (tapDetail) {
-      setSegmentState('z17', !segments['z17']);
+    _touchCanvas.drawPath(pathQ, paint, onTapDown: (tapDetail) {
+      setSegmentState('q', !segments['q']);
     });
 
-    paint.color = segments['z18'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ18 = Path();
-    pathZ18.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
-    pathZ18.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 72);
-    pathZ18.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 37, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ18.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ18.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 62);
-    pathZ18.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 47, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
-    pathZ18.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
-    pathZ18.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 58);
-    pathZ18.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 43, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ18.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ18.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 68);
-    pathZ18.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 33, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
-    pathZ18.close();
+    paint.color = segments['r'] ? _COLOR_ON : _COLOR_OFF;
+    var pathR = Path();
+    pathR.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
+    pathR.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 72);
+    pathR.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 37, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathR.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathR.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 62);
+    pathR.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 47, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
+    pathR.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
+    pathR.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 58);
+    pathR.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 43, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathR.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathR.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 68);
+    pathR.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 33, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
+    pathR.close();
 
-    _touchCanvas.drawPath(pathZ18, paint, onTapDown: (tapDetail) {
-      setSegmentState('z18', !segments['z18']);
+    _touchCanvas.drawPath(pathR, paint, onTapDown: (tapDetail) {
+      setSegmentState('r', !segments['r']);
     });
 
-    paint.color = segments['z19'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ19 = Path();
-    pathZ19.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
-    pathZ19.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 33, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
-    pathZ19.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 62);
-    pathZ19.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ19.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 43, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ19.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 72);
-    pathZ19.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
-    pathZ19.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 47, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
-    pathZ19.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 68);
-    pathZ19.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ19.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 37, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
-    pathZ19.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 58);
-    pathZ19.close();
+    paint.color = segments['s'] ? _COLOR_ON : _COLOR_OFF;
+    var pathS = Path();
+    pathS.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
+    pathS.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 33, size.height / RELATIVE_DISPLAY_HEIGHT * 55);
+    pathS.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 62);
+    pathS.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathS.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 43, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathS.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 72);
+    pathS.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
+    pathS.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 47, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
+    pathS.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 68);
+    pathS.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 40, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathS.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 37, size.height / RELATIVE_DISPLAY_HEIGHT * 65);
+    pathS.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 58);
+    pathS.close();
 
-    _touchCanvas.drawPath(pathZ19, paint, onTapDown: (tapDetail) {
-      setSegmentState('z19', !segments['z19']);
+    _touchCanvas.drawPath(pathS, paint, onTapDown: (tapDetail) {
+      setSegmentState('s', !segments['s']);
     });
 
-    paint.color = segments['z20'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ20 = Path();
-    pathZ20.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
-    pathZ20.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
-    pathZ20.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
-    pathZ20.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
-    pathZ20.close();
+    paint.color = segments['t'] ? _COLOR_ON : _COLOR_OFF;
+    var pathT = Path();
+    pathT.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 5, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
+    pathT.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
+    pathT.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
+    pathT.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 0, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
+    pathT.close();
 
-    _touchCanvas.drawPath(pathZ20, paint, onTapDown: (tapDetail) {
-      setSegmentState('z20', !segments['z20']);
+    _touchCanvas.drawPath(pathT, paint, onTapDown: (tapDetail) {
+      setSegmentState('t', !segments['t']);
     });
 
-    paint.color = segments['z21'] ? _COLOR_ON : _COLOR_OFF;
-    var pathZ21 = Path();
-    pathZ21.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
-    pathZ21.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
-    pathZ21.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
-    pathZ21.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
-    pathZ21.close();
+    paint.color = segments['u'] ? _COLOR_ON : _COLOR_OFF;
+    var pathU = Path();
+    pathU.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
+    pathU.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 50, size.height / RELATIVE_DISPLAY_HEIGHT * 75);
+    pathU.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 55, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
+    pathU.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
+    pathU.close();
 
-    _touchCanvas.drawPath(pathZ21, paint, onTapDown: (tapDetail) {
-      setSegmentState('z21', !segments['z21']);
+    _touchCanvas.drawPath(pathU, paint, onTapDown: (tapDetail) {
+      setSegmentState('u', !segments['u']);
     });
 
   }
