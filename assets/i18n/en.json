@@ -385,6 +385,7 @@
   "chef_generate_auxiliary_recipe" : "Use auxiliary recipes",
   "chef_error_structure_recipe" : "STRUCTURAL ERROR",
   "chef_error_structure_recipe_title" : "Recipe-part 'Title'",
+  "chef_error_structure_recipe_missing_output" : "There is nothing to cook or bake",
   "chef_error_structure_recipe_missing_title" : "Title is missing",
   "chef_error_structure_recipe_comments" : "Recipe-part 'Comments'",
   "chef_error_structure_recipe_ingredient_list" : "Recipe-part 'Ingredient list'",

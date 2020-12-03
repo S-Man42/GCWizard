@@ -387,6 +387,7 @@
   "chef_error_structure_recipe" : "STRUKTUR FEHLER",
   "chef_error_structure_recipe_title" : "Rezept-Abschnitt 'Titel'",
   "chef_error_structure_recipe_missing_title" : "Titel fehlt",
+  "chef_error_structure_recipe_missing_output" : "Es gibt nichts zum kochen oder backen",
   "chef_error_structure_recipe_comments" : "Rezept-Abschnitt 'Kommentar'",
   "chef_error_structure_recipe_ingredient_list" : "Rezept-Abschnitt 'Zutatenliste'",
   "chef_error_structure_recipe_cooking_time" : "Rezept-Abschnitt 'Kochzeit'",
