@@ -44,11 +44,6 @@ class ChefState extends State<Chef> {
       mask: '#' * 1000, // allow 1000 characters input
       filter: {"#": RegExp(r'[0-9] ')}
   );
-  var GeneratedOutputFormatter  = WrapperForMaskTextInputFormatter(
-      mask: '#' * 1000, // allow 1000 characters input
-      //filter: {"#": RegExp(r'[A-Z0-9] ,;.:!?()+-*/#<>')}
-      filter: {"#": RegExp(r'[A-Z0-9 ;,:.-_*+<>()/!]')}
-  );
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;    // interpret
   GCWSwitchPosition _currentLanguage = GCWSwitchPosition.right; // english
@@ -145,7 +140,6 @@ class ChefState extends State<Chef> {
               ),
               GCWTextField(
                 controller: _outputController,
-                inputFormatters: [GeneratedOutputFormatter],
                 hintText: i18n(context, 'chef_output'),
                 onChanged: (text) {
                   setState(() {
@@ -155,7 +149,7 @@ class ChefState extends State<Chef> {
               ),
               GCWOnOffSwitch(
                 notitle: false,
-                title: i18n(context, 'chef_generate_auxilary_recipe'),
+                title: i18n(context, 'chef_generate_auxiliary_recipe'),
                 value: _auxilaryRecipes,
                 onChanged: (value) {
                   setState(() {
@@ -205,9 +199,13 @@ class ChefState extends State<Chef> {
     if (_currentMode == GCWSwitchPosition.right) { // generate chef
       if (_currentTitle == '') {
         output = buildOutputText(
-            ['chef_error_structure_recipe',
-            'chef_error_structure_recipe_missing_title']);
-      } else
+          ['chef_error_structure_recipe',
+          'chef_error_structure_recipe_missing_title']);
+      } else if (_currentOutput == '')
+        output = buildOutputText(
+          ['chef_error_structure_recipe',
+          'chef_error_structure_recipe_missing_output']);
+      else
         output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature, _currentOutput, _auxilaryRecipes);
     } else { // interpret chef
       if (isValid(_currentInput)) {
@@ -227,7 +225,8 @@ class ChefState extends State<Chef> {
     String output = '';
     outputList.forEach((element) {
       if (element.startsWith('chef_')) {
-        output = output + i18n(context, element) + '\n';
+        output = output
+            + i18n(context, element) + '\n';
       } else
         output = output + element + '\n';
     });
