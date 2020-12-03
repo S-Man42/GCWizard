@@ -15,43 +15,43 @@ enum textId {
 }
 
 final List<RegExp> matchersENG = [
-  RegExp(r'^take ([a-zA-Z ]+) from refrigerator$'),
-  RegExp(r'^(put|fold) ([a-zA-Z ]+) into( the)?( (\d+)(nd|rd|th|st))? mixing bowl$'),
+  RegExp(r'^take ([a-z0-9 ]+) from refrigerator$'),
+  RegExp(r'^(put|fold) ([a-z0-9 ]+) into( the)?( (\d+)(nd|rd|th|st))? mixing bowl$'),
   RegExp(r'^add dry ingredients( to( (\d+)(nd|rd|th|st))? mixing bowl)?$'),
-  RegExp(r'^(add|remove|combine|divide) ([a-zA-Z ]+?)( (to|into|from)( (\d+)(nd|rd|th|st))? mixing bowl)?$'),
-  RegExp(r'^liquefy contents of the( (\d+)(nd|rd|th|st))? mixing bowl$'),
-  RegExp(r'^liquefy ([a-zA-Z ]+)$'),
+  RegExp(r'^(add|remove|combine|divide) ([a-z0-9 ]+?)( (to|into|from)( (\d+)(nd|rd|th|st))? mixing bowl)?$'),
+  RegExp(r'^liqu[ie]fy( the)? contents of the( (\d+)(nd|rd|th|st))? mixing bowl$'),
+  RegExp(r'^liqu[ie]fy( the)? ([a-z0-9 ]+)$'),
   RegExp(r'^stir( the( (\d+)(nd|rd|th|st))? mixing bowl)? for (\d+) minutes$'),
-  RegExp(r'^stir ([a-zA-Z ]+) into the( (\d+)(nd|rd|th|st))? mixing bowl$'),
+  RegExp(r'^stir ([a-z0-9 ]+) into the( (\d+)(nd|rd|th|st))? mixing bowl$'),
   RegExp(r'^mix( the( (\d+)(nd|rd|th|st))? mixing bowl)? well$'),
   RegExp(r'^clean( (\d+)(nd|rd|th|st))? mixing bowl$'),
-  RegExp(r'^pour contents of the( (\d+)(nd|rd|th|st))? mixing bowl into the( (\d+)(nd|rd|th|st))? baking dish$'),
+  RegExp(r'^pour contents of( the)?( (\d+)(nd|rd|th|st))? mixing bowl into the( (\d+)(nd|rd|th|st))? baking dish$'),
   RegExp(r'^set aside$'),
   RegExp(r'^refrigerate( for (\d+) hour(s)?)?$'),
-  RegExp(r'^serve with ([a-zA-Z ]+)$'),
+  RegExp(r'^serve with ([a-z0-9 ]+)$'),
   RegExp(r'^suggestion: (.*)$'),
-  RegExp(r'^([a-zA-Z]+?)( the ([a-zA-Z ]+))? until ([a-zA-Z]+)$'),
-  RegExp(r'^([a-zA-Z]+) the ([a-zA-Z ]+)$')
+  RegExp(r'^([a-z0-9]+?)(( the)? ([a-z0-9 ]+))? until ([a-z0-9]+)$'),
+  RegExp(r'^([a-z0-9]+)( the)? ([a-z0-9 ]+)$')
 ];
 
 final List<RegExp> matchersDEU = [
-  RegExp(r'^nehme ([a-zäöüß ]+) aus dem kühlschrank$'),
-  RegExp(r'^(gebe|unterhebe) ([a-zäöüß ]+) in( die)?( (\d+)(te))? rührschüssel$'),
+  RegExp(r'^nehme ([a-zäöüß0-9 ]+) aus dem kühlschrank$'),
+  RegExp(r'^(gebe|unterhebe) ([a-zäöüß0-9 ]+) in( die)?( (\d+)(te))? rührschüssel$'),
   RegExp(r'^füge hinzu feste zutaten( zur( (\d+)(ten))? rührschüssel)?$'),
-  RegExp(r'^(füge hinzu|entferne|kombiniere|teile) ([a-zäöüß ]+?) (zu|mit( der)?|aus( der)?|in( die)?)( (\d+)(te(n)?))? rührschüssel$'),
+  RegExp(r'^(füge hinzu|entferne|kombiniere|teile) ([a-zäöüß0-9 ]+?) (zu|mit( der)?|aus( der)?|in( die)?)( (\d+)(te(n)?))? rührschüssel$'),
   RegExp(r'^verflüssige die inhalte der( (\d+)(ten))? rührschüssel$'),
-  RegExp(r'^verflüssige ([a-zäöüß ]+)$'),
+  RegExp(r'^verflüssige( den| das| die)? ([a-zäöüß0-9 ]+)$'),
   RegExp(r'^rühre( die( (\d+)(te))? rührschüssel)? für (\d+) minuten$'),
-  RegExp(r'^rühre ([a-zäöüß ]+) in die( (\d+)(te))? rührschüssel$'),
+  RegExp(r'^rühre ([a-zäöüß0-9 ]+) in die( (\d+)(te))? rührschüssel$'),
   RegExp(r'^mische( die( (\d+)(te))? rührschüssel)? well$'),
   RegExp(r'^säubere die( (\d+)(te))? rührschüssel$'),
   RegExp(r'^gieße die inhalte der( (\d+)(ten))? rührschüssel auf die( (\d+)(te))? servierplatte$'),
   RegExp(r'^stelle beiseite'),
   RegExp(r'^gefriere( für (\d+) stunde(n)?)?$'),
-  RegExp(r'^serviere mit ([a-zäöüß ]+)$'),
+  RegExp(r'^serviere mit ([a-zäöüß0-9 ]+)$'),
   RegExp(r'^vorschlag: (.*)$'),
-  RegExp(r'^([a-zäöüß]+?)( (das|den|die) ([a-zäöüß ]+))? bis ([a-zäöüß]+)$'),
-  RegExp(r'^([a-zäöüß]+) (das|den|die) ([a-zäöüß ]+)$')
+  RegExp(r'^([a-zäöüß0-9]+?)( (das|den|die) ([a-zäöüß0-9 ]+))? bis ([a-zäöüß0-9]+)$'),
+  RegExp(r'^([a-zäöüß0-9]+) (das|den|die) ([a-zäöüß0-9 ]+)$')
 ];
 
 final RegExp MeasureType = RegExp(r'^heaped$|^level$|^gestrichen$|^gehäuft$');
@@ -76,7 +76,8 @@ final List<String> itemListLiquidENG = [
   'amaretto', 'espresso', 'cream', 'aquavit', 'white wine', 'red wine', 'tabasco', 'sour cream', 'beer', 'sake',
   'vodka', 'calvados', 'whisky', 'grand marnier',  'grenadine', 'gin', 'rum', 'tonic', 'raki', 'beaten eggs',
   'ouzo', 'fruit brandy', 'cider', 'tequila', 'cointreau', 'agave nectar', 'white vermouth', 'red vermouth', 'angustora', 'blue curacao',
-  'white rum', 'tomato juice', 'limoncello', 'honey syrup', 'syrup', 'ginger beer', 'brandy', 'grappa', 'port', 'sherry'
+  'white rum', 'tomato juice', 'limoncello', 'honey syrup', 'syrup', 'ginger beer', 'brandy', 'grappa', 'port', 'sherry',
+  'bourbon', 'scotch'
 ];
 
 final List<String> itemListLiquidDEU = [
@@ -85,6 +86,7 @@ final List<String> itemListLiquidDEU = [
   'Wodka' 'Calvados', 'Whisky',  'Grand Marnier', 'Grenadine', 'Gin', 'Rum', 'Tonic', 'Raki',  'geschlagene Eier',
   'Ouzo', 'Obstler', 'Cidre', 'Tequila', 'Cointreau', 'Agavensaft', 'weißer Wermut', 'roter Wermut', 'Angustora', 'Blue Curacao'
   'weißer Rum', 'Tomatensaft', 'Limoncello', 'Honigsirup', 'Zuckersirup', 'Ginger Ale', 'Weinbrand', 'Grappa', 'Portwein', 'Sherry',
+  'Bourbon Whisky', 'Scotch Whisky'
 ];
 
 final List<String> itemListDryENG = [

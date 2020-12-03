@@ -59,7 +59,7 @@ class Method {
         mixingbowl = (matchers[4].firstMatch(line).group(2) == null ? 1 : int.parse(matchers[4].firstMatch(line).group(2))) - 1;
     } else if (matchers[5].hasMatch(line)) {//liquefy
         type = Type.Liquefy;
-        ingredient = matchers[5].firstMatch(line).group(1);
+        ingredient = matchers[5].firstMatch(line).group(2);
     } else if (matchers[6].hasMatch(line)) {// stir the
         type = Type.Stir;
         mixingbowl = (matchers[6].firstMatch(line).group(3) == null ? 1 : int.parse(matchers[6].firstMatch(line).group(3))) - 1;
@@ -76,8 +76,13 @@ class Method {
         mixingbowl = (matchers[9].firstMatch(line).group(2) == null ? 1 : int.parse(matchers[9].firstMatch(line).group(2))) - 1;
     } else if (matchers[10].hasMatch(line)) {// pour
         type = Type.Pour;
-        mixingbowl = (matchers[10].firstMatch(line).group(2) == null ? 1 : int.parse(matchers[10].firstMatch(line).group(2))) - 1;
-        bakingdish = (matchers[10].firstMatch(line).group(5) == null ? 1 : int.parse(matchers[10].firstMatch(line).group(5))) - 1;
+        if (language == 'ENG') {
+          mixingbowl =  (matchers[10].firstMatch(line).group(3) == null ? 1 : int.parse(matchers[10].firstMatch(line).group(3))) - 1;
+          bakingdish = (matchers[10].firstMatch(line).group(6) == null ? 1 : int.parse(matchers[10].firstMatch(line).group(6))) - 1;
+        } else {
+          mixingbowl =  (matchers[10].firstMatch(line).group(2) == null ? 1 : int.parse(matchers[10].firstMatch(line).group(2))) - 1;
+          bakingdish = (matchers[10].firstMatch(line).group(5) == null ? 1 : int.parse(matchers[10].firstMatch(line).group(5))) - 1;
+        }
     } else if (matchers[11].hasMatch(line)) {// set aside
         type = Type.SetAside;
     } else if (matchers[12].hasMatch(line)) {// refridgerate
@@ -88,12 +93,12 @@ class Method {
         auxrecipe = matchers[13].firstMatch(line).group(1);
     } else if (matchers[14].hasMatch(line)) {// suggestion
         type = Type.Remember;
-    } else if (matchers[15].hasMatch(line)) {// xxx the ingredient until yyyed
+    } else if (matchers[15].hasMatch(line)) {// xxx (the) ingredient until yyyed
         type = Type.VerbUntil;
         if (language == 'ENG') {
-          verb = matchers[15].firstMatch(line).group(4);
-          if (matchers[15].firstMatch(line).group(3) != null) {
-            ingredient = matchers[15].firstMatch(line).group(3);
+          verb = matchers[15].firstMatch(line).group(5);
+          if (matchers[15].firstMatch(line).group(4) != null) {
+            ingredient = matchers[15].firstMatch(line).group(4);
           }
         } else {
           verb = matchers[15].firstMatch(line).group(5);
@@ -101,11 +106,11 @@ class Method {
             ingredient = matchers[15].firstMatch(line).group(4);
           }
         }
-    } else if (matchers[16].hasMatch(line)) {// yyy the ingredient
+    } else if (matchers[16].hasMatch(line)) {// yyy (the) ingredient
         type = Type.Verb;
         verb = matchers[16].firstMatch(line).group(1);
         if (language == 'ENG') {
-          ingredient = matchers[16].firstMatch(line).group(2);
+          ingredient = matchers[16].firstMatch(line).group(3);
         } else {
           ingredient = matchers[16].firstMatch(line).group(3);
         }
