@@ -488,11 +488,15 @@ namespace GC_Wizard_SymbolTables_Pdf
         {
             // Create a font
             XFont font = new XFont("Verdana", FontSizeOverlay, XFontStyle.Regular);
-            //if (name == " ")
-            //{
-            //    name = '\u2423'.ToString();
-            //    font = new XFont("Consolas", FontSizeOverlay, XFontStyle.Regular);
-            //}
+            if (name == " ")
+            {
+                //    name = '\u2423'.ToString();
+                //    font = new XFont("Consolas", FontSizeOverlay, XFontStyle.Regular);
+                if (Language == LanguageEnum.de)
+                    name = "Leerzeichen";
+                else
+                    name = "Space";
+            }
 
             // Draw the name
             name = checkTextLength(name, maxLength, font, gfx);
