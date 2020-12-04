@@ -52,24 +52,31 @@ Future<WhitespaceResult> encodeWhitespace(String code) async {
 }
 
 String _transformCode(String code) {
-  code = code.toLowerCase();
-  var codeWhite = _uncomment(code);
-  var codeEnglish = code.replaceAll(RegExp(r'[^' + plainTextCharacterEnglish + ']'), '');
-  var codeGerman = code.replaceAll(RegExp(r'[^' + plainTextCharacterGerman + ']'), '');
+  var codeLowerCase = code.toLowerCase();
+  var code1 = _uncomment(codeLowerCase);
+  plainTextCharacter = plainTextCharacterEnglish;
 
-  if (codeWhite.length > codeEnglish.length && codeWhite.length > codeGerman.length) {
+  var code2 = codeLowerCase.replaceAll(RegExp(r'[^' + plainTextCharacterEnglish + ']'), '');
+  if (code2.length > code1.length) {
     plainTextCharacter = plainTextCharacterEnglish;
-    code = codeWhite;
-  } else if (codeEnglish.length > codeWhite.length && codeEnglish.length > codeGerman.length) {
-    plainTextCharacter = plainTextCharacterEnglish;
-    code =  _codeSubstitution(codeEnglish);
-  } else if (codeGerman.length > codeWhite.length && codeGerman.length > codeEnglish.length) {
+    code1 = _codeSubstitution(code2);
+  }
+
+   code2 = codeLowerCase.replaceAll(RegExp(r'[^' + plainTextCharacterGerman + ']'), '');
+  if (code2.length > code1.length) {
     plainTextCharacter = plainTextCharacterGerman;
-    code =  _codeSubstitution(codeGerman);
-  } else
-    code = codeWhite;
+    code1 = _codeSubstitution(code2);
+  }
 
-  return code;
+  code2 = codeLowerCase.replaceAll(RegExp(r'[ \t\n]'), '');
+  code2 = code2.replaceAll('space', ' ').replaceAll('tab', '\t').replaceAll('lf', '\n');
+  code2 = _uncomment(code2);
+  if (code2.length > code1.length) {
+    code1 = code2;
+    plainTextCharacter = plainTextCharacterEnglish;
+  }
+
+  return code1;
 }
 
 String _codeSubstitution(String code) {
