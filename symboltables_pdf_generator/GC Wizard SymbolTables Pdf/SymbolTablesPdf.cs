@@ -25,6 +25,8 @@ namespace GC_Wizard_SymbolTables_Pdf
 
         public EventHandler Progress_Changed;
 
+        private String versionText = "";
+
         public Single BorderWidthTop { get; set; }
         public Single BorderWidthLeft { get; set; }
         public Single BorderWidthRight { get; set; }
@@ -115,17 +117,17 @@ namespace GC_Wizard_SymbolTables_Pdf
         public SymbolTablesPdf()
         {
             HeadingDistance = 10;
-            RowDistance = 14;
+            RowDistance = 18;
             ColumnDistance = 10;
 
-            BorderWidthTop = 30;
+            BorderWidthTop = 35;
             BorderWidthLeft = 35;
             BorderWidthRight = 20;
             BorderWidthBottom = 20;
             ImageSize = 50;
             Language = LanguageEnum.de;
             FontSizeName = 20;
-            FontSizeOverlay = 10;
+            FontSizeOverlay = 8;
             Orientation = PdfSharp.PageOrientation.Portrait;
         }
 
@@ -486,6 +488,12 @@ namespace GC_Wizard_SymbolTables_Pdf
         {
             // Create a font
             XFont font = new XFont("Verdana", FontSizeOverlay, XFontStyle.Regular);
+            //if (name == " ")
+            //{
+            //    name = '\u2423'.ToString();
+            //    font = new XFont("Consolas", FontSizeOverlay, XFontStyle.Regular);
+            //}
+
             // Draw the name
             name = checkTextLength(name, maxLength, font, gfx);
             if (!name.Contains(Environment.NewLine))
@@ -503,6 +511,33 @@ namespace GC_Wizard_SymbolTables_Pdf
 
         private string checkTextLength(string text, int maxLength, XFont font, XGraphics gfx)
         {
+            text = checkPartTextLength(text, maxLength, font, gfx);
+
+            var index = text.LastIndexOf("\n");
+
+
+            if (index >= 0)
+            {
+                var subString = text.Substring(index);
+                var size = gfx.MeasureString(subString, font);
+                while (size.Width > maxLength)
+                {
+                    subString = checkPartTextLength(subString, maxLength, font, gfx);
+
+                    text = text.Substring(0, index) + subString;
+
+                    index = text.LastIndexOf("\n");
+                    subString = text.Substring(index);
+                    size = gfx.MeasureString(subString, font);
+                }
+
+            }
+
+            return text;
+        }
+
+        private string checkPartTextLength(string text, int maxLength, XFont font, XGraphics gfx)
+        {
             var size = gfx.MeasureString(text, font);
 
             if (size.Width <= maxLength)
@@ -517,37 +552,41 @@ namespace GC_Wizard_SymbolTables_Pdf
                     if (size.Width <= maxLength)
                         return _index;
                     else
-                        _index = text.LastIndexOf(" ", _index - 1);
+                    {
+                        do
+                        {
+                            _index = text.LastIndexOf(_char, _index - 1, _index - 1);
+                            if (_index > 0)
+                                size = gfx.MeasureString(text.Substring(0, _index), font);
+
+                        } while (_index > 0 & size.Width >= maxLength);
+                    }
                 }
 
                 return _index;
             };
 
             var index = textSplit(text, ' ');
-            if (index > 0)
-                return text.Substring(0, index) + Environment.NewLine + text.Substring(index + 1);
+            if (index > 1)
+                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
 
             index = textSplit(text, '/');
             if (index > 0)
-                return text.Substring(0, index) + Environment.NewLine + text.Substring(index + 1);
+                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
 
             index = textSplit(text, ',');
             if (index > 0)
-                return text.Substring(0, index) + Environment.NewLine + text.Substring(index + 1);
-
-            index = textSplit(text, ',');
-            if (index > 0)
-                return text.Substring(0, index) + Environment.NewLine + text.Substring(index + 1);
+                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
 
             index = textSplit(text, ')');
             if (index > 0)
-                return text.Substring(0, index) + Environment.NewLine + text.Substring(index + 1);
+                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
 
             for (index = text.Length - 1; index >= 0; index--)
             {
                 size = gfx.MeasureString(text.Substring(0, index), font);
                 if (size.Width <= maxLength)
-                    return text.Substring(0, index) + Environment.NewLine + text.Substring(index + 1);
+                    return text.Substring(0, index) + Environment.NewLine + text.Substring(index);
 
             }
 
@@ -580,7 +619,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             gfx.DrawRectangle(new XPen(XColor.FromArgb(Color.Gray.ToArgb()), 0.2), offset.X, offset.Y, size.Width, size.Height);
 
             // Draw the overlay
-            drawOverlay(overlay, (int)(size.Width + ColumnDistance / 2), document, ref page, ref gfx, new PointF(offset.X, (Single)(offset.Y + size.Height)));
+            drawOverlay(overlay, (int)(size.Width + ColumnDistance - 2), document, ref page, ref gfx, new PointF(offset.X, (Single)(offset.Y + size.Height)));
 
             offset.X += (Single)size.Width + ColumnDistance;
 
@@ -601,14 +640,15 @@ namespace GC_Wizard_SymbolTables_Pdf
             if (document.PageCount == 1)
             {
                 text = File.ReadAllText(versionFileName(ProjectPath));
-                text = getVersionEntryValue(text, "version");
-                textSize = gfx.MeasureString(text, font);
+                versionText = getVersionEntryValue(text, "version");
+            }
 
-                // Draw the version text
-                gfx.DrawString(text, font, XBrushes.Black,
+            textSize = gfx.MeasureString(versionText, font);
+            // Draw the version text
+            gfx.DrawString(versionText, font, XBrushes.Black,
                     new XRect(page.Width - BorderWidthRight - textSize.Width, (BorderWidthTop - font.Height) / 2, page.Width, page.Height),
                     XStringFormats.TopLeft);
-            }
+
 
             // GC Wicard Icon
             gfx.DrawImage(Properties.Resources.circle_border_128, 5, 5, BorderWidthTop - 5, BorderWidthTop - 5);
