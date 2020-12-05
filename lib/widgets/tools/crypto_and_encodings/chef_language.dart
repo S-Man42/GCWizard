@@ -101,6 +101,15 @@ class ChefState extends State<Chef> {
         ? Column(
             children: <Widget>[
               GCWTextField(
+                controller: _outputController,
+                hintText: i18n(context, 'chef_output'),
+                onChanged: (text) {
+                  setState(() {
+                    _currentOutput = text;
+                  });
+                },
+              ),
+              GCWTextField(
                 controller: _titleController,
                 hintText: i18n(context, 'chef_recipetitle'),
                 onChanged: (text) {
@@ -108,6 +117,9 @@ class ChefState extends State<Chef> {
                     _currentTitle = text;
                   });
                 },
+              ),
+              GCWTextDivider(
+                  text: i18n(context, 'chef_options')
               ),
               GCWTextField(
                 controller: _remarkController,
@@ -138,15 +150,6 @@ class ChefState extends State<Chef> {
                   });
                 },
               ),
-              GCWTextField(
-                controller: _outputController,
-                hintText: i18n(context, 'chef_output'),
-                onChanged: (text) {
-                  setState(() {
-                    _currentOutput = text;
-                  });
-                },
-              ),
               GCWOnOffSwitch(
                 notitle: false,
                 title: i18n(context, 'chef_generate_auxiliary_recipe'),
@@ -156,7 +159,10 @@ class ChefState extends State<Chef> {
                     _auxilaryRecipes = value;
                   });
                 },
-              )
+              ),
+              GCWTextDivider(
+                  text: i18n(context, 'chef_sourcecode')
+              ),
             ],
           )
         : Column(
@@ -180,11 +186,11 @@ class ChefState extends State<Chef> {
                   });
                 },
               ),
+              GCWTextDivider(
+                  text: i18n(context, 'chef_output')
+              ),
               ],
           ),
-        GCWTextDivider(
-            text: i18n(context, 'common_output')
-        ),
         _buildOutput(context)
       ],
     );
