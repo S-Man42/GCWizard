@@ -15,43 +15,43 @@ enum textId {
 }
 
 final List<RegExp> matchersENG = [
-  RegExp(r'^take ([a-z0-9 ]+) from refrigerator$'),
-  RegExp(r'^(put|fold) ([a-z0-9 ]+) into( the)?( (\d+)(nd|rd|th|st))? mixing bowl$'),
-  RegExp(r'^add dry ingredients( to( (\d+)(nd|rd|th|st))? mixing bowl)?$'),
-  RegExp(r'^(add|remove|combine|divide) ([a-z0-9 ]+?)( (to|into|from)( (\d+)(nd|rd|th|st))? mixing bowl)?$'),
+  RegExp(r'^take( the)? ([a-z0-9 ]+) from( the)? refrigerator$'),
+  RegExp(r'^(put|fold)( the)? ([a-z0-9 ]+) into( the)?( (\d+)(nd|rd|th|st))? mixing bowl$'),
+  RegExp(r'^add( the)? dry ingredients (to ((the )?(\d+)(nd|rd|th|st) )?mixing bowl)?$'),
+  RegExp(r'^(add|remove|combine|divide)( the)? ([a-z0-9 ]+?)( (to|into|from)( the)?( (\d+)(nd|rd|th|st))? mixing bowl)?$'),
   RegExp(r'^liqu[ie]fy( the)? contents of the( (\d+)(nd|rd|th|st))? mixing bowl$'),
   RegExp(r'^liqu[ie]fy( the)? ([a-z0-9 ]+)$'),
-  RegExp(r'^stir( the( (\d+)(nd|rd|th|st))? mixing bowl)? for (\d+) minutes$'),
-  RegExp(r'^stir ([a-z0-9 ]+) into the( (\d+)(nd|rd|th|st))? mixing bowl$'),
-  RegExp(r'^mix( the( (\d+)(nd|rd|th|st))? mixing bowl)? well$'),
-  RegExp(r'^clean( (\d+)(nd|rd|th|st))? mixing bowl$'),
-  RegExp(r'^pour contents of( the)?( (\d+)(nd|rd|th|st))? mixing bowl into the( (\d+)(nd|rd|th|st))? baking dish$'),
+  RegExp(r'^stir ((the )?((\d+)(nd|rd|th|st) )?mixing bowl )?for (\d+ )minute(s)?$'),
+  RegExp(r'^stir (the )?([a-z0-9 ]+) into (the )?((\d+)(nd|rd|th|st) )?mixing bowl$'),
+  RegExp(r'^mix( (the )?((\d+)(nd|rd|th|st) )?mixing bowl)?( well)?$'),
+  RegExp(r'^clean( the)?( (\d+)(nd|rd|th|st))? mixing bowl( well)?$'),
+  RegExp(r'^pour( the)? contents of( the)?( (\d+)(nd|rd|th|st))? mixing bowl into( the)?( (\d+)(nd|rd|th|st))? baking dish$'),
   RegExp(r'^set aside$'),
   RegExp(r'^refrigerate( for (\d+) hour(s)?)?$'),
-  RegExp(r'^serve with ([a-z0-9 ]+)$'),
+  RegExp(r'^serve with( the)? ([a-z0-9 ]+)$'),
   RegExp(r'^suggestion: (.*)$'),
-  RegExp(r'^([a-z0-9]+?)(( the)? ([a-z0-9 ]+))? until ([a-z0-9]+)$'),
+  RegExp(r'^([a-z0-9]+)( (the )?([a-z0-9 ]+))? until ([a-z0-9]+)$'),
   RegExp(r'^([a-z0-9]+)( the)? ([a-z0-9 ]+)$')
 ];
 
 final List<RegExp> matchersDEU = [
-  RegExp(r'^nehme ([a-zäöüß0-9 ]+) aus dem kühlschrank$'),
-  RegExp(r'^(gebe|unterhebe) ([a-zäöüß0-9 ]+) in( die)?( (\d+)(te))? rührschüssel$'),
+  RegExp(r'^nehme( die| das| den)? ([a-zäöüß0-9 ]+) aus (dem )?kühlschrank$'),
+  RegExp(r'^(gebe|unterhebe)( die| das| den)? ([a-zäöüß0-9 ]+) in( die)?( (\d+)(te))? rührschüssel$'),
   RegExp(r'^füge hinzu feste zutaten( zur( (\d+)(ten))? rührschüssel)?$'),
-  RegExp(r'^(füge hinzu|entferne|kombiniere|teile) ([a-zäöüß0-9 ]+?) (zu|mit( der)?|aus( der)?|in( die)?)( (\d+)(te(n)?))? rührschüssel$'),
-  RegExp(r'^verflüssige die inhalte der( (\d+)(ten))? rührschüssel$'),
+  RegExp(r'^(füge hinzu|entferne|kombiniere|teile)( die| das| den)? ([a-zäöüß0-9 ]+?)( (zu |mit |aus |in (der |die )?)((\d+)(te(n)?) )?rührschüssel)?$'),
+  RegExp(r'^verflüssige (die )?inhalte der( (\d+)(ten) )? rührschüssel$'),
   RegExp(r'^verflüssige( den| das| die)? ([a-zäöüß0-9 ]+)$'),
-  RegExp(r'^rühre( die( (\d+)(te))? rührschüssel)? für (\d+) minuten$'),
-  RegExp(r'^rühre ([a-zäöüß0-9 ]+) in die( (\d+)(te))? rührschüssel$'),
-  RegExp(r'^mische( die( (\d+)(te))? rührschüssel)? well$'),
+  RegExp(r'^rühre ((die )?((\d+)(te ))?rührschüssel )?für (\d+) minute(n)?$'),
+  RegExp(r'^rühre (das |die |den )?([a-zäöüß0-9 ]+) in (die )?((\d+)(te) )?rührschüssel$'),
+  RegExp(r'^mische( (die )?((\d+)(te)? )?rührschüssel)?( gut)?$'),
   RegExp(r'^säubere die( (\d+)(te))? rührschüssel$'),
-  RegExp(r'^gieße die inhalte der( (\d+)(ten))? rührschüssel auf die( (\d+)(te))? servierplatte$'),
+  RegExp(r'^gieße (die )?inhalte( der)?( (\d+)(ten))? rührschüssel auf( die)?( (\d+)(te))? servierplatte$'),
   RegExp(r'^stelle beiseite'),
   RegExp(r'^gefriere( für (\d+) stunde(n)?)?$'),
-  RegExp(r'^serviere mit ([a-zäöüß0-9 ]+)$'),
+  RegExp(r'^serviere mit (dem |einem )?([a-zäöüß0-9 ]+)$'),
   RegExp(r'^vorschlag: (.*)$'),
-  RegExp(r'^([a-zäöüß0-9]+?)( (das|den|die) ([a-zäöüß0-9 ]+))? bis ([a-zäöüß0-9]+)$'),
-  RegExp(r'^([a-zäöüß0-9]+) (das|den|die) ([a-zäöüß0-9 ]+)$')
+  RegExp(r'^([a-zäöüß0-9]+)( (das |den |die )?([a-zäöüß0-9 ]+))? bis ([a-zäöüß0-9]+)$'),
+  RegExp(r'^([a-zäöüß0-9]+)( das| den| die)? ([a-zäöüß0-9 ]+)$')
 ];
 
 final RegExp MeasureType = RegExp(r'^heaped$|^level$|^gestrichen$|^gehäuft$');
