@@ -74,7 +74,7 @@ class Recipe {
   void setCookingTime(String cookingtime) {
     RegExp expr = new RegExp(r'^(cooking time: |kochzeit: )(\d*)( minute(s)?| minute(n)?| hour(s)?| stunde(n)?)\.$');
     if (expr.hasMatch(cookingtime)) {
-      this.serves = int.parse(expr.firstMatch(cookingtime).group(2));
+      this.cookingtime = int.parse(expr.firstMatch(cookingtime).group(2));
     } else {
       this.error = true;
       errorList.add('chef_error_syntax');
@@ -85,9 +85,9 @@ class Recipe {
   }
 
   void setOvenTemp(String oventemp) {
-    RegExp expr = new RegExp(r'^(pre-heat oven to |vorheizen des ofens auf )(\d*)( (grad|degrees) celsius)?( gas (mark|skala) (\d*))?\.$');
+    RegExp expr = new RegExp(r'^(pre-heat oven to |vorheizen des ofens auf )(\d*) (degrees|grad) cel(c|s)ius( \(gas (mark |skala )(\d*)\))?.$');
     if (expr.hasMatch(oventemp)) {
-      this.serves = int.parse(expr.firstMatch(oventemp).group(2));
+      this.oventemp = int.parse(expr.firstMatch(oventemp).group(2));
       if (expr.firstMatch(oventemp).group(7)!= null) {
         this.gasmark = int.parse(expr.firstMatch(oventemp).group(7));
       }
