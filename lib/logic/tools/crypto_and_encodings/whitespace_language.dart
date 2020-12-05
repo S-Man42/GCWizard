@@ -69,7 +69,7 @@ String _transformCode(String code) {
   }
 
   code2 = codeLowerCase.replaceAll(RegExp(r'[ \t\n]'), '');
-  code2 = code2.replaceAll('space', ' ').replaceAll('tab', '\t').replaceAll('lf', '\n');
+  code2 = code2.replaceAll('[space]', ' ').replaceAll('[tab]', '\t').replaceAll('[lf]', '\n');
   code2 = _uncomment(code2);
   if (code2.length > code1.length) {
     code1 = code2;
