@@ -1408,25 +1408,26 @@ Pour contents of 2nd mixing bowl into the baking dish.
 Serves 1.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'DEU', 'input' : '',  'recipe' : HelloWorld, 'isValid' : false, 'expectedOutput' : ['Hello, World!']},
-      {'language' : 'DEU', 'input' : '',  'recipe' : Factorial, 'isValid' : false, 'expectedOutput' : ['0! = 1',
-        '1! = 1',
-        '2! = 2',
-        '3! = 6',
-        '4! = 24',
-        '5! = 120',
-        '6! = 720',
-        '7! = 5040',
-        '8! = 40320',
-        '9! = 362880',
-        '10! = 3628800',
-        '11! = 39916800',
-        '12! = 479001600',
-        '13! = 6227020800',
-        '14! = 87178291200',
-        '15! = 1307674368000',
-        '16! = 20922789888000']},
-      {'language' : 'DEU', 'input' : '',   'recipe' : Fibonacci,   'isValid' : true, 'expectedOutput' : ['1123581321345589144233377610987']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorld, 'isValid' : false, 'expectedOutput' : ['Hello, World!']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : Factorial, 'isValid' : false, 'expectedOutput' : ['0! = 1\n' +
+        '1! = 1\n' +
+        '2! = 2\n' +
+        '3! = 6\n' +
+        '4! = 24\n' +
+        '5! = 120\n' +
+        '6! = 720\n' +
+        '7! = 5040\n' +
+        '8! = 40320\n' +
+        '9! = 362880\n' +
+        '10! = 3628800\n' +
+        '11! = 39916800\n' +
+        '12! = 479001600\n' +
+        '13! = 6227020800\n' +
+        '14! = 87178291200\n' +
+        '15! = 1307674368000\n' +
+        '16! = 20922789888000\n' +
+          '']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : Fibonacci,   'isValid' : true, 'expectedOutput' : ['1123581321345589144233377610987']},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -1554,25 +1555,26 @@ Serves 1.''';
 
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'DEU', 'input' : '',  'recipe' : HelloWorld, 'isValid' : false, 'expectedOutput' : ['Hello, World!']},
-      {'language' : 'DEU', 'input' : '',  'recipe' : Factorial, 'isValid' : false, 'expectedOutput' : ['0! = 1',
-        '1! = 1',
-        '2! = 2',
-        '3! = 6',
-        '4! = 24',
-        '5! = 120',
-        '6! = 720',
-        '7! = 5040',
-        '8! = 40320',
-        '9! = 362880',
-        '10! = 3628800',
-        '11! = 39916800',
-        '12! = 479001600',
-        '13! = 6227020800',
-        '14! = 87178291200',
-        '15! = 1307674368000',
-        '16! = 20922789888000']},
-      {'language' : 'DEU', 'input' : '',   'recipe' : Fibonacci,   'isValid' : true, 'expectedOutput' : ['1123581321345589144233377610987']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorld, 'isValid' : false, 'expectedOutput' : ['Hello, World!']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : Factorial, 'isValid' : false, 'expectedOutput' : ['0! = 1\n' +
+          '1! = 1\n' +
+          '2! = 2\n' +
+          '3! = 6\n' +
+          '4! = 24\n' +
+          '5! = 120\n' +
+          '6! = 720\n' +
+          '7! = 5040\n' +
+          '8! = 40320\n' +
+          '9! = 362880\n' +
+          '10! = 3628800\n' +
+          '11! = 39916800\n' +
+          '12! = 479001600\n' +
+          '13! = 6227020800\n' +
+          '14! = 87178291200\n' +
+          '15! = 1307674368000\n' +
+          '16! = 20922789888000\n'+
+          '']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : Fibonacci,   'isValid' : true, 'expectedOutput' : ['1123581321345589144233377610987']},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -1860,13 +1862,13 @@ Pour contents of the mixing bowl into the baking dish.
 Refrigerate for 1 hour.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'DEU', 'input' : '',   'recipe' : exp,   'isValid' : true, 'expectedOutput' : ['8']},
-      {'language' : 'DEU', 'input' : '',   'recipe' : fac,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'DEU', 'input' : '',   'recipe' : fib,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'DEU', 'input' : '',   'recipe' : fib2,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'DEU', 'input' : '',   'recipe' : hello,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'DEU', 'input' : '',   'recipe' : japh,   'isValid' : true, 'expectedOutput' : ['Just another Chef/Perl Hacker,']},
-      {'language' : 'DEU', 'input' : '5',   'recipe' : stdin,   'isValid' : true, 'expectedOutput' : ['5']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : exp,   'isValid' : true, 'expectedOutput' : ['8']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : fac,   'isValid' : true, 'expectedOutput' : ['chef_error_structure_recipe']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : fib,   'isValid' : true, 'expectedOutput' : ['chef_error_structure_recipe']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : fib2,   'isValid' : true, 'expectedOutput' : ['chef_error_structure_recipe']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : hello,   'isValid' : true, 'expectedOutput' : ['chef_error_structure_recipe']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : japh,   'isValid' : true, 'expectedOutput' : ['Just another Chef/Perl Hacker,']},
+      {'language' : 'ENG', 'input' : '5',   'recipe' : stdin,   'isValid' : true, 'expectedOutput' : ['5']},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -1944,7 +1946,7 @@ Pour contents of the mixing bowl into the baking dish.
 Refrigerate for 1 hour.''';
 
         List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'DEU', 'input' : '',  'recipe' : HelloWorld, 'isValid' : false, 'expectedOutput' : ['world!']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorld, 'isValid' : false, 'expectedOutput' : ['world!']},
         ];
 
     _inputsToExpected.forEach((elem) {
@@ -2434,17 +2436,17 @@ Pour contents of the 2nd mixing bowl into the baking dish.
 Serves 1.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'DEU', 'input' : '4 5 7 4 6',  'recipe' : BubbledAndBacon, 'isValid' : false, 'expectedOutput' : ['4567']},
-      {'language' : 'DEU', 'input' : '12',  'recipe' : FactorialAndFish, 'isValid' : false, 'expectedOutput' : ['479001600']},
-      {'language' : 'DEU', 'input' : '12',  'recipe' : FibonacciDuFromage, 'isValid' : false, 'expectedOutput' : ['1123581321345589144']},
+      {'language' : 'ENG', 'input' : '4 5 7 4 6',  'recipe' : BubbledAndBacon, 'isValid' : false, 'expectedOutput' : ['4567']},
+      {'language' : 'ENG', 'input' : '12',  'recipe' : FactorialAndFish, 'isValid' : false, 'expectedOutput' : ['479001600']},
+      {'language' : 'ENG', 'input' : '12',  'recipe' : FibonacciDuFromage, 'isValid' : false, 'expectedOutput' : ['1123581321345589144']},
       //{'language' : 'DEU', 'input' : '',  'recipe' : FibonacciNumberswithCaramelSauce, 'isValid' : false, 'expectedOutput' : ['']},
       //recursion does not work - Stack overflow
-      {'language' : 'DEU', 'input' : '',  'recipe' : FruitLoops, 'isValid' : false, 'expectedOutput' : ['880']},
-      {'language' : 'DEU', 'input' : '60 24',  'recipe' : GreatestCommonDijonMustard, 'isValid' : false, 'expectedOutput' : ['12']},
-      {'language' : 'DEU', 'input' : '',  'recipe' : HelloSouchef, 'isValid' : false, 'expectedOutput' : ['Hello world!']},
-      {'language' : 'DEU', 'input' : '',  'recipe' : HelloWorldSouffle, 'isValid' : false, 'expectedOutput' : ['Hello world!']},
-      {'language' : 'DEU', 'input' : '5 3',  'recipe' : PeasAndPower, 'isValid' : false, 'expectedOutput' : ['125']},
-      {'language' : 'DEU', 'input' : '8 1 1 0 1 1 1 1 0 3 1 1 1 1 1 1 0 1 1 2 2 1 1 1 2 2 0 0 0 3 3 1 0 0 0 3 0	0 0 0',  'recipe' : TuringsTortillasNotEdible, 'isValid' : false, 'expectedOutput' : ['11111100']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : FruitLoops, 'isValid' : false, 'expectedOutput' : ['880']},
+      {'language' : 'ENG', 'input' : '60 24',  'recipe' : GreatestCommonDijonMustard, 'isValid' : false, 'expectedOutput' : ['12']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : HelloSouchef, 'isValid' : false, 'expectedOutput' : ['Hello world!']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorldSouffle, 'isValid' : false, 'expectedOutput' : ['Hello world!']},
+      {'language' : 'ENG', 'input' : '5 3',  'recipe' : PeasAndPower, 'isValid' : false, 'expectedOutput' : ['125']},
+      {'language' : 'ENG', 'input' : '8 1 1 0 1 1 1 1 0 3 1 1 1 1 1 1 0 1 1 2 2 1 1 1 2 2 0 0 0 3 3 1 0 0 0 3 0 0 0 0 0',  'recipe' : TuringsTortillasNotEdible, 'isValid' : false, 'expectedOutput' : ['11111100']},
     ];
 
     _inputsToExpected.forEach((elem) {
