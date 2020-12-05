@@ -37,7 +37,7 @@ final List<RegExp> matchersENG = [
 final List<RegExp> matchersDEU = [
   RegExp(r'^nehme( die| das| den)? ([a-zäöüß0-9 ]+) aus (dem )?kühlschrank$'),
   RegExp(r'^(gebe|unterhebe)( die| das| den)? ([a-zäöüß0-9 ]+) in( die)?( (\d+)(te))? rührschüssel$'),
-  RegExp(r'^füge hinzu feste zutaten( zur( (\d+)(ten))? rührschüssel)?$'),
+  RegExp(r'^füge hinzu( die festen| feste)? zutaten( zu(r|der)?( (\d+)(ten))? rührschüssel)?$'),
   RegExp(r'^(füge hinzu|entferne|kombiniere|teile)( die| das| den)? ([a-zäöüß0-9 ]+?)( (zu |mit |aus |in (der |die )?)((\d+)(te(n)?) )?rührschüssel)?$'),
   RegExp(r'^verflüssige (die )?inhalte der( (\d+)(ten) )? rührschüssel$'),
   RegExp(r'^verflüssige( den| das| die)? ([a-zäöüß0-9 ]+)$'),
