@@ -1265,6 +1265,8 @@
   "morse_next_letter" : "Weiter",
   "morse_next_word" : "Pause",
 
+  "multidecoder_title" : "Multi Decoder",
+
   "numeralbases_title" : "Zahlensysteme",
   "numeralbases_description" : "Konvertiert Zahlen zwischen verschiedenen Zahlensystemen (z.B. binär oder hexadezimal zu dezimal)",
   "numeralbases_example" : "101010 → 42, 2A → 42",
