@@ -351,7 +351,7 @@ class Registry {
         tool: BurrowsWheeler(),
         i18nPrefix: 'burrowswheeler',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'burrows wheeler'
+        searchStrings: 'burrows wheeler transformation bwt bzip2'
       ),
       GCWTool(
         tool: Caesar(),

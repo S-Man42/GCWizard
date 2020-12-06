@@ -1,5 +1,11 @@
+class BWTOutput {
+  String text;
+  String index;
 
-String encryptBurrowsWheeler(String plain, indexChar) {
+  BWTOutput(this.text, this.index);
+}
+
+BWTOutput encryptBurrowsWheeler(String plain, indexChar) {
   int len = plain.length;
   List<String> matrix = new List<String>();
 
@@ -18,26 +24,36 @@ String encryptBurrowsWheeler(String plain, indexChar) {
       index = i;
   }
 
-  chiffre = chiffre.substring(0,index) + indexChar + chiffre.substring(index);
-  return chiffre;
+  if (int.tryParse(indexChar) == null)
+    chiffre = chiffre.substring(0,index) + indexChar + chiffre.substring(index);
+  else {
+    index = index + 1;
+    indexChar = index.toString();
+  }
+  return BWTOutput(chiffre, indexChar);
 }
 
 
-String decryptBurrowsWheeler(String chiffre, indexChar) {
+BWTOutput decryptBurrowsWheeler(String chiffre, indexChar) {
   if (chiffre == '' || chiffre == null)
-    return '';
+    return BWTOutput('', '');
 
   int len = chiffre.length;
   int index = 0;
   String input = '';
 
-  for (int  i = 0; i < len; i++){
-    if (chiffre[i] != indexChar)
-      input = input + chiffre[i];
-    else
-      index = i;
+  if (int.tryParse(indexChar) == null) {
+    for (int  i = 0; i < len; i++){
+      if (chiffre[i] != indexChar)
+        input = input + chiffre[i];
+      else
+        index = i;
+    }
+    len = len - 1;
+  } else {
+    index = int.parse(indexChar) - 1;
+    input = chiffre;
   }
-  len = len - 1;
 
   Map<int, List<String>> tabelle = new Map<int, List<String>>();
 
@@ -60,5 +76,5 @@ String decryptBurrowsWheeler(String chiffre, indexChar) {
     decodiert = decodiert + tabelle[index][1];
     index = int.parse(tabelle[index][0]);
   }
-  return decodiert;
+  return BWTOutput(decodiert, indexChar);
 }
