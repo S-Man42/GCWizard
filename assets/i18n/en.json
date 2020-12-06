@@ -1250,7 +1250,7 @@
 
   "keyboard_title" : "Keyboard",
   "keyboard_example" : "QWERTZ → Ü;:PY",
-  "keyboard_description" : "Converting between keyboard type QWERTZ, QWERTY,DVORAK, COLEMAK, RISTOME, NEO",
+  "keyboard_description" : "Converting from/to QWERTZ, QWERTY, DVORAK, COLEMAK, RISTOME, NEO, FRA NF Z71-300",
   "keyboard_from" : "Converting from",
   "keyboard_to" : "Converting to",
   "keyboard_mode_qwertz_t1" : "QWERTZ DEU T1",
@@ -1262,6 +1262,7 @@
   "keyboard_mode_colemak" : "COLEMAK",
   "keyboard_mode_ristome" : "RISTOME",
   "keyboard_mode_neo" : "NEO",
+  "keyboard_mode_azerty" : "FRA NF Z71-300",
 
   "licenses_title" : "Licenses",
   "licenses_usedlibraries" : "Used Code Libraries (Flutter/Dart)",

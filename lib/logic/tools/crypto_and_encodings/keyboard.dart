@@ -1,6 +1,32 @@
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum KeyboardMode{QWERTZ_T1, QWERTY_US_INT, Dvorak, Dvorak_II_DEU, RISTOME, NEO, COLEMAK, Dvorak_I_DEU1, Dvorak_I_DEU2}
+enum KeyboardLayout{
+  QWERTZ_T1, 
+  QWERTY_US_INT, 
+  Dvorak, 
+  Dvorak_II_DEU, 
+  RISTOME, 
+  NEO, 
+  COLEMAK, 
+  Dvorak_I_DEU1, 
+  Dvorak_I_DEU2, 
+  AZERTY}
+
+
+/*
+final Map xxxtoNormal = {
+  '°' : '101o', '!' : '102o', '"' : '103o', '§' : '104o', '\$' : '105o', '%' : '106o', '&' : '107o', '/' : '108o', '(' : '109o', ')' : '110o', '=' : '111o', '?' : '112o', '`' : '113o',
+  '^' : '101u', '1' : '102u', '2' : '103u', '3' : '104u', '4'  : '105u', '5' : '106u', '6' : '107u', '7' : '108u', '8' : '109u', '9' : '110u', '0' : '111u', 'ß' : '112u', '`' : '113u',
+  'Q' : '201o', 'W' : '202o', 'E' : '203o', 'R' : '204o', 'T'  : '205o', 'Z' : '206o', 'U' : '207o', 'I' : '208o', 'O' : '209o', 'P' : '210o', 'Ü' : '211o', '*' : '212o',
+  'q' : '201u', 'w' : '202u', 'e' : '203u', 'r' : '204u', 't'  : '205u', 'z' : '206u', 'u' : '207u', 'i' : '208u', 'o' : '209u', 'p' : '210u', 'ü' : '211u', '+' : '212u',
+  'A' : '301o', 'S' : '302o', 'D' : '303o', 'F' : '304o', 'G'  : '305o', 'H' : '306o', 'J' : '307o', 'K' : '308o', 'L' : '309o', 'Ö' : '310o', 'Ä' : '311o', "'" : '312o',
+  'a' : '301u', 's' : '302u', 'd' : '303u', 'f' : '304u', 'g'  : '305u', 'h' : '306u', 'j' : '307u', 'k' : '308u', 'l' : '309u', 'ö' : '310u', 'ä' : '311u', '#' : '312u',
+  '>' : '401o', 'Y' : '402o', 'X' : '403o', 'C' : '404o', 'V'  : '405o', 'B' : '406o', 'N' : '407o', 'M' : '408o', ';' : '409o', ':' : '410o', '_' : '411o',
+  '<' : '401u', 'y' : '402u', 'x' : '403u', 'c' : '404u', 'v'  : '405u', 'b' : '406u', 'n' : '407u', 'm' : '408u', ',' : '409u', '.' : '410u', '-' : '411u',
+  ' ' : '501',  ''  : ''
+};
+*/
 
 final Map QWERTZ_T1toNormal = {
   '°' : '101o', '!' : '102o', '"' : '103o', '§' : '104o', '\$' : '105o', '%' : '106o', '&' : '107o', '/' : '108o', '(' : '109o', ')' : '110o', '=' : '111o', '?' : '112o', '`' : '113o',
@@ -110,6 +136,18 @@ final Map ColemakToNormal = {
   ' ' : '501',  ''  : ''
 };
 
+final Map AZERTYToNormal = {
+  '#' : '101o', '1' : '102o', '2' : '103o', '3' : '104o', '4' : '105o', '5' : '106o', '6' : '107o', '7' : '108o', '8' : '109o', '9' : '110o', '0' : '111o', '"' : '112o', '' : '113o',
+  '@' : '101u', 'à' : '102u', 'é' : '103u', 'è' : '104u', '4'  : '105u', '(' : '106u', ')' : '107u', '7' : '108u', '8' : '109u', '9' : '110u', '0' : '111u', "'" : '112u', '^' : '113u',
+  'A' : '201o', 'Z' : '202o', 'E' : '203o', 'R' : '204o', 'T'  : '205o', 'Y' : '206o', 'U' : '207o', 'I' : '208o', 'O' : '209o', 'P' : '210o', '_' : '211o', '*' : '212o',
+  'a' : '201u', 'z' : '202u', 'e' : '203u', 'r' : '204u', 't'  : '205u', 'z' : '206u', 'u' : '207u', 'i' : '208u', 'o' : '209u', 'p' : '210u', '-' : '211u', '+' : '212u',
+  'Q' : '301o', 'S' : '302o', 'D' : '303o', 'F' : '304o', 'G'  : '305o', 'H' : '306o', 'J' : '307o', 'K' : '308o', 'L' : '309o', 'M' : '310o', '\\' : '311o', "'" : '312o',
+  'q' : '301u', 's' : '302u', 'd' : '303u', 'f' : '304u', 'g'  : '305u', 'h' : '306u', 'j' : '307u', 'k' : '308u', 'l' : '309u', 'm' : '310u', '/' : '311u', '*' : '312u',
+  '>' : '401o', 'W' : '402o', 'X' : '403o', 'C' : '404o', 'V'  : '405o', 'B' : '406o', 'N' : '407o', '?' : '408o', '!' : '409o', '' : '410o', '=' : '411o',
+  '<' : '401u', 'w' : '402u', 'x' : '403u', 'c' : '404u', 'v'  : '405u', 'b' : '406u', 'n' : '407u', '.' : '408u', ',' : '409u', ':' : '410u', ';' : '411u',
+  ' ' : '501',  ''  : ''
+};
+
 final Map NormalToQWERTZ_T1 = switchMapKeyValue(QWERTZ_T1toNormal);
 final Map NormalToQWERTY_US_INT = switchMapKeyValue(QWERTY_US_INTtoNormal);
 final Map NormalToDvorak = switchMapKeyValue(DvoraktoNormal);
@@ -119,9 +157,25 @@ final Map NormalToDvorak_I_DEU2 = switchMapKeyValue(Dvorak_I_DEU2toNormal);
 final Map NormalToRistome = switchMapKeyValue(RistomeToNormal);
 final Map NormalToColemak = switchMapKeyValue(ColemakToNormal);
 final Map NormalToNeo = switchMapKeyValue(NeoToNormal);
+final Map NormalToAZERTY = switchMapKeyValue(AZERTYToNormal);
+
+Map buildKeyboardsMap(var context) {
+  return {
+    KeyboardLayout.QWERTZ_T1 : i18n(context, 'keyboard_mode_qwertz_t1'),
+    KeyboardLayout.QWERTY_US_INT : i18n(context, 'keyboard_mode_qwerty_us_int'),
+    KeyboardLayout.Dvorak : i18n(context, 'keyboard_mode_dvorak'),
+    KeyboardLayout.Dvorak_II_DEU : i18n(context, 'keyboard_mode_dvorak_II'),
+    KeyboardLayout.Dvorak_I_DEU1 : i18n(context, 'keyboard_mode_dvorak_I1'),
+    KeyboardLayout.Dvorak_I_DEU2 : i18n(context, 'keyboard_mode_dvorak_I2'),
+    KeyboardLayout.COLEMAK : i18n(context, 'keyboard_mode_colemak'),
+    KeyboardLayout.RISTOME : i18n(context, 'keyboard_mode_ristome'),
+    KeyboardLayout.NEO : i18n(context, 'keyboard_mode_neo'),
+    KeyboardLayout.AZERTY : i18n(context, 'keyboard_mode_azerty'),
+  };
+}
 
 
-String encodeKeyboard(String input, KeyboardMode keyboardFrom, keyboardTo){
+String encodeKeyboard(String input, KeyboardLayout keyboardFrom, keyboardTo){
   Map mapFrom;
   Map mapTo;
 
@@ -129,28 +183,27 @@ String encodeKeyboard(String input, KeyboardMode keyboardFrom, keyboardTo){
     return '' ;
 
   switch (keyboardFrom) {
-    case KeyboardMode.RISTOME : mapFrom = RistomeToNormal; break;
-    case KeyboardMode.Dvorak_II_DEU : mapFrom = Dvorak_II_DEUtoNormal; break;
-    case KeyboardMode.Dvorak : mapFrom = DvoraktoNormal; break;
-    case KeyboardMode.QWERTY_US_INT : mapFrom = QWERTY_US_INTtoNormal; break;
-    case KeyboardMode.QWERTZ_T1 : mapFrom = QWERTZ_T1toNormal; break;
-    case KeyboardMode.COLEMAK : mapFrom = ColemakToNormal; break;
-    case KeyboardMode.Dvorak_I_DEU1 : mapFrom = Dvorak_I_DEU2toNormal; break;
-    case KeyboardMode.Dvorak_I_DEU2 : mapFrom = Dvorak_I_DEU1toNormal; break;
-    case KeyboardMode.NEO : mapFrom = NeoToNormal; break;
+    case KeyboardLayout.RISTOME : mapFrom = RistomeToNormal; break;
+    case KeyboardLayout.Dvorak_II_DEU : mapFrom = Dvorak_II_DEUtoNormal; break;
+    case KeyboardLayout.Dvorak : mapFrom = DvoraktoNormal; break;
+    case KeyboardLayout.QWERTY_US_INT : mapFrom = QWERTY_US_INTtoNormal; break;
+    case KeyboardLayout.QWERTZ_T1 : mapFrom = QWERTZ_T1toNormal; break;
+    case KeyboardLayout.COLEMAK : mapFrom = ColemakToNormal; break;
+    case KeyboardLayout.Dvorak_I_DEU1 : mapFrom = Dvorak_I_DEU2toNormal; break;
+    case KeyboardLayout.Dvorak_I_DEU2 : mapFrom = Dvorak_I_DEU1toNormal; break;
+    case KeyboardLayout.NEO : mapFrom = NeoToNormal; break;
   }
   switch (keyboardTo) {
-    case KeyboardMode.QWERTZ_T1 : mapTo = NormalToQWERTZ_T1; break;
-    case KeyboardMode.RISTOME : mapTo = NormalToRistome; break;
-    case KeyboardMode.NEO : mapTo = NormalToNeo; break;
-    case KeyboardMode.Dvorak_I_DEU1 : mapTo = NormalToDvorak_I_DEU1; break;
-    case KeyboardMode.Dvorak_I_DEU2 : mapTo = NormalToDvorak_I_DEU2; break;
-    case KeyboardMode.Dvorak_II_DEU : mapTo = NormalToDvorak_II_DEU; break;
-    case KeyboardMode.Dvorak : mapTo = NormalToDvorak; break;
-    case KeyboardMode.QWERTY_US_INT : mapTo = NormalToQWERTY_US_INT; break;
-    case KeyboardMode.COLEMAK : mapTo = NormalToColemak; break;
+    case KeyboardLayout.QWERTZ_T1 : mapTo = NormalToQWERTZ_T1; break;
+    case KeyboardLayout.RISTOME : mapTo = NormalToRistome; break;
+    case KeyboardLayout.NEO : mapTo = NormalToNeo; break;
+    case KeyboardLayout.Dvorak_I_DEU1 : mapTo = NormalToDvorak_I_DEU1; break;
+    case KeyboardLayout.Dvorak_I_DEU2 : mapTo = NormalToDvorak_I_DEU2; break;
+    case KeyboardLayout.Dvorak_II_DEU : mapTo = NormalToDvorak_II_DEU; break;
+    case KeyboardLayout.Dvorak : mapTo = NormalToDvorak; break;
+    case KeyboardLayout.QWERTY_US_INT : mapTo = NormalToQWERTY_US_INT; break;
+    case KeyboardLayout.COLEMAK : mapTo = NormalToColemak; break;
   }
-print(mapTo);
   return input.split('')
               .map((character) {
                   var norm = mapFrom[character];

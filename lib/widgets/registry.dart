@@ -442,12 +442,6 @@ class Registry {
         searchStrings: 'entensprache duck speak nak entisch duckish'
       ),
       GCWTool(
-        tool: Keyboard(),
-        i18nPrefix: 'keyboard',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'dvorak keyboard tastatur layout qwertz qwerty neo colemak ristome'
-    ),
-      GCWTool(
         tool: EnclosedAreas(),
         i18nPrefix: 'enclosedareas',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -540,6 +534,12 @@ class Registry {
         i18nPrefix: 'kenny',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'they killed kenny sie haben kenny getoetet kennys kenny\'s code southpark'
+      ),
+      GCWTool(
+        tool: Keyboard(),
+        i18nPrefix: 'keyboard',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'dvorak keyboard key tasten azerty tastatur layout qwertz qwerty neo colemak ristome'
       ),
       GCWTool(
         tool: Morse(),
