@@ -9,6 +9,8 @@ class WhitespaceResult {
   final bool input_expected;
   final bool error;
   final String errorText;
+  final bool finished;
+  final WhitespaceState state ;
 
   WhitespaceResult({
     this.output = '',
@@ -16,25 +18,77 @@ class WhitespaceResult {
     this.input_expected = false,
     this.error = false,
     this.errorText = '',
+
+    this.finished,
+    this.state = null
   });
 }
 
-Future<WhitespaceResult> decodeWhitespace(String code, String inp, {int timeOut = 30000}) async {
+class WhitespaceState {
+  String code;
+  String inp;
+  List<String> input;
+  List<int> stack;
+  List<int> return_positions;
+  Map<int, int> heap;
+  Map<String, int> labels;
+  int pos;
+  bool loading;
+  int debugCounter;
+  String plainTextCharacter ;
+
+  storeState() {
+    this.code = _code;
+    this.inp = _inp;
+    this.input = _input;
+    this.stack = _stack;
+    this.return_positions= _return_positions;
+    this.heap = _heap;
+    this.labels = _labels;
+    this.pos = _pos;
+    this.loading = _loading;
+    this.debugCounter = _debugCounter;
+    this.plainTextCharacter = _plainTextCharacter;
+  }
+
+  restoreState() {
+    _code = this.code;
+    _inp = this.inp;
+    _input = this.input;
+    _stack = this.stack;
+    _return_positions = this.return_positions;
+    _heap = this.heap;
+    _labels = this.labels;
+    _pos = this.pos;
+    _loading = this.loading;
+    _debugCounter = this.debugCounter;
+    _plainTextCharacter = this.plainTextCharacter;
+
+    _code_length = _code.length;
+  }
+}
+
+Future<WhitespaceResult> decodeWhitespace(String code, String inp, {int timeOut = 30000, WhitespaceState continueState}) async {
   try {
     if (code == null || code.length == 0) return WhitespaceResult();
 
     _timeOut = max(timeOut, 100);
 
-    code = _transformCode(code);
-
-    var interpreter = _Interpreter(code, inp);
+    _Interpreter interpreter;
+    if (continueState == null) {
+      code = _transformCode(code);
+      interpreter = _Interpreter(code, inp);
+    } else {
+      interpreter = _Interpreter(null, null);
+      continueState.restoreState();
+    }
     interpreter.run();
 
-    return WhitespaceResult(output: _output, input_expected: _input_required, code: _clean(_code));
+    return WhitespaceResult(output: _output, input_expected: _input_required, code: _clean(code));
   } catch (err) {
     return WhitespaceResult(
         output: _output,
-        code: _clean(_code),
+        code: _clean(code),
         input_expected: _input_required,
         error: true,
         errorText: err.toString() + (' (Position: ' + _pos.toString() + ')'));
@@ -54,17 +108,17 @@ Future<WhitespaceResult> encodeWhitespace(String code) async {
 String _transformCode(String code) {
   var codeLowerCase = code.toLowerCase();
   var code1 = _uncomment(codeLowerCase);
-  plainTextCharacter = plainTextCharacterEnglish;
+  _plainTextCharacter = _plainTextCharacterEnglish;
 
-  var code2 = codeLowerCase.replaceAll(RegExp(r'[^' + plainTextCharacterEnglish + ']'), '');
+  var code2 = codeLowerCase.replaceAll(RegExp(r'[^' + _plainTextCharacterEnglish + ']'), '');
   if (code2.length > code1.length) {
-    plainTextCharacter = plainTextCharacterEnglish;
+    _plainTextCharacter = _plainTextCharacterEnglish;
     code1 = _codeSubstitution(code2);
   }
 
-   code2 = codeLowerCase.replaceAll(RegExp(r'[^' + plainTextCharacterGerman + ']'), '');
+  code2 = codeLowerCase.replaceAll(RegExp(r'[^' + _plainTextCharacterGerman + ']'), '');
   if (code2.length > code1.length) {
-    plainTextCharacter = plainTextCharacterGerman;
+    _plainTextCharacter = _plainTextCharacterGerman;
     code1 = _codeSubstitution(code2);
   }
 
@@ -73,28 +127,28 @@ String _transformCode(String code) {
   code2 = _uncomment(code2);
   if (code2.length > code1.length) {
     code1 = code2;
-    plainTextCharacter = plainTextCharacterEnglish;
+    _plainTextCharacter = _plainTextCharacterEnglish;
   }
 
   return code1;
 }
 
 String _codeSubstitution(String code) {
-  code = code.replaceAll(RegExp(r'[^' + plainTextCharacter + ']'), '');
+  code = code.replaceAll(RegExp(r'[^' + _plainTextCharacter + ']'), '');
 
   code = code
-      .replaceAll(plainTextCharacter[0], ' ')
-      .replaceAll(plainTextCharacter[1], '\t')
-      .replaceAll(plainTextCharacter[2], '\n');
+      .replaceAll(_plainTextCharacter[0], ' ')
+      .replaceAll(_plainTextCharacter[1], '\t')
+      .replaceAll(_plainTextCharacter[2], '\n');
   return code;
 }
 
 /// Returns a readable string representation of whitespace.
 String _clean(String s) {
   return s
-      .replaceAll(' ', plainTextCharacter[0])
-      .replaceAll('\t', plainTextCharacter[1])
-      .replaceAll('\n', plainTextCharacter[2]);
+      .replaceAll(' ', _plainTextCharacter[0])
+      .replaceAll('\t', _plainTextCharacter[1])
+      .replaceAll('\n', _plainTextCharacter[2]);
 }
 
 List<String> _input;
@@ -108,7 +162,6 @@ var _code_length = 0;
 var _inp = '';
 var _output = '';
 var _loading = true;
-var _instruction = '';
 var _command = '';
 var _input_required = false;
 var _debug = false;
@@ -116,9 +169,9 @@ var _debugCounter = 1;
 var _timeOut = 30000;
 
 
-const plainTextCharacterGerman = 'ltu';
-const plainTextCharacterEnglish = 'stl';
-var plainTextCharacter = plainTextCharacterEnglish;
+const _plainTextCharacterGerman = 'ltu';
+const _plainTextCharacterEnglish = 'stl';
+var _plainTextCharacter = _plainTextCharacterEnglish;
 
 /// The main interpreter for the program handles our state and responds to input.
 class _Interpreter {
@@ -139,9 +192,13 @@ class _Interpreter {
     '\n': 'FlowControl'
   };
 
+
   _Interpreter(String code, String inp) {
+    if (code == null)
+      return;
+
     _code = code;
-    _code_length = _code.length;
+    _code_length = code.length;
     _inp = inp;
     _input = _inp.split('').toList();
 
@@ -150,7 +207,6 @@ class _Interpreter {
     _pos = 0;
     _output = '';
     _loading = true;
-    _instruction = '';
     _command = '';
     _labels.clear();
     _return_positions.clear();
@@ -170,7 +226,7 @@ class _Interpreter {
       if ((DateTime.now().difference(start_time)).inMilliseconds > _timeOut) {
         throw new Exception('TimeOut: Program runs too long');
       }
-
+      var _instruction = '';
       var token = _code.substring(_pos, _pos + 1);
       if (!_IMP.containsKey(token) && _pos + 2 <= _code.length) {
         token = _code.substring(_pos, _pos + 2);
@@ -371,9 +427,9 @@ class _IO {
   }
 
   void _input_char() {
-    var a = _input_pop(0);
-    var b = _stack_pop();
     _input_required = true;
+    var a = _input_pop(1);
+    var b = _stack_pop();
 
     _heap.addAll({b: a.codeUnits[0]});
     _debugOutput('input_char', a);
@@ -386,17 +442,16 @@ class _IO {
     if (index < 0) index = _input.indexOf(' ');
     if (index < 0) index = _input.length;
     if (index >= 0) {
-      var num = _input.sublist(0, index).join();
-      _input = _input.sublist(min(index + 1, _input.length - 1));
-
-      _heap.addAll({b : int.parse(num)});
+      _heap.addAll({b : int.parse(_input_pop(index + 1))});
     }
   }
 
-  String _input_pop(int index) {
-    _input_required = true;
-    var item = _input[index];
-    _input.removeAt(index);
+  String _input_pop(int length) {
+    if (_input.length == 0)
+      return '';
+    var item = _input.sublist(0, min(length, _input.length)).join();
+    _input = _input.sublist(min(length, _input.length));
+
     return item;
   }
 }
