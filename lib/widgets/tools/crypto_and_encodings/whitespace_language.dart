@@ -4,11 +4,12 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/whitespace_language.d
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+
 
 class WhitespaceLanguage extends StatefulWidget {
   @override
@@ -19,8 +20,9 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
 
   WhitespaceResult _currentOutput = null;
 
+  String _currentCode = '';
   String _currentInput = '';
-  String _currentKey = '';
+  WhitespaceState _continueState = null;
   var _isStarted = false;
 
   var _currentMode = GCWSwitchPosition.left;
@@ -33,28 +35,11 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
         GCWTextField(
           onChanged: (text) {
             setState(() {
-              _currentInput = text;
+              _currentCode = text;
             });
           },
         ),
 
-        _currentMode ==  GCWSwitchPosition.left ?
-          Container()
-        :
-          GCWTextDivider(
-            text: i18n(context, 'common_input')
-          ),
-        _currentMode ==  GCWSwitchPosition.left ?
-          Container()
-        :
-          GCWTextField(
-            hintText: i18n(context, 'common_input'),
-            onChanged: (text) {
-              setState(() {
-                _currentKey = text;
-              });
-            },
-          ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -68,7 +53,7 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
           text: i18n(context, 'whitespace_language_start'),
           onPressed: () {
             setState(() {
-              _calcOutput();
+              _calcOutput(context);
             });
           },
         ),
@@ -78,7 +63,7 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput == null || _currentInput.length == 0)
+    if (_currentCode == null || _currentCode.length == 0)
       return GCWDefaultOutput();
 
     if (_currentOutput == null)
@@ -89,44 +74,82 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
 
     return GCWMultipleOutput(
       children: [
-        _currentOutput.output,
+        _currentOutput.output + (_currentOutput.error ? '\n' + _currentOutput.errorText  : ''),
         GCWOutput(
           title: i18n(context, 'whitespace_language_readable_code'),
           child: GCWOutputText(
             text: _currentOutput.code,
           ),
         ),
-        GCWOutput(
-          title: i18n(context, 'whitespace_language_info'),
-          child: GCWOutputText(
-            text: (_currentOutput.input_expected ? i18n(context, 'whitespace_language_input_expected') + '\n' : '') + (_currentOutput.error ? _currentOutput.errorText + '\n' : ''),
-          ),
-        )
       ],
     );
   }
 
 
-  _calcOutput() async {
-    if (_currentInput == null || _currentInput.length == 0 || _isStarted)
+  _calcOutput(BuildContext context) async {
+    if (_currentCode == null || _currentCode.length == 0 || _isStarted)
       return;
 
     _isStarted = true;
+    _currentOutput= null;
 
     if (_currentMode == GCWSwitchPosition.left) {
-      var currentOutputFuture = encodeWhitespace(_currentInput);
+      var currentOutputFuture = encodeWhitespace(_currentCode);
       currentOutputFuture.then((output) {
         _currentOutput = output;
         _isStarted = false;
         this.setState(() {});
       });
     } else {
-      var currentOutputFuture = decodeWhitespace(_currentInput, _currentKey);
+      var currentOutputFuture = decodeWhitespace(_currentCode, '', continueState: _continueState);
+      _continueState = null;
+
       currentOutputFuture.then((output) {
-        _currentOutput = output;
-        _isStarted = false;
-        this.setState(() {});
+        if (output.finished) {
+          _currentOutput = output;
+          _isStarted = false;
+          this.setState(() {});
+        } else {
+          _continueState = output.state;
+          _currentInput = "";
+          _showDialogBox(context, output.output);
+        }
       });
     }
+  }
+
+  _showDialogBox(BuildContext context, String text) {
+    showGCWDialog(
+        context,
+        text,
+        Container(
+          width: 300,
+          height: 100,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GCWTextField(
+                autofocus: true,
+                filled: true,
+                onChanged: (text) {
+                  _currentInput = text;
+                },
+              ),
+            ],
+          ),
+        ),
+        [
+          GCWDialogButton(
+            text: i18n(context, 'common_ok'),
+            onPressed: () {
+              _isStarted = false;
+              if (_continueState != null)
+                _continueState.inp = _currentInput + '\n';
+              _calcOutput(context);
+            },
+          )
+        ],
+        cancelButton: false
+    );
   }
 }

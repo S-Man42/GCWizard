@@ -2161,8 +2161,6 @@
   "whitespace_language_example" : "      → DFH",
   "whitespace_language_start" : "Start",
   "whitespace_language_readable_code" : "Lesbarer Code",
-  "whitespace_language_info" : "Info",
-  "whitespace_language_input_expected" : "Eingabe erwartet",
 
   "windchill_title": "Windchill",
   "windchill_description" : "Gefühlte Temperatur",

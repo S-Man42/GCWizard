@@ -19,7 +19,7 @@ class WhitespaceResult {
     this.error = false,
     this.errorText = '',
 
-    this.finished,
+    this.finished = true,
     this.state = null
   });
 }
@@ -27,6 +27,7 @@ class WhitespaceResult {
 class WhitespaceState {
   String code;
   String inp;
+  String output;
   List<String> input;
   List<int> stack;
   List<int> return_positions;
@@ -34,19 +35,22 @@ class WhitespaceState {
   Map<String, int> labels;
   int pos;
   bool loading;
+  bool inputNumber;
   int debugCounter;
-  String plainTextCharacter ;
+  String plainTextCharacter;
 
-  storeState() {
+  storeState(int posOffset) {
     this.code = _code;
     this.inp = _inp;
+    this.output = _output;
     this.input = _input;
     this.stack = _stack;
-    this.return_positions= _return_positions;
+    this.return_positions = _return_positions;
     this.heap = _heap;
     this.labels = _labels;
-    this.pos = _pos;
+    this.pos = _pos + posOffset;
     this.loading = _loading;
+    this.inputNumber = _input_required_number;
     this.debugCounter = _debugCounter;
     this.plainTextCharacter = _plainTextCharacter;
   }
@@ -54,6 +58,11 @@ class WhitespaceState {
   restoreState() {
     _code = this.code;
     _inp = this.inp;
+    _output = this.output;
+    if (this.inp != null) {
+      _output += ' ' + this.inp;
+      _input.addAll(this.inp.split(''));
+    }
     _input = this.input;
     _stack = this.stack;
     _return_positions = this.return_positions;
@@ -80,18 +89,30 @@ Future<WhitespaceResult> decodeWhitespace(String code, String inp, {int timeOut 
       interpreter = _Interpreter(code, inp);
     } else {
       interpreter = _Interpreter(null, null);
+      _inp = inp;
       continueState.restoreState();
     }
     interpreter.run();
 
-    return WhitespaceResult(output: _output, input_expected: _input_required, code: _clean(code));
+    return WhitespaceResult(output: _output, input_expected: _input_required, code: _clean(_code));
   } catch (err) {
-    return WhitespaceResult(
-        output: _output,
-        code: _clean(code),
-        input_expected: _input_required,
-        error: true,
-        errorText: err.toString() + (' (Position: ' + _pos.toString() + ')'));
+    if (err.message == _inputRequired) {
+      var state = WhitespaceState();
+      state.storeState(-4); //2 commands back ('\t\n': 'IO' and '\t ': 'input_char' or '\t\t': 'input_num')
+      return WhitespaceResult(
+          output: _output,
+          code: _clean(_code),
+          input_expected: _input_required,
+          finished: false,
+          state: state);
+    }
+      else
+        return WhitespaceResult(
+            output: _output,
+            code: _clean(_code),
+            input_expected: _input_required,
+            error: true,
+            errorText: err.toString() + (' (Position: ' + _pos.toString() + ')'));
   }
 }
 
@@ -164,11 +185,12 @@ var _output = '';
 var _loading = true;
 var _command = '';
 var _input_required = false;
+var _input_required_number = false;
 var _debug = false;
 var _debugCounter = 1;
 var _timeOut = 30000;
 
-
+const _inputRequired = "input required";
 const _plainTextCharacterGerman = 'ltu';
 const _plainTextCharacterEnglish = 'stl';
 var _plainTextCharacter = _plainTextCharacterEnglish;
@@ -196,6 +218,8 @@ class _Interpreter {
   _Interpreter(String code, String inp) {
     if (code == null)
       return;
+    if (inp == null)
+      inp ='';
 
     _code = code;
     _code_length = code.length;
@@ -428,21 +452,31 @@ class _IO {
 
   void _input_char() {
     _input_required = true;
+    _input_required_number = false;
+    if (_input.length == 0)
+      throw new Exception(_inputRequired);
     var a = _input_pop(1);
     var b = _stack_pop();
 
-    _heap.addAll({b: a.codeUnits[0]});
+    _heap.addAll({b : a.codeUnits[0]});
     _debugOutput('input_char', a);
   }
 
   void _input_num() {
     _input_required = true;
+    _input_required_number = true;
+    if (_input.length == 0)
+      throw new Exception(_inputRequired);
+
     var b = _stack_pop();
     var index = _input.indexOf('\n');
-    if (index < 0) index = _input.indexOf(' ');
+    var index1 =  _input.indexOf(' ');
+    if ((index1 >= 0) & (index1 < index))
+      index = index1;
     if (index < 0) index = _input.length;
     if (index >= 0) {
-      _heap.addAll({b : int.parse(_input_pop(index + 1))});
+      var a = int.parse(_input_pop(index + 1));
+      _heap.addAll({b : a});
     }
   }
 
@@ -451,6 +485,8 @@ class _IO {
       return '';
     var item = _input.sublist(0, min(length, _input.length)).join();
     _input = _input.sublist(min(length, _input.length));
+    //var item = _input[0];
+    //_input.removeAt(0);
 
     return item;
   }
