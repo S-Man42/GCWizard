@@ -37,6 +37,7 @@ import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
+import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
@@ -1048,6 +1049,12 @@ class Registry {
         i18nPrefix: 'coords_equilateraltriangle',
         iconPath: 'assets/coordinates/icon_equilateral_triangle.png',
         searchStrings: SEARCHSTRING_COORDINATES + 'equilateral triangles gleichseitiges dreiecke'
+      ),
+      GCWTool(
+          tool: Antipodes(),
+          i18nPrefix: 'coords_antipodes',
+          iconPath: 'assets/coordinates/icon_antipodes.png',
+          searchStrings: SEARCHSTRING_COORDINATES + 'gegenüber opposide erde earth punkt point'
       ),
       GCWTool(
         tool: EllipsoidTransform(),
