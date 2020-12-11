@@ -12,16 +12,18 @@ enum VigenereBreakerAlphabet{ENGLISH, GERMAN, SPANISH, FRENCH}
 enum VigenereBreakerErrorCode{OK, KEY_LENGTH, KEY_TOO_LONG, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, ALPHABET_TOO_LONG, WRONG_GENERATE_TEXT}
 
 class VigenereBreakerResult {
-  final String plaintext;
-  final String key;
-  final double fitness;
-  final String alphabet;
-  final VigenereBreakerErrorCode errorCode;
+  String plaintext;
+  String key;
+  double fitness;
+  double fitnessFiltered;
+  String alphabet;
+  VigenereBreakerErrorCode errorCode;
 
   VigenereBreakerResult({
     this.plaintext = '',
     this.key = '',
     this.fitness = 0.0,
+    this.fitnessFiltered = 0.0,
     this.alphabet = '',
     this.errorCode = VigenereBreakerErrorCode.OK
   });
@@ -38,12 +40,12 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_LENGTH);
 
   var bigrams = getBigrams(alphabet);
-  var trigrams = getTrigrams(alphabet);
+  //var trigrams = getTrigrams(alphabet);
 
   var vigenereSquare = _createVigenereSquare(bigrams.alphabet.length, vigenereBreakerType == VigenereBreakerType.BEAUFORT);
   var cipher_bin = List<int>();
-  var resultList = List <guballa.BreakerResult>();
-  guballa.BreakerResult best_result = null;
+  var resultList = List <VigenereBreakerResult>();
+  VigenereBreakerResult best_result = null;
   String out1 = '';
 try {
   iterateText(input, bigrams.alphabet).forEach((char) {cipher_bin.add(char);});
@@ -59,97 +61,59 @@ try {
 
   for (int keyLength = keyLengthMin; keyLength <= keyLengthMax; keyLength++) {
     var breakerResult = guballa.break_vigenere(cipher_bin, keyLength, vigenereSquare, bigrams.bigrams);
-    resultList.add(breakerResult);
-    if (best_result == null || breakerResult.fitness > best_result.fitness)
-      best_result = breakerResult;
+    var result = VigenereBreakerResult();
 
-    var key_str = breakerResult.key.map((x) => bigrams.alphabet[x]).join();
-    key_str = decryptVigenere(''.padRight(key_str.length, bigrams.alphabet[0]), key_str, false);
+    resultList.add(result);
 
-    var txt = decryptVigenere(input, key_str, false);
-    var fitness = calc_fitnessBigrams(txt, bigrams);
-    var fitness1 = calc_fitnessTrigrams(txt, trigrams);
+    result.key = breakerResult.key.map((x) => bigrams.alphabet[x]).join();
+    result.key = decryptVigenere(''.padRight(result.key.length, bigrams.alphabet[0]), result.key, false);
 
+    result.plaintext = decryptVigenere(input, result.key, false);
+    result.fitness = calc_fitnessBigrams(result.plaintext, bigrams);
+    //var fitness1 = calc_fitnessTrigrams(txt, trigrams);
+/*
     out1 = out1 + '\n' + fitness.toStringAsFixed(2) + '\t' + fitness1.toStringAsFixed(2) + '\t' +
         key_str  + '\n' +  txt;
-
+*/
   }
   best_result = bestSolution(resultList);
 } on Exception
   {
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.WRONG_GENERATE_TEXT);
   };
-  var key_str = best_result.key.map((x) => bigrams.alphabet[x]).join();
-  key_str = decryptVigenere(''.padRight(key_str.length, bigrams.alphabet[0]), key_str, false);
 
-  //var out = encryptVigenere(input, key_str, false);
-  var out = decryptVigenere(input, key_str, false);
+  for (var i = 1; i < resultList.length; ++i)
+    out1 = out1 + '\n' + resultList[i].fitness.toStringAsFixed(2) + '\t' + resultList[i].fitnessFiltered.toStringAsFixed(2) + '\t' +
+        resultList[i].key ;
 
-  return VigenereBreakerResult(plaintext: out, key: key_str +'\n' + out1, fitness: best_result.fitness, errorCode: VigenereBreakerErrorCode.OK );
+  return VigenereBreakerResult(plaintext: best_result.plaintext, key: best_result.key +'\n' + out1, fitness: best_result.fitness, errorCode: VigenereBreakerErrorCode.OK );
 }
 
-guballa.BreakerResult bestSolution(List<guballa.BreakerResult> keyList){
+VigenereBreakerResult bestSolution(List<VigenereBreakerResult> keyList){
   if (keyList == null || keyList.length == 0)
     return null;
 
-  keyList.sort((a, b) => a.fitness.compareTo(b.fitness));
-  // var median = _quantile(keyList, 50);
-  var lowerQuantile = _quantile(keyList, 25);
-  var upperQuantile = _quantile(keyList, 75);
-  var quantileDiff = (upperQuantile - lowerQuantile) / 2;
-  var antennas = quantileDiff * 3;
-  // var lowerAntennas = lowerQuantile - antennas;
-  var upperAntennas = upperQuantile + antennas;
-  var antennasList = List<guballa.BreakerResult>();
-
-  keyList.forEach((element) {
-    if (element.fitness > upperAntennas)
-      antennasList.add(element);
-  });
-
-  guballa.BreakerResult bestFitness = null;
-  if (antennasList.length == 0) {
-    keyList.forEach((element) {
-      if (bestFitness == null || element.fitness > bestFitness.fitness)
-        bestFitness = element;
-    });
-  } else {
-    antennasList.forEach((element) {
-      if (bestFitness == null || element.fitness > bestFitness.fitness)
-        bestFitness = element;
-    });
-  }
+  keyList = _highPassFilter (0.05, keyList);
+  var bestFitness = keyList[0];
+  for (var i = 1; i < keyList.length; ++i)
+    if (bestFitness.fitnessFiltered < keyList[i].fitnessFiltered)
+      bestFitness = keyList[i];
 
   return bestFitness;
 }
 
-double _quantile(List<guballa.BreakerResult> keyList, int percentage) {
-  if (keyList == null || keyList.length == 0)
-    return 0;
-  if (keyList.length == 1)
-    return keyList[0].fitness;
 
-  var position = (keyList.length + 1) * percentage / 100.0;
-  var leftNumber = 0.0;
-  var rightNumber = 0.0;
 
-  var n = percentage / 100.0 * (keyList.length - 1) + 1;
+ /// HighPass Filter
+/// param alpha alpha should be in the range of [0..1]. If alpha = 1, the output equals the input. The smaller alpha gets, the stronger is the highpass effect.
+List<VigenereBreakerResult> _highPassFilter( double alpha, List<VigenereBreakerResult> keyList) {
 
-  if (position >= 1) {
-    leftNumber = keyList[n.floor() - 1].fitness;
-    rightNumber = keyList[n.floor()].fitness;
-  } else {
-    leftNumber = keyList[0].fitness; // first data
-    rightNumber = keyList[1].fitness; // first data
-  }
+  for (var i = 1; i < keyList.length; ++i)
+    keyList[i].fitnessFiltered = alpha * (keyList[i - 1].fitness + keyList[i].fitness - keyList[i - 1].fitness);
 
-  if (leftNumber == rightNumber)
-    return leftNumber;
-  else {
-    var part = n - n.floor();
-    return leftNumber + part * (rightNumber - leftNumber);
-  }
+  return keyList;
 }
+
 
 List<List<int>> _createVigenereSquare(int size, bool beaufortVariant){
   var vigenereSquare = List<List<int>>(size);
