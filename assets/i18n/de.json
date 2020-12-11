@@ -299,6 +299,11 @@
 
   "burrowswheeler_title" : "Burrows-Wheeler Transformation",
   "burrowswheeler_description" : "Grundlage für bzip-Komprimierung",
+  "burrowswheeler_compress_output" : "Komprimierte Ausgabe",
+  "burrowswheeler_decompress_output" : "Unkomprimierte Ausgabe",
+  "burrowswheeler_language" : "Sprache",
+  "burrowswheeler_language_deu" : "Deutsch",
+  "burrowswheeler_language_eng" : "Englisch",
   "burrowswheeler_index" : "Index",
   "burrowswheeler_index_encode" : "Index verschlüsseln",
   "burrowswheeler_index_symbol" : "Indexsymbol",

@@ -15,33 +15,35 @@ class BurrowsWheeler extends StatefulWidget {
 }
 
 class BurrowsWheelerState extends State<BurrowsWheeler> {
-  var _plainController;
-  var _chiffreController;
-  var _indexNumberController;
-  var _indexCharacterController;
+  var plainController;
+  var chiffreController;
+  var indexNumberController;
+  var indexCharacterController;
 
-  var _currentMode = GCWSwitchPosition.left;
+  var currentMode = GCWSwitchPosition.left;
+  var currentLanguage = GCWSwitchPosition.left;
 
-  String _currentInputPlain = '';
-  String _currentInputChiffre = '';
-  String _IndexSymbol = '#';
-  bool _encodeIndex = false;
-  int _IndexPosition = 1;
-  int _currentInputLen = 0;
+  String currentInputPlain = '';
+  String currentInputChiffre = '';
+  String IndexSymbol = '#';
+  bool encodeIndex = false;
+  bool compress = false;
+  int IndexPosition = 1;
+  int currentInputLen = 0;
 
   @override
   void initState() {
     super.initState();
-    _plainController = TextEditingController(text: _currentInputPlain);
-    _chiffreController = TextEditingController(text: _currentInputChiffre);
-    _indexCharacterController = TextEditingController(text: _IndexSymbol);
+    plainController = TextEditingController(text: currentInputPlain);
+    chiffreController = TextEditingController(text: currentInputChiffre);
+    indexCharacterController = TextEditingController(text: IndexSymbol);
   }
 
   @override
   void dispose() {
-    _plainController.dispose();
-    _chiffreController.dispose();
-    _indexCharacterController.dispose();
+    plainController.dispose();
+    chiffreController.dispose();
+    indexCharacterController.dispose();
 
     super.dispose();
   }
@@ -52,89 +54,111 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
-          value: _currentMode,
+          value: currentMode,
           onChanged: (value) {
             setState(() {
-              _currentMode = value;
+              currentMode = value;
             });
           },
         ),
         GCWOnOffSwitch(
           notitle: false,
           title: i18n(context, 'burrowswheeler_index_encode'),
-          value: _encodeIndex,
+          value: encodeIndex,
           onChanged: (value) {
             setState(() {
-              _encodeIndex = value;
+              encodeIndex = value;
             });
           },
         ),
-
-        _currentMode == GCWSwitchPosition.left
+        GCWOnOffSwitch(
+          notitle: false,
+          title: i18n(context, 'burrowswheeler_compress_output'),
+          value: compress,
+          onChanged: (value) {
+            setState(() {
+              compress = value;
+            });
+          },
+        ),
+        compress == true
+        ? GCWTwoOptionsSwitch(
+            title: i18n(context, 'burrowswheeler_language'),
+            leftValue: i18n(context, 'burrowswheeler_language_deu'),
+            rightValue: i18n(context, 'burrowswheeler_language_eng'),
+            value: currentLanguage,
+            onChanged: (value) {
+              setState(() {
+                currentLanguage = value;
+              });
+            },
+          )
+        : Container(),
+        currentMode == GCWSwitchPosition.left // encrypt
         ? Column(
           children: <Widget>[
             GCWTextField(
-              controller: _plainController,
+              controller: plainController,
               hintText: i18n(context, 'burrowswheeler_inputplain'),
               onChanged: (text) {
                 setState(() {
-                  _currentInputPlain = text;
-                  if (_currentInputPlain == '' || _currentInputPlain == null)
-                    _currentInputLen = 0;
+                  currentInputPlain = text;
+                  if (currentInputPlain == '' || currentInputPlain == null)
+                    currentInputLen = 0;
                   else
-                  _currentInputLen = _currentInputPlain.length;
+                  currentInputLen = currentInputPlain.length;
                 });
               },
             ),
-            _encodeIndex == false
+            encodeIndex == false
                 ? Container()
                 : GCWTextField(
-                controller: _indexCharacterController,
+                controller: indexCharacterController,
                 hintText: i18n(context, 'burrowswheeler_index_symbol'),
                 onChanged: (text) {
                   setState(() {
-                    _IndexSymbol = text;
+                    IndexSymbol = text;
                   });
                 }
             ),
 
           ]
         )
-        : Column(
+        : Column( // decrypt
           children: <Widget>[
             GCWTextField(
-              controller: _chiffreController,
+              controller: chiffreController,
               hintText: i18n(context, 'burrowswheeler_inputchiffre'),
               onChanged: (text) {
                 setState(() {
-                  _currentInputChiffre = text;
-                  if (_currentInputChiffre == '' || _currentInputChiffre == null)
-                    _currentInputLen = 0;
+                  currentInputChiffre = text;
+                  if (currentInputChiffre == '' || currentInputChiffre == null)
+                    currentInputLen = 0;
                   else
-                    _currentInputLen = _currentInputChiffre.length;
+                    currentInputLen = currentInputChiffre.length;
                 });
               },
             ),
-            _encodeIndex == false
+            encodeIndex == false
                 ? GCWIntegerSpinner(
-                    controller: _indexNumberController,
+                    controller: indexNumberController,
                     min: 1,
-                    max: _currentInputLen,
-                    value: _IndexPosition,
+                    max: currentInputLen * 2 + 1,
+                    value: IndexPosition,
                     onChanged: (value) {
                       setState(() {
-                        _IndexPosition = value;
+                       IndexPosition = value;
                       });
                     },
                   )
                 : GCWTextField(
-                      controller: _indexCharacterController,
-                      hintText: i18n(context, 'burrowswheeler_index_symbol'),
-                      onChanged: (text) {
-                        setState(() {
-                          _IndexSymbol = text;
-                        });
-                      }
+                    controller: indexCharacterController,
+                    hintText: i18n(context, 'burrowswheeler_index_symbol'),
+                    onChanged: (text) {
+                      setState(() {
+                        IndexSymbol = text;
+                      });
+                    }
                   ),
           ],
         ),
@@ -146,39 +170,53 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
 
   _buildOutput() {
 
-    BWTOutput _currentOutput;
+    BWTOutput currentOutput;
+    String title = '';
 
-    if (_currentMode == GCWSwitchPosition.left) { // encrypt
-      if (_encodeIndex) {
-        if (_IndexSymbol == '' || _IndexSymbol == null)
-          _currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '');
-        else if (_currentInputPlain.contains(_IndexSymbol))
-          _currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_char_index'), '');
+    if (currentMode == GCWSwitchPosition.left) { // encrypt
+      if (encodeIndex) {
+        if (IndexSymbol == '' || IndexSymbol == null)
+          currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '', '');
+        else if (currentInputPlain.contains(IndexSymbol))
+          currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_char_index'), '', '');
         else
-          _currentOutput = encryptBurrowsWheeler(_currentInputPlain, _IndexSymbol);
+          currentOutput = encryptBurrowsWheeler(currentInputPlain, IndexSymbol, compress, currentLanguage == GCWSwitchPosition.left);
       } else {
-          _currentOutput = encryptBurrowsWheeler(_currentInputPlain, '0');
+          currentOutput = encryptBurrowsWheeler(currentInputPlain, '0', compress, currentLanguage == GCWSwitchPosition.left);
       }
     } else { // decrypt
-      if (_encodeIndex) {
-        if (_IndexSymbol == '' || _IndexSymbol == null)
-          _currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '');
+      if (encodeIndex) {
+        if (IndexSymbol == '' || IndexSymbol == null)
+          currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '', '');
         else
-          _currentOutput = decryptBurrowsWheeler(_currentInputChiffre, _IndexSymbol);
+          currentOutput = decryptBurrowsWheeler(currentInputChiffre, IndexSymbol, compress, currentLanguage == GCWSwitchPosition.left);
       } else {
-        _currentOutput = decryptBurrowsWheeler(_currentInputChiffre, _IndexPosition.toString());
+        currentOutput =decryptBurrowsWheeler(currentInputChiffre, IndexPosition.toString(), compress, currentLanguage == GCWSwitchPosition.left);
       }
     }
 
+    if (currentMode == GCWSwitchPosition.left)
+      title = i18n(context, 'burrowswheeler_compress_output');
+    else
+      title = i18n(context, 'burrowswheeler_decompress_output');
+
     return GCWMultipleOutput(
       children: [
-        _currentOutput.text,
+        currentOutput.text,
         GCWOutput(
             title: i18n(context, 'burrowswheeler_index'),
             child: GCWOutputText(
-              text: _currentOutput.index,
+              text: currentOutput.index,
+            )
+        ),
+        compress == true
+        ? GCWOutput(
+            title: title,
+            child: GCWOutputText(
+              text: currentOutput.compress,
             )
         )
+            : Container()
       ],
     );
   }
