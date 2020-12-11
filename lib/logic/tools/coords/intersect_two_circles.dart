@@ -15,6 +15,10 @@ class _IntersectTwoCirclesCalculator extends IntervalCalculator {
     var r1 = parameters['radius1'];
     var r2 = parameters['radius2'];
 
+    // same position and diameter
+    if ((r1 == r2) && (distanceToCoord1.a == distanceToCoord2.a) & (distanceToCoord1.b == distanceToCoord2.b))
+      return false;
+
     return (distanceToCoord1.a <= r1) && (r1 <= distanceToCoord1.b) && (distanceToCoord2.a <= r2) && (r2 <= distanceToCoord2.b);
   }
 }
