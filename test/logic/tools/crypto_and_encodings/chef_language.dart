@@ -1408,8 +1408,8 @@ Pour contents of 2nd mixing bowl into the baking dish.
 Serves 1.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorld, 'isValid' : false, 'expectedOutput' : ['Hello, World!']},
-      {'language' : 'ENG', 'input' : '',  'recipe' : Factorial, 'isValid' : false, 'expectedOutput' : ['0! = 1\n' +
+      {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorld, 'expectedOutput' : ['Hello, World!\n']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : Factorial, 'expectedOutput' : ['0! = 1\n' +
         '1! = 1\n' +
         '2! = 2\n' +
         '3! = 6\n' +
@@ -1427,12 +1427,12 @@ Serves 1.''';
         '15! = 1307674368000\n' +
         '16! = 20922789888000\n' +
           '']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : Fibonacci,   'isValid' : true, 'expectedOutput' : ['1123581321345589144233377610987']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : Fibonacci,  'expectedOutput' : ['1123581321345589144233377610987']},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('  ', ' '), elem['input']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);
@@ -1467,7 +1467,7 @@ Put passion fruit into the mixing bowl.
 Put durian into the mixing bowl.
 Put lobsters into the mixing bowl.
 Put rice into the mixing bowl.
-Put orange juice  into the mixing bowl.
+Put orange juice into the mixing bowl.
 Put water into the mixing bowl.
 Put sugar into the mixing bowl.
 Put cashews into the mixing bowl.
@@ -1555,8 +1555,8 @@ Serves 1.''';
 
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorld, 'isValid' : false, 'expectedOutput' : ['Hello, World!']},
-      {'language' : 'ENG', 'input' : '',  'recipe' : Factorial, 'isValid' : false, 'expectedOutput' : ['0! = 1\n' +
+      {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorld, 'expectedOutput' : ['Hello, World!\n']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : Factorial, 'expectedOutput' : ['0! = 1\n' +
           '1! = 1\n' +
           '2! = 2\n' +
           '3! = 6\n' +
@@ -1574,12 +1574,12 @@ Serves 1.''';
           '15! = 1307674368000\n' +
           '16! = 20922789888000\n'+
           '']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : Fibonacci,   'isValid' : true, 'expectedOutput' : ['1123581321345589144233377610987']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : Fibonacci,  'expectedOutput' : ['1123581321345589144233377610987']},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('  ', ' '), elem['input']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);
@@ -1590,25 +1590,25 @@ Serves 1.''';
 
   group("chef_language.metacpan.acme-chef-1.01.examples", () {
     var exp = '''Exponentiation cake.
- 
+
 Calculate exponentiation: sugar ^ flour.
- 
+
 Ingredients.
 3 kg flour
 2 g sugar
 1 egg
- 
+
 Method.
 Put flour into mixing bowl.
 Bake flour.
-Remove egg.
-Fold flour into mixing bowl.
-Put sugar into mixing bowl.
-Cool flour.
-Combine sugar.
-Water flour until cooled.
-Pour contents of the mixing bowl into the baking dish.
-Refrigerate for 1 hour.
+  Remove egg.
+  Fold flour into mixing bowl.
+  Put sugar into mixing bowl.
+  Cool flour.
+    Combine sugar.
+  Water flour until cooled.
+  Pour contents of the mixing bowl into the baking dish.
+  Refrigerate for 1 hour.
 Heat until baked.
 Clean mixing bowl.
 Put egg into mixing bowl.
@@ -1787,7 +1787,7 @@ Pour contents of the mixing bowl into the baking dish.
  
 Serves 1.''';
     var japh = '''JAPH Souffle.
- 
+
 Ingredients.
 44 potatoes
 114 onions
@@ -1812,49 +1812,50 @@ Ingredients.
 115 dweebs
 117 sheep
 74 creeps
- 
+
 Method.
-Put potatoes into the mixing bowl. 
-Put onions into the mixing bowl. 
-Put flour into the mixing bowl. 
-Put salt into the mixing bowl. 
-Put bottles of beer into the mixing bowl. 
-Put acid into the mixing bowl. 
-Put oil into the mixing bowl. 
-Put pins into the mixing bowl. 
-Put pines into the mixing bowl. 
-Put onions into the mixing bowl. 
-Put laptops into the mixing bowl. 
-Put mouses into the mixing bowl. 
-Put keyboards into the mixing bowl. 
-Put idiots into the mixing bowl. 
-Put flour into the mixing bowl. 
-Put hackers into the mixing bowl. 
-Put voodoo puppets into the mixing bowl. 
-Put pins into the mixing bowl. 
-Put onions into the mixing bowl. 
-Put flour into the mixing bowl. 
-Put hackers into the mixing bowl. 
-Put crackpipes into the mixing bowl. 
-Put megawatts into the mixing bowl. 
-Put numbers into the mixing bowl. 
-Put commas into the mixing bowl. 
-Put pins into the mixing bowl. 
-Put crackpipes into the mixing bowl. 
-Put dweebs into the mixing bowl. 
-Put sheep into the mixing bowl. 
-Put creeps into the mixing bowl. 
-Liquify contents of the mixing bowl. 
+Put potatoes into the mixing bowl.
+Put onions into the mixing bowl.
+Put flour into the mixing bowl.
+Put salt into the mixing bowl.
+Put bottles of beer into the mixing bowl.
+Put acid into the mixing bowl.
+Put oil into the mixing bowl.
+Put pins into the mixing bowl.
+Put pines into the mixing bowl.
+Put onions into the mixing bowl.
+Put laptops into the mixing bowl.
+Put mouses into the mixing bowl.
+Put keyboards into the mixing bowl.
+Put idiots into the mixing bowl.
+Put flour into the mixing bowl.
+Put hackers into the mixing bowl.
+Put voodoo puppets into the mixing bowl.
+Put pins into the mixing bowl.
+Put onions into the mixing bowl.
+Put flour into the mixing bowl.
+Put hackers into the mixing bowl.
+Put crackpipes into the mixing bowl.
+Put megawatts into the mixing bowl.
+Put numbers into the mixing bowl.
+Put commas into the mixing bowl.
+Put pins into the mixing bowl.
+Put crackpipes into the mixing bowl.
+Put dweebs into the mixing bowl.
+Put sheep into the mixing bowl.
+Put creeps into the mixing bowl.
+Liquify contents of the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
- 
-Serves 1.''';
+
+Serves 1.
+''';
     var stdin = '''STDIN stew.
- 
+
 Read flour from STDIN and output it.
- 
+
 Ingredients.
 flour
- 
+
 Method.
 Take flour from refrigerator.
 Put flour into mixing bowl.
@@ -1885,9 +1886,10 @@ Refrigerate for 1 hour.''';
   group("chef_language.mike-worth-HelloWorld", () {
 
     // http://www.mike-worth.com/2013/03/31/baking-a-hello-world-cake/
+    // the recipe has to be adapted: add "Serves 1.", "Pour the contents ... after servibg with chocolate sauce"
     var HelloWorld = '''Hello World Cake with Chocolate sauce.
-
-This prints hello world, while being tastier than Hello World Souffle. The main chef makes a " world!" cake, which he puts in the baking dish. When he gets the sous chef to make the "Hello" chocolate sauce, it gets put into the baking dish and then the whole thing is printed when he refrigerates the sauce. When actually cooking, I'm interpreting the chocolate sauce baking dish to be separate from the cake one and Liquify to mean either melt or blend depending on context.
+    
+    This prints hello world, while being tastier than Hello World Souffle. The main chef makes a " world!" cake, which he puts in the baking dish. When he gets the sous chef to make the "Hello" chocolate sauce, it gets put into the baking dish and then the whole thing is printed when he refrigerates the sauce. When actually cooking, I'm interpreting the chocolate sauce baking dish to be separate from the cake one and Liquify to mean either melt or blend depending on context.
 
 Ingredients.
 33 g chocolate chips
@@ -1916,10 +1918,13 @@ Stir the mixing bowl for 1 minute.
 Combine double cream into the mixing bowl.
 Stir the mixing bowl for 4 minutes.
 Liquify the contents of the mixing bowl.
-Pour contents of the mixing bowl into the baking dish.
 bake the cake mixture.
 Wait until baked.
 Serve with chocolate sauce.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.
+
 
 chocolate sauce.
 
@@ -1946,12 +1951,12 @@ Pour contents of the mixing bowl into the baking dish.
 Refrigerate for 1 hour.''';
 
         List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorld, 'isValid' : false, 'expectedOutput' : ['world!']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorld, 'expectedOutput' : ['Hello world!']},
         ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('  ', ' '), elem['input']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i], elem['expectedOutput'][i]);
