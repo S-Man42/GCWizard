@@ -429,7 +429,8 @@
   "chef_error_runtime_mix_empty_mixing_bowl" : "Versuch, leere Rührschüssel zu mischen",
   "chef_hint_recipe_hint" : "Hinweis:",
   "chef_hint_recipe_ingredients" : "Wurde das Schlüsselwort 'Ingredients.' definiert über der Zutatenliste?",
-  "chef_hint_recipe_methods" : "Wurde das Schlüsselwort 'Methods.' definiert über der Methodenliste?",
+  "chef_hint_recipe_methods" : "Wurde das Schlüsselwort 'Zubereitung.' definiert über der Methodenliste?",
+  "chef_hint_recipe_oven_temperature" : "Wurde die Ofentemperatur korrekt vorgegeben?",
   "chef_hint_no_hint_available" : "Kein Hinweis verfügbar",
 
   "chickenlanguage_title" : "Hühnersprache",

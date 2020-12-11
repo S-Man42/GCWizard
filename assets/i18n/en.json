@@ -429,6 +429,7 @@
   "chef_hint_recipe_hint" : "Hint:",
   "chef_hint_recipe_ingredients" : "Did you specify 'Ingredients.' above the ingredient list?",
   "chef_hint_recipe_methods" : "Did you specify 'Methods.' above the methods?",
+  "chef_hint_recipe_oven_temperature" : "Did you have the correct oven temperature?",
   "chef_hint_no_hint_available" : "No hint available",
 
   "chickenlanguage_title" : "Chicken Language",
