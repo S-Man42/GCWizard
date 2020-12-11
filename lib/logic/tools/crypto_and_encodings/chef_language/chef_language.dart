@@ -309,8 +309,8 @@ class Chef {
 		Recipe r = null;
 		String title = '';
 		String line = '';
-		readRecipe.split("\n\n")
-			.forEach((element) {
+		readRecipe.split("\n\n").forEach((element) {
+
 				line = element.trim();
 				if (line.startsWith("ingredients") || line.startsWith("zutaten")) {
 					if (progress > 3) {
@@ -338,7 +338,7 @@ class Chef {
 						this.valid = false;
 						return '';
 					}
-				} else if (line.startsWith("pre-heat oven") || line.startsWith("vorheizen des ofens")) {
+				} else if (line.startsWith("pre-heat oven") || line.startsWith("pre heat oven") || line.startsWith("vorheizen des ofens")) {
 					if (progress > 5) {
 						valid = false;
 						_addError(4, progress);
@@ -408,7 +408,7 @@ class Chef {
 										'']);
 			return;
 		}
-	}
+	} // chef
 
 	String _parseTitle(String title) {
 		if (title.endsWith('.')) {
@@ -435,8 +435,9 @@ class Chef {
 
 	String _structHint(int progress) {
 		switch (progress) {
-			case 2 :	return 'chef_hint_recipe_ingredients';
-			case 3 :	return 'chef_hint_recipe_methods';
+			case 2 : return 'chef_hint_recipe_ingredients';
+			case 3 : return 'chef_hint_recipe_methods';
+			case 4 : return 'chef_hint_recipe_oven_temperature';
 		}
 		return "chef_hint_no_hint_available";
 	}
