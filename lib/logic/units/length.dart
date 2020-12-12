@@ -78,17 +78,66 @@ final LENGTH_PARSEC= Length(
   inMeters: 96939420213600000.0 / pi
 );
 
+final LENGTH_LAR= Length(
+    name: 'common_unit_length_lar_name',
+    symbol: 'lar',
+    inMeters: 4826
+);
+
+final LENGTH_RANGAR= Length(
+    name: 'common_unit_length_rangar_name',
+    symbol: 'rangar',
+    inMeters: 4826 / 5000
+);
+
+final LENGTH_LANDLEAGUE= Length(
+    name: 'common_unit_length_landleague_name',
+    symbol: 'league',
+    inMeters: 4828
+);
+
+final LENGTH_FATHOM= Length(
+    name: 'common_unit_length_fathom_name',
+    symbol: 'fth',
+    inMeters: 1.8288
+);
+
+final LENGTH_FURLONG= Length(
+    name: 'common_unit_length_furlong_name',
+    symbol: 'fur',
+    inMeters: 201.168
+);
+
+final LENGTH_CHAIN= Length(
+    name: 'common_unit_length_chain_name',
+    symbol: 'ch',
+    inMeters: 20.1168
+);
+
+final LENGTH_ROD= Length(
+    name: 'common_unit_length_rod_name',
+    symbol: 'rd',
+    inMeters: 5.0292
+);
+
 final List<Unit> baseLengths = [
   LENGTH_METER,
   LENGTH_STATUTEMILE,
   LENGTH_INCH,
   LENGTH_FOOT,
   LENGTH_YARD,
+  LENGTH_FATHOM,
+  LENGTH_FURLONG,
+  LENGTH_CHAIN,
+  LENGTH_ROD,
+  LENGTH_LANDLEAGUE,
   LENGTH_USSURVEYFOOT,
   LENGTH_NAUTICALMILE,
   LENGTH_LIGHTYEAR,
   LENGTH_ASTRONOMICALUNIT,
-  LENGTH_PARSEC
+  LENGTH_PARSEC,
+  LENGTH_LAR,
+  LENGTH_RANGAR
 ];
 
 final LENGTH_KM = Length(

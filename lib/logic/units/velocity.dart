@@ -34,6 +34,12 @@ final VELOCITY_MPH = Velocity(
   inMS: 1.0 / 3.6 * 1.609344
 );
 
+final VELOCITY_MPMIN = Velocity(
+    name: 'common_unit_velocity_mpmin_name',
+    symbol: 'mph',
+    inMS: 1.0 / 3.6 * 1.609344 * 60.0
+);
+
 final VELOCITY_FTS = Velocity(
     name: 'common_unit_velocity_fts_name',
     symbol: 'mph',
@@ -46,10 +52,53 @@ final VELOCITY_KN = Velocity(
   inMS: 463.0 / 900.0
 );
 
+final VELOCITY_MMIN = Velocity(
+    name: 'common_unit_velocity_mmin_name',
+    symbol: 'm/min',
+    inMS: 1.0 / 60.0
+);
+
+final VELOCITY_KMS = Velocity(
+    name: 'common_unit_velocity_kms_name',
+    symbol: 'km/s',
+    inMS: 1.0 / 3.6 / 60 / 60.0
+);
+
+final VELOCITY_KMMIN = Velocity(
+    name: 'common_unit_velocity_kmmin_name',
+    symbol: 'km/min',
+    inMS: 1.0 / 3.6 / 60.0
+);
+
+final VELOCITY_FTMIN = Velocity(
+    name: 'common_unit_velocity_ftmin_name',
+    symbol: 'ft/min',
+    inMS: 0.3048 * 60.0
+);
+
+final VELOCITY_YDS = Velocity(
+    name: 'common_unit_velocity_yds_name',
+    symbol: 'yd/s',
+    inMS: 0.9144
+);
+
+final VELOCITY_YDMIN = Velocity(
+    name: 'common_unit_velocity_ydmin_name',
+    symbol: 'yd/min',
+    inMS: 0.01524
+);
 
 final List<Unit> velocities = [
   VELOCITY_MS,
+  VELOCITY_MMIN,
+  VELOCITY_KMS,
+  VELOCITY_KMMIN,
   VELOCITY_KMH,
+  VELOCITY_MPMIN,
   VELOCITY_MPH,
-  VELOCITY_KN
+  VELOCITY_KN,
+  VELOCITY_FTS,
+  VELOCITY_FTMIN,
+  VELOCITY_YDS,
+  VELOCITY_YDMIN
 ];

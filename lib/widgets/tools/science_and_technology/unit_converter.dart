@@ -16,6 +16,7 @@ import 'package:gc_wizard/logic/units/unit_category.dart';
 import 'package:gc_wizard/logic/units/unit_prefix.dart';
 import 'package:gc_wizard/logic/units/velocity.dart';
 import 'package:gc_wizard/logic/units/volume.dart';
+import 'package:gc_wizard/logic/units/typography.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -36,6 +37,7 @@ final List<Map<String, dynamic>> _categories = [
   {'category' : UNITCATEGORY_PRESSURE, 'default_from_unit': PRESSURE_PASCAL, 'default_to_unit': PRESSURE_BAR},
   {'category' : UNITCATEGORY_TEMPERATURE, 'default_from_unit': TEMPERATURE_CELSIUS, 'default_to_unit': TEMPERATURE_FAHRENHEIT},
   {'category' : UNITCATEGORY_TIME, 'default_from_unit': TIME_HOUR, 'default_to_unit': TIME_MINUTE},
+  {'category' : UNITCATEGORY_TYPOGRAPHY, 'default_from_unit': TYPOGRAPHY_DTPPOINT, 'default_to_unit': TYPOGRAPHY_CENTIMETER},
   {'category' : UNITCATEGORY_VELOCITY, 'default_from_unit': VELOCITY_KMH, 'default_to_unit': VELOCITY_MS},
   {'category' : UNITCATEGORY_VOLUME, 'default_from_unit': VOLUME_CUBICMETER, 'default_to_unit': VOLUME_LITER},
 ];

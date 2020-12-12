@@ -262,6 +262,18 @@ final VOLUME_BATHTUB = Volume (
   inCubicMeters: 0.001 * 150.0
 );
 
+final VOLUME_TEASPOON = Volume (
+    name: 'common_unit_volume_tsp_name',
+    symbol: 'TL',
+    inCubicMeters: 0.001 * 0.001 * 5
+);
+
+final VOLUME_TABLESPOON = Volume (
+    name: 'common_unit_volume_tbsp_name',
+    symbol: 'EL',
+    inCubicMeters: 0.001 * 0.001 * 15
+);
+
 final List<Unit> volumes = [
   VOLUME_CUBICMILLIMETER,
   VOLUME_CUBICCENTIMETER,
@@ -303,5 +315,7 @@ final List<Unit> volumes = [
   VOLUME_USDRYGALLON,
   VOLUME_USPECK,
   VOLUME_USBUSHEL,
-  VOLUME_BATHTUB
+  VOLUME_BATHTUB,
+  VOLUME_TEASPOON,
+  VOLUME_TABLESPOON
 ];
