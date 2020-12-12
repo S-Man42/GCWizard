@@ -147,3 +147,4 @@ String tiger_192Digest(String data) {
 String whirlpool_512Digest(String data) {
   return _digest(WhirlpoolDigest(), data);
 }
+

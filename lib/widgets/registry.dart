@@ -98,7 +98,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hashes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
@@ -207,6 +208,7 @@ class Registry {
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
   static final SEARCHSTRING_CCITT1 = SEARCHSTRING_CCITT + 'ccitt1 ccitt-1 baudot-code baudotcode ';
   static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen lochkarten konrad zuse z-22 z22 punchedpapertape cards baudot-murray-code ';
+  static final SEARCHSTRING_CODEBREAKER = 'solver loeser universal universeller codebreaker codebrecher codeknacker cracker ';
   static final SEARCHSTRING_COMBINATORICS = 'mathematics mathematik kombinatorik combinatorics ';
   static final SEARCHSTRING_COMBINATORICS_COMBINATION = SEARCHSTRING_COMBINATORICS + 'combinations kombinationen untergruppen subgroups ';
   static final SEARCHSTRING_COMBINATORICS_PERMUTATION = SEARCHSTRING_COMBINATORICS + 'permutationen permutations anordnungen reihenfolgen arrangements orders ';
@@ -220,7 +222,7 @@ class Registry {
   static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterische programmiersprache esoteric programming language ';
   static final SEARCHSTRING_FORMULASOLVER = 'formulasolver formelrechner formelsolver ';
   static final SEARCHSTRING_GAMELANGUAGE = 'spielsprachen game languages secret languages geheimsprachen ';
-  static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschluesselungen ';
+  static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschluesselungen hashvalues hashwerte ';
   static final SEARCHSTRING_HASHES_BLAKE2B = SEARCHSTRING_HASHES_SHA3 + 'blake2b ';
   static final SEARCHSTRING_HASHES_KECCAK = SEARCHSTRING_HASHES_SHA3 + 'keccak ';
   static final SEARCHSTRING_HASHES_RIPEMD = SEARCHSTRING_HASHES_SHA3 + 'ripemd ripe-md ';
@@ -700,7 +702,7 @@ class Registry {
           tool: SubstitutionBreaker(),
         i18nPrefix: 'substitutionbreaker',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'substitution monoalphabetische monoalphabetic ersetzen replacements alphabet change austauschen change switch solver loeser universal universeller codebreaker codebrecher codeknacker cracker '
+        searchStrings: SEARCHSTRING_CODEBREAKER + 'substitution monoalphabetische monoalphabetic ersetzen replacements alphabet change austauschen change switch '
       ),
       GCWTool(
         tool: SudokuSolver(),
@@ -1143,6 +1145,11 @@ class Registry {
       ),
 
       //Hash Selection *****************************************************************************************
+      GCWTool(
+        tool: HashBreaker(),
+        i18nPrefix: 'hashes_hashbreaker',
+        searchStrings: SEARCHSTRING_HASHES + SEARCHSTRING_CODEBREAKER + 'hashbreaker hashsolver hashloeser hashknacker hashcracker'
+      ),
       GCWTool(
         tool: MD5(),
         i18nPrefix: 'hashes_md5',

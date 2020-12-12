@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/logic/units/unit.dart';
+import 'package:gc_wizard/logic/common/units/unit.dart';
 
 class Angle extends Unit {
   Function toDegree;
