@@ -948,6 +948,11 @@
   "crosssum_range_alert_input_text" : "The chosen range is very large: %s1 elements.\n\nSuch a calculation could take much time.\n\nAre you sure?",
   "crosssum_range_iterated_title" : "Iterated Cross Sum (Digital Root) in Range",
   "crosssum_range_iterated_description" : "Finds all integers within a range with a specific digital root",
+  "crosssum_range_frequency_title" : "Frequency of Cross Sums in Range",
+  "crosssum_range_frequency_description" : "Calculates which cross sums and how often they occur within a range",
+  "crosssum_range_frequency_sortby" : "Sort by",
+  "crosssum_range_frequency_sortby_crosssum" : "Cross Sum",
+  "crosssum_range_frequency_sortby_frequency" : "Frequency",
 
   "crosstotal_title" : "Show Sums",
   "crosstotal_output" : "Sums, Cross Sums, Products",

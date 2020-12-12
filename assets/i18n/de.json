@@ -948,6 +948,11 @@
   "crosssum_range_alert_result_text" : "Du hast %s1 Ergebnisse generiert.\n\nWillst du sie wirklich alle anzeigen?",
   "crosssum_range_iterated_title" : "Iterierte Quersumme in Bereich",
   "crosssum_range_iterated_description" : "Findet alle Zahlen in einem Bereich mit einer bestimmten iterierten Quersumme",
+  "crosssum_range_frequency_title" : "Häufigkeiten von Quersummen in Bereich",
+  "crosssum_range_frequency_description" : "Ermittelt, welche Quersummen wie oft in einem Bereich auftreten",
+  "crosssum_range_frequency_sortby" : "Ordnen nach",
+  "crosssum_range_frequency_sortby_crosssum" : "Quersumme",
+  "crosssum_range_frequency_sortby_frequency" : "Häufigkeit",
 
   "crosstotal_title" : "Zeige Summen",
   "crosstotal_output" : "Summen, Quersummen, Produkte",
