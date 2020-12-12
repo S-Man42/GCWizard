@@ -1,5 +1,4 @@
 import 'package:gc_wizard/logic/units/unit.dart';
-import 'package:gc_wizard/logic/units/unit_category.dart';
 
 class Velocity extends Unit {
   Function toMS;
