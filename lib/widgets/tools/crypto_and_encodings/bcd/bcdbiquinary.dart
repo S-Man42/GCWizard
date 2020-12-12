@@ -6,9 +6,9 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcd.dart';
 class BCDBiquinary extends BCD {
 
   BCDBiquinary({Key key}) :
-        super(
-        key: key,
-        type: BCDType.BIQUINARY
-      );
+    super(
+      key: key,
+      type: BCDType.BIQUINARY
+    );
 }
 

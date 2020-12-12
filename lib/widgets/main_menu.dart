@@ -150,7 +150,7 @@ ListTile _buildMenuItem(BuildContext context, item) {
       color: themeColors().mainFont(),
     ),
     title: Text(
-      (item['tool'] as GCWToolWidget).toolName,
+      (item['tool'] as GCWTool).toolName,
       style: _menuItemStyle()
     ),
     onTap: () {

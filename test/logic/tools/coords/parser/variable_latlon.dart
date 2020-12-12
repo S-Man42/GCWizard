@@ -1,4 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
+import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
 import 'package:latlong/latlong.dart';
@@ -61,7 +62,7 @@ void main() {
     };
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'text': 'N 51.[A][A+1] E [B][B^A].[4]23', 'values': {'A': '1-3', 'B': '4-0#2,1', 'C': '12,34'}, 'projectionData': {'bearing': 'A00.B', 'distance': '[A*2]50, [B+5]', 'lengthUnitInMeters': 1.0, 'ellipsoid': getEllipsoidByName('WGS84')}, 'expectedOutput': expectedLatLngList},
+      {'text': 'N 51.[A][A+1] E [B][B^A].[4]23', 'values': {'A': '1-3', 'B': '4-0#2,1', 'C': '12,34'}, 'projectionData': {'bearing': 'A00.B', 'distance': '[A*2]50, [B+5]', 'lengthUnit': UNITCATEGORY_LENGTH.defaultUnit, 'ellipsoid': getEllipsoidByName('WGS84')}, 'expectedOutput': expectedLatLngList},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -90,7 +91,7 @@ void main() {
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'text': 'N 52° 30.123 E [11° 20.E4]', 'values': {'E': '5'}, 'expectedOutput': expectedLatLngList},
-      {'text': 'N 52° 30.123 E 11° 20.E4', 'values': {'E': '5'}, 'expectedOutput': {'coordinates': [], 'leftPadCoordinates': []}},
+      {'text': 'N 52° 30.123 E 12', 'values': {'E': '5'}, 'expectedOutput':  {'coordinates': [{'variables': {'E': '5'}, 'coordinate': LatLng(52.50205, 5.2)}],'leftPadCoordinates': [{'variables': {'E': '5'},'coordinate': LatLng(52.50205, 5.2)}]}},
       {'text': '52° 30.123 11° 20.E4', 'values': {'E': '5'}, 'expectedOutput': expectedLatLngList},
     ];
 

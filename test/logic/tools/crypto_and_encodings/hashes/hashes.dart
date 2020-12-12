@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes.dart';
+import "package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hashes.dart";
 
 void main() {
   group("Hashes:", () {

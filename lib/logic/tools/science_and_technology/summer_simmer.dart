@@ -1,6 +1,6 @@
 // https://myscope.net/hitzeindex-gefuehle-temperatur/
 
-import 'package:gc_wizard/logic/units/temperature.dart';
+import 'package:gc_wizard/logic/common/units/temperature.dart';
 
 
 double calculateSummerSimmerIndex (double temperature, double humidity, Temperature temperatureUnit) {
