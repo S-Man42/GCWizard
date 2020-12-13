@@ -95,9 +95,6 @@ VigenereBreakerResult _generateFile(File bigrams_fh, String className, String al
   sb.write("\n");
   sb.write("    alphabet = '" + alphabet + "';\n");
   sb.write("    replacementList = " + replacementListString + ";\n");
-  sb.write("    nbr_bigrams = " + nbr_bigrams.toString() + ";\n");
-  sb.write("    min_bigrams = " + min_bigrams.toString() + ";\n");
-  sb.write("    max_bigrams = " + max_bigrams.toString() + ";\n");
   sb.write("    bigrams = " + bigramsListToString(bigrams, alphabet) + ";\n");
   sb.write("  }\n");
   sb.write("}\n");

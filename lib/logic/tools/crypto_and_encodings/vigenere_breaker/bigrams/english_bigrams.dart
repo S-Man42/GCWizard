@@ -6,9 +6,6 @@ class EnglishBigrams extends Bigrams {
 
     alphabet = 'abcdefghijklmnopqrstuvwxyz';
     replacementList = null;
-    nbr_bigrams = 4324127906;
-    min_bigrams = 280;
-    max_bigrams = 116997844;
     bigrams = [
   //       A       B       C       D       E       F       G       H       I       J       K       L       M       N       O       P       Q       R       S       T       U       V       W       X       Y       Z
     [ 674016, 799875, 854970, 840659, 616349, 766571, 800171, 693864, 835825, 621327, 758506, 913541, 846164, 960064, 609791, 797899, 542827, 921492, 912651, 931603, 754601, 795467, 737590, 600056, 820922, 611705 ], //A

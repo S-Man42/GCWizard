@@ -57,6 +57,8 @@ class VigenereBreakerState extends State<VigenereBreaker> {
     var BreakerAlphabetItems = {
       VigenereBreakerAlphabet.ENGLISH : i18n(context, 'common_language_english'),
       VigenereBreakerAlphabet.GERMAN : i18n(context, 'common_language_german'),
+      VigenereBreakerAlphabet.SPANISH : i18n(context, 'common_language_spanish'),
+      VigenereBreakerAlphabet.FRENCH : i18n(context, 'common_language_french'),
     };
 
     return Column(
@@ -89,7 +91,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
             children: <Widget>[
               Expanded(
                   child: GCWText(
-                      text: 'Key Length min: ', //i18n(context, 'homophone_rotation') + ':'
+                      text: i18n(context, 'vigenere_breaker_key_length_min') + ':'
                   ),
                   flex: 1
               ),
@@ -113,7 +115,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
           children: <Widget>[
          Expanded(
                   child: GCWText(
-                    text: 'Key Length  max: ', //i18n(context, 'homophone_rotation') + ':'
+                    text: i18n(context, 'vigenere_breaker_key_length_max') + ':' + ':'
                   ),
                   flex: 1
               ),
@@ -134,7 +136,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
             ]
         ),
         GCWButton(
-          text: i18n(context, 'substitutionbreaker_start'),
+          text: i18n(context, 'vigenere_breaker_start'),
           onPressed: () {
             setState(() {
               _calcOutput();

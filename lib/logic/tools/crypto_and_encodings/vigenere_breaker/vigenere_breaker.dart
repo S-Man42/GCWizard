@@ -70,11 +70,6 @@ try {
 
     result.plaintext = decryptVigenere(input, result.key, false);
     result.fitness = calc_fitnessBigrams(result.plaintext, bigrams);
-    //var fitness1 = calc_fitnessTrigrams(txt, trigrams);
-/*
-    out1 = out1 + '\n' + fitness.toStringAsFixed(2) + '\t' + fitness1.toStringAsFixed(2) + '\t' +
-        key_str  + '\n' +  txt;
-*/
   }
   best_result = bestSolution(resultList);
 } on Exception
@@ -82,7 +77,7 @@ try {
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.WRONG_GENERATE_TEXT);
   };
 
-  for (var i = 1; i < resultList.length; ++i)
+  for (var i = 0; i < resultList.length; ++i)
     out1 = out1 + '\n' + resultList[i].fitness.toStringAsFixed(2) + '\t' + resultList[i].fitnessFiltered.toStringAsFixed(2) + '\t' +
         resultList[i].key ;
 
@@ -93,7 +88,7 @@ VigenereBreakerResult bestSolution(List<VigenereBreakerResult> keyList){
   if (keyList == null || keyList.length == 0)
     return null;
 
-  keyList = _highPassFilter (0.05, keyList);
+  keyList = _highPassFilter (0.98, keyList);
   var bestFitness = keyList[0];
   for (var i = 1; i < keyList.length; ++i)
     if (bestFitness.fitnessFiltered < keyList[i].fitnessFiltered)
@@ -103,13 +98,13 @@ VigenereBreakerResult bestSolution(List<VigenereBreakerResult> keyList){
 }
 
 
-
- /// HighPass Filter
+/// HighPass Filter
 /// param alpha alpha should be in the range of [0..1]. If alpha = 1, the output equals the input. The smaller alpha gets, the stronger is the highpass effect.
 List<VigenereBreakerResult> _highPassFilter( double alpha, List<VigenereBreakerResult> keyList) {
+  keyList[0].fitnessFiltered = alpha * keyList[0].fitness;
 
   for (var i = 1; i < keyList.length; ++i)
-    keyList[i].fitnessFiltered = alpha * (keyList[i - 1].fitness + keyList[i].fitness - keyList[i - 1].fitness);
+    keyList[i].fitnessFiltered = alpha * (keyList[i - 1].fitnessFiltered + keyList[i].fitness - keyList[i - 1].fitness);
 
   return keyList;
 }

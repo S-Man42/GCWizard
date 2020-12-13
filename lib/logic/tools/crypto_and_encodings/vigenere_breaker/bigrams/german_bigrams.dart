@@ -6,9 +6,6 @@ class GermanBigrams extends Bigrams {
 
     alphabet = 'abcdefghijklmnopqrstuvwxyz';
     replacementList = {'ä': 'ae','ö': 'oe','ü': 'ue','ß': 'ss'};
-    nbr_bigrams = 944226341;
-    min_bigrams = 55;
-    max_bigrams = 38772514;
     bigrams = [
   //       A       B       C       D       E       F       G       H       I       J       K       L       M       N       O       P       Q       R       S       T       U       V       W       X       Y       Z
     [ 667643, 814073, 796829, 736398, 900826, 741569, 813861, 788369, 699600, 479374, 707898, 857087, 815163, 897533, 490330, 676425, 422461, 846932, 857860, 832287, 884117, 631007, 589078, 567159, 603432, 636022 ], //A

@@ -2673,6 +2673,9 @@
   "vigenere_breaker_title" : "Vigenère Codeknacker",
   "vigenere_breaker_description" : "Chance, automatisch einen polyalphabetischen Code zu knacken",
   "vigenere_breaker_example" : "ABC mit Schlüssel DEF → DFH",
+  "vigenere_breaker_key_length_min" : "Schlüssellänge min",
+  "vigenere_breaker_key_length_max" : "Schlüssellänge max",
+  "vigenere_breaker_start" : "Berechne",
 
   "windchill_title": "Windchill",
   "windchill_description" : "Gefühlte Temperatur",
