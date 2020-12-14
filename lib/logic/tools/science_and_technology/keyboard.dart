@@ -1,10 +1,9 @@
-import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 // Add keyboard layouts
 // 1. adapt enum
 // 2. add Map xxxToNormal
-// 3. adapt buildKeyboardsMap
+// 3. adapt List<KeyboardData> allKeyboards
 // 4. adapt buildConvertingMap
 
 enum convertDirection{toNormal, fromNormal}
@@ -158,23 +157,28 @@ final Map BEPOToNormal = {
                  ' ' : '501',  ''  : ''
 };
 
+class KeyboardData {
+  final key;
+  String name;
+  String example;
 
-Map buildKeyboardsMap(var context) {
-  return {
-    KeyboardLayout.QWERTZ_T1 : i18n(context, 'keyboard_mode_qwertz_t1'),
-    KeyboardLayout.RISTOME : i18n(context, 'keyboard_mode_ristome'),
-    KeyboardLayout.NEO : i18n(context, 'keyboard_mode_neo'),
-    KeyboardLayout.Dvorak_I_DEU1 : i18n(context, 'keyboard_mode_dvorak_I1'),
-    KeyboardLayout.Dvorak_I_DEU2 : i18n(context, 'keyboard_mode_dvorak_I2'),
-    KeyboardLayout.Dvorak_I_DEU3 : i18n(context, 'keyboard_mode_dvorak_I3'),
-    KeyboardLayout.Dvorak_II_DEU : i18n(context, 'keyboard_mode_dvorak_II'),
-    KeyboardLayout.FRA_AZERTY : i18n(context, 'keyboard_mode_fra_azerty'),
-    KeyboardLayout.FRA_BEPO : i18n(context, 'keyboard_mode_fra_bepo'),
-    KeyboardLayout.QWERTY_US_INT : i18n(context, 'keyboard_mode_qwerty_us_int'),
-    KeyboardLayout.Dvorak : i18n(context, 'keyboard_mode_dvorak'),
-    KeyboardLayout.COLEMAK : i18n(context, 'keyboard_mode_colemak'),
-  };
+  KeyboardData(this.key, this.name, this.example);
 }
+
+List<KeyboardData> allKeyboards = [
+    KeyboardData(KeyboardLayout.QWERTZ_T1, 'keyboard_mode_qwertz_t1', 'QWERTZ'),
+    KeyboardData(KeyboardLayout.RISTOME, 'keyboard_mode_ristome', 'QPROCB'),
+    KeyboardData(KeyboardLayout.NEO, 'keyboard_mode_neo', 'XVLCWK'),
+    KeyboardData(KeyboardLayout.Dvorak_I_DEU1, 'keyboard_mode_dvorak_I1', 'Ä;:PYF'),
+    KeyboardData(KeyboardLayout.Dvorak_I_DEU2, 'keyboard_mode_dvorak_I2', 'ÖÜÄPYF'),
+    KeyboardData(KeyboardLayout.Dvorak_I_DEU3, 'keyboard_mode_dvorak_I3', 'ÄÖÜPYF'),
+    KeyboardData(KeyboardLayout.Dvorak_II_DEU, 'keyboard_mode_dvorak_II', 'Ü;:PYF'),
+    KeyboardData(KeyboardLayout.FRA_AZERTY, 'keyboard_mode_fra_azerty', 'AZERTY'),
+    KeyboardData(KeyboardLayout.FRA_BEPO, 'keyboard_mode_fra_bepo', 'BÉPOÈ!'),
+    KeyboardData(KeyboardLayout.QWERTY_US_INT, 'keyboard_mode_qwerty_us_int', 'QWERTY'),
+    KeyboardData(KeyboardLayout.Dvorak, 'keyboard_mode_dvorak', '"<>PYF'),
+    KeyboardData(KeyboardLayout.COLEMAK, 'keyboard_mode_colemak', 'QWFPGJ')
+];
 
 
 Map buildConvertingMap(KeyboardLayout type, convertDirection direction){
@@ -200,7 +204,6 @@ Map buildConvertingMap(KeyboardLayout type, convertDirection direction){
 }
 
 String encodeKeyboard(String input, KeyboardLayout keyboardFrom, keyboardTo){
-print(keyboardFrom.toString()+'=>'+keyboardTo.toString());
   Map mapSourceToNormal;
   Map mapNormalToTarget;
 
