@@ -77,27 +77,30 @@ class KeyboardState extends State<Keyboard> {
               ),
             ),
             Flexible(
-              child: Column(
-                children: <Widget>[
-                  GCWTextDivider(
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    GCWTextDivider(
                       text: i18n(context, 'keyboard_to')
-                  ),
-                  GCWDropDownButton(
-                    value: _currentKeyboardTo,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentKeyboardTo = value;
-                      });
-                    },
-                    items: allKeyboards.map((keyboard) {
-                      return GCWDropDownMenuItem(
+                    ),
+                    GCWDropDownButton(
+                      value: _currentKeyboardTo,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentKeyboardTo = value;
+                        });
+                      },
+                      items: allKeyboards.map((keyboard) {
+                        return GCWDropDownMenuItem(
                           value: keyboard.key,
                           child: i18n(context, keyboard.name),
                           subtitle: keyboard.example
-                      );
-                    }).toList(),
-                  ),
-                ],
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.only(left: DEFAULT_MARGIN),
               ),
             ),
           ],
