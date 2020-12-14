@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'file:///D:/Programmierung/GCWizard/lib/logic/tools/science_and_technology/keyboard.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -35,8 +36,6 @@ class KeyboardState extends State<Keyboard> {
 
   @override
   Widget build(BuildContext context) {
-    Map KeyboardModeItemsFrom = buildKeyboardsMap(context);
-    Map KeyboardModeItemsTo = buildKeyboardsMap(context);
 
     return Column(
       children: <Widget>[
@@ -50,32 +49,34 @@ class KeyboardState extends State<Keyboard> {
         ),
         Row(
           children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: <Widget>[
-                  GCWTextDivider(
+            Flexible(
+              child: Container(
+                child: Column(
+                 children: <Widget>[
+                    GCWTextDivider(
                       text: i18n(context, 'keyboard_from')
-                  ),
-                  GCWDropDownButton(
-                    value: _currentKeyboardFrom,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentKeyboardFrom = value;
-                      });
-                    },
-                    items: KeyboardModeItemsFrom.entries.map((mode) {
-                      return GCWDropDownMenuItem(
-                        value: mode.key,
-                        child: mode.value,
-                      );
-                    }).toList(),
-                  ),
-                ],
+                    ),
+                    GCWDropDownButton(
+                      value: _currentKeyboardFrom,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentKeyboardFrom = value;
+                        });
+                      },
+                      items: allKeyboards.map((keyboard) {
+                        return GCWDropDownMenuItem(
+                          value: keyboard.key,
+                          child: i18n(context, keyboard.name),
+                          subtitle: keyboard.example
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
               ),
             ),
-            Expanded(
-              flex: 1,
+            Flexible(
               child: Column(
                 children: <Widget>[
                   GCWTextDivider(
@@ -88,10 +89,11 @@ class KeyboardState extends State<Keyboard> {
                         _currentKeyboardTo = value;
                       });
                     },
-                    items: KeyboardModeItemsTo.entries.map((mode) {
+                    items: allKeyboards.map((keyboard) {
                       return GCWDropDownMenuItem(
-                        value: mode.key,
-                        child: mode.value,
+                          value: keyboard.key,
+                          child: i18n(context, keyboard.name),
+                          subtitle: keyboard.example
                       );
                     }).toList(),
                   ),
