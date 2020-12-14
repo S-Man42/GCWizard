@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'file:///D:/Programmierung/GCWizard/lib/logic/tools/science_and_technology/keyboard.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/keyboard.dart';
 
 void main() {
   String inputString = 'abcdefghijklmnopqrstuvwxyzäöüABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ1234567890';
