@@ -49,7 +49,7 @@ class KeyboardState extends State<Keyboard> {
         ),
         Row(
           children: <Widget>[
-            Flexible(
+            Expanded(
               child: Container(
                 child: Column(
                  children: <Widget>[
@@ -76,7 +76,7 @@ class KeyboardState extends State<Keyboard> {
                 padding: EdgeInsets.only(right: DEFAULT_MARGIN),
               ),
             ),
-            Flexible(
+            Expanded(
               child: Container(
                 child: Column(
                   children: <Widget>[
