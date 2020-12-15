@@ -21,13 +21,11 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
   var indexCharacterController;
 
   var currentMode = GCWSwitchPosition.left;
-  var currentLanguage = GCWSwitchPosition.left;
 
   String currentInputPlain = '';
   String currentInputChiffre = '';
   String IndexSymbol = '#';
   bool encodeIndex = false;
-  bool compress = false;
   int IndexPosition = 1;
   int currentInputLen = 0;
 
@@ -71,29 +69,6 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
             });
           },
         ),
-        GCWOnOffSwitch(
-          notitle: false,
-          title: i18n(context, 'burrowswheeler_compress_output'),
-          value: compress,
-          onChanged: (value) {
-            setState(() {
-              compress = value;
-            });
-          },
-        ),
-        compress == true
-        ? GCWTwoOptionsSwitch(
-            title: i18n(context, 'burrowswheeler_language'),
-            leftValue: i18n(context, 'burrowswheeler_language_deu'),
-            rightValue: i18n(context, 'burrowswheeler_language_eng'),
-            value: currentLanguage,
-            onChanged: (value) {
-              setState(() {
-                currentLanguage = value;
-              });
-            },
-          )
-        : Container(),
         currentMode == GCWSwitchPosition.left // encrypt
         ? Column(
           children: <Widget>[
@@ -176,22 +151,22 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
     if (currentMode == GCWSwitchPosition.left) { // encrypt
       if (encodeIndex) {
         if (IndexSymbol == '' || IndexSymbol == null)
-          currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '', '');
+          currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '');
         else if (currentInputPlain.contains(IndexSymbol))
-          currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_char_index'), '', '');
+          currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_char_index'), '');
         else
-          currentOutput = encryptBurrowsWheeler(currentInputPlain, IndexSymbol, compress, currentLanguage == GCWSwitchPosition.left);
+          currentOutput = encryptBurrowsWheeler(currentInputPlain, IndexSymbol);
       } else {
-          currentOutput = encryptBurrowsWheeler(currentInputPlain, '0', compress, currentLanguage == GCWSwitchPosition.left);
+          currentOutput = encryptBurrowsWheeler(currentInputPlain, '0');
       }
     } else { // decrypt
       if (encodeIndex) {
         if (IndexSymbol == '' || IndexSymbol == null)
-          currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '', '');
+          currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '');
         else
-          currentOutput = decryptBurrowsWheeler(currentInputChiffre, IndexSymbol, compress, currentLanguage == GCWSwitchPosition.left);
+          currentOutput = decryptBurrowsWheeler(currentInputChiffre, IndexSymbol);
       } else {
-        currentOutput =decryptBurrowsWheeler(currentInputChiffre, IndexPosition.toString(), compress, currentLanguage == GCWSwitchPosition.left);
+        currentOutput =decryptBurrowsWheeler(currentInputChiffre, IndexPosition.toString());
       }
     }
 
@@ -209,14 +184,6 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
               text: currentOutput.index,
             )
         ),
-        compress == true
-        ? GCWOutput(
-            title: title,
-            child: GCWOutputText(
-              text: currentOutput.compress,
-            )
-        )
-            : Container()
       ],
     );
   }
