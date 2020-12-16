@@ -50,8 +50,9 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
       children: children,
     );
 
+    var _isNoOutput = widget.outputs == null || widget.outputs.length == 0 || widget.points.length == 0 ;
     var _button = Visibility (
-      visible: widget.outputs != null && widget.outputs.length > 0 && widget.points.length > 0,
+      visible: !_isNoOutput,
       child: GCWButton (
         text: i18n(context, 'coords_show_on_map'),
         onPressed: () {
@@ -69,14 +70,13 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
     );
 
     var _children = widget.mapButtonTop ? [_button, _outputText] : [_outputText, _button];
-
     return GCWMultipleOutput(
       children: _children,
       trailing: GCWIconButton(
         iconData: Icons.save,
         size: IconButtonSize.SMALL,
-        onPressed: () {
-          _exportCoordinates(context, 'GC Wizard Export ' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), widget.points, widget.geodetics, widget.circles);
+        color: _isNoOutput ? Colors.grey : null,
+        onPressed: () { _isNoOutput ? null : _exportCoordinates(context, 'GC Wizard Export ' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), widget.points, widget.geodetics, widget.circles);
         },
       )
     );
@@ -110,10 +110,11 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
   }
 
   _showExportedFileDialog(Map<String, dynamic> value, String type) {
-    showExportedFileDialog(
-        context,
-        value['path'],
-        fileType: type
-    );
+    if (value != null)
+      showExportedFileDialog(
+          context,
+          value['path'],
+          fileType: type
+      );
   }
 }
