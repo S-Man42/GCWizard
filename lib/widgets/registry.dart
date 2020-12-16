@@ -1033,6 +1033,12 @@ class Registry {
         searchStrings: SEARCHSTRING_COORDINATES + 'multilateration trilateration distances intersection distanzen entfernungen abstand abstaende drei three 3 circles kreise'
       ),
       GCWTool(
+          tool: Antipodes(),
+          i18nPrefix: 'coords_antipodes',
+          iconPath: 'assets/coordinates/icon_antipodes.png',
+          searchStrings: SEARCHSTRING_COORDINATES + 'gegenueberliegende oppositeside antipodes antipoden gegenpunkte'
+      ),
+      GCWTool(
         tool: Intersection(),
         i18nPrefix: 'coords_intersection',
         iconPath: 'assets/coordinates/icon_intersection.png',
@@ -1049,12 +1055,6 @@ class Registry {
         i18nPrefix: 'coords_equilateraltriangle',
         iconPath: 'assets/coordinates/icon_equilateral_triangle.png',
         searchStrings: SEARCHSTRING_COORDINATES + 'equilateral triangles gleichseitiges dreiecke'
-      ),
-      GCWTool(
-          tool: Antipodes(),
-          i18nPrefix: 'coords_antipodes',
-          iconPath: 'assets/coordinates/icon_antipodes.png',
-          searchStrings: SEARCHSTRING_COORDINATES + 'gegenüber opposide erde earth punkt point'
       ),
       GCWTool(
         tool: EllipsoidTransform(),

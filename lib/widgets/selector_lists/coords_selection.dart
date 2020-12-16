@@ -35,6 +35,7 @@ class CoordsSelection extends GCWSelection {
           className(VariableCoordinateFormulas()),
           className(CenterTwoPoints()),
           className(CenterThreePoints()),
+          className(Antipodes()),
           className(CrossBearing()),
           className(IntersectBearings()),
           className(IntersectFourPoints()),
@@ -44,7 +45,6 @@ class CoordsSelection extends GCWSelection {
           className(Intersection()),
           className(Resection()),
           className(EquilateralTriangle()),
-          className(Antipodes()),
           className(EllipsoidTransform()),
         ].contains(className(element.tool));
       }).toList();

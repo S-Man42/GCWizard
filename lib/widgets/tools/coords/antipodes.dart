@@ -67,8 +67,13 @@ class AntipodesState extends State<Antipodes> {
 
     _currentMapPoints = [
       MapPoint(
-        point: _currentCoords,
-        markerText: i18n(context, 'coords_antipodes_coorda'),
+          point: _currentCoords,
+          markerText: i18n(context, 'coords_antipodes_coorda'),
+          coordinateFormat: _currentCoordsFormat
+      ),
+      MapPoint(
+        point: _currentValues[0],
+        markerText: i18n(context, 'coords_antipodes_coordb'),
         coordinateFormat: _currentCoordsFormat
       ),
     ];
