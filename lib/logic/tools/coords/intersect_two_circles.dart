@@ -15,14 +15,16 @@ class _IntersectTwoCirclesCalculator extends IntervalCalculator {
     var r1 = parameters['radius1'];
     var r2 = parameters['radius2'];
 
-    // same position and diameter
-    if ((r1 == r2) && (distanceToCoord1.a == distanceToCoord2.a) & (distanceToCoord1.b == distanceToCoord2.b))
-      return false;
-
     return (distanceToCoord1.a <= r1) && (r1 <= distanceToCoord1.b) && (distanceToCoord2.a <= r2) && (r2 <= distanceToCoord2.b);
   }
 }
 
 List<LatLng> intersectTwoCircles(LatLng coord1, double radius1, LatLng coord2, double radius2, Ellipsoid ellipsoid) {
+
+  // same position
+  if ((coord1.latitude == coord2.latitude) &
+      (coord1.longitude == coord2.longitude))
+    return [];
+
   return _IntersectTwoCirclesCalculator({'coord1': coord1, 'radius1': radius1, 'coord2': coord2, 'radius2': radius2}, ellipsoid).check();
 }
