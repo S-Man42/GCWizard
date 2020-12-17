@@ -174,6 +174,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
@@ -536,6 +537,12 @@ class Registry {
         i18nPrefix: 'kenny',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'they killed kenny sie haben kenny getoetet kennys kenny\'s code southpark'
+      ),
+      GCWTool(
+        tool: Keyboard(),
+        i18nPrefix: 'keyboard',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'dvorak keyboard keys tasten azerty tastatur layout qwertz qwerty neo colemak ristome sprachen languages'
       ),
       GCWTool(
         tool: Morse(),
