@@ -1,5 +1,8 @@
 import 'dart:math';
 import 'package:tuple/tuple.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
+
 // ported from https://github.com/adapap/whitespace-interpreter/blob/master/whitespace_interpreter.py#L1
 // decoder with debug https://naokikp.github.io/wsi/whitespace.html
 
@@ -117,13 +120,11 @@ Future<WhitespaceResult> decodeWhitespace(String code, String inp, {int timeOut 
 }
 
 
-Future<WhitespaceResult> encodeWhitespace(String code) async {
-  if (code == null)
-    code = '';
+Future<WhitespaceResult> encodeWhitespace(String input) async {
 
-  code = code = _transformCode(code);
+  var code = _WhitespaceOutputString(input);
 
-  return WhitespaceResult(output: code);
+  return WhitespaceResult(output: code, code: _clean(code));
 }
 
 String _transformCode(String code) {
@@ -828,6 +829,19 @@ int _whitespaceToInt(String code) {
   return num;
 }
 
+/// Converts an integer to Whitespace representation.
+String _IntToWhitespace(int value, {bool noSign = false}) {
+  if (value == 0)
+    return '\n';
+  var code = convertBase(value.abs().toString(), 10, 2);
+  final Map<String, String> keys = {'0':' ', '1':'\t'};
+  if (!noSign)
+    code = (value < 0 ? '1' : '0') + code;
+  code = substitution(code, keys) + '\n';
+  return code;
+}
+
+
 /// Sets a label in the sequence if possible.
 Tuple2<int, String> _label_parameter() {
   /*Format of a label:
@@ -844,12 +858,38 @@ Tuple2<int, String> _label_parameter() {
 
 
 void _debugOutput(String command, String label) {
-  if (_debug) {
-    label = label != null ? ' (' + label + ')' : '';
-    print('[' + _debugCounter.toString() + '] ' +
-        'Command: ' +
-        command +
-        label);
-    _debugCounter += 1;
+    if (_debug) {
+      label = label != null ? ' (' + label + ')' : '';
+      print('[' + _debugCounter.toString() + '] ' +
+          'Command: ' +
+          command +
+          label);
+      _debugCounter += 1;
   }
+}
+
+String _WhitespaceOutputString(String input) {
+  if ((input == null) || (input == ''))
+    return '';
+  var sb = new StringBuffer();
+  var i =0;
+  const push_num = "   ";
+  const store = "\t\t ";
+  const output_loop = "    \n\n    \t\n \n \t\t\t \n \n\t  \t \n\t\n     \t\n\t   \n \n  \t\n\n   \t \n\n\n\n";
+
+  for (i=0; i<input.length;i++) {
+    sb.write(push_num);
+    sb.write(_IntToWhitespace(i));
+    sb.write(push_num);
+    sb.write(_IntToWhitespace(input.codeUnitAt(i)));
+    sb.write(store);
+  }
+  sb.write(push_num);
+  sb.write(_IntToWhitespace(i));
+  sb.write(push_num);
+  sb.write(_IntToWhitespace(0));
+  sb.write(store);
+  sb.write(output_loop);
+
+  return sb.toString();
 }

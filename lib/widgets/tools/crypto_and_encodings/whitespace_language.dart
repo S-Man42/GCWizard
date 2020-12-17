@@ -69,9 +69,6 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
     if (_currentOutput == null)
       return GCWDefaultOutput();
 
-    if (_currentMode ==  GCWSwitchPosition.left)
-      return GCWDefaultOutput(child: _currentOutput.output);
-
     return GCWMultipleOutput(
       children: [
         _currentOutput.output + (_currentOutput.error ? '\n' + _currentOutput.errorText  : ''),
