@@ -63,7 +63,7 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentCode == null || _currentCode.length == 0)
+    if ((_currentCode == null || _currentCode.length == 0) && (_currentOutput == null))
       return GCWDefaultOutput();
 
     if (_currentOutput == null)

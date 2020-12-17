@@ -830,13 +830,12 @@ int _whitespaceToInt(String code) {
 }
 
 /// Converts an integer to Whitespace representation.
-String _IntToWhitespace(int value, {bool noSign = false}) {
+String _IntToWhitespace(int value) {
   if (value == 0)
-    return '\n';
+    return ' \n';
   var code = convertBase(value.abs().toString(), 10, 2);
   final Map<String, String> keys = {'0':' ', '1':'\t'};
-  if (!noSign)
-    code = (value < 0 ? '1' : '0') + code;
+  code = (value < 0 ? '1' : '0') + code;
   code = substitution(code, keys) + '\n';
   return code;
 }
@@ -873,7 +872,7 @@ String _WhitespaceOutputString(String input) {
     return '';
   var sb = new StringBuffer();
   var i =0;
-  const push_num = "   ";
+  const push_num = "  ";
   const store = "\t\t ";
   const output_loop = "    \n\n    \t\n \n \t\t\t \n \n\t  \t \n\t\n     \t\n\t   \n \n  \t\n\n   \t \n\n\n\n";
 
