@@ -166,18 +166,18 @@ class KeyboardData {
 }
 
 List<KeyboardData> allKeyboards = [
-    KeyboardData(KeyboardLayout.QWERTZ_T1, 'keyboard_mode_qwertz_t1', 'QWERTZ'),
-    KeyboardData(KeyboardLayout.RISTOME, 'keyboard_mode_ristome', 'QPROCB'),
-    KeyboardData(KeyboardLayout.NEO, 'keyboard_mode_neo', 'XVLCWK'),
-    KeyboardData(KeyboardLayout.Dvorak_I_DEU1, 'keyboard_mode_dvorak_I1', 'Ä;:PYF'),
-    KeyboardData(KeyboardLayout.Dvorak_I_DEU2, 'keyboard_mode_dvorak_I2', 'ÖÜÄPYF'),
-    KeyboardData(KeyboardLayout.Dvorak_I_DEU3, 'keyboard_mode_dvorak_I3', 'ÄÖÜPYF'),
-    KeyboardData(KeyboardLayout.Dvorak_II_DEU, 'keyboard_mode_dvorak_II', 'Ü;:PYF'),
-    KeyboardData(KeyboardLayout.FRA_AZERTY, 'keyboard_mode_fra_azerty', 'AZERTY'),
-    KeyboardData(KeyboardLayout.FRA_BEPO, 'keyboard_mode_fra_bepo', 'BÉPOÈ!'),
-    KeyboardData(KeyboardLayout.QWERTY_US_INT, 'keyboard_mode_qwerty_us_int', 'QWERTY'),
-    KeyboardData(KeyboardLayout.Dvorak, 'keyboard_mode_dvorak', '"<>PYF'),
-    KeyboardData(KeyboardLayout.COLEMAK, 'keyboard_mode_colemak', 'QWFPGJ')
+  KeyboardData(KeyboardLayout.QWERTY_US_INT, 'keyboard_mode_qwerty_us_int', 'QWERTY'),
+  KeyboardData(KeyboardLayout.QWERTZ_T1, 'keyboard_mode_qwertz_t1', 'QWERTZ'),
+  KeyboardData(KeyboardLayout.FRA_AZERTY, 'keyboard_mode_fra_azerty', 'AZERTY'),
+  KeyboardData(KeyboardLayout.Dvorak, 'keyboard_mode_dvorak', '"<>PYF'),
+  KeyboardData(KeyboardLayout.Dvorak_I_DEU1, 'keyboard_mode_dvorak_I1', 'Ä;:PYF'),
+  KeyboardData(KeyboardLayout.Dvorak_I_DEU2, 'keyboard_mode_dvorak_I2', 'ÖÜÄPYF'),
+  KeyboardData(KeyboardLayout.Dvorak_I_DEU3, 'keyboard_mode_dvorak_I3', 'ÄÖÜPYF'),
+  KeyboardData(KeyboardLayout.Dvorak_II_DEU, 'keyboard_mode_dvorak_II', 'Ü;:PYF'),
+  KeyboardData(KeyboardLayout.RISTOME, 'keyboard_mode_ristome', 'QPROCB'),
+  KeyboardData(KeyboardLayout.NEO, 'keyboard_mode_neo', 'XVLCWK'),
+  KeyboardData(KeyboardLayout.COLEMAK, 'keyboard_mode_colemak', 'QWFPGJ'),
+  KeyboardData(KeyboardLayout.FRA_BEPO, 'keyboard_mode_fra_bepo', 'BÉPOÈ!'),
 ];
 
 

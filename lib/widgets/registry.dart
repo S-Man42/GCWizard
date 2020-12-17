@@ -92,7 +92,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
-import 'file:///D:/Programmierung/GCWizard/lib/widgets/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
@@ -173,6 +172,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
@@ -539,7 +539,7 @@ class Registry {
         tool: Keyboard(),
         i18nPrefix: 'keyboard',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'dvorak keyboard key tasten azerty tastatur layout qwertz qwerty neo colemak ristome'
+        searchStrings: 'dvorak keyboard keys tasten azerty tastatur layout qwertz qwerty neo colemak ristome sprachen languages'
       ),
       GCWTool(
         tool: Morse(),

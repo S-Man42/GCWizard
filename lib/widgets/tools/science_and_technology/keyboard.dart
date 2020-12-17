@@ -20,7 +20,7 @@ class KeyboardState extends State<Keyboard> {
   String _currentInput = '';
 
   KeyboardLayout _currentKeyboardFrom = KeyboardLayout.QWERTZ_T1;
-  KeyboardLayout _currentKeyboardTo = KeyboardLayout.Dvorak;
+  KeyboardLayout _currentKeyboardTo = KeyboardLayout.QWERTY_US_INT;
 
   @override
   void initState() {
