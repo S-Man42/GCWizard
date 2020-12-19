@@ -56,23 +56,24 @@ class Recipe {
   void setMethod(String method, language) {
     var f = new NumberFormat('###');
     this.methods = List<Method>();
-    List<String> scanner = method.replaceAll("\n", "").replaceAll(". ",".").split('.');
-    for(int i = 1; i < scanner.length - 1; i++){
-      var m = new Method(scanner[i], i, language);
-      if (m.type != Type.Invalid)
+    //List<String> scanner = method.replaceAll("\n", "").replaceAll(". ",".").split('.');
+    List<String> methodList = method.replaceAll("zubereitung:", "zubereitung.").replaceAll("\n", " ").replaceAll(". ",".").split('.');
+    for(int i = 1; i < methodList.length - 1; i++){
+      var m = new Method(methodList[i], i, language);
+      if (m.type != Type.Invalid) {
         this.methods.add(m);
-      else {
+      } else {
         this.error = true;
         this.errorList.add('chef_error_syntax');
         this.errorList.add('chef_error_syntax_method');
-        this.errorList.add(f.format(i).toString() + ' : ' + scanner[i]);
+        this.errorList.add(f.format(i).toString() + ' : ' + methodList[i]);
         this.errorList.add('');
       }
     };
   }
 
   void setCookingTime(String cookingtime) {
-    RegExp expr = new RegExp(r'^(cooking time: |kochzeit: )(\d*)( minute(s)?| minute(n)?| hour(s)?| stunde(n)?)\.$');
+    RegExp expr = new RegExp(r'^(cooking time: |garzeit: )(\d*)( minute(s)?| minute(n)?| hour(s)?| stunde(n)?)\.$');
     if (expr.hasMatch(cookingtime)) {
       this.cookingtime = int.parse(expr.firstMatch(cookingtime).group(2));
     } else {
@@ -85,7 +86,7 @@ class Recipe {
   }
 
   void setOvenTemp(String oventemp) {
-    RegExp expr = new RegExp(r'^(pre-heat oven to |vorheizen des ofens auf )(\d*) (degrees|grad) cel(c|s)ius( \(gas (mark |skala )(\d*)\))?.$');
+    RegExp expr = new RegExp(r'^(pre-heat oven to |ofen auf )(\d*) (degrees|grad) cel(c|s)ius( \(gas (mark |skala )(\d*)\))?( vorheizen)?.$');
     if (expr.hasMatch(oventemp)) {
       this.oventemp = int.parse(expr.firstMatch(oventemp).group(2));
       if (expr.firstMatch(oventemp).group(7)!= null) {
@@ -101,8 +102,8 @@ class Recipe {
   }
 
   void setServes(String serves) {
-    if (RegExp(r'(serves |portionen )(\d*)(\.)$').hasMatch(serves)) {
-      this.serves = int.parse(RegExp(r'(serves |portionen )(\d*)(\.)$').firstMatch(serves).group(2));
+    if (RegExp(r'^(serves |portionen(:)? )(\d*)(\.)$').hasMatch(serves)) {
+      this.serves = int.parse(RegExp(r'^(serves |portionen(:)? )(\d*)(\.)$').firstMatch(serves).group(3));
     } else {
       this.error = true;
       errorList.add('chef_error_syntax');

@@ -39,7 +39,7 @@ List<String> _getAuxiliaryRecipe(String name, int value, List<String> ingredient
 	output.add(nTwo.toString() + ' ' + ingredientTwo[0] + ' ' + ingredientTwo[1]);
 	output.add('');
 	output.add(getText(textId.Method, '', language));
-	output.add(getText(textId.Put_into_the_mixing_bowl, ingredientOne[1], language));
+	output.add(getText(textId.Put, ingredientOne[1], language));
 	if (combine)
 		output.add(getText(textId.Combine, ingredientTwo[1], language));
 	else
@@ -135,9 +135,9 @@ String generateChef(String language, title, String remark, String time, String t
 						ingredientListed[item] = item;
 						ingredientList.add(value.toString() + ' ' + measure + ' ' +	item);
 						amount[value] = item;
-						methodList.add(getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+						methodList.add(getText(textId.Put, amount[value], language));
 					} else { // digit was already processed
-						methodList.add(getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+						methodList.add(getText(textId.Put, amount[value], language));
 					}
 
 				} else if (value < 100) { // => number 10-99 => store charcode 10 - 99 => dry, unspecific
@@ -150,9 +150,9 @@ String generateChef(String language, title, String remark, String time, String t
 						ingredientListed[item] = item;
 						ingredientList.add(value.toString() + ' ' + measure + ' ' + item);
 						amount[value] = item;
-						methodList.add(getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+						methodList.add(getText(textId.Put, amount[value], language));
 					} else { // number was already processed
-						methodList.add(getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+						methodList.add(getText(textId.Put, amount[value], language));
 					}
 
 				} else { // => auxiliary recipe to provide number: pour, clean, serve with, pour
@@ -168,7 +168,7 @@ String generateChef(String language, title, String remark, String time, String t
 						}
 						auxiliaryRecipes[auxiliaryName] = _getAuxiliaryRecipe(auxiliaryName, value, ingredientOne, ingredientTwo, language);
 						if (i > 0) {
-							methodList.add(getText(textId.Pour_contents, '', language));
+							methodList.add(getText(textId.Pour, '', language));
 							methodList.add(getText(textId.Clean, '', language));
 						}
 						methodList.add(getText(textId.Serve_with, auxiliaryName, language));
@@ -187,9 +187,9 @@ String generateChef(String language, title, String remark, String time, String t
 						ingredientListed[item] = item;
 						ingredientList.add(value.toString() + ' ' + measure + ' ' +	item);
 						amount[value] = item;
-						methodList.add(getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+						methodList.add(getText(textId.Put, amount[value], language));
 					} else { // character was already processed
-						methodList.add(getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+						methodList.add(getText(textId.Put, amount[value], language));
 					}
 				});
 			}
@@ -218,9 +218,9 @@ String generateChef(String language, title, String remark, String time, String t
 				ingredientListed[item] = item;
 				ingredientList.add(value.toString() + ' ' + measure + ' ' +	item);
 				amount[value] = item;
-				methodList.add(getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+				methodList.add(getText(textId.Put, amount[value], language));
 			} else {
-				methodList.add(getText(textId.Put_into_the_mixing_bowl, amount[value], language));
+				methodList.add(getText(textId.Put, amount[value], language));
 			}
 		});
 	}
@@ -241,7 +241,7 @@ String generateChef(String language, title, String remark, String time, String t
 	output.writeln(methodList.join('\n'));
 	if (!auxiliary)
 		output.writeln(getText(textId.Liquefy_contents, '', language));
-	output.writeln(getText(textId.Pour_contents, '', language));
+	output.writeln(getText(textId.Pour, '', language));
 	output.writeln('');
 	output.writeln(getText(textId.Serves, '', language));
 
@@ -310,7 +310,6 @@ class Chef {
 		String title = '';
 		String line = '';
 		readRecipe.split("\n\n").forEach((element) {
-
 				line = element.trim();
 				if (line.startsWith("ingredients") || line.startsWith("zutaten")) {
 					if (progress > 3) {
@@ -325,7 +324,7 @@ class Chef {
 						valid = false;
 						return '';
 					}
-				} else if (line.startsWith("cooking time") || line.startsWith("kochzeit")) {
+				} else if (line.startsWith("cooking time") || line.startsWith("garzeit")) {
 					if (progress > 4) {
 						valid = false;
 						_addError(3, progress);
@@ -338,7 +337,7 @@ class Chef {
 						this.valid = false;
 						return '';
 					}
-				} else if (line.startsWith("pre-heat oven") || line.startsWith("pre heat oven") || line.startsWith("vorheizen des ofens")) {
+				} else if (line.startsWith("pre-heat oven") || line.startsWith("pre heat oven") || line.startsWith("ofen auf")) {
 					if (progress > 5) {
 						valid = false;
 						_addError(4, progress);
@@ -458,7 +457,7 @@ class Chef {
 	void bake(String language, additionalIngredients) {
 		Kitchen k = new Kitchen(this.recipes, this.mainrecipe, null, null, language);
 		if (k.valid) {
-			k.cook(additionalIngredients, language);
+			k.cook(additionalIngredients, language, 1);
 		}
     this.valid = k.valid;
     this.meal = k.meal;

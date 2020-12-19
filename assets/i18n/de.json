@@ -410,6 +410,8 @@
   "chef_error_syntax_cooking_time" : "Fehlerhafte Anweisung für die Kochzeit",
   "chef_error_syntax_oven_temperature" : "Fehlerhafte Anweisung für das Vorheizen des Ofens",
   "chef_error_runtime" : "LAUFZEIT FEHLER",
+  "chef_error_runtime_exception" : "Ausnahmefehler: etwas unerwartetes ist passiert",
+  "chef_error_runtime_serving_aux" : "Beilagenrezept konnte nicht ausgeführt werden",
   "chef_error_runtime_invalid_input" : "Ungültige Eingabe: nur Nummern sind erlaubt",
   "chef_error_runtime_ingredient_not_found" : "Zutat nicht gefunden",
   "chef_error_runtime_method_step" : "Anweisungsfehler in Schritt ",

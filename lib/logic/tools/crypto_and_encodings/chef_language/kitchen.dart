@@ -12,11 +12,13 @@ class Kitchen {
   Map<String, Recipe>	recipes;
   Recipe recipe;
   bool valid;
+  bool exception;
   List<String> error;
   List<String> meal;
 
   Kitchen(Map<String, Recipe> recipes, Recipe mainrecipe, List<Container> mbowls, List<Container> bdishes, String language) {
     this.valid = true;
+    this.exception = false;
     this.meal = new List<String>();
     this.error = new List<String>();
     this.recipes = recipes;
@@ -31,8 +33,7 @@ class Kitchen {
           maxbowl = m.mixingbowl;
       });
 
-      this.mixingbowls = new List<Container>(
-          mbowls == null ? maxbowl + 1 : max(maxbowl + 1, mbowls.length));
+      this.mixingbowls = new List<Container>(mbowls == null ? maxbowl + 1 : max(maxbowl + 1, mbowls.length));
       for (int i = 0; i < this.mixingbowls.length; i++)
         this.mixingbowls[i] = new Container(null);
       if (mbowls != null) {
@@ -41,8 +42,7 @@ class Kitchen {
         }
       }
 
-      this.bakingdishes = new List<Container>(
-          bdishes == null ? maxdish + 1 : max(maxdish + 1, bdishes.length));
+      this.bakingdishes = new List<Container>(bdishes == null ? maxdish + 1 : max(maxdish + 1, bdishes.length));
       for (int i = 0; i < this.bakingdishes.length; i++)
         this.bakingdishes[i] = new Container(null);
       if (bdishes != null) {
@@ -59,7 +59,7 @@ class Kitchen {
     }
   }
 
-  Container cook(String additionalIngredients, String language)  {
+  Container cook(String additionalIngredients, language, int depth)  {
     int ingredientIndex = 0;
     List<String> input = additionalIngredients.split(' ');
 
@@ -69,15 +69,17 @@ class Kitchen {
     Component c;
     int i = 0;
     bool deepfrozen = false;
-    methodloop: while (i < methods.length && !deepfrozen) {
+    bool exceptionArose = false;
+    methodloop:
+    while (i < methods.length && !deepfrozen && !exceptionArose) {
       Method m = methods[i];
       switch (m.type) {
         case Type.Invalid:
           valid = false;
           error.addAll(['chef_error_syntax_method',
-                        m.ingredient,
-                        'chef_error_syntax_method_unsupported',
-                        '']);
+            m.ingredient,
+            'chef_error_syntax_method_unsupported',
+            '']);
           return null;
           break;
         case Type.Take :
@@ -90,41 +92,45 @@ class Kitchen {
         case Type.Liquefy :
         case Type.StirInto :
         case Type.Verb :
-          if (ingredients[m.ingredient] == null){
+          if (ingredients[m.ingredient] == null) {
             valid = false;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_method_step',
-                           m.n.toString() + ' : ' + m.type.toString(),
-                          'chef_error_runtime_ingredient_not_found',
-                           m.ingredient,
-                          '']);
+              'chef_error_runtime_method_step',
+              m.n.toString() + ' : ' + m.type.toString(),
+              'chef_error_runtime_ingredient_not_found',
+              m.ingredient,
+              '']);
             return null;
           }
       }
       switch (m.type) {
         case Type.Take :
-          if ((input.join('') != '') && (ingredientIndex <= input.length - 1)) {
-            ingredients[m.ingredient].setAmount(int.parse(input[ingredientIndex]));
+          if ((input.join('') != '') &&
+              (ingredientIndex <= input.length - 1)) {
+            ingredients[m.ingredient].setAmount(
+                int.parse(input[ingredientIndex]));
             ingredientIndex++;
           } else {
             valid = false;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_missing_input',
-                          '']);
+              'chef_error_runtime_missing_input',
+              '']);
             return null;
           }
           break;
         case Type.Put :
-          mixingbowls[m.mixingbowl].push( Component.Contructor1(ingredients[m.ingredient]));
+          mixingbowls[m.mixingbowl].push(
+              Component.Contructor1(ingredients[m.ingredient]));
           break;
         case Type.Fold :
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_folded_from_empty_mixing_bowl',
-                          'chef_error_runtime_method_step',
-                          m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString(),
-                          '']);
+              'chef_error_runtime_folded_from_empty_mixing_bowl',
+              'chef_error_runtime_method_step',
+              m.n.toString() + ' : ' + m.type.toString() + ' => ' +
+                  (m.mixingbowl + 1).toString(),
+              '']);
             return null;
           }
           c = mixingbowls[m.mixingbowl].pop();
@@ -135,10 +141,11 @@ class Kitchen {
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_add_to_empty_mixing_bowl',
-                          'chef_error_runtime_method_step',
-                          m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString(),
-                          '']);
+              'chef_error_runtime_add_to_empty_mixing_bowl',
+              'chef_error_runtime_method_step',
+              m.n.toString() + ' : ' + m.type.toString() + ' => ' +
+                  (m.mixingbowl + 1).toString(),
+              '']);
             return null;
           }
           c = mixingbowls[m.mixingbowl].peek();
@@ -148,10 +155,11 @@ class Kitchen {
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_remove_from_empty_mixing_bowl',
-                          'chef_error_runtime_method_step',
-                          m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString(),
-                          '']);
+              'chef_error_runtime_remove_from_empty_mixing_bowl',
+              'chef_error_runtime_method_step',
+              m.n.toString() + ' : ' + m.type.toString() + ' => ' +
+                  (m.mixingbowl + 1).toString(),
+              '']);
             return null;
           }
           c = mixingbowls[m.mixingbowl].peek(); // returns top of m.mixingbowl
@@ -161,10 +169,11 @@ class Kitchen {
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_combine_with_empty_mixing_bowl',
-                          'chef_error_runtime_method_step',
-                          m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString(),
-                          '']);
+              'chef_error_runtime_combine_with_empty_mixing_bowl',
+              'chef_error_runtime_method_step',
+              m.n.toString() + ' : ' + m.type.toString() + ' => ' +
+                  (m.mixingbowl + 1).toString(),
+              '']);
             return null;
           }
           c = mixingbowls[m.mixingbowl].peek();
@@ -174,14 +183,15 @@ class Kitchen {
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_divide_from_empty_mixing_bowl',
-                          'chef_error_runtime_method_step',
-                          m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString(),
-                          '']);
+              'chef_error_runtime_divide_from_empty_mixing_bowl',
+              'chef_error_runtime_method_step',
+              m.n.toString() + ' : ' + m.type.toString() + ' => ' +
+                  (m.mixingbowl + 1).toString()]);
             return null;
           }
           c = mixingbowls[m.mixingbowl].peek();
-          c.setValue((c.getValue() ~/ ingredients[m.ingredient].getAmount()).round());
+          c.setValue((c.getValue() ~/ ingredients[m.ingredient].getAmount())
+              .round());
           break;
         case Type.AddDry :
           int sum = 0;
@@ -201,10 +211,10 @@ class Kitchen {
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_stir_empty_mixing_bowl',
-                          'chef_error_runtime_method_step',
-                          m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString(),
-                          '']);
+              'chef_error_runtime_stir_empty_mixing_bowl',
+              'chef_error_runtime_method_step',
+              m.n.toString() + ' : ' + m.type.toString() + ' => ' +
+                  (m.mixingbowl + 1).toString()]);
             return null;
           }
           mixingbowls[m.mixingbowl].stir(m.time);
@@ -213,22 +223,23 @@ class Kitchen {
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_stir_in_empty_mixing_bowl',
-                          'chef_error_runtime_method_step',
-                          m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString(),
-                          '']);
+              'chef_error_runtime_stir_in_empty_mixing_bowl',
+              'chef_error_runtime_method_step',
+              m.n.toString() + ' : ' + m.type.toString() + ' => ' +
+                  (m.mixingbowl + 1).toString()]);
             return null;
           }
-          mixingbowls[m.mixingbowl].stir(ingredients[m.ingredient].getAmount());
+          mixingbowls[m.mixingbowl].stir(
+              ingredients[m.ingredient].getAmount());
           break;
         case Type.Mix :
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_mix_empty_mixing_bowl',
-                          'chef_error_runtime_method_step',
-                          m.n.toString() + ' : ' + m.type.toString() + ' => ' + (m.mixingbowl + 1).toString(),
-                          '']);
+              'chef_error_runtime_mix_empty_mixing_bowl',
+              'chef_error_runtime_method_step',
+              m.n.toString() + ' : ' + m.type.toString() + ' => ' +
+                  (m.mixingbowl + 1).toString()]);
             return null;
           }
           mixingbowls[m.mixingbowl].shuffle();
@@ -240,16 +251,16 @@ class Kitchen {
           bakingdishes[m.bakingdish].combine(mixingbowls[m.mixingbowl]);
           break;
         case Type.Verb :
-          int end = i+1;
+          int end = i + 1;
           for (; end < methods.length; end++)
-            if (_sameVerb(m.verb, methods[end].verb) && methods[end].type == Type.VerbUntil)
+            if (_sameVerb(m.verb, methods[end].verb, language) &&
+                methods[end].type == Type.VerbUntil)
               break;
           if (end == methods.length) {
             valid = false;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_method_loop',
-                          m.n.toString() + ' : ' + m.type.toString(),
-                          '']);
+              'chef_error_runtime_method_loop',
+              m.n.toString() + ' : ' + m.type.toString()]);
             return null;
           }
           if (ingredients[m.ingredient].getAmount() <= 0) {
@@ -257,29 +268,28 @@ class Kitchen {
             continue methodloop;
           }
           else
-            loops.insertAll(0,{_LoopData(i, end, m.verb)});
+            loops.insertAll(0, {_LoopData(i, end, m.verb)});
           break;
         case Type.VerbUntil :
-          if (!_sameVerb(loops[0].verb, m.verb)){
+          if (!_sameVerb(loops[0].verb, m.verb, language)) {
             valid = false;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_method_loop_end',
-                          m.n.toString() + ' : ' + m.type.toString(),
-                          '']);
+              'chef_error_runtime_method_loop_end',
+              m.n.toString() + ' : ' + m.type.toString()]);
             return null;
           }
           if (ingredients[m.ingredient] != null)
-            ingredients[m.ingredient].setAmount(ingredients[m.ingredient].getAmount() - 1);
+            ingredients[m.ingredient].setAmount(
+                ingredients[m.ingredient].getAmount() - 1);
           i = loops[0].from;
           loops.removeAt(0);
           continue methodloop;
         case Type.SetAside :
-          if (loops.length == 0){
+          if (loops.length == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_method_loop_aside',
-                          m.n.toString() + ' : ' + m.type.toString(),
-                          '']);
+              'chef_error_runtime_method_loop_aside',
+              m.n.toString() + ' : ' + m.type.toString()]);
             return null;
           }
           else {
@@ -289,67 +299,91 @@ class Kitchen {
           }
           break;
         case Type.Serve :
-          if (recipes[m.auxrecipe.toLowerCase()] == null){
+          if (recipes[m.auxrecipe.toLowerCase()] == null) {
             valid = false;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_method_aux_recipe',
-                          m.n.toString() + ' : ' + m.type.toString() + ' => ' + m.auxrecipe,
-                          '']);
+              'chef_error_runtime_method_aux_recipe',
+              m.n.toString() + ' : ' + m.type.toString() + ' => ' +
+                  m.auxrecipe]);
             return null;
           }
-          Kitchen k = new Kitchen(recipes, recipes[m.auxrecipe.toLowerCase()], mixingbowls, bakingdishes, language);
-          Container con = k.cook(additionalIngredients, language);
-          if (con != null)
-            mixingbowls[0].combine(con);
-          else {
+          try {
+            Kitchen k = new Kitchen(
+                recipes, recipes[m.auxrecipe.toLowerCase()], mixingbowls,
+                bakingdishes, language);
+            Container con = k.cook(additionalIngredients, language, depth + 1);
+            if (k.exception) {
+              valid = false;
+              exception = true;
+              exceptionArose = true;
+              //error.removeRange(0, error.length-1);
+              error.addAll(k.error);
+              continue methodloop;
+            } else
+              if (con != null)
+                mixingbowls[0].combine(con);
+              else {
+                valid = false;
+                error.addAll(['chef_error_runtime',
+                  'chef_error_runtime_method_aux_recipe',
+                  'chef_error_runtime_method_aux_recipe_return']);
+                return null;
+              }
+          } catch (e) {
             valid = false;
+            exception = true;
             error.addAll(['chef_error_runtime',
-                          'chef_error_runtime_method_aux_recipe',
-                          'chef_error_runtime_method_aux_recipe_return',
-                          '']);
-            return null;
+              'chef_error_runtime_exception',
+              'chef_error_runtime_serving_aux',
+              e.toString() + ' at depth ' +  depth.toString()]);
+            exceptionArose = true;
+            continue methodloop;
           }
           break;
         case Type.Refrigerate :
-          if (m.time > 0)
+          if (m.time > 0) {
             _serve(m.time);
+          }
           deepfrozen = true;
           break;
         case Type.Remember :
           break;
-        default :{
-          valid = false;
-          error.addAll(['chef_error_runtime',
-                        'chef_error_syntax_method_unsupported',
-                        m.n.toString() + ' : ' + m.type.toString(),
-                        '']);
-          return null;
-        }
+        default :
+          {
+            valid = false;
+            error.addAll(['chef_error_runtime',
+              'chef_error_syntax_method_unsupported',
+              m.n.toString() + ' : ' + m.type.toString()]);
+            return null;
+          }
       }
       i++;
     } // end of MethodLoop - all is done
-    if (recipe.getServes() > 0 && !deepfrozen) {
-      _serve(recipe.getServes());
+    if (!exceptionArose) {
+      if (recipe.getServes() > 0 && !deepfrozen) {
+        _serve(recipe.getServes());
+      }
+      if (mixingbowls.length > 0) {
+        return mixingbowls[0];
+      } // end of auxiliary recipe
+      //return null;  // end of mainrecipe
     }
-    if (mixingbowls.length > 0) {
-      return mixingbowls[0];
-    } // end of auxiliary recipe
-    return null;  // end of mainrecipe
   } // cook
 
-  bool _sameVerb(String imp, String verb) {
+  bool _sameVerb(String imp, verb, language) {
     if (verb == null || imp == null)
       return false;
     verb = verb.toLowerCase();
     imp = imp.toLowerCase();
     int L = imp.length;
-    return verb==imp || //A = A
-        verb == ('ge' + imp.substring(0, L - 1) + 't') || // suche  ~ gesucht   füttere ~ gefüttert
-        verb==(imp + "n") || //shake ~ shaken
-        verb==(imp + "d") || //prepare ~ prepared
-        verb==(imp + "ed") || //monitor ~ monitored
-        verb==(imp + (imp[L - 1]) + "ed") || //stir ~ stirred
-        (imp[L - 1] == 'y' && verb == (imp.substring(0, L - 1) + "ied")); //carry ~ carried
+    if (language == 'ENG')
+      return verb==(imp + "n") || //shake ~ shaken
+             verb==(imp + "d") || //prepare ~ prepared
+             verb==(imp + "ed") || //monitor ~ monitored
+             verb==(imp + (imp[L - 1]) + "ed") || //stir ~ stirred
+             (imp[L - 1] == 'y' && verb == (imp.substring(0, L - 1) + "ied")); //carry ~ carried
+    else
+      return verb==imp;
   }
 
   void _serve(int n) {

@@ -1,12 +1,12 @@
 enum textId {
-  Put_into_the_mixing_bowl,
+  Put,
   Ingredients,
   Cooking_time,
   Pre_heat_oven,
   Method,
   Liquefy_contents,
   Liquefy,
-  Pour_contents,
+  Pour,
   Serves,
   Serve_with,
   Clean,
@@ -35,29 +35,30 @@ final List<RegExp> matchersENG = [
 ];
 
 final List<RegExp> matchersDEU = [
-  RegExp(r'^nehme( die| das| den)? ([a-zäöüß0-9 ]+) aus (dem )?kühlschrank$'),
-  RegExp(r'^(gebe|unterhebe)( die| das| den)? ([a-zäöüß0-9 ]+) in( die)?( (\d+)(te))? rührschüssel$'),
-  RegExp(r'^füge hinzu( die festen| feste)? zutaten( zu(r|der)?( (\d+)(ten))? rührschüssel)?$'),
-  RegExp(r'^(füge hinzu|entferne|kombiniere|teile)( die| das| den)? ([a-zäöüß0-9 ]+?)( (zu |mit |aus |in (der |die )?)((\d+)(te(n)?) )?rührschüssel)?$'),
-  RegExp(r'^verflüssige (die )?inhalte der( (\d+)(ten) )? rührschüssel$'),
-  RegExp(r'^verflüssige( den| das| die)? ([a-zäöüß0-9 ]+)$'),
-  RegExp(r'^rühre ((die )?((\d+)(te ))?rührschüssel )?für (\d+) minute(n)?$'),
-  RegExp(r'^rühre (das |die |den )?([a-zäöüß0-9 ]+) in (die )?((\d+)(te) )?rührschüssel$'),
-  RegExp(r'^mische( (die )?((\d+)(te)? )?rührschüssel)?( gut)?$'),
-  RegExp(r'^säubere die( (\d+)(te))? rührschüssel$'),
-  RegExp(r'^gieße (die )?inhalte( der)?( (\d+)(ten))? rührschüssel auf( die)?( (\d+)(te))? servierplatte$'),
-  RegExp(r'^stelle beiseite'),
-  RegExp(r'^gefriere( für (\d+) stunde(n)?)?$'),
+  RegExp(r'^(den |die |das )?([a-zäöüß0-9 ]+) aus (dem )?kühlschrank nehmen$'),
+  RegExp(r'^(den |die |das )?([a-zäöüß0-9 ]+) in( die)?( (\d+)(te))? (rühr)?schüssel geben$'),
+  RegExp(r'^(den |die |das )?([a-zäöüß0-9 ]+)( in( die)?( (\d+)(te))? (rühr)?schüssel)? unterheben$'),
+  RegExp(r'^alle festen zutaten(( (zu)?(( )?de)?(r)?)?( (\d+)(ten))? (rühr)?schüssel)? hinzugeben$'),
+  RegExp(r'^(den |die |das )?([a-zäöüß0-9 ]+?)( (zu |mit |aus |in (der |die )?)((\d+)(te(n)?) )?(rühr)?schüssel)?( )?(dazugeben|hinzufügen|abschöpfen|entfernen|kombinieren|teilen)$'),
+  RegExp(r'^inhalt(e)? der ((\d+)(ten) )?(rühr)?schüssel( auf dem stövchen)?( erhitzen| zerlassen| schmelzen| verflüssigen)$'),
+  RegExp(r'^(den |die |das )?([a-zäöüß0-9 ]+)( erhitzen| zerlassen| schmelzen| verflüssigen)$'),
+  RegExp(r'^((die )?((\d+)(te ))?(rühr)?schüssel )?für (\d+) minute(n)? umrühren$'),
+  RegExp(r'^(das |die |den )?([a-zäöüß0-9 ]+) (in (die )?((\d+)(te) )?(rühr)?schüssel )?unterrühren$'),
+  RegExp(r'^inhalt der ((\d+)(ten ))?(rühr)?schüssel gut verrühren$'),
+  RegExp(r'^((\d+)(te) )?(rühr)?schüssel (abwaschen|säubern)$'),
+  RegExp(r'^(inhalt(e)?( der)?( (\d+)(te(n)?))? )?(rühr)?schüssel( auf| in)( die| das| den| ein(e)?(n)?)?( (\d+)(te(n)?))? (servier(schale|platte)|teller|backblech) (gießen|stürzen|schütten)$'),
+  RegExp(r'^(zur seite stellen|stelle beiseite)'),
+  RegExp(r'^(einfrieren|gefriere)( für (\d+) stunde(n)?)?$'),
   RegExp(r'^serviere mit (dem |einem )?([a-zäöüß0-9 ]+)$'),
   RegExp(r'^vorschlag: (.*)$'),
-  RegExp(r'^([a-zäöüß0-9]+)( (das |den |die )?([a-zäöüß0-9 ]+))? bis ([a-zäöüß0-9]+)$'),
-  RegExp(r'^([a-zäöüß0-9]+)( das| den| die)? ([a-zäöüß0-9 ]+)$')
+  RegExp(r'^solange ([a-zäöüß0-9]+) bis ((das |den |die )?([a-zäöüß0-9 ]+))? zur weiterarbeitung bereit$'),
+  RegExp(r'^(das |den |die )?([a-zäöüß0-9]+) ([a-zäöüß0-9 ]+)$')
 ];
 
 final RegExp MeasureType = RegExp(r'^heaped$|^level$|^gestrichen$|^gehäuft$');
-final RegExp MeasureDry = RegExp(r'^g(r)?$|^kg$|^pinch(es)?$|^prise(n)$|^scheibe(n)?$');
+final RegExp MeasureDry = RegExp(r'^g(r)?$|^kg$|^pinch(es)?$|^prise(n)$');
 final RegExp MeasureLiquid = RegExp(r'^ml$|^l$|^dash(es)?$|^drop(s)?$|^spritzer$|^tropfen$');
-final RegExp MeasureElse = RegExp(r'^cup(s)?$|^teaspoon(s)?$|^tablespoon(s)?$|^teelöffel$|^esslöffel$');
+final RegExp MeasureElse = RegExp(r'^cup(s)?$|^tasse(n)?$|^teaspoon(s)?$|^tablespoon(s)?$|^teelöffel$|^esslöffel$');
 
 final List<String> liquidMeasuresDEU = ['ml', 'l', 'Spritzer', 'Tropfen'];
 
@@ -131,71 +132,71 @@ final List<List<String>> itemListAuxiliaryENG = [
 String getText(textId id, String parameter, language) {
   var text ='';
   switch (id) {
-    case textId.Put_into_the_mixing_bowl:
+    case textId.Put:
       if (language == 'ENG')
         text = 'Put %1 into the mixing bowl.';
       else
-        text = 'Gebe %1 in die Rührschüssel.';
+        text = '%1 in die Schüssel geben.';
       break;
     case textId.Add:
       if (language == 'ENG')
         text = 'Add %1 into the mixing bowl.';
       else
-        text = 'Füge hinzu %1 in die Rührschüssel.';
+        text = '%1 dazugeben.';
       break;
     case textId.Combine:
       if (language == 'ENG')
         text = 'Combine %1 into mixing bowl.';
       else
-        text = 'Kombiniere %1 in die Rührschüssel.';
+        text = '%1 kombinieren.';
       break;
     case textId.Ingredients:
       if (language == 'ENG')
         text = 'Ingredients.';
       else
-        text = 'Zutaten.';
+        text = 'Zutaten:';
       break;
     case textId.Cooking_time:
       if (language == 'ENG')
         text = 'Cooking time: %1 minutes.';
       else
-        text = 'Kochzeit: %1 minuten.';
+        text = 'Garzeit: %1 Minuten.';
       break;
     case textId.Pre_heat_oven:
       if (language == 'ENG')
         text = 'Pre-heat oven to %1 degrees Celsius.';
       else
-        text = 'Vorheizen des Ofens auf %1 Grad Celsius.';
+        text = 'Ofen auf %1 Grad Celsius vorheizen.';
       break;
     case textId.Method:
       if (language == 'ENG')
         text = 'Method.';
       else
-        text = 'Zubereitung.';
+        text = 'Zubereitung:';
       break;
     case textId.Liquefy:
       if (language == 'ENG')
         text = 'Liquefy %1.';
       else
-        text = 'Verflüssige %1.';
+        text = '%1 zerlassen.';
       break;
     case textId.Liquefy_contents:
       if (language == 'ENG')
         text = 'Liquefy contents of the mixing bowl.';
       else
-        text = 'Verflüssige die Inhalte der Rührschüssel.';
+        text = 'Inhalt der Schüssel auf dem Stövchen erhitzen.';
       break;
-    case textId.Pour_contents:
+    case textId.Pour:
       if (language == 'ENG')
         text = 'Pour contents of the mixing bowl into the baking dish.';
       else
-        text = 'Gieße die Inhalte der Rührschüssel auf die Servierplatte.';
+        text = 'Schüssel in eine Servierschale stürzen.';
       break;
     case textId.Serves:
       if (language == 'ENG')
         text = 'Serves 1.';
       else
-        text = 'Portionen 1.';
+        text = 'Portionen: 1.';
       break;
     case textId.Serve_with:
       if (language == 'ENG')
@@ -208,7 +209,7 @@ String getText(textId id, String parameter, language) {
       if (language == 'ENG')
         text = 'Clean %1 mixing bowl.';
       else
-        text = 'Säubere die %1 Rührschüssel.';
+        text = '%1 Schüssel abwaschen.';
       break;
       break;
   }

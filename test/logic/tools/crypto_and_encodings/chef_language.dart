@@ -160,83 +160,14 @@ Pour contents of the mixing bowl into the baking dish.
 Serves 1.
 ''';
 
-    var test20 = '''Demo.
-
-Gibt aus N 437 E 708 magnetisch
-
-Zutaten.
-32 ml ambra
-109 Spritzer Zitronensaft
-97 ml Eigelb
-103 ml Öl
-110 ml Calvados
-101 ml Ouzo
-116 ml saure Sahne
-105 ml Bier
-115 ml Korn
-99 Tropfen flüssige Vanille
-104 Spritzer Tabasco
-69 ml Sahne
-78 ml Whisky
-
-Zubereitung.
-Gebe Tabasco in die Rührschüssel.
-Gebe flüssige Vanille in die Rührschüssel.
-Gebe Korn in die Rührschüssel.
-Gebe Bier in die Rührschüssel.
-Gebe saure Sahne in die Rührschüssel.
-Gebe Ouzo in die Rührschüssel.
-Gebe Calvados in die Rührschüssel.
-Gebe Öl in die Rührschüssel.
-Gebe Eigelb in die Rührschüssel.
-Gebe Zitronensaft in die Rührschüssel.
-Gebe ambra in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
-Säubere die Rührschüssel.
-Serviere mit cremige bittere Currychips.
-Gebe ambra in die Rührschüssel.
-Gebe Sahne in die Rührschüssel.
-Gebe ambra in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
-Säubere die Rührschüssel.
-Serviere mit schwere scharfe Currydressing.
-Gebe ambra in die Rührschüssel.
-Gebe Whisky in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
-
-Portionen 1.
-
-
-cremige bittere Currychips
-
-Zutaten.
-12 g schmalz
-59 Prisen Kümmel
-
-Zubereitung.
-Gebe schmalz in die Rührschüssel.
-Kombiniere Kümmel in die Rührschüssel.
-
-
-schwere scharfe Currydressing
-
-Zutaten.
-19 Prisen Anis
-23 g Marmelade
-
-Zubereitung.
-Gebe Anis in die Rührschüssel.
-Kombiniere Marmelade in die Rührschüssel.''';
-
-    List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '',   'recipe' : test0, 'isValid' : false, 'expectedOutput' : []},
+        List<Map<String, dynamic>> _inputsToExpected = [
+      {'language' : 'ENG', 'input' : '',   'recipe' : test0, 'expectedOutput' : []},
       {'language' : 'ENG', 'input' : '',   'recipe' : test12,   'isValid' : true, 'expectedOutput' : ['Koordinaten\r\n'
       '\r\n'
       '\r\n'
       '\r\n'
       '\r\n']},
       {'language' : 'ENG', 'input' : '',   'recipe' : test13,   'isValid' : true, 'expectedOutput' : ['n 432 e 708']},
-      {'language' : 'DEU', 'input' : '',   'recipe' : test20,   'isValid' : true, 'expectedOutput' : ['N 437 E 708 magnetisch']},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -536,8 +467,8 @@ Refrigerate for 1 hours.
 Serves 1.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '5',  'recipe' : take, 'isValid' : false, 'expectedOutput' : ['5']},
-      {'language' : 'ENG', 'input' : '',  'recipe' : take, 'isValid' : false, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
+      {'language' : 'ENG', 'input' : '5',  'recipe' : take, 'expectedOutput' : ['5']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : take, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
       {'language' : 'ENG', 'input' : '',   'recipe' : put,   'isValid' : true, 'expectedOutput' : ['10']},
       {'language' : 'ENG', 'input' : '',   'recipe' : fold,   'isValid' : true, 'expectedOutput' : ['1010']},
       {'language' : 'ENG', 'input' : '',   'recipe' : add,   'isValid' : true, 'expectedOutput' : ['2010']},
@@ -823,7 +754,7 @@ Pour contents of the mixing bowl into the baking dish.
 Serves.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '',  'recipe' : testNoInput, 'isValid' : false, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : testNoInput, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testPutNoInput,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_method_step','1 : Type.Verb','chef_error_runtime_ingredient_not_found']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testFoldEmptyBow,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_folded_from_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Fold => 1']},
       {'language' : 'ENG', 'input' : '',   'recipe' : testAddEmptyBowl,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_add_to_empty_mixing_bowl','chef_error_runtime_method_step','1 : Type.Add => 1']},
@@ -854,157 +785,192 @@ Serves.''';
 
   group("chef_language.generatedRecipes", () {
 
-      var testDEUgenerated = '''Testrezept in Deutsch.
+      var testDEUgenerated = '''Mama Marias Meisterprobe.
 
-Nur mal so zum probieren
+Einfach mal ausprobieren
 
-Zutaten.
-56 Spritzer Zitronensaft
-48 g Kartoffeln
-55 Zwiebeln
-32 ml geschlagene Eier
-69 Scheiben Brot
-50 g Milchschokolade
-51 ml Rotwein
-52 gr Süßkartoffeln
-78 ml Milch
+Zutaten:
+116 l Orangensaft
+115 Tropfen Schmalz
+101 Prisen Sherry
+84 Tasse Süßkartoffeln
 
-Kochzeit: 50 minuten.
+Garzeit: 120 minuten.
 
-Vorheizen des Ofens auf 160 Grad Celsius.
+Ofen auf 100 Grad Celsius vorheizen.
 
-Zubereitung.
-Gebe Zitronensaft in die Rührschüssel.
-Gebe Kartoffeln in die Rührschüssel.
-Gebe Zwiebeln in die Rührschüssel.
-Gebe geschlagene Eier in die Rührschüssel.
-Gebe Brot in die Rührschüssel.
-Gebe geschlagene Eier in die Rührschüssel.
-Gebe Milchschokolade in die Rührschüssel.
-Gebe Rotwein in die Rührschüssel.
-Gebe Süßkartoffeln in die Rührschüssel.
-Gebe geschlagene Eier in die Rührschüssel.
-Gebe Milch in die Rührschüssel.
-Verflüssige die Inhalte der Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+Orangensaft in die Schüssel geben.
+Schmalz in die Schüssel geben.
+Sherry in die Schüssel geben.
+Süßkartoffeln in die Schüssel geben.
+Inhalt der Schüssel auf dem Stövchen erhitzen.
+Schüssel in eine Servierschale stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
+      var testDEUgenerateoNoAux = '''Mama Marias Meisterprobe.
 
-      var testDEUgeneratedAux = '''Demo .
+Einfach mal ausprobieren
 
-n 437 e 708 r2d2
+Zutaten:
+56 Prisen Milchschokolade
+48 l Marmelade
+55 Tropfen Ouzo
+32 Teelöffel Soda
+101 l Scotch Whisky
+51 Prisen Erbsen
+52 l Pfeffer
+110 g Eigelb
 
-Zutaten.
-32 ml ambra
-50 ml Rum
-100 ml Espresso
-114 ml Calvados
-101 Spritzer Zitronensaft
-110 Tropfen flüssige Vanille
+Garzeit: 120 Minuten.
 
-Zubereitung.
-Gebe Rum in die Rührschüssel.
-Gebe Espresso in die Rührschüssel.
-Gebe Rum in die Rührschüssel.
-Gebe Calvados in die Rührschüssel.
-Gebe ambra in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
-Säubere die Rührschüssel.
-Serviere mit leichte bittere Honigchips.
-Gebe Ambra in die Rührschüssel.
-Gebe Zitronensaft in die Rührschüssel.
-Gebe ambra in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
-Säubere die Rührschüssel.
-Serviere mit fluffige süße Ketchupdressing.
-Gebe Ambra in die Rührschüssel.
-Gebe flüssige Vanille in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Ofen auf 100 Grad Celsius vorheizen.
 
-Portionen 1.
+Zubereitung:
+Milchschokolade in die Schüssel geben.
+Marmelade in die Schüssel geben.
+Ouzo in die Schüssel geben.
+Soda in die Schüssel geben.
+Scotch Whisky in die Schüssel geben.
+Soda in die Schüssel geben.
+Ouzo in die Schüssel geben.
+Erbsen in die Schüssel geben.
+Pfeffer in die Schüssel geben.
+Soda in die Schüssel geben.
+Eigelb in die Schüssel geben.
+Inhalt der Schüssel auf dem Stövchen erhitzen.
+Schüssel in eine Servierschale stürzen.
+
+Portionen: 1.''';
+      var testDEUgeneratedAux = '''Mama Marias Meisterprobe.
+
+Einfach mal ausprobieren
+
+Zutaten:
+32 ml Ambra
+101 l Schmand
+110 Tropfen Eiweiß
+
+Garzeit: 120 minuten.
+
+Ofen auf 100 Grad Celsius vorheizen.
+
+Zubereitung:
+Serviere mit schwere scharfe Currydressings.
+Ambra in die Schüssel geben.
+Schmand in die Schüssel geben.
+Ambra in die Schüssel geben.
+Schüssel in eine Servierschale stürzen.
+ Schüssel abwaschen.
+Serviere mit schwere bittere Currychips.
+Ambra in die Schüssel geben.
+Eiweiß in die Schüssel geben.
+Schüssel in eine Servierschale stürzen.
+
+Portionen: 1.
 
 
-leichte bittere Honigchips
+schwere scharfe Currydressings
 
-Zutaten.
-12 g Süßkartoffeln
-59 g Kakaopulver
+Zutaten:
+59 kg Pfeffer
+12 kg Frischkäse
 
-Zubereitung.
-Gebe Süßkartoffeln in die Rührschüssel.
-Kombiniere Kakaopulver in die Rührschüssel.
+Zubereitung:
+Pfeffer in die Schüssel geben.
+Frischkäse kombinieren.
 
 
-fluffige süße Ketchupdressing
+schwere bittere Currychips
 
-Zutaten.
-19 Teelöffel Chili
-23 Prisen Anis
+Zutaten:
+19 g Guacamole
+23 g Kartoffeln
 
-Zubereitung.
-Gebe Chili in die Rührschüssel.
-Kombiniere Anis in die Rührschüssel.
-''';
+Zubereitung:
+Guacamole in die Schüssel geben.
+Kartoffeln kombinieren.''';
+      var testENGgeneratedNoAux = '''Mama Marias Masterpiece.
 
-      var testENGgeneratedAux = '''Demo .
+Just try it
 
-n 437 e 708 r2d2
+Ingredients.
+56 pinches dark chocolate
+48 ml ouzo
+55 l cucumber
+32 pinches pinches
+101 drops eggs
+51 pinches beer
+52 dashes fruit brandy
+110 teaspoons onions
+
+Method.
+Put dark chocolate into the mixing bowl.
+Put ouzo into the mixing bowl.
+Put cucumber into the mixing bowl.
+Put pinches into the mixing bowl.
+Put eggs into the mixing bowl.
+Put pinches into the mixing bowl.
+Put cucumber into the mixing bowl.
+Put beer into the mixing bowl.
+Put fruit brandy into the mixing bowl.
+Put pinches into the mixing bowl.
+Put onions into the mixing bowl.
+Liquefy contents of the mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+      var testENGgeneratedAux = '''Mama Marias Masterpiece with a little help.
+
+Just try it
 
 Ingredients.
 32 ml ambergris
-50 ml raki
-100 ml calvados
-114 ml gin
-101 ml sour cream
-110 ml water
+101 l grenadine
+110 ml agave nectar
 
 Method.
-Put raki into the mixing bowl.
-Put calvados into the mixing bowl.
-Put raki into the mixing bowl.
-Put gin into the mixing bowl.
+Serve with fluffy hot ketchuptopping.
+Put ambergris into the mixing bowl.
+Put grenadine into the mixing bowl.
 Put ambergris into the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 Clean mixing bowl.
-Serve with heavy hot ketchupsauce.
+Serve with light hot honeychips.
 Put ambergris into the mixing bowl.
-Put sour cream into the mixing bowl.
-Put ambergris into the mixing bowl.
-Pour contents of the mixing bowl into the baking dish.
-Clean mixing bowl.
-Serve with creamy sour honeydressing.
-Put ambergris into the mixing bowl.
-Put water into the mixing bowl.
+Put agave nectar into the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.
 
 
-heavy hot ketchupsauce
+fluffy hot ketchuptopping
 
 Ingredients.
-12 g shrimps
-59 g zucchini
+59 pinches tofu
+12 kg apple pieces 
 
 Method.
-Put shrimps into the mixing bowl.
-Combine zucchini into mixing bowl.
+Put tofu into the mixing bowl.
+Combine apple pieces into mixing bowl.
 
 
-creamy sour honeydressing
+light hot honeychips
 
 Ingredients.
-19 g cocoa powder
-23 g mixed fruits
+19 g raisins
+23 g wholemeal flour
 
 Method.
-Put cocoa powder into the mixing bowl.
-Combine mixed fruits into mixing bowl.''';
+Put raisins into the mixing bowl.
+Combine wholemeal flour into mixing bowl.''';
 
       List<Map<String, dynamic>> _inputsToExpected = [
-        {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgenerated, 'isValid' : false, 'expectedOutput' : ['N 432 E 708']},
-        {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgeneratedAux, 'isValid' : false, 'expectedOutput' : ['n 437 e 708 r2d2']},
-        {'language' : 'ENG', 'input' : '',  'recipe' : testENGgeneratedAux, 'isValid' : false, 'expectedOutput' : ['n 437 e 708 r2d2']},
+        {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgenerated, 'expectedOutput' : ['Test']},
+        {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgenerateoNoAux, 'expectedOutput' : ['n 437 e 708']},
+        {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgeneratedAux, 'expectedOutput' : ['n 437 e 708']},
+        {'language' : 'ENG', 'input' : '',  'recipe' : testENGgeneratedNoAux, 'expectedOutput' : ['n 437 e 708']},
+        {'language' : 'ENG', 'input' : '',  'recipe' : testENGgeneratedAux, 'expectedOutput' : ['n 437 e 708']},
       ];
 
       _inputsToExpected.forEach((elem) {
@@ -1021,132 +987,132 @@ Combine mixed fruits into mixing bowl.''';
   group("chef_language.deuAnweisungen", () {
     var nehme = '''Test TAKE.
 
-Zutaten.
+Zutaten:
 inGebe
 
-Zubereitung.
-Nehme inGebe aus dem Kühlschrank.
-Gebe inGebe in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+inGebe aus dem Kühlschrank nehmen.
+inGebe in die Schüssel geben.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
     var gebe = '''Test Gebe.
 
-Zutaten.
+Zutaten:
 10 salz
 
-Zubereitung.
-Gebe Salz in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+Salz in die Schüssel geben.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
     var unterhebe = '''Test FOLD.
 
-Zutaten.
+Zutaten:
 10 Salz
 Pfeffer
 
-Zubereitung.
-Gebe Salz in die Rührschüssel.
-Unterhebe Pfeffer in die Rührschüssel.
-Gebe Pfeffer in die Rührschüssel.
-Gebe Pfeffer in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+Salz in die Schüssel geben.
+Pfeffer unterheben.
+Pfeffer in die Schüssel geben.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
     var fuegehinzu = '''Test ADD.
 
-Zutaten.
+Zutaten:
 10 Salz
 10 Pfeffer
 
-Zubereitung.
-Gebe Salz in die Rührschüssel.
-Gebe Salz in die Rührschüssel.
-Füge hinzu Pfeffer in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+Salz in die Schüssel geben.
+Salz in die Schüssel geben.
+Pfeffer dazugeben.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
     var entferne = '''Test REMOVE.
 
-Zutaten.
+Zutaten:
 10 Salz
 10 Pfeffer
 
-Zubereitung.
-Gebe Salz in die Rührschüssel.
-Gebe Salz in die Rührschüssel.
-Entferne Pfeffer in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+Salz in die Schüssel geben.
+Pfeffer in die Schüssel geben.
+Pfeffer abschöpfen.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
     var kombiniere = '''Test COMBINE.
 
-Zutaten.
+Zutaten:
 10 Salz
 10 Pfeffer
 
-Zubereitung.
-Gebe Salz in die Rührschüssel.
-Gebe Salz in die Rührschüssel.
-Kombiniere Pfeffer in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+Salz in die Schüssel geben.
+Salz in die Schüssel geben.
+Pfeffer kombinieren.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
     var teile = '''Test DIVIDE.
 
-Zutaten.
+Zutaten:
 10 Salz
 10 Pfeffer
 
-Zubereitung.
-Gebe Salz in die Rührschüssel.
-Gebe Salz in die Rührschüssel.
-Teile Pfeffer in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+Salz in die Schüssel geben.
+Pfeffer in die Schüssel geben.
+Pfeffer teilen.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
     var fuegeHinzuTrockeneZutaten = '''Test ADDRY.
 
-Zutaten.
+Zutaten:
 10 Salz
 10 Pfeffer
 
-Zubereitung.
-Füge hinzu feste Zutaten zur Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+Alle festen Zutaten hinzugeben.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
     var verfluessigeZutat = '''Test LIQUEFYINGREDIENT.
 
-Zutaten.
-65 Salz
+Zutaten:
+65 Butter
 80 Pfeffer
+70 Salz
 
-Zubereitung.
-Gebe Salz in die Rührschüssel.
-Gebe Pfeffer in die Rührschüssel.
-Verflüssige Salz.
-Gebe Salz in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+Salz in die Schüssel geben.
+Pfeffer in die Schüssel geben.
+Butter zerlassen.
+Butter in die Schüssel geben.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
     var verfluessigeSchuessel = '''Test LIQUEFYBOWL.
 
-Zutaten.
+Zutaten:
 65 Salz
 80 Pfeffer
 
-Zubereitung.
-Gebe Salz in die Rührschüssel.
-Gebe Pfeffer in die Rührschüssel.
-Verflüssige die Inhalte der Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+Salz in die Schüssel geben.
+Pfeffer in die Schüssel geben.
+Inhalt der Schüssel auf dem Stövchen erhitzen.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
     var ruehre = '''Test STIR.
 
-Zutaten.
+Zutaten:
 1 sugar
 2 Salz
 3 salmon
@@ -1154,20 +1120,20 @@ Zutaten.
 5 wine
 6 wodka
 
-Zubereitung.
-Gebe sugar in die Rührschüssel.
-Gebe Salz in die Rührschüssel.
-Gebe salmon in die Rührschüssel.
-Gebe Pfeffer in die Rührschüssel.
-Gebe wine in die Rührschüssel.
-Gebe wodka in die Rührschüssel.
-Rühre für 2 Minuten.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+sugar in die Schüssel geben.
+Salz in die Schüssel geben.
+salmon in die Schüssel geben.
+Pfeffer in die Schüssel geben.
+wine in die Schüssel geben.
+wodka in die Schüssel geben.
+Schüssel für 2 Minuten umrühren.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
     var ruehreZutat = '''Test STIRINGREDIENT INTO THE Rührschüssel
 
-Zutaten.
+Zutaten:
 1 sugar
 2 Salz
 3 salmon
@@ -1175,111 +1141,112 @@ Zutaten.
 5 wine
 6 wodka
 
-Zubereitung.
-Gebe sugar in die Rührschüssel.
-Gebe Salz in die Rührschüssel.
-Gebe salmon in die Rührschüssel.
-Gebe Pfeffer in die Rührschüssel.
-Gebe wine in die Rührschüssel.
-Gebe wodka in die Rührschüssel.
-Gebe Salz in die Rührschüssel.
-Rühre Salz in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+sugar in die Schüssel geben.
+Salz in die Schüssel geben.
+salmon in die Schüssel geben.
+Pfeffer in die Schüssel geben.
+wine in die Schüssel geben.
+wodka in die Schüssel geben.
+Salz in die Schüssel geben.
+Salz unterrühren.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
     var saeubere = '''Test CLEAN.
 
-Zutaten.
+Zutaten:
 65 Salz
 80 Pfeffer
 
-Zubereitung.
-Gebe Salz in die Rührschüssel.
-Gebe Pfeffer in die Rührschüssel.
-Säubere die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+Salz in die Schüssel geben.
+Pfeffer in die Schüssel geben.
+Schüssel abwaschen.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
     var schleife = '''Test LOOP.
 
-Zutaten.
+Zutaten:
 5 g Salz
 80 g Pfeffer
 
-Zubereitung.
-Zähle das Salz.
-   Gebe Pfeffer in die Rührschüssel.
-   Füge hinzu Pfeffer in die Rührschüssel.
-   Unterhebe Pfeffer in die Rührschüssel.
-prüfe das Salz bis gezählt.
-Gebe Pfeffer in die Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Zubereitung:
+Salz zählen.
+   Pfeffer in die Schüssel geben.
+   Pfeffer dazugeben.
+   Pfeffer unterheben.
+Solange zählen bis Salz zur Weiterarbeitung bereit.
+Pfeffer in die Schüssel geben.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.''';
+Portionen: 1.''';
     var serviere = '''Test SERVE.
 
-Zutaten.
+Zutaten:
 5 g Salz
 80 g Pfeffer
 0 air
 
-Zubereitung.
-Gebe air in die Rührschüssel.
-zähle das Salz.
+Zubereitung:
+air in die Schüssel geben.
+Salz zählen.
    Serviere mit chili.
-zähle das Salz bis gezählt.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
+Solange zählen bis Salz zur Weiterarbeitung bereit.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
 
-Portionen 1.
+Portionen: 1.
 
 
 chili.
 
-Zutaten.
+Zutaten:
 1 g Harissa
 
-Zubereitung.
-Füge hinzu harissa in die Rührschüssel.''';
+Zubereitung:
+harissa dazugeben.''';
     var gefriere = '''Test Gefriere.
 
-Zutaten.
+Zutaten:
 65 Salz
 80 Pfeffer
 
-Zubereitung.
-Gebe Salz in die Rührschüssel.
-Gebe Pfeffer in die Rührschüssel.
-Verflüssige die Inhalte der Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
-Gefriere.
+Zubereitung:
+Salz in die Schüssel geben.
+Pfeffer in die Schüssel geben.
+Inhalt der Schüssel auf dem Stövchen erhitzen.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
+Einfrieren.
 
-Portionen 1.''';
+
+Portionen: 1.''';
     var gefriereNummer = '''Test Gefriere.
 
-Zutaten.
+Zutaten:
 65 Salz
 80 Pfeffer
 
-Zubereitung.
-Gebe Salz in die Rührschüssel.
-Gebe Pfeffer in die Rührschüssel.
-Verflüssige die Inhalte der Rührschüssel.
-Gieße die Inhalte der Rührschüssel auf die Servierplatte.
-Gefriere für 1 Stunde.
+Zubereitung:
+Salz in die Schüssel geben.
+Pfeffer in die Schüssel geben.
+Inhalt der Schüssel auf dem Stövchen erhitzen.
+Inhalt der Schüssel auf eine Servierplatte stürzen.
+Einfrieren für 1 Stunde.
 
-Portionen 1.''';
+Portionen: 1.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'DEU', 'input' : '5',  'recipe' : nehme, 'isValid' : false, 'expectedOutput' : ['5']},
-      {'language' : 'DEU', 'input' : '',  'recipe' : nehme, 'isValid' : false, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
+      {'language' : 'DEU', 'input' : '5',  'recipe' : nehme, 'expectedOutput' : ['5']},
+      {'language' : 'DEU', 'input' : '',  'recipe' : nehme, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_missing_input']},
       {'language' : 'DEU', 'input' : '',   'recipe' : gebe,   'isValid' : true, 'expectedOutput' : ['10']},
-      {'language' : 'DEU', 'input' : '',   'recipe' : unterhebe,   'isValid' : true, 'expectedOutput' : ['1010']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : unterhebe,   'isValid' : true, 'expectedOutput' : ['10']},
       {'language' : 'DEU', 'input' : '',   'recipe' : fuegehinzu,   'isValid' : true, 'expectedOutput' : ['2010']},
       {'language' : 'DEU', 'input' : '',   'recipe' : entferne,   'isValid' : true, 'expectedOutput' : ['010']},
       {'language' : 'DEU', 'input' : '',   'recipe' : kombiniere,   'isValid' : true, 'expectedOutput' : ['10010']},
       {'language' : 'DEU', 'input' : '',   'recipe' : teile,   'isValid' : true, 'expectedOutput' : ['110']},
       {'language' : 'DEU', 'input' : '',   'recipe' : fuegeHinzuTrockeneZutaten,   'isValid' : true, 'expectedOutput' : ['20']},
-      {'language' : 'DEU', 'input' : '',   'recipe' : verfluessigeZutat,   'isValid' : true, 'expectedOutput' : ['A8065']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : verfluessigeZutat,   'isValid' : true, 'expectedOutput' : ['A8070']},
       {'language' : 'DEU', 'input' : '',   'recipe' : verfluessigeSchuessel,   'isValid' : true, 'expectedOutput' : ['PA']},
       {'language' : 'DEU', 'input' : '',   'recipe' : ruehre,   'isValid' : true, 'expectedOutput' : ['546321']},
       {'language' : 'DEU', 'input' : '2654321',   'recipe' : ruehreZutat,   'isValid' : true, 'expectedOutput' : ['6524321']},
@@ -1883,10 +1850,63 @@ Refrigerate for 1 hour.''';
     });
   });
 
+  group("chef_language.GC8WY5T-Wohlschmeckendes Allerlei a la Ironside", () {
+
+    // https://www.geocaching.com/geocache/GC8WY5T_wohlschmeckendes-allerlei-a-la-ironside
+    // the original recipe provides only numbers because of the dry ingredients"
+    // to get characters I added the liquefy-statement " Inhalt der Schüssel auf dem Stövchen erhitzen."
+    var GC = '''Roberts Lieblingsrezept:
+
+Zutaten:
+101 Eier
+104 g Mehl
+246 ml Milch
+72 ml Wasser
+32 g Zucker
+109 Teelöffel Honig
+54 g Traubenzucker
+110 g Puderzucker
+105 g Äpfel
+108 g Avokado
+103 g Ananas
+65 g Kiwis
+10 g Erdnüsse
+13 g Erdbeeren
+52 g Feigen
+51 g Pekannüsse
+57 g Karotte
+46 g Mandeln
+49 g Birnen
+176 g Granatapfel
+69 g Zwiebeln
+53 g Walnüsse
+50 g Mandarine
+78 g Wassermelone
+
+Zubereitung:
+Eier in die Schüssel geben. Mehl in die Schüssel geben. Milch in die Schüssel geben. Wasser in die Schüssel geben. Zucker in die Schüssel geben. Honig in die Schüssel geben. Traubenzucker in die Schüssel geben. Zucker in die Schüssel geben. Puderzucker in die Schüssel geben. Äpfel in die Schüssel geben. Zucker in die Schüssel geben. Puderzucker in die Schüssel geben. Avokado in die Schüssel geben. Eier in die Schüssel geben. Ananas in die Schüssel geben. Puderzucker in die Schüssel geben. Kiwis in die Schüssel geben. Erdnüsse in die Schüssel geben. Erdbeeren in die Schüssel geben. Feigen in die Schüssel geben. Pekannüsse in die Schüssel geben. Karotte in die Schüssel geben. Mandeln in die Schüssel geben. Birnen in die Schüssel geben. Pekannüsse in die Schüssel geben. Zucker in die Schüssel geben. Granatapfel in die Schüssel geben. Traubenzucker in die Schüssel geben. Zucker in die Schüssel geben. Zwiebeln in die Schüssel geben. Zucker in die Schüssel geben. Zucker in die Schüssel geben. Walnüsse in die Schüssel geben. Feigen in die Schüssel geben. Pekannüsse in die Schüssel geben. Mandeln in die Schüssel geben. Walnüsse in die Schüssel geben. Mandarine in die Schüssel geben. Zucker in die Schüssel geben. Granatapfel in die Schüssel geben. Birnen in die Schüssel geben. Walnüsse in die Schüssel geben. Zucker in die Schüssel geben. Wassermelone in die Schüssel geben. Inhalt der Schüssel auf dem Stövchen erhitzen. Schüssel in eine Servierschale stürzen.
+
+Portionen: 1.''';
+
+        List<Map<String, dynamic>> _inputsToExpected = [
+      {'language' : 'DEU', 'input' : '',  'recipe' : GC, 'expectedOutput' : ['N 51° 25.345  E 6° 31.934\nAngeln in 6m Höhe']},
+        ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('  ', ' '), elem['input']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i], elem['expectedOutput'][i]);
+        }
+      });
+    });
+  });
+
   group("chef_language.mike-worth-HelloWorld", () {
 
     // http://www.mike-worth.com/2013/03/31/baking-a-hello-world-cake/
-    // the recipe has to be adapted: add "Serves 1.", "Pour the contents ... after servibg with chocolate sauce"
+    // the recipe has to be adapted: add "Serves 1.", "Pour the contents ... after serving with chocolate sauce"
     var HelloWorld = '''Hello World Cake with Chocolate sauce.
     
     This prints hello world, while being tastier than Hello World Souffle. The main chef makes a " world!" cake, which he puts in the baking dish. When he gets the sous chef to make the "Hello" chocolate sauce, it gets put into the baking dish and then the whole thing is printed when he refrigerates the sauce. When actually cooking, I'm interpreting the chocolate sauce baking dish to be separate from the cake one and Liquify to mean either melt or blend depending on context.
@@ -1950,9 +1970,216 @@ Liquify contents of the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 Refrigerate for 1 hour.''';
 
-        List<Map<String, dynamic>> _inputsToExpected = [
+    List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorld, 'expectedOutput' : ['Hello world!']},
-        ];
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('  ', ' '), elem['input']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i], elem['expectedOutput'][i]);
+        }
+      });
+    });
+  });
+
+  group("chef_language.99bottlesOfBeer", () {
+
+    // http://www.99-bottles-of-beer.net/language-chef-722.html
+    //
+    var BottlesOfBeer = '''99 bottles of beer on the wall.
+
+99 bottles of beer on the wall song.
+
+Ingredients.
+1 programmer
+10 ml newlines
+32 ml spaces
+44 ml commas
+46 ml full stops
+66 ml black cherry
+71 ml grapefruit
+78 ml nauclea
+84 ml tea
+97 ml apples
+98 ml bananas
+99 ml carrots
+99 g melange
+100 ml dragonfruit
+101 ml elderberries
+102 ml figs
+103 ml grapes
+104 ml horse mangos
+105 ml indian figs
+106 ml junglesop
+107 ml kiwi
+108 ml lemon
+109 ml mango
+110 ml nuts
+111 ml onion
+112 ml pineapple
+114 ml rhubarb
+115 ml strawberries
+116 ml tomatoes
+117 ml u
+118 ml vanilla
+119 ml water
+121 ml yellowberries
+98 kg beer
+100 kg peanuts
+
+Method.
+Put full stops into mixing bowl. Put rhubarb into mixing bowl. Put elderberries into mixing bowl.
+Put elderberries into mixing bowl. Put bananas into mixing bowl.
+Put spaces into mixing bowl. Put figs into mixing bowl. Put onion into mixing bowl.
+Put spaces into mixing bowl. Put strawberries into mixing bowl. Put elderberries into mixing bowl.
+Put lemon into mixing bowl. Put tomatoes into mixing bowl. Put tomatoes into mixing bowl. Put onion
+into mixing bowl. Put black cherry into mixing bowl.
+Put spaces into mixing bowl. Put melange into mixing bowl.
+Put full stops into mixing bowl. Put full stops into mixing bowl. Put full stops into mixing bowl.
+Put elderberries into mixing bowl. Put rhubarb into mixing bowl. Put onion into mixing bowl. Put
+mango into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put mango into mixing bowl. Put
+onion into mixing bowl. Put strawberries into mixing bowl.
+Put spaces into mixing bowl. Put yellowberries into mixing bowl. Put u into mixing bowl. Put bananas
+into mixing bowl.
+Put spaces into mixing bowl. Put dragonfruit into mixing bowl. Put nuts into mixing bowl. Put apples
+into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put rhubarb into mixing bowl. Put
+onion into mixing bowl. Put tomatoes into mixing bowl. Put strawberries into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put horse mangos into mixing bowl. 
+Put tomatoes into mixing bowl.
+Put spaces into mixing bowl. Put onion into mixing bowl. Put tomatoes into mixing bowl.
+Put spaces into mixing bowl. Put onion into mixing bowl. Put grapefruit into mixing bowl.
+Put newlines into mixing bowl. Put full stops into mixing bowl. Put full stops into mixing bowl. Put
+full stops into mixing bowl. Put rhubarb into mixing bowl. Put elderberries into mixing bowl. Put
+elderberries into mixing bowl. Put bananas into mixing bowl. Put spaces into mixing bowl. Put figs
+into mixing bowl. Put onion into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put lemon into mixing bowl. Put
+tomatoes into mixing bowl. Put tomatoes into mixing bowl. Put onion into mixing bowl. Put bananas
+into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put rhubarb into mixing bowl. Put
+onion into mixing bowl. Put mango into mixing bowl.
+Put spaces into mixing bowl. Put onion into mixing bowl. Put nuts into mixing bowl.
+Put spaces into mixing bowl. Put commas into mixing bowl. Put lemon into mixing bowl. Put lemon into
+mixing bowl. Put apples into mixing bowl. Put water into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put horse mangos into mixing bowl. 
+Put tomatoes into mixing bowl.
+Put spaces into mixing bowl. Put nuts into mixing bowl. Put onion into mixing bowl.
+Put spaces into mixing bowl. Put rhubarb into mixing bowl. Put elderberries into mixing bowl. Put
+elderberries into mixing bowl. Put bananas into mixing bowl.
+Put spaces into mixing bowl. Put figs into mixing bowl. Put onion into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put lemon into mixing bowl. Put
+tomatoes into mixing bowl. Put tomatoes into mixing bowl. Put onion into mixing bowl. Put bananas
+into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put rhubarb into mixing bowl. Put
+onion into mixing bowl. Put mango into mixing bowl.
+Put spaces into mixing bowl. Put onion into mixing bowl. Put nauclea into mixing bowl. Put newlines
+into mixing bowl.
+Put newlines into mixing bowl. Put full stops into mixing bowl. Put lemon into mixing bowl. Put
+lemon into mixing bowl. Put apples into mixing bowl. Put water into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put horse mangos into mixing bowl. 
+Put tomatoes into mixing bowl.
+Put spaces into mixing bowl. Put nuts into mixing bowl. Put onion into mixing bowl.
+Put spaces into mixing bowl. Put rhubarb into mixing bowl. Put elderberries into mixing bowl. Put
+elderberries into mixing bowl. Put bananas into mixing bowl.
+Put spaces into mixing bowl. Put figs into mixing bowl. Put onion into mixing bowl.
+Put spaces into mixing bowl. Put strawberries into mixing bowl. Put elderberries into mixing bowl.
+Put lemon into mixing bowl. Put tomatoes into mixing bowl. Put tomatoes into mixing bowl. Put onion
+into mixing bowl. Put bananas into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put rhubarb into mixing bowl. Put
+onion into mixing bowl. Put mango into mixing bowl.
+Put spaces into mixing bowl. Put onion into mixing bowl. Put nuts into mixing bowl.
+Put spaces into mixing bowl. Put commas into mixing bowl. Put dragonfruit into mixing bowl. Put nuts
+into mixing bowl. Put u into mixing bowl. Put onion into mixing bowl. Put rhubarb into mixing bowl.
+Put apples into mixing bowl.
+Put spaces into mixing bowl. Put tomatoes into mixing bowl. Put indian figs into mixing bowl.
+Put spaces into mixing bowl. Put strawberries into mixing bowl. Put strawberries into mixing bowl.
+Put apples into mixing bowl. Put pineapple into mixing bowl.
+Put spaces into mixing bowl. Put dragonfruit into mixing bowl. Put nuts into mixing bowl. Put apples
+into mixing bowl.
+Put spaces into mixing bowl. Put nuts into mixing bowl. Put water into mixing bowl. Put onion into
+mixing bowl. Put dragonfruit into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put nuts into mixing bowl. Put onion
+into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put kiwi into mixing bowl. Put
+apples into mixing bowl. Put tea into mixing bowl.
+Put newlines into mixing bowl. Put full stops into mixing bowl. Put rhubarb into mixing bowl. Put
+elderberries into mixing bowl. Put elderberries into mixing bowl. Put bananas into mixing bowl.
+Put spaces into mixing bowl. Put figs into mixing bowl. Put onion into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put lemon into mixing bowl. Put
+tomatoes into mixing bowl. Put tomatoes into mixing bowl. Put onion into mixing bowl. Put bananas
+into mixing bowl.
+Put spaces into mixing bowl. Put programmer into mixing bowl. Put spaces into mixing bowl.
+Put commas into mixing bowl. Put lemon into mixing bowl. Put lemon into mixing bowl. Put apples into
+mixing bowl. Put water into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put horse mangos into mixing bowl. 
+Put tomatoes into mixing bowl.
+Put spaces into mixing bowl. Put nuts into mixing bowl. Put onion into mixing bowl.
+Put spaces into mixing bowl. Put rhubarb into mixing bowl. Put elderberries into mixing bowl. Put
+elderberries into mixing bowl. Put bananas into mixing bowl.
+Put spaces into mixing bowl. Put figs into mixing bowl. Put onion into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put lemon into mixing bowl. Put
+tomatoes into mixing bowl. Put tomatoes into mixing bowl. Put onion into mixing bowl. Put black
+cherry into mixing bowl.
+Put spaces into mixing bowl. Put programmer into mixing bowl.
+Drink the beer. Put newlines into mixing bowl. Put newlines into mixing bowl.
+Put full stops into mixing bowl. Put lemon into mixing bowl. Put lemon into mixing bowl. Put apples
+into mixing bowl. Put water into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put horse mangos into mixing bowl. 
+Put tomatoes into mixing bowl.
+Put spaces into mixing bowl. Put nuts into mixing bowl. Put onion into mixing bowl.
+Put spaces into mixing bowl. Put rhubarb into mixing bowl. Put elderberries into mixing bowl. Put
+elderberries into mixing bowl. Put bananas into mixing bowl.
+Put spaces into mixing bowl. Put figs into mixing bowl. Put onion into mixing bowl.
+Put spaces into mixing bowl. Put strawberries into mixing bowl. Put elderberries into mixing bowl.
+Put lemon into mixing bowl. Put tomatoes into mixing bowl. Put tomatoes into mixing bowl. Put onion
+into mixing bowl. Put bananas into mixing bowl.
+Put spaces into mixing bowl. Put peanuts into mixing bowl. Remove beer from mixing bowl. Remove
+programmer from mixing bowl.
+Put spaces into mixing bowl. Put commas into mixing bowl. Put dragonfruit into mixing bowl. Put nuts
+into mixing bowl. Put u into mixing bowl. Put onion into mixing bowl. Put rhubarb into mixing bowl.
+Put apples into mixing bowl.
+Put spaces into mixing bowl. Put tomatoes into mixing bowl. Put indian figs into mixing bowl.
+Put spaces into mixing bowl. Put strawberries into mixing bowl. Put strawberries into mixing bowl.
+Put apples into mixing bowl. Put pineapple into mixing bowl.
+Put spaces into mixing bowl. Put dragonfruit into mixing bowl. Put nuts into mixing bowl. Put apples
+into mixing bowl.
+Put spaces into mixing bowl. Put nuts into mixing bowl. Put water into mixing bowl. Put onion into
+mixing bowl. Put dragonfruit into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put nuts into mixing bowl. Put onion
+into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put kiwi into mixing bowl. Put
+apples into mixing bowl. Put tea into mixing bowl.
+Put newlines into mixing bowl. Put full stops into mixing bowl. Put rhubarb into mixing bowl. Put
+elderberries into mixing bowl. Put elderberries into mixing bowl. Put bananas into mixing bowl.
+Put spaces into mixing bowl. Put figs into mixing bowl. Put onion into mixing bowl.
+Put spaces into mixing bowl. Put strawberries into mixing bowl. Put elderberries into mixing bowl.
+Put lemon into mixing bowl. Put tomatoes into mixing bowl. Put tomatoes into mixing bowl. Put onion
+into mixing bowl. Put bananas into mixing bowl.
+Put spaces into mixing bowl. Put peanuts into mixing bowl. Remove beer from mixing bowl. Put spaces
+into mixing bowl.
+Put commas into mixing bowl. Put lemon into mixing bowl. Put lemon into mixing bowl. Put apples into
+mixing bowl. Put water into mixing bowl.
+Put spaces into mixing bowl. Put elderberries into mixing bowl. Put horse mangos into mixing bowl. 
+Put tomatoes into mixing bowl.
+Put spaces into mixing bowl. Put nuts into mixing bowl. Put onion into mixing bowl.
+Put spaces into mixing bowl. Put rhubarb into mixing bowl. Put elderberries into mixing bowl. Put
+elderberries into mixing bowl. Put bananas into mixing bowl.
+Put spaces into mixing bowl. Put figs into mixing bowl. Put onion into mixing bowl.
+Put spaces into mixing bowl. Put strawberries into mixing bowl. Put elderberries into mixing bowl.
+Put lemon into mixing bowl. Put tomatoes into mixing bowl. Put tomatoes into mixing bowl. Put onion
+into mixing bowl. Put black cherry into mixing bowl.
+Put spaces into mixing bowl. Put peanuts into mixing bowl. Remove beer from mixing bowl.
+Enjoy the beer until Drinked. Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.''';
+
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'language' : 'ENG', 'input' : '',  'recipe' : BottlesOfBeer, 'expectedOutput' : ['99 Bottles of beer on the wall, 99 bottles of beer.\nTake one down and pass it around, 98 bottles of beer on the wall.\n\n98 Bottles of beer on the wall, 98 bottles of beer.\nTake one down and pass it around, 97 bottles of beer on the wall.\n\n97 Bottles of beer on the wall, 97 bottles of beer.\nTake one down and pass it around, 96 bottles of beer on the wall.\n\n96 Bottles of beer on the wall, 96 bottles of beer.\nTake one down and pass it around, 95 bottles of beer on the wall.\n\n95 Bottles of beer on the wall, 95 bottles of beer.\nTake one down and pass it around, 94 bottles of beer on the wall.\n\n94 Bottles of beer on the wall, 94 bottles of beer.\nTake one down and pass it around, 93 bottles of beer on the wall.\n\n93 Bottles of beer on the wall, 93 bottles of beer.\nTake one down and pass it around, 92 bottles of beer on the wall.\n\n92 Bottles of beer on the wall, 92 bottles of beer.\nTake one down and pass it around, 91 bottles of beer on the wall.\n\n91 Bottles of beer on the wall, 91 bottles of beer.\nTake one down and pass it around, 90 bottles of beer on the wall.\n\n90 Bottles of beer on the wall, 90 bottles of beer.\nTake one down and pass it around, 89 bottles of beer on the wall.\n\n89 Bottles of beer on the wall, 89 bottles of beer.\nTake one down and pass it around, 88 bottles of beer on the wall.\n\n88 Bottles of beer on the wall, 88 bottles of beer.\nTake one down and pass it around, 87 bottles of beer on the wall.\n\n87 Bottles of beer on the wall, 87 bottles of beer.\nTake one down and pass it around, 86 bottles of beer on the wall.\n\n86 Bottles of beer on the wall, 86 bottles of beer.\nTake one down and pass it around, 85 bottles of beer on the wall.\n\n85 Bottles of beer on the wall, 85 bottles of beer.\nTake one down and pass it around, 84 bottles of beer on the wall.\n\n84 Bottles of beer on the wall, 84 bottles of beer.\nTake one down and pass it around, 83 bottles of beer on the wall.\n\n83 Bottles of beer on the wall, 83 bottles of beer.\nTake one down and pass it around, 82 bottles of beer on the wall.\n\n82 Bottles of beer on the wall, 82 bottles of beer.\nTake one down and pass it around, 81 bottles of beer on the wall.\n\n81 Bottles of beer on the wall, 81 bottles of beer.\nTake one down and pass it around, 80 bottles of beer on the wall.\n\n80 Bottles of beer on the wall, 80 bottles of beer.\nTake one down and pass it around, 79 bottles of beer on the wall.\n\n79 Bottles of beer on the wall, 79 bottles of beer.\nTake one down and pass it around, 78 bottles of beer on the wall.\n\n78 Bottles of beer on the wall, 78 bottles of beer.\nTake one down and pass it around, 77 bottles of beer on the wall.\n\n77 Bottles of beer on the wall, 77 bottles of beer.\nTake one down and pass it around, 76 bottles of beer on the wall.\n\n76 Bottles of beer on the wall, 76 bottles of beer.\nTake one down and pass it around, 75 bottles of beer on the wall.\n\n75 Bottles of beer on the wall, 75 bottles of beer.\nTake one down and pass it around, 74 bottles of beer on the wall.\n\n74 Bottles of beer on the wall, 74 bottles of beer.\nTake one down and pass it around, 73 bottles of beer on the wall.\n\n73 Bottles of beer on the wall, 73 bottles of beer.\nTake one down and pass it around, 72 bottles of beer on the wall.\n\n72 Bottles of beer on the wall, 72 bottles of beer.\nTake one down and pass it around, 71 bottles of beer on the wall.\n\n71 Bottles of beer on the wall, 71 bottles of beer.\nTake one down and pass it around, 70 bottles of beer on the wall.\n\n70 Bottles of beer on the wall, 70 bottles of beer.\nTake one down and pass it around, 69 bottles of beer on the wall.\n\n69 Bottles of beer on the wall, 69 bottles of beer.\nTake one down and pass it around, 68 bottles of beer on the wall.\n\n68 Bottles of beer on the wall, 68 bottles of beer.\nTake one down and pass it around, 67 bottles of beer on the wall.\n\n67 Bottles of beer on the wall, 67 bottles of beer.\nTake one down and pass it around, 66 bottles of beer on the wall.\n\n66 Bottles of beer on the wall, 66 bottles of beer.\nTake one down and pass it around, 65 bottles of beer on the wall.\n\n65 Bottles of beer on the wall, 65 bottles of beer.\nTake one down and pass it around, 64 bottles of beer on the wall.\n\n64 Bottles of beer on the wall, 64 bottles of beer.\nTake one down and pass it around, 63 bottles of beer on the wall.\n\n63 Bottles of beer on the wall, 63 bottles of beer.\nTake one down and pass it around, 62 bottles of beer on the wall.\n\n62 Bottles of beer on the wall, 62 bottles of beer.\nTake one down and pass it around, 61 bottles of beer on the wall.\n\n61 Bottles of beer on the wall, 61 bottles of beer.\nTake one down and pass it around, 60 bottles of beer on the wall.\n\n60 Bottles of beer on the wall, 60 bottles of beer.\nTake one down and pass it around, 59 bottles of beer on the wall.\n\n59 Bottles of beer on the wall, 59 bottles of beer.\nTake one down and pass it around, 58 bottles of beer on the wall.\n\n58 Bottles of beer on the wall, 58 bottles of beer.\nTake one down and pass it around, 57 bottles of beer on the wall.\n\n57 Bottles of beer on the wall, 57 bottles of beer.\nTake one down and pass it around, 56 bottles of beer on the wall.\n\n56 Bottles of beer on the wall, 56 bottles of beer.\nTake one down and pass it around, 55 bottles of beer on the wall.\n\n55 Bottles of beer on the wall, 55 bottles of beer.\nTake one down and pass it around, 54 bottles of beer on the wall.\n\n54 Bottles of beer on the wall, 54 bottles of beer.\nTake one down and pass it around, 53 bottles of beer on the wall.\n\n53 Bottles of beer on the wall, 53 bottles of beer.\nTake one down and pass it around, 52 bottles of beer on the wall.\n\n52 Bottles of beer on the wall, 52 bottles of beer.\nTake one down and pass it around, 51 bottles of beer on the wall.\n\n51 Bottles of beer on the wall, 51 bottles of beer.\nTake one down and pass it around, 50 bottles of beer on the wall.\n\n50 Bottles of beer on the wall, 50 bottles of beer.\nTake one down and pass it around, 49 bottles of beer on the wall.\n\n49 Bottles of beer on the wall, 49 bottles of beer.\nTake one down and pass it around, 48 bottles of beer on the wall.\n\n48 Bottles of beer on the wall, 48 bottles of beer.\nTake one down and pass it around, 47 bottles of beer on the wall.\n\n47 Bottles of beer on the wall, 47 bottles of beer.\nTake one down and pass it around, 46 bottles of beer on the wall.\n\n46 Bottles of beer on the wall, 46 bottles of beer.\nTake one down and pass it around, 45 bottles of beer on the wall.\n\n45 Bottles of beer on the wall, 45 bottles of beer.\nTake one down and pass it around, 44 bottles of beer on the wall.\n\n44 Bottles of beer on the wall, 44 bottles of beer.\nTake one down and pass it around, 43 bottles of beer on the wall.\n\n43 Bottles of beer on the wall, 43 bottles of beer.\nTake one down and pass it around, 42 bottles of beer on the wall.\n\n42 Bottles of beer on the wall, 42 bottles of beer.\nTake one down and pass it around, 41 bottles of beer on the wall.\n\n41 Bottles of beer on the wall, 41 bottles of beer.\nTake one down and pass it around, 40 bottles of beer on the wall.\n\n40 Bottles of beer on the wall, 40 bottles of beer.\nTake one down and pass it around, 39 bottles of beer on the wall.\n\n39 Bottles of beer on the wall, 39 bottles of beer.\nTake one down and pass it around, 38 bottles of beer on the wall.\n\n38 Bottles of beer on the wall, 38 bottles of beer.\nTake one down and pass it around, 37 bottles of beer on the wall.\n\n37 Bottles of beer on the wall, 37 bottles of beer.\nTake one down and pass it around, 36 bottles of beer on the wall.\n\n36 Bottles of beer on the wall, 36 bottles of beer.\nTake one down and pass it around, 35 bottles of beer on the wall.\n\n35 Bottles of beer on the wall, 35 bottles of beer.\nTake one down and pass it around, 34 bottles of beer on the wall.\n\n34 Bottles of beer on the wall, 34 bottles of beer.\nTake one down and pass it around, 33 bottles of beer on the wall.\n\n33 Bottles of beer on the wall, 33 bottles of beer.\nTake one down and pass it around, 32 bottles of beer on the wall.\n\n32 Bottles of beer on the wall, 32 bottles of beer.\nTake one down and pass it around, 31 bottles of beer on the wall.\n\n31 Bottles of beer on the wall, 31 bottles of beer.\nTake one down and pass it around, 30 bottles of beer on the wall.\n\n30 Bottles of beer on the wall, 30 bottles of beer.\nTake one down and pass it around, 29 bottles of beer on the wall.\n\n29 Bottles of beer on the wall, 29 bottles of beer.\nTake one down and pass it around, 28 bottles of beer on the wall.\n\n28 Bottles of beer on the wall, 28 bottles of beer.\nTake one down and pass it around, 27 bottles of beer on the wall.\n\n27 Bottles of beer on the wall, 27 bottles of beer.\nTake one down and pass it around, 26 bottles of beer on the wall.\n\n26 Bottles of beer on the wall, 26 bottles of beer.\nTake one down and pass it around, 25 bottles of beer on the wall.\n\n25 Bottles of beer on the wall, 25 bottles of beer.\nTake one down and pass it around, 24 bottles of beer on the wall.\n\n24 Bottles of beer on the wall, 24 bottles of beer.\nTake one down and pass it around, 23 bottles of beer on the wall.\n\n23 Bottles of beer on the wall, 23 bottles of beer.\nTake one down and pass it around, 22 bottles of beer on the wall.\n\n22 Bottles of beer on the wall, 22 bottles of beer.\nTake one down and pass it around, 21 bottles of beer on the wall.\n\n21 Bottles of beer on the wall, 21 bottles of beer.\nTake one down and pass it around, 20 bottles of beer on the wall.\n\n20 Bottles of beer on the wall, 20 bottles of beer.\nTake one down and pass it around, 19 bottles of beer on the wall.\n\n19 Bottles of beer on the wall, 19 bottles of beer.\nTake one down and pass it around, 18 bottles of beer on the wall.\n\n18 Bottles of beer on the wall, 18 bottles of beer.\nTake one down and pass it around, 17 bottles of beer on the wall.\n\n17 Bottles of beer on the wall, 17 bottles of beer.\nTake one down and pass it around, 16 bottles of beer on the wall.\n\n16 Bottles of beer on the wall, 16 bottles of beer.\nTake one down and pass it around, 15 bottles of beer on the wall.\n\n15 Bottles of beer on the wall, 15 bottles of beer.\nTake one down and pass it around, 14 bottles of beer on the wall.\n\n14 Bottles of beer on the wall, 14 bottles of beer.\nTake one down and pass it around, 13 bottles of beer on the wall.\n\n13 Bottles of beer on the wall, 13 bottles of beer.\nTake one down and pass it around, 12 bottles of beer on the wall.\n\n12 Bottles of beer on the wall, 12 bottles of beer.\nTake one down and pass it around, 11 bottles of beer on the wall.\n\n11 Bottles of beer on the wall, 11 bottles of beer.\nTake one down and pass it around, 10 bottles of beer on the wall.\n\n10 Bottles of beer on the wall, 10 bottles of beer.\nTake one down and pass it around, 9 bottles of beer on the wall.\n\n9 Bottles of beer on the wall, 9 bottles of beer.\nTake one down and pass it around, 8 bottles of beer on the wall.\n\n8 Bottles of beer on the wall, 8 bottles of beer.\nTake one down and pass it around, 7 bottles of beer on the wall.\n\n7 Bottles of beer on the wall, 7 bottles of beer.\nTake one down and pass it around, 6 bottles of beer on the wall.\n\n6 Bottles of beer on the wall, 6 bottles of beer.\nTake one down and pass it around, 5 bottles of beer on the wall.\n\n5 Bottles of beer on the wall, 5 bottles of beer.\nTake one down and pass it around, 4 bottles of beer on the wall.\n\n4 Bottles of beer on the wall, 4 bottles of beer.\nTake one down and pass it around, 3 bottles of beer on the wall.\n\n3 Bottles of beer on the wall, 3 bottles of beer.\nTake one down and pass it around, 2 bottles of beer on the wall.\n\n2 Bottles of beer on the wall, 2 bottles of beer.\nTake one down and pass it around, 1 bottles of beer on the wall.\n\n1 Bottle of beer on the wall, 1 bottle of beer.\nTake one down and pass it around, no more bottles of beer on the wall.\n\nNo more bottle of beer on the wall, no more bottle of beer...\nGo to the store and buy some more...99 Bottles of beer.']},
+    ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
@@ -2101,10 +2328,10 @@ Put salt into mixing bowl.
 Add pepper.''';
     var FibonacciNumberswithCaramelSauce = '''Fibonacci Numbers with Caramel Sauce.
 
-This recipe prints the first 100 Fibonacci numbers. It uses an auxiliary recipe for caramel sauce to define Fibonacci numbers recursively. This results in an awful lot of caramel sauce! Definitely one for the sweet-tooths.
+This recipe prints the first 5 Fibonacci numbers. It uses an auxiliary recipe for caramel sauce to define Fibonacci numbers recursively. This results in an awful lot of caramel sauce! Definitely one for the sweet-tooths.
 
 Ingredients.
-100 g flour
+5 g flour
 250 g butter
 1 egg
 
@@ -2441,17 +2668,16 @@ Pour contents of the 2nd mixing bowl into the baking dish.
 Serves 1.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'ENG', 'input' : '4 5 7 4 6',  'recipe' : BubbledAndBacon, 'isValid' : false, 'expectedOutput' : ['4567']},
-      {'language' : 'ENG', 'input' : '12',  'recipe' : FactorialAndFish, 'isValid' : false, 'expectedOutput' : ['479001600']},
-      {'language' : 'ENG', 'input' : '12',  'recipe' : FibonacciDuFromage, 'isValid' : false, 'expectedOutput' : ['1123581321345589144']},
-      //{'language' : 'DEU', 'input' : '',  'recipe' : FibonacciNumberswithCaramelSauce, 'isValid' : false, 'expectedOutput' : ['']},
-      //recursion does not work - Stack overflow
-      {'language' : 'ENG', 'input' : '',  'recipe' : FruitLoops, 'isValid' : false, 'expectedOutput' : ['880']},
-      {'language' : 'ENG', 'input' : '60 24',  'recipe' : GreatestCommonDijonMustard, 'isValid' : false, 'expectedOutput' : ['12']},
-      {'language' : 'ENG', 'input' : '',  'recipe' : HelloSouchef, 'isValid' : false, 'expectedOutput' : ['Hello world!']},
-      {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorldSouffle, 'isValid' : false, 'expectedOutput' : ['Hello world!']},
-      {'language' : 'ENG', 'input' : '5 3',  'recipe' : PeasAndPower, 'isValid' : false, 'expectedOutput' : ['125']},
-      {'language' : 'ENG', 'input' : '8 1 1 0 1 1 1 1 0 3 1 1 1 1 1 1 0 1 1 2 2 1 1 1 2 2 0 0 0 3 3 1 0 0 0 3 0 0 0 0 0',  'recipe' : TuringsTortillasNotEdible, 'isValid' : false, 'expectedOutput' : ['11111100']},
+      {'language' : 'ENG', 'input' : '5 7 4 6 3 8',  'recipe' : BubbledAndBacon, 'expectedOutput' : ['34678']},
+      {'language' : 'ENG', 'input' : '12',  'recipe' : FactorialAndFish, 'expectedOutput' : ['479001600']},
+      {'language' : 'ENG', 'input' : '12',  'recipe' : FibonacciDuFromage, 'expectedOutput' : ['1123581321345589144']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : FibonacciNumberswithCaramelSauce, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_method_aux_recipe','']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : FruitLoops, 'expectedOutput' : ['880']},
+      {'language' : 'ENG', 'input' : '60 24',  'recipe' : GreatestCommonDijonMustard, 'expectedOutput' : ['12']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : HelloSouchef, 'expectedOutput' : ['Hello world!']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorldSouffle, 'expectedOutput' : ['Hello world!']},
+      {'language' : 'ENG', 'input' : '5 3',  'recipe' : PeasAndPower, 'expectedOutput' : ['125']},
+      {'language' : 'ENG', 'input' : '8 1 1 0 1 1 1 1 0 3 1 1 1 1 1 1 0 1 1 2 2 1 1 1 2 2 0 0 0 3 3 1 0 0 0 3 0 0 0 0 0',  'recipe' : TuringsTortillasNotEdible, 'expectedOutput' : ['11111100']},
     ];
 
     _inputsToExpected.forEach((elem) {

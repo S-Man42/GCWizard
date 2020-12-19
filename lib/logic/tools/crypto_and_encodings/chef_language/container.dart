@@ -50,12 +50,12 @@ class Container {
 
   String serve() {
     String result = "";
-    for (int i = _contents.length - 1; i >= 0; i--) {
-      if (_contents[i].getState() == State.Dry) {
-        result = result + _contents[i].getValue().toString() + '';
+    for (int i = _contents.length ; i > 0; i--) {
+      if (_contents[i - 1].getState() == State.Dry) {
+        result = result + _contents[i - 1].getValue().toString() + '';
       }
       else {// return charCodes
-        result = result + String.fromCharCode(_contents[i].getValue()) ;
+        result = result + String.fromCharCode(_contents[i - 1].getValue()) ;
       }
     }
     return result;
