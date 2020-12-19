@@ -1,7 +1,7 @@
 // https://de.wikipedia.org/wiki/Hitzeindex
 import 'dart:math';
 
-import 'package:gc_wizard/logic/units/temperature.dart';
+import 'package:gc_wizard/logic/common/units/temperature.dart';
 
 var _heatParameterCelsius = {
   1 : 8.784695 * (-1),

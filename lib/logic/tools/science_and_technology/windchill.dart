@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:gc_wizard/logic/units/velocity.dart';
+import 'package:gc_wizard/logic/common/units/velocity.dart';
 
 double calcWindchillMetricMS(double tempInCelsius, double vInMS) {
   if (vInMS == null)

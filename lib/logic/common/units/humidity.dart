@@ -1,7 +1,4 @@
-import 'dart:math';
-
-import 'package:gc_wizard/logic/units/unit.dart';
-import 'package:gc_wizard/logic/units/unit_category.dart';
+import 'package:gc_wizard/logic/common/units/unit.dart';
 
 class Humidity extends Unit {
   Function toDegree;
