@@ -22,6 +22,23 @@ void main() {
     });
   });
 
+  group("wikipedia.encrypt", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : '^ANANAS^', 'index': '0', 'expectedOutput' : BWTOutput('^NNAAA^S','7')},
+      {'input' : '^ANANAS^', 'index': '#', 'expectedOutput' : BWTOutput('^NNAAA#^S','#')},
+      {'input' : 'Wikipedia!', 'index': '0', 'expectedOutput' : BWTOutput('a!iepdWkii','2')},
+      {'input' : 'Wikipedia!', 'index': '#', 'expectedOutput' : BWTOutput('a#!iepdWkii','#')},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, index: ${elem['index']}', () {
+        BWTOutput _actual = encryptBurrowsWheeler(elem['input'], elem['index']);
+        expect(_actual.text, elem['expectedOutput'].text);
+        expect(_actual.index, elem['expectedOutput'].index);
+      });
+    });
+  });
+
   group("BurrowsWheeler.encrypt", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : '', 'index': '0', 'expectedOutput' : BWTOutput('','')},
@@ -36,27 +53,11 @@ void main() {
       {'input' : 'helene', 'index': 'h',    'expectedOutput' : BWTOutput('burrowswheeler_error_char_index','')},
       {'input' : 'helene', 'index': '#',    'expectedOutput' : BWTOutput('nhl#eee','#')},
 
-      {'input' : 'Koordinaten N52.27.456 E13.08.123', 'index': '0',
-        'expectedOutput' : BWTOutput('6n3827..E51.12.N4520 3 nrtdeiKooa','22')},
-      {'input' : 'Koordinaten N52.27.456 E13.08.123', 'index': '#',
-        'expectedOutput' : BWTOutput('6n3827..E51.12.N4520 #3 nrtdeiKooa','#')},
-      {'input' : 'Koordinaten N52.27.456 E13.08.123', 'index': '0',
-        'expectedOutput' : BWTOutput('sntini i lneearsiisrwrwE.wtbuuinrNncceeeesvdeeelueeieeii.Kooddehnfinhaffn.zzzfs.','8')},
-      {'input' : 'Koordinaten N52.27.456 E13.08.123', 'index': '#',
-        'expectedOutput' : BWTOutput('sntini #i lneearsiisrwrwE.wtbuuinrNncceeeesvdeeelueeieeii.Kooddehnfinhaffn.zzzfs.','#')},
-      {'input' : 'Koordinaten N52.27.456 E13.08.123', 'index': '0',
-        'expectedOutput' : BWTOutput('xnntoe e nreerrotvzvnvnsrN.ittgedffseeioowrE.Kowwfohhueoehaeoe.eoeiittti.','8')},
-      {'input' : 'Koordinaten N52.27.456 E13.08.123', 'index': '#',
-        'expectedOutput' : BWTOutput('xnntoe #e nreerrotvzvnvnsrN.ittgedffseeioowrE.Kowwfohhueoehaeoe.eoeiittti.','#')},
+      {'input' : 'Koordinaten N52.27.456 E13.08.123', 'index': '0',        'expectedOutput' : BWTOutput('6n3827..E51.12.N4520 3 nrtdeiKooa','22')},
+      {'input' : 'Koordinaten N52.27.456 E13.08.123', 'index': '#',        'expectedOutput' : BWTOutput('6n3827..E51.12.N4520 #3 nrtdeiKooa','#')},
 
-      {'input' : 'wenn-fliegen-hinter-fliegen-fliegen-fliegen-fliegen-fliegen-nach', 'index': '0',
-        'expectedOutput' : BWTOutput('rnnnnnnnnaiiiiiiggggggwt------eeeeee-cllllllhffffffeeeneee-eienh','64')},
-      {'input' : 'wenn-fliegen-hinter-fliegen-fliegen-fliegen-fliegen-fliegen-nach', 'index': '#',
-        'expectedOutput' : BWTOutput('rnnnnnnnnaiiiiiiggggggwt------eeeeee-cllllllhffffffeeeneee-eien#h','#')},
-      {'input' : 'wenn-fliegen-hinter-fliegen-fliegen-fliegen-fliegen-fliegen-nach', 'index': '0',
-        'expectedOutput' : BWTOutput('rnnnnnnnnaiiiiiiggggggwt------eeeeee-cllllllhffffffeeeneee-eienh','64')},
-      {'input' : 'wenn-fliegen-hinter-fliegen-fliegen-fliegen-fliegen-fliegen-nach', 'index': '#',
-        'expectedOutput' : BWTOutput('rnnnnnnnnaiiiiiiggggggwt------eeeeee-cllllllhffffffeeeneee-eien#h','#')},
+      {'input' : 'wenn-fliegen-hinter-fliegen-fliegen-fliegen-fliegen-fliegen-nach', 'index': '0',        'expectedOutput' : BWTOutput('rnnnnnnnnaiiiiiiggggggwt------eeeeee-cllllllhffffffeeeneee-eienh','64')},
+      {'input' : 'wenn-fliegen-hinter-fliegen-fliegen-fliegen-fliegen-fliegen-nach', 'index': '#',        'expectedOutput' : BWTOutput('rnnnnnnnnaiiiiiiggggggwt------eeeeee-cllllllhffffffeeeneee-eien#h','#')},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -90,6 +91,23 @@ void main() {
     });
   });
 
+  group("wikipedia.decrypt", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : '^NNAAA^S', 'index': '7', 'expectedOutput' : BWTOutput('^ANANAS^','7')},
+      {'input' : '^NNAAA#^S', 'index': '#', 'expectedOutput' : BWTOutput('^ANANAS^','#')},
+      {'input' : 'a!iepdWkii', 'index': '2', 'expectedOutput' : BWTOutput('Wikipedia!','2')},
+      {'input' : 'a#!iepdWkii', 'index': '#', 'expectedOutput' : BWTOutput('Wikipedia!','#')},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, index: ${elem['index']}', () {
+        BWTOutput _actual = decryptBurrowsWheeler(elem['input'], elem['index']);
+        expect(_actual.text, elem['expectedOutput'].text);
+        expect(_actual.index, elem['expectedOutput'].index);
+      });
+    });
+  });
+
   group("BurrowsWheeler.decrypt", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : '', 'index': '0',  'compress': false, 'deu': true,
@@ -100,34 +118,11 @@ void main() {
       {'input' : 'nhleee',  'index': 'h', 'expectedOutput' : BWTOutput('elele','h')},
       {'input' : 'nhl#eee', 'index': '#', 'expectedOutput' : BWTOutput('helene','#')},
 
-      {'input' : 'nhle2',  'index': '4',  'expectedOutput' : BWTOutput('helene','4')},
-      {'input' : 'nhle2',  'index': '',   'expectedOutput' : BWTOutput('burrowswheeler_error_no_index','')},
-      {'input' : 'nhle2',  'index': 'h',  'expectedOutput' : BWTOutput('elele','h')},
-      {'input' : 'nhl#e2', 'index': '#',  'expectedOutput' : BWTOutput('helene','#')},
+      {'input' : '6n3827..E51.12.N4520 3 nrtdeiKooa', 'index': '22',        'expectedOutput' : BWTOutput('Koordinaten N52.27.456 E13.08.123','22')},
+      {'input' : '6n3827..E51.12.N4520 #3 nrtdeiKooa', 'index': '#',        'expectedOutput' : BWTOutput('Koordinaten N52.27.456 E13.08.123','#')},
 
-      {'input' : '6n3827..E51.12.N4520 3 nrtdeiKooa', 'index': '22',
-        'expectedOutput' : BWTOutput('Koordinaten N52.27.456 E13.08.123','22')},
-      {'input' : '6n3827..E51.12.N4520 #3 nrtdeiKooa', 'index': '#',
-        'expectedOutput' : BWTOutput('Koordinaten N52.27.456 E13.08.123','#')},
-
-      {'input' : 'sntini i lne1arsi1srwrwE.wtbu1inrNnc1e3svde2lue1ie1i1.Ko1d1ehnfinhaf1n.z2fs.', 'index': '8',
-        'expectedOutput' : BWTOutput('Koordinaten N52.27.456 E13.08.123','8')},
-      {'input' : 'sntini #i lne1arsi1srwrwE.wtbu1inrNnc1e3svde2lue1ie1i1.Ko1d1ehnfinhaf1n.z2fs.', 'index': '#',
-        'expectedOutput' : BWTOutput('Koordinaten N52.27.456 E13.08.123','#')},
-
-      {'input' : 'xn1toe e nre1r1otvzvnvnsrN.it1gedf1se1io1wrE.Kow1foh1ueoehaeoe.eoei1t2i.', 'index': '8',
-        'expectedOutput' : BWTOutput('Koordinaten N52.27.456 E13.08.123','8')},
-      {'input' : 'xn1toe #e nre1r1otvzvnvnsrN.it1gedf1se1io1wrE.Kow1foh1ueoehaeoe.eoei1t2i.', 'index': '#',
-        'expectedOutput' : BWTOutput('Koordinaten N52.27.456 E13.08.123','#')},
-
-      {'input' : 'rnnnnnnnnaiiiiiiggggggwt------eeeeee-cllllllhffffffeeeneee-eienh', 'index': '64',
-        'expectedOutput' : BWTOutput('wenn-fliegen-hinter-fliegen-fliegen-fliegen-fliegen-fliegen-nach','64')},
-      {'input' : 'rnnnnnnnnaiiiiiiggggggwt------eeeeee-cllllllhffffffeeeneee-eien#h', 'index': '#',
-        'expectedOutput' : BWTOutput('wenn-fliegen-hinter-fliegen-fliegen-fliegen-fliegen-fliegen-nach','#')},
-      {'input' : 'rn7ai5g5wt-5e5-cl5hf5e2ne2-eienh', 'index': '64',
-        'expectedOutput' : BWTOutput('wenn-fliegen-hinter-fliegen-fliegen-fliegen-fliegen-fliegen-nach','64')},
-      {'input' : 'rn7ai5g5wt-5e5-cl5hf5e2ne2-eien#h', 'index': '#',
-        'expectedOutput' : BWTOutput('wenn-fliegen-hinter-fliegen-fliegen-fliegen-fliegen-fliegen-nach','#')},
+      {'input' : 'rnnnnnnnnaiiiiiiggggggwt------eeeeee-cllllllhffffffeeeneee-eienh', 'index': '64',        'expectedOutput' : BWTOutput('wenn-fliegen-hinter-fliegen-fliegen-fliegen-fliegen-fliegen-nach','64')},
+      {'input' : 'rnnnnnnnnaiiiiiiggggggwt------eeeeee-cllllllhffffffeeeneee-eien#h', 'index': '#',        'expectedOutput' : BWTOutput('wenn-fliegen-hinter-fliegen-fliegen-fliegen-fliegen-fliegen-nach','#')},
     ];
 
     _inputsToExpected.forEach((elem) {
