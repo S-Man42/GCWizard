@@ -306,9 +306,8 @@
   "burrowswheeler_index_type_number_automated" : "Index-Nummer (autom.)",
   "burrowswheeler_inputplain" : "Klartext",
   "burrowswheeler_inputcipher" : "Chiffretext",
-  "burrowswheeler_error_no_index" : "FEHLER: Der Index fehlt",
+  "burrowswheeler_error_no_index" : "FEHLER: Das Index-Zeichen fehlt",
   "burrowswheeler_error_char_index" : "FEHLER: Index-Zeichen darf nicht Teil des Textes sein",
-  "burrowswheeler_error_number_index" : "FEHLER: Text darf keine Zahlen enthalten",
 
   "caesar_title" : "Caesar Chiffre",
   "caesar_description" : "Verschiebt Buchstaben im Alphabet um 13 Stellen (ROT-13)",
