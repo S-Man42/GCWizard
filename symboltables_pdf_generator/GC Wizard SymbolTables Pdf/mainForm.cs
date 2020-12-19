@@ -90,7 +90,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 symbolTablesPdf.ImageSize = ImageSize;
                 symbolTablesPdf.Language = Language;
                 symbolTablesPdf.FontSizeName = FontSizeName;
-                symbolTablesPdf.FontSizeOverlay = FontSizeOverlay;
+                symbolTablesPdf.FontSizeOverlay = 7; // FontSizeOverlay;
                 symbolTablesPdf.Orientation = Landscape ? PdfSharp.PageOrientation.Landscape : PdfSharp.PageOrientation.Portrait;
                 symbolTablesPdf.NewPage = NewPage;
 

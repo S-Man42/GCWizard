@@ -26,3 +26,26 @@ List<int> crossSumRange(int rangeStart, int rangeEnd, int crossSumToFind, {Cross
 
   return out;
 }
+
+Map<int, int> crossSumRangeFrequencies(int rangeStart, int rangeEnd) {
+  if (rangeStart == null || rangeEnd == null)
+    return {};
+
+  if (rangeStart > rangeEnd) {
+    var help = rangeEnd;
+    rangeEnd = rangeStart;
+    rangeStart = help;
+  }
+
+  Map<int, int> frequencies = {};
+
+  var crossSumResult = 0;
+  for (int i = rangeStart; i <= rangeEnd; i++) {
+    crossSumResult = crossSum([i]).toInt();
+
+    var currentValue = frequencies[crossSumResult] ?? 0;
+    frequencies[crossSumResult] = currentValue + 1;
+  }
+
+  return frequencies;
+}
