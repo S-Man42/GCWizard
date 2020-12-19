@@ -8,12 +8,9 @@ void main() {
 
   group("bioinfo-lectures.encrypt", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : 'banana#', 'index': '0',  'compress': false, 'deu': true,
-        'expectedOutput' : BWTOutput('annb#aa','5')},
-      {'input' : 'appellee#', 'index': '0',  'compress': false, 'deu': true,
-        'expectedOutput' : BWTOutput('e#elplepa','2')},
-      {'input' : 'dogwood#', 'index': '0',  'compress': false, 'deu': true,
-        'expectedOutput' : BWTOutput('do#oodwg','3')},
+      {'input' : 'banana#', 'index': '0', 'expectedOutput' : BWTOutput('annb#aa','5')},
+      {'input' : 'appellee#', 'index': '0', 'expectedOutput' : BWTOutput('e#elplepa','2')},
+      {'input' : 'dogwood#', 'index': '0', 'expectedOutput' : BWTOutput('do#oodwg','3')},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -27,8 +24,7 @@ void main() {
 
   group("BurrowsWheeler.encrypt", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : '', 'index': '0',  'compress': false, 'deu': true,
-        'expectedOutput' : BWTOutput('','')},
+      {'input' : '', 'index': '0', 'expectedOutput' : BWTOutput('','')},
 
       {'input' : 'helene', 'index': '0',    'expectedOutput' : BWTOutput('nhleee','4')},
       {'input' : 'helene', 'index': '',     'expectedOutput' : BWTOutput('burrowswheeler_error_no_index','')},

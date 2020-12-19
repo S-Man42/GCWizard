@@ -1,5 +1,3 @@
-import 'package:gc_wizard/utils/common_utils.dart';
-
 class BWTOutput {
   String text;
   String index;
@@ -13,7 +11,6 @@ BWTOutput encryptBurrowsWheeler(String plain, indexChar) {
 
   int len = plain.length;
   List<String> matrix = new List<String>();
-  String compressed = '';
 
   matrix.add(plain);
     for (int i= 0; i < len - 1; i++) {
@@ -40,13 +37,9 @@ BWTOutput encryptBurrowsWheeler(String plain, indexChar) {
   return BWTOutput(chiffre, indexChar);
 }
 
-
 BWTOutput decryptBurrowsWheeler(String chiffre, indexChar) {
   if (chiffre == '' || chiffre == null)
     return BWTOutput('', '');
-
-  int count = 0;
-  String decompressed = '';
 
   int len = chiffre.length;
   int index = 0;
@@ -80,13 +73,13 @@ BWTOutput decryptBurrowsWheeler(String chiffre, indexChar) {
     }
   }
 
-  String decodiert = '';
+  String decoded = '';
   for (int i = 0; i < len; i++){
     if (tabelle[index] != null) {
-      decodiert = decodiert + tabelle[index][1];
+      decoded = decoded + tabelle[index][1];
       index = int.parse(tabelle[index][0]);
     }
   }
 
-  return BWTOutput(decodiert, indexChar);
+  return BWTOutput(decoded, indexChar);
 }
