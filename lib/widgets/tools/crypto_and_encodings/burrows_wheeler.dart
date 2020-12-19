@@ -122,7 +122,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
               ? GCWIntegerSpinner(
                   controller: indexNumberController,
                   min: 1,
-                  max: currentInputLen * 2 + 1,
+                  max: currentInputLen,
                   value: currentIndexPosition,
                   onChanged: (value) {
                     setState(() {
@@ -143,7 +143,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
 
 
     if (currentMode == GCWSwitchPosition.left) { // encrypt
-      if (currentIndexType == GCWSwitchPosition.right) {
+      if (currentIndexType == GCWSwitchPosition.right) { // encoded index - symbol
         if (currentIndexSymbol == '' || currentIndexSymbol == null)
           currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '');
         else if (currentInputPlain.contains(currentIndexSymbol))
@@ -154,7 +154,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
         currentOutput = encryptBurrowsWheeler(currentInputPlain, '0');
       }
     } else { // decrypt
-      if (currentIndexType == GCWSwitchPosition.right) {
+      if (currentIndexType == GCWSwitchPosition.right) { // encoded index - symbol
         if (currentIndexSymbol == '' || currentIndexSymbol == null)
           currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '');
         else
