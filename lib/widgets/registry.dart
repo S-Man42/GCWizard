@@ -81,6 +81,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdoriginal.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdpetherick.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/beatnik_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/brainfk.dart';
@@ -325,6 +326,12 @@ class Registry {
         i18nPrefix: 'beaufort_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_BEAUFORT
+      ),
+      GCWTool(
+        tool: Beatnik(),
+        i18nPrefix: 'beatnik',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'beatnik esoteric programming language programmiersprache esoterische'
       ),
       GCWTool(
         tool: Binary(),
