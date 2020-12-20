@@ -6,7 +6,6 @@ import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:latlong/latlong.dart';
 
-
 Map<String, LatLng> _parseCoordText(String text) {
   var parsedCoord = parseLatLon(text);
   if (parsedCoord == null)
@@ -28,31 +27,41 @@ _sanitizeVariableDoubleText(String text) {
   return text.replaceAll(',', '.').replaceAll(RegExp(r'[^0-9\.\[\]]'), '');
 }
 
+_sanitizeForFormula(String formula) {
+  RegExp regExp = new RegExp(r'\[.+?\]');
+  if (regExp.hasMatch(formula))
+    return formula;
+
+  return '[$formula]';
+}
+
 Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> substitutions, {Map<String, dynamic> projectionData = const {}}) {
-  var textToExpand = sanitizeForFormula(coordinate);
+  var textToExpand = _sanitizeForFormula(coordinate);
 
   var withProjection = false;
   if (projectionData != null) {
     if (projectionData['bearing'] != null && projectionData['bearing'].length > 0
         && projectionData['distance'] != null && projectionData['distance'].length > 0) {
       withProjection = true;
-      textToExpand += String.fromCharCode(1) + sanitizeForFormula(projectionData['bearing']);
-      textToExpand += String.fromCharCode(1) + sanitizeForFormula(projectionData['distance']);
+      textToExpand += String.fromCharCode(1) + _sanitizeForFormula(projectionData['bearing']);
+      textToExpand += String.fromCharCode(1) + _sanitizeForFormula(projectionData['distance']);
     }
   }
 
-  var expandedTexts = expandText(textToExpand, substitutions);
-
   var formulaParser = FormulaParser();
+
+  var expandedTexts = VariableStringExpander(textToExpand, substitutions, (e) {
+    return formulaParser
+        .parse(e, {})['result']
+        .replaceAll(RegExp(r'[\[\]]'), '');
+  }, uniqueResults: true).run();
+
   var coords = <Map<String, dynamic>>[];
   var leftPadCoords = <Map<String, dynamic>>[];
 
   for (Map<String, dynamic> expandedText in expandedTexts) {
-    var evaluatedFormula = formulaParser.parse(expandedText['text'], {});
-    evaluatedFormula['result'] = evaluatedFormula['result'].replaceAll(RegExp(r'[\[\]]'), '');
-
     if (withProjection) {
-      var evaluatedTexts = evaluatedFormula['result'].split(String.fromCharCode(1));
+      var evaluatedTexts = expandedText['text'].split(String.fromCharCode(1));
 
       var parsedCoord = _parseCoordText(evaluatedTexts[0]);
       if (parsedCoord == null)
@@ -98,7 +107,7 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
       });
 
     } else {
-      var parsedCoord = _parseCoordText(evaluatedFormula['result']);
+      var parsedCoord = _parseCoordText(expandedText['text']);
       if (parsedCoord == null)
         continue;
 
