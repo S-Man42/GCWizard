@@ -7,10 +7,12 @@
 // https://oeis.org/A000051   Fermat
 // https://oeis.org/A014551   Jacobsthal-Lucas
 // https://oeis.org/A002203   Pell-Lucas
+// https://oeis.org/A005132   Recaman
+// https://oeis.org/A000108   Catalan
 
 import 'dart:math';
 
-enum NumberSequencesMode {LUCAS, FIBONACCI, MERSENNE, FERMAT, JACOBSTAHL, JACOBSTHALLUCAS, PELL, PELLLUCAS}
+enum NumberSequencesMode {LUCAS, FIBONACCI, MERSENNE, FERMAT, JACOBSTAHL, JACOBSTHALLUCAS, PELL, PELLLUCAS, CATALAN, RECAMAN}
 
 final Map<NumberSequencesMode, String> NumberSequencesName = {
   NumberSequencesMode.LUCAS : 'numbersequence_mode_lucas',
@@ -21,6 +23,8 @@ final Map<NumberSequencesMode, String> NumberSequencesName = {
   NumberSequencesMode.JACOBSTHALLUCAS : 'numbersequence_mode_jacobsthallucas',
   NumberSequencesMode.PELL : 'numbersequence_mode_pell',
   NumberSequencesMode.PELLLUCAS : 'numbersequence_mode_pelllucas',
+  NumberSequencesMode.CATALAN : 'numbersequence_mode_catalan',
+  NumberSequencesMode.RECAMAN : 'numbersequence_mode_recaman',
 };
 
 final Zero = BigInt.zero;

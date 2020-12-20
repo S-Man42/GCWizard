@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/cross_sum.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 
 final _ALERT_MAX_OUTPUT = 200;
 final _ALERT_MAX_RANGE = 25000;
@@ -24,7 +25,7 @@ class CrossSumRangeState extends State<CrossSumRange> {
   var _currentRangeStart = 0;
   var _currentRangeEnd = 100;
 
-  var _currentOutput = '';
+  var _currentOutput = [];
 
   @override
   void initState() {
@@ -84,17 +85,23 @@ class CrossSumRangeState extends State<CrossSumRange> {
             }
           },
         ),
-        GCWDefaultOutput(
-          child: _currentOutput
+        GCWMultipleOutput(
+          children: _currentOutput,
         )
       ],
     );
   }
 
   _calculateOutput() {
-    setState(() {
-      _currentOutput = '';
-    });
+    _buildOutput(output) {
+      return [
+        GCWOutputText(
+          text: '${i18n(context, 'common_count')}: ${output.length}',
+          copyText: output.length.toString(),
+        ),
+        output.join('\n')
+      ];
+    }
 
     var output;
     switch (widget.type) {
@@ -113,13 +120,13 @@ class CrossSumRangeState extends State<CrossSumRange> {
         i18n(context, 'crosssum_range_alert_result_text', parameters: [output.length]),
         () {
           setState(() {
-            _currentOutput = output.join('\n');
+            _currentOutput = _buildOutput(output);
           });
         },
       );
     } else {
       setState(() {
-        _currentOutput = output.join('\n');
+        _currentOutput = _buildOutput(output);
       });
     }
   }

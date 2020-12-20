@@ -34,7 +34,7 @@ class _GCWToolListState extends State<GCWToolList> {
     );
   }
 
-  Widget _buildRow(BuildContext context, GCWToolWidget tool) {
+  Widget _buildRow(BuildContext context, GCWTool tool) {
     Future _navigateToSubPage(context) async {
       Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => tool));
     }
@@ -75,7 +75,7 @@ class _GCWToolListState extends State<GCWToolList> {
     );
   }
 
-  _buildSubtitle(BuildContext context, GCWToolWidget tool) {
+  _buildSubtitle(BuildContext context, GCWTool tool) {
     var descriptionText;
     if (Prefs.getBool('toollist_show_descriptions') && tool.description != null && tool.description.length > 0) {
       descriptionText = IgnorePointer(

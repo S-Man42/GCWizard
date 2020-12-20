@@ -11,13 +11,15 @@ import 'package:gc_wizard/widgets/selector_lists/numbersequencepell_selection.da
 import 'package:gc_wizard/widgets/selector_lists/numbersequencejacobsthal_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numbersequencepelllucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numbersequencejacobsthallucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencerecaman_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequencecatalan_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class NumberSequenceSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
 
-    final List<GCWToolWidget> _toolList =
+    final List<GCWTool> _toolList =
     Registry.toolList.where((element) {
       return [
         className(NumberSequenceLucasSelection()),
@@ -28,6 +30,8 @@ class NumberSequenceSelection extends GCWSelection {
         className(NumberSequenceJacobsthalSelection()),
         className(NumberSequencePellLucasSelection()),
         className(NumberSequenceJacobsthalLucasSelection()),
+        className(NumberSequenceRecamanSelection()),
+        className(NumberSequenceCatalanSelection()),
       ].contains(className(element.tool));
     }).toList();
 

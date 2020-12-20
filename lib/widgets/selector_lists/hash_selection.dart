@@ -3,16 +3,18 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hashes.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker.dart';
 
 class HashSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
 
-    final List<GCWToolWidget> _toolList =
+    final List<GCWTool> _toolList =
       Registry.toolList.where((element) {
         return [
+          className(HashBreaker()),
           className(MD5()),
           className(SHA1()),
           className(SHA224()),

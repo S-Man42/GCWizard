@@ -160,7 +160,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
   _buildGroupList(BuildContext context) {
     var odd = true;
     var rows = formulaGroups.map((group) {
-      var formulaTool = GCWToolWidget(
+      var formulaTool = GCWTool(
         tool: FormulaSolverFormulas(group: group),
         toolName: '${group.name} - ${i18n(context, 'formulasolver_formulas')}',
         i18nPrefix: 'formulasolver', // for calling the help of the formulasolver
