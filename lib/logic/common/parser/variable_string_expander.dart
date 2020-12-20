@@ -1,114 +1,242 @@
 import 'dart:collection';
 
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
+enum VariableStringExpanderBreakCondition {RUN_ALL, BREAK_ON_FIRST_FOUND}
 
-Set<int> _expandVariableGroup(String group) {
-  var output = SplayTreeSet<int>();
+/*
+  - Takes a string which contains an arbitrary number of variables, e.g. "A B C"
+  - Requires for every variable one or many possible values like {'A': '1-3', 'B': '5,6', 'C': '4-6#2'}
+  - Creates strings with all possible variable combinations:
+    '1 5 4', '1 5 6', '1 6 4', '1 6 6',
+    '2 5 4', '2 5 6', '2 6 4', '2 6 6',
+    '3 5 4', '3 5 6', '3 6 4', '3 6 6'
 
-  if (group == null)
-    return output;
+  - for every string, an operation can be executed (given by isResult callback).
+    This callback return can return true if the function should add the current
+    string to a result set which will be returned in the end
+    e.g.: - Create all possible string combinations, calculate a hash and check if it matches
+            a given one. If so, add to result set (-> Hash Breaker)
+          - Create all possible coordinate strings, evaluate and expand formulata terms,
+            add every formula expanded string to the result set (-> Variable Coordinate)
 
-  group = group.replaceAll(RegExp(r'[^\d,\-#]'), '');
+   - Performance note:
+     - Three final status were considered
+       1. Don't use formula groups (brackets): No need of finding some groups that
+          must be considered different to the outside parts. Spares a loop with separate
+          (expensive) replace operation: "N 52 23.ABC E 10 45.DEF; {A: 0-9, B: 0-9, ...}"
+          -> drawback (visible in this example): The east E will be treated as variable.
+          -> could be done with creating a warning when adding a variable which is found as text in the input
+          -> fastest. In tested real-world use case with ca. 30 Mio. combinations: 1:24min runtime
+       2. Use formula groups to be able to make difference between variables and text,
+          but don't use mathematical engine to expand real formulas: "N 52 23.[ABC] E 10 45.[DEF]; {A: 0-9, B: 0-9, ...}"
+          -> More flexible in handling
+          -> same example: Runtime 1:39min
+       3. Apply the whole formula magic incl. mathematical engine: "N 52 [A/10000] E 10 [B/10000]; {A: 23000-23999, B: 45000-45999}"
+          -> Extremely flexible
+          -> VarCoords could profit from it: The formula calculating part would be moved from there
+          -> Expensive, even on basic examples
+          -> Runtime: 2:51
+     - Decision for 2. Best Cost/Price-Balance
+ */
+class VariableStringExpander {
+  String input;
+  Map<String, String> substitutions;
+  Function addAsResult;
 
-  if (group.length == 0)
-    return output;
+  VariableStringExpanderBreakCondition breakCondition;
+  bool uniqueResults;
 
-  var ranges = group.split(',');
-  ranges.forEach((range) {
-    var rangeParts = range.split('#');
-    var rangeBounds = rangeParts[0].split('-');
-    if(rangeBounds.length == 1) {
-      output.add(int.tryParse(rangeBounds[0]));
-      return;
+  VariableStringExpander(
+    this.input,
+    this.substitutions,
+    this.addAsResult,
+    {
+      this.breakCondition = VariableStringExpanderBreakCondition.RUN_ALL,
+      this.uniqueResults = false
     }
+  );
 
-    var start = int.tryParse(rangeBounds[0]);
-    var end = int.tryParse(rangeBounds[1]);
+  // Map<String, List<int>> expandedSubstitutions = {};
+  List<List<String>> _expandedVariableGroups = [];
+  List<String> _substitutionKeys = [];
 
-    if (start == end) {
-      output.add(start);
-      return;
-    }
+  List<String> _variableGroups;
+  int _countVariableGroups;
+  String _variableGroup;
 
-    var increment = 1;
-    if (rangeParts.length > 1)
-      increment = int.tryParse(rangeParts[1]);
+  List<Map<String, dynamic>> _results = [];
+  List<String> _uniqueResults = [];
 
-    if (start < end) {
-      for (int i = start; i <= end; i += increment)
-        output.add(i);
-    } else {
-      for (int i = start; i >= end; i -= increment)
-        output.add(i);
-    }
-  });
+  List<int> _variableValueIndexes = [];
+  List<int> _countVariableValues = [];
+  int _currentVariableIndex = -1;
 
-  return output;
-}
+  // Expands a "compressed" variable group like "5-10" to "5,6,7,8,9,10"
+  List<String> _expandVariableGroup(String group) {
+    var output = SplayTreeSet<String>();
 
-void _generateCartesianVariables(Map<String, List<int>> lists, List<Map<String, String>> result, int keyIndex, Map<String, String> current) {
-  var keys = lists.keys.toList();
-  if (keyIndex == keys.length) {
-    result.add(current);
-    return;
-  }
+    if (group == null)
+      return [];
 
-  var key = keys[keyIndex];
-  var list = lists[key];
-  for (int i = 0; i < list.length; i++) {
-    var newList = Map<String, String>.from(current);
-    newList.putIfAbsent(key, () => list[i].toString());
-    _generateCartesianVariables(lists, result, keyIndex + 1, newList);
-  }
-}
+    group = group.replaceAll(RegExp(r'[^\d,\-#]'), '');
 
-sanitizeForFormula(String formula) {
-  RegExp regExp = new RegExp(r'\[.+?\]');
-  if (regExp.hasMatch(formula))
-    return formula;
+    if (group.length == 0)
+      return [];
 
-  return '[$formula]';
-}
+    var ranges = group.split(',');
+    ranges.forEach((range) {
+      var rangeParts = range.split('#');
+      var rangeBounds = rangeParts[0].split('-');
+      if(rangeBounds.length == 1) {
+        output.add(int.tryParse(rangeBounds[0]).toString());
+        return;
+      }
 
-List<Map<String, dynamic>> expandText(String text, Map<String, String> substitutions) {
-  var expandedList = SplayTreeSet<String>();
+      var start = int.tryParse(rangeBounds[0]);
+      var end = int.tryParse(rangeBounds[1]);
 
-  if (text == null || text.length == 0)
-    return [];
+      if (start == end) {
+        output.add(start.toString());
+        return;
+      }
 
-  if (substitutions == null || substitutions.length == 0) {
-    expandedList.add(text);
-    return [];
-  }
+      var increment = 1;
+      if (rangeParts.length > 1)
+        increment = int.tryParse(rangeParts[1]);
 
-  text = sanitizeForFormula(text);
-
-  Map<String, List<int>> expandedSubstitutions = {};
-  substitutions.entries.forEach((substitution) => expandedSubstitutions.putIfAbsent(
-      substitution.key,
-          () => _expandVariableGroup(substitution.value).toList()
-  ));
-
-  List<Map<String, String>> variableCombinations = [];
-  _generateCartesianVariables(expandedSubstitutions, variableCombinations, 0, {});
-
-  List<Map<String, dynamic>> output = [];
-
-  RegExp regExp = new RegExp(r'\[.+?\]');
-  var matches = regExp.allMatches(text.trim());
-
-  variableCombinations.forEach((combination) {
-    var substituted = text;
-
-    matches.forEach((match) {
-      var content = substitution(match.group(0), combination, caseSensitive: false);
-      substituted = substituted.replaceAll(match.group(0), content);
+      if (start < end) {
+        for (int i = start; i <= end; i += increment)
+          output.add(i.toString());
+      } else {
+        for (int i = start; i >= end; i -= increment)
+          output.add(i.toString());
+      }
     });
 
-    if (expandedList.add(substituted)) {
-      output.add({'text': substituted, 'variables': combination});
-    }
-  });
+    return output.toList();
+  }
 
-  return output;
+  // counting indexes like a normal numeral system:
+  // First count the last index until all values are checked, reset index to 0
+  // Second increase last but one index, run last index again, and so on.
+  // Example:
+  //   [0, 0, 0], [0, 0, 1], [0, 0, 2]
+  //   [0, 1, 0], [0, 1, 1], [0, 1, 2]
+  //   [0, 2, 0], [0, 2, 1], [0, 2, 2]
+  //   [0, 3, 0], [0, 3, 1], [0, 3, 2]
+  //   [0, 4, 0], [0, 4, 1], [0, 4, 2]
+  //
+  //   [1, 0, 0], [1, 0, 1], [1, 0, 2]
+  //   [1, 1, 0], [1, 1, 1], [1, 1, 2]
+  //   [1, 2, 0], [1, 2, 1], [1, 2, 2]
+  //   [1, 3, 0], [1, 3, 1], [1, 3, 2]
+  //   [1, 4, 0], [1, 4, 1], [1, 4, 2]
+  bool _setIndexes() {
+    while (_variableValueIndexes[_currentVariableIndex] == _countVariableValues[_currentVariableIndex] - 1) {
+      if (_currentVariableIndex == 0)
+        return true;
+
+      _variableValueIndexes[_currentVariableIndex] = 0;
+      _currentVariableIndex--;
+    }
+
+    _variableValueIndexes[_currentVariableIndex] = _variableValueIndexes[_currentVariableIndex] + 1;
+    _currentVariableIndex = _variableValueIndexes.length - 1;
+
+    return false;
+  }
+
+  int _variableGroupIndex, _variableValueIndex;
+  String _result;
+
+  Map<String, String> _getCurrentVariables() {
+    Map<String, String> variables = {};
+
+    for (int i = 0; i < _variableValueIndexes.length; i++) {
+      variables.putIfAbsent(_substitutionKeys[i], () => _expandedVariableGroups[i][_variableValueIndexes[i]]);
+    }
+
+    return variables;
+  }
+
+  void _generateCartesianVariables() {
+    do {
+      _substitude();
+
+      _result = addAsResult(_result);
+      if (_result != null) {
+        if (uniqueResults && _uniqueResults.contains(_result))
+          continue;
+
+        _results.add({'text': _result, 'variables': _getCurrentVariables()});
+        if (uniqueResults)
+          _uniqueResults.add(_result);
+
+        if (breakCondition == VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND)
+          break;
+      }
+    } while(_setIndexes() == false);
+  }
+
+  // do the substitution of the variables set with their specific values given by their counted indexes
+  void _substitude() {
+    _result = input;
+    for (_variableGroupIndex = 0; _variableGroupIndex < _countVariableGroups; _variableGroupIndex++) {
+      _variableGroup = _variableGroups[_variableGroupIndex];
+
+      for (_variableValueIndex = 0; _variableValueIndex < _variableValueIndexes.length; _variableValueIndex++) {
+        _variableGroup = _variableGroup.replaceAll(
+          _substitutionKeys[_variableValueIndex],
+          _expandedVariableGroups[_variableValueIndex][_variableValueIndexes[_variableValueIndex]]
+        );
+      }
+
+      _result = _result.replaceFirst(_variableGroups[_variableGroupIndex], _variableGroup);
+    }
+  }
+
+  _sanitizeForFormula(String formula) {
+    RegExp regExp = new RegExp(r'\[.+?\]');
+    if (regExp.hasMatch(formula))
+      return formula;
+
+    return '[$formula]';
+  }
+
+  List<Map<String, dynamic>> run({onlyPrecheck: false}) {
+    if (input == null || input.length == 0)
+      return [];
+
+    if (substitutions == null || substitutions.length == 0) {
+      return [{'text': input, 'variables': {}}];
+    }
+
+    input = _sanitizeForFormula(input);
+
+    // expand all groups, initialize lists
+    substitutions.entries.forEach((substitution) {
+      _substitutionKeys.add(substitution.key);
+      var group = _expandVariableGroup(substitution.value);
+      _expandedVariableGroups.add(group);
+
+      _countVariableValues.add(group.length);
+      _variableValueIndexes.add(0);
+      _currentVariableIndex++;
+    });
+
+    // check number of combinations
+    if (onlyPrecheck) {
+      var countCombinations = _countVariableValues.fold(1, (previousValue, element) => previousValue * element);
+      return [{'count': countCombinations}];
+    }
+
+    // Find matching formula groups
+    RegExp regExp = new RegExp(r'\[.+?\]');
+    _variableGroups = regExp.allMatches(input.trim()).map((elem) => elem.group(0)).toList();
+    _countVariableGroups = _variableGroups.length;
+
+    // gogogo!
+    _generateCartesianVariables();
+
+    return _results;
+  }
 }

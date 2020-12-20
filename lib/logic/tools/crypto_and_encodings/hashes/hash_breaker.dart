@@ -1,9 +1,18 @@
 import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hashes.dart';
 
-final _ALERT_MAXIMUM = 25000;
+final _ALARM_COUNT = 100000;
 
-Map<String, dynamic> breakHash(String input, String searchMask, Map<String, String> substitutions, Function hashFunction, {calculateAll: false}) {
+Map<String, dynamic> preCheck(Map<String, String> substitutions) {
+  var expander = VariableStringExpander('DUMMY', substitutions, (e) => false);
+  var count = expander.run(onlyPrecheck: true);
+
+  if (count[0]['count'] >= _ALARM_COUNT)
+    return {'status' : 'high_count', 'count': count[0]['count']};
+
+  return {'status' : 'ok'};
+}
+
+Map<String, dynamic> breakHash(String input, String searchMask, Map<String, String> substitutions, Function hashFunction) {
   if (
     input == null || input.length == 0
     || searchMask == null || searchMask.length == 0
@@ -11,21 +20,20 @@ Map<String, dynamic> breakHash(String input, String searchMask, Map<String, Stri
   )
     return null;
 
-  List<Map<String, dynamic>> expandedTexts = expandText(searchMask, substitutions);
-  if (expandedTexts.length >= _ALERT_MAXIMUM && calculateAll == false)
-    return {'state': 'error', 'count': expandedTexts.length};
-
-  if (expandedTexts == null || expandedTexts.length == 0)
-    return null;
-
   input = input.toLowerCase();
+  var expander = VariableStringExpander(searchMask, substitutions, (expandedText) {
+    var withoutBrackets = expandedText.replaceAll(RegExp(r'[\[\]]'), '');
+    var hashValue = hashFunction(withoutBrackets).toLowerCase();
 
-  for (String expandedText in expandedTexts.map((text) => text['text'].replaceAll(RegExp(r'[\[\]]'), '')).toList()) {
-    String hash = hashFunction(expandedText);
+    if (hashValue == input)
+      return withoutBrackets;
+    else return null;
+  }, breakCondition: VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND);
 
-    if (hash.toLowerCase() == input)
-      return {'state': 'ok', 'text': expandedText};
-  }
+  var results = expander.run();
 
-  return {'state': 'not_found'};
+  if (results == null || results.length == 0)
+    return {'state': 'not_found'};
+
+  return {'state': 'ok', 'text': results[0]['text']};
 }

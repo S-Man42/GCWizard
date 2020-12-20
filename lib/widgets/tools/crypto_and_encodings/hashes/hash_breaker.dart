@@ -174,36 +174,38 @@ class _HashBreakerState extends State<HashBreaker> {
   }
 
   _calculateOutput({calculateAll = false}) {
-    print('A');
-
     var _substitutions = <String, String>{};
     _currentSubstitutions.entries.forEach((entry) {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
     });
 
-    Map<String, dynamic> output = breakHash(_currentInput, _currentMask, _substitutions, _currentHashFunction, calculateAll: calculateAll);
-    if (output == null)
-      return i18n(context, 'hashes_hashbreaker_solutionnotfound');
+    if (calculateAll == false) {
+      var preCheckResult = preCheck(_substitutions);
+      if (preCheckResult == null || preCheckResult['status'] == null)
+        return i18n(context, 'hashes_hashbreaker_solutionnotfound');
 
-    if (output['state'] == 'error') {
-      showGCWAlertDialog(
-        context,
-        i18n(context, 'hashes_hashbreaker_alert_range_title'),
-        i18n(context, 'hashes_hashbreaker_alert_range_text', parameters: [output['count']]),
-        () {
-          setState(() {
-            _calculateOutput(calculateAll: true);
-          });
-        },
-      );
-    } else {
-      if (output['state'] == 'not_found') {
-        _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
+      if (preCheckResult['status'] == 'high_count') {
+        showGCWAlertDialog(
+          context,
+          i18n(context, 'hashes_hashbreaker_alert_range_title'),
+          i18n(context, 'hashes_hashbreaker_alert_range_text', parameters: [preCheckResult['count']]),
+          () {
+            setState(() {
+              _calculateOutput(calculateAll: true);
+            });
+          },
+        );
+
+        _currentOutput = '';
         return;
       }
-
-      _currentOutput = output['text'];
     }
+
+    Map<String, dynamic> output = breakHash(_currentInput, _currentMask, _substitutions, _currentHashFunction);
+    if (output == null || output['state'] == null || output['state'] == 'not_found')
+      return i18n(context, 'hashes_hashbreaker_solutionnotfound');
+
+    _currentOutput = output['text'];
   }
 
   _buildVariablesInput() {
