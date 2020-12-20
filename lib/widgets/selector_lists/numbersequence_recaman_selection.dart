@@ -6,7 +6,7 @@ import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/recaman.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-class NumberSequenceFermatSelection extends GCWSelection {
+class NumberSequenceRecamanSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
 

@@ -70,7 +70,7 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
 
   _buildOutput() {
     List<List<String>> columnData = new List<List<String>>();
-    getRange(widget.mode, _currentInputStart, _currentInputStop).forEach((element) {
+    getNumbersInRange(widget.mode, _currentInputStart, _currentInputStop).forEach((element) {
       columnData.add([element]);
     });
     return GCWOutput(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 
 class NumberSequenceCheckNumber extends StatefulWidget {
   final NumberSequencesMode mode;
@@ -15,8 +15,7 @@ class NumberSequenceCheckNumber extends StatefulWidget {
 
 class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
 
-  String _currentInputN = '0';
-  TextEditingController _inputController;
+  int currentInputN = 0;
 
   @override
   void initState() {
@@ -36,11 +35,11 @@ class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
         GCWTextDivider(
             text: i18n(context, NumberSequencesName[widget.mode])
         ),
-        GCWIntegerTextField(
-          controller: _inputController,
-          onChanged: (text) {
+        GCWIntegerSpinner(
+          value: currentInputN,
+          onChanged: (value) {
             setState(() {
-              _currentInputN = text;
+              currentInputN = value;
             });
           },
         ),
@@ -55,7 +54,7 @@ class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
 
   _buildOutput() {
     return GCWOutputText(
-          text: checkNumber(widget.mode, _currentInputN),
+          text: checkNumber(widget.mode, currentInputN),
         );
     }
 }

@@ -16,7 +16,7 @@ class NumberSequenceDigits extends StatefulWidget {
 
 class NumberSequenceDigitsState extends State<NumberSequenceDigits> {
 
-  int _currentInputN = 0;
+  int _currentInputN = 1;
 
   @override
   void initState() {
@@ -58,7 +58,7 @@ class NumberSequenceDigitsState extends State<NumberSequenceDigits> {
 
   _buildOutput() {
     List<List<String>> columnData = new List<List<String>>();
-    getDigits(widget.mode, _currentInputN).forEach((element) {
+    getNumbersWithNDigits(widget.mode, _currentInputN).forEach((element) {
       columnData.add([element]);
     });
     return GCWOutput(
