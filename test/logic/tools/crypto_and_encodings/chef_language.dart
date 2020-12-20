@@ -2671,7 +2671,7 @@ Serves 1.''';
       {'language' : 'ENG', 'input' : '5 7 4 6 3 8',  'recipe' : BubbledAndBacon, 'expectedOutput' : ['34678']},
       {'language' : 'ENG', 'input' : '12',  'recipe' : FactorialAndFish, 'expectedOutput' : ['479001600']},
       {'language' : 'ENG', 'input' : '12',  'recipe' : FibonacciDuFromage, 'expectedOutput' : ['1123581321345589144']},
-      {'language' : 'ENG', 'input' : '',  'recipe' : FibonacciNumberswithCaramelSauce, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_method_aux_recipe','']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : FibonacciNumberswithCaramelSauce, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_exception','chef_error_runtime_serving_aux','Stack overflow at depth ']},
       {'language' : 'ENG', 'input' : '',  'recipe' : FruitLoops, 'expectedOutput' : ['880']},
       {'language' : 'ENG', 'input' : '60 24',  'recipe' : GreatestCommonDijonMustard, 'expectedOutput' : ['12']},
       {'language' : 'ENG', 'input' : '',  'recipe' : HelloSouchef, 'expectedOutput' : ['Hello world!']},
