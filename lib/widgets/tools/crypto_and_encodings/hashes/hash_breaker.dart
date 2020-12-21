@@ -42,39 +42,6 @@ class HashBreaker extends StatefulWidget {
 }
 
 class _HashBreakerState extends State<HashBreaker> {
-  final Map<String, Function> _HASHFUNCTIONS = {
-    'hashes_md5' : md5Digest,
-    'hashes_sha1' : sha1Digest,
-    'hashes_sha224' : sha224Digest,
-    'hashes_sha256' : sha256Digest,
-    'hashes_sha384' : sha384Digest,
-    'hashes_sha512' : sha512Digest,
-    'hashes_sha512.224' : sha512_224Digest,
-    'hashes_sha512.256' : sha512_256Digest,
-    'hashes_sha3.224' : sha3_224Digest,
-    'hashes_sha3.256' : sha3_256Digest,
-    'hashes_sha3.384' : sha3_384Digest,
-    'hashes_sha3.512' : sha3_512Digest,
-    'hashes_keccak224' : keccak_224Digest,
-    'hashes_keccak256' : keccak_256Digest,
-    'hashes_keccak288' : keccak_288Digest,
-    'hashes_keccak384' : keccak_384Digest,
-    'hashes_keccak512' : keccak_512Digest,
-    'hashes_ripemd128' : ripemd_128Digest,
-    'hashes_ripemd160' : ripemd_160Digest,
-    'hashes_ripemd256' : ripemd_256Digest,
-    'hashes_ripemd320' : ripemd_320Digest,
-    'hashes_md2' : md2Digest,
-    'hashes_md4' : md4Digest,
-    'hashes_tiger192' : tiger_192Digest,
-    'hashes_whirlpool512' : whirlpool_512Digest,
-    'hashes_blake2b160' : blake2b_160Digest,
-    'hashes_blake2b224' : blake2b_224Digest,
-    'hashes_blake2b256' : blake2b_256Digest,
-    'hashes_blake2b384' : blake2b_384Digest,
-    'hashes_blake2b512' : blake2b_512Digest,
-  };
-
   var _fromController;
   var _toController;
   var _inputController;
@@ -143,7 +110,7 @@ class _HashBreakerState extends State<HashBreaker> {
               _currentHashFunction = newValue;
             });
           },
-          items: _HASHFUNCTIONS.entries.map((hashFunction) {
+          items: HASH_FUNCTIONS.entries.map((hashFunction) {
             return GCWDropDownMenuItem(
               value: hashFunction.value,
               child: i18n(context, hashFunction.key + '_title'),

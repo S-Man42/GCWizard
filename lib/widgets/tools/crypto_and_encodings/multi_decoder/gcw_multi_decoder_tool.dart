@@ -10,7 +10,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_m
 
 enum MultiDecoderToolState {DECODE, CONFIGURATION}
 
-class GCWMultiDecoderTool {
+abstract class GCWMultiDecoderTool {
   final int id;
   String name;
   final String internalToolName;

@@ -898,7 +898,7 @@ class Registry {
       ),
       GCWTool(
         tool: BCDBiquinary(),
-        i18nPrefix: 'bcd_biquinaer',
+        i18nPrefix: 'bcd_biquinary',
         searchStrings: SEARCHSTRING_BCD + 'biquinaer biquinary'
       ),
       GCWTool(

@@ -239,8 +239,8 @@
   "bcd_1of10_example" : "19 → 0000000010 1000000000",
   "bcd_hamming_title" : "BCD (Hamming)",
   "bcd_hamming_example" : "19 → 0000111 1001100",
-  "bcd_biquinaer_title" : "BCD (Biquinär)",
-  "bcd_biquinaer_example" : "19 → 1000010 0110000",
+  "bcd_biquinary_title" : "BCD (Biquinär)",
+  "bcd_biquinary_example" : "19 → 1000010 0110000",
 
   "beaufort_selection_title" : "Windstärke (Beaufort)",
   "beaufort_title" : "Windstärke (Beaufort)",

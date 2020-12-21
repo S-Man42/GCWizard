@@ -54,7 +54,7 @@ class MultiDecoderState extends State<MultiDecoder> {
 
   _refreshMDTTools() {
     mdtTools = multiDecoderTools.map((mdtTool) {
-      return multiDecoderToolToGCWMultiDecoderTool(mdtTool);
+      return multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
   }
 
@@ -88,7 +88,12 @@ class MultiDecoderState extends State<MultiDecoder> {
                     tool: MultiDecoderConfiguration(),
                     toolName: 'Config'
                   )
-                ));
+                ))
+                .whenComplete(() {
+                  setState(() {
+                    _currentOutput = null;
+                  });
+                });
               },
             )
           ],
@@ -118,7 +123,7 @@ class MultiDecoderState extends State<MultiDecoder> {
     var results = mdtTools.map((tool) {
       try {
         var result = tool.onDecode(_currentInput);
-        if (result == null || result.length == 0)
+        if (result == null || result.toString().length == 0)
           result = 'ZONK';
 
         return GCWOutput(

@@ -51,7 +51,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
   }
 
   String _createName(String chosenInternalName) {
-    var baseName = i18n(context, chosenInternalName + '_title');
+    var baseName = chosenInternalName;//i18n(context, chosenInternalName + '_title');
     var name = baseName;
 
     int nameCounter = 1;
@@ -66,7 +66,6 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
     var chosenInternalName = mdtToolsRegistry[_currentChosenTool];
     var name = _createName(chosenInternalName);
 
-    print(mdtTools.map((e) => e.name).toList());
     var nameOccurrences = mdtTools.where((tool) => tool.name == name).length;
     if (nameOccurrences > 0)
       name = '$name ${nameOccurrences + 1}';
@@ -75,11 +74,17 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
       name,
       chosenInternalName,
     );
+
+    var mdtTool = multiDecoderToolToGCWMultiDecoderTool(context, tool);
+    tool.options = mdtTool.options.entries.map((option) {
+      return MultiDecoderToolOption(option.key, option.value);
+    }).toList();
+
     _currentEditId = insertMultiDecoderTool(tool);
     _editingToolNameController.text = name;
     _editingToolName = name;
 
-    mdtTools.insert(0, multiDecoderToolToGCWMultiDecoderTool(tool));
+    mdtTools.insert(0, multiDecoderToolToGCWMultiDecoderTool(context, tool));
   }
 
   _updateTool(GCWMultiDecoderTool tool) {
@@ -99,7 +104,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
 
   _refreshMDTTools() {
     mdtTools = multiDecoderTools.map((mdtTool) {
-      return multiDecoderToolToGCWMultiDecoderTool(mdtTool);
+      return multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
   }
 
@@ -144,7 +149,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                       index,
                       GCWDropDownMenuItem(
                         value: index,
-                        child: Text(i18n(context, toolName + '_title'))
+                        child: toolName//Text(i18n(context, toolName + '_title'))
                       )
                     );
                   }).values.toList(),
@@ -197,7 +202,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                           )
                         ],
                       ),
-                      tool.configurationWidget
+                      tool.configurationWidget ?? Container()
                     ]
                   ),
                   padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
@@ -249,7 +254,6 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                 iconData: Icons.remove,
                 onPressed: () {
                   setState(() {
-                    print(tool.name);
                     showDeleteAlertDialog(context, tool.name, () {
                       _deleteTool(tool.id);
                       setState(() {});

@@ -4,7 +4,8 @@ import 'package:gc_wizard/widgets/common/gcw_abc_spinner.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_multi_decoder_tool_configuration.dart';
 
-const MULTIDECODERTOOL_INTERNALNAMES_ROTATION = 'rotation';
+const MDT_INTERNALNAMES_ROTATION = 'rotation';
+const MDT_ROTATION_OPTION_KEY = 'key';
 
 class MultiDecoderToolRotation extends GCWMultiDecoderTool {
 
@@ -14,17 +15,17 @@ class MultiDecoderToolRotation extends GCWMultiDecoderTool {
       id: id,
       name: name,
       state: state,
-      internalToolName: MULTIDECODERTOOL_INTERNALNAMES_ROTATION,
+      internalToolName: MDT_INTERNALNAMES_ROTATION,
       onDecode: (input) {
-        return Rotator().rotate(input, options['key']);
+        return Rotator().rotate(input, options[MDT_ROTATION_OPTION_KEY]);
       },
       options: options,
       configurationWidget: GCWMultiDecoderToolConfiguration(
         widgets: {
-          'key': GCWABCSpinner(
-            value: options['key'],
+          MDT_ROTATION_OPTION_KEY: GCWABCSpinner(
+            value: options[MDT_ROTATION_OPTION_KEY],
             onChanged: (value) {
-              options['key'] = value;
+              options[MDT_ROTATION_OPTION_KEY] = value;
             },
           )
         }
