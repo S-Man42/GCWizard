@@ -453,6 +453,8 @@
   "common_custom" : "Custom",
   "common_day" : "Day",
   "common_decrypt" : "Decrypt",
+  "common_deletealtert_title" : "Really remove?",
+  "common_deletealtert_text" : "Do you really want to remove '%s1'?",
   "common_distance_hint" : "Enter distance",
   "common_encrypt" : "Encrypt",
   "common_error" : "Error",
@@ -1023,9 +1025,6 @@
   "decabit_example" : "ABC → ++-+++---- ++++--+--- +--++++---",
   "decabit_numeric_mode" : "Numeric",
 
-  "deletealert_title" : "Really remove?",
-  "deletealert_text" : "Do you really want to remove '%s1'?",
-
   "dna_selection_title" : "DNA/mRNA",
   "dna_selection_description" : "Encodes text as DNA/mRNA sequences",
   "dna_selection_example" : "AE → GCTGAG or GCUGAG",
@@ -1295,6 +1294,8 @@
   "morse_long" : "Long",
   "morse_next_letter" : "Next",
   "morse_next_word" : "Next Word",
+
+  "multidecoder_title" : "Multi Decoder",
 
   "numeralbases_title" : "Numeral Systems (Radix)",
   "numeralbases_description" : "Converts numbers between different radix (e.g. hexadecimal or binary to decimal)",

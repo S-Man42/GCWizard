@@ -57,7 +57,7 @@ class _GCWUnitsState extends State<GCWUnits> {
                         });
                       },
                     ),
-                    padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
+                    padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                   ),
                   flex: 1
                 )

@@ -104,7 +104,7 @@ class _GCWToolListState extends State<GCWToolList> {
           Container(
             child: exampleText,
             padding: EdgeInsets.only(
-              top: 10.0
+              top: DEFAULT_DESCRIPTION_MARGIN
             )
           )
         ],

@@ -11,6 +11,8 @@ class Rotator {
   }
 
   String rotate(String input, int key, {bool removeUnknownCharacters = false, ignoreCase = true}) {
+    print('AAAA');
+
     if (input == null)
       input = '';
 

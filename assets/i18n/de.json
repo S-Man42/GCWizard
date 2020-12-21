@@ -453,6 +453,8 @@
   "common_bearing_hint" : "Peilung (Grad) eingeben",
   "common_day" : "Tag",
   "common_decrypt" : "Entschlüsseln",
+  "common_deletealtert_title" : "Wirklich löschen?",
+  "common_deletealtert_text" : "Möchtest du wirklich '%s1' löschen?",
   "common_distance_hint" : "Distanz eingeben",
   "common_encrypt" : "Verschlüsseln",
   "common_error" : "Fehler",
@@ -1022,9 +1024,6 @@
   "decabit_description" : "Binärer Code in der Energiewirtschaft",
   "decabit_example" : "ABC → ++-+++---- ++++--+--- +--++++---",
   "decabit_numeric_mode" : "Numerisch",
-
-  "deletealert_title" : "Wirklich löschen?",
-  "deletealert_text" : "Möchtest du wirklich '%s1' löschen?",
 
   "dna_selection_title" : "DNA/mRNA",
   "dna_selection_description" : "Kodiert Text als DNA/mRNA-Sequenzen",
