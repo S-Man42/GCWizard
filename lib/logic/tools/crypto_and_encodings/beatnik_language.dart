@@ -1,22 +1,16 @@
 import 'package:gc_wizard/logic/tools/games/scrabble.dart';
 import 'package:gc_wizard/logic/tools/games/scrabble_sets.dart';
 
+class BeatnikOutput{
+  final List<String> output;
+  final List<List<String>> programm;
 
-bool isValid(String input){
-  bool flag = true;
-  if (input == null || input == '')
-    return true;
-  List<String> numbers = input.split(' ');
-  numbers.forEach((element) {
-    if (int.tryParse(element) == null) {
-      flag = false;
-    }
-  });
-  return flag;
+  BeatnikOutput(this.output, this.programm);
 }
 
-String generateBeatnik(String language, output){
-  return '';
+
+BeatnikOutput generateBeatnik(String language, output){
+  BeatnikOutput(null, null);
 }
 
 
@@ -74,7 +68,7 @@ class BeatnikStack {
   }
 }
 
-List<String> interpretBeatnik(var ScrabbleVersion, String sourcecode, input){
+BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input){
   var _currentValues = [];
   int value = 0;
 
@@ -92,7 +86,7 @@ List<String> interpretBeatnik(var ScrabbleVersion, String sourcecode, input){
     assembler.add(value);
   }
 
-  List<String> inputlist = input.split(' ');
+  List<String> inputlist = input.split('');
 
   BeatnikStack stack = new BeatnikStack();
 
@@ -113,21 +107,21 @@ List<String> interpretBeatnik(var ScrabbleVersion, String sourcecode, input){
           stack.push(assembler[pc + 1]);
           pc = pc + 2;
         } else
-          return['beatnik_error_runtime', 'beatnik_error_runtime_pc'];
+          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc'], decodedProgramm);
         break;
       case 6:
         if (stack.size() > 0) {
           stack.pop();
           pc++;
         } else
-          return['beatnik_error_runtime', 'beatnik_error_runtime_stack'];
+          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack'], decodedProgramm);
         break;
       case 7:
         if (stack.size() > 2) {
           stack.add();
           pc++;
         } else
-          return['beatnik_error_runtime', 'beatnik_error_runtime_stack'];
+          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack'], decodedProgramm);
         break;
       case 8:
         if (inputindex < inputlist.length) {
@@ -135,7 +129,7 @@ List<String> interpretBeatnik(var ScrabbleVersion, String sourcecode, input){
           inputindex++;
           pc++;
         } else {
-          return['beatnik_error_runtime', 'beatnik_error_runtime_invalid_input'];
+          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_invalid_input'], decodedProgramm);
         }
         break;
       case 9:
@@ -143,28 +137,28 @@ List<String> interpretBeatnik(var ScrabbleVersion, String sourcecode, input){
           output = output + String.fromCharCode(stack.pop());
           pc++;
         } else
-          return['beatnik_error_runtime', 'beatnik_error_runtime_stack'];
+          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack'], decodedProgramm);
         break;
       case 10:
         if (stack.size() > 2) {
           stack.sub();
           pc++;
         } else
-          return['beatnik_error_runtime', 'beatnik_error_runtime_stack'];
+          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack'], decodedProgramm);
         break;
       case 11:
         if (stack.size() > 2) {
           stack.swap();
           pc++;
         } else
-          return['beatnik_error_runtime', 'beatnik_error_runtime_stack'];
+          returnBeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack'], decodedProgramm);
         break;
       case 12:
         if (stack.size() > 1) {
           stack.double();
           pc++;
         } else
-          return['beatnik_error_runtime', 'beatnik_error_runtime_stack'];
+          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack'], decodedProgramm);
         break;
       case 13:
         if (stack.size() > 1) {
@@ -173,11 +167,11 @@ List<String> interpretBeatnik(var ScrabbleVersion, String sourcecode, input){
             if (pc + 1 < assembler.length)
               pc = pc + assembler[pc + 1];
             else
-              return['beatnik_error_runtime', 'beatnik_error_runtime_pc'];
+              return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc'], decodedProgramm);
           else
             pc++;
         } else
-          return['beatnik_error_runtime', 'beatnik_error_runtime_stack'];
+          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack'], decodedProgramm);
         break;
       case 14:
         if (stack.size() > 1) {
@@ -186,11 +180,11 @@ List<String> interpretBeatnik(var ScrabbleVersion, String sourcecode, input){
             if (pc + 1 < assembler.length)
               pc = pc + assembler[pc + 1];
             else
-              return['beatnik_error_runtime', 'beatnik_error_runtime_pc'];
+              return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc'], decodedProgramm);
           else
             pc++;
         } else
-          return['beatnik_error_runtime', 'beatnik_error_runtime_stack'];
+          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack'], decodedProgramm);
         break;
       case 15:
         if (stack.size() > 1) {
@@ -199,11 +193,11 @@ List<String> interpretBeatnik(var ScrabbleVersion, String sourcecode, input){
             if (pc + 1 < assembler.length)
               pc = pc - assembler[pc + 1];
             else
-              return['beatnik_error_runtime', 'beatnik_error_runtime_pc'];
+              return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc'], decodedProgramm);
           else
             pc++;
         } else
-          return['beatnik_error_runtime', 'beatnik_error_runtime_stack'];
+          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack'], decodedProgramm);
         break;
       case 16:
         if (stack.size() > 1) {
@@ -212,19 +206,19 @@ List<String> interpretBeatnik(var ScrabbleVersion, String sourcecode, input){
             if (pc + 1 < assembler.length)
               pc = pc - assembler[pc + 1];
             else
-              return['beatnik_error_runtime', 'beatnik_error_runtime_pc'];
+              return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc'], decodedProgramm);
           else
             pc++;
         } else
-          return['beatnik_error_runtime', 'beatnik_error_runtime_stack'];
+          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack'], decodedProgramm);
         break;
       case 17:
         exit = true;
         break;
-      default: return['beatnik_error_runtime', 'beatnik_error_runtime_code'];
+      default: return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_code'], decodedProgramm);
     }
     if (pc < 0 || pc > assembler.length)
-      return['beatnik_error_runtime', 'beatnik_error_runtime_pc'];
+      return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc'], decodedProgramm);
   }
-  return [output];
+  return BeatnikOutput([output], decodedProgramm);
 }

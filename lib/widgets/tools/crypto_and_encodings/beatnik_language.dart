@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/beatnik_language.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/logic/tools/games/scrabble_sets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class Beatnik extends StatefulWidget {
 
@@ -101,7 +103,6 @@ class BeatnikState extends State<Beatnik> {
             ),
             GCWTextField(
               controller: _inputController,
-              inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9 ]')),],
               hintText: i18n(context, 'beatnik_hint_input'),
               onChanged: (text) {
                 setState(() {
@@ -120,21 +121,38 @@ class BeatnikState extends State<Beatnik> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    String output = '';
-    if (_currentMode == GCWSwitchPosition.right) { // generate chef
+    List<List<String>> columnData = new List<List<String>>();
+    var flexData = [1, 1, 3, 1, 1];
+    BeatnikOutput output;
+    String outputData = '';
+
+    if (_currentMode == GCWSwitchPosition.right) { // generate beatnik
         output = generateBeatnik(_currentScrabbleVersion, _currentOutput);
-    } else { // interpret chef
-        output = buildOutputText(interpretBeatnik(_currentScrabbleVersion, _currentProgramm.toUpperCase(), _currentInput));
+    } else { // interpret beatnik
+        output = interpretBeatnik(_currentScrabbleVersion, _currentProgramm.toUpperCase(), _currentInput);
     }
-    return GCWOutputText(
-      text: output.trim(),
-      isMonotype: true,
+
+    columnData = buildOutputData(output);
+    outputData = buildOutputText(output);
+
+    return Column(
+      children: <Widget>[
+        GCWOutputText(
+          text: outputData,
+        ),
+        GCWOutput(
+          title: i18n(context, 'beatnik_hint_code'),
+          child: Column(
+            children: columnedMultiLineOutput(context, columnData, flexValues: flexData)
+          ),
+        ),
+      ],
     );
   }
 
-  String buildOutputText(List<String> outputList){
+  String buildOutputText(BeatnikOutput outputList){
     String output = '';
-    outputList.forEach((element) {
+    outputList.output.forEach((element) {
       if (element.startsWith('beatnik_')) {
         output = output
             + i18n(context, element) + '\n';
@@ -142,5 +160,9 @@ class BeatnikState extends State<Beatnik> {
         output = output + element + '\n';
     });
     return output;
+  }
+
+  List<List<String>> buildOutputData(BeatnikOutput outputList){
+    return outputList.programm;
   }
 }
