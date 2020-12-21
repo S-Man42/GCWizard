@@ -77,7 +77,7 @@ class BeatnikStack {
   void sub(){
     int a = pop();
     int b = pop();
-    push(a - b);
+    push(b - a);
   }
 
   void swap(){
