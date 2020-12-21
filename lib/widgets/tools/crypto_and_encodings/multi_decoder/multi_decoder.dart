@@ -130,7 +130,9 @@ class MultiDecoderState extends State<MultiDecoder> {
           title: tool.name,
           child: result,
         );
-      } catch(e) {}
+      } catch(e) {
+        print(e);
+      }
     }).toList();
 
     _currentOutput = Column(

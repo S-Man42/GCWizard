@@ -1696,7 +1696,7 @@
   "settings_general_clipboard_keep.entries.in.days" : "Max. Tage speichern",
   "settings_general_defaulttab" : "Standard-Tab",
   "settings_general_defaulttab_atstart" : "Beim Start",
-  "settings_general_defaulttab_uselasttab" : "Zeige zuletzte benutzten Tab",
+  "settings_general_defaulttab_uselasttab" : "Zeige zuletzt benutzten Tab",
   "settings_general_defaulttab_usedefaulttab" : "Zeige Standard-Tab",
   "settings_general_theme" : "Oberfläche",
   "settings_general_theme_color" : "Farbe",

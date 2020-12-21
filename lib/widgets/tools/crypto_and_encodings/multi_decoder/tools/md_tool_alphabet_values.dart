@@ -10,7 +10,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/alphabet_values.dart'
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 
-const MDT_INTERNALNAMES_ALPHABETVALUES = 'alphabetvalues';
+const MDT_INTERNALNAMES_ALPHABETVALUES = 'alphabet_values';
 const MDT_ALPHABETVALUES_OPTION_ALPHABET = 'alphabet';
 
 class MultiDecoderToolAlphabetValues extends GCWMultiDecoderTool {

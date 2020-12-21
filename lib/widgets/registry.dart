@@ -549,7 +549,7 @@ class Registry {
         tool: Morse(),
         i18nPrefix: 'morse',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'samuel morse morsecode morsen translators translate uebersetzen uebersetzer punkte striche dots dashes'
+        searchStrings: 'samuel morse morsecode morsen punkte striche dots dashes'
       ),
       GCWTool(
         tool: MultiDecoder(),
