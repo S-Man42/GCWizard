@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hashes.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/base.dart';
-import 'package:gc_wizard/widgets/common/gcw_abc_spinner.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_multi_decoder_tool_configuration.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_multi_decoder_tool_configuration.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
 
-const MDT_INTERNALNAMES_BASE = 'base';
-const MDT_BASE_OPTION_BASEFUNCTION = 'baseFunction';
+const MDT_INTERNALNAMES_BASE = 'multidecoder_tool_base_title';
+const MDT_BASE_OPTION_BASEFUNCTION = 'multidecoder_tool_base_option_basefunction';
 
 class MultiDecoderToolBase extends GCWMultiDecoderTool {
 
-  BuildContext context;
-
-  MultiDecoderToolBase({Key key, int id, String name, MultiDecoderToolState state, Map<String, dynamic> options, this.context}) :
+  MultiDecoderToolBase({Key key, int id, String name, Map<String, dynamic> options, BuildContext context}) :
     super(
       key: key,
       id: id,
       name: name,
-      state: state,
       internalToolName: MDT_INTERNALNAMES_BASE,
       onDecode: (input) {
         return BASE_FUNCTIONS[options[MDT_BASE_OPTION_BASEFUNCTION]](input);
@@ -36,7 +30,7 @@ class MultiDecoderToolBase extends GCWMultiDecoderTool {
             },
             items: BASE_FUNCTIONS.entries.map((baseFunction) {
               return GCWDropDownMenuItem(
-                value: baseFunction.key,
+                value: baseFunction.key + '_title',
                 child: i18n(context, baseFunction.key + '_title'),
               );
             }).toList(),

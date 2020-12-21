@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
 import 'package:gc_wizard/persistence/multi_decoder/model.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/tools/md_tools.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_multi_decoder_tool.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/tools/md_tool_coordinate_formats.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/tools/md_tool_rotation.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/tools/md_tools.dart';
 
 class MultiDecoderConfiguration extends StatefulWidget {
   @override
@@ -24,17 +24,19 @@ class MultiDecoderConfiguration extends StatefulWidget {
 class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
   TextEditingController _editingToolNameController;
 
-  int _currentChosenTool = 0;
+  int _currentChosenTool;
   String _editingToolName = '';
 
   int _currentEditId;
 
+  List<String> _sortedToolRegistry;
   List<GCWMultiDecoderTool> mdtTools;
 
   @override
   void initState() {
     super.initState();
     _editingToolNameController = TextEditingController(text: _editingToolName);
+
 
     refreshMultiDecoderTools();
   }
@@ -51,7 +53,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
   }
 
   String _createName(String chosenInternalName) {
-    var baseName = chosenInternalName;//i18n(context, chosenInternalName + '_title');
+    var baseName = i18n(context, chosenInternalName);
     var name = baseName;
 
     int nameCounter = 1;
@@ -63,7 +65,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
   }
 
   _addNewTool() {
-    var chosenInternalName = mdtToolsRegistry[_currentChosenTool];
+    var chosenInternalName = _sortedToolRegistry[_currentChosenTool];
     var name = _createName(chosenInternalName);
 
     var nameOccurrences = mdtTools.where((tool) => tool.name == name).length;
@@ -128,10 +130,19 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
   Widget build(BuildContext context) {
     _refreshMDTTools();
 
+    if (_sortedToolRegistry == null) {
+      _sortedToolRegistry = List.from(mdtToolsRegistry);
+      _sortedToolRegistry.sort((a, b) {
+        return i18n(context, a).compareTo(i18n(context, b));
+      });
+
+      _currentChosenTool = _sortedToolRegistry.indexOf(MDT_INTERNALNAMES_ROTATION);
+    }
+
     return Column(
       children: <Widget>[
         GCWTextDivider(
-          text: 'Add Tool',
+          text: i18n(context, 'multidecoder_configuration_addtool'),
         ),
         Row(
           children: [
@@ -144,12 +155,12 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                       _currentChosenTool = value;
                     });
                   },
-                  items: mdtToolsRegistry.asMap().map((index, toolName) {
+                  items: _sortedToolRegistry.asMap().map((index, toolName) {
                     return MapEntry(
                       index,
                       GCWDropDownMenuItem(
                         value: index,
-                        child: toolName//Text(i18n(context, toolName + '_title'))
+                        child: i18n(context, toolName)
                       )
                     );
                   }).values.toList(),
@@ -168,7 +179,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
           ]
         ),
         GCWTextDivider(
-          text: 'Configure Chosen Tools',
+          text: i18n(context, 'multidecoder_configuration_configurecreated'),
         ),
         _buildToollist()
       ],
@@ -188,7 +199,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                       Row(
                         children: [
                           Expanded(
-                            child: GCWText(text: 'Name'),
+                            child: GCWText(text: i18n(context, 'multidecoder_configuration_name')),
                             flex: 1
                           ),
                           Expanded(
@@ -210,12 +221,18 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
               : Column(
                   children: [
                     GCWText(
-                      text: tool.name,
+                      text: tool.name
                     ),
                     Container(
                       child: GCWText(
                         text: tool.options.entries.map((entry) {
-                          return '${entry.key}: ${entry.value}';
+                          var value = entry.value;
+
+                          if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
+                            value = getCoordinateFormatByKey(entry.value).name;
+                          }
+
+                          return '${i18n(context, entry.key)}: ${i18n(context, value.toString()) ?? value}';
                         }).join('\n'),
                         style: gcwDescriptionTextStyle(),
                       ),
@@ -230,7 +247,9 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                 ? GCWIconButton(
                     iconData: Icons.check,
                     onPressed: () {
-                      tool.name = _editingToolName;
+                      if (_editingToolName.length > 0) {
+                        tool.name = _editingToolName;
+                      }
                       _updateTool(tool);
 
                       setState(() {

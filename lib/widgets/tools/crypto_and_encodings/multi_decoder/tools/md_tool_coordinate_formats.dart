@@ -1,44 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hashes.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/bcd.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/base.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dart';
-import 'package:gc_wizard/widgets/common/gcw_abc_spinner.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_multi_decoder_tool.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_multi_decoder_tool_configuration.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_multi_decoder_tool_configuration.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/utils/constants.dart';
-import 'package:latlong/latlong.dart';
-import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_multi_decoder_tool.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_multi_decoder_tool_configuration.dart';
+import 'package:latlong/latlong.dart';
 
-const MDT_INTERNALNAMES_COORDINATEFORMATS = 'coordinate_formats';
-const MDT_COORDINATEFORMATS_OPTION_FORMAT = 'format';
+const MDT_INTERNALNAMES_COORDINATEFORMATS = 'multidecoder_tool_coordinateformats_title';
+const MDT_COORDINATEFORMATS_OPTION_FORMAT = 'multidecoder_tool_coordinateformats_option_format';
 
 class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
 
-  MultiDecoderToolCoordinateFormats({Key key, int id, String name, MultiDecoderToolState state, Map<String, dynamic> options, BuildContext context}) :
+  MultiDecoderToolCoordinateFormats({Key key, int id, String name, Map<String, dynamic> options, BuildContext context}) :
     super(
       key: key,
       id: id,
       name: name,
-      state: state,
       internalToolName: MDT_INTERNALNAMES_COORDINATEFORMATS,
       onDecode: (String input) {
         input = input.replaceAll(RegExp(r'\s+'), ' ').toUpperCase();
@@ -95,7 +87,7 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
         } catch(e) {}
 
         if (coords == null)
-          return 'Note: hhjkhjk';
+          return null;
 
         return formatCoordOutput(coords, defaultCoordFormat(), defaultEllipsoid());
       },

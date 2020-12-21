@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
-import 'package:latlong/latlong.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
 class GCWMultiDecoderToolConfiguration extends StatefulWidget {
   final Map<String, Widget> widgets;
@@ -34,7 +30,7 @@ class GCWMultiDecoderToolConfigurationState extends State<GCWMultiDecoderToolCon
         return Row(
           children: [
             Expanded(
-              child: GCWText(text:entry.key),//GCWText(text: i18n(context, entry.key)),
+              child: GCWText(text: i18n(context, entry.key)),
               flex: 1
             ),
             Expanded(

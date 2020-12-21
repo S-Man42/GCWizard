@@ -1,29 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/multi_decoder_configuration.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
-import 'package:gc_wizard/persistence/multi_decoder/model.dart';
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
-import 'package:gc_wizard/persistence/multi_decoder/model.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/tools/md_tools.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_multi_decoder_tool.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
+import 'package:gc_wizard/persistence/multi_decoder/model.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/gcw_multi_decoder_tool.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/multi_decoder_configuration.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/tools/md_tool_coordinate_formats.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/tools/md_tools.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
 class MultiDecoder extends StatefulWidget {
   @override
@@ -35,8 +26,9 @@ class MultiDecoderState extends State<MultiDecoder> {
   List<GCWMultiDecoderTool> mdtTools;
 
   String _currentInput = '';
-
   Widget _currentOutput;
+
+  var _firstRun = true;
 
   @override
   void initState() {
@@ -60,6 +52,10 @@ class MultiDecoderState extends State<MultiDecoder> {
 
   @override
   Widget build(BuildContext context) {
+    if (_firstRun && multiDecoderTools.length == 0) {
+      initializeMultiToolDecoder(context);
+    }
+
     _refreshMDTTools();
 
     if (_currentOutput == null)
@@ -86,7 +82,7 @@ class MultiDecoderState extends State<MultiDecoder> {
                 Navigator.push(context, NoAnimationMaterialPageRoute(
                   builder: (context) => GCWTool(
                     tool: MultiDecoderConfiguration(),
-                    toolName: 'Config'
+                    toolName: i18n(context, 'multidecoder_configuration_title')
                   )
                 ))
                 .whenComplete(() {
@@ -99,7 +95,7 @@ class MultiDecoderState extends State<MultiDecoder> {
           ],
         ),
         GCWButton(
-          text: 'Calc',
+          text: i18n(context, 'common_submit_button_text'),
           onPressed: () {
             setState(() {
               _calculateOutput();
@@ -111,28 +107,47 @@ class MultiDecoderState extends State<MultiDecoder> {
     );
   }
 
+  _toolTitle(GCWMultiDecoderTool tool) {
+    var optionValues = tool.options.values.map((value) {
+      var result = value;
+
+      if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
+        result = getCoordinateFormatByKey(value).name;
+      }
+
+      return i18n(context, result.toString()) ?? result;
+    }).join(', ');
+
+    var result = tool.name;
+    if (optionValues != null && optionValues.length > 0)
+      result += ' ($optionValues)';
+
+    return result;
+  }
+
   _initOutput() {
     _currentOutput = Column(
       children: mdtTools.map((tool) {
-        return GCWTextDivider(text: tool.name);
+        return GCWTextDivider(text: _toolTitle(tool));
       }).toList()
     );
   }
 
   _calculateOutput() {
     var results = mdtTools.map((tool) {
-      try {
-        var result = tool.onDecode(_currentInput);
-        if (result == null || result.toString().length == 0)
-          result = 'ZONK';
+      var result;
 
-        return GCWOutput(
-          title: tool.name,
-          child: result,
-        );
-      } catch(e) {
-        print(e);
-      }
+      try {
+        result = tool.onDecode(_currentInput);
+      } catch(e){}
+
+      if (result == null || result.toString().length == 0)
+        return Container();
+
+      return GCWOutput(
+        title: _toolTitle(tool),
+        child: result,
+      );
     }).toList();
 
     _currentOutput = Column(

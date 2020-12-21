@@ -72,6 +72,10 @@ int moveMultiDecoderToolDown(int toolId) {
   return index;
 }
 
+void updateMultiDecoderTools() {
+  _saveData();
+}
+
 void updateMultiDecoderTool(MultiDecoderTool tool) {
   multiDecoderTools = multiDecoderTools.map((currentTool) {
     if (currentTool.id == tool.id)
