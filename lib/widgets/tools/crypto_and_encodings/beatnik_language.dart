@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/beatnik_language.dart';
@@ -73,8 +73,8 @@ class BeatnikState extends State<Beatnik> {
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.right // generate Chef-programm
-            ? Column(
+        _currentMode == GCWSwitchPosition.right // generate Beatnik-programm
+        ? Column(
           children: <Widget>[
             GCWTextField(
               controller: _outputController,
@@ -85,12 +85,9 @@ class BeatnikState extends State<Beatnik> {
                 });
               },
             ),
-            GCWTextDivider(
-                text: i18n(context, 'beatnik_hint_code')
-            ),
           ],
         )
-            : Column(
+        : Column( // interpret Beatnik-programm
           children: <Widget>[
             GCWTextField(
               controller: _programmController,
@@ -110,10 +107,10 @@ class BeatnikState extends State<Beatnik> {
                 });
               },
             ),
-            GCWTextDivider(
-                text: i18n(context, 'beatnik_hint_output')
-            ),
           ],
+        ),
+        GCWTextDivider(
+            text: i18n(context, 'beatnik_hint_output')
         ),
         _buildOutput(context)
       ],
@@ -121,8 +118,6 @@ class BeatnikState extends State<Beatnik> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    List<List<String>> columnData = new List<List<String>>();
-    var flexData = [1, 1, 3, 1, 1];
     BeatnikOutput output;
     String outputData = '';
 
@@ -132,7 +127,6 @@ class BeatnikState extends State<Beatnik> {
         output = interpretBeatnik(_currentScrabbleVersion, _currentProgramm.toUpperCase(), _currentInput);
     }
 
-    columnData = buildOutputData(output);
     outputData = buildOutputText(output);
 
     return Column(
@@ -140,11 +134,39 @@ class BeatnikState extends State<Beatnik> {
         GCWOutputText(
           text: outputData,
         ),
-        GCWOutput(
-          title: i18n(context, 'beatnik_hint_code'),
-          child: Column(
-            children: columnedMultiLineOutput(context, columnData, flexValues: flexData)
-          ),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    GCWTextDivider(
+                        text: i18n(context, 'beatnik_hint_code_assembler')
+                    ),
+                    GCWOutputText(
+                      text: output.assembler.join('\n'),
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    GCWTextDivider(
+                        text: i18n(context, 'beatnik_hint_code_memnonic')
+                    ),
+                    GCWOutputText(
+                      text: output.memnonic.join('\n'),
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+              ),
+            ),
+          ]
         ),
       ],
     );
@@ -154,15 +176,11 @@ class BeatnikState extends State<Beatnik> {
     String output = '';
     outputList.output.forEach((element) {
       if (element.startsWith('beatnik_')) {
-        output = output
-            + i18n(context, element) + '\n';
+        output = output + i18n(context, element) + '\n';
       } else
         output = output + element + '\n';
     });
     return output;
   }
 
-  List<List<String>> buildOutputData(BeatnikOutput outputList){
-    return outputList.programm;
-  }
 }
