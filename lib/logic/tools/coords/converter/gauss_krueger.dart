@@ -141,8 +141,5 @@ LatLng parseGaussKrueger(String input, Ellipsoid ells, {gaussKruegerCode: 1}) {
   if (_northing == null)
     return null;
 
-  print(_easting);
-  print(_northing);
-
   return gaussKruegerToLatLon(GaussKrueger(gaussKruegerCode, _easting, _northing), ells);
 }
