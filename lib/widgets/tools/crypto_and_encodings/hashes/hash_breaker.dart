@@ -1,36 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
-import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/logic/common/units/length.dart';
-import 'package:gc_wizard/logic/common/units/unit_category.dart';
-import 'package:gc_wizard/persistence/formula_solver/model.dart' as formula_base;
-import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart';
-import 'package:gc_wizard/persistence/variable_coordinate/model.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
-import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hashes.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hash_breaker.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'dart:async';
+import 'package:flutter/material.dart';
+
 
 class HashBreaker extends StatefulWidget {
   final Function hashFunction;
@@ -42,6 +27,39 @@ class HashBreaker extends StatefulWidget {
 }
 
 class _HashBreakerState extends State<HashBreaker> {
+  final Map<String, Function> _HASHFUNCTIONS = {
+    'hashes_md5' : md5Digest,
+    'hashes_sha1' : sha1Digest,
+    'hashes_sha224' : sha224Digest,
+    'hashes_sha256' : sha256Digest,
+    'hashes_sha384' : sha384Digest,
+    'hashes_sha512' : sha512Digest,
+    'hashes_sha512.224' : sha512_224Digest,
+    'hashes_sha512.256' : sha512_256Digest,
+    'hashes_sha3.224' : sha3_224Digest,
+    'hashes_sha3.256' : sha3_256Digest,
+    'hashes_sha3.384' : sha3_384Digest,
+    'hashes_sha3.512' : sha3_512Digest,
+    'hashes_keccak224' : keccak_224Digest,
+    'hashes_keccak256' : keccak_256Digest,
+    'hashes_keccak288' : keccak_288Digest,
+    'hashes_keccak384' : keccak_384Digest,
+    'hashes_keccak512' : keccak_512Digest,
+    'hashes_ripemd128' : ripemd_128Digest,
+    'hashes_ripemd160' : ripemd_160Digest,
+    'hashes_ripemd256' : ripemd_256Digest,
+    'hashes_ripemd320' : ripemd_320Digest,
+    'hashes_md2' : md2Digest,
+    'hashes_md4' : md4Digest,
+    'hashes_tiger192' : tiger_192Digest,
+    'hashes_whirlpool512' : whirlpool_512Digest,
+    'hashes_blake2b160' : blake2b_160Digest,
+    'hashes_blake2b224' : blake2b_224Digest,
+    'hashes_blake2b256' : blake2b_256Digest,
+    'hashes_blake2b384' : blake2b_384Digest,
+    'hashes_blake2b512' : blake2b_512Digest,
+  };
+
   var _fromController;
   var _toController;
   var _inputController;
@@ -63,6 +81,7 @@ class _HashBreakerState extends State<HashBreaker> {
   var _currentOutput = '';
   var _currentHashFunction = md5Digest;
   var _currentSubstitutions = <int, Map<String, String>>{};
+  var _isStarted = false;
 
   @override
   void initState() {
@@ -110,7 +129,7 @@ class _HashBreakerState extends State<HashBreaker> {
               _currentHashFunction = newValue;
             });
           },
-          items: HASH_FUNCTIONS.entries.map((hashFunction) {
+          items: _HASHFUNCTIONS.entries.map((hashFunction) {
             return GCWDropDownMenuItem(
               value: hashFunction.value,
               child: i18n(context, hashFunction.key + '_title'),
@@ -126,13 +145,7 @@ class _HashBreakerState extends State<HashBreaker> {
         ),
         _buildVariablesInput(),
         _buildSubstitutionList(context),
-        GCWSubmitFlatButton(
-          onPressed: () {
-            setState(() {
-              _calculateOutput();
-            });
-          },
-        ),
+        _buildButtonProgressBar(),
         GCWDefaultOutput(
           child: _currentOutput
         )
@@ -140,7 +153,43 @@ class _HashBreakerState extends State<HashBreaker> {
     );
   }
 
-  _calculateOutput({calculateAll = false}) {
+  _buildButtonProgressBar() {
+    //ChangeNotifierProvider<TimeState>();
+   return _isStarted ?
+     LinearPercentIndicator(
+        width : 300.0,
+        linearStrokeCap: LinearStrokeCap.butt,
+        lineHeight: 30.0,
+        percent: Progress,
+
+        center: (Text(
+            (Progress * 100).toStringAsFixed(1) + "%",
+    //style : new TextStyle( fontSize: 16.0, color: Colors.white, fontStyle: FontStyle.italic),
+    )))
+        :
+     GCWSubmitFlatButton(
+      onPressed: () {
+        setState(() {
+          _startProgressTimer();
+          _calculateOutput();
+        });
+      },
+    );
+  }
+
+  _startProgressTimer() {
+    Timer.periodic(Duration(milliseconds: 500), (timer) {
+      if (!_isStarted)
+        timer.cancel();
+print('timer tick');
+      this.setState(() {});
+    });
+  }
+
+  _calculateOutput({calculateAll = false}) async {
+    if (_isStarted)
+      return;
+
     var _substitutions = <String, String>{};
     _currentSubstitutions.entries.forEach((entry) {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
@@ -148,10 +197,8 @@ class _HashBreakerState extends State<HashBreaker> {
 
     if (calculateAll == false) {
       var preCheckResult = preCheck(_substitutions);
-      if (preCheckResult == null || preCheckResult['status'] == null) {
-        _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
-        return;
-      }
+      if (preCheckResult == null || preCheckResult['status'] == null)
+        return i18n(context, 'hashes_hashbreaker_solutionnotfound');
 
       if (preCheckResult['status'] == 'high_count') {
         showGCWAlertDialog(
@@ -160,6 +207,7 @@ class _HashBreakerState extends State<HashBreaker> {
           i18n(context, 'hashes_hashbreaker_alert_range_text', parameters: [preCheckResult['count']]),
           () {
             setState(() {
+              this.setState(() {});
               _calculateOutput(calculateAll: true);
             });
           },
@@ -170,13 +218,18 @@ class _HashBreakerState extends State<HashBreaker> {
       }
     }
 
-    Map<String, dynamic> output = breakHash(_currentInput, _currentMask, _substitutions, _currentHashFunction);
-    if (output == null || output['state'] == null || output['state'] == 'not_found') {
-      _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
-      return;
-    }
+    _isStarted = true;
+    var _currentOutputFuture = breakHash(_currentInput, _currentMask, _substitutions, _currentHashFunction);
 
-    _currentOutput = output['text'];
+    _currentOutputFuture.then((output) {
+      _isStarted = false;
+      if (output == null || output['state'] == null || output['state'] == 'not_found'){
+        return i18n(context, 'hashes_hashbreaker_solutionnotfound');
+      }
+
+      _currentOutput = output['text'];
+      this.setState(() {});
+    });
   }
 
   _buildVariablesInput() {
@@ -322,8 +375,8 @@ class _HashBreakerState extends State<HashBreaker> {
 
       if (odd) {
         output = Container(
-          color: themeColors().outputListOddRows(),
-          child: row
+            color: themeColors().outputListOddRows(),
+            child: row
         );
       } else {
         output = Container(
@@ -337,10 +390,10 @@ class _HashBreakerState extends State<HashBreaker> {
 
     return Container(
       child: Column(
-        children: rows
+          children: rows
       ),
       padding: EdgeInsets.only(
-        top: 10
+          top: 10
       ),
     );
   }
