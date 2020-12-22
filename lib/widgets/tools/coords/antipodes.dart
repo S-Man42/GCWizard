@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/theme/fixed_colors.dart';
 
 class Antipodes extends StatefulWidget {
   @override
@@ -67,17 +68,17 @@ class AntipodesState extends State<Antipodes> {
 
     _currentMapPoints = [
       MapPoint(
-          point: _currentCoords,
-          markerText: i18n(context, 'coords_antipodes_coorda'),
-          coordinateFormat: _currentCoordsFormat
+        point: _currentCoords,
+        markerText: i18n(context, 'coords_antipodes_coorda'),
+        coordinateFormat: _currentCoordsFormat
       ),
       MapPoint(
         point: _currentValues[0],
+        color: COLOR_MAP_CALCULATEDPOINT,
         markerText: i18n(context, 'coords_antipodes_coordb'),
         coordinateFormat: _currentCoordsFormat
       ),
     ];
-
 
     _currentOutput = _currentValues.map((projection) {
       return formatCoordOutput(projection, _currentOutputFormat, defaultEllipsoid());
