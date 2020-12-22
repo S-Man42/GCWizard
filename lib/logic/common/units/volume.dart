@@ -261,16 +261,40 @@ final VOLUME_BATHTUB = Volume (
   inCubicMeters: 0.001 * 150.0
 );
 
+final VOLUME_SALTSPOON = Volume (
+    name: 'common_unit_volume_tsp_name',
+    symbol: 'ssp',
+    inCubicMeters: 0.001 * 0.001 * 1.23
+);
+
+final VOLUME_DESSERTSPOON = Volume (
+    name: 'common_unit_volume_tsp_name',
+    symbol: 'dsp',
+    inCubicMeters: 0.001 * 0.001 * 9.86
+);
+
 final VOLUME_TEASPOON = Volume (
     name: 'common_unit_volume_tsp_name',
-    symbol: 'TL',
-    inCubicMeters: 0.001 * 0.001 * 5
+    symbol: 'tsp',
+    inCubicMeters: 0.001 * 0.001 * 4.93
 );
 
 final VOLUME_TABLESPOON = Volume (
     name: 'common_unit_volume_tbsp_name',
-    symbol: 'EL',
-    inCubicMeters: 0.001 * 0.001 * 15
+    symbol: 'tbsp',
+    inCubicMeters: 0.001 * 0.001 * 14.8
+);
+
+final VOLUME_CUP = Volume (
+    name: 'common_unit_volume_tc_name',
+    symbol: 'c',
+    inCubicMeters: 0.001 * 0.001 * 177
+);
+
+final VOLUME_TEACUP = Volume (
+    name: 'common_unit_volume_tc_name',
+    symbol: 'tc',
+    inCubicMeters: 0.001 * 0.001 * 237
 );
 
 final List<Unit> volumes = [
@@ -316,5 +340,9 @@ final List<Unit> volumes = [
   VOLUME_USBUSHEL,
   VOLUME_BATHTUB,
   VOLUME_TEASPOON,
-  VOLUME_TABLESPOON
+  VOLUME_TABLESPOON,
+  VOLUME_DESSERTSPOON,
+  VOLUME_SALTSPOON,
+  VOLUME_CUP,
+  VOLUME_TEACUP
 ];

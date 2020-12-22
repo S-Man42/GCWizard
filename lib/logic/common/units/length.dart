@@ -89,15 +89,9 @@ final LENGTH_RANGAR= Length(
     inMeters: 4826 / 5000
 );
 
-final LENGTH_LANDLEAGUE= Length(
-    name: 'common_unit_length_landleague_name',
-    symbol: 'league',
-    inMeters: 4828
-);
-
 final LENGTH_FATHOM= Length(
     name: 'common_unit_length_fathom_name',
-    symbol: 'fth',
+    symbol: 'fm',
     inMeters: 1.8288
 );
 
@@ -119,6 +113,12 @@ final LENGTH_ROD= Length(
     inMeters: 5.0292
 );
 
+final LENGTH_LINK= Length(
+    name: 'common_unit_length_link_name',
+    symbol: 'li',
+    inMeters: 0.20168
+);
+
 final List<Unit> baseLengths = [
   LENGTH_METER,
   LENGTH_STATUTEMILE,
@@ -129,7 +129,7 @@ final List<Unit> baseLengths = [
   LENGTH_FURLONG,
   LENGTH_CHAIN,
   LENGTH_ROD,
-  LENGTH_LANDLEAGUE,
+  LENGTH_LINK,
   LENGTH_USSURVEYFOOT,
   LENGTH_NAUTICALMILE,
   LENGTH_LIGHTYEAR,
