@@ -41,6 +41,8 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
         ),
 
         GCWTwoOptionsSwitch(
+          leftValue: i18n(context, 'whitespace_generator'),
+          rightValue: i18n(context, 'whitespace_interpreter'),
           value: _currentMode,
           onChanged: (value) {
             setState(() {
@@ -91,14 +93,14 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
     _currentOutput= null;
 
     if (_currentMode == GCWSwitchPosition.left) {
-      var currentOutputFuture = encodeWhitespace(_currentCode);
+      var currentOutputFuture = generateWhitespace(_currentCode);
       currentOutputFuture.then((output) {
         _currentOutput = output;
         _isStarted = false;
         this.setState(() {});
       });
     } else {
-      var currentOutputFuture = decodeWhitespace(_currentCode, '', continueState: _continueState);
+      var currentOutputFuture = interpreterWhitespace(_currentCode, '', continueState: _continueState);
       _continueState = null;
 
       currentOutputFuture.then((output) {

@@ -80,7 +80,7 @@ class WhitespaceState {
   }
 }
 
-Future<WhitespaceResult> decodeWhitespace(String code, String inp, {int timeOut = 30000, WhitespaceState continueState}) async {
+Future<WhitespaceResult> interpreterWhitespace(String code, String inp, {int timeOut = 30000, WhitespaceState continueState}) async {
   try {
     if (code == null || code.length == 0) return WhitespaceResult();
 
@@ -120,7 +120,7 @@ Future<WhitespaceResult> decodeWhitespace(String code, String inp, {int timeOut 
 }
 
 
-Future<WhitespaceResult> encodeWhitespace(String input) async {
+Future<WhitespaceResult> generateWhitespace(String input) async {
 
   var code = _WhitespaceOutputString(input);
 
