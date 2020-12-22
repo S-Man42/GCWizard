@@ -9,6 +9,8 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/logic/tools/games/scrabble_sets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class Beatnik extends StatefulWidget {
 
@@ -26,6 +28,7 @@ class BeatnikState extends State<Beatnik> {
   var _currentOutput = '';
   var _currentScrabbleVersion = scrabbleID_EN;
   bool _currentScrabble = true;
+  bool _currentDebug = false;
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;    // interpret
 
@@ -120,6 +123,10 @@ class BeatnikState extends State<Beatnik> {
   Widget _buildOutput(BuildContext context) {
     BeatnikOutput output;
     String outputData = '';
+    var flexData;
+    flexData = [1, 2, 3, 3];
+
+    List<List<String>> columnData = new List<List<String>>();
 
     if (_currentMode == GCWSwitchPosition.right) { // generate beatnik
         output = generateBeatnik(_currentScrabbleVersion, _currentOutput);
@@ -129,13 +136,38 @@ class BeatnikState extends State<Beatnik> {
 
     outputData = buildOutputText(output);
 
+    for (int i = 0; i< output.debug.length; i++) {
+      columnData.add([output.debug[i].pc, output.debug[i].command, output.debug[i].stack, output.debug[i].output]);
+    }
+
+
     return Column(
       children: <Widget>[
         GCWOutputText(
           text: outputData,
         ),
         GCWOnOffSwitch(
-          title:i18n(context, 'beatnik_show_scrabble'),
+          title:i18n(context, 'beatnik_debug'),
+          value: _currentDebug,
+          onChanged: (value) {
+            setState(() {
+              _currentDebug = value;
+            });
+          },
+        ),
+        _currentDebug == true
+        ? GCWOutput(
+            title: i18n(context, 'beatnik_debug'),
+            child: Column(
+              children: columnedMultiLineOutput(context, columnData, flexValues: flexData)
+            ),
+          )
+        : Container(),
+        GCWTextDivider(
+          text: i18n(context, 'beatnik_hint_code'),
+        ),
+        GCWOnOffSwitch(
+          title: i18n(context, 'beatnik_show_scrabble'),
           value: _currentScrabble,
           onChanged: (value) {
             setState(() {
