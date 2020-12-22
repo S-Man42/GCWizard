@@ -135,3 +135,32 @@ String latLonToUTMString(LatLng coord, Ellipsoid ells) {
   UTMREF utm = latLonToUTM(coord, ells);
   return '${utm.zone.lonZone} ${utm.hemisphere == HemisphereLatitude.North ? 'N' : 'S'} ${doubleFormat.format(utm.easting)} ${doubleFormat.format(utm.northing)}';
 }
+
+LatLng parseUTM(String input, Ellipsoid ells) {
+  RegExp regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s?([0-9\.]+)\s+([0-9\.]+)\s*$');
+  var matches = regExp.allMatches(input);
+  if (matches.length == 0)
+    return null;
+
+  var match = matches.elementAt(0);
+  var _lonZone = int.tryParse(match.group(1));
+  if (_lonZone == null)
+    return null;
+
+  var _hemisphere = match.group(2);
+  if (['N', 'M'].contains(_hemisphere) == false)
+    return null;
+
+  var _easting = double.tryParse(match.group(3));
+  if (_easting == null)
+    return null;
+
+  var _northing = double.tryParse(match.group(4));
+  if (_northing == null)
+    return null;
+
+  var zone = UTMZone(_lonZone, _lonZone, _hemisphere);
+  var utm = UTMREF(zone, _easting, _northing);
+
+  return UTMREFtoLatLon(utm, ells);
+}

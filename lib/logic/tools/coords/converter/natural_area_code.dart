@@ -56,3 +56,17 @@ LatLng naturalAreaCodeToLatLon(NaturalAreaCode nac) {
     _nacComponentToLatLonComponent(nac.x) * 360.0 - 180.0,
   );
 }
+
+LatLng parseNaturalAreaCode(String input) {
+  RegExp regExp = RegExp(r'^\s*([0-9A-Z]+)(\s*,\s*|\s+)([0-9A-Z]+)\s*$');
+  var matches = regExp.allMatches(input);
+  if (matches.length == 0)
+    return null;
+
+  var match = matches.elementAt(0);
+
+  var x = match.group(1);
+  var y = match.group(3);
+
+  return naturalAreaCodeToLatLon(NaturalAreaCode(x, y));
+}

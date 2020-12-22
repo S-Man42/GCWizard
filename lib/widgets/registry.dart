@@ -104,6 +104,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/multi_decoder.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
@@ -548,7 +549,13 @@ class Registry {
         tool: Morse(),
         i18nPrefix: 'morse',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'samuel morse morsecode morsen translators translate uebersetzen uebersetzer punkte striche dots dashes'
+        searchStrings: 'samuel morse morsecode morsen punkte striche dots dashes'
+      ),
+      GCWTool(
+        tool: MultiDecoder(),
+        i18nPrefix: 'multidecoder',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'multidecoder multisolver multiloeser universal universeller',
       ),
       GCWTool(
         tool: NumeralBases(),
@@ -891,7 +898,7 @@ class Registry {
       ),
       GCWTool(
         tool: BCDBiquinary(),
-        i18nPrefix: 'bcd_biquinaer',
+        i18nPrefix: 'bcd_biquinary',
         searchStrings: SEARCHSTRING_BCD + 'biquinaer biquinary'
       ),
       GCWTool(

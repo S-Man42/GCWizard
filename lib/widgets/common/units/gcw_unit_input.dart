@@ -61,7 +61,7 @@ class _GCWUnitInputState extends State<GCWUnitInput> {
                   });
                 },
               ),
-              padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
+              padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
             ),
             flex: 3
           ),

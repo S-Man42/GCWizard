@@ -206,7 +206,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
                             text: '${group.formulas.length} ' + i18n(context, group.formulas.length == 1 ? 'formulasolver_formula' : 'formulasolver_formulas'),
                             style: gcwDescriptionTextStyle(),
                           ),
-                          padding: EdgeInsets.only(left: 10),
+                          padding: EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
                         )
                       ],
                     )

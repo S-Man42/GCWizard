@@ -141,7 +141,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
                     onPressed: _decreaseValue
                   ),
                   margin: EdgeInsets.only(
-                    right: 2 * DEFAULT_MARGIN
+                    right: DOUBLE_DEFAULT_MARGIN
                   ),
                 ),
                 Expanded(
@@ -153,7 +153,7 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
                     onPressed: _increaseValue
                   ),
                   margin: EdgeInsets.only(
-                    left: 2 * DEFAULT_MARGIN
+                    left: DOUBLE_DEFAULT_MARGIN
                   ),
                 )
               ],

@@ -45,7 +45,7 @@ class GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDist
                     });
                   },
                 ),
-                padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN)
+                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
               )
             ),
             Expanded(
