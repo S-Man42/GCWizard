@@ -160,7 +160,11 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                       index,
                       GCWDropDownMenuItem(
                         value: index,
-                        child: i18n(context, toolName)
+                        child: i18n(context, toolName),
+                        subtitle:
+                          i18n(context, 'multidecoder_configuration_counttoolused',
+                            parameters: [mdtTools.where((tool) => tool.internalToolName == toolName).length]
+                          )
                       )
                     );
                   }).values.toList(),

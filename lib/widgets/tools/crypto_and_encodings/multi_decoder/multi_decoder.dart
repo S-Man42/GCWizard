@@ -72,6 +72,11 @@ class MultiDecoderState extends State<MultiDecoder> {
                   controller: _controller,
                   onChanged: (text) {
                     _currentInput = text;
+                    if (_currentInput == null || _currentInput.length == 0) {
+                      setState(() {
+                        _currentOutput = null;
+                      });
+                    }
                   },
                 ),
                 padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
