@@ -28,7 +28,7 @@ class MultiDecoderState extends State<MultiDecoder> {
   String _currentInput = '';
   Widget _currentOutput;
 
-  var _firstRun = true;
+  var _firstBuild = true;
 
   @override
   void initState() {
@@ -52,8 +52,9 @@ class MultiDecoderState extends State<MultiDecoder> {
 
   @override
   Widget build(BuildContext context) {
-    if (_firstRun && multiDecoderTools.length == 0) {
+    if (_firstBuild && multiDecoderTools.length == 0) {
       initializeMultiToolDecoder(context);
+      _firstBuild = false;
     }
 
     _refreshMDTTools();
