@@ -131,3 +131,25 @@ String decToSwissGridString(LatLng coord, Ellipsoid ells) {
 
   return 'Y: ${swissGrid.easting}\nX: ${swissGrid.northing}';
 }
+
+LatLng parseSwissGrid(String input, Ellipsoid ells, {isSwissGridPlus: false}) {
+  RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)\s*$');
+  var matches = regExp.allMatches(input);
+  if (matches.length == 0)
+    return null;
+
+  var match = matches.elementAt(0);
+
+  var _easting = double.tryParse(match.group(1));
+  if (_easting == null)
+    return null;
+
+  var _northing = double.tryParse(match.group(3));
+  if (_northing == null)
+    return null;
+
+  if (isSwissGridPlus)
+    return swissGridPlusToLatLon(SwissGrid(_easting, _northing), ells);
+
+  return swissGridToLatLon(SwissGrid(_easting, _northing), ells);
+}

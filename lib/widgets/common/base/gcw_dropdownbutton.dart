@@ -100,7 +100,7 @@ _buildMenuItemChild(GCWDropDownMenuItem item) {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            padding: EdgeInsets.only(left: 10)
+            padding: EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN)
           ),
         ]
       ),

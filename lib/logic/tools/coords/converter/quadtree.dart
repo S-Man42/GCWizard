@@ -50,3 +50,10 @@ LatLng quadtreeToLatLon(List<int> quadtree) {
   var lat = radianToDegrees(2 * atan(exp(latRadians)) - PI / 2);
   return LatLng(lat, lon);
 }
+
+LatLng parseQuadtree(String input) {
+  if (input.length != input.replaceAll(RegExp(r'[^0123]'), '').length)
+    return null;
+
+  return quadtreeToLatLon(input.split('').map((character) => int.tryParse(character)).toList());
+}

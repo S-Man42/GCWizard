@@ -139,7 +139,7 @@ class GCWCoordsDMMState extends State<GCWCoordsDMM> {
                     });
                   }
                 ),
-                padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
               )
             ),
             Expanded(
@@ -230,7 +230,7 @@ class GCWCoordsDMMState extends State<GCWCoordsDMM> {
                     });
                   }
                 ),
-                padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
               )
             ),
             Expanded(
