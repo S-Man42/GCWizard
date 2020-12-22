@@ -54,7 +54,7 @@ class _GCWDistanceState extends State<GCWDistance> {
                 });
               },
             ),
-            padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN)
+            padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
           )
         ),
         Expanded(

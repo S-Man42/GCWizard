@@ -5,7 +5,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 showDeleteAlertDialog(BuildContext context, String deleteableText, Function onOKPressed) {
   showGCWAlertDialog(
     context,
-    i18n(context, 'deletealert_title'),
-    i18n(context, 'deletealert_text', parameters: [deleteableText]), onOKPressed
+    i18n(context, 'common_deletealtert_title'),
+    i18n(context, 'common_deletealtert_text', parameters: [deleteableText]), onOKPressed
   );
 }

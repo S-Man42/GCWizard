@@ -48,6 +48,7 @@ import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
+import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
@@ -115,6 +116,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/multi_decoder.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
@@ -570,7 +572,13 @@ class Registry {
         tool: Morse(),
         i18nPrefix: 'morse',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'samuel morse morsecode morsen translators translate uebersetzen uebersetzer punkte striche dots dashes'
+        searchStrings: 'samuel morse morsecode morsen punkte striche dots dashes'
+      ),
+      GCWTool(
+        tool: MultiDecoder(),
+        i18nPrefix: 'multidecoder',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'multidecoder multisolver multiloeser universal universeller',
       ),
       GCWTool(
          tool: NumberSequenceSelection(),
@@ -919,7 +927,7 @@ class Registry {
       ),
       GCWTool(
         tool: BCDBiquinary(),
-        i18nPrefix: 'bcd_biquinaer',
+        i18nPrefix: 'bcd_biquinary',
         searchStrings: SEARCHSTRING_BCD + 'biquinaer biquinary'
       ),
       GCWTool(
@@ -1068,6 +1076,12 @@ class Registry {
         i18nPrefix: 'coords_intersectthreecircles',
         iconPath: 'assets/coordinates/icon_intersect_three_circles.png',
         searchStrings: SEARCHSTRING_COORDINATES + 'multilateration trilateration distances intersection distanzen entfernungen abstand abstaende drei three 3 circles kreise'
+      ),
+      GCWTool(
+          tool: Antipodes(),
+          i18nPrefix: 'coords_antipodes',
+          iconPath: 'assets/coordinates/icon_antipodes.png',
+          searchStrings: SEARCHSTRING_COORDINATES + 'gegenueberliegende oppositeside antipodes antipoden gegenpunkte'
       ),
       GCWTool(
         tool: Intersection(),

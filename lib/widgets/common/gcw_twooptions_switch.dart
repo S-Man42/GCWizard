@@ -14,8 +14,18 @@ class GCWTwoOptionsSwitch extends StatefulWidget {
   final String rightValue;
   final GCWSwitchPosition value;
   final bool alternativeColor;
+  final bool notitle;
 
-  const GCWTwoOptionsSwitch({Key key, this.onChanged, this.title, this.leftValue, this.rightValue, this.value, this.alternativeColor: false}) : super(key: key);
+  const GCWTwoOptionsSwitch({
+    Key key,
+    this.onChanged,
+    this.title,
+    this.leftValue,
+    this.rightValue,
+    this.value,
+    this.alternativeColor: false,
+    this.notitle: false
+  }) : super(key: key);
 
   @override
   GCWTwoOptionsSwitchState createState() => GCWTwoOptionsSwitchState();
@@ -34,7 +44,7 @@ class GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
 
     return Row(
       children: <Widget>[
-        Expanded(
+        widget.notitle ? Container() : Expanded(
           child: GCWText(
             text: (widget.title ?? i18n(context, 'common_switch_title')) + ':',
             style: textStyle,

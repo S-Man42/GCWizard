@@ -3,6 +3,13 @@ import 'dart:convert';
 import 'package:base32/base32.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/ascii85.dart';
 
+final Map<String, Function> BASE_FUNCTIONS = {
+  'base_base16' : decodeBase16,
+  'base_base32' : decodeBase32,
+  'base_base64' : decodeBase64,
+  'base_base85' : decodeBase85,
+};
+
 String decodeBase16(String input) {
   if (input == null || input == '')
     return '';

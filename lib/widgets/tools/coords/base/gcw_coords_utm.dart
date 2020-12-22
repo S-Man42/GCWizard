@@ -78,7 +78,7 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
                       });
                     }
                   ),
-                  padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN),
+                  padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 )
               ),
             ],

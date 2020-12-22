@@ -110,3 +110,21 @@ String latLonToWaldmeisterString(LatLng coord) {
   var waldmeister = latLonToWaldmeister(coord);
   return waldmeister.join('\n');
 }
+
+LatLng parseWaldmeister(String input) {
+  RegExp regExp = RegExp(r'^\s*([0-9]+)(\s*,\s*|\s+)([0-9]+)(\s*,\s*|\s+)([0-9]+)\s*$');
+  var matches = regExp.allMatches(input);
+  if (matches.length == 0)
+    return null;
+
+  var match = matches.elementAt(0);
+
+  var a = int.tryParse(match.group(1));
+  var b = int.tryParse(match.group(3));
+  var c = int.tryParse(match.group(5));
+
+  if (a == null || b == null || c == null)
+    return null;
+
+  return waldmeisterToLatLon(a, b, c);
+}
