@@ -671,12 +671,11 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
   return numberList;
 }
 
-List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
-  List<getPositionOfSequenceOutput> numberList = new List<getPositionOfSequenceOutput>();
+getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
+  getPositionOfSequenceOutput numberList;
 
   if (check == null || check == '') {
-    numberList.add(getPositionOfSequenceOutput('-1', '', ''));
-    return numberList;
+    return getPositionOfSequenceOutput('-1', '', '');
   }
 
   BigInt number = Zero;
@@ -699,7 +698,7 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
           int j = 0;
           while (!numberString.substring(j).startsWith(check))
             j++;
-          numberList.add(getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString()));
+          numberList = getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
           found = true;
         }
         index++;
@@ -714,7 +713,7 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
           int j = 0;
           while (!numberString.substring(j).startsWith(check))
             j++;
-          numberList.add(getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString()));
+          numberList = getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
           found = true;
         }
         index++;
@@ -729,7 +728,7 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
           int j = 0;
           while (!numberString.substring(j).startsWith(check))
             j++;
-          numberList.add(getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString()));
+          numberList = getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
           found = true;
         }
         index++;
@@ -744,7 +743,7 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
           int j = 0;
           while (!numberString.substring(j).startsWith(check))
             j++;
-          numberList.add(getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString()));
+          numberList = getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
           found = true;
         }
         index++;
@@ -756,11 +755,11 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
       number = pn1;
       if (check == Zero.toString()) {
         found = true;
-        numberList.add(getPositionOfSequenceOutput('0', '0', '1'));
+        numberList = getPositionOfSequenceOutput('0', '0', '1');
       } else
         if (check == One.toString()){
           found = true;
-          numberList.add(getPositionOfSequenceOutput('1', '1', '1'));
+          numberList = getPositionOfSequenceOutput('1', '1', '1');
       }
       while (index < maxSearch + 1 && !found) {
         number = pn1 + Two * pn0;
@@ -771,7 +770,7 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
           int j = 0;
           while (!numberString.substring(j).startsWith(check))
             j++;
-          numberList.add(getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString()));
+          numberList = getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
           found = true;
         }
         index++;
@@ -783,11 +782,11 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
       number = pn1;
       if (check == Two.toString()){
         found = true;
-        numberList.add(getPositionOfSequenceOutput('2', '0', '1'));
+        numberList = getPositionOfSequenceOutput('2', '0', '1');
       } else
         if ((check == One.toString())){
           found = true;
-          numberList.add(getPositionOfSequenceOutput('1', '1', '1'));
+          numberList = getPositionOfSequenceOutput('1', '1', '1');
         }
       while (index < maxSearch + 1 && !found) {
         number = pn1 + Two * pn0;
@@ -798,7 +797,7 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
           int j = 0;
           while (!numberString.substring(j).startsWith(check))
             j++;
-          numberList.add(getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString()));
+          numberList = getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
           found = true;
         }
         index++;
@@ -810,11 +809,11 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
       number = pn1;
       if (check == Zero.toString()){
         found = true;
-        numberList.add(getPositionOfSequenceOutput('0', '0', '1'));
+        numberList = getPositionOfSequenceOutput('0', '0', '1');
       } else
         if ((check == One.toString())){
           found = true;
-          numberList.add(getPositionOfSequenceOutput('1', '1', '1'));
+          numberList = getPositionOfSequenceOutput('1', '1', '1');
         }
       while (index < maxSearch + 1 && !found) {
         number = Two * pn1 + pn0;
@@ -825,7 +824,7 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
           int j = 0;
           while (!numberString.substring(j).startsWith(check))
             j++;
-          numberList.add(getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString()));
+          numberList = getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
           found = true;
         }
         index++;
@@ -837,7 +836,7 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
       number = pn1;
       if (check == Two.toString()){
         found = true;
-        numberList.add(getPositionOfSequenceOutput('2', '0', '1'));
+        numberList = getPositionOfSequenceOutput('2', '0', '1');
       }
       while (index < maxSearch + 1 && !found) {
         number = Two * pn1 + pn0;
@@ -848,7 +847,7 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
           int j = 0;
           while (!numberString.substring(j).startsWith(check))
             j++;
-          numberList.add(getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString()));
+          numberList = getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
           found = true;
         }
         index++;
@@ -862,7 +861,7 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
           int j = 0;
           while (!numberString.substring(j).startsWith(check))
             j++;
-          numberList.add(getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString()));
+          numberList = getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
           found = true;
         }
         index++;
@@ -888,7 +887,7 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
           int j = 0;
           while (!numberString.substring(j).startsWith(check))
             j++;
-          numberList.add(getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString()));
+          numberList = getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
           found = true;
         }
         index++;
@@ -896,7 +895,7 @@ List getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
       break;
   }
   if (!found) {
-    numberList.add(getPositionOfSequenceOutput('-1', '', ''));
+    numberList = getPositionOfSequenceOutput('-1', '', '');
   }
   return numberList;
 }

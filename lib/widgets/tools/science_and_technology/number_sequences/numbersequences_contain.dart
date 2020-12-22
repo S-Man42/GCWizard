@@ -38,6 +38,8 @@ class NumberSequenceContainsState extends State<NumberSequenceContains> {
         ),
         GCWIntegerSpinner(
           value: currentInputN,
+          min: 0,
+          max: 999999999,
           onChanged: (value) {
             setState(() {
               currentInputN = value;
@@ -54,27 +56,20 @@ class NumberSequenceContainsState extends State<NumberSequenceContains> {
 
   _buildOutput() {
     List<List<String>> columnData = new List<List<String>>();
-    List<getPositionOfSequenceOutput> detailedOutput;
+    getPositionOfSequenceOutput detailedOutput;
 
     var flexData;
-    String  columnDataNumber;
-    String  columnDataPositionSequence;
-    String  columnDataPositionDigits;
 
     detailedOutput = getFirstPositionOfSequence(widget.mode, currentInputN.toString());
 
     columnData.add([i18n(context, 'numbersequence_output_col_1'), i18n(context, 'numbersequence_output_col_2'), i18n(context, 'numbersequence_output_col_3')]);
-    for (int i = 0; i< detailedOutput.length; i++) {
-      columnDataNumber = detailedOutput[i].number;
-      columnDataPositionSequence = detailedOutput[i].PositionSequence;
-      columnDataPositionDigits = detailedOutput[i].PositionDigits;
-      columnData.add([columnDataNumber, columnDataPositionSequence, columnDataPositionDigits]);
-    }
+    columnData.add([detailedOutput.number, detailedOutput.PositionSequence, detailedOutput.PositionDigits]);
+
     flexData = [4, 2, 1];
 
     return GCWOutput(
         child: Column(
-            children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)
+            children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 0)
         )
     );
   }
