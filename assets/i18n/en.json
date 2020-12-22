@@ -249,6 +249,8 @@
   "beatnik_hint" : "Hint",
   "beatnik_hint_generated" : "Finally you have to replace the numbers with words. The word-value has to be computed according to the scrabble-set and should be equla to the number.",
   "beatnik_hint_code" : "Sourcecode",
+  "beatnik_show_scrabble" : "Show Scrabble",
+  "beatnik_hint_code_scrabble" : "Scrabble",
   "beatnik_hint_code_assembler" : "Assembler",
   "beatnik_hint_code_memnonic" : "Memnonic",
   "beatnik_hint_input" : "Input",

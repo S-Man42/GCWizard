@@ -248,6 +248,8 @@
   "beatnik_mode_generate" : "Generator",
   "beatnik_hint" : "Hinweis",
   "beatnik_hint_code" : "Quellcode",
+  "beatnik_show_scrabble" : "Show Scrabble",
+  "beatnik_hint_code_scrabble" : "Scrabble",
   "beatnik_hint_code_assembler" : "Assembler",
   "beatnik_hint_code_memnonic" : "Memnonic",
   "beatnik_hint_input" : "Eingabe",

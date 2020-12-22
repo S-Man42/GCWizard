@@ -8,8 +8,7 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/logic/tools/games/scrabble_sets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 
 class Beatnik extends StatefulWidget {
 
@@ -26,6 +25,7 @@ class BeatnikState extends State<Beatnik> {
   var _currentInput = '';
   var _currentOutput = '';
   var _currentScrabbleVersion = scrabbleID_EN;
+  bool _currentScrabble = true;
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;    // interpret
 
@@ -134,37 +134,79 @@ class BeatnikState extends State<Beatnik> {
         GCWOutputText(
           text: outputData,
         ),
+        GCWOnOffSwitch(
+          title:i18n(context, 'beatnik_show_scrabble'),
+          value: _currentScrabble,
+          onChanged: (value) {
+            setState(() {
+              _currentScrabble = value;
+            });
+          },
+        ),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            _currentScrabble == true
+            ? Expanded(
+                flex: 2,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                    child: Container(
+                      child: Column(
+                          children: <Widget>[
+                            GCWTextDivider(
+                                text: i18n(context, 'beatnik_hint_code_scrabble')
+                            ),
+                            GCWOutputText(
+                              text: output.scrabble.join('\n'),
+                              isMonotype: true,
+                            ),
+                          ]
+                      ),
+                      padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                    )
+                )
+            )
+            : Container(),
             Expanded(
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    GCWTextDivider(
-                        text: i18n(context, 'beatnik_hint_code_assembler')
-                    ),
-                    GCWOutputText(
-                      text: output.assembler.join('\n'),
-                    ),
-                  ],
+              flex: 1,
+              child: Align(
+              alignment: Alignment.topCenter,
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      GCWTextDivider(
+                          text: i18n(context, 'beatnik_hint_code_assembler')
+                      ),
+                      GCWOutputText(
+                        text: output.assembler.join('\n'),
+                        isMonotype: true,
+                      ),
+                    ],
+                  ),
+                  padding: EdgeInsets.only(right: DEFAULT_MARGIN),
                 ),
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
-              ),
+              )
             ),
             Expanded(
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    GCWTextDivider(
-                        text: i18n(context, 'beatnik_hint_code_memnonic')
+                flex: 1,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        GCWTextDivider(
+                            text: i18n(context, 'beatnik_hint_code_memnonic')
+                        ),
+                        GCWOutputText(
+                          text: output.memnonic.join('\n'),
+                          isMonotype: true,
+                        ),
+                      ],
                     ),
-                    GCWOutputText(
-                      text: output.memnonic.join('\n'),
-                    ),
-                  ],
-                ),
-                padding: EdgeInsets.only(left: DEFAULT_MARGIN),
-              ),
+                    padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+                  ),
+                )
             ),
           ]
         ),
