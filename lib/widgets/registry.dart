@@ -98,11 +98,13 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hashes.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/multi_decoder.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
@@ -157,6 +159,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/com
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
@@ -172,6 +175,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
@@ -206,10 +210,11 @@ class Registry {
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
   static final SEARCHSTRING_CCITT1 = SEARCHSTRING_CCITT + 'ccitt1 ccitt-1 baudot-code baudotcode ';
   static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen lochkarten konrad zuse z-22 z22 punchedpapertape cards baudot-murray-code ';
+  static final SEARCHSTRING_CODEBREAKER = 'solver loeser universal universeller codebreaker codebrecher codeknacker cracker ';
   static final SEARCHSTRING_COMBINATORICS = 'mathematics mathematik kombinatorik combinatorics ';
   static final SEARCHSTRING_COMBINATORICS_COMBINATION = SEARCHSTRING_COMBINATORICS + 'combinations kombinationen untergruppen subgroups ';
   static final SEARCHSTRING_COMBINATORICS_PERMUTATION = SEARCHSTRING_COMBINATORICS + 'permutationen permutations anordnungen reihenfolgen arrangements orders ';
-  static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden rotationsellipsoids rotationsellipsoiden ';
+  static final SEARCHSTRING_COORDINATES = 'coordinates dec dms utm mgrs degrees minutes seconds koordinaten grad minuten sekunden ';
   static final SEARCHSTRING_COORDINATES_COMPASSROSE = 'compassrose kompassrose himmelsrichtungen windrichtungen intercardinaldirections ';
   static final SEARCHSTRING_CROSSSUMS = 'crosssums digits alternated crosstotals iterated iteriert products quersummen produkte alternierend alterniert iterierend digitalroot digitroot ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
@@ -217,9 +222,9 @@ class Registry {
   static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
   static final SEARCHSTRING_EASTER = 'eastersunday ostern ostersonntag ';
   static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterische programmiersprache esoteric programming language ';
-  static final SEARCHSTRING_FORMULASOLVER = 'formula solver formelrechner ';
+  static final SEARCHSTRING_FORMULASOLVER = 'formulasolver formelrechner formelsolver ';
   static final SEARCHSTRING_GAMELANGUAGE = 'spielsprachen game languages secret languages geheimsprachen ';
-  static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschluesselungen ';
+  static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschluesselungen hashvalues hashwerte ';
   static final SEARCHSTRING_HASHES_BLAKE2B = SEARCHSTRING_HASHES_SHA3 + 'blake2b ';
   static final SEARCHSTRING_HASHES_KECCAK = SEARCHSTRING_HASHES_SHA3 + 'keccak ';
   static final SEARCHSTRING_HASHES_RIPEMD = SEARCHSTRING_HASHES_SHA3 + 'ripemd ripe-md ';
@@ -535,10 +540,22 @@ class Registry {
         searchStrings: 'they killed kenny sie haben kenny getoetet kennys kenny\'s code southpark'
       ),
       GCWTool(
+        tool: Keyboard(),
+        i18nPrefix: 'keyboard',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'dvorak keyboard keys tasten azerty tastatur layout qwertz qwerty neo colemak ristome sprachen languages'
+      ),
+      GCWTool(
         tool: Morse(),
         i18nPrefix: 'morse',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'samuel morse morsecode morsen translators translate uebersetzen uebersetzer punkte striche dots dashes'
+        searchStrings: 'samuel morse morsecode morsen punkte striche dots dashes'
+      ),
+      GCWTool(
+        tool: MultiDecoder(),
+        i18nPrefix: 'multidecoder',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'multidecoder multisolver multiloeser universal universeller',
       ),
       GCWTool(
         tool: NumeralBases(),
@@ -699,7 +716,7 @@ class Registry {
           tool: SubstitutionBreaker(),
         i18nPrefix: 'substitutionbreaker',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'substitution monoalphabetische monoalphabetic ersetzen replacements alphabet change austauschen change switch solver loeser universal universeller codebreaker codebrecher codeknacker cracker '
+        searchStrings: SEARCHSTRING_CODEBREAKER + 'substitution monoalphabetische monoalphabetic ersetzen replacements alphabet change austauschen change switch '
       ),
       GCWTool(
         tool: SudokuSolver(),
@@ -881,7 +898,7 @@ class Registry {
       ),
       GCWTool(
         tool: BCDBiquinary(),
-        i18nPrefix: 'bcd_biquinaer',
+        i18nPrefix: 'bcd_biquinary',
         searchStrings: SEARCHSTRING_BCD + 'biquinaer biquinary'
       ),
       GCWTool(
@@ -963,7 +980,7 @@ class Registry {
         tool: WaypointProjection(),
         i18nPrefix: 'coords_waypointprojection',
         iconPath: 'assets/coordinates/icon_waypoint_projection.png',
-        searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_COORDINATES_COMPASSROSE + 'winkel angles waypointprojections bearings wegpunktprojektionen wegpunktpeilungen directions richtungen reverse projections rueckwaertspeilung'
+        searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_COORDINATES_COMPASSROSE + 'winkel angles waypointprojections bearings wegpunktprojektionen wegpunktpeilungen cardinaldirections richtungen reverse projections rueckwaertspeilung kompassrose compassrose himmelsrichtungen '
       ),
       GCWTool(
         tool: DistanceBearing(),
@@ -975,7 +992,7 @@ class Registry {
         tool: FormatConverter(),
         i18nPrefix: 'coords_formatconverter',
         iconPath: 'assets/coordinates/icon_format_converter.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'converter converting konverter konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gauss kruger krueger gauue mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
+        searchStrings: SEARCHSTRING_COORDINATES + 'coordinateformatconverter converting koordinatenformatkonverter formate konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
       ),
       GCWTool(
         tool: VariableCoordinateFormulas(),
@@ -1053,7 +1070,7 @@ class Registry {
         tool: EllipsoidTransform(),
         i18nPrefix: 'coords_ellipsoidtransform',
         iconPath: 'assets/coordinates/icon_ellipsoid_transform.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'rotationsellipsoids converter converting konverter konvertieren umwandeln bessel 1841 bessel krassowski krasowksi krasovsky krassovsky 1950 airy 1830 modified potsdam dhdn2001 dhdn1995 pulkowo mgi lv95 ed50 clarke 1866 osgb36 date datum wgs84'
+        searchStrings: SEARCHSTRING_COORDINATES + 'rotationsellipsoids rotationsellipsoiden converter converting konverter konvertieren umwandeln bessel 1841 bessel krassowski krasowksi krasovsky krassovsky 1950 airy 1830 modified potsdam dhdn2001 dhdn1995 pulkowo mgi lv95 ed50 clarke 1866 osgb36 date datum wgs84'
       ),
 
       //CrossSumSelection *******************************************************************************************
@@ -1071,6 +1088,11 @@ class Registry {
         tool: IteratedCrossSumRange(),
         i18nPrefix: 'crosssum_range_iterated',
         searchStrings: SEARCHSTRING_CROSSSUMS
+      ),
+      GCWTool(
+        tool: CrossSumRangeFrequency(),
+        i18nPrefix: 'crosssum_range_frequency',
+        searchStrings: SEARCHSTRING_CROSSSUMS + 'frequency frequenzen haeufigkeiten auftreten occurrences '
       ),
 
       //DatesSelection **********************************************************************************************
@@ -1137,6 +1159,11 @@ class Registry {
       ),
 
       //Hash Selection *****************************************************************************************
+      GCWTool(
+        tool: HashBreaker(),
+        i18nPrefix: 'hashes_hashbreaker',
+        searchStrings: SEARCHSTRING_HASHES + SEARCHSTRING_CODEBREAKER + 'hashbreaker hashsolver hashloeser hashknacker hashcracker'
+      ),
       GCWTool(
         tool: MD5(),
         i18nPrefix: 'hashes_md5',
@@ -1297,7 +1324,7 @@ class Registry {
       GCWTool(
         tool: CoordinatesSettings(),
         i18nPrefix: 'settings_coordinates',
-        searchStrings: SEARCHSTRING_SETTINGS + SEARCHSTRING_COORDINATES,
+        searchStrings: SEARCHSTRING_SETTINGS + SEARCHSTRING_COORDINATES + 'rotationsellipsoids rotationsellipsoiden ',
       ),
       GCWTool(
         tool: Changelog(),
@@ -2087,7 +2114,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'terzi',
         iconFilename: 'Z.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'francesco lana di terzi alphabet square dots punkte points quadrat alphabet blindenschrift braille eyeless relief taktil tactiles'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'francesco lana de terzi alphabet square dots punkte points quadrat alphabet blindenschrift braille eyeless relief taktil tactiles'
       ),
       GCWSymbolTableTool(
         symbolKey: 'theban',
@@ -2117,7 +2144,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'utopian',
         iconFilename: 'L.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'utopian utopisch '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'utopian utopisch utopiensiumalphabetum thomasmore vtopiensiumalphabetum'
       ),
       GCWSymbolTableTool(
         symbolKey: 'visitor_1984',

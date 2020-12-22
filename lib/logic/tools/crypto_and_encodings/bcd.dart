@@ -45,6 +45,25 @@ var BCDBiquinaerToDigit = switchMapKeyValue(DigitToBCDBiquinaer);
 
 enum BCDType {ORIGINAL, AIKEN, STIBITZ, GRAY, GLIXON, OBRIEN, PETHERICK, TOMPKINS, LIBAWCRAIG, GRAYEXCESS, TWOOFFIVE, ONEOFTEN, PLANET, POSTNET, HAMMING, BIQUINARY}
 
+final Map<String, BCDType> BCD_TYPES = {
+  'bcd_original' : BCDType.ORIGINAL,
+  'bcd_1of10' : BCDType.ONEOFTEN,
+  'bcd_2of5' : BCDType.TWOOFFIVE,
+  'bcd_2of5planet' : BCDType.PLANET,
+  'bcd_2of5postnet' : BCDType.POSTNET,
+  'bcd_aiken' : BCDType.AIKEN,
+  'bcd_biquinary' : BCDType.BIQUINARY,
+  'bcd_glixon' : BCDType.GLIXON,
+  'bcd_gray' : BCDType.GRAY,
+  'bcd_grayexcess' : BCDType.GRAYEXCESS,
+  'bcd_hamming' : BCDType.HAMMING,
+  'bcd_libawcraig' : BCDType.LIBAWCRAIG,
+  'bcd_obrien' : BCDType.OBRIEN,
+  'bcd_petherick' : BCDType.PETHERICK,
+  'bcd_stibitz' : BCDType.STIBITZ,
+  'bcd_tompkins' : BCDType.TOMPKINS,
+};
+
 String encodeBCD(String input, BCDType type){
   if (input == null || input == '')
     return '' ;
@@ -86,14 +105,11 @@ String encodeBCD(String input, BCDType type){
   }
 
   return input
-      .split('')
-      .where((character) => bcdMap[character] != null)
-      .map((character) => bcdMap[character])
-      .join(' ');
+    .split('')
+    .where((character) => bcdMap[character] != null)
+    .map((character) => bcdMap[character])
+    .join(' ');
 }
-
-
-
 
 String decodeBCD(String input, BCDType type){
   if (input == null || input == '')
@@ -136,13 +152,13 @@ String decodeBCD(String input, BCDType type){
   }
 
   return input
-      .split(RegExp(r'[^01]'))
-      .map((bcd) {
+    .split(RegExp(r'[^01]'))
+    .map((bcd) {
 
-        var character = bcdMap[bcd];
-        return character != null ? character : '';
-      })
-      .join();
+      var character = bcdMap[bcd];
+      return character != null ? character : '';
+    })
+    .join();
 }
 
 

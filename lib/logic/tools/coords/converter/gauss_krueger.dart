@@ -124,3 +124,22 @@ String latLonToGaussKruegerString(LatLng coords, int gaussKruegerCode, Ellipsoid
 
   return 'R: ${gaussKrueger.easting}\nH: ${gaussKrueger.northing}';
 }
+
+LatLng parseGaussKrueger(String input, Ellipsoid ells, {gaussKruegerCode: 1}) {
+  RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)\s*$');
+  var matches = regExp.allMatches(input);
+  if (matches.length == 0)
+    return null;
+
+  var match = matches.elementAt(0);
+
+  var _easting = double.tryParse(match.group(1));
+  if (_easting == null)
+    return null;
+
+  var _northing = double.tryParse(match.group(3));
+  if (_northing == null)
+    return null;
+
+  return gaussKruegerToLatLon(GaussKrueger(gaussKruegerCode, _easting, _northing), ells);
+}

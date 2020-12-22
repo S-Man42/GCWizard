@@ -3,8 +3,8 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/logic/units/length.dart';
-import 'package:gc_wizard/logic/units/unit_category.dart';
+import 'package:gc_wizard/logic/common/units/length.dart';
+import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart' as formula_base;
 import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart';
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart';
@@ -250,7 +250,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
                         updateFormula(widget.formula);
                       },
                     ),
-                    padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
+                    padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                   )
                 ),
                 Expanded(
