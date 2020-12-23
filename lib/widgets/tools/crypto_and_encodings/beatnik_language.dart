@@ -11,6 +11,8 @@ import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
+
 
 class Beatnik extends StatefulWidget {
 
@@ -249,7 +251,10 @@ class BeatnikState extends State<Beatnik> {
   String buildOutputText(BeatnikOutput outputList){
     String output = '';
     outputList.output.forEach((element) {
-      if (element.startsWith('beatnik_')) {
+      //if (element.startsWith('beatnik_error_runtime_invalid_input'))
+      //  _showDialogBox(context, _currentInput);
+      //else
+        if (element.startsWith('beatnik_')) {
         output = output + i18n(context, element) + '\n';
       } else
         output = output + element + '\n';
@@ -257,4 +262,39 @@ class BeatnikState extends State<Beatnik> {
     return output;
   }
 
+  _showDialogBox(BuildContext context, String text) {
+    showGCWDialog(
+        context,
+        text,
+        Container(
+          width: 300,
+          height: 100,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GCWTextField(
+                autofocus: true,
+                filled: true,
+                onChanged: (text) {
+                  _currentInput = text;
+                },
+              ),
+            ],
+          ),
+        ),
+        [
+          GCWDialogButton(
+            text: i18n(context, 'common_ok'),
+            onPressed: () {
+              //_isStarted = false;
+              //if (_continueState != null)
+              //  _continueState.inp = _currentInput;
+              //_calcOutput(context);
+              this.setState(() {});
+            },
+          )
+        ],
+        cancelButton: false
+    );
+  }
 }
