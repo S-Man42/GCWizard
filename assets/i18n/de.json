@@ -817,9 +817,9 @@
   "common_unit_volume_tsp_name" : "Teelöffel (US)",
   "common_unit_volume_tbsp_name" : "Esslöffel (US",
   "common_unit_volume_ssp_name" : "Salzlöffel (US)",
-  "common_unit_volume_dsp_name" : "Dessertlöffel (US",
+  "common_unit_volume_dsp_name" : "Dessertlöffel (US)",
   "common_unit_volume_tc_name" : "Teetasse (US)",
-  "common_unit_volume_c_name" : "Tasse (US",
+  "common_unit_volume_c_name" : "Tasse (US)",
 
   "coords_selection_title" : "Koordinaten",
   "coords_selection_description" : "Koordinatenberechnungen",
