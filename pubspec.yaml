@@ -84,6 +84,7 @@ flutter:
     - assets/symbol_tables/egyptian_numerals/
     - assets/symbol_tables/elia/
     - assets/symbol_tables/enochian/
+    - assets/symbol_tables/eurythmy/
     - assets/symbol_tables/fakoo/
     - assets/symbol_tables/finger/
     - assets/symbol_tables/flags/

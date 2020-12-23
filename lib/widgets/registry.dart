@@ -1735,6 +1735,11 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'enochian henochisch john dee magische sprache magie language edward kelley henoic'
       ),
       GCWSymbolTableTool(
+        symbolKey: 'eurythmy',
+        iconFilename:  'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'eurythmy eurythmie waldorf motion art marievonsivers rudolfsteiner movementart motionart bewegungskunst'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'fakoo',
         iconFilename: 'SZ_umlaut.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fakoo alphabet blinde eyeless relief'
