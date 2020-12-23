@@ -86,6 +86,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/ook.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
@@ -352,6 +353,12 @@ class Registry {
         i18nPrefix: 'brainfk',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_BRAINFK
+      ),
+      GCWTool(
+        tool: BurrowsWheeler(),
+        i18nPrefix: 'burrowswheeler',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'burrows wheeler transformation bwt bzip2'
       ),
       GCWTool(
         tool: Caesar(),
