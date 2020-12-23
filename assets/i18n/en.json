@@ -2309,6 +2309,14 @@
   "vigenere_example" : "ABC with key DEF → DFH",
   "vigenere_autokey" : "Autokey",
 
+  "whitespace_language_title" : "Whitespace",
+  "whitespace_language_description" : "Esoteric Programming language with 3 characters (Space, Tab, Enter)",
+  "whitespace_language_example" : "      → DFH",
+  "whitespace_generator" : "Generator",
+  "whitespace_interpreter" : "Interpreter",
+  "whitespace_language_start" : "Start",
+  "whitespace_language_readable_code" : "Readable Code",
+
   "windchill_title": "Windchill",
   "windchill_description" : "Apparent Temperature",
   "windchill_temperature" : "Temperature",
