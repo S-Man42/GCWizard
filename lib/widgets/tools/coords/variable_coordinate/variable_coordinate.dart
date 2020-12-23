@@ -26,6 +26,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
 
+
 class VariableCoordinate extends StatefulWidget {
   final Formula formula;
 
@@ -36,7 +37,7 @@ class VariableCoordinate extends StatefulWidget {
 }
 
 class VariableCoordinateState extends State<VariableCoordinate> {
-  Widget _output;
+  Widget _output = GCWCoordsOutput(outputs : List<dynamic>());
   GCWSwitchPosition _currentCoordMode = GCWSwitchPosition.left;
 
   final MAX_COUNT_COORDINATES = 100;
@@ -174,7 +175,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
             _calculateOutput(context);
           },
         ),
-        _output ?? Container()
+        _output ?? Container(),
       ],
     );
   }
@@ -515,7 +516,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         GCWCoordsOutput(
           mapButtonTop: true,
           outputs: _currentOutput,
-          points: _currentMapPoints
+          points: _currentMapPoints,
         )
       ]
     );

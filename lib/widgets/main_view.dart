@@ -56,8 +56,10 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
@@ -90,6 +92,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
@@ -185,10 +188,12 @@ class _MainViewState extends State<MainView> {
           className(Binary()),
           className(BookCipher()),
           className(BrainfkSelection()),
+          className(BurrowsWheeler()),
           className(Caesar()),
           className(CCITT1Selection()),
           className(CCITT2Selection()),
           className(Chao()),
+          className(Chef()),
           className(ChickenLanguage()),
           className(CoordsSelection()),
           className(ColorPicker()),
@@ -254,6 +259,7 @@ class _MainViewState extends State<MainView> {
           className(UnitConverter()),
           className(VanitySelection()),
           className(Vigenere()),
+          className(WhitespaceLanguage()),
           className(Windchill()),
           className(Z22()),
         ].contains(className(element.tool));

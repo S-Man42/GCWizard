@@ -97,10 +97,12 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/ook.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
@@ -152,6 +154,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vanity_multiplenumbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vanity_singlenumbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
@@ -375,6 +378,12 @@ class Registry {
         searchStrings: SEARCHSTRING_BRAINFK
       ),
       GCWTool(
+        tool: BurrowsWheeler(),
+        i18nPrefix: 'burrowswheeler',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'burrows wheeler transformation bwt bzip2'
+      ),
+      GCWTool(
         tool: Caesar(),
         i18nPrefix: 'caesar',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -397,6 +406,12 @@ class Registry {
         i18nPrefix: 'chao',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'chao john francis byrne'
+      ),
+      GCWTool(
+        tool: Chef(),
+        i18nPrefix: 'chef',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'chef language programming sprache esoteric esoterisch programmiersprache'
       ),
       GCWTool(
         tool: ChickenLanguage(),
@@ -806,6 +821,12 @@ class Registry {
         i18nPrefix: 'vigenere',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_VIGENERE + 'autokey'
+      ),
+      GCWTool(
+        tool: WhitespaceLanguage(),
+        i18nPrefix: 'whitespace_language',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'whitespace'
       ),
       GCWTool(
         tool: Windchill(),

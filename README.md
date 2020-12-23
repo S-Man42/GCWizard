@@ -289,7 +289,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/increasedn.dart';
 
 ...
 
-GCWToolWidget(
+GCWTool(
   tool: IncreasedN(), 
   i18nPrefix: 'increasedn', 
   category: ToolCategory.CRYPTOGRAPHY,
