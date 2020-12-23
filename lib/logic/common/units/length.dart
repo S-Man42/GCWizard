@@ -80,13 +80,13 @@ final LENGTH_PARSEC= Length(
 final LENGTH_LAR= Length(
     name: 'common_unit_length_lar_name',
     symbol: 'lar',
-    inMeters: 4826
+    inMeters: 4827
 );
 
 final LENGTH_RANGAR= Length(
     name: 'common_unit_length_rangar_name',
     symbol: 'rangar',
-    inMeters: 4826 / 5000
+    inMeters: 4827 / 5000
 );
 
 final LENGTH_FATHOM= Length(
@@ -116,7 +116,7 @@ final LENGTH_ROD= Length(
 final LENGTH_LINK= Length(
     name: 'common_unit_length_link_name',
     symbol: 'li',
-    inMeters: 0.20168
+    inMeters: 0.201168
 );
 
 final List<Unit> baseLengths = [

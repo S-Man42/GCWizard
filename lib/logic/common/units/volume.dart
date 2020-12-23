@@ -252,7 +252,7 @@ final VOLUME_USPECK = Volume (
 final VOLUME_USBUSHEL = Volume (
   name: 'common_unit_volume_usbu_name',
   symbol: 'US.bu',
-  inCubicMeters: 0.001 * 4.40488377086 * 8
+  inCubicMeters: 0.001 * 4.40488377086 * 8.0
 );
 
 final VOLUME_BATHTUB = Volume (
@@ -261,41 +261,66 @@ final VOLUME_BATHTUB = Volume (
   inCubicMeters: 0.001 * 150.0
 );
 
-final VOLUME_SALTSPOON = Volume (
+final VOLUME_USSALTSPOON = Volume (
     name: 'common_unit_volume_tsp_name',
     symbol: 'ssp',
-    inCubicMeters: 0.001 * 0.001 * 1.23
+    inCubicMeters: 0.001 * 0.001 * 4.928922 / 4.0
 );
 
-final VOLUME_DESSERTSPOON = Volume (
+final VOLUME_USCOFFEESPOON = Volume (
+    name: 'common_unit_volume_csp_name',
+    symbol: 'csp',
+    inCubicMeters: 0.001 * 0.001 * 4.928922 / 2.0
+);
+
+final VOLUME_USDESSERTSPOON = Volume (
     name: 'common_unit_volume_tsp_name',
     symbol: 'dsp',
-    inCubicMeters: 0.001 * 0.001 * 9.86
+    inCubicMeters: 0.001 * 0.001 * 4.928922 * 2.0
 );
 
-final VOLUME_TEASPOON = Volume (
+final VOLUME_USTEASPOON = Volume (
     name: 'common_unit_volume_tsp_name',
     symbol: 'tsp',
-    inCubicMeters: 0.001 * 0.001 * 4.93
+    inCubicMeters: 0.001 * 0.001 * 4.928922
 );
 
-final VOLUME_TABLESPOON = Volume (
+final VOLUME_USTABLESPOON = Volume (
     name: 'common_unit_volume_tbsp_name',
     symbol: 'tbsp',
-    inCubicMeters: 0.001 * 0.001 * 14.8
+    inCubicMeters: 0.001 * 0.001 * 14.78676
 );
 
-final VOLUME_CUP = Volume (
-    name: 'common_unit_volume_tc_name',
-    symbol: 'c',
-    inCubicMeters: 0.001 * 0.001 * 177
-);
-
-final VOLUME_TEACUP = Volume (
+final VOLUME_USTEACUP = Volume (
     name: 'common_unit_volume_tc_name',
     symbol: 'tc',
-    inCubicMeters: 0.001 * 0.001 * 237
+    inCubicMeters: 0.001 * 3.785411784 / 32.0
 );
+
+final VOLUME_USDASH = Volume (
+    name: 'common_unit_volume_ds_name',
+    symbol: 'ds',
+    inCubicMeters: 0.001 * 0.001 * 4.928922 / 8.0
+);
+
+final VOLUME_USPINCH = Volume (
+    name: 'common_unit_volume_pn_name',
+    symbol: 'pn',
+    inCubicMeters: 0.001 * 0.001 * 4.928922 / 16.0
+);
+
+final VOLUME_USSMIDGEN = Volume (
+    name: 'common_unit_volume_smi_name',
+    symbol: 'smi',
+    inCubicMeters: 0.001 * 0.001 * 4.928922 / 32.0
+);
+
+final VOLUME_USDROP = Volume (
+    name: 'common_unit_volume_dr_name',
+    symbol: 'dr',
+    inCubicMeters: 0.001 * 0.001 * 4.928922 /96.0
+);
+
 
 final List<Unit> volumes = [
   VOLUME_CUBICMILLIMETER,
@@ -339,10 +364,14 @@ final List<Unit> volumes = [
   VOLUME_USPECK,
   VOLUME_USBUSHEL,
   VOLUME_BATHTUB,
-  VOLUME_TEASPOON,
-  VOLUME_TABLESPOON,
-  VOLUME_DESSERTSPOON,
-  VOLUME_SALTSPOON,
-  VOLUME_CUP,
-  VOLUME_TEACUP
+  VOLUME_USTEASPOON,
+  VOLUME_USCOFFEESPOON,
+  VOLUME_USTABLESPOON,
+  VOLUME_USDESSERTSPOON,
+  VOLUME_USSALTSPOON,
+  VOLUME_USTEACUP,
+  VOLUME_USDROP,
+  VOLUME_USSMIDGEN,
+  VOLUME_USPINCH,
+  VOLUME_USDASH
 ];

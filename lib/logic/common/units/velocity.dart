@@ -35,13 +35,13 @@ final VELOCITY_MPH = Velocity(
 
 final VELOCITY_MPMIN = Velocity(
     name: 'common_unit_velocity_mpmin_name',
-    symbol: 'mph',
+    symbol: 'mpm',
     inMS: 1.0 / 3.6 * 1.609344 * 60.0
 );
 
 final VELOCITY_FTS = Velocity(
     name: 'common_unit_velocity_fts_name',
-    symbol: 'mph',
+    symbol: 'fts',
     inMS: 0.3048
 );
 
@@ -60,19 +60,19 @@ final VELOCITY_MMIN = Velocity(
 final VELOCITY_KMS = Velocity(
     name: 'common_unit_velocity_kms_name',
     symbol: 'km/s',
-    inMS: 1.0 / 3.6 / 60 / 60.0
+    inMS: 1000.0
 );
 
 final VELOCITY_KMMIN = Velocity(
     name: 'common_unit_velocity_kmmin_name',
     symbol: 'km/min',
-    inMS: 1.0 / 3.6 / 60.0
+    inMS: 100.0 / 6.0
 );
 
 final VELOCITY_FTMIN = Velocity(
     name: 'common_unit_velocity_ftmin_name',
     symbol: 'ft/min',
-    inMS: 0.3048 * 60.0
+    inMS: 0.3048 / 60.0
 );
 
 final VELOCITY_YDS = Velocity(
