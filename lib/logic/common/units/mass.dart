@@ -111,6 +111,12 @@ final MASS_ZENTNER = Mass(
   inGram: 50.0 * 1000.0
 );
 
+final MASS_STONE = Mass(
+    name: 'common_unit_mass_st_name',
+    symbol: 'st',
+    inGram: 6350.29317888
+);
+
 final List<Unit> baseMasses = [
   MASS_GRAM,
   MASS_TON,
@@ -127,7 +133,8 @@ final List<Unit> baseMasses = [
   MASS_TROYOUNCE,
   MASS_CARAT,
   MASS_PFUND,
-  MASS_ZENTNER
+  MASS_ZENTNER,
+  MASS_STONE
 ];
 
 final MASS_KILOGRAM = Mass(

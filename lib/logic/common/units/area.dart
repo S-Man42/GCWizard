@@ -27,6 +27,12 @@ final AREA_SQUAREKILOMETER = Area (
     inSquareMeters: 1000.0 * 1000.0
 );
 
+final AREA_SQUAREDEZIMETER = Area (
+    name: 'common_unit_area_dm2_name',
+    symbol: 'dm\u00B2',
+    inSquareMeters: 0.1 * 0.1
+);
+
 final AREA_SQUARECENTIMETER = Area (
   name: 'common_unit_area_cm2_name',
   symbol: 'cm\u00B2',
@@ -114,6 +120,7 @@ final AREA_SOCCERFIELD = Area (
 final List<Unit> areas = [
   AREA_SQUAREMILLIMETER,
   AREA_SQUARECENTIMETER,
+  AREA_SQUAREDEZIMETER,
   AREA_SQUAREMETER,
   AREA_SQUAREKILOMETER,
   AREA_SQUAREINCH,
