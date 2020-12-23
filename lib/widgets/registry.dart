@@ -90,6 +90,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
@@ -375,6 +376,12 @@ class Registry {
         i18nPrefix: 'chao',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'chao john francis byrne'
+      ),
+      GCWTool(
+        tool: Chef(),
+        i18nPrefix: 'chef',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'chef language programming sprache esoteric esoterisch programmiersprache'
       ),
       GCWTool(
         tool: ChickenLanguage(),
