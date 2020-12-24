@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
@@ -53,8 +53,8 @@ class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
   }
 
   _buildOutput() {
-    return GCWOutputText(
-          text: checkNumber(widget.mode, currentInputN),
-        );
+    return GCWDefaultOutput(
+        child: checkNumber(widget.mode, currentInputN),
+      );
     }
 }
