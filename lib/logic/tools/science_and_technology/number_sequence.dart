@@ -1,17 +1,25 @@
 // https://de.wikipedia.org/wiki/Lucas-Folge
-// not recursive
-// https://oeis.org/A000032   Lucas
-// https://oeis.org/A000045   Fibonacci
+// could build not recursive
 // https://oeis.org/A000225   Mersenne
 // https://oeis.org/A000051   Fermat
 // https://oeis.org/A000108   Catalan
 // https://oeis.org/A001045   Jacobsthal
-// https://oeis.org/A000129   Pell
 // https://oeis.org/A014551   Jacobsthal-Lucas
+// should be build recursive
+// https://oeis.org/A000032   Lucas
+// https://oeis.org/A000045   Fibonacci
+// https://oeis.org/A000129   Pell
 // https://oeis.org/A002203   Pell-Lucas
 //
 // recursive sequences
-// https://oeis.org/A005132   Recaman
+// https://oeis.org/A005132   Recamán
+//
+// suggestions - https://en.wikipedia.org/wiki/List_of_integer_sequences
+// https://oeis.org/A084175   Jacobsthal-Oblong   a(n) = a(n-1) * a(n-2)
+// https://oeis.org/A008336   RecamánII          	a(n+1) = a(n)/n if n|a(n) else a(n)*n, a(1) = 1.
+// https://oeis.org/A000058   Sylvester           a(n) = 1 + a(0)*a(1)*...*a(n-1)
+// https://oeis.org/A000110   Bell                a(n) = exp(exp(n) - 1)
+
 
 import 'dart:math';
 
