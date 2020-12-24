@@ -140,7 +140,7 @@ class BeatnikState extends State<Beatnik> {
 
     for (int i = 0; i< output.debug.length; i++) {
       columnData.add([output.debug[i].pc, output.debug[i].command, output.debug[i].stack, output.debug[i].output]);
-    }
+    };
 
 
     return Column(
@@ -158,13 +158,103 @@ class BeatnikState extends State<Beatnik> {
           },
         ),
         _currentDebug == true
-        ? GCWOutput(
+        ? Column(
+            children: <Widget>[
+              GCWOutput(
+                title: i18n(context, 'beatnik_debug'),
+                child: Column(
+                    children: columnedMultiLineOutput(context, columnData, flexValues: flexData)
+                ),
+              ),
+              GCWTextDivider(
+                  text: i18n(context, 'beatnik_hint_code'),
+               ),
+              GCWOnOffSwitch(
+                  title: i18n(context, 'beatnik_show_scrabble'),
+                  value: _currentScrabble,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentScrabble = value;
+                    });
+                  },
+                ),
+              Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      _currentScrabble == true
+                          ? Expanded(
+                          flex: 2,
+                          child: Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                child: Column(
+                                    children: <Widget>[
+                                      GCWTextDivider(
+                                          text: i18n(context, 'beatnik_hint_code_scrabble')
+                                      ),
+                                      GCWOutputText(
+                                        text: output.scrabble.join('\n'),
+                                        isMonotype: true,
+                                      ),
+                                    ]
+                                ),
+                                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                              )
+                          )
+                      )
+                          : Container(),
+                      Expanded(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  GCWTextDivider(
+                                      text: i18n(context, 'beatnik_hint_code_assembler')
+                                  ),
+                                  GCWOutputText(
+                                    text: output.assembler.join('\n'),
+                                    isMonotype: true,
+                                  ),
+                                ],
+                              ),
+                              padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                            ),
+                          )
+                      ),
+                      Expanded(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              child: Column(
+                                children: <Widget>[
+                                  GCWTextDivider(
+                                      text: i18n(context, 'beatnik_hint_code_memnonic')
+                                  ),
+                                  GCWOutputText(
+                                    text: output.memnonic.join('\n'),
+                                    isMonotype: true,
+                                  ),
+                                ],
+                              ),
+                              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+                            ),
+                          )
+                      ),
+                    ]
+                ),
+              ]
+        )
+/*        ? GCWOutput(
             title: i18n(context, 'beatnik_debug'),
             child: Column(
               children: columnedMultiLineOutput(context, columnData, flexValues: flexData)
             ),
-          )
+          )*/
         : Container(),
+/*
         GCWTextDivider(
           text: i18n(context, 'beatnik_hint_code'),
         ),
@@ -244,6 +334,7 @@ class BeatnikState extends State<Beatnik> {
             ),
           ]
         ),
+*/
       ],
     );
   }

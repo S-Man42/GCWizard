@@ -12,16 +12,16 @@ import 'package:gc_wizard/logic/tools/games/scrabble_sets.dart';
 class BeatnikOutput{
   final List<String> output;
   final List<String> scrabble;
-  final List<String> _assembler;
-  final List<String> _memnonic;
-  final List<_debugOutput> _debug;
+  final List<String> assembler;
+  final List<String> memnonic;
+  final List<_debugOutput> debug;
   final bool input_expected;
   final bool error;
   final String errorText;
   final bool finished;
   final BeatnikState state ;
 
-  BeatnikOutput(this.output, this.scrabble, this._assembler, this._memnonic, this._debug, this.input_expected, this.error, this.errorText, this.finished, this.state);
+  BeatnikOutput(this.output, this.scrabble, this.assembler, this.memnonic, this.debug, this.input_expected, this.error, this.errorText, this.finished, this.state);
 }
 
 class BeatnikState {
