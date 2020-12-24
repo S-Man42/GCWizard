@@ -1,8 +1,4 @@
-
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chef_international.dart';
-
-enum Type {Take, Put, Fold, Add, Remove, Combine, Divide, AddDry, Liquefy, LiquefyBowl, Stir, StirInto,
-  Mix, Clean, Pour, Verb, VerbUntil, SetAside, Serve, Refrigerate, Remember, Invalid}
 
 class Method {
 
@@ -110,91 +106,91 @@ class Method {
       matchers = matchersDEU;
       if (matchers[0].hasMatch(line)) {// die zutat aus dem kühlschrank nehmen
         ingredient = matchers[0].firstMatch(line).group(2);
-        type = Type.Take;
+        type = Type.Nehmen;
 
       } else if (matchers[1].hasMatch(line)) {// zutat in die schüssel geben
-        type = Type.Put;
+        type = Type.Geben;
         ingredient = matchers[1].firstMatch(line).group(2);
         mixingbowl = (matchers[1].firstMatch(line).group(4) == null ? 1 : int.parse(matchers[1].firstMatch(line).group(4))) - 1;
 
       } else if (matchers[2].hasMatch(line)) {// zutat in die schüssel unterheben
-        type = Type.Fold;
+        type = Type.Unterheben;
         ingredient = matchers[2].firstMatch(line).group(2);
         mixingbowl = (matchers[2].firstMatch(line).group(4) == null ? 1 : int.parse(matchers[2].firstMatch(line).group(4))) - 1;
 
       } else if (matchers[3].hasMatch(line)) {// feste zutaten hinzufügen
-        type = Type.AddDry;
+        type = Type.FestesHinzugeben;
         mixingbowl = (matchers[3].firstMatch(line).group(8) == null ? 1 : int.parse(matchers[3].firstMatch(line).group(8))) - 1;
 
       } else if (matchers[4].hasMatch(line)) {// füge hinzu |entferne | kombiniere | teile
         switch (matchers[4].firstMatch(line).group(12)) {
           case 'hinzufügen':
-          case 'dazugeben': type = Type.Add; break;
+          case 'dazugeben': type = Type.Dazugeben; break;
           case 'entfernen':
-          case 'abschöpfen':type = Type.Remove; break;
-          case 'kombinieren':type = Type.Combine; break;
-          case 'teilen': type = Type.Divide; break;
+          case 'abschöpfen':type = Type.Abschoepfen; break;
+          case 'kombinieren':type = Type.Kombinieren; break;
+          case 'teilen': type = Type.Teilen; break;
         }
         ingredient = matchers[4].firstMatch(line).group(2);
         mixingbowl = (matchers[4].firstMatch(line).group(7) == null ? 1 : int.parse(matchers[4].firstMatch(line).group(7))) - 1;
 
       } else if (matchers[5].hasMatch(line)) {//inhalt der schüssel verflüssigen
-        type = Type.LiquefyBowl;
+        type = Type.SchuesselErhitzen;
         mixingbowl = (matchers[5].firstMatch(line).group(3) == null ? 1 : int.parse(matchers[5].firstMatch(line).group(3))) - 1;
 
       } else if (matchers[6].hasMatch(line)) {//zutat verflüssigen
-        type = Type.Liquefy;
+        type = Type.Schmelzen;
         ingredient = matchers[6].firstMatch(line).group(2);
 
       } else if (matchers[7].hasMatch(line)) {// schüssel rühren
-        type = Type.Stir;
+        type = Type.SchuessselRuehren;
         mixingbowl = (matchers[7].firstMatch(line).group(4) == null ? 1 : int.parse(matchers[7].firstMatch(line).group(4))) - 1;
         time = int.parse(matchers[7].firstMatch(line).group(7));
 
       } else if (matchers[8].hasMatch(line)) {// zutat unterrühren
-        type = Type.StirInto;
+        type = Type.ZutatRuehren;
         ingredient = matchers[8].firstMatch(line).group(2);
         mixingbowl = (matchers[8].firstMatch(line).group(6) == null ? 1 : int.parse(matchers[8].firstMatch(line).group(6))) - 1;
 
       } else if (matchers[9].hasMatch(line)) {// mischen
-        type = Type.Mix;
+        type = Type.Mischen;
         mixingbowl = (matchers[9].firstMatch(line).group(2) == null ? 1 : int.parse(matchers[9].firstMatch(line).group(2))) - 1;
 
       } else if (matchers[10].hasMatch(line)) {// säubern || waschen
-        type = Type.Clean;
+        type = Type.Saeubern;
         mixingbowl = (matchers[10].firstMatch(line).group(2) == null ? 1 : int.parse(matchers[10].firstMatch(line).group(2))) - 1;
 
       } else if (matchers[11].hasMatch(line)) {// stürzen || gießen
-        type = Type.Pour;
+        type = Type.Ausgiessen;
         mixingbowl =  (matchers[11].firstMatch(line).group(4) == null ? 1 : int.parse(matchers[11].firstMatch(line).group(4))) - 1;
         bakingdish = (matchers[11].firstMatch(line).group(12) == null ? 1 : int.parse(matchers[11].firstMatch(line).group(12))) - 1;
 
       } else if (matchers[12].hasMatch(line)) {// zur seite stellen
-        type = Type.SetAside;
+        type = Type.BeiseiteStellen;
 
       } else if (matchers[13].hasMatch(line)) {// einfrieren
-        type = Type.Refrigerate;
+        type = Type.Gefrieren;
         time = matchers[13].firstMatch(line).group(3) == null ? 0 : int.parse(matchers[13].firstMatch(line).group(3));
 
       } else if (matchers[14].hasMatch(line)) {// serve with
-        type = Type.Serve;
+        type = Type.Servieren;
         auxrecipe = matchers[14].firstMatch(line).group(2);
 
       } else if (matchers[15].hasMatch(line)) {// vorschlag
-        type = Type.Remember;
+        type = Type.Erinnern;
 
       } else if (matchers[16].hasMatch(line)) {// solange yyy bis zutat zur ...
-        type = Type.VerbUntil;
+        type = Type.WiederholenBis;
         verb = matchers[16].firstMatch(line).group(1);
         ingredient = matchers[16].firstMatch(line).group(4);
 
       } else if (matchers[17].hasMatch(line)) {// die zutat yyy
-        type = Type.Verb;
+        type = Type.Wiederholen;
         verb = matchers[17].firstMatch(line).group(3);
         ingredient = matchers[17].firstMatch(line).group(2);
 
       } else { // invalid method
-        type = Type.Invalid;
+        type = Type.Unbekannt;
         ingredient = line;
       }
     }

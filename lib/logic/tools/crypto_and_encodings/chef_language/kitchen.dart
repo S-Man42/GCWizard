@@ -4,6 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/compone
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/ingredient.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/method.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/recipe.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chef_international.dart';
 
 class Kitchen {
 
@@ -75,6 +76,7 @@ class Kitchen {
       Method m = methods[i];
       switch (m.type) {
         case Type.Invalid:
+        case Type.Unbekannt:
           valid = false;
           error.addAll(['chef_error_syntax_method',
             m.ingredient,
@@ -92,6 +94,16 @@ class Kitchen {
         case Type.Liquefy :
         case Type.StirInto :
         case Type.Verb :
+        case Type.Nehmen :
+        case Type.Geben :
+        case Type.Unterheben :
+        case Type.Dazugeben :
+        case Type.Abschoepfen :
+        case Type.Kombinieren :
+        case Type.Teilen :
+        case Type.Schmelzen :
+        case Type.ZutatRuehren :
+        case Type.Wiederholen :
           if (ingredients[m.ingredient] == null) {
             valid = false;
             error.addAll(['chef_error_runtime',
@@ -104,7 +116,7 @@ class Kitchen {
           }
       }
       switch (m.type) {
-        case Type.Take :
+        case Type.Nehmen :
           if ((input.join('') != '') &&
               (ingredientIndex <= input.length - 1)) {
             ingredients[m.ingredient].setAmount(
@@ -118,11 +130,11 @@ class Kitchen {
             return null;
           }
           break;
-        case Type.Put :
+        case Type.Geben :
           mixingbowls[m.mixingbowl].push(
               Component.Contructor1(ingredients[m.ingredient]));
           break;
-        case Type.Fold :
+        case Type.Unterheben :
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
@@ -137,7 +149,7 @@ class Kitchen {
           ingredients[m.ingredient].setAmount(c.getValue());
           ingredients[m.ingredient].setState(c.getState());
           break;
-        case Type.Add :
+        case Type.Dazugeben :
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
@@ -151,7 +163,7 @@ class Kitchen {
           c = mixingbowls[m.mixingbowl].peek();
           c.setValue(c.getValue() + ingredients[m.ingredient].getAmount());
           break;
-        case Type.Remove : // ingredient.amount from mixingbowl
+        case Type.Abschoepfen : // ingredient.amount from mixingbowl
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
@@ -165,7 +177,7 @@ class Kitchen {
           c = mixingbowls[m.mixingbowl].peek(); // returns top of m.mixingbowl
           c.setValue(c.getValue() - ingredients[m.ingredient].getAmount());
           break;
-        case Type.Combine :
+        case Type.Kombinieren :
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
@@ -179,7 +191,7 @@ class Kitchen {
           c = mixingbowls[m.mixingbowl].peek();
           c.setValue(c.getValue() * ingredients[m.ingredient].getAmount());
           break;
-        case Type.Divide :
+        case Type.Teilen :
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
@@ -193,7 +205,7 @@ class Kitchen {
           c.setValue((c.getValue() ~/ ingredients[m.ingredient].getAmount())
               .round());
           break;
-        case Type.AddDry :
+        case Type.FestesHinzugeben :
           int sum = 0;
           ingredients.forEach((key, value) {
             if (value.getState() == State.Dry)
@@ -201,13 +213,13 @@ class Kitchen {
           });
           mixingbowls[m.mixingbowl].push(new Component(sum, State.Dry, ''));
           break;
-        case Type.Liquefy :
+        case Type.Schmelzen :
           ingredients[m.ingredient].liquefy();
           break;
-        case Type.LiquefyBowl :
+        case Type.SchuesselErhitzen :
           mixingbowls[m.mixingbowl].liquefy();
           break;
-        case Type.Stir :
+        case Type.SchuessselRuehren :
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
@@ -219,7 +231,7 @@ class Kitchen {
           }
           mixingbowls[m.mixingbowl].stir(m.time);
           break;
-        case Type.StirInto :
+        case Type.ZutatRuehren :
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
@@ -232,7 +244,7 @@ class Kitchen {
           mixingbowls[m.mixingbowl].stir(
               ingredients[m.ingredient].getAmount());
           break;
-        case Type.Mix :
+        case Type.Mischen :
           if (mixingbowls[m.mixingbowl].size() == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
@@ -244,13 +256,13 @@ class Kitchen {
           }
           mixingbowls[m.mixingbowl].shuffle();
           break;
-        case Type.Clean :
+        case Type.Saeubern :
           mixingbowls[m.mixingbowl].clean();
           break;
-        case Type.Pour :
+        case Type.Ausgiessen :
           bakingdishes[m.bakingdish].combine(mixingbowls[m.mixingbowl]);
           break;
-        case Type.Verb :
+        case Type.Wiederholen :
           int end = i + 1;
           for (; end < methods.length; end++)
             if (_sameVerb(m.verb, methods[end].verb, language) &&
@@ -270,7 +282,7 @@ class Kitchen {
           else
             loops.insertAll(0, {_LoopData(i, end, m.verb)});
           break;
-        case Type.VerbUntil :
+        case Type.WiederholenBis :
           if (!_sameVerb(loops[0].verb, m.verb, language)) {
             valid = false;
             error.addAll(['chef_error_runtime',
@@ -284,7 +296,7 @@ class Kitchen {
           i = loops[0].from;
           loops.removeAt(0);
           continue methodloop;
-        case Type.SetAside :
+        case Type.BeiseiteStellen :
           if (loops.length == 0) {
             valid = false;
             error.addAll(['chef_error_runtime',
@@ -298,7 +310,7 @@ class Kitchen {
             continue methodloop;
           }
           break;
-        case Type.Serve :
+        case Type.Servieren :
           if (recipes[m.auxrecipe.toLowerCase()] == null) {
             valid = false;
             error.addAll(['chef_error_runtime',
@@ -340,13 +352,13 @@ class Kitchen {
             continue methodloop;
           }
           break;
-        case Type.Refrigerate :
+        case Type.Gefrieren :
           if (m.time > 0) {
             _serve(m.time);
           }
           deepfrozen = true;
           break;
-        case Type.Remember :
+        case Type.Erinnern :
           break;
         default :
           {

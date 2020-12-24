@@ -176,6 +176,9 @@ class ChefState extends State<Chef> {
                   });
                 },
               ),
+              GCWTextDivider(
+                  text: i18n(context, 'chef_fridgerator')
+              ),
               GCWTextField(
                 controller: _inputController,
                 inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9 ]')),],

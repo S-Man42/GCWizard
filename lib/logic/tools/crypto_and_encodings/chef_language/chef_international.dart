@@ -14,6 +14,9 @@ enum textId {
   Combine
 }
 
+enum Type {Take,   Put,   Fold,       Add,       Remove,      Combine,     Divide, AddDry,           Liquefy,   LiquefyBowl,       Stir,         StirInto,          Mix,     Clean,    Pour,      Verb,         VerbUntil,      SetAside,        Serve,     Refrigerate, Remember, Invalid,
+           Nehmen, Geben, Unterheben, Dazugeben, Abschoepfen, Kombinieren, Teilen, FestesHinzugeben, Schmelzen, SchuesselErhitzen, ZutatRuehren, SchuessselRuehren, Mischen, Saeubern, Ausgiessen, Wiederholen, WiederholenBis, BeiseiteStellen, Servieren, Gefrieren,   Erinnern, Unbekannt}
+
 final List<RegExp> matchersENG = [
   RegExp(r'^take( the)? ([a-z0-9 ]+) from( the)? refrigerator$'),
   RegExp(r'^(put|fold)( the)? ([a-z0-9 ]+) into( the)?( (\d+)(nd|rd|th|st))? mixing bowl$'),
