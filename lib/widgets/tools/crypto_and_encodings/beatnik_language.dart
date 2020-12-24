@@ -11,8 +11,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
-
 
 class Beatnik extends StatefulWidget {
 
@@ -79,20 +77,20 @@ class BeatnikState extends State<Beatnik> {
           },
         ),
         _currentMode == GCWSwitchPosition.right // generate Beatnik-programm
-        ? Column(
-          children: <Widget>[
-            GCWTextField(
-              controller: _outputController,
-              hintText: i18n(context, 'beatnik_hint_output'),
-              onChanged: (text) {
-                setState(() {
-                  _currentOutput = text;
-                });
-              },
-            ),
-          ],
-        )
-        : Column( // interpret Beatnik-programm
+            ? Column(
+                children: <Widget>[
+                  GCWTextField(
+                    controller: _outputController,
+                    hintText: i18n(context, 'beatnik_hint_output'),
+                    onChanged: (text) {
+                      setState(() {
+                        _currentOutput = text;
+                      });
+                    },
+                  ),
+                ],
+              )
+            : Column( // interpret Beatnik-programm
           children: <Widget>[
             GCWTextField(
               controller: _programmController,
@@ -131,16 +129,16 @@ class BeatnikState extends State<Beatnik> {
     List<List<String>> columnData = new List<List<String>>();
 
     if (_currentMode == GCWSwitchPosition.right) { // generate beatnik
-        output = generateBeatnik(_currentScrabbleVersion, _currentOutput);
+      output = generateBeatnik(_currentScrabbleVersion, _currentOutput);
     } else { // interpret beatnik
-        output = interpretBeatnik(_currentScrabbleVersion, _currentProgramm.toUpperCase(), _currentInput);
+      output = interpretBeatnik(_currentScrabbleVersion, _currentProgramm.toUpperCase(), _currentInput);
     }
 
     outputData = buildOutputText(output);
 
     for (int i = 0; i< output.debug.length; i++) {
       columnData.add([output.debug[i].pc, output.debug[i].command, output.debug[i].stack, output.debug[i].output]);
-    };
+    }
 
 
     return Column(
@@ -158,183 +156,96 @@ class BeatnikState extends State<Beatnik> {
           },
         ),
         _currentDebug == true
-        ? Column(
-            children: <Widget>[
-              GCWOutput(
-                title: i18n(context, 'beatnik_debug'),
-                child: Column(
-                    children: columnedMultiLineOutput(context, columnData, flexValues: flexData)
-                ),
-              ),
-              GCWTextDivider(
-                  text: i18n(context, 'beatnik_hint_code'),
-               ),
-              GCWOnOffSwitch(
-                  title: i18n(context, 'beatnik_show_scrabble'),
-                  value: _currentScrabble,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentScrabble = value;
-                    });
-                  },
-                ),
-              Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      _currentScrabble == true
-                          ? Expanded(
-                          flex: 2,
-                          child: Align(
+            ? Column(
+                children: <Widget>[
+                  GCWOutput(
+                    title: i18n(context, 'beatnik_debug'),
+                    child: Column(
+                        children: columnedMultiLineOutput(context, columnData, flexValues: flexData)
+                    ),
+                  ),
+                  GCWTextDivider(
+                    text: i18n(context, 'beatnik_hint_code'),
+                  ),
+                  GCWOnOffSwitch(
+                    title: i18n(context, 'beatnik_show_scrabble'),
+                    value: _currentScrabble,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentScrabble = value;
+                      });
+                    },
+                  ),
+                  Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        _currentScrabble == true
+                            ? Expanded(
+                            flex: 2,
+                            child: Align(
+                                alignment: Alignment.topCenter,
+                                child: Container(
+                                  child: Column(
+                                      children: <Widget>[
+                                        GCWTextDivider(
+                                            text: i18n(context, 'beatnik_hint_code_scrabble')
+                                        ),
+                                        GCWOutputText(
+                                          text: output.scrabble.join('\n'),
+                                          isMonotype: true,
+                                        ),
+                                      ]
+                                  ),
+                                  padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                                )
+                            )
+                        )
+                            : Container(),
+                        Expanded(
+                            flex: 1,
+                            child: Align(
                               alignment: Alignment.topCenter,
                               child: Container(
                                 child: Column(
-                                    children: <Widget>[
-                                      GCWTextDivider(
-                                          text: i18n(context, 'beatnik_hint_code_scrabble')
-                                      ),
-                                      GCWOutputText(
-                                        text: output.scrabble.join('\n'),
-                                        isMonotype: true,
-                                      ),
-                                    ]
+                                  children: <Widget>[
+                                    GCWTextDivider(
+                                        text: i18n(context, 'beatnik_hint_code_assembler')
+                                    ),
+                                    GCWOutputText(
+                                      text: output.assembler.join('\n'),
+                                      isMonotype: true,
+                                    ),
+                                  ],
                                 ),
                                 padding: EdgeInsets.only(right: DEFAULT_MARGIN),
-                              )
-                          )
-                      )
-                          : Container(),
-                      Expanded(
-                          flex: 1,
-                          child: Align(
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                              child: Column(
-                                children: <Widget>[
-                                  GCWTextDivider(
-                                      text: i18n(context, 'beatnik_hint_code_assembler')
-                                  ),
-                                  GCWOutputText(
-                                    text: output.assembler.join('\n'),
-                                    isMonotype: true,
-                                  ),
-                                ],
                               ),
-                              padding: EdgeInsets.only(right: DEFAULT_MARGIN),
-                            ),
-                          )
-                      ),
-                      Expanded(
-                          flex: 1,
-                          child: Align(
-                            alignment: Alignment.topCenter,
-                            child: Container(
-                              child: Column(
-                                children: <Widget>[
-                                  GCWTextDivider(
-                                      text: i18n(context, 'beatnik_hint_code_memnonic')
-                                  ),
-                                  GCWOutputText(
-                                    text: output.memnonic.join('\n'),
-                                    isMonotype: true,
-                                  ),
-                                ],
+                            )
+                        ),
+                        Expanded(
+                            flex: 1,
+                            child: Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    GCWTextDivider(
+                                        text: i18n(context, 'beatnik_hint_code_memnonic')
+                                    ),
+                                    GCWOutputText(
+                                      text: output.memnonic.join('\n'),
+                                      isMonotype: true,
+                                    ),
+                                  ],
+                                ),
+                                padding: EdgeInsets.only(left: DEFAULT_MARGIN),
                               ),
-                              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
-                            ),
-                          )
-                      ),
-                    ]
-                ),
-              ]
-        )
-/*        ? GCWOutput(
-            title: i18n(context, 'beatnik_debug'),
-            child: Column(
-              children: columnedMultiLineOutput(context, columnData, flexValues: flexData)
-            ),
-          )*/
-        : Container(),
-/*
-        GCWTextDivider(
-          text: i18n(context, 'beatnik_hint_code'),
-        ),
-        GCWOnOffSwitch(
-          title: i18n(context, 'beatnik_show_scrabble'),
-          value: _currentScrabble,
-          onChanged: (value) {
-            setState(() {
-              _currentScrabble = value;
-            });
-          },
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _currentScrabble == true
-            ? Expanded(
-                flex: 2,
-                child: Align(
-                  alignment: Alignment.topCenter,
-                    child: Container(
-                      child: Column(
-                          children: <Widget>[
-                            GCWTextDivider(
-                                text: i18n(context, 'beatnik_hint_code_scrabble')
-                            ),
-                            GCWOutputText(
-                              text: output.scrabble.join('\n'),
-                              isMonotype: true,
-                            ),
-                          ]
-                      ),
-                      padding: EdgeInsets.only(right: DEFAULT_MARGIN),
-                    )
-                )
-            )
-            : Container(),
-            Expanded(
-              flex: 1,
-              child: Align(
-              alignment: Alignment.topCenter,
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      GCWTextDivider(
-                          text: i18n(context, 'beatnik_hint_code_assembler')
-                      ),
-                      GCWOutputText(
-                        text: output.assembler.join('\n'),
-                        isMonotype: true,
-                      ),
-                    ],
+                            )
+                        ),
+                      ]
                   ),
-                  padding: EdgeInsets.only(right: DEFAULT_MARGIN),
-                ),
+                ]
               )
-            ),
-            Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    child: Column(
-                      children: <Widget>[
-                        GCWTextDivider(
-                            text: i18n(context, 'beatnik_hint_code_memnonic')
-                        ),
-                        GCWOutputText(
-                          text: output.memnonic.join('\n'),
-                          isMonotype: true,
-                        ),
-                      ],
-                    ),
-                    padding: EdgeInsets.only(left: DEFAULT_MARGIN),
-                  ),
-                )
-            ),
-          ]
-        ),
-*/
+            : Container(),
       ],
     );
   }
@@ -342,10 +253,7 @@ class BeatnikState extends State<Beatnik> {
   String buildOutputText(BeatnikOutput outputList){
     String output = '';
     outputList.output.forEach((element) {
-      //if (element.startsWith('beatnik_error_runtime_invalid_input'))
-      //  _showDialogBox(context, _currentInput);
-      //else
-        if (element.startsWith('beatnik_')) {
+      if (element.startsWith('beatnik_')) {
         output = output + i18n(context, element) + '\n';
       } else
         output = output + element + '\n';
@@ -353,39 +261,4 @@ class BeatnikState extends State<Beatnik> {
     return output;
   }
 
-  _showDialogBox(BuildContext context, String text) {
-    showGCWDialog(
-        context,
-        text,
-        Container(
-          width: 300,
-          height: 100,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              GCWTextField(
-                autofocus: true,
-                filled: true,
-                onChanged: (text) {
-                  _currentInput = text;
-                },
-              ),
-            ],
-          ),
-        ),
-        [
-          GCWDialogButton(
-            text: i18n(context, 'common_ok'),
-            onPressed: () {
-              //_isStarted = false;
-              //if (_continueState != null)
-              //  _continueState.inp = _currentInput;
-              //_calcOutput(context);
-              this.setState(() {});
-            },
-          )
-        ],
-        cancelButton: false
-    );
-  }
 }
