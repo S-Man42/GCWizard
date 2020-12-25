@@ -400,6 +400,7 @@
   "chef_language_ENG" : "Englisch",
   "chef_generate_auxiliary_recipe" : "Benutze Beilagen",
   "chef_error_structure_recipe" : "STRUKTUR FEHLER",
+  "chef_error_structure_subrecipe" : "Ein Fehler im Beilagenrezept",
   "chef_error_structure_recipe_title" : "Rezept-Abschnitt 'Titel'",
   "chef_error_structure_recipe_missing_title" : "Titel fehlt",
   "chef_error_structure_recipe_missing_output" : "Ausgabe fehlt - es gibt nichts zum kochen oder backen",
