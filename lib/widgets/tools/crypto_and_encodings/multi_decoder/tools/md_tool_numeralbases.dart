@@ -15,8 +15,12 @@ class MultiDecoderToolNumeralBases extends GCWMultiDecoderTool {
       id: id,
       name: name,
       internalToolName: MDT_INTERNALNAMES_NUMERALBASES,
-      onDecode: (input) {
-        return convertBase(input, options[MDT_NUMERALBASES_OPTION_FROM], 10);
+      onDecode: (String input) {
+        return input
+          .split(RegExp(r'\s+'))
+          .where((element) => element.length > 0)
+          .map((element) => convertBase(element, options[MDT_NUMERALBASES_OPTION_FROM], 10))
+          .join(' ');
       },
       options: options,
       configurationWidget: GCWMultiDecoderToolConfiguration(

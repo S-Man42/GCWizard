@@ -148,8 +148,10 @@ class _HashBreakerState extends State<HashBreaker> {
 
     if (calculateAll == false) {
       var preCheckResult = preCheck(_substitutions);
-      if (preCheckResult == null || preCheckResult['status'] == null)
-        return i18n(context, 'hashes_hashbreaker_solutionnotfound');
+      if (preCheckResult == null || preCheckResult['status'] == null) {
+        _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
+        return;
+      }
 
       if (preCheckResult['status'] == 'high_count') {
         showGCWAlertDialog(
@@ -169,8 +171,10 @@ class _HashBreakerState extends State<HashBreaker> {
     }
 
     Map<String, dynamic> output = breakHash(_currentInput, _currentMask, _substitutions, _currentHashFunction);
-    if (output == null || output['state'] == null || output['state'] == 'not_found')
-      return i18n(context, 'hashes_hashbreaker_solutionnotfound');
+    if (output == null || output['state'] == null || output['state'] == 'not_found') {
+      _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
+      return;
+    }
 
     _currentOutput = output['text'];
   }
@@ -318,8 +322,8 @@ class _HashBreakerState extends State<HashBreaker> {
 
       if (odd) {
         output = Container(
-            color: themeColors().outputListOddRows(),
-            child: row
+          color: themeColors().outputListOddRows(),
+          child: row
         );
       } else {
         output = Container(
@@ -333,10 +337,10 @@ class _HashBreakerState extends State<HashBreaker> {
 
     return Container(
       child: Column(
-          children: rows
+        children: rows
       ),
       padding: EdgeInsets.only(
-          top: 10
+        top: 10
       ),
     );
   }
