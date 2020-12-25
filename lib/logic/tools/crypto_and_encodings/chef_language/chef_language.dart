@@ -324,7 +324,8 @@ class Chef {
 						valid = false;
 						return '';
 					}
-				} else if (line.startsWith("cooking time") || line.startsWith("garzeit")) {
+				}
+				else if (line.startsWith("cooking time") || line.startsWith("garzeit")) {
 					if (progress > 4) {
 						valid = false;
 						_addError(3, progress);
@@ -337,7 +338,8 @@ class Chef {
 						this.valid = false;
 						return '';
 					}
-				} else if (line.startsWith("pre-heat oven") || line.startsWith("pre heat oven") || line.startsWith("ofen auf")) {
+				}
+				else if (line.startsWith("pre-heat oven") || line.startsWith("pre heat oven") || line.startsWith("ofen auf")) {
 					if (progress > 5) {
 						valid = false;
 						_addError(4, progress);
@@ -350,7 +352,8 @@ class Chef {
 						this.valid = false;
 						return '';
 					}
-				} else if (line.startsWith("method") || line.startsWith("zubereitung")) {
+				}
+				else if (line.startsWith("method") || line.startsWith("zubereitung")) {
 					if (progress > 5){
 						valid = false;
 						_addError(5, progress);
@@ -363,7 +366,8 @@ class Chef {
 						this.valid = false;
 						return '';
 					}
-				} else if (line.startsWith("serves") || line.startsWith("portionen")) {
+				}
+				else if (line.startsWith("serves") || line.startsWith("portionen")) {
 					if (progress != 6) {
 						valid = false;
 						_addError(6, progress);
@@ -376,7 +380,8 @@ class Chef {
 						this.valid = false;
 						return '';
 					}
-				} else {
+				}
+				else {
 					if (progress == 0 || progress >= 6) {
 						title = _parseTitle(line);
 						r = new Recipe(line);
