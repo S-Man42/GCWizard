@@ -389,7 +389,8 @@ class Registry {
         tool: Chef(),
         i18nPrefix: 'chef',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'chef language programming sprache esoteric esoterisch programmiersprache'
+        searchStrings: 'chef language programming sprache esoteric esoterisch programmiersprache',
+        //titleTrailing: chefDocumentationDownloadButton(context),
       ),
       GCWTool(
         tool: ChickenLanguage(),

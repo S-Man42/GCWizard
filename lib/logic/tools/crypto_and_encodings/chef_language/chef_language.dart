@@ -309,6 +309,13 @@ class Chef {
 		Recipe r = null;
 		String title = '';
 		String line = '';
+		bool mainrecipeFound = false;
+		bool progressError = false;
+		bool ingredientsFound = false;
+		bool methodsFound = false;
+		bool servesFound = false;
+		bool refrigerateFound = false;
+
 		readRecipe.split("\n\n").forEach((element) {
 				line = element.trim();
 				if (line.startsWith("ingredients") || line.startsWith("zutaten")) {
@@ -319,6 +326,7 @@ class Chef {
 					}
 					progress = 3;
 					r.setIngredients(line);
+					ingredientsFound = true;
 					if (r.error) {
 						this.error.addAll(r.errorList);
 						valid = false;
@@ -361,6 +369,9 @@ class Chef {
 					}
 					progress = 6;
 					r.setMethod(line, language);
+					methodsFound = true;
+					if (line.contains('refrigerate') || line.contains('einfrieren'))
+						refrigerateFound = true;
 					if (r.error){
 						this.error.addAll(r.errorList);
 						this.valid = false;
@@ -375,6 +386,7 @@ class Chef {
 					}
 					progress = 0;
 					r.setServes(line);
+					servesFound = true;
 					if (r.error){
 						this.error.addAll(r.errorList);
 						this.valid = false;
@@ -387,20 +399,29 @@ class Chef {
 						r = new Recipe(line);
 						if (mainrecipe == null) {
 							mainrecipe = r;
+							mainrecipeFound = true;
 						}
 						progress = 1;
 						recipes.addAll({title : r});
-					} else if (progress == 1) {
+					}
+					else if (progress == 1) {
 						progress = 2;
 						r.setComments(line);
-					} else {
+					}
+					else {
 						valid = false;
-						error.addAll(['chef_error_structure_recipe',
-													'chef_error_structure_recipe_read_unexpected_comments_title',
-													_progressToExpected(progress),
-													'chef_hint_recipe_hint',
-													_structHint(progress),
-													'']);
+						if (!progressError)
+						  {
+						  	progressError = true;
+								if (mainrecipeFound) {
+									error.add('chef_error_structure_subrecipe');
+								}
+								error.addAll(['chef_error_structure_recipe_read_unexpected_comments_title',
+									_progressToExpected(progress),
+									'chef_hint_recipe_hint',
+									_structHint(progress),
+									'']);
+							}
 						return '';
 					}
 				}
@@ -410,6 +431,27 @@ class Chef {
 			error.addAll(['chef_error_structure_recipe',
 										'chef_error_structure_recipe_empty_missing_title',
 										'']);
+			return;
+		}
+		if (!ingredientsFound) {
+			valid = false;
+			error.addAll(['chef_error_structure_recipe',
+				'chef_error_structure_recipe_empty_ingredients',
+				'']);
+			return;
+		}
+		if (!methodsFound) {
+			valid = false;
+			error.addAll(['chef_error_structure_recipe',
+				'chef_error_structure_recipe_empty_methods',
+				'']);
+			return;
+		}
+		if (!servesFound && !refrigerateFound) {
+			valid = false;
+			error.addAll(['chef_error_structure_recipe',
+				'chef_error_structure_recipe_empty_serves',
+				'']);
 			return;
 		}
 	} // chef
