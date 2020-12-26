@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data_specialsorts.dart';
 
 final SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
 
@@ -12,7 +13,8 @@ class _SymbolTableConstants {
   final CONFIG_SPECIALMAPPINGS = 'special_mappings';
   final CONFIG_TRANSLATE = 'translate';
   final CONFIG_CASESENSITIVE = 'case_sensitive';
-  final CONFIG_SORT = 'sort';
+  final CONFIG_SPECIALSORT = 'special_sort';
+  final CONFIG_IGNORE = 'ignore';
 
   final Map<String, String> CONFIG_SPECIAL_CHARS = {
     "space" : " ",
@@ -126,6 +128,9 @@ class SymbolTableData {
 
     config = json.decode(file);
 
+    if (config[_constants.CONFIG_IGNORE] == null)
+      config.putIfAbsent(_constants.CONFIG_IGNORE, () => <String>[]);
+
     if (config[_constants.CONFIG_SPECIALMAPPINGS] == null)
       config.putIfAbsent(_constants.CONFIG_SPECIALMAPPINGS, () => Map<String, String>());
 
@@ -133,10 +138,17 @@ class SymbolTableData {
       config[_constants.CONFIG_SPECIALMAPPINGS].putIfAbsent(element.key, () => element.value);
     });
 
-    if (config[_constants.CONFIG_SORT] == null) {
+    if (config[_constants.CONFIG_SPECIALSORT] == null || config[_constants.CONFIG_SPECIALSORT] == false) {
       _sort = _defaultSort;
     } else {
-      _sort = _defaultSort;
+      switch (_symbolKey) {
+        case "notes_names_bassclef" : _sort = specialSortNoteNames; break;
+        case "notes_names_trebleclef" : _sort = specialSortNoteNames; break;
+        case "notes_notevalues" : _sort = specialSortNoteValues; break;
+        case "notes_restvalues" : _sort = specialSortNoteValues; break;
+        case "trafficsigns_germany" : _sort = specialSortTrafficSignsGermany; break;
+        default: _sort = _defaultSort; break;
+      }
     }
   }
 
@@ -187,6 +199,7 @@ class SymbolTableData {
 
         return {key : value};
       })
+      .where((element) => !config[_constants.CONFIG_IGNORE].contains(element.keys.first.toLowerCase()))
       .where((element) => element.values.first != null)
       .toList();
 
