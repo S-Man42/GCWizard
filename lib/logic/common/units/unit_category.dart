@@ -1,3 +1,4 @@
+import 'package:gc_wizard/logic/common/units/typography.dart';
 import 'package:gc_wizard/logic/common/units/angle.dart';
 import 'package:gc_wizard/logic/common/units/area.dart';
 import 'package:gc_wizard/logic/common/units/density.dart';
@@ -24,6 +25,7 @@ final UNITCATEGORY_POWER = UnitCategory('unitconverter_category_power', powers, 
 final UNITCATEGORY_PRESSURE = UnitCategory('unitconverter_category_pressure', pressures, PRESSURE_PASCAL, true);
 final UNITCATEGORY_TEMPERATURE = UnitCategory('unitconverter_category_temperature', temperatures, TEMPERATURE_KELVIN, true);
 final UNITCATEGORY_TIME = UnitCategory('unitconverter_category_time', times, TIME_SECOND, true);
+final UNITCATEGORY_TYPOGRAPHY = UnitCategory('unitconverter_category_typography', typographies, TYPOGRAPHY_DTPPOINT, false);
 final UNITCATEGORY_VELOCITY = UnitCategory('unitconverter_category_velocity', velocities, VELOCITY_MS, false);
 final UNITCATEGORY_VOLUME = UnitCategory('unitconverter_category_volume', volumes, VOLUME_CUBICMETER, false);
 
