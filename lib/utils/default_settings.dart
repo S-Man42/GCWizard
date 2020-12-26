@@ -71,6 +71,10 @@ void initDefaultSettings() {
   if (Prefs.get('formulasolver_formulas') == null) {
     Prefs.setStringList('formulasolver_formulas', []);
   }
+  
+  if (Prefs.get('multidecoder_tools') == null) {
+    Prefs.setStringList('multidecoder_tools', []);
+  }
 
   if (Prefs.get('symboltables_countcolumns_portrait') == null) {
     Prefs.setInt('symboltables_countcolumns_portrait', 6);

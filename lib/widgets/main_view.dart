@@ -47,12 +47,15 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
@@ -63,6 +66,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/multi_decoder.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
@@ -80,6 +84,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
@@ -175,10 +180,12 @@ class _MainViewState extends State<MainView> {
           className(Binary()),
           className(BookCipher()),
           className(BrainfkSelection()),
+          className(BurrowsWheeler()),
           className(Caesar()),
           className(CCITT1Selection()),
           className(CCITT2Selection()),
           className(Chao()),
+          className(Chef()),
           className(ChickenLanguage()),
           className(CistercianNumbers()),
           className(CoordsSelection()),
@@ -206,7 +213,9 @@ class _MainViewState extends State<MainView> {
           className(Humidex()),
           className(Kamasutra()),
           className(Kenny()),
+          className(Keyboard()),
           className(Morse()),
+          className(MultiDecoder()),
           className(NumeralBases()),
           className(NumeralWordsSelection()),
           className(OneTimePad()),
@@ -242,6 +251,7 @@ class _MainViewState extends State<MainView> {
           className(UnitConverter()),
           className(VanitySelection()),
           className(Vigenere()),
+          className(WhitespaceLanguage()),
           className(Windchill()),
           className(Z22()),
         ].contains(className(element.tool));

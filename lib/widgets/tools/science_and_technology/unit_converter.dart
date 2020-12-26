@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/units/angle.dart';
-import 'package:gc_wizard/logic/units/area.dart';
-import 'package:gc_wizard/logic/units/density.dart';
-import 'package:gc_wizard/logic/units/energy.dart';
-import 'package:gc_wizard/logic/units/force.dart';
-import 'package:gc_wizard/logic/units/length.dart';
-import 'package:gc_wizard/logic/units/mass.dart';
-import 'package:gc_wizard/logic/units/power.dart';
-import 'package:gc_wizard/logic/units/pressure.dart';
-import 'package:gc_wizard/logic/units/temperature.dart';
-import 'package:gc_wizard/logic/units/time.dart';
-import 'package:gc_wizard/logic/units/unit.dart';
-import 'package:gc_wizard/logic/units/unit_category.dart';
-import 'package:gc_wizard/logic/units/unit_prefix.dart';
-import 'package:gc_wizard/logic/units/velocity.dart';
-import 'package:gc_wizard/logic/units/volume.dart';
+import 'package:gc_wizard/logic/common/units/typography.dart';
+import 'package:gc_wizard/logic/common/units/angle.dart';
+import 'package:gc_wizard/logic/common/units/area.dart';
+import 'package:gc_wizard/logic/common/units/density.dart';
+import 'package:gc_wizard/logic/common/units/energy.dart';
+import 'package:gc_wizard/logic/common/units/force.dart';
+import 'package:gc_wizard/logic/common/units/length.dart';
+import 'package:gc_wizard/logic/common/units/mass.dart';
+import 'package:gc_wizard/logic/common/units/power.dart';
+import 'package:gc_wizard/logic/common/units/pressure.dart';
+import 'package:gc_wizard/logic/common/units/temperature.dart';
+import 'package:gc_wizard/logic/common/units/time.dart';
+import 'package:gc_wizard/logic/common/units/unit.dart';
+import 'package:gc_wizard/logic/common/units/unit_category.dart';
+import 'package:gc_wizard/logic/common/units/unit_prefix.dart';
+import 'package:gc_wizard/logic/common/units/velocity.dart';
+import 'package:gc_wizard/logic/common/units/volume.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -36,6 +37,7 @@ final List<Map<String, dynamic>> _categories = [
   {'category' : UNITCATEGORY_PRESSURE, 'default_from_unit': PRESSURE_PASCAL, 'default_to_unit': PRESSURE_BAR},
   {'category' : UNITCATEGORY_TEMPERATURE, 'default_from_unit': TEMPERATURE_CELSIUS, 'default_to_unit': TEMPERATURE_FAHRENHEIT},
   {'category' : UNITCATEGORY_TIME, 'default_from_unit': TIME_HOUR, 'default_to_unit': TIME_MINUTE},
+  {'category' : UNITCATEGORY_TYPOGRAPHY, 'default_from_unit': TYPOGRAPHY_DTPPOINT, 'default_to_unit': TYPOGRAPHY_CENTIMETER},
   {'category' : UNITCATEGORY_VELOCITY, 'default_from_unit': VELOCITY_KMH, 'default_to_unit': VELOCITY_MS},
   {'category' : UNITCATEGORY_VOLUME, 'default_from_unit': VOLUME_CUBICMETER, 'default_to_unit': VOLUME_LITER},
 ];

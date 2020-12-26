@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/units/length.dart';
-import 'package:gc_wizard/logic/units/unit_category.dart';
+import 'package:gc_wizard/logic/common/units/length.dart';
+import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
@@ -54,7 +54,7 @@ class _GCWDistanceState extends State<GCWDistance> {
                 });
               },
             ),
-            padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN)
+            padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
           )
         ),
         Expanded(

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/units/unit.dart';
-import 'package:gc_wizard/logic/units/unit_category.dart';
-import 'package:gc_wizard/logic/units/unit_prefix.dart';
+import 'package:gc_wizard/logic/common/units/unit.dart';
+import 'package:gc_wizard/logic/common/units/unit_category.dart';
+import 'package:gc_wizard/logic/common/units/unit_prefix.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_prefix_dropdownbutton.dart';
 
@@ -60,7 +57,7 @@ class _GCWUnitsState extends State<GCWUnits> {
                         });
                       },
                     ),
-                    padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
+                    padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                   ),
                   flex: 1
                 )

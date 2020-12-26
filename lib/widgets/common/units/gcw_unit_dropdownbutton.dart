@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/units/unit.dart';
-import 'package:gc_wizard/logic/units/unit_category.dart';
+import 'package:gc_wizard/logic/common/units/unit.dart';
+import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 
 

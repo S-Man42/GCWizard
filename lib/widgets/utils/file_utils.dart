@@ -1,10 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:share_extend/share_extend.dart';
+import 'package:open_file/open_file.dart';
 
-Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) async {
+Future<String> MainPath() async {
   var status = await Permission.storage.request();
   if (status != PermissionStatus.granted) {
     return null;
@@ -25,7 +26,14 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) 
     final Directory _appDocDirNewFolder = await _appDocDirFolder.create(recursive: true);
     path = _appDocDirNewFolder.path;
   }
+  return path;
+}
 
+Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) async {
+
+  var path = await MainPath();
+  if (path == null)
+    return null;
   var filePath = '$path/$fileName';
   var file = File(filePath);
 
@@ -35,4 +43,48 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) 
   await file.writeAsBytes(data.buffer.asUint8List());
 
   return {'path': filePath, 'file': file};
+}
+
+Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {String subDirectory}) async {
+
+  var path = await MainPath();
+  if (path == null)
+    return null;
+  var filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
+  var file = await File(filePath).create(recursive: true);
+
+  if (! await file.exists())
+    file.create();
+
+  await file.writeAsString(data);
+
+  return {'path': filePath, 'file': file};
+}
+
+shareFile(String path, String type) {
+  ShareExtend.share(path, "file");
+}
+
+openFile(String path, String type) {
+  Map<String, String> knowExtensions = {
+    ".gpx": "application/gpx+xml",
+    ".kml": "application/vnd.google-earth.kml+xml",
+    ".kmz": "application/vnd.google-earth.kmz",
+  };
+  Map<String, String> knowUtiExtensions = {
+    ".gpx": "com.topografix.gpx",
+    ".kml": "com.google.earth.kml",
+  };
+
+  if (type != null) {
+    type = type.toLowerCase();
+    OpenFile.open(path,
+        type: knowExtensions.containsKey(type) ? knowExtensions[type] : null,
+        uti: knowUtiExtensions.containsKey(type) ? knowUtiExtensions[type] : null
+    );
+  }
+  else
+    OpenFile.open(path);
+
+
 }
