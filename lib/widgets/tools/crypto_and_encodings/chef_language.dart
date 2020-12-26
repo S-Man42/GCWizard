@@ -179,7 +179,7 @@ class ChefState extends State<Chef> {
                 },
               ),
               GCWTextDivider(
-                  text: i18n(context, 'chef_fridgerator')
+                  text: i18n(context, 'chef_refrigerator')
               ),
               GCWTextField(
                 controller: _inputController,

@@ -387,7 +387,7 @@
   "chef_generate" : "Generator",
   "chef_code" : "Programmcode",
   "chef_input" : "Eingabe von zusätzliche Zutaten",
-  "chef_fridgerator" : "Kühlschrank",
+  "chef_refrigerator" : "Kühlschrank (Eingaben)",
   "chef_output" : "Ausgabe",
   "chef_sourcecode" : "Chef-Programm",
   "chef_options" : "Optionen",

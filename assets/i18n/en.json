@@ -387,7 +387,7 @@
   "chef_generate" : "Generator",
   "chef_code" : "Code",
   "chef_input" : "Input of additional ingredients",
-  "chef_fridgerator" : "Fridgerator",
+  "chef_refrigerator" : "Refrigerator (Input)",
   "chef_recipetitle" : "Title",
   "chef_remark" : "Remark",
   "chef_time" : "Cooking time",
