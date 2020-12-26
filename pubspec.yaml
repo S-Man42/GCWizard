@@ -132,7 +132,11 @@ flutter:
     - assets/symbol_tables/moon/
     - assets/symbol_tables/murray/
     - assets/symbol_tables/murraybaudot/
-    - assets/symbol_tables/notes/
+    - assets/symbol_tables/notes_doremi/
+    - assets/symbol_tables/notes_notevalues/
+    - assets/symbol_tables/notes_names_bassclef/
+    - assets/symbol_tables/notes_names_trebleclef/
+    - assets/symbol_tables/notes_restvalues/
     - assets/symbol_tables/ogham/
     - assets/symbol_tables/optical_fiber_fotag/
     - assets/symbol_tables/optical_fiber_iec60304/

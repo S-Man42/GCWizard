@@ -251,6 +251,8 @@ class Registry {
   static final SEARCHSTRING_SYMBOLTABLES_FREEMASONS = 'freemasons freimaurer ';
   static final SEARCHSTRING_SYMBOLTABLES_HYLIAN = 'thelegendofzelda dielegendevonzelda hylian hylianisches hyrule ';
   static final SEARCHSTRING_SYMBOLTABLES_ILLUMINATI = SEARCHSTRING_SYMBOLTABLES_FREEMASONS + 'illuminati illuminatus illuminaten 23 ';
+  static final SEARCHSTRING_SYMBOLTABLES_MUSIC = 'music musik ';
+  static final SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES = SEARCHSTRING_SYMBOLTABLES_MUSIC + 'notes noten ';
   static final SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER = 'lwl llk lichtwellenleiter lichtleitkabel opticalfiber glasfaserkabel ';
   static final SEARCHSTRING_TOMTOM = 'a-tom-tom atomtom ';
   static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
@@ -1975,9 +1977,29 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_CCITT2
       ),
       GCWSymbolTableTool(
-        symbolKey: 'notes',
+        symbolKey: 'notes_doremi',
         iconFilename: '1.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'doremifalamiresisol notesystem solmisation notensystem tonstufen degrees octal oktal musik music'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES + 'doremifalamiresisol notesystem solmisation notensystem tonstufen degrees octal oktal'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'notes_names_bassclef',
+        iconFilename: 'logo.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES + 'notenames notennamen bassclef bassschluessel tonleiter scale bassvorzeichen kreuzvorzeichen hashtag flat sharp'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'notes_names_trebleclef',
+        iconFilename: 'logo.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES + 'notenames notennamen trebleclef violinschluessel tonleiter scale bassvorzeichen kreuzvorzeichen hashtag flat sharp'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'notes_notevalues',
+        iconFilename: '3_32.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES + 'notevalues notenwerte dotted punkt gepunktete punktierte viertel halbe ganze achtel sechzehntel whole half quarter eightth sixteenth semibreve minim crotchet semihemidemisemiquaver'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'notes_restvalues',
+        iconFilename: '3_8.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES + 'notevalues notenwerte restvalues pausenwerte dotted punkt gepunktete punktierte viertel halbe ganze achtel sechzehntel whole half quarter eightth sixteenth semibreve minim crotchet semihemidemisemiquaver'
       ),
       GCWSymbolTableTool(
         symbolKey: 'ogham',
