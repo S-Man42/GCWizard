@@ -38,16 +38,16 @@ enum VariableStringExpanderBreakCondition {RUN_ALL, BREAK_ON_FIRST_FOUND}
      - Decision for 2. Best Cost/Price-Balance
  */
 class VariableStringExpander {
-  String input;
-  Map<String, String> substitutions;
+  String _input;
+  Map<String, String> _substitutions;
   Function addAsResult;
 
   VariableStringExpanderBreakCondition breakCondition;
   bool uniqueResults;
 
   VariableStringExpander(
-    this.input,
-    this.substitutions,
+    this._input,
+    this._substitutions,
     this.addAsResult,
     {
       this.breakCondition = VariableStringExpanderBreakCondition.RUN_ALL,
@@ -179,14 +179,14 @@ class VariableStringExpander {
 
   // do the substitution of the variables set with their specific values given by their counted indexes
   void _substitude() {
-    _result = input;
+    _result = _input;
     for (_variableGroupIndex = 0; _variableGroupIndex < _countVariableGroups; _variableGroupIndex++) {
       _variableGroup = _variableGroups[_variableGroupIndex];
 
       for (_variableValueIndex = 0; _variableValueIndex < _variableValueIndexes.length; _variableValueIndex++) {
-        _variableGroup = _variableGroup.replaceAll(
+        _variableGroup = _variableGroup.toUpperCase().replaceAll(
           _substitutionKeys[_variableValueIndex],
-          _expandedVariableGroups[_variableValueIndex][_variableValueIndexes[_variableValueIndex]]
+          _expandedVariableGroups[_variableValueIndex][_variableValueIndexes[_variableValueIndex]],
         );
       }
 
@@ -203,18 +203,18 @@ class VariableStringExpander {
   }
 
   List<Map<String, dynamic>> run({onlyPrecheck: false}) {
-    if (input == null || input.length == 0)
+    if (_input == null || _input.length == 0)
       return [];
 
-    if (substitutions == null || substitutions.length == 0) {
-      return [{'text': input, 'variables': {}}];
+    if (_substitutions == null || _substitutions.length == 0) {
+      return [{'text': _input, 'variables': {}}];
     }
 
-    input = _sanitizeForFormula(input);
+    _input = _sanitizeForFormula(_input);
 
     // expand all groups, initialize lists
-    substitutions.entries.forEach((substitution) {
-      _substitutionKeys.add(substitution.key);
+    _substitutions.entries.forEach((substitution) {
+      _substitutionKeys.add(substitution.key.toUpperCase());
       var group = _expandVariableGroup(substitution.value);
       _expandedVariableGroups.add(group);
 
@@ -231,7 +231,7 @@ class VariableStringExpander {
 
     // Find matching formula groups
     RegExp regExp = new RegExp(r'\[.+?\]');
-    _variableGroups = regExp.allMatches(input.trim()).map((elem) => elem.group(0)).toList();
+    _variableGroups = regExp.allMatches(_input.trim()).map((elem) => elem.group(0)).toList();
     _countVariableGroups = _variableGroups.length;
 
     // gogogo!
