@@ -450,8 +450,9 @@
   "chickenlanguage_description" : "Game Language, Secret Language",
   "chickenlanguage_example" : "code → cohodefodehedefe",
 
-  "cistercian_title" : "Cistercian",
-  "cistercian_description" : "Cistercian numbers",
+  "cistercian_title" : "Cistercian numbers",
+  "cistercian_description" : "Numbering system of the Cistercian monastic order",
+  "cistercian_example" : "11 202 1000  → ⊺ ⊧ ⌋",
 
   "chronogram_title" : "Chronogram",
   "chronogram_description" : "Finds and adds roman numerals in texts",

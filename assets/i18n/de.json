@@ -451,8 +451,9 @@
   "chickenlanguage_description" : "Spielsprache, Geheimsprache",
   "chickenlanguage_example" : "Huhn → huhudefuhn",
 
-  "cistercian_title" : "Zisterzienser",
-  "cistercian_description" : "Zahlensystem der Zisterzienser",
+  "cistercian_title" : "Zisterzienserzahlen",
+  "cistercian_description" : "Zahlensystem der Zisterzienser-Mönche",
+  "cistercian_example" : "11 202 1000  → ⊺ ⊧ ⌋",
 
   "chronogram_title" : "Chronogramm",
   "chronogram_description" : "Finded und addiert römische Zahlen in Texten",
