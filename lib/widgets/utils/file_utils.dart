@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_extend/share_extend.dart';
-import 'package:open_file/open_file.dart';
+//import 'package:open_file/open_file.dart';
 
 Future<String> MainPath() async {
   var status = await Permission.storage.request();
@@ -76,15 +76,15 @@ openFile(String path, String type) {
     ".kml": "com.google.earth.kml",
   };
 
-  if (type != null) {
-    type = type.toLowerCase();
-    OpenFile.open(path,
-        type: knowExtensions.containsKey(type) ? knowExtensions[type] : null,
-        uti: knowUtiExtensions.containsKey(type) ? knowUtiExtensions[type] : null
-    );
-  }
-  else
-    OpenFile.open(path);
+  //if (type != null) {
+    //type = type.toLowerCase();
+    //OpenFile.open(path,
+    //    type: knowExtensions.containsKey(type) ? knowExtensions[type] : null,
+    //    uti: knowUtiExtensions.containsKey(type) ? knowUtiExtensions[type] : null
+    //);
+ // }
+  //else
+    //OpenFile.open(path);
 
 
 }
