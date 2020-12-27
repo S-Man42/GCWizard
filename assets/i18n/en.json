@@ -453,6 +453,7 @@
   "cistercian_title" : "Cistercian numbers",
   "cistercian_description" : "Numbering system of the Cistercian monastic order",
   "cistercian_example" : "11 202 1000  → ⊺ ⊧ ⌋",
+  "cistercian_decodemode_visualsegments" : "Visual Segments",
 
   "chronogram_title" : "Chronogram",
   "chronogram_description" : "Finds and adds roman numerals in texts",

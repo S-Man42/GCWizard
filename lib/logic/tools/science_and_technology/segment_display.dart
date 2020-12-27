@@ -438,46 +438,47 @@ final Map<List<String>, String> _Segment16ToAZ = {
   [] : ' '
 };
 
-final Map<int, List<String>> _AZToCistercianSegment = {
-  0 : ['k'],
-  1 : ['b','k'],
-  2 : ['j','k'],
-  3 : ['h','k'],
-  4 : ['g','k'],
-  5 : ['b','g','k'],
-  6 : ['d','k'],
-  7 : ['b','d','k'],
-  8 : ['d','j','k'],
-  9 : ['b','d','j','k'],
-  10 : ['a','k'],
-  20 : ['i','k'],
-  30 : ['e','k'],
-  40 : ['f','k'],
-  50 : ['a','f','k'],
-  60 : ['c','k'],
-  70 : ['a','c','k'],
-  80 : ['c','i','k'],
-  90 : ['a','c','i','k'],
-  100 : ['k','u'],
-  200 : ['k','m'],
-  300 : ['k','r'],
-  400 : ['k','s'],
-  500 : ['k','s','u'],
-  600 : ['k','o'],
-  700 : ['k','o','u'],
-  800 : ['k','m','o'],
-  900 : ['k','m','o','u'],
-  1000 : ['k','t'],
-  2000 : ['k','l'],
-  3000 : ['k','q'],
-  4000 : ['k','p'],
-  5000 : ['k','p','t'],
-  6000 : ['k','n'],
-  7000 : ['k','n','t'],
-  8000 : ['k','l','n'],
-  9000 : ['k','l','n','t'],
+final Map<String, List<String>> _AZToSegmentCistercian = {
+  '0' : ['k'],
+  '1' : ['b','k'],
+  '2' : ['j','k'],
+  '3' : ['h','k'],
+  '4' : ['g','k'],
+  '5' : ['b','g','k'],
+  '6' : ['d','k'],
+  '7' : ['b','d','k'],
+  '8' : ['d','j','k'],
+  '9' : ['b','d','j','k'],
+  '10' : ['a','k'],
+  '20' : ['i','k'],
+  '30' : ['e','k'],
+  '40' : ['f','k'],
+  '50' : ['a','f','k'],
+  '60' : ['c','k'],
+  '70' : ['a','c','k'],
+  '80' : ['c','i','k'],
+  '90' : ['a','c','i','k'],
+  '100' : ['k','u'],
+  '200' : ['k','m'],
+  '300' : ['k','r'],
+  '400' : ['k','s'],
+  '500' : ['k','s','u'],
+  '600' : ['k','o'],
+  '700' : ['k','o','u'],
+  '800' : ['k','m','o'],
+  '900' : ['k','m','o','u'],
+  '1000' : ['k','t'],
+  '2000' : ['k','l'],
+  '3000' : ['k','q'],
+  '4000' : ['k','p'],
+  '5000' : ['k','p','t'],
+  '6000' : ['k','n'],
+  '7000' : ['k','n','t'],
+  '8000' : ['k','l','n'],
+  '9000' : ['k','l','n','t'],
 };
 
+final Map<List<String>, String> _SegmentCistercianToAZ = switchMapKeyValue(_AZToSegmentCistercian);
 
 List<List<String>> encodeCistercian(String input) {
   if (input == null || input == '')
@@ -493,7 +494,7 @@ List<List<String>> encodeCistercian(String input) {
     if (encodeNumber != null && encodeNumber < 10000) {
       var display;
       if (character.length == 1 && character[0] == '0'){
-        segmentList = _AZToCistercianSegment[digit];
+        segmentList = _AZToSegmentCistercian[digit];
         if (display == null){
           display = segmentList;
         } else {
@@ -508,7 +509,7 @@ List<List<String>> encodeCistercian(String input) {
         for (int i = 0; i < character.length; i++ ){
           digit = int.parse(character[i]) * pow(10, character.length - i - 1);
           if (digit != 0) {
-            segmentList = _AZToCistercianSegment[digit];
+            segmentList = _AZToSegmentCistercian[digit.toString()];
             if (display == null){
               display = segmentList;
             } else {
@@ -535,7 +536,6 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
     return [];
 
   var AZToSegment;
-
   switch (segmentType) {
     case SegmentDisplayType.SEVEN:
       AZToSegment = _AZTo7Segment;
@@ -575,7 +575,6 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
 Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType) {
   if (input == null || input == '')
     return {'displays': [], 'text': ''};
-
   var baseSegments;
 
   switch (segmentType) {
@@ -658,10 +657,6 @@ Map<String, dynamic> decodeCistercian(String input) {
 
   for (int i = 0; i < input.length; i++) {
     var segment = input[i];
-    //if (i + 1 < input.length && ['1', '2', 'p'].contains(input[i + 1])) {
-    //  i++;
-    //  segment += input[i];
-    //}
 
     if (!baseSegments.contains(segment)) {
       if (currentDisplay != null) {
@@ -834,7 +829,6 @@ Map<String, dynamic> decodeCistercian(String input) {
   return {'displays': displays, 'text': out};
 }
 
-
 _characterFromSegmentList(SegmentDisplayType type, List<String> segments) {
   Map<List<String>,String> segmentToAZ;
 
@@ -849,6 +843,173 @@ _characterFromSegmentList(SegmentDisplayType type, List<String> segments) {
       segmentToAZ = _Segment16ToAZ;
       break;
   }
+  if (type == SegmentDisplayType.CISTERCIAN)
+    return _buildCistercianNumber(segments);
+  else
+    return segmentToAZ.map((key, value) => MapEntry(key.join(), value.toString()))[segments.join()];
+}
 
-  return segmentToAZ.map((key, value) => MapEntry(key.join(), value.toString()))[segments.join()];
+_buildCistercianNumber(List<String> segments){
+  var result = _SegmentCistercianToAZ.map((key, value) => MapEntry(key.join(), value.toString()))[segments.join()];
+  int one = 0;
+  int ten = 0;
+  int hundred = 0;
+  int thousand = 0;
+  if (result != null)
+    return result;
+  else {
+    if (segments.contains('k')) {
+      segments.remove('k');
+      // check ten
+      if (segments.contains('a') && segments.contains('c') && segments.contains('i')) {
+        ten = 90;
+        segments.remove('a');
+        segments.remove('c');
+        segments.remove('i');
+      } else if (segments.contains('a') && segments.contains('c')) {
+        ten = 70;
+        segments.remove('a');
+        segments.remove('c');
+      } else if (segments.contains('a') && segments.contains('i')) {
+        ten = 80;
+        segments.remove('a');
+        segments.remove('i');
+      } else if (segments.contains('a') && segments.contains('f')) {
+        ten = 50;
+        segments.remove('a');
+        segments.remove('f');
+      } else if (segments.contains('a')) {
+        ten = 10;
+        segments.remove('a');
+      } else if (segments.contains('i')) {
+        ten = 20;
+        segments.remove('i');
+      } else if (segments.contains('e')) {
+        ten = 30;
+        segments.remove('e');
+      } else if (segments.contains('f')) {
+        ten = 40;
+        segments.remove('f');
+      } else if (segments.contains('c')) {
+        ten = 60;
+        segments.remove('c');
+      }
+      // check one
+      if (segments.contains('b') && segments.contains('d') &&
+          segments.contains('j')) {
+        one = 9;
+        segments.remove('b');
+        segments.remove('d');
+        segments.remove('j');
+      }
+      else if (segments.contains('b') && segments.contains('d')) {
+        one = 7;
+        segments.remove('b');
+        segments.remove('d');
+      } else if (segments.contains('d') && segments.contains('j')) {
+        one = 8;
+        segments.remove('d');
+        segments.remove('j');
+      } else if (segments.contains('b') && segments.contains('g')) {
+        one = 5;
+        segments.remove('b');
+        segments.remove('g');
+      } else if (segments.contains('b')) {
+        one = 1;
+        segments.remove('b');
+      } else if (segments.contains('j')) {
+        one = 2;
+        segments.remove('j');
+      } else if (segments.contains('h')) {
+        one = 3;
+        segments.remove('h');
+      } else if (segments.contains('g')) {
+        one = 4;
+        segments.remove('g');
+      } else if (segments.contains('d')) {
+        one = 6;
+        segments.remove('d');
+      }
+
+      // check hundred
+      if (segments.contains('m') && segments.contains('o') &&
+          segments.contains('u')) {
+        hundred = 900;
+        segments.remove('m');
+        segments.remove('o');
+        segments.remove('u');
+      }
+      else if (segments.contains('o') && segments.contains('u')) {
+        hundred = 700;
+        segments.remove('o');
+        segments.remove('u');
+      } else if (segments.contains('m') && segments.contains('o')) {
+        hundred = 800;
+        segments.remove('m');
+        segments.remove('o');
+      } else if (segments.contains('s') && segments.contains('u')) {
+        hundred = 500;
+        segments.remove('s');
+        segments.remove('u');
+      } else if (segments.contains('u')) {
+        hundred = 100;
+        segments.remove('u');
+      } else if (segments.contains('m')) {
+        hundred = 200;
+        segments.remove('m');
+      } else if (segments.contains('r')) {
+        hundred = 300;
+        segments.remove('r');
+      } else if (segments.contains('s')) {
+        hundred = 400;
+        segments.remove('s');
+      } else if (segments.contains('o')) {
+        hundred = 600;
+        segments.remove('o');
+      }
+
+      // check thousand
+      if (segments.contains('l') && segments.contains('n') &&
+          segments.contains('t')) {
+        thousand = 9000;
+        segments.remove('l');
+        segments.remove('n');
+        segments.remove('t');
+      }
+      else if (segments.contains('n') && segments.contains('t')) {
+        thousand = 7000;
+        segments.remove('n');
+        segments.remove('t');
+      } else if (segments.contains('l') && segments.contains('n')) {
+        thousand = 8000;
+        segments.remove('l');
+        segments.remove('n');
+      } else if (segments.contains('p') && segments.contains('t')) {
+        thousand = 5000;
+        segments.remove('p');
+        segments.remove('t');
+      } else if (segments.contains('t')) {
+        thousand = 1000;
+        segments.remove('t');
+      } else if (segments.contains('l')) {
+        thousand = 2000;
+        segments.remove('l');
+      } else if (segments.contains('q')) {
+        thousand = 3000;
+        segments.remove('q');
+      } else if (segments.contains('p')) {
+        thousand = 4000;
+        segments.remove('p');
+      } else if (segments.contains('n')) {
+        thousand = 6000;
+        segments.remove('n');
+      }
+      if (segments.isEmpty)
+        return (thousand + hundred + ten + one).toString();
+      else
+        return null;
+    } else
+      return null;
+  }
+
 }

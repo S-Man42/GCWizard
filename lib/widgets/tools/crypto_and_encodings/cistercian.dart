@@ -12,6 +12,7 @@ import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/cistercian_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:prefs/prefs.dart';
@@ -31,6 +32,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
   var _currentDecodeInput = '';
   var _currentDisplays = <List<String>>[];
   var _currentMode = GCWSwitchPosition.left; //encrypt decrypt
+  bool _currentDecodeVisual = true;
 
   @override
   void initState() {
@@ -75,7 +77,23 @@ class CistercianNumbersState extends State<CistercianNumbers> {
                       });
                     },
                   )
-                : _buildVisualEncryption(), // decrpyt: input segment => output number
+            //    : _buildVisualEncryption(), // decrpyt: input segment => output number
+                : Column(
+                    children: <Widget>[
+                      GCWOnOffSwitch(
+                        title: i18n(context, 'cistercian_decodemode_visualsegments'),
+                        value: _currentDecodeVisual,
+                          onChanged: (value) {
+                            setState(() {
+                              _currentDecodeVisual = value;
+                            });
+                          },
+                      ),
+                      _currentDecodeVisual == true
+                      ? _buildVisualDecryption()
+                      : _buildTextualDecryption()
+                    ],
+            ),
             GCWTextDivider(
               text: i18n(context, 'segmentdisplay_displayoutput'),
               trailing: Row(
@@ -116,7 +134,22 @@ class CistercianNumbersState extends State<CistercianNumbers> {
       );
   }
 
-  _buildVisualEncryption() {
+  _buildTextualDecryption(){
+    return Column(
+      children: <Widget>[
+        GCWTextField(
+          controller: _inputDecodeController,
+          onChanged: (text) {
+            setState(() {
+              _currentDecodeInput = text;
+            });
+          },
+        )
+      ],
+    );
+  }
+
+  _buildVisualDecryption() {
     Map<String, bool> currentDisplay;
 
     var displays = _currentDisplays; //<List<String>>[];
@@ -225,24 +258,26 @@ class CistercianNumbersState extends State<CistercianNumbers> {
           )
         ],
       );
-    } else { //decode
-        //_currentDisplays is the result of the buildvisualencryption
-      var output =  _currentDisplays.map((character) {
-        if (character != null)
-          return character.join();
-      }).join(' ');
-print('output:'+output);
-      segments = decodeCistercian(output);
-
-      return
-        Column(
-          children: <Widget>[
-            _buildDigitalOutput(countColumns, segments['displays']),
-              GCWDefaultOutput(
-                child: segments['text']
-              )
-          ],
-        );
+    }
+    else { //decode
+      if (_currentDecodeVisual) { //_currentDisplays is the result of the buildvisualencryption
+        var output = _currentDisplays.map((character) {
+          if (character != null)
+            return character.join();
+        }).join(' ');
+        segments = decodeCistercian(output);
+      }
+      else { // _currentDecodeInput => segments
+        segments = decodeSegment(_currentDecodeInput, SegmentDisplayType.CISTERCIAN);
+      }
+      return Column(
+        children: <Widget>[
+          _buildDigitalOutput(countColumns, segments['displays']),
+          GCWDefaultOutput(
+              child: segments['text']
+          )
+        ],
+      );
     }
   }
 }

@@ -454,6 +454,7 @@
   "cistercian_title" : "Zisterzienserzahlen",
   "cistercian_description" : "Zahlensystem der Zisterzienser-Mönche",
   "cistercian_example" : "11 202 1000  → ⊺ ⊧ ⌋",
+  "cistercian_decodemode_visualsegments" : "Grafisch/Segmente",
 
   "chronogram_title" : "Chronogramm",
   "chronogram_description" : "Finded und addiert römische Zahlen in Texten",

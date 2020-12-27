@@ -56,35 +56,35 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   Widget build(BuildContext context) {
     final mediaQueryData = MediaQuery.of(context);
     var countColumns = mediaQueryData.orientation == Orientation.portrait
-        ? Prefs.get('symboltables_countcolumns_portrait')
-        : Prefs.get('symboltables_countcolumns_landscape');
+      ? Prefs.get('symboltables_countcolumns_portrait')
+      : Prefs.get('symboltables_countcolumns_landscape');
 
     return Column(
-        children: <Widget>[
-          GCWTwoOptionsSwitch(
-            value: _currentMode,
-            onChanged: (value) {
-              setState(() {
-                _currentMode = value;
-              });
-            },
-          ),
-          _currentMode == GCWSwitchPosition.left // encrypt
-              ? GCWTwoOptionsSwitch(
-                  value: _currentEncryptMode,
-                  title: i18n(context, 'segmentdisplay_encodemode'),
-                  leftValue: i18n(context, 'segmentdisplay_encodemode_text'),
-                  rightValue: i18n(context, 'segmentdisplay_encodemode_visualsegments'),
-                  onChanged: (value) {
-                    setState(() {
-                      _currentEncryptMode = value;
-                      if (_currentEncryptMode == GCWSwitchPosition.right) {
-                        _currentDisplays = encodeSegment(_currentEncodeInput, widget.type);
-                      }
-                    });
-                  },
-                )
-              : Container(),
+      children: <Widget>[
+        GCWTwoOptionsSwitch(
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
+        _currentMode == GCWSwitchPosition.left // encrypt
+          ? GCWTwoOptionsSwitch(
+              value: _currentEncryptMode,
+              title: i18n(context, 'segmentdisplay_encodemode'),
+              leftValue: i18n(context, 'segmentdisplay_encodemode_text'),
+              rightValue: i18n(context, 'segmentdisplay_encodemode_visualsegments'),
+              onChanged: (value) {
+                setState(() {
+                  _currentEncryptMode = value;
+                  if (_currentEncryptMode == GCWSwitchPosition.right) {
+                    _currentDisplays = encodeSegment(_currentEncodeInput, widget.type);
+                  }
+                });
+              },
+            )
+          : Container(),
           _currentMode == GCWSwitchPosition.left // encrypt
           ? (
             _currentEncryptMode == GCWSwitchPosition.left
@@ -106,41 +106,41 @@ class SegmentDisplayState extends State<SegmentDisplay> {
               });
             },
           ),
-          GCWTextDivider(
-            text: i18n(context, 'segmentdisplay_displayoutput'),
-            trailing: Row(
-              children: <Widget>[
-                GCWIconButton(
-                  size: IconButtonSize.SMALL,
-                  iconData: Icons.zoom_in,
-                  onPressed: () {
-                    setState(() {
-                      int newCountColumn = max(countColumns - 1, 1);
+        GCWTextDivider(
+          text: i18n(context, 'segmentdisplay_displayoutput'),
+          trailing: Row(
+            children: <Widget>[
+              GCWIconButton(
+                size: IconButtonSize.SMALL,
+                iconData: Icons.zoom_in,
+                onPressed: () {
+                  setState(() {
+                    int newCountColumn = max(countColumns - 1, 1);
 
-                      mediaQueryData.orientation == Orientation.portrait
-                          ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                          : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                    });
-                  },
-                ),
-                GCWIconButton(
-                  size: IconButtonSize.SMALL,
-                  iconData: Icons.zoom_out,
-                  onPressed: () {
-                    setState(() {
-                      int newCountColumn = countColumns + 1;
+                    mediaQueryData.orientation == Orientation.portrait
+                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                  });
+                },
+              ),
+              GCWIconButton(
+                size: IconButtonSize.SMALL,
+                iconData: Icons.zoom_out,
+                onPressed: () {
+                  setState(() {
+                    int newCountColumn = countColumns + 1;
 
-                      mediaQueryData.orientation == Orientation.portrait
-                          ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                          : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                    });
-                  },
-                )
-              ],
-            ),
+                    mediaQueryData.orientation == Orientation.portrait
+                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                  });
+                },
+              )
+            ],
           ),
-          _buildOutput(countColumns)
-        ]
+        ),
+        _buildOutput(countColumns)
+      ]
     );
   }
 
@@ -217,33 +217,33 @@ class SegmentDisplayState extends State<SegmentDisplay> {
           ),
         ),
         GCWToolBar(
-            children: [
-              GCWIconButton(
-                iconData: Icons.space_bar,
-                onPressed: () {
-                  setState(() {
-                    _currentDisplays.add([]);
-                  });
-                },
-              ),
-              GCWIconButton(
-                iconData: Icons.backspace,
-                onPressed: () {
-                  setState(() {
-                    if (_currentDisplays.length > 0)
-                      _currentDisplays.removeLast();
-                  });
-                },
-              ),
-              GCWIconButton(
-                iconData: Icons.clear,
-                onPressed: () {
-                  setState(() {
-                    _currentDisplays = [];
-                  });
-                },
-              )
-            ]
+          children: [
+            GCWIconButton(
+              iconData: Icons.space_bar,
+              onPressed: () {
+                setState(() {
+                  _currentDisplays.add([]);
+                });
+              },
+            ),
+            GCWIconButton(
+              iconData: Icons.backspace,
+              onPressed: () {
+                setState(() {
+                  if (_currentDisplays.length > 0)
+                    _currentDisplays.removeLast();
+                });
+              },
+            ),
+            GCWIconButton(
+              iconData: Icons.clear,
+              onPressed: () {
+                setState(() {
+                  _currentDisplays = [];
+                });
+              },
+            )
+          ]
         )
       ],
     );
