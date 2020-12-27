@@ -85,11 +85,8 @@ class CistercianNumbersState extends State<CistercianNumbers> {
                       setState(() {
                         int newCountColumn = max(countColumns - 1, 1);
                         mediaQueryData.orientation == Orientation.portrait
-                            ? Prefs.setInt('symboltables_countcolumns_portrait',
-                            newCountColumn)
-                            : Prefs.setInt(
-                            'symboltables_countcolumns_landscape',
-                            newCountColumn);
+                            ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                            : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
                       });
                     },
                   ),

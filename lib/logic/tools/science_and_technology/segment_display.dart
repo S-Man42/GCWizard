@@ -9,7 +9,7 @@ enum SegmentDisplayType{SEVEN, FOURTEEN, SIXTEEN, CISTERCIAN}
 final _baseSegments7Segment = ['a','b','c','d','e','f','g','dp'];
 final _baseSegments14Segment = ['a','b','c','d','e','f','g1','g2','h','i','j','k','l','m','dp'];
 final _baseSegments16Segment = ['a1','a2','b','c','d1','d2','e','f','g1','g2','h','i','j','k','l','m','dp'];
-final _baseSegmentsCistercianSegment = ['a','b','c','d','e','f','g','h','i','a0','k','l','m','n','o','p','q','r','s','t','u'];
+final _baseSegmentsCistercianSegment = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u'];
 
 final Map<String, List<String>> _AZTo16Segment = {
   '1'  : ['b','c','j'],
@@ -477,23 +477,20 @@ final Map<int, List<String>> _AZToCistercianSegment = {
   9000 : ['k','l','n','t'],
 };
 
-final Map<List<String>, int> _SegmentCistercianToAZ = switchMapKeyValue(_AZToCistercianSegment);
-
 
 List<List<String>> encodeCistercian(String input) {
   if (input == null || input == '')
     return [];
 
   List<String> inputCharacters = input.split(RegExp(r'[^1234567890]')).toList();
-  print(inputCharacters);
   var output = <List<String>>[];
   var digit = 0;
-  var segmentList; // = new List<String>();
+  var segmentList;
 
   for (String character in inputCharacters) {
     int encodeNumber = int.tryParse(character);
     if (encodeNumber != null && encodeNumber < 10000) {
-      var display; // = new List<String>();
+      var display;
       for (int i = 0; i < character.length; i++){
         digit = int.parse(character[i]) * pow(10, character.length - i - 1);
         if (digit != 0) {
@@ -517,7 +514,6 @@ List<List<String>> encodeCistercian(String input) {
   }
   return output;
 }
-
 
 List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
   if (input == null || input == '')
@@ -560,7 +556,6 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
 
   return output;
 }
-
 
 Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType) {
   if (input == null || input == '')
@@ -636,7 +631,6 @@ Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType)
   return {'displays': displays, 'text': out};
 }
 
-
 Map<String, dynamic> decodeCistercian(String input) {
   if (input == null || input == '')
     return {'displays': [], 'text': ''};
@@ -681,21 +675,19 @@ Map<String, dynamic> decodeCistercian(String input) {
   List<String> tokens =  input.split(' ');
   //var out = displays.map((display) {
   for (int i = 0; i < tokens.length; i++) {
-print(i.toString()+'.'+tokens[i]);
     unknownToken = true;
     digit = 0;
     // segments contains all segments - these have to split into numbers
     //   1000 - 9000    k   l n p q t
     //    100 -  900    k   u m r s o
     //     10 -   90    k   a  i  e  f  c
-    //      1 -    9    k   b  a0 h  g  d
+    //      1 -    9    k   b  j h  g  d
     // to return number.toString()
     // or return UNKNOWN_ELEMENT
 
     if (tokens[i].contains('k')) {
       tokens[i] = tokens[i].replaceAll('k', '');
       // check numbers 100 - 900
-      print('check 100 - 900');
       if (tokens[i].contains('u') && tokens[i].contains('m') && tokens[i].contains('o')) { // 900
         digit = digit + 900;
         tokens[i] = tokens[i].replaceAll('u', ''); tokens[i] = tokens[i].replaceAll('m', ''); tokens[i] = tokens[i].replaceAll('o', '');
@@ -726,7 +718,6 @@ print(i.toString()+'.'+tokens[i]);
       }
 
       // check numbers 1000 - 9000
-      print('check 100 - 900');
       if (tokens[i].contains('t') && tokens[i].contains('n') && tokens[i].contains('l')) { // 9000
         digit = digit + 9000;
         tokens[i] = tokens[i].replaceAll('t', ''); tokens[i] = tokens[i].replaceAll('n', ''); tokens[i] = tokens[i].replaceAll('l', '');
@@ -757,12 +748,12 @@ print(i.toString()+'.'+tokens[i]);
       }
 
       // check numbers 1 - 10
-      if (tokens[i].contains('a0') && tokens[i].contains('b') && tokens[i].contains('d')) { // 9
+      if (tokens[i].contains('j') && tokens[i].contains('b') && tokens[i].contains('d')) { // 9
         digit = digit + 9;
-        tokens[i] = tokens[i].replaceAll('a0', ''); tokens[i] = tokens[i].replaceAll('b', ''); tokens[i] = tokens[i].replaceAll('d', '');
-      } else if (tokens[i].contains('a0') && tokens[i].contains('d')) { // 8
+        tokens[i] = tokens[i].replaceAll('j', ''); tokens[i] = tokens[i].replaceAll('b', ''); tokens[i] = tokens[i].replaceAll('d', '');
+      } else if (tokens[i].contains('j') && tokens[i].contains('d')) { // 8
         digit = digit + 8;
-        tokens[i] = tokens[i].replaceAll('a0', ''); tokens[i] = tokens[i].replaceAll('d', '');
+        tokens[i] = tokens[i].replaceAll('j', ''); tokens[i] = tokens[i].replaceAll('d', '');
       } else if (tokens[i].contains('b') && tokens[i].contains('d')) { // 7
         digit = digit + 7;
         tokens[i] = tokens[i].replaceAll('b', ''); tokens[i] = tokens[i].replaceAll('d', '');
@@ -778,16 +769,15 @@ print(i.toString()+'.'+tokens[i]);
       } else if ( tokens[i].contains('h')) { // 3
         digit = digit + 3;
         tokens[i] = tokens[i].replaceAll('h', '');
-      } else if (tokens[i].contains('a0')) { // 2
+      } else if (tokens[i].contains('j')) { // 2
         digit = digit + 2;
-        tokens[i] = tokens[i].replaceAll('a0', '');
+        tokens[i] = tokens[i].replaceAll('j', '');
       } else if (tokens[i].contains('b')) { // 1
         digit = digit + 1;
         tokens[i] = tokens[i].replaceAll('b', '');
       }
 
       // check numbers 10 - 90
-      print('check 10 - 90');
       if (tokens[i].contains('a') && tokens[i].contains('c') && tokens[i].contains('i')) { // 90
         digit = digit + 90;
         tokens[i] = tokens[i].replaceAll('a', ''); tokens[i] = tokens[i].replaceAll('c', ''); tokens[i] = tokens[i].replaceAll('i', '');
@@ -817,7 +807,6 @@ print(i.toString()+'.'+tokens[i]);
         tokens[i] = tokens[i].replaceAll('a', '');
       }
 
-print('finally =>'+tokens[i]+'<');
       if (tokens[i] == '')
         unknownToken = false;
     }
