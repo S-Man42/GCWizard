@@ -1,3 +1,6 @@
+// https://rosettacode.org/wiki/Cistercian_numerals
+// https://www.unicode.org/L2/L2020/20290-cistercian-digits.pdf
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -28,7 +31,6 @@ class CistercianNumbersState extends State<CistercianNumbers> {
   var _currentDecodeInput = '';
   var _currentDisplays = <List<String>>[];
   var _currentMode = GCWSwitchPosition.left; //encrypt decrypt
-  var _currentEncryptMode = GCWSwitchPosition.left; //text  visual
 
   @override
   void initState() {

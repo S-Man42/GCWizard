@@ -439,6 +439,7 @@ final Map<List<String>, String> _Segment16ToAZ = {
 };
 
 final Map<int, List<String>> _AZToCistercianSegment = {
+  0 : ['k'],
   1 : ['b','k'],
   2 : ['j','k'],
   3 : ['h','k'],
@@ -491,16 +492,30 @@ List<List<String>> encodeCistercian(String input) {
     int encodeNumber = int.tryParse(character);
     if (encodeNumber != null && encodeNumber < 10000) {
       var display;
-      for (int i = 0; i < character.length; i++){
-        digit = int.parse(character[i]) * pow(10, character.length - i - 1);
-        if (digit != 0) {
-          segmentList = _AZToCistercianSegment[digit];
-          if (display == null){
-            display = segmentList;
-          } else {
-            for (String charElem in segmentList) {
-              if (!display.contains(charElem)) {
-                display.add(charElem);
+      if (character.length == 1 && character[0] == '0'){
+        segmentList = _AZToCistercianSegment[digit];
+        if (display == null){
+          display = segmentList;
+        } else {
+          for (String charElem in segmentList) {
+            if (!display.contains(charElem)) {
+              display.add(charElem);
+            }
+          }
+        }
+      }
+      else {
+        for (int i = 0; i < character.length; i++ ){
+          digit = int.parse(character[i]) * pow(10, character.length - i - 1);
+          if (digit != 0) {
+            segmentList = _AZToCistercianSegment[digit];
+            if (display == null){
+              display = segmentList;
+            } else {
+              for (String charElem in segmentList) {
+                if (!display.contains(charElem)) {
+                  display.add(charElem);
+                }
               }
             }
           }
