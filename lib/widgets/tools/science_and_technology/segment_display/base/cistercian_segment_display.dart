@@ -22,5 +22,5 @@ class CistercianSegmentDisplay extends NSegmentDisplay {
           readOnly: readOnly,
           onChanged: onChanged,
           type: SegmentDisplayType.CISTERCIAN
-      );
+        );
 }
