@@ -11,7 +11,7 @@ class ChickenLanguage extends StatefulWidget {
 
 class ChickenLanguageState extends State<ChickenLanguage> {
   var _currentInput = '';
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +25,7 @@ class ChickenLanguageState extends State<ChickenLanguage> {
           }
         ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

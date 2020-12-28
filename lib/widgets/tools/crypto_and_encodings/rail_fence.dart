@@ -19,7 +19,7 @@ class RailFenceState extends State<RailFence> {
   String _currentPassword = '';
   var _currentOffset = 0;
 
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
 
   var _maskInputFormatter = WrapperForMaskTextInputFormatter(
     mask: '#' * 10000,

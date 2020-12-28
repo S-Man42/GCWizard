@@ -11,7 +11,7 @@ class SpoonLanguage extends StatefulWidget {
 
 class SpoonLanguageState extends State<SpoonLanguage> {
   var _currentInput = '';
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +25,7 @@ class SpoonLanguageState extends State<SpoonLanguage> {
           }
         ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

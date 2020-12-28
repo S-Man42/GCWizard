@@ -19,7 +19,7 @@ class VigenereState extends State<Vigenere> {
   String _currentInput = '';
   String _currentKey = '';
   int _currentAValue = 0;
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   bool _currentAutokey = false;
 
   @override
@@ -74,6 +74,7 @@ class VigenereState extends State<Vigenere> {
           },
         ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

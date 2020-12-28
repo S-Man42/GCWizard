@@ -13,7 +13,7 @@ class Deadfish extends StatefulWidget {
 
 class DeadfishState extends State<Deadfish> {
   var _currentInput = '';
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
   var _currentDeadfishMode = GCWSwitchPosition.left;
 
   @override
@@ -37,6 +37,7 @@ class DeadfishState extends State<Deadfish> {
           },
         ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

@@ -17,7 +17,7 @@ class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
   var _controller;
 
   var _currentInput = defaultIntegerListText;
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentNumberForSpaceMode = GCWSwitchPosition.right;
 
   @override
@@ -90,7 +90,7 @@ class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
     if (_currentMode == GCWSwitchPosition.left) {
       return encodeVanityMultipleNumbers(_currentInput['text'], numberForSpace: _currentNumberForSpaceMode == GCWSwitchPosition.right ? '1' : '0');
     } else {
-      return decodeVanityMultipleNumbers(_currentInput['values']);
+      return decodeVanityMultipleNumbers(List<int>.from(_currentInput['values']));
     }
   }
 }

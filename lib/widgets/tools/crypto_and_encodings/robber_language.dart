@@ -11,7 +11,7 @@ class RobberLanguage extends StatefulWidget {
 
 class RobberLanguageState extends State<RobberLanguage> {
   var _currentInput = '';
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +25,7 @@ class RobberLanguageState extends State<RobberLanguage> {
           }
         ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
