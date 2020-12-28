@@ -59,10 +59,21 @@ class FormulaParser {
   }
 
   dynamic _evaluateFormula(String formula, Map<String, String> values) {
+    Map<String, String> preparedValues = _parenthesesForValues(values);
+
     //replace constants and formula names
     var safedFormulaNames = _safeFunctionsAndConstants(formula);
     //replace values
-    var substitutedFormula = substitution(safedFormulaNames['formula'], values, caseSensitive: false);
+    int i = values.length;
+    var substitutedFormula = safedFormulaNames['formula'];
+    var fullySubstituded = false;
+    while (i > 0 && !fullySubstituded) {
+      var tempSubstitutedFormula = substitution(substitutedFormula, preparedValues, caseSensitive: false);
+      fullySubstituded = _isFullySubstituted(tempSubstitutedFormula, substitutedFormula);
+
+      substitutedFormula = tempSubstitutedFormula;
+      i--;
+    }
     //restore the formula names
     substitutedFormula = substitution(substitutedFormula, safedFormulaNames['map']);
 
@@ -76,6 +87,19 @@ class FormulaParser {
     } catch (e) {
       throw FormatException(substitutedFormula);
     }
+  }
+
+  bool _isFullySubstituted(String tempSubstitutedFormula, substitutedFormula) {
+    return double.tryParse(tempSubstitutedFormula.replaceAll(RegExp(r'[\(\)]'), '')) != null
+      || substitutedFormula == tempSubstitutedFormula;
+  }
+
+  Map<String, String> _parenthesesForValues(Map<String, String> values) {
+    Map<String, String> val = {};
+    values.entries.forEach((element) {
+      val.putIfAbsent(element.key, () => '(${element.value})');
+    });
+    return val;
   }
 
   Map<String, String> parse(String formula, Map<String, String> values) {

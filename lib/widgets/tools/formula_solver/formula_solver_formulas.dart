@@ -194,7 +194,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
       if (calculated['state'] != STATE_OK)
         formulaResult = '($formulaResult)';
 
-      formulaResults.putIfAbsent('{f${index + 1}}', () => formulaResult);
+      formulaResults.putIfAbsent('{${index + 1}}', () => formulaResult);
 
       Widget output;
 
