@@ -1242,6 +1242,8 @@
   "formulasolver_formulas_copyformula" : "Formel kopieren",
   "formulasolver_formulas_copyresult" : "Ergebnis kopieren",
   "formulasolver_formulas_openinvarcoords" : "In Variable Koordinate öffnen",
+  "formulasolver_formulas_showonmap" : "Auf Karte anzeigen",
+  "formulasolver_formulas_showonmap_coordinatetext" : "Formelergebnis",
   "formulasolver_values_newvalue" : "Variable hinzufügen",
   "formulasolver_values_key" : "Name",
   "formulasolver_values_value" : "Wert",
