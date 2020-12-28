@@ -42,7 +42,6 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   var _currentEditedFormula = '';
   var _currentEditId;
 
-  Map<String, dynamic> _foundCoordinate;
   Map<int, Map<String, dynamic>> _foundCoordinates = {};
 
   ThemeColors _themeColors;
@@ -205,7 +204,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
       Widget output;
 
-      _foundCoordinate = parseLatLon(calculated['result'], true);
+      var _foundCoordinate = parseLatLon(calculated['result'], true);
       if (_foundCoordinate != null)
         _foundCoordinates.putIfAbsent(index + 1, () => _foundCoordinate);
 
@@ -341,7 +340,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                       break;
                   }
                 },
-                itemBuilder: (context) => _buildPopupMenuItems(context, formula.id, calculated['result'])
+                itemBuilder: (context) => _buildPopupMenuItems(context, _foundCoordinate != null)
               ),
             ),
           ],
@@ -391,7 +390,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     );
   }
 
-  _buildPopupMenuItems(BuildContext context, int formulaId, calculated) {
+  _buildPopupMenuItems(BuildContext context, bool hasCoordinate) {
     var items = [
       PopupMenuItem(
         value: 1,
@@ -435,7 +434,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
       ),
     ];
 
-    if (_foundCoordinate != null) {
+    if (hasCoordinate) {
       items.add(
         PopupMenuItem(
           value: 6,
