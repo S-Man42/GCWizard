@@ -71,7 +71,7 @@ class FormulaParser {
       var tempSubstitutedFormula = substitution(substitutedFormula, preparedValues, caseSensitive: false);
       fullySubstituded = _isFullySubstituted(tempSubstitutedFormula, substitutedFormula);
 
-      substitutedFormula = tempSubstitutedFormula;
+      substitutedFormula = tempSubstitutedFormula;//.replaceAll(RegExp(r'[\(\)]'), '');
       i--;
     }
     //restore the formula names
@@ -91,13 +91,20 @@ class FormulaParser {
 
   bool _isFullySubstituted(String tempSubstitutedFormula, substitutedFormula) {
     return double.tryParse(tempSubstitutedFormula.replaceAll(RegExp(r'[\(\)]'), '')) != null
-      || substitutedFormula == tempSubstitutedFormula;
+      || substitutedFormula == tempSubstitutedFormula.replaceAll(RegExp(r'[\(\)]'), '');
   }
 
   Map<String, String> _parenthesesForValues(Map<String, String> values) {
     Map<String, String> val = {};
     values.entries.forEach((element) {
-      val.putIfAbsent(element.key, () => '(${element.value})');
+      var value = element.value;
+      if (value == null || value.length == 0)
+        val.putIfAbsent(element.key, () => element.key);
+
+      if (double.tryParse(value) != null)
+        val.putIfAbsent(element.key, () => value);
+      else
+        val.putIfAbsent(element.key, () => '($value)');
     });
     return val;
   }
