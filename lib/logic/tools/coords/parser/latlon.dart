@@ -353,10 +353,16 @@ LatLng parseDMS(String text) {
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
 Map<String, dynamic> parseLatLon(String text, [wholeString = false]) {
-  if (text == null || text.length == 0)
+  if (text == null)
     return null;
 
-  regexEnd = wholeString ? '\$' : '';
+  if (wholeString) {
+    text = text.trim();
+    regexEnd = wholeString ? '\$' : '';
+  }
+
+  if (text.length == 0)
+    return null;
 
   LatLng coord = parseDMS(text);
   if (coord != null)

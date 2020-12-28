@@ -71,7 +71,7 @@ class FormulaParser {
       var tempSubstitutedFormula = substitution(substitutedFormula, preparedValues, caseSensitive: false);
       fullySubstituded = _isFullySubstituted(tempSubstitutedFormula, substitutedFormula);
 
-      substitutedFormula = tempSubstitutedFormula;//.replaceAll(RegExp(r'[\(\)]'), '');
+      substitutedFormula = tempSubstitutedFormula;
       i--;
     }
     //restore the formula names
