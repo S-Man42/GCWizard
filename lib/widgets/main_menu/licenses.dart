@@ -64,6 +64,7 @@ class LicensesState extends State<Licenses> {
             ['myGeoTools', 'several'],
             ['Wikipedia', 'several'],
             ['www.breitkopf.de', 'Solmisation'],
+            ['www.steinerverlag.de', 'Eurythmy'],
           ]),
         ),
       ]
