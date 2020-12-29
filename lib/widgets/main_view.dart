@@ -381,17 +381,17 @@ class _MainViewState extends State<MainView> {
           children: [
             GCWToolList(
               toolList: _isSearching && _searchText.length > 0
-                ? _getSearchedList(Registry.toolList)
+                ? _getSearchedList()
                 : _categoryList
             ),
             GCWToolList(
               toolList: _isSearching && _searchText.length > 0
-                ? _getSearchedList(Registry.toolList)
+                ? _getSearchedList()
                 : _toolList
             ),
             GCWToolList(
               toolList: _isSearching && _searchText.length > 0
-                ? _getSearchedList(Favorites.toolList)
+                ? _getSearchedList()
                 : Favorites.toolList
             ),
           ],
@@ -440,7 +440,9 @@ class _MainViewState extends State<MainView> {
     );
   }
 
-  List<GCWTool> _getSearchedList(List<GCWTool> list) {
+  List<GCWTool> _getSearchedList() {
+    var list = Registry.toolList;
+
     list = list.where((tool) {
       if (tool.searchStrings == null || tool.searchStrings.length == 0)
         return false;
