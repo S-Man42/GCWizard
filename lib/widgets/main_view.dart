@@ -117,6 +117,11 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range_frequency.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
@@ -230,6 +235,9 @@ class _MainViewState extends State<MainView> {
           className(Combination()),
           className(CombinationPermutation()),
           className(CrossBearing()),
+          className(CrossSum()),
+          className(CrossSumRange()),
+          className(CrossSumRangeFrequency()),
           className(DayCalculator()),
           className(Deadfish()),
           className(Decabit()),
@@ -264,6 +272,8 @@ class _MainViewState extends State<MainView> {
           className(Intersection()),
           className(IntersectThreeCircles()),
           className(IntersectTwoCircles()),
+          className(IteratedCrossSumRange()),
+          className(IteratedCrossSumRangeFrequency()),
           className(Kamasutra()),
           className(Kenny()),
           className(Keyboard()),

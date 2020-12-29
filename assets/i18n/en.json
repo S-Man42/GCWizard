@@ -1076,6 +1076,8 @@
   "crosssum_range_frequency_sortby" : "Sort by",
   "crosssum_range_frequency_sortby_crosssum" : "Cross Sum",
   "crosssum_range_frequency_sortby_frequency" : "Frequency",
+  "crosssum_range_iterated_frequency_title" : "Frequency of iter. Cross Sums in Range",
+  "crosssum_range_iterated_frequency_description" : "Calculates which iterated cross sums and how often they occur within a range",
 
   "crosstotal_title" : "Show Sums",
   "crosstotal_output" : "Sums, Cross Sums, Products",

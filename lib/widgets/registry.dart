@@ -162,6 +162,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range_frequency.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
@@ -1117,6 +1118,11 @@ class Registry {
       GCWTool(
         tool: CrossSumRangeFrequency(),
         i18nPrefix: 'crosssum_range_frequency',
+        searchStrings: SEARCHSTRING_CROSSSUMS + 'frequency frequenzen haeufigkeiten auftreten occurrences '
+      ),
+      GCWTool(
+        tool: IteratedCrossSumRangeFrequency(),
+        i18nPrefix: 'crosssum_range_iterated_frequency',
         searchStrings: SEARCHSTRING_CROSSSUMS + 'frequency frequenzen haeufigkeiten auftreten occurrences '
       ),
 

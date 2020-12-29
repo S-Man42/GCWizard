@@ -1077,6 +1077,8 @@
   "crosssum_range_frequency_sortby" : "Ordnen nach",
   "crosssum_range_frequency_sortby_crosssum" : "Quersumme",
   "crosssum_range_frequency_sortby_frequency" : "Häufigkeit",
+  "crosssum_range_iterated_frequency_title" : "Häufigkeiten von iter. Quersummen in Bereich",
+  "crosssum_range_iterated_frequency_description" : "Ermittelt, welche iterierten Quersummen wie oft in einem Bereich auftreten",
 
   "crosstotal_title" : "Zeige Summen",
   "crosstotal_output" : "Summen, Quersummen, Produkte",
