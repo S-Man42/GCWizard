@@ -246,13 +246,15 @@ class Registry {
   static final SEARCHSTRING_RSA = SEARCHSTRING_PRIMES + 'rsa ronald rivest adi shamir leonard adleman asymmetry asymmetric asymmetrie asymmetrisches public private key oeffentlicher privater schluessel phi ';
   static final SEARCHSTRING_SEGMENTDISPLAY = 'led segments segmente display segmentanzeige ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schriften ';
+  static final SEARCHSTRING_SYMBOLTABLES_BARCODES = 'barcodes strichcodes striche linien lines strokes streaks ';
   static final SEARCHSTRING_SYMBOLTABLES_CHAPPE = 'opticaltelegraph visual visueller optischertelegraf claude chappe ';
-  static final SEARCHSTRING_SYMBOLTABLES_FREEMASONS = 'freemasons freimaurer ';
+  static final SEARCHSTRING_SYMBOLTABLES_FREEMASONS = 'freemasons freimaurer pigpen ';
   static final SEARCHSTRING_SYMBOLTABLES_HYLIAN = 'thelegendofzelda dielegendevonzelda hylian hylianisches hyrule ';
   static final SEARCHSTRING_SYMBOLTABLES_ILLUMINATI = SEARCHSTRING_SYMBOLTABLES_FREEMASONS + 'illuminati illuminatus illuminaten 23 ';
   static final SEARCHSTRING_SYMBOLTABLES_MUSIC = 'music musik ';
   static final SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES = SEARCHSTRING_SYMBOLTABLES_MUSIC + 'notes noten ';
   static final SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER = 'lwl llk lichtwellenleiter lichtleitkabel opticalfiber glasfaserkabel ';
+  static final SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE = 'gebaarental deafmute deaf-mute deafblind hearing loss deaf-blind taub-stummes hands haende fingers daumen thumbs signs signlanguage gebaerdensprache deafblind gehoerloses taubstummes ';
   static final SEARCHSTRING_TOMTOM = 'a-tom-tom atomtom ';
   static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
   static final SEARCHSTRING_VIGENERE = SEARCHSTRING_ROTATION + 'vigenere ';
@@ -402,7 +404,7 @@ class Registry {
         tool: ColorPicker(),
         i18nPrefix: 'colors',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'colors pal ntsc farben rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode picker red green blue yellow black key magenta orange cyan luminanz hellwert farbwert helligkeit saettigung luminance chrominanz chrominance saturation lightness hue cmyk luma chroma'
+        searchStrings: 'colors colours pal ntsc farben rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode picker red green blue yellow black key magenta orange cyan luminanz hellwert farbwert helligkeit saettigung luminance chrominanz chrominance saturation lightness hue cmyk luma chroma'
       ),
       GCWTool(
         tool: CombinatoricsSelection(),
@@ -578,7 +580,7 @@ class Registry {
         tool: NumeralBases(),
         i18nPrefix: 'numeralbases',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: SEARCHSTRING_BINARY + 'radix numeral systems basis basen zahlensysteme octal octenary oktal dual hexadecimal hexadezimal'
+        searchStrings: SEARCHSTRING_BINARY + 'radix numeral systems zahlenbasis zahlenbasen zahlensysteme octal octenary oktal dual hexadecimal hexadezimal'
       ),
       GCWTool(
         tool: NumeralWordsSelection(),
@@ -1545,14 +1547,39 @@ class Registry {
 
       //Symbol Tables **********************************************************************************************
       GCWSymbolTableTool(
+        symbolKey: 'adlam',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'adlam fulani alkule dandayde lenol mulugol west africa ibrahima abdoulaye barry guinea nigeria liberia'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'alchemy',
         iconFilename: 'mercury.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'alchemy alchemie elements elemente '
       ),
       GCWSymbolTableTool(
+        symbolKey: 'alchemy_alphabet',
+        iconFilename: 'L.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'alchemie alchemy '
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'angerthas_cirth',
         iconFilename: 'ghw.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'angerthas cirth runen runes zwerge dwarfs derherrderringe elben elbisch elves elvish thelordoftherings j.r.r. jrr tolkien'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'alphabetum_arabum',
+        iconFilename: 'G.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'alphabetumarabum arabisch arabian arabic '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'alphabetum_egiptiorum',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'alphabetum egiptiorum giambattista palatino'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'alphabetum_gothicum',
+        iconFilename: 'G.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'geats alphabetum gothicum gothik gotisches '
       ),
       GCWSymbolTableTool(
         symbolKey: 'antiker',
@@ -1575,14 +1602,29 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'ath baronh '
       ),
       GCWSymbolTableTool(
+        symbolKey: 'atlantean',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'atlantisch atlantean marcokrand thelostempire dasverlorenekoenigreich atlantis'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'aurebesh',
         iconFilename: 'G.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'aurebesh starwars wookies clonewars outerrim '
       ),
       GCWSymbolTableTool(
+        symbolKey: 'australian_sign_language',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE + 'australian australisches auslan '
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'babylonian_numerals',
         iconFilename: '4.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + ' babylonisches babylonian zahlen ziffern numbers numerals keilschrift cuneiform'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'ballet',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'ballett dancing tanzen dances taenze primaballerina'
       ),
       GCWSymbolTableTool(
         symbolKey: 'barbier',
@@ -1592,7 +1634,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'barcode39',
         iconFilename: 'A.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'barcode39'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_BARCODES + 'barcode39'
       ),
       GCWSymbolTableTool(
         symbolKey: 'baudot',
@@ -1618,6 +1660,11 @@ class Registry {
         symbolKey: 'braille',
         iconFilename: 'H.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tactiles blindenschrift braille dots points punkte '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'british_sign_language',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE + 'grossbritannien grossbritanien bsl greatbritain british grossbritisch englisch english'
       ),
       GCWSymbolTableTool(
         symbolKey: 'chappe_v1',
@@ -1652,22 +1699,27 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'color_code',
         iconFilename: 'D.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colorcode rgb farbcode farben colors red green blue rot gruen blau '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colorcode colourcode rgb farbcode farben colors red green blue rot gruen blau colours '
       ),
       GCWSymbolTableTool(
         symbolKey: 'color_honey',
         iconFilename: 'H.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colorhoney color-honey farbcode farben colors six bees honeycombs bienenwaben '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colorhoney color-honey farbcode farben colors six bees honeycombs bienenwaben colours colourcode colourhoney colour-honey '
       ),
       GCWSymbolTableTool(
         symbolKey: 'color_tokki',
         iconFilename: 'H.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colortokki color-tokki farbcode woven carpet webteppich gewebter farben colors six '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colortokki color-tokki farbcode woven carpet webteppich gewebter farben colors six colourtokki colours colour-tokko '
       ),
       GCWSymbolTableTool(
         symbolKey: 'cyrillic',
         iconFilename: 'D.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'kyrillisch cyrillic russisch russian alphabet schrift font cyrl saloniki'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'cyrillic kyrillisches russisches russian slawisch slavian slavic cyrl saloniki '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'cyrillic_numbers',
+        iconFilename: '1.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'cyrillic kyrillisches russisches russian slawisch slavian slavic cyrl saloniki '
       ),
       GCWSymbolTableTool(
         symbolKey: 'daedric',
@@ -1682,17 +1734,27 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'dancing_men',
         iconFilename: 'I.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dancingmen tanzende strichmaennchen sherlockholmes matchstickman '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dancingmen tanzende strichmaennchen sherlockholmes matchstickman arthurconandoyle arthurdoyle '
       ),
       GCWSymbolTableTool(
         symbolKey: 'deafblind',
         iconFilename: 'R.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'deafmute deaf-mute deafblind hearing loss deaf-blind taub-stumme taubstumme gehoerlose sign language hands haende '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE
       ),
       GCWSymbolTableTool(
         symbolKey: 'devanagari_numerals',
         iconFilename: '3.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'devanagari indisches indian indien sanskrit prakrit hindi marathi zahlen ziffern numbers numerals'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'dni',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dni d\'ni myst'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'dni_colors',
+        iconFilename: 'red.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dni colours colors farben d\'ni myst'
       ),
       GCWSymbolTableTool(
         symbolKey: 'doremi',
@@ -1730,6 +1792,11 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'enochian henochisch john dee magische sprache magie language edward kelley henoic'
       ),
       GCWSymbolTableTool(
+        symbolKey: 'eurythmy',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'anthroposophisches anthroposophics eurythmics eurythmie waldorfschulen rudolfsteiner tanzdeinennamen danceyourname'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'fakoo',
         iconFilename: 'SZ_umlaut.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fakoo alphabet blinde eyeless relief'
@@ -1737,7 +1804,12 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'finger',
         iconFilename: 'H.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fingers fingeralphabet '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'finger_numbers',
+        iconFilename: '7_.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE
       ),
       GCWSymbolTableTool(
         symbolKey: 'flags',
@@ -1760,6 +1832,11 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fonic talesoftheabyss '
       ),
       GCWSymbolTableTool(
+        symbolKey: 'four_triangles',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fourtriangles vierdreiecke punkte points dots'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'freemason',
         iconFilename: 'Q.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'freemasons freimaurer '
@@ -1772,7 +1849,12 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'futurama',
         iconFilename: 'O.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'futurama matt groening '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'futurama mattgroening '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'futurama_2',
+        iconFilename: 'J.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'futurama mattgroening'
       ),
       GCWSymbolTableTool(
         symbolKey: 'gallifreyan',
@@ -1792,7 +1874,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'glagolitic',
         iconFilename: 'B.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'glagolitic glagolitisch glagoliza glagolitsa slawische slavic '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'glagolitic glagolitisch glagoliza glagolitsa slawische slavic slavian '
       ),
       GCWSymbolTableTool(
         symbolKey: 'gnommish',
@@ -1895,6 +1977,26 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'japanese japanisches zahlen ziffern numbers'
       ),
       GCWSymbolTableTool(
+        symbolKey: 'kabouter_abc',
+        iconFilename: 'E.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'boyscouts pfadfinder kabouter niederlaendisch kobolde cobolds netherlands dutch hollaendisch holland scouting nederlands bambilie bambiliaanse gnoms gnome'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'kabouter_abc_1947',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'boyscouts pfadfinder kabouter niederlaendisch kobolde cobolds netherlands dutch hollaendisch holland scouting nederlands bambilie bambiliaanse gnoms gnome 1947'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'kartrak',
+        iconFilename: '2.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_BARCODES + 'freighttrains freight gueter fracht coach waggon wagon wagen kartrak aci automaticcaridentification railway gueterzug colouredbarcode coloredbarcode farbigerstrichcode colours rfid gueterzuege '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'kharoshthi',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'kharoshthi gandhari gandhara indian indien indisches pakistan afghanistan prakrit sanskrit'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'klingon',
         iconFilename: '_j.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klingonisch klingonen klingons klingonlanguageinstitute kli '
@@ -1970,6 +2072,16 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_CCITT2
       ),
       GCWSymbolTableTool(
+        symbolKey: 'musica',
+        iconFilename: '_a.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'wcmusicabta christophe feray instruments instrumente piano klavier schlagzeug floete oboe bratsche trompete gitarre guitar drums posaune geige noten notes violin fleet fluegel'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'new_zealand_sign_language',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE + ' newzealand neuseeland neuseelaendisches'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'notes_doremi',
         iconFilename: '1.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES + 'doremifalamiresisol notesystem solmisation notensystem tonstufen degrees octal oktal'
@@ -2032,12 +2144,17 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'planet',
         iconFilename: '3.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'planet united states postal service usps barcode '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_BARCODES + 'planet united states postal service usps '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'pokemon_unown',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'pokemon unown'
       ),
       GCWSymbolTableTool(
         symbolKey: 'postnet',
         iconFilename: '6.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'postnet united states postal service usps barcode '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_BARCODES + 'postnet united states postal service usps '
       ),
       GCWSymbolTableTool(
         symbolKey: 'puzzle',
@@ -2055,6 +2172,11 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'reality realitaet '
       ),
       GCWSymbolTableTool(
+        symbolKey: 'red_herring',
+        iconFilename: '8.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'roter hering red herring fische fish'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'resistor',
         iconFilename: '1.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_RESISTOR_COLORCODE
@@ -2065,6 +2187,10 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'rhesusa tintenkleckse farbkleckse farbspritzer blutspritzer inkblots bloodsplatter blutgruppen bloodgroup bloodtype bluttropfen blutstropfen farbtropfen',
       ),
       GCWSymbolTableTool(
+        symbolKey: 'rm4scc',
+        iconFilename: 'R.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_BARCODES + 'rm4scc royalmail4statecustomercode cleanmail postcodes delivery point cbc kix klantindex england singapore niederlande netherlands singapur holland switzerland schweiz austria oesterreich denmark daenemark australia australien'),
+      GCWSymbolTableTool(
         symbolKey: 'romulan',
         iconFilename: '9.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek romulans romulaner romulanisch '
@@ -2073,6 +2199,11 @@ class Registry {
         symbolKey: 'runes',
         iconFilename: 'F.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'runes runen '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'sanluca',
+        iconFilename: 'E.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'ndrangheta mafia codic di san luca sanluca kalabrian kalabrien kalabrische cosa nostra lobardei piemont ligurien emilia romagna stele di rosetta stein'
       ),
       GCWSymbolTableTool(
         symbolKey: 'sarati',
@@ -2087,7 +2218,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'sign',
         iconFilename: 'K.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sign language zeichensprache gebaerdensprache hearing loss taubstumme taub-stumme deafblind deaf-blind gehoerlose deaf-mute deafmute'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE
       ),
       GCWSymbolTableTool(
         symbolKey: 'skullz',
@@ -2113,6 +2244,11 @@ class Registry {
         symbolKey: 'spintype',
         iconFilename: 'G.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'spintype boxes kaestchen kasten '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'stippelcode',
+        iconFilename: 'B.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'stippelcode drabkikker punkte points dots polka'
       ),
       GCWSymbolTableTool(
         symbolKey: 'suetterlin',
@@ -2161,8 +2297,13 @@ class Registry {
       ),
       GCWSymbolTableTool(
         symbolKey: 'theban',
-        iconFilename: '8.png',
+        iconFilename: 'dot.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'thebanisches hexenalphabet onorius witches witchalphabet engelsschrift angels wikka wicca wicka'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'three_squares',
+        iconFilename: 'C.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'threesquares dreivierecke points dots punkt'
       ),
       GCWSymbolTableTool(
         symbolKey: 'tines',
@@ -2198,6 +2339,11 @@ class Registry {
         symbolKey: 'visitor_2009',
         iconFilename: '9.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'visitor die besucher v aliens ausserirdische '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'vulcanian',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'vulcanian startrek vulkanier misterspock mr.spock mrspock vulkanisch'
       ),
       GCWSymbolTableTool(
         symbolKey: 'wakandan',
@@ -2245,9 +2391,24 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'yankoryani tekumel '
       ),
       GCWSymbolTableTool(
+        symbolKey: 'yinyang',
+        iconFilename: 'N.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'suedkorea flagge kolumbien columbia erikmoreno yinyang jingjing yingyang southkorea'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'zentradi',
         iconFilename: 'F.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'zentradi zentraedi robotech macross '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'zodiac_z340',
+        iconFilename: 'A____.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'zodiackiller z340 letter briefe zodiak'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'zodiac_z408',
+        iconFilename: 'D.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'zodiackiller z408 letter briefe zodiak'
       ),
 
       // TomTomSelection *********************************************************************************************
