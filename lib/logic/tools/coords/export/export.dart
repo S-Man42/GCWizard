@@ -6,7 +6,7 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:latlong/latlong.dart';
 
 
-Future<Map<String, dynamic>> exportCoordinates(String name, List<MapPoint> points, List<MapGeodetic> geodetics, List<MapCircle> circles, {bool kmlFormat = false}) async {
+Future<Map<String, dynamic>> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<MapCircle> circles, {bool kmlFormat = false}) async {
   String xml;
 
   if ((points == null || points.length == 0) && (geodetics == null || geodetics.length == 0) && (circles == null || circles.length == 0))
@@ -28,13 +28,13 @@ Future<Map<String, dynamic>> exportCoordinates(String name, List<MapPoint> point
 /// Convert points into GPX
 class _GpxWriter {
   /// Convert points into GPX XML (v1.0) as String
-  String asString(String name, List<MapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles).toXmlString(pretty: true, indent: '\t');
+  String asString(String name, List<GCWMapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles).toXmlString(pretty: true, indent: '\t');
 
   /// Convert Gpx into GPX XML (v1.0) as XmlNode
-  XmlNode asXml(String name, List<MapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles);
+  XmlNode asXml(String name, List<GCWMapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles);
 
 
-  XmlNode _build(String name, List<MapPoint> points, List<MapGeodetic> geodetics, List<MapCircle> circles) {final builder = XmlBuilder();
+  XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<MapCircle> circles) {final builder = XmlBuilder();
 
     if ((points == null || points.length == 0) && (geodetics == null || geodetics.length == 0)  && (circles == null || circles.length == 0))
       return null;
@@ -74,7 +74,7 @@ class _GpxWriter {
     return builder.buildDocument();
   }
 
-  void _writePoint(XmlBuilder builder, bool waypoint, String cacheName, String stageName, MapPoint wpt) {
+  void _writePoint(XmlBuilder builder, bool waypoint, String cacheName, String stageName, GCWMapPoint wpt) {
     if (wpt != null) {
       builder.element('wpt', nest: () {
         _writeAttribute(builder, 'lat', wpt.point.latitude);
@@ -142,12 +142,12 @@ class _GpxWriter {
 /// Convert Gpx into KML
 class _KmlWriter {
   /// Convert points into KML as String
-  String asString(String name, List<MapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles).toXmlString(pretty: true, indent: '\t');
+  String asString(String name, List<GCWMapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles).toXmlString(pretty: true, indent: '\t');
 
   /// Convert points into KML as XmlNode
-  XmlNode asXml(String name, List<MapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles);
+  XmlNode asXml(String name, List<GCWMapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles);
 
-  XmlNode _build(String name, List<MapPoint> points, List<MapGeodetic> geodetics, List<MapCircle> circles) {
+  XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<MapCircle> circles) {
     final builder = XmlBuilder();
     var i = 0;
 
@@ -259,7 +259,7 @@ class _KmlWriter {
     return builder.buildDocument();
   }
 
-  void _writePoint(XmlBuilder builder, bool waypoint, String cacheName, String stageName, MapPoint wpt, String styleId) {
+  void _writePoint(XmlBuilder builder, bool waypoint, String cacheName, String stageName, GCWMapPoint wpt, String styleId) {
     if (wpt != null) {
       builder.element('Placemark', nest: () {
         if (!waypoint) {

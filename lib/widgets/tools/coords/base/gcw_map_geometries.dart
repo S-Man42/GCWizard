@@ -7,13 +7,13 @@ import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:latlong/latlong.dart';
 
-class MapPoint {
-  final LatLng point;
+class GCWMapPoint {
+  LatLng point;
   final String markerText;
   final Color color;
   final Map<String, String> coordinateFormat;
 
-  const MapPoint({
+  GCWMapPoint({
     @required this.point,
     this.markerText,
     this.color: COLOR_MAP_POINT,
@@ -21,14 +21,14 @@ class MapPoint {
   });
 }
 
-class MapGeodetic {
+class GCWMapGeodetic {
   LatLng start;
   LatLng end;
   final Color color;
 
   List<LatLng> shape;
 
-  MapGeodetic({
+  GCWMapGeodetic({
     @required this.start,
     @required this.end,
     this.color: COLOR_MAP_POLYLINE,

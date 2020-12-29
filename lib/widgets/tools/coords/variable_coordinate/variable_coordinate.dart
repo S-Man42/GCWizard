@@ -66,7 +66,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   var _editValueController;
 
   List<dynamic> _currentOutput = [];
-  List<MapPoint> _currentMapPoints = [];
+  List<GCWMapPoint> _currentMapPoints = [];
 
   @override
   void initState() {
@@ -485,8 +485,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       );
     }));
 
-    _currentMapPoints = List<MapPoint>.from((_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
-      return MapPoint(
+    _currentMapPoints = List<GCWMapPoint>.from((_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
+      return GCWMapPoint(
         point: coord['coordinate'],
         markerText: _formatVariables(coord['variables']),
         coordinateFormat: _currentOutputFormat

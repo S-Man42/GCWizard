@@ -40,8 +40,8 @@ class CrossBearingState extends State<CrossBearing> {
     super.initState();
 
     _currentMapPoints = [
-      MapPoint(point: _currentCoords1),
-      MapPoint(point: _currentCoords2)
+      GCWMapPoint(point: _currentCoords1),
+      GCWMapPoint(point: _currentCoords2)
     ];
   }
 
@@ -102,11 +102,11 @@ class CrossBearingState extends State<CrossBearing> {
           outputs: _currentOutput,
           points: _currentMapPoints,
           geodetics: [
-            MapGeodetic(
+            GCWMapGeodetic(
               start: _getStartLine1(),
               end: _getEndLine1(),
             ),
-            MapGeodetic(
+            GCWMapGeodetic(
               start: _getStartLine2(),
               end: _getEndLine2(),
               color: HSLColor
@@ -162,12 +162,12 @@ class CrossBearingState extends State<CrossBearing> {
     _currentIntersection = intersectBearings(_currentCoords1, _currentBearing1['value'], _currentCoords2, _currentBearing2['value'], defaultEllipsoid(), true);
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords1,
         markerText: i18n(context, "coords_crossbearing_coord1"),
         coordinateFormat: _currentCoordsFormat1
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords2,
         markerText: i18n(context, "coords_crossbearing_coord2"),
         coordinateFormat: _currentCoordsFormat2
@@ -180,7 +180,7 @@ class CrossBearingState extends State<CrossBearing> {
     }
 
     _currentMapPoints.add(
-      MapPoint(
+      GCWMapPoint(
         point: _currentIntersection,
         color: COLOR_MAP_CALCULATEDPOINT,
         markerText: i18n(context, "coords_common_intersection"),

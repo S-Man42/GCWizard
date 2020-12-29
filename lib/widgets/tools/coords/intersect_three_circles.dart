@@ -44,9 +44,9 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
   void initState() {
     super.initState();
     _currentMapPoints = [
-      MapPoint(point: _currentCoords1),
-      MapPoint(point: _currentCoords2),
-      MapPoint(point: _currentCoords3),
+      GCWMapPoint(point: _currentCoords1),
+      GCWMapPoint(point: _currentCoords2),
+      GCWMapPoint(point: _currentCoords3),
     ];
   }
 
@@ -166,17 +166,17 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
     );
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords1,
         markerText: i18n(context, 'coords_intersectcircles_centerpoint1'),
         coordinateFormat: _currentCoordsFormat1
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords2,
         markerText: i18n(context, 'coords_intersectcircles_centerpoint2'),
         coordinateFormat: _currentCoordsFormat2
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords3,
         markerText: i18n(context, 'coords_intersectcircles_centerpoint3'),
         coordinateFormat: _currentCoordsFormat3
@@ -190,7 +190,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
 
     _currentMapPoints.addAll(
       _currentIntersections
-        .map((intersection) => MapPoint(
+        .map((intersection) => GCWMapPoint(
           point: intersection.coords,
           color: COLOR_MAP_CALCULATEDPOINT,
           markerText: i18n(context, 'coords_common_intersection'),

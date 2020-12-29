@@ -94,22 +94,22 @@ class CenterThreePointsState extends State<CenterThreePoints> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: [
-            MapPoint(
+            GCWMapPoint(
               point: _currentCoords1,
               markerText: i18n(context, 'coords_centerthreepoints_coorda'),
               coordinateFormat: _currentCoordsFormat1
             ),
-            MapPoint(
+            GCWMapPoint(
               point: _currentCoords2,
               markerText: i18n(context, 'coords_centerthreepoints_coordb'),
               coordinateFormat: _currentCoordsFormat2
             ),
-            MapPoint(
+            GCWMapPoint(
               point: _currentCoords3,
               markerText: i18n(context, 'coords_centerthreepoints_coordc'),
               coordinateFormat: _currentCoordsFormat3
             ),
-            MapPoint(
+            GCWMapPoint(
               point: _currentCenter,
               color: COLOR_MAP_CALCULATEDPOINT,
               markerText: i18n(context, 'coords_common_centerpoint'),
@@ -117,11 +117,11 @@ class CenterThreePointsState extends State<CenterThreePoints> {
             )
           ],
           geodetics: [
-            MapGeodetic(
+            GCWMapGeodetic(
               start: _currentCoords1,
               end: _currentCenter
             ),
-            MapGeodetic(
+            GCWMapGeodetic(
                 start: _currentCoords2,
                 end: _currentCenter,
                 color: HSLColor
@@ -129,7 +129,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
                   .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
                   .toColor()
             ),
-            MapGeodetic(
+            GCWMapGeodetic(
                 start: _currentCoords3,
                 end: _currentCenter,
                 color: HSLColor

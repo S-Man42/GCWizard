@@ -98,7 +98,7 @@ class EllipsoidTransformState extends State<EllipsoidTransform> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: [
-            MapPoint(
+            GCWMapPoint(
               point: _currentCoords,
             ),
           ],

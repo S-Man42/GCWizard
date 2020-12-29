@@ -331,7 +331,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                         break;
 
                       _showFormulaResultOnMap([
-                        MapPoint(
+                        GCWMapPoint(
                           point: coordinate['coordinate'],
                           markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext'),
                           coordinateFormat: {'format': coordinate['format']}
@@ -372,7 +372,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
             onPressed: () {
               _showFormulaResultOnMap(
                 _foundCoordinates.entries.map((coordinate) {
-                  return MapPoint(
+                  return GCWMapPoint(
                     point: coordinate.value['coordinate'],
                     markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') + ' ${coordinate.key}',
                     coordinateFormat: {'format': coordinate.value['format']}

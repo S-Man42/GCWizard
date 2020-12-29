@@ -28,14 +28,14 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
   var _currentMapPoints;
-  List<MapGeodetic> _currentMapGeodetics;
+  List<GCWMapGeodetic> _currentMapGeodetics;
 
   @override
   void initState() {
     super.initState();
     _currentMapPoints = [
-      MapPoint(point: _currentCoords1),
-      MapPoint(point: _currentCoords2)
+      GCWMapPoint(point: _currentCoords1),
+      GCWMapPoint(point: _currentCoords2)
     ];
   }
 
@@ -91,12 +91,12 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
     _currentIntersections = equilateralTriangle(_currentCoords1, _currentCoords2, defaultEllipsoid());
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords1,
         markerText: i18n(context, 'coords_equilateraltriangle_coorda'),
         coordinateFormat: _currentCoordsFormat1
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords2,
         markerText: i18n(context, 'coords_equilateraltriangle_coordb'),
         coordinateFormat: _currentCoordsFormat2
@@ -110,7 +110,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
 
     _currentMapPoints.addAll(
       _currentIntersections
-        .map((intersection) => MapPoint(
+        .map((intersection) => GCWMapPoint(
           point: intersection,
           color: COLOR_MAP_CALCULATEDPOINT,
           markerText: i18n(context, 'coords_common_intersection'),
@@ -120,7 +120,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
     );
 
     _currentMapGeodetics = [
-      MapGeodetic(
+      GCWMapGeodetic(
         start: _currentCoords1,
         end: _currentCoords2
       ),
@@ -128,7 +128,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
     
     _currentIntersections.forEach((intersection) {
       _currentMapGeodetics.addAll([
-        MapGeodetic(
+        GCWMapGeodetic(
           start: _currentCoords1,
           end: intersection,
           color: HSLColor
@@ -136,7 +136,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
             .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
             .toColor()
         ),
-        MapGeodetic(
+        GCWMapGeodetic(
           start: _currentCoords2,
           end: intersection,
           color: HSLColor

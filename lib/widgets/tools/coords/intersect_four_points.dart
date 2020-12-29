@@ -39,10 +39,10 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
     super.initState();
 
     _currentMapPoints = [
-      MapPoint(point: _currentCoords11),
-      MapPoint(point: _currentCoords12),
-      MapPoint(point: _currentCoords21),
-      MapPoint(point: _currentCoords22),
+      GCWMapPoint(point: _currentCoords11),
+      GCWMapPoint(point: _currentCoords12),
+      GCWMapPoint(point: _currentCoords21),
+      GCWMapPoint(point: _currentCoords22),
     ];
   }
 
@@ -109,11 +109,11 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
           outputs: _currentOutput,
           points: _currentMapPoints,
           geodetics: [
-            MapGeodetic(
+            GCWMapGeodetic(
               start: _currentCoords11,
               end: _currentCoords12
             ),
-            MapGeodetic(
+            GCWMapGeodetic(
                 start: _currentCoords21,
                 end: _currentCoords22,
                 color: HSLColor
@@ -131,22 +131,22 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
     _currentIntersection = intersectFourPoints(_currentCoords11, _currentCoords12, _currentCoords21, _currentCoords22, defaultEllipsoid());
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords11,
         markerText: i18n(context, 'coords_intersectfourpoints_coord11'),
         coordinateFormat: _currentCoordsFormat11
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords12,
         markerText: i18n(context, 'coords_intersectfourpoints_coord12'),
         coordinateFormat: _currentCoordsFormat12
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords21,
         markerText: i18n(context, 'coords_intersectfourpoints_coord21'),
         coordinateFormat: _currentCoordsFormat21
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords22,
         markerText: i18n(context, 'coords_intersectfourpoints_coord22'),
         coordinateFormat: _currentCoordsFormat22
@@ -159,7 +159,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
     }
 
     _currentMapPoints.add(
-      MapPoint(
+      GCWMapPoint(
         point: _currentIntersection,
         color: COLOR_MAP_CALCULATEDPOINT,
         markerText: i18n(context, 'coords_common_intersection'),

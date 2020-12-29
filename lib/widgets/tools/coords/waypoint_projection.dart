@@ -26,8 +26,8 @@ class WaypointProjectionState extends State<WaypointProjection> {
   var _currentReverse = false;
 
   var _currentValues = [defaultCoordinate];
-  var _currentMapPoints = <MapPoint>[];
-  var _currentGeodetics = <MapGeodetic>[];
+  var _currentMapPoints = <GCWMapPoint>[];
+  var _currentGeodetics = <GCWMapGeodetic>[];
   var _currentCoordsFormat = defaultCoordFormat();
 
   var _currentOutputFormat = defaultCoordFormat();
@@ -103,18 +103,18 @@ class WaypointProjectionState extends State<WaypointProjection> {
       }
 
       _currentMapPoints = [
-        MapPoint(
+        GCWMapPoint(
           point: _currentCoords,
           markerText: i18n(context, 'coords_waypointprojection_start'),
           coordinateFormat: _currentCoordsFormat
         )
       ];
 
-      _currentGeodetics = <MapGeodetic>[];
+      _currentGeodetics = <GCWMapGeodetic>[];
 
       _currentValues.forEach((projection) {
         _currentMapPoints.add(
-          MapPoint(
+          GCWMapPoint(
             point: projection,
             color: COLOR_MAP_CALCULATEDPOINT,
             markerText: i18n(context, 'coords_waypointprojection_end'),
@@ -123,7 +123,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
         );
 
         _currentGeodetics.add(
-          MapGeodetic(
+          GCWMapGeodetic(
             start: projection,
             end: _currentCoords
           )
@@ -133,12 +133,12 @@ class WaypointProjectionState extends State<WaypointProjection> {
       _currentValues = [projection(_currentCoords, _currentBearing['value'], _currentDistance, defaultEllipsoid())];
 
       _currentMapPoints = [
-        MapPoint(
+        GCWMapPoint(
           point: _currentCoords,
           markerText: i18n(context, 'coords_waypointprojection_start'),
           coordinateFormat: _currentCoordsFormat
         ),
-        MapPoint(
+        GCWMapPoint(
           point: _currentValues[0],
           color: COLOR_MAP_CALCULATEDPOINT,
           markerText: i18n(context, 'coords_waypointprojection_end'),
@@ -146,7 +146,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
         )
       ];
 
-      _currentGeodetics = [MapGeodetic(
+      _currentGeodetics = [GCWMapGeodetic(
         start: _currentCoords,
         end: _currentValues[0]
       )];

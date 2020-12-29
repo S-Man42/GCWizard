@@ -1054,6 +1054,7 @@
   "coords_variablecoordinate_currentformulas" : "Created Formulas",
   "coords_variablecoordinate_newformula" : "Add Formula",
   "coords_variablecoordinate_newformula_hint" : "Enter Formula Name",
+  "coords_custommapview_title" : "Map View",
 
   "crosssum_selection_title" : "Cross Sum/Digit Sum",
   "crosssum_selection_description" : "Cross Sums of an Integer",

@@ -15,8 +15,8 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_mapview.dart';
 
 class GCWCoordsOutput extends StatefulWidget {
   final List<dynamic> outputs;
-  final List<MapPoint> points;
-  final List<MapGeodetic> geodetics;
+  final List<GCWMapPoint> points;
+  final List<GCWMapGeodetic> geodetics;
   final List<MapCircle> circles;
   final bool mapButtonTop;
 
@@ -82,7 +82,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
     );
   }
 
-  Future<bool> _exportCoordinates(BuildContext context, String name, List<MapPoint> points, List<MapGeodetic> geodetics, List<MapCircle> circles) async {
+  Future<bool> _exportCoordinates(BuildContext context, String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<MapCircle> circles) async {
     showGCWDialog(
         context,
         i18n(context, 'coords_export_saved'),

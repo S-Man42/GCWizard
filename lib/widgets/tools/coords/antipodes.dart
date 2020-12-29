@@ -20,7 +20,7 @@ class AntipodesState extends State<Antipodes> {
   var _currentCoords = defaultCoordinate;
 
   var _currentValues = [defaultCoordinate];
-  var _currentMapPoints = <MapPoint>[];
+  var _currentMapPoints = <GCWMapPoint>[];
   var _currentCoordsFormat = defaultCoordFormat();
 
   var _currentOutputFormat = defaultCoordFormat();
@@ -67,12 +67,12 @@ class AntipodesState extends State<Antipodes> {
     _currentValues = [antipodes(_currentCoords)];
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords,
         markerText: i18n(context, 'coords_antipodes_coorda'),
         coordinateFormat: _currentCoordsFormat
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentValues[0],
         color: COLOR_MAP_CALCULATEDPOINT,
         markerText: i18n(context, 'coords_antipodes_coordb'),

@@ -84,19 +84,19 @@ class DistanceBearingState extends State<DistanceBearing> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: [
-            MapPoint(
+            GCWMapPoint(
               point: _currentCoords1,
               markerText: i18n(context, 'coords_distancebearing_coorda'),
               coordinateFormat: _currentCoordsFormat1
             ),
-            MapPoint(
+            GCWMapPoint(
               point: _currentCoords2,
               markerText: i18n(context, 'coords_distancebearing_coordb'),
               coordinateFormat: _currentCoordsFormat2
             ),
           ],
           geodetics: [
-            MapGeodetic(
+            GCWMapGeodetic(
               start: _currentCoords1,
               end: _currentCoords2
             )

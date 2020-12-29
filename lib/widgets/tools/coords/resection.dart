@@ -39,14 +39,14 @@ class ResectionState extends State<Resection> {
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
   var _currentMapPoints;
-  List<MapGeodetic> _currentMapGeodetics = [];
+  List<GCWMapGeodetic> _currentMapGeodetics = [];
 
   @override
   void initState() {
     super.initState();
     _currentMapPoints = [
-      MapPoint(point: _currentCoords1),
-      MapPoint(point: _currentCoords2)
+      GCWMapPoint(point: _currentCoords1),
+      GCWMapPoint(point: _currentCoords2)
     ];
   }
 
@@ -125,8 +125,8 @@ class ResectionState extends State<Resection> {
   }
 
   _calculateOutput() {
-    _currentMapPoints = <MapPoint>[];
-    _currentMapGeodetics = <MapGeodetic>[];
+    _currentMapPoints = <GCWMapPoint>[];
+    _currentMapGeodetics = <GCWMapGeodetic>[];
 
     if (_currentCoords1 == _currentCoords2
       || _currentCoords2 == _currentCoords3
@@ -140,17 +140,17 @@ class ResectionState extends State<Resection> {
     _currentIntersections = resection(_currentCoords1, _currentAngle12['value'], _currentCoords2, _currentAngle23['value'], _currentCoords3, ells);
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords1,
         markerText: i18n(context, 'coords_resection_coorda'),
         coordinateFormat: _currentCoordsFormat1
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords2,
         markerText: i18n(context, 'coords_resection_coordb'),
         coordinateFormat: _currentCoordsFormat2
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords3,
         markerText: i18n(context, 'coords_resection_coordc'),
         coordinateFormat: _currentCoordsFormat3
@@ -172,7 +172,7 @@ class ResectionState extends State<Resection> {
     _currentIntersections = _currentIntersections.sublist(0, min(_currentIntersections.length, 2));
 
     _currentMapPoints.addAll(
-      _currentIntersections.map((intersection) => MapPoint(
+      _currentIntersections.map((intersection) => GCWMapPoint(
         point: intersection,
         color: COLOR_MAP_CALCULATEDPOINT,
         markerText: i18n(context, 'coords_common_intersection'),
@@ -184,15 +184,15 @@ class ResectionState extends State<Resection> {
     _currentIntersections.forEach((intersection) {
       _currentMapGeodetics.addAll(
         [
-          MapGeodetic(
+          GCWMapGeodetic(
             start: intersection,
             end: _currentCoords1
           ),
-          MapGeodetic(
+          GCWMapGeodetic(
             start: intersection,
             end: _currentCoords2
           ),
-          MapGeodetic(
+          GCWMapGeodetic(
             start: intersection,
             end: _currentCoords3
           ),

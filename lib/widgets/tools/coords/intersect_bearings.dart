@@ -40,8 +40,8 @@ class IntersectBearingsState extends State<IntersectBearings> {
     super.initState();
 
     _currentMapPoints = [
-      MapPoint(point: _currentCoords1),
-      MapPoint(point: _currentCoords2)
+      GCWMapPoint(point: _currentCoords1),
+      GCWMapPoint(point: _currentCoords2)
     ];
   }
 
@@ -102,11 +102,11 @@ class IntersectBearingsState extends State<IntersectBearings> {
           outputs: _currentOutput,
           points: _currentMapPoints,
           geodetics: [
-            MapGeodetic(
+            GCWMapGeodetic(
               start: _currentCoords1,
               end: _getEndLine1()
             ),
-            MapGeodetic(
+            GCWMapGeodetic(
               start: _currentCoords2,
               end: _getEndLine2(),
               color: HSLColor
@@ -148,12 +148,12 @@ class IntersectBearingsState extends State<IntersectBearings> {
     _currentIntersection = intersectBearings(_currentCoords1, _currentBearing1['value'], _currentCoords2, _currentBearing2['value'], defaultEllipsoid(), false);
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords1,
         markerText: i18n(context, 'coords_intersectbearings_coord1'),
         coordinateFormat: _currentCoordsFormat1
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords2,
         markerText: i18n(context, 'coords_intersectbearings_coord2'),
         coordinateFormat: _currentCoordsFormat2
@@ -166,7 +166,7 @@ class IntersectBearingsState extends State<IntersectBearings> {
     }
 
     _currentMapPoints.add(
-      MapPoint(
+      GCWMapPoint(
         point: _currentIntersection,
         color: COLOR_MAP_CALCULATEDPOINT,
         markerText: i18n(context, 'coords_common_intersection'),

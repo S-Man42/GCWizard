@@ -82,17 +82,17 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: [
-            MapPoint(
+            GCWMapPoint(
               point: _currentCoords1,
               markerText: i18n(context, 'coords_centertwopoints_coorda'),
               coordinateFormat: _currentCoordsFormat1
             ),
-            MapPoint(
+            GCWMapPoint(
               point: _currentCoords2,
               markerText: i18n(context, 'coords_centertwopoints_coordb'),
               coordinateFormat: _currentCoordsFormat2
             ),
-            MapPoint(
+            GCWMapPoint(
               point: _currentCenter,
               color: COLOR_MAP_CALCULATEDPOINT,
               markerText: i18n(context, 'coords_common_centerpoint'),
@@ -100,7 +100,7 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
             ),
           ],
           geodetics: [
-            MapGeodetic(
+            GCWMapGeodetic(
               start: _currentCoords1,
               end: _currentCoords2
             ),

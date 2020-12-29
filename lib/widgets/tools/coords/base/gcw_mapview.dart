@@ -32,9 +32,12 @@ final OSM_URL = 'coords_mapview_osm_url';
 final MAPBOX_SATELLITE_TEXT = 'coords_mapview_mapbox_satellite';
 final MAPBOX_SATELLITE_URL = 'coords_mapview_mapbox_satellite_url';
 
+final _DEFAULT_COORDINATE = LatLng(52.5, 13.4);
+final _DEFAULT_ZOOM = 9.0;
+
 class GCWMapView extends StatefulWidget {
-  final List<MapPoint> points;
-  final List<MapGeodetic> geodetics;
+  final List<GCWMapPoint> points;
+  final List<GCWMapGeodetic> geodetics;
   final List<MapCircle> circles;
 
   const GCWMapView({Key key, this.points: const [], this.geodetics: const [], this.circles: const []})
@@ -195,8 +198,12 @@ class GCWMapViewState extends State<GCWMapView> {
           FlutterMap(
             mapController: _mapController,
             options: MapOptions(
-              center: computeCentroid(widget.points.map((_point) => _point.point).toList()),
-              zoom: _getBoundsZoomLevel().toDouble(),
+              center: widget.points.length > 0
+                ? computeCentroid(widget.points.map((_point) => _point.point).toList())
+                : _DEFAULT_COORDINATE,
+              zoom: widget.points.length > 0
+                ? _getBoundsZoomLevel().toDouble()
+                : _DEFAULT_ZOOM,
               minZoom: 1.0,
               maxZoom: 18.0,
               plugins: [PopupMarkerPlugin()],
@@ -289,14 +296,14 @@ class GCWMapViewState extends State<GCWMapView> {
   }
 
   _buildMarkers() {
-    var points = List<MapPoint>.from(widget.points);
+    var points = List<GCWMapPoint>.from(widget.points);
 
     // Add User Position
     if (
          _locationSubscription != null && !_locationSubscription.isPaused
       && _currentPosition != null
     ) {
-      points.add(MapPoint(
+      points.add(GCWMapPoint(
         point: _currentPosition,
         markerText: i18n(context, 'common_userposition'),
         color: COLOR_MAP_USERPOSITION,
@@ -304,8 +311,23 @@ class GCWMapViewState extends State<GCWMapView> {
       ));
     }
 
-    //Marker Outlines
-    List<Marker> markers = points.map((_point) {
+    return points.map((_point) {
+      var icon = Stack(
+        alignment: Alignment.center,
+        children: [
+          Icon(
+            Icons.my_location,
+            size: 28.3,
+            color: COLOR_MAP_POINT_OUTLINE,
+          ),
+          Icon(
+            Icons.my_location,
+            size: 25.0,
+            color: _point.color,
+          )
+        ],
+      );
+
       return GCWMarker(
         coordinateDescription: _buildPopupCoordinateDescription(_point),
         coordinateText: _buildPopupCoordinateText(_point),
@@ -313,36 +335,10 @@ class GCWMapViewState extends State<GCWMapView> {
         height: 28.3,
         point: _point.point,
         builder: (context) {
-          return Icon(
-            Icons.my_location,
-            size: 28.3,
-            color: COLOR_MAP_POINT_OUTLINE,
-          );
+          return icon;
         }
       );
     }).toList();
-
-    //colored Markers
-    markers.addAll(
-      points.map((_point) {
-        return GCWMarker(
-          coordinateDescription: _buildPopupCoordinateDescription(_point),
-          coordinateText: _buildPopupCoordinateText(_point),
-          width: 25.0,
-          height: 25.0,
-          point: _point.point,
-          builder: (context) {
-            return Icon(
-              Icons.my_location,
-              size: 25.0,
-              color: _point.color,
-            );
-          }
-        );
-      }).toList()
-    );
-
-    return markers;
   }
 
   _buildButtons() {
@@ -388,7 +384,7 @@ class GCWMapViewState extends State<GCWMapView> {
     }
   }
 
-  _buildPopupCoordinateText(MapPoint point) {
+  _buildPopupCoordinateText(GCWMapPoint point) {
     var coordinateFormat = defaultCoordFormat();
     if (point.coordinateFormat != null)
       coordinateFormat = point.coordinateFormat;
@@ -396,7 +392,7 @@ class GCWMapViewState extends State<GCWMapView> {
     return formatCoordOutput(point.point, coordinateFormat, getEllipsoidByName(ELLIPSOID_NAME_WGS84));
   }
 
-  _buildPopupCoordinateDescription(MapPoint point) {
+  _buildPopupCoordinateDescription(GCWMapPoint point) {
     if (point.markerText == null || point.markerText.length == 0)
       return null;
 
