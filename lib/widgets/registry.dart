@@ -2104,12 +2104,12 @@ class Registry {
       ),
       GCWSymbolTableTool(
         symbolKey: 'notes_notevalues',
-        iconFilename: '3_32.png',
+        iconFilename: '1_-4.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES + 'notevalues notenwerte dotted punkt gepunktete punktierte viertel halbe ganze achtel sechzehntel whole half quarter eightth sixteenth semibreve minim crotchet semihemidemisemiquaver'
       ),
       GCWSymbolTableTool(
         symbolKey: 'notes_restvalues',
-        iconFilename: '3_8.png',
+        iconFilename: '1_-2.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES + 'notevalues notenwerte restvalues pausenwerte dotted punkt gepunktete punktierte viertel halbe ganze achtel sechzehntel whole half quarter eightth sixteenth semibreve minim crotchet semihemidemisemiquaver'
       ),
       GCWSymbolTableTool(

@@ -1,0 +1,14 @@
+Quelle: Mark :-)
+
+GCWSymbolTableTool(
+symbolKey: 'pausenwert',
+iconFilename: '31_2048.png',
+searchStrings: SEARCHSTRING_SYMBOLTABLES + 'musik music pausenwert rest dotted punkt gepunktet punktiert'
+),
+
+
+  "symboltables_atlantean_title" : "Pausenwert",
+  "symboltables_atlantean_description" : "",
+
+  "symboltables_atlantean_title" : "Rest values",
+  "symboltables_atlantean_description" : "",
