@@ -109,17 +109,17 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
           outputs: _currentOutput,
           points: _currentMapPoints,
           geodetics: [
-            GCWMapGeodetic(
+            GCWMapGeodetic.fromLatLng(
               start: _currentCoords11,
               end: _currentCoords12
             ),
-            GCWMapGeodetic(
-                start: _currentCoords21,
-                end: _currentCoords22,
-                color: HSLColor
-                  .fromColor(COLOR_MAP_POLYLINE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
-                  .toColor()
+            GCWMapGeodetic.fromLatLng(
+              start: _currentCoords21,
+              end: _currentCoords22,
+              color: HSLColor
+                .fromColor(COLOR_MAP_POLYLINE)
+                .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+                .toColor()
             ),
           ],
         ),

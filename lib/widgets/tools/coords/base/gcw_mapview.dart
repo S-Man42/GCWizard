@@ -38,9 +38,16 @@ final _DEFAULT_ZOOM = 9.0;
 class GCWMapView extends StatefulWidget {
   final List<GCWMapPoint> points;
   final List<GCWMapGeodetic> geodetics;
-  final List<MapCircle> circles;
+  final List<GCWMapCircle> circles;
+  final bool allowCreatePoints;
 
-  const GCWMapView({Key key, this.points: const [], this.geodetics: const [], this.circles: const []})
+  const GCWMapView({
+    Key key,
+    this.points: const [],
+    this.geodetics: const [],
+    this.circles: const [],
+    this.allowCreatePoints: false
+  })
     : super(key: key);
 
   @override
@@ -207,7 +214,23 @@ class GCWMapViewState extends State<GCWMapView> {
               minZoom: 1.0,
               maxZoom: 18.0,
               plugins: [PopupMarkerPlugin()],
-              onTap: (_) => _popupLayerController.hidePopup()
+              onTap: (_) => _popupLayerController.hidePopup(),
+              onLongPress: widget.allowCreatePoints ? (LatLng coordinate) {
+                widget.points.add(GCWMapPoint(
+                  point: coordinate,
+                  isDragable: true,
+                  radius: 16100
+                ));
+
+                if (widget.points.length > 1) {
+                  widget.geodetics.add(
+                    GCWMapGeodetic(
+                      start: widget.points.last,
+                      end: widget.points[widget.points.length - 2]
+                    )
+                  );
+                }
+              } : null
             ),
             layers: layers,
           ),
@@ -328,17 +351,40 @@ class GCWMapViewState extends State<GCWMapView> {
         ],
       );
 
+      var marker = _point.isDragable ? _createDragableIcon(_point, icon) : icon;
+
       return GCWMarker(
         coordinateDescription: _buildPopupCoordinateDescription(_point),
         coordinateText: _buildPopupCoordinateText(_point),
         width: 28.3,
         height: 28.3,
         point: _point.point,
-        builder: (context) {
-          return icon;
-        }
+        builder: (context) => marker
       );
     }).toList();
+  }
+
+  _createDragableIcon(GCWMapPoint point, Widget icon) {
+    return GestureDetector(
+      onPanUpdate: (details) {
+        _popupLayerController.hidePopup();
+
+        CustomPoint position = Epsg3857().latLngToPoint(point.point, _mapController.zoom);
+        Offset delta = details.delta;
+        LatLng pointToLatLng = Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom);
+
+        point.point = pointToLatLng;
+        point.refresh();
+
+        widget.geodetics.forEach((element) {
+          if (element.start == point || element.end == point)
+            element.update();
+        });
+
+        setState(() {});
+      },
+      child: icon,
+    );
   }
 
   _buildButtons() {
@@ -471,6 +517,18 @@ class GCWMapViewState extends State<GCWMapView> {
         color: _circle.color,
       );
     }).toList();
+
+    _polylines.addAll(
+      widget.points
+        .where((point) => point.circle != null)
+        .map((point) {
+          return Polyline(
+            points: point.circle.shape,
+            strokeWidth: 3.0,
+            color: point.circle.color,
+          );
+        }).toList()
+    );
 
     return _polylines;
   }

@@ -6,7 +6,7 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:latlong/latlong.dart';
 
 
-Future<Map<String, dynamic>> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<MapCircle> circles, {bool kmlFormat = false}) async {
+Future<Map<String, dynamic>> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<GCWMapCircle> circles, {bool kmlFormat = false}) async {
   String xml;
 
   if ((points == null || points.length == 0) && (geodetics == null || geodetics.length == 0) && (circles == null || circles.length == 0))
@@ -34,7 +34,7 @@ class _GpxWriter {
   XmlNode asXml(String name, List<GCWMapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles);
 
 
-  XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<MapCircle> circles) {final builder = XmlBuilder();
+  XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<GCWMapCircle> circles) {final builder = XmlBuilder();
 
     if ((points == null || points.length == 0) && (geodetics == null || geodetics.length == 0)  && (circles == null || circles.length == 0))
       return null;
@@ -147,7 +147,7 @@ class _KmlWriter {
   /// Convert points into KML as XmlNode
   XmlNode asXml(String name, List<GCWMapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles);
 
-  XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<MapCircle> circles) {
+  XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<GCWMapCircle> circles) {
     final builder = XmlBuilder();
     var i = 0;
 

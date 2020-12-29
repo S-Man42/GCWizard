@@ -105,7 +105,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
           outputs: _currentOutput,
           points: _currentMapPoints,
           geodetics: [
-            GCWMapGeodetic(
+            GCWMapGeodetic.fromLatLng(
               start: _currentCoordsStart,
               end: projection(
                   _currentCoordsStart,
@@ -123,7 +123,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
             )
           ],
           circles: [
-            MapCircle(
+            GCWMapCircle(
               centerPoint: _currentCoordsCircle,
               radius: _currentRadiusCircle
             ),

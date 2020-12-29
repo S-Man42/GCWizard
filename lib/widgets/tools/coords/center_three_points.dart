@@ -117,29 +117,29 @@ class CenterThreePointsState extends State<CenterThreePoints> {
             )
           ],
           geodetics: [
-            GCWMapGeodetic(
+            GCWMapGeodetic.fromLatLng(
               start: _currentCoords1,
               end: _currentCenter
             ),
-            GCWMapGeodetic(
-                start: _currentCoords2,
-                end: _currentCenter,
-                color: HSLColor
-                  .fromColor(COLOR_MAP_POLYLINE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
-                  .toColor()
+            GCWMapGeodetic.fromLatLng(
+              start: _currentCoords2,
+              end: _currentCenter,
+              color: HSLColor
+                .fromColor(COLOR_MAP_POLYLINE)
+                .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+                .toColor()
             ),
-            GCWMapGeodetic(
-                start: _currentCoords3,
-                end: _currentCenter,
-                color: HSLColor
-                  .fromColor(COLOR_MAP_POLYLINE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
-                  .toColor()
+            GCWMapGeodetic.fromLatLng(
+              start: _currentCoords3,
+              end: _currentCenter,
+              color: HSLColor
+                .fromColor(COLOR_MAP_POLYLINE)
+                .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
+                .toColor()
             ),
           ],
           circles: [
-            MapCircle(
+            GCWMapCircle(
               centerPoint: _currentCenter,
               radius: _currentDistance
             )

@@ -123,7 +123,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
         );
 
         _currentGeodetics.add(
-          GCWMapGeodetic(
+          GCWMapGeodetic.fromLatLng(
             start: projection,
             end: _currentCoords
           )
@@ -146,7 +146,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
         )
       ];
 
-      _currentGeodetics = [GCWMapGeodetic(
+      _currentGeodetics = [GCWMapGeodetic.fromLatLng(
         start: _currentCoords,
         end: _currentValues[0]
       )];

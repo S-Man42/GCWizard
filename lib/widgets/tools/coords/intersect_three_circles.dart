@@ -128,7 +128,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
           outputs: _currentOutput,
           points: _currentMapPoints,
           circles: [
-            MapCircle(
+            GCWMapCircle(
               centerPoint: _currentCoords1,
               radius: _currentRadius1,
               color:
@@ -137,11 +137,11 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
                   .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness - 0.3)
                   .toColor()
             ),
-            MapCircle(
+            GCWMapCircle(
               centerPoint: _currentCoords2,
               radius: _currentRadius2
             ),
-            MapCircle(
+            GCWMapCircle(
               centerPoint: _currentCoords3,
               radius: _currentRadius3,
               color:

@@ -102,11 +102,11 @@ class IntersectBearingsState extends State<IntersectBearings> {
           outputs: _currentOutput,
           points: _currentMapPoints,
           geodetics: [
-            GCWMapGeodetic(
+            GCWMapGeodetic.fromLatLng(
               start: _currentCoords1,
               end: _getEndLine1()
             ),
-            GCWMapGeodetic(
+            GCWMapGeodetic.fromLatLng(
               start: _currentCoords2,
               end: _getEndLine2(),
               color: HSLColor

@@ -9,22 +9,46 @@ import 'package:latlong/latlong.dart';
 
 class GCWMapPoint {
   LatLng point;
-  final String markerText;
-  final Color color;
+  String markerText;
+  Color color;
   final Map<String, String> coordinateFormat;
+  final bool isDragable;
+  final double radius;
+
+  GCWMapCircle circle;
 
   GCWMapPoint({
     @required this.point,
     this.markerText,
     this.color: COLOR_MAP_POINT,
-    this.coordinateFormat
-  });
+    this.coordinateFormat,
+    this.isDragable: false,
+    this.radius
+  }) {
+    if (radius != null && radius > 0.0)
+      circle = GCWMapCircle(centerPoint: this.point, radius: this.radius);
+  }
+
+  refresh() {
+    if (radius != null && radius > 0.0) {
+      if (circle == null)
+        circle = GCWMapCircle(centerPoint: this.point, radius: this.radius);
+      else {
+        circle.centerPoint = this.point;
+        circle.radius = this.radius;
+        circle._update();
+      }
+    } else {
+      if (circle != null)
+        circle = null;
+    }
+  }
 }
 
 class GCWMapGeodetic {
-  LatLng start;
-  LatLng end;
-  final Color color;
+  GCWMapPoint start;
+  GCWMapPoint end;
+  Color color;
 
   List<LatLng> shape;
 
@@ -33,52 +57,56 @@ class GCWMapGeodetic {
     @required this.end,
     this.color: COLOR_MAP_POLYLINE,
   }) {
-    _initialize();
+    update();
   }
 
-  void _initialize() {
-    if (this.start == null)
-      this.start = defaultCoordinate;
-    if (this.end == null)
-      this.end = defaultCoordinate;
+  void update() {
+    DistanceBearingData _distBear = distanceBearing(start.point, end.point, defaultEllipsoid());
 
-    DistanceBearingData _distBear = distanceBearing(this.start, this.end, defaultEllipsoid());
-
-    shape = [this.start];
+    shape = [start.point];
     const _stepLength = 5000.0;
 
     var _countSteps = (_distBear.distance / _stepLength).floor();
 
     for (int _i = 1; _i < _countSteps; _i++) {
       var _nextPoint = projection(
-          this.start,
-          _distBear.bearingAToB,
-          _stepLength * _i,
-          defaultEllipsoid()
+          start.point,
+        _distBear.bearingAToB,
+        _stepLength * _i,
+        defaultEllipsoid()
       );
       shape.add(_nextPoint);
     }
 
-    shape.add(this.end);
+    shape.add(end.point);
+  }
+
+  @deprecated
+  static fromLatLng({LatLng start, end, Color color}) {
+    return GCWMapGeodetic(
+      start: GCWMapPoint(point: start),
+      end: GCWMapPoint(point: end),
+      color: color
+    );
   }
 }
 
-class MapCircle {
+class GCWMapCircle {
   LatLng centerPoint;
-  final double radius;
-  final Color color;
+  double radius;
+  Color color;
 
   List<LatLng> shape;
 
-  MapCircle({
+  GCWMapCircle({
     @required this.centerPoint,
     @required this.radius,
     this.color: COLOR_MAP_CIRCLE
   }) {
-    _initialize();
+    _update();
   }
 
-  void _initialize() {
+  void _update() {
     if (this.centerPoint == null)
       this.centerPoint = defaultCoordinate;
 

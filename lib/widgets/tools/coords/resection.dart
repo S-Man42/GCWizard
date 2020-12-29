@@ -184,15 +184,15 @@ class ResectionState extends State<Resection> {
     _currentIntersections.forEach((intersection) {
       _currentMapGeodetics.addAll(
         [
-          GCWMapGeodetic(
+          GCWMapGeodetic.fromLatLng(
             start: intersection,
             end: _currentCoords1
           ),
-          GCWMapGeodetic(
+          GCWMapGeodetic.fromLatLng(
             start: intersection,
             end: _currentCoords2
           ),
-          GCWMapGeodetic(
+          GCWMapGeodetic.fromLatLng(
             start: intersection,
             end: _currentCoords3
           ),

@@ -102,11 +102,11 @@ class CrossBearingState extends State<CrossBearing> {
           outputs: _currentOutput,
           points: _currentMapPoints,
           geodetics: [
-            GCWMapGeodetic(
+            GCWMapGeodetic.fromLatLng(
               start: _getStartLine1(),
               end: _getEndLine1(),
             ),
-            GCWMapGeodetic(
+            GCWMapGeodetic.fromLatLng(
               start: _getStartLine2(),
               end: _getEndLine2(),
               color: HSLColor

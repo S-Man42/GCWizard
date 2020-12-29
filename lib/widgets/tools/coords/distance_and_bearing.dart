@@ -96,7 +96,7 @@ class DistanceBearingState extends State<DistanceBearing> {
             ),
           ],
           geodetics: [
-            GCWMapGeodetic(
+            GCWMapGeodetic.fromLatLng(
               start: _currentCoords1,
               end: _currentCoords2
             )

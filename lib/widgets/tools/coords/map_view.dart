@@ -21,9 +21,15 @@ class MapView extends StatefulWidget {
 }
 
 class MapViewState extends State<MapView> {
+  var points = <GCWMapPoint>[];
+  var geodetics = <GCWMapGeodetic>[];
 
   @override
   Widget build(BuildContext context) {
-    return GCWMapView();
+    return GCWMapView(
+      points: points,
+      geodetics: geodetics,
+      allowCreatePoints: true,
+    );
   }
 }

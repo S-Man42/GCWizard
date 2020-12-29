@@ -100,13 +100,13 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
             ),
           ],
           geodetics: [
-            GCWMapGeodetic(
+            GCWMapGeodetic.fromLatLng(
               start: _currentCoords1,
               end: _currentCoords2
             ),
           ],
           circles: [
-            MapCircle(
+            GCWMapCircle(
               centerPoint: _currentCenter,
               radius: _currentDistance
             ),

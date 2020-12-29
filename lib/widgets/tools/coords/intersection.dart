@@ -128,7 +128,7 @@ class IntersectionState extends State<Intersection> {
     ];
 
     _currentMapGeodetics = [
-      GCWMapGeodetic(
+      GCWMapGeodetic.fromLatLng(
         start: _currentCoords1,
         end: _currentCoords2
       )
@@ -153,7 +153,7 @@ class IntersectionState extends State<Intersection> {
         var endPoint2 = projection(_currentCoords2, _crsBA, dist * 3, ells);
 
         _currentMapGeodetics.addAll([
-          GCWMapGeodetic(
+          GCWMapGeodetic.fromLatLng(
             start: _currentCoords1,
             end: endPoint1,
             color: HSLColor
@@ -161,7 +161,7 @@ class IntersectionState extends State<Intersection> {
               .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
               .toColor()
           ),
-          GCWMapGeodetic(
+          GCWMapGeodetic.fromLatLng(
             start: _currentCoords2,
             end: endPoint2,
             color: HSLColor
@@ -178,7 +178,7 @@ class IntersectionState extends State<Intersection> {
         var endPoint2 = projection(_currentCoords2, _crsBA, distance2ToIntersect * 1.5, ells);
 
         _currentMapGeodetics.addAll([
-          GCWMapGeodetic(
+          GCWMapGeodetic.fromLatLng(
             start: _currentCoords1,
             end: endPoint1,
             color: HSLColor
@@ -186,7 +186,7 @@ class IntersectionState extends State<Intersection> {
               .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
               .toColor()
           ),
-          GCWMapGeodetic(
+          GCWMapGeodetic.fromLatLng(
             start: _currentCoords2,
             end: endPoint2,
             color: HSLColor

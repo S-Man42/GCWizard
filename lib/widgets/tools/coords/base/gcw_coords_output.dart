@@ -17,7 +17,7 @@ class GCWCoordsOutput extends StatefulWidget {
   final List<dynamic> outputs;
   final List<GCWMapPoint> points;
   final List<GCWMapGeodetic> geodetics;
-  final List<MapCircle> circles;
+  final List<GCWMapCircle> circles;
   final bool mapButtonTop;
 
   const GCWCoordsOutput({
@@ -82,7 +82,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
     );
   }
 
-  Future<bool> _exportCoordinates(BuildContext context, String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<MapCircle> circles) async {
+  Future<bool> _exportCoordinates(BuildContext context, String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<GCWMapCircle> circles) async {
     showGCWDialog(
         context,
         i18n(context, 'coords_export_saved'),
