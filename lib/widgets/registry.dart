@@ -222,7 +222,7 @@ class Registry {
   static final SEARCHSTRING_CROSSSUMS = 'crosssums digits alternated crosstotals iterated iteriert products quersummen produkte alternierend alterniert iterierend digitalroot digitroot ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_DNA = 'code-sonne codesonne codesun dna mrna desoxyribonucleicacid desoxyribonukleinsaeure dns mrns genetisches genetik genetics genes genomes gattaca nucleotide nukleotid sequence sequenz thymine uracile cytosine adenine guanine ';
-  static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
+  static final SEARCHSTRING_E = 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
   static final SEARCHSTRING_EASTER = 'eastersunday ostern ostersonntag ';
   static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterische programmiersprache esoteric programming language ';
   static final SEARCHSTRING_FORMULASOLVER = 'formulasolver formelrechner formelsolver ';
@@ -236,8 +236,8 @@ class Registry {
   static final SEARCHSTRING_HASHES_SHA3 = SEARCHSTRING_HASHES_SHA + 'sha3 sha-3 ';
   static final SEARCHSTRING_IRRATIONALNUMBERS = 'irrational number irrationale zahlen fraction decimal digit nachkommastelle ';
   static final SEARCHSTRING_NUMERALWORDS = 'numeralwords zahlwoerter numberwords zaehlwort zahlwort zaehlwoerter numerals';
-  static final SEARCHSTRING_PHI = SEARCHSTRING_IRRATIONALNUMBERS + 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
-  static final SEARCHSTRING_PI = SEARCHSTRING_IRRATIONALNUMBERS + 'pi circle kreis 3,1415926535 3.1415926535 ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
+  static final SEARCHSTRING_PHI = 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
+  static final SEARCHSTRING_PI = 'pi circle kreis 3,1415926535 3.1415926535 ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
   static final SEARCHSTRING_RESISTOR = 'resistors widerstand widerstaende resistance ohm ';
   static final SEARCHSTRING_RESISTOR_COLORCODE = SEARCHSTRING_RESISTOR + 'colorcodes farben farbcodes colors ';
@@ -472,7 +472,7 @@ class Registry {
         tool: ESelection(),
         i18nPrefix: 'e_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: SEARCHSTRING_E
+        searchStrings: SEARCHSTRING_IRRATIONALNUMBERS + SEARCHSTRING_E
       ),
       GCWTool(
         tool: Enigma(),
@@ -608,13 +608,13 @@ class Registry {
         tool: PhiSelection(),
         i18nPrefix: 'phi_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: SEARCHSTRING_PHI
+        searchStrings: SEARCHSTRING_IRRATIONALNUMBERS + SEARCHSTRING_PHI
       ),
       GCWTool(
         tool: PiSelection(),
         i18nPrefix: 'pi_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: SEARCHSTRING_PI
+        searchStrings: SEARCHSTRING_IRRATIONALNUMBERS + SEARCHSTRING_PI
       ),
       GCWTool(
         tool: PigLatin(),
