@@ -174,6 +174,7 @@
   "astronomy_moonposition_title": "Position und Phase des Mondes",
   "astronomy_moonposition_description": "Position des Mondes (Azimut, Altitude, ...) + Phase (Alter, Beleuchtung, ...)",
   "astronomy_easter_selection_title" : "Ostern",
+  "astronomy_easter_selection_description" : "Berechnet das Osterdatum eines Jahres",
   "astronomy_easter_easterdate_title" : "Datum Ostersonntag",
   "astronomy_easter_easterdate_description" : "Datum von Ostersonntag für ein bestimmtes Jahr (zwischen 1583 und 3042)",
   "astronomy_easter_easteryears_title" : "Jahre mit Osterdatum",
@@ -285,7 +286,7 @@
   "book_cipher_random_output_hint" : "Buchstaben werden zufällig ausgewählt",
 
   "brainfk_title" : "Brainf**k",
-  "brainfk_description" : "Esoterische Programmiersprache aus 8 Zeichen; inkl. Derivat 'Ook'",
+  "brainfk_description" : "Esoterische Programmiersprache aus 8 Zeichen",
   "brainfk_example" : ">++++++++[<++++++++>-]<++.",
   "brainfk_interpret" : "Interpreter",
   "brainfk_generate" : "Generator",
@@ -295,7 +296,6 @@
   "brainfk_error_pointertoosmall" : "Zeiger zu klein",
   "brainfk_error_loopnotclosed" : "Schleife nicht geschlossen",
   "brainfk_error_loopnotopened" : "Schleife nicht geöffnet",
-  "brainfk_ook_title" : "Ook",
 
   "burrowswheeler_title" : "Burrows-Wheeler Transformation",
   "burrowswheeler_description" : "Grundlage für bzip-Komprimierung",
@@ -1490,6 +1490,10 @@
   "onetimepad_key" : "Schlüssel",
   "onetimepad_input" : "Eingabe",
   "onetimepad_keyoffset" : "A",
+
+  "ook_title" : "Ook",
+  "ook_description" : "Esoterische Programmiersprache, Derivat von Brainf**k",
+  "ook_example" : "Ook? Ook. Ook! Ook.",
 
   "periodictable_title" : "Periodensystem der Elemente",
   "periodictable_description" : "Zeigt Eigenschaften chemischer Elemente; sortiert sie nach bestimmten Kriterien",

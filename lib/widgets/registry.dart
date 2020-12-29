@@ -11,7 +11,6 @@ import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
@@ -352,9 +351,9 @@ class Registry {
         searchStrings: 'bookcipher buchcode word wort position zeile row line absatz section letter buchstabe buechercode buchchiffre buecherchiffre'
       ),
       GCWTool(
-        tool: BrainfkSelection(),
-        i18nPrefix: 'brainfk',
+        tool: Brainfk(),
         category: ToolCategory.CRYPTOGRAPHY,
+        i18nPrefix: 'brainfk',
         searchStrings: SEARCHSTRING_BRAINFK
       ),
       GCWTool(
@@ -592,6 +591,12 @@ class Registry {
         i18nPrefix: 'onetimepad',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'onetimepad einmalschluessel one-time-pad otp'
+      ),
+      GCWTool(
+        tool: Ook(),
+        i18nPrefix: 'ook',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_BRAINFK + 'ook terry pratchett monkeys apes dots punkte questionsmarks exclamationmarks fragezeichen ausrufezeichen affen orang-utans orangutans'
       ),
       GCWTool(
         tool: PeriodicTable(),
@@ -956,18 +961,6 @@ class Registry {
         tool: Beaufort(),
         i18nPrefix: 'beaufort',
         searchStrings: SEARCHSTRING_BEAUFORT
-      ),
-
-      //Brainfk Selection **********************************************************************************************
-      GCWTool(
-        tool: Brainfk(),
-        i18nPrefix: 'brainfk',
-        searchStrings: SEARCHSTRING_BRAINFK
-      ),
-      GCWTool(
-        tool: Ook(),
-        i18nPrefix: 'brainfk_ook',
-        searchStrings: SEARCHSTRING_BRAINFK + 'ook terry pratchett monkeys apes'
       ),
 
       //CCITT*Selection **********************************************************************************************
