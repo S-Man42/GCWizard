@@ -1266,6 +1266,9 @@
   "gccode_example" : "GCK25B → 156997",
   "gccode_novalidgcode" : "Kein valider GC-Code",
 
+  "generalcodebreakers_selection_title" : "Allgemeine Codelöser",
+  "generalcodebreakers_selection_description" : "Tools, die versuchen, Codes ohne spezifische Angaben zu identifizieren oder zu brechen (z.B. Multi-Dekodierer, Hash-Suche)",
+
   "gray_title" : "Gray-Code",
   "gray_description" : "Konvertiert eine Binär-/Dezimalzahl in eine Gray-codierte Dezimal-/Binärzahl",
   "gray_example" : "4 | 100 → 6 | 110",
@@ -1912,7 +1915,7 @@
   "substitution_current_substitutions" : "Erstellte Ersetzungen",
   "substitution_case_sensitive" : "Beachte Groß-/Kleinschreibung",
 
-  "substitutionbreaker_title" : "Universeller Codeknacker",
+  "substitutionbreaker_title" : "Codelöser für Textersetzungen",
   "substitutionbreaker_description" : "Chance, automatisch einen monoalphabetischen Code zu knacken",
   "substitutionbreaker_example" : "QFRQ → TEST",
   "substitutionbreaker_start" : "Berechne",

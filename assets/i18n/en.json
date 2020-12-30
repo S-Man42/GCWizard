@@ -1265,6 +1265,9 @@
   "gccode_example" : "GCK25B → 156997",
   "gccode_novalidgcode" : "No valid GC Code",
 
+  "generalcodebreakers_selection_title" : "General Codesolvers",
+  "generalcodebreakers_selection_description" : "Tools, which try to identify or break codes without any further information (Multi Decoder, Hash Search, ...)",
+
   "gray_title" : "Gray Code",
   "gray_description" : "Encodes a binary/decimal number to a Gray encoded decimal/binary number",
   "gray_example" : "4 | 100 → 6 | 110",
@@ -1911,7 +1914,7 @@
   "substitution_current_substitutions" : "Created Replacements",
   "substitution_case_sensitive" : "Case sensitive",
 
-  "substitutionbreaker_title" : "Universal Code Breaker",
+  "substitutionbreaker_title" : "Substitution Breaker",
   "substitutionbreaker_description" : "Chance to automatically break monoalphabetic replacement ciphers",
   "substitutionbreaker_example" : "QFRQ → TEST",
   "substitutionbreaker_start" : "Solve",
