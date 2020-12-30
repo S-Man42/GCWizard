@@ -25,6 +25,7 @@ import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/language_games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
@@ -91,9 +92,9 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chef_language.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/chicken_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
@@ -110,13 +111,13 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/multi
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pig_latin.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rc4.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/robber_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers/chronogram.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot13.dart';
@@ -132,7 +133,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculato
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution_breaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
@@ -227,7 +228,7 @@ class Registry {
   static final SEARCHSTRING_EASTER = 'eastersunday ostern ostersonntag ';
   static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterische programmiersprache esoteric programming language ';
   static final SEARCHSTRING_FORMULASOLVER = 'formulasolver formelrechner formelsolver ';
-  static final SEARCHSTRING_GAMELANGUAGE = 'spielsprachen game languages secret languages geheimsprachen ';
+  static final SEARCHSTRING_LANGUAGEGAMES = 'spielsprachen gamelanguages secretlanguagegames geheimsprachen kindersprachen ';
   static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschluesselungen hashvalues hashwerte ';
   static final SEARCHSTRING_HASHES_BLAKE2B = SEARCHSTRING_HASHES_SHA3 + 'blake2b ';
   static final SEARCHSTRING_HASHES_KECCAK = SEARCHSTRING_HASHES_SHA3 + 'keccak ';
@@ -396,12 +397,6 @@ class Registry {
         searchStrings: 'chef language programming sprache esoteric esoterisch programmiersprache'
       ),
       GCWTool(
-        tool: ChickenLanguage(),
-        i18nPrefix: 'chickenlanguage',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'chickenlanguage huehnersprache huenersprache huhn'
-      ),
-      GCWTool(
         tool: ColorPicker(),
         i18nPrefix: 'colors',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -442,12 +437,6 @@ class Registry {
         searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd '
       ),
       GCWTool(
-        tool: DTMF(),
-        i18nPrefix: 'dtmf',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'dual-tone multi-frequency dualtonemultifrequency touchtone mehrfrequenzwahlverfahren mfwv mfv tonwahl dtmf mehrfrequenzton tonwahlverfahren mfc mf4'
-      ),
-      GCWTool(
         tool: Decabit(),
         i18nPrefix: 'decabit',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -460,10 +449,10 @@ class Registry {
         searchStrings: SEARCHSTRING_DNA
       ),
       GCWTool(
-        tool: DuckSpeak(),
-        i18nPrefix: 'duckspeak',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'entensprache duck speak nak entisch duckish'
+        tool: DTMF(),
+        i18nPrefix: 'dtmf',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'dual-tone multi-frequency dualtonemultifrequency touchtone mehrfrequenzwahlverfahren mfwv mfv tonwahl dtmf mehrfrequenzton tonwahlverfahren mfc mf4'
       ),
       GCWTool(
         tool: EnclosedAreas(),
@@ -563,6 +552,12 @@ class Registry {
         tool: Keyboard(),
         i18nPrefix: 'keyboard',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: SEARCHSTRING_LANGUAGEGAMES
+      ),
+      GCWTool(
+        tool: LanguageGamesSelection(),
+        i18nPrefix: 'languagegames_selection',
+        category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'dvorak keyboard keys tasten azerty tastatur layout qwertz qwerty neo colemak ristome sprachen languages'
       ),
       GCWTool(
@@ -620,12 +615,6 @@ class Registry {
         searchStrings: SEARCHSTRING_IRRATIONALNUMBERS + SEARCHSTRING_PI
       ),
       GCWTool(
-        tool: PigLatin(),
-        i18nPrefix: 'piglatin',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'piglatin schweinesprache schweinchensprache ay '
-      ),
-      GCWTool(
         tool: Playfair(),
         i18nPrefix: 'playfair',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -674,12 +663,6 @@ class Registry {
         searchStrings: 'reversed backwards umkehren umgekehrt rueckwaerts inversed inverted invertieren invertierung invertiert inverse '
       ),
       GCWTool(
-        tool: RobberLanguage(),
-        i18nPrefix: 'robberlanguage',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'robberlanguage raeubersprache rotwelsch astrid lindgren rovarspraket'
-      ),
-      GCWTool(
         tool: RomanNumbersSelection(),
         i18nPrefix: 'romannumbers',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -725,12 +708,6 @@ class Registry {
         i18nPrefix: 'solitaire',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'solitaire solitaer carddeck cardgame joker kartenspiel kartendeck cryptonomicon pontifex bruceschneier stromchiffrierung streamcipher nealstephenson'
-      ),
-      GCWTool(
-        tool: SpoonLanguage(),
-        i18nPrefix: 'spoonlanguage',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'spoonlanguage loeffelsprache'
       ),
       GCWTool(
         tool: Substitution(),
@@ -1344,6 +1321,33 @@ class Registry {
         tool: BLAKE2b_224(),
         i18nPrefix: 'hashes_blake2b512',
         searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '512bits'
+      ),
+
+      //Language Games Selection *******************************************************************************
+      GCWTool(
+        tool: ChickenLanguage(),
+        i18nPrefix: 'chickenlanguage',
+        searchStrings: SEARCHSTRING_LANGUAGEGAMES + 'chickenlanguage huehnersprache huenersprache huhn'
+      ),
+      GCWTool(
+        tool: DuckSpeak(),
+        i18nPrefix: 'duckspeak',
+        searchStrings: 'entensprache duck speak nak entisch duckish'
+      ),
+      GCWTool(
+        tool: PigLatin(),
+        i18nPrefix: 'piglatin',
+        searchStrings: SEARCHSTRING_LANGUAGEGAMES + 'piglatin schweinesprache schweinchensprache ay '
+      ),
+      GCWTool(
+        tool: RobberLanguage(),
+        i18nPrefix: 'robberlanguage',
+        searchStrings: SEARCHSTRING_LANGUAGEGAMES + 'robberlanguage raeubersprache rotwelsch astrid lindgren rovarspraket'
+      ),
+      GCWTool(
+        tool: SpoonLanguage(),
+        i18nPrefix: 'spoonlanguage',
+        searchStrings: SEARCHSTRING_LANGUAGEGAMES + 'spoonlanguage loeffelsprache'
       ),
 
       //Main Menu **********************************************************************************************

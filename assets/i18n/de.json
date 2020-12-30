@@ -1404,6 +1404,8 @@
   "keyboard_mode_fra_azerty" : "NF Z71-300 AZERTY (Franz.)",
   "keyboard_mode_fra_bepo" : "NF Z71-300 BÉPO (Franz.)",
 
+  "languagegames_selection_title" : "Spielsprachen",
+  "languagegames_selection_description" : "Geheimsprachen für Kinder",
 
   "licenses_title" : "Lizenzen",
   "licenses_usedlibraries" : "Verwendete Code-Bibliotheken (Flutter/Dart)",
