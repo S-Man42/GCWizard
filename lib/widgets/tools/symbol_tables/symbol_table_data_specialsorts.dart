@@ -22,8 +22,6 @@ int specialSortNoteNames(Map<String, String> a, Map<String, String> b) {
 }
 
 int specialSortNoteValues(Map<String, String> a, Map<String, String> b) {
-  print('AAA');
-
   var keyA = a.values.first.split('/').last.split('.').first; // get filename from path without suffix
   var keyB = b.values.first.split('/').last.split('.').first;
 
