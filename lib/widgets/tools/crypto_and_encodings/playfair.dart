@@ -19,7 +19,7 @@ class PlayfairState extends State<Playfair> {
   String _currentInput = '';
   String _currentKey = '';
 
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
 
   @override
@@ -71,6 +71,7 @@ class PlayfairState extends State<Playfair> {
           },
         ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

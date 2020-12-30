@@ -14,7 +14,7 @@ class BookCipher extends StatefulWidget {
 
 class BookCipherState extends State<BookCipher> {
   var _currentInput = '';
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
   var _currentDecodeMode = GCWSwitchPosition.left;
   var _currentText = '';
   var _currentWord = '';
@@ -78,6 +78,7 @@ class BookCipherState extends State<BookCipher> {
         }
         ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

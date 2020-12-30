@@ -18,7 +18,7 @@ class BaseState extends State<Base> {
   var _inputController;
 
   String _currentInput = '';
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {
@@ -45,6 +45,7 @@ class BaseState extends State<Base> {
           },
         ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

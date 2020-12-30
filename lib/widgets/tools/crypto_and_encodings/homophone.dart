@@ -20,7 +20,7 @@ class Homophone extends StatefulWidget {
 }
 
 class HomophoneState extends State<Homophone> {
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
 
   var _currentRotationController;
   String _currentInput = '';

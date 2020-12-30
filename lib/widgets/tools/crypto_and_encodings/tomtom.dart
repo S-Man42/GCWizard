@@ -29,7 +29,7 @@ class TomTomState extends State<TomTom> {
   var _currentA = '/';
   var _currentB = '\\';
 
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {

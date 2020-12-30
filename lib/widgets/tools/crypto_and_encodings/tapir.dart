@@ -17,7 +17,7 @@ class TapirState extends State<Tapir> {
   var _otpController;
 
   var _currentInput = '';
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   var _currentOneTimePadMode = false;
 
   var _currentOneTimePad = '';
@@ -56,6 +56,7 @@ class TapirState extends State<Tapir> {
           },
         ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

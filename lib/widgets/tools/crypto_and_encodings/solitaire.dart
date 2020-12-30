@@ -18,7 +18,7 @@ class SolitaireState extends State<Solitaire> {
   String _currentInput = '';
   String _currentKey = '';
 
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
 
   @override
   Widget build(BuildContext context) {

@@ -21,7 +21,7 @@ class ASCIIValuesState extends State<ASCIIValues> {
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = defaultIntegerListText;
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentRadix = GCWSwitchPosition.left;
   bool _currentCrosstotalMode = true;
 
@@ -63,6 +63,7 @@ class ASCIIValuesState extends State<ASCIIValues> {
               },
             ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           leftValue: i18n(context, 'asciivalues_mode_left'),
           rightValue: i18n(context, 'asciivalues_mode_right'),
           onChanged: (value) {

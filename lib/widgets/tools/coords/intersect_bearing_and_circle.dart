@@ -139,12 +139,12 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
     _currentMapPoints = [
       MapPoint(
         point: _currentCoordsStart,
-        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint1'),
+        markerText: i18n(context, 'coords_intersectbearingcircle_geodetic'),
         coordinateFormat: _currentCoordsFormatStart
       ),
       MapPoint(
         point: _currentCoordsCircle,
-        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint2'),
+        markerText: i18n(context, 'coords_intersectbearingcircle_circle'),
         coordinateFormat: _currentCoordsFormatCircle
       )
     ];
