@@ -21,7 +21,7 @@ class MultiDecoderToolAlphabetValues extends GCWMultiDecoderTool {
       name: name,
       internalToolName: MDT_INTERNALNAMES_ALPHABETVALUES,
       onDecode: (String input) {
-        var alphabet = availableAlphabets().firstWhere((alphabet) => alphabet.key == options[MDT_ALPHABETVALUES_OPTION_ALPHABET]).alphabet;
+        var alphabet = ALL_ALPHABETS.firstWhere((alphabet) => alphabet.key == options[MDT_ALPHABETVALUES_OPTION_ALPHABET]).alphabet;
 
         return logic.AlphabetValues(alphabet: alphabet).valuesToText(
           input.split(RegExp(r'[^0-9]')).map((value) => int.tryParse(value)).toList()
@@ -32,7 +32,7 @@ class MultiDecoderToolAlphabetValues extends GCWMultiDecoderTool {
         widgets: {
           MDT_ALPHABETVALUES_OPTION_ALPHABET: GCWStatefulDropDownButton(
             value: options[MDT_ALPHABETVALUES_OPTION_ALPHABET],
-            items: availableAlphabets().map((alphabet) {
+            items: ALL_ALPHABETS.map((alphabet) {
               return GCWDropDownMenuItem(
                 value: alphabet.key,
                 child: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name
