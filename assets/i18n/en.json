@@ -1142,6 +1142,8 @@
   "deadfish_example" : "A →  iisiiiisio",
   "deadfish_mode_left" : "IDSO",
   "deadfish_mode_right" : "XKCD",
+  "deadfish_interpreter" : "Interpreter",
+  "deadfish_generator" : "Generator",
 
   "decabit_title" : "Decabit",
   "decabit_description" : "Binary code for power industry",
@@ -1214,6 +1216,9 @@
   "enigma_numberrotors" : "Count",
   "enigma_input" : "Input",
   "enigma_usedmessagekey" : "Applied Message Key",
+
+  "esotericprogramminglanguages_selection_title" : "Esoteric Programming Languages",
+  "esotericprogramminglanguages_selection_description" : "Interpreters and Generators for strange programming languages (e.g. Brainf**k, Ook, Whitespace, Chef, ...)",
 
   "formulasolver_title" : "Formula Solver",
   "formulasolver_description" : "Create formulas for stations and finals, add variables, solve them",

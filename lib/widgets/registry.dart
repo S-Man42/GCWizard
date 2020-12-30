@@ -26,6 +26,7 @@ import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/language_games_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/esoteric_programminglanguages_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
@@ -84,16 +85,16 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/brainfk.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/ook.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chef_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/chicken_language.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
@@ -141,7 +142,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/whitespace_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
@@ -226,7 +227,7 @@ class Registry {
   static final SEARCHSTRING_DNA = 'code-sonne codesonne codesun dna mrna desoxyribonucleicacid desoxyribonukleinsaeure dns mrns genetisches genetik genetics genes genomes gattaca nucleotide nukleotid sequence sequenz thymine uracile cytosine adenine guanine ';
   static final SEARCHSTRING_E = 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
   static final SEARCHSTRING_EASTER = 'eastersunday ostern ostersonntag ';
-  static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterische programmiersprache esoteric programming language ';
+  static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterischeprogrammiersprache esotericprogramminglanguage ';
   static final SEARCHSTRING_FORMULASOLVER = 'formulasolver formelrechner formelsolver ';
   static final SEARCHSTRING_LANGUAGEGAMES = 'spielsprachen gamelanguages secretlanguagegames geheimsprachen kindersprachen ';
   static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschluesselungen hashvalues hashwerte ';
@@ -355,12 +356,6 @@ class Registry {
         searchStrings: 'bookcipher buchcode word wort position zeile row line absatz section letter buchstabe buechercode buchchiffre buecherchiffre'
       ),
       GCWTool(
-        tool: Brainfk(),
-        category: ToolCategory.CRYPTOGRAPHY,
-        i18nPrefix: 'brainfk',
-        searchStrings: SEARCHSTRING_BRAINFK
-      ),
-      GCWTool(
         tool: BurrowsWheeler(),
         i18nPrefix: 'burrowswheeler',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -389,12 +384,6 @@ class Registry {
         i18nPrefix: 'chao',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'chao john francis byrne'
-      ),
-      GCWTool(
-        tool: Chef(),
-        i18nPrefix: 'chef',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'chef language programming sprache esoteric esoterisch programmiersprache'
       ),
       GCWTool(
         tool: ColorPicker(),
@@ -431,12 +420,6 @@ class Registry {
         searchStrings: SEARCHSTRING_DATES
       ),
       GCWTool(
-        tool: Deadfish(),
-        i18nPrefix: 'deadfish',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd '
-      ),
-      GCWTool(
         tool: Decabit(),
         i18nPrefix: 'decabit',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -471,6 +454,12 @@ class Registry {
         i18nPrefix: 'enigma',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'enigma rotors walzen'
+      ),
+      GCWTool(
+        tool: EsotericProgrammingLanguageSelection(),
+        i18nPrefix: 'esotericprogramminglanguages_selection',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE
       ),
       GCWTool(
         tool: FormulaSolverFormulaGroups(),
@@ -589,12 +578,6 @@ class Registry {
         i18nPrefix: 'onetimepad',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'onetimepad einmalschluessel one-time-pad otp'
-      ),
-      GCWTool(
-        tool: Ook(),
-        i18nPrefix: 'ook',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_BRAINFK + 'ook terry pratchett monkeys apes dots punkte questionsmarks exclamationmarks fragezeichen ausrufezeichen affen orang-utans orangutans'
       ),
       GCWTool(
         tool: PeriodicTable(),
@@ -780,12 +763,6 @@ class Registry {
         i18nPrefix: 'vigenere',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_VIGENERE + 'autokey'
-      ),
-      GCWTool(
-        tool: WhitespaceLanguage(),
-        i18nPrefix: 'whitespace_language',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'whitespace'
       ),
       GCWTool(
         tool: Windchill(),
@@ -1164,6 +1141,33 @@ class Registry {
         tool: EasterYears(),
         i18nPrefix: 'astronomy_easter_easteryears',
         searchStrings: SEARCHSTRING_EASTER,
+      ),
+
+      //Esoteric Programming Language Selection ****************************************************************
+      GCWTool(
+        tool: Chef(),
+        i18nPrefix: 'chef',
+        searchStrings: 'chef language programming sprache esoteric esoterisch programmiersprache'
+      ),
+      GCWTool(
+        tool: Brainfk(),
+        i18nPrefix: 'brainfk',
+        searchStrings: SEARCHSTRING_BRAINFK
+      ),
+      GCWTool(
+        tool: Deadfish(),
+        i18nPrefix: 'deadfish',
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd '
+      ),
+      GCWTool(
+        tool: Ook(),
+        i18nPrefix: 'ook',
+        searchStrings: SEARCHSTRING_BRAINFK + 'ook terry pratchett monkeys apes dots punkte questionsmarks exclamationmarks fragezeichen ausrufezeichen affen orang-utans orangutans'
+      ),
+      GCWTool(
+        tool: WhitespaceLanguage(),
+        i18nPrefix: 'whitespace_language',
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'whitespace'
       ),
 
       //Hash Selection *****************************************************************************************

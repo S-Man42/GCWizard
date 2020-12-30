@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/chicken_language.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/language_games/chicken_language.dart';
 
 void main() {
   group('chicken_language.encryptChickenLanguage:', () {

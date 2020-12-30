@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/duck_speak.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/language_games/duck_speak.dart';
 
 void main() {
   group("DuckSpeak.encodeDuckSpeak:", () {

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/robber_language.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/language_games/robber_language.dart';
 
 void main() {
   group('robber_language.encryptRobberLanguage:', () {

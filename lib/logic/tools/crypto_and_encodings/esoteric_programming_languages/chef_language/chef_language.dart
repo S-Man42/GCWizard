@@ -1,8 +1,8 @@
 import 'dart:math';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/kitchen.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/recipe.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/kitchen.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/recipe.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/primes/primes.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/chef_language/chef_international.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/chef_international.dart';
 
 List<String> _getAuxiliaryRecipe(String name, int value, List<String> ingredientOne, ingredientTwo, String language){
 	List<String> output = new List<String>();

@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/pig_latin.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/language_games/pig_latin.dart';
 
 void main() {
   group("PigLatin.encrypt:", () {
