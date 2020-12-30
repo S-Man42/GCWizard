@@ -216,7 +216,7 @@ NumeralWordsOutput _isNumeralWord10(String input, NumeralWordsLanguage language,
       }
     }
   else if (language == NumeralWordsLanguage.SOL) {
-      expr = RegExp('(mimisol|fafare|fafami|fafasol|fafala|fafasi|fafasimimisol|fadodo|fadodomimisol)?(redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa|mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado)');
+      expr = RegExp(r'^(mimisol|fafare|fafami|fafasol|fafala|fafasi|fafasimimisol|fadodo|fadodomimisol)?(redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa|mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado)$');
       if (expr.hasMatch(input)){
         state = true;
         var matches = expr.firstMatch(input);
@@ -439,30 +439,76 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(String input, NumeralWordsLang
       } else helpText = helpText1;
 
       // trim solresol : identify correct numeral words and remove spaces
-  /*
-        expr = RegExp(r'(redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)?( )?(farere)?( )?(mimisol|fafare|fafami|fafasol|fafala|fafasi|fadodo)?( )?(mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)?( )?(famimi)?( )?(redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)?( )?(farere)?( )?(mimisol|fafare|fafami|fafasol|fafala|fafasi|fadodo)?( )?(mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)?');
-        */
-
-      expr = RegExp(r'(redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)?( )?(farere)?( )?(mimisol|fafare|fafami|fafasol|fafala|fafasi|fadodo)?( )?(mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)?( )?(famimi)?( )?(redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)?( )?(farere)?( )?(mimisol|fafare|fafami|fafasol|fafala|fafasi|fadodo)?( )?(mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)?');
+      // 1st trim: SOL_farere => SOLfarere_
+      expr = RegExp(r'(redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa) farere');
       if (expr.hasMatch(helpText)) {
         helpText1 = helpText.replaceAllMapped(expr, (Match m) {
           if (m.group(0) != ' ' )
             return m.group(0).replaceAll(' ', '');
         });
-        helpText1 = helpText1.replaceAll('null', ' ');
       } else
         helpText1 = helpText;
 
-      // trim esperanto: identify correct numeral words and remove spaces
-      expr = RegExp(r'(.*unu|.*du|.*tri|.*kvar|.*kvin|.*ses|.*sep|.*ok|.*nau)( )mil(( )(unu.*|du.*|tri.*|kvar.*|kvin.*|ses.*|spe.*|ok.*|nau.*))?');
+
+      // 2nd trim:
+      expr = RegExp(r'(fafare|fafami|fafasol|fafala|fafasi|fadodo) (mimisol|mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)');
       if (expr.hasMatch(helpText1)) {
         helpText = helpText1.replaceAllMapped(expr, (Match m) {
+          if (m.group(0) != ' ' )
+            return m.group(0).replaceAll(' ', '');
+        });
+      } else
+        helpText = helpText1;
+
+      expr = RegExp(r'mimisol (redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)');
+      if (expr.hasMatch(helpText)) {
+        helpText1 = helpText.replaceAllMapped(expr, (Match m) {
+          if (m.group(0) != ' ' )
+            return m.group(0).replaceAll(' ', '');
+        });
+      } else
+        helpText1 = helpText;
+
+      // 3rd trim: SOLfarere_SOL => SOLfarereSOL
+      expr = RegExp(r'(redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)farere (fafare|fafami|fafasol|fafala|fafasi|fadodo|mimisol|mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)');
+      if (expr.hasMatch(helpText1)) {
+        helpText = helpText1.replaceAllMapped(expr, (Match m) {
+          if (m.group(0) != ' ' )
+            return m.group(0).replaceAll(' ', '');
+        });
+      } else
+        helpText = helpText1;
+
+      //4th trim: famimi_SOL => SOLfamimiSOL
+      expr = RegExp(r'famimi (farere|fafare|fafami|fafasol|fafala|fafasi|fadodo|mimisol|mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa)');
+      if (expr.hasMatch(helpText)) {
+        helpText1 = helpText.replaceAllMapped(expr, (Match m) {
+          if (m.group(0) != ' ' )
+            return m.group(0).replaceAll(' ', '');
+        });
+      } else
+        helpText1 = helpText;
+
+      // 5th trim: SOL_famimi => SOLfamimi
+      expr = RegExp(r'(farere|fafare|fafami|fafasol|fafala|fafasi|fadodo|mimisol|mimila|mimisi|midodo|mirere|mifafa|misolsol|milala|misisi|fafado|redodo|remimi|refafa|resolsol|relala|resisi|mimido|mimire|mimifa) famimi');
+      if (expr.hasMatch(helpText1)) {
+        helpText = helpText1.replaceAllMapped(expr, (Match m) {
+          if (m.group(0) != ' ' )
+            return m.group(0).replaceAll(' ', '');
+        });
+      } else
+        helpText = helpText1;
+
+      // trim esperanto: identify correct numeral words and remove spaces
+      expr = RegExp(r'(.*unu|.*du|.*tri|.*kvar|.*kvin|.*ses|.*sep|.*ok|.*nau)( )mil(( )(unu.*|du.*|tri.*|kvar.*|kvin.*|ses.*|spe.*|ok.*|nau.*))?');
+      if (expr.hasMatch(helpText)) {
+        helpText1 = helpText.replaceAllMapped(expr, (Match m) {
           return m.group(0).replaceAll(' ', '');
         });
-      } else helpText = helpText1;
+      } else helpText1 = helpText;
 
       // trim german
-      inputToDecode = helpText
+      inputToDecode = helpText1
           .replaceAll('zehnten', 'zehn')
           .replaceAll('zehnter', 'zehn')
           .replaceAll('zehnte', 'zehn')
@@ -488,7 +534,6 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(String input, NumeralWordsLang
           .replaceAll('mil ', 'mil');
 
       decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-]'));
-
       // build map to identify numeral words
       Map searchLanguages = new Map();
       if (language == NumeralWordsLanguage.ALL)  // search element in all languages
