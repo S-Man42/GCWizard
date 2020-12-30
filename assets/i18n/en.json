@@ -907,7 +907,7 @@
   "common_unit_volume_ds_name" : "US Dash",
 
   "coords_selection_title" : "Coordinates",
-  "coords_selection_description" : "Coordinate Calculation tools",
+  "coords_selection_description" : "Coordinate calculation tools",
   "coords_common_latitude" : "Latitude",
   "coords_common_longitude" : "Longitude",
   "coords_common_north" : "North",
@@ -1222,7 +1222,7 @@
   "esotericprogramminglanguages_selection_description" : "Interpreters and Generators for strange programming languages (e.g. Brainf**k, Ook, Whitespace, Chef, ...)",
 
   "formulasolver_title" : "Formula Solver",
-  "formulasolver_description" : "Create formulas for stations and finals, add variables, solve them",
+  "formulasolver_description" : "Create formulas for stages and finals, add variables, solve them",
   "formulasolver_onlinehelp" : "https://blog.gcwizard.net/2020/06/11/formula-solver/",
   "formulasolver_group" : "Group",
   "formulasolver_formulas" : "Formulas",

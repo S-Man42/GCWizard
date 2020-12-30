@@ -383,7 +383,7 @@
   "chao_alphabet_za" : "Z-A",
 
   "chef_title" : "Chef",
-  "chef_description" : "Esoterische Programmiersprache, die wie ein Kochrezeot aussieht",
+  "chef_description" : "Esoterische Programmiersprache, die wie ein Kochrezept aussieht",
   "chef_interpret" : "Interpreter",
   "chef_generate" : "Generator",
   "chef_code" : "Programmcode",
