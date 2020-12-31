@@ -1429,6 +1429,15 @@
   "licenses_additionalcode" : "Weiterer Code",
   "licenses_symboltablesources" : "Quellen für Symboltabellen",
 
+  "malbolge_title" : "Malbolge",
+  "malbolge_description" : "Esoteric programming language",
+  "malbolge_mode_interpret" : "Interpreter",
+  "malbolge_mode_generate" : "Generator",
+  "malbolge_hint_code" : "Malbolge-Program",
+  "malbolge_hint_input" : "Input",
+  "malbolge_hint_output" : "Output",
+  "malbolge_debug" : "Debug",
+
   "mainmenu_about_title" : "Über",
   "mainmenu_settings_title" : "Einstellungen",
   "mainmenu_changelog_title" : "Changelog",
