@@ -25,7 +25,7 @@ class SkytaleState extends State<Skytale> {
 
   bool _fromColumnSpinner = false;
 
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {
@@ -89,6 +89,7 @@ class SkytaleState extends State<Skytale> {
           },
         ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

@@ -12,8 +12,9 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 final _ALERT_MAX_RANGE = 25000;
 
 class CrossSumRangeFrequency extends StatefulWidget {
+  final CrossSumType type;
 
-  CrossSumRangeFrequency({Key key}) : super(key: key);
+  CrossSumRangeFrequency({Key key, this.type: CrossSumType.NORMAL}) : super(key: key);
 
   @override
   CrossSumRangeFrequencyState createState() => CrossSumRangeFrequencyState();
@@ -91,7 +92,14 @@ class CrossSumRangeFrequencyState extends State<CrossSumRangeFrequency> {
 
   _calculateFrequencies() {
     setState(() {
-      _currentFrequencies = crossSumRangeFrequencies(_currentRangeStart, _currentRangeEnd);
+      switch (widget.type) {
+        case CrossSumType.NORMAL:
+          _currentFrequencies = crossSumRangeFrequencies(_currentRangeStart, _currentRangeEnd);
+          break;
+        case CrossSumType.ITERATED:
+          _currentFrequencies = crossSumRangeFrequencies(_currentRangeStart, _currentRangeEnd, type: CrossSumType.ITERATED);
+          break;
+      }
     });
   }
 

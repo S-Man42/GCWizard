@@ -13,7 +13,7 @@ class DNAAminoAcids extends StatefulWidget {
 }
 
 class DNAAminoAcidsState extends State<DNAAminoAcids> {
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
   var _currentInput = '';
 
   @override

@@ -20,7 +20,7 @@ class ChaoState extends State<Chao> {
   var _alphabetControllerPlain;
   var _alphabetControllerChiffre;
 
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
 
   String _currentInput = '';
   String _currentOutput = '';

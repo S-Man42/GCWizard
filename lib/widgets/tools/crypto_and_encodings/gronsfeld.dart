@@ -20,7 +20,7 @@ class GronsfeldState extends State<Gronsfeld> {
   String _currentInput = '';
   String _currentKey = '';
   int _currentAValue = 0;
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   bool _currentAutokey = false;
 
   @override
@@ -75,6 +75,7 @@ class GronsfeldState extends State<Gronsfeld> {
           },
         ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

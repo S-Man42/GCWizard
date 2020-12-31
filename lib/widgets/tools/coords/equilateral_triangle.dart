@@ -93,12 +93,12 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
     _currentMapPoints = [
       MapPoint(
         point: _currentCoords1,
-        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint1'),
+        markerText: i18n(context, 'coords_equilateraltriangle_coorda'),
         coordinateFormat: _currentCoordsFormat1
       ),
       MapPoint(
         point: _currentCoords2,
-        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint2'),
+        markerText: i18n(context, 'coords_equilateraltriangle_coordb'),
         coordinateFormat: _currentCoordsFormat2
       )
     ];

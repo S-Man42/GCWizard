@@ -17,7 +17,7 @@ class BinaryState extends State<Binary> {
   var _binaryController;
   var _decimalController;
 
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {

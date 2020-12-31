@@ -19,7 +19,7 @@ class TapCodeState extends State<TapCode> {
   var _currentEncryptionInput = '';
   var _currentDecryptionInput = '';
   AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   var _maskFormatter = WrapperForMaskTextInputFormatter(
     mask: '## ' * 100000 + '##',

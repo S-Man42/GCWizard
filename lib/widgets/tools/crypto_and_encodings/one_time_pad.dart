@@ -21,7 +21,7 @@ class OneTimePadState extends State<OneTimePad> {
 
   var _currentOffset = 0;
 
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
 
   // two same maskTextInputFormatters are necessary because using the same formatter creates conflicts
   // (entered value in one input will be used for the other one)

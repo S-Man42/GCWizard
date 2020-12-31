@@ -28,7 +28,7 @@ class ADFGVXState extends State<ADFGVX> {
   PolybiosMode _currentPolybiosMode = PolybiosMode.ZA90;
   String _currentAlphabet = '';
 
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {
