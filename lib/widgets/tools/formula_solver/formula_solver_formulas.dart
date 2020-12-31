@@ -204,7 +204,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
       Widget output;
 
-      var _foundCoordinate = parseLatLon(calculated['result'], true);
+      var _foundCoordinate = parseLatLon(calculated['result'], wholeString: true);
       if (_foundCoordinate != null)
         _foundCoordinates.putIfAbsent(index + 1, () => _foundCoordinate);
 
