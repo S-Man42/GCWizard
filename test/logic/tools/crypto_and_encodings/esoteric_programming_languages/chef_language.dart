@@ -195,7 +195,6 @@ Put input into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
     // put
     var put = '''Test PUT.
 
@@ -207,7 +206,6 @@ Put salt into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
     // fold
     var fold = '''Test FOLD.
 
@@ -223,7 +221,6 @@ Put pepper into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
     // add
     var add = '''Test ADD.
 
@@ -238,7 +235,6 @@ Add pepper into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
     // remove
     var remove = '''Test REMOVE.
 
@@ -253,7 +249,6 @@ Remove pepper from mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
     // combine
     var combine = '''Test COMBINE.
 
@@ -268,7 +263,6 @@ Combine pepper into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
     // divide
     var divide = '''Test DIVIDE.
 
@@ -283,7 +277,6 @@ Divide pepper into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
     // addry
     var addry = '''Test ADDRY.
 
@@ -296,7 +289,6 @@ Add dry ingredients to mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
     // liquefyingredient
     var liquefyingredient = '''Test LIQUEFYINGREDIENT.
 
@@ -312,7 +304,6 @@ Put salt into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
     // liquefybowl
     var liquefybowl = '''Test LIQUEFYBOWL.
 
@@ -327,7 +318,6 @@ Liquefy contents of the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
     // stir
     var stir = '''Test STIR.
 
@@ -350,7 +340,6 @@ Stir for 2 minutes.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
     // stiringredient 2654321 => 6524321
     var stiringredient = '''Test STIRINGREDIENT INTO THE MIXING BOWL
 
@@ -374,7 +363,6 @@ Stir salt into the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
     // clean
     var clean = '''Test CLEAN.
 
@@ -389,7 +377,6 @@ Clean mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
     // loop
     var loop = '''Test LOOP.
 
@@ -407,7 +394,6 @@ Put pepper into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
     // serve
     var serve = '''Test SERVE.
 
@@ -433,7 +419,6 @@ Ingredients.
 
 Method.
 Add harissa into mixing bowl.''';
-
     // refrigerate
     var refrigerate = '''Test REFRIGERATE.
 
@@ -449,7 +434,6 @@ Pour contents of the mixing bowl into the baking dish.
 Refrigerate.
 
 Serves 1.''';
-
     // refrigeratenumber
     var refrigeratenumber = '''Test REFRIGERATE.
 
@@ -479,7 +463,7 @@ Serves 1.''';
       {'language' : 'ENG', 'input' : '',   'recipe' : liquefyingredient,   'isValid' : true, 'expectedOutput' : ['A8065']},
       {'language' : 'ENG', 'input' : '',   'recipe' : liquefybowl,   'isValid' : true, 'expectedOutput' : ['PA']},
       {'language' : 'ENG', 'input' : '',   'recipe' : stir,   'isValid' : true, 'expectedOutput' : ['546321']},
-      {'language' : 'ENG', 'input' : '2654321',   'recipe' : stiringredient,   'isValid' : true, 'expectedOutput' : ['6524321']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : stiringredient,   'isValid' : true, 'expectedOutput' : ['6524321']},
       {'language' : 'ENG', 'input' : '',   'recipe' : clean,   'isValid' : true, 'expectedOutput' : ['']},
       {'language' : 'ENG', 'input' : '',   'recipe' : loop,   'isValid' : true, 'expectedOutput' : ['2560']},
       {'language' : 'ENG', 'input' : '',   'recipe' : serve,   'isValid' : true, 'expectedOutput' : ['55555555555555555555555555555555']},
@@ -1249,10 +1233,10 @@ Portionen: 1.''';
       {'language' : 'DEU', 'input' : '',   'recipe' : verfluessigeZutat,   'isValid' : true, 'expectedOutput' : ['A8070']},
       {'language' : 'DEU', 'input' : '',   'recipe' : verfluessigeSchuessel,   'isValid' : true, 'expectedOutput' : ['PA']},
       {'language' : 'DEU', 'input' : '',   'recipe' : ruehre,   'isValid' : true, 'expectedOutput' : ['546321']},
-      {'language' : 'DEU', 'input' : '2654321',   'recipe' : ruehreZutat,   'isValid' : true, 'expectedOutput' : ['6524321']},
+      {'language' : 'DEU', 'input' : '',   'recipe' : ruehreZutat,   'isValid' : true, 'expectedOutput' : ['6524321']},
       {'language' : 'DEU', 'input' : '',   'recipe' : saeubere,   'isValid' : true, 'expectedOutput' : ['']},
-      {'language' : 'DEU', 'input' : '',   'recipe' : schleife,   'isValid' : true, 'expectedOutput' : ['2560']},
-      {'language' : 'DEU', 'input' : '',   'recipe' : serviere,   'isValid' : true, 'expectedOutput' : ['55555555555555555555555555555555']},
+      {'language' : 'DEU', 'input' : '+',   'recipe' : schleife,   'isValid' : true, 'expectedOutput' : ['2560']},
+      {'language' : 'DEU', 'input' : '+',   'recipe' : serviere,   'isValid' : true, 'expectedOutput' : ['55555555555555555555555555555555']},
       {'language' : 'DEU', 'input' : '',   'recipe' : gefriere,   'isValid' : true, 'expectedOutput' : []},
       {'language' : 'DEU', 'input' : '',   'recipe' : gefriereNummer,   'isValid' : true, 'expectedOutput' : ['PA']},
     ];
@@ -1884,12 +1868,45 @@ Zutaten:
 78 g Wassermelone
 
 Zubereitung:
+Eier in die Schüssel geben. Mehl in die Schüssel geben. Milch in die Schüssel geben. Wasser in die Schüssel geben. Zucker in die Schüssel geben. Honig in die Schüssel geben. Traubenzucker in die Schüssel geben. Zucker in die Schüssel geben. Puderzucker in die Schüssel geben. Äpfel in die Schüssel geben. Zucker in die Schüssel geben. Puderzucker in die Schüssel geben. Avokado in die Schüssel geben. Eier in die Schüssel geben. Ananas in die Schüssel geben. Puderzucker in die Schüssel geben. Kiwis in die Schüssel geben. Erdnüsse in die Schüssel geben. Erdbeeren in die Schüssel geben. Feigen in die Schüssel geben. Pekannüsse in die Schüssel geben. Karotte in die Schüssel geben. Mandeln in die Schüssel geben. Birnen in die Schüssel geben. Pekannüsse in die Schüssel geben. Zucker in die Schüssel geben. Granatapfel in die Schüssel geben. Traubenzucker in die Schüssel geben. Zucker in die Schüssel geben. Zwiebeln in die Schüssel geben. Zucker in die Schüssel geben. Zucker in die Schüssel geben. Walnüsse in die Schüssel geben. Feigen in die Schüssel geben. Pekannüsse in die Schüssel geben. Mandeln in die Schüssel geben. Walnüsse in die Schüssel geben. Mandarine in die Schüssel geben. Zucker in die Schüssel geben. Granatapfel in die Schüssel geben. Birnen in die Schüssel geben. Walnüsse in die Schüssel geben. Zucker in die Schüssel geben. Wassermelone in die Schüssel geben. Schüssel in eine Servierschale stürzen.
+
+Portionen: 1.''';
+    var GCCorrect = '''Roberts Lieblingsrezept:
+
+Zutaten:
+101 Eier
+104 g Mehl
+246 ml Milch
+72 ml Wasser
+32 g Zucker
+109 Teelöffel Honig
+54 g Traubenzucker
+110 g Puderzucker
+105 g Äpfel
+108 g Avokado
+103 g Ananas
+65 g Kiwis
+10 g Erdnüsse
+13 g Erdbeeren
+52 g Feigen
+51 g Pekannüsse
+57 g Karotte
+46 g Mandeln
+49 g Birnen
+176 g Granatapfel
+69 g Zwiebeln
+53 g Walnüsse
+50 g Mandarine
+78 g Wassermelone
+
+Zubereitung:
 Eier in die Schüssel geben. Mehl in die Schüssel geben. Milch in die Schüssel geben. Wasser in die Schüssel geben. Zucker in die Schüssel geben. Honig in die Schüssel geben. Traubenzucker in die Schüssel geben. Zucker in die Schüssel geben. Puderzucker in die Schüssel geben. Äpfel in die Schüssel geben. Zucker in die Schüssel geben. Puderzucker in die Schüssel geben. Avokado in die Schüssel geben. Eier in die Schüssel geben. Ananas in die Schüssel geben. Puderzucker in die Schüssel geben. Kiwis in die Schüssel geben. Erdnüsse in die Schüssel geben. Erdbeeren in die Schüssel geben. Feigen in die Schüssel geben. Pekannüsse in die Schüssel geben. Karotte in die Schüssel geben. Mandeln in die Schüssel geben. Birnen in die Schüssel geben. Pekannüsse in die Schüssel geben. Zucker in die Schüssel geben. Granatapfel in die Schüssel geben. Traubenzucker in die Schüssel geben. Zucker in die Schüssel geben. Zwiebeln in die Schüssel geben. Zucker in die Schüssel geben. Zucker in die Schüssel geben. Walnüsse in die Schüssel geben. Feigen in die Schüssel geben. Pekannüsse in die Schüssel geben. Mandeln in die Schüssel geben. Walnüsse in die Schüssel geben. Mandarine in die Schüssel geben. Zucker in die Schüssel geben. Granatapfel in die Schüssel geben. Birnen in die Schüssel geben. Walnüsse in die Schüssel geben. Zucker in die Schüssel geben. Wassermelone in die Schüssel geben. Inhalt der Schüssel auf dem Stövchen erhitzen. Schüssel in eine Servierschale stürzen.
 
 Portionen: 1.''';
 
         List<Map<String, dynamic>> _inputsToExpected = [
-      {'language' : 'DEU', 'input' : '',  'recipe' : GC, 'expectedOutput' : ['N 51° 25.345  E 6° 31.934\nAngeln in 6m Höhe']},
+          {'language' : 'DEU', 'input' : '',  'recipe' : GC, 'expectedOutput' : ['783253491763250534651525332326932541763251494657515213106511010310110811032105110325410932Hö104101']},
+          {'language' : 'DEU', 'input' : '',  'recipe' : GCCorrect, 'expectedOutput' : ['N 51° 25.345  E 6° 31.934\r\nAngeln in 6m Höhe']},
         ];
 
     _inputsToExpected.forEach((elem) {
@@ -2671,7 +2688,7 @@ Serves 1.''';
       {'language' : 'ENG', 'input' : '5 7 4 6 3 8',  'recipe' : BubbledAndBacon, 'expectedOutput' : ['34678']},
       {'language' : 'ENG', 'input' : '12',  'recipe' : FactorialAndFish, 'expectedOutput' : ['479001600']},
       {'language' : 'ENG', 'input' : '12',  'recipe' : FibonacciDuFromage, 'expectedOutput' : ['1123581321345589144']},
-      {'language' : 'ENG', 'input' : '',  'recipe' : FibonacciNumberswithCaramelSauce, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_exception','chef_error_runtime_serving_aux','Stack overflow at depth ']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : FibonacciNumberswithCaramelSauce, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_exception','chef_error_runtime_serving_aux','Stack Overflow']},
       {'language' : 'ENG', 'input' : '',  'recipe' : FruitLoops, 'expectedOutput' : ['880']},
       {'language' : 'ENG', 'input' : '60 24',  'recipe' : GreatestCommonDijonMustard, 'expectedOutput' : ['12']},
       {'language' : 'ENG', 'input' : '',  'recipe' : HelloSouchef, 'expectedOutput' : ['Hello world!']},
