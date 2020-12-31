@@ -168,7 +168,8 @@ class AboutState extends State<About> {
                     ),
                     TextSpan(
                       text: [
-                        'Andy \'Puma66\'',
+                        'Andy \'Puma66\' (Special Support)',
+                        'Andreas \'TeamBirdy2404\' (Symbol Tables)',
                         'Mike B. (Code & Symbol Tables)',
                         'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
                       ].join('\n') + '\n'
@@ -180,17 +181,17 @@ class AboutState extends State<About> {
               RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                    children: [
-                      TextSpan(
-                          text: i18n(context, 'about_specialthanks') + '\n',
-                          style: boldTextStyle
-                      ),
-                      TextSpan(
-                          text: 'Daniel \'Eisbehr\' K. (Maintainer GCC)'
-                              + '\n'
-                      )
-                    ],
-                    style: gcwTextStyle()
+                  children: [
+                    TextSpan(
+                      text: i18n(context, 'about_specialthanks') + '\n',
+                      style: boldTextStyle
+                    ),
+                    TextSpan(
+                        text: 'Daniel \'Eisbehr\' K. (Maintainer GCC)'
+                            + '\n'
+                    )
+                  ],
+                  style: gcwTextStyle()
                 ),
               ),
               RichText(
@@ -212,7 +213,6 @@ class AboutState extends State<About> {
                           'Michael D. (Symbol Tables)',
                           '\'moenk\' (GK Coords)',
                           '\'Schnatt\' (Symbol Tables)',
-                          '\'TeamBirdy2404\' (Symbol Tables)',
                           'Udo J. (Code)',
                           '\'wollpirat\' (Food, Tea & more)'
                         ].join('\n') + '\n'
@@ -247,6 +247,7 @@ class AboutState extends State<About> {
                           '\'mahoplus\'',
                           'Martin Sch.',
                           '\'mgo\'',
+                          '\'MrDosinger\'',
                           'Niki R.',
                           'Palk \'geogedoens.de\'',
                           '\'Pamakaru\'',

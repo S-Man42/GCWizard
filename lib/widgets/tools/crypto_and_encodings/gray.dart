@@ -21,7 +21,7 @@ class GrayState extends State<Gray> {
   var _currentOutput = GrayOutput([], []);
 
   GCWSwitchPosition _currentInputMode = GCWSwitchPosition.left;
-  GCWSwitchPosition _currentCodingMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   var _decimalMaskFormatter = WrapperForMaskTextInputFormatter(
     mask: '#' * 10000,
@@ -75,19 +75,20 @@ class GrayState extends State<Gray> {
             ),
 
         GCWTwoOptionsSwitch(
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
+        GCWTwoOptionsSwitch(
           title: i18n(context, 'gray_mode'),
           leftValue: i18n(context, 'gray_mode_decimal'),
           rightValue: i18n(context, 'gray_mode_binary'),
           onChanged: (value) {
             setState(() {
               _currentInputMode = value;
-            });
-          },
-        ),
-        GCWTwoOptionsSwitch(
-          onChanged: (value) {
-            setState(() {
-              _currentCodingMode = value;
             });
           },
         ),
@@ -98,7 +99,7 @@ class GrayState extends State<Gray> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentCodingMode == GCWSwitchPosition.left) {
+    if (_currentMode == GCWSwitchPosition.left) {
       if (_currentInputMode == GCWSwitchPosition.left) {
          _currentOutput = encodeGray(_currentDecimalInput, mode: GrayMode.DECIMAL);
       } else {// input is binary

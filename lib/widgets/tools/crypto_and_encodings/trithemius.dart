@@ -15,7 +15,7 @@ class TrithemiusState extends State<Trithemius> {
 
   String _currentInput = '';
   int _currentAValue = 0;
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {

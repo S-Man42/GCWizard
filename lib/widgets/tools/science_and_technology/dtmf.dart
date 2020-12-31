@@ -28,7 +28,7 @@ class DTMFState extends State<DTMF> {
   var _currentDecryptLowFrequency = DTMF_FREQUENCIES_LOW[0];
   var _currentDecryptHighFrequency = DTMF_FREQUENCIES_HIGH[0];
 
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   var _maskInputFormatter = WrapperForMaskTextInputFormatter(
     mask: '#' * 10000,
@@ -54,6 +54,7 @@ class DTMFState extends State<DTMF> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

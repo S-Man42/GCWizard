@@ -28,7 +28,7 @@ class AbaddonState extends State<Abaddon> {
   var _currentB = 'µ';
   var _currentC = 'þ';
 
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {

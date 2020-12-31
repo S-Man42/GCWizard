@@ -112,9 +112,9 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
   _showExportedFileDialog(Map<String, dynamic> value, String type) {
     if (value != null)
       showExportedFileDialog(
-          context,
-          value['path'],
-          fileType: type
+        context,
+        value['path'],
+        fileType: type
       );
   }
 }

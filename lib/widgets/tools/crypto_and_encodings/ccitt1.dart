@@ -20,7 +20,7 @@ class CCITT1State extends State<CCITT1> {
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = defaultIntegerListText;
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _currentRadix = GCWSwitchPosition.left;
 
   @override

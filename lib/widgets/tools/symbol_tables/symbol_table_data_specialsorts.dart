@@ -1,8 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-
 int specialSortNoteNames(Map<String, String> a, Map<String, String> b) {
   var keyA = a.values.first.split('/').last.split('.').first; // get filename from path without suffix
   var keyB = b.values.first.split('/').last.split('.').first;
@@ -27,27 +22,22 @@ int specialSortNoteNames(Map<String, String> a, Map<String, String> b) {
 }
 
 int specialSortNoteValues(Map<String, String> a, Map<String, String> b) {
-  var keyA = a.keys.first;
-  var keyB = b.keys.first;
+  var keyA = a.values.first.split('/').last.split('.').first; // get filename from path without suffix
+  var keyB = b.values.first.split('/').last.split('.').first;
 
-  var aSplitSlash = keyA.split('/').toList();
-  var bSplitSlash = keyB.split('/').toList();
+  var aSplit = keyA.replaceAll(RegExp(r'(^_*|_*$)'), '').split('_');
+  var aDotted = int.tryParse(aSplit[0]);
+  var aValue = int.tryParse(aSplit[1]);
 
-  var aCounter = int.tryParse(aSplitSlash[0]);
-  var aDenominator = 1;
-  if (aSplitSlash.length > 1)
-    aDenominator = int.tryParse(aSplitSlash[1]);
+  var bSplit = keyB.replaceAll(RegExp(r'(^_*|_*$)'), '').split('_');
+  var bDotted = int.tryParse(bSplit[0]);
+  var bValue = int.tryParse(bSplit[1]);
 
-  var bCounter = int.tryParse(bSplitSlash[0]);
-  var bDenominator = 1;
-  if (bSplitSlash.length > 1)
-    bDenominator = int.tryParse(bSplitSlash[1]);
+  var compareDotted = aDotted.compareTo(bDotted);
+  if (compareDotted != 0)
+    return compareDotted;
 
-  var compare = aCounter.compareTo(bCounter);
-  if (compare != 0)
-    return compare;
-
-  return aDenominator.compareTo(bDenominator);
+  return bValue.compareTo(aValue);
 }
 
 int specialSortTrafficSignsGermany(Map<String, String> a, Map<String, String> b) {

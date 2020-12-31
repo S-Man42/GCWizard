@@ -27,12 +27,12 @@ showExportedFileDialog(BuildContext context, String filePath, {Widget contentWid
           shareFile(filePath, fileType);
         },
       ),
-      GCWDialogButton(
-        text: i18n(context, 'common_exportfile_openfile'),
-        onPressed: () {
-          openFile(filePath, fileType);
-        },
-      ),
+      // GCWDialogButton(
+      //   text: i18n(context, 'common_exportfile_openfile'),
+      //   onPressed: () {
+      //     openFile(filePath, fileType);
+      //   },
+      // ),
       GCWDialogButton(
         text: i18n(context, 'common_ok'),
       )
