@@ -2108,6 +2108,11 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES + 'doremifalamiresisol notesystem solmisation notensystem tonstufen degrees octal oktal'
       ),
       GCWSymbolTableTool(
+        symbolKey: 'notes_names_altoclef',
+        iconFilename: 'logo.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES + 'notenames notennamen altoclef altschluessel tonleiter scale bassvorzeichen kreuzvorzeichen hashtag flat sharp'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'notes_names_bassclef',
         iconFilename: 'logo.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES + 'notenames notennamen bassclef bassschluessel tonleiter scale bassvorzeichen kreuzvorzeichen hashtag flat sharp'
