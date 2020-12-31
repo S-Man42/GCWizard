@@ -1,6 +1,7 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/method.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/ingredient.dart';
 import 'package:intl/intl.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/chef_international.dart';
 
 class Recipe {
 
@@ -60,14 +61,14 @@ class Recipe {
     List<String> methodList = method.replaceAll("zubereitung:", "zubereitung.").replaceAll("\n", " ").replaceAll(". ",".").split('.');
     for(int i = 1; i < methodList.length - 1; i++){
       var m = new Method(methodList[i], i, language);
-      if (m.type != Type.Invalid) {
-        this.methods.add(m);
-      } else {
+      if (m.type == Type.Invalid || m.type == Type.Unbekannt) {
         this.error = true;
         this.errorList.add('chef_error_syntax');
         this.errorList.add('chef_error_syntax_method');
         this.errorList.add(f.format(i).toString() + ' : ' + methodList[i]);
         this.errorList.add('');
+      } else {
+        this.methods.add(m);
       }
     };
   }

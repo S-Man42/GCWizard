@@ -14,6 +14,9 @@ enum textId {
   Combine
 }
 
+enum Type {Take,   Put,   Fold,       Add,       Remove,      Combine,     Divide, AddDry,           Liquefy,   LiquefyBowl,       Stir,         StirInto,          Mix,     Clean,    Pour,      Verb,         VerbUntil,      SetAside,        Serve,     Refrigerate, Remember, Invalid,
+           Nehmen, Geben, Unterheben, Dazugeben, Abschoepfen, Kombinieren, Teilen, FestesHinzugeben, Schmelzen, SchuesselErhitzen, ZutatRuehren, SchuessselRuehren, Mischen, Saeubern, Ausgiessen, Wiederholen, WiederholenBis, BeiseiteStellen, Servieren, Gefrieren,   Erinnern, Unbekannt}
+
 final List<RegExp> matchersENG = [
   RegExp(r'^take( the)? ([a-z0-9 ]+) from( the)? refrigerator$'),
   RegExp(r'^(put|fold)( the)? ([a-z0-9 ]+) into( the)?( (\d+)(nd|rd|th|st))? mixing bowl$'),
@@ -21,7 +24,7 @@ final List<RegExp> matchersENG = [
   RegExp(r'^(add|remove|combine|divide)( the)? ([a-z0-9 ]+?)( (to|into|from)( the)?( (\d+)(nd|rd|th|st))? mixing bowl)?$'),
   RegExp(r'^liqu[ie]fy( the)? contents of the( (\d+)(nd|rd|th|st))? mixing bowl$'),
   RegExp(r'^liqu[ie]fy( the)? ([a-z0-9 ]+)$'),
-  RegExp(r'^stir ((the )?((\d+)(nd|rd|th|st) )?mixing bowl )?for (\d+ )minute(s)?$'),
+  RegExp(r'^stir ((the )?((\d+)(nd|rd|th|st) )?mixing bowl )?for (\d+) minute(s)?$'),
   RegExp(r'^stir (the )?([a-z0-9 ]+) into (the )?((\d+)(nd|rd|th|st) )?mixing bowl$'),
   RegExp(r'^mix( (the )?((\d+)(nd|rd|th|st) )?mixing bowl)?( well)?$'),
   RegExp(r'^clean( the)?( (\d+)(nd|rd|th|st))? mixing bowl( well)?$'),
