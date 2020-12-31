@@ -24,7 +24,7 @@ class KennyState extends State<Kenny> {
   var _currentP = 'p';
   var _currentF = 'f';
 
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {

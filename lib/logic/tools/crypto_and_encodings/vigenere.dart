@@ -1,7 +1,7 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/rotator.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
-String encryptVigenere(String input, String key, bool autoKey, {int aValue = 0}) {
+String encryptVigenere(String input, String key, bool autoKey, {int aValue = 0, ignoreNonLetters: true}) {
   if (input == null || input.length == 0)
     return '';
 
@@ -28,12 +28,15 @@ String encryptVigenere(String input, String key, bool autoKey, {int aValue = 0})
   var aOffset = alphabet_AZ['A'] - aValue;
 
   for (int i = 0; i < input.length; ++i) {
-    if(!alphabet_AZ.containsKey(input[i].toUpperCase()))  {
+    if(ignoreNonLetters && !alphabet_AZ.containsKey(input[i].toUpperCase()))  {
       keyOffset++;
       output += input[i];
 
       continue;
     }
+
+    if (i - keyOffset >= key.length)
+      break;
 
     output += Rotator().rotate(input[i], alphabet_AZ[key[i - keyOffset]] - aOffset);
   }
@@ -41,7 +44,7 @@ String encryptVigenere(String input, String key, bool autoKey, {int aValue = 0})
   return output;
 }
 
-String decryptVigenere(String input, String key, bool autoKey, {int aValue: 0}) {
+String decryptVigenere(String input, String key, bool autoKey, {int aValue: 0, bool ignoreNonLetters: true}) {
   if (input == null || input.length == 0)
     return '';
 
@@ -67,7 +70,7 @@ String decryptVigenere(String input, String key, bool autoKey, {int aValue: 0}) 
   var aOffset = alphabet_AZ['A'] - aValue;
 
   for (int i = 0; i < input.length; ++i) {
-    if(!alphabet_AZ.containsKey(input[i].toUpperCase()))  {
+    if(ignoreNonLetters && !alphabet_AZ.containsKey(input[i].toUpperCase()))  {
       keyOffset++;
       output += input[i];
 
@@ -77,8 +80,15 @@ String decryptVigenere(String input, String key, bool autoKey, {int aValue: 0}) 
     int position;
     if (autoKey) {
       String s = originalKey + output.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
+
+      if (i - keyOffset >= s.length)
+        break;
+
       position = alphabet_AZ[s[i - keyOffset]];
     } else {
+      if (i - keyOffset >= key.length)
+        break;
+
       position = alphabet_AZ[key[i - keyOffset]];
     }
 

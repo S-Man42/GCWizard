@@ -37,8 +37,8 @@ class GCWMapView extends StatefulWidget {
   final List<MapGeodetic> geodetics;
   final List<MapCircle> circles;
 
-  const GCWMapView({Key key, this.points, this.geodetics, this.circles})
-      : super(key: key);
+  const GCWMapView({Key key, this.points: const [], this.geodetics: const [], this.circles: const []})
+    : super(key: key);
 
   @override
   GCWMapViewState createState() => GCWMapViewState();
@@ -272,16 +272,16 @@ class GCWMapViewState extends State<GCWMapView> {
 
     layers.addAll([
       PolylineLayerOptions(
-          polylines: _polylines
+        polylines: _polylines
       ),
       MarkerLayerOptions(
-          markers: _markers
+        markers: _markers
       ),
       PopupMarkerLayerOptions(
-          markers: _markers,
-          popupSnap: PopupSnap.top,
-          popupController: _popupLayerController,
-          popupBuilder: (BuildContext _, Marker marker) => _buildPopups(marker)
+        markers: _markers,
+        popupSnap: PopupSnap.top,
+        popupController: _popupLayerController,
+        popupBuilder: (BuildContext _, Marker marker) => _buildPopups(marker)
       ),
     ]);
 
@@ -468,7 +468,6 @@ class GCWMapViewState extends State<GCWMapView> {
   }
 
   List<Polyline> _addCircles() {
-
     List<Polyline> _polylines =  widget.circles.map((_circle) {
       return Polyline(
         points: _circle.shape,

@@ -22,7 +22,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
   var indexNumberController;
   var indexCharacterController;
 
-  var currentMode = GCWSwitchPosition.left;
+  var currentMode = GCWSwitchPosition.right;
   var currentIndexType = GCWSwitchPosition.left;
 
   String currentInputPlain = '';

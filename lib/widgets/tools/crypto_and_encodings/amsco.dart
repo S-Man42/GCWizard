@@ -24,7 +24,7 @@ class AmscoState extends State<Amsco> {
   String _currentInput = '';
   String _currentKey = '';
 
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
   var _currentOneCharStart = GCWSwitchPosition.left;
 
   @override

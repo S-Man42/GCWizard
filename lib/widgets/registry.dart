@@ -11,7 +11,6 @@ import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/brainfk_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
@@ -22,8 +21,11 @@ import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dna_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/easter_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/esoteric_programminglanguages_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/language_games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
@@ -84,22 +86,22 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/brainfk.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/brainfk/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chef_language.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chicken_language.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/deadfish.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/duck_speak.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/substitution_breaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker.dart';
@@ -107,18 +109,20 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hashes.dart'
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/homophone.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kamasutra.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/kenny.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/chicken_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/duck_speak.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/pig_latin.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robber_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/multi_decoder/multi_decoder.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rail_fence.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rc4.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/reverse.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers/chronogram.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/roman_numbers/roman_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot13.dart';
@@ -134,17 +138,12 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculato
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution_breaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vanity_multiplenumbers.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vanity_singlenumbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
@@ -166,6 +165,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range_frequency.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
@@ -196,6 +196,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/s
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/summer_simmer.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multiplenumbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singlenumbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 
@@ -224,11 +226,11 @@ class Registry {
   static final SEARCHSTRING_CROSSSUMS = 'crosssums digits alternated crosstotals iterated iteriert products quersummen produkte alternierend alterniert iterierend digitalroot digitroot ';
   static final SEARCHSTRING_DATES = 'dates datum tage days ';
   static final SEARCHSTRING_DNA = 'code-sonne codesonne codesun dna mrna desoxyribonucleicacid desoxyribonukleinsaeure dns mrns genetisches genetik genetics genes genomes gattaca nucleotide nukleotid sequence sequenz thymine uracile cytosine adenine guanine ';
-  static final SEARCHSTRING_E = SEARCHSTRING_IRRATIONALNUMBERS + 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
+  static final SEARCHSTRING_E = 'eulersche zahl euler\'s number 2,7182818284 2.7182818284 ';
   static final SEARCHSTRING_EASTER = 'eastersunday ostern ostersonntag ';
-  static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterische programmiersprache esoteric programming language ';
+  static final SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE = 'esoterischeprogrammiersprache esotericprogramminglanguage ';
   static final SEARCHSTRING_FORMULASOLVER = 'formulasolver formelrechner formelsolver ';
-  static final SEARCHSTRING_GAMELANGUAGE = 'spielsprachen game languages secret languages geheimsprachen ';
+  static final SEARCHSTRING_LANGUAGEGAMES = 'spielsprachen gamelanguages secretlanguagegames geheimsprachen kindersprachen ';
   static final SEARCHSTRING_HASHES = 'hashes message digests onewayencryptions einwegverschluesselungen hashvalues hashwerte ';
   static final SEARCHSTRING_HASHES_BLAKE2B = SEARCHSTRING_HASHES_SHA3 + 'blake2b ';
   static final SEARCHSTRING_HASHES_KECCAK = SEARCHSTRING_HASHES_SHA3 + 'keccak ';
@@ -237,9 +239,9 @@ class Registry {
   static final SEARCHSTRING_HASHES_SHA2 = SEARCHSTRING_HASHES_SHA + 'sha2 sha-2 ';
   static final SEARCHSTRING_HASHES_SHA3 = SEARCHSTRING_HASHES_SHA + 'sha3 sha-3 ';
   static final SEARCHSTRING_IRRATIONALNUMBERS = 'irrational number irrationale zahlen fraction decimal digit nachkommastelle ';
-  static final SEARCHSTRING_NUMERALWORDS = 'numeralwords zahlwoerter numberwords zaehlwort zahlwort zaehlwoerter numerals';
-  static final SEARCHSTRING_PHI = SEARCHSTRING_IRRATIONALNUMBERS + 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
-  static final SEARCHSTRING_PI = SEARCHSTRING_IRRATIONALNUMBERS + 'pi circle kreis 3,1415926535 3.1415926535 ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
+  static final SEARCHSTRING_NUMERALWORDS = 'numeralwords zahlwoerter numberwords zaehlwort zahlwort zaehlwoerter numerals solresol esperanto volapuek ';
+  static final SEARCHSTRING_PHI = 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
+  static final SEARCHSTRING_PI = 'pi circle kreis 3,1415926535 3.1415926535 ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
   static final SEARCHSTRING_RESISTOR = 'resistors widerstand widerstaende resistance ohm ';
   static final SEARCHSTRING_RESISTOR_COLORCODE = SEARCHSTRING_RESISTOR + 'colorcodes farben farbcodes colors ';
@@ -248,13 +250,15 @@ class Registry {
   static final SEARCHSTRING_RSA = SEARCHSTRING_PRIMES + 'rsa ronald rivest adi shamir leonard adleman asymmetry asymmetric asymmetrie asymmetrisches public private key oeffentlicher privater schluessel phi ';
   static final SEARCHSTRING_SEGMENTDISPLAY = 'led segments segmente display segmentanzeige ';
   static final SEARCHSTRING_SYMBOLTABLES = 'symbols symbole tabelle zeichen signs tables tabellen codes bilder images pictures fonts schriften ';
+  static final SEARCHSTRING_SYMBOLTABLES_BARCODES = 'barcodes strichcodes striche linien lines strokes streaks ';
   static final SEARCHSTRING_SYMBOLTABLES_CHAPPE = 'opticaltelegraph visual visueller optischertelegraf claude chappe ';
-  static final SEARCHSTRING_SYMBOLTABLES_FREEMASONS = 'freemasons freimaurer ';
+  static final SEARCHSTRING_SYMBOLTABLES_FREEMASONS = 'freemasons freimaurer pigpen ';
   static final SEARCHSTRING_SYMBOLTABLES_HYLIAN = 'thelegendofzelda dielegendevonzelda hylian hylianisches hyrule ';
   static final SEARCHSTRING_SYMBOLTABLES_ILLUMINATI = SEARCHSTRING_SYMBOLTABLES_FREEMASONS + 'illuminati illuminatus illuminaten 23 ';
   static final SEARCHSTRING_SYMBOLTABLES_MUSIC = 'music musik ';
   static final SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES = SEARCHSTRING_SYMBOLTABLES_MUSIC + 'notes noten ';
   static final SEARCHSTRING_SYMBOLTABLES_OPTICALFIBER = 'lwl llk lichtwellenleiter lichtleitkabel opticalfiber glasfaserkabel ';
+  static final SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE = 'gebaarental deafmute deaf-mute deafblind hearing loss deaf-blind taub-stummes hands haende fingers daumen thumbs signs signlanguage gebaerdensprache deafblind gehoerloses taubstummes ';
   static final SEARCHSTRING_TOMTOM = 'a-tom-tom atomtom ';
   static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
   static final SEARCHSTRING_VIGENERE = SEARCHSTRING_ROTATION + 'vigenere ';
@@ -353,12 +357,6 @@ class Registry {
         searchStrings: 'bookcipher buchcode word wort position zeile row line absatz section letter buchstabe buechercode buchchiffre buecherchiffre'
       ),
       GCWTool(
-        tool: BrainfkSelection(),
-        i18nPrefix: 'brainfk',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_BRAINFK
-      ),
-      GCWTool(
         tool: BurrowsWheeler(),
         i18nPrefix: 'burrowswheeler',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -389,28 +387,10 @@ class Registry {
         searchStrings: 'chao john francis byrne'
       ),
       GCWTool(
-        tool: Chef(),
-        i18nPrefix: 'chef',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'chef language programming sprache esoteric esoterisch programmiersprache'
-      ),
-      GCWTool(
-        tool: ChickenLanguage(),
-        i18nPrefix: 'chickenlanguage',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'chickenlanguage huehnersprache huenersprache huhn'
-      ),
-      GCWTool(
-        tool: CistercianNumbers(),
-        i18nPrefix: 'cistercian',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'cistercian numbers Zisterzienser'
-      ),
-      GCWTool(
         tool: ColorPicker(),
         i18nPrefix: 'colors',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'colors pal ntsc farben rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode picker red green blue yellow black key magenta orange cyan luminanz hellwert farbwert helligkeit saettigung luminance chrominanz chrominance saturation lightness hue cmyk luma chroma'
+        searchStrings: 'colors colours pal ntsc farben rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode picker red green blue yellow black key magenta orange cyan luminanz hellwert farbwert helligkeit saettigung luminance chrominanz chrominance saturation lightness hue cmyk luma chroma'
       ),
       GCWTool(
         tool: CombinatoricsSelection(),
@@ -441,18 +421,6 @@ class Registry {
         searchStrings: SEARCHSTRING_DATES
       ),
       GCWTool(
-        tool: Deadfish(),
-        i18nPrefix: 'deadfish',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd '
-      ),
-      GCWTool(
-        tool: DTMF(),
-        i18nPrefix: 'dtmf',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'dual-tone multi-frequency dualtonemultifrequency touchtone mehrfrequenzwahlverfahren mfwv mfv tonwahl dtmf mehrfrequenzton tonwahlverfahren mfc mf4'
-      ),
-      GCWTool(
         tool: Decabit(),
         i18nPrefix: 'decabit',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -465,10 +433,10 @@ class Registry {
         searchStrings: SEARCHSTRING_DNA
       ),
       GCWTool(
-        tool: DuckSpeak(),
-        i18nPrefix: 'duckspeak',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'entensprache duck speak nak entisch duckish'
+        tool: DTMF(),
+        i18nPrefix: 'dtmf',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: 'dual-tone multi-frequency dualtonemultifrequency touchtone mehrfrequenzwahlverfahren mfwv mfv tonwahl dtmf mehrfrequenzton tonwahlverfahren mfc mf4'
       ),
       GCWTool(
         tool: EnclosedAreas(),
@@ -480,13 +448,19 @@ class Registry {
         tool: ESelection(),
         i18nPrefix: 'e_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: SEARCHSTRING_E
+        searchStrings: SEARCHSTRING_IRRATIONALNUMBERS + SEARCHSTRING_E
       ),
       GCWTool(
         tool: Enigma(),
         i18nPrefix: 'enigma',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'enigma rotors walzen'
+      ),
+      GCWTool(
+        tool: EsotericProgrammingLanguageSelection(),
+        i18nPrefix: 'esotericprogramminglanguages_selection',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE
       ),
       GCWTool(
         tool: FormulaSolverFormulaGroups(),
@@ -509,6 +483,11 @@ class Registry {
         i18nPrefix: 'gccode',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'geocaching geocache code gccode gc-code base31 hexadecimal hexadezimal'
+      ),
+      GCWTool(
+        tool: GeneralCodebreakersSelection(),
+        i18nPrefix: 'generalcodebreakers_selection',
+        searchStrings: SEARCHSTRING_CODEBREAKER
       ),
       GCWTool(
         tool: Gray(),
@@ -568,6 +547,12 @@ class Registry {
         tool: Keyboard(),
         i18nPrefix: 'keyboard',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: SEARCHSTRING_LANGUAGEGAMES
+      ),
+      GCWTool(
+        tool: LanguageGamesSelection(),
+        i18nPrefix: 'languagegames_selection',
+        category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'dvorak keyboard keys tasten azerty tastatur layout qwertz qwerty neo colemak ristome sprachen languages'
       ),
       GCWTool(
@@ -579,14 +564,14 @@ class Registry {
       GCWTool(
         tool: MultiDecoder(),
         i18nPrefix: 'multidecoder',
-        category: ToolCategory.CRYPTOGRAPHY,
+        category: ToolCategory.GENERAL_CODEBREAKERS,
         searchStrings: 'multidecoder multisolver multiloeser universal universeller',
       ),
       GCWTool(
         tool: NumeralBases(),
         i18nPrefix: 'numeralbases',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: SEARCHSTRING_BINARY + 'radix numeral systems basis basen zahlensysteme octal octenary oktal dual hexadecimal hexadezimal'
+        searchStrings: SEARCHSTRING_BINARY + 'radix numeral systems zahlenbasis zahlenbasen zahlensysteme octal octenary oktal dual hexadecimal hexadezimal'
       ),
       GCWTool(
         tool: NumeralWordsSelection(),
@@ -610,19 +595,13 @@ class Registry {
         tool: PhiSelection(),
         i18nPrefix: 'phi_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: SEARCHSTRING_PHI
+        searchStrings: SEARCHSTRING_IRRATIONALNUMBERS + SEARCHSTRING_PHI
       ),
       GCWTool(
         tool: PiSelection(),
         i18nPrefix: 'pi_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: SEARCHSTRING_PI
-      ),
-      GCWTool(
-        tool: PigLatin(),
-        i18nPrefix: 'piglatin',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'piglatin schweinesprache schweinchensprache ay '
+        searchStrings: SEARCHSTRING_IRRATIONALNUMBERS + SEARCHSTRING_PI
       ),
       GCWTool(
         tool: Playfair(),
@@ -673,12 +652,6 @@ class Registry {
         searchStrings: 'reversed backwards umkehren umgekehrt rueckwaerts inversed inverted invertieren invertierung invertiert inverse '
       ),
       GCWTool(
-        tool: RobberLanguage(),
-        i18nPrefix: 'robberlanguage',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'robberlanguage raeubersprache rotwelsch astrid lindgren rovarspraket'
-      ),
-      GCWTool(
         tool: RomanNumbersSelection(),
         i18nPrefix: 'romannumbers',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -726,12 +699,6 @@ class Registry {
         searchStrings: 'solitaire solitaer carddeck cardgame joker kartenspiel kartendeck cryptonomicon pontifex bruceschneier stromchiffrierung streamcipher nealstephenson'
       ),
       GCWTool(
-        tool: SpoonLanguage(),
-        i18nPrefix: 'spoonlanguage',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_GAMELANGUAGE + 'spoonlanguage loeffelsprache'
-      ),
-      GCWTool(
         tool: Substitution(),
         i18nPrefix: 'substitution',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -740,7 +707,7 @@ class Registry {
       GCWTool(
           tool: SubstitutionBreaker(),
         i18nPrefix: 'substitutionbreaker',
-        category: ToolCategory.CRYPTOGRAPHY,
+        category: ToolCategory.GENERAL_CODEBREAKERS,
         searchStrings: SEARCHSTRING_CODEBREAKER + 'substitution monoalphabetische monoalphabetic ersetzen replacements alphabet change austauschen change switch '
       ),
       GCWTool(
@@ -802,12 +769,6 @@ class Registry {
         i18nPrefix: 'vigenere',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_VIGENERE + 'autokey'
-      ),
-      GCWTool(
-        tool: WhitespaceLanguage(),
-        i18nPrefix: 'whitespace_language',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'whitespace'
       ),
       GCWTool(
         tool: Windchill(),
@@ -965,18 +926,6 @@ class Registry {
         searchStrings: SEARCHSTRING_BEAUFORT
       ),
 
-      //Brainfk Selection **********************************************************************************************
-      GCWTool(
-        tool: Brainfk(),
-        i18nPrefix: 'brainfk',
-        searchStrings: SEARCHSTRING_BRAINFK
-      ),
-      GCWTool(
-        tool: Ook(),
-        i18nPrefix: 'brainfk_ook',
-        searchStrings: SEARCHSTRING_BRAINFK + 'ook terry pratchett monkeys apes'
-      ),
-
       //CCITT*Selection **********************************************************************************************
       GCWTool(
         tool: CCITT1(),
@@ -1131,6 +1080,11 @@ class Registry {
         i18nPrefix: 'crosssum_range_frequency',
         searchStrings: SEARCHSTRING_CROSSSUMS + 'frequency frequenzen haeufigkeiten auftreten occurrences '
       ),
+      GCWTool(
+        tool: IteratedCrossSumRangeFrequency(),
+        i18nPrefix: 'crosssum_range_iterated_frequency',
+        searchStrings: SEARCHSTRING_CROSSSUMS + 'frequency frequenzen haeufigkeiten auftreten occurrences '
+      ),
 
       //DatesSelection **********************************************************************************************
       GCWTool(
@@ -1195,10 +1149,38 @@ class Registry {
         searchStrings: SEARCHSTRING_EASTER,
       ),
 
+      //Esoteric Programming Language Selection ****************************************************************
+      GCWTool(
+        tool: Chef(),
+        i18nPrefix: 'chef',
+        searchStrings: 'chef language programming sprache esoteric esoterisch programmiersprache'
+      ),
+      GCWTool(
+        tool: Brainfk(),
+        i18nPrefix: 'brainfk',
+        searchStrings: SEARCHSTRING_BRAINFK
+      ),
+      GCWTool(
+        tool: Deadfish(),
+        i18nPrefix: 'deadfish',
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd '
+      ),
+      GCWTool(
+        tool: Ook(),
+        i18nPrefix: 'ook',
+        searchStrings: SEARCHSTRING_BRAINFK + 'ook terry pratchett monkeys apes dots punkte questionsmarks exclamationmarks fragezeichen ausrufezeichen affen orang-utans orangutans'
+      ),
+      GCWTool(
+        tool: WhitespaceLanguage(),
+        i18nPrefix: 'whitespace_language',
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'whitespace'
+      ),
+
       //Hash Selection *****************************************************************************************
       GCWTool(
         tool: HashBreaker(),
         i18nPrefix: 'hashes_hashbreaker',
+        category: ToolCategory.GENERAL_CODEBREAKERS,
         searchStrings: SEARCHSTRING_HASHES + SEARCHSTRING_CODEBREAKER + 'hashbreaker hashsolver hashloeser hashknacker hashcracker'
       ),
       GCWTool(
@@ -1350,6 +1332,33 @@ class Registry {
         tool: BLAKE2b_224(),
         i18nPrefix: 'hashes_blake2b512',
         searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '512bits'
+      ),
+
+      //Language Games Selection *******************************************************************************
+      GCWTool(
+        tool: ChickenLanguage(),
+        i18nPrefix: 'chickenlanguage',
+        searchStrings: SEARCHSTRING_LANGUAGEGAMES + 'chickenlanguage huehnersprache huenersprache huhn'
+      ),
+      GCWTool(
+        tool: DuckSpeak(),
+        i18nPrefix: 'duckspeak',
+        searchStrings: 'entensprache duck speak nak entisch duckish'
+      ),
+      GCWTool(
+        tool: PigLatin(),
+        i18nPrefix: 'piglatin',
+        searchStrings: SEARCHSTRING_LANGUAGEGAMES + 'piglatin schweinesprache schweinchensprache ay '
+      ),
+      GCWTool(
+        tool: RobberLanguage(),
+        i18nPrefix: 'robberlanguage',
+        searchStrings: SEARCHSTRING_LANGUAGEGAMES + 'robberlanguage raeubersprache rotwelsch astrid lindgren rovarspraket'
+      ),
+      GCWTool(
+        tool: SpoonLanguage(),
+        i18nPrefix: 'spoonlanguage',
+        searchStrings: SEARCHSTRING_LANGUAGEGAMES + 'spoonlanguage loeffelsprache'
       ),
 
       //Main Menu **********************************************************************************************
@@ -1559,14 +1568,39 @@ class Registry {
 
       //Symbol Tables **********************************************************************************************
       GCWSymbolTableTool(
+        symbolKey: 'adlam',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'adlam fulani alkule dandayde lenol mulugol west africa ibrahima abdoulaye barry guinea nigeria liberia'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'alchemy',
         iconFilename: 'mercury.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'alchemy alchemie elements elemente '
       ),
       GCWSymbolTableTool(
+        symbolKey: 'alchemy_alphabet',
+        iconFilename: 'L.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'alchemie alchemy '
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'angerthas_cirth',
         iconFilename: 'ghw.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'angerthas cirth runen runes zwerge dwarfs derherrderringe elben elbisch elves elvish thelordoftherings j.r.r. jrr tolkien'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'alphabetum_arabum',
+        iconFilename: 'G.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'alphabetumarabum arabisch arabian arabic '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'alphabetum_egiptiorum',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'alphabetum egiptiorum giambattista palatino'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'alphabetum_gothicum',
+        iconFilename: 'G.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'geats alphabetum gothicum gothik gotisches '
       ),
       GCWSymbolTableTool(
         symbolKey: 'antiker',
@@ -1589,14 +1623,29 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'ath baronh '
       ),
       GCWSymbolTableTool(
+        symbolKey: 'atlantean',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'atlantisch atlantean marcokrand thelostempire dasverlorenekoenigreich atlantis'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'aurebesh',
         iconFilename: 'G.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'aurebesh starwars wookies clonewars outerrim '
       ),
       GCWSymbolTableTool(
+        symbolKey: 'australian_sign_language',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE + 'australian australisches auslan '
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'babylonian_numerals',
         iconFilename: '4.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + ' babylonisches babylonian zahlen ziffern numbers numerals keilschrift cuneiform'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'ballet',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'ballett dancing tanzen dances taenze primaballerina'
       ),
       GCWSymbolTableTool(
         symbolKey: 'barbier',
@@ -1606,7 +1655,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'barcode39',
         iconFilename: 'A.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'barcode39'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_BARCODES + 'barcode39'
       ),
       GCWSymbolTableTool(
         symbolKey: 'baudot',
@@ -1632,6 +1681,11 @@ class Registry {
         symbolKey: 'braille',
         iconFilename: 'H.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'tactiles blindenschrift braille dots points punkte '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'british_sign_language',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE + 'grossbritannien grossbritanien bsl greatbritain british grossbritisch englisch english'
       ),
       GCWSymbolTableTool(
         symbolKey: 'chappe_v1',
@@ -1666,22 +1720,27 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'color_code',
         iconFilename: 'D.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colorcode rgb farbcode farben colors red green blue rot gruen blau '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colorcode colourcode rgb farbcode farben colors red green blue rot gruen blau colours '
       ),
       GCWSymbolTableTool(
         symbolKey: 'color_honey',
         iconFilename: 'H.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colorhoney color-honey farbcode farben colors six bees honeycombs bienenwaben '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colorhoney color-honey farbcode farben colors six bees honeycombs bienenwaben colours colourcode colourhoney colour-honey '
       ),
       GCWSymbolTableTool(
         symbolKey: 'color_tokki',
         iconFilename: 'H.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colortokki color-tokki farbcode woven carpet webteppich gewebter farben colors six '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'colortokki color-tokki farbcode woven carpet webteppich gewebter farben colors six colourtokki colours colour-tokko '
       ),
       GCWSymbolTableTool(
         symbolKey: 'cyrillic',
         iconFilename: 'D.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'kyrillisch cyrillic russisch russian alphabet schrift font cyrl saloniki'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'cyrillic kyrillisches russisches russian slawisch slavian slavic cyrl saloniki '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'cyrillic_numbers',
+        iconFilename: '1.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'cyrillic kyrillisches russisches russian slawisch slavian slavic cyrl saloniki '
       ),
       GCWSymbolTableTool(
         symbolKey: 'daedric',
@@ -1696,17 +1755,27 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'dancing_men',
         iconFilename: 'I.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dancingmen tanzende strichmaennchen sherlockholmes matchstickman '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dancingmen tanzende strichmaennchen sherlockholmes matchstickman arthurconandoyle arthurdoyle '
       ),
       GCWSymbolTableTool(
         symbolKey: 'deafblind',
         iconFilename: 'R.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'deafmute deaf-mute deafblind hearing loss deaf-blind taub-stumme taubstumme gehoerlose sign language hands haende '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE
       ),
       GCWSymbolTableTool(
         symbolKey: 'devanagari_numerals',
         iconFilename: '3.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'devanagari indisches indian indien sanskrit prakrit hindi marathi zahlen ziffern numbers numerals'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'dni',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dni d\'ni myst'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'dni_colors',
+        iconFilename: 'red.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dni colours colors farben d\'ni myst'
       ),
       GCWSymbolTableTool(
         symbolKey: 'doremi',
@@ -1744,6 +1813,11 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'enochian henochisch john dee magische sprache magie language edward kelley henoic'
       ),
       GCWSymbolTableTool(
+        symbolKey: 'eurythmy',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'anthroposophisches anthroposophics eurythmics eurythmie waldorfschulen rudolfsteiner tanzdeinennamen danceyourname'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'fakoo',
         iconFilename: 'SZ_umlaut.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fakoo alphabet blinde eyeless relief'
@@ -1751,7 +1825,12 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'finger',
         iconFilename: 'H.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fingers fingeralphabet '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'finger_numbers',
+        iconFilename: '7_.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE
       ),
       GCWSymbolTableTool(
         symbolKey: 'flags',
@@ -1774,6 +1853,11 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fonic talesoftheabyss '
       ),
       GCWSymbolTableTool(
+        symbolKey: 'four_triangles',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'fourtriangles vierdreiecke punkte points dots'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'freemason',
         iconFilename: 'Q.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'freemasons freimaurer '
@@ -1786,7 +1870,12 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'futurama',
         iconFilename: 'O.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'futurama matt groening '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'futurama mattgroening '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'futurama_2',
+        iconFilename: 'J.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'futurama mattgroening'
       ),
       GCWSymbolTableTool(
         symbolKey: 'gallifreyan',
@@ -1806,7 +1895,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'glagolitic',
         iconFilename: 'B.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'glagolitic glagolitisch glagoliza glagolitsa slawische slavic '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'glagolitic glagolitisch glagoliza glagolitsa slawische slavic slavian '
       ),
       GCWSymbolTableTool(
         symbolKey: 'gnommish',
@@ -1909,6 +1998,26 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'japanese japanisches zahlen ziffern numbers'
       ),
       GCWSymbolTableTool(
+        symbolKey: 'kabouter_abc',
+        iconFilename: 'E.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'boyscouts pfadfinder kabouter niederlaendisch kobolde cobolds netherlands dutch hollaendisch holland scouting nederlands bambilie bambiliaanse gnoms gnome'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'kabouter_abc_1947',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'boyscouts pfadfinder kabouter niederlaendisch kobolde cobolds netherlands dutch hollaendisch holland scouting nederlands bambilie bambiliaanse gnoms gnome 1947'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'kartrak',
+        iconFilename: '2.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_BARCODES + 'freighttrains freight gueter fracht coach waggon wagon wagen kartrak aci automaticcaridentification railway gueterzug colouredbarcode coloredbarcode farbigerstrichcode colours rfid gueterzuege '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'kharoshthi',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'kharoshthi gandhari gandhara indian indien indisches pakistan afghanistan prakrit sanskrit'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'klingon',
         iconFilename: '_j.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek klingonisch klingonen klingons klingonlanguageinstitute kli '
@@ -1984,6 +2093,16 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_CCITT2
       ),
       GCWSymbolTableTool(
+        symbolKey: 'musica',
+        iconFilename: '_a.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'wcmusicabta christophe feray instruments instrumente piano klavier schlagzeug floete oboe bratsche trompete gitarre guitar drums posaune geige noten notes violin fleet fluegel'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'new_zealand_sign_language',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE + ' newzealand neuseeland neuseelaendisches'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'notes_doremi',
         iconFilename: '1.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES + 'doremifalamiresisol notesystem solmisation notensystem tonstufen degrees octal oktal'
@@ -2000,12 +2119,12 @@ class Registry {
       ),
       GCWSymbolTableTool(
         symbolKey: 'notes_notevalues',
-        iconFilename: '3_32.png',
+        iconFilename: '1_-4.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES + 'notevalues notenwerte dotted punkt gepunktete punktierte viertel halbe ganze achtel sechzehntel whole half quarter eightth sixteenth semibreve minim crotchet semihemidemisemiquaver'
       ),
       GCWSymbolTableTool(
         symbolKey: 'notes_restvalues',
-        iconFilename: '3_8.png',
+        iconFilename: '1_-2.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_MUSIC_NOTES + 'notevalues notenwerte restvalues pausenwerte dotted punkt gepunktete punktierte viertel halbe ganze achtel sechzehntel whole half quarter eightth sixteenth semibreve minim crotchet semihemidemisemiquaver'
       ),
       GCWSymbolTableTool(
@@ -2046,12 +2165,17 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'planet',
         iconFilename: '3.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'planet united states postal service usps barcode '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_BARCODES + 'planet united states postal service usps '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'pokemon_unown',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'pokemon unown'
       ),
       GCWSymbolTableTool(
         symbolKey: 'postnet',
         iconFilename: '6.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'postnet united states postal service usps barcode '
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_BARCODES + 'postnet united states postal service usps '
       ),
       GCWSymbolTableTool(
         symbolKey: 'puzzle',
@@ -2069,6 +2193,11 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'reality realitaet '
       ),
       GCWSymbolTableTool(
+        symbolKey: 'red_herring',
+        iconFilename: '8.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'roter hering red herring fische fish'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'resistor',
         iconFilename: '1.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_RESISTOR_COLORCODE
@@ -2079,6 +2208,10 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'rhesusa tintenkleckse farbkleckse farbspritzer blutspritzer inkblots bloodsplatter blutgruppen bloodgroup bloodtype bluttropfen blutstropfen farbtropfen',
       ),
       GCWSymbolTableTool(
+        symbolKey: 'rm4scc',
+        iconFilename: 'R.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_BARCODES + 'rm4scc royalmail4statecustomercode cleanmail postcodes delivery point cbc kix klantindex england singapore niederlande netherlands singapur holland switzerland schweiz austria oesterreich denmark daenemark australia australien'),
+      GCWSymbolTableTool(
         symbolKey: 'romulan',
         iconFilename: '9.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'startrek romulans romulaner romulanisch '
@@ -2087,6 +2220,11 @@ class Registry {
         symbolKey: 'runes',
         iconFilename: 'F.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'runes runen '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'sanluca',
+        iconFilename: 'E.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'ndrangheta mafia codic di san luca sanluca kalabrian kalabrien kalabrische cosa nostra lobardei piemont ligurien emilia romagna stele di rosetta stein'
       ),
       GCWSymbolTableTool(
         symbolKey: 'sarati',
@@ -2101,7 +2239,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'sign',
         iconFilename: 'K.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'sign language zeichensprache gebaerdensprache hearing loss taubstumme taub-stumme deafblind deaf-blind gehoerlose deaf-mute deafmute'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE
       ),
       GCWSymbolTableTool(
         symbolKey: 'skullz',
@@ -2127,6 +2265,11 @@ class Registry {
         symbolKey: 'spintype',
         iconFilename: 'G.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'spintype boxes kaestchen kasten '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'stippelcode',
+        iconFilename: 'B.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'stippelcode drabkikker punkte points dots polka'
       ),
       GCWSymbolTableTool(
         symbolKey: 'suetterlin',
@@ -2175,8 +2318,13 @@ class Registry {
       ),
       GCWSymbolTableTool(
         symbolKey: 'theban',
-        iconFilename: '8.png',
+        iconFilename: 'dot.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'thebanisches hexenalphabet onorius witches witchalphabet engelsschrift angels wikka wicca wicka'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'three_squares',
+        iconFilename: 'C.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'threesquares dreivierecke points dots punkt'
       ),
       GCWSymbolTableTool(
         symbolKey: 'tines',
@@ -2212,6 +2360,11 @@ class Registry {
         symbolKey: 'visitor_2009',
         iconFilename: '9.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'visitor die besucher v aliens ausserirdische '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'vulcanian',
+        iconFilename: 'A.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'vulcanian startrek vulkanier misterspock mr.spock mrspock vulkanisch'
       ),
       GCWSymbolTableTool(
         symbolKey: 'wakandan',
@@ -2259,9 +2412,24 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'yankoryani tekumel '
       ),
       GCWSymbolTableTool(
+        symbolKey: 'yinyang',
+        iconFilename: 'N.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'suedkorea flagge kolumbien columbia erikmoreno yinyang jingjing yingyang southkorea'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'zentradi',
         iconFilename: 'F.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'zentradi zentraedi robotech macross '
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'zodiac_z340',
+        iconFilename: 'A____.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'zodiackiller z340 letter briefe zodiak'
+      ),
+      GCWSymbolTableTool(
+        symbolKey: 'zodiac_z408',
+        iconFilename: 'D.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'zodiackiller z408 letter briefe zodiak'
       ),
 
       // TomTomSelection *********************************************************************************************
