@@ -155,6 +155,7 @@ flutter:
     - assets/symbol_tables/new_zealand_sign_language/
     - assets/symbol_tables/notes_doremi/
     - assets/symbol_tables/notes_notevalues/
+    - assets/symbol_tables/notes_names_altoclef/
     - assets/symbol_tables/notes_names_bassclef/
     - assets/symbol_tables/notes_names_trebleclef/
     - assets/symbol_tables/notes_restvalues/
