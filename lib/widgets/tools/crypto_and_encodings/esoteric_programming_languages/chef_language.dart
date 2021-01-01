@@ -249,11 +249,12 @@ class ChefState extends State<Chef> {
   String buildOutputText(List<String> outputList){
     String output = '';
     outputList.forEach((element) {
-      if (element.startsWith('chef_')) {
-        output = output
+      if (element != null)
+        if (element.startsWith('chef_')) {
+          output = output
             + i18n(context, element) + '\n';
-      } else
-        output = output + element + '\n';
+        } else
+          output = output + element + '\n';
     });
     return output;
   }
