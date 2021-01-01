@@ -113,7 +113,7 @@ class MalbolgeState extends State<Malbolge> {
     if (_currentMode == GCWSwitchPosition.right) { // generate malbolge
       output = generateMalbolge(_currentOutput);
     } else { // interpret malbolge
-      output = interpretMalbolge(_currentProgramm.toUpperCase(), _currentInput);
+      output = interpretMalbolge(_currentProgramm, _currentInput);
     }
 
     outputData = buildOutputText(output);
