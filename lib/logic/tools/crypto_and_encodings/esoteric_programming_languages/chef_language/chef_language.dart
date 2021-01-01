@@ -315,6 +315,7 @@ class Chef {
     bool methodsFound = false;
     bool servesFound = false;
     bool refrigerateFound = false;
+    bool titleFound = false;
 
     readRecipe.split("\n\n").forEach((element) {
       line = element.trim();
@@ -396,6 +397,7 @@ class Chef {
       else {
         if (progress == 0 || progress >= 6) {
           title = _parseTitle(line);
+          titleFound = true;
           r = new Recipe(line);
           if (mainrecipe == null) {
             mainrecipe = r;
@@ -432,6 +434,14 @@ class Chef {
       error.addAll([
         Messages[language]['chef_error_structure_recipe'],
         Messages[language]['chef_error_structure_recipe_empty_missing_title'],
+        '']);
+      return;
+    }
+    if (!titleFound) {
+      valid = false;
+      error.addAll([
+        Messages[language]['chef_error_structure_recipe'],
+        Messages[language]['chef_error_structure_recipe_missing_title'],
         '']);
       return;
     }

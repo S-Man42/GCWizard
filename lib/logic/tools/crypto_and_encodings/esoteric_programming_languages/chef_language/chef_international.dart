@@ -178,9 +178,9 @@ final List<String> liquidMeasuresDEU = ['ml', 'l', 'Spritzer', 'Tropfen'];
 
 final List<String> liquidMeasuresENG = ['ml', 'l', 'dashes', 'drops'];
 
-final List<String> dryMeasuresDEU = ['g', 'kg', 'Prisen', 'Scheiben'];
+final List<String> dryMeasuresDEU = ['g', 'kg', 'Prisen'];
 
-final List<String> dryMeasuresENG = ['g', 'kg', 'pinches', 'slices'];
+final List<String> dryMeasuresENG = ['g', 'kg', 'pinches'];
 
 final List<String> measuresDEU = ['Teelöffel', 'Esslöffel', 'Tasse'];
 
@@ -225,7 +225,7 @@ final List<String> itemListDryDEU = [
   'Gurke', 'Kartoffeln', 'Süßkartoffeln', 'Apfelstücke', 'Garnelen',
   'Guacamole', 'Vollkornmehl', 'Tofu', 'Chili', 'Curry',
   'Senf', 'Marmelade', 'gemischte Früchte', 'Zucchini', 'Schmalz', 'Eier',
-  'Maisstärke', 'Scheiben', 'Brot', 'Speck',	'dunkle Schokolade', 'Milchschokolade',
+  'Maisstärke', 'Brot', 'Speck',	'dunkle Schokolade', 'Milchschokolade',
   'Kakaopulver', 'Erbsen', 'Karotten', 'Rosinen',	'mexikanische Gewürze', 'Bananenchips'
 ];
 
