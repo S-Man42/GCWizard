@@ -127,6 +127,7 @@ class MalbolgeState extends State<Malbolge> {
       children: <Widget>[
         GCWOutputText(
           text: outputData,
+          isMonotype: true,
         ),
         GCWOnOffSwitch(
           title:i18n(context, 'malbolge_debug'),
@@ -138,7 +139,7 @@ class MalbolgeState extends State<Malbolge> {
           },
         ),
         _currentDebug == true
-            ? Column(
+          ? Column(
             children: <Widget>[
               GCWOutput(
                 title: i18n(context, 'malbolge_debug'),
@@ -150,53 +151,53 @@ class MalbolgeState extends State<Malbolge> {
                 text: i18n(context, 'malbolge_hint_code'),
               ),
               Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                        flex: 1,
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            child: Column(
-                              children: <Widget>[
-                                GCWTextDivider(
-                                    text: i18n(context, 'malbolge_hint_code_assembler')
-                                ),
-                                GCWOutputText(
-                                  text: output.assembler.join('\n'),
-                                  isMonotype: true,
-                                ),
-                              ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    flex: 3,
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            GCWTextDivider(
+                              text: i18n(context, 'malbolge_hint_code_assembler')
                             ),
-                            padding: EdgeInsets.only(right: DEFAULT_MARGIN),
-                          ),
-                        )
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            child: Column(
-                              children: <Widget>[
-                                GCWTextDivider(
-                                    text: i18n(context, 'malbolge_hint_code_memnonic')
-                                ),
-                                GCWOutputText(
-                                  text: output.memnonic.join('\n'),
-                                  isMonotype: true,
-                                ),
-                              ],
+                            GCWOutputText(
+                              text: output.assembler.join('\n'),
+                              isMonotype: true,
                             ),
-                            padding: EdgeInsets.only(left: DEFAULT_MARGIN),
-                          ),
-                        )
-                    ),
-                  ]
+                          ],
+                        ),
+                        padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                      ),
+                    )
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                        child: Column(
+                          children: <Widget>[
+                            GCWTextDivider(
+                              text: i18n(context, 'malbolge_hint_code_memnonic')
+                            ),
+                            GCWOutputText(
+                              text: output.memnonic.join('\n'),
+                              isMonotype: true,
+                            ),
+                          ],
+                        ),
+                        padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+                      ),
+                    )
+                  ),
+                ]
               ),
             ]
-        )
-            : Container(),
+          )
+          : Container(),
       ],
     );
   }
@@ -204,10 +205,11 @@ class MalbolgeState extends State<Malbolge> {
   String buildOutputText(malbolgeOutput outputList){
     String output = '';
     outputList.output.forEach((element) {
-      if (element.startsWith('malbolge_')) {
-        output = output + i18n(context, element) + '\n';
-      } else
-        output = output + element + '\n';
+      if (element != null)
+        if (element.startsWith('malbolge_')) {
+          output = output + i18n(context, element) + '\n';
+        } else
+          output = output + element + '\n';
     });
     return output;
   }
