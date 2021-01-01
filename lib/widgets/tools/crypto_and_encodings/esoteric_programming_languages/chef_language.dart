@@ -223,10 +223,14 @@ class ChefState extends State<Chef> {
         try {
           output = buildOutputText(interpretChef(language, _currentRecipe.toLowerCase().replaceAll('  ', ' '), _currentInput));
         } catch (e) {
-          output = buildOutputText(['chef_error_runtime', 'chef_error_runtime_exception']);
+          output = buildOutputText([
+            'chef_error_runtime',
+            'chef_error_runtime_exception']);
         }
       } else
-        output = buildOutputText(['chef_error_runtime', 'chef_error_runtime_invalid_input']);
+        output = buildOutputText([
+          'chef_error_runtime',
+          'chef_error_runtime_invalid_input']);
     }
     return GCWOutputText(
         text: output.trim(),
