@@ -321,11 +321,11 @@ class Chef {
       if (line.startsWith("ingredients") || line.startsWith("zutaten")) {
         if (progress > 3) {
           valid = false;
-          _addError(2, progress);
+          _addError(language, 2, progress);
           return '';
         }
         progress = 3;
-        r.setIngredients(line);
+        r.setIngredients(line, language);
         ingredientsFound = true;
         if (r.error) {
           this.error.addAll(r.errorList);
@@ -336,11 +336,11 @@ class Chef {
       else if (line.startsWith("cooking time") || line.startsWith("garzeit")) {
         if (progress > 4) {
           valid = false;
-          _addError(3, progress);
+          _addError(language, 3, progress);
           return '';
         }
         progress = 4;
-        r.setCookingTime(line);
+        r.setCookingTime(line, language);
         if (r.error){
           this.error.addAll(r.errorList);
           this.valid = false;
@@ -350,11 +350,11 @@ class Chef {
       else if (line.startsWith("pre-heat oven") || line.startsWith("pre heat oven") || line.startsWith("ofen auf")) {
         if (progress > 5) {
           valid = false;
-          _addError(4, progress);
+          _addError(language, 4, progress);
           return '';
         }
         progress = 5;
-        r.setOvenTemp(line);
+        r.setOvenTemp(line, language);
         if (r.error){
           this.error.addAll(r.errorList);
           this.valid = false;
@@ -364,7 +364,7 @@ class Chef {
       else if (line.startsWith("method") || line.startsWith("zubereitung")) {
         if (progress > 5){
           valid = false;
-          _addError(5, progress);
+          _addError(language, 5, progress);
           return '';
         }
         progress = 6;
@@ -381,11 +381,11 @@ class Chef {
       else if (line.startsWith("serves") || line.startsWith("portionen")) {
         if (progress != 6) {
           valid = false;
-          _addError(6, progress);
+          _addError(language, 6, progress);
           return '';
         }
         progress = 0;
-        r.setServes(line);
+        r.setServes(line, language);
         servesFound = true;
         if (r.error){
           this.error.addAll(r.errorList);
@@ -414,12 +414,13 @@ class Chef {
             {
               progressError = true;
               if (mainrecipeFound) {
-                error.add('chef_error_structure_subrecipe');
+                error.add(Messages[language]['chef_error_structure_subrecipe']);
               }
-              error.addAll(['chef_error_structure_recipe_read_unexpected_comments_title',
-                _progressToExpected(progress),
-                'chef_hint_recipe_hint',
-                _structHint(progress),
+              error.addAll([
+                Messages[language]['chef_error_structure_recipe_read_unexpected_comments_title'],
+                Messages[language][_progressToExpected(language, progress)],
+                Messages[language]['chef_hint_recipe_hint'],
+                Messages[language][_structHint(language, progress)],
                 '']);
             }
           return '';
@@ -428,29 +429,33 @@ class Chef {
     });
     if (mainrecipe == null) {
       valid = false;
-      error.addAll(['chef_error_structure_recipe',
-                    'chef_error_structure_recipe_empty_missing_title',
-                    '']);
+      error.addAll([
+        Messages[language]['chef_error_structure_recipe'],
+        Messages[language]['chef_error_structure_recipe_empty_missing_title'],
+        '']);
       return;
     }
     if (!ingredientsFound) {
       valid = false;
-      error.addAll(['chef_error_structure_recipe',
-        'chef_error_structure_recipe_empty_ingredients',
+      error.addAll([
+        Messages[language]['chef_error_structure_recipe'],
+        Messages[language]['chef_error_structure_recipe_empty_ingredients'],
         '']);
       return;
     }
     if (!methodsFound) {
       valid = false;
-      error.addAll(['chef_error_structure_recipe',
-        'chef_error_structure_recipe_empty_methods',
+      error.addAll([
+        Messages[language]['chef_error_structure_recipe'],
+        Messages[language]['chef_error_structure_recipe_empty_methods'],
         '']);
       return;
     }
     if (!servesFound && !refrigerateFound) {
       valid = false;
-      error.addAll(['chef_error_structure_recipe',
-        'chef_error_structure_recipe_empty_serves',
+      error.addAll([
+        Messages[language]['chef_error_structure_recipe'],
+        Messages[language]['chef_error_structure_recipe_empty_serves'],
         '']);
       return;
     }
@@ -463,42 +468,46 @@ class Chef {
     return title.toLowerCase();
   }
 
-  void _addError(int progressToExpected, int progress) {
-    error.add('chef_error_structure_recipe');
+  void _addError(String language, int progressToExpected, int progress) {
+    error.add(Messages[language]['chef_error_structure_recipe']);
     if (progressToExpected >= 0) {
-      error.addAll(['chef_error_structure_recipe_read_unexpected',
-                     _progressToExpected(progressToExpected),
-                     'chef_error_structure_recipe_expecting',
-                     _progressToExpected(progress)]);
+      error.addAll([
+        Messages[language]['chef_error_structure_recipe_read_unexpected'],
+        _progressToExpected(language, progressToExpected),
+        Messages[language]['chef_error_structure_recipe_expecting'],
+        _progressToExpected(language, progress),
+       '']);
     } else {
-      error.addAll(['chef_error_structure_recipe_read_unexpected_comments_title',
-                     _progressToExpected(progress),
-                     'chef_hint_recipe_hint',
-                     _structHint(progress)]);
+      error.addAll([
+        Messages[language]['chef_error_structure_recipe_read_unexpected_comments_title'],
+        _progressToExpected(language, progress),
+        Messages[language]['chef_hint_recipe_hint'],
+        _structHint(language, progress)]);
     }
     error.add('');
   }
 
-  String _structHint(int progress) {
+  String _structHint(String language, int progress) {
     switch (progress) {
-      case 2 : return 'chef_hint_recipe_ingredients';
-      case 3 : return 'chef_hint_recipe_methods';
-      case 4 : return 'chef_hint_recipe_oven_temperature';
+      case 2 : return Messages[language]['chef_hint_recipe_ingredients'];
+      case 3 : return Messages[language]['chef_hint_recipe_methods'];
+      case 4 : return Messages[language]['chef_hint_recipe_oven_temperature'];
     }
-    return "chef_hint_no_hint_available";
+    return Messages[language]["chef_hint_no_hint_available"];
   }
 
-  String _progressToExpected(int progress) {
+  String _progressToExpected(String language, int progress) {
+    String output = '';
     switch (progress) {
-      case 0 :  return 'chef_error_structure_recipe_title';
-      case 1 :  return 'chef_error_structure_recipe_comments';
-      case 2 :  return 'chef_error_structure_recipe_ingredient_list';
-      case 3 :  return 'chef_error_structure_recipe_cooking_time';
-      case 4 :  return 'chef_error_structure_recipe_oven_temperature';
-      case 5 :  return 'chef_error_structure_recipe_methods';
-      case 6 :  return 'chef_error_structure_recipe_serve_amount';
+      case 0 :  output =  Messages[language]['chef_error_structure_recipe_title']; break;
+      case 1 :  output =  Messages[language]['chef_error_structure_recipe_comments']; break;
+      case 2 :  output =  Messages[language]['chef_error_structure_recipe_ingredient_list']; break;
+      case 3 :  output =  Messages[language]['chef_error_structure_recipe_cooking_time']; break;
+      case 4 :  output =  Messages[language]['chef_error_structure_recipe_oven_temperature']; break;
+      case 5 :  output =  Messages[language]['chef_error_structure_recipe_methods']; break;
+      case 6 :  output =  Messages[language]['chef_error_structure_recipe_serve_amount']; break;
     }
-    return null;
+    return output;
   }
 
   void bake(String language, additionalIngredients) {
