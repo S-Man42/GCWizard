@@ -874,6 +874,68 @@ Zutaten:
 Zubereitung:
 Guacamole in die Schüssel geben.
 Kartoffeln kombinieren.''';
+      var testDEUgeneratedAuxDouble = '''So kocht Kladow mt Beilagen.
+
+Der finale Spaß bei N48° 44.859 E008° 00.282
+
+Zutaten:
+32 ml Ambra
+46 ml Tequila
+48 l Bitter Lemon
+176 l WodkaCalvados
+56 ml Öl
+69 l Gin
+44 g Bananenchips
+48 kg Anis
+78 Spritzer Rotwein
+
+Garzeit: 120 Minuten.
+
+Ofen auf 30 Grad Celsius vorheizen.
+
+Zubereitung:
+Serviere mit cremige bittere Ketchuptoppings.
+Tequila in die Schüssel geben.
+Bitter Lemon in die Schüssel geben.
+Ambra in die Schüssel geben.
+WodkaCalvados in die Schüssel geben.
+Öl in die Schüssel geben.
+Gin in die Schüssel geben.
+Ambra in die Schüssel geben.
+Schüssel in eine Servierschale stürzen.
+ Schüssel abwaschen.
+Serviere mit leichte bittere Currychips.
+Tequila in die Schüssel geben.
+Bananenchips in die Schüssel geben.
+Ambra in die Schüssel geben.
+WodkaCalvados in die Schüssel geben.
+Anis in die Schüssel geben.
+Rotwein in die Schüssel geben.
+Schüssel in eine Servierschale stürzen.
+
+Portionen: 1.
+
+
+cremige bittere Ketchuptoppings
+
+Zutaten:
+47 Prisen Zwiebeln
+6 Prisen Bohnen
+
+Zubereitung:
+Zwiebeln in die Schüssel geben.
+Bohnen kombinieren.
+
+
+leichte bittere Currychips
+
+Zutaten:
+342 g Eigelb
+517 g Salz
+
+Zubereitung:
+Eigelb in die Schüssel geben.
+Salz dazugeben.''';
       var testENGgeneratedNoAux = '''Mama Marias Masterpiece.
 
 Just try it
@@ -953,6 +1015,7 @@ Combine wholemeal flour into mixing bowl.''';
         {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgenerated, 'expectedOutput' : ['Test']},
         {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgenerateoNoAux, 'expectedOutput' : ['n 437 e 708']},
         {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgeneratedAux, 'expectedOutput' : ['n 437 e 708']},
+        {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgeneratedAuxDouble, 'expectedOutput' : ['N48° 44.859 E8° 0.282']},
         {'language' : 'ENG', 'input' : '',  'recipe' : testENGgeneratedNoAux, 'expectedOutput' : ['n 437 e 708']},
         {'language' : 'ENG', 'input' : '',  'recipe' : testENGgeneratedAux, 'expectedOutput' : ['n 437 e 708']},
       ];
