@@ -94,7 +94,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
+// import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
@@ -1150,11 +1150,11 @@ class Registry {
       ),
 
       //Esoteric Programming Language Selection ****************************************************************
-      GCWTool(
-        tool: Chef(),
-        i18nPrefix: 'chef',
-        searchStrings: 'chef language programming sprache esoteric esoterisch programmiersprache'
-      ),
+      // GCWTool(
+      //   tool: Chef(),
+      //   i18nPrefix: 'chef',
+      //   searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'chef kochrezepte kochen zutaten ingredients cookingrecipes cookrecipes'
+      // ),
       GCWTool(
         tool: Brainfk(),
         i18nPrefix: 'brainfk',
@@ -1163,7 +1163,7 @@ class Registry {
       GCWTool(
         tool: Deadfish(),
         i18nPrefix: 'deadfish',
-        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd '
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd toterfisch '
       ),
       GCWTool(
         tool: Ook(),
