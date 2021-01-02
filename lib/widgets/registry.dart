@@ -1153,7 +1153,7 @@ class Registry {
       GCWTool(
         tool: Chef(),
         i18nPrefix: 'chef',
-        searchStrings: 'chef language programming sprache esoteric esoterisch programmiersprache'
+        searchStrings: 'chef koch rezept recipe language programming sprache esoteric esoterisch programmiersprache'
       ),
       GCWTool(
         tool: Brainfk(),
