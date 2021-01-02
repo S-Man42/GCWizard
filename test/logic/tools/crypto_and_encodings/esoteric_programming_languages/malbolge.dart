@@ -16,11 +16,11 @@ void main() {
     // https://zb3.me/malbolge-tools/#generator
 
     var HelloWorld = '''(=<`#9]~6ZY32Vx/4Rs+0No-&Jk)"Fh}|Bcy?`=*z]Kw%oG4UUS0/@-ejc(:'8dc''';
-    var HelloWorld_EU = '''D'`Nq"!\~Z{ji7CBeuQPqp.'mm\$Gj!EfC0"c>w_{)sr8YXtsl2Sonmf,jLbaf_%cE[`Y}@?[ZYRvVUTSRQJImM/KDhHA)E>bB\$@?>=6Z{3810/.R2r0/.'&+\$H('&feBc!~}vut:xwpXn4lqpingf,jLbaf_%cE[`Y}]\U=SwQ9UNrR4PINGLEiCHG@EDCB;_987[;:9810Tut,+0)Mnm+*)"'~D\$dc!x}vu;\xqpo54Uqjing-NMiha'edFEa`_X|\[T<RvPUTSLQPImM/KJIBAeED=BA:9]=<;{z870T432+*)M'&%\$)('~D\$dc!~}v<tsxwvon4lTjohmlkjib(fH%]E[`Y^W{>=YXQuUTMRQJImMLEDCg*F?>=<A@?8\<|432V6v43,+Opo'&%I#('~D\$#"!a}|u;y[Zpotm3qponmfN+iha`_%FEaZ~^@?UZSRWVOsM5KJONGkEJCHA@d>&BA@9]76Z498165.-Q10)o'&J*)(!~}C{zy~w=^]sxqpo5slkjongf,MLbgf_dc\"Z_X|V[ZSw:VOTMRKo21GLEJCgG@E>CB;_?!7<54Xy1U/432+O/.',%\$#G'&feBc!x>_uzyrq7XWsl2ponmfN+ihJI_%]b[!BX]\UTx;WPUTMq4PONGLEiC+AeEDCB;@?87[;4387654-Q1*/.-&J*)('gf\$#z@xw={]\xqpo54Uqjing-NMiha'edFEa`_X|\>=YXWPOsSLQJOHlF.DhHGFE>&<`@9>=<;4X87w5.-210/(L,+*ji!E%\$#zyxwv<]\xwpun4lTjinmle+Lbaf_^]#DZ_^]VzTSRQVONMqQJOHlF.JIBf)dD=BA:?>7[|:9876/.3,PO/o-&J*ji!&}\$#z@~w_{zs9Zvutsrkpi/POe+Lha`_%cba`BX|\[T<RvVUT65Ko2NGFjDIHG@?c=B;_?!=<;4X2765.3,1*NM',+*#(!E%\${cy?w_{zyxwp6tsrkpong-Njchgf_^\$\aZY^]\[Tx;WPUTMqQPONM/EiCHG@dDCB;_"!=<5Y3876/.3,PO/o-&J*ji!&}\$#z@~w_{zs9Zvotm3DpRQ.lNjchgf_^$E[!_X]VzyYXQ9UNrRQ32NMLEDhH*@ED=<`@9>=<;4Xy165.-Q10/.'&J*)(!g}Cd"!xw=*''';
+    var HelloWorld_EU = '''D'`Nq"!\~Z{ji7CBeuQPqp.'mm\$Gj!EfC0"c>w_{)sr8YXtsl2Sonmf,jLbaf_%cE[`Y}@?[ZYRvVUTSRQJImM/KDhHA)E>bB\$@?>=6Z{3810/.R2r0/.'&+\$H('&feBc!~}vut:xwpXn4lqpingf,jLbaf_%cE[`Y}]\U=SwQ9UNrR4PINGLEiCHG@EDCB;_987[;:9810Tut,+0)Mnm+*)"'~D\$dc!x}vu;\\xqpo54Uqjing-NMiha'edFEa`_X|\[T<RvPUTSLQPImM/KJIBAeED=BA:9]=<;{z870T432+*)M'&%\$)('~D\$dc!~}v<tsxwvon4lTjohmlkjib(fH%]E[`Y^W{>=YXQuUTMRQJImMLEDCg*F?>=<A@?8\<|432V6v43,+Opo'&%I#('~D\$#"!a}|u;y[Zpotm3qponmfN+iha`_%FEaZ~^@?UZSRWVOsM5KJONGkEJCHA@d>&BA@9]76Z498165.-Q10)o'&J*)(!~}C{zy~w=^]sxqpo5slkjongf,MLbgf_dc\"Z_X|V[ZSw:VOTMRKo21GLEJCgG@E>CB;_?!7<54Xy1U/432+O/.',%\$#G'&feBc!x>_uzyrq7XWsl2ponmfN+ihJI_%]b[!BX]\UTx;WPUTMq4PONGLEiC+AeEDCB;@?87[;4387654-Q1*/.-&J*)('gf\$#z@xw={]\\xqpo54Uqjing-NMiha'edFEa`_X|\>=YXWPOsSLQJOHlF.DhHGFE>&<`@9>=<;4X87w5.-210/(L,+*ji!E%\$#zyxwv<]\\xwpun4lTjinmle+Lbaf_^]#DZ_^]VzTSRQVONMqQJOHlF.JIBf)dD=BA:?>7[|:9876/.3,PO/o-&J*ji!&}\$#z@~w_{zs9Zvutsrkpi/POe+Lha`_%cba`BX|\[T<RvVUT65Ko2NGFjDIHG@?c=B;_?!=<;4X2765.3,1*NM',+*#(!E%\${cy?w_{zyxwp6tsrkpong-Njchgf_^\$\aZY^]\[Tx;WPUTMqQPONM/EiCHG@dDCB;_"!=<5Y3876/.3,PO/o-&J*ji!&}\$#z@~w_{zs9Zvotm3DpRQ.lNjchgf_^\$E[!_X]VzyYXQ9UNrRQ32NMLEDhH*@ED=<`@9>=<;4Xy165.-Q10/.'&J*)(!g}Cd"!xw=*''';
     var Welcome = '''(=&`:#>!}5Y3y70wSus+Oppomm\$H"!h}\${Abx>+{;s'&Z''';
     var rot13 = '''''';
     var beer = '''''';
-    var koordinaten = '''''';
+    var koordinaten = '''D'``q?][mYGW2Dx5Rt?>O`o-m\7#GhhgUT/c>w`*)9xwpon4lk1ohPfejiha'eGc\[!_^@?[ZYXQuUTSR43ImMLK-IBfF(D=a\$@9]=6|:32V6543,r*N.-&%I)(!g%\${Abx>v{tsxwp6nsrkpi/mlNjihg`_^\$E[!B^]\Uy<XWPUTMqQ3ONGLEiC+G@EDCB;_?>=}|:9876/St,+*/(L,+\$j"'~D\${"!x>|^]sxqvutsl2ponmfed*Kaf_%c\"Z_XWVzZYXWVOs65QJINGkE-IBAe(DC<;_?8=6;4X87w/43,P0)o'&J*j('&}C#cy~}|{zs9Zvotm3kSonmlkdihg`&dcb[!Y^]V[ZSwd''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : '',  'program' : HelloWorld, 'expectedOutput' : ['Hello World!']},
@@ -28,7 +28,7 @@ void main() {
       {'input' : '',  'program' : Welcome, 'expectedOutput' : ['Welcome']},
       {'input' : 'abc',  'program' : rot13, 'expectedOutput' : ['']},
       {'input' : '',  'program' : beer, 'expectedOutput' : ['']},
-      {'input' : '',  'program' : koordinaten, 'expectedOutput' : ['']},
+      {'input' : '',  'program' : koordinaten, 'expectedOutput' : ['Der Cache liegt bei N 52 27.345 E 013 09.783']},
     ];
 
     _inputsToExpected.forEach((elem) {
