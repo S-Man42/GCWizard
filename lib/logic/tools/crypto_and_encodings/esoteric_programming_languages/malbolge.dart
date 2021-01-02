@@ -21,6 +21,15 @@ class DebugOutput{
 final xlat1 = '+b(29e*j1VMEKLyC})8&m#~W>qxdRp0wkrUo[D7,XTcA"lI.v%{gJh4G\\-=O@5`_3i<?Z\';FNQuY]szf\$!BS/|t:Pn6^Ha';
 final xlat2 = '5z]&gqtyfr\$(we4{WP)H-Zn,[%\\3dL+Q;>U!pJS72FhOA1CB6v^=I_0/8|jsb9m<.TVac`uY*MK\'X~xDl}REokN:#?G"i@';
 final validOpCodeList = {'j', 'i', '*', 'p', '<', '/', 'v', 'o'};
+final opCodeList = {
+  'j' : 'mov d, [d]',
+  'i' : 'jmp [d]',
+  '*' : '[d] = rotr [d]\na = [d]',
+  'p' : '[d] = crz a, [d]\na = [d]',
+  '/' : 'in a',
+  '<' : 'out a',
+  'v' : 'end',
+  'o' : 'nop' };
 
 malbolgeOutput generateMalbolge(String input){
 }
@@ -53,17 +62,17 @@ malbolgeOutput interpretMalbolge(String program, STDIN){
     return malbolgeOutput([
       'malbolge_error_invalid_program',
       'malbolge_error_program_to_short'], [], [], []);
-  print(memory[j].toString()+' '+_intToTrits((memory[j]))+' , '+memory[j-1].toString()+' '+_intToTrits((memory[j-1])));
   for (int i = j + 1; i < 59049; i++) {
-    memory[i] = _crazy(memory[i - 2], memory[i - 1]);
+    memory[i] = _crazy(memory[i - 1], memory[i - 2]);
   }
-      print(memory[59048].toString()+' '+_intToTrits((memory[59048]))+' , '+memory[59047].toString()+' '+_intToTrits((memory[59047])));
 
   // execute programm
+  print('execute program ----------------------------------------------');
   int a = 0;
   int c = 0;
   int d = 0;
   int opCode = 0;
+  String op = '';
   bool halt = false;
   int input = 0;
   List<String> output = new List<String>();
@@ -87,59 +96,65 @@ malbolgeOutput interpretMalbolge(String program, STDIN){
         'd = '+d.toString(),]);
       return malbolgeOutput(output, assembler, memnonic, debug);
     }
-    opCode = (memory[c] - 33 + c) % 94;
-
+    op = xlat1[(memory[c] - 33 + c) % 94];
     assembler.add(_format(c) + ' ' + _format(d) + ' ' + _format(a));
     assembler.add(_format(memory[c]) + ' ' + _format(memory[d]) + ' ' + _format(memory[a]));
     memnonic.add('');
+    print('c '+c.toString()+'   '+op+' '+opCodeList[op]);
 
-    switch (opCode) {
-      case 4:   //     i     c = [d]
+    switch (op) {
+      case 'i':   //     4     c = [d]
         c = memory[d];
-        memnonic.add('jmp [d]');
+        memnonic.add(opCodeList[op]);
         break;
-      case 5:   //     /     out a % 256
+
+      case '<':   //   23     out a % 256
       print('out a: '+a.toString()+' '+(a % 256).toString());
         STDOUT = STDOUT + String.fromCharCode(a % 256);
-      memnonic.add('out a');
+        memnonic.add(opCodeList[op]);
         break;
-      case 23:  //     <     in a
+
+      case '/':  //      5     in a
         if (input < STDIN.length) {
           a = STDIN.codeUnitAt(input);
           input++;
-        } else {
+        }
+        else {
           output.addAll([STDOUT,
             '',
             'malbolge_error_runtime',
             'malbolge_error_no_input']);
           return malbolgeOutput(output, assembler, memnonic, debug);
         }
-        memnonic.add('out a');
+        memnonic.add(opCodeList[op]);
         break;
-      case 39:  //     *     a = [d] = rotr [d]
+
+      case '*':  //    39     a = [d] = rotr [d]
         memory[d] = _rotate(memory[d]);
         a = memory[d];
-        memnonic.add('rotr [d]');
-        memnonic.add('mov a, [d]');
+        memnonic.add(opCodeList[op]);
         assembler.add('');
         break;
-      case 40:  //     j     mov d, [d]
+
+      case 'j':  //    40     mov d, [d]
         d = memory[d];
         memnonic.add('mov d, [d]');
         break;
-      case 62:  //     p     a = [d] = crazy(a, [d])
-        memory[d] = _crazy(memory[d], a);
+
+      case 'p':  //    62     a = [d] = crazy(a, [d])
+        memory[d] = _crazy(a, memory[d]);
         a = memory[d];
-        memnonic.add('crz([d], a)');
-        memnonic.add('mov a, [d]');
+        memnonic.add(opCodeList[op]);
         assembler.add('');
         break;
-      case 68:  //     o     NOP
-        memnonic.add('nop');
+
+      case 'o':  //    68     NOP
+        memnonic.add(opCodeList[op]);
         break;
-      case 81:  //     v     end
+
+      case 'v':  //    81     end
         halt = true;
-        memnonic.add('end');
+        memnonic.add(opCodeList[op]);
         break;
       default:
     };
@@ -182,11 +197,13 @@ int _tritsToInt(String input){
   return output;
 }
 
-final crazyMap = {
-  '00' : '1', '01' : '0', '02' : '0',
-  '10' : '1', '11' : '0', '12' : '2',
-  '20' : '2', '21' : '2', '22' : '1'};
+// final crazyMap = {
+//   '00' : '1', '01' : '0', '02' : '0',
+//   '10' : '1', '11' : '0', '12' : '2',
+//   '20' : '2', '21' : '2', '22' : '1'};
+
 final p9 = {0 : 1, 1 : 9, 2 : 81, 3 : 729, 4 : 6561};
+
 final o = {
   0 : { 0:4, 1:3, 2:3, 3:1, 4:0, 5:0, 6:1, 7:0, 8:0 },
   1 : { 0:4, 1:3, 2:5, 3:1, 4:0, 5:2, 6:1, 7:0, 8:2 },
@@ -198,30 +215,23 @@ final o = {
   7 : { 0:7, 1:6, 2:8, 3:7, 4:6, 5:8, 6:4, 7:3, 8:5 },
   8 : { 0:8, 1:8, 2:7, 3:8, 4:8, 5:7, 6:5, 7:5, 8:4 },
 };
+
 int _crazy(int x, y){
   int i = 0;
   for (int j = 0; j < 5; j++){
-    print(j.toString()+' '+p9[j].toString()+' '+((y / p9[j]) % 9).toString()+' '+((x / p9[j]) % 9).toString());
     i = i + o[(y ~/ p9[j]) % 9][(x ~/ p9[j]) % 9] * p9[j];
   }
-  //String trits1 = _intToTrits(x);
-  //String trits2 = _intToTrits(y);
-  //String output = '';
-  //for (int i = 0; i < trits1.length; i++)
-  //  output = output + crazyMap[trits1[i] + trits2[i]];
-  //print('crazy-----'+mem1.toString()+','+mem2.toString());
-  //print(trits1);
-  //print(trits2);
-  //print('----------');
-  //print(output);
-  //return _tritsToInt(output);
   return i;
+  // String trits1 = _intToTrits(x);
+  // String trits2 = _intToTrits(y);
+  // String output = '';
+  // for (int i = 0; i < trits1.length; i++)
+  //   output = output + crazyMap[trits2[i] + trits1[i]];
+  //return _tritsToInt(output);
 }
 
-int _rotate(int input){
-  String output = _intToTrits(input);
-  print('rotate '+input.toString()+': '+output+'>'+output[9] + output.substring(0, 9));
-  return _tritsToInt(output[9] + output.substring(0, 8));
+int _rotate(int n){
+ return (n ~/ 3 + (n % 3) * 19683);
 }
 
 bool _invalid(int opCode) {
