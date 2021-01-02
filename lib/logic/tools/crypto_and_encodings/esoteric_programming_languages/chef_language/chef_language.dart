@@ -49,34 +49,35 @@ List<String> _getAuxiliaryRecipe(String name, int value, List<String> ingredient
 
 
 String generateChef(String language, title, String remark, String time, String temperature, String outputToGenerate, bool auxiliary){
-  var output = StringBuffer();
-  List<String> outputElements = new List<String>();
-  List<String> methodList = new List<String>();
-  List<String> ingredientList = new List<String>();
-  Map <String, List<String>> auxiliaryRecipes = new Map <String, List<String>>();
-  Map<int, String> amount = new Map<int, String>();
-  Map<String, String> ingredientListed = new Map<String, String>();
   int value = 0;
   int i = 0;
-  List<String> itemList = new List<String>();
-  List<String> itemListLiquid= new List<String>();
-  List<String> itemListDry = new List<String>();
-  List<List<String>> itemListAuxiliary = new List<List<String>>();
-  List<String> itemListMeasuresLiquid= new List<String>();
-  List<String> itemListMeasuresDry = new List<String>();
-  List<String> itemListMeasure = new List<String>();
+  var output = StringBuffer();
+  List<String> outputElements = new List<String>();                                    // store the output elements
+  List<String> methodList = new List<String>();                                   // store the methods
+  List<String> ingredientList = new List<String>();                               // store the ingredients
+  Map <String, List<String>> auxiliaryRecipes = new Map <String, List<String>>(); // store the auxiliary recipes
+
+  Map<int, String> amount = new Map<int, String>();                               // store the already got value
+  Map<String, String> ingredientListed = new Map<String, String>();               // store the already used ingredients
+
+  List<String> itemList = new List<String>();                                          // List with all ingredients
+  List<String> itemListLiquid= new List<String>();                                     // List with only liquid ingredients
+  List<String> itemListDry = new List<String>();                                       // List with only dry ingredients
+  List<String> itemListMeasuresLiquid= new List<String>();                             // List with measures for liquid ingredients
+  List<String> itemListMeasuresDry = new List<String>();                               // List with measures for dry ingredients
+  List<String> itemListMeasure = new List<String>();                                   // List with all measures
+  List<List<String>> itemListAuxiliary = new List<List<String>>();                           // List with strinds to generate title of an aux recipe
 
   String item = '';  
   String measure = '';
   String auxiliaryName = '';
   
-  List<String> ingredientOne = new List<String>();
-  List<String> ingredientTwo = new List<String>();
+  List<String> ingredientOne = new List<String>();                                     // store 1st ingredient, amount an measure for aux recipe
+  List<String> ingredientTwo = new List<String>();                                     // store 2nd ingredient, amount an measure for aux recipe
   
-  RegExp expr = new RegExp(r'(([\D]+)|([\d]+))+?');
-
   Random random = new Random();
 
+  // fill the lists for the ingredients depending on language
   if (language == 'ENG') {
     itemListDry.addAll(itemListDryENG);
     itemListLiquid.addAll(itemListLiquidENG);
@@ -93,7 +94,7 @@ String generateChef(String language, title, String remark, String time, String t
     itemListMeasuresDry.addAll(dryMeasuresDEU);
   }
 
-  if (auxiliary) { // build auxilay recipes
+  if (auxiliary) { // have to be used add ingredient to generate a space-char
     if (language == 'ENG'){
       amount[32] = 'ambergris';
       ingredientList.add(32.toString() + ' ml ambergris');
@@ -102,12 +103,15 @@ String generateChef(String language, title, String remark, String time, String t
       ingredientList.add(32.toString() + ' ml Ambra');
     }
 
+    // divide output into groups of digits and non-digits
+    RegExp expr = new RegExp(r'(([\D]+)|([\d]+))+?'); // any non digit | any digit
     expr.allMatches(outputToGenerate).forEach((match) {
       if (match.group(1) != null) {
         outputElements.add(match.group(1));
       }
     });
 
+    // reverse every output-element - it is a stack, so last in first out!
     for (i = 0; i < outputElements.length / 2; i++) {
       var temp = outputElements[i];
       if (int.tryParse(temp) == null)
@@ -121,27 +125,31 @@ String generateChef(String language, title, String remark, String time, String t
 
     i = 0;
     outputElements.forEach((element) {
+      // check element => number => 0 - 9    => 48 - 57 = liquid
+      //                            10 - 99  => numbers = dry
+      //                            100 ...  => aux recipe
+      //                  string => all char => liquid
       if (int.tryParse(element) != null) { // element is a number
         value = int.parse(element);
-
-        if (value < 10) { // => digit 0-9 => store charcode 48 - 57 => liquid
-          value = element.codeUnitAt(0);
-          if (amount[value] == null) { // a new digit
+        if (value < 10) { // => digit 0-9 => store digit as charcode 48 - 57 => liquid ingredient
+          value = value + 48;
+          if (amount[value] == null) { // value was not used before <=> a new digit
             item = itemListLiquid.elementAt(random.nextInt(itemListLiquid.length));
-            measure = itemListMeasuresLiquid.elementAt(random.nextInt(itemListMeasuresLiquid.length));
             while (ingredientListed[item] != null) {
               item = itemListLiquid.elementAt(random.nextInt(itemListLiquid.length));
             }
             ingredientListed[item] = item;
+            measure = itemListMeasuresLiquid.elementAt(random.nextInt(itemListMeasuresLiquid.length));
             ingredientList.add(value.toString() + ' ' + measure + ' ' +  item);
             amount[value] = item;
             methodList.add(getText(textId.Put, amount[value], language));
-          } else { // digit was already processed
+          }
+          else { // digit was already processed
             methodList.add(getText(textId.Put, amount[value], language));
           }
-
-        } else if (value < 100) { // => number 10-99 => store charcode 10 - 99 => dry, unspecific
-          if (amount[value] == null) { // a new number
+        }
+        else if (value < 100) { // => number 10-99 => store number as char with charcode 10 - 99 => dry, unspecific ingredients
+          if (amount[value] == null) { // value was not used before <=> a new a new number
             item = itemListDry.elementAt(random.nextInt(itemListDry.length));
             measure = itemListMeasuresDry.elementAt(random.nextInt(itemListMeasuresDry.length));
             while (ingredientListed[item] != null) {
@@ -152,28 +160,45 @@ String generateChef(String language, title, String remark, String time, String t
             amount[value] = item;
             methodList.add(getText(textId.Put, amount[value], language));
           } else { // number was already processed
-            methodList.add(getText(textId.Put, amount[value], language));
+             if (itemListLiquid.contains(amount[value])) { // value is used with liquid => process and get new dry ingredient
+               item = itemListDry.elementAt(random.nextInt(itemListDry.length));
+               measure = itemListMeasuresDry.elementAt(random.nextInt(itemListMeasuresDry.length));
+               while (ingredientListed[item] != null) {
+                 item = itemListDry.elementAt(random.nextInt(itemListDry.length));
+               }
+               ingredientListed[item] = item;
+               ingredientList.add(value.toString() + ' ' + measure + ' ' + item);
+               amount[value] = item;
+               methodList.add(getText(textId.Put, amount[value], language));
+             }
+             else {
+               methodList.add(getText(textId.Put, amount[value], language));
+             }
           }
-
-        } else { // => auxiliary recipe to provide number: pour, clean, serve with, pour
-
-            auxiliaryName = itemListAuxiliary[0][random.nextInt(4)] + itemListAuxiliary[1][random.nextInt(4)] + itemListAuxiliary[2][random.nextInt(4)] + itemListAuxiliary[3][random.nextInt(4)];
-            while (auxiliaryRecipes[auxiliaryName] != null) {
-              auxiliaryName = itemListAuxiliary[0][random.nextInt(4)] + itemListAuxiliary[1][random.nextInt(4)] + itemListAuxiliary[2][random.nextInt(4)] + itemListAuxiliary[3][random.nextInt(4)];
-            }
-            ingredientOne = [itemListMeasuresDry.elementAt(random.nextInt(itemListMeasuresDry.length)), itemListDry.elementAt(random.nextInt(itemListDry.length))];
-            ingredientTwo = [itemListMeasuresDry.elementAt(random.nextInt(itemListMeasuresDry.length)), itemListDry.elementAt(random.nextInt(itemListDry.length))];
-            while (ingredientTwo.elementAt(1) == ingredientOne.elementAt(1)) {
-              ingredientTwo = [itemListMeasuresDry.elementAt(random.nextInt(itemListMeasuresDry.length)), itemListDry.elementAt(random.nextInt(itemListDry.length))];
-            }
-            auxiliaryRecipes[auxiliaryName] = _getAuxiliaryRecipe(auxiliaryName, value, ingredientOne, ingredientTwo, language);
-            if (i > 0) {
-              methodList.add(getText(textId.Pour, '', language));
-              methodList.add(getText(textId.Clean, '', language));
-            }
-            methodList.add(getText(textId.Serve_with, auxiliaryName, language));
         }
-      } else { // element is a string of non-digits  => Liquid
+        else { // value >= 100 => auxiliary recipe to provide number: pour, clean, serve with, pour
+
+          // build name for auxiliary recipe
+          auxiliaryName = itemListAuxiliary[0][random.nextInt(4)] + itemListAuxiliary[1][random.nextInt(4)] + itemListAuxiliary[2][random.nextInt(4)] + itemListAuxiliary[3][random.nextInt(4)];
+          while (auxiliaryRecipes[auxiliaryName] != null) {
+            auxiliaryName = itemListAuxiliary[0][random.nextInt(4)] + itemListAuxiliary[1][random.nextInt(4)] + itemListAuxiliary[2][random.nextInt(4)] + itemListAuxiliary[3][random.nextInt(4)];
+          }
+          // get two ingredients to calculate value
+          ingredientOne = [itemListMeasuresDry.elementAt(random.nextInt(itemListMeasuresDry.length)), itemListDry.elementAt(random.nextInt(itemListDry.length))];
+          ingredientTwo = [itemListMeasuresDry.elementAt(random.nextInt(itemListMeasuresDry.length)), itemListDry.elementAt(random.nextInt(itemListDry.length))];
+          while (ingredientTwo.elementAt(1) == ingredientOne.elementAt(1)) {
+            ingredientTwo = [itemListMeasuresDry.elementAt(random.nextInt(itemListMeasuresDry.length)), itemListDry.elementAt(random.nextInt(itemListDry.length))];
+          }
+          // build auxiliary recipe
+          auxiliaryRecipes[auxiliaryName] = _getAuxiliaryRecipe(auxiliaryName, value, ingredientOne, ingredientTwo, language);
+          if (i > 0) {
+            methodList.add(getText(textId.Pour, '', language));
+            methodList.add(getText(textId.Clean, '', language));
+          }
+          methodList.add(getText(textId.Serve_with, auxiliaryName, language));
+        }
+      }
+      else { // element is a string of non-digits  => Liquid ingredients
         List<String> Elements = element.split('');
         Elements.forEach((element) {
           value = element.codeUnitAt(0);
@@ -188,14 +213,16 @@ String generateChef(String language, title, String remark, String time, String t
             ingredientList.add(value.toString() + ' ' + measure + ' ' +  item);
             amount[value] = item;
             methodList.add(getText(textId.Put, amount[value], language));
-          } else { // character was already processed
+          }
+          else { // character was already processed {
             methodList.add(getText(textId.Put, amount[value], language));
           }
         });
       }
       i++;
     }); // outputElements.forEach((element)
-  } else { // build "normal" linear recipe
+  }
+  else { // build "normal" linear recipe
     itemList.addAll(itemListDry);
     itemList.addAll(itemListLiquid);
     itemListMeasure.addAll(itemListMeasuresDry);
@@ -219,7 +246,8 @@ String generateChef(String language, title, String remark, String time, String t
         ingredientList.add(value.toString() + ' ' + measure + ' ' +  item);
         amount[value] = item;
         methodList.add(getText(textId.Put, amount[value], language));
-      } else {
+      }
+      else {
         methodList.add(getText(textId.Put, amount[value], language));
       }
     });
