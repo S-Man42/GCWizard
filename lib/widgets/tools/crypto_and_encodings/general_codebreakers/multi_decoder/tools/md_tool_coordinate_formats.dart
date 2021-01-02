@@ -39,13 +39,13 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
         try {
           switch (options[MDT_COORDINATEFORMATS_OPTION_FORMAT]) {
             case keyCoordsDEC:
-              coords = parseDEC(input);
+              coords = parseDEC(input, wholeString: true);
               break;
             case keyCoordsDMM:
-              coords = parseDMM(input);
+              coords = parseDMM(input, wholeString: true);
               break;
             case keyCoordsDMS:
-              coords = parseDMS(input);
+              coords = parseDMS(input, wholeString: true);
               break;
             case keyCoordsUTM:
               coords = parseUTM(input, defaultEllipsoid());

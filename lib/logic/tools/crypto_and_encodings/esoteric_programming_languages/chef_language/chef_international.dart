@@ -14,6 +14,9 @@ enum textId {
   Combine
 }
 
+enum Type {Take,   Put,   Fold,       Add,       Remove,      Combine,     Divide, AddDry,           Liquefy,   LiquefyBowl,       Stir,         StirInto,          Mix,     Clean,    Pour,      Verb,         VerbUntil,      SetAside,        Serve,     Refrigerate, Remember, Invalid,
+           Nehmen, Geben, Unterheben, Dazugeben, Abschoepfen, Kombinieren, Teilen, FestesHinzugeben, Schmelzen, SchuesselErhitzen, ZutatRuehren, SchuessselRuehren, Mischen, Saeubern, Ausgiessen, Wiederholen, WiederholenBis, BeiseiteStellen, Servieren, Gefrieren,   Erinnern, Unbekannt}
+
 final List<RegExp> matchersENG = [
   RegExp(r'^take( the)? ([a-z0-9 ]+) from( the)? refrigerator$'),
   RegExp(r'^(put|fold)( the)? ([a-z0-9 ]+) into( the)?( (\d+)(nd|rd|th|st))? mixing bowl$'),
@@ -21,7 +24,7 @@ final List<RegExp> matchersENG = [
   RegExp(r'^(add|remove|combine|divide)( the)? ([a-z0-9 ]+?)( (to|into|from)( the)?( (\d+)(nd|rd|th|st))? mixing bowl)?$'),
   RegExp(r'^liqu[ie]fy( the)? contents of the( (\d+)(nd|rd|th|st))? mixing bowl$'),
   RegExp(r'^liqu[ie]fy( the)? ([a-z0-9 ]+)$'),
-  RegExp(r'^stir ((the )?((\d+)(nd|rd|th|st) )?mixing bowl )?for (\d+ )minute(s)?$'),
+  RegExp(r'^stir ((the )?((\d+)(nd|rd|th|st) )?mixing bowl )?for (\d+) minute(s)?$'),
   RegExp(r'^stir (the )?([a-z0-9 ]+) into (the )?((\d+)(nd|rd|th|st) )?mixing bowl$'),
   RegExp(r'^mix( (the )?((\d+)(nd|rd|th|st) )?mixing bowl)?( well)?$'),
   RegExp(r'^clean( the)?( (\d+)(nd|rd|th|st))? mixing bowl( well)?$'),
@@ -60,13 +63,124 @@ final RegExp MeasureDry = RegExp(r'^g(r)?$|^kg$|^pinch(es)?$|^prise(n)$');
 final RegExp MeasureLiquid = RegExp(r'^ml$|^l$|^dash(es)?$|^drop(s)?$|^spritzer$|^tropfen$');
 final RegExp MeasureElse = RegExp(r'^cup(s)?$|^tasse(n)?$|^teaspoon(s)?$|^tablespoon(s)?$|^teelöffel$|^esslöffel$');
 
+final Map Messages = {
+  'DEU' : {
+    "chef_error_structure_recipe" : "chef_error_structure_recipe",
+    "chef_error_structure_subrecipe" : "chef_error_structure_subrecipe",
+    "chef_error_structure_recipe_title" : "chef_error_structure_recipe_title_de",
+    "chef_error_structure_recipe_missing_title" : "chef_error_structure_recipe_missing_title",
+    "chef_error_structure_recipe_missing_output" : "chef_error_structure_recipe_missing_output",
+    "chef_error_structure_recipe_comments" : "chef_error_structure_recipe_comments_de",
+    "chef_error_structure_recipe_ingredient_list" : "chef_error_structure_recipe_ingredient_list_de",
+    "chef_error_structure_recipe_cooking_time" : "chef_error_structure_recipe_cooking_time_de",
+    "chef_error_structure_recipe_oven_temperature" : "chef_error_structure_recipe_oven_temperature_de",
+    "chef_error_structure_recipe_methods" : "chef_error_structure_recipe_methods_de",
+    "chef_error_structure_recipe_serve_amount" : "chef_error_structure_recipe_serve_amount_de",
+    "chef_error_structure_recipe_read_unexpected" : "chef_error_structure_recipe_read_unexpected",
+    "chef_error_structure_recipe_read_unexpected_comments_title" : "chef_error_structure_recipe_read_unexpected_comments_title",
+    "chef_error_structure_recipe_expecting" : "chef_error_structure_recipe_expecting",
+    "chef_error_structure_recipe_empty_missing_title" : "chef_error_structure_recipe_empty_missing_title",
+    "chef_error_structure_recipe_empty_ingredients" : "chef_error_structure_recipe_empty_ingredients_de",
+    "chef_error_structure_recipe_empty_methods" : "chef_error_structure_recipe_empty_methods_de",
+    "chef_error_structure_recipe_empty_serves" : "chef_error_structure_recipe_empty_serves_de",
+    "chef_error_syntax" : "chef_error_syntax",
+    "chef_error_syntax_ingredient" : "chef_error_syntax_ingredient",
+    "chef_error_syntax_ingredient_name" : "chef_error_syntax_ingredient_name",
+    "chef_error_syntax_method" : "chef_error_syntax_method",
+    "chef_error_syntax_method_unsupported" : "chef_error_syntax_method_unsupported",
+    "chef_error_syntax_serves" : "chef_error_syntax_serves",
+    "chef_error_syntax_serves_without_number" : "chef_error_syntax_serves_without_number",
+    "chef_error_syntax_cooking_time" : "chef_error_syntax_cooking_time_de",
+    "chef_error_syntax_oven_temperature" : "chef_error_syntax_oven_temperature_de",
+    "chef_error_runtime" : "chef_error_runtime",
+    "chef_error_runtime_exception" : "chef_error_runtime_exception",
+    "chef_error_runtime_serving_aux" : "chef_error_runtime_serving_aux",
+    "chef_error_runtime_invalid_input" : "chef_error_runtime_invalid_input",
+    "chef_error_runtime_ingredient_not_found" : "chef_error_runtime_ingredient_not_found",
+    "chef_error_runtime_method_step" : "chef_error_runtime_method_step",
+    "chef_error_runtime_missing_input" : "chef_error_runtime_missing_input",
+    "chef_error_runtime_folded_from_empty_mixing_bowl" : "chef_error_runtime_folded_from_empty_mixing_bowl",
+    "chef_error_runtime_method_loop" : "chef_error_runtime_method_loop",
+    "chef_error_runtime_method_loop_end" : "chef_error_runtime_method_loop_end",
+    "chef_error_runtime_method_loop_aside" : "chef_error_runtime_method_loop_aside",
+    "chef_error_runtime_method_aux_recipe" : "chef_error_runtime_method_aux_recipe",
+    "chef_error_runtime_method_aux_recipe_return" : "chef_error_runtime_method_aux_recipe_return",
+    "chef_error_runtime_add_to_empty_mixing_bowl" : "chef_error_runtime_add_to_empty_mixing_bowl",
+    "chef_error_runtime_remove_from_empty_mixing_bowl" : "chef_error_runtime_remove_from_empty_mixing_bowl",
+    "chef_error_runtime_combine_with_empty_mixing_bowl" : "chef_error_runtime_combine_with_empty_mixing_bowl",
+    "chef_error_runtime_divide_from_empty_mixing_bowl" : "chef_error_runtime_divide_from_empty_mixing_bowl",
+    "chef_error_runtime_stir_empty_mixing_bowl" : "chef_error_runtime_stir_empty_mixing_bowl",
+    "chef_error_runtime_stir_in_empty_mixing_bowl" : "chef_error_runtime_stir_in_empty_mixing_bowl",
+    "chef_error_runtime_mix_empty_mixing_bowl" : "chef_error_runtime_mix_empty_mixing_bowl",
+    "chef_hint_recipe_hint" : "chef_hint_recipe_hint",
+    "chef_hint_recipe_ingredients" : "chef_hint_recipe_ingredients_de",
+    "chef_hint_recipe_methods" : "chef_hint_recipe_methods_de",
+    "chef_hint_recipe_oven_temperature" : "chef_hint_recipe_oven_temperature",
+    "chef_hint_no_hint_available" : "chef_hint_no_hint_available",
+  },
+  'ENG' : {
+    "chef_error_structure_recipe" : "chef_error_structure_recipe",
+    "chef_error_structure_subrecipe" : "chef_error_structure_subrecipe",
+    "chef_error_structure_recipe_title" : "chef_error_structure_recipe_title_en",
+    "chef_error_structure_recipe_missing_title" : "chef_error_structure_recipe_missing_title",
+    "chef_error_structure_recipe_missing_output" : "chef_error_structure_recipe_missing_output",
+    "chef_error_structure_recipe_comments" : "chef_error_structure_recipe_comments_en",
+    "chef_error_structure_recipe_ingredient_list" : "chef_error_structure_recipe_ingredient_list_en",
+    "chef_error_structure_recipe_cooking_time" : "chef_error_structure_recipe_cooking_time_en",
+    "chef_error_structure_recipe_oven_temperature" : "chef_error_structure_recipe_oven_temperature_en",
+    "chef_error_structure_recipe_methods" : "chef_error_structure_recipe_methods_en",
+    "chef_error_structure_recipe_serve_amount" : "chef_error_structure_recipe_serve_amount_en",
+    "chef_error_structure_recipe_read_unexpected" : "chef_error_structure_recipe_read_unexpected",
+    "chef_error_structure_recipe_read_unexpected_comments_title" : "chef_error_structure_recipe_read_unexpected_comments_title",
+    "chef_error_structure_recipe_expecting" : "chef_error_structure_recipe_expecting",
+    "chef_error_structure_recipe_empty_missing_title" : "chef_error_structure_recipe_empty_missing_title",
+    "chef_error_structure_recipe_empty_ingredients" : "chef_error_structure_recipe_empty_ingredients_en",
+    "chef_error_structure_recipe_empty_methods" : "chef_error_structure_recipe_empty_methods_en",
+    "chef_error_structure_recipe_empty_serves" : "chef_error_structure_recipe_empty_serves_en",
+    "chef_error_syntax" : "chef_error_syntax",
+    "chef_error_syntax_ingredient" : "chef_error_syntax_ingredient",
+    "chef_error_syntax_ingredient_name" : "chef_error_syntax_ingredient_name",
+    "chef_error_syntax_method" : "chef_error_syntax_method",
+    "chef_error_syntax_method_unsupported" : "chef_error_syntax_method_unsupported",
+    "chef_error_syntax_serves" : "chef_error_syntax_serves",
+    "chef_error_syntax_serves_without_number" : "chef_error_syntax_serves_without_number",
+    "chef_error_syntax_cooking_time" : "chef_error_syntax_cooking_time_en",
+    "chef_error_syntax_oven_temperature" : "chef_error_syntax_oven_temperature_en",
+    "chef_error_runtime" : "chef_error_runtime",
+    "chef_error_runtime_exception" : "chef_error_runtime_exception",
+    "chef_error_runtime_serving_aux" : "chef_error_runtime_serving_aux",
+    "chef_error_runtime_invalid_input" : "chef_error_runtime_invalid_input",
+    "chef_error_runtime_ingredient_not_found" : "chef_error_runtime_ingredient_not_found",
+    "chef_error_runtime_method_step" : "chef_error_runtime_method_step",
+    "chef_error_runtime_missing_input" : "chef_error_runtime_missing_input",
+    "chef_error_runtime_folded_from_empty_mixing_bowl" : "chef_error_runtime_folded_from_empty_mixing_bowl",
+    "chef_error_runtime_method_loop" : "chef_error_runtime_method_loop",
+    "chef_error_runtime_method_loop_end" : "chef_error_runtime_method_loop_end",
+    "chef_error_runtime_method_loop_aside" : "chef_error_runtime_method_loop_aside",
+    "chef_error_runtime_method_aux_recipe" : "chef_error_runtime_method_aux_recipe",
+    "chef_error_runtime_method_aux_recipe_return" : "chef_error_runtime_method_aux_recipe_return",
+    "chef_error_runtime_add_to_empty_mixing_bowl" : "chef_error_runtime_add_to_empty_mixing_bowl",
+    "chef_error_runtime_remove_from_empty_mixing_bowl" : "chef_error_runtime_remove_from_empty_mixing_bowl",
+    "chef_error_runtime_combine_with_empty_mixing_bowl" : "chef_error_runtime_combine_with_empty_mixing_bowl",
+    "chef_error_runtime_divide_from_empty_mixing_bowl" : "chef_error_runtime_divide_from_empty_mixing_bowl",
+    "chef_error_runtime_stir_empty_mixing_bowl" : "chef_error_runtime_stir_empty_mixing_bowl",
+    "chef_error_runtime_stir_in_empty_mixing_bowl" : "chef_error_runtime_stir_in_empty_mixing_bowl",
+    "chef_error_runtime_mix_empty_mixing_bowl" : "chef_error_runtime_mix_empty_mixing_bowl",
+    "chef_hint_recipe_hint" : "chef_hint_recipe_hint",
+    "chef_hint_recipe_ingredients" : "chef_hint_recipe_ingredients_en",
+    "chef_hint_recipe_methods" : "chef_hint_recipe_methods_en",
+    "chef_hint_recipe_oven_temperature" : "chef_hint_recipe_oven_temperature",
+    "chef_hint_no_hint_available" : "chef_hint_no_hint_available",
+  }
+};
+
 final List<String> liquidMeasuresDEU = ['ml', 'l', 'Spritzer', 'Tropfen'];
 
 final List<String> liquidMeasuresENG = ['ml', 'l', 'dashes', 'drops'];
 
-final List<String> dryMeasuresDEU = ['g', 'kg', 'Prisen', 'Scheiben'];
+final List<String> dryMeasuresDEU = ['g', 'kg', 'Prisen'];
 
-final List<String> dryMeasuresENG = ['g', 'kg', 'pinches', 'slices'];
+final List<String> dryMeasuresENG = ['g', 'kg', 'pinches'];
 
 final List<String> measuresDEU = ['Teelöffel', 'Esslöffel', 'Tasse'];
 
@@ -111,7 +225,7 @@ final List<String> itemListDryDEU = [
   'Gurke', 'Kartoffeln', 'Süßkartoffeln', 'Apfelstücke', 'Garnelen',
   'Guacamole', 'Vollkornmehl', 'Tofu', 'Chili', 'Curry',
   'Senf', 'Marmelade', 'gemischte Früchte', 'Zucchini', 'Schmalz', 'Eier',
-  'Maisstärke', 'Scheiben', 'Brot', 'Speck',	'dunkle Schokolade', 'Milchschokolade',
+  'Maisstärke', 'Brot', 'Speck',	'dunkle Schokolade', 'Milchschokolade',
   'Kakaopulver', 'Erbsen', 'Karotten', 'Rosinen',	'mexikanische Gewürze', 'Bananenchips'
 ];
 
