@@ -38,14 +38,12 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_LENGTH);
 
   var bigrams = getBigrams(alphabet);
-  //var trigrams = getTrigrams(alphabet);
 
   var vigenereSquare = _createVigenereSquare(bigrams.alphabet.length, vigenereBreakerType == VigenereBreakerType.BEAUFORT);
   var cipher_bin = List<int>();
   var resultList = List <VigenereBreakerResult>();
   VigenereBreakerResult best_result = null;
-  String out1 = '';
-try {
+
   iterateText(input, bigrams.alphabet).forEach((char) {cipher_bin.add(char);});
 
   if (cipher_bin.length < 3)
@@ -69,24 +67,16 @@ try {
     result.plaintext = decryptVigenere(input, result.key, false);
     result.fitness = calc_fitnessBigrams(result.plaintext, bigrams);
   }
-  best_result = bestSolution(resultList);
-} on Exception
-  {
-    return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.WRONG_GENERATE_TEXT);
-  };
+  best_result = _bestSolution(resultList);
 
-  for (var i = 0; i < resultList.length; ++i)
-    out1 = out1 + '\n' + resultList[i].fitness.toStringAsFixed(2) + '\t' + resultList[i].fitnessFiltered.toStringAsFixed(2) + '\t' +
-        resultList[i].key ;
-
-  return VigenereBreakerResult(plaintext: best_result.plaintext, key: best_result.key +'\n' + out1, fitness: best_result.fitness, errorCode: VigenereBreakerErrorCode.OK );
+  return VigenereBreakerResult(plaintext: best_result.plaintext, key: best_result.key, fitness: best_result.fitness, errorCode: VigenereBreakerErrorCode.OK );
 }
 
-VigenereBreakerResult bestSolution(List<VigenereBreakerResult> keyList){
+VigenereBreakerResult _bestSolution(List<VigenereBreakerResult> keyList){
   if (keyList == null || keyList.length == 0)
     return null;
 
-  keyList = _highPassFilter (0.98, keyList);
+  keyList = _highPassFilter (2, keyList);
   var bestFitness = keyList[0];
   for (var i = 1; i < keyList.length; ++i)
     if (bestFitness.fitnessFiltered < keyList[i].fitnessFiltered)
@@ -97,12 +87,10 @@ VigenereBreakerResult bestSolution(List<VigenereBreakerResult> keyList){
 
 
 /// HighPass Filter
-/// param alpha alpha should be in the range of [0..1]. If alpha = 1, the output equals the input. The smaller alpha gets, the stronger is the highpass effect.
 List<VigenereBreakerResult> _highPassFilter( double alpha, List<VigenereBreakerResult> keyList) {
-  keyList[0].fitnessFiltered = alpha * keyList[0].fitness;
 
-  for (var i = 1; i < keyList.length; ++i)
-    keyList[i].fitnessFiltered = alpha * (keyList[i - 1].fitnessFiltered + keyList[i].fitness - keyList[i - 1].fitness);
+  for (var i = 0; i < keyList.length; ++i)
+    keyList[i].fitnessFiltered = alpha * keyList[i].fitness - (i > 0 ? keyList[i - 1].fitness : keyList[i].fitness) -  (i < keyList.length-1 ? keyList[i + 1].fitness : keyList[i].fitness);
 
   return keyList;
 }
