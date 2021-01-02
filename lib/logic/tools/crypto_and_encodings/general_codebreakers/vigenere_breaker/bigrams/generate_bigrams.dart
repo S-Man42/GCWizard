@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/vigenere_breaker.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/vigenere_breaker.dart';
 import 'package:path/path.dart' as path;
 
  main() {
@@ -34,7 +34,7 @@ bool generate_bigram() {
   ];
 
   _inputsToExpected.forEach((elem) async {
-    var filePath = path.current + "/lib/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/";
+    var filePath = path.current + "/lib/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/";
     var fileIn = File(path.normalize(filePath + elem['input']));
     var fileOut = File(path.normalize(filePath + elem['fileOut']));
 

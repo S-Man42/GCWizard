@@ -1,4 +1,4 @@
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/bigrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/bigrams.dart';
 
 class FrenchBigrams extends Bigrams {
 

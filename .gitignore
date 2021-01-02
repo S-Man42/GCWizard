@@ -88,13 +88,13 @@ web
 *.gz
 *.toc
 howtocode/
-lib/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/german_bigramsOrg.dart
-lib/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/german_bigrams.txt
-lib/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/english_bigrams.txt
-lib/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/bigrams Vergleich.xlsx
-lib/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/Fitness Test.xlsx
-lib/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/french_bigrams.txt
-lib/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/spanish_bigrams.txt
-lib/logic/tools/crypto_and_encodings/vigenere_breaker/bigrams/~$bigrams Vergleich.xlsx
-lib/logic/tools/crypto_and_encodings/vigenere_breaker/trigrams/english_trigrams.txt
-lib/logic/tools/crypto_and_encodings/vigenere_breaker/trigrams/german_trigrams.txt
+lib/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/german_bigramsOrg.dart
+lib/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/german_bigrams.txt
+lib/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/english_bigrams.txt
+lib/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/bigrams Vergleich.xlsx
+lib/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/Fitness Test.xlsx
+lib/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/french_bigrams.txt
+lib/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/spanish_bigrams.txt
+lib/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/~$bigrams Vergleich.xlsx
+lib/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/trigrams/english_trigrams.txt
+lib/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/trigrams/german_trigrams.txt

@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:tuple/tuple.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/guballa.de/breaker.dart' as guballa;
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/trigrams/trigrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/guballa.de/breaker.dart' as guballa;
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/trigrams/trigrams.dart';
 
 /*
 guballa.BreakerResult break_vigenere (List<int> cipher_bin, int keyLength, List<List<int>> vigenereSquare, List<int> Trigrams) {

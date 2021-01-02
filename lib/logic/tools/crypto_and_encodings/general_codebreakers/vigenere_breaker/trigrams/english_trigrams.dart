@@ -1,4 +1,4 @@
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere_breaker/trigrams/trigrams.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/trigrams/trigrams.dart';
 
 class EnglishTrigrams extends Trigrams {
 
