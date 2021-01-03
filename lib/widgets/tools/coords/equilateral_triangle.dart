@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class EquilateralTriangle extends StatefulWidget {
@@ -44,7 +44,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, "coords_equilateraltriangle_coorda"),
+          title: i18n(context, "coords_equilateraltriangle_coorda"),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -54,7 +54,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
           },
         ),
         GCWCoords(
-          text: i18n(context, "coords_equilateraltriangle_coordb"),
+          title: i18n(context, "coords_equilateraltriangle_coordb"),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {

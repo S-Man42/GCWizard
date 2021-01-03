@@ -15,15 +15,19 @@ import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/mappoint_editor.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 
 enum _LayerType {OPENSTREETMAP_MAPNIK, MAPBOX_SATELLITE}
 
@@ -218,8 +222,11 @@ class GCWMapViewState extends State<GCWMapView> {
               onLongPress: widget.allowCreatePoints ? (LatLng coordinate) {
                 widget.points.add(GCWMapPoint(
                   point: coordinate,
-                  isDragable: true,
-                  radius: 16100
+                  isEditable: true,
+                  circle: GCWMapCircle(
+                    radius: 16100
+                  ),
+                  circleColorSameAsPointColor: true
                 ));
 
                 if (widget.points.length > 1) {
@@ -351,14 +358,14 @@ class GCWMapViewState extends State<GCWMapView> {
         ],
       );
 
-      var marker = _point.isDragable ? _createDragableIcon(_point, icon) : icon;
+      var marker = _point.isEditable ? _createDragableIcon(_point, icon) : icon;
 
       return GCWMarker(
         coordinateDescription: _buildPopupCoordinateDescription(_point),
         coordinateText: _buildPopupCoordinateText(_point),
         width: 28.3,
         height: 28.3,
-        point: _point.point,
+        mapPoint: _point,
         builder: (context) => marker
       );
     }).toList();
@@ -374,7 +381,7 @@ class GCWMapViewState extends State<GCWMapView> {
         LatLng pointToLatLng = Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom);
 
         point.point = pointToLatLng;
-        point.refresh();
+        point.update();
 
         widget.geodetics.forEach((element) {
           if (element.start == point || element.end == point)
@@ -447,11 +454,13 @@ class GCWMapViewState extends State<GCWMapView> {
 
   _buildPopups(Marker marker) {
 
+
     ThemeColors colors = themeColors();
+    GCWMarker gcwMarker = marker as GCWMarker;
 
     return Container(
       width: 250,
-      height: defaultFontSize() * 7,
+      height: defaultFontSize() * (gcwMarker.mapPoint.isEditable ? 12 : 7),
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.only(
         bottom: 5
@@ -470,10 +479,10 @@ class GCWMapViewState extends State<GCWMapView> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          (marker as GCWMarker).coordinateDescription == null ? Container()
+          gcwMarker.coordinateDescription == null ? Container()
             : Container(
                 child: GCWText(
-                  text: (marker as GCWMarker).coordinateDescription,
+                  text: gcwMarker.coordinateDescription,
                   style: TextStyle(
                     fontFamily: gcwTextStyle().fontFamily,
                     fontSize: defaultFontSize(),
@@ -486,13 +495,43 @@ class GCWMapViewState extends State<GCWMapView> {
                 ),
               ),
           GCWOutputText(
-            text: (marker as GCWMarker).coordinateText,
+            text: gcwMarker.coordinateText,
             style: TextStyle(
-                fontFamily: gcwTextStyle().fontFamily,
-                fontSize: defaultFontSize(),
-                color: colors.dialogText()
+              fontFamily: gcwTextStyle().fontFamily,
+              fontSize: defaultFontSize(),
+              color: colors.dialogText()
             )
-          )
+          ),
+          gcwMarker.mapPoint.hasCircle()
+            ? GCWOutputText(
+                text: 'Radius: ${gcwMarker.mapPoint.circle.radius} m',
+                style: TextStyle(
+                  fontFamily: gcwTextStyle().fontFamily,
+                  fontSize: defaultFontSize(),
+                  color: colors.dialogText()
+                ),
+                copyText: gcwMarker.mapPoint.circle.radius.toString() + ' m',
+              )
+            : Container(),
+          gcwMarker.mapPoint.isEditable
+            ? GCWButton(
+                text: 'Edit',
+                onPressed: () {
+                  Navigator.push(context, NoAnimationMaterialPageRoute(
+                    builder: (context) => GCWTool(
+                      tool: MapPointEditor(mapPoint: gcwMarker.mapPoint),
+                      toolName: 'Map Point Editor'
+                    )
+                  ))
+                  .whenComplete(() {
+                    setState(() {
+                      // _currentPosition = gcwMarker.mapPoint.point;
+                      gcwMarker.mapPoint.update();
+                    });
+                  });
+                }
+              )
+            : Container()
         ],
       )
     );
@@ -520,7 +559,7 @@ class GCWMapViewState extends State<GCWMapView> {
 
     _polylines.addAll(
       widget.points
-        .where((point) => point.circle != null)
+        .where((point) => point.circle != null && point.circle.shape != null)
         .map((point) {
           return Polyline(
             points: point.circle.shape,
@@ -537,14 +576,15 @@ class GCWMapViewState extends State<GCWMapView> {
 class GCWMarker extends Marker {
   final String coordinateText;
   final String coordinateDescription;
+  final GCWMapPoint mapPoint;
 
   GCWMarker({
     this.coordinateText,
     this.coordinateDescription,
-    LatLng point,
+    this.mapPoint,
     WidgetBuilder builder,
     double width,
     double height,
     AnchorPos anchorPos
-  }) : super(point: point, builder: builder, width: width, height: height);
+  }) : super(point: mapPoint.point, builder: builder, width: width, height: height);
 }

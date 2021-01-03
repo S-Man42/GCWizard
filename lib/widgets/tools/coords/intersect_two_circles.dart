@@ -9,7 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class IntersectTwoCircles extends StatefulWidget {
@@ -46,7 +46,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, "coords_intersectcircles_centerpoint1"),
+          title: i18n(context, "coords_intersectcircles_centerpoint1"),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -64,7 +64,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
           },
         ),
         GCWCoords(
-          text: i18n(context, "coords_intersectcircles_centerpoint2"),
+          title: i18n(context, "coords_intersectcircles_centerpoint2"),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {

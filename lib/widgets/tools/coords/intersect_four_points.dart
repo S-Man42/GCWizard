@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:latlong/latlong.dart';
 
@@ -51,7 +51,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_intersectfourpoints_coord11'),
+          title: i18n(context, 'coords_intersectfourpoints_coord11'),
           coordsFormat: _currentCoordsFormat11,
           onChanged: (ret) {
             setState(() {
@@ -61,7 +61,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_intersectfourpoints_coord12'),
+          title: i18n(context, 'coords_intersectfourpoints_coord12'),
           coordsFormat: _currentCoordsFormat12,
           onChanged: (ret) {
             setState(() {
@@ -71,7 +71,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_intersectfourpoints_coord21'),
+          title: i18n(context, 'coords_intersectfourpoints_coord21'),
           coordsFormat: _currentCoordsFormat21,
           onChanged: (ret) {
             setState(() {
@@ -81,7 +81,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_intersectfourpoints_coord22'),
+          title: i18n(context, 'coords_intersectfourpoints_coord22'),
           coordsFormat: _currentCoordsFormat22,
           onChanged: (ret) {
             setState(() {

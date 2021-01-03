@@ -11,36 +11,35 @@ class GCWMapPoint {
   LatLng point;
   String markerText;
   Color color;
-  final Map<String, String> coordinateFormat;
-  final bool isDragable;
-  final double radius;
-
+  Map<String, String> coordinateFormat;
+  bool isEditable;
   GCWMapCircle circle;
+  bool circleColorSameAsPointColor;
 
   GCWMapPoint({
     @required this.point,
     this.markerText,
     this.color: COLOR_MAP_POINT,
     this.coordinateFormat,
-    this.isDragable: false,
-    this.radius
+    this.isEditable: false,
+    this.circle,
+    this.circleColorSameAsPointColor: false
   }) {
-    if (radius != null && radius > 0.0)
-      circle = GCWMapCircle(centerPoint: this.point, radius: this.radius);
+    update();
   }
 
-  refresh() {
-    if (radius != null && radius > 0.0) {
-      if (circle == null)
-        circle = GCWMapCircle(centerPoint: this.point, radius: this.radius);
-      else {
-        circle.centerPoint = this.point;
-        circle.radius = this.radius;
-        circle._update();
-      }
-    } else {
-      if (circle != null)
-        circle = null;
+  hasCircle() {
+    return circle != null && circle.radius != null && circle.radius > 0.0;
+  }
+
+  update() {
+    if (circle != null) {
+      circle.centerPoint = point;
+
+      if (circleColorSameAsPointColor)
+        circle.color = color;
+
+      circle._update();
     }
   }
 }
@@ -83,11 +82,15 @@ class GCWMapGeodetic {
 
   @deprecated
   static fromLatLng({LatLng start, end, Color color}) {
-    return GCWMapGeodetic(
+    var geodetic = GCWMapGeodetic(
       start: GCWMapPoint(point: start),
-      end: GCWMapPoint(point: end),
-      color: color
+      end: GCWMapPoint(point: end)
     );
+
+    if (color != null)
+      geodetic.color = color;
+
+    return geodetic;
   }
 }
 
@@ -99,7 +102,7 @@ class GCWMapCircle {
   List<LatLng> shape;
 
   GCWMapCircle({
-    @required this.centerPoint,
+    this.centerPoint,
     @required this.radius,
     this.color: COLOR_MAP_CIRCLE
   }) {
@@ -109,6 +112,11 @@ class GCWMapCircle {
   void _update() {
     if (this.centerPoint == null)
       this.centerPoint = defaultCoordinate;
+
+    if (this.radius == null || this.radius <= 0.0) {
+      shape = null;
+      return;
+    }
 
     var _degrees = 0.5;
 

@@ -45,7 +45,7 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
     refreshFormulas();
 
     _currentNewKey = _maxLetter();
-    _newKeyController.text = _currentNewKey;
+    _newKeyController.title = _currentNewKey;
   }
 
   @override
@@ -123,7 +123,7 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
 
                 setState(() {
                   _currentNewKey = _maxLetter();
-                  _newKeyController.text = _currentNewKey;
+                  _newKeyController.title = _currentNewKey;
                 });
               },
             )
@@ -222,8 +222,8 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
               onPressed: () {
                 setState(() {
                   _currentEditId = value.id;
-                  _editKeyController.text = value.key;
-                  _editValueController.text = value.value;
+                  _editKeyController.title = value.key;
+                  _editValueController.title = value.value;
                   _currentEditedKey = value.key;
                   _currentEditedValue = value.value;
                 });

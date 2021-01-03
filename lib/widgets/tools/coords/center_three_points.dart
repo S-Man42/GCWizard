@@ -11,7 +11,7 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat_distance.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:latlong/latlong.dart';
 
@@ -46,7 +46,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_centerthreepoints_coorda'),
+          title: i18n(context, 'coords_centerthreepoints_coorda'),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -56,7 +56,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_centerthreepoints_coordb'),
+          title: i18n(context, 'coords_centerthreepoints_coordb'),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {
@@ -66,7 +66,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_centerthreepoints_coordc'),
+          title: i18n(context, 'coords_centerthreepoints_coordc'),
           coordsFormat: _currentCoordsFormat3,
           onChanged: (ret) {
             setState(() {

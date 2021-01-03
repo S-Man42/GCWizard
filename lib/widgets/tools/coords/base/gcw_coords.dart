@@ -32,9 +32,10 @@ import 'package:location/location.dart';
 class GCWCoords extends StatefulWidget {
   final Function onChanged;
   final Map<String, String> coordsFormat;
-  final String text;
+  final LatLng coordinates;
+  final String title;
 
-  const GCWCoords({Key key, this.text, this.onChanged, this.coordsFormat}) : super(key: key);
+  const GCWCoords({Key key, this.title, this.coordinates, this.onChanged, this.coordsFormat}) : super(key: key);
 
   @override
   GCWCoordsState createState() => GCWCoordsState();
@@ -57,7 +58,7 @@ class GCWCoordsState extends State<GCWCoords> {
     super.initState();
 
     _currentCoordsFormat = widget.coordsFormat ?? defaultCoordFormat();
-    _currentValue = defaultCoordinate;
+    _currentValue = widget.coordinates ?? defaultCoordinate;
   }
 
   @override
@@ -235,7 +236,7 @@ class GCWCoordsState extends State<GCWCoords> {
     Column _widget = Column(
       children: <Widget>[
         GCWTextDivider(
-          text: widget.text,
+          text: widget.title,
           bottom: 0.0,
           trailing: Row(
             children: [

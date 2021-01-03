@@ -9,8 +9,9 @@ import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 class GCWDistance extends StatefulWidget {
   final Function onChanged;
   final String hintText;
+  final double value;
 
-  const GCWDistance({Key key, this.onChanged, this.hintText}) : super(key: key);
+  const GCWDistance({Key key, this.onChanged, this.hintText, this.value}) : super(key: key);
 
   @override
   _GCWDistanceState createState() => _GCWDistanceState();
@@ -25,8 +26,12 @@ class _GCWDistanceState extends State<GCWDistance> {
   @override
   void initState() {
     super.initState();
-    _controller = new TextEditingController (
-        text: _currentInput['text']
+
+    if (widget.value != null)
+      _currentInput = {'text' : widget.value.toString(), 'value': widget.value};
+
+    _controller = TextEditingController (
+      text: _currentInput['text']
     );
   }
 
@@ -76,7 +81,7 @@ class _GCWDistanceState extends State<GCWDistance> {
 
   _setCurrentValueAndEmitOnChange([setTextFieldText = false]) {
     if (setTextFieldText)
-      _controller.text = _currentInput.toString();
+      _controller.title = _currentInput.toString();
 
     double _currentValue = _currentInput['value'];
     var _meters = _currentLengthUnit.toMeter(_currentValue);

@@ -7,7 +7,7 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 
@@ -31,7 +31,7 @@ class AntipodesState extends State<Antipodes> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_antipodes_coorda'),
+          title: i18n(context, 'coords_antipodes_coorda'),
           coordsFormat: _currentCoordsFormat,
           onChanged: (ret) {
             setState(() {

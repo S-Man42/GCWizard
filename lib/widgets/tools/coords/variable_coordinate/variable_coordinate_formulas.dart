@@ -163,7 +163,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
                   setState(() {
                     _currentEditId = formula.id;
                     _currentEditedName = formula.name;
-                    _editFormulaController.text = formula.name;
+                    _editFormulaController.title = formula.name;
                   });
                 },
               ),

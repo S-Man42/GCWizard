@@ -14,7 +14,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class IntersectGeodeticAndCircle extends StatefulWidget {
@@ -52,7 +52,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, "coords_intersectbearingcircle_geodetic"),
+          title: i18n(context, "coords_intersectbearingcircle_geodetic"),
           coordsFormat: _currentCoordsFormatStart,
           onChanged: (ret) {
             setState(() {
@@ -69,7 +69,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
           },
         ),
         GCWCoords(
-          text: i18n(context, "coords_intersectbearingcircle_circle"),
+          title: i18n(context, "coords_intersectbearingcircle_circle"),
           coordsFormat: _currentCoordsFormatCircle,
           onChanged: (ret) {
             setState(() {

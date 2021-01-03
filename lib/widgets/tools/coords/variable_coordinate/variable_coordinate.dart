@@ -22,7 +22,7 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
 
@@ -388,8 +388,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
                     onPressed: () {
                       setState(() {
                         _currentEditId = value.id;
-                        _editKeyController.text = value.key;
-                        _editValueController.text = value.value;
+                        _editKeyController.title = value.key;
+                        _editValueController.title = value.value;
                         _currentEditedKey = value.key;
                         _currentEditedValue = value.value;
                       });

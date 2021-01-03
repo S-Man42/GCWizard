@@ -12,7 +12,7 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class DistanceBearing extends StatefulWidget {
@@ -42,7 +42,7 @@ class DistanceBearingState extends State<DistanceBearing> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_distancebearing_coorda'),
+          title: i18n(context, 'coords_distancebearing_coorda'),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -52,7 +52,7 @@ class DistanceBearingState extends State<DistanceBearing> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_distancebearing_coordb'),
+          title: i18n(context, 'coords_distancebearing_coordb'),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {

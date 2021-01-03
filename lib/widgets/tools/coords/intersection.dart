@@ -12,7 +12,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_angle.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class Intersection extends StatefulWidget {
@@ -50,7 +50,7 @@ class IntersectionState extends State<Intersection> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_intersection_coorda'),
+          title: i18n(context, 'coords_intersection_coorda'),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -68,7 +68,7 @@ class IntersectionState extends State<Intersection> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_intersection_coordb'),
+          title: i18n(context, 'coords_intersection_coordb'),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {

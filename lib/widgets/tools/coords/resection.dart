@@ -12,7 +12,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_angle.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class Resection extends StatefulWidget {
@@ -55,7 +55,7 @@ class ResectionState extends State<Resection> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, "coords_resection_coorda"),
+          title: i18n(context, "coords_resection_coorda"),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -73,7 +73,7 @@ class ResectionState extends State<Resection> {
           },
         ),
         GCWCoords(
-          text: i18n(context, "coords_resection_coordb"),
+          title: i18n(context, "coords_resection_coordb"),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {
@@ -91,7 +91,7 @@ class ResectionState extends State<Resection> {
           },
         ),
         GCWCoords(
-          text: i18n(context, "coords_resection_coordc"),
+          title: i18n(context, "coords_resection_coordc"),
           coordsFormat: _currentCoordsFormat3,
           onChanged: (ret) {
             setState(() {

@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:xml/xml.dart';
 import 'package:intl/intl.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:latlong/latlong.dart';
 

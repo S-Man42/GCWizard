@@ -252,7 +252,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
                       setState(() {
                         _currentEditId = group.id;
                         _currentEditedName = group.name;
-                        _editGroupController.text = group.name;
+                        _editGroupController.title = group.name;
                       });
                       break;
                     case 2:
