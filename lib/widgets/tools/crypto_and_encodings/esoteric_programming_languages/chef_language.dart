@@ -220,9 +220,17 @@ class ChefState extends State<Chef> {
         output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature, _currentOutput, _auxilaryRecipes);
     } else { // interpret chef
       if (isValid(_currentInput)) {
-        output = buildOutputText(interpretChef(language, _currentRecipe.toLowerCase().replaceAll('  ', ' '), _currentInput));
+        try {
+          output = buildOutputText(interpretChef(language, _currentRecipe.toLowerCase().replaceAll('  ', ' '), _currentInput));
+        } catch (e) {
+          output = buildOutputText([
+            'chef_error_runtime',
+            'chef_error_runtime_exception']);
+        }
       } else
-        output = buildOutputText(['chef_error_runtime', 'chef_error_runtime_invalid_input']);
+        output = buildOutputText([
+          'chef_error_runtime',
+          'chef_error_runtime_invalid_input']);
     }
     return GCWOutputText(
         text: output.trim(),
@@ -249,11 +257,12 @@ class ChefState extends State<Chef> {
   String buildOutputText(List<String> outputList){
     String output = '';
     outputList.forEach((element) {
-      if (element.startsWith('chef_')) {
-        output = output
+      if (element != null)
+        if (element.startsWith('chef_')) {
+          output = output
             + i18n(context, element) + '\n';
-      } else
-        output = output + element + '\n';
+        } else
+          output = output + element + '\n';
     });
     return output;
   }
