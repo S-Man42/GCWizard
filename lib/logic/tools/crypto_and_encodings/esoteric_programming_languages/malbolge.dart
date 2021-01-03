@@ -1,3 +1,6 @@
+// https://raw.githubusercontent.com/wallstop/MalbolgeGenerator/master/MalbolgeInterpreter.py
+// 
+
 import 'dart:math';
 
 class malbolgeOutput{
@@ -31,8 +34,11 @@ final opCodeList = {
   'v' : 'end',
   'o' : 'nop' };
 
-malbolgeOutput generateMalbolge(String input){
+malbolgeOutput generateMalbolge(String inputString){
+
+  return malbolgeOutput([], [], [], []);
 }
+
 
 malbolgeOutput interpretMalbolge(String program, STDIN){
   List<int> memory = new List<int>(59049);
@@ -175,32 +181,6 @@ malbolgeOutput interpretMalbolge(String program, STDIN){
   output.add(STDOUT);
   return malbolgeOutput(output, assembler, memnonic, debug);
 }
-
-String _intToTrits(int input){
-  String output = '';
-  for (int i = 9; i >= 0; i--) {
-    if (input >= pow(3, i)) {
-      output = output + (input ~/ pow(3, i)).toString();
-      input = input % pow(3, i);
-    }
-    else {
-      output = output + '0';
-    }
-  }
-  return output;
-}
-
-int _tritsToInt(String input){
-  int output = 0;
-  for (int i = input.length; i > 0; i--)
-    output = output + int.parse(input[i - 1]) * pow(3, input.length - i);
-  return output;
-}
-
-// final crazyMap = {
-//   '00' : '1', '01' : '0', '02' : '0',
-//   '10' : '1', '11' : '0', '12' : '2',
-//   '20' : '2', '21' : '2', '22' : '1'};
 
 final p9 = {0 : 1, 1 : 9, 2 : 81, 3 : 729, 4 : 6561};
 
