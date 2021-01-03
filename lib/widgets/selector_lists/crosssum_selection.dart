@@ -7,6 +7,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range_frequency.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class CrossSumSelection extends GCWSelection {
@@ -18,6 +19,7 @@ class CrossSumSelection extends GCWSelection {
         className(CrossSumRange()),
         className(IteratedCrossSumRange()),
         className(CrossSumRangeFrequency()),
+        className(IteratedCrossSumRangeFrequency()),
       ].contains(className(element.tool));
     }).toList();
 

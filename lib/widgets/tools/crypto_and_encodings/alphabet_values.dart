@@ -29,33 +29,6 @@ class AlphabetValues extends StatefulWidget {
   AlphabetValuesState createState() => AlphabetValuesState();
 }
 
-List<Alphabet> availableAlphabets() {
-  var stored = Prefs.getStringList('alphabetvalues_custom_alphabets');
-  var alphabets = [
-    alphabetAZ,
-    alphabetGerman1,
-    alphabetGerman2,
-    alphabetGerman3,
-    alphabetSpanish1,
-    alphabetSpanish2,
-    alphabetPolish1,
-    alphabetGreek1,
-    alphabetRussian1,
-  ];
-
-  alphabets.addAll(stored.map<Alphabet>((storedAlphabet) {
-    var alphabet = Map<String, dynamic>.from(jsonDecode(storedAlphabet));
-    return Alphabet(
-      key: alphabet['key'],
-      name: alphabet['name'],
-      type: AlphabetType.CUSTOM,
-      alphabet: Map<String, String>.from(alphabet['alphabet'])
-    );
-  }).toList());
-
-  return alphabets;
-}
-
 class AlphabetValuesState extends State<AlphabetValues> {
   List<Alphabet> _alphabets;
 
@@ -94,7 +67,17 @@ class AlphabetValuesState extends State<AlphabetValues> {
     _fromController = TextEditingController(text: _currentFromInput);
     _toController = TextEditingController(text: _currentToInput);
 
-    _alphabets = availableAlphabets();
+    _storedAlphabets = Prefs.getStringList('alphabetvalues_custom_alphabets');
+    _alphabets = List<Alphabet>.from(ALL_ALPHABETS);
+    _alphabets.addAll(_storedAlphabets.map<Alphabet>((storedAlphabet) {
+      var alphabet = Map<String, dynamic>.from(jsonDecode(storedAlphabet));
+      return Alphabet(
+        key: alphabet['key'],
+        name: alphabet['name'],
+        type: AlphabetType.CUSTOM,
+        alphabet: Map<String, String>.from(alphabet['alphabet'])
+      );
+    }).toList());
 
     _currentAlphabetKey = Prefs.get('alphabetvalues_default_alphabet');
     _setAlphabet();

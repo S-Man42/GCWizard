@@ -59,7 +59,7 @@ class FormulaParser {
   }
 
   dynamic _evaluateFormula(String formula, Map<String, String> values) {
-    Map<String, String> preparedValues = _parenthesesForValues(values);
+    Map<String, String> preparedValues = _prepareValues(values);
 
     //replace constants and formula names
     var safedFormulaNames = _safeFunctionsAndConstants(formula);
@@ -94,17 +94,19 @@ class FormulaParser {
       || substitutedFormula == tempSubstitutedFormula.replaceAll(RegExp(r'[\(\)]'), '');
   }
 
-  Map<String, String> _parenthesesForValues(Map<String, String> values) {
+  Map<String, String> _prepareValues(Map<String, String> values) {
     Map<String, String> val = {};
     values.entries.forEach((element) {
+      var key = element.key.trim();
       var value = element.value;
+
       if (value == null || value.length == 0)
-        val.putIfAbsent(element.key, () => element.key);
+        val.putIfAbsent(key, () => key);
 
       if (double.tryParse(value) != null)
-        val.putIfAbsent(element.key, () => value);
+        val.putIfAbsent(key, () => value);
       else
-        val.putIfAbsent(element.key, () => '($value)');
+        val.putIfAbsent(key, () => '($value)');
     });
     return val;
   }
