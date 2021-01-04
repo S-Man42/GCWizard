@@ -48,6 +48,7 @@ class GCWMapGeodetic {
   GCWMapPoint start;
   GCWMapPoint end;
   Color color;
+  double length;
 
   List<LatLng> shape;
 
@@ -61,6 +62,7 @@ class GCWMapGeodetic {
 
   void update() {
     DistanceBearingData _distBear = distanceBearing(start.point, end.point, defaultEllipsoid());
+    length = _distBear.distance;
 
     shape = [start.point];
     const _stepLength = 5000.0;
@@ -91,6 +93,43 @@ class GCWMapGeodetic {
       geodetic.color = color;
 
     return geodetic;
+  }
+}
+
+class GCWMapPolyGeodetics {
+  List<GCWMapPoint> points = [];
+  Color color;
+  double length;
+
+  List<LatLng> shape;
+
+  GCWMapPolyGeodetics({
+    @required this.points,
+    this.color: COLOR_MAP_POLYLINE,
+  }) {
+    update();
+  }
+
+  void update() {
+    length = 0.0;
+    shape = [];
+
+    if (points == null) {
+      return;
+    }
+
+    if (points.length > 0)
+      shape.add(points[0].point);
+
+    if (points.length < 2)
+      return;
+
+    GCWMapGeodetic geodetic;
+    for (int i = 1; i < points.length; i++) {
+      geodetic = GCWMapGeodetic(start: points[i - 1], end: points[i]);
+      length += geodetic.length;
+      shape.addAll(geodetic.shape.skip(1));
+    }
   }
 }
 

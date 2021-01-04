@@ -22,8 +22,9 @@ import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_rgb.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/hsv_picker.dart';
+import 'package:gc_wizard/logic/common/units/length.dart';
 
-var _DEFAULT_RADIUS = 161.0;
+double _DEFAULT_RADIUS = LENGTH_STATUTEMILE.toMeter(0.1);
 
 class MapPointEditor extends StatefulWidget {
   final GCWMapPoint mapPoint;

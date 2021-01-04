@@ -7,11 +7,11 @@ enum IconButtonSize {NORMAL, SMALL, TINY}
 class GCWIconButton extends StatelessWidget {
   final Function onPressed;
   final IconData iconData;
-  final Image image;
+  final Widget customIcon;
   final IconButtonSize size;
   final Color color;
 
-  const GCWIconButton({Key key, this.onPressed, this.iconData, this.image, this.size: IconButtonSize.NORMAL, this.color}) : super(key: key);
+  const GCWIconButton({Key key, this.onPressed, this.iconData, this.customIcon, this.size: IconButtonSize.NORMAL, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +42,11 @@ class GCWIconButton extends StatelessWidget {
         height: buttonHeight,
         child: OutlineButton(
           padding: EdgeInsets.zero,
-          child: Icon(
+          child: this.customIcon ?? Icon(
             this.iconData,
             size: iconSize,
             color: this.color ?? themeColors().mainFont()
-          ) ?? this.image,
+          ),
           onPressed: this.onPressed,
           borderSide: BorderSide(color: themeColors().accent()),
           shape: RoundedRectangleBorder(
