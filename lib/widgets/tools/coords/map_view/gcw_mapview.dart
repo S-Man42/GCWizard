@@ -15,6 +15,7 @@ import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
@@ -22,9 +23,11 @@ import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/mappoint_editor.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/geodetics_editor.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -239,10 +242,7 @@ class GCWMapViewState extends State<GCWMapView> {
                   widget.points.add(GCWMapPoint(
                     point: coordinate,
                     isEditable: true,
-                    color: Color.fromARGB(255, random.nextInt(255), random.nextInt(255), random.nextInt(255)),
-                    circle: GCWMapCircle(
-                      radius: 16100
-                    ),
+                    color: HSVColor.fromAHSV(1.0, random.nextDouble() * 360.0, 1.0, random.nextDouble() / 2 + 0.5).toColor(),
                     circleColorSameAsPointColor: true
                   ));
 
@@ -330,13 +330,11 @@ class GCWMapViewState extends State<GCWMapView> {
     _polylines.addAll(_circlePolylines);
 
     layers.addAll([
-      // PolylineLayerOptions(
-      //   polylines: _polylines
-      // ),
       TappablePolylineLayerOptions(
         polylineCulling: true,
         polylines: _polylines,
-        onTap: (GCWPolyline polyline) => _showPolylineDialog(polyline),
+        onTap: (polyline) => _showPolylineDialog(polyline),
+        onMiss: () {} //Bug in framework: https://github.com/OwnWeb/flutter_map_tappable_polyline/issues/20
       ),
       MarkerLayerOptions(
         markers: _markers
@@ -353,14 +351,98 @@ class GCWMapViewState extends State<GCWMapView> {
   }
 
   _showPolylineDialog(GCWPolyline polyline) {
+    if (polyline == null)
+      return;
+
+    var text;
+    var copyableText;
+    var format = NumberFormat('0.00');
     var child = polyline.child;
     if (child is GCWMapGeodetic) {
-      print('Geodetic');
+      copyableText = format.format((child as GCWMapGeodetic).length);
+      text = 'Length: $copyableText m';
     } else if (child is GCWMapPolyGeodetics) {
-      print('PolyGeodetic');
+      copyableText = format.format((child as GCWMapPolyGeodetics).length);
+      text = 'Length: $copyableText m';
     } else if (child is GCWMapCircle) {
-      print('Circle');
+      copyableText = format.format((child as GCWMapCircle).radius);
+      text = 'Radius: $copyableText m';
     }
+
+    var dialogButtons = <GCWDialogButton>[];
+    if (widget.isEditable) {
+      dialogButtons.addAll([
+        GCWDialogButton(
+          text: 'Edit',
+          onPressed: () {
+            if (child is GCWMapGeodetic || child is GCWMapPolyGeodetics) {
+              Navigator.push(context, NoAnimationMaterialPageRoute(
+                builder: (context) => GCWTool(
+                  tool: GeodeticsEditor(geodetic: child),
+                  toolName: 'Geodetics Editor'
+                )
+              ))
+              .whenComplete(() {
+                setState(() {
+                  if (child is GCWMapGeodetic)
+                    child.update();
+                  if (child is GCWMapPolyGeodetics)
+                    child.update();
+                });
+              });
+            } else if (child is GCWMapCircle) {
+              var mapPoint = widget.points.firstWhere((element) => element.circle == child);
+              Navigator.push(context, NoAnimationMaterialPageRoute(
+                builder: (context) => GCWTool(
+                  tool: MapPointEditor(mapPoint: mapPoint),
+                  toolName: 'Map Point Editor'
+                )
+              ))
+              .whenComplete(() {
+                setState(() {
+                  mapPoint.update();
+                  _mapController.move(mapPoint.point, _mapController.zoom);
+                });
+              });
+            }
+          }
+        ),
+        GCWDialogButton(
+          text: 'Remove',
+          onPressed: () {
+            setState(() {
+              if (child is GCWMapGeodetic) {
+                widget.geodetics.remove(child);
+              } else if (child is GCWMapPolyGeodetics) {
+                widget.polyGeodetics.remove(child);
+              } else if (child is GCWMapCircle) {
+                var mapPoint = widget.points.firstWhere((element) => element.circle == child);
+                mapPoint.circle = null;
+                mapPoint.update();
+              }
+            });
+          }
+        ),
+      ]);
+    }
+
+    showGCWDialog(context, '',
+      Container(
+        width: 250,
+        height: defaultFontSize() * 2,
+        child: GCWOutputText(
+          text: text,
+          style: TextStyle(
+            fontFamily: gcwTextStyle().fontFamily,
+            fontSize: defaultFontSize(),
+            color: themeColors().dialogText()
+          ),
+          copyText: copyableText,
+        ) ,
+      ),
+      dialogButtons,
+      closeOnOutsideTouch: true
+    );
   }
 
   _buildMarkers() {
@@ -496,8 +578,8 @@ class GCWMapViewState extends State<GCWMapView> {
       ),
       GCWIconButton(
         customIcon: _isPolylineDrawing
-          ? _createIconButtonIcons(Icons.timeline, color: Colors.red)
-          : _createIconButtonIcons(Icons.timeline, stacked: Icons.edit),
+          ? _createIconButtonIcons(Icons.timeline, color: Colors.deepOrangeAccent)
+          : _createIconButtonIcons(Icons.timeline, stacked: Icons.add),
         onPressed: () {
           setState(() {
             if (_isPolylineDrawing) {
@@ -583,8 +665,8 @@ class GCWMapViewState extends State<GCWMapView> {
     GCWMarker gcwMarker = marker as GCWMarker;
 
     return Container(
-      width: 250,
-      height: defaultFontSize() * (gcwMarker.mapPoint.isEditable ? 12 : 7),
+      width: gcwMarker.mapPoint.isEditable ? 350 : 250,
+      height: defaultFontSize() * (gcwMarker.mapPoint.isEditable ? 13 : 7),
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.only(
         bottom: 5
@@ -640,23 +722,48 @@ class GCWMapViewState extends State<GCWMapView> {
           gcwMarker.mapPoint.isEditable
             ? GCWToolBar(
                 children: [
-                  GCWButton(
-                      text: 'Edit',
-                      onPressed: () {
-                        Navigator.push(context, NoAnimationMaterialPageRoute(
-                          builder: (context) => GCWTool(
-                            tool: MapPointEditor(mapPoint: gcwMarker.mapPoint),
-                            toolName: 'Map Point Editor'
-                            )
-                        ))
-                        .whenComplete(() {
+                  _isPolylineDrawing
+                    ? GCWButton(
+                        text: 'Line To Here',
+                        onPressed: () {
                           setState(() {
-                            gcwMarker.mapPoint.update();
-                            _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);
+                            widget.polyGeodetics.last.points.add(gcwMarker.mapPoint);
+                            widget.polyGeodetics.last.update();
                             _popupLayerController.hidePopup();
                           });
+                        }
+                      )
+                    : GCWButton(
+                        text: 'Line From Here',
+                        onPressed: () {
+                          setState(() {
+                            _isPolylineDrawing = true;
+                            widget.polyGeodetics.add(
+                              GCWMapPolyGeodetics(
+                                points: [gcwMarker.mapPoint]
+                              )
+                            );
+                            _popupLayerController.hidePopup();
+                          });
+                        }
+                      ),
+                  GCWButton(
+                    text: 'Edit',
+                    onPressed: () {
+                      Navigator.push(context, NoAnimationMaterialPageRoute(
+                        builder: (context) => GCWTool(
+                          tool: MapPointEditor(mapPoint: gcwMarker.mapPoint),
+                          toolName: 'Map Point Editor'
+                          )
+                      ))
+                      .whenComplete(() {
+                        setState(() {
+                          gcwMarker.mapPoint.update();
+                          _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);
+                          _popupLayerController.hidePopup();
                         });
-                      }
+                      });
+                    }
                   ),
                   GCWButton(
                     text: 'Remove',

@@ -6,9 +6,9 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 final TextStyle _textStyle = gcwTextStyle().copyWith(color: themeColors().dialogText());
 final TextStyle _boldTextStyle = _textStyle.copyWith(fontWeight: FontWeight.bold);
 
-showGCWDialog(BuildContext context, String title, Widget child, List<GCWDialogButton> buttons, {cancelButton: true}) {
+showGCWDialog(BuildContext context, String title, Widget child, List<GCWDialogButton> buttons, {cancelButton: true, closeOnOutsideTouch: false}) {
   if (cancelButton)
-    buttons.insert(0, _cancelButton);
+    buttons.add(_cancelButton);
 
   AlertDialog dialog = AlertDialog(
     title: Text(title),
@@ -21,7 +21,7 @@ showGCWDialog(BuildContext context, String title, Widget child, List<GCWDialogBu
 
   showDialog(
     context: context,
-    barrierDismissible: false,
+    barrierDismissible: closeOnOutsideTouch,
     builder: (BuildContext context) {
       return dialog;
     },
