@@ -33,6 +33,8 @@ import 'package:location/location.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/persistence/map_view/json_provider.dart';
+import 'package:gc_wizard/persistence/map_view/model.dart';
 
 enum _LayerType {OPENSTREETMAP_MAPNIK, MAPBOX_SATELLITE}
 
@@ -41,8 +43,7 @@ final OSM_URL = 'coords_mapview_osm_url';
 final MAPBOX_SATELLITE_TEXT = 'coords_mapview_mapbox_satellite';
 final MAPBOX_SATELLITE_URL = 'coords_mapview_mapbox_satellite_url';
 
-final _DEFAULT_COORDINATE = LatLng(52.5, 13.4);
-final _DEFAULT_ZOOM = 9.0;
+final _DEFAULT_BOUNDS = LatLngBounds(LatLng(51.5, 12.9), LatLng(53.5, 13.9));
 
 class GCWMapView extends StatefulWidget {
   final List<GCWMapPoint> points;
@@ -58,8 +59,7 @@ class GCWMapView extends StatefulWidget {
     this.polyGeodetics: const [],
     this.circles: const [],
     this.isEditable: false
-  })
-    : super(key: key);
+  }) : super(key: key);
 
   @override
   GCWMapViewState createState() => GCWMapViewState();
@@ -77,67 +77,19 @@ class GCWMapViewState extends State<GCWMapView> {
   Location _location = Location();
   LatLng _currentPosition;
   double _currentAccuracy;
+  bool _manuallyToggledPosition = false;
 
   var _isPolylineDrawing = false;
 
-  //////////////////////////////////////////////////////////////////////////////
-  // from: https://stackoverflow.com/a/58958668/3984221
-  LatLng computeCentroid(Iterable<LatLng> points) {
-    double latitude = 0;
-    double longitude = 0;
-    int n = points.length;
-
-    for (LatLng point in points) {
-      latitude += point.latitude;
-      longitude += point.longitude;
-    }
-
-    return LatLng(latitude / n, longitude / n);
-  }
-
-  //////////////////////////////////////////////////////////////////////////////
-
-  //////////////////////////////////////////////////////////////////////////////
-  // from: https://stackoverflow.com/a/13274361/3984221
-
-  double _latRad(_lat) {
-    var _sin = sin(_lat * PI / 180);
-    var _radX2 = log((1 + _sin) / (1 - _sin)) / 2;
-    return max(min(_radX2, PI), -PI) / 2;
-  }
-
-  int _zoom(_mapPx, _worldPx, _fraction) {
-    return (log(_mapPx / _worldPx / _fraction) / ln2).floor();
-  }
-
-  int _getBoundsZoomLevel() {
-    var _mapDim = MediaQuery.of(context).size;
-    var _worldDim = {'height': 256, 'width': 256};
-    var _zoomMax = 18;
+  _getInitialBounds() {
+    if (widget.points == null || widget.points.length == 0)
+      return _DEFAULT_BOUNDS;
 
     var _bounds = LatLngBounds();
     widget.points.forEach((point) => _bounds.extend(point.point));
 
-    var _ne = _bounds.northEast;
-    var _sw = _bounds.southWest;
-
-    var _latFraction = (_latRad(_ne.latitude) - _latRad(_sw.latitude)) / PI;
-
-    var _lngDiff = _ne.longitude - _sw.longitude;
-    var _lngFraction = ((_lngDiff < 0) ? (_lngDiff + 360) : _lngDiff) / 360;
-
-    var _latZoom = _zoomMax;
-    if (_latFraction > 0.0)
-      _latZoom = _zoom(_mapDim.height, _worldDim['height'], _latFraction);
-
-    var _lngZoom = _zoomMax;
-    if (_lngFraction > 0.0)
-      _lngZoom = _zoom(_mapDim.width, _worldDim['width'], _lngFraction);
-
-    return min(min(_latZoom, _lngZoom), _zoomMax);
+    return _bounds;
   }
-
-  //////////////////////////////////////////////////////////////////////////////
 
   Future<String> _loadToken(String tokenName) async {
     return await rootBundle.loadString('assets/tokens/$tokenName');
@@ -147,6 +99,8 @@ class GCWMapViewState extends State<GCWMapView> {
   void initState() {
     super.initState();
     _popupLayerController.mapController = _mapController;
+
+    refreshMapViews();
   }
 
   @override
@@ -177,9 +131,10 @@ class GCWMapViewState extends State<GCWMapView> {
           setState(() {
             var newPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
 
-            if (_currentPosition == null) {
+            if (_currentPosition == null && (_manuallyToggledPosition || widget.points.length == 0)) {
               _mapController.move(newPosition, _mapController.zoom);
             }
+            _manuallyToggledPosition = false;
 
             _currentPosition = newPosition;
             _currentAccuracy = currentLocation.accuracy;
@@ -232,12 +187,8 @@ class GCWMapViewState extends State<GCWMapView> {
           FlutterMap(
             mapController: _mapController,
             options: MapOptions(
-              center: widget.points.length > 0
-                ? computeCentroid(widget.points.map((_point) => _point.point).toList())
-                : _DEFAULT_COORDINATE,
-              zoom: widget.points.length > 0
-                ? _getBoundsZoomLevel().toDouble()
-                : _DEFAULT_ZOOM,
+              bounds: _getInitialBounds(),
+              boundsOptions: FitBoundsOptions(padding: EdgeInsets.all(30.0)),
               minZoom: 1.0,
               maxZoom: 18.0,
               plugins: [PopupMarkerPlugin(), TappablePolylineMapPlugin()],
@@ -637,7 +588,11 @@ class GCWMapViewState extends State<GCWMapView> {
         GCWIconButton(
           backgroundColor: COLOR_MAP_ICONBUTTONS,
           customIcon: _createIconButtonIcons(_locationSubscription.isPaused ? Icons.location_off : Icons.location_on),
-          onPressed: _toggleLocationListening,
+          onPressed: () {
+            _toggleLocationListening();
+            if (!_locationSubscription.isPaused)
+              _manuallyToggledPosition = true;
+          }
         )
       );
     }

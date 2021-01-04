@@ -81,7 +81,7 @@ class _GCWDistanceState extends State<GCWDistance> {
 
   _setCurrentValueAndEmitOnChange([setTextFieldText = false]) {
     if (setTextFieldText)
-      _controller.title = _currentInput.toString();
+      _controller.text = _currentInput.toString();
 
     double _currentValue = _currentInput['value'];
     var _meters = _currentLengthUnit.toMeter(_currentValue);

@@ -305,7 +305,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                       setState(() {
                         _currentEditId = formula.id;
                         _currentEditedFormula = formula.formula;
-                        _editFormulaController.title = formula.formula;
+                        _editFormulaController.text = formula.formula;
                       });
                       break;
                     case 2:

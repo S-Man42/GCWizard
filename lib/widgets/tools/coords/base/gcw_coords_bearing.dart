@@ -151,7 +151,7 @@ class _GCWBearingState extends State<GCWBearing> {
                 var compassValue = COMPASS_ROSE.firstWhere((direction) => direction['symbol'] == value)['value'];
 
                 _currentBearing = {'text': compassValue.toString(), 'value': compassValue};
-                _bearingController.title = compassValue.toString();
+                _bearingController.text = compassValue.toString();
 
                 widget.onChanged(_currentBearing);
               });

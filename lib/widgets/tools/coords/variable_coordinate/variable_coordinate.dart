@@ -388,8 +388,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
                     onPressed: () {
                       setState(() {
                         _currentEditId = value.id;
-                        _editKeyController.title = value.key;
-                        _editValueController.title = value.value;
+                        _editKeyController.text = value.key;
+                        _editValueController.text = value.value;
                         _currentEditedKey = value.key;
                         _currentEditedValue = value.value;
                       });

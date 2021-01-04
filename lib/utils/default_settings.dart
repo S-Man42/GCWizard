@@ -71,6 +71,10 @@ void initDefaultSettings() {
   if (Prefs.get('formulasolver_formulas') == null) {
     Prefs.setStringList('formulasolver_formulas', []);
   }
+
+  if (Prefs.get('mapview_mapviews') == null) {
+    Prefs.setStringList('mapview_mapviews', []);
+  }
   
   if (Prefs.get('multidecoder_tools') == null) {
     Prefs.setStringList('multidecoder_tools', []);
