@@ -17,6 +17,7 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
@@ -234,9 +235,11 @@ class GCWMapViewState extends State<GCWMapView> {
               onTap: (_) => _popupLayerController.hidePopup(),
               onLongPress: widget.isEditable ? (LatLng coordinate) {
                 setState(() {
+                  var random = Random();
                   widget.points.add(GCWMapPoint(
                     point: coordinate,
                     isEditable: true,
+                    color: Color.fromARGB(255, random.nextInt(255), random.nextInt(255), random.nextInt(255)),
                     circle: GCWMapCircle(
                       radius: 16100
                     ),
@@ -333,7 +336,7 @@ class GCWMapViewState extends State<GCWMapView> {
       TappablePolylineLayerOptions(
         polylineCulling: true,
         polylines: _polylines,
-        onTap: (TaggedPolyline polyline) => print(polyline.tag),
+        onTap: (GCWPolyline polyline) => _showPolylineDialog(polyline),
       ),
       MarkerLayerOptions(
         markers: _markers
@@ -347,6 +350,17 @@ class GCWMapViewState extends State<GCWMapView> {
     ]);
 
     return layers;
+  }
+
+  _showPolylineDialog(GCWPolyline polyline) {
+    var child = polyline.child;
+    if (child is GCWMapGeodetic) {
+      print('Geodetic');
+    } else if (child is GCWMapPolyGeodetics) {
+      print('PolyGeodetic');
+    } else if (child is GCWMapCircle) {
+      print('Circle');
+    }
   }
 
   _buildMarkers() {
@@ -624,23 +638,64 @@ class GCWMapViewState extends State<GCWMapView> {
               )
             : Container(),
           gcwMarker.mapPoint.isEditable
-            ? GCWButton(
-                text: 'Edit',
-                onPressed: () {
-                  Navigator.push(context, NoAnimationMaterialPageRoute(
-                    builder: (context) => GCWTool(
-                      tool: MapPointEditor(mapPoint: gcwMarker.mapPoint),
-                      toolName: 'Map Point Editor'
-                    )
-                  ))
-                  .whenComplete(() {
-                    setState(() {
-                      gcwMarker.mapPoint.update();
-                      _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);
-                      _popupLayerController.hidePopup();
-                    });
-                  });
-                }
+            ? GCWToolBar(
+                children: [
+                  GCWButton(
+                      text: 'Edit',
+                      onPressed: () {
+                        Navigator.push(context, NoAnimationMaterialPageRoute(
+                          builder: (context) => GCWTool(
+                            tool: MapPointEditor(mapPoint: gcwMarker.mapPoint),
+                            toolName: 'Map Point Editor'
+                            )
+                        ))
+                        .whenComplete(() {
+                          setState(() {
+                            gcwMarker.mapPoint.update();
+                            _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);
+                            _popupLayerController.hidePopup();
+                          });
+                        });
+                      }
+                  ),
+                  GCWButton(
+                    text: 'Remove',
+                    onPressed: () {
+                      setState(() {
+                        var tempPolyGeodetics = List<GCWMapPolyGeodetics>.from(widget.polyGeodetics);
+                        var removeablePolyGeodetics = [];
+                        tempPolyGeodetics.asMap().forEach((tempIndex, element) {
+                          var index = widget.polyGeodetics[tempIndex].points.indexOf(gcwMarker.mapPoint);
+                          if (index > -1)
+                            widget.polyGeodetics[tempIndex].points.remove(gcwMarker.mapPoint);
+
+                          if (widget.polyGeodetics[tempIndex].points.length < 2) {
+                            removeablePolyGeodetics.add(widget.polyGeodetics[tempIndex]);
+                          } else {
+                            widget.polyGeodetics[tempIndex].update();
+                          }
+                        });
+                        removeablePolyGeodetics.forEach((element) {
+                          widget.polyGeodetics.remove(element);
+                        });
+
+                        var tempGeodetics = List<GCWMapGeodetic>.from(widget.geodetics);
+                        var removeableGeodetics = [];
+                        tempGeodetics.asMap().forEach((index, element) {
+                          if (element.start == gcwMarker.mapPoint || element.end == gcwMarker.mapPoint)
+                            removeableGeodetics.add(widget.geodetics[index]);
+                        });
+                        removeableGeodetics.forEach((element) {
+                          widget.geodetics.remove(element);
+                        });
+
+                        widget.points.remove(gcwMarker.mapPoint);
+
+                        _popupLayerController.hidePopup();
+                      });
+                    },
+                  )
+                ]
               )
             : Container()
         ],
@@ -650,21 +705,21 @@ class GCWMapViewState extends State<GCWMapView> {
 
   List<Polyline> _addPolylines() {
     List<Polyline> _polylines = widget.geodetics.map((_geodetic) {
-      return TaggedPolyline(
+      return GCWPolyline(
         points: _geodetic.shape,
         strokeWidth: 3.0,
         color: _geodetic.color,
-        tag: _geodetic.length.toString()
+        child: _geodetic
       );
     }).toList();
 
     _polylines.addAll(
       widget.polyGeodetics.map((_polyGeodetic) {
-        return TaggedPolyline(
+        return GCWPolyline(
           points: _polyGeodetic.shape,
           strokeWidth: 3.0,
           color: _polyGeodetic.color,
-          tag: _polyGeodetic.length.toString()
+          child: _polyGeodetic
         );
       }).toList()
     );
@@ -673,11 +728,11 @@ class GCWMapViewState extends State<GCWMapView> {
 
   List<Polyline> _addCircles() {
     List<Polyline> _polylines =  widget.circles.map((_circle) {
-      return TaggedPolyline(
+      return GCWPolyline(
         points: _circle.shape,
         strokeWidth: 3.0,
         color: _circle.color,
-        tag: _circle.radius.toString()
+        child: _circle
       );
     }).toList();
 
@@ -685,11 +740,11 @@ class GCWMapViewState extends State<GCWMapView> {
       widget.points
         .where((point) => point.circle != null && point.circle.shape != null)
         .map((point) {
-          return TaggedPolyline(
+          return GCWPolyline(
             points: point.circle.shape,
             strokeWidth: 3.0,
             color: point.circle.color,
-            tag: point.circle.radius.toString()
+            child: point.circle
           );
         }).toList()
     );
@@ -712,4 +767,19 @@ class GCWMarker extends Marker {
     double height,
     AnchorPos anchorPos
   }) : super(point: mapPoint.point, builder: builder, width: width, height: height);
+}
+
+class GCWPolyline extends TaggedPolyline {
+  dynamic child;
+
+  GCWPolyline({
+    points,
+    strokeWidth,
+    color,
+    this.child
+  }) : super(
+    points: points,
+    strokeWidth: strokeWidth,
+    color: color,
+  );
 }
