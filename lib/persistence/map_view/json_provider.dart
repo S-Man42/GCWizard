@@ -59,24 +59,16 @@ void _updateMapView(MapView view) {
   }).toList();
 }
 
-int insertMapPoint(MapPoint point, MapView mapView) {
-  var id = newID(
-    mapView.points
-      .map((view) => view.id)
-      .toList()
-  );
-  point.id = id;
+void insertMapPoint(MapPoint point, MapView mapView) {
   mapView.points.add(point);
 
   _updateMapView(mapView);
   _saveData();
-
-  return id;
 }
 
 void updateMapPoint(MapPoint point, MapView mapView) {
   mapView.points = mapView.points.map((mapPoint) {
-    if (mapPoint.id == point.id)
+    if (mapPoint.uuid == point.uuid)
       return point;
 
     return mapPoint;
@@ -86,8 +78,8 @@ void updateMapPoint(MapPoint point, MapView mapView) {
   _saveData();
 }
 
-void deleteMapPoint(int pointId, MapView mapView) {
-  mapView.points.removeWhere((point) => point.id == pointId);
+void deleteMapPoint(String pointUUID, MapView mapView) {
+  mapView.points.removeWhere((point) => point.uuid == pointUUID);
 
   _updateMapView(mapView);
   _saveData();

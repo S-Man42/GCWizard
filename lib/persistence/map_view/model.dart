@@ -28,16 +28,17 @@ class MapView {
 }
 
 class MapPoint {
-  int id;
+  final String uuid;
   final double latitude;
   final double longitude;
   final String coordinateFormat;
   final String color;
-  final String radius;
+  final double radius;
   final bool circleColorSameAsColor;
   final String circleColor;
 
   MapPoint(
+    this.uuid,
     this.latitude,
     this.longitude,
     this.coordinateFormat,
@@ -48,7 +49,7 @@ class MapPoint {
   );
 
   Map<String, dynamic> toMap() => {
-    'id': id,
+    'uuid': uuid,
     'latitude': latitude,
     'longitude': longitude,
     'coordinateFormat': coordinateFormat,
@@ -59,7 +60,7 @@ class MapPoint {
   };
 
   MapPoint.fromJson(Map<String, dynamic> json):
-    id = json['id'],
+    uuid = json['uuid'],
     latitude = json['latitude'],
     longitude = json['longitude'],
     coordinateFormat = json['coordinateFormat'],

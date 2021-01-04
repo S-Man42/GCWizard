@@ -6,8 +6,10 @@ import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:latlong/latlong.dart';
+import 'package:uuid/uuid.dart';
 
 class GCWMapPoint {
+  String uuid;
   LatLng point;
   String markerText;
   Color color;
@@ -17,6 +19,7 @@ class GCWMapPoint {
   bool circleColorSameAsPointColor;
 
   GCWMapPoint({
+    this.uuid,
     @required this.point,
     this.markerText,
     this.color: COLOR_MAP_POINT,
@@ -25,6 +28,8 @@ class GCWMapPoint {
     this.circle,
     this.circleColorSameAsPointColor: false
   }) {
+    if (uuid == null || uuid.length == 0)
+      uuid = Uuid().v4();
     update();
   }
 
@@ -44,6 +49,7 @@ class GCWMapPoint {
   }
 }
 
+@deprecated
 class GCWMapGeodetic {
   GCWMapPoint start;
   GCWMapPoint end;
@@ -97,6 +103,7 @@ class GCWMapGeodetic {
 }
 
 class GCWMapPolyGeodetics {
+  String uuid;
   List<GCWMapPoint> points = [];
   Color color;
   double length;
@@ -107,6 +114,7 @@ class GCWMapPolyGeodetics {
     @required this.points,
     this.color: COLOR_MAP_POLYLINE,
   }) {
+    uuid = Uuid().v4();
     update();
   }
 
@@ -130,6 +138,13 @@ class GCWMapPolyGeodetics {
       length += geodetic.length;
       shape.addAll(geodetic.shape.skip(1));
     }
+  }
+
+  static GCWMapPolyGeodetics fromGCWMapGeodetic(GCWMapGeodetic geodetic) {
+    return GCWMapPolyGeodetics(
+      points: [geodetic.start, geodetic.end],
+      color: geodetic.color
+    );
   }
 }
 

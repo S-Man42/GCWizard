@@ -35,6 +35,7 @@ import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/persistence/map_view/json_provider.dart';
 import 'package:gc_wizard/persistence/map_view/model.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.dart';
 
 enum _LayerType {OPENSTREETMAP_MAPNIK, MAPBOX_SATELLITE}
 
@@ -81,6 +82,8 @@ class GCWMapViewState extends State<GCWMapView> {
 
   var _isPolylineDrawing = false;
 
+  MapView _currentMapView;
+
   _getInitialBounds() {
     if (widget.points == null || widget.points.length == 0)
       return _DEFAULT_BOUNDS;
@@ -100,7 +103,70 @@ class GCWMapViewState extends State<GCWMapView> {
     super.initState();
     _popupLayerController.mapController = _mapController;
 
+    _initializeMapView();
+  }
+
+  String _colorToHexString(Color color) {
+    return HexCode.fromRGB(
+      RGB(color.red.toDouble(), color.green.toDouble(), color.blue.toDouble())
+    ).toString();
+  }
+
+  Color _hexStringToColor(String hex) {
+    RGB rgb = HexCode(hex).toRGB();
+    return Color.fromARGB(255, rgb.red.floor(), rgb.green.floor(), rgb.blue.floor());
+  }
+
+  MapPoint _gcwMapPointToMapPoint(GCWMapPoint gcwMapPoint) {
+    return MapPoint(
+      gcwMapPoint.uuid,
+      gcwMapPoint.point.latitude,
+      gcwMapPoint.point.longitude,
+      gcwMapPoint.coordinateFormat['format'],
+      _colorToHexString(gcwMapPoint.color),
+      gcwMapPoint.hasCircle() ? gcwMapPoint.circle.radius : null,
+      gcwMapPoint.circleColorSameAsPointColor,
+      gcwMapPoint.hasCircle() ? _colorToHexString(gcwMapPoint.circle.color) : null,
+    );
+  }
+
+  GCWMapPoint _mapPointToGCWMapPoint(MapPoint mapPoint) {
+    return GCWMapPoint(
+      uuid: mapPoint.uuid,
+      point: LatLng(mapPoint.latitude, mapPoint.longitude),
+      coordinateFormat: {'format': mapPoint.coordinateFormat},
+      color: _hexStringToColor(mapPoint.color),
+      circle: mapPoint.radius != null ? GCWMapCircle(
+        radius: mapPoint.radius,
+        color: _hexStringToColor(mapPoint.circleColor)
+      ) : null,
+      circleColorSameAsPointColor: mapPoint.circleColorSameAsColor
+    );
+  }
+
+  _initializeMapView() {
     refreshMapViews();
+
+    if (mapViews.length == 0) {
+      insertMapView(MapView([], []));
+    }
+    _currentMapView = mapViews.last;
+
+    if (widget.points != null) {
+      _currentMapView.points.addAll(
+        widget.points
+          .where((point) => !_currentMapView.points.map((point) => point.uuid).toList().contains(point.uuid))
+          .map((point) => _gcwMapPointToMapPoint(point))
+          .toList()
+      );
+
+      widget.points.addAll(
+        _currentMapView.points
+          .where((point) => !widget.points.map((point) => point.uuid).toList().contains(point.uuid))
+          .map((point) => _mapPointToGCWMapPoint(point))
+          .toList()
+      );
+    }
   }
 
   @override
@@ -115,6 +181,26 @@ class GCWMapViewState extends State<GCWMapView> {
       _locationSubscription.cancel();
       _locationSubscription = null;
       _currentPosition = null;
+    }
+  }
+
+  _addMapPoint(LatLng coordinate) {
+    var random = Random();
+    var gcwMapPoint = GCWMapPoint(
+      point: coordinate,
+      coordinateFormat: defaultCoordFormat(),
+      isEditable: true,
+      color: HSVColor.fromAHSV(1.0, random.nextDouble() * 360.0, 1.0, random.nextDouble() / 2 + 0.5).toColor(),
+      circleColorSameAsPointColor: true
+    );
+
+    insertMapPoint(_gcwMapPointToMapPoint(gcwMapPoint), _currentMapView);
+
+    widget.points.add(gcwMapPoint);
+
+    if (_isPolylineDrawing) {
+      widget.polyGeodetics.last.points.add(widget.points.last);
+      widget.polyGeodetics.last.update();
     }
   }
 
@@ -195,18 +281,7 @@ class GCWMapViewState extends State<GCWMapView> {
               onTap: (_) => _popupLayerController.hidePopup(),
               onLongPress: widget.isEditable ? (LatLng coordinate) {
                 setState(() {
-                  var random = Random();
-                  widget.points.add(GCWMapPoint(
-                    point: coordinate,
-                    isEditable: true,
-                    color: HSVColor.fromAHSV(1.0, random.nextDouble() * 360.0, 1.0, random.nextDouble() / 2 + 0.5).toColor(),
-                    circleColorSameAsPointColor: true
-                  ));
-
-                  if (_isPolylineDrawing) {
-                    widget.polyGeodetics.last.points.add(widget.points.last);
-                    widget.polyGeodetics.last.update();
-                  }
+                  _addMapPoint(coordinate);
                 });
               } : null
             ),
