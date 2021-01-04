@@ -21,6 +21,7 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/gcw_color_rgb.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/hsv_picker.dart';
 
 var _DEFAULT_RADIUS = 161.0;
 
@@ -40,6 +41,8 @@ class MapPointEditorState extends State<MapPointEditor> {
   var _nameController;
 
   var _currentRadius = _DEFAULT_RADIUS;
+  HSVColor _currentMarkerColorPickerColor;
+  HSVColor _currentCircleColorPickerColor;
 
   @override
   void initState() {
@@ -50,6 +53,12 @@ class MapPointEditorState extends State<MapPointEditor> {
     if (widget.mapPoint.hasCircle()) {
       _currentRadius = widget.mapPoint.circle.radius;
     }
+
+    _currentMarkerColorPickerColor = HSVColor.fromColor(widget.mapPoint.color);
+    if (widget.mapPoint.hasCircle() && !widget.mapPoint.circleColorSameAsPointColor)
+      _currentCircleColorPickerColor = HSVColor.fromColor(widget.mapPoint.circle.color);
+    else
+      _currentCircleColorPickerColor = HSVColor.fromColor(widget.mapPoint.color);
   }
 
   @override
@@ -76,22 +85,19 @@ class MapPointEditorState extends State<MapPointEditor> {
         GCWTextDivider(
           text: 'Marker Color'
         ),
-        GCWColorRGB(
-          color: RGB(
-            widget.mapPoint.color.red.toDouble(),
-            widget.mapPoint.color.green.toDouble(),
-            widget.mapPoint.color.blue.toDouble()
+        Container(
+          child: HSVPicker(
+            color: _currentMarkerColorPickerColor,
+            onChanged: (color) {
+              setState(() {
+                _currentMarkerColorPickerColor = color;
+                widget.mapPoint.color = _currentMarkerColorPickerColor.toColor();
+              });
+            },
           ),
-          onChanged: (color) {
-            setState(() {
-              widget.mapPoint.color = Color.fromARGB(
-                255,
-                color.red.round(),
-                color.green.round(),
-                color.blue.round()
-              );
-            });
-          },
+          padding: EdgeInsets.only(
+            bottom: 20.0
+          ),
         ),
         GCWTextDivider(
           text: 'Circle'
@@ -135,22 +141,19 @@ class MapPointEditorState extends State<MapPointEditor> {
                   },
                 ),
                 widget.mapPoint.circleColorSameAsPointColor ? Container()
-                  : GCWColorRGB(
-                      color: RGB(
-                        widget.mapPoint.circle.color.red.toDouble(),
-                        widget.mapPoint.circle.color.green.toDouble(),
-                        widget.mapPoint.circle.color.blue.toDouble()
+                  : Container(
+                      child: HSVPicker(
+                        color: _currentCircleColorPickerColor,
+                        onChanged: (color) {
+                          setState(() {
+                            _currentCircleColorPickerColor = color;
+                            widget.mapPoint.circle.color = _currentCircleColorPickerColor.toColor();
+                          });
+                        },
                       ),
-                      onChanged: (color) {
-                        setState(() {
-                          widget.mapPoint.circle.color = Color.fromARGB(
-                            255,
-                            color.red.round(),
-                            color.green.round(),
-                            color.blue.round()
-                          );
-                        });
-                      },
+                      padding: EdgeInsets.only(
+                        bottom: 20.0
+                      ),
                     ),
               ],
             )

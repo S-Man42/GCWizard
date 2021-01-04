@@ -220,23 +220,25 @@ class GCWMapViewState extends State<GCWMapView> {
               plugins: [PopupMarkerPlugin()],
               onTap: (_) => _popupLayerController.hidePopup(),
               onLongPress: widget.allowCreatePoints ? (LatLng coordinate) {
-                widget.points.add(GCWMapPoint(
-                  point: coordinate,
-                  isEditable: true,
-                  circle: GCWMapCircle(
-                    radius: 16100
-                  ),
-                  circleColorSameAsPointColor: true
-                ));
+                setState(() {
+                  widget.points.add(GCWMapPoint(
+                    point: coordinate,
+                    isEditable: true,
+                    circle: GCWMapCircle(
+                      radius: 16100
+                    ),
+                    circleColorSameAsPointColor: true
+                  ));
 
-                if (widget.points.length > 1) {
-                  widget.geodetics.add(
-                    GCWMapGeodetic(
-                      start: widget.points.last,
-                      end: widget.points[widget.points.length - 2]
-                    )
-                  );
-                }
+                  if (widget.points.length > 1) {
+                    widget.geodetics.add(
+                      GCWMapGeodetic(
+                        start: widget.points.last,
+                        end: widget.points[widget.points.length - 2]
+                      )
+                    );
+                  }
+                });
               } : null
             ),
             layers: layers,
