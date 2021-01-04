@@ -82,6 +82,17 @@ class MapPointEditorState extends State<MapPointEditor> {
             widget.mapPoint.update();
           },
         ),
+        GCWCoords(
+          title: 'Coordinate',
+          coordinates: widget.mapPoint.point,
+          coordsFormat: widget.mapPoint.coordinateFormat,
+          onChanged: (ret) {
+            setState(() {
+              widget.mapPoint.coordinateFormat = ret['coordsFormat'];
+              widget.mapPoint.point = ret['value'];
+            });
+          },
+        ),
         GCWTextDivider(
           text: 'Marker Color'
         ),
@@ -103,7 +114,7 @@ class MapPointEditorState extends State<MapPointEditor> {
           text: 'Circle'
         ),
         GCWOnOffSwitch(
-          title: 'Umkreis',
+          title: 'Has Circle',
           value: widget.mapPoint.hasCircle(),
           onChanged: (value) {
             setState(() {

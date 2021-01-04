@@ -145,6 +145,7 @@ class GCWMapViewState extends State<GCWMapView> {
     if (_locationSubscription != null) {
       _locationSubscription.cancel();
       _locationSubscription = null;
+      _currentPosition = null;
     }
   }
 
@@ -159,7 +160,13 @@ class GCWMapViewState extends State<GCWMapView> {
         })
         .listen((LocationData currentLocation) {
           setState(() {
-            _currentPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
+            var newPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
+
+            if (_currentPosition == null) {
+              _mapController.move(newPosition, _mapController.zoom);
+            }
+
+            _currentPosition = newPosition;
             _currentAccuracy = currentLocation.accuracy;
           });
         });
@@ -172,6 +179,7 @@ class GCWMapViewState extends State<GCWMapView> {
         _locationSubscription.resume();
       } else {
         _locationSubscription.pause();
+        _currentPosition = null;
       }
     });
   }
@@ -527,8 +535,8 @@ class GCWMapViewState extends State<GCWMapView> {
                   ))
                   .whenComplete(() {
                     setState(() {
-                      // _currentPosition = gcwMarker.mapPoint.point;
                       gcwMarker.mapPoint.update();
+                      _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);
                     });
                   });
                 }

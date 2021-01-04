@@ -58,7 +58,9 @@ class GCWCoordsState extends State<GCWCoords> {
     super.initState();
 
     _currentCoordsFormat = widget.coordsFormat ?? defaultCoordFormat();
+    _setPastedCoordsFormat();
     _currentValue = widget.coordinates ?? defaultCoordinate;
+    _pastedCoords = _currentValue;
   }
 
   @override
