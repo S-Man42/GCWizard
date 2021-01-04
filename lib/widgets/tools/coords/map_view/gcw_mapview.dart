@@ -66,8 +66,8 @@ class GCWMapView extends StatefulWidget {
 }
 
 class GCWMapViewState extends State<GCWMapView> {
-  final PopupController _popupLayerController = PopupController();
   final MapController _mapController = MapControllerImpl();
+  final GCWMapPopupController _popupLayerController = GCWMapPopupController();
 
   _LayerType _currentLayer = _LayerType.OPENSTREETMAP_MAPNIK;
   var _mapBoxToken;
@@ -141,6 +141,12 @@ class GCWMapViewState extends State<GCWMapView> {
 
   Future<String> _loadToken(String tokenName) async {
     return await rootBundle.loadString('assets/tokens/$tokenName');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _popupLayerController.mapController = _mapController;
   }
 
   @override
@@ -660,13 +666,12 @@ class GCWMapViewState extends State<GCWMapView> {
 
   _buildPopups(Marker marker) {
 
-
     ThemeColors colors = themeColors();
     GCWMarker gcwMarker = marker as GCWMarker;
 
     return Container(
       width: gcwMarker.mapPoint.isEditable ? 350 : 250,
-      height: defaultFontSize() * (gcwMarker.mapPoint.isEditable ? 13 : 7),
+      height: defaultFontSize() * (gcwMarker.mapPoint.isEditable ? 12 : 7),
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.only(
         bottom: 5
@@ -889,4 +894,15 @@ class GCWPolyline extends TaggedPolyline {
     strokeWidth: strokeWidth,
     color: color,
   );
+}
+
+class GCWMapPopupController extends PopupController {
+  MapController mapController;
+
+  @override
+  void togglePopup(Marker marker) {
+    if (mapController != null)
+    mapController.move(marker.point, mapController.zoom);
+    super.togglePopup(marker);
+  }
 }
