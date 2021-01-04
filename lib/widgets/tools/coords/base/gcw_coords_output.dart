@@ -75,7 +75,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
       trailing: GCWIconButton(
         iconData: Icons.save,
         size: IconButtonSize.SMALL,
-        color: _isNoOutput ? Colors.grey : null,
+        iconColor: _isNoOutput ? Colors.grey : null,
         onPressed: () { _isNoOutput ? null : _exportCoordinates(context, 'GC Wizard Export ' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), widget.points, widget.geodetics, widget.circles);
         },
       )

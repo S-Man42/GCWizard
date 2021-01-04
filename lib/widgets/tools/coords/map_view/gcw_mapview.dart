@@ -571,6 +571,7 @@ class GCWMapViewState extends State<GCWMapView> {
   _buildEditButtons() {
     var buttons = [
       GCWIconButton(
+        backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.my_location, stacked: Icons.add),
         onPressed: () {
           setState(() {
@@ -583,8 +584,9 @@ class GCWMapViewState extends State<GCWMapView> {
         },
       ),
       GCWIconButton(
+        backgroundColor: _isPolylineDrawing ? COLOR_MAP_DRAWLINE_ICONBUTTON : COLOR_MAP_ICONBUTTONS,
         customIcon: _isPolylineDrawing
-          ? _createIconButtonIcons(Icons.timeline, color: Colors.deepOrangeAccent)
+          ? _createIconButtonIcons(Icons.timeline, stacked: Icons.priority_high)
           : _createIconButtonIcons(Icons.timeline, stacked: Icons.add),
         onPressed: () {
           setState(() {
@@ -609,6 +611,7 @@ class GCWMapViewState extends State<GCWMapView> {
   _buildLayerButtons() {
     var buttons = [
       GCWIconButton(
+          backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.layers),
         onPressed: () {
           _currentLayer = _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? _LayerType.MAPBOX_SATELLITE : _LayerType.OPENSTREETMAP_MAPNIK;
@@ -632,6 +635,7 @@ class GCWMapViewState extends State<GCWMapView> {
     ) {
       buttons.add(
         GCWIconButton(
+          backgroundColor: COLOR_MAP_ICONBUTTONS,
           customIcon: _createIconButtonIcons(_locationSubscription.isPaused ? Icons.location_off : Icons.location_on),
           onPressed: _toggleLocationListening,
         )

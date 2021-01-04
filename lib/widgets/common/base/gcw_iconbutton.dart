@@ -9,9 +9,10 @@ class GCWIconButton extends StatelessWidget {
   final IconData iconData;
   final Widget customIcon;
   final IconButtonSize size;
-  final Color color;
+  final Color iconColor;
+  final Color backgroundColor;
 
-  const GCWIconButton({Key key, this.onPressed, this.iconData, this.customIcon, this.size: IconButtonSize.NORMAL, this.color}) : super(key: key);
+  const GCWIconButton({Key key, this.onPressed, this.iconData, this.customIcon, this.size: IconButtonSize.NORMAL, this.iconColor, this.backgroundColor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +41,23 @@ class GCWIconButton extends StatelessWidget {
       width: containerWidth,
       child: ButtonTheme(
         height: buttonHeight,
-        child: OutlineButton(
+        child: FlatButton(
+          color: backgroundColor,
           padding: EdgeInsets.zero,
           child: this.customIcon ?? Icon(
             this.iconData,
             size: iconSize,
-            color: this.color ?? themeColors().mainFont()
+            color: this.iconColor ?? themeColors().mainFont()
           ),
           onPressed: this.onPressed,
-          borderSide: BorderSide(color: themeColors().accent()),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(roundedBorderRadius),
-          )
+            side: BorderSide(
+              color: themeColors().accent(),
+              width: 1,
+              style: BorderStyle.solid
+            ),
+            borderRadius: BorderRadius.circular(roundedBorderRadius)
+          ),
         ),
       ),
       padding: EdgeInsets.only(
