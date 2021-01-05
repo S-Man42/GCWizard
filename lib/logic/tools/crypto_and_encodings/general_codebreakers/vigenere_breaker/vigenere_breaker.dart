@@ -39,7 +39,7 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
 
   var bigrams = getBigrams(alphabet);
 
-  var vigenereSquare = _createVigenereSquare(bigrams.alphabet.length, vigenereBreakerType == VigenereBreakerType.BEAUFORT);
+  var vigenereSquare = _createVigenereEncodeSquare(bigrams.alphabet.length, vigenereBreakerType == VigenereBreakerType.BEAUFORT);
   var cipher_bin = List<int>();
   var resultList = List <VigenereBreakerResult>();
   VigenereBreakerResult best_result = null;
@@ -62,9 +62,8 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
     resultList.add(result);
 
     result.key = breakerResult.key.map((x) => bigrams.alphabet[x]).join();
-    result.key = decryptVigenere(''.padRight(result.key.length, bigrams.alphabet[0]), result.key, false);
 
-    result.plaintext = decryptVigenere(input, result.key, false);
+    result.plaintext = decryptVigenere(input, result.key, vigenereBreakerType == VigenereBreakerType.AUTOKEYVIGENERE, ignoreNonLetters: true);
     result.fitness = calc_fitnessBigrams(result.plaintext, bigrams);
   }
   best_result = _bestSolution(resultList);
@@ -96,35 +95,20 @@ List<VigenereBreakerResult> _highPassFilter( double alpha, List<VigenereBreakerR
 }
 
 
-List<List<int>> _createVigenereSquare(int size, bool beaufortVariant){
+List<List<int>> _createVigenereEncodeSquare(int size, bool beaufortVariant){
   var vigenereSquare = List<List<int>>(size);
-  var rowList = List<int>();
-
-  for (int i = 0; i < vigenereSquare.length; i++)
-    rowList.add(i);
 
   if (beaufortVariant) {
-    vigenereSquare[0] = rowList;
-    rowList = createRowList(rowList);
-    for (int row = vigenereSquare.length - 1; row > 0 ; row--) {
-      vigenereSquare[row] = rowList;
-      rowList = createRowList(rowList);
+    for (int row = 0; row < vigenereSquare.length; row++) {
+      vigenereSquare[row] = List.generate(vigenereSquare.length, (index) => (index - row) % vigenereSquare.length);;
     }
   } else {
     for (int row = 0; row < vigenereSquare.length; row++) {
-      vigenereSquare[row] = rowList;
-      rowList = createRowList(rowList);
+      vigenereSquare[row] = List.generate(vigenereSquare.length, (index) => (vigenereSquare.length - index + row) % vigenereSquare.length);;
     }
   }
 
   return vigenereSquare;
 }
 
-List<int> createRowList(List<int> sourceList) {
-  var rowList = List<int>();
-  rowList.addAll(sourceList.getRange(1, sourceList.length));
-  rowList.add(sourceList[0]);
-
-  return rowList;
-}
 

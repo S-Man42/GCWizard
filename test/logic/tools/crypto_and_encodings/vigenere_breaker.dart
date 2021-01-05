@@ -10,20 +10,24 @@ void main() {
     var text12 = 'aorqohpeicsblloimecdultvhj';
     var text13 = 'kurzerverschluesseltertext';
 
-    var text14 = 'Els eave xomypjnh, ewmm oez Aphzrqllnfs zwgie pmjjpcmifx jdt.';
+    var text14 = 'Els eave xomypjnh, ewmm oez Sphzrqllnfs zwgie pmjjpcmifx jdt.';
     var text15 = 'Das wird moeglich, weil der Algorithmus recht performant ist.';
 
-    var text16 = '''VVRQI EREOY LDPTT MWNFL ECKAV MZPWE EHRZK UHXHI KCISC BGBZH LHEPK DSERK AEESJ KOLIF 
-ZJKHB SXSZK SALUA ZPGVX EOKIX OZEIQ VHBHF HWFJI MITSP XHCZS JTYWH VTRSW KVMSG QTKSY 
-WYMOF XQPSH IGSOH GMVXC ITPKW YZXAH JVRSK ZWGXT RMTXW AGFDV IQGTK SVXEM OMFWN OFOR''';
-    var text17 = '''CONVE NTION ATITY ISNOT MORAL ITYSE LFRIG HTEOU SNESS ISNOT RELIG IONTO ATTIC KTHEF 
-IRSTI SNOTT OASSA ILTHE LASTT OPLUC KTHEM ASKFR OMTHE NACEO FTHEP HARIS EEISN OTTOL 
-IFTAN IMPIO USHAN DTOTH ECROW NONTH ORNST HESET HINGS ANDDE EDSAR EDIAM ETRIC ALLY''';
+    var text16 = 'elseavexomypjnhewmmoezsphzrqllnfszwgiepmjjpcmifxjdt';
+    var text17 = 'daswirdmoeglichweilderalgorithmusrechtperformantist';
 
-    var text18 = 'elseavexomypjnhewmmoezsphzrqllnfszwgiepmjjpcmifxjdt';
-    var text19 = 'daswirdmoeglichweilderalgorithmusrechtperformantist';
+    var text18 = 'Els eavg mgaoclov, aktt fln Etrrvztssij zxjtn hvvhvkbeey wjf.';
+    var text19 = 'Das wird moeglich, weil der Algorithmus recht performant ist.';
+
+    var text20 = 'oxdtvdhsdwdrjuqslhiszleshdjdfkuauhmzpehxgnhlezrfdvzmulvaauhopg';
+    var text21 = 'thistextisencryptedwiththevigenerecipherbreakingitisrathereasy';
 
     List<Map<String, dynamic>> _inputsToExpected = [
+      //{'input' : 'oxdtv', 'VigenereBreakerType' : VigenereBreakerType.BEAUFORT, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 5, 'keyLengthMax' : 5, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'hello', 'expectedOutput' : text21},
+      //{'input' : text20, 'VigenereBreakerType' : VigenereBreakerType.BEAUFORT, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 5, 'keyLengthMax' : 5, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'hello', 'expectedOutput' : text11},
+      {'input' : text10, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 5, 'keyLengthMax' : 5, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'hello', 'expectedOutput' : text11},
+      //{'input' : 'Altd h', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 5, 'keyLengthMax' : 5, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'hello', 'expectedOutput' : text11},
+
       {'input' : null, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 2, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
@@ -33,9 +37,9 @@ IFTAN IMPIO USHAN DTOTH ECROW NONTH ORNST HESET HINGS ANDDE EDSAR EDIAM ETRIC AL
 
       {'input' : text10, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'hello', 'expectedOutput' : text11},
       {'input' : text12, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'quark', 'expectedOutput' : text13},
-      {'input' : text14, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'blaire', 'expectedOutput' : text15},
-      {'input' : text16, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 99, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'theverywallkhaveearssotakegreatcarenottospeaktooloud', 'expectedOutput' : text17},
-      {'input' : text18, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'blaise', 'expectedOutput' : text19},
+      {'input' : text14, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'blaise', 'expectedOutput' : text15},
+      {'input' : text16, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'blaise', 'expectedOutput' : text17},
+      {'input' : text18, 'VigenereBreakerType' : VigenereBreakerType.AUTOKEYVIGENERE, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'blaise', 'expectedOutput' : text19},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -49,10 +53,8 @@ IFTAN IMPIO USHAN DTOTH ECROW NONTH ORNST HESET HINGS ANDDE EDSAR EDIAM ETRIC AL
   });
 
   group("vigenere_breaker.calc_fitness:", () {
-    var text10 = 'Altd hlbe tg lrncmwxpo kpxs evl ztrsuicp qptspf. Ivplyprr th pw clhoic pozc. :-)';
     var text11 = 'This text is encrypted with the vigenere cipher. Breaking it is rather easy. :-)';
 
-    var text12 = 'aorqohpeicsblloimecdultvhj';
     var text13 = 'kurzerverschluesseltertext';
 
     List<Map<String, dynamic>> _inputsToExpected = [

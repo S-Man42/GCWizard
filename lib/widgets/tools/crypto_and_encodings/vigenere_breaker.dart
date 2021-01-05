@@ -14,6 +14,7 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 
 
 class VigenereBreaker extends StatefulWidget {
@@ -26,6 +27,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
   String _currentInput = '';
   VigenereBreakerAlphabet _currentAlphabet = VigenereBreakerAlphabet.GERMAN;
   VigenereBreakerResult _currentOutput = null;
+  bool _currentAutokey = false;
   var _minKeyLengthController;
   var _maxKeyLengthController;
   int _minKeyLength = 3;
@@ -68,6 +70,14 @@ class VigenereBreakerState extends State<VigenereBreaker> {
             });
           },
         ),
+        GCWOnOffSwitch(
+          title: i18n(context, 'vigenere_autokey'),
+          onChanged: (value) {
+            setState(() {
+              _currentAutokey = value;
+            });
+          },
+        ),
         GCWTextDivider(
           text: i18n(context, 'common_alphabet')
         ),
@@ -86,52 +96,54 @@ class VigenereBreakerState extends State<VigenereBreaker> {
           }).toList(),
         ),
         Row(
-            children: <Widget>[
-              Expanded(
-                  child: GCWText(
-                      text: i18n(context, 'vigenere_breaker_key_length_min') + ':'
-                  ),
-                  flex: 1
+          children: <Widget>[
+            Expanded(
+              child: GCWText(
+                  text: i18n(context, 'vigenere_breaker_key_length_min') + ':'
               ),
-              Expanded(
-                  child: GCWIntegerSpinner(
-                    controller: _minKeyLengthController,
-                    min: 1,
-                    max: 999,
-                    onChanged: (value) {
-                      setState(() {
-                        _minKeyLength = value;
-                        _maxKeyLengthController.text = max(_minKeyLength, _maxKeyLength).toString();
-                      });
-                    },
-                  ),
-                  flex: 2
+              flex: 1
+            ),
+            Expanded(
+              child: GCWIntegerSpinner(
+                controller: _minKeyLengthController,
+                min: 1,
+                max: 999,
+                onChanged: (value) {
+                  setState(() {
+                    _minKeyLength = value;
+                    _maxKeyLength = max(_minKeyLength, _maxKeyLength);
+                    _maxKeyLengthController.text = _maxKeyLength.toString();
+                  });
+                },
               ),
-            ]
+              flex: 2
+            ),
+          ]
         ),
         Row(
           children: <Widget>[
-         Expanded(
-                  child: GCWText(
-                    text: i18n(context, 'vigenere_breaker_key_length_max') + ':' + ':'
-                  ),
-                  flex: 1
+            Expanded(
+              child: GCWText(
+                text: i18n(context, 'vigenere_breaker_key_length_max') + ':' + ':'
               ),
-              Expanded(
-                  child: GCWIntegerSpinner(
-                    controller: _maxKeyLengthController,
-                    min: 1,
-                    max: 999,
-                    onChanged: (value) {
-                      setState(() {
-                        _maxKeyLength = value;
-                        _minKeyLengthController.text = min(_minKeyLength, _maxKeyLength).toString();
-                      });
-                    },
-                  ),
-                  flex: 2
+              flex: 1
+            ),
+            Expanded(
+              child: GCWIntegerSpinner(
+                controller: _maxKeyLengthController,
+                min: 1,
+                max: 999,
+                onChanged: (value) {
+                  setState(() {
+                    _maxKeyLength = value;
+                    _minKeyLength = min(_minKeyLength, _maxKeyLength);
+                    _minKeyLengthController.text = _minKeyLength.toString();
+                  });
+                },
               ),
-            ]
+              flex: 2
+            ),
+          ]
         ),
         GCWButton(
           text: i18n(context, 'vigenere_breaker_start'),
@@ -167,11 +179,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
             GCWOutput(
               title: i18n(context, 'common_key'),
               child: GCWOutputText(
-                text:
-                  _currentOutput.key + '\n' +
-                   '\n' +
-                  'fitness: ' + _currentOutput.fitness.toStringAsFixed(2),
-                  //isMonotype: true,
+                text: _currentOutput.key
               ),
             ),
           ],
@@ -187,7 +195,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
 
     _isStarted = true;
 
-    var _currentOutputFuture = break_cipher(_currentInput, VigenereBreakerType.VIGENERE, _currentAlphabet, _minKeyLength, _maxKeyLength);
+    var _currentOutputFuture = break_cipher(_currentInput, _currentAutokey ? VigenereBreakerType.AUTOKEYVIGENERE : VigenereBreakerType.VIGENERE, _currentAlphabet, _minKeyLength, _maxKeyLength);
     _currentOutputFuture.then((output) {
       _currentOutput = output;
       _isStarted = false;
