@@ -260,7 +260,7 @@
   "beatnik_hint_code_memnonic" : "Memnonic",
   "beatnik_hint_input" : "Eingabe",
   "beatnik_hint_output" : "Ausgabe",
-  "beatnik_hint_generated" : "Zum Abschluss sind die Zahlen durch geeignet Wörter zu ersetzen. Der Wortwert ist anhand der Scrabble-Steine zu berrechnen und muss der Zahl entsprechen.",
+  "beatnik_hint_generated" : "Zum Abschluss sind die Zahlen durch geeignete Wörter zu ersetzen.\nDer Wortwert ist anhand der Scrabble-Steine zu berrechnen und muss der jeweiligen Zahl entsprechen.",
   "beatnik_error_runtime" : "Laufzeitfehler",
   "beatnik_error_runtime_invalid_input" : "Ungültige Eingabe",
   "beatnik_error_runtime_pc" : "Lesezugriff außerhalb des Speicherbereichs",
