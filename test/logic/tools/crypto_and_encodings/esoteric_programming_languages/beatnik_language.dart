@@ -113,6 +113,14 @@ Equalize, add bezique, bra emblaze.
   He (quezal), aeons liable.  Label lilac "bulla," ocean sauce!
 Ends, addends,
    duodena sounded amends.''';
+    String CliffleCorrect = '''Baa, badassed areas!
+Jarheads' arses
+      queasiest nude adverbs!
+    Dare address abase adder? *bares  dadas* HA!
+Equalize, add bezique, bra emblaze.
+  He (quezal), aeons liable.  Label  "bulla," ocean sauce!
+Ends, addends,
+   duodena sounded amends.''';
     String GC2M99K = '''NORD: AUFGABE SCHWER! BEIDE PERSONEN HATTEN EINES VERSTANDEN: ETWAS FEIERN! NATÜRLICH - NUR WER VERURTEILT DAS? DIE JUGEND? NEIN! DIE IST NÄMLICH SICHERLICH VORSICHTIG. BLIEBEN DIE ÄRZTE. DAMIT SIND MANCHE FAST SOGENANNTE BOTSCHAFTER. KONTAKT VERMEIDEN!
 
 Danke, Onkel Hanno - ich liebe Scrabble.
@@ -164,6 +172,7 @@ DIE IRONIE IST UNSER VERLUST AN STARKER ETHIK - SO ZIEMLICH.''';
       {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Rudimentary, 'input' : 'a', 'expectedOutput' : ['h']},
       {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Alphabet, 'input' : '', 'expectedOutput' : [' !"#\$%&'+"'"+'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~']},
       {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : Cliffle, 'input' : '', 'expectedOutput' : ['beatnik_error_runtime','beatnik_error_runtime_stack','beatnik_error_runtime_add']},
+      {'scrabbleSet' : scrabbleID_EN, 'sourcecode' : CliffleCorrect, 'input' : '', 'expectedOutput' : ['Hi']},
       {'scrabbleSet' : scrabbleID_D, 'sourcecode' : GC2M99K, 'input' : '', 'expectedOutput' : ['Cache bei:N51°15.176 E6° 32.373']},
     ];
 
