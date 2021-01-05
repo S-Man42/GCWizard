@@ -125,7 +125,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
           children: <Widget>[
             Expanded(
               child: GCWText(
-                text: i18n(context, 'vigenere_breaker_key_length_max') + ':' + ':'
+                text: i18n(context, 'vigenere_breaker_key_length_max') + ':'
               ),
               flex: 1
             ),
