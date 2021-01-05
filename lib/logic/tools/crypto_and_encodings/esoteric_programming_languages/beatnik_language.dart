@@ -56,7 +56,7 @@ BeatnikOutput generateBeatnik(var ScrabbleVersion, output){
   List<DebugOutput> debugProgramm = new List<DebugOutput>();
   debugProgramm.add(DebugOutput('','','',''));
 
-  return  BeatnikOutput(['beatnik_hint_generated'], [''], assemblerProgramm, memnonicProgramm, debugProgramm);
+  return  BeatnikOutput([assemblerProgramm.join(' ')], [''], assemblerProgramm, memnonicProgramm, debugProgramm);
 }
 
 
@@ -201,15 +201,11 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input){
   int pc = 0;
   int inputindex = 0;
   while (!exit && pc < assembler.length){
-// DEBUG
     if (assembler[pc] == 5 || assembler[pc] == 13 || assembler[pc] == 14 || assembler[pc] == 15 || assembler[pc] == 16) {
       debugProgramm.add(DebugOutput(pc.toString(), memnonic(assembler[pc])+' '+formatNumber(assembler[pc+1]), stack.getContent(), output));
-      print(formatNumber(pc)+': '+formatNumber(assembler[pc])+' '+formatNumber(assembler[pc+1])+'     Stack: '+formatString(stack.getContent(), 40)+'   Output: '+output);
     } else {
       debugProgramm.add(DebugOutput(pc.toString(), memnonic(assembler[pc]), stack.getContent(), output));
-      print(formatNumber(pc)+': '+formatNumber(assembler[pc])+'         Stack: '+formatString(stack.getContent(), 40)+'   Output: '+output);
     }
-// DEBUG
     switch (assembler[pc]) {
       case 5: // push n
         if (pc + 1 < assembler.length - 1) {
