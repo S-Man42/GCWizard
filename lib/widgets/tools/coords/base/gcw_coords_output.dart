@@ -57,7 +57,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
             },
           ),
           GCWButton(
-            text: 'Add to Free Map Tool',
+            text: i18n(context, 'coords_show_on_openmap'),
             onPressed: () {
               _openInMap(freeMap: true);
             },
