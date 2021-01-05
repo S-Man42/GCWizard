@@ -1,5 +1,6 @@
-
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
@@ -12,11 +13,16 @@ double _DEFAULT_RADIUS = 161.0;
 
 class MapPointEditor extends StatefulWidget {
   final GCWMapPoint mapPoint;
+  Length lengthUnit;
 
-  const MapPointEditor({
+  MapPointEditor({
     Key key,
-    this.mapPoint
-  }) : super(key: key);
+    this.mapPoint,
+    this.lengthUnit
+  }) : super(key: key) {
+    if (lengthUnit == null)
+      lengthUnit = LENGTH_METER;
+  }
 
   @override
   MapPointEditorState createState() => MapPointEditorState();
@@ -36,7 +42,7 @@ class MapPointEditorState extends State<MapPointEditor> {
     _nameController = TextEditingController(text: widget.mapPoint.markerText ?? '');
 
     if (widget.mapPoint.hasCircle()) {
-      _currentRadius = widget.mapPoint.circle.radius;
+      _currentRadius = widget.lengthUnit.fromMeter(widget.mapPoint.circle.radius);
     }
 
     _currentMarkerColorPickerColor = HSVColor.fromColor(widget.mapPoint.color);
@@ -57,10 +63,10 @@ class MapPointEditorState extends State<MapPointEditor> {
     return Column(
       children: [
         GCWTextDivider(
-          text: 'Marker'
+          text: i18n(context, 'coords_openmap_pointeditor_point')
         ),
         GCWTextField(
-          hintText: 'Enter Markertext',
+          hintText: i18n(context, 'coords_openmap_pointeditor_point_text'),
           controller: _nameController,
           onChanged: (text) {
             widget.mapPoint.markerText = text;
@@ -68,7 +74,7 @@ class MapPointEditorState extends State<MapPointEditor> {
           },
         ),
         GCWCoords(
-          title: 'Coordinate',
+          title: i18n(context, 'coords_openmap_pointeditor_point_coordinate'),
           coordinates: widget.mapPoint.point,
           coordsFormat: widget.mapPoint.coordinateFormat,
           onChanged: (ret) {
@@ -79,7 +85,7 @@ class MapPointEditorState extends State<MapPointEditor> {
           },
         ),
         GCWTextDivider(
-          text: 'Marker Color'
+          text: i18n(context, 'coords_openmap_pointeditor_point_color')
         ),
         Container(
           child: HSVPicker(
@@ -96,10 +102,10 @@ class MapPointEditorState extends State<MapPointEditor> {
           ),
         ),
         GCWTextDivider(
-          text: 'Circle'
+          text: i18n(context, 'coords_openmap_pointeditor_circle')
         ),
         GCWOnOffSwitch(
-          title: 'Has Circle',
+          title: i18n(context, 'coords_openmap_pointeditor_circle_hascircle'),
           value: widget.mapPoint.hasCircle(),
           onChanged: (value) {
             setState(() {
@@ -119,7 +125,8 @@ class MapPointEditorState extends State<MapPointEditor> {
           ? Column(
               children: [
                 GCWDistance(
-                  value: widget.mapPoint.circle.radius,
+                  value: _currentRadius,
+                  unit: widget.lengthUnit,
                   onChanged: (value) {
                     _currentRadius = value;
                     widget.mapPoint.circle.radius = _currentRadius;
@@ -127,7 +134,7 @@ class MapPointEditorState extends State<MapPointEditor> {
                   },
                 ),
                 GCWOnOffSwitch(
-                  title: 'Circle same Color as Marker',
+                  title: i18n(context, 'coords_openmap_pointeditor_circle_samecolor'),
                   value: widget.mapPoint.circleColorSameAsPointColor,
                   onChanged: (value) {
                     setState(() {

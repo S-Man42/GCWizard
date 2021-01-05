@@ -166,13 +166,11 @@ class MapViewPersistenceAdapter {
   removeMapPointFromMapPolyline(GCWMapPoint mapPoint) {
     var removablePolylines = [];
     mapWidget.polylines.forEach((polyline) {
-      print(polyline.uuid);
-      print(polyline.points.map((e) => e.uuid).toList());
       var polylineDAO = _mapPolylineDAOByUUID(polyline.uuid);
   
       if (polyline.points.indexOf(mapPoint) > -1) {
-        print(polyline.points.remove(mapPoint));
-        print(polylineDAO.pointUUIDs.remove(mapPoint.uuid));
+        polyline.points.remove(mapPoint);
+        polylineDAO.pointUUIDs.remove(mapPoint.uuid);
       }
   
       if (polyline.points.length < 2) {

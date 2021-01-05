@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/common/units/length.dart';
-import 'package:gc_wizard/logic/common/units/unit_category.dart';
+import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
+import 'package:prefs/prefs.dart';
 
 class GCWDistance extends StatefulWidget {
   final Function onChanged;
   final String hintText;
   final double value;
+  final Length unit;
 
-  const GCWDistance({Key key, this.onChanged, this.hintText, this.value}) : super(key: key);
+  const GCWDistance({Key key, this.onChanged, this.hintText, this.value, this.unit}) : super(key: key);
 
   @override
   _GCWDistanceState createState() => _GCWDistanceState();
@@ -21,7 +23,7 @@ class _GCWDistanceState extends State<GCWDistance> {
   var _controller;
 
   var _currentInput = {'text': '','value': 0.0};
-  Length _currentLengthUnit = UNITCATEGORY_LENGTH.defaultUnit;
+  Length _currentLengthUnit;
 
   @override
   void initState() {
@@ -33,6 +35,8 @@ class _GCWDistanceState extends State<GCWDistance> {
     _controller = TextEditingController (
       text: _currentInput['text']
     );
+
+    _currentLengthUnit = widget.unit ?? getUnitBySymbol(allLengths(), Prefs.get('i18n_default_length_unit'));
   }
 
   @override

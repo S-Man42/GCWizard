@@ -9,6 +9,8 @@ import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:flutter_map_tappable_polyline/flutter_map_tappable_polyline.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/common/units/length.dart';
+import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
@@ -31,6 +33,7 @@ import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
+import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum _LayerType {OPENSTREETMAP_MAPNIK, MAPBOX_SATELLITE}
@@ -42,6 +45,7 @@ final MAPBOX_SATELLITE_URL = 'coords_mapview_mapbox_satellite_url';
 
 final _DEFAULT_BOUNDS = LatLngBounds(LatLng(51.5, 12.9), LatLng(53.5, 13.9));
 final _POLYGON_STROKEWIDTH = 3.0;
+final _BUTTONGROUP_MARGIN = 30.0;
 
 class GCWMapView extends StatefulWidget {
   final List<GCWMapPoint> points;
@@ -77,6 +81,8 @@ class GCWMapViewState extends State<GCWMapView> {
 
   MapViewPersistenceAdapter _persistanceAdapter;
 
+  Length defaultLengthUnit;
+
   _getInitialBounds() {
     if (widget.points == null || widget.points.length == 0)
       return _DEFAULT_BOUNDS;
@@ -98,6 +104,8 @@ class GCWMapViewState extends State<GCWMapView> {
 
     if (widget.isEditable)
       _persistanceAdapter = MapViewPersistenceAdapter(widget);
+
+    defaultLengthUnit = getUnitBySymbol(allLengths(), Prefs.get('i18n_default_length_unit'));
   }
 
   @override
@@ -148,6 +156,10 @@ class GCWMapViewState extends State<GCWMapView> {
         _currentPosition = null;
       }
     });
+  }
+
+  _formatLengthOutput(double length) {
+    return NumberFormat('0.00').format(defaultLengthUnit.fromMeter(length)) + ' ' + defaultLengthUnit.symbol;
   }
 
   @override
@@ -302,14 +314,13 @@ class GCWMapViewState extends State<GCWMapView> {
 
     var text;
     var copyableText;
-    var format = NumberFormat('0.00');
     var child = polyline.child;
     if (child is GCWMapPolyline) {
-      copyableText = format.format(child.length);
-      text = 'Length: $copyableText m';
+      copyableText = _formatLengthOutput(child.length);
+      text = i18n(context, 'unitconverter_category_length') + ': $copyableText';
     } else if (child is GCWMapCircle) {
-      copyableText = format.format(child.radius);
-      text = 'Radius: $copyableText m';
+      copyableText = _formatLengthOutput(child.radius);
+      text = i18n(context, 'common_radius') + ': $copyableText';
     }
 
     var dialogButtons = <GCWDialogButton>[];
@@ -336,7 +347,7 @@ class GCWMapViewState extends State<GCWMapView> {
               var mapPoint = widget.points.firstWhere((element) => element.circle == child);
               Navigator.push(context, NoAnimationMaterialPageRoute(
                 builder: (context) => GCWTool(
-                  tool: MapPointEditor(mapPoint: mapPoint),
+                  tool: MapPointEditor(mapPoint: mapPoint, lengthUnit: defaultLengthUnit),
                   toolName: i18n(context, 'coords_openmap_lineeditor')
                 )
               ))
@@ -546,7 +557,7 @@ class GCWMapViewState extends State<GCWMapView> {
         },
       ),
       Container(
-        padding: EdgeInsets.only(top: 30),
+        padding: EdgeInsets.only(top: _BUTTONGROUP_MARGIN),
         child: GCWIconButton(
           backgroundColor: COLOR_MAP_ICONBUTTONS,
           customIcon: _createIconButtonIcons(Icons.delete),
@@ -663,8 +674,6 @@ class GCWMapViewState extends State<GCWMapView> {
     if (gcwMarker.mapPoint.isEditable)
       containerHeightMultiplier += 2;
 
-    var format = NumberFormat('0.00');
-
     return Container(
       width: 250,
       height: defaultFontSize() * containerHeightMultiplier,
@@ -704,9 +713,9 @@ class GCWMapViewState extends State<GCWMapView> {
           ),
           gcwMarker.mapPoint.hasCircle()
             ? GCWOutputText(
-                text: i18n(context, 'common_radius') + format.format(gcwMarker.mapPoint.circle.radius) + ' m',
+                text: i18n(context, 'common_radius') + ': ' + _formatLengthOutput(gcwMarker.mapPoint.circle.radius),
                 style: gcwDialogTextStyle(),
-                copyText: gcwMarker.mapPoint.circle.radius.toString() + ' m',
+                copyText: _formatLengthOutput(gcwMarker.mapPoint.circle.radius),
               )
             : Container(),
           gcwMarker.mapPoint.isEditable
@@ -745,7 +754,7 @@ class GCWMapViewState extends State<GCWMapView> {
                     onPressed: () {
                       Navigator.push(context, NoAnimationMaterialPageRoute(
                         builder: (context) => GCWTool(
-                          tool: MapPointEditor(mapPoint: gcwMarker.mapPoint),
+                          tool: MapPointEditor(mapPoint: gcwMarker.mapPoint, lengthUnit: defaultLengthUnit),
                           toolName: i18n(context, 'coords_openmap_pointeditor')
                           )
                       ))

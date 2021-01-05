@@ -50,7 +50,7 @@ class CrossBearingState extends State<CrossBearing> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          title: i18n(context, "coords_crossbearing_coord1"),
+          title: i18n(context, 'coords_crossbearing_coord1'),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -67,7 +67,7 @@ class CrossBearingState extends State<CrossBearing> {
           },
         ),
         GCWCoords(
-          title: i18n(context, "coords_crossbearing_coord2"),
+          title: i18n(context, 'coords_crossbearing_coord2'),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {
