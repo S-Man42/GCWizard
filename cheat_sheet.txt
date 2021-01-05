@@ -13,7 +13,7 @@ Gold Version:
 - Android: Copy icons android/app/src/main/res/icons_gold into main icon directory
 - iOS: Copy icons ios/Runner/Assets.xcassets/AppIcon.appiconset/icons_gold into main icon directory
 - Android (change package name to gc_wizard_gold):
-    1. in file: android/app/src/main/AndroidManifest.xml
+    1. in file: android/app/src/main/AndroidManifest.xml (and name to "GC Wizard Gold", too)
     2. in file: android/app/build.gradle -> defaultConfig
 - iOS:
     1. change bundle identifier in XCode/Info.plist in ios/Runner to de.sman42.gcWizardGold
