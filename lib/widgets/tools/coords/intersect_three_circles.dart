@@ -3,8 +3,8 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/logic/units/length.dart';
-import 'package:gc_wizard/logic/units/unit_category.dart';
+import 'package:gc_wizard/logic/common/units/length.dart';
+import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
@@ -168,17 +168,17 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
     _currentMapPoints = [
       MapPoint(
         point: _currentCoords1,
-        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint1'),
+        markerText: i18n(context, 'coords_intersectcircles_centerpoint1'),
         coordinateFormat: _currentCoordsFormat1
       ),
       MapPoint(
         point: _currentCoords2,
-        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint2'),
+        markerText: i18n(context, 'coords_intersectcircles_centerpoint2'),
         coordinateFormat: _currentCoordsFormat2
       ),
       MapPoint(
         point: _currentCoords3,
-        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint3'),
+        markerText: i18n(context, 'coords_intersectcircles_centerpoint3'),
         coordinateFormat: _currentCoordsFormat3
       )
     ];
@@ -202,7 +202,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
     _currentOutput = _currentIntersections
       .map((intersection) {
         return '${formatCoordOutput(intersection.coords, _currentOutputFormat, defaultEllipsoid())} '
-          '(${i18n(context, "coords_intersectthreecircles_marker_accuracy")}: '
+          '(${i18n(context, "coords_intersectthreecircles_accuracy")}: '
               '${doubleFormat.format(_currentOutputUnit.fromMeter(intersection.accuracy))} ${_currentOutputUnit.symbol})';
 
       })

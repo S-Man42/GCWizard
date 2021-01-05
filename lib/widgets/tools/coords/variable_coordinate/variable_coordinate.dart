@@ -3,8 +3,8 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/logic/units/length.dart';
-import 'package:gc_wizard/logic/units/unit_category.dart';
+import 'package:gc_wizard/logic/common/units/length.dart';
+import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart' as formula_base;
 import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart';
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart';
@@ -26,6 +26,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
 
+
 class VariableCoordinate extends StatefulWidget {
   final Formula formula;
 
@@ -36,7 +37,7 @@ class VariableCoordinate extends StatefulWidget {
 }
 
 class VariableCoordinateState extends State<VariableCoordinate> {
-  Widget _output;
+  Widget _output = GCWCoordsOutput(outputs : List<dynamic>());
   GCWSwitchPosition _currentCoordMode = GCWSwitchPosition.left;
 
   final MAX_COUNT_COORDINATES = 100;
@@ -174,7 +175,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
             _calculateOutput(context);
           },
         ),
-        _output ?? Container()
+        _output ?? Container(),
       ],
     );
   }
@@ -249,7 +250,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
                         updateFormula(widget.formula);
                       },
                     ),
-                    padding: EdgeInsets.only(right: 2 * DEFAULT_MARGIN),
+                    padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                   )
                 ),
                 Expanded(
@@ -515,7 +516,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         GCWCoordsOutput(
           mapButtonTop: true,
           outputs: _currentOutput,
-          points: _currentMapPoints
+          points: _currentMapPoints,
         )
       ]
     );

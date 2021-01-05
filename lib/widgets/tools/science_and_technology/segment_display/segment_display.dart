@@ -33,7 +33,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
   var _currentDisplays = <List<String>>[];
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
   var _currentEncryptMode = GCWSwitchPosition.left;
 
   @override

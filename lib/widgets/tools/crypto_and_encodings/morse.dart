@@ -24,7 +24,7 @@ class MorseState extends State<Morse> {
 
   var _currentEncodeInput = '';
   var _currentDecodeInput = '';
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {
@@ -47,6 +47,7 @@ class MorseState extends State<Morse> {
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

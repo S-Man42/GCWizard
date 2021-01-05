@@ -1,7 +1,4 @@
 import 'dart:math';
-import 'package:gc_wizard/logic/units/mass.dart';
-import 'package:gc_wizard/logic/units/energy.dart';
-import 'package:gc_wizard/theme/theme.dart';
 
 double calculateEnergy (double mass, double velocity) {
   var massInKG = mass / 1000;

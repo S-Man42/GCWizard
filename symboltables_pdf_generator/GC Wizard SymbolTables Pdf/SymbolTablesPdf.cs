@@ -10,9 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using PdfSharp.Pdf;
 using PdfSharp.Drawing;
-using PdfSharp.Pdf.IO;
 using System.Collections;
-using System.Resources;
 
 namespace GC_Wizard_SymbolTables_Pdf
 {
@@ -20,12 +18,20 @@ namespace GC_Wizard_SymbolTables_Pdf
     // dll from http://www.pdfsharp.net/
     public class SymbolTablesPdf
     {
+        const string CONFIG_FILENAME = "config.json";
+        const string CONFIG_SPECIALMAPPINGS = "special_mappings";
+        const string CONFIG_TRANSLATE = "translate";
+        const string CONFIG_CASESENSITIVE = "case_sensitive";
+        const string CONFIG_SPECIALSORT = "special_sort";
+        const string CONFIG_IGNORE = "ignore";
 
         public EventHandler SymbolTablesCount_Changed;
 
         public EventHandler SymbolImagesCount_Changed;
 
         public EventHandler Progress_Changed;
+
+        private String versionText = "";
 
         public Single BorderWidthTop { get; set; }
         public Single BorderWidthLeft { get; set; }
@@ -35,9 +41,9 @@ namespace GC_Wizard_SymbolTables_Pdf
         public int ImageSize { get; set; }
 
 
-        public int HeadingDistance { get; set; } = 10;
-        public int RowDistance { get; set; } = 12;
-        public int ColumnDistance { get; set; } = 10;
+        public int HeadingDistance { get; set; }
+        public int RowDistance { get; set; }
+        public int ColumnDistance { get; set; }
 
         public LanguageEnum Language { get; set; }
 
@@ -64,8 +70,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 if (_Progress != value)
                 {
                     _Progress = value;
-                    if (Progress_Changed != null)
-                        Progress_Changed(this, EventArgs.Empty);
+                    Progress_Changed?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -106,6 +111,8 @@ namespace GC_Wizard_SymbolTables_Pdf
             }
         }
 
+        private Dictionary<String, String> CONFIG_SPECIAL_CHARS = null;
+
 
         public enum LanguageEnum
         {
@@ -115,6 +122,10 @@ namespace GC_Wizard_SymbolTables_Pdf
 
         public SymbolTablesPdf()
         {
+            HeadingDistance = 10;
+            RowDistance = 18;
+            ColumnDistance = 10;
+
             BorderWidthTop = 35;
             BorderWidthLeft = 35;
             BorderWidthRight = 20;
@@ -122,7 +133,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             ImageSize = 50;
             Language = LanguageEnum.de;
             FontSizeName = 20;
-            FontSizeOverlay = 5;
+            FontSizeOverlay = 8;
             Orientation = PdfSharp.PageOrientation.Portrait;
         }
 
@@ -235,42 +246,236 @@ namespace GC_Wizard_SymbolTables_Pdf
             return offset;
         }
 
-        private IEnumerable<KeyValuePair<String, String>> createSymbolList(String path, String folder, String languagefile)
+        private IEnumerable<KeyValuePair<String, String>> createSymbolList(String path, String _symbolKey, String languagefile)
         {
             var list = new Dictionary<String, String>();
             var overlay = String.Empty;
             var _path = symbolTablesDirectory(path);
-            _path = Path.Combine(_path, folder);
+            _path = Path.Combine(_path, _symbolKey);
+
+            var configFilePath = Path.Combine(_path, CONFIG_FILENAME);
+            List<String> translateList = null;
+            List<String> translateables = null;
+            List<String> ignoreList = null;
+            Dictionary<String, String> mappingList = null;
+            bool caseSensitive = false;
+            bool specialSort = false;
+
+            if (File.Exists(Path.Combine(configFilePath)))
+            {
+                var fileContent = File.ReadAllText(configFilePath);
+                translateList = parseTranslateConfig(fileContent);
+                translateables = new List<String>();
+                ignoreList = parseIgnoreConfig(fileContent);
+                mappingList = parseMappingConfig(fileContent);
+                caseSensitive = parseCaseSesitiveConfig(fileContent);
+                specialSort = parseSpecialSortConfig(fileContent);
+
+            }
+            else
+                mappingList = parseMappingConfig(null);
+
 
             foreach (var symbol in Directory.GetFiles(_path, "*.png"))
             {
-                overlay = symbolOverlay(symbol, folder, languagefile);
+                if (ignoreList == null || ignoreList.Count == 0 || !ignoreList.Contains(Path.GetFileNameWithoutExtension(symbol)))
+                {
+                    overlay = symbolOverlay(symbol, _symbolKey, languagefile, translateList, mappingList, caseSensitive, ref translateables);
 
-                list.Add(symbol, overlay);
+                    list.Add(symbol, overlay);
+                }
             }
 
-            var comparer = new NameSort();
+            Comparer<object> _sort;
+            if (specialSort == false)
+            {
+                _sort = new NameSort(translateables);
+            }
+            else
+            {
+                switch (_symbolKey)
+                {
+                    case "notes_names_altoclef": _sort = new specialSortNoteNames(translateables); break;
+                    case "notes_names_bassclef": _sort = new specialSortNoteNames(translateables); break;
+                    case "notes_names_trebleclef": _sort = new specialSortNoteNames(translateables); break;
+                    case "notes_notevalues": _sort = new specialSortNoteValues(translateables); break;
+                    case "notes_restvalues": _sort = new specialSortNoteValues(translateables); break;
+                    case "trafficsigns_germany": _sort = new specialSortTrafficSignsGermany(translateables); break;
+                    default: _sort = new NameSort(translateables); break;
+                }
+            }
+
             var listSorted = list.ToList();
-            listSorted.Sort(delegate (KeyValuePair<String, String> x, KeyValuePair<String, String> y) { return comparer.Compare(x.Value, y.Value); });
+            if (_sort is specialSortNoteNames || _sort is specialSortNoteValues)
+                listSorted.Sort(delegate (KeyValuePair<String, String> x, KeyValuePair<String, String> y) { return _sort.Compare(x.Key, y.Key); });
+            else
+                listSorted.Sort(delegate (KeyValuePair<String, String> x, KeyValuePair<String, String> y) { return _sort.Compare(x.Value, y.Value); });
+
             return listSorted;
         }
 
-        private String symbolOverlay(String symbolPath, String folder, String languagefile)
+        private List<String> parseTranslateConfig(String fileContent)
+        {
+            var regex = new Regex(@"(" + CONFIG_TRANSLATE + @")(.*?)(\[)(.*?)(\])", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            var regex2 = new Regex(@"\""(.*?)\""");
+            var list = new List<String>();
+
+            if (fileContent != null)
+            {
+                var match = regex.Match(fileContent);
+                if (match.Success)
+                {
+                    var matches = regex2.Matches(match.Groups[4].Value);
+                    foreach (Match match2 in matches)
+                        list.Add(match2.Groups[1].Value);
+                }
+            }
+            return list;
+        }
+
+        private Dictionary<String, String> parseMappingConfig(String fileContent)
+        {
+            var regex = new Regex(@"(" + CONFIG_SPECIALMAPPINGS + @")(.*?)(\{)(.*?)(\})", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            var regex2 = new Regex(@"\""(.*?)\""(\s*:\s*)\""(.*?)\""");
+            var list = defaultMappingList();
+
+            if (fileContent != null)
+            {
+                var match = regex.Match(fileContent);
+                if (match.Success)
+                {
+                    foreach (string line in match.Groups[4].Value.Split('\n'))
+                    {
+                        var match2 = regex2.Match(line);
+                        if (match2.Success)
+                        {
+                            list.Add(match2.Groups[1].Value, match2.Groups[3].Value);
+                        }
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        private List<String> parseIgnoreConfig(String fileContent)
+        {
+            var regex = new Regex(@"(" + CONFIG_IGNORE + @")(.*?)(\[)(.*?)(\])", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            var regex2 = new Regex(@"\""(.*?)\""");
+            var list = new List<String>();
+
+            if (fileContent != null)
+            {
+                var match = regex.Match(fileContent);
+                if (match.Success)
+                {
+                    var matches = regex2.Matches(match.Groups[4].Value);
+                    foreach (Match match2 in matches)
+                        list.Add(match2.Groups[1].Value);
+                }
+            }
+            return list;
+        }
+
+        private Dictionary<String, String> defaultMappingList()
+        {
+            if (CONFIG_SPECIAL_CHARS == null)
+            {
+                CONFIG_SPECIAL_CHARS = new Dictionary<String, String>();
+
+                var path = Path.Combine(ProjectPath, @"lib\widgets\tools\symbol_tables\symbol_table_data.dart");
+                if (File.Exists(path))
+                {
+
+                    try
+                    {
+                        var fileContent = File.ReadAllText(path);
+                        var regex = new Regex(@"(CONFIG_SPECIAL_CHARS)(.*?)(\{)(.*?)(\};)", RegexOptions.Singleline | RegexOptions.IgnoreCase);
+                        var regex2 = new Regex(@"\""(.*?)\""(\s*:\s*)\""(.*?)\""");
+                        var regex3 = new Regex(@"\""(.*?)\""(\s*:\s*)\""(.*?)\""{2}");
+
+                        var match = regex.Match(fileContent);
+                        if (match.Success)
+                        {
+                            foreach (string line in match.Groups[4].Value.Split('\n'))
+                            {
+                                var match2 = regex2.Match(line);
+                                var match3 = regex3.Match(line);
+                                if (match2.Success)
+                                {
+                                    var value = match2.Groups[3].Value;
+                                    if (match3.Success)
+                                    {
+                                        value += "\"";
+                                        if (value.StartsWith("\\"))
+                                            value = value.Substring(1);
+                                    }
+
+                                    if (value.StartsWith("\\\\") || value.StartsWith("\\$"))
+                                        //if (value == "\"")
+                                        //    value = "\"";
+                                        //else
+                                        value = value.Substring(1);
+
+                                    CONFIG_SPECIAL_CHARS.Add(match2.Groups[1].Value, value);
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+            }
+
+            return new Dictionary<String, String>(CONFIG_SPECIAL_CHARS);
+        }
+
+        private bool parseCaseSesitiveConfig(String fileContent)
+        {
+            var regex = new Regex(@"(\""" + CONFIG_CASESENSITIVE + @"\""\s *:)\s(true)");
+            bool value = false;
+
+            if (fileContent != null)
+            {
+                var match = regex.Match(fileContent);
+                value = match.Success;
+            }
+            return value;
+        }
+
+        private bool parseSpecialSortConfig(String fileContent)
+        {
+            var regex = new Regex(@"(\""" + CONFIG_SPECIALSORT + @"\""\s *:)\s(true)");
+            bool value = false;
+
+            if (fileContent != null)
+            {
+                var match = regex.Match(fileContent);
+                value = match.Success;
+            }
+            return value;
+        }
+
+
+        private String symbolOverlay(String symbolPath, String folder, String languagefile, List<String> translateList, Dictionary<String, String> mappingList, bool caseSensitive, ref List<String> translateables)
         {
             var fileName = Path.GetFileNameWithoutExtension(symbolPath);
-            var overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + fileName);
+            var overlay = fileName;
 
-            if (overlay == null)
+            overlay = new Regex("(^_*|_*$)").Replace(overlay, "");
+
+
+            if (mappingList != null && mappingList.ContainsKey(overlay))
+                overlay = mappingList[overlay];
+            else if (translateList != null && translateList.Contains(overlay))
             {
-                Byte asciiCode;
-                while (fileName.EndsWith("_"))
-                    fileName = fileName.Substring(0, fileName.Length - 1);
-
-                if (Byte.TryParse(fileName, out asciiCode))
-                    overlay = Convert.ToChar(asciiCode).ToString();
-                else
-                    overlay = String.Empty;
+                overlay = getEntryValue(languagefile, "symboltables_" + folder + "_" + overlay);
+                translateables.Add(overlay);
             }
+
+            if (!caseSensitive)
+                overlay = overlay.ToUpper();
 
             return overlay;
         }
@@ -350,26 +555,59 @@ namespace GC_Wizard_SymbolTables_Pdf
         {
             // Create a font
             XFont font = new XFont("Verdana", FontSizeOverlay, XFontStyle.Regular);
+            if (name == " ")
+            {
+                //    name = '\u2423'.ToString();
+                //    font = new XFont("Consolas", FontSizeOverlay, XFontStyle.Regular);
+                if (Language == LanguageEnum.de)
+                    name = "Leerzeichen";
+                else
+                    name = "Space";
+            }
+
             // Draw the name
             name = checkTextLength(name, maxLength, font, gfx);
             if (!name.Contains(Environment.NewLine))
-                gfx.DrawString(name, font, XBrushes.Blue,
-                    new XRect(offset.X, offset.Y, ImageSize, 10),
-                    XStringFormats.TopLeft);
+                gfx.DrawString(name, font, XBrushes.Blue, new XRect(offset.X, offset.Y, ImageSize, 2 * FontSizeOverlay), XStringFormats.TopLeft);
             else
             {
                 var text = name.Split('\n');
 
                 for (int i = 0; i < text.Length; i++)
-                    gfx.DrawString(text[i], font, XBrushes.Blue,
-                        new XRect(offset.X, offset.Y + i * FontSizeOverlay, ImageSize, RowDistance),
-                        XStringFormats.TopLeft);
+                    gfx.DrawString(text[i], font, XBrushes.Blue, new XRect(offset.X, offset.Y + i * FontSizeOverlay, ImageSize, RowDistance), XStringFormats.TopLeft);
             }
 
             return offset;
         }
 
         private string checkTextLength(string text, int maxLength, XFont font, XGraphics gfx)
+        {
+            text = checkPartTextLength(text, maxLength, font, gfx);
+
+            var index = text.LastIndexOf("\n");
+
+
+            if (index >= 0)
+            {
+                var subString = text.Substring(index);
+                var size = gfx.MeasureString(subString, font);
+                while (size.Width > maxLength)
+                {
+                    subString = checkPartTextLength(subString, maxLength, font, gfx);
+
+                    text = text.Substring(0, index) + subString;
+
+                    index = text.LastIndexOf("\n");
+                    subString = text.Substring(index);
+                    size = gfx.MeasureString(subString, font);
+                }
+
+            }
+
+            return text;
+        }
+
+        private string checkPartTextLength(string text, int maxLength, XFont font, XGraphics gfx)
         {
             var size = gfx.MeasureString(text, font);
 
@@ -385,37 +623,41 @@ namespace GC_Wizard_SymbolTables_Pdf
                     if (size.Width <= maxLength)
                         return _index;
                     else
-                        _index = text.LastIndexOf(" ", _index - 1);
+                    {
+                        do
+                        {
+                            _index = text.LastIndexOf(_char, _index - 1, _index - 1);
+                            if (_index > 0)
+                                size = gfx.MeasureString(text.Substring(0, _index), font);
+
+                        } while (_index > 0 & size.Width >= maxLength);
+                    }
                 }
 
                 return _index;
             };
 
             var index = textSplit(text, ' ');
-            if (index > 0)
-                return text.Substring(0, index) + Environment.NewLine + text.Substring(index + 1);
+            if (index > 1)
+                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
 
             index = textSplit(text, '/');
             if (index > 0)
-                return text.Substring(0, index) + Environment.NewLine + text.Substring(index + 1);
+                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
 
             index = textSplit(text, ',');
             if (index > 0)
-                return text.Substring(0, index) + Environment.NewLine + text.Substring(index + 1);
-
-            index = textSplit(text, ',');
-            if (index > 0)
-                return text.Substring(0, index) + Environment.NewLine + text.Substring(index + 1);
+                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
 
             index = textSplit(text, ')');
             if (index > 0)
-                return text.Substring(0, index) + Environment.NewLine + text.Substring(index + 1);
+                return text.Substring(0, index) + Environment.NewLine + text.Substring(index).Trim();
 
             for (index = text.Length - 1; index >= 0; index--)
             {
                 size = gfx.MeasureString(text.Substring(0, index), font);
                 if (size.Width <= maxLength)
-                    return text.Substring(0, index) + Environment.NewLine + text.Substring(index + 1);
+                    return text.Substring(0, index) + Environment.NewLine + text.Substring(index);
 
             }
 
@@ -448,7 +690,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             gfx.DrawRectangle(new XPen(XColor.FromArgb(Color.Gray.ToArgb()), 0.2), offset.X, offset.Y, size.Width, size.Height);
 
             // Draw the overlay
-            drawOverlay(overlay, (int)(size.Width + ColumnDistance / 2), document, ref page, ref gfx, new PointF(offset.X, (Single)(offset.Y + size.Height)));
+            drawOverlay(overlay, (int)(size.Width + ColumnDistance - 2), document, ref page, ref gfx, new PointF(offset.X, (Single)(offset.Y + size.Height)));
 
             offset.X += (Single)size.Width + ColumnDistance;
 
@@ -469,17 +711,20 @@ namespace GC_Wizard_SymbolTables_Pdf
             if (document.PageCount == 1)
             {
                 text = File.ReadAllText(versionFileName(ProjectPath));
-                text = getVersionEntryValue(text, "version");
-                textSize = gfx.MeasureString(text, font);
-
-                // Draw the version text
-                gfx.DrawString(text, font, XBrushes.Black,
-                    new XRect(page.Width - BorderWidthRight - textSize.Width, (BorderWidthTop - font.Height) / 2, page.Width, page.Height),
-                    XStringFormats.TopLeft);
+                versionText = getVersionEntryValue(text, "version");
             }
 
+            textSize = gfx.MeasureString(versionText, font);
+            // Draw the version text
+            gfx.DrawString(versionText, font, XBrushes.Black,
+                    new XRect(page.Width - BorderWidthRight - textSize.Width, (BorderWidthTop - font.Height) / 2, page.Width, page.Height),
+                    XStringFormats.TopLeft);
+
+
             // GC Wicard Icon
-            gfx.DrawImage(Properties.Resources.circle_border_128, 5, 5, BorderWidthTop - 5, BorderWidthTop - 5);
+            MemoryStream memoryStream = new MemoryStream();
+            Properties.Resources.circle_border_128.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
+            gfx.DrawImage(XImage.FromStream(memoryStream), 5, 5, BorderWidthTop - 5, BorderWidthTop - 5);
 
             // Draw GC Wizard Text
             // Create a font
@@ -510,7 +755,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 var match = regex.Match(line);
                 if (match.Success)
                 {
-                    value = match.Groups[2].Value.ToString();
+                    value = match.Groups[2].Value;
                     break;
                 }
             }
@@ -534,7 +779,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 var match = regex.Match(line);
                 if (match.Success)
                 {
-                    value = "Version: " + match.Groups[2].Value.ToString() + " (Build: " + match.Groups[4].Value.ToString() + ")";
+                    value = "Version: " + match.Groups[2].Value + " (Build: " + match.Groups[4].Value + ")";
                     break;
                 }
             }
@@ -632,36 +877,48 @@ namespace GC_Wizard_SymbolTables_Pdf
             return Path.Combine(path, @"assets\symbol_tables");
         }
 
-        public class NameSort
+        public class NameSort : Comparer<Object>
         {
-            public int Compare(Object _a, Object _b)
-            {
-                const string SPECIAL_MARKER = "[#*?SPECIAL_MARKER%&]";
+            List<String> translateables;
 
+            public NameSort(List<String> translateables)
+            {
+                this.translateables = translateables;
+            }
+
+            override public int Compare(Object _a, Object _b)
+            {
                 int intA;
                 int intB;
-                String a = _a.ToString();
-                String b = _b.ToString();
+                String keyA = _a.ToString();
+                String keyB = _b.ToString();
 
 
-                if (!int.TryParse(a, out intA))
+                if (!int.TryParse(keyA, out intA))
                 {
-                    if (!int.TryParse(b, out intB))
+                    if (!int.TryParse(keyB, out intB))
                     {
-                        if (a.StartsWith(SPECIAL_MARKER))
+                        if (translateables != null && translateables.Contains(keyA))
                         {
-                            if (b.StartsWith(SPECIAL_MARKER))
-                                return a.CompareTo(b);
+                            if (translateables.Contains(keyB))
+                            {
+                                return keyA.CompareTo(keyB);
+                            }
                             else
+                            {
                                 return 1;
+                            }
                         }
                         else
                         {
-                            if (b.StartsWith(SPECIAL_MARKER))
+                            if (translateables != null && translateables.Contains(keyB))
+                            {
                                 return -1;
+                            }
                             else
-                                return lowerCase(a, b);
-
+                            {
+                                return lowerCase(keyA, keyB);
+                            }
                         }
                     }
                     else
@@ -669,7 +926,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 }
                 else
                 {
-                    if (!int.TryParse(b, out intB))
+                    if (!int.TryParse(keyB, out intB))
                         return -1;
                     else
                         return intA.CompareTo(intB);
@@ -680,7 +937,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             {
                 if ((a == String.Empty) | (b == String.Empty))
                     return a.CompareTo(b);
-                else { }
+
                 var abytes = System.Text.Encoding.Default.GetBytes(a);
                 var bbytes = System.Text.Encoding.Default.GetBytes(b);
 
@@ -690,6 +947,133 @@ namespace GC_Wizard_SymbolTables_Pdf
                     return a.CompareTo(b);
 
 
+            }
+        }
+
+        public class specialSortNoteNames : Comparer<Object>
+        {
+            List<String> translateables;
+
+            public specialSortNoteNames(List<String> translateables)
+            {
+                this.translateables = translateables;
+            }
+
+            override public int Compare(Object _a, Object _b)
+            {
+                var keyA = Path.GetFileNameWithoutExtension(_a.ToString()); // get filename from path without suffix
+                var keyB = Path.GetFileNameWithoutExtension(_b.ToString());
+
+
+                var aSplit = keyA.Split('_');
+                var aMain = 0;
+                int.TryParse(aSplit[0], out aMain);
+                var aSign = "";
+                if (aSplit.Length > 1)
+                    aSign = aSplit[1];
+
+                var bSplit = keyB.Split('_');
+                var bMain = 0;
+                int.TryParse(bSplit[0], out bMain);
+                var bSign = "";
+                if (bSplit.Length > 1)
+                    bSign = bSplit[1];
+
+                var compareSign = aSign.CompareTo(bSign);
+                if (compareSign != 0)
+                    return compareSign;
+
+                return aMain.CompareTo(bMain);
+            }
+        }
+
+        public class specialSortNoteValues : Comparer<Object>
+        {
+            List<String> translateables;
+
+            public specialSortNoteValues(List<String> translateables)
+            {
+                this.translateables = translateables;
+            }
+
+            override public int Compare(Object _a, Object _b)
+            {
+                var keyA = Path.GetFileNameWithoutExtension(_a.ToString()); // get filename from path without suffix
+                var keyB = Path.GetFileNameWithoutExtension(_b.ToString());
+
+
+                var aSplit = keyA.Split('_');
+                int aDotted = 0;
+                int aValue = 0;
+                int.TryParse(aSplit[0], out aDotted);
+                if (aSplit.Length > 1)
+                    int.TryParse(aSplit[1], out aValue);
+
+                var bSplit = keyB.Split('_');
+                int bDotted = 0;
+                int bValue = 0;
+                int.TryParse(bSplit[0], out bDotted);
+                if (bSplit.Length > 1)
+                    int.TryParse(bSplit[1], out bValue);
+
+                var compareDotted = aDotted.CompareTo(bDotted);
+                if (compareDotted != 0)
+                    return compareDotted;
+
+                return bValue.CompareTo(aValue);
+            }
+        }
+
+        public class specialSortTrafficSignsGermany : Comparer<Object>
+        {
+            List<String> translateables;
+
+            public specialSortTrafficSignsGermany(List<String> translateables)
+            {
+                this.translateables = translateables;
+            }
+
+            override public int Compare(Object _a, Object _b)
+            {
+                var keyA = _a.ToString();
+                var keyB = _b.ToString();
+
+                var aSplitDash = keyA.Split('-');
+                var bSplitDash = keyB.Split('-');
+                var aSplitDot = aSplitDash[0].Split('.');
+                var bSplitDot = bSplitDash[0].Split('.');
+
+                int aMain = 0;
+                int.TryParse(aSplitDot[0], out aMain);
+                var aDot = 0;
+                if (aSplitDot.Length > 1)
+                    int.TryParse(aSplitDot[1], out aDot);
+                var aDash = 0;
+                if (aSplitDash.Length > 1)
+                    int.TryParse(aSplitDash[1], out aDash);
+
+                var bMain = 0;
+                int.TryParse(bSplitDot[0], out bMain);
+                var bDot = 0;
+                if (bSplitDot.Length > 1)
+                    int.TryParse(bSplitDot[1], out bDot);
+                var bDash = 0;
+                if (bSplitDash.Length > 1)
+                    int.TryParse(bSplitDash[1], out bDash);
+
+                var compareMain = aMain.CompareTo(bMain);
+                if (compareMain != 0)
+                    return compareMain;
+
+                var compareDot = aDot.CompareTo(bDot);
+                if (compareDot != 0)
+                    return compareDot;
+
+                var compareDash = aDash.CompareTo(bDash);
+                if (compareDash != 0)
+                    return compareDash;
+
+                return 0;
             }
         }
     }

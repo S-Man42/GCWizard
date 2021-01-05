@@ -17,7 +17,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_crosstotal_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_crosstotal_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
@@ -69,17 +68,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     _toController = TextEditingController(text: _currentToInput);
 
     _storedAlphabets = Prefs.getStringList('alphabetvalues_custom_alphabets');
-    _alphabets = [
-      alphabetAZ,
-      alphabetGerman1,
-      alphabetGerman2,
-      alphabetGerman3,
-      alphabetSpanish1,
-      alphabetSpanish2,
-      alphabetPolish1,
-      alphabetGreek1,
-      alphabetRussian1,
-    ];
+    _alphabets = List<Alphabet>.from(ALL_ALPHABETS);
     _alphabets.addAll(_storedAlphabets.map<Alphabet>((storedAlphabet) {
       var alphabet = Map<String, dynamic>.from(jsonDecode(storedAlphabet));
       return Alphabet(

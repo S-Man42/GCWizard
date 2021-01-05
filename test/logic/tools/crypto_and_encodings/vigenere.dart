@@ -53,6 +53,32 @@ void main() {
     });
   });
 
+  group("Vigenere.encryptIgnoreNonLetters:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {
+        'input' : 'Wie ich sehe hast du das Rätsel gelöst. Du wirst jetzt sicherlich die Koordinaten lesen wollen, keine Sorge, dass wirst du. Aber zunächst ',
+        'key': 'beteigeuze',
+        'autoKey': false,
+        'aValue': 0,
+        'expectedOutput' : 'Xmx qil riii liyx cy htw Xänrim zitöwn. Ey aqxwn nfxsx ymwgispbgp hcd Lshvlorusio eiakr vsmpxr, oyhrf Lszmi, hbwl eovms ey. Ihil dvrägpyx '
+      },
+      {
+        'input' : 'Wie ich sehe hast du das Rätsel gelöst. Du wirst jetzt sicherlich die Koordinaten lesen wollen, keine Sorge, dass wirst du. Aber zunächst ',
+        'key': 'beteigeuze',
+        'autoKey': true,
+        'aValue': 0,
+        'expectedOutput' : 'Xmx qil ridm pczl ky dsl Lätkve kprödl. Xq nakbx ixlhv wznpgyoqgr rzh Xohvqtrsxrj wpwrx ebpdse, neafa Jgkjy, hrrm ypjl'
+      },
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
+        var _actual = encryptVigenere(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue'], ignoreNonLetters: false);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
   group("Vigenere.decrypt:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'key': null, 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
@@ -99,6 +125,32 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
         var _actual = decryptVigenere(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("Vigenere.decryptIgnoreNonLetters:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {
+        'expectedOutput' : 'Wie ich sehe hast du das Rätsel gelöst. Du wirst jetzt sicherlich die Koordinaten lesen wollen, keine Sorge, dass wirst du. Aber zunächst ',
+        'key': 'beteigeuze',
+        'autoKey': false,
+        'aValue': 0,
+        'input' : 'Xmx qil riii liyx cy htw Xänrim zitöwn. Ey aqxwn nfxsx ymwgispbgp hcd Lshvlorusio eiakr vsmpxr, oyhrf Lszmi, hbwl eovms ey. Ihil dvrägpyx '
+      },
+      {
+        'expectedOutput' : 'WIEICHSEHEHASTDUDASRTSELGELSTDUWIRSTJETZTSICHERLICHDIEKOORDINATENLESENWOLLENKEINESORGEDASSWIRSTDUABERZUNCHST',
+        'key': 'beteigeuze',
+        'autoKey': true,
+        'aValue': 0,
+        'input' : 'XMXMKNWYGIDIWBFBVEZVASWEJYOSLUNOMCYXUWMCNOQTZXAPBBAVQGRSFCLKUDBIXZSJHVJOEPRYOWMAAGZCKRNEAFAAFJZHXATWNHLFVKMT'
+      },
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
+        var _actual = decryptVigenere(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue'], ignoreNonLetters: false);
         expect(_actual, elem['expectedOutput']);
       });
     });

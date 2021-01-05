@@ -23,7 +23,7 @@ class GCWCoordsOutputFormatState extends State<GCWCoordsOutputFormat> {
     return Column(
         children: <Widget>[
           GCWTextDivider(
-            text: i18n(context, 'coords_output_format')
+            text: i18n(context, 'coords_output_format'),
           ),
           GCWCoordsFormatSelector(
             format: widget.coordFormat ?? _currentFormat,

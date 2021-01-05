@@ -128,6 +128,21 @@ int _sign(String match) {
   return 1;
 }
 
+String _prepareInput(String text, {wholeString = false}) {
+  if (text == null)
+    return null;
+
+  if (wholeString) {
+    text = text.trim();
+    regexEnd = wholeString ? '\$' : '';
+  }
+
+  if (text.length == 0)
+    return null;
+
+  return text;
+}
+
 LatLng _parseDECTrailingSigns(String text) {
 
   RegExp regex = RegExp(PATTERN_DEC_TRAILINGSIGN + regexEnd, caseSensitive: false);
@@ -156,7 +171,11 @@ LatLng _parseDECTrailingSigns(String text) {
   return null;
 }
 
-LatLng parseDEC(String text) {
+LatLng parseDEC(String text, {wholeString = false}) {
+
+  text = _prepareInput(text, wholeString: wholeString);
+  if (text == null)
+    return null;
 
   var parsedTrailingSigns = _parseDECTrailingSigns(text);
   if (parsedTrailingSigns != null)
@@ -238,7 +257,12 @@ LatLng _parseDMMTrailingSigns(String text, leftPadMilliMinutes) {
   return null;
 }
 
-LatLng parseDMM(String text, {leftPadMilliMinutes: false}) {
+LatLng parseDMM(String text, {leftPadMilliMinutes: false, wholeString: false}) {
+
+  text = _prepareInput(text, wholeString: wholeString);
+  if (text == null)
+    return null;
+
   var parsedTrailingSigns = _parseDMMTrailingSigns(text, leftPadMilliMinutes);
   if (parsedTrailingSigns != null)
     return parsedTrailingSigns;
@@ -313,7 +337,12 @@ LatLng _parseDMSTrailingSigns(String text) {
   return null;
 }
 
-LatLng parseDMS(String text) {
+LatLng parseDMS(String text, {wholeString = false}) {
+
+  text = _prepareInput(text, wholeString: wholeString);
+  if (text == null)
+    return null;
+
   var parsedTrailingSigns = _parseDMSTrailingSigns(text);
   if (parsedTrailingSigns != null)
     return parsedTrailingSigns;
@@ -352,21 +381,16 @@ LatLng parseDMS(String text) {
 
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
-Map<String, dynamic> parseLatLon(String text, [wholeString = false]) {
-  if (text == null || text.length == 0)
-    return null;
-
-  regexEnd = wholeString ? '\$' : '';
-
-  LatLng coord = parseDMS(text);
+Map<String, dynamic> parseLatLon(String text, {wholeString = false}) {
+  LatLng coord = parseDMS(text, wholeString: wholeString);
   if (coord != null)
     return {'format': keyCoordsDMS, 'coordinate': coord};
 
-  coord = parseDMM(text);
+  coord = parseDMM(text, wholeString: wholeString);
   if (coord != null)
     return {'format': keyCoordsDMM, 'coordinate': coord};
 
-  coord = parseDEC(text);
+  coord = parseDEC(text, wholeString: wholeString);
   if (coord != null)
     return {'format': keyCoordsDEC, 'coordinate': coord};
 

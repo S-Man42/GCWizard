@@ -45,7 +45,7 @@ class BCDState extends State<BCD> {
   );
 
   String _currentInput = '';
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {
@@ -77,6 +77,7 @@ class BCDState extends State<BCD> {
             )
           : _buildDecode(context),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

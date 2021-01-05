@@ -39,6 +39,7 @@ class LicensesState extends State<Licenses> {
             ['qr_flutter', 'BSD 3-Clause "New" or "Revised" License'],
             ['touchable', 'GPL 3.0 License'],
             ['url_launcher', 'BSD License'],
+            ['Chef Interpreter', 'CC0 1.0 Universal Public Domain Dedication'],
           ]),
         ),
 
@@ -51,6 +52,7 @@ class LicensesState extends State<Licenses> {
             ['astronomie.info, jgiesen.de', 'Astronomy Functions'],
             ['flutter_hsvcolor_picker (minimized)', 'Color Picker'],
             ['Jens Guballa (guballa.de)', 'Universal Code Breaker'],
+            ['Wesley Janssen, Joost Rijneveld, Mathijs Vos', 'Chef Interpreter'],
           ]),
         ),
 
@@ -62,6 +64,7 @@ class LicensesState extends State<Licenses> {
             ['myGeoTools', 'several'],
             ['Wikipedia', 'several'],
             ['www.breitkopf.de', 'Solmisation'],
+            ['www.steinerverlag.de', 'Eurythmy'],
           ]),
         ),
       ]

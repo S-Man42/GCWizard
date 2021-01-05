@@ -15,7 +15,7 @@ class BaconState extends State<Bacon> {
   var _controller;
 
   var _currentInput = '';
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   GCWSwitchPosition _binaryMode = GCWSwitchPosition.left;
   bool _inversMode = false;
 
@@ -46,6 +46,7 @@ class BaconState extends State<Bacon> {
           },
         ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;

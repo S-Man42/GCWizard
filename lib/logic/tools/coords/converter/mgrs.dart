@@ -1,3 +1,4 @@
+import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
@@ -120,13 +121,11 @@ UTMREF convertMGRSToUTM(MGRS mgrs) {
     min_northing = latitudeBandConstants[letter - 2][1];
     northing_offset = latitudeBandConstants[letter - 2][4];
   }
-  else if ((letter >= alphabet.indexOf('J')) && (letter <= alphabet.indexOf('N')))
-  {
+  else if ((letter >= alphabet.indexOf('J')) && (letter <= alphabet.indexOf('N'))) {
     min_northing = latitudeBandConstants[letter - 3][1];
     northing_offset = latitudeBandConstants[letter - 3][4];
   }
-  else if ((letter >= alphabet.indexOf('P')) && (letter <= alphabet.indexOf('X')))
-  {
+  else if ((letter >= alphabet.indexOf('P')) && (letter <= alphabet.indexOf('X'))) {
     min_northing = latitudeBandConstants[letter - 4][1];
     northing_offset = latitudeBandConstants[letter - 4][4];
   }
@@ -150,4 +149,32 @@ UTMREF convertMGRSToUTM(MGRS mgrs) {
 LatLng mgrsToLatLon(MGRS mgrs, Ellipsoid ells) {
   var utm = convertMGRSToUTM(mgrs);
   return UTMREFtoLatLon(utm, ells);
+}
+
+LatLng parseMGRS(String input, Ellipsoid ells) {
+  RegExp regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s+([A-Z]{2})\s?([0-9\.]+)\s+([0-9\.]+)\s*$');
+  var matches = regExp.allMatches(input);
+  if (matches.length == 0)
+    return null;
+
+  var match = matches.elementAt(0);
+  var _lonZone = int.tryParse(match.group(1));
+  if (_lonZone == null)
+    return null;
+
+  var _latZone = match.group(2);
+  var _digraph = match.group(3);
+
+  var _easting = double.tryParse(match.group(4));
+  if (_easting == null)
+    return null;
+
+  var _northing = double.tryParse(match.group(5));
+  if (_northing == null)
+    return null;
+
+  var zone = UTMZone(_lonZone, _lonZone, _latZone);
+  var mgrs = MGRS(zone, _digraph, _easting, _northing);
+
+  return mgrsToLatLon(mgrs, ells);
 }
