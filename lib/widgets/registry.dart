@@ -340,12 +340,6 @@ class Registry {
         searchStrings: SEARCHSTRING_BEAUFORT
       ),
       GCWTool(
-        tool: Beatnik(),
-        i18nPrefix: 'beatnik',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'beatnik esoteric programming language programmiersprache esoterische'
-      ),
-      GCWTool(
         tool: Binary(),
         i18nPrefix: 'binary',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -1162,6 +1156,11 @@ class Registry {
       //   i18nPrefix: 'chef',
       //   searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'chef kochrezepte kochen zutaten ingredients cookingrecipes cookrecipes'
       // ),
+      GCWTool(
+        tool: Beatnik(),
+        i18nPrefix: 'beatnik',
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'beatnik cliff biffle'
+      ),
       GCWTool(
         tool: Brainfk(),
         i18nPrefix: 'brainfk',
