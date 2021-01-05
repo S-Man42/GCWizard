@@ -18,13 +18,16 @@ class Malbolge extends StatefulWidget {
 
 class MalbolgeState extends State<Malbolge> {
   var _programmController;
+  var _normalizeController;
   var _inputController;
   var _outputController;
 
   var _currentProgramm = '';
+  var _currentNormalizedProgramm = '';
   var _currentInput = '';
   var _currentOutput = '';
   bool _currentDebug = false;
+  bool _currentNormalize = false;
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;    // interpret
 
@@ -34,6 +37,7 @@ class MalbolgeState extends State<Malbolge> {
     _programmController = TextEditingController(text: _currentProgramm);
     _inputController = TextEditingController(text: _currentInput);
     _outputController = TextEditingController(text: _currentOutput);
+    _normalizeController = TextEditingController(text: _currentNormalizedProgramm);
   }
 
   @override
@@ -41,6 +45,7 @@ class MalbolgeState extends State<Malbolge> {
     _programmController.dispose();
     _inputController.dispose();
     _outputController.dispose();
+    _normalizeController.dispose();
     super.dispose();
   }
 
@@ -60,40 +65,49 @@ class MalbolgeState extends State<Malbolge> {
         ),
         _currentMode == GCWSwitchPosition.right // generate malbolge-programm
             ? Column(
-          children: <Widget>[
-            GCWTextField(
-              controller: _outputController,
-              hintText: i18n(context, 'malbolge_hint_output'),
-              onChanged: (text) {
-                setState(() {
-                  _currentOutput = text;
-                });
-              },
-            ),
-          ],
-        )
+                children: <Widget>[
+                  GCWTextField(
+                    controller: _outputController,
+                    hintText: i18n(context, 'malbolge_hint_output'),
+                    onChanged: (text) {
+                      setState(() {
+                        _currentOutput = text;
+                      });
+                    },
+                  ),
+                ],
+              )
             : Column( // interpret malbolge-programm
-          children: <Widget>[
-            GCWTextField(
-              controller: _programmController,
-              hintText: i18n(context, 'malbolge_hint_code'),
-              onChanged: (text) {
-                setState(() {
-                  _currentProgramm = text;
-                });
-              },
-            ),
-            GCWTextField(
-              controller: _inputController,
-              hintText: i18n(context, 'malbolge_hint_input'),
-              onChanged: (text) {
-                setState(() {
-                  _currentInput = text;
-                });
-              },
-            ),
-          ],
-        ),
+                children: <Widget>[
+                  GCWOnOffSwitch(
+                    title:i18n(context, 'malbolge_normalize'),
+                    value: _currentNormalize,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentNormalize = value;
+                      });
+                    },
+                  ),
+                  GCWTextField(
+                    controller: _programmController,
+                    hintText: i18n(context, 'malbolge_hint_code'),
+                    onChanged: (text) {
+                      setState(() {
+                        _currentProgramm = text;
+                      });
+                    },
+                  ),
+                  GCWTextField(
+                    controller: _inputController,
+                    hintText: i18n(context, 'malbolge_hint_input'),
+                    onChanged: (text) {
+                      setState(() {
+                        _currentInput = text;
+                      });
+                    },
+                  ),
+                ],
+              ),
         GCWTextDivider(
             text: i18n(context, 'malbolge_hint_output')
         ),
@@ -129,7 +143,8 @@ class MalbolgeState extends State<Malbolge> {
           text: outputData,
           isMonotype: true,
         ),
-        GCWOnOffSwitch(
+        _currentMode == GCWSwitchPosition.right // generate malbolge-programm
+        ? GCWOnOffSwitch(
           title:i18n(context, 'malbolge_debug'),
           value: _currentDebug,
           onChanged: (value) {
@@ -137,7 +152,8 @@ class MalbolgeState extends State<Malbolge> {
               _currentDebug = value;
             });
           },
-        ),
+        )
+        : Container(),
         _currentDebug == true
           ? Column(
             children: <Widget>[

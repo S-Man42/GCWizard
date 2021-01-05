@@ -1443,6 +1443,7 @@
   "malbolge_hint_code_assembler" : "   c     d     a\nmem[c] mem[d] mem[a]",
   "malbolge_hint_code_memnonic" : "Memnonic",
   "malbolge_debug" : "Debug",
+  "malbolge_normalize" : "normalized program",
   "malbolge_error_invalid_program" : "ERROR - INVALID PROGRAM",
   "malbolge_error_invalid_character" : "Invalid Character found",
   "malbolge_error_program_to_short" : "Program to short",
