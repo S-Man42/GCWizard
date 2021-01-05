@@ -663,7 +663,7 @@ class GCWMapViewState extends State<GCWMapView> {
     if (gcwMarker.mapPoint.hasCircle())
       containerHeightMultiplier += 3;
     if (gcwMarker.mapPoint.isEditable)
-      containerHeightMultiplier += 3;
+      containerHeightMultiplier += 5;
 
     var format = NumberFormat('0.00');
 

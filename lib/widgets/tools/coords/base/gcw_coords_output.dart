@@ -3,6 +3,7 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
@@ -47,18 +48,39 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
     var _isNoOutput = widget.outputs == null || widget.outputs.length == 0 || widget.points.length == 0 ;
     var _button = Visibility (
       visible: !_isNoOutput,
-      child: GCWButton (
-        text: i18n(context, 'coords_show_on_map'),
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => GCWTool (
-            tool: GCWMapView(
-              points: widget.points,
-              polylines: widget.polylines,
-            ),
-            toolName: i18n(context, 'coords_map_view_title'),
-            autoScroll: false,
-          )));
-        },
+      child: GCWToolBar(
+        children: [
+          GCWButton (
+            text: i18n(context, 'coords_show_on_map'),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => GCWTool (
+                tool: GCWMapView(
+                  points: widget.points,
+                  polylines: widget.polylines,
+                ),
+                toolName: i18n(context, 'coords_map_view_title'),
+                autoScroll: false,
+              )));
+            },
+          ),
+          GCWButton(
+            text: 'Add to Free Map Tool',
+            onPressed: () {
+              widget.points.forEach((point) {
+                point.isEditable = true;
+              });
+              Navigator.push(context, MaterialPageRoute(builder: (context) => GCWTool (
+                tool: GCWMapView(
+                  points: widget.points,
+                  polylines: widget.polylines,
+                  isEditable: true,
+                ),
+                toolName: i18n(context, 'coords_map_view_title'),
+                autoScroll: false,
+              )));
+            },
+          )
+        ],
       )
     );
 

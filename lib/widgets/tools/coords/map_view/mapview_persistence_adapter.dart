@@ -21,6 +21,7 @@ class MapViewPersistenceAdapter {
   MapPointDAO _gcwMapPointToMapPointDAO(GCWMapPoint gcwMapPoint) {
     return MapPointDAO(
       gcwMapPoint.uuid,
+      gcwMapPoint.markerText,
       gcwMapPoint.point.latitude,
       gcwMapPoint.point.longitude,
       gcwMapPoint.coordinateFormat['format'],
@@ -34,6 +35,7 @@ class MapViewPersistenceAdapter {
   GCWMapPoint _mapPointDAOToGCWMapPoint(MapPointDAO mapPointDAO) {
     return GCWMapPoint(
       uuid: mapPointDAO.uuid,
+      markerText: _mapViewDAO.name,
       point: LatLng(mapPointDAO.latitude, mapPointDAO.longitude),
       coordinateFormat: {'format': mapPointDAO.coordinateFormat},
       color: hexStringToColor(mapPointDAO.color),
@@ -103,6 +105,8 @@ class MapViewPersistenceAdapter {
           .toList()
       );
     }
+
+    updateMapViews();
   }
   
   GCWMapPoint addMapPoint(LatLng coordinate) {

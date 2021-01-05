@@ -29,6 +29,7 @@ class MapViewDAO {
 
 class MapPointDAO {
   final String uuid;
+  String name;
   double latitude;
   double longitude;
   String coordinateFormat;
@@ -39,6 +40,7 @@ class MapPointDAO {
 
   MapPointDAO(
     this.uuid,
+    this.name,
     this.latitude,
     this.longitude,
     this.coordinateFormat,
@@ -50,6 +52,7 @@ class MapPointDAO {
 
   Map<String, dynamic> toMap() => {
     'uuid': uuid,
+    'name': name,
     'latitude': latitude,
     'longitude': longitude,
     'coordinateFormat': coordinateFormat,
@@ -61,6 +64,7 @@ class MapPointDAO {
 
   MapPointDAO.fromJson(Map<String, dynamic> json):
     uuid = json['uuid'],
+    name = json['name'],
     latitude = json['latitude'],
     longitude = json['longitude'],
     coordinateFormat = json['coordinateFormat'],

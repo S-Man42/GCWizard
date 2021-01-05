@@ -57,19 +57,9 @@ void deleteMapViewDAO(int viewId) {
   _saveData();
 }
 
-void _updateMapView(MapViewDAO view) {
-  mapViews = mapViews.map((mapView) {
-    if (mapView.id == view.id)
-      return view;
-
-    return mapView;
-  }).toList();
-}
-
 void insertMapPointDAO(MapPointDAO point, MapViewDAO mapView) {
   mapView.points.add(point);
 
-  _updateMapView(mapView);
   _saveData();
 }
 
@@ -81,21 +71,18 @@ void updateMapPointDAO(MapPointDAO point, MapViewDAO mapView) {
     return mapPoint;
   }).toList();
 
-  _updateMapView(mapView);
   _saveData();
 }
 
 void deleteMapPointDAO(String pointUUID, MapViewDAO mapView) {
   mapView.points.removeWhere((point) => point.uuid == pointUUID);
 
-  _updateMapView(mapView);
   _saveData();
 }
 
 void insertMapPolylineDAO(MapPolylineDAO polyline, MapViewDAO mapView) {
   mapView.polylines.add(polyline);
 
-  _updateMapView(mapView);
   _saveData();
 }
 
@@ -107,13 +94,11 @@ void updateMapPolylineDAO(MapPolylineDAO polyline, MapViewDAO mapView) {
     return mapPolyline;
   }).toList();
 
-  _updateMapView(mapView);
   _saveData();
 }
 
 void deleteMapPolylineDAO(String polylineUUID, MapViewDAO mapView) {
   mapView.polylines.removeWhere((polyline) => polyline.uuid == polylineUUID);
 
-  _updateMapView(mapView);
   _saveData();
 }
