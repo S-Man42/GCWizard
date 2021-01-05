@@ -51,59 +51,6 @@ class GCWMapPoint {
   }
 }
 
-@deprecated
-class GCWMapGeodetic {
-  GCWMapPoint start;
-  GCWMapPoint end;
-  Color color;
-  double length;
-
-  List<LatLng> shape;
-
-  GCWMapGeodetic({
-    @required this.start,
-    @required this.end,
-    this.color: COLOR_MAP_POLYLINE,
-  }) {
-    update();
-  }
-
-  void update() {
-    DistanceBearingData _distBear = distanceBearing(start.point, end.point, defaultEllipsoid());
-    length = _distBear.distance;
-
-    shape = [start.point];
-    const _stepLength = 5000.0;
-
-    var _countSteps = (_distBear.distance / _stepLength).floor();
-
-    for (int _i = 1; _i < _countSteps; _i++) {
-      var _nextPoint = projection(
-          start.point,
-        _distBear.bearingAToB,
-        _stepLength * _i,
-        defaultEllipsoid()
-      );
-      shape.add(_nextPoint);
-    }
-
-    shape.add(end.point);
-  }
-
-  @deprecated
-  static fromLatLng({LatLng start, end, Color color}) {
-    var geodetic = GCWMapGeodetic(
-      start: GCWMapPoint(point: start),
-      end: GCWMapPoint(point: end)
-    );
-
-    if (color != null)
-      geodetic.color = color;
-
-    return geodetic;
-  }
-}
-
 class GCWMapPolyline {
   String uuid;
   List<GCWMapPoint> points = [];
@@ -122,6 +69,27 @@ class GCWMapPolyline {
     update();
   }
 
+  void _calculateGeodetics(GCWMapPoint start, GCWMapPoint end) {
+    DistanceBearingData _distBear = distanceBearing(start.point, end.point, defaultEllipsoid());
+    length += _distBear.distance;
+
+    const _stepLength = 5000.0;
+
+    var _countSteps = (_distBear.distance / _stepLength).floor();
+
+    for (int _i = 1; _i < _countSteps; _i++) {
+      var _nextPoint = projection(
+        start.point,
+        _distBear.bearingAToB,
+        _stepLength * _i,
+        defaultEllipsoid()
+      );
+      shape.add(_nextPoint);
+    }
+
+    shape.add(end.point);
+  }
+
   void update() {
     length = 0.0;
     shape = [];
@@ -136,19 +104,9 @@ class GCWMapPolyline {
     if (points.length < 2)
       return;
 
-    GCWMapGeodetic geodetic;
     for (int i = 1; i < points.length; i++) {
-      geodetic = GCWMapGeodetic(start: points[i - 1], end: points[i]);
-      length += geodetic.length;
-      shape.addAll(geodetic.shape.skip(1));
+      _calculateGeodetics(points[i - 1], points[i]);
     }
-  }
-
-  static GCWMapPolyline fromGCWMapGeodetic(GCWMapGeodetic geodetic) {
-    return GCWMapPolyline(
-      points: [geodetic.start, geodetic.end],
-      color: geodetic.color
-    );
   }
 }
 

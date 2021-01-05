@@ -22,8 +22,6 @@ class MapPolylineEditorState extends State<MapPolylineEditor> {
   void initState() {
     super.initState();
 
-    if (widget.geodetic is GCWMapGeodetic)
-      _currentColorPickerColor = HSVColor.fromColor(widget.geodetic.color);
     if (widget.geodetic is GCWMapPolyline)
       _currentColorPickerColor = HSVColor.fromColor(widget.geodetic.color);
   }
@@ -42,8 +40,6 @@ class MapPolylineEditorState extends State<MapPolylineEditor> {
               setState(() {
                 _currentColorPickerColor = color;
 
-                if (widget.geodetic is GCWMapGeodetic)
-                  widget.geodetic.color = _currentColorPickerColor.toColor();
                 if (widget.geodetic is GCWMapPolyline)
                   widget.geodetic.color = _currentColorPickerColor.toColor();
               });
