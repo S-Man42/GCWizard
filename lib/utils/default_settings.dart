@@ -72,6 +72,7 @@ void initDefaultSettings() {
     Prefs.setStringList('formulasolver_formulas', []);
   }
 
+  Prefs.setStringList('mapview_mapviews', []);
   if (Prefs.get('mapview_mapviews') == null) {
     Prefs.setStringList('mapview_mapviews', []);
   }

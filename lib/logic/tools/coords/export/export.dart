@@ -5,17 +5,16 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:latlong/latlong.dart';
 
-
-Future<Map<String, dynamic>> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<GCWMapCircle> circles, {bool kmlFormat = false}) async {
+Future<Map<String, dynamic>> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines, {bool kmlFormat = false}) async {
   String xml;
 
-  if ((points == null || points.length == 0) && (geodetics == null || geodetics.length == 0) && (circles == null || circles.length == 0))
+  if ((points == null || points.length == 0) && (polylines == null || polylines.length == 0))
     return null;
 
   if (kmlFormat)
-    xml = _KmlWriter().asString(name, points, geodetics, circles);
+    xml = _KmlWriter().asString(name, points, polylines);
   else
-    xml = _GpxWriter().asString(name, points, geodetics, circles);
+    xml = _GpxWriter().asString(name, points, polylines);
 
   try {
     var fileName = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '_' + 'coordinates' + (kmlFormat ? '.kml' : '.gpx');
@@ -28,15 +27,15 @@ Future<Map<String, dynamic>> exportCoordinates(String name, List<GCWMapPoint> po
 /// Convert points into GPX
 class _GpxWriter {
   /// Convert points into GPX XML (v1.0) as String
-  String asString(String name, List<GCWMapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles).toXmlString(pretty: true, indent: '\t');
+  String asString(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) => _build(name, points, polylines).toXmlString(pretty: true, indent: '\t');
 
   /// Convert Gpx into GPX XML (v1.0) as XmlNode
-  XmlNode asXml(String name, List<GCWMapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles);
+  XmlNode asXml(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) => _build(name, points, polylines);
 
 
-  XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<GCWMapCircle> circles) {final builder = XmlBuilder();
+  XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {final builder = XmlBuilder();
 
-    if ((points == null || points.length == 0) && (geodetics == null || geodetics.length == 0)  && (circles == null || circles.length == 0))
+    if ((points == null || points.length == 0) && (polylines == null || polylines.length == 0))
       return null;
 
     builder.processing('xml', 'version="1.0" encoding="UTF-8"');
@@ -49,7 +48,6 @@ class _GpxWriter {
       builder.attribute('xmlns:groundspeak', 'http://www.groundspeak.com/cache/1/0/1');
       builder.attribute('xmlns:gsak', 'http://www.gsak.net/xmlv1/6');
 
-
       if (points != null) {
         for (var i=0; i < points.length; i++) {
           if (i==0)
@@ -58,14 +56,19 @@ class _GpxWriter {
         }
       }
 
+      var circles = points
+        .where((point) => point.hasCircle())
+        .map((point) => point.circle)
+        .toList();
+
       if (circles != null) {
         circles.forEach((circle) {
           _writeLines(builder, name, 'circle', circle.shape);
         });
       }
 
-      if (geodetics != null) {
-        geodetics.forEach((geodetic) {
+      if (polylines != null) {
+        polylines.forEach((geodetic) {
           _writeLines(builder, name, 'line', geodetic.shape);
         });
       }
@@ -142,17 +145,17 @@ class _GpxWriter {
 /// Convert Gpx into KML
 class _KmlWriter {
   /// Convert points into KML as String
-  String asString(String name, List<GCWMapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles).toXmlString(pretty: true, indent: '\t');
+  String asString(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) => _build(name, points, polylines).toXmlString(pretty: true, indent: '\t');
 
   /// Convert points into KML as XmlNode
-  XmlNode asXml(String name, List<GCWMapPoint> points, geodetics, circles) => _build(name, points, geodetics, circles);
+  XmlNode asXml(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) => _build(name, points, polylines);
 
-  XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<GCWMapCircle> circles) {
+  XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
     final builder = XmlBuilder();
     var i = 0;
 
-    if ((points == null || points.length == 0) && (geodetics == null || geodetics.length == 0)  && (circles == null || circles.length == 0))
-    return null;
+    if ((points == null || points.length == 0) && (polylines == null || polylines.length == 0))
+      return null;
 
     builder.processing('xml', 'version="1.0" encoding="UTF-8"');
     builder.element('kml', nest: () {
@@ -185,6 +188,11 @@ class _KmlWriter {
           }
         }
 
+        var circles = points
+          .where((point) => point.hasCircle())
+          .map((point) => point.circle)
+          .toList();
+
         if (circles != null) {
           for (i=0; i < circles.length; i++) {
             builder.element('StyleMap', nest: () {
@@ -208,25 +216,25 @@ class _KmlWriter {
           }
         }
 
-        if (geodetics != null) {
-          for (i=0; i < geodetics.length; i++) {
+        if (polylines != null) {
+          for (i=0; i < polylines.length; i++) {
             builder.element('StyleMap', nest: () {
-              builder.attribute('id', 'geodetic' + i.toString());
+              builder.attribute('id', 'polyline' + i.toString());
 
               builder.element('Pair', nest: () {
                 _writeElement(builder, 'key', 'normal');
-                _writeElement(builder, 'styleUrl', '#geodetic' + i.toString());
+                _writeElement(builder, 'styleUrl', '#polyline' + i.toString());
               });
             });
           }
-          for (i=0; i < geodetics.length; i++) {
+          for (i=0; i < polylines.length; i++) {
             builder.element('Style', nest: () {
-              builder.attribute('id', 'geodetic' + i.toString());
+              builder.attribute('id', 'polyline' + i.toString());
               builder.element('LineStyle', nest: () {
-                _writeElement(builder, 'color', _ColorCode(geodetics[i].color));
+                _writeElement(builder, 'color', _ColorCode(polylines[i].color));
                 _writeElement(builder, 'width', 3);
               });
-              _writeElement(builder, 'color', _ColorCode(geodetics[i].color));
+              _writeElement(builder, 'color', _ColorCode(polylines[i].color));
             });
           }
         }
@@ -248,9 +256,9 @@ class _KmlWriter {
           }
         }
 
-        if (geodetics != null && geodetics.length > 0) {
-          for (i=0; i < geodetics.length; i++) {
-            _writeLines(builder, 'line', geodetics[i].shape, '#geodetic' + i.toString());
+        if (polylines != null && polylines.length > 0) {
+          for (i=0; i < polylines.length; i++) {
+            _writeLines(builder, 'line', polylines[i].shape, '#polyline' + i.toString());
           }
         }
       });

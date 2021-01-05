@@ -1,17 +1,13 @@
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/export/export.dart' as coordinatesExport;
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
-
 
 class GCWCoordsOutput extends StatefulWidget {
   final List<dynamic> outputs;
@@ -76,45 +72,13 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
         iconData: Icons.save,
         size: IconButtonSize.SMALL,
         iconColor: _isNoOutput ? Colors.grey : null,
-        onPressed: () { _isNoOutput ? null : _exportCoordinates(context, 'GC Wizard Export ' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()), widget.points, widget.geodetics, widget.circles);
+        onPressed: () { _isNoOutput ? null : _exportCoordinates(context, widget.points, widget.geodetics, widget.circles);
         },
       )
     );
   }
 
-  Future<bool> _exportCoordinates(BuildContext context, String name, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<GCWMapCircle> circles) async {
-    showGCWDialog(
-        context,
-        i18n(context, 'coords_export_saved'),
-          Text(i18n(context, 'coords_export_fileformat'),
-        ),
-        [
-          GCWDialogButton(
-            text: 'GPX',
-            onPressed: () async {
-              coordinatesExport.exportCoordinates(name, points, geodetics, circles).then((value) {
-                _showExportedFileDialog(value, '.gpx');
-              });
-            },
-          ),
-          GCWDialogButton(
-            text: 'KML',
-            onPressed: () async {
-              coordinatesExport.exportCoordinates(name, points, geodetics, circles, kmlFormat: true).then((value) {
-                _showExportedFileDialog(value, '.kml');
-              });
-            },
-          )
-        ]
-    );
-  }
-
-  _showExportedFileDialog(Map<String, dynamic> value, String type) {
-    if (value != null)
-      showExportedFileDialog(
-        context,
-        value['path'],
-        fileType: type
-      );
+  Future<bool> _exportCoordinates(BuildContext context, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<GCWMapCircle> circles) async {
+    // showCoordinatesExportDialog(context, points, geodetics, circles);
   }
 }

@@ -45,7 +45,7 @@ class GeodeticsEditorState extends State<GeodeticsEditor> {
 
     if (widget.geodetic is GCWMapGeodetic)
       _currentColorPickerColor = HSVColor.fromColor(widget.geodetic.color);
-    if (widget.geodetic is GCWMapPolyGeodetics)
+    if (widget.geodetic is GCWMapPolyline)
       _currentColorPickerColor = HSVColor.fromColor(widget.geodetic.color);
   }
 
@@ -65,7 +65,7 @@ class GeodeticsEditorState extends State<GeodeticsEditor> {
 
                 if (widget.geodetic is GCWMapGeodetic)
                   widget.geodetic.color = _currentColorPickerColor.toColor();
-                if (widget.geodetic is GCWMapPolyGeodetics)
+                if (widget.geodetic is GCWMapPolyline)
                   widget.geodetic.color = _currentColorPickerColor.toColor();
               });
             },

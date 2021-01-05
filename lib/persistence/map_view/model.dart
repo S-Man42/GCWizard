@@ -77,10 +77,11 @@ class MapPointDAO {
 
 class MapPolylineDAO {
   String uuid;
-  final List<String> pointUUIDs;
+  List<String> pointUUIDs;
   String color;
 
   MapPolylineDAO(
+    this.uuid,
     this.pointUUIDs,
     this.color
   );
@@ -93,7 +94,7 @@ class MapPolylineDAO {
 
   MapPolylineDAO.fromJson(Map<String, dynamic> json):
     uuid = json['uuid'],
-    pointUUIDs = json['pointUUIDs'],
+    pointUUIDs = List<String>.from(json['pointUUIDs']),
     color = json['color'];
 
   @override

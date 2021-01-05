@@ -102,7 +102,7 @@ class GCWMapGeodetic {
   }
 }
 
-class GCWMapPolyGeodetics {
+class GCWMapPolyline {
   String uuid;
   List<GCWMapPoint> points = [];
   Color color;
@@ -110,7 +110,7 @@ class GCWMapPolyGeodetics {
 
   List<LatLng> shape;
 
-  GCWMapPolyGeodetics({
+  GCWMapPolyline({
     this.uuid,
     @required this.points,
     this.color: COLOR_MAP_POLYLINE,
@@ -142,8 +142,8 @@ class GCWMapPolyGeodetics {
     }
   }
 
-  static GCWMapPolyGeodetics fromGCWMapGeodetic(GCWMapGeodetic geodetic) {
-    return GCWMapPolyGeodetics(
+  static GCWMapPolyline fromGCWMapGeodetic(GCWMapGeodetic geodetic) {
+    return GCWMapPolyline(
       points: [geodetic.start, geodetic.end],
       color: geodetic.color
     );

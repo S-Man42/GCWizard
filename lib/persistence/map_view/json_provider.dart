@@ -17,6 +17,13 @@ void refreshMapViews() {
     .toList();
 }
 
+clearMapViewDAO(MapViewDAO view) {
+  view.polylines.clear();
+  view.points.clear();
+
+  _saveData();
+}
+
 _saveData() {
   var jsonData = mapViews
     .map((view) => jsonEncode(view.toMap()))

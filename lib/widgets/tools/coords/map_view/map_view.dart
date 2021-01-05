@@ -23,14 +23,14 @@ class MapView extends StatefulWidget {
 class MapViewState extends State<MapView> {
   var points = <GCWMapPoint>[];
   var geodetics = <GCWMapGeodetic>[];
-  var polyGeodetics = <GCWMapPolyGeodetics>[];
+  var polyGeodetics = <GCWMapPolyline>[];
 
   @override
   Widget build(BuildContext context) {
     return GCWMapView(
       points: points,
       geodetics: geodetics,
-      polyGeodetics: polyGeodetics,
+      polylines: polyGeodetics,
       isEditable: true,
     );
   }
