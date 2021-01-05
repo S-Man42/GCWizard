@@ -31,6 +31,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
   var _currentCoordsFormat22 = defaultCoordFormat();
 
   var _currentMapPoints;
+  var _currentMapPolylines = <GCWMapPolyline>[];
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
 
@@ -108,20 +109,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
-          geodetics: [
-            GCWMapGeodetic.fromLatLng(
-              start: _currentCoords11,
-              end: _currentCoords12
-            ),
-            GCWMapGeodetic.fromLatLng(
-              start: _currentCoords21,
-              end: _currentCoords22,
-              color: HSLColor
-                .fromColor(COLOR_MAP_POLYLINE)
-                .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
-                .toColor()
-            ),
-          ],
+          polylines: _currentMapPolylines
         ),
       ],
     );
@@ -151,6 +139,19 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
         markerText: i18n(context, 'coords_intersectfourpoints_coord22'),
         coordinateFormat: _currentCoordsFormat22
       )
+    ];
+
+    _currentMapPolylines = [
+      GCWMapPolyline(
+        points: [_currentMapPoints[0], _currentMapPoints[1]]
+      ),
+      GCWMapPolyline(
+        points: [_currentMapPoints[2], _currentMapPoints[3]],
+        color: HSLColor
+          .fromColor(COLOR_MAP_POLYLINE)
+          .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+          .toColor()
+      ),
     ];
 
     if (_currentIntersection == null) {

@@ -39,6 +39,17 @@ class DistanceBearingState extends State<DistanceBearing> {
 
   @override
   Widget build(BuildContext context) {
+    var mapPoint1 = GCWMapPoint(
+      point: _currentCoords1,
+      markerText: i18n(context, 'coords_distancebearing_coorda'),
+      coordinateFormat: _currentCoordsFormat1
+    );
+    var mapPoint2 = GCWMapPoint(
+      point: _currentCoords2,
+      markerText: i18n(context, 'coords_distancebearing_coordb'),
+      coordinateFormat: _currentCoordsFormat2
+    );
+
     return Column(
       children: <Widget>[
         GCWCoords(
@@ -84,21 +95,12 @@ class DistanceBearingState extends State<DistanceBearing> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: [
-            GCWMapPoint(
-              point: _currentCoords1,
-              markerText: i18n(context, 'coords_distancebearing_coorda'),
-              coordinateFormat: _currentCoordsFormat1
-            ),
-            GCWMapPoint(
-              point: _currentCoords2,
-              markerText: i18n(context, 'coords_distancebearing_coordb'),
-              coordinateFormat: _currentCoordsFormat2
-            ),
+            mapPoint1,
+            mapPoint2
           ],
-          geodetics: [
-            GCWMapGeodetic.fromLatLng(
-              start: _currentCoords1,
-              end: _currentCoords2
+          polylines: [
+            GCWMapPolyline(
+              points: [mapPoint1, mapPoint2]
             )
           ],
         ),

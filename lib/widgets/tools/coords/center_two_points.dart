@@ -41,6 +41,27 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
 
   @override
   Widget build(BuildContext context) {
+    var mapPointCurrentCoords1 = GCWMapPoint(
+      point: _currentCoords1,
+      markerText: i18n(context, 'coords_centertwopoints_coorda'),
+      coordinateFormat: _currentCoordsFormat1
+    );
+    var mapPointCurrentCoords2 = GCWMapPoint(
+      point: _currentCoords2,
+      markerText: i18n(context, 'coords_centertwopoints_coordb'),
+      coordinateFormat: _currentCoordsFormat2
+    );
+    var mapPointCenter = GCWMapPoint(
+      point: _currentCenter,
+      color: COLOR_MAP_CALCULATEDPOINT,
+      markerText: i18n(context, 'coords_common_centerpoint'),
+      coordinateFormat: _currentOutputFormat,
+      circleColorSameAsPointColor: false,
+      circle: GCWMapCircle(
+        radius: _currentDistance
+      )
+    );
+
     return Column(
       children: <Widget>[
         GCWCoords(
@@ -82,35 +103,15 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: [
-            GCWMapPoint(
-              point: _currentCoords1,
-              markerText: i18n(context, 'coords_centertwopoints_coorda'),
-              coordinateFormat: _currentCoordsFormat1
-            ),
-            GCWMapPoint(
-              point: _currentCoords2,
-              markerText: i18n(context, 'coords_centertwopoints_coordb'),
-              coordinateFormat: _currentCoordsFormat2
-            ),
-            GCWMapPoint(
-              point: _currentCenter,
-              color: COLOR_MAP_CALCULATEDPOINT,
-              markerText: i18n(context, 'coords_common_centerpoint'),
-              coordinateFormat: _currentOutputFormat
-            ),
+            mapPointCurrentCoords1,
+            mapPointCurrentCoords2,
+            mapPointCenter
           ],
-          geodetics: [
-            GCWMapGeodetic.fromLatLng(
-              start: _currentCoords1,
-              end: _currentCoords2
+          polylines: [
+            GCWMapPolyline(
+              points: [mapPointCurrentCoords1, mapPointCurrentCoords2]
             ),
-          ],
-          circles: [
-            GCWMapCircle(
-              centerPoint: _currentCenter,
-              radius: _currentDistance
-            ),
-          ],
+          ]
         ),
       ],
     );

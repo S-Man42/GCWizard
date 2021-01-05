@@ -127,30 +127,6 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
-          circles: [
-            GCWMapCircle(
-              centerPoint: _currentCoords1,
-              radius: _currentRadius1,
-              color:
-                HSLColor
-                  .fromColor(COLOR_MAP_CIRCLE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness - 0.3)
-                  .toColor()
-            ),
-            GCWMapCircle(
-              centerPoint: _currentCoords2,
-              radius: _currentRadius2
-            ),
-            GCWMapCircle(
-              centerPoint: _currentCoords3,
-              radius: _currentRadius3,
-              color:
-              HSLColor
-                  .fromColor(COLOR_MAP_CIRCLE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness + 0.2)
-                  .toColor()
-            ),
-          ],
         ),
       ],
     );
@@ -169,17 +145,37 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
       GCWMapPoint(
         point: _currentCoords1,
         markerText: i18n(context, 'coords_intersectcircles_centerpoint1'),
-        coordinateFormat: _currentCoordsFormat1
+        coordinateFormat: _currentCoordsFormat1,
+        circleColorSameAsPointColor: false,
+        circle: GCWMapCircle(
+          radius: _currentRadius1,
+          color: HSLColor
+            .fromColor(COLOR_MAP_CIRCLE)
+            .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness - 0.3)
+            .toColor()
+        ),
       ),
       GCWMapPoint(
         point: _currentCoords2,
         markerText: i18n(context, 'coords_intersectcircles_centerpoint2'),
-        coordinateFormat: _currentCoordsFormat2
+        coordinateFormat: _currentCoordsFormat2,
+        circleColorSameAsPointColor: false,
+        circle: GCWMapCircle(
+          radius: _currentRadius2
+        ),
       ),
       GCWMapPoint(
         point: _currentCoords3,
         markerText: i18n(context, 'coords_intersectcircles_centerpoint3'),
-        coordinateFormat: _currentCoordsFormat3
+        coordinateFormat: _currentCoordsFormat3,
+        circleColorSameAsPointColor: false,
+        circle: GCWMapCircle(
+          radius: _currentRadius3,
+          color: HSLColor
+            .fromColor(COLOR_MAP_CIRCLE)
+            .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness + 0.2)
+            .toColor()
+        ),
       )
     ];
 

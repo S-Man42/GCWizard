@@ -28,7 +28,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
   var _currentMapPoints;
-  List<GCWMapGeodetic> _currentMapGeodetics;
+  List<GCWMapPolyline> _currentMapPolylines;
 
   @override
   void initState() {
@@ -81,7 +81,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
-          geodetics: _currentMapGeodetics,
+          polylines: _currentMapPolylines,
         ),
       ],
     );
@@ -108,42 +108,38 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
       return;
     }
 
-    _currentMapPoints.addAll(
-      _currentIntersections
-        .map((intersection) => GCWMapPoint(
-          point: intersection,
-          color: COLOR_MAP_CALCULATEDPOINT,
-          markerText: i18n(context, 'coords_common_intersection'),
-          coordinateFormat: _currentOutputFormat
-        ))
-        .toList()
-    );
+    var intersectionMapPoints = _currentIntersections
+      .map((intersection) => GCWMapPoint(
+        point: intersection,
+        color: COLOR_MAP_CALCULATEDPOINT,
+        markerText: i18n(context, 'coords_common_intersection'),
+        coordinateFormat: _currentOutputFormat
+      )).toList();
 
-    _currentMapGeodetics = [
-      GCWMapGeodetic.fromLatLng(
-        start: _currentCoords1,
-        end: _currentCoords2
+    _currentMapPoints.addAll(intersectionMapPoints);
+
+    _currentMapPolylines = [
+      GCWMapPolyline(
+        points: [_currentMapPoints[0], _currentMapPoints[1]]
       ),
     ];
-    
-    _currentIntersections.forEach((intersection) {
-      _currentMapGeodetics.addAll([
-        GCWMapGeodetic.fromLatLng(
-          start: _currentCoords1,
-          end: intersection,
+
+    intersectionMapPoints.forEach((intersection) {
+      _currentMapPolylines.addAll([
+        GCWMapPolyline(
+          points: [_currentMapPoints[0], intersection],
           color: HSLColor
             .fromColor(COLOR_MAP_POLYLINE)
             .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
             .toColor()
         ),
-        GCWMapGeodetic.fromLatLng(
-          start: _currentCoords2,
-          end: intersection,
+        GCWMapPolyline(
+          points: [_currentMapPoints[1], intersection],
           color: HSLColor
             .fromColor(COLOR_MAP_POLYLINE)
             .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness -0.3)
             .toColor()
-        ),
+        )
       ]);
     });
 

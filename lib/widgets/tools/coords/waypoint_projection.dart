@@ -27,7 +27,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
 
   var _currentValues = [defaultCoordinate];
   var _currentMapPoints = <GCWMapPoint>[];
-  var _currentGeodetics = <GCWMapGeodetic>[];
+  var _currentMapPolylines = <GCWMapPolyline>[];
   var _currentCoordsFormat = defaultCoordFormat();
 
   var _currentOutputFormat = defaultCoordFormat();
@@ -88,7 +88,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
-          geodetics: _currentGeodetics,
+          polylines: _currentMapPolylines,
         ),
       ],
     );
@@ -110,22 +110,21 @@ class WaypointProjectionState extends State<WaypointProjection> {
         )
       ];
 
-      _currentGeodetics = <GCWMapGeodetic>[];
+      _currentMapPolylines = <GCWMapPolyline>[];
 
       _currentValues.forEach((projection) {
-        _currentMapPoints.add(
-          GCWMapPoint(
-            point: projection,
-            color: COLOR_MAP_CALCULATEDPOINT,
-            markerText: i18n(context, 'coords_waypointprojection_end'),
-            coordinateFormat: _currentOutputFormat
-          )
+        var projectionMapPoint = GCWMapPoint(
+          point: projection,
+          color: COLOR_MAP_CALCULATEDPOINT,
+          markerText: i18n(context, 'coords_waypointprojection_end'),
+          coordinateFormat: _currentOutputFormat
         );
 
-        _currentGeodetics.add(
-          GCWMapGeodetic.fromLatLng(
-            start: projection,
-            end: _currentCoords
+        _currentMapPoints.add(projectionMapPoint);
+
+        _currentMapPolylines.add(
+          GCWMapPolyline(
+            points: [projectionMapPoint, _currentMapPoints[0]]
           )
         );
       });
@@ -146,10 +145,11 @@ class WaypointProjectionState extends State<WaypointProjection> {
         )
       ];
 
-      _currentGeodetics = [GCWMapGeodetic.fromLatLng(
-        start: _currentCoords,
-        end: _currentValues[0]
-      )];
+      _currentMapPolylines = [
+        GCWMapPolyline(
+          points: [_currentMapPoints[0], _currentMapPoints[1]]
+        )
+      ];
     }
 
     _currentOutput = _currentValues.map((projection) {

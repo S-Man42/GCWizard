@@ -39,7 +39,7 @@ class ResectionState extends State<Resection> {
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
   var _currentMapPoints;
-  List<GCWMapGeodetic> _currentMapGeodetics = [];
+  List<GCWMapPolyline> _currentMapPolylines = [];
 
   @override
   void initState() {
@@ -118,7 +118,7 @@ class ResectionState extends State<Resection> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
-          geodetics: _currentMapGeodetics
+          polylines: _currentMapPolylines
         ),
       ],
     );
@@ -126,7 +126,7 @@ class ResectionState extends State<Resection> {
 
   _calculateOutput() {
     _currentMapPoints = <GCWMapPoint>[];
-    _currentMapGeodetics = <GCWMapGeodetic>[];
+    _currentMapPolylines = <GCWMapPolyline>[];
 
     if (_currentCoords1 == _currentCoords2
       || _currentCoords2 == _currentCoords3
@@ -170,31 +170,28 @@ class ResectionState extends State<Resection> {
 
     //show max. 2 solutions; if there are more -> special cases at the end of the world -> advanced mode
     _currentIntersections = _currentIntersections.sublist(0, min(_currentIntersections.length, 2));
-
-    _currentMapPoints.addAll(
-      _currentIntersections.map((intersection) => GCWMapPoint(
+    var intersectionMapPoints = _currentIntersections
+      .map((intersection) => GCWMapPoint(
         point: intersection,
         color: COLOR_MAP_CALCULATEDPOINT,
         markerText: i18n(context, 'coords_common_intersection'),
         coordinateFormat: _currentOutputFormat
       ))
-      .toList()
-    );
+      .toList();
 
-    _currentIntersections.forEach((intersection) {
-      _currentMapGeodetics.addAll(
+    _currentMapPoints.addAll(intersectionMapPoints);
+
+    intersectionMapPoints.forEach((intersection) {
+      _currentMapPolylines.addAll(
         [
-          GCWMapGeodetic.fromLatLng(
-            start: intersection,
-            end: _currentCoords1
+          GCWMapPolyline(
+            points: [intersection, _currentMapPoints[0]]
           ),
-          GCWMapGeodetic.fromLatLng(
-            start: intersection,
-            end: _currentCoords2
+          GCWMapPolyline(
+            points: [intersection, _currentMapPoints[1]]
           ),
-          GCWMapGeodetic.fromLatLng(
-            start: intersection,
-            end: _currentCoords3
+          GCWMapPolyline(
+            points: [intersection, _currentMapPoints[2]]
           ),
         ]
       );

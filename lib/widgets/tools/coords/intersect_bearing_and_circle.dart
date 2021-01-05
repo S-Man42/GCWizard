@@ -104,30 +104,29 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
-          geodetics: [
-            GCWMapGeodetic.fromLatLng(
-              start: _currentCoordsStart,
-              end: projection(
-                  _currentCoordsStart,
-                  _currentBearingStart['value'],
-                  max<double> (
-                    distanceBearing(
-                      _currentCoordsStart,
-                      _currentCoordsCircle,
-                      defaultEllipsoid()
-                    ).distance,
-                    _currentRadiusCircle
-                  ) * 2.5,
-                  defaultEllipsoid()
-              )
+          polylines: [
+            GCWMapPolyline(
+              points: [
+                _currentMapPoints[0],
+                GCWMapPoint(
+                  point: projection(
+                    _currentCoordsStart,
+                    _currentBearingStart['value'],
+                    max<double> (
+                      distanceBearing(
+                        _currentCoordsStart,
+                        _currentCoordsCircle,
+                        defaultEllipsoid()
+                      ).distance,
+                      _currentRadiusCircle
+                    ) * 2.5,
+                    defaultEllipsoid()
+                  ),
+                  isVisible: false
+                )
+              ]
             )
-          ],
-          circles: [
-            GCWMapCircle(
-              centerPoint: _currentCoordsCircle,
-              radius: _currentRadiusCircle
-            ),
-          ],
+          ]
         ),
       ],
     );
@@ -145,7 +144,11 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
       GCWMapPoint(
         point: _currentCoordsCircle,
         markerText: i18n(context, 'coords_intersectbearingcircle_circle'),
-        coordinateFormat: _currentCoordsFormatCircle
+        coordinateFormat: _currentCoordsFormatCircle,
+        circleColorSameAsPointColor: false,
+        circle: GCWMapCircle(
+          radius: _currentRadiusCircle
+        ),
       )
     ];
 

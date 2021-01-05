@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -15,28 +14,26 @@ import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
-import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
-import 'package:gc_wizard/widgets/tools/coords/map_view/mappoint_editor.dart';
-import 'package:gc_wizard/widgets/tools/coords/map_view/geodetics_editor.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/mappoint_editor.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/mappolyline_editor.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adapter.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/persistence/map_view/json_provider.dart';
-import 'package:gc_wizard/persistence/map_view/model.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.dart';
 
 enum _LayerType {OPENSTREETMAP_MAPNIK, MAPBOX_SATELLITE}
 
@@ -46,20 +43,17 @@ final MAPBOX_SATELLITE_TEXT = 'coords_mapview_mapbox_satellite';
 final MAPBOX_SATELLITE_URL = 'coords_mapview_mapbox_satellite_url';
 
 final _DEFAULT_BOUNDS = LatLngBounds(LatLng(51.5, 12.9), LatLng(53.5, 13.9));
+final _POLYGON_STROKEWIDTH = 3.0;
 
 class GCWMapView extends StatefulWidget {
   final List<GCWMapPoint> points;
-  final List<GCWMapGeodetic> geodetics;
   final List<GCWMapPolyline> polylines;
-  final List<GCWMapCircle> circles;
   final bool isEditable;
 
   const GCWMapView({
     Key key,
     this.points: const [],
-    this.geodetics: const [],
     this.polylines: const [],
-    this.circles: const [],
     this.isEditable: false
   }) : super(key: key);
 
@@ -69,7 +63,7 @@ class GCWMapView extends StatefulWidget {
 
 class GCWMapViewState extends State<GCWMapView> {
   final MapController _mapController = MapControllerImpl();
-  final GCWMapPopupController _popupLayerController = GCWMapPopupController();
+  final _GCWMapPopupController _popupLayerController = _GCWMapPopupController();
 
   _LayerType _currentLayer = _LayerType.OPENSTREETMAP_MAPNIK;
   var _mapBoxToken;
@@ -83,7 +77,7 @@ class GCWMapViewState extends State<GCWMapView> {
 
   var _isPolylineDrawing = false;
 
-  MapViewDAO _currentMapViewDAO;
+  MapViewPersistenceAdapter _persistanceAdapter;
 
   _getInitialBounds() {
     if (widget.points == null || widget.points.length == 0)
@@ -104,105 +98,8 @@ class GCWMapViewState extends State<GCWMapView> {
     super.initState();
     _popupLayerController.mapController = _mapController;
 
-    _initializeMapView();
-  }
-
-  String _colorToHexString(Color color) {
-    return HexCode.fromRGB(
-      RGB(color.red.toDouble(), color.green.toDouble(), color.blue.toDouble())
-    ).toString();
-  }
-
-  Color _hexStringToColor(String hex) {
-    RGB rgb = HexCode(hex).toRGB();
-    return Color.fromARGB(255, rgb.red.floor(), rgb.green.floor(), rgb.blue.floor());
-  }
-
-  MapPointDAO _gcwMapPointToMapPointDAO(GCWMapPoint gcwMapPoint) {
-    return MapPointDAO(
-      gcwMapPoint.uuid,
-      gcwMapPoint.point.latitude,
-      gcwMapPoint.point.longitude,
-      gcwMapPoint.coordinateFormat['format'],
-      _colorToHexString(gcwMapPoint.color),
-      gcwMapPoint.hasCircle() ? gcwMapPoint.circle.radius : null,
-      gcwMapPoint.circleColorSameAsPointColor,
-      gcwMapPoint.hasCircle() ? _colorToHexString(gcwMapPoint.circle.color) : null,
-    );
-  }
-
-  GCWMapPoint _mapPointDAOToGCWMapPoint(MapPointDAO mapPointDAO) {
-    return GCWMapPoint(
-      uuid: mapPointDAO.uuid,
-      point: LatLng(mapPointDAO.latitude, mapPointDAO.longitude),
-      coordinateFormat: {'format': mapPointDAO.coordinateFormat},
-      color: _hexStringToColor(mapPointDAO.color),
-      circle: mapPointDAO.radius != null ? GCWMapCircle(
-        radius: mapPointDAO.radius,
-        color: _hexStringToColor(mapPointDAO.circleColor)
-      ) : null,
-      circleColorSameAsPointColor: mapPointDAO.circleColorSameAsColor,
-      isEditable: true
-    );
-  }
-
-  MapPolylineDAO _gcwMapPolylineToMapPolylineDAO(GCWMapPolyline gcwMapPolyline) {
-    return MapPolylineDAO(
-      gcwMapPolyline.uuid,
-      gcwMapPolyline.points.map((point) => point.uuid).toList(),
-      _colorToHexString(gcwMapPolyline.color)
-    );
-  }
-
-  GCWMapPolyline _mapPolylineDAOToGCWMapPolyline(MapPolylineDAO mapPolylineDAO) {
-    return GCWMapPolyline(
-      uuid: mapPolylineDAO.uuid,
-      points: mapPolylineDAO.pointUUIDs
-        .map((uuid) => widget.points.firstWhere((point) => point.uuid == uuid))
-        .toList(),
-      color: _hexStringToColor(mapPolylineDAO.color)
-    );
-  }
-
-  _initializeMapView() {
-    refreshMapViews();
-
-    if (mapViews.length == 0) {
-      insertMapViewDAO(MapViewDAO([], []));
-    }
-    _currentMapViewDAO = mapViews.last;
-
-    if (widget.points != null) {
-      _currentMapViewDAO.points.addAll(
-        widget.points
-          .where((point) => !_currentMapViewDAO.points.map((pointDAO) => pointDAO.uuid).toList().contains(point.uuid))
-          .map((point) => _gcwMapPointToMapPointDAO(point))
-          .toList()
-      );
-
-      widget.points.addAll(
-        _currentMapViewDAO.points
-          .where((pointDAO) => !widget.points.map((point) => point.uuid).toList().contains(pointDAO.uuid))
-          .map((pointDAO) => _mapPointDAOToGCWMapPoint(pointDAO))
-          .toList()
-      );
-    }
-
-    if (widget.polylines != null) {
-      _currentMapViewDAO.polylines.addAll(
-        widget.polylines
-          .where((polyline) => !_currentMapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
-          .map((polyline) => _gcwMapPolylineToMapPolylineDAO(polyline))
-          .toList()
-      );
-
-      widget.polylines.addAll(
-        _currentMapViewDAO.polylines
-          .where((polylineDAO) => !widget.polylines.map((polyline) => polyline.uuid).toList().contains(polylineDAO.uuid))
-          .map((polylineDAO) => _mapPolylineDAOToGCWMapPolyline(polylineDAO))
-          .toList()
-      );
-    }
+    if (widget.isEditable)
+      _persistanceAdapter = MapViewPersistenceAdapter(widget);
   }
 
   @override
@@ -220,152 +117,27 @@ class GCWMapViewState extends State<GCWMapView> {
     }
   }
 
-  GCWMapPoint _addMapPoint(LatLng coordinate) {
-    var random = Random();
-    var mapPoint = GCWMapPoint(
-      point: coordinate,
-      coordinateFormat: defaultCoordFormat(),
-      isEditable: true,
-      color: HSVColor.fromAHSV(1.0, random.nextDouble() * 360.0, 1.0, random.nextDouble() / 2 + 0.5).toColor(),
-      circleColorSameAsPointColor: true
-    );
-
-    insertMapPointDAO(_gcwMapPointToMapPointDAO(mapPoint), _currentMapViewDAO);
-
-    widget.points.add(mapPoint);
-    return mapPoint;
-  }
-
-  MapPointDAO _mapPointDAOByUUID(String uuid) {
-    return _currentMapViewDAO.points.firstWhere((point) => point.uuid == uuid);
-  }
-
-  MapPolylineDAO _mapPolylineDAOByUUID(String uuid) {
-    return _currentMapViewDAO.polylines.firstWhere((polyline) => polyline.uuid == uuid);
-  }
-
-  _updateMapPoint(GCWMapPoint mapPoint) {
-    mapPoint.update();
-
-    var mapPointDAO = _mapPointDAOByUUID(mapPoint.uuid);
-
-    mapPointDAO.latitude = mapPoint.point.latitude;
-    mapPointDAO.longitude = mapPoint.point.longitude;
-    mapPointDAO.coordinateFormat = mapPoint.coordinateFormat['format'];
-    mapPointDAO.color = _colorToHexString(mapPoint.color);
-    mapPointDAO.radius = mapPoint.hasCircle() ? mapPoint.circle.radius : null;
-    mapPointDAO.circleColorSameAsColor = mapPoint.circleColorSameAsPointColor;
-    mapPointDAO.circleColor = mapPoint.hasCircle() ? _colorToHexString(mapPoint.circle.color) : null;
-
-    updateMapPointDAO(mapPointDAO, _currentMapViewDAO);
-  }
-
-  _updateMapPolyline(GCWMapPolyline polyline) {
-    polyline.update();
-
-    var mapPolylineDAO = _mapPolylineDAOByUUID(polyline.uuid);
-    mapPolylineDAO.pointUUIDs = polyline.points.map((point) => point.uuid).toList();
-    mapPolylineDAO.color = _colorToHexString(polyline.color);
-
-    updateMapPolylineDAO(mapPolylineDAO, _currentMapViewDAO);
-  }
-
-  _removeMapPointFromMapPolyline(GCWMapPoint mapPoint) {
-    var removablePolylines = [];
-    widget.polylines.forEach((polyline) {
-      print(polyline.uuid);
-      print(polyline.points.map((e) => e.uuid).toList());
-      var polylineDAO = _mapPolylineDAOByUUID(polyline.uuid);
-
-      if (polyline.points.indexOf(mapPoint) > -1) {
-        print(polyline.points.remove(mapPoint));
-        print(polylineDAO.pointUUIDs.remove(mapPoint.uuid));
-      }
-
-      if (polyline.points.length < 2) {
-        removablePolylines.add(polyline);
-      } else {
-        polyline.update();
-        updateMapPolylineDAO(polylineDAO, _currentMapViewDAO);
-      }
-    });
-
-    removablePolylines.forEach((polyline) {
-      _removeMapPolyline(polyline);
-    });
-  }
-
-  _removeMapPoint(GCWMapPoint mapPoint) {
-    _removeMapPointFromMapPolyline(mapPoint);
-
-    widget.points.remove(mapPoint);
-    deleteMapPointDAO(mapPoint.uuid, _currentMapViewDAO);
-  }
-
-  _removeMapPolyline(GCWMapPolyline polyline, {removePoints: false}) {
-    widget.polylines.remove(polyline);
-    deleteMapPolylineDAO(polyline.uuid, _currentMapViewDAO);
-
-    if (removePoints) {
-      polyline.points.forEach((point) {
-        for (GCWMapPolyline anotherPolyline in widget.polylines) {
-          if (anotherPolyline.uuid == polyline.uuid)
-            continue;
-
-          if (anotherPolyline.points.contains(point))
-            return;
-        }
-
-        _removeMapPoint(point);
-      });
-    }
-  }
-
-  void _clearMapView() {
-    widget.points.clear();
-    widget.polylines.clear();
-    clearMapViewDAO(_currentMapViewDAO);
-  }
-
-  GCWMapPolyline _createMapPolyline() {
-    var polyline = GCWMapPolyline(points: []);
-    widget.polylines.add(polyline);
-    insertMapPolylineDAO(_gcwMapPolylineToMapPolylineDAO(polyline), _currentMapViewDAO);
-
-    return polyline;
-  }
-
-  _addMapPointIntoPolyline(GCWMapPoint mapPoint, GCWMapPolyline polyline) {
-    polyline.points.add(mapPoint);
-    polyline.update();
-
-    var polylineDAO = _mapPolylineDAOByUUID(polyline.uuid);
-    polylineDAO.pointUUIDs.add(mapPoint.uuid);
-    updateMapPolylineDAO(polylineDAO, _currentMapViewDAO);
-  }
-
   _toggleLocationListening() {
     if (_currentLocationPermissionGranted == false)
       return;
 
     if (_locationSubscription == null) {
       _locationSubscription = _location.onLocationChanged
-        .handleError((error) {
-          _cancelLocationSubscription();
-        })
-        .listen((LocationData currentLocation) {
-          setState(() {
-            var newPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
+          .handleError((error) {
+        _cancelLocationSubscription();
+      }).listen((LocationData currentLocation) {
+        setState(() {
+          var newPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
 
-            if (_currentPosition == null && (_manuallyToggledPosition || widget.points.length == 0)) {
-              _mapController.move(newPosition, _mapController.zoom);
-            }
-            _manuallyToggledPosition = false;
+          if (_currentPosition == null && (_manuallyToggledPosition || widget.points.length == 0)) {
+            _mapController.move(newPosition, _mapController.zoom);
+          }
+          _manuallyToggledPosition = false;
 
-            _currentPosition = newPosition;
-            _currentAccuracy = currentLocation.accuracy;
-          });
+          _currentPosition = newPosition;
+          _currentAccuracy = currentLocation.accuracy;
         });
+      });
 
       _locationSubscription.pause();
     }
@@ -421,10 +193,10 @@ class GCWMapViewState extends State<GCWMapView> {
               onTap: (_) => _popupLayerController.hidePopup(),
               onLongPress: widget.isEditable ? (LatLng coordinate) {
                 setState(() {
-                  var newPoint = _addMapPoint(coordinate);
+                  var newPoint = _persistanceAdapter.addMapPoint(coordinate);
 
                   if (_isPolylineDrawing) {
-                    _addMapPointIntoPolyline(newPoint, widget.polylines.last);
+                    _persistanceAdapter.addMapPointIntoPolyline(newPoint, widget.polylines.last);
                   }
                 });
               } : null
@@ -439,13 +211,13 @@ class GCWMapViewState extends State<GCWMapView> {
             )
           ),
 
-          Positioned(
+          widget.isEditable ? Positioned(
             top: 15.0,
             left: 15.0,
             child: Column(
               children: _buildEditButtons()
             )
-          ),
+          ) : Container(),
 
           Positioned(
             bottom: 5.0,
@@ -519,14 +291,14 @@ class GCWMapViewState extends State<GCWMapView> {
         markers: _markers,
         popupSnap: PopupSnap.top,
         popupController: _popupLayerController,
-        popupBuilder: (BuildContext _, Marker marker) => _buildPopups(marker)
+        popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker)
       ),
     ]);
 
     return layers;
   }
 
-  _showPolylineDialog(GCWPolyline polyline) {
+  _showPolylineDialog(_GCWTappablePolyline polyline) {
     if (polyline == null)
       return;
 
@@ -534,14 +306,11 @@ class GCWMapViewState extends State<GCWMapView> {
     var copyableText;
     var format = NumberFormat('0.00');
     var child = polyline.child;
-    if (child is GCWMapGeodetic) {
-      copyableText = format.format((child as GCWMapGeodetic).length);
-      text = 'Length: $copyableText m';
-    } else if (child is GCWMapPolyline) {
-      copyableText = format.format((child as GCWMapPolyline).length);
+    if (child is GCWMapPolyline) {
+      copyableText = format.format(child.length);
       text = 'Length: $copyableText m';
     } else if (child is GCWMapCircle) {
-      copyableText = format.format((child as GCWMapCircle).radius);
+      copyableText = format.format(child.radius);
       text = 'Radius: $copyableText m';
     }
 
@@ -551,19 +320,17 @@ class GCWMapViewState extends State<GCWMapView> {
         GCWDialogButton(
           text: 'Edit',
           onPressed: () {
-            if (child is GCWMapGeodetic || child is GCWMapPolyline) {
+            if (child is GCWMapPolyline) {
               Navigator.push(context, NoAnimationMaterialPageRoute(
                 builder: (context) => GCWTool(
-                  tool: GeodeticsEditor(geodetic: child),
+                  tool: MapPolylineEditor(geodetic: child),
                   toolName: 'Geodetics Editor'
                 )
               ))
               .whenComplete(() {
                 setState(() {
-                  if (child is GCWMapGeodetic)
-                    child.update();
                   if (child is GCWMapPolyline) {
-                    _updateMapPolyline(child);
+                    _persistanceAdapter.updateMapPolyline(child);
                   }
                 });
               });
@@ -577,7 +344,7 @@ class GCWMapViewState extends State<GCWMapView> {
               ))
               .whenComplete(() {
                 setState(() {
-                  _updateMapPoint(mapPoint);
+                  _persistanceAdapter.updateMapPoint(mapPoint);
                   _mapController.move(mapPoint.point, _mapController.zoom);
                 });
               });
@@ -587,9 +354,7 @@ class GCWMapViewState extends State<GCWMapView> {
         GCWDialogButton(
           text: 'Remove',
           onPressed: () {
-            if (child is GCWMapGeodetic) {
-              widget.geodetics.remove(child);
-            } else if (child is GCWMapPolyline) {
+            if (child is GCWMapPolyline) {
               showGCWDialog(
                 context,
                 'Delete with points?',
@@ -598,11 +363,7 @@ class GCWMapViewState extends State<GCWMapView> {
                   height: 100,
                   child: GCWText(
                     text: 'With Points',
-                    style: TextStyle(
-                      fontFamily: gcwTextStyle().fontFamily,
-                      fontSize: defaultFontSize(),
-                      color: themeColors().dialogText()
-                    )
+                    style: gcwDialogTextStyle()
                   ),
                 ),
                 [
@@ -610,7 +371,7 @@ class GCWMapViewState extends State<GCWMapView> {
                     text: 'Keep Points',
                     onPressed: () {
                       setState(() {
-                        _removeMapPolyline(child);
+                        _persistanceAdapter.removeMapPolyline(child);
                       });
                     }
                   ),
@@ -618,7 +379,7 @@ class GCWMapViewState extends State<GCWMapView> {
                     text: 'Remove Points',
                     onPressed: () {
                       setState(() {
-                        _removeMapPolyline(child, removePoints: true);
+                        _persistanceAdapter.removeMapPolyline(child, removePoints: true);
                       });
                     }
                   ),
@@ -628,7 +389,7 @@ class GCWMapViewState extends State<GCWMapView> {
               setState(() {
                 var mapPoint = widget.points.firstWhere((element) => element.circle == child);
                 mapPoint.circle = null;
-                _updateMapPoint(mapPoint);
+                _persistanceAdapter.updateMapPoint(mapPoint);
               });
             }
           }
@@ -642,11 +403,7 @@ class GCWMapViewState extends State<GCWMapView> {
         height: defaultFontSize() * 2,
         child: GCWOutputText(
           text: text,
-          style: TextStyle(
-            fontFamily: gcwTextStyle().fontFamily,
-            fontSize: defaultFontSize(),
-            color: themeColors().dialogText()
-          ),
+          style: gcwDialogTextStyle(),
           copyText: copyableText,
         ) ,
       ),
@@ -656,7 +413,7 @@ class GCWMapViewState extends State<GCWMapView> {
   }
 
   _buildMarkers() {
-    var points = List<GCWMapPoint>.from(widget.points);
+    var points = List<GCWMapPoint>.from(widget.points.where((point) => point.isVisible));
 
     // Add User Position
     if (
@@ -690,7 +447,7 @@ class GCWMapViewState extends State<GCWMapView> {
 
       var marker = _point.isEditable ? _createDragableIcon(_point, icon) : icon;
 
-      return GCWMarker(
+      return _GCWMarker(
         coordinateDescription: _buildPopupCoordinateDescription(_point),
         coordinateText: _buildPopupCoordinateText(_point),
         width: 28.3,
@@ -711,20 +468,9 @@ class GCWMapViewState extends State<GCWMapView> {
         LatLng pointToLatLng = Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom);
 
         point.point = pointToLatLng;
-        point.update();
-
-        widget.geodetics.forEach((element) {
-          if (element.start == point || element.end == point)
-            element.update();
-        });
-
-        widget.polylines.forEach((element) {
-          if (element.points.contains(point))
-            element.update();
-        });
 
         setState(() {
-          _updateMapPoint(point);
+          _persistanceAdapter.updateMapPoint(point);
         });
       },
       child: icon,
@@ -781,7 +527,7 @@ class GCWMapViewState extends State<GCWMapView> {
         customIcon: _createIconButtonIcons(Icons.my_location, stacked: Icons.add),
         onPressed: () {
           setState(() {
-            _addMapPoint(_mapController.center);
+            _persistanceAdapter.addMapPoint(_mapController.center);
           });
         },
       ),
@@ -796,7 +542,7 @@ class GCWMapViewState extends State<GCWMapView> {
               _isPolylineDrawing = false;
             } else {
               _isPolylineDrawing = true;
-              _createMapPolyline();
+              _persistanceAdapter.createMapPolyline();
             }
           });
         },
@@ -815,11 +561,7 @@ class GCWMapViewState extends State<GCWMapView> {
                 height: 100,
                 child: GCWText(
                   text: 'Really delete everything?',
-                  style: TextStyle(
-                    fontFamily: gcwTextStyle().fontFamily,
-                    fontSize: defaultFontSize(),
-                    color: themeColors().dialogText()
-                  )
+                  style: gcwDialogTextStyle(),
                 ),
               ),
               [
@@ -827,7 +569,7 @@ class GCWMapViewState extends State<GCWMapView> {
                   text: 'OK',
                   onPressed: () {
                     setState(() {
-                      _clearMapView();
+                      _persistanceAdapter.clearMapView();
                     });
                   }
                 ),
@@ -851,7 +593,7 @@ class GCWMapViewState extends State<GCWMapView> {
   _buildLayerButtons() {
     var buttons = [
       GCWIconButton(
-          backgroundColor: COLOR_MAP_ICONBUTTONS,
+        backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.layers),
         onPressed: () {
           _currentLayer = _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? _LayerType.MAPBOX_SATELLITE : _LayerType.OPENSTREETMAP_MAPNIK;
@@ -912,14 +654,22 @@ class GCWMapViewState extends State<GCWMapView> {
     return point.markerText;
   }
 
-  _buildPopups(Marker marker) {
+  _buildPopup(Marker marker) {
 
     ThemeColors colors = themeColors();
-    GCWMarker gcwMarker = marker as GCWMarker;
+    _GCWMarker gcwMarker = marker as _GCWMarker;
+
+    var containerHeightMultiplier = 7;
+    if (gcwMarker.mapPoint.hasCircle())
+      containerHeightMultiplier += 3;
+    if (gcwMarker.mapPoint.isEditable)
+      containerHeightMultiplier += 3;
+
+    var format = NumberFormat('0.00');
 
     return Container(
       width: gcwMarker.mapPoint.isEditable ? 350 : 250,
-      height: defaultFontSize() * (gcwMarker.mapPoint.isEditable ? 12 : 7),
+      height: defaultFontSize() * containerHeightMultiplier,
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.only(
         bottom: 5
@@ -942,10 +692,7 @@ class GCWMapViewState extends State<GCWMapView> {
             : Container(
                 child: GCWText(
                   text: gcwMarker.coordinateDescription,
-                  style: TextStyle(
-                    fontFamily: gcwTextStyle().fontFamily,
-                    fontSize: defaultFontSize(),
-                    color: colors.dialogText(),
+                  style: gcwDialogTextStyle().copyWith(
                     fontWeight: FontWeight.bold
                   )
                 ),
@@ -955,20 +702,12 @@ class GCWMapViewState extends State<GCWMapView> {
               ),
           GCWOutputText(
             text: gcwMarker.coordinateText,
-            style: TextStyle(
-              fontFamily: gcwTextStyle().fontFamily,
-              fontSize: defaultFontSize(),
-              color: colors.dialogText()
-            )
+            style: gcwDialogTextStyle()
           ),
           gcwMarker.mapPoint.hasCircle()
             ? GCWOutputText(
-                text: 'Radius: ${gcwMarker.mapPoint.circle.radius} m',
-                style: TextStyle(
-                  fontFamily: gcwTextStyle().fontFamily,
-                  fontSize: defaultFontSize(),
-                  color: colors.dialogText()
-                ),
+                text: 'Radius: ${format.format(gcwMarker.mapPoint.circle.radius)} m',
+                style: gcwDialogTextStyle(),
                 copyText: gcwMarker.mapPoint.circle.radius.toString() + ' m',
               )
             : Container(),
@@ -981,7 +720,7 @@ class GCWMapViewState extends State<GCWMapView> {
                         onPressed: () {
                           setState(() {
                             var polyline = widget.polylines.last;
-                            _addMapPointIntoPolyline(gcwMarker.mapPoint, polyline);
+                            _persistanceAdapter.addMapPointIntoPolyline(gcwMarker.mapPoint, polyline);
 
                             _popupLayerController.hidePopup();
                           });
@@ -993,8 +732,8 @@ class GCWMapViewState extends State<GCWMapView> {
                           setState(() {
                             _isPolylineDrawing = true;
 
-                            var newPolyline = _createMapPolyline();
-                            _addMapPointIntoPolyline(gcwMarker.mapPoint, newPolyline);
+                            var newPolyline = _persistanceAdapter.createMapPolyline();
+                            _persistanceAdapter.addMapPointIntoPolyline(gcwMarker.mapPoint, newPolyline);
 
                             _popupLayerController.hidePopup();
                           });
@@ -1011,7 +750,7 @@ class GCWMapViewState extends State<GCWMapView> {
                       ))
                       .whenComplete(() {
                         setState(() {
-                          _updateMapPoint(gcwMarker.mapPoint);
+                          _persistanceAdapter.updateMapPoint(gcwMarker.mapPoint);
                           _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);
                           _popupLayerController.hidePopup();
                         });
@@ -1022,7 +761,7 @@ class GCWMapViewState extends State<GCWMapView> {
                     text: 'Remove',
                     onPressed: () {
                       setState(() {
-                        _removeMapPoint(gcwMarker.mapPoint);
+                        _persistanceAdapter.removeMapPoint(gcwMarker.mapPoint);
                         _popupLayerController.hidePopup();
                       });
                     },
@@ -1036,75 +775,53 @@ class GCWMapViewState extends State<GCWMapView> {
   }
 
   List<Polyline> _addPolylines() {
-    List<Polyline> _polylines = widget.geodetics.map((_geodetic) {
-      return GCWPolyline(
-        points: _geodetic.shape,
-        strokeWidth: 3.0,
-        color: _geodetic.color,
-        child: _geodetic
+    List<Polyline> _polylines = widget.polylines.map((polyline) {
+      return _GCWTappablePolyline(
+        points: polyline.shape,
+        strokeWidth: _POLYGON_STROKEWIDTH,
+        color: polyline.color,
+        child: polyline
       );
     }).toList();
 
-    _polylines.addAll(
-      widget.polylines.map((polyline) {
-        return GCWPolyline(
-          points: polyline.shape,
-          strokeWidth: 3.0,
-          color: polyline.color,
-          child: polyline
-        );
-      }).toList()
-    );
     return _polylines;
   }
 
   List<Polyline> _addCircles() {
-    List<Polyline> _polylines =  widget.circles.map((_circle) {
-      return GCWPolyline(
-        points: _circle.shape,
-        strokeWidth: 3.0,
-        color: _circle.color,
-        child: _circle
-      );
-    }).toList();
-
-    _polylines.addAll(
-      widget.points
-        .where((point) => point.circle != null && point.circle.shape != null)
-        .map((point) {
-          return GCWPolyline(
-            points: point.circle.shape,
-            strokeWidth: 3.0,
-            color: point.circle.color,
-            child: point.circle
-          );
-        }).toList()
-    );
+    List<Polyline> _polylines = widget.points
+      .where((point) => point.circle != null && point.circle.shape != null)
+      .map((point) {
+        return _GCWTappablePolyline(
+          points: point.circle.shape,
+          strokeWidth: _POLYGON_STROKEWIDTH,
+          color: point.circle.color,
+          child: point.circle
+        );
+      }).toList();
 
     return _polylines;
   }
 }
 
-class GCWMarker extends Marker {
+class _GCWMarker extends Marker {
   final String coordinateText;
   final String coordinateDescription;
   final GCWMapPoint mapPoint;
 
-  GCWMarker({
+  _GCWMarker({
     this.coordinateText,
     this.coordinateDescription,
     this.mapPoint,
     WidgetBuilder builder,
     double width,
     double height,
-    AnchorPos anchorPos
   }) : super(point: mapPoint.point, builder: builder, width: width, height: height);
 }
 
-class GCWPolyline extends TaggedPolyline {
+class _GCWTappablePolyline extends TaggedPolyline {
   dynamic child;
 
-  GCWPolyline({
+  _GCWTappablePolyline({
     points,
     strokeWidth,
     color,
@@ -1116,7 +833,7 @@ class GCWPolyline extends TaggedPolyline {
   );
 }
 
-class GCWMapPopupController extends PopupController {
+class _GCWMapPopupController extends PopupController {
   MapController mapController;
 
   @override

@@ -12,16 +12,14 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
 class GCWCoordsOutput extends StatefulWidget {
   final List<dynamic> outputs;
   final List<GCWMapPoint> points;
-  final List<GCWMapGeodetic> geodetics;
-  final List<GCWMapCircle> circles;
+  final List<GCWMapPolyline> polylines;
   final bool mapButtonTop;
 
   const GCWCoordsOutput({
     Key key,
     this.outputs,
     this.points: const [],
-    this.geodetics: const [],
-    this.circles: const [],
+    this.polylines: const [],
     this.mapButtonTop: false
   }) : super(key: key);
 
@@ -55,8 +53,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
           Navigator.push(context, MaterialPageRoute(builder: (context) => GCWTool (
             tool: GCWMapView(
               points: widget.points,
-              geodetics: widget.geodetics,
-              circles: widget.circles,
+              polylines: widget.polylines,
             ),
             toolName: i18n(context, 'coords_map_view_title'),
             autoScroll: false,
@@ -72,13 +69,14 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
         iconData: Icons.save,
         size: IconButtonSize.SMALL,
         iconColor: _isNoOutput ? Colors.grey : null,
-        onPressed: () { _isNoOutput ? null : _exportCoordinates(context, widget.points, widget.geodetics, widget.circles);
+        onPressed: () {
+          _isNoOutput ? null : _exportCoordinates(context, widget.points, widget.polylines);
         },
       )
     );
   }
 
-  Future<bool> _exportCoordinates(BuildContext context, List<GCWMapPoint> points, List<GCWMapGeodetic> geodetics, List<GCWMapCircle> circles) async {
-    // showCoordinatesExportDialog(context, points, geodetics, circles);
+  Future<bool> _exportCoordinates(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) async {
+    showCoordinatesExportDialog(context, points, polylines);
   }
 }

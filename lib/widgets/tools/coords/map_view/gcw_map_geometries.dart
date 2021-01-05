@@ -17,6 +17,7 @@ class GCWMapPoint {
   bool isEditable;
   GCWMapCircle circle;
   bool circleColorSameAsPointColor;
+  bool isVisible;
 
   GCWMapPoint({
     this.uuid,
@@ -26,7 +27,8 @@ class GCWMapPoint {
     this.coordinateFormat,
     this.isEditable: false,
     this.circle,
-    this.circleColorSameAsPointColor: false
+    this.circleColorSameAsPointColor: false,
+    this.isVisible: true
   }) {
     if (uuid == null || uuid.length == 0)
       uuid = Uuid().v4();
