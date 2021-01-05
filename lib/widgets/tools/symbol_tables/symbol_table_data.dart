@@ -152,6 +152,7 @@ class SymbolTableData {
       _sort = _defaultSort;
     } else {
       switch (_symbolKey) {
+        case "notes_names_altoclef" : _sort = specialSortNoteNames; break;
         case "notes_names_bassclef" : _sort = specialSortNoteNames; break;
         case "notes_names_trebleclef" : _sort = specialSortNoteNames; break;
         case "notes_notevalues" : _sort = specialSortNoteValues; break;

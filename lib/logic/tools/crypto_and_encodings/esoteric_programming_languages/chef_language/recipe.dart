@@ -1,6 +1,7 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/method.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/ingredient.dart';
 import 'package:intl/intl.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/chef_international.dart';
 
 class Recipe {
 
@@ -23,7 +24,7 @@ class Recipe {
     this.errorList = new List<String>();
   }
 
-  void setIngredients(String Input) {
+  void setIngredients(String Input, language) {
     var f = new NumberFormat('###');
     this.ingredients = Map<String, Ingredient>();
     var i=0;
@@ -34,9 +35,9 @@ class Recipe {
         Ingredient ing = new Ingredient(ingredientLine);
         if (ing.getName() == 'INVALID') {
           error = true;
-          this.errorList.add('chef_error_syntax');
-          this.errorList.add('chef_error_syntax_ingredient');
-          this.errorList.add('chef_error_syntax_ingredient_name');
+          this.errorList.add(Messages[language]['chef_error_syntax']);
+          this.errorList.add(Messages[language]['chef_error_syntax_ingredient']);
+          this.errorList.add(Messages[language]['chef_error_syntax_ingredient_name']);
           this.errorList.add(f.format(i).toString() + ' : ' + ingredientLine);
           this.errorList.add('');
           return;
@@ -60,32 +61,32 @@ class Recipe {
     List<String> methodList = method.replaceAll("zubereitung:", "zubereitung.").replaceAll("\n", " ").replaceAll(". ",".").split('.');
     for(int i = 1; i < methodList.length - 1; i++){
       var m = new Method(methodList[i], i, language);
-      if (m.type != Type.Invalid) {
-        this.methods.add(m);
-      } else {
+      if (m.type == Type.Invalid || m.type == Type.Unbekannt) {
         this.error = true;
-        this.errorList.add('chef_error_syntax');
-        this.errorList.add('chef_error_syntax_method');
+        this.errorList.add(Messages[language]['chef_error_syntax']);
+        this.errorList.add(Messages[language]['chef_error_syntax_method']);
         this.errorList.add(f.format(i).toString() + ' : ' + methodList[i]);
         this.errorList.add('');
+      } else {
+        this.methods.add(m);
       }
     };
   }
 
-  void setCookingTime(String cookingtime) {
+  void setCookingTime(String cookingtime, language) {
     RegExp expr = new RegExp(r'^(cooking time: |garzeit: )(\d*)( minute(s)?| minute(n)?| hour(s)?| stunde(n)?)\.$');
     if (expr.hasMatch(cookingtime)) {
       this.cookingtime = int.parse(expr.firstMatch(cookingtime).group(2));
     } else {
       this.error = true;
-      errorList.add('chef_error_syntax');
-      errorList.add('chef_error_syntax_cooking_time');
+      errorList.add(Messages[language]['chef_error_syntax']);
+      errorList.add(Messages[language]['chef_error_syntax_cooking_time']);
       errorList.add(cookingtime);
       errorList.add('');
     }
   }
 
-  void setOvenTemp(String oventemp) {
+  void setOvenTemp(String oventemp, language) {
     RegExp expr = new RegExp(r'^(pre-heat oven to |ofen auf )(\d*) (degrees|grad) cel(c|s)ius( \(gas (mark |skala )(\d*)\))?( vorheizen)?.$');
     if (expr.hasMatch(oventemp)) {
       this.oventemp = int.parse(expr.firstMatch(oventemp).group(2));
@@ -94,21 +95,21 @@ class Recipe {
       }
     } else {
       this.error = true;
-      errorList.add('chef_error_syntax');
-      errorList.add('chef_error_syntax_oven_temperature');
+      errorList.add(Messages[language]['chef_error_syntax']);
+      errorList.add(Messages[language]['chef_error_syntax_oven_temperature']);
       errorList.add(oventemp);
       errorList.add('');
     }
   }
 
-  void setServes(String serves) {
+  void setServes(String serves, language) {
     if (RegExp(r'^(serves |portionen(:)? )(\d*)(\.)$').hasMatch(serves)) {
       this.serves = int.parse(RegExp(r'^(serves |portionen(:)? )(\d*)(\.)$').firstMatch(serves).group(3));
     } else {
       this.error = true;
-      errorList.add('chef_error_syntax');
-      errorList.add('chef_error_syntax_serves');
-      errorList.add('chef_error_syntax_serves_without_number');
+      errorList.add(Messages[language]['chef_error_syntax']);
+      errorList.add(Messages[language]['chef_error_syntax_serves']);
+      errorList.add(Messages[language]['chef_error_syntax_serves_without_number']);
       errorList.add(serves);
       errorList.add('');
     }

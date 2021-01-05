@@ -32,6 +32,7 @@ class SymbolTableSelection extends GCWSelection {
   }
 }
 
+
 Widget symboltablesDownloadButton(BuildContext context) {
   return IconButton(
     icon: Icon(Icons.file_download),

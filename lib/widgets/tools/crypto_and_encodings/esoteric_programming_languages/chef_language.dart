@@ -8,6 +8,8 @@ import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Chef extends StatefulWidget {
 
@@ -176,6 +178,9 @@ class ChefState extends State<Chef> {
                   });
                 },
               ),
+              GCWTextDivider(
+                  text: i18n(context, 'chef_refrigerator')
+              ),
               GCWTextField(
                 controller: _inputController,
                 inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9 ]')),],
@@ -215,9 +220,17 @@ class ChefState extends State<Chef> {
         output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature, _currentOutput, _auxilaryRecipes);
     } else { // interpret chef
       if (isValid(_currentInput)) {
-        output = buildOutputText(interpretChef(language, _currentRecipe.toLowerCase().replaceAll('  ', ' '), _currentInput));
+        try {
+          output = buildOutputText(interpretChef(language, _currentRecipe.toLowerCase().replaceAll('  ', ' '), _currentInput));
+        } catch (e) {
+          output = buildOutputText([
+            'chef_error_runtime',
+            'chef_error_runtime_exception']);
+        }
       } else
-        output = buildOutputText(['chef_error_runtime', 'chef_error_runtime_invalid_input']);
+        output = buildOutputText([
+          'chef_error_runtime',
+          'chef_error_runtime_invalid_input']);
     }
     return GCWOutputText(
         text: output.trim(),
@@ -225,16 +238,32 @@ class ChefState extends State<Chef> {
     );
   }
 
+  Widget chefDocumentationDownloadButton(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.article_outlined),
+      onPressed: () {
+        showGCWAlertDialog(
+          context,
+          i18n(context, 'chef_download_documentation_title'),
+          i18n(context, 'chef_download_documentation_text'),
+              () {
+            launch(i18n(context, 'https://misc.gcwizard.net/chef.pdf'));
+          },
+        );
+      },
+    );
+  }
+
   String buildOutputText(List<String> outputList){
     String output = '';
     outputList.forEach((element) {
-      if (element.startsWith('chef_')) {
-        output = output
+      if (element != null)
+        if (element.startsWith('chef_')) {
+          output = output
             + i18n(context, element) + '\n';
-      } else
-        output = output + element + '\n';
+        } else
+          output = output + element + '\n';
     });
     return output;
   }
-
 }
