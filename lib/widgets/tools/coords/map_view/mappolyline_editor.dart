@@ -4,11 +4,11 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/hsv_picker.dart';
 
 class MapPolylineEditor extends StatefulWidget {
-  final dynamic geodetic;
+  final dynamic polyline;
 
   const MapPolylineEditor({
     Key key,
-    this.geodetic
+    this.polyline
   }) : super(key: key);
 
   @override
@@ -22,8 +22,8 @@ class MapPolylineEditorState extends State<MapPolylineEditor> {
   void initState() {
     super.initState();
 
-    if (widget.geodetic is GCWMapPolyline)
-      _currentColorPickerColor = HSVColor.fromColor(widget.geodetic.color);
+    if (widget.polyline is GCWMapPolyline)
+      _currentColorPickerColor = HSVColor.fromColor(widget.polyline.color);
   }
 
   @override
@@ -40,8 +40,8 @@ class MapPolylineEditorState extends State<MapPolylineEditor> {
               setState(() {
                 _currentColorPickerColor = color;
 
-                if (widget.geodetic is GCWMapPolyline)
-                  widget.geodetic.color = _currentColorPickerColor.toColor();
+                if (widget.polyline is GCWMapPolyline)
+                  widget.polyline.color = _currentColorPickerColor.toColor();
               });
             },
           ),

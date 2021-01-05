@@ -978,9 +978,9 @@ class Registry {
       GCWTool(
         tool: MapView(),
         autoScroll: false,
-        i18nPrefix: 'coords_custommapview',
+        i18nPrefix: 'coords_openmap',
         iconPath: 'assets/coordinates/icon_variable_coordinate.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'mapview kartenansicht '
+        searchStrings: SEARCHSTRING_COORDINATES + 'mapview kartenansicht freiekarte openmap measurement messen messungen '
       ),
       GCWTool(
         tool: VariableCoordinateFormulas(),

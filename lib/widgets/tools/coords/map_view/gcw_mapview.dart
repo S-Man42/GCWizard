@@ -14,13 +14,11 @@ import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
-import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
@@ -323,8 +321,8 @@ class GCWMapViewState extends State<GCWMapView> {
             if (child is GCWMapPolyline) {
               Navigator.push(context, NoAnimationMaterialPageRoute(
                 builder: (context) => GCWTool(
-                  tool: MapPolylineEditor(geodetic: child),
-                  toolName: 'Geodetics Editor'
+                  tool: MapPolylineEditor(polyline: child),
+                  toolName: i18n(context, 'coords_openmap_lineeditor')
                 )
               ))
               .whenComplete(() {
@@ -339,7 +337,7 @@ class GCWMapViewState extends State<GCWMapView> {
               Navigator.push(context, NoAnimationMaterialPageRoute(
                 builder: (context) => GCWTool(
                   tool: MapPointEditor(mapPoint: mapPoint),
-                  toolName: 'Map Point Editor'
+                  toolName: i18n(context, 'coords_openmap_lineeditor')
                 )
               ))
               .whenComplete(() {
@@ -352,23 +350,23 @@ class GCWMapViewState extends State<GCWMapView> {
           }
         ),
         GCWDialogButton(
-          text: 'Remove',
+          text: i18n(context, 'coords_openmap_lineremove_button'),
           onPressed: () {
             if (child is GCWMapPolyline) {
               showGCWDialog(
                 context,
-                'Delete with points?',
+                i18n(context, 'coords_openmap_lineremove_dialog_title'),
                 Container(
                   width: 250,
                   height: 100,
                   child: GCWText(
-                    text: 'With Points',
+                    text: i18n(context, 'coords_openmap_lineremove_dialog_text'),
                     style: gcwDialogTextStyle()
                   ),
                 ),
                 [
                   GCWDialogButton(
-                    text: 'Keep Points',
+                    text: i18n(context, 'coords_openmap_lineremove_dialog_keeppoints'),
                     onPressed: () {
                       setState(() {
                         _persistanceAdapter.removeMapPolyline(child);
@@ -376,7 +374,7 @@ class GCWMapViewState extends State<GCWMapView> {
                     }
                   ),
                   GCWDialogButton(
-                    text: 'Remove Points',
+                    text: i18n(context, 'coords_openmap_lineremove_dialog_removepoints'),
                     onPressed: () {
                       setState(() {
                         _persistanceAdapter.removeMapPolyline(child, removePoints: true);
@@ -555,18 +553,18 @@ class GCWMapViewState extends State<GCWMapView> {
           onPressed: () {
             showGCWDialog(
               context,
-              'Really delete everything?',
+              i18n(context, 'coords_openmap_removeeverything_title'),
               Container(
                 width: 250,
                 height: 100,
                 child: GCWText(
-                  text: 'Really delete everything?',
+                  text: i18n(context, 'coords_openmap_removeeverything_text'),
                   style: gcwDialogTextStyle(),
                 ),
               ),
               [
                 GCWDialogButton(
-                  text: 'OK',
+                  text: i18n(context, 'common_ok'),
                   onPressed: () {
                     setState(() {
                       _persistanceAdapter.clearMapView();
@@ -663,12 +661,12 @@ class GCWMapViewState extends State<GCWMapView> {
     if (gcwMarker.mapPoint.hasCircle())
       containerHeightMultiplier += 3;
     if (gcwMarker.mapPoint.isEditable)
-      containerHeightMultiplier += 5;
+      containerHeightMultiplier += 2;
 
     var format = NumberFormat('0.00');
 
     return Container(
-      width: gcwMarker.mapPoint.isEditable ? 350 : 250,
+      width: 250,
       height: defaultFontSize() * containerHeightMultiplier,
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.only(
@@ -706,17 +704,18 @@ class GCWMapViewState extends State<GCWMapView> {
           ),
           gcwMarker.mapPoint.hasCircle()
             ? GCWOutputText(
-                text: 'Radius: ${format.format(gcwMarker.mapPoint.circle.radius)} m',
+                text: i18n(context, 'common_radius') + format.format(gcwMarker.mapPoint.circle.radius) + ' m',
                 style: gcwDialogTextStyle(),
                 copyText: gcwMarker.mapPoint.circle.radius.toString() + ' m',
               )
             : Container(),
           gcwMarker.mapPoint.isEditable
-            ? GCWToolBar(
+            ? Row(
                 children: [
                   _isPolylineDrawing
-                    ? GCWButton(
-                        text: 'Line To Here',
+                    ? GCWDialogButton(
+                        text: i18n(context, 'coords_openmap_linetohere'),
+                        suppressClose: true,
                         onPressed: () {
                           setState(() {
                             var polyline = widget.polylines.last;
@@ -726,8 +725,9 @@ class GCWMapViewState extends State<GCWMapView> {
                           });
                         }
                       )
-                    : GCWButton(
-                        text: 'Line From Here',
+                    : GCWDialogButton(
+                        text: i18n(context, 'coords_openmap_linefromhere'),
+                        suppressClose: true,
                         onPressed: () {
                           setState(() {
                             _isPolylineDrawing = true;
@@ -739,13 +739,14 @@ class GCWMapViewState extends State<GCWMapView> {
                           });
                         }
                       ),
-                  GCWButton(
-                    text: 'Edit',
+                  GCWIconButton(
+                    iconData: Icons.edit,
+                    iconColor: colors.dialogText(),
                     onPressed: () {
                       Navigator.push(context, NoAnimationMaterialPageRoute(
                         builder: (context) => GCWTool(
                           tool: MapPointEditor(mapPoint: gcwMarker.mapPoint),
-                          toolName: 'Map Point Editor'
+                          toolName: i18n(context, 'coords_openmap_pointeditor')
                           )
                       ))
                       .whenComplete(() {
@@ -757,8 +758,9 @@ class GCWMapViewState extends State<GCWMapView> {
                       });
                     }
                   ),
-                  GCWButton(
-                    text: 'Remove',
+                  GCWIconButton(
+                    iconData: Icons.delete,
+                    iconColor: colors.dialogText(),
                     onPressed: () {
                       setState(() {
                         _persistanceAdapter.removeMapPoint(gcwMarker.mapPoint);

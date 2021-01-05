@@ -41,8 +41,9 @@ class GCWDialogButton extends StatefulWidget {
   final String text;
   final isCancelButton;
   final Function onPressed;
+  final bool suppressClose;
 
-  const GCWDialogButton({Key key, this.text, this.onPressed, this.isCancelButton: false}) : super(key: key);
+  const GCWDialogButton({Key key, this.text, this.onPressed, this.isCancelButton: false, this.suppressClose: false}) : super(key: key);
 
   @override
   _GCWDialogButtonState createState() => _GCWDialogButtonState();
@@ -59,7 +60,8 @@ class _GCWDialogButtonState extends State<GCWDialogButton> {
         style: _boldTextStyle,
       ),
       onPressed: () {
-        Navigator.of(context).pop();
+        if (!widget.suppressClose)
+          Navigator.of(context).pop();
 
         if (!widget.isCancelButton && widget.onPressed != null)
           widget.onPressed();

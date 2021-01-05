@@ -53,31 +53,13 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
           GCWButton (
             text: i18n(context, 'coords_show_on_map'),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => GCWTool (
-                tool: GCWMapView(
-                  points: widget.points,
-                  polylines: widget.polylines,
-                ),
-                toolName: i18n(context, 'coords_map_view_title'),
-                autoScroll: false,
-              )));
+              _openInMap();
             },
           ),
           GCWButton(
             text: 'Add to Free Map Tool',
             onPressed: () {
-              widget.points.forEach((point) {
-                point.isEditable = true;
-              });
-              Navigator.push(context, MaterialPageRoute(builder: (context) => GCWTool (
-                tool: GCWMapView(
-                  points: widget.points,
-                  polylines: widget.polylines,
-                  isEditable: true,
-                ),
-                toolName: i18n(context, 'coords_map_view_title'),
-                autoScroll: false,
-              )));
+              _openInMap(freeMap: true);
             },
           )
         ],
@@ -96,6 +78,24 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
         },
       )
     );
+  }
+
+  _openInMap({freeMap: false}) {
+    if (freeMap) {
+      widget.points.forEach((point) {
+        point.isEditable = true;
+      });
+    }
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) => GCWTool (
+      tool: GCWMapView(
+        points: widget.points,
+        polylines: widget.polylines,
+        isEditable: freeMap,
+      ),
+      toolName: freeMap ? i18n(context, 'coords_show_on_openmap') : i18n(context, 'coords_map_view_title'),
+      autoScroll: false,
+    )));
   }
 
   Future<bool> _exportCoordinates(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) async {
