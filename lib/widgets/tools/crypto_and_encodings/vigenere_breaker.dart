@@ -106,7 +106,8 @@ class VigenereBreakerState extends State<VigenereBreaker> {
             Expanded(
               child: GCWIntegerSpinner(
                 controller: _minKeyLengthController,
-                min: 1,
+                value: _minKeyLength,
+                min: 3,
                 max: 999,
                 onChanged: (value) {
                   setState(() {
@@ -131,7 +132,8 @@ class VigenereBreakerState extends State<VigenereBreaker> {
             Expanded(
               child: GCWIntegerSpinner(
                 controller: _maxKeyLengthController,
-                min: 1,
+                value: _maxKeyLength,
+                min: 3,
                 max: 999,
                 onChanged: (value) {
                   setState(() {

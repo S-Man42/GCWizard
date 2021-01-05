@@ -6,6 +6,7 @@ void main() {
   group("vigenere_breaker.encrypt:", () {
     var text10 = 'Altd hlbe tg lrncmwxpo kpxs evl ztrsuicp qptspf. Ivplyprr th pw clhoic pozc. :-)';
     var text11 = 'This text is encrypted with the vigenere cipher. Breaking it is rather easy. :-)';
+    var text22 = 'Altd hxeb al ikvzqtggu uxml wdm opzlrzzk gvtyit. Jglebjek id qf ximpwi etzc. :-)';
 
     var text12 = 'aorqohpeicsblloimecdultvhj';
     var text13 = 'kurzerverschluesseltertext';
@@ -19,15 +20,12 @@ void main() {
     var text18 = 'Els eavg mgaoclov, aktt fln Etrrvztssij zxjtn hvvhvkbeey wjf.';
     var text19 = 'Das wird moeglich, weil der Algorithmus recht performant ist.';
 
-    var text20 = 'oxdtvdhsdwdrjuqslhiszleshdjdfkuauhmzpehxgnhlezrfdvzmulvaauhopg';
-    var text21 = 'thistextisencryptedwiththevigenerecipherbreakingitisrathereasy';
+    var text20 = 'Wmwl lax wqf Mifg nq aby Qqbwguemgzdypmfk xcg jqu Uuimlvv ze xvrnxr';
+    var text21 = 'Dies ist ein Text um die Entschluesselung mit dem Breaker zu testen';
+
+
 
     List<Map<String, dynamic>> _inputsToExpected = [
-      //{'input' : 'oxdtv', 'VigenereBreakerType' : VigenereBreakerType.BEAUFORT, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 5, 'keyLengthMax' : 5, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'hello', 'expectedOutput' : text21},
-      //{'input' : text20, 'VigenereBreakerType' : VigenereBreakerType.BEAUFORT, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 5, 'keyLengthMax' : 5, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'hello', 'expectedOutput' : text11},
-      {'input' : text10, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 5, 'keyLengthMax' : 5, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'hello', 'expectedOutput' : text11},
-      //{'input' : 'Altd h', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 5, 'keyLengthMax' : 5, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'hello', 'expectedOutput' : text11},
-
       {'input' : null, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
       {'input' : '', 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 2, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : '', 'expectedOutput' : ''},
@@ -39,7 +37,9 @@ void main() {
       {'input' : text12, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'quark', 'expectedOutput' : text13},
       {'input' : text14, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'blaise', 'expectedOutput' : text15},
       {'input' : text16, 'VigenereBreakerType' : VigenereBreakerType.VIGENERE, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'blaise', 'expectedOutput' : text17},
-      {'input' : text18, 'VigenereBreakerType' : VigenereBreakerType.AUTOKEYVIGENERE, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'blaise', 'expectedOutput' : text19},
+
+      {'input' : text22, 'VigenereBreakerType' : VigenereBreakerType.AUTOKEYVIGENERE, 'alphabet' : VigenereBreakerAlphabet.ENGLISH, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'hello', 'expectedOutput' : text11},
+      {'input' : text20, 'VigenereBreakerType' : VigenereBreakerType.AUTOKEYVIGENERE, 'alphabet' : VigenereBreakerAlphabet.GERMAN, 'keyLengthMin' : 3, 'keyLengthMax' : 30, 'errorCode' : VigenereBreakerErrorCode.OK, 'key' : 'test', 'expectedOutput' : text21},
     ];
 
     _inputsToExpected.forEach((elem) {

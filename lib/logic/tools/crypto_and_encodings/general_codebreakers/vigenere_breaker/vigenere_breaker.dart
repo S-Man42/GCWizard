@@ -33,7 +33,7 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
   if (input == null || input == '')
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
 
-  if (((keyLengthMin < 3) || (keyLengthMin > 1000)) || ((keyLengthMax < 1) || (keyLengthMax > 1000)))
+  if (((keyLengthMin < 3) || (keyLengthMin > 1000)) || ((keyLengthMax < 3) || (keyLengthMax > 1000)))
     // key length not in the valid range 3..1000
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.KEY_LENGTH);
 
@@ -56,7 +56,7 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
   keyLengthMax = min(keyLengthMax, cipher_bin.length);
 
   for (int keyLength = keyLengthMin; keyLength <= keyLengthMax; keyLength++) {
-    var breakerResult = guballa.break_vigenere(cipher_bin, keyLength, vigenereSquare, bigrams.bigrams);
+    var breakerResult = guballa.break_vigenere(cipher_bin, keyLength, vigenereSquare, bigrams.bigrams, vigenereBreakerType == VigenereBreakerType.AUTOKEYVIGENERE);
     var result = VigenereBreakerResult();
 
     resultList.add(result);
