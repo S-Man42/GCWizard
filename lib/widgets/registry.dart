@@ -1153,7 +1153,7 @@ class Registry {
       GCWTool(
         tool: Chef(),
         i18nPrefix: 'chef',
-        searchStrings: 'chef koch rezept recipe language programming sprache esoteric esoterisch programmiersprache'
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'chef chefkoch kochrezepte rezepte kochen zutaten ingredients cooking cook recipes'
       ),
       GCWTool(
         tool: Brainfk(),
@@ -1163,7 +1163,7 @@ class Registry {
       GCWTool(
         tool: Deadfish(),
         i18nPrefix: 'deadfish',
-        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd '
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd toterfisch '
       ),
       GCWTool(
         tool: Ook(),
