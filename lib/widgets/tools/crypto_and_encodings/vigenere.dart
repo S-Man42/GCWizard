@@ -19,8 +19,9 @@ class VigenereState extends State<Vigenere> {
   String _currentInput = '';
   String _currentKey = '';
   int _currentAValue = 0;
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   bool _currentAutokey = false;
+  bool _currentNonLetters = false;
 
   @override
   void initState() {
@@ -66,6 +67,14 @@ class VigenereState extends State<Vigenere> {
           },
         ),
         GCWOnOffSwitch(
+          title: i18n(context, 'vigenere_ignorenonletters'),
+          onChanged: (value) {
+            setState(() {
+              _currentNonLetters = value;
+            });
+          },
+        ),
+        GCWOnOffSwitch(
           title: i18n(context, 'vigenere_autokey'),
           onChanged: (value) {
             setState(() {
@@ -74,6 +83,7 @@ class VigenereState extends State<Vigenere> {
           },
         ),
         GCWTwoOptionsSwitch(
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
@@ -89,9 +99,9 @@ class VigenereState extends State<Vigenere> {
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.left) {
-      output = encryptVigenere(_currentInput, _currentKey, _currentAutokey, aValue: _currentAValue);
+      output = encryptVigenere(_currentInput, _currentKey, _currentAutokey, aValue: _currentAValue, ignoreNonLetters: _currentNonLetters);
     } else {
-      output = decryptVigenere(_currentInput, _currentKey, _currentAutokey, aValue: _currentAValue);
+      output = decryptVigenere(_currentInput, _currentKey, _currentAutokey, aValue: _currentAValue, ignoreNonLetters: _currentNonLetters);
     }
 
     return GCWDefaultOutput(

@@ -7,7 +7,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-enum ToolCategory {CRYPTOGRAPHY, COORDINATES, FORMULA_SOLVER, GAMES, SCIENCE_AND_TECHNOLOGY, SYMBOL_TABLES}
+enum ToolCategory {CRYPTOGRAPHY, COORDINATES, FORMULA_SOLVER, GAMES, GENERAL_CODEBREAKERS, SCIENCE_AND_TECHNOLOGY, SYMBOL_TABLES}
 
 class GCWTool extends StatefulWidget {
   final Widget tool;

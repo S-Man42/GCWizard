@@ -34,8 +34,8 @@ List<Intersect> _distIntersection(LatLng coord1, double dist14,
     distBear = distanceBearing(intersects[1], coord3, ells);
 
     _output.add(Intersect(
-        coords: intersects[1],
-        accuracy: (dist34 - distBear.distance).abs()
+      coords: intersects[1],
+      accuracy: (dist34 - distBear.distance).abs()
     ));
   }
 

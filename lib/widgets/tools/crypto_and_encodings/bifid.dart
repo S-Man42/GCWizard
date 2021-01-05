@@ -24,7 +24,7 @@ class BifidState extends State<Bifid> {
   var _inputController;
   var _alphabetController;
 
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
 
   String _currentInput = '';
   String _currentAlphabet = '';

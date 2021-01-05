@@ -13,7 +13,7 @@ class DNANucleicAcidSequence extends StatefulWidget {
 }
 
 class DNANucleicAcidSequenceState extends State<DNANucleicAcidSequence> {
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
   var _currentInput = '';
   var _currentDNAMode = GCWSwitchPosition.left;
 

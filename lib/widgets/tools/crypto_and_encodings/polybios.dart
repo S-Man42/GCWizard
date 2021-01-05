@@ -30,7 +30,7 @@ class PolybiosState extends State<Polybios> {
 
   AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
 
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {

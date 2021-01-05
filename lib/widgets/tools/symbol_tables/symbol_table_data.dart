@@ -58,6 +58,10 @@ class _SymbolTableConstants {
     "lessthan" : "<",
     "greaterthan" : ">",
     "euro" : "€",
+    "times" : "×",
+    "division" : "÷",
+    "inverted_question" : "¿",
+    "degree" : "°",
 
     "AE_umlaut" : "Ä",
     "OE_umlaut" : "Ö",
@@ -68,6 +72,7 @@ class _SymbolTableConstants {
     "A_circumflex" : "Â",
     "AE_together" : "Æ",
     "C_cedille" : "Ç",
+    "C_acute" : "Ć",
     "E_acute" : "É",
     "E_grave" : "È",
     "E_circumflex" : "Ê",
@@ -76,17 +81,22 @@ class _SymbolTableConstants {
     "I_grave" : "Ì",
     "I_circumflex" : "Î",
     "I_trema" : "Ï",
+    "N_acute" : "Ń",
     "N_tilde" : "Ñ",
     "O_acute" : "Ó",
     "O_grave" : "Ò",
     "O_circumflex" : "Ô",
+    "R_acute" : "Ŕ",
+    "S_acute" : "Ś",
     "U_acute" : "Ú",
     "U_grave" : "Ù",
     "U_circumflex" : "Û",
+    "Z_acute" : "Ź",
 
     "ae_umlaut" : "ä",
     "oe_umlaut" : "ö",
     "ue_umlaut" : "ü",
+    "n_tilde" : "ñ",
   };
 }
 
@@ -142,6 +152,7 @@ class SymbolTableData {
       _sort = _defaultSort;
     } else {
       switch (_symbolKey) {
+        case "notes_names_altoclef" : _sort = specialSortNoteNames; break;
         case "notes_names_bassclef" : _sort = specialSortNoteNames; break;
         case "notes_names_trebleclef" : _sort = specialSortNoteNames; break;
         case "notes_notevalues" : _sort = specialSortNoteValues; break;

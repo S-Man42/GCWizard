@@ -168,17 +168,17 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
     _currentMapPoints = [
       MapPoint(
         point: _currentCoords1,
-        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint1'),
+        markerText: i18n(context, 'coords_intersectcircles_centerpoint1'),
         coordinateFormat: _currentCoordsFormat1
       ),
       MapPoint(
         point: _currentCoords2,
-        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint2'),
+        markerText: i18n(context, 'coords_intersectcircles_centerpoint2'),
         coordinateFormat: _currentCoordsFormat2
       ),
       MapPoint(
         point: _currentCoords3,
-        markerText: i18n(context, 'coords_intersectcircles_marker_centerpoint3'),
+        markerText: i18n(context, 'coords_intersectcircles_centerpoint3'),
         coordinateFormat: _currentCoordsFormat3
       )
     ];
@@ -202,7 +202,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
     _currentOutput = _currentIntersections
       .map((intersection) {
         return '${formatCoordOutput(intersection.coords, _currentOutputFormat, defaultEllipsoid())} '
-          '(${i18n(context, "coords_intersectthreecircles_marker_accuracy")}: '
+          '(${i18n(context, "coords_intersectthreecircles_accuracy")}: '
               '${doubleFormat.format(_currentOutputUnit.fromMeter(intersection.accuracy))} ${_currentOutputUnit.symbol})';
 
       })

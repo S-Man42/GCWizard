@@ -19,7 +19,7 @@ class RomanNumbersState extends State<RomanNumbers> {
 
   var _currentEncodeInput = defaultIntegerText;
   var _currentDecodeInput = '';
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
   RomanNumberType _currentRomanNumbersTypeMode = RomanNumberType.USE_SUBTRACTION_RULE;
 
   String _output = '';

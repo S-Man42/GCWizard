@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
 import 'package:gc_wizard/persistence/formula_solver/json_provider.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
 import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart' as var_coords_provider;
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart' as var_coords_model;
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -20,6 +21,8 @@ import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coor
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_values.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_mapview.dart';
 
 class FormulaSolverFormulas extends StatefulWidget {
   final FormulaGroup group;
@@ -38,6 +41,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   var _currentNewFormula = '';
   var _currentEditedFormula = '';
   var _currentEditId;
+
+  Map<int, Map<String, dynamic>> _foundCoordinates = {};
 
   ThemeColors _themeColors;
 
@@ -61,6 +66,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
   @override
   Widget build(BuildContext context) {
     _themeColors = themeColors();
+    _foundCoordinates = {};
 
     var formulaTool = GCWTool(
       tool: FormulaSolverFormulaValues(group: widget.group),
@@ -194,9 +200,13 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
       if (calculated['state'] != STATE_OK)
         formulaResult = '($formulaResult)';
 
-      formulaResults.putIfAbsent('{f${index + 1}}', () => formulaResult);
+      formulaResults.putIfAbsent('{${index + 1}}', () => formulaResult);
 
       Widget output;
+
+      var _foundCoordinate = parseLatLon(calculated['result'], wholeString: true);
+      if (_foundCoordinate != null)
+        _foundCoordinates.putIfAbsent(index + 1, () => _foundCoordinate);
 
       var row = Container(
         child: Row (
@@ -315,50 +325,22 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                       var varCoordsFormula = _exportToVariableCoordinate(formula);
                       _openInVariableCoordinate(varCoordsFormula);
                       break;
+                    case 6:
+                      var coordinate = _foundCoordinate;
+                      if (coordinate == null)
+                        break;
+
+                      _showFormulaResultOnMap([
+                        MapPoint(
+                          point: coordinate['coordinate'],
+                          markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext'),
+                          coordinateFormat: {'format': coordinate['format']}
+                        )
+                      ]);
+                      break;
                   }
                 },
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    value: 1,
-                    child: buildPopupItem(
-                      context,
-                      Icons.edit,
-                      'formulasolver_formulas_editformula'
-                    )
-                  ),
-                  PopupMenuItem(
-                    value: 2,
-                    child: buildPopupItem(
-                      context,
-                      Icons.delete,
-                      'formulasolver_formulas_removeformula'
-                    )
-                  ),
-                  PopupMenuItem(
-                    value: 3,
-                    child: buildPopupItem(
-                      context,
-                      Icons.content_copy,
-                      'formulasolver_formulas_copyformula'
-                    )
-                  ),
-                  PopupMenuItem(
-                    value: 4,
-                    child: buildPopupItem(
-                      context,
-                      Icons.content_copy,
-                      'formulasolver_formulas_copyresult',
-                    )
-                  ),
-                  PopupMenuItem(
-                    value: 5,
-                    child: buildPopupItem(
-                      context,
-                      Icons.forward,
-                      'formulasolver_formulas_openinvarcoords',
-                    )
-                  ),
-                ],
+                itemBuilder: (context) => _buildPopupMenuItems(context, _foundCoordinate != null)
               ),
             ),
           ],
@@ -383,7 +365,22 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     if (rows.length > 0) {
       rows.insert(0,
         GCWTextDivider(
-          text: i18n(context, 'formulasolver_formulas_currentformulas')
+          text: i18n(context, 'formulasolver_formulas_currentformulas'),
+          trailing: _foundCoordinates.length > 0 ? GCWIconButton(
+            iconData: Icons.my_location,
+            size: IconButtonSize.SMALL,
+            onPressed: () {
+              _showFormulaResultOnMap(
+                _foundCoordinates.entries.map((coordinate) {
+                  return MapPoint(
+                    point: coordinate.value['coordinate'],
+                    markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') + ' ${coordinate.key}',
+                    coordinateFormat: {'format': coordinate.value['format']}
+                  );
+                }).toList()
+              );
+            },
+          ) : Container()
         )
       );
     }
@@ -391,5 +388,75 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     return Column(
       children: rows
     );
+  }
+
+  _buildPopupMenuItems(BuildContext context, bool hasCoordinate) {
+    var items = [
+      PopupMenuItem(
+        value: 1,
+        child: buildPopupItem(
+          context,
+          Icons.edit,
+          'formulasolver_formulas_editformula'
+        )
+      ),
+      PopupMenuItem(
+        value: 2,
+        child: buildPopupItem(
+          context,
+          Icons.delete,
+          'formulasolver_formulas_removeformula'
+        )
+      ),
+      PopupMenuItem(
+        value: 3,
+        child: buildPopupItem(
+          context,
+          Icons.content_copy,
+          'formulasolver_formulas_copyformula'
+        )
+      ),
+      PopupMenuItem(
+        value: 4,
+        child: buildPopupItem(
+          context,
+          Icons.content_copy,
+          'formulasolver_formulas_copyresult',
+        )
+      ),
+      PopupMenuItem(
+        value: 5,
+        child: buildPopupItem(
+          context,
+          Icons.forward,
+          'formulasolver_formulas_openinvarcoords',
+        )
+      ),
+    ];
+
+    if (hasCoordinate) {
+      items.add(
+        PopupMenuItem(
+          value: 6,
+          child: buildPopupItem(
+            context,
+            Icons.my_location,
+            'formulasolver_formulas_showonmap',
+          )
+        )
+      );
+    }
+
+    return items;
+  }
+
+  _showFormulaResultOnMap(coordinates) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => GCWTool (
+      tool: GCWMapView(
+        points: coordinates,
+      ),
+      toolName: i18n(context, 'coords_map_view_title'),
+      autoScroll: false,
+    )));
   }
 }

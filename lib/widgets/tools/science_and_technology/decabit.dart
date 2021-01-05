@@ -27,7 +27,7 @@ class DecabitState extends State<Decabit> {
   var _currentA = '+';
   var _currentB = '-';
 
-  var _currentMode = GCWSwitchPosition.left;
+  var _currentMode = GCWSwitchPosition.right;
   bool _numericMode = false;
 
   @override

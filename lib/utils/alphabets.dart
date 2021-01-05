@@ -321,3 +321,15 @@ final Alphabet alphabetRussian1 = Alphabet(
     String.fromCharCode(1071) : '33', // Я
   }
 );
+
+final List<Alphabet> ALL_ALPHABETS = [
+    alphabetAZ,
+    alphabetGerman1,
+    alphabetGerman2,
+    alphabetGerman3,
+    alphabetSpanish1,
+    alphabetSpanish2,
+    alphabetPolish1,
+    alphabetGreek1,
+    alphabetRussian1,
+];
