@@ -42,6 +42,12 @@ TextStyle gcwDescriptionTextStyle() {
   );
 }
 
+TextStyle gcwDialogTextStyle() {
+  return gcwTextStyle().copyWith(
+    color: themeColors().dialogText()
+  );
+}
+
 const roundedBorderRadius = 4.0;
 
 ThemeData buildTheme() {

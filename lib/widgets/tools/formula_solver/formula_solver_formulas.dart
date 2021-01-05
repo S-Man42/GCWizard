@@ -21,8 +21,8 @@ import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coor
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_values.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_mapview.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
 
 class FormulaSolverFormulas extends StatefulWidget {
   final FormulaGroup group;
@@ -331,7 +331,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                         break;
 
                       _showFormulaResultOnMap([
-                        MapPoint(
+                        GCWMapPoint(
                           point: coordinate['coordinate'],
                           markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext'),
                           coordinateFormat: {'format': coordinate['format']}
@@ -372,7 +372,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
             onPressed: () {
               _showFormulaResultOnMap(
                 _foundCoordinates.entries.map((coordinate) {
-                  return MapPoint(
+                  return GCWMapPoint(
                     point: coordinate.value['coordinate'],
                     markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext') + ' ${coordinate.key}',
                     coordinateFormat: {'format': coordinate.value['format']}

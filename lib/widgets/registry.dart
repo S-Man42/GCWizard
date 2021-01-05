@@ -54,6 +54,7 @@ import 'package:gc_wizard/widgets/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_two_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersection.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/map_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
@@ -973,6 +974,13 @@ class Registry {
         i18nPrefix: 'coords_formatconverter',
         iconPath: 'assets/coordinates/icon_format_converter.png',
         searchStrings: SEARCHSTRING_COORDINATES + 'coordinateformatconverter converting koordinatenformatkonverter formate konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
+      ),
+      GCWTool(
+        tool: MapView(),
+        autoScroll: false,
+        i18nPrefix: 'coords_openmap',
+        iconPath: 'assets/coordinates/icon_variable_coordinate.png',
+        searchStrings: SEARCHSTRING_COORDINATES + 'mapview kartenansicht freiekarte openmap measurement messen messungen '
       ),
       GCWTool(
         tool: VariableCoordinateFormulas(),

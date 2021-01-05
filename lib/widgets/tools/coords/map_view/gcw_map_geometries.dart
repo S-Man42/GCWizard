@@ -6,81 +6,133 @@ import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:latlong/latlong.dart';
+import 'package:uuid/uuid.dart';
 
-class MapPoint {
-  final LatLng point;
-  final String markerText;
-  final Color color;
-  final Map<String, String> coordinateFormat;
+class GCWMapPoint {
+  String uuid;
+  LatLng point;
+  String markerText;
+  Color color;
+  Map<String, String> coordinateFormat;
+  bool isEditable;
+  GCWMapCircle circle;
+  bool circleColorSameAsPointColor;
+  bool isVisible;
 
-  const MapPoint({
+  GCWMapPoint({
+    this.uuid,
     @required this.point,
     this.markerText,
     this.color: COLOR_MAP_POINT,
-    this.coordinateFormat
-  });
+    this.coordinateFormat,
+    this.isEditable: false,
+    this.circle,
+    this.circleColorSameAsPointColor: false,
+    this.isVisible: true
+  }) {
+    if (uuid == null || uuid.length == 0)
+      uuid = Uuid().v4();
+    update();
+  }
+
+  hasCircle() {
+    return circle != null && circle.radius != null && circle.radius > 0.0;
+  }
+
+  update() {
+    if (circle != null) {
+      circle.centerPoint = point;
+
+      if (circleColorSameAsPointColor)
+        circle.color = color;
+
+      circle._update();
+    }
+  }
 }
 
-class MapGeodetic {
-  LatLng start;
-  LatLng end;
-  final Color color;
+class GCWMapPolyline {
+  String uuid;
+  List<GCWMapPoint> points = [];
+  Color color;
+  double length;
 
   List<LatLng> shape;
 
-  MapGeodetic({
-    @required this.start,
-    @required this.end,
+  GCWMapPolyline({
+    this.uuid,
+    @required this.points,
     this.color: COLOR_MAP_POLYLINE,
   }) {
-    _initialize();
+    if (uuid == null || uuid.length == 0)
+      uuid = Uuid().v4();
+    update();
   }
 
-  void _initialize() {
-    if (this.start == null)
-      this.start = defaultCoordinate;
-    if (this.end == null)
-      this.end = defaultCoordinate;
+  void _calculateGeodetics(GCWMapPoint start, GCWMapPoint end) {
+    DistanceBearingData _distBear = distanceBearing(start.point, end.point, defaultEllipsoid());
+    length += _distBear.distance;
 
-    DistanceBearingData _distBear = distanceBearing(this.start, this.end, defaultEllipsoid());
-
-    shape = [this.start];
     const _stepLength = 5000.0;
 
     var _countSteps = (_distBear.distance / _stepLength).floor();
 
     for (int _i = 1; _i < _countSteps; _i++) {
       var _nextPoint = projection(
-          this.start,
-          _distBear.bearingAToB,
-          _stepLength * _i,
-          defaultEllipsoid()
+        start.point,
+        _distBear.bearingAToB,
+        _stepLength * _i,
+        defaultEllipsoid()
       );
       shape.add(_nextPoint);
     }
 
-    shape.add(this.end);
+    shape.add(end.point);
+  }
+
+  void update() {
+    length = 0.0;
+    shape = [];
+
+    if (points == null) {
+      return;
+    }
+
+    if (points.length > 0)
+      shape.add(points[0].point);
+
+    if (points.length < 2)
+      return;
+
+    for (int i = 1; i < points.length; i++) {
+      _calculateGeodetics(points[i - 1], points[i]);
+    }
   }
 }
 
-class MapCircle {
+class GCWMapCircle {
   LatLng centerPoint;
-  final double radius;
-  final Color color;
+  double radius;
+  Color color;
 
   List<LatLng> shape;
 
-  MapCircle({
-    @required this.centerPoint,
+  GCWMapCircle({
+    this.centerPoint,
     @required this.radius,
     this.color: COLOR_MAP_CIRCLE
   }) {
-    _initialize();
+    _update();
   }
 
-  void _initialize() {
+  void _update() {
     if (this.centerPoint == null)
       this.centerPoint = defaultCoordinate;
+
+    if (this.radius == null || this.radius <= 0.0) {
+      shape = null;
+      return;
+    }
 
     var _degrees = 0.5;
 
