@@ -12,7 +12,7 @@ void refreshMapViews() {
   mapViews = rawMapViews
     .where((view) => view.length > 0)
     .map((view) {
-      return MapView.fromJson(jsonDecode(view));
+      return MapViewDAO.fromJson(jsonDecode(view));
     })
     .toList();
 }
@@ -25,7 +25,7 @@ _saveData() {
   Prefs.setStringList('mapview_mapviews', jsonData);
 }
 
-int insertMapView(MapView view) {
+int insertMapViewDAO(MapViewDAO view) {
   view.name = view.name ?? '';
   var id = newID(
     mapViews
@@ -44,13 +44,13 @@ void updateMapViews() {
   _saveData();
 }
 
-void deleteMapView(int viewId) {
+void deleteMapViewDAO(int viewId) {
   mapViews.removeWhere((group) => group.id == viewId);
 
   _saveData();
 }
 
-void _updateMapView(MapView view) {
+void _updateMapView(MapViewDAO view) {
   mapViews = mapViews.map((mapView) {
     if (mapView.id == view.id)
       return view;
@@ -59,14 +59,14 @@ void _updateMapView(MapView view) {
   }).toList();
 }
 
-void insertMapPoint(MapPoint point, MapView mapView) {
+void insertMapPointDAO(MapPointDAO point, MapViewDAO mapView) {
   mapView.points.add(point);
 
   _updateMapView(mapView);
   _saveData();
 }
 
-void updateMapPoint(MapPoint point, MapView mapView) {
+void updateMapPointDAO(MapPointDAO point, MapViewDAO mapView) {
   mapView.points = mapView.points.map((mapPoint) {
     if (mapPoint.uuid == point.uuid)
       return point;
@@ -78,31 +78,23 @@ void updateMapPoint(MapPoint point, MapView mapView) {
   _saveData();
 }
 
-void deleteMapPoint(String pointUUID, MapView mapView) {
+void deleteMapPointDAO(String pointUUID, MapViewDAO mapView) {
   mapView.points.removeWhere((point) => point.uuid == pointUUID);
 
   _updateMapView(mapView);
   _saveData();
 }
 
-int insertMapPolyline(MapPolyline polyline, MapView mapView) {
-  var id = newID(
-    mapView.polylines
-      .map((view) => view.id)
-      .toList()
-  );
-  polyline.id = id;
+void insertMapPolylineDAO(MapPolylineDAO polyline, MapViewDAO mapView) {
   mapView.polylines.add(polyline);
 
   _updateMapView(mapView);
   _saveData();
-
-  return id;
 }
 
-void updateMapPolyline(MapPolyline polyline, MapView mapView) {
+void updateMapPolylineDAO(MapPolylineDAO polyline, MapViewDAO mapView) {
   mapView.polylines = mapView.polylines.map((mapPolyline) {
-    if (mapPolyline.id == polyline.id)
+    if (mapPolyline.uuid == polyline.uuid)
       return polyline;
 
     return mapPolyline;
@@ -112,8 +104,8 @@ void updateMapPolyline(MapPolyline polyline, MapView mapView) {
   _saveData();
 }
 
-void deleteMapPolyline(int polylineId, MapView mapView) {
-  mapView.polylines.removeWhere((polyline) => polyline.id == polylineId);
+void deleteMapPolylineDAO(String polylineUUID, MapViewDAO mapView) {
+  mapView.polylines.removeWhere((polyline) => polyline.uuid == polylineUUID);
 
   _updateMapView(mapView);
   _saveData();

@@ -111,10 +111,12 @@ class GCWMapPolyGeodetics {
   List<LatLng> shape;
 
   GCWMapPolyGeodetics({
+    this.uuid,
     @required this.points,
     this.color: COLOR_MAP_POLYLINE,
   }) {
-    uuid = Uuid().v4();
+    if (uuid == null || uuid.length == 0)
+      uuid = Uuid().v4();
     update();
   }
 

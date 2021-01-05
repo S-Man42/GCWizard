@@ -1,12 +1,12 @@
-List<MapView> mapViews = [];
+List<MapViewDAO> mapViews = [];
 
-class MapView {
+class MapViewDAO {
   int id;
   String name;
-  List<MapPoint> points = [];
-  List<MapPolyline> polylines = [];
+  List<MapPointDAO> points = [];
+  List<MapPolylineDAO> polylines = [];
 
-  MapView(this.points, this.polylines);
+  MapViewDAO(this.points, this.polylines);
 
   Map<String, dynamic> toMap() => {
     'id': id,
@@ -15,11 +15,11 @@ class MapView {
     'polylines' : polylines.map((polyline) => polyline.toMap()).toList(),
   };
 
-  MapView.fromJson(Map<String, dynamic> json):
+  MapViewDAO.fromJson(Map<String, dynamic> json):
     name = json['name'],
     id = json['id'],
-    points = List<MapPoint>.from(json['points'].map((point) => MapPoint.fromJson(point))),
-    polylines = List<MapPolyline>.from(json['polylines'].map((polyline) => MapPolyline.fromJson(polyline)));
+    points = List<MapPointDAO>.from(json['points'].map((point) => MapPointDAO.fromJson(point))),
+    polylines = List<MapPolylineDAO>.from(json['polylines'].map((polyline) => MapPolylineDAO.fromJson(polyline)));
 
   @override
   String toString() {
@@ -27,17 +27,17 @@ class MapView {
   }
 }
 
-class MapPoint {
+class MapPointDAO {
   final String uuid;
-  final double latitude;
-  final double longitude;
-  final String coordinateFormat;
-  final String color;
-  final double radius;
-  final bool circleColorSameAsColor;
-  final String circleColor;
+  double latitude;
+  double longitude;
+  String coordinateFormat;
+  String color;
+  double radius;
+  bool circleColorSameAsColor;
+  String circleColor;
 
-  MapPoint(
+  MapPointDAO(
     this.uuid,
     this.latitude,
     this.longitude,
@@ -59,7 +59,7 @@ class MapPoint {
     'circleColor': circleColor
   };
 
-  MapPoint.fromJson(Map<String, dynamic> json):
+  MapPointDAO.fromJson(Map<String, dynamic> json):
     uuid = json['uuid'],
     latitude = json['latitude'],
     longitude = json['longitude'],
@@ -75,25 +75,25 @@ class MapPoint {
   }
 }
 
-class MapPolyline {
-  int id;
-  final List<int> pointIds;
-  final String color;
+class MapPolylineDAO {
+  String uuid;
+  final List<String> pointUUIDs;
+  String color;
 
-  MapPolyline(
-    this.pointIds,
+  MapPolylineDAO(
+    this.pointUUIDs,
     this.color
   );
 
   Map<String, dynamic> toMap() => {
-    'id': id,
-    'pointIds': pointIds,
+    'uuid': uuid,
+    'pointUUIDs': pointUUIDs,
     'color': color
   };
 
-  MapPolyline.fromJson(Map<String, dynamic> json):
-    id = json['id'],
-    pointIds = json['pointIds'],
+  MapPolylineDAO.fromJson(Map<String, dynamic> json):
+    uuid = json['uuid'],
+    pointUUIDs = json['pointUUIDs'],
     color = json['color'];
 
   @override
