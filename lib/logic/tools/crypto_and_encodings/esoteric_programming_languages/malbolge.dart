@@ -27,8 +27,8 @@ final validInstructions  = {'j', 'i', '*', 'p', '<', '/', 'v', 'o'};
 final opCodeList = {
   'j' : 'mov d, [d]',
   'i' : 'jmp [d]',
-  '*' : '[d] = rotr [d]\na = [d]',
-  'p' : '[d] = crz a, [d]\na = [d]',
+  '*' : 'a = [d] = rotr [d]',
+  'p' : 'a = [d] = crz a, [d]]',
   '/' : 'in a',
   '<' : 'out a',
   'v' : 'end',
@@ -117,12 +117,16 @@ malbolgeOutput generateMalbolge(String inputString){
       }
     } // while
   } // for
-  return malbolgeOutput([_reverseNormalize(endString + 'v')], [], [], []);
+  endString = endString + 'v';
+  return malbolgeOutput([_reverseNormalize(endString)], [endString], [], []);
 }
 
 
 malbolgeOutput interpretMalbolge(String program, String STDIN){
   List<int> memory = new List<int>(59049);
+
+  if (_checkNormalize(program))
+    program = _reverseNormalize(program);
 
   // load program
   int codeUnit = 0;
@@ -183,19 +187,16 @@ malbolgeOutput interpretMalbolge(String program, String STDIN){
       return malbolgeOutput(output, assembler, memnonic, debug);
     }
     op = normalTranslate [(memory[c] - 33 + c) % 94];
-    assembler.add(_format(c) + ' ' + _format(d) + ' ' + _format(a));
-    assembler.add(_format(memory[c]) + ' ' + _format(memory[d]) + ' ' + _format(memory[a]));
-    memnonic.add('');
+    assembler.add(_format(c) + '   ' + op);
+    memnonic.add(opCodeList[op]);
 
     switch (op) {
       case 'i':   //     4     c = [d]
         c = memory[d];
-        memnonic.add(opCodeList[op]);
         break;
 
       case '<':   //   23     out a % 256
         STDOUT = STDOUT + String.fromCharCode(a % 256);
-        memnonic.add(opCodeList[op]);
         break;
 
       case '/':  //      5     in a
@@ -210,35 +211,27 @@ malbolgeOutput interpretMalbolge(String program, String STDIN){
             'malbolge_error_no_input']);
           return malbolgeOutput(output, assembler, memnonic, debug);
         }
-        memnonic.add(opCodeList[op]);
         break;
 
       case '*':  //    39     a = [d] = rotr [d]
         memory[d] = _rotate(memory[d]);
         a = memory[d];
-        memnonic.add(opCodeList[op]);
-        assembler.add('');
         break;
 
       case 'j':  //    40     mov d, [d]
         d = memory[d];
-        memnonic.add('mov d, [d]');
         break;
 
       case 'p':  //    62     a = [d] = crazy(a, [d])
         memory[d] = _crazy(a, memory[d]);
         a = memory[d];
-        memnonic.add(opCodeList[op]);
-        assembler.add('');
         break;
 
       case 'o':  //    68     NOP
-        memnonic.add(opCodeList[op]);
         break;
 
       case 'v':  //    81     end
         halt = true;
-        memnonic.add(opCodeList[op]);
         break;
       default:
     };

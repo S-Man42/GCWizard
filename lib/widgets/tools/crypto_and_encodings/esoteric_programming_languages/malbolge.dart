@@ -8,6 +8,7 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class Malbolge extends StatefulWidget {
@@ -18,7 +19,6 @@ class Malbolge extends StatefulWidget {
 
 class MalbolgeState extends State<Malbolge> {
   var _programmController;
-  var _normalizeController;
   var _inputController;
   var _outputController;
 
@@ -27,7 +27,7 @@ class MalbolgeState extends State<Malbolge> {
   var _currentInput = '';
   var _currentOutput = '';
   bool _currentDebug = false;
-  bool _currentNormalize = false;
+
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;    // interpret
 
@@ -37,7 +37,6 @@ class MalbolgeState extends State<Malbolge> {
     _programmController = TextEditingController(text: _currentProgramm);
     _inputController = TextEditingController(text: _currentInput);
     _outputController = TextEditingController(text: _currentOutput);
-    _normalizeController = TextEditingController(text: _currentNormalizedProgramm);
   }
 
   @override
@@ -45,7 +44,6 @@ class MalbolgeState extends State<Malbolge> {
     _programmController.dispose();
     _inputController.dispose();
     _outputController.dispose();
-    _normalizeController.dispose();
     super.dispose();
   }
 
@@ -79,15 +77,6 @@ class MalbolgeState extends State<Malbolge> {
               )
             : Column( // interpret malbolge-programm
                 children: <Widget>[
-                  GCWOnOffSwitch(
-                    title:i18n(context, 'malbolge_normalize'),
-                    value: _currentNormalize,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentNormalize = value;
-                      });
-                    },
-                  ),
                   GCWTextField(
                     controller: _programmController,
                     hintText: i18n(context, 'malbolge_hint_code'),
@@ -108,9 +97,6 @@ class MalbolgeState extends State<Malbolge> {
                   ),
                 ],
               ),
-        GCWTextDivider(
-            text: i18n(context, 'malbolge_hint_output')
-        ),
         _buildOutput(context)
       ],
     );
@@ -126,6 +112,7 @@ class MalbolgeState extends State<Malbolge> {
 
     if (_currentMode == GCWSwitchPosition.right) { // generate malbolge
       output = generateMalbolge(_currentOutput);
+      _currentDebug = false;
     } else { // interpret malbolge
       output = interpretMalbolge(_currentProgramm, _currentInput);
     }
@@ -139,11 +126,22 @@ class MalbolgeState extends State<Malbolge> {
 
     return Column(
       children: <Widget>[
-        GCWOutputText(
-          text: outputData,
-          isMonotype: true,
+        GCWDefaultOutput(
+          child: GCWOutputText(
+            text: outputData,
+            isMonotype: true,
+          ),
         ),
         _currentMode == GCWSwitchPosition.right // generate malbolge-programm
+        ? GCWOutput(
+          title: i18n(context, 'malbolge_normalize'),
+          child: GCWOutputText(
+            text: output.assembler.join(''),
+            isMonotype: true,
+          ),
+        )
+        : Container(),
+        _currentMode == GCWSwitchPosition.left // interpret malbolge-programm
         ? GCWOnOffSwitch(
           title:i18n(context, 'malbolge_debug'),
           value: _currentDebug,
@@ -157,15 +155,6 @@ class MalbolgeState extends State<Malbolge> {
         _currentDebug == true
           ? Column(
             children: <Widget>[
-              GCWOutput(
-                title: i18n(context, 'malbolge_debug'),
-                child: Column(
-                    children: columnedMultiLineOutput(context, columnData, flexValues: flexData)
-                ),
-              ),
-              GCWTextDivider(
-                text: i18n(context, 'malbolge_hint_code'),
-              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -190,7 +179,7 @@ class MalbolgeState extends State<Malbolge> {
                     )
                   ),
                   Expanded(
-                    flex: 2,
+                    flex: 5,
                     child: Align(
                       alignment: Alignment.topCenter,
                       child: Container(
