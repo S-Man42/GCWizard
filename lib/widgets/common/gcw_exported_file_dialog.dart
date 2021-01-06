@@ -6,7 +6,6 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 
-
 showExportedFileDialog(BuildContext context, String filePath, {Widget contentWidget, int dialogHeight, String fileType}) {
   showGCWDialog(
     context,

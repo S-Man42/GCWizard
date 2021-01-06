@@ -14,6 +14,7 @@ dependencies:
     sdk: flutter
   flutter_map: ^0.10.1+1
   flutter_map_marker_popup: ^0.1.4
+  flutter_map_tappable_polyline: ^1.2.0
   fluttertoast: ^7.1.1
   intl: ^0.16.1
   location: ^3.0.2
@@ -30,6 +31,7 @@ dependencies:
   qr_flutter: ^3.2.0
   share_extend: ^1.1.9
   touchable: ^0.2.0
+  uuid: ^2.2.2
   url_launcher: ^5.7.10
   percent_indicator: ^2.1.9
 

@@ -11,7 +11,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:latlong/latlong.dart';
 
@@ -40,8 +40,8 @@ class IntersectBearingsState extends State<IntersectBearings> {
     super.initState();
 
     _currentMapPoints = [
-      MapPoint(point: _currentCoords1),
-      MapPoint(point: _currentCoords2)
+      GCWMapPoint(point: _currentCoords1),
+      GCWMapPoint(point: _currentCoords2)
     ];
   }
 
@@ -50,7 +50,7 @@ class IntersectBearingsState extends State<IntersectBearings> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_intersectbearings_coord1'),
+          title: i18n(context, 'coords_intersectbearings_coord1'),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -67,7 +67,7 @@ class IntersectBearingsState extends State<IntersectBearings> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_intersectbearings_coord2'),
+          title: i18n(context, 'coords_intersectbearings_coord2'),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {
@@ -101,59 +101,57 @@ class IntersectBearingsState extends State<IntersectBearings> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
-          geodetics: [
-            MapGeodetic(
-              start: _currentCoords1,
-              end: _getEndLine1()
+          polylines: [
+            GCWMapPolyline(
+              points: [_currentMapPoints[0], _getEndLine1()]
             ),
-            MapGeodetic(
-              start: _currentCoords2,
-              end: _getEndLine2(),
+            GCWMapPolyline(
+              points: [_currentMapPoints[1], _getEndLine2()],
               color: HSLColor
-                  .fromColor(COLOR_MAP_POLYLINE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
-                  .toColor()
-            ),
+                .fromColor(COLOR_MAP_POLYLINE)
+                .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+                .toColor()
+            )
           ],
         ),
       ],
     );
   }
 
-  LatLng _getEndLine1() {
-     final _ells = defaultEllipsoid();
+  GCWMapPoint _getEndLine1() {
+    final _ells = defaultEllipsoid();
 
-     if (_currentIntersection == null) {
-       var distance1To2 = distanceBearing(_currentCoords1, _currentCoords2, _ells).distance;
-       return projection(_currentCoords1, _currentBearing1['value'], distance1To2 * 3, _ells);
-     }
+    if (_currentIntersection == null) {
+      var distance1To2 = distanceBearing(_currentCoords1, _currentCoords2, _ells).distance;
+      return GCWMapPoint(point: projection(_currentCoords1, _currentBearing1['value'], distance1To2 * 3, _ells), isVisible: false);
+    }
 
-     var distance1ToIntersect = distanceBearing(_currentCoords1, _currentIntersection, _ells).distance;
-     return projection(_currentCoords1, _currentBearing1['value'], distance1ToIntersect * 1.5, _ells);
+    var distance1ToIntersect = distanceBearing(_currentCoords1, _currentIntersection, _ells).distance;
+    return GCWMapPoint(point: projection(_currentCoords1, _currentBearing1['value'], distance1ToIntersect * 1.5, _ells), isVisible: false);
   }
 
-  LatLng _getEndLine2() {
+  GCWMapPoint _getEndLine2() {
     final _ells = defaultEllipsoid();
 
     if (_currentIntersection == null) {
       var distance2To1 = distanceBearing(_currentCoords2, _currentCoords1, _ells).distance;
-      return projection(_currentCoords2, _currentBearing2['value'], distance2To1 * 3, _ells);
+      return GCWMapPoint(point: projection(_currentCoords2, _currentBearing2['value'], distance2To1 * 3, _ells), isVisible: false);
     }
 
     var distance2ToIntersect = distanceBearing(_currentCoords2, _currentIntersection, _ells).distance;
-    return projection(_currentCoords2, _currentBearing2['value'], distance2ToIntersect * 1.5, _ells);
+    return GCWMapPoint(point: projection(_currentCoords2, _currentBearing2['value'], distance2ToIntersect * 1.5, _ells), isVisible: false);
   }
 
   _calculateOutput() {
     _currentIntersection = intersectBearings(_currentCoords1, _currentBearing1['value'], _currentCoords2, _currentBearing2['value'], defaultEllipsoid(), false);
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords1,
         markerText: i18n(context, 'coords_intersectbearings_coord1'),
         coordinateFormat: _currentCoordsFormat1
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords2,
         markerText: i18n(context, 'coords_intersectbearings_coord2'),
         coordinateFormat: _currentCoordsFormat2
@@ -166,7 +164,7 @@ class IntersectBearingsState extends State<IntersectBearings> {
     }
 
     _currentMapPoints.add(
-      MapPoint(
+      GCWMapPoint(
         point: _currentIntersection,
         color: COLOR_MAP_CALCULATEDPOINT,
         markerText: i18n(context, 'coords_common_intersection'),
