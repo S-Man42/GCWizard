@@ -43,27 +43,23 @@ malbolgeOutput generateMalbolge(String inputString){
   bool found = false;
   var randomGenerator = Random();
 
-  var opCodes = {'o', 'p', '*'};                                                 // This is the  list of opcodes that the program will use (aside from <)
+  var opCodes = {'o', 'p', '*'};                                                // This is the  list of opcodes that the program will use (aside from <)
                                                                                 // p and * change the value of A, which is crucial for printing
                                                                                 // o is nice to have, because it increments D, which is then used to get different values of A through * and p
                                                                                 // j can also be used here, but might crash the program (not sure if I handle jumps to places without data)
 
   for (int x = 0; x < inputString.length; x++){                                 // Master loop, looks for letters
-    print('----- ' + inputString[x]);
     tempString = '';
     found = false;                                                              // Whether or not the current letter of the desired string has been found
-    if (masterList.length > 0)
-      masterList.removeRange(0, masterList.length - 1);                         // masterList holds all possible combination of the above opCodes for some length.
-    if (tempList.length > 0)
-      tempList.removeRange(0, masterList.length - 1);                           // tempList is used as a temporary holder while all possible combinations of opCodes of length + 1 are generated
+    if (masterList.length > 0) masterList.removeRange(0, masterList.length - 1);// masterList holds all possible combination of the above opCodes for some length.
+    if (tempList.length > 0) tempList.removeRange(0, masterList.length - 1);    // tempList is used as a temporary holder while all possible combinations of opCodes of length + 1 are generated
 
-    opCodes.forEach((element) {                                                  // Tries only a single opcode at first, length of masterList is 1
+    opCodes.forEach((element) {                                                 // Tries only a single opcode at first, length of masterList is 1
       masterList.add(element);
     });
     counter = 0;                                                                // Counter is used to keep track of iterations while searching
 
     while(!found) {
-      print('- counter '+counter.toString());
       counter++;
 
       // Iterates through all possible combinations of opcodes for the current length, and sees if any of them print the desired character
@@ -97,8 +93,7 @@ malbolgeOutput generateMalbolge(String inputString){
         });
 
         // Update masterList with these new combinations (clears all old ones)
-        if (masterList.length > 0)
-          masterList.removeRange(0, masterList.length);
+        if (masterList.length > 0) masterList.removeRange(0, masterList.length);
         masterList.addAll(tempList);
       }
       // This is the novel part. If no solution has been found by length 5, a random combination of opCodes is appended to the current-good malbolge program.
@@ -108,8 +103,7 @@ malbolgeOutput generateMalbolge(String inputString){
         endString = endString + masterList[randomGenerator.nextInt(masterList.length - 1)];
 
         // Reset opCode combinations
-        if (masterList.length > 0)
-          masterList.removeRange(0, masterList.length);
+        if (masterList.length > 0) masterList.removeRange(0, masterList.length);
         opCodes.forEach((y) {
           masterList.add(y);
         });
@@ -337,7 +331,6 @@ int _index(String s, c){
 }
 
 String _interpret(String instructionList){
-  print('_interpret '+instructionList);
   bool running = true;
   String outputString = '';
   int maxInstructions = instructionList.length;
@@ -365,29 +358,34 @@ String _interpret(String instructionList){
     currentInstruction = normalTranslate[(malbolgeTape[c] - 33 + c) % 94];
 
     // executes instruction
-    switch (currentInstruction) {
-      case '<':
+    switch (currentInstruction) { // check only the instructions the generator uses
+      case '<': // out a
         outputString = outputString + String.fromCharCode(a % 256);
         break;
-      case '*':
+      case '*': // a = [d] = rotr [d]
         if(d >= maxInstructions)
           running =false;
-        a = _rotate(malbolgeTape[d]);
-        malbolgeTape[d] = a;
+        else {
+          a = _rotate(malbolgeTape[d]);
+          malbolgeTape[d] = a;
+        }
         break;
-      case 'p':
+      case 'p': //a = [d] = crz a, [d]
         if(d >= maxInstructions)
           running = false;
-        a = _crazy(a, malbolgeTape[d]);
-        malbolgeTape[d] = a;
+        else {
+          a = _crazy(a, malbolgeTape[d]);
+          malbolgeTape[d] = a;
+        }
       break;
-      case 'v':
+      case 'v': // halt
         running = false;
+        break;
+      case 'o': // nop
         break;
     } // switch currentInstruction
 
-    // Encrypts the last-executed instructions on the tape
-    //If you aren't using jumps, this isn't technically necessary
+    // Encrypts the last-executed instructions on the tape - If you aren't using jumps, this isn't technically necessary
     if (33 <= malbolgeTape[c] && malbolgeTape[c] <= 126)
       malbolgeTape[c] = encryptionTranslate.codeUnitAt(malbolgeTape[c] - 33);
 

@@ -23,7 +23,6 @@ class MalbolgeState extends State<Malbolge> {
   var _outputController;
 
   var _currentProgramm = '';
-  var _currentNormalizedProgramm = '';
   var _currentInput = '';
   var _currentOutput = '';
   bool _currentDebug = false;
