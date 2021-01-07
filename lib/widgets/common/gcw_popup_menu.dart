@@ -5,8 +5,7 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 
 class GCWPopupMenu extends StatefulWidget {
-  final List<GCWPopupMenuItem> menuItems;
-
+  final List<GCWPopupMenuItem> Function(BuildContext context) menuItemBuilder;
   final IconData iconData;
   final Widget customIcon;
   final IconButtonSize size;
@@ -15,7 +14,7 @@ class GCWPopupMenu extends StatefulWidget {
 
   const GCWPopupMenu({
     Key key,
-    this.menuItems,
+    this.menuItemBuilder,
     this.iconData,
     this.customIcon,
     this.size: IconButtonSize.NORMAL,
@@ -54,16 +53,6 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
 
   @override
   Widget build(BuildContext context) {
-    var items = widget.menuItems.asMap().map((index, GCWPopupMenuItem item) {
-      return MapEntry<PopupMenuEntry<dynamic>, Function>(
-        item.isDivider ? PopupMenuDivider() : PopupMenuItem(child: item.child, value: index),
-        item.action
-      );
-    });
-
-    _menuItems = items.keys.toList();
-    _menuAction = items.values.toList();
-
     return GCWIconButton(
       iconData: widget.iconData,
       customIcon: widget.customIcon,
@@ -71,6 +60,16 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
       iconColor: widget.iconColor,
       backgroundColor: widget.backgroundColor,
       onPressed: () {
+        var items = widget.menuItemBuilder(context).asMap().map((index, GCWPopupMenuItem item) {
+          return MapEntry<PopupMenuEntry<dynamic>, Function>(
+            item.isDivider ? PopupMenuDivider() : PopupMenuItem(child: item.child, value: index),
+            item.action
+          );
+        });
+
+        _menuItems = items.keys.toList();
+        _menuAction = items.values.toList();
+
         showMenu(
           context: context,
           position: _menuPosition,

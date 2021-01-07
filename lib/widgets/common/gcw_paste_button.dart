@@ -32,11 +32,11 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
       customIcon: widget.customIcon,
       iconData: Icons.content_paste,
       backgroundColor: widget.backgroundColor,
-      menuItems: _buildMenuItems(),
+      menuItemBuilder: (context) => _buildMenuItems(context),
     );
   }
 
-  _buildMenuItems() {
+  _buildMenuItems(BuildContext context) {
     var menuItems = [
       GCWPopupMenuItem(
         child: Text(
