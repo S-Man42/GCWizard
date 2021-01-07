@@ -8,17 +8,31 @@ class GCWIconButton extends StatelessWidget {
   final Function onPressed;
   final IconData iconData;
   final Widget customIcon;
-  final IconButtonSize size;
+  IconButtonSize size;
   final Color iconColor;
   final Color backgroundColor;
 
-  const GCWIconButton({Key key, this.onPressed, this.iconData, this.customIcon, this.size: IconButtonSize.NORMAL, this.iconColor, this.backgroundColor}) : super(key: key);
+  GCWIconButton({
+    Key key,
+    this.onPressed,
+    this.iconData,
+    this.customIcon,
+    this.size,
+    this.iconColor,
+    this.backgroundColor
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var containerWidth;
     var buttonHeight;
     var iconSize;
+
+    // moved to here instead of default value in constructur because
+    // some tools explicitly hand over a NULL value
+    if (this.size == null)
+      this.size = IconButtonSize.NORMAL;
+
     switch (this.size) {
       case IconButtonSize.NORMAL:
         containerWidth = 40.0;

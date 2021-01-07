@@ -109,11 +109,11 @@ class MapViewPersistenceAdapter {
     updateMapViews();
   }
   
-  GCWMapPoint addMapPoint(LatLng coordinate) {
+  GCWMapPoint addMapPoint(LatLng coordinate, {Map<String, String> coordinateFormat}) {
     var random = Random();
     var mapPoint = GCWMapPoint(
       point: coordinate,
-      coordinateFormat: defaultCoordFormat(),
+      coordinateFormat: coordinateFormat ?? defaultCoordFormat(),
       isEditable: true,
       color: HSVColor.fromAHSV(1.0, random.nextDouble() * 360.0, 1.0, random.nextDouble() / 2 + 0.5).toColor(),
       circleColorSameAsPointColor: true

@@ -5,17 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
+import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:prefs/prefs.dart';
 
 class GCWPasteButton extends StatefulWidget {
   final Function onSelected;
+  final IconButtonSize size;
+  final Widget customIcon;
+  final Color backgroundColor;
 
-  const GCWPasteButton({Key key, this.onSelected}) : super(key: key);
+  const GCWPasteButton({Key key, this.onSelected, this.size, this.customIcon, this.backgroundColor}) : super(key: key);
 
   @override
   GCWPasteButtonState createState() => GCWPasteButtonState();
@@ -24,119 +27,85 @@ class GCWPasteButton extends StatefulWidget {
 class GCWPasteButtonState extends State<GCWPasteButton> {
   @override
   Widget build(BuildContext context) {
-    ThemeColors colors = themeColors();
-
-    return Container(
-      width: 29,
-      height: 29,
-      decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(roundedBorderRadius),
-          side: BorderSide(
-            width: 1,
-            color: colors.accent(),
-          ),
-        ),
-      ),
-      child: PopupMenuButton(
-        offset: Offset(0, 30),
-        icon: Icon(Icons.content_paste, color: themeColors().mainFont(), size: 20),
-        color: colors.accent(),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(roundedBorderRadius),
-        ),
-        onSelected: (value) {
-          if (value == 0) {
-            Clipboard.getData('text/plain').then((data) {
-              if (data.text.length == 0) {
-                showToast(i18n(context, 'common_clipboard_notextdatafound'));
-                return;
-              }
-
-              setState(() {
-                widget.onSelected(data.text);
-                insertIntoGCWClipboard(data.text);
-              });
-            });
-          } else {
-            var pasteData = jsonDecode(Prefs.getStringList('clipboard_items')[value - 1])['text'];
-            setState(() {
-              widget.onSelected(pasteData);
-            });
-            insertIntoGCWClipboard(pasteData);
-          }
-        },
-        itemBuilder: (context) => _buildPopupList(),
-        padding: EdgeInsets.all(0),
-      ),
-      padding: EdgeInsets.only(
-        left: 2,
-        right: 2,
-      ),
+    return GCWPopupMenu(
+      size: widget.size,
+      customIcon: widget.customIcon,
+      iconData: Icons.content_paste,
+      backgroundColor: widget.backgroundColor,
+      menuItems: _buildMenuItems(),
     );
   }
 
-  _buildPopupList() {
-    var popupList = <PopupMenuEntry>[
-      PopupMenuItem(
-        value: 0,
+  _buildMenuItems() {
+    var menuItems = [
+      GCWPopupMenuItem(
         child: Text(
           i18n(context, 'common_clipboard_fromdeviceclipboard'),
-          style: gcwTextStyle().copyWith(color: themeColors().dialogText())
-        )
+          style: gcwDialogTextStyle()
+        ),
+        action: () {
+          Clipboard.getData('text/plain').then((data) {
+            if (data.text.length == 0) {
+              showToast(i18n(context, 'common_clipboard_notextdatafound'));
+              return;
+            }
+
+            setState(() {
+              widget.onSelected(data.text);
+              insertIntoGCWClipboard(data.text);
+            });
+          });
+        }
       ),
-      PopupMenuDivider()
+      GCWPopupMenuItem(isDivider: true)
     ];
 
     var gcwClipboard = Prefs.getStringList('clipboard_items')
-      .asMap()
-      .map((index, clipboardItem) {
-      var item = jsonDecode(clipboardItem);
+      .map((clipboardItem) {
+        var item = jsonDecode(clipboardItem);
 
         var datetime = DateTime.fromMillisecondsSinceEpoch(int.tryParse(item['created']));
         var dateFormat = DateFormat('yMd', Localizations.localeOf(context).toString());
         var timeFormat = DateFormat('Hms', Localizations.localeOf(context).toString());
 
-        return MapEntry(
-          index,
-          PopupMenuItem(
-            value: index + 1,
-            child: Container(
-              child: Column(
-                children: [
-                  Align(
-                    child: Text(
-                      dateFormat.format(datetime) + ' ' + timeFormat.format(datetime),
-                      style: gcwTextStyle().copyWith(
-                        color: themeColors().dialogText(),
-                        fontSize: max(defaultFontSize() - 4, 10)
-                      ),
+        return GCWPopupMenuItem(
+          child: Container(
+            child: Column(
+              children: [
+                Align(
+                  child: Text(
+                    dateFormat.format(datetime) + ' ' + timeFormat.format(datetime),
+                    style: gcwDialogTextStyle().copyWith(
+                      fontSize: max(defaultFontSize() - 4, 10)
                     ),
-                    alignment: Alignment.centerLeft
                   ),
-                  Align(
-                    child: Text(
-                      item['text'],
-                      style: gcwTextStyle().copyWith(
-                        color: themeColors().dialogText(),
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    alignment: Alignment.centerLeft
+                  alignment: Alignment.centerLeft
+                ),
+                Align(
+                  child: Text(
+                    item['text'],
+                    style: gcwDialogTextStyle(),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                ],
-              ),
-              padding: EdgeInsets.only(bottom: 15),
-            )
-          )
+                  alignment: Alignment.centerLeft
+                ),
+              ],
+            ),
+            padding: EdgeInsets.only(bottom: 15),
+          ),
+          action: (index) {
+            var pasteData = jsonDecode(Prefs.getStringList('clipboard_items')[index - 2])['text'];
+            setState(() {
+              widget.onSelected(pasteData);
+            });
+            insertIntoGCWClipboard(pasteData);
+          }
         );
       })
-      .values
       .toList();
 
-    popupList.addAll(gcwClipboard);
-
-    return popupList;
+    menuItems.addAll(gcwClipboard);
+    return menuItems;
   }
 }
