@@ -95,7 +95,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
-// import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
@@ -1158,11 +1158,11 @@ class Registry {
       ),
 
       //Esoteric Programming Language Selection ****************************************************************
-      // GCWTool(
-      //   tool: Chef(),
-      //   i18nPrefix: 'chef',
-      //   searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'chef kochrezepte kochen zutaten ingredients cookingrecipes cookrecipes'
-      // ),
+      GCWTool(
+        tool: Chef(),
+        i18nPrefix: 'chef',
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'chef chefkoch kochrezepte rezepte kochen zutaten ingredients cooking cook recipes'
+      ),
       GCWTool(
         tool: Brainfk(),
         i18nPrefix: 'brainfk',
