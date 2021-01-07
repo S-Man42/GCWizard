@@ -1452,6 +1452,9 @@
   "malbolge_error_program_to_big" : "Program to big",
   "malbolge_error_runtime" : "ERROR - RUNTIME PROGRAM",
   "malbolge_error_invalid_opcode" : "Invalid OpCode found",
+  "malbolge_error_infinite_loop" : "Would enter infinite loop",
+  "malbolge_error_illegal_jump" : "Illegal jump out of bounds",
+  "malbolge_error_illegal_write" : "Illegal write of a non-ASCII-Character",
   "malbolge_error_no_input" : "No input found on STDIN",
 
   "morse_title" : "Morse",

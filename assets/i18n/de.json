@@ -1446,6 +1446,9 @@
   "malbolge_error_program_to_big" : "Programm ist zu lang",
   "malbolge_error_runtime" : "ERROR - LAUFZEITFEHLER",
   "malbolge_error_invalid_opcode" : "Ungültiger Befehl gefunden",
+  "malbolge_error_infinite_loop" : "Das Programm würde in eine Endlosschleife geraten",
+  "malbolge_error_illegal_jump" : "Ungültiger Sprung außerhalb des Speichers",
+  "malbolge_error_illegal_write" : "Ungültiger Schreibversuch eines nicht-ASCII-Zeichens",
   "malbolge_error_no_input" : "Keine Eingabe gefunden",
 
   "mainmenu_about_title" : "Über",
