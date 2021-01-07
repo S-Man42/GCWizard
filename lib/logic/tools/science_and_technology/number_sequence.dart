@@ -23,29 +23,14 @@
 
 import 'dart:math';
 
-class getPositionOfSequenceOutput {
+class PositionOfSequenceOutput {
   final String number;
-  final String PositionSequence;
-  final String PositionDigits;
-  getPositionOfSequenceOutput(this.number, this.PositionSequence, this.PositionDigits);
+  final String positionSequence;
+  final String positionDigits;
+  PositionOfSequenceOutput(this.number, this.positionSequence, this.positionDigits);
 }
 
-
-enum NumberSequencesMode {LUCAS, FIBONACCI, MERSENNE, FERMAT, JACOBSTAHL, JACOBSTHALLUCAS, PELL, PELLLUCAS, CATALAN, RECAMAN}
-
-
-final Map<NumberSequencesMode, String> NumberSequencesName = {
-  NumberSequencesMode.LUCAS : 'numbersequence_mode_lucas',
-  NumberSequencesMode.FIBONACCI : 'numbersequence_mode_fibonacci',
-  NumberSequencesMode.MERSENNE : 'numbersequence_mode_mersenne',
-  NumberSequencesMode.FERMAT : 'numbersequence_mode_fermat',
-  NumberSequencesMode.JACOBSTAHL : 'numbersequence_mode_jacobsthal',
-  NumberSequencesMode.JACOBSTHALLUCAS : 'numbersequence_mode_jacobsthallucas',
-  NumberSequencesMode.PELL : 'numbersequence_mode_pell',
-  NumberSequencesMode.PELLLUCAS : 'numbersequence_mode_pelllucas',
-  NumberSequencesMode.CATALAN : 'numbersequence_mode_catalan',
-  NumberSequencesMode.RECAMAN : 'numbersequence_mode_recaman',
-};
+enum NumberSequencesMode {LUCAS, FIBONACCI, MERSENNE, FERMAT, JACOBSTAHL, JACOBSTHAL_LUCAS, PELL, PELL_LUCAS, CATALAN, RECAMAN}
 
 
 final Zero = BigInt.zero;
@@ -194,9 +179,9 @@ String getNumberAt(NumberSequencesMode sequence, int n){
     case NumberSequencesMode.MERSENNE:        return getMersenne(n).toString();         break;
     case NumberSequencesMode.LUCAS:           return getLucas(n).toString();            break;
     case NumberSequencesMode.JACOBSTAHL:      return getJacobsthal(n).toString();       break;
-    case NumberSequencesMode.JACOBSTHALLUCAS: return getJacobsthalLucas(n).toString();  break;
+    case NumberSequencesMode.JACOBSTHAL_LUCAS: return getJacobsthalLucas(n).toString();  break;
     case NumberSequencesMode.PELL:            return getPell(n).toString();             break;
-    case NumberSequencesMode.PELLLUCAS:       return getPellLucas(n).toString();  break;
+    case NumberSequencesMode.PELL_LUCAS:       return getPellLucas(n).toString();  break;
     case NumberSequencesMode.CATALAN:         return getCatalan(n).toString();          break;
     case NumberSequencesMode.RECAMAN:         return getRecaman(n).toString();          break;
   }
@@ -224,7 +209,7 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
     for (int i = start; i <= stop; i++)
       numberList.add(getJacobsthal(i).toString());
   }
-  else if (sequence == NumberSequencesMode.JACOBSTHALLUCAS) {
+  else if (sequence == NumberSequencesMode.JACOBSTHAL_LUCAS) {
     for (int i = start; i <= stop; i++)
       numberList.add(getJacobsthalLucas(i).toString());
   }
@@ -268,7 +253,7 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
       index++;
     }
   }
-  else if (sequence == NumberSequencesMode.PELLLUCAS) {
+  else if (sequence == NumberSequencesMode.PELL_LUCAS) {
     BigInt number;
     BigInt pn0 = Two;
     BigInt pn1 = Two;
@@ -386,7 +371,7 @@ String checkNumber(NumberSequencesMode sequence, int check){
       number = getJacobsthal(index);
     }
   }
-  else if (sequence == NumberSequencesMode.JACOBSTHALLUCAS) {
+  else if (sequence == NumberSequencesMode.JACOBSTHAL_LUCAS) {
     index = 0;
     number = getJacobsthalLucas(index);
     while (number <= checkNumber){
@@ -439,7 +424,7 @@ String checkNumber(NumberSequencesMode sequence, int check){
       }
     }
   }
-  else if (sequence == NumberSequencesMode.PELLLUCAS) {
+  else if (sequence == NumberSequencesMode.PELL_LUCAS) {
     if (checkNumber == Two) {
       return Zero.toString();
     } else {
@@ -551,7 +536,7 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
       index++;
     }
   }
-  else if (sequence == NumberSequencesMode.JACOBSTHALLUCAS) {
+  else if (sequence == NumberSequencesMode.JACOBSTHAL_LUCAS) {
     int index = 0;
     number = Two;
     while (number.toString().length < digits + 1) {
@@ -593,7 +578,7 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
         numberList.add(number.toString());
     }
   }
-  else if (sequence == NumberSequencesMode.PELLLUCAS) {
+  else if (sequence == NumberSequencesMode.PELL_LUCAS) {
     BigInt pn0 = Two;
     BigInt pn1 = Two;
     if (digits == 1) {
@@ -645,11 +630,11 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
   return numberList;
 }
 
-getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
-  getPositionOfSequenceOutput numberList;
+PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
+  PositionOfSequenceOutput numberList;
 
   if (check == null || check == '') {
-    return getPositionOfSequenceOutput('-1', '', '');
+    return PositionOfSequenceOutput('-1', '', '');
   }
 
   BigInt number = Zero;
@@ -670,7 +655,7 @@ getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode seque
         int j = 0;
         while (!numberString.substring(j).startsWith(check))
           j++;
-        return getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
+        return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
       }
       index++;
     }
@@ -684,7 +669,7 @@ getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode seque
         int j = 0;
         while (!numberString.substring(j).startsWith(check))
           j++;
-        return getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
+        return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
       }
       index++;
     }
@@ -698,7 +683,7 @@ getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode seque
         int j = 0;
         while (!numberString.substring(j).startsWith(check))
           j++;
-        return getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
+        return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
       }
       index++;
     }
@@ -712,12 +697,12 @@ getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode seque
         int j = 0;
         while (!numberString.substring(j).startsWith(check))
           j++;
-        return getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
+        return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
       }
       index++;
     }
   }
-  else if (sequence == NumberSequencesMode.JACOBSTHALLUCAS) {
+  else if (sequence == NumberSequencesMode.JACOBSTHAL_LUCAS) {
     index = 0;
     while (index <= maxIndex) {
       number = getJacobsthalLucas(index);
@@ -726,7 +711,7 @@ getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode seque
         int j = 0;
         while (!numberString.substring(j).startsWith(check))
           j++;
-        return getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
+        return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
       }
       index++;
     }
@@ -736,9 +721,9 @@ getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode seque
     pn1 = One;
     number = pn1;
     if (check == Zero.toString()){
-      return getPositionOfSequenceOutput('0', '0', '1');
+      return PositionOfSequenceOutput('0', '0', '1');
     } else if (check == One.toString()){
-      return getPositionOfSequenceOutput('1', '1', '1');
+      return PositionOfSequenceOutput('1', '1', '1');
     } else {
       index = 2;
       while (index <= maxIndex) {
@@ -750,7 +735,7 @@ getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode seque
           int j = 0;
           while (!numberString.substring(j).startsWith(check))
             j++;
-          return getPositionOfSequenceOutput(
+          return PositionOfSequenceOutput(
               numberString, index.toString(), (j + 1).toString());
         }
         index++;
@@ -762,9 +747,9 @@ getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode seque
     pn1 = One;
     number = pn1;
     if (check == Zero.toString()){
-      return getPositionOfSequenceOutput('0', '0', '1');
+      return PositionOfSequenceOutput('0', '0', '1');
     } else if (check == One.toString()){
-      return getPositionOfSequenceOutput('1', '1', '1');
+      return PositionOfSequenceOutput('1', '1', '1');
     } else {
       index = 2;
       while (index <= maxIndex) {
@@ -776,16 +761,16 @@ getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode seque
           int j = 0;
           while (!numberString.substring(j).startsWith(check))
             j++;
-          return getPositionOfSequenceOutput(
+          return PositionOfSequenceOutput(
               numberString, index.toString(), (j + 1).toString());
         }
         index++;
       }
     }
   }
-  else if (sequence == NumberSequencesMode.PELLLUCAS) {
+  else if (sequence == NumberSequencesMode.PELL_LUCAS) {
     if (check == Two.toString()){
-      return getPositionOfSequenceOutput('2', '0', '1');
+      return PositionOfSequenceOutput('2', '0', '1');
     }
     pn0 = Two;
     pn1 = Two;
@@ -800,7 +785,7 @@ getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode seque
         int j = 0;
         while (!numberString.substring(j).startsWith(check))
           j++;
-        return getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
+        return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
       }
       index++;
     }
@@ -809,9 +794,9 @@ getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode seque
     pn0 = Two;
     pn1 = One;
     if (check == Two.toString()){
-      return getPositionOfSequenceOutput('2', '0', '1');
+      return PositionOfSequenceOutput('2', '0', '1');
     } else if ((check == One.toString())){
-      return getPositionOfSequenceOutput('1', '1', '1');
+      return PositionOfSequenceOutput('1', '1', '1');
     } else {
       index = 1;
       number  = Three;
@@ -821,7 +806,7 @@ getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode seque
           int j = 0;
           while (!numberString.substring(j).startsWith(check))
             j++;
-          return getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
+          return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
         }
         index++;
         number = pn1 + pn0;
@@ -851,10 +836,10 @@ getPositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode seque
         int j = 0;
         while (!numberString.substring(j).startsWith(check))
           j++;
-        return getPositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
+        return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
       }
       index = index + One;
     }
   }
- return getPositionOfSequenceOutput('-1', '', '');
+ return PositionOfSequenceOutput('-1', '', '');
 }

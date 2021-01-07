@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-class NumberSequenceNthNumber extends StatefulWidget {
+class NumberSequenceDigits extends StatefulWidget {
   final NumberSequencesMode mode;
-  const NumberSequenceNthNumber({Key key, this.mode}) : super(key: key);
+  const NumberSequenceDigits({Key key, this.mode}) : super(key: key);
 
   @override
-  NumberSequenceNthNumberState createState() => NumberSequenceNthNumberState();
+  NumberSequenceDigitsState createState() => NumberSequenceDigitsState();
 }
 
-class NumberSequenceNthNumberState extends State<NumberSequenceNthNumber> {
+class NumberSequenceDigitsState extends State<NumberSequenceDigits> {
 
-  int _currentInputN = 0;
+  int _currentInputN = 1;
 
   @override
   void initState() {
@@ -32,14 +32,11 @@ class NumberSequenceNthNumberState extends State<NumberSequenceNthNumber> {
 
     return Column(
       children: <Widget>[
-        GCWTextDivider(
-            text: i18n(context, NumberSequencesName[widget.mode])
-        ),
         GCWIntegerSpinner(
-          title: i18n(context, 'numbersequence_inputn'),
-          min: 0,
-          max: 111111,
+          title: i18n(context, 'numbersequence_inputd'),
           value: _currentInputN,
+          min: 1,
+          max: 500,
           onChanged: (value) {
             setState(() {
               _currentInputN = value;
@@ -52,8 +49,15 @@ class NumberSequenceNthNumberState extends State<NumberSequenceNthNumber> {
   }
 
   _buildOutput() {
+    List<List<String>> columnData = [];
+    getNumbersWithNDigits(widget.mode, _currentInputN).forEach((element) {
+      columnData.add([element]);
+    });
+
     return GCWDefaultOutput(
-      child: getNumberAt(widget.mode, _currentInputN)
+      child: Column(
+        children: columnedMultiLineOutput(context, columnData)
+      )
     );
   }
 }
