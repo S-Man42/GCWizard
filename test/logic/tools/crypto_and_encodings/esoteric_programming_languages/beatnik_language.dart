@@ -101,7 +101,7 @@ Saint Towellings.
 Larger aeons telephone stolid char, pal!
 Boats Dean forsook, rosters, tunas, terrariums -- united, traced.
 Nude pagoda careens.''';
-    String Rudimentary = '''Hello, aunts! Around, around, swim!Hello, aunts! Around, around, swim!''';
+    String Rudimentary = '''Hello, aunts! Around, around, swim!''';
     String Alphabet = '''Ho humbuzz, Dionysus. | orgasm if I feel altruistic & alone...
     Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch?! Ha!
     Monarchies spoil; language intermediates everyone!''';
