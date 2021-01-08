@@ -12,7 +12,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_angle.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class Resection extends StatefulWidget {
@@ -39,14 +39,14 @@ class ResectionState extends State<Resection> {
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
   var _currentMapPoints;
-  List<MapGeodetic> _currentMapGeodetics = [];
+  List<GCWMapPolyline> _currentMapPolylines = [];
 
   @override
   void initState() {
     super.initState();
     _currentMapPoints = [
-      MapPoint(point: _currentCoords1),
-      MapPoint(point: _currentCoords2)
+      GCWMapPoint(point: _currentCoords1),
+      GCWMapPoint(point: _currentCoords2)
     ];
   }
 
@@ -55,7 +55,7 @@ class ResectionState extends State<Resection> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, "coords_resection_coorda"),
+          title: i18n(context, "coords_resection_coorda"),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -73,7 +73,7 @@ class ResectionState extends State<Resection> {
           },
         ),
         GCWCoords(
-          text: i18n(context, "coords_resection_coordb"),
+          title: i18n(context, "coords_resection_coordb"),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {
@@ -91,7 +91,7 @@ class ResectionState extends State<Resection> {
           },
         ),
         GCWCoords(
-          text: i18n(context, "coords_resection_coordc"),
+          title: i18n(context, "coords_resection_coordc"),
           coordsFormat: _currentCoordsFormat3,
           onChanged: (ret) {
             setState(() {
@@ -118,15 +118,15 @@ class ResectionState extends State<Resection> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
-          geodetics: _currentMapGeodetics
+          polylines: _currentMapPolylines
         ),
       ],
     );
   }
 
   _calculateOutput() {
-    _currentMapPoints = <MapPoint>[];
-    _currentMapGeodetics = <MapGeodetic>[];
+    _currentMapPoints = <GCWMapPoint>[];
+    _currentMapPolylines = <GCWMapPolyline>[];
 
     if (_currentCoords1 == _currentCoords2
       || _currentCoords2 == _currentCoords3
@@ -140,17 +140,17 @@ class ResectionState extends State<Resection> {
     _currentIntersections = resection(_currentCoords1, _currentAngle12['value'], _currentCoords2, _currentAngle23['value'], _currentCoords3, ells);
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords1,
         markerText: i18n(context, 'coords_resection_coorda'),
         coordinateFormat: _currentCoordsFormat1
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords2,
         markerText: i18n(context, 'coords_resection_coordb'),
         coordinateFormat: _currentCoordsFormat2
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords3,
         markerText: i18n(context, 'coords_resection_coordc'),
         coordinateFormat: _currentCoordsFormat3
@@ -170,31 +170,28 @@ class ResectionState extends State<Resection> {
 
     //show max. 2 solutions; if there are more -> special cases at the end of the world -> advanced mode
     _currentIntersections = _currentIntersections.sublist(0, min(_currentIntersections.length, 2));
-
-    _currentMapPoints.addAll(
-      _currentIntersections.map((intersection) => MapPoint(
+    var intersectionMapPoints = _currentIntersections
+      .map((intersection) => GCWMapPoint(
         point: intersection,
         color: COLOR_MAP_CALCULATEDPOINT,
         markerText: i18n(context, 'coords_common_intersection'),
         coordinateFormat: _currentOutputFormat
       ))
-      .toList()
-    );
+      .toList();
 
-    _currentIntersections.forEach((intersection) {
-      _currentMapGeodetics.addAll(
+    _currentMapPoints.addAll(intersectionMapPoints);
+
+    intersectionMapPoints.forEach((intersection) {
+      _currentMapPolylines.addAll(
         [
-          MapGeodetic(
-            start: intersection,
-            end: _currentCoords1
+          GCWMapPolyline(
+            points: [intersection, _currentMapPoints[0]]
           ),
-          MapGeodetic(
-            start: intersection,
-            end: _currentCoords2
+          GCWMapPolyline(
+            points: [intersection, _currentMapPoints[1]]
           ),
-          MapGeodetic(
-            start: intersection,
-            end: _currentCoords3
+          GCWMapPolyline(
+            points: [intersection, _currentMapPoints[2]]
           ),
         ]
       );

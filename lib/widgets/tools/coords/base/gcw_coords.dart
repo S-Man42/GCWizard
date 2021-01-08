@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
-import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dmm.dart';
@@ -18,6 +16,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mercator.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mgrs.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_naturalareacode.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_openlocationcode.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_paste_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_quadtree.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewhereigo_waldmeister.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
@@ -32,9 +31,10 @@ import 'package:location/location.dart';
 class GCWCoords extends StatefulWidget {
   final Function onChanged;
   final Map<String, String> coordsFormat;
-  final String text;
+  final LatLng coordinates;
+  final String title;
 
-  const GCWCoords({Key key, this.text, this.onChanged, this.coordsFormat}) : super(key: key);
+  const GCWCoords({Key key, this.title, this.coordinates, this.onChanged, this.coordsFormat}) : super(key: key);
 
   @override
   GCWCoordsState createState() => GCWCoordsState();
@@ -57,7 +57,9 @@ class GCWCoordsState extends State<GCWCoords> {
     super.initState();
 
     _currentCoordsFormat = widget.coordsFormat ?? defaultCoordFormat();
-    _currentValue = defaultCoordinate;
+    _setPastedCoordsFormat();
+    _currentValue = widget.coordinates ?? defaultCoordinate;
+    _pastedCoords = _currentValue;
   }
 
   @override
@@ -235,7 +237,7 @@ class GCWCoordsState extends State<GCWCoords> {
     Column _widget = Column(
       children: <Widget>[
         GCWTextDivider(
-          text: widget.text,
+          text: widget.title,
           bottom: 0.0,
           trailing: Row(
             children: [
@@ -249,8 +251,9 @@ class GCWCoordsState extends State<GCWCoords> {
                 ),
                 padding: EdgeInsets.only(right: DEFAULT_MARGIN),
               ),
-              GCWPasteButton(
-                onSelected: _parseClipboardAndSetCoords
+              GCWCoordsPasteButton(
+                size: IconButtonSize.SMALL,
+                onPasted: _setCoords
               )
             ],
           )
@@ -287,16 +290,11 @@ class GCWCoordsState extends State<GCWCoords> {
     });
   }
 
-  _parseClipboardAndSetCoords(text) {
-    var parsed = parseLatLon(text);
-    if (parsed == null) {
-      showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
+  _setCoords(Map<String, dynamic> pastedCoords) {
+    if (pastedCoords == null)
       return;
-    }
 
-    _pastedCoords = parsed['coordinate'];
-    if (_pastedCoords == null)
-      return;
+    _pastedCoords = pastedCoords['coordinate'];
 
     _setPastedCoordsFormat();
     _currentValue = _pastedCoords;

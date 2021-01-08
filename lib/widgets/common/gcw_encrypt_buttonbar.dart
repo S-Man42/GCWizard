@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
-import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
+import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 
 class GCWEncryptButtonBar extends StatefulWidget {
   final Function onPressedEncode;

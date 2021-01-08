@@ -47,7 +47,7 @@ class _GCWOutputTextState extends State<GCWOutputText> {
         ),
         widget.text != null && widget.text.length > 0 && !widget.suppressCopyButton
           ? GCWIconButton(
-              color: widget.style != null ? widget.style.color : themeColors().mainFont(),
+              iconColor: widget.style != null ? widget.style.color : themeColors().mainFont(),
               size: IconButtonSize.SMALL,
               iconData: Icons.content_copy,
               onPressed: () {
