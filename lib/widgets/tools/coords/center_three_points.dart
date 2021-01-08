@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/common/units/length.dart';
+import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/logic/tools/coords/centerpoint.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/logic/common/units/length.dart';
-import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat_distance.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:latlong/latlong.dart';
 
 class CenterThreePoints extends StatefulWidget {
@@ -43,10 +43,36 @@ class CenterThreePointsState extends State<CenterThreePoints> {
 
   @override
   Widget build(BuildContext context) {
+    var mapPointCurrentCoords1 = GCWMapPoint(
+      point: _currentCoords1,
+      markerText: i18n(context, 'coords_centerthreepoints_coorda'),
+      coordinateFormat: _currentCoordsFormat1
+    );
+    var mapPointCurrentCoords2 = GCWMapPoint(
+        point: _currentCoords2,
+        markerText: i18n(context, 'coords_centerthreepoints_coordb'),
+        coordinateFormat: _currentCoordsFormat2
+    );
+    var mapPointCurrentCoords3 = GCWMapPoint(
+      point: _currentCoords3,
+      markerText: i18n(context, 'coords_centerthreepoints_coordc'),
+      coordinateFormat: _currentCoordsFormat3
+    );
+    var mapPointCenter = GCWMapPoint(
+      point: _currentCenter,
+      color: COLOR_MAP_CALCULATEDPOINT,
+      markerText: i18n(context, 'coords_common_centerpoint'),
+      coordinateFormat: _currentOutputFormat,
+      circleColorSameAsPointColor: false,
+      circle: GCWMapCircle(
+        radius: _currentDistance
+      )
+    );
+
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_centerthreepoints_coorda'),
+          title: i18n(context, 'coords_centerthreepoints_coorda'),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -56,7 +82,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_centerthreepoints_coordb'),
+          title: i18n(context, 'coords_centerthreepoints_coordb'),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {
@@ -66,7 +92,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_centerthreepoints_coordc'),
+          title: i18n(context, 'coords_centerthreepoints_coordc'),
           coordsFormat: _currentCoordsFormat3,
           onChanged: (ret) {
             setState(() {
@@ -91,59 +117,34 @@ class CenterThreePointsState extends State<CenterThreePoints> {
             });
           },
         ),
+
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: [
-            MapPoint(
-              point: _currentCoords1,
-              markerText: i18n(context, 'coords_centerthreepoints_coorda'),
-              coordinateFormat: _currentCoordsFormat1
+            mapPointCurrentCoords1,
+            mapPointCurrentCoords2,
+            mapPointCurrentCoords3,
+            mapPointCenter
+          ],
+          polylines: [
+            GCWMapPolyline(
+              points: [mapPointCurrentCoords1, mapPointCenter]
             ),
-            MapPoint(
-              point: _currentCoords2,
-              markerText: i18n(context, 'coords_centerthreepoints_coordb'),
-              coordinateFormat: _currentCoordsFormat2
+            GCWMapPolyline(
+              points: [mapPointCurrentCoords2, mapPointCenter],
+              color: HSLColor
+                .fromColor(COLOR_MAP_POLYLINE)
+                .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+                .toColor()
             ),
-            MapPoint(
-              point: _currentCoords3,
-              markerText: i18n(context, 'coords_centerthreepoints_coordc'),
-              coordinateFormat: _currentCoordsFormat3
-            ),
-            MapPoint(
-              point: _currentCenter,
-              color: COLOR_MAP_CALCULATEDPOINT,
-              markerText: i18n(context, 'coords_common_centerpoint'),
-              coordinateFormat: _currentOutputFormat
+            GCWMapPolyline(
+              points: [mapPointCurrentCoords3, mapPointCenter],
+              color: HSLColor
+                .fromColor(COLOR_MAP_POLYLINE)
+                .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
+                .toColor()
             )
-          ],
-          geodetics: [
-            MapGeodetic(
-              start: _currentCoords1,
-              end: _currentCenter
-            ),
-            MapGeodetic(
-                start: _currentCoords2,
-                end: _currentCenter,
-                color: HSLColor
-                  .fromColor(COLOR_MAP_POLYLINE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
-                  .toColor()
-            ),
-            MapGeodetic(
-                start: _currentCoords3,
-                end: _currentCenter,
-                color: HSLColor
-                  .fromColor(COLOR_MAP_POLYLINE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
-                  .toColor()
-            ),
-          ],
-          circles: [
-            MapCircle(
-              centerPoint: _currentCenter,
-              radius: _currentDistance
-            )
-          ],
+          ]
         ),
       ],
     );

@@ -11,7 +11,7 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat_distance.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:latlong/latlong.dart';
 
@@ -41,10 +41,31 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
 
   @override
   Widget build(BuildContext context) {
+    var mapPointCurrentCoords1 = GCWMapPoint(
+      point: _currentCoords1,
+      markerText: i18n(context, 'coords_centertwopoints_coorda'),
+      coordinateFormat: _currentCoordsFormat1
+    );
+    var mapPointCurrentCoords2 = GCWMapPoint(
+      point: _currentCoords2,
+      markerText: i18n(context, 'coords_centertwopoints_coordb'),
+      coordinateFormat: _currentCoordsFormat2
+    );
+    var mapPointCenter = GCWMapPoint(
+      point: _currentCenter,
+      color: COLOR_MAP_CALCULATEDPOINT,
+      markerText: i18n(context, 'coords_common_centerpoint'),
+      coordinateFormat: _currentOutputFormat,
+      circleColorSameAsPointColor: false,
+      circle: GCWMapCircle(
+        radius: _currentDistance
+      )
+    );
+
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_centertwopoints_coorda'),
+          title: i18n(context, 'coords_centertwopoints_coorda'),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -54,7 +75,7 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_centertwopoints_coordb'),
+          title: i18n(context, 'coords_centertwopoints_coordb'),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {
@@ -82,35 +103,15 @@ class CenterTwoPointsState extends State<CenterTwoPoints> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: [
-            MapPoint(
-              point: _currentCoords1,
-              markerText: i18n(context, 'coords_centertwopoints_coorda'),
-              coordinateFormat: _currentCoordsFormat1
-            ),
-            MapPoint(
-              point: _currentCoords2,
-              markerText: i18n(context, 'coords_centertwopoints_coordb'),
-              coordinateFormat: _currentCoordsFormat2
-            ),
-            MapPoint(
-              point: _currentCenter,
-              color: COLOR_MAP_CALCULATEDPOINT,
-              markerText: i18n(context, 'coords_common_centerpoint'),
-              coordinateFormat: _currentOutputFormat
-            ),
+            mapPointCurrentCoords1,
+            mapPointCurrentCoords2,
+            mapPointCenter
           ],
-          geodetics: [
-            MapGeodetic(
-              start: _currentCoords1,
-              end: _currentCoords2
+          polylines: [
+            GCWMapPolyline(
+              points: [mapPointCurrentCoords1, mapPointCurrentCoords2]
             ),
-          ],
-          circles: [
-            MapCircle(
-              centerPoint: _currentCenter,
-              radius: _currentDistance
-            ),
-          ],
+          ]
         ),
       ],
     );

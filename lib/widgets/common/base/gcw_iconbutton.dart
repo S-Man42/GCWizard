@@ -7,17 +7,32 @@ enum IconButtonSize {NORMAL, SMALL, TINY}
 class GCWIconButton extends StatelessWidget {
   final Function onPressed;
   final IconData iconData;
-  final Image image;
-  final IconButtonSize size;
-  final Color color;
+  final Widget customIcon;
+  IconButtonSize size;
+  final Color iconColor;
+  final Color backgroundColor;
 
-  const GCWIconButton({Key key, this.onPressed, this.iconData, this.image, this.size: IconButtonSize.NORMAL, this.color}) : super(key: key);
+  GCWIconButton({
+    Key key,
+    this.onPressed,
+    this.iconData,
+    this.customIcon,
+    this.size,
+    this.iconColor,
+    this.backgroundColor
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var containerWidth;
     var buttonHeight;
     var iconSize;
+
+    // moved to here instead of default value in constructur because
+    // some tools explicitly hand over a NULL value
+    if (this.size == null)
+      this.size = IconButtonSize.NORMAL;
+
     switch (this.size) {
       case IconButtonSize.NORMAL:
         containerWidth = 40.0;
@@ -40,18 +55,23 @@ class GCWIconButton extends StatelessWidget {
       width: containerWidth,
       child: ButtonTheme(
         height: buttonHeight,
-        child: OutlineButton(
+        child: FlatButton(
+          color: backgroundColor,
           padding: EdgeInsets.zero,
-          child: Icon(
+          child: this.customIcon ?? Icon(
             this.iconData,
             size: iconSize,
-            color: this.color ?? themeColors().mainFont()
-          ) ?? this.image,
+            color: this.iconColor ?? themeColors().mainFont()
+          ),
           onPressed: this.onPressed,
-          borderSide: BorderSide(color: themeColors().accent()),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(roundedBorderRadius),
-          )
+            side: BorderSide(
+              color: themeColors().accent(),
+              width: 1,
+              style: BorderStyle.solid
+            ),
+            borderRadius: BorderRadius.circular(roundedBorderRadius)
+          ),
         ),
       ),
       padding: EdgeInsets.only(

@@ -9,7 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class IntersectTwoCircles extends StatefulWidget {
@@ -36,8 +36,8 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
   void initState() {
     super.initState();
     _currentMapPoints = [
-      MapPoint(point: _currentCoords1),
-      MapPoint(point: _currentCoords2)
+      GCWMapPoint(point: _currentCoords1),
+      GCWMapPoint(point: _currentCoords2)
     ];
   }
 
@@ -46,7 +46,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, "coords_intersectcircles_centerpoint1"),
+          title: i18n(context, "coords_intersectcircles_centerpoint1"),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -64,7 +64,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
           },
         ),
         GCWCoords(
-          text: i18n(context, "coords_intersectcircles_centerpoint2"),
+          title: i18n(context, "coords_intersectcircles_centerpoint2"),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {
@@ -98,22 +98,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
         ),
         GCWCoordsOutput(
           outputs: _currentOutput,
-          points: _currentMapPoints,
-          circles: [
-            MapCircle(
-              centerPoint: _currentCoords1,
-              radius: _currentRadius1,
-              color:
-                HSLColor
-                  .fromColor(COLOR_MAP_CIRCLE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness - 0.3)
-                  .toColor()
-            ),
-            MapCircle(
-              centerPoint: _currentCoords2,
-              radius: _currentRadius2
-            ),
-          ],
+          points: _currentMapPoints
         ),
       ],
     );
@@ -123,15 +108,30 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
     _currentIntersections = intersectTwoCircles(_currentCoords1, _currentRadius1, _currentCoords2, _currentRadius2, defaultEllipsoid());
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords1,
         markerText: i18n(context, 'coords_intersectcircles_centerpoint1'),
-        coordinateFormat: _currentCoordsFormat1
+        coordinateFormat: _currentCoordsFormat1,
+        circleColorSameAsPointColor: false,
+        circle: GCWMapCircle(
+          radius: _currentRadius1,
+          color: HSLColor
+            .fromColor(COLOR_MAP_CIRCLE)
+            .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness - 0.3)
+            .toColor()
+        ),
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords2,
         markerText: i18n(context, 'coords_intersectcircles_centerpoint2'),
-        coordinateFormat: _currentCoordsFormat1
+        coordinateFormat: _currentCoordsFormat1,
+        circle: GCWMapCircle(
+          radius: _currentRadius2,
+          color: HSLColor
+            .fromColor(COLOR_MAP_CIRCLE)
+            .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness - 0.3)
+            .toColor()
+        ),
       )
     ];
 
@@ -142,7 +142,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
 
     _currentMapPoints.addAll(
       _currentIntersections
-        .map((intersection) => MapPoint(
+        .map((intersection) => GCWMapPoint(
           point: intersection,
           color: COLOR_MAP_CALCULATEDPOINT,
           markerText: i18n(context, 'coords_common_intersection'),
