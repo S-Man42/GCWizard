@@ -166,8 +166,10 @@ Map<String, dynamic> decodeCistercian(String input) {
         tokens[i] = tokens[i].replaceAll('u', ''); tokens[i] = tokens[i].replaceAll('s', '');
       }
       else if (tokens[i].contains('o')) { // 600
+        print('1. found 600 '+tokens[i]);
         digit = digit + 600;
-        tokens[i].replaceAll('o', '');
+        tokens[i] = tokens[i].replaceAll('o', '');
+        print('2. found 600 '+tokens[i]);
       }
       else if (tokens[i].contains('s')) { // 400
         digit = digit + 400;
@@ -205,7 +207,7 @@ Map<String, dynamic> decodeCistercian(String input) {
       }
       else if (tokens[i].contains('n')) { // 6000
         digit = digit + 6000;
-        tokens[i].replaceAll('n', '');
+        tokens[i] = tokens[i].replaceAll('n', '');
       }
       else if (tokens[i].contains('p')) { // 4000
         digit = digit + 4000;
@@ -243,7 +245,7 @@ Map<String, dynamic> decodeCistercian(String input) {
       }
       else if (tokens[i].contains('d')) { // 6
         digit = digit + 6;
-        tokens[i].replaceAll('d', '');
+        tokens[i] = tokens[i].replaceAll('d', '');
       }
       else if (tokens[i].contains('g')) { // 4
         digit = digit + 4;
@@ -281,7 +283,7 @@ Map<String, dynamic> decodeCistercian(String input) {
       }
       else if (tokens[i].contains('c')) { // 60
         digit = digit + 60;
-        tokens[i].replaceAll('c', '');
+        tokens[i] = tokens[i].replaceAll('c', '');
       }
       else if (tokens[i].contains('f')) { // 40
         digit = digit + 40;
