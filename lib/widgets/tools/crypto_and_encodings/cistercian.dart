@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/cistercian_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian.dart';
 import 'package:prefs/prefs.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
@@ -77,8 +78,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
                       });
                     },
                   )
-            //    : _buildVisualEncryption(), // decrpyt: input segment => output number
-                : Column(
+                : Column( // decrpyt: input segment => output number
                     children: <Widget>[
                       GCWOnOffSwitch(
                         title: i18n(context, 'cistercian_decodemode_visualsegments'),

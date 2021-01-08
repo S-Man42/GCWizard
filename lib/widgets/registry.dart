@@ -91,6 +91,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
@@ -385,6 +386,12 @@ class Registry {
         i18nPrefix: 'chao',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'chao john francis byrne'
+      ),
+      GCWTool(
+        tool: CistercianNumbers(),
+        i18nPrefix: 'cistercian',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: 'cistercian zisterzienser monastic order monk mönchsorden mönche zahlen numbers'
       ),
       GCWTool(
         tool: ColorPicker(),

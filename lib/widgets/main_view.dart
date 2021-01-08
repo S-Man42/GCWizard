@@ -61,6 +61,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
@@ -232,6 +233,7 @@ class _MainViewState extends State<MainView> {
           // className(Chef()),
           className(ChickenLanguage()),
           className(Chronogram()),
+          className(CistercianNumbers()),
           className(ColorPicker()),
           className(Combination()),
           className(CombinationPermutation()),
