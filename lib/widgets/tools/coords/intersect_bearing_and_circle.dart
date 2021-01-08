@@ -14,7 +14,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class IntersectGeodeticAndCircle extends StatefulWidget {
@@ -42,8 +42,8 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
     super.initState();
 
     _currentMapPoints = [
-      MapPoint(point: _currentCoordsStart),
-      MapPoint(point: _currentCoordsCircle)
+      GCWMapPoint(point: _currentCoordsStart),
+      GCWMapPoint(point: _currentCoordsCircle)
     ];
   }
 
@@ -52,7 +52,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, "coords_intersectbearingcircle_geodetic"),
+          title: i18n(context, "coords_intersectbearingcircle_geodetic"),
           coordsFormat: _currentCoordsFormatStart,
           onChanged: (ret) {
             setState(() {
@@ -69,7 +69,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
           },
         ),
         GCWCoords(
-          text: i18n(context, "coords_intersectbearingcircle_circle"),
+          title: i18n(context, "coords_intersectbearingcircle_circle"),
           coordsFormat: _currentCoordsFormatCircle,
           onChanged: (ret) {
             setState(() {
@@ -104,30 +104,29 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
-          geodetics: [
-            MapGeodetic(
-              start: _currentCoordsStart,
-              end: projection(
-                  _currentCoordsStart,
-                  _currentBearingStart['value'],
-                  max<double> (
-                    distanceBearing(
-                      _currentCoordsStart,
-                      _currentCoordsCircle,
-                      defaultEllipsoid()
-                    ).distance,
-                    _currentRadiusCircle
-                  ) * 2.5,
-                  defaultEllipsoid()
-              )
+          polylines: [
+            GCWMapPolyline(
+              points: [
+                _currentMapPoints[0],
+                GCWMapPoint(
+                  point: projection(
+                    _currentCoordsStart,
+                    _currentBearingStart['value'],
+                    max<double> (
+                      distanceBearing(
+                        _currentCoordsStart,
+                        _currentCoordsCircle,
+                        defaultEllipsoid()
+                      ).distance,
+                      _currentRadiusCircle
+                    ) * 2.5,
+                    defaultEllipsoid()
+                  ),
+                  isVisible: false
+                )
+              ]
             )
-          ],
-          circles: [
-            MapCircle(
-              centerPoint: _currentCoordsCircle,
-              radius: _currentRadiusCircle
-            ),
-          ],
+          ]
         ),
       ],
     );
@@ -137,15 +136,19 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
     _currentIntersections = intersectGeodeticAndCircle(_currentCoordsStart, _currentBearingStart['value'], _currentCoordsCircle, _currentRadiusCircle, defaultEllipsoid());
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoordsStart,
         markerText: i18n(context, 'coords_intersectbearingcircle_geodetic'),
         coordinateFormat: _currentCoordsFormatStart
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoordsCircle,
         markerText: i18n(context, 'coords_intersectbearingcircle_circle'),
-        coordinateFormat: _currentCoordsFormatCircle
+        coordinateFormat: _currentCoordsFormatCircle,
+        circleColorSameAsPointColor: false,
+        circle: GCWMapCircle(
+          radius: _currentRadiusCircle
+        ),
       )
     ];
 
@@ -156,7 +159,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
 
     _currentMapPoints.addAll(
       _currentIntersections
-        .map((intersection) => MapPoint(
+        .map((intersection) => GCWMapPoint(
           point: intersection,
           color: COLOR_MAP_CALCULATEDPOINT,
           markerText: i18n(context, 'coords_common_intersection'),

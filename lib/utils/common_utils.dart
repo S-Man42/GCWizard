@@ -2,7 +2,9 @@ import 'dart:collection';
 import 'dart:math';
 
 import 'package:diacritic/diacritic.dart';
+import 'package:flutter/rendering.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/rotator.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.dart';
 import 'package:intl/intl.dart';
 
 import 'alphabets.dart';
@@ -273,4 +275,15 @@ bool isUpperCase(String letter) {
     return false;
 
   return (letter.toUpperCase() == letter);
+}
+
+String colorToHexString(Color color) {
+  return HexCode.fromRGB(
+    RGB(color.red.toDouble(), color.green.toDouble(), color.blue.toDouble())
+  ).toString();
+}
+
+Color hexStringToColor(String hex) {
+  RGB rgb = HexCode(hex).toRGB();
+  return Color.fromARGB(255, rgb.red.floor(), rgb.green.floor(), rgb.blue.floor());
 }

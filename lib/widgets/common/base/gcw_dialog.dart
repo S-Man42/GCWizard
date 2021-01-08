@@ -6,9 +6,9 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 final TextStyle _textStyle = gcwTextStyle().copyWith(color: themeColors().dialogText());
 final TextStyle _boldTextStyle = _textStyle.copyWith(fontWeight: FontWeight.bold);
 
-showGCWDialog(BuildContext context, String title, Widget child, List<GCWDialogButton> buttons, {cancelButton: true}) {
+showGCWDialog(BuildContext context, String title, Widget child, List<GCWDialogButton> buttons, {cancelButton: true, closeOnOutsideTouch: false}) {
   if (cancelButton)
-    buttons.insert(0, _cancelButton);
+    buttons.add(_cancelButton);
 
   AlertDialog dialog = AlertDialog(
     title: Text(title),
@@ -21,7 +21,7 @@ showGCWDialog(BuildContext context, String title, Widget child, List<GCWDialogBu
 
   showDialog(
     context: context,
-    barrierDismissible: false,
+    barrierDismissible: closeOnOutsideTouch,
     builder: (BuildContext context) {
       return dialog;
     },
@@ -41,8 +41,9 @@ class GCWDialogButton extends StatefulWidget {
   final String text;
   final isCancelButton;
   final Function onPressed;
+  final bool suppressClose;
 
-  const GCWDialogButton({Key key, this.text, this.onPressed, this.isCancelButton: false}) : super(key: key);
+  const GCWDialogButton({Key key, this.text, this.onPressed, this.isCancelButton: false, this.suppressClose: false}) : super(key: key);
 
   @override
   _GCWDialogButtonState createState() => _GCWDialogButtonState();
@@ -59,7 +60,8 @@ class _GCWDialogButtonState extends State<GCWDialogButton> {
         style: _boldTextStyle,
       ),
       onPressed: () {
-        Navigator.of(context).pop();
+        if (!widget.suppressClose)
+          Navigator.of(context).pop();
 
         if (!widget.isCancelButton && widget.onPressed != null)
           widget.onPressed();

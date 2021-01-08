@@ -120,27 +120,6 @@ insertIntoGCWClipboard(String text) {
   Prefs.setStringList('clipboard_items', gcwClipboard);
 }
 
-buildPopupItem(BuildContext context, IconData icon, String i18nKey) {
-  var color = themeColors().dialogText();
-
-  return  Row(
-    children: [
-      Container(
-        child: Icon(icon, color: color),
-        padding: EdgeInsets.only(
-          right: 10
-        ),
-      ),
-      Text(
-        i18n(context, i18nKey),
-        style: TextStyle(
-          color: color
-        )
-      )
-    ],
-  );
-}
-
 String textControllerInsertText(String input, String currentText, TextEditingController textController) {
   var cursorPosition = max(textController.selection.end, 0);
 
