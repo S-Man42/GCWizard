@@ -12,10 +12,10 @@ class BeatnikOutput{
   final List<String> output;
   final List<String> scrabble;
   final List<String> assembler;
-  final List<String> memnonic;
+  final List<String> mnemonic;
   final List<DebugOutput> debug;
 
-  BeatnikOutput(this.output, this.scrabble, this.assembler, this.memnonic, this.debug);
+  BeatnikOutput(this.output, this.scrabble, this.assembler, this.mnemonic, this.debug);
 }
 
 class DebugOutput{

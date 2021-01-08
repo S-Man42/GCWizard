@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'file:///D:/Programmierung/GCWizard/lib/logic/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/logic/tools/games/scrabble_sets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class Beatnik extends StatefulWidget {
@@ -26,6 +29,12 @@ class BeatnikState extends State<Beatnik> {
   var _currentProgramm = '';
   var _currentInput = '';
   var _currentOutput = '';
+  BeatnikOutput _output = BeatnikOutput([''], [''], [''], [''], []);
+
+  String _outputData = '';
+
+  List<List<String>> _columnData = new List<List<String>>();
+
   var _currentScrabbleVersion = scrabbleID_EN;
   bool _currentShowScrabble = true;
   bool _currentShowDebug = false;
@@ -112,15 +121,35 @@ class BeatnikState extends State<Beatnik> {
                   ),
                 ],
         ),
-        GCWTextDivider(
-            text: i18n(context, 'beatnik_hint_output')
+        GCWToolBar(
+          children: [
+            GCWButton(
+              text: 'Start',
+              onPressed: () {
+                if (_currentMode == GCWSwitchPosition.right) { // generate beatnik
+                  _output = generateBeatnik(_currentScrabbleVersion, _currentOutput);
+                  _currentShowScrabble = false;
+                }
+                else { // interpret beatnik
+                  _output = interpretBeatnik(_currentScrabbleVersion, _currentProgramm.toUpperCase(), _currentInput);
+                }
+                _outputData = buildOutputText(_output);
+
+                for (int i = 0; i< _output.debug.length; i++) {
+                  _columnData.add([_output.debug[i].pc, _output.debug[i].command, _output.debug[i].stack, _output.debug[i].output]);
+                }
+              },
+            ),
+          ],
         ),
+
         _buildOutput(context)
       ],
     );
   }
 
   Widget _buildOutput(BuildContext context) {
+/*
     BeatnikOutput output;
     String outputData = '';
     var flexData;
@@ -133,19 +162,22 @@ class BeatnikState extends State<Beatnik> {
       _currentShowScrabble = false;
     } else { // interpret beatnik
       output = interpretBeatnik(_currentScrabbleVersion, _currentProgramm.toUpperCase(), _currentInput);
-    }
 
     outputData = buildOutputText(output);
 
     for (int i = 0; i< output.debug.length; i++) {
       columnData.add([output.debug[i].pc, output.debug[i].command, output.debug[i].stack, output.debug[i].output]);
     }
+    }*/
+
 
 
     return Column(
       children: <Widget>[
-        GCWOutputText(
-          text: outputData,
+        GCWDefaultOutput(
+          child: GCWOutputText(
+            text: _outputData,
+          ),
         ),
         _currentMode == GCWSwitchPosition.left // interpret Beatnik
         ? GCWOnOffSwitch(
@@ -157,7 +189,7 @@ class BeatnikState extends State<Beatnik> {
             });
           },
         )
-        : Column(
+        : Column( // generete beatnik
             children: <Widget>[
               GCWOutputText(
                 text: i18n(context, 'beatnik_hint_generated'),
@@ -176,7 +208,7 @@ class BeatnikState extends State<Beatnik> {
                                   text: i18n(context, 'beatnik_hint_code_assembler')
                               ),
                               GCWOutputText(
-                                text: output.assembler.join('\n'),
+                                text: _output.assembler.join('\n'),
                                 isMonotype: true,
                               ),
                             ],
@@ -193,10 +225,10 @@ class BeatnikState extends State<Beatnik> {
                           child: Column(
                             children: <Widget>[
                               GCWTextDivider(
-                                  text: i18n(context, 'beatnik_hint_code_memnonic')
+                                  text: i18n(context, 'beatnik_hint_code_mnemonic')
                               ),
                               GCWOutputText(
-                                text: output.memnonic.join('\n'),
+                                text: _output.mnemonic.join('\n'),
                                 isMonotype: true,
                               ),
                             ],
@@ -239,7 +271,7 @@ class BeatnikState extends State<Beatnik> {
                                       text: i18n(context, 'beatnik_hint_code_scrabble')
                                   ),
                                   GCWOutputText(
-                                    text: output.scrabble.join('\n'),
+                                    text: _output.scrabble.join('\n'),
                                     isMonotype: true,
                                   ),
                                 ]
@@ -260,7 +292,7 @@ class BeatnikState extends State<Beatnik> {
                                   text: i18n(context, 'beatnik_hint_code_assembler')
                               ),
                               GCWOutputText(
-                                text: output.assembler.join('\n'),
+                                text: _output.assembler.join('\n'),
                                 isMonotype: true,
                               ),
                             ],
@@ -277,10 +309,10 @@ class BeatnikState extends State<Beatnik> {
                           child: Column(
                             children: <Widget>[
                               GCWTextDivider(
-                                  text: i18n(context, 'beatnik_hint_code_memnonic')
+                                  text: i18n(context, 'beatnik_hint_code_mnemonic')
                               ),
                               GCWOutputText(
-                                text: output.memnonic.join('\n'),
+                                text: _output.mnemonic.join('\n'),
                                 isMonotype: true,
                               ),
                             ],
@@ -294,7 +326,7 @@ class BeatnikState extends State<Beatnik> {
               GCWOutput(
                 title: i18n(context, 'beatnik_debug'),
                 child: Column(
-                    children: columnedMultiLineOutput(context, columnData, flexValues: flexData)
+                    children: columnedMultiLineOutput(context, _columnData, flexValues: [1, 2, 3, 3])
                 ),
               ),
             ]
