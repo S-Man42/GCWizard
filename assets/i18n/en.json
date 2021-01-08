@@ -1293,7 +1293,7 @@
   "formulasolver_formulas_copyresult" : "Copy Result",
   "formulasolver_formulas_openinvarcoords" : "Open in Variable Coordinate",
   "formulasolver_formulas_showonmap" : "Show on Map",
-  "formulasolver_formulas_showonmap_coordinatetext" : "Formel Result",
+  "formulasolver_formulas_showonmap_coordinatetext" : "Formula Result",
   "formulasolver_values_newvalue" : "Add Variable",
   "formulasolver_values_key" : "Name",
   "formulasolver_values_value" : "Value",

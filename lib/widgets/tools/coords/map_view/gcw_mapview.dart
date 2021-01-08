@@ -52,16 +52,21 @@ final _POLYGON_STROKEWIDTH = 3.0;
 final _BUTTONGROUP_MARGIN = 30.0;
 
 class GCWMapView extends StatefulWidget {
-  final List<GCWMapPoint> points;
-  final List<GCWMapPolyline> polylines;
+  List<GCWMapPoint> points;
+  List<GCWMapPolyline> polylines;
   final bool isEditable;
 
-  const GCWMapView({
+  GCWMapView({
     Key key,
-    this.points: const [],
-    this.polylines: const [],
+    this.points,
+    this.polylines,
     this.isEditable: false
-  }) : super(key: key);
+  }) : super(key: key) {
+    if (points == null)
+      points = [];
+    if (polylines == null)
+      polylines = [];
+  }
 
   @override
   GCWMapViewState createState() => GCWMapViewState();
@@ -689,6 +694,8 @@ class GCWMapViewState extends State<GCWMapView> {
     if (gcwMarker.mapPoint.hasCircle())
       containerHeightMultiplier += 3;
     if (gcwMarker.mapPoint.isEditable)
+      containerHeightMultiplier += 2;
+    if (gcwMarker.coordinateDescription != null && gcwMarker.coordinateDescription.length > 0)
       containerHeightMultiplier += 2;
 
     return Container(

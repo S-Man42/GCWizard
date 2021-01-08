@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 
 class GCWPopupMenu extends StatefulWidget {
   final List<GCWPopupMenuItem> Function(BuildContext context) menuItemBuilder;
@@ -96,4 +96,25 @@ class GCWPopupMenuItem {
   final bool isDivider;
 
   GCWPopupMenuItem({this.child, this.action, this.isDivider: false});
+}
+
+iconedGCWPopupMenuItem(BuildContext context, IconData icon, String i18nKey) {
+  var color = themeColors().dialogText();
+
+  return  Row(
+    children: [
+      Container(
+        child: Icon(icon, color: color),
+        padding: EdgeInsets.only(
+          right: 10
+        ),
+      ),
+      Text(
+        i18n(context, i18nKey),
+        style: TextStyle(
+          color: color
+        )
+      )
+    ],
+  );
 }

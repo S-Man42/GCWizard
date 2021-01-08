@@ -10,7 +10,6 @@ final DOUBLE_DEFAULT_MARGIN = 2 * DEFAULT_MARGIN;
 final DEFAULT_DESCRIPTION_MARGIN = 10.0;
 
 final DEFAULT_LISTITEM_SIZE = 42.0;
-final DEFAULT_POPUPBUTTON_SIZE = 40.0;
 
 TextStyle gcwTextStyle() {
  return TextStyle(
