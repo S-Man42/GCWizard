@@ -95,60 +95,40 @@ class VigenereBreakerState extends State<VigenereBreaker> {
             );
           }).toList(),
         ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: GCWText(
-                  text: i18n(context, 'vigenere_breaker_key_length_min') + ':'
-              ),
-              flex: 1
-            ),
-            Expanded(
-              child: GCWIntegerSpinner(
-                controller: _minKeyLengthController,
-                value: _minKeyLength,
-                min: 3,
-                max: 999,
-                onChanged: (value) {
-                  setState(() {
-                    _minKeyLength = value;
-                    _maxKeyLength = max(_minKeyLength, _maxKeyLength);
-                    _maxKeyLengthController.text = _maxKeyLength.toString();
-                  });
-                },
-              ),
-              flex: 2
-            ),
-          ]
+        GCWTextDivider(
+            text: i18n(context, 'vigenerebreaker_key_length')
         ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: GCWText(
-                text: i18n(context, 'vigenere_breaker_key_length_max') + ':'
-              ),
-              flex: 1
-            ),
-            Expanded(
-              child: GCWIntegerSpinner(
-                controller: _maxKeyLengthController,
-                value: _maxKeyLength,
-                min: 3,
-                max: 999,
-                onChanged: (value) {
-                  setState(() {
-                    _maxKeyLength = value;
-                    _minKeyLength = min(_minKeyLength, _maxKeyLength);
-                    _minKeyLengthController.text = _minKeyLength.toString();
-                  });
-                },
-              ),
-              flex: 2
-            ),
-          ]
+        GCWIntegerSpinner(
+          title: i18n(context, 'vigenerebreaker_key_length_min'),
+          controller: _minKeyLengthController,
+          value: _minKeyLength,
+          min: 3,
+          max: 999,
+          onChanged: (value) {
+            setState(() {
+              _minKeyLength = value;
+              _maxKeyLength = max(_minKeyLength, _maxKeyLength);
+              _maxKeyLengthController.text = _maxKeyLength.toString();
+            });
+          },
         ),
+        GCWIntegerSpinner(
+          title: i18n(context, 'vigenerebreaker_key_length_max'),
+          controller: _maxKeyLengthController,
+          value: _maxKeyLength,
+          min: 3,
+          max: 999,
+          onChanged: (value) {
+            setState(() {
+              _maxKeyLength = value;
+              _minKeyLength = min(_minKeyLength, _maxKeyLength);
+              _minKeyLengthController.text = _minKeyLength.toString();
+            });
+          },
+        ),
+
         GCWButton(
-          text: i18n(context, 'vigenere_breaker_start'),
+          text: i18n(context, 'vigenerebreaker_start'),
           onPressed: () {
             setState(() {
               _calcOutput();
@@ -169,7 +149,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
       return GCWDefaultOutput();
 
     if (_currentOutput.errorCode != VigenereBreakerErrorCode.OK){
-      showToast( i18n(context, 'substitutionbreaker_error', parameters: [_currentOutput.errorCode]));
+      showToast( i18n(context, 'vigenerebreaker_error', parameters: [_currentOutput.errorCode]));
       return GCWDefaultOutput();
     }
 

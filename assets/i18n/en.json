@@ -2659,6 +2659,15 @@
   "vigenere_autokey" : "Autokey",
   "vigenere_ignorenonletters" : "Ignore Non-Letters",
 
+  "vigenerebreaker_title": "Vigenère Code Breaker",
+  "vigenerebreaker_description": "Chance to automatically break polyalphabetic ciphers",
+  "vigenerebreaker_example": "ABC with key DEF → DFH",
+  "vigenerebreaker_key_length": "Key Length",
+  "vigenerebreaker_key_length_min": "min",
+  "vigenerebreaker_key_length_max": "max",
+  "vigenerebreaker_start": "Solve",
+  "vigenerebreaker_error" : "An error occured: %s1",
+
   "whitespace_language_title" : "Whitespace",
   "whitespace_language_description" : "Esoteric Programming language with 3 characters (Space, Tab, Enter)",
   "whitespace_language_example" : "      → DFH",
@@ -2666,17 +2675,6 @@
   "whitespace_interpreter" : "Interpreter",
   "whitespace_language_start" : "Start",
   "whitespace_language_readable_code" : "Readable Code",
-
-  "vigenere_breaker_title" : "Vigenère Code Breaker",
-  "vigenere_breaker_description" : "Chance to automatically break polyalphabetic ciphers",
-  "vigenere_breaker_example" : "ABC with key DEF → DFH",
-
-  "vigenere_breaker_title" : "Vigenère Code Breaker",
-  "vigenere_breaker_description" : "Chance to automatically break polyalphabetic ciphers",
-  "vigenere_breaker_example" : "ABC with key DEF → DFH",
-  "vigenere_breaker_key_length_min" : "Key Length min",
-  "vigenere_breaker_key_length_max" : "Key Length max",
-  "vigenere_breaker_start" : "Solve",
 
   "windchill_title": "Windchill",
   "windchill_description" : "Apparent Temperature",

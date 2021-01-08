@@ -40,7 +40,7 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
   var bigrams = getBigrams(alphabet);
 
   var vigenereSquare = _createVigenereEncodeSquare(bigrams.alphabet.length, vigenereBreakerType == VigenereBreakerType.BEAUFORT);
-  var cipher_bin = List<int>();
+  var cipher_bin = <int>[];
   var resultList = List <VigenereBreakerResult>();
   VigenereBreakerResult best_result = null;
 
@@ -61,7 +61,7 @@ Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vig
 
     resultList.add(result);
 
-    result.key = breakerResult.key.map((x) => bigrams.alphabet[x]).join();
+    result.key = breakerResult.key.map((x) => bigrams.alphabet[x].toUpperCase()).join();
 
     result.plaintext = decryptVigenere(input, result.key, vigenereBreakerType == VigenereBreakerType.AUTOKEYVIGENERE, ignoreNonLetters: true);
     result.fitness = calc_fitnessBigrams(result.plaintext, bigrams);
@@ -96,7 +96,7 @@ List<VigenereBreakerResult> _highPassFilter( double alpha, List<VigenereBreakerR
 
 
 List<List<int>> _createVigenereEncodeSquare(int size, bool beaufortVariant){
-  var vigenereSquare = List<List<int>>(size);
+  var vigenereSquare = List.generate(size, (index) => <int>[]);
 
   if (beaufortVariant) {
     for (int row = 0; row < vigenereSquare.length; row++) {

@@ -2658,6 +2658,15 @@
   "vigenere_autokey" : "Autokey",
   "vigenere_ignorenonletters" : "Nur Buchstaben beachten",
 
+  "vigenerebreaker_title": "Vigenère Codeknacker",
+  "vigenerebreaker_description": "Chance, automatisch einen polyalphabetischen Code zu knacken",
+  "vigenerebreaker_example": "ABC mit Schlüssel DEF → DFH",
+  "vigenerebreaker_key_length": "Schlüssellänge",
+  "vigenerebreaker_key_length_min": "min",
+  "vigenerebreaker_key_length_max": "max",
+  "vigenerebreaker_start": "Berechne",
+  "vigenerebreaker_error" : "Ein Fehler trat auf: %s1",
+
   "whitespace_language_title" : "Whitespace",
   "whitespace_language_description" : "Esoterische Programmiersprache aus 3 Zeichen (Leerzeichen, Tab, Enter)",
   "whitespace_language_example" : "      → DFH",
@@ -2665,17 +2674,6 @@
   "whitespace_interpreter" : "Interpreter",
   "whitespace_language_start" : "Start",
   "whitespace_language_readable_code" : "Lesbarer Code",
-
-  "vigenere_breaker_title" : "Vigenère Codeknacker",
-  "vigenere_breaker_description" : "Chance, automatisch einen polyalphabetischen Code zu knacken",
-  "vigenere_breaker_example" : "ABC mit Schlüssel DEF → DFH",
-
-  "vigenere_breaker_title" : "Vigenère Codeknacker",
-  "vigenere_breaker_description" : "Chance, automatisch einen polyalphabetischen Code zu knacken",
-  "vigenere_breaker_example" : "ABC mit Schlüssel DEF → DFH",
-  "vigenere_breaker_key_length_min" : "Schlüssellänge min",
-  "vigenere_breaker_key_length_max" : "Schlüssellänge max",
-  "vigenere_breaker_start" : "Berechne",
 
   "windchill_title": "Windchill",
   "windchill_description" : "Gefühlte Temperatur",
