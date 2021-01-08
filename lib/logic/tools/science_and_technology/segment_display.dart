@@ -1,6 +1,5 @@
 import 'dart:core';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/cistercian.dart';
 
 enum SegmentDisplayType{SEVEN, FOURTEEN, SIXTEEN, CISTERCIAN}
 
@@ -452,8 +451,7 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
       break;
   }
 
-  var inputCharacters;
-    inputCharacters = input.toUpperCase().split('').toList();
+  var inputCharacters = input.toUpperCase().split('').toList();
   var output = <List<String>>[];
 
   for (String character in inputCharacters) {
@@ -490,9 +488,6 @@ Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType)
       break;
     case SegmentDisplayType.SIXTEEN:
       baseSegments = _baseSegments16Segment;
-      break;
-    case SegmentDisplayType.CISTERCIAN:
-      baseSegments = _baseSegmentsCistercianSegment;
       break;
   }
 
@@ -563,9 +558,6 @@ _characterFromSegmentList(SegmentDisplayType type, List<String> segments) {
       segmentToAZ = _Segment16ToAZ;
       break;
   }
-  if (type == SegmentDisplayType.CISTERCIAN)
-    return _buildCistercianNumber(segments);
-  else
-    return segmentToAZ.map((key, value) => MapEntry(key.join(), value.toString()))[segments.join()];
+  return segmentToAZ.map((key, value) => MapEntry(key.join(), value.toString()))[segments.join()];
 }
 

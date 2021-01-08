@@ -135,15 +135,14 @@ Map<String, dynamic> decodeCistercian(String input) {
   bool unknownToken = true;
   int digit = 0;
   List<String> tokens =  input.split(' ');
-  //var out = displays.map((display) {
   for (int i = 0; i < tokens.length; i++) {
     unknownToken = true;
     digit = 0;
     // segments contains all segments - these have to split into numbers
     //   1000 - 9000    k   l n p q t
     //    100 -  900    k   u m r s o
-    //     10 -   90    k   a  i  e  f  c
-    //      1 -    9    k   b  j h  g  d
+    //     10 -   90    k   a i e f c
+    //      1 -    9    k   b j h g d
     // to return number.toString()
     // or return UNKNOWN_ELEMENT
 
@@ -153,28 +152,36 @@ Map<String, dynamic> decodeCistercian(String input) {
       if (tokens[i].contains('u') && tokens[i].contains('m') && tokens[i].contains('o')) { // 900
         digit = digit + 900;
         tokens[i] = tokens[i].replaceAll('u', ''); tokens[i] = tokens[i].replaceAll('m', ''); tokens[i] = tokens[i].replaceAll('o', '');
-      } else if (tokens[i].contains('m') && tokens[i].contains('o')) { // 800
+      }
+      else if (tokens[i].contains('m') && tokens[i].contains('o')) { // 800
         digit = digit + 800;
         tokens[i] = tokens[i].replaceAll('m', ''); tokens[i] = tokens[i].replaceAll('o', '');
-      } else if (tokens[i].contains('u') && tokens[i].contains('q')) { // 700
+      }
+      else if (tokens[i].contains('u') && tokens[i].contains('o')) { // 700
         digit = digit + 700;
-        tokens[i] = tokens[i].replaceAll('u', ''); tokens[i] = tokens[i].replaceAll('q', '');
-      } else if (tokens[i].contains('o')) { // 600
-        digit = digit + 600;
-        tokens[i].replaceAll('o', '');
-      } else if (tokens[i].contains('u') && tokens[i].contains('s')) { // 500
+        tokens[i] = tokens[i].replaceAll('u', ''); tokens[i] = tokens[i].replaceAll('o', '');
+      }
+      else if (tokens[i].contains('u') && tokens[i].contains('s')) { // 500
         digit = digit + 500;
         tokens[i] = tokens[i].replaceAll('u', ''); tokens[i] = tokens[i].replaceAll('s', '');
-      } else if (tokens[i].contains('s')) { // 400
+      }
+      else if (tokens[i].contains('o')) { // 600
+        digit = digit + 600;
+        tokens[i].replaceAll('o', '');
+      }
+      else if (tokens[i].contains('s')) { // 400
         digit = digit + 400;
         tokens[i] = tokens[i].replaceAll('s', '');
-      } else if ( tokens[i].contains('r')) { // 300
+      }
+      else if ( tokens[i].contains('r')) { // 300
         digit = digit + 300;
         tokens[i] = tokens[i].replaceAll('r', '');
-      } else if (tokens[i].contains('m')) { // 200
+      }
+      else if (tokens[i].contains('m')) { // 200
         digit = digit + 200;
         tokens[i] = tokens[i].replaceAll('m', '');
-      } else if (tokens[i].contains('u')) { // 100
+      }
+      else if (tokens[i].contains('u')) { // 100
         digit = digit + 100;
         tokens[i] = tokens[i].replaceAll('u', '');
       }
@@ -183,28 +190,36 @@ Map<String, dynamic> decodeCistercian(String input) {
       if (tokens[i].contains('t') && tokens[i].contains('n') && tokens[i].contains('l')) { // 9000
         digit = digit + 9000;
         tokens[i] = tokens[i].replaceAll('t', ''); tokens[i] = tokens[i].replaceAll('n', ''); tokens[i] = tokens[i].replaceAll('l', '');
-      } else if (tokens[i].contains('n') && tokens[i].contains('l')) { // 8000
+      }
+      else if (tokens[i].contains('n') && tokens[i].contains('l')) { // 8000
         digit = digit + 8000;
         tokens[i] = tokens[i].replaceAll('n', ''); tokens[i] = tokens[i].replaceAll('l', '');
-      } else if (tokens[i].contains('t') && tokens[i].contains('n')) { // 7000
+      }
+      else if (tokens[i].contains('t') && tokens[i].contains('n')) { // 7000
         digit = digit + 7000;
         tokens[i] = tokens[i].replaceAll('t', ''); tokens[i] = tokens[i].replaceAll('n', '');
-      } else if (tokens[i].contains('n')) { // 6000
-        digit = digit + 6000;
-        tokens[i].replaceAll('n', '');
-      } else if (tokens[i].contains('t') && tokens[i].contains('p')) { // 5000
+      }
+      else if (tokens[i].contains('t') && tokens[i].contains('p')) { // 5000
         digit = digit + 5000;
         tokens[i] = tokens[i].replaceAll('t', ''); tokens[i] = tokens[i].replaceAll('p', '');
-      } else if (tokens[i].contains('p')) { // 4000
+      }
+      else if (tokens[i].contains('n')) { // 6000
+        digit = digit + 6000;
+        tokens[i].replaceAll('n', '');
+      }
+      else if (tokens[i].contains('p')) { // 4000
         digit = digit + 4000;
         tokens[i] = tokens[i].replaceAll('p', '');
-      } else if ( tokens[i].contains('q')) { // 3000
+      }
+      else if ( tokens[i].contains('q')) { // 3000
         digit = digit + 3000;
         tokens[i] = tokens[i].replaceAll('q', '');
-      } else if (tokens[i].contains('l')) { // 2000
+      }
+      else if (tokens[i].contains('l')) { // 2000
         digit = digit + 2000;
         tokens[i] = tokens[i].replaceAll('l', '');
-      } else if (tokens[i].contains('t')) { // 1000
+      }
+      else if (tokens[i].contains('t')) { // 1000
         digit = digit + 1000;
         tokens[i] = tokens[i].replaceAll('t', '');
       }
@@ -213,28 +228,36 @@ Map<String, dynamic> decodeCistercian(String input) {
       if (tokens[i].contains('j') && tokens[i].contains('b') && tokens[i].contains('d')) { // 9
         digit = digit + 9;
         tokens[i] = tokens[i].replaceAll('j', ''); tokens[i] = tokens[i].replaceAll('b', ''); tokens[i] = tokens[i].replaceAll('d', '');
-      } else if (tokens[i].contains('j') && tokens[i].contains('d')) { // 8
+      }
+      else if (tokens[i].contains('j') && tokens[i].contains('d')) { // 8
         digit = digit + 8;
         tokens[i] = tokens[i].replaceAll('j', ''); tokens[i] = tokens[i].replaceAll('d', '');
-      } else if (tokens[i].contains('b') && tokens[i].contains('d')) { // 7
+      }
+      else if (tokens[i].contains('b') && tokens[i].contains('d')) { // 7
         digit = digit + 7;
         tokens[i] = tokens[i].replaceAll('b', ''); tokens[i] = tokens[i].replaceAll('d', '');
-      } else if (tokens[i].contains('d')) { // 6
-        digit = digit + 6;
-        tokens[i].replaceAll('d', '');
-      } else if (tokens[i].contains('b') && tokens[i].contains('g')) { // 5
+      }
+      else if (tokens[i].contains('b') && tokens[i].contains('g')) { // 5
         digit = digit + 5;
         tokens[i] = tokens[i].replaceAll('b', ''); tokens[i] = tokens[i].replaceAll('g', '');
-      } else if (tokens[i].contains('g')) { // 4
+      }
+      else if (tokens[i].contains('d')) { // 6
+        digit = digit + 6;
+        tokens[i].replaceAll('d', '');
+      }
+      else if (tokens[i].contains('g')) { // 4
         digit = digit + 4;
         tokens[i] = tokens[i].replaceAll('g', '');
-      } else if ( tokens[i].contains('h')) { // 3
+      }
+      else if ( tokens[i].contains('h')) { // 3
         digit = digit + 3;
         tokens[i] = tokens[i].replaceAll('h', '');
-      } else if (tokens[i].contains('j')) { // 2
+      }
+      else if (tokens[i].contains('j')) { // 2
         digit = digit + 2;
         tokens[i] = tokens[i].replaceAll('j', '');
-      } else if (tokens[i].contains('b')) { // 1
+      }
+      else if (tokens[i].contains('b')) { // 1
         digit = digit + 1;
         tokens[i] = tokens[i].replaceAll('b', '');
       }
@@ -243,28 +266,36 @@ Map<String, dynamic> decodeCistercian(String input) {
       if (tokens[i].contains('a') && tokens[i].contains('c') && tokens[i].contains('i')) { // 90
         digit = digit + 90;
         tokens[i] = tokens[i].replaceAll('a', ''); tokens[i] = tokens[i].replaceAll('c', ''); tokens[i] = tokens[i].replaceAll('i', '');
-      } else if (tokens[i].contains('c') && tokens[i].contains('i')) { // 80
+      }
+      else if (tokens[i].contains('c') && tokens[i].contains('i')) { // 80
         digit = digit + 80;
         tokens[i] = tokens[i].replaceAll('c', ''); tokens[i] = tokens[i].replaceAll('i', '');
-      } else if (tokens[i].contains('a') && tokens[i].contains('c')) { // 70
+      }
+      else if (tokens[i].contains('a') && tokens[i].contains('c')) { // 70
         digit = digit + 70;
         tokens[i] = tokens[i].replaceAll('a', ''); tokens[i] = tokens[i].replaceAll('c', '');
-      } else if (tokens[i].contains('c')) { // 60
-        digit = digit + 60;
-        tokens[i].replaceAll('c', '');
-      } else if (tokens[i].contains('a') && tokens[i].contains('f')) { // 50
+      }
+      else if (tokens[i].contains('a') && tokens[i].contains('f')) { // 50
         digit = digit + 50;
         tokens[i] = tokens[i].replaceAll('a', ''); tokens[i] = tokens[i].replaceAll('f', '');
-      } else if (tokens[i].contains('f')) { // 40
+      }
+      else if (tokens[i].contains('c')) { // 60
+        digit = digit + 60;
+        tokens[i].replaceAll('c', '');
+      }
+      else if (tokens[i].contains('f')) { // 40
         digit = digit + 40;
         tokens[i] = tokens[i].replaceAll('f', '');
-      } else if ( tokens[i].contains('e')) { // 30
+      }
+      else if ( tokens[i].contains('e')) { // 30
         digit = digit + 30;
         tokens[i] = tokens[i].replaceAll('e', '');
-      } else if (tokens[i].contains('i')) { // 20
+      }
+      else if (tokens[i].contains('i')) { // 20
         digit = digit + 20;
         tokens[i] = tokens[i].replaceAll('i', '');
-      } else if (tokens[i].contains('a')) { // 10
+      }
+      else if (tokens[i].contains('a')) { // 10
         digit = digit + 10;
         tokens[i] = tokens[i].replaceAll('a', '');
       }
@@ -272,6 +303,7 @@ Map<String, dynamic> decodeCistercian(String input) {
       if (tokens[i] == '')
         unknownToken = false;
     }
+
     if (unknownToken)
       out = out + ' ' + UNKNOWN_ELEMENT;
     else
@@ -279,169 +311,4 @@ Map<String, dynamic> decodeCistercian(String input) {
   };
 
   return {'displays': displays, 'text': out};
-}
-
-_buildCistercianNumber(List<String> segments){
-  var result = _SegmentCistercianToAZ.map((key, value) => MapEntry(key.join(), value.toString()))[segments.join()];
-  int one = 0;
-  int ten = 0;
-  int hundred = 0;
-  int thousand = 0;
-  if (result != null)
-    return result;
-  else {
-    if (segments.contains('k')) {
-      segments.remove('k');
-      // check ten
-      if (segments.contains('a') && segments.contains('c') && segments.contains('i')) {
-        ten = 90;
-        segments.remove('a');
-        segments.remove('c');
-        segments.remove('i');
-      } else if (segments.contains('a') && segments.contains('c')) {
-        ten = 70;
-        segments.remove('a');
-        segments.remove('c');
-      } else if (segments.contains('a') && segments.contains('i')) {
-        ten = 80;
-        segments.remove('a');
-        segments.remove('i');
-      } else if (segments.contains('a') && segments.contains('f')) {
-        ten = 50;
-        segments.remove('a');
-        segments.remove('f');
-      } else if (segments.contains('a')) {
-        ten = 10;
-        segments.remove('a');
-      } else if (segments.contains('i')) {
-        ten = 20;
-        segments.remove('i');
-      } else if (segments.contains('e')) {
-        ten = 30;
-        segments.remove('e');
-      } else if (segments.contains('f')) {
-        ten = 40;
-        segments.remove('f');
-      } else if (segments.contains('c')) {
-        ten = 60;
-        segments.remove('c');
-      }
-      // check one
-      if (segments.contains('b') && segments.contains('d') &&
-          segments.contains('j')) {
-        one = 9;
-        segments.remove('b');
-        segments.remove('d');
-        segments.remove('j');
-      }
-      else if (segments.contains('b') && segments.contains('d')) {
-        one = 7;
-        segments.remove('b');
-        segments.remove('d');
-      } else if (segments.contains('d') && segments.contains('j')) {
-        one = 8;
-        segments.remove('d');
-        segments.remove('j');
-      } else if (segments.contains('b') && segments.contains('g')) {
-        one = 5;
-        segments.remove('b');
-        segments.remove('g');
-      } else if (segments.contains('b')) {
-        one = 1;
-        segments.remove('b');
-      } else if (segments.contains('j')) {
-        one = 2;
-        segments.remove('j');
-      } else if (segments.contains('h')) {
-        one = 3;
-        segments.remove('h');
-      } else if (segments.contains('g')) {
-        one = 4;
-        segments.remove('g');
-      } else if (segments.contains('d')) {
-        one = 6;
-        segments.remove('d');
-      }
-
-      // check hundred
-      if (segments.contains('m') && segments.contains('o') &&
-          segments.contains('u')) {
-        hundred = 900;
-        segments.remove('m');
-        segments.remove('o');
-        segments.remove('u');
-      }
-      else if (segments.contains('o') && segments.contains('u')) {
-        hundred = 700;
-        segments.remove('o');
-        segments.remove('u');
-      } else if (segments.contains('m') && segments.contains('o')) {
-        hundred = 800;
-        segments.remove('m');
-        segments.remove('o');
-      } else if (segments.contains('s') && segments.contains('u')) {
-        hundred = 500;
-        segments.remove('s');
-        segments.remove('u');
-      } else if (segments.contains('u')) {
-        hundred = 100;
-        segments.remove('u');
-      } else if (segments.contains('m')) {
-        hundred = 200;
-        segments.remove('m');
-      } else if (segments.contains('r')) {
-        hundred = 300;
-        segments.remove('r');
-      } else if (segments.contains('s')) {
-        hundred = 400;
-        segments.remove('s');
-      } else if (segments.contains('o')) {
-        hundred = 600;
-        segments.remove('o');
-      }
-
-      // check thousand
-      if (segments.contains('l') && segments.contains('n') &&
-          segments.contains('t')) {
-        thousand = 9000;
-        segments.remove('l');
-        segments.remove('n');
-        segments.remove('t');
-      }
-      else if (segments.contains('n') && segments.contains('t')) {
-        thousand = 7000;
-        segments.remove('n');
-        segments.remove('t');
-      } else if (segments.contains('l') && segments.contains('n')) {
-        thousand = 8000;
-        segments.remove('l');
-        segments.remove('n');
-      } else if (segments.contains('p') && segments.contains('t')) {
-        thousand = 5000;
-        segments.remove('p');
-        segments.remove('t');
-      } else if (segments.contains('t')) {
-        thousand = 1000;
-        segments.remove('t');
-      } else if (segments.contains('l')) {
-        thousand = 2000;
-        segments.remove('l');
-      } else if (segments.contains('q')) {
-        thousand = 3000;
-        segments.remove('q');
-      } else if (segments.contains('p')) {
-        thousand = 4000;
-        segments.remove('p');
-      } else if (segments.contains('n')) {
-        thousand = 6000;
-        segments.remove('n');
-      }
-      if (segments.isEmpty)
-        return (thousand + hundred + ten + one).toString();
-      else
-        return null;
-    } else
-      return null;
-  }
-
 }
