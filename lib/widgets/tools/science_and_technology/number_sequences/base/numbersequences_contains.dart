@@ -7,7 +7,8 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class NumberSequenceContains extends StatefulWidget {
   final NumberSequencesMode mode;
-  const NumberSequenceContains({Key key, this.mode}) : super(key: key);
+  final int maxIndex;
+  const NumberSequenceContains({Key key, this.mode, this.maxIndex}) : super(key: key);
 
   @override
 
@@ -35,7 +36,6 @@ class NumberSequenceContainsState extends State<NumberSequenceContains> {
         GCWIntegerSpinner(
           value: currentInputN,
           min: 0,
-          max: 999999999,
           onChanged: (value) {
             setState(() {
               currentInputN = value;
@@ -53,7 +53,7 @@ class NumberSequenceContainsState extends State<NumberSequenceContains> {
 
     var flexData;
 
-    detailedOutput = getFirstPositionOfSequence(widget.mode, currentInputN.toString());
+    detailedOutput = getFirstPositionOfSequence(widget.mode, currentInputN.toString(), widget.maxIndex);
 
     columnData.add([i18n(context, 'numbersequence_output_col_1'), i18n(context, 'numbersequence_output_col_2'), i18n(context, 'numbersequence_output_col_3')]);
     columnData.add([detailedOutput.number, detailedOutput.positionSequence.toString(), detailedOutput.positionDigits.toString()]);

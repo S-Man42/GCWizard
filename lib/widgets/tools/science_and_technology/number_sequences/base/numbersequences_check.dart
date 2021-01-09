@@ -8,7 +8,8 @@ import 'package:flutter/services.dart';
 
 class NumberSequenceCheckNumber extends StatefulWidget {
   final NumberSequencesMode mode;
-  const NumberSequenceCheckNumber({Key key, this.mode}) : super(key: key);
+  final int maxIndex;
+  const NumberSequenceCheckNumber({Key key, this.mode, this.maxIndex}) : super(key: key);
 
   @override
   NumberSequenceCheckNumberState createState() => NumberSequenceCheckNumberState();
@@ -59,7 +60,7 @@ class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
 
   _buildOutput() {
     return GCWDefaultOutput(
-      child: checkNumber(widget.mode, BigInt.parse(_currentInputN)).toString(),
+      child: checkNumber(widget.mode, BigInt.parse(_currentInputN), widget.maxIndex).toString(),
     );
   }
 }

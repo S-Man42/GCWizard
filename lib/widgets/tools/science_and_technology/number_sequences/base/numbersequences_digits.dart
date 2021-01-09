@@ -7,7 +7,8 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class NumberSequenceDigits extends StatefulWidget {
   final NumberSequencesMode mode;
-  const NumberSequenceDigits({Key key, this.mode}) : super(key: key);
+  final int maxDigits;
+  const NumberSequenceDigits({Key key, this.mode, this.maxDigits}) : super(key: key);
 
   @override
   NumberSequenceDigitsState createState() => NumberSequenceDigitsState();
@@ -36,7 +37,7 @@ class NumberSequenceDigitsState extends State<NumberSequenceDigits> {
           title: i18n(context, 'numbersequence_inputd'),
           value: _currentInputN,
           min: 1,
-          max: 500,
+          max: widget.maxDigits,
           onChanged: (value) {
             setState(() {
               _currentInputN = value;
