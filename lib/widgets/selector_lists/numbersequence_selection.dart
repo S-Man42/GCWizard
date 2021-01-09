@@ -7,6 +7,8 @@ import 'package:gc_wizard/widgets/selector_lists/numbersequence_lucas_selection.
 import 'package:gc_wizard/widgets/selector_lists/numbersequence_fibonacci_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numbersequence_mersenne_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numbersequence_fermat_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_mersennefermat_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_factorial_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numbersequence_pell_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numbersequence_jacobsthal_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numbersequence_pelllucas_selection.dart';
@@ -22,16 +24,18 @@ class NumberSequenceSelection extends GCWSelection {
     final List<GCWTool> _toolList =
     Registry.toolList.where((element) {
       return [
-        className(NumberSequenceLucasSelection()),
+        className(NumberSequenceFactorialSelection()),
         className(NumberSequenceFibonacciSelection()),
+        className(NumberSequenceLucasSelection()),
         className(NumberSequenceFermatSelection()),
         className(NumberSequenceMersenneSelection()),
+        className(NumberSequenceMersenneFermatSelection()),
         className(NumberSequencePellSelection()),
         className(NumberSequenceJacobsthalSelection()),
         className(NumberSequencePellLucasSelection()),
         className(NumberSequenceJacobsthalLucasSelection()),
-        className(NumberSequenceRecamanSelection()),
         className(NumberSequenceCatalanSelection()),
+        className(NumberSequenceRecamanSelection()),
       ].contains(className(element.tool));
     }).toList();
 
