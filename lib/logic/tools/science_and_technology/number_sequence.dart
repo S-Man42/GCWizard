@@ -1,7 +1,8 @@
 // https://de.wikipedia.org/wiki/Lucas-Folge
 // could build not recursive
 // https://oeis.org/A000225   Mersenne
-// https://oeis.org/A000051   Fermat
+// https://oeis.org/A000051   Mersenne-like with Fermat-numbers
+// https://oeis.org/A000251   Fermat
 // https://oeis.org/A000108   Catalan
 // https://oeis.org/A001045   Jacobsthal
 // https://oeis.org/A014551   Jacobsthal-Lucas
@@ -13,6 +14,7 @@
 //
 // recursive sequences
 // https://oeis.org/A005132   Recamán
+// https://oeis.org/A000142   Factorial
 //
 // suggestions - https://en.wikipedia.org/wiki/List_of_integer_sequences
 // https://oeis.org/A084175   Jacobsthal-Oblong   a(n) = a(n-1) * a(n-2)
@@ -25,12 +27,12 @@ import 'dart:math';
 
 class PositionOfSequenceOutput {
   final String number;
-  final String positionSequence;
-  final String positionDigits;
+  final int positionSequence;
+  final int positionDigits;
   PositionOfSequenceOutput(this.number, this.positionSequence, this.positionDigits);
 }
 
-enum NumberSequencesMode {LUCAS, FIBONACCI, MERSENNE, FERMAT, JACOBSTAHL, JACOBSTHAL_LUCAS, PELL, PELL_LUCAS, CATALAN, RECAMAN}
+enum NumberSequencesMode {LUCAS, FIBONACCI, MERSENNE, MERSENNE_FERMAT, FERMAT, JACOBSTAHL, JACOBSTHAL_LUCAS, PELL, PELL_LUCAS, CATALAN, RECAMAN, FACTORIAL}
 
 
 final Zero = BigInt.zero;
@@ -41,177 +43,79 @@ final sqrt5 = sqrt(5);
 final sqrt2 = sqrt(2);
 
 
-BigInt getFermat(int n){
+BigInt _getMersenneFermat(int n){
   return Two.pow(n) + One;
 }
 
-BigInt getMersenne(int n){
+BigInt _getFermat(int n){
+  return Two.pow(pow(2, n)) + One;
+}
+
+BigInt _getMersenne(int n){
   return Two.pow(n) - One;
 }
 
-BigInt getCatalan(int n){
+BigInt _getCatalan(int n){
   try {
-    return binomialcoefficient(2 * n, n) ~/ (BigInt.from(n) + One);
+    return _getBinomialcoefficient(2 * n, n) ~/ (BigInt.from(n) + One);
   } catch (e) {
     return BigInt.from(-1);
   }
 }
 
-BigInt getJacobsthal(int n){
+BigInt _getJacobsthal(int n){
   return (Two.pow(n) - BigInt.from(-1).pow(n)) ~/ Three;
 }
 
-BigInt getJacobsthalLucas(int n){
+BigInt _getJacobsthalLucas(int n){
   return Two.pow(n) + BigInt.from(-1).pow(n);
 }
 
-BigInt getFibonacci(int n){
-  BigInt pn0 = Zero;
-  BigInt pn1 = One;
-  BigInt number;
-  if (n == 0)
-    return Zero;
-  else if (n == 1)
-    return One;
-  else
-    for (int i = 2; i <= n; i++) {
-      number = pn0 + pn1;
-      pn0 = pn1;
-      pn1 = number;
-    }
-  return number;
-}
 
-BigInt getLucas(int n){
-  BigInt pn0 = Two;
-  BigInt pn1 = One;
-  BigInt number;
-  if (n == 0)
-    return Two;
-  else if (n == 1)
-    return One;
-  else
-    for (int i = 2; i <= n; i++) {
-      number = pn0 + pn1;
-      pn0 = pn1;
-      pn1 = number;
-    }
-  return number;
-}
-
-BigInt getPell(int n){
-  BigInt pn0 = Zero;
-  BigInt pn1 = One;
-  BigInt number;
-
-  if (n == 0)
-    number = pn0;
-  else
-    if (n == 1)
-      number = pn1;
-  else
-    for (int i = 1; i < n; i++) {
-      number = Two * pn1 + pn0;
-      pn0 = pn1;
-      pn1 = number;
-    }
-  return number;
-}
-
-BigInt getPellLucas(int n){
-  BigInt pn0 = Two;
-  BigInt pn1 = Two;
-  BigInt number;
-  if (n == 0)
-    number = pn0;
-  else
-    if (n == 1)
-      number = pn1;
-    else
-      for (int i = 2; i <= n; i++) {
-        number = Two * pn1 + pn0;
-        pn0 = pn1;
-        pn1 = number;
-      }
-  return number;
-}
-
-BigInt getRecaman(int n){
-  List<BigInt> recamanSequence = new List<BigInt>();
-  BigInt pn0 = Zero;
-  BigInt number;
-  recamanSequence.add(Zero);
-  if (n == 0)
-    number = Zero;
-  else
-    for (int i = 1; i <= n; i++){
-      if ((pn0 - BigInt.from(i)) > Zero && !recamanSequence.contains(pn0 - BigInt.from(i)))
-        number = pn0 - BigInt.from(i);
-      else
-        number = pn0 + BigInt.from(i);
-      recamanSequence.add(number);
-      pn0 = number;
-    }
-  return number;
-}
-
-
-BigInt factorial(int n){
+BigInt _getfactorial(int n){
   if (n > 0)
-    return n <= 1 ? One : BigInt.from(n) * factorial(n - 1);
+    return n <= 1 ? One : BigInt.from(n) * _getfactorial(n - 1);
 }
 
-BigInt binomialcoefficient(int n, k){
+BigInt _getBinomialcoefficient(int n, k){
   if (n == k)
     return Zero;
   else
-    return factorial(n) ~/ factorial(k) ~/ factorial(n - k);
+    return _getfactorial(n) ~/ _getfactorial(k) ~/ _getfactorial(n - k);
 }
 
 
-String getNumberAt(NumberSequencesMode sequence, int n){
-  if (n == null)
-    return '';
-
-  switch (sequence){
-    case NumberSequencesMode.FERMAT:          return getFermat(n).toString();           break;
-    case NumberSequencesMode.FIBONACCI:       return getFibonacci(n).toString();        break;
-    case NumberSequencesMode.MERSENNE:        return getMersenne(n).toString();         break;
-    case NumberSequencesMode.LUCAS:           return getLucas(n).toString();            break;
-    case NumberSequencesMode.JACOBSTAHL:      return getJacobsthal(n).toString();       break;
-    case NumberSequencesMode.JACOBSTHAL_LUCAS: return getJacobsthalLucas(n).toString();  break;
-    case NumberSequencesMode.PELL:            return getPell(n).toString();             break;
-    case NumberSequencesMode.PELL_LUCAS:       return getPellLucas(n).toString();  break;
-    case NumberSequencesMode.CATALAN:         return getCatalan(n).toString();          break;
-    case NumberSequencesMode.RECAMAN:         return getRecaman(n).toString();          break;
+Function _getNumberSequenceFunction(NumberSequencesMode mode) {
+  switch (mode) {
+    case NumberSequencesMode.FERMAT:           return _getFermat;
+    case NumberSequencesMode.MERSENNE:         return _getMersenne;
+    case NumberSequencesMode.MERSENNE_FERMAT:  return _getMersenneFermat;
+    case NumberSequencesMode.CATALAN:          return _getCatalan;
+    case NumberSequencesMode.JACOBSTAHL:       return _getJacobsthal;
+    case NumberSequencesMode.JACOBSTHAL_LUCAS: return _getJacobsthalLucas;
   }
+  return null;
+}
+
+
+BigInt getNumberAt(NumberSequencesMode sequence, int n){
+  if (n == null)
+    return Zero;
+  else
+    return getNumbersInRange(sequence, n, n)[0];
 }
 
 List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
   if (start == null || stop == null || start == '' || stop == '')
-    return [];
+    return [-1];
 
   List numberList = new List();
 
-  if (sequence == NumberSequencesMode.FERMAT) {
-    for (int i = start; i <= stop; i++)
-      numberList.add(getFermat(i).toString());
-  }
-  else if (sequence == NumberSequencesMode.MERSENNE) {
-    for (int i = start; i <= stop; i++)
-      numberList.add(getMersenne(i).toString());
-  }
-  else if (sequence == NumberSequencesMode.CATALAN) {
-    for (int i = start; i <= stop; i++)
-      numberList.add(getCatalan(i).toString());
-  }
-  else if (sequence == NumberSequencesMode.JACOBSTAHL) {
-    for (int i = start; i <= stop; i++)
-      numberList.add(getJacobsthal(i).toString());
-  }
-  else if (sequence == NumberSequencesMode.JACOBSTHAL_LUCAS) {
-    for (int i = start; i <= stop; i++)
-      numberList.add(getJacobsthalLucas(i).toString());
+  var numberSequenceFunction = _getNumberSequenceFunction(sequence);
+  if (numberSequenceFunction != null) {
+    for (int i = start; i <= stop; i++) {
+      numberList.add(numberSequenceFunction(i));
+    }
   }
   else if (sequence == NumberSequencesMode.FIBONACCI) {
     BigInt number;
@@ -229,8 +133,8 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
         pn1 = number;
       }
       if (index >= start)
-        numberList.add(number.toString());
-      index++;
+        numberList.add(number);
+      index = index + 1;
     }
   }
   else if (sequence == NumberSequencesMode.PELL) {
@@ -249,8 +153,8 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
         pn1 = number;
       }
       if (index >= start)
-        numberList.add(number.toString());
-      index++;
+        numberList.add(number);
+      index = index + 1;
     }
   }
   else if (sequence == NumberSequencesMode.PELL_LUCAS) {
@@ -269,8 +173,8 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
         pn1 = number;
       }
       if (index >= start)
-        numberList.add(number.toString());
-      index++;
+        numberList.add(number);
+      index = index + 1;
     }
   }
   else if (sequence == NumberSequencesMode.LUCAS) {
@@ -289,188 +193,20 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
         pn1 = number;
       }
       if (index >= start)
-        numberList.add(number.toString());
-      index++;
+        numberList.add(number);
+      index = index + 1;
     }
   }
-  else {
+  else if (sequence == NumberSequencesMode.RECAMAN) {
     List<BigInt> recamanSequence = new List<BigInt>();
     BigInt number;
     BigInt pn0 = Zero;
-    int index = 0;
-    recamanSequence.add(Zero);
-    index = 0;
-    while (index < stop + 1) {
-      if (index == 0)
-        number = pn0;
-      else
-      if ((pn0 - BigInt.from(index)) > Zero && !recamanSequence.contains(pn0 - BigInt.from(index)))
-        number = pn0 - BigInt.from(index);
-      else
-        number = pn0 + BigInt.from(index);
-      recamanSequence.add(number);
-      pn0 = number;
-      if (index >= start)
-        numberList.add(number.toString());
-      index++;
-    }
-  }
-
-  return numberList;
-}
-
-String checkNumber(NumberSequencesMode sequence, int check){
-  if (check == null || check == '')
-    return '-1';
-
-  BigInt checkNumber = BigInt.from(check);
-  BigInt number;
-  int index;
-
-  if (sequence == NumberSequencesMode.FERMAT) {
-    index = 0;
-    number = getFermat(index);
-    while (number <= checkNumber){
-      if (number == checkNumber) {
-        return index.toString();
-      } else
-        index++;
-      number = getFermat(index);
-    }
-  }
-  else if (sequence == NumberSequencesMode.MERSENNE) {
-    index = 0;
-    number = getMersenne(index);
-    while (number <= checkNumber){
-      if (number == checkNumber) {
-        return index.toString();
-      } else
-        index++;
-      number = getMersenne(index);
-    }
-  }
-  else if (sequence == NumberSequencesMode.CATALAN) {
-    index = 0;
-    number = getCatalan(index);
-    while (number <= checkNumber){
-      if (number == checkNumber) {
-        return index.toString();
-      } else
-      index++;
-      number = getCatalan(index);
-    }
-  }
-  else if (sequence == NumberSequencesMode.JACOBSTAHL) {
-    index = 0;
-    number = getJacobsthal(index);
-    while (number <= checkNumber){
-      if (number == checkNumber) {
-        return index.toString();
-      } else
-      index++;
-      number = getJacobsthal(index);
-    }
-  }
-  else if (sequence == NumberSequencesMode.JACOBSTHAL_LUCAS) {
-    index = 0;
-    number = getJacobsthalLucas(index);
-    while (number <= checkNumber){
-      if (number == checkNumber) {
-        return index.toString();
-      } else
-      index++;
-      number = getJacobsthalLucas(index);
-    }
-  }
-  else if (sequence == NumberSequencesMode.FIBONACCI) {
-    if (checkNumber == Zero)
-      index = 0;
-    else if (checkNumber == One)
-      index = 1;
-    else {
-      BigInt pn0 = One;
-      BigInt pn1 = Two;
-      index = 3;
-      number = Two;
-      while (number <= checkNumber) {
-        if (number == checkNumber) {
-          return index.toString();
-        } else
-          index++;
-        number = pn0 + pn1;
-        pn0 = pn1;
-        pn1 = number;
-      }
-    }
-  }
-  else if (sequence == NumberSequencesMode.PELL) {
-    if (checkNumber == Zero) {
-      return Zero.toString();
-    } else if (checkNumber == One) {
-      return One.toString();
-    } else {
-      BigInt pn0 = One;
-      BigInt pn1 = Two;
-      index = 2;
-      number = Two;
-      while (number <= checkNumber) {
-        if (number == checkNumber) {
-          return index.toString();
-        }
-        index++;
-        number = Two * pn1 + pn0;
-        pn0 = pn1;
-        pn1 = number;
-      }
-    }
-  }
-  else if (sequence == NumberSequencesMode.PELL_LUCAS) {
-    if (checkNumber == Two) {
-      return Zero.toString();
-    } else {
-      BigInt pn0 = Two;
-      BigInt pn1 = BigInt.from(6);
-      index = 2;
-      number = BigInt.from(6);
-      while (number <= checkNumber) {
-        if (number == checkNumber) {
-          return index.toString();
-        }
-        index++;
-        number = Two * pn1 + pn0;
-        pn0 = pn1;
-        pn1 = number;
-      }
-    }
-  }
-  else if (sequence == NumberSequencesMode.LUCAS) {
-    if (checkNumber == Two)
-      return Zero.toString();
-    else if (checkNumber == One)
-      return One.toString();
-    else {
-      BigInt pn0 = One;
-      BigInt pn1 = Three;
-      index = 2;
-      number = Three;
-      while (number <= checkNumber) {
-        if (number == checkNumber) {
-          return index.toString();
-        }
-        index++;
-        number = pn0 + pn1;
-        pn0 = pn1;
-        pn1 = number;
-      }
-    }
-  }
-  else { // NumberSequencesMode.RECAMAN
-    List<BigInt> recamanSequence = new List<BigInt>();
     BigInt index = Zero;
-    BigInt pn0 = Zero;
-    while (index < BigInt.from(111111) + One) {
+    recamanSequence.add(Zero);
+    index = Zero;
+    while (index < BigInt.from(stop) + One) {
       if (index == Zero)
-        number = Zero;
+        number = pn0;
       else
       if ((pn0 - index) > Zero && !recamanSequence.contains(pn0 - index))
         number = pn0 - index;
@@ -478,14 +214,43 @@ String checkNumber(NumberSequencesMode sequence, int check){
         number = pn0 + index;
       recamanSequence.add(number);
       pn0 = number;
-
-      if (number == checkNumber) {
-        return index.toString();
-      } else
-        index = index + One;
+      if (index >= BigInt.from(start))
+        numberList.add(number);
+      index = index + One;
     }
   }
-  return '-1';
+  else if (sequence == NumberSequencesMode.FACTORIAL) {
+    BigInt number;
+    int index = 0;
+    while (index < stop + 1) {
+      if (index == 0)
+        number = One;
+      else if (index == 1)
+        number = One;
+      else {
+        number = number * BigInt.from(index);
+      }
+      if (index >= start)
+        numberList.add(number);
+      index = index + 1;
+    }
+  }
+
+  return numberList;
+}
+
+int checkNumber(NumberSequencesMode sequence, BigInt checkNumber, int maxIndex){
+
+  if (checkNumber == null || checkNumber == '')
+    return -1;
+  else
+    if (getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionSequence == -1)
+      return -1;
+    else
+      if (getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionDigits == 1)
+        return getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionSequence;
+      else
+        return -1;
 }
 
 List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
@@ -496,62 +261,23 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
 
   List numberList = new List();
 
-  if (sequence == NumberSequencesMode.FERMAT) {
+  var numberSequenceFunction = _getNumberSequenceFunction(sequence);
+  if (numberSequenceFunction != null) {
     int index = 0;
     number = Two;
     while (number.toString().length < digits + 1) {
-      number = getFermat(index);
+      number = numberSequenceFunction(index);
       if (number.toString().length == digits)
-        numberList.add(number.toString());
-      index++;
-    }
-  }
-  else if (sequence == NumberSequencesMode.MERSENNE) {
-    int index = 0;
-    number = Zero;
-    while (number.toString().length < digits + 1) {
-      number = getMersenne(index);
-      if (number.toString().length == digits)
-        numberList.add(number.toString());
-      index++;
-    }
-  }
-  else if (sequence == NumberSequencesMode.CATALAN) {
-    int index = 0;
-    number = One;
-    while (number.toString().length < digits + 1) {
-      number = getCatalan(index);
-      if (number.toString().length == digits)
-        numberList.add(number.toString());
-      index++;
-    }
-  }
-  else if (sequence == NumberSequencesMode.JACOBSTAHL) {
-    int index = 0;
-    number = Zero;
-    while (number.toString().length < digits + 1) {
-      number = getJacobsthal(index);
-      if (number.toString().length == digits)
-        numberList.add(number.toString());
-      index++;
-    }
-  }
-  else if (sequence == NumberSequencesMode.JACOBSTHAL_LUCAS) {
-    int index = 0;
-    number = Two;
-    while (number.toString().length < digits + 1) {
-      number = getJacobsthalLucas(index);
-      if (number.toString().length == digits)
-        numberList.add(number.toString());
-      index++;
+        numberList.add(number);
+      index = index + 1;
     }
   }
   else if (sequence == NumberSequencesMode.FIBONACCI) {
     BigInt pn0 = Zero;
     BigInt pn1 = One;
     if (digits == 1) {
-      numberList.add(pn0.toString());
-      numberList.add(pn1.toString());
+      numberList.add(pn0);
+      numberList.add(pn1);
     }
     number = pn1;
     while (number.toString().length < digits + 1) {
@@ -559,15 +285,15 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
       pn0 = pn1;
       pn1 = number;
       if (number.toString().length == digits)
-        numberList.add(number.toString());
+        numberList.add(number);
     }
   }
   else if (sequence == NumberSequencesMode.PELL) {
     BigInt pn0 = Zero;
     BigInt pn1 = One;
     if (digits == 1) {
-      numberList.add(pn0.toString());
-      numberList.add(pn1.toString());
+      numberList.add(pn0);
+      numberList.add(pn1);
     }
     number = pn1;
     while (number.toString().length < digits + 1) {
@@ -575,15 +301,15 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
       pn0 = pn1;
       pn1 = number;
       if (number.toString().length == digits)
-        numberList.add(number.toString());
+        numberList.add(number);
     }
   }
   else if (sequence == NumberSequencesMode.PELL_LUCAS) {
     BigInt pn0 = Two;
     BigInt pn1 = Two;
     if (digits == 1) {
-      numberList.add(pn0.toString());
-      numberList.add(pn1.toString());
+      numberList.add(pn0);
+      numberList.add(pn1);
     }
     number = pn1;
     while (number.toString().length < digits + 1) {
@@ -591,15 +317,15 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
       pn0 = pn1;
       pn1 = number;
       if (number.toString().length == digits)
-        numberList.add(number.toString());
+        numberList.add(number);
     }
   }
   else if (sequence == NumberSequencesMode.LUCAS) {
     BigInt pn0 = Two;
     BigInt pn1 = One;
     if (digits == 1) {
-      numberList.add(pn0.toString());
-      numberList.add(pn1.toString());
+      numberList.add(pn0);
+      numberList.add(pn1);
     }
     number = pn1;
     while (number.toString().length < digits + 1) {
@@ -607,10 +333,10 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
       pn0 = pn1;
       pn1 = number;
       if (number.toString().length == digits)
-        numberList.add(number.toString());
+        numberList.add(number);
     }
   }
-  else {
+  else if (sequence == NumberSequencesMode.RECAMAN) {
     BigInt pn0 = Zero;
     List<BigInt> recamanSequence = new List<BigInt>();
     for (int index = 0; index < 100000; index++){
@@ -624,17 +350,32 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
       recamanSequence.add(number);
       pn0 = number;
       if (number.toString().length == digits)
-        numberList.add(number.toString());
+        numberList.add(number);
     }
   }
+  else if (sequence == NumberSequencesMode.FACTORIAL) {
+    BigInt index = BigInt.from(4);
+    if (digits == 1) {
+      numberList.add(One);
+      numberList.add(Two);
+      numberList.add(BigInt.from(6));
+    }
+    number = BigInt.from(6);
+    while (number.toString().length < digits + 1) {
+      number = number * index;
+      if (number.toString().length == digits)
+        numberList.add(number);
+      index = index + One;
+    }
+  }
+
   return numberList;
 }
 
-PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence, String check){
-  PositionOfSequenceOutput numberList;
+PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence, String check, int maxIndex){
 
-  if (check == null || check == '') {
-    return PositionOfSequenceOutput('-1', '', '');
+    if (check == null || check == '') {
+    return PositionOfSequenceOutput('-1', 0, 0);
   }
 
   BigInt number = Zero;
@@ -642,78 +383,23 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
   BigInt pn0 = Zero;
   BigInt pn1 = One;
   int index = 0;
-  int maxIndex = 111111;
   String numberString = '';
 
   RegExp expr = new RegExp(r'(' + check +')');
 
-  if (sequence == NumberSequencesMode.FERMAT) {
+  var numberSequenceFunction = _getNumberSequenceFunction(sequence);
+  if (numberSequenceFunction != null) {
+
     while (index <= maxIndex) {
-      number = getFermat(index);
+      number = numberSequenceFunction(index);
       numberString = number.toString();
       if (numberString.contains(check)) {
         int j = 0;
         while (!numberString.substring(j).startsWith(check))
           j++;
-        return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
+        return PositionOfSequenceOutput(numberString, index, (j + 1));
       }
-      index++;
-    }
-  }
-  else if (sequence == NumberSequencesMode.MERSENNE) {
-    index = 0;
-    while (index <= maxIndex) {
-      number = getMersenne(index);
-      numberString = number.toString();
-      if (expr.hasMatch(numberString)) {
-        int j = 0;
-        while (!numberString.substring(j).startsWith(check))
-          j++;
-        return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
-      }
-      index++;
-    }
-  }
-  else if (sequence == NumberSequencesMode.CATALAN) {
-    index = 0;
-    while (index <= maxIndex) {
-      number = getCatalan(index);
-      numberString = number.toString();
-      if (expr.hasMatch(numberString)) {
-        int j = 0;
-        while (!numberString.substring(j).startsWith(check))
-          j++;
-        return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
-      }
-      index++;
-    }
-  }
-  else if (sequence == NumberSequencesMode.JACOBSTAHL) {
-    index = 0;
-    while (index <= maxIndex) {
-      number = getJacobsthal(index);
-      numberString = number.toString();
-      if (expr.hasMatch(numberString)) {
-        int j = 0;
-        while (!numberString.substring(j).startsWith(check))
-          j++;
-        return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
-      }
-      index++;
-    }
-  }
-  else if (sequence == NumberSequencesMode.JACOBSTHAL_LUCAS) {
-    index = 0;
-    while (index <= maxIndex) {
-      number = getJacobsthalLucas(index);
-      numberString = number.toString();
-      if (expr.hasMatch(numberString)) {
-        int j = 0;
-        while (!numberString.substring(j).startsWith(check))
-          j++;
-        return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
-      }
-      index++;
+      index = index + 1;
     }
   }
   else if (sequence == NumberSequencesMode.FIBONACCI) {
@@ -721,9 +407,9 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
     pn1 = One;
     number = pn1;
     if (check == Zero.toString()){
-      return PositionOfSequenceOutput('0', '0', '1');
+      return PositionOfSequenceOutput('0', 0, 1);
     } else if (check == One.toString()){
-      return PositionOfSequenceOutput('1', '1', '1');
+      return PositionOfSequenceOutput('1', 1, 1);
     } else {
       index = 2;
       while (index <= maxIndex) {
@@ -736,9 +422,9 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
           while (!numberString.substring(j).startsWith(check))
             j++;
           return PositionOfSequenceOutput(
-              numberString, index.toString(), (j + 1).toString());
+              numberString, index, j + 1);
         }
-        index++;
+        index = index + 1;
       }
     }
   }
@@ -747,9 +433,9 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
     pn1 = One;
     number = pn1;
     if (check == Zero.toString()){
-      return PositionOfSequenceOutput('0', '0', '1');
+      return PositionOfSequenceOutput('0', 0, 1);
     } else if (check == One.toString()){
-      return PositionOfSequenceOutput('1', '1', '1');
+      return PositionOfSequenceOutput('1', 1, 1);
     } else {
       index = 2;
       while (index <= maxIndex) {
@@ -762,15 +448,15 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
           while (!numberString.substring(j).startsWith(check))
             j++;
           return PositionOfSequenceOutput(
-              numberString, index.toString(), (j + 1).toString());
+              numberString, index, j + 1);
         }
-        index++;
+        index = index + 1;
       }
     }
   }
   else if (sequence == NumberSequencesMode.PELL_LUCAS) {
     if (check == Two.toString()){
-      return PositionOfSequenceOutput('2', '0', '1');
+      return PositionOfSequenceOutput('2', 0, 1);
     }
     pn0 = Two;
     pn1 = Two;
@@ -785,18 +471,18 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
         int j = 0;
         while (!numberString.substring(j).startsWith(check))
           j++;
-        return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
+        return PositionOfSequenceOutput(numberString, index, j + 1);
       }
-      index++;
+      index = index + 1;
     }
   }
   else if (sequence == NumberSequencesMode.LUCAS) {
     pn0 = Two;
     pn1 = One;
     if (check == Two.toString()){
-      return PositionOfSequenceOutput('2', '0', '1');
+      return PositionOfSequenceOutput('2', 0, 1);
     } else if ((check == One.toString())){
-      return PositionOfSequenceOutput('1', '1', '1');
+      return PositionOfSequenceOutput('1', 1, 1);
     } else {
       index = 1;
       number  = Three;
@@ -806,26 +492,27 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
           int j = 0;
           while (!numberString.substring(j).startsWith(check))
             j++;
-          return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
+          return PositionOfSequenceOutput(numberString, index, j + 1);
         }
-        index++;
+        index = index + 1;
         number = pn1 + pn0;
         pn0 = pn1;
         pn1 = number;
       }
     }
   }
-  else {
-    List<BigInt> recamanSequence = new List<BigInt>();
-    BigInt index = Zero;
-    pn0 = Zero;
-    number = Zero;
-    recamanSequence.add(Zero);
-    while (index <= BigInt.from(maxIndex)) {
+  else if (sequence == NumberSequencesMode.RECAMAN) {
+    List<int> recamanSequence = new List<int>();
+    int index = 0;
+    int maxIndex = 111111;
+    int pn0 = 0;
+    int number = 0;
+    recamanSequence.add(0);
+    while (index <= maxIndex) {
       if (index == Zero)
-        number = Zero;
+        number = 0;
       else
-      if ((pn0 - index) > Zero && !recamanSequence.contains(pn0 - index))
+      if ((pn0 - index) > 0 && !recamanSequence.contains(pn0 - index))
         number = pn0 - index;
       else
         number = pn0 + index;
@@ -836,10 +523,33 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
         int j = 0;
         while (!numberString.substring(j).startsWith(check))
           j++;
-        return PositionOfSequenceOutput(numberString, index.toString(), (j + 1).toString());
+        return PositionOfSequenceOutput(numberString, index, j + 1);
       }
-      index = index + One;
+      index = index + 1;
     }
   }
- return PositionOfSequenceOutput('-1', '', '');
+  else if (sequence == NumberSequencesMode.FACTORIAL) {
+    number = One;
+    if (check == Zero.toString()){
+      return PositionOfSequenceOutput('0', 0, 1);
+    } else if (check == One.toString()){
+      return PositionOfSequenceOutput('1', 1, 1);
+    } else {
+      index = 2;
+      while (index <= maxIndex) {
+        number = number * BigInt.from(index);
+        numberString = number.toString();
+        if (expr.hasMatch(numberString)) {
+          int j = 0;
+          while (!numberString.substring(j).startsWith(check))
+            j++;
+          return PositionOfSequenceOutput(
+              numberString, index, j + 1);
+        }
+        index = index + 1;
+      }
+    }
+  }
+
+  return PositionOfSequenceOutput('-1', 0, 0);
 }
