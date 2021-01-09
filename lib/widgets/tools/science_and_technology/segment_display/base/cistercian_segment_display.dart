@@ -4,7 +4,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 
 const _INITIAL_SEGMENTS = <String, bool>{
   'a': false, 'b': false, 'c': false, 'd': false, 'e': false, 'f': false, 'g': false,
-  'h': false, 'i': false, 'j': false, 'k': false, 'l': false, 'm': false, 'n': false,
+  'h': false, 'i': false, 'j': false, 'k': true, 'l': false, 'm': false, 'n': false,
   'o': false, 'p': false, 'q': false, 'r': false, 's': false, 't': false, 'u': false
 };
 
@@ -15,12 +15,12 @@ class CistercianSegmentDisplay extends NSegmentDisplay {
   final Function onChanged;
 
   CistercianSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged}) :
-        super(
-          key: key,
-          initialSegments: _INITIAL_SEGMENTS,
-          segments: segments,
-          readOnly: readOnly,
-          onChanged: onChanged,
-          type: SegmentDisplayType.CISTERCIAN
-        );
+    super(
+      key: key,
+      initialSegments: _INITIAL_SEGMENTS,
+      segments: segments,
+      readOnly: readOnly,
+      onChanged: onChanged,
+      type: SegmentDisplayType.CISTERCIAN
+    );
 }
