@@ -6,21 +6,21 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
 
 class NumberSequenceJacobsthalCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequenceJacobsthalCheckNumber() : super(mode: NumberSequencesMode.JACOBSTAHL);
+  NumberSequenceJacobsthalCheckNumber() : super(mode: NumberSequencesMode.JACOBSTAHL, maxIndex: 111111);
 }
 
 class NumberSequenceJacobsthalDigits extends NumberSequenceDigits {
-  NumberSequenceJacobsthalDigits() : super(mode: NumberSequencesMode.JACOBSTAHL);
+  NumberSequenceJacobsthalDigits() : super(mode: NumberSequencesMode.JACOBSTAHL, maxDigits: 111);
 }
 
 class NumberSequenceJacobsthalRange extends NumberSequenceRange {
-  NumberSequenceJacobsthalRange() : super(mode: NumberSequencesMode.JACOBSTAHL);
+  NumberSequenceJacobsthalRange() : super(mode: NumberSequencesMode.JACOBSTAHL, maxIndex: 111111);
 }
 
 class NumberSequenceJacobsthalNthNumber extends NumberSequenceNthNumber {
-  NumberSequenceJacobsthalNthNumber() : super(mode: NumberSequencesMode.JACOBSTAHL);
+  NumberSequenceJacobsthalNthNumber() : super(mode: NumberSequencesMode.JACOBSTAHL, maxIndex: 111111);
 }
 
 class NumberSequenceJacobsthalContains extends NumberSequenceContains {
-  NumberSequenceJacobsthalContains() : super(mode: NumberSequencesMode.JACOBSTAHL);
+  NumberSequenceJacobsthalContains() : super(mode: NumberSequencesMode.JACOBSTAHL, maxIndex: 111111);
 }

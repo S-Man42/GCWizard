@@ -6,21 +6,21 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
 
 class NumberSequencePellLucasCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequencePellLucasCheckNumber() : super(mode: NumberSequencesMode.PELL_LUCAS);
+  NumberSequencePellLucasCheckNumber() : super(mode: NumberSequencesMode.PELL_LUCAS, maxIndex: 111111);
 }
 
 class NumberSequencePellLucasDigits extends NumberSequenceDigits {
-  NumberSequencePellLucasDigits() : super(mode: NumberSequencesMode.PELL_LUCAS);
+  NumberSequencePellLucasDigits() : super(mode: NumberSequencesMode.PELL_LUCAS, maxDigits: 111);
 }
 
 class NumberSequencePellLucasRange extends NumberSequenceRange {
-  NumberSequencePellLucasRange() : super(mode: NumberSequencesMode.PELL_LUCAS);
+  NumberSequencePellLucasRange() : super(mode: NumberSequencesMode.PELL_LUCAS, maxIndex: 111111);
 }
 
 class NumberSequencePellLucasNthNumber extends NumberSequenceNthNumber {
-  NumberSequencePellLucasNthNumber() : super(mode: NumberSequencesMode.PELL_LUCAS);
+  NumberSequencePellLucasNthNumber() : super(mode: NumberSequencesMode.PELL_LUCAS, maxIndex: 111111);
 }
 
 class NumberSequencePellLucasContains extends NumberSequenceContains {
-  NumberSequencePellLucasContains() : super(mode: NumberSequencesMode.PELL_LUCAS);
+  NumberSequencePellLucasContains() : super(mode: NumberSequencesMode.PELL_LUCAS, maxIndex: 111111);
 }

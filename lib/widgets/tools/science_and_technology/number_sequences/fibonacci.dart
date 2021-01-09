@@ -6,21 +6,21 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
 
 class NumberSequenceFibonacciCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequenceFibonacciCheckNumber() : super(mode: NumberSequencesMode.FIBONACCI);
+  NumberSequenceFibonacciCheckNumber() : super(mode: NumberSequencesMode.FIBONACCI, maxIndex: 111111);
 }
 
 class NumberSequenceFibonacciDigits extends NumberSequenceDigits {
-  NumberSequenceFibonacciDigits() : super(mode: NumberSequencesMode.FIBONACCI);
+  NumberSequenceFibonacciDigits() : super(mode: NumberSequencesMode.FIBONACCI, maxDigits: 111);
 }
 
 class NumberSequenceFibonacciRange extends NumberSequenceRange {
-  NumberSequenceFibonacciRange() : super(mode: NumberSequencesMode.FIBONACCI);
+  NumberSequenceFibonacciRange() : super(mode: NumberSequencesMode.FIBONACCI, maxIndex: 111111);
 }
 
 class NumberSequenceFibonacciNthNumber extends NumberSequenceNthNumber {
-  NumberSequenceFibonacciNthNumber() : super(mode: NumberSequencesMode.FIBONACCI);
+  NumberSequenceFibonacciNthNumber() : super(mode: NumberSequencesMode.FIBONACCI, maxIndex: 111111);
 }
 
 class NumberSequenceFibonacciContains extends NumberSequenceContains {
-  NumberSequenceFibonacciContains() : super(mode: NumberSequencesMode.FIBONACCI);
+  NumberSequenceFibonacciContains() : super(mode: NumberSequencesMode.FIBONACCI, maxIndex: 111111);
 }

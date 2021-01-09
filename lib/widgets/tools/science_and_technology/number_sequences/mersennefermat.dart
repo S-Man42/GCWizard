@@ -6,21 +6,21 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
 
 class NumberSequenceMersenneFermatCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequenceMersenneFermatCheckNumber() : super(mode: NumberSequencesMode.MERSENNE_FERMAT);
+  NumberSequenceMersenneFermatCheckNumber() : super(mode: NumberSequencesMode.MERSENNE_FERMAT, maxIndex: 111111);
 }
 
 class NumberSequenceMersenneFermatDigits extends NumberSequenceDigits {
-  NumberSequenceMersenneFermatDigits() : super(mode: NumberSequencesMode.MERSENNE_FERMAT);
+  NumberSequenceMersenneFermatDigits() : super(mode: NumberSequencesMode.MERSENNE_FERMAT, maxDigits: 111);
 }
 
 class NumberSequenceMersenneFermatRange extends NumberSequenceRange {
-  NumberSequenceMersenneFermatRange() : super(mode: NumberSequencesMode.MERSENNE_FERMAT);
+  NumberSequenceMersenneFermatRange() : super(mode: NumberSequencesMode.MERSENNE_FERMAT, maxIndex: 111111);
 }
 
 class NumberSequenceMersenneFermatNthNumber extends NumberSequenceNthNumber {
-  NumberSequenceMersenneFermatNthNumber() : super(mode: NumberSequencesMode.MERSENNE_FERMAT);
+  NumberSequenceMersenneFermatNthNumber() : super(mode: NumberSequencesMode.MERSENNE_FERMAT, maxIndex: 111111);
 }
 
 class NumberSequenceMersenneFermatContains extends NumberSequenceContains {
-  NumberSequenceMersenneFermatContains() : super(mode: NumberSequencesMode.MERSENNE_FERMAT);
+  NumberSequenceMersenneFermatContains() : super(mode: NumberSequencesMode.MERSENNE_FERMAT, maxIndex: 111111);
 }

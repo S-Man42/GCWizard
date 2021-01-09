@@ -6,21 +6,21 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
 
 class NumberSequenceRecamanCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequenceRecamanCheckNumber() : super(mode: NumberSequencesMode.RECAMAN);
+  NumberSequenceRecamanCheckNumber() : super(mode: NumberSequencesMode.RECAMAN, maxIndex: 111111);
 }
 
 class NumberSequenceRecamanDigits extends NumberSequenceDigits {
-  NumberSequenceRecamanDigits() : super(mode: NumberSequencesMode.RECAMAN);
+  NumberSequenceRecamanDigits() : super(mode: NumberSequencesMode.RECAMAN, maxDigits: 111);
 }
 
 class NumberSequenceRecamanRange extends NumberSequenceRange {
-  NumberSequenceRecamanRange() : super(mode: NumberSequencesMode.RECAMAN);
+  NumberSequenceRecamanRange() : super(mode: NumberSequencesMode.RECAMAN, maxIndex: 111111);
 }
 
 class NumberSequenceRecamanNthNumber extends NumberSequenceNthNumber {
-  NumberSequenceRecamanNthNumber() : super(mode: NumberSequencesMode.RECAMAN);
+  NumberSequenceRecamanNthNumber() : super(mode: NumberSequencesMode.RECAMAN, maxIndex: 111111);
 }
 
 class NumberSequenceRecamanContains extends NumberSequenceContains {
-  NumberSequenceRecamanContains() : super(mode: NumberSequencesMode.RECAMAN);
+  NumberSequenceRecamanContains() : super(mode: NumberSequencesMode.RECAMAN, maxIndex: 111111);
 }

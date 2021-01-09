@@ -6,21 +6,21 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
 
 class NumberSequencePellCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequencePellCheckNumber() : super(mode: NumberSequencesMode.PELL);
+  NumberSequencePellCheckNumber() : super(mode: NumberSequencesMode.PELL, maxIndex: 111111);
 }
 
 class NumberSequencePellDigits extends NumberSequenceDigits {
-  NumberSequencePellDigits() : super(mode: NumberSequencesMode.PELL);
+  NumberSequencePellDigits() : super(mode: NumberSequencesMode.PELL, maxDigits: 111);
 }
 
 class NumberSequencePellRange extends NumberSequenceRange {
-  NumberSequencePellRange() : super(mode: NumberSequencesMode.PELL);
+  NumberSequencePellRange() : super(mode: NumberSequencesMode.PELL, maxIndex: 111111);
 }
 
 class NumberSequencePellNthNumber extends NumberSequenceNthNumber {
-  NumberSequencePellNthNumber() : super(mode: NumberSequencesMode.PELL);
+  NumberSequencePellNthNumber() : super(mode: NumberSequencesMode.PELL, maxIndex: 111111);
 }
 
 class NumberSequencePellContains extends NumberSequenceContains {
-  NumberSequencePellContains() : super(mode: NumberSequencesMode.PELL);
+  NumberSequencePellContains() : super(mode: NumberSequencesMode.PELL, maxIndex: 111111);
 }

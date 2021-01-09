@@ -6,21 +6,21 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
 
 class NumberSequenceLucasCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequenceLucasCheckNumber() : super(mode: NumberSequencesMode.LUCAS);
+  NumberSequenceLucasCheckNumber() : super(mode: NumberSequencesMode.LUCAS, maxIndex: 111111);
 }
 
 class NumberSequenceLucasDigits extends NumberSequenceDigits {
-  NumberSequenceLucasDigits() : super(mode: NumberSequencesMode.LUCAS);
+  NumberSequenceLucasDigits() : super(mode: NumberSequencesMode.LUCAS, maxDigits: 111);
 }
 
 class NumberSequenceLucasRange extends NumberSequenceRange {
-  NumberSequenceLucasRange() : super(mode: NumberSequencesMode.LUCAS);
+  NumberSequenceLucasRange() : super(mode: NumberSequencesMode.LUCAS, maxIndex: 111111);
 }
 
 class NumberSequenceLucasNthNumber extends NumberSequenceNthNumber {
-  NumberSequenceLucasNthNumber() : super(mode: NumberSequencesMode.LUCAS);
+  NumberSequenceLucasNthNumber() : super(mode: NumberSequencesMode.LUCAS, maxIndex: 111111);
 }
 
 class NumberSequenceLucasContains extends NumberSequenceContains {
-  NumberSequenceLucasContains() : super(mode: NumberSequencesMode.LUCAS);
+  NumberSequenceLucasContains() : super(mode: NumberSequencesMode.LUCAS, maxIndex: 111111);
 }

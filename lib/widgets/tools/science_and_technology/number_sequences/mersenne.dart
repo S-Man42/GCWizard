@@ -6,21 +6,21 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
 
 class NumberSequenceMersenneCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequenceMersenneCheckNumber() : super(mode: NumberSequencesMode.MERSENNE);
+  NumberSequenceMersenneCheckNumber() : super(mode: NumberSequencesMode.MERSENNE, maxIndex: 111111);
 }
 
 class NumberSequenceMersenneDigits extends NumberSequenceDigits {
-  NumberSequenceMersenneDigits() : super(mode: NumberSequencesMode.MERSENNE);
+  NumberSequenceMersenneDigits() : super(mode: NumberSequencesMode.MERSENNE, maxDigits: 111);
 }
 
 class NumberSequenceMersenneRange extends NumberSequenceRange {
-  NumberSequenceMersenneRange() : super(mode: NumberSequencesMode.MERSENNE);
+  NumberSequenceMersenneRange() : super(mode: NumberSequencesMode.MERSENNE, maxIndex: 111111);
 }
 
 class NumberSequenceMersenneNthNumber extends NumberSequenceNthNumber {
-  NumberSequenceMersenneNthNumber() : super(mode: NumberSequencesMode.MERSENNE);
+  NumberSequenceMersenneNthNumber() : super(mode: NumberSequencesMode.MERSENNE, maxIndex: 111111);
 }
 
 class NumberSequenceMersenneContains extends NumberSequenceContains {
-  NumberSequenceMersenneContains() : super(mode: NumberSequencesMode.MERSENNE);
+  NumberSequenceMersenneContains() : super(mode: NumberSequencesMode.MERSENNE, maxIndex: 111111);
 }
