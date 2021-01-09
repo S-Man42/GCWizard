@@ -6,8 +6,8 @@ import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 
 class NumberSequenceNthNumber extends StatefulWidget {
   final NumberSequencesMode mode;
-  final int maxRange;
-  const NumberSequenceNthNumber({Key key, this.mode, this.maxRange}) : super(key: key);
+  final int maxIndex;
+  const NumberSequenceNthNumber({Key key, this.mode, this.maxIndex}) : super(key: key);
 
   @override
   NumberSequenceNthNumberState createState() => NumberSequenceNthNumberState();
@@ -35,7 +35,7 @@ class NumberSequenceNthNumberState extends State<NumberSequenceNthNumber> {
         GCWIntegerSpinner(
           title: i18n(context, 'numbersequence_inputn'),
           min: 0,
-          max: widget.maxRange,
+          max: widget.maxIndex,
           value: _currentInputN,
           onChanged: (value) {
             setState(() {
