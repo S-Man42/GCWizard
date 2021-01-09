@@ -30,6 +30,8 @@ import 'package:gc_wizard/widgets/selector_lists/numbersequence_lucas_selection.
 import 'package:gc_wizard/widgets/selector_lists/numbersequence_fibonacci_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numbersequence_mersenne_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numbersequence_fermat_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_mersennefermat_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_factorial_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numbersequence_pell_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numbersequence_jacobsthal_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numbersequence_pelllucas_selection.dart';
@@ -195,7 +197,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/catalan.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/recaman.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/factorial.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fermat.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersennefermat.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fibonacci.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_lucas.dart';
@@ -261,7 +265,7 @@ class Registry {
   static final SEARCHSTRING_HASHES_SHA3 = SEARCHSTRING_HASHES_SHA + 'sha3 sha-3 ';
   static final SEARCHSTRING_IRRATIONALNUMBERS = 'irrational number irrationale zahlen fraction decimal digit nachkommastelle ';
   static final SEARCHSTRING_NUMERALWORDS = 'numeralwords zahlwoerter numberwords zaehlwort zahlwort zaehlwoerter numerals';
-  static final SEARCHSTRING_NUMBERSEQUENCES = 'zahlenfolgen number sequences lucas fibonacci fermat mersenne jacobsthal pell';
+  static final SEARCHSTRING_NUMBERSEQUENCES = 'zahlenfolgen number sequences';
   static final SEARCHSTRING_PHI = SEARCHSTRING_IRRATIONALNUMBERS + 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PI = SEARCHSTRING_IRRATIONALNUMBERS + 'pi circle kreis 3,1415926535 3.1415926535 ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
@@ -1459,322 +1463,386 @@ class Registry {
       GCWTool(
         tool: NumberSequenceFermatSelection(),
         i18nPrefix: 'numbersequence_fermat',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat oeis A000251',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneFermatSelection(),
+        i18nPrefix: 'numbersequence_mersennefermat',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat oeis A000051',
+      ),
+      GCWTool(
+        tool: NumberSequenceFactorialSelection(),
+        i18nPrefix: 'numbersequence_factorial',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fakultaet faktorielle factorial',
       ),
       GCWTool(
         tool: NumberSequenceFibonacciSelection(),
         i18nPrefix: 'numbersequence_fibonacci',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fibonacci oeis A000045',
       ),
       GCWTool(
         tool: NumberSequenceMersenneSelection(),
         i18nPrefix: 'numbersequence_mersenne',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne oeis A000225',
       ),
       GCWTool(
         tool: NumberSequenceLucasSelection(),
         i18nPrefix: 'numbersequence_lucas',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas oeis A000032',
       ),
       GCWTool(
         tool: NumberSequencePellSelection(),
         i18nPrefix: 'numbersequence_pell',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell oeis A000129',
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalSelection(),
         i18nPrefix: 'numbersequence_jacobsthal',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oeis A001045',
       ),
       GCWTool(
         tool: NumberSequencePellLucasSelection(),
         i18nPrefix: 'numbersequence_pelllucas',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas oeis A002203',
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalLucasSelection(),
         i18nPrefix: 'numbersequence_jacobsthallucas',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas A014551',
       ),
       GCWTool(
         tool: NumberSequenceCatalanSelection(),
         i18nPrefix: 'numbersequence_catalan',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan oeis A000108',
       ),
       GCWTool(
         tool: NumberSequenceRecamanSelection(),
         i18nPrefix: 'numbersequence_recaman',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'recaman oeis A005132',
+      ),
+
+      //NumberSequenceSelection Factorial ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceFactorialNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'factorial fakultaet faktorielle positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceFactorialRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'factorial fakultaet faktorielle range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceFactorialCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'factorial fakultaet faktorielle tests is ist ueberpruefungen',
+      ),
+      GCWTool(
+        tool: NumberSequenceFactorialDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'factorial fakultaet faktorielle',
+      ),
+      GCWTool(
+        tool: NumberSequenceFactorialContains(),
+        i18nPrefix: 'numbersequence_contains',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'factorial fakultaet faktorielle',
+      ),
+
+      //NumberSequenceSelection Mersenne-Fermat ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceMersenneFermatNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'mersenne fermat positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneFermatRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'mersenne fermat range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneFermatCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat tests is ist ueberpruefungen',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneFermatDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneFermatContains(),
+        i18nPrefix: 'numbersequence_contains',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat',
       ),
 
       //NumberSequenceSelection Fermat ****************************************************************************************
       GCWTool(
         tool: NumberSequenceFermatNthNumber(),
         i18nPrefix: 'numbersequence_nth',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'fermat positions position',
       ),
       GCWTool(
         tool: NumberSequenceFermatRange(),
         i18nPrefix: 'numbersequence_range',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat range bereich',
       ),
       GCWTool(
         tool: NumberSequenceFermatCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat tests is ist ueberpruefungen' ,
       ),
       GCWTool(
         tool: NumberSequenceFermatDigits(),
         i18nPrefix: 'numbersequence_digits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat',
       ),
       GCWTool(
         tool: NumberSequenceFermatContains(),
         i18nPrefix: 'numbersequence_contains',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat',
       ),
 
       //NumberSequenceSelection Lucas ****************************************************************************************
       GCWTool(
         tool: NumberSequenceLucasNthNumber(),
         i18nPrefix: 'numbersequence_nth',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'lucas positions position',
       ),
       GCWTool(
         tool: NumberSequenceLucasRange(),
         i18nPrefix: 'numbersequence_range',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas range bereich',
       ),
       GCWTool(
         tool: NumberSequenceLucasCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas tests is ist ueberpruefungen' ,
       ),
       GCWTool(
         tool: NumberSequenceLucasDigits(),
         i18nPrefix: 'numbersequence_digits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas',
       ),
       GCWTool(
         tool: NumberSequenceLucasContains(),
         i18nPrefix: 'numbersequence_contains',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas',
       ),
 
       //NumberSequenceSelection Fibonacci ****************************************************************************************
       GCWTool(
         tool: NumberSequenceFibonacciNthNumber(),
         i18nPrefix: 'numbersequence_nth',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'fibonacci positions position',
       ),
       GCWTool(
         tool: NumberSequenceFibonacciRange(),
         i18nPrefix: 'numbersequence_range',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fibonacci range bereich',
       ),
       GCWTool(
         tool: NumberSequenceFibonacciCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fibonacci tests is ist ueberpruefungen' ,
       ),
       GCWTool(
         tool: NumberSequenceFibonacciDigits(),
         i18nPrefix: 'numbersequence_digits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fibonacci',
       ),
       GCWTool(
         tool: NumberSequenceFibonacciContains(),
         i18nPrefix: 'numbersequence_contains',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fibonacci',
       ),
 
       //NumberSequenceSelection Mersenne ****************************************************************************************
       GCWTool(
         tool: NumberSequenceMersenneNthNumber(),
         i18nPrefix: 'numbersequence_nth',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'mersenne positions position',
       ),
       GCWTool(
         tool: NumberSequenceMersenneRange(),
         i18nPrefix: 'numbersequence_range',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne range bereich',
       ),
       GCWTool(
         tool: NumberSequenceMersenneCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne tests is ist ueberpruefungen' ,
       ),
       GCWTool(
         tool: NumberSequenceMersenneDigits(),
         i18nPrefix: 'numbersequence_digits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne',
       ),
       GCWTool(
         tool: NumberSequenceMersenneContains(),
         i18nPrefix: 'numbersequence_contains',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne',
       ),
 
       //NumberSequenceSelection Pell ****************************************************************************************
       GCWTool(
         tool: NumberSequencePellNthNumber(),
         i18nPrefix: 'numbersequence_nth',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'pell positions position',
       ),
       GCWTool(
         tool: NumberSequencePellRange(),
         i18nPrefix: 'numbersequence_range',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell range bereich',
       ),
       GCWTool(
         tool: NumberSequencePellCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell tests is ist ueberpruefungen' ,
       ),
       GCWTool(
         tool: NumberSequencePellDigits(),
         i18nPrefix: 'numbersequence_digits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell',
       ),
       GCWTool(
         tool: NumberSequencePellContains(),
         i18nPrefix: 'numbersequence_contains',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell',
       ),
 
       //NumberSequenceSelection Pell-Lucas ****************************************************************************************
       GCWTool(
         tool: NumberSequencePellLucasNthNumber(),
         i18nPrefix: 'numbersequence_nth',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'pell lucas positions position',
       ),
       GCWTool(
         tool: NumberSequencePellLucasRange(),
         i18nPrefix: 'numbersequence_range',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas range bereich',
       ),
       GCWTool(
         tool: NumberSequencePellLucasCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas tests is ist ueberpruefungen' ,
       ),
       GCWTool(
         tool: NumberSequencePellLucasDigits(),
         i18nPrefix: 'numbersequence_digits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas',
       ),
       GCWTool(
         tool: NumberSequencePellLucasContains(),
         i18nPrefix: 'numbersequence_contains',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas',
       ),
 
       //NumberSequenceSelection Jacobsthal ****************************************************************************************
       GCWTool(
         tool: NumberSequenceJacobsthalNthNumber(),
         i18nPrefix: 'numbersequence_nth',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'jacobsthal positions position',
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalRange(),
         i18nPrefix: 'numbersequence_range',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal range bereich',
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal tests is ist ueberpruefungen' ,
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalDigits(),
         i18nPrefix: 'numbersequence_digits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal',
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalContains(),
         i18nPrefix: 'numbersequence_contains',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal',
       ),
 
       //NumberSequenceSelection Jacobsthal-Lucas ****************************************************************************************
       GCWTool(
         tool: NumberSequenceJacobsthalLucasNthNumber(),
         i18nPrefix: 'numbersequence_nth',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'jacobsthal lucas positions position',
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalLucasRange(),
         i18nPrefix: 'numbersequence_range',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas range bereich',
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalLucasCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas tests is ist ueberpruefungen' ,
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalLucasDigits(),
         i18nPrefix: 'numbersequence_digits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas',
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalLucasContains(),
         i18nPrefix: 'numbersequence_contains',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas',
       ),
 
       //NumberSequenceSelection Catalan ****************************************************************************************
       GCWTool(
         tool: NumberSequenceCatalanNthNumber(),
         i18nPrefix: 'numbersequence_nth',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'catalan positions position',
       ),
       GCWTool(
         tool: NumberSequenceCatalanRange(),
         i18nPrefix: 'numbersequence_range',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan range bereich',
       ),
       GCWTool(
         tool: NumberSequenceCatalanCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan tests is ist ueberpruefungen' ,
       ),
       GCWTool(
         tool: NumberSequenceCatalanDigits(),
         i18nPrefix: 'numbersequence_digits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan',
       ),
       GCWTool(
         tool: NumberSequenceCatalanContains(),
         i18nPrefix: 'numbersequence_contains',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan',
       ),
 
       //NumberSequenceSelection Recaman ****************************************************************************************
       GCWTool(
         tool: NumberSequenceRecamanNthNumber(),
         i18nPrefix: 'numbersequence_nth',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'recaman positions position',
       ),
       GCWTool(
         tool: NumberSequenceRecamanRange(),
         i18nPrefix: 'numbersequence_range',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'recaman range bereich',
       ),
       GCWTool(
         tool: NumberSequenceRecamanCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'recaman tests is ist ueberpruefungen' ,
       ),
       GCWTool(
         tool: NumberSequenceRecamanDigits(),
         i18nPrefix: 'numbersequence_digits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'recaman',
       ),
       GCWTool(
         tool: NumberSequenceRecamanContains(),
         i18nPrefix: 'numbersequence_contains',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES +'recaman',
       ),
 
       //NumeralWordsSelection ****************************************************************************************
@@ -2000,7 +2068,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'barbier',
         iconFilename: 'J.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'charles barbier nachtschrift militär military army armee lautschrift dots points punkte tactiles blindenschrift'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'charles barbier nachtschrift militaer military army armee lautschrift dots points punkte tactiles blindenschrift'
       ),
       GCWSymbolTableTool(
         symbolKey: 'barcode39',
