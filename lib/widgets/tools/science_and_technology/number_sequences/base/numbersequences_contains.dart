@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class NumberSequenceContains extends StatefulWidget {
@@ -33,9 +32,6 @@ class NumberSequenceContainsState extends State<NumberSequenceContains> {
 
     return Column(
       children: <Widget>[
-        GCWTextDivider(
-            text: i18n(context, NumberSequencesName[widget.mode])
-        ),
         GCWIntegerSpinner(
           value: currentInputN,
           min: 0,
@@ -52,15 +48,15 @@ class NumberSequenceContainsState extends State<NumberSequenceContains> {
   }
 
   _buildOutput() {
-    List<List<String>> columnData = new List<List<String>>();
-    getPositionOfSequenceOutput detailedOutput;
+    List<List<String>> columnData = [];
+    PositionOfSequenceOutput detailedOutput;
 
     var flexData;
 
     detailedOutput = getFirstPositionOfSequence(widget.mode, currentInputN.toString());
 
     columnData.add([i18n(context, 'numbersequence_output_col_1'), i18n(context, 'numbersequence_output_col_2'), i18n(context, 'numbersequence_output_col_3')]);
-    columnData.add([detailedOutput.number, detailedOutput.PositionSequence, detailedOutput.PositionDigits]);
+    columnData.add([detailedOutput.number, detailedOutput.positionSequence, detailedOutput.positionDigits]);
 
     flexData = [4, 2, 1];
 

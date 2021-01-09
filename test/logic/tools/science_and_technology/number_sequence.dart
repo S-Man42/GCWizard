@@ -9,11 +9,11 @@ void main() {
       {'sequence' : NumberSequencesMode.LUCAS,            'position' : 30, 'expectedOutput' : '1860498'},
       {'sequence' : NumberSequencesMode.FIBONACCI,        'position' : 30, 'expectedOutput' : '832040'},
       {'sequence' : NumberSequencesMode.JACOBSTAHL,       'position' : 30, 'expectedOutput' : '357913941'},
-      {'sequence' : NumberSequencesMode.JACOBSTHALLUCAS,  'position' : 30, 'expectedOutput' : '1073741825'},
+      {'sequence' : NumberSequencesMode.JACOBSTHAL_LUCAS,  'position' : 30, 'expectedOutput' : '1073741825'},
       {'sequence' : NumberSequencesMode.PELL,             'position' : 30, 'expectedOutput' : '107578520350'},
       {'sequence' : NumberSequencesMode.FERMAT,           'position' : 30, 'expectedOutput' : '1073741825'},
       {'sequence' : NumberSequencesMode.MERSENNE,         'position' : 30, 'expectedOutput' : '1073741823'},
-      {'sequence' : NumberSequencesMode.PELLLUCAS,        'position' : 30, 'expectedOutput' : '304278004998'},
+      {'sequence' : NumberSequencesMode.PELL_LUCAS,        'position' : 30, 'expectedOutput' : '304278004998'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -30,11 +30,11 @@ void main() {
       {'sequence' : NumberSequencesMode.LUCAS,            'expectedOutput' : '30', 'number' : 1860498},
       {'sequence' : NumberSequencesMode.FIBONACCI,        'expectedOutput' : '30', 'number' : 832040},
       {'sequence' : NumberSequencesMode.JACOBSTAHL,       'expectedOutput' : '30', 'number' : 357913941},
-      {'sequence' : NumberSequencesMode.JACOBSTHALLUCAS,  'expectedOutput' : '30', 'number' : 1073741825},
+      {'sequence' : NumberSequencesMode.JACOBSTHAL_LUCAS,  'expectedOutput' : '30', 'number' : 1073741825},
       {'sequence' : NumberSequencesMode.PELL,             'expectedOutput' : '30', 'number' : 107578520350},
       {'sequence' : NumberSequencesMode.FERMAT,           'expectedOutput' : '30', 'number' : 1073741825},
       {'sequence' : NumberSequencesMode.MERSENNE,         'expectedOutput' : '30', 'number' : 1073741823},
-      {'sequence' : NumberSequencesMode.PELLLUCAS,        'expectedOutput' : '30', 'number' : 304278004998},
+      {'sequence' : NumberSequencesMode.PELL_LUCAS,        'expectedOutput' : '30', 'number' : 304278004998},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -51,11 +51,11 @@ void main() {
       {'sequence' : NumberSequencesMode.LUCAS,            'start' : 10, 'stop' : 15, 'expectedOutput' : ['123','199','322','521','843','1364']},
       {'sequence' : NumberSequencesMode.FIBONACCI,        'start' : 10, 'stop' : 15, 'expectedOutput' : ['55','89','144','233','377','610']},
       {'sequence' : NumberSequencesMode.JACOBSTAHL,       'start' : 10, 'stop' : 15, 'expectedOutput' : ['341','683','1365','2731','5461','10923']},
-      {'sequence' : NumberSequencesMode.JACOBSTHALLUCAS,  'start' : 10, 'stop' : 15, 'expectedOutput' : ['1025','2047','4097','8191','16385','32767']},
+      {'sequence' : NumberSequencesMode.JACOBSTHAL_LUCAS,  'start' : 10, 'stop' : 15, 'expectedOutput' : ['1025','2047','4097','8191','16385','32767']},
       {'sequence' : NumberSequencesMode.PELL,             'start' : 10, 'stop' : 15, 'expectedOutput' : ['2378','5741','13860','33461','80782','195025']},
       {'sequence' : NumberSequencesMode.FERMAT,           'start' : 10, 'stop' : 15, 'expectedOutput' : ['1025','2049','4097','8193','16385','32769']},
       {'sequence' : NumberSequencesMode.MERSENNE,         'start' : 10, 'stop' : 15, 'expectedOutput' : ['1023','2047','4095','8191','16383','32767']},
-      {'sequence' : NumberSequencesMode.PELLLUCAS,        'start' : 10, 'stop' : 15, 'expectedOutput' : ['6726','16238','39202','94642','228486','551614']},
+      {'sequence' : NumberSequencesMode.PELL_LUCAS,        'start' : 10, 'stop' : 15, 'expectedOutput' : ['6726','16238','39202','94642','228486','551614']},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -77,11 +77,11 @@ void main() {
       {'sequence' : NumberSequencesMode.LUCAS,            'digits' : 4, 'expectedOutput' : ['1364','2207','3571','5778','9349']},
       {'sequence' : NumberSequencesMode.FIBONACCI,        'digits' : 4, 'expectedOutput' : ['1597','2584','4181','6765']},
       {'sequence' : NumberSequencesMode.JACOBSTAHL,       'digits' : 4, 'expectedOutput' : ['1365','2731','5461']},
-      {'sequence' : NumberSequencesMode.JACOBSTHALLUCAS,  'digits' : 4, 'expectedOutput' : ['1025','2047','4097','8191']},
+      {'sequence' : NumberSequencesMode.JACOBSTHAL_LUCAS,  'digits' : 4, 'expectedOutput' : ['1025','2047','4097','8191']},
       {'sequence' : NumberSequencesMode.PELL,             'digits' : 4, 'expectedOutput' : ['2378','5741']},
       {'sequence' : NumberSequencesMode.FERMAT,           'digits' : 4, 'expectedOutput' : ['1025','2049','4097','8193']},
       {'sequence' : NumberSequencesMode.MERSENNE,         'digits' : 4, 'expectedOutput' : ['1023','2047','4095','8191']},
-      {'sequence' : NumberSequencesMode.PELLLUCAS,        'digits' : 4, 'expectedOutput' : ['1154','2786','6726']},
+      {'sequence' : NumberSequencesMode.PELL_LUCAS,        'digits' : 4, 'expectedOutput' : ['1154','2786','6726']},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -98,34 +98,34 @@ void main() {
   });
   group("numbersequence.getFirstPositionOfSequence:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'sequence' : NumberSequencesMode.CATALAN,          'number' : '27361', 'expectedOutput' : getPositionOfSequenceOutput('7107690250413013761896628105173181658589772625392889208165477368352734802736195805963143770815133859332929972050727625767936724822523808745285247568658130484108957872094022098605943811100613700',
+      {'sequence' : NumberSequencesMode.CATALAN,          'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('7107690250413013761896628105173181658589772625392889208165477368352734802736195805963143770815133859332929972050727625767936724822523808745285247568658130484108957872094022098605943811100613700',
           '327','73')},
-      {'sequence' : NumberSequencesMode.RECAMAN,          'number' : '27361', 'expectedOutput' : getPositionOfSequenceOutput('273610',
+      {'sequence' : NumberSequencesMode.RECAMAN,          'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('273610',
           '83075','1')},
-      {'sequence' : NumberSequencesMode.LUCAS,            'number' : '27361', 'expectedOutput' : getPositionOfSequenceOutput('18748771816031882432361279585437379027793299399977527519157412464660965640249644313681249312162162629997750374920749068562512008441470175698571763320577336460472736199197895450368969873315889049038863774234995048085554243',
+      {'sequence' : NumberSequencesMode.LUCAS,            'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('18748771816031882432361279585437379027793299399977527519157412464660965640249644313681249312162162629997750374920749068562512008441470175698571763320577336460472736199197895450368969873315889049038863774234995048085554243',
           '1054','161')},
-      {'sequence' : NumberSequencesMode.FIBONACCI,        'number' : '27361', 'expectedOutput' : getPositionOfSequenceOutput('192825882676106134378869728155374187660112414871811939193829103432318224700718717483263710524617634117161273616072137461357355627213312950037507329891012147460930383989353659980559007148865250358951233784907640314179868106583934968628863665186',
+      {'sequence' : NumberSequencesMode.FIBONACCI,        'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('192825882676106134378869728155374187660112414871811939193829103432318224700718717483263710524617634117161273616072137461357355627213312950037507329891012147460930383989353659980559007148865250358951233784907640314179868106583934968628863665186',
           '1161','106')},
-      {'sequence' : NumberSequencesMode.JACOBSTAHL,       'number' : '27361', 'expectedOutput' : getPositionOfSequenceOutput('2590225189634305427892615875764691875523209118736186028335749879651872380273611330901',
+      {'sequence' : NumberSequencesMode.JACOBSTAHL,       'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('2590225189634305427892615875764691875523209118736186028335749879651872380273611330901',
           '282','74')},
-      {'sequence' : NumberSequencesMode.JACOBSTHALLUCAS,  'number' : '27361', 'expectedOutput' : getPositionOfSequenceOutput('6546781215792283740026379393655198304433284092086129578966582736192267592809349109766540184651808314301773368255120142018434513091770786106657055178751',
+      {'sequence' : NumberSequencesMode.JACOBSTHAL_LUCAS,  'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('6546781215792283740026379393655198304433284092086129578966582736192267592809349109766540184651808314301773368255120142018434513091770786106657055178751',
           '501','61')},
-      {'sequence' : NumberSequencesMode.PELL,             'number' : '27361', 'expectedOutput' : getPositionOfSequenceOutput('20384220119784227273612728531358390881151829634178',
+      {'sequence' : NumberSequencesMode.PELL,             'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('20384220119784227273612728531358390881151829634178',
           '130','18')},
-      {'sequence' : NumberSequencesMode.FERMAT,           'number' : '27361', 'expectedOutput' : getPositionOfSequenceOutput('6546781215792283740026379393655198304433284092086129578966582736192267592809349109766540184651808314301773368255120142018434513091770786106657055178753',
+      {'sequence' : NumberSequencesMode.FERMAT,           'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('6546781215792283740026379393655198304433284092086129578966582736192267592809349109766540184651808314301773368255120142018434513091770786106657055178753',
           '501','61')},
-      {'sequence' : NumberSequencesMode.MERSENNE,         'number' : '27361', 'expectedOutput' : getPositionOfSequenceOutput('6546781215792283740026379393655198304433284092086129578966582736192267592809349109766540184651808314301773368255120142018434513091770786106657055178751',
+      {'sequence' : NumberSequencesMode.MERSENNE,         'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('6546781215792283740026379393655198304433284092086129578966582736192267592809349109766540184651808314301773368255120142018434513091770786106657055178751',
           '501','61')},
-      {'sequence' : NumberSequencesMode.PELLLUCAS,        'number' : '27361', 'expectedOutput' : getPositionOfSequenceOutput('29774604858329219664456332466656921673276471399199273612561389350268513626587176095809188915836887219380276486',
+      {'sequence' : NumberSequencesMode.PELL_LUCAS,        'number' : '27361', 'expectedOutput' : PositionOfSequenceOutput('29774604858329219664456332466656921673276471399199273612561389350268513626587176095809188915836887219380276486',
           '286','51')},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('sequence: ${elem['sequence']}, number: ${elem['start']}', () {
-        getPositionOfSequenceOutput _actual = getFirstPositionOfSequence(elem['sequence'], elem['number']);
+        PositionOfSequenceOutput _actual = getFirstPositionOfSequence(elem['sequence'], elem['number']);
         expect(_actual.number, elem['expectedOutput'].number);
-        expect(_actual.PositionSequence, elem['expectedOutput'].PositionSequence);
-        expect(_actual.PositionDigits, elem['expectedOutput'].PositionDigits);
+        expect(_actual.positionSequence, elem['expectedOutput'].PositionSequence);
+        expect(_actual.positionDigits, elem['expectedOutput'].PositionDigits);
       });
     });
   });
