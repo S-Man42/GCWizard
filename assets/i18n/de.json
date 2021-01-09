@@ -465,10 +465,6 @@
   "chef_hint_recipe_methods_en" : "Wurde das Schlüsselwort 'Methods.' definiert über der Methodenliste?",
   "chef_hint_recipe_oven_temperature" : "Wurde die Ofentemperatur korrekt vorgegeben?",
   "chef_hint_no_hint_available" : "Kein Hinweis verfügbar",
-  "chef_download_documentation_title" : "Download der Chef-Dokumentation",
-  "chef_download_documentation_text" : "Möchtest Du die Dokumentation herunterladen?",
-  "chef_download_documentation_url" : "https://misc.gcwizard.net/chef_de.pdf",
-  "chef_online_help_url" : "https://blog.gcwizard.net/de/2020/06/12/variable-koordinate/",
 
   "chickenlanguage_title" : "Hühnersprache",
   "chickenlanguage_description" : "Spielsprache, Geheimsprache",
