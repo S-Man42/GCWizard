@@ -502,10 +502,6 @@
   "chef_hint_recipe_methods_de" : "Did you specify 'Zubereitung:' above the methods?",
   "chef_hint_recipe_oven_temperature" : "Did you have the correct oven temperature?",
   "chef_hint_no_hint_available" : "No hint available",
-  "chef_download_documentation_title" : "Download the Chef-language documentation",
-  "chef_download_documentation_text" : "Would you like to download the documentation?",
-  "chef_download_documentation_url" : "https://misc.gcwizard.net/chef_en.pdf",
-  "chef_online_help_url" : "https://blog.gcwizard.net/en/2020/06/12/variable-koordinate/",
 
   "chickenlanguage_title" : "Chicken Language",
   "chickenlanguage_description" : "Game Language, Secret Language",
