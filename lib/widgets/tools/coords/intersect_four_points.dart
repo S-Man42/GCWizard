@@ -8,7 +8,7 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:latlong/latlong.dart';
 
@@ -31,6 +31,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
   var _currentCoordsFormat22 = defaultCoordFormat();
 
   var _currentMapPoints;
+  var _currentMapPolylines = <GCWMapPolyline>[];
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
 
@@ -39,10 +40,10 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
     super.initState();
 
     _currentMapPoints = [
-      MapPoint(point: _currentCoords11),
-      MapPoint(point: _currentCoords12),
-      MapPoint(point: _currentCoords21),
-      MapPoint(point: _currentCoords22),
+      GCWMapPoint(point: _currentCoords11),
+      GCWMapPoint(point: _currentCoords12),
+      GCWMapPoint(point: _currentCoords21),
+      GCWMapPoint(point: _currentCoords22),
     ];
   }
 
@@ -51,7 +52,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_intersectfourpoints_coord11'),
+          title: i18n(context, 'coords_intersectfourpoints_coord11'),
           coordsFormat: _currentCoordsFormat11,
           onChanged: (ret) {
             setState(() {
@@ -61,7 +62,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_intersectfourpoints_coord12'),
+          title: i18n(context, 'coords_intersectfourpoints_coord12'),
           coordsFormat: _currentCoordsFormat12,
           onChanged: (ret) {
             setState(() {
@@ -71,7 +72,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_intersectfourpoints_coord21'),
+          title: i18n(context, 'coords_intersectfourpoints_coord21'),
           coordsFormat: _currentCoordsFormat21,
           onChanged: (ret) {
             setState(() {
@@ -81,7 +82,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_intersectfourpoints_coord22'),
+          title: i18n(context, 'coords_intersectfourpoints_coord22'),
           coordsFormat: _currentCoordsFormat22,
           onChanged: (ret) {
             setState(() {
@@ -108,20 +109,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
-          geodetics: [
-            MapGeodetic(
-              start: _currentCoords11,
-              end: _currentCoords12
-            ),
-            MapGeodetic(
-                start: _currentCoords21,
-                end: _currentCoords22,
-                color: HSLColor
-                  .fromColor(COLOR_MAP_POLYLINE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
-                  .toColor()
-            ),
-          ],
+          polylines: _currentMapPolylines
         ),
       ],
     );
@@ -131,26 +119,39 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
     _currentIntersection = intersectFourPoints(_currentCoords11, _currentCoords12, _currentCoords21, _currentCoords22, defaultEllipsoid());
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords11,
         markerText: i18n(context, 'coords_intersectfourpoints_coord11'),
         coordinateFormat: _currentCoordsFormat11
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords12,
         markerText: i18n(context, 'coords_intersectfourpoints_coord12'),
         coordinateFormat: _currentCoordsFormat12
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords21,
         markerText: i18n(context, 'coords_intersectfourpoints_coord21'),
         coordinateFormat: _currentCoordsFormat21
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords22,
         markerText: i18n(context, 'coords_intersectfourpoints_coord22'),
         coordinateFormat: _currentCoordsFormat22
       )
+    ];
+
+    _currentMapPolylines = [
+      GCWMapPolyline(
+        points: [_currentMapPoints[0], _currentMapPoints[1]]
+      ),
+      GCWMapPolyline(
+        points: [_currentMapPoints[2], _currentMapPoints[3]],
+        color: HSLColor
+          .fromColor(COLOR_MAP_POLYLINE)
+          .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+          .toColor()
+      ),
     ];
 
     if (_currentIntersection == null) {
@@ -159,7 +160,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
     }
 
     _currentMapPoints.add(
-      MapPoint(
+      GCWMapPoint(
         point: _currentIntersection,
         color: COLOR_MAP_CALCULATEDPOINT,
         markerText: i18n(context, 'coords_common_intersection'),

@@ -22,7 +22,7 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
 import 'package:flutter/material.dart';
@@ -301,8 +301,8 @@ class _HashBreakerState extends State<HashBreaker> {
                     onPressed: () {
                       setState(() {
                         _currentEditId = substitution.key;
-                        _editKeyController.text = substitution.value.keys.first;
-                        _editValueController.text = substitution.value.values.first;
+                        _editKeyController.title = substitution.value.keys.first;
+                        _editValueController.title = substitution.value.values.first;
                         _currentEditedKey = substitution.value.keys.first;
                         _currentEditedValue = substitution.value.values.first;
                       });

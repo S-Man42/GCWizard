@@ -82,6 +82,5 @@ String i18n(BuildContext context, String key, {List<dynamic> parameters: const [
   }
 
   var text = AppLocalizations.of(context).translate(key);
-
   return map.isEmpty ? text : substitution(text, map);
 }

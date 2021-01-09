@@ -54,6 +54,7 @@ import 'package:gc_wizard/widgets/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_two_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersection.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/map_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
@@ -976,6 +977,13 @@ class Registry {
         searchStrings: SEARCHSTRING_COORDINATES + 'coordinateformatconverter converting koordinatenformatkonverter formate konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
       ),
       GCWTool(
+        tool: MapView(),
+        autoScroll: false,
+        i18nPrefix: 'coords_openmap',
+        iconPath: 'assets/coordinates/icon_variable_coordinate.png',
+        searchStrings: SEARCHSTRING_COORDINATES + 'mapview kartenansicht freiekarte openmap measurement messen messungen '
+      ),
+      GCWTool(
         tool: VariableCoordinateFormulas(),
         i18nPrefix: 'coords_variablecoordinate',
         iconPath: 'assets/coordinates/icon_variable_coordinate.png',
@@ -1154,7 +1162,7 @@ class Registry {
       GCWTool(
         tool: Chef(),
         i18nPrefix: 'chef',
-        searchStrings: 'chef language programming sprache esoteric esoterisch programmiersprache'
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'chef chefkoch kochrezepte rezepte kochen zutaten ingredients cooking cook recipes'
       ),
       GCWTool(
         tool: Brainfk(),
@@ -1164,7 +1172,7 @@ class Registry {
       GCWTool(
         tool: Deadfish(),
         i18nPrefix: 'deadfish',
-        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd '
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd toterfisch '
       ),
       GCWTool(
           tool: Malbolge(),

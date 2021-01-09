@@ -12,7 +12,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_angle.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class Intersection extends StatefulWidget {
@@ -34,14 +34,14 @@ class IntersectionState extends State<Intersection> {
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
   var _currentMapPoints;
-  List<MapGeodetic> _currentMapGeodetics = [];
+  List<GCWMapPolyline> _currentMapPolylines = [];
 
   @override
   void initState() {
     super.initState();
     _currentMapPoints = [
-      MapPoint(point: _currentCoords1),
-      MapPoint(point: _currentCoords2)
+      GCWMapPoint(point: _currentCoords1),
+      GCWMapPoint(point: _currentCoords2)
     ];
   }
 
@@ -50,7 +50,7 @@ class IntersectionState extends State<Intersection> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_intersection_coorda'),
+          title: i18n(context, 'coords_intersection_coorda'),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -68,7 +68,7 @@ class IntersectionState extends State<Intersection> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_intersection_coordb'),
+          title: i18n(context, 'coords_intersection_coordb'),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {
@@ -103,7 +103,7 @@ class IntersectionState extends State<Intersection> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
-          geodetics: _currentMapGeodetics
+          polylines: _currentMapPolylines
         ),
       ],
     );
@@ -115,22 +115,21 @@ class IntersectionState extends State<Intersection> {
     _currentIntersections = intersection(_currentCoords1, _currentAngle1['value'], _currentCoords2, _currentAngle2['value'], ells);
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords1,
         markerText: i18n(context, 'coords_intersection_coorda'),
         coordinateFormat: _currentCoordsFormat1
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords2,
         markerText: i18n(context, 'coords_intersection_coordb'),
         coordinateFormat: _currentCoordsFormat2
       )
     ];
 
-    _currentMapGeodetics = [
-      MapGeodetic(
-        start: _currentCoords1,
-        end: _currentCoords2
+    _currentMapPolylines = [
+      GCWMapPolyline(
+        points: [_currentMapPoints[0], _currentMapPoints[1]]
       )
     ];
 
@@ -152,18 +151,16 @@ class IntersectionState extends State<Intersection> {
         var endPoint1 = projection(_currentCoords1, _crsAB, dist * 3, ells);
         var endPoint2 = projection(_currentCoords2, _crsBA, dist * 3, ells);
 
-        _currentMapGeodetics.addAll([
-          MapGeodetic(
-            start: _currentCoords1,
-            end: endPoint1,
+        _currentMapPolylines.addAll([
+          GCWMapPolyline(
+            points: [_currentMapPoints[0], GCWMapPoint(point: endPoint1, isVisible: false)],
             color: HSLColor
               .fromColor(COLOR_MAP_POLYLINE)
               .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
               .toColor()
           ),
-          MapGeodetic(
-            start: _currentCoords2,
-            end: endPoint2,
+          GCWMapPolyline(
+            points: [_currentMapPoints[1], GCWMapPoint(point: endPoint2, isVisible: false)],
             color: HSLColor
               .fromColor(COLOR_MAP_POLYLINE)
               .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness -0.3)
@@ -177,18 +174,16 @@ class IntersectionState extends State<Intersection> {
         var distance2ToIntersect = distanceBearing(_currentCoords2, intersection, ells).distance;
         var endPoint2 = projection(_currentCoords2, _crsBA, distance2ToIntersect * 1.5, ells);
 
-        _currentMapGeodetics.addAll([
-          MapGeodetic(
-            start: _currentCoords1,
-            end: endPoint1,
+        _currentMapPolylines.addAll([
+          GCWMapPolyline(
+            points: [_currentMapPoints[0], GCWMapPoint(point: endPoint1, isVisible: false)],
             color: HSLColor
               .fromColor(COLOR_MAP_POLYLINE)
               .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
               .toColor()
           ),
-          MapGeodetic(
-            start: _currentCoords2,
-            end: endPoint2,
+          GCWMapPolyline(
+            points: [_currentMapPoints[1], GCWMapPoint(point: endPoint2, isVisible: false)],
             color: HSLColor
               .fromColor(COLOR_MAP_POLYLINE)
               .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness -0.3)
@@ -205,7 +200,7 @@ class IntersectionState extends State<Intersection> {
 
     _currentMapPoints.addAll(
       _currentIntersections
-        .map((intersection) => MapPoint(
+        .map((intersection) => GCWMapPoint(
           point: intersection,
           color: COLOR_MAP_CALCULATEDPOINT,
           markerText: i18n(context, 'coords_common_intersection'),

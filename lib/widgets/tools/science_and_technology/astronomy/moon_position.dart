@@ -29,7 +29,7 @@ class MoonPositionState extends State<MoonPosition> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'common_location'),
+          title: i18n(context, 'common_location'),
           coordsFormat: _currentCoordsFormat,
           onChanged: (ret) {
             setState(() {

@@ -22,7 +22,7 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
 
@@ -66,7 +66,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   var _editValueController;
 
   List<dynamic> _currentOutput = [];
-  List<MapPoint> _currentMapPoints = [];
+  List<GCWMapPoint> _currentMapPoints = [];
 
   @override
   void initState() {
@@ -485,8 +485,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       );
     }));
 
-    _currentMapPoints = List<MapPoint>.from((_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
-      return MapPoint(
+    _currentMapPoints = List<GCWMapPoint>.from((_currentCoordMode == GCWSwitchPosition.left ? normalCoords : leftPaddedCoords).map((coord) {
+      return GCWMapPoint(
         point: coord['coordinate'],
         markerText: _formatVariables(coord['variables']),
         coordinateFormat: _currentOutputFormat
