@@ -49,7 +49,7 @@ class NumberSequenceNthNumberState extends State<NumberSequenceNthNumber> {
 
   _buildOutput() {
     return GCWDefaultOutput(
-      child: getNumberAt(widget.mode, _currentInputN)
+      child: getNumberAt(widget.mode, _currentInputN).toString()
     );
   }
 }

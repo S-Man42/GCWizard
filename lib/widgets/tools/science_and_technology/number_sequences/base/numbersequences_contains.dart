@@ -56,7 +56,7 @@ class NumberSequenceContainsState extends State<NumberSequenceContains> {
     detailedOutput = getFirstPositionOfSequence(widget.mode, currentInputN.toString());
 
     columnData.add([i18n(context, 'numbersequence_output_col_1'), i18n(context, 'numbersequence_output_col_2'), i18n(context, 'numbersequence_output_col_3')]);
-    columnData.add([detailedOutput.number, detailedOutput.positionSequence, detailedOutput.positionDigits]);
+    columnData.add([detailedOutput.number, detailedOutput.positionSequence.toString(), detailedOutput.positionDigits.toString()]);
 
     flexData = [4, 2, 1];
 

@@ -59,7 +59,7 @@ class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
 
   _buildOutput() {
     return GCWDefaultOutput(
-      child: checkNumber(widget.mode, BigInt.parse(_currentInputN)),
+      child: checkNumber(widget.mode, BigInt.parse(_currentInputN)).toString(),
     );
   }
 }

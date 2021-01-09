@@ -1495,6 +1495,7 @@
   "numbersequence_title" : "Zahlenfolgen",
   "numbersequence_description" : "Berechnungen zu Fibonacci-, Lucas-, Mersenne-, Fermat-, Pell-, Jacobsthal-, Catalan- und Recaman-Zahlenfolgen",
   "numbersequence_factorial_title" : "Fakultät",
+  "numbersequence_factorial_description" : "Online Encyclopedia of Integer Sequences A000142",
   "numbersequence_factorial_example" : "0, 1, 2, 6, 24, 120, 720, 5040, ...",
   "numbersequence_mersennefermat_title" : "Mersenne-ähnliche Folge mit Fermat-Zahlen",
   "numbersequence_mersennefermat_description" : "Online Encyclopedia of Integer Sequences A000051",
