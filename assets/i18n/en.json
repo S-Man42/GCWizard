@@ -465,10 +465,6 @@
   "chef_hint_recipe_methods_de" : "Did you specify 'Zubereitung:' above the methods?",
   "chef_hint_recipe_oven_temperature" : "Did you have the correct oven temperature?",
   "chef_hint_no_hint_available" : "No hint available",
-  "chef_download_documentation_title" : "Download the Chef-language documentation",
-  "chef_download_documentation_text" : "Would you like to download the documentation?",
-  "chef_download_documentation_url" : "https://misc.gcwizard.net/chef_en.pdf",
-  "chef_online_help_url" : "https://blog.gcwizard.net/en/2020/06/12/variable-koordinate/",
 
   "chickenlanguage_title" : "Chicken Language",
   "chickenlanguage_description" : "Game Language, Secret Language",
@@ -2690,6 +2686,15 @@
   "vigenere_example" : "ABC with key DEF → DFH",
   "vigenere_autokey" : "Autokey",
   "vigenere_ignorenonletters" : "Ignore Non-Letters",
+
+  "vigenerebreaker_title": "Vigenère Code Breaker",
+  "vigenerebreaker_description": "Chance to automatically break polyalphabetic ciphers",
+  "vigenerebreaker_example": "ABC with key DEF → DFH",
+  "vigenerebreaker_key_length": "Key Length",
+  "vigenerebreaker_key_length_min": "min",
+  "vigenerebreaker_key_length_max": "max",
+  "vigenerebreaker_start": "Solve",
+  "vigenerebreaker_error" : "An error occured: %s1",
 
   "whitespace_language_title" : "Whitespace",
   "whitespace_language_description" : "Esoteric Programming language with 3 characters (Space, Tab, Enter)",
