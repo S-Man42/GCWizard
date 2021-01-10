@@ -25,14 +25,14 @@ final xlat1  = '+b(29e*j1VMEKLyC})8&m#~W>qxdRp0wkrUo[D7,XTcA"lI.v%{gJh4G\\-=O@5`
 final xlat2  = '5z]&gqtyfr\$(we4{WP)H-Zn,[%\\3dL+Q;>U!pJS72FhOA1CB6v^=I_0/8|jsb9m<.TVac`uY*MK\'X~xDl}REokN:#?G"i@';
 final validInstructions  = {'j', 'i', '*', 'p', '<', '/', 'v', 'o'};
 final opCodeList = {
-  'j' : 'mov d, [d]',
-  'i' : 'jmp [d]',
-  '*' : 'a = [d] = rotr [d]',
-  'p' : 'a = [d] = crz a, [d]]',
-  '/' : 'in a',
-  '<' : 'out a',
-  'v' : 'end',
-  'o' : 'nop' };
+  'i' : 'jmp [d]',                  //   4
+  '<' : 'out a',                    //   5
+  '/' : 'in a',                     //  23
+  '*' : 'a = [d] = rotr [d]',       //  39
+  'j' : 'mov d, [d]',               //  40
+  'p' : 'a = [d] = crz a, [d]]',    //  62
+  'v' : 'end',                      //  81
+  'o' : 'nop' };                    //  68
 
 malbolgeOutput generateMalbolge(String inputString){
   String endString = 'j';
@@ -43,7 +43,7 @@ malbolgeOutput generateMalbolge(String inputString){
   bool found = false;
   var randomGenerator = Random();
 
-  var opCodes = {'o', 'p', '*'};                                                // This is the  list of opcodes that the program will use (aside from <)
+  var opCodes = {'o', 'p', '*'};                                           // This is the  list of opcodes that the program will use (aside from <)
                                                                                 // p and * change the value of A, which is crucial for printing
                                                                                 // o is nice to have, because it increments D, which is then used to get different values of A through * and p
                                                                                 // j can also be used here, but might crash the program (not sure if I handle jumps to places without data)
@@ -111,6 +111,7 @@ malbolgeOutput generateMalbolge(String inputString){
         counter = 0;
       }
     } // while
+
   } // for
   endString = endString + 'v';
   return malbolgeOutput([_reverseNormalize(endString)], [endString], [], []);
@@ -342,6 +343,7 @@ int _index(String s, c){
 }
 
 String _interpret(String instructionList){
+  print('   ... interpret '+instructionList);
   bool running = true;
   String outputString = '';
   int maxInstructions = instructionList.length;
@@ -356,8 +358,10 @@ String _interpret(String instructionList){
   for (int i = 0; i < maxInstructions; i++)
     malbolgeTape.add(malbolgeTapeString.codeUnitAt(i));
 
-  // Used to "properly" initialize the malbolgeTape. However, this is a huge performance hit, as most malbolge programs are significantly less than the maximum size, and the crazy ops take time to calculate
-  //So, instead, I've added some checks into the interpreter to simply exit on invalid tape indexes. The below section should be uncommented if you wish for "proper" machine execution
+  // Used to "properly" initialize the malbolgeTape. However, this is a huge performance hit,
+  // as most malbolge programs are significantly less than the maximum size, and the crazy ops take time to calculate
+  // So, instead, I've added some checks into the interpreter to simply exit on invalid tape indexes.
+  // The below section should be uncommented if you wish for "proper" machine execution
 
   //int currentIndex = malbolgeTape.length;
   //while(currentIndex < 59049){
@@ -390,6 +394,7 @@ String _interpret(String instructionList){
         }
       break;
       case 'j': // d = mov d, [d]
+      print('       => d: '+d.toString()+ '   mem[d]: '+malbolgeTape[d].toString());
         d = malbolgeTape[d];
         break;
       case 'v': // halt
