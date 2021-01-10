@@ -2680,6 +2680,15 @@
   "vigenere_autokey" : "Autokey",
   "vigenere_ignorenonletters" : "Ignore Non-Letters",
 
+  "vigenerebreaker_title": "Vigenère Code Breaker",
+  "vigenerebreaker_description": "Chance to automatically break polyalphabetic ciphers",
+  "vigenerebreaker_example": "ABC with key DEF → DFH",
+  "vigenerebreaker_key_length": "Key Length",
+  "vigenerebreaker_key_length_min": "min",
+  "vigenerebreaker_key_length_max": "max",
+  "vigenerebreaker_start": "Solve",
+  "vigenerebreaker_error" : "An error occured: %s1",
+
   "whitespace_language_title" : "Whitespace",
   "whitespace_language_description" : "Esoteric Programming language with 3 characters (Space, Tab, Enter)",
   "whitespace_language_example" : "      → DFH",
