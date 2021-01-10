@@ -108,6 +108,9 @@
   "amsco_error_key" : "Bad key!",
   "amsco_usedgrid" : "Used Grid",
 
+  "apparenttemperature_selection_title" : "Apparent Temperature",
+  "apparenttemperature_selection_description" : "Calculates comfort due to temperature, humidity and wind",
+
   "asciivalues_title" : "ASCII and Unicode (UTF-8)",
   "asciivalues_description" : "ASCII and UTF-8/Unicode character codes",
   "asciivalues_example" : "6 → 54, A → 65, a → 97, ä → 228",

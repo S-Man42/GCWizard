@@ -7,6 +7,7 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
+import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
@@ -178,9 +179,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_selection.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/heat_index.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/humidex.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
@@ -198,11 +199,11 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/summer_simmer.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multiplenumbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singlenumbers.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/windchill.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 
 class Registry {
@@ -308,10 +309,16 @@ class Registry {
         searchStrings: SEARCHSTRING_BINARY + 'ascii utf8 utf-8 unicode american standard information interchange'
       ),
       GCWTool(
-        tool: AstronomySelection(),
-        i18nPrefix: 'astronomy_selection',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: SEARCHSTRING_ASTRONOMY
+          tool: ApparentTemperatureSelection(),
+          i18nPrefix: 'apparenttemperature_selection',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          searchStrings: 'apparent perceived gefuehlt temperatur temperature'
+      ),
+      GCWTool(
+          tool: AstronomySelection(),
+          i18nPrefix: 'astronomy_selection',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          searchStrings: SEARCHSTRING_ASTRONOMY
       ),
       GCWTool(
         tool: Atbash(),
@@ -519,12 +526,6 @@ class Registry {
         searchStrings: SEARCHSTRING_HASHES
       ),
       GCWTool(
-        tool: HeatIndex(),
-        i18nPrefix: 'heatindex',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit hitzeindex heatindex'
-      ),
-      GCWTool(
         tool: Hexadecimal(),
         i18nPrefix: 'hexadecimal',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -535,12 +536,6 @@ class Registry {
         i18nPrefix: 'homophone',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'homophone monoalphabetische monoalphabetical letterfrequency buchstabenhaeufigkeiten'
-      ),
-      GCWTool(
-        tool: Humidex(),
-        i18nPrefix: 'humidex',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit canadian canada humidex dewpoint'
       ),
       GCWTool(
         tool: Kamasutra(),
@@ -728,12 +723,6 @@ class Registry {
         searchStrings: 'sudoku grid gitter'
       ),
       GCWTool(
-        tool: SummerSimmerIndex(),
-        i18nPrefix: 'summersimmerindex',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit ssi summersimmerindex'
-      ),
-      GCWTool(
         tool: SymbolTableSelection(),
         i18nPrefix: 'symboltables_selection',
         searchStrings: SEARCHSTRING_SYMBOLTABLES,
@@ -788,16 +777,32 @@ class Registry {
           searchStrings: SEARCHSTRING_VIGENERE + 'autokey solver loeser codebreaker codebrecher codeknacker cracker '
       ),
       GCWTool(
-        tool: Windchill(),
-        i18nPrefix: 'windchill',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'windchill gefuehltetemperatur apparenttemperature windgeschwindigkeit wind speed'
-      ),
-      GCWTool(
         tool: Z22(),
         i18nPrefix: 'z22',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_CCITT2
+      ),
+
+      //ApparentTemperatureSelection  ***********************************************************************************
+      GCWTool(
+        tool: HeatIndex(),
+        i18nPrefix: 'heatindex',
+        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit hitzeindex heatindex'
+      ),
+      GCWTool(
+        tool: Humidex(),
+        i18nPrefix: 'humidex',
+        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit canadian canada humidex dewpoint'
+      ),
+      GCWTool(
+        tool: SummerSimmerIndex(),
+        i18nPrefix: 'summersimmerindex',
+        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit ssi summersimmerindex'
+      ),
+      GCWTool(
+        tool: Windchill(),
+        i18nPrefix: 'windchill',
+        searchStrings: 'windchill gefuehltetemperatur apparenttemperature windgeschwindigkeit wind speed'
       ),
 
       //AstronomySelection  ********************************************************************************************

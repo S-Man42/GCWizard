@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/favorites.dart';
 import 'package:gc_wizard/widgets/main_menu.dart';
 import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
@@ -133,9 +134,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/heat_index.dart';
+import 'file:///D:/Programmierung/GCWizard/lib/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/humidex.dart';
+import 'file:///D:/Programmierung/GCWizard/lib/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
@@ -143,9 +144,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart'
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/summer_simmer.dart';
+import 'file:///D:/Programmierung/GCWizard/lib/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
+import 'file:///D:/Programmierung/GCWizard/lib/widgets/tools/science_and_technology/apparent_temperature/windchill.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -214,6 +215,7 @@ class _MainViewState extends State<MainView> {
           className(AlphabetValues()),
           className(Amsco()),
           className(Antipodes()),
+          className(ApparentTemperatureSelection()),
           className(ASCIIValues()),
           className(Atbash()),
           className(Bacon()),
