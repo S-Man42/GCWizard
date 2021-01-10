@@ -2,20 +2,20 @@
 // https://www.unicode.org/L2/L2020/20290-cistercian-digits.pdf
 
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/cistercian.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_buttonbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/cistercian_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/cistercian.dart';
 import 'package:prefs/prefs.dart';
-import 'package:gc_wizard/utils/constants.dart';
 
 
 class CistercianNumbers extends StatefulWidget {
@@ -25,16 +25,19 @@ class CistercianNumbers extends StatefulWidget {
 
 class CistercianNumbersState extends State<CistercianNumbers> {
 
+  final _DEFAULT_SEGMENT = ['k'];
+
   var _inputEncodeController;
   var _currentEncodeInput = '';
-  var _currentDisplays = <List<String>>[];
-  var _currentMode = GCWSwitchPosition.left; //encrypt decrypt
+  List<List<String>> _currentDisplays;
+  var _currentMode = GCWSwitchPosition.right; //encrypt decrypt
 
   @override
   void initState() {
     super.initState();
 
     _inputEncodeController = TextEditingController(text: _currentEncodeInput);
+    _currentDisplays = [_DEFAULT_SEGMENT];
   }
 
   @override
@@ -63,18 +66,18 @@ class CistercianNumbersState extends State<CistercianNumbers> {
               },
             ),
             _currentMode == GCWSwitchPosition.left  // encrypt: input number => output segment
-                ? GCWTextField(
-                    controller: _inputEncodeController,
-                    onChanged: (text) {
-                      setState(() {
-                        _currentEncodeInput = text;
-                      });
-                    },
-                  )
-                : Column( // decrpyt: input segment => output number
-                    children: <Widget>[
-                      _buildVisualDecryption()
-                    ],
+              ? GCWTextField(
+                  controller: _inputEncodeController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentEncodeInput = text;
+                    });
+                  },
+                )
+              : Column( // decrpyt: input segment => output number
+                  children: <Widget>[
+                    _buildVisualDecryption()
+                  ],
             ),
             GCWTextDivider(
               text: i18n(context, 'segmentdisplay_displayoutput'),
@@ -87,8 +90,8 @@ class CistercianNumbersState extends State<CistercianNumbers> {
                       setState(() {
                         int newCountColumn = max(countColumns - 1, 1);
                         mediaQueryData.orientation == Orientation.portrait
-                            ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                            : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                          ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                          : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
                       });
                     },
                   ),
@@ -100,11 +103,8 @@ class CistercianNumbersState extends State<CistercianNumbers> {
                         int newCountColumn = countColumns + 1;
 
                         mediaQueryData.orientation == Orientation.portrait
-                            ? Prefs.setInt('symboltables_countcolumns_portrait',
-                            newCountColumn)
-                            : Prefs.setInt(
-                            'symboltables_countcolumns_landscape',
-                            newCountColumn);
+                          ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                          : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
                       });
                     },
                   )
@@ -148,8 +148,8 @@ class CistercianNumbersState extends State<CistercianNumbers> {
         Container(
           width: 180,
           padding: EdgeInsets.only(
-              top: DEFAULT_MARGIN * 2,
-              bottom: DEFAULT_MARGIN * 4
+            top: DEFAULT_MARGIN * 2,
+            bottom: DEFAULT_MARGIN * 4
           ),
           child: Row(
             children: <Widget>[
@@ -168,7 +168,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
                 iconData: Icons.space_bar,
                 onPressed: () {
                   setState(() {
-                    _currentDisplays.add([]);
+                    _currentDisplays.add(_DEFAULT_SEGMENT);
                   });
                 },
               ),
@@ -185,7 +185,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
                 iconData: Icons.clear,
                 onPressed: () {
                   setState(() {
-                    _currentDisplays = [];
+                    _currentDisplays = [_DEFAULT_SEGMENT];
                   });
                 },
               )
@@ -210,15 +210,6 @@ class CistercianNumbersState extends State<CistercianNumbers> {
     var segments;
     if (_currentMode == GCWSwitchPosition.left) { //encode
       segments = encodeCistercian(_currentEncodeInput);
-/*
-      var output =  segments.map((character) {
-        if (character == null)
-          return UNKNOWN_ELEMENT;
-
-        return character.join();
-      }).join(' ');
-*/
-
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments),
@@ -235,7 +226,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
           GCWDefaultOutput(
-              child: segments['text']
+            child: segments['text']
           )
         ],
       );

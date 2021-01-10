@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:gc_wizard/utils/common_utils.dart';
+
 import 'package:gc_wizard/utils/constants.dart';
 
 final _baseSegmentsCistercianSegment = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u'];
@@ -44,8 +44,6 @@ final Map<String, List<String>> _AZToSegmentCistercian = {
   '9000' : ['k','l','n','t'],
 };
 
-final Map<List<String>, String> _SegmentCistercianToAZ = switchMapKeyValue(_AZToSegmentCistercian);
-
 List<List<String>> encodeCistercian(String input) {
   if (input == null || input == '')
     return [];
@@ -56,42 +54,25 @@ List<List<String>> encodeCistercian(String input) {
   var segmentList;
 
   for (String character in inputCharacters) {
+    if (character == '0') {
+      output.add(_AZToSegmentCistercian['0']);
+      continue;
+    }
+
     int encodeNumber = int.tryParse(character);
+    var encodeString = encodeNumber.toString();
     if (encodeNumber != null && encodeNumber < 10000) {
-      var display;
-      if (character.length == 1 && character[0] == '0'){
-        segmentList = _AZToSegmentCistercian[digit];
-        if (display == null){
-          display = segmentList;
-        } else {
-          for (String charElem in segmentList) {
-            if (!display.contains(charElem)) {
-              display.add(charElem);
-            }
-          }
+      var display = Set<String>();
+      for (int i = 0; i < encodeString.length; i++ ){
+        digit = int.parse(encodeString[i]) * pow(10, encodeString.length - i - 1);
+        if (digit != 0) {
+          segmentList = _AZToSegmentCistercian[digit.toString()];
+          display.addAll(segmentList);
         }
       }
-      else {
-        for (int i = 0; i < character.length; i++ ){
-          digit = int.parse(character[i]) * pow(10, character.length - i - 1);
-          if (digit != 0) {
-            segmentList = _AZToSegmentCistercian[digit.toString()];
-            if (display == null){
-              display = segmentList;
-            } else {
-              for (String charElem in segmentList) {
-                if (!display.contains(charElem)) {
-                  display.add(charElem);
-                }
-              }
-            }
-          }
-        }
-      } // end scanning number
-      if (display != null) {
-        display.sort();
-        output.add(display);
-      }
+      var displayList = display.toList();
+      displayList.sort();
+      output.add(displayList);
     }
   }
   return output;
@@ -166,10 +147,8 @@ Map<String, dynamic> decodeCistercian(String input) {
         tokens[i] = tokens[i].replaceAll('u', ''); tokens[i] = tokens[i].replaceAll('s', '');
       }
       else if (tokens[i].contains('o')) { // 600
-        print('1. found 600 '+tokens[i]);
         digit = digit + 600;
         tokens[i] = tokens[i].replaceAll('o', '');
-        print('2. found 600 '+tokens[i]);
       }
       else if (tokens[i].contains('s')) { // 400
         digit = digit + 400;

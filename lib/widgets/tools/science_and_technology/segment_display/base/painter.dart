@@ -191,7 +191,7 @@ class SegmentDisplayPainter extends CustomPainter {
       setSegmentState('j', !segments['j']);
     });
 
-    paint.color = segments['k'] ? _COLOR_ON : _COLOR_OFF;
+    paint.color = _COLOR_ON; // k is always on
     var pathK = Path();
     pathK.moveTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 0);
     pathK.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 30, size.height / RELATIVE_DISPLAY_HEIGHT * 0);
@@ -199,9 +199,7 @@ class SegmentDisplayPainter extends CustomPainter {
     pathK.lineTo(size.width / RELATIVE_DISPLAY_WIDTH * 25, size.height / RELATIVE_DISPLAY_HEIGHT * 80);
     pathK.close();
 
-    _touchCanvas.drawPath(pathK, paint, onTapDown: (tapDetail) {
-      setSegmentState('k', !segments['k']);
-    });
+    _touchCanvas.drawPath(pathK, paint);
 
     paint.color = segments['l'] ? _COLOR_ON : _COLOR_OFF;
     var pathL = Path();
