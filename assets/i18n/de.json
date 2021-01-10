@@ -108,6 +108,9 @@
   "amsco_error_key" : "Schlüssel fehlerhaft!",
   "amsco_usedgrid" : "Verwendete Matrix",
 
+  "apparenttemperature_selection_title" : "Gefühlte Temperatur",
+  "apparenttemperature_selection_description" : "Berechnet den Wohlfühlfaktor in Abhängigkeit von Temperatur, Luftfeuchtigkeit und Wind",
+
   "asciivalues_title" : "ASCII und Unicode (UTF-8)",
   "asciivalues_mode_left" : "A-Z → ASCII",
   "asciivalues_mode_right" : "ASCII → A-Z",
