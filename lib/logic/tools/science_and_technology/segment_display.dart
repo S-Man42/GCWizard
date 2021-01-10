@@ -1,8 +1,7 @@
 import 'dart:core';
-
 import 'package:gc_wizard/utils/constants.dart';
 
-enum SegmentDisplayType{SEVEN, FOURTEEN, SIXTEEN}
+enum SegmentDisplayType{SEVEN, FOURTEEN, SIXTEEN, CISTERCIAN}
 
 final _baseSegments7Segment = ['a','b','c','d','e','f','g','dp'];
 final _baseSegments14Segment = ['a','b','c','d','e','f','g1','g2','h','i','j','k','l','m','dp'];
@@ -440,7 +439,6 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
     return [];
 
   var AZToSegment;
-
   switch (segmentType) {
     case SegmentDisplayType.SEVEN:
       AZToSegment = _AZTo7Segment;
@@ -454,7 +452,6 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
   }
 
   var inputCharacters = input.toUpperCase().split('').toList();
-
   var output = <List<String>>[];
 
   for (String character in inputCharacters) {
@@ -467,20 +464,19 @@ List<List<String>> encodeSegment(String input, SegmentDisplayType segmentType) {
         output.add(prevCharacter);
       }
     } else {
-      var display = AZToSegment[character];
-      if (display != null)
-        output.add(AZToSegment[character]);
+      var display;
+        display = AZToSegment[character];
+        if (display != null)
+          output.add(AZToSegment[character]);
     }
   }
 
   return output;
 }
 
-
 Map<String, dynamic> decodeSegment(String input, SegmentDisplayType segmentType) {
   if (input == null || input == '')
     return {'displays': [], 'text': ''};
-
   var baseSegments;
 
   switch (segmentType) {
@@ -562,6 +558,6 @@ _characterFromSegmentList(SegmentDisplayType type, List<String> segments) {
       segmentToAZ = _Segment16ToAZ;
       break;
   }
-
-  return segmentToAZ.map((key, value) => MapEntry(key.join(), value))[segments.join()];
+  return segmentToAZ.map((key, value) => MapEntry(key.join(), value.toString()))[segments.join()];
 }
+

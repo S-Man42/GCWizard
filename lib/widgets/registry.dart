@@ -92,6 +92,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
@@ -175,6 +176,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
+import 'package:gc_wizard/widgets/selector_lists/cistercian_selection.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
@@ -219,6 +221,7 @@ class Registry {
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
   static final SEARCHSTRING_CCITT1 = SEARCHSTRING_CCITT + 'ccitt1 ccitt-1 baudot-code baudotcode ';
   static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen lochkarten konrad zuse z-22 z22 punchedpapertape cards baudot-murray-code ';
+  static final SEARCHSTRING_CISTERCIAN = 'cistercian zisterzienser monastic order monk moenchsorden moenche zahlen numbers ';
   static final SEARCHSTRING_CODEBREAKER = 'solver loeser universal universeller codebreaker codebrecher codeknacker cracker textersetzung replacement';
   static final SEARCHSTRING_COMBINATORICS = 'mathematics mathematik kombinatorik combinatorics ';
   static final SEARCHSTRING_COMBINATORICS_COMBINATION = SEARCHSTRING_COMBINATORICS + 'combinations kombinationen untergruppen subgroups ';
@@ -387,6 +390,12 @@ class Registry {
         i18nPrefix: 'chao',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'chao john francis byrne'
+      ),
+      GCWTool(
+        tool: CistercianSelection(),
+        i18nPrefix: 'cistercian_selection',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_CISTERCIAN
       ),
       GCWTool(
         tool: ColorPicker(),
@@ -944,6 +953,13 @@ class Registry {
         tool: CCITT2(),
         i18nPrefix: 'ccitt2',
         searchStrings: SEARCHSTRING_CCITT2
+      ),
+
+      //Cistercian Selection *****************************************************************************************
+      GCWTool(
+        tool: CistercianNumbers(),
+        i18nPrefix: 'cistercian',
+        searchStrings: SEARCHSTRING_CISTERCIAN
       ),
 
       //CombinatoricsSelection ***************************************************************************************
@@ -1730,7 +1746,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'cistercian',
         iconFilename: '80.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'cistercian zisterzienser'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_CISTERCIAN
       ),
       GCWSymbolTableTool(
         symbolKey: 'color_code',
