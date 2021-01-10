@@ -239,22 +239,6 @@ class ChefState extends State<Chef> {
     );
   }
 
-  Widget chefDocumentationDownloadButton(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.article_outlined),
-      onPressed: () {
-        showGCWAlertDialog(
-          context,
-          i18n(context, 'chef_download_documentation_title'),
-          i18n(context, 'chef_download_documentation_text'),
-              () {
-            launch(i18n(context, 'https://misc.gcwizard.net/chef.pdf'));
-          },
-        );
-      },
-    );
-  }
-
   String buildOutputText(List<String> outputList){
     String output = '';
     outputList.forEach((element) {

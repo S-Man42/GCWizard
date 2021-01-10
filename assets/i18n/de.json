@@ -465,14 +465,17 @@
   "chef_hint_recipe_methods_en" : "Wurde das Schlüsselwort 'Methods.' definiert über der Methodenliste?",
   "chef_hint_recipe_oven_temperature" : "Wurde die Ofentemperatur korrekt vorgegeben?",
   "chef_hint_no_hint_available" : "Kein Hinweis verfügbar",
-  "chef_download_documentation_title" : "Download der Chef-Dokumentation",
-  "chef_download_documentation_text" : "Möchtest Du die Dokumentation herunterladen?",
-  "chef_download_documentation_url" : "https://misc.gcwizard.net/chef_de.pdf",
-  "chef_online_help_url" : "https://blog.gcwizard.net/de/2020/06/12/variable-koordinate/",
 
   "chickenlanguage_title" : "Hühnersprache",
   "chickenlanguage_description" : "Spielsprache, Geheimsprache",
   "chickenlanguage_example" : "Huhn → huhudefuhn",
+
+  "cistercian_selection_title" : "Zisterzienserzahlen",
+  "cistercian_selection_description" : "Zahlensystem der Zisterzienser-Mönche",
+  "cistercian_example" : "11 202 1000  → ⊺ ⊧ ⌋",
+  "cistercian_title" : "Zisterzienserzahlen",
+  "cistercian_description" : "Zahlensystem der Zisterzienser-Mönche",
+  "cistercian_example" : "11 202 1000  → ⊺ ⊧ ⌋",
 
   "chronogram_title" : "Chronogramm",
   "chronogram_description" : "Finded und addiert römische Zahlen in Texten",
@@ -2682,6 +2685,15 @@
   "vigenere_example" : "ABC mit Schlüssel DEF → DFH",
   "vigenere_autokey" : "Autokey",
   "vigenere_ignorenonletters" : "Nur Buchstaben beachten",
+
+  "vigenerebreaker_title": "Vigenère Codeknacker",
+  "vigenerebreaker_description": "Chance, automatisch einen polyalphabetischen Code zu knacken",
+  "vigenerebreaker_example": "ABC mit Schlüssel DEF → DFH",
+  "vigenerebreaker_key_length": "Schlüssellänge",
+  "vigenerebreaker_key_length_min": "min",
+  "vigenerebreaker_key_length_max": "max",
+  "vigenerebreaker_start": "Berechne",
+  "vigenerebreaker_error" : "Ein Fehler trat auf: %s1",
 
   "whitespace_language_title" : "Whitespace",
   "whitespace_language_description" : "Esoterische Programmiersprache aus 3 Zeichen (Leerzeichen, Tab, Enter)",

@@ -69,7 +69,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.left
+        _currentMode == GCWSwitchPosition.left // encrypt
           ? GCWTwoOptionsSwitch(
               value: _currentEncryptMode,
               title: i18n(context, 'segmentdisplay_encodemode'),
@@ -85,27 +85,27 @@ class SegmentDisplayState extends State<SegmentDisplay> {
               },
             )
           : Container(),
-        _currentMode == GCWSwitchPosition.left
+          _currentMode == GCWSwitchPosition.left // encrypt
           ? (
-              _currentEncryptMode == GCWSwitchPosition.left
-                ? GCWTextField(
-                    controller: _inputEncodeController,
-                    onChanged: (text) {
-                      setState(() {
-                        _currentEncodeInput = text;
-                      });
-                    },
-                  )
-                : _buildVisualEncryption()
+            _currentEncryptMode == GCWSwitchPosition.left
+            ? GCWTextField(
+                controller: _inputEncodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
+            : _buildVisualEncryption()
             )
           : GCWTextField(
-              controller: _inputDecodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecodeInput = text;
-                });
-              },
-            ),
+            controller: _inputDecodeController,
+            onChanged: (text) {
+              setState(() {
+                _currentDecodeInput = text;
+              });
+            },
+          ),
         GCWTextDivider(
           text: i18n(context, 'segmentdisplay_displayoutput'),
           trailing: Row(
@@ -205,8 +205,8 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         Container(
           width: 180,
           padding: EdgeInsets.only(
-            top: DEFAULT_MARGIN * 2,
-            bottom: DEFAULT_MARGIN * 4
+              top: DEFAULT_MARGIN * 2,
+              bottom: DEFAULT_MARGIN * 4
           ),
           child: Row(
             children: <Widget>[
@@ -251,30 +251,30 @@ class SegmentDisplayState extends State<SegmentDisplay> {
 
   _buildDigitalOutput(countColumns, segments) {
     var displays = segments
-      .where((character) => character != null)
-      .map((character) {
-        var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
+        .where((character) => character != null)
+        .map((character) {
+      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
 
-        switch (widget.type) {
-          case SegmentDisplayType.SEVEN:
-            return SevenSegmentDisplay(
-              segments: displayedSegments,
-              readOnly: true,
-            );
-          case SegmentDisplayType.FOURTEEN:
-            return FourteenSegmentDisplay(
-              segments: displayedSegments,
-              readOnly: true,
-            );
-          case SegmentDisplayType.SIXTEEN:
-            return SixteenSegmentDisplay(
-              segments: displayedSegments,
-              readOnly: true,
-            );
-          default: return null;
-        }
-      })
-      .toList();
+      switch (widget.type) {
+        case SegmentDisplayType.SEVEN:
+          return SevenSegmentDisplay(
+            segments: displayedSegments,
+            readOnly: true,
+          );
+        case SegmentDisplayType.FOURTEEN:
+          return FourteenSegmentDisplay(
+            segments: displayedSegments,
+            readOnly: true,
+          );
+        case SegmentDisplayType.SIXTEEN:
+          return SixteenSegmentDisplay(
+            segments: displayedSegments,
+            readOnly: true,
+          );
+        default: return null;
+      }
+    })
+        .toList();
 
     return buildSegmentDisplayOutput(countColumns, displays);
   }
@@ -298,7 +298,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments),
           GCWDefaultOutput(
-            child: output
+              child: output
           )
         ],
       );
@@ -309,7 +309,7 @@ class SegmentDisplayState extends State<SegmentDisplay> {
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
           GCWDefaultOutput(
-            child: segments['text']
+              child: segments['text']
           )
         ],
       );
