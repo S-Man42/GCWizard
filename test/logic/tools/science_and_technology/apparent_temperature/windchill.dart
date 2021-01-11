@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/science_and_technology/windchill.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/windchill.dart';
 
 void main() {
   group("Windchill.calculate:", () {
