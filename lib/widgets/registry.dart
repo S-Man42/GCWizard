@@ -211,6 +211,7 @@ class Registry {
 
   static final SEARCHSTRING_SETTINGS = 'settings einstellungen preferences options optionen ';
 
+  static final SEARCHSTRING_APPARENTTEMPERATURE = 'apparent perceived gefuehltetemperatur temperature ';
   static final SEARCHSTRING_ASTRONOMY = 'astronomy astronomie stars sterne planets planeten astronomisches astronomical ';
   static final SEARCHSTRING_ASTRONOMY_RISESET = 'rise set transit noon aufgang aufgaenge untergang untergaenge dawn dusk mittag culmination kulmination ';
   static final SEARCHSTRING_ASTRONOMY_POSITION = 'declination position stand rektaszension zodiac astrology astrologischeszeichen astrologie astrologicalsign tierkreiszeichen sternzeichen azimuth altitude diameter durchmesser hoehe rightascension distance entfernung distanz observer beobachter juliandate julianischesdatum sternzeit siderealtime gmst lmst eclipticlongitude ekliptischelaenge ';
@@ -301,6 +302,12 @@ class Registry {
         i18nPrefix: 'amsco',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'amsco transposition spaltentausch swap columns'
+      ),
+      GCWTool(
+        tool: ApparentTemperatureSelection(),
+        i18nPrefix: 'apparenttemperature_selection',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: SEARCHSTRING_APPARENTTEMPERATURE
       ),
       GCWTool(
         tool: ASCIIValues(),
@@ -779,30 +786,24 @@ class Registry {
 
       //ApparentTemperatureSelection  ********************************************************************************************
       GCWTool(
-        tool: ApparentTemperatureSelection(),
-        i18nPrefix: 'apparenttemperature_selection',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'apparent perceived gefuehlt temperatur temperature'
-      ),
-      GCWTool(
         tool: HeatIndex(),
         i18nPrefix: 'heatindex',
-        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit hitzeindex heatindex'
+        searchStrings: SEARCHSTRING_APPARENTTEMPERATURE + 'humidity luftfeuchtigkeit hitzeindex heatindex'
       ),
       GCWTool(
         tool: Humidex(),
         i18nPrefix: 'humidex',
-        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit canadian canada humidex dewpoint'
+        searchStrings: SEARCHSTRING_APPARENTTEMPERATURE + 'humidity luftfeuchtigkeit canadian canada humidex dewpoint'
       ),
       GCWTool(
         tool: SummerSimmerIndex(),
         i18nPrefix: 'summersimmerindex',
-        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit ssi summersimmerindex'
+        searchStrings: SEARCHSTRING_APPARENTTEMPERATURE + 'humidity luftfeuchtigkeit ssi summersimmerindex'
       ),
       GCWTool(
         tool: Windchill(),
         i18nPrefix: 'windchill',
-        searchStrings: 'windchill gefuehltetemperatur apparenttemperature windgeschwindigkeit wind speed'
+        searchStrings: SEARCHSTRING_APPARENTTEMPERATURE + 'windchill windgeschwindigkeit wind speed'
       ),
 
       //AstronomySelection  ********************************************************************************************

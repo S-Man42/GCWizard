@@ -215,7 +215,6 @@ class _MainViewState extends State<MainView> {
           className(AlphabetValues()),
           className(Amsco()),
           className(Antipodes()),
-          className(ApparentTemperatureSelection()),
           className(ASCIIValues()),
           className(Atbash()),
           className(Bacon()),
