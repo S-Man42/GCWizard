@@ -32,41 +32,44 @@ BeatnikOutput generateBeatnik(var ScrabbleVersion, output){
   var random = Random();
   int number = 0;
   int h = 0;
+  int r = 0;
   int add = 0;
   List<int> assembler = new List<int>();
+
   // reverse input - because we have to use a stack
   output = output.split('').reversed.join('');
+
   // get chars and put them on the stack
   for (int i = 0; i < output.length; i++) {
     number = output[i].codeUnitAt(0);
     assembler.add(5);
     if (number <= 23) {
       assembler.add(number);
-      print('  '+assembler.last.toString());
     }
-    else { // scrabble word > 15 are a challenge - so split them
+    else { // scrabble word > 23 are a challenge - so split them
       add = 0;
       while (number > 23) {
-        int r = random.nextInt(100) + 1;
+        // get a number by random in the ranges 1-20 (66%) 21-30 (24%) 31-40 (10%)
+        r = random.nextInt(100) + 1;
         if (r > 90)
-          h = random.nextInt(40) + 1;
-        else if (r > 60)
-          h = random.nextInt(30) + 1;
+          h = random.nextInt(10) + 31;
+        else if (r > 66)
+          h = random.nextInt(10) + 21;
         else
           h = random.nextInt(20) + 1;
         if (h < number) {
           assembler.add(h);
           add++;
           number = number - h;
+          if (add == 2) {
+            assembler.add(7);
+            add = 1;
+          }
+          if (number > 23) {
+            assembler.add(5);
+          }
         }
-        if (add == 2) {
-          assembler.add(7);
-          add = 1;
-        }
-        if (number > 23) {
-          assembler.add(5);
-        }
-      }
+      } // while
       assembler.add(5); assembler.add(number);
       assembler.add(7);
     }
@@ -83,11 +86,11 @@ BeatnikOutput generateBeatnik(var ScrabbleVersion, output){
   for (int i = 0; i < assembler.length; i++){
     if (assembler[i] == 5 || assembler[i] == 13 || assembler[i] == 14 || assembler[i] == 15 || assembler[i] == 16) {
       assemblerProgramm.add(assembler[i].toString() + ' ' + assembler[i + 1].toString());
-      memnonicProgramm.add(memnonic(assembler[i]) + ' ' + assembler[i + 1].toString());
+      memnonicProgramm.add(_memnonic(assembler[i]) + ' ' + assembler[i + 1].toString());
       i++;
     } else {
       assemblerProgramm.add(assembler[i].toString());
-      memnonicProgramm.add(memnonic(assembler[i]));
+      memnonicProgramm.add(_memnonic(assembler[i]));
     }
   }
 
@@ -158,14 +161,14 @@ final memnonicTable = {0 : 'noop', 1 : 'noop', 2 : 'noop', 3 : 'noop', 4 : 'noop
   13 : 'jmpz+', 14 : 'jmpnz+', 15 : 'jmpz-', 16 : 'jmpnz-', 17 : 'exit',
   18 : 'noop', 19 : 'noop', 20 : 'noop', 21 : 'noop', 22 : 'noop', 23 : 'noop' };
 
-String memnonic(int command){
+String _memnonic(int command){
   if (command >= 5 && command <= 17)
     return memnonicTable[command];
   else
     return ' ';
 }
 
-String formatNumber(int number){
+String _formatNumber(int number){
   if (number < 10)
     return '  ' + number.toString();
   else if (number < 100)
@@ -174,12 +177,15 @@ String formatNumber(int number){
     return number.toString();
 }
 
-String formatString(String input, int length){
-  String out = '';
-  for (int i = 0; i < length - input.length; i++){
-    out = out + ' ';
-  }
-  return input + out;
+bool _checkNormalize( List<String> instructions){
+  bool result = true;
+  for (int i = 0; i < instructions.length; i++) {
+    if (int.tryParse(instructions[i]) == null){
+      result = false;
+      i = instructions.length;
+    }
+  };
+  return result;
 }
 
 BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input){
@@ -192,16 +198,16 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input){
   List<int> assembler = new List<int>();
   List<String> scrabbleProgram = new List<String>();
   bool normalized = _checkNormalize(sourcecode.split(' '));
-  List<String> program;
+  List<String> program = new List<String>();
 
   if (normalized)
     program = sourcecode.split(' ');
   else
-    program = sourcecode
-      .replaceAll(new RegExp(r'(\s|\n|\t|\f\|\r)'),'#')
-      .replaceAll(new RegExp(r'[^A-ZÄÖÜ]'),'#')
-      .replaceAll(new RegExp(r'#+'),'#')
-      .split('#');
+    program = sourcecode.toUpperCase()
+        .replaceAll(new RegExp(r'(\s|\n|\t|\f\|\r)'),'#')
+        .replaceAll(new RegExp(r'[^A-ZÄÖÜ]'),'#')
+        .replaceAll(new RegExp(r'#+'),'#')
+        .split('#');
 
   for (int i = 0; i < program.length; i++){
     if (!normalized){
@@ -215,163 +221,156 @@ BeatnikOutput interpretBeatnik(var ScrabbleVersion, String sourcecode, input){
       value = int.parse(program[i]);
     if (value > 0) {
       assembler.add(value);
-      scrabbleProgram.add(formatNumber(value) + ' ' + program[i]);
+      scrabbleProgram.add(_formatNumber(value) + ' ' + program[i]);
     }
   }
 
   List<DebugOutput> debugProgram = new List<DebugOutput>();
   List<String> assemblerProgram = new List<String>();
   List<String> memnonicProgram = new List<String>();
-  String space;
-  for (int i = 0; i < assembler.length; i++){
-    if (assembler[i] < 10)
-      space = ' ';
-    else
-      space = '';
-    if (assembler[i] == 5 || assembler[i] == 13 || assembler[i] == 14 || assembler[i] == 15 || assembler[i] == 16) {
-      assemblerProgram.add(space + assembler[i].toString() + ' ' + assembler[i + 1].toString());
-      memnonicProgram.add(memnonic(assembler[i]) + ' ' + assembler[i + 1].toString());
-      i++;
-    } else {
-      assemblerProgram.add(space + assembler[i].toString());
-      memnonicProgram.add(memnonic(assembler[i]));
-    }
-  }
-
-  List<String> inputlist = input.split('');
-
-  BeatnikStack stack = new BeatnikStack();
-
+  String space = '';
   String output = '';
   bool exit = false;
   int pc = 0;
   int inputindex = 0;
-  while (!exit && pc < assembler.length){
-    if (assembler[pc] == 5 || assembler[pc] == 13 || assembler[pc] == 14 || assembler[pc] == 15 || assembler[pc] == 16) {
-      debugProgram.add(DebugOutput(pc.toString(), memnonic(assembler[pc])+' '+formatNumber(assembler[pc+1]), stack.getContent(), output));
-    } else {
-      debugProgram.add(DebugOutput(pc.toString(), memnonic(assembler[pc]), stack.getContent(), output));
+  List<String> inputlist = input.split('');
+  BeatnikStack stack = new BeatnikStack();
+
+  try {
+    for (int i = 0; i < assembler.length; i++){
+      if (assembler[i] < 10)
+        space = ' ';
+      else
+        space = '';
+      if (assembler[i] == 5 || assembler[i] == 13 || assembler[i] == 14 || assembler[i] == 15 || assembler[i] == 16) {
+        assemblerProgram.add(space + assembler[i].toString() + ' ' + assembler[i + 1].toString());
+        memnonicProgram.add(_memnonic(assembler[i]) + ' ' + assembler[i + 1].toString());
+        i++;
+      } else {
+        assemblerProgram.add(space + assembler[i].toString());
+        memnonicProgram.add(_memnonic(assembler[i]));
+      }
     }
-    switch (assembler[pc]) {
-      case 5: // push n
-        if (pc + 1 < assembler.length - 1) {
-          pc++;
-          stack.push(assembler[pc]);
-        } else
-          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc', 'beatnik_error_runtime_push', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-        break;
-      case 6: // pop
-        if (stack.size() >= 1) {
-          stack.pop();
-        } else
-          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_pop', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-        break;
-      case 7: // add
-        if (stack.size() >= 2) {
-          stack.add();
-        } else
-          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_add', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-        break;
-      case 8: // push input
-        if (inputindex < inputlist.length - 1) {
-          stack.push(inputlist[inputindex].codeUnitAt(0));
-          inputindex++;
-        } else {
-          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_invalid_input', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-        }
-        break;
-      case 9: // pop output
-        if (stack.size() >= 1) {
-          output = output + String.fromCharCode(stack.pop());
-        } else
-          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_pop_output', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-        break;
-      case 10: // sub
-        if (stack.size() >= 2) {
-          stack.sub();
-        } else
-          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_sub', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-        break;
-      case 11: //swap
-        if (stack.size() >= 2) {
-          stack.swap();
-        } else
-          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_swap', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-        break;
-      case 12: //double
-        if (stack.size() >= 1) {
-          stack.double();
-        } else
-          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_double', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-        break;
-      case 13: // jump z +
-        if (stack.size() >= 1) {
-          if (stack.pop() == 0)
-            if (pc + 1 <= assembler.length - 1) {
+
+    while (!exit && pc < assembler.length){
+      if (assembler[pc] == 5 || assembler[pc] == 13 || assembler[pc] == 14 || assembler[pc] == 15 || assembler[pc] == 16) {
+        debugProgram.add(DebugOutput(pc.toString(), _memnonic(assembler[pc]) + ' ' + _formatNumber(assembler[pc+1]), stack.getContent(), output));
+      } else {
+        debugProgram.add(DebugOutput(pc.toString(), _memnonic(assembler[pc]), stack.getContent(), output));
+      }
+      switch (assembler[pc]) {
+        case 5: // push n
+          if (pc + 1 < assembler.length - 1) {
+            pc++;
+            stack.push(assembler[pc]);
+          } else
+            return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc', 'beatnik_error_runtime_push', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+          break;
+        case 6: // pop
+          if (stack.size() >= 1) {
+            stack.pop();
+          } else
+            return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_pop', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+          break;
+        case 7: // add
+          if (stack.size() >= 2) {
+            stack.add();
+          } else
+            return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_add', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+          break;
+        case 8: // push input
+          if (inputindex < inputlist.length - 1) {
+            stack.push(inputlist[inputindex].codeUnitAt(0));
+            inputindex++;
+          } else {
+            return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_invalid_input', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+          }
+          break;
+        case 9: // pop output
+          if (stack.size() >= 1) {
+            output = output + String.fromCharCode(stack.pop());
+          } else
+            return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_pop_output', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+          break;
+        case 10: // sub
+          if (stack.size() >= 2) {
+            stack.sub();
+          } else
+            return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_sub', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+          break;
+        case 11: //swap
+          if (stack.size() >= 2) {
+            stack.swap();
+          } else
+            return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_swap', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+          break;
+        case 12: //double
+          if (stack.size() >= 1) {
+            stack.double();
+          } else
+            return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_double', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+          break;
+        case 13: // jump z +
+          if (stack.size() >= 1) {
+            if (stack.pop() == 0)
+              if (pc + 1 <= assembler.length - 1) {
+                pc++;
+                pc = pc + assembler[pc];
+              } else
+                return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc', 'beatnik_error_runtime_jmpz_f', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+            else
               pc++;
-              pc = pc + assembler[pc];
-            } else
-              return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc', 'beatnik_error_runtime_jmpz_f', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-          else
-            pc++;
-        } else
-          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_jmpz_f', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-        break;
-      case 14: // jump nz +
-        if (stack.size() >= 1) {
-          if (stack.pop() != 0)
-            if (pc + 1 <= assembler.length - 1) {
+          } else
+            return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_jmpz_f', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+          break;
+        case 14: // jump nz +
+          if (stack.size() >= 1) {
+            if (stack.pop() != 0)
+              if (pc + 1 <= assembler.length - 1) {
+                pc++;
+                pc = pc + assembler[pc];
+              } else
+                return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc', 'beatnik_error_runtime_jmpnz_f', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+            else
               pc++;
-              pc = pc + assembler[pc];
-            } else
-              return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc', 'beatnik_error_runtime_jmpnz_f', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-          else
-            pc++;
-        } else
-          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_jmpnz_f', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-        break;
-      case 15: // jump z -
-        if (stack.size() >= 1) {
-          if (stack.pop() == 0)
-            if (pc + 1 <= assembler.length - 1) {
-              pc = pc - assembler[pc + 1];
-            } else
-              return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc', 'beatnik_error_runtime_jmpz_b', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-          else
-            pc++;
-        } else
-          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_jmpz_b', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-        break;
-      case 16: // jump nz -
-        if (stack.size() >= 1) {
-          if (stack.pop() != 0)
-            if (pc + 1 <= assembler.length - 1) {
-              pc = pc - assembler[pc + 1];
-            } else
-              return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc' 'beatnik_error_runtime_jmpnz_b', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-          else
-            pc++;
-        } else
-          return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_jmpnz_b', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
-        break;
-      case 17: // exit
-        exit = true;
-        break;
+          } else
+            return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_jmpnz_f', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+          break;
+        case 15: // jump z -
+          if (stack.size() >= 1) {
+            if (stack.pop() == 0)
+              if (pc + 1 <= assembler.length - 1) {
+                pc = pc - assembler[pc + 1];
+              } else
+                return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc', 'beatnik_error_runtime_jmpz_b', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+            else
+              pc++;
+          } else
+            return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_jmpz_b', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+          break;
+        case 16: // jump nz -
+          if (stack.size() >= 1) {
+            if (stack.pop() != 0)
+              if (pc + 1 <= assembler.length - 1) {
+                pc = pc - assembler[pc + 1];
+              } else
+                return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc' 'beatnik_error_runtime_jmpnz_b', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+            else
+              pc++;
+          } else
+            return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_stack', 'beatnik_error_runtime_jmpnz_b', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+          break;
+        case 17: // exit
+          exit = true;
+          break;
+      }
+      pc++;
+      if (pc < 0)
+        return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
     }
-    pc++;
-    if (pc < 0)
-      return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+    return BeatnikOutput([output], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
+  } catch (e) {
+    return BeatnikOutput(['beatnik_error_runtime', 'beatnik_error_runtime_pc', 'Step ' + pc.toString()], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
   }
-  return BeatnikOutput([output], scrabbleProgram, assemblerProgram, memnonicProgram, debugProgram);
 }
 
-bool _checkNormalize( List<String> instructions){
-  bool result = true;
-  for (int i = 0; i < instructions.length; i++) {
-    if (int.tryParse(instructions[i]) == null){
-      result = false;
-      i = instructions.length;
-    }
-  };
-  return result;
-}
