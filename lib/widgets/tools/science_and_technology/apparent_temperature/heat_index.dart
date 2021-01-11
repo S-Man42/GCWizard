@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/summer_simmer.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/logic/common/units/temperature.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-class SummerSimmerIndex extends StatefulWidget {
+class HeatIndex extends StatefulWidget {
   @override
-  SummerSimmerIndexState createState() => SummerSimmerIndexState();
+  HeatIndexState createState() => HeatIndexState();
 }
 
-class SummerSimmerIndexState extends State<SummerSimmerIndex> {
+class HeatIndexState extends State<HeatIndex> {
 
   double _currentTemperature = 0.0;
   double _currentHumidity = 0.0;
@@ -66,19 +66,19 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
 
     double output;
     if (_isMetric) {
-      output = calculateSummerSimmerIndex(_currentTemperature, _currentHumidity, TEMPERATURE_CELSIUS);
+      output = calculateHeatIndex(_currentTemperature, _currentHumidity, TEMPERATURE_CELSIUS);
       unit = TEMPERATURE_CELSIUS.symbol;
     } else {
-      output = calculateSummerSimmerIndex(_currentTemperature, _currentHumidity, TEMPERATURE_FAHRENHEIT);
+      output = calculateHeatIndex(_currentTemperature, _currentHumidity, TEMPERATURE_FAHRENHEIT);
       unit = TEMPERATURE_FAHRENHEIT.symbol;
     }
 
     String hintT;
     if (
-    (_isMetric && _currentTemperature < 18)
-        || (!_isMetric && _currentTemperature < 64)
+    (_isMetric && _currentTemperature < 27)
+        || (!_isMetric && _currentTemperature < 80)
     ) {
-      hintT = i18n(context, 'heatindex_hint_temperature', parameters: ['${_isMetric ? 18 : 64} $unit']);
+      hintT = i18n(context, 'heatindex_hint_temperature', parameters: ['${_isMetric ? 27 : 80} $unit']);
     }
 
     String hintH;
@@ -88,26 +88,17 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
     var hint = [hintT, hintH].where((element) => element != null && element.length > 0).join('\n');
 
     String hintM;
-    if (output > 51.7)
-      hintM = 'summersimmerindex_index_51.7';
+    if (output > 54)
+      hintM = 'heatindex_index_54';
     else
-    if (output > 44.4)
-      hintM = 'summersimmerindex_index_44.4';
+    if (output > 40)
+      hintM = 'heatindex_index_40';
     else
-    if (output > 37.8)
-      hintM = 'summersimmerindex_index_37.8';
+    if (output > 32)
+      hintM = 'heatindex_index_32';
     else
-    if (output > 32.8)
-      hintM = 'summersimmerindex_index_32.8';
-    else
-    if (output > 28.3)
-      hintM = 'summersimmerindex_index_28.3';
-    else
-    if (output > 25.0)
-      hintM = 'summersimmerindex_index_25.0';
-    else
-    if (output > 21.3)
-      hintM = 'summersimmerindex_index_21.3';
+    if (output > 27)
+      hintM = 'heatindex_index_27';
 
     var outputs = [
       GCWOutput(
