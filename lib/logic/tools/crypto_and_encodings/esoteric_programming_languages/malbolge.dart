@@ -36,7 +36,8 @@ final opCodeList = {
   'v' : 'end',                   '81' : 'v',
   'o' : 'nop',                   '68' : 'o' };
 
-malbolgeOutput generateMalbolge(String inputString){
+
+/*malbolgeOutput generateMalbolge(String inputString){
   String endString = 'j';
   String tempString = '';
   List masterList = new List();
@@ -117,7 +118,7 @@ malbolgeOutput generateMalbolge(String inputString){
   } // for
   endString = endString + 'v';
   return malbolgeOutput([_reverseNormalize(endString)], [endString], [], []);
-}
+}*/
 
 
 malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
@@ -133,7 +134,6 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
   // load program
   int charCode = 0;
   String malbolge = program.replaceAll(RegExp(r'\s'), '');
-  int j = 0;
   int i = 0;
   while (i < malbolge.length){
     charCode = malbolge.codeUnitAt(i);
@@ -151,13 +151,11 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
      memory[i] = charCode;
      i++;
   }
-print('geladen');
   // fill memory with op(i-1, i-2)
   while (i < 59049){
     memory[i] = _op(memory[i - 1], memory[i - 2]);
     i++;
   }
-print('memory filled');
   // execute programm
   int a = 0;
   int c = 0;
@@ -187,11 +185,11 @@ print('memory filled');
           'd = '+d.toString(),]);
         return malbolgeOutput(output, assembler, memnonic, debug);
       }
-      opcode = xlat1 [(memory[c] - 33 + c) % 94];
+      opcode = xlat1[(memory[c] - 33 + c) % 94];
       assembler.add(_format(c) + '   ' + opcode);
       memnonic.add(opCodeList[opcode]);
     } else {
-      opcode = xlat1 [(memory[c] - 33 + c) % 94];
+      opcode = xlat1[(memory[c] - 33 + c) % 94];
       assembler.add(_format(c) + '   ' + opCodeList[opcode]);
       memnonic.add(opCodeList[opcode]);
     }
