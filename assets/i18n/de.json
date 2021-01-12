@@ -1465,6 +1465,7 @@
   "malbolge_description" : "Esoteric programming language",
   "malbolge_mode_interpret" : "Interpreter",
   "malbolge_mode_generate" : "Generator",
+  "malbolge_mode_interpret_strict" : "Streng",
   "malbolge_hint_code" : "Malbolge-Program",
   "malbolge_hint_code_assembler" : "Assembler",
   "malbolge_hint_code_memnonic" : "Memnonic",

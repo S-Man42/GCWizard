@@ -33,7 +33,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretMalbolge(elem['program'], elem['input']).output;
+        var _actual = interpretMalbolge(elem['program'], elem['input'], false).output;
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -51,7 +51,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () {
-        var _actual = interpretMalbolge(elem['program'], elem['input']).output;
+        var _actual = interpretMalbolge(elem['program'], elem['input'], false).output;
         expect(_actual, elem['expectedOutput']);
       });
     });

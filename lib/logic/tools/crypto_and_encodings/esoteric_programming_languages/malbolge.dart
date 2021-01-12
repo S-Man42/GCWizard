@@ -1,5 +1,7 @@
 // https://raw.githubusercontent.com/wallstop/MalbolgeGenerator/master/MalbolgeInterpreter.py
-// 
+// faulty regarding the generator and also interpreter
+//
+// https://github.com/zb3/malbolge-tools
 
 import 'dart:math';
 
@@ -25,14 +27,14 @@ final xlat1  = '+b(29e*j1VMEKLyC})8&m#~W>qxdRp0wkrUo[D7,XTcA"lI.v%{gJh4G\\-=O@5`
 final xlat2  = '5z]&gqtyfr\$(we4{WP)H-Zn,[%\\3dL+Q;>U!pJS72FhOA1CB6v^=I_0/8|jsb9m<.TVac`uY*MK\'X~xDl}REokN:#?G"i@';
 final validInstructions  = {'j', 'i', '*', 'p', '<', '/', 'v', 'o'};
 final opCodeList = {
-  'i' : 'jmp [d]',                  //   4
-  '<' : 'out a',                    //   5
-  '/' : 'in a',                     //  23
-  '*' : 'a = [d] = rotr [d]',       //  39
-  'j' : 'mov d, [d]',               //  40
-  'p' : 'a = [d] = crz a, [d]]',    //  62
-  'v' : 'end',                      //  81
-  'o' : 'nop' };                    //  68
+  'i' : 'jmp [d]',                '4' : 'i',
+  '<' : 'out a',                  '5' : '<',
+  '/' : 'in a',                  '23' : '/',
+  '*' : 'a = [d] = rotr [d]',    '39' : '*',
+  'j' : 'mov d, [d]',            '40' : 'j',
+  'p' : 'a = [d] = crz a, [d]]', '62' : 'p',
+  'v' : 'end',                   '81' : 'v',
+  'o' : 'nop',                   '68' : 'o' };
 
 malbolgeOutput generateMalbolge(String inputString){
   String endString = 'j';
@@ -118,9 +120,8 @@ malbolgeOutput generateMalbolge(String inputString){
 }
 
 
-malbolgeOutput interpretMalbolge(String program, String STDIN){
+malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
   List<int> memory = new List<int>(59049);
-
   if (program.length < 2)
     return malbolgeOutput([
       'malbolge_error_invalid_program',
@@ -150,13 +151,13 @@ malbolgeOutput interpretMalbolge(String program, String STDIN){
      memory[i] = charCode;
      i++;
   }
-
+print('geladen');
   // fill memory with op(i-1, i-2)
   while (i < 59049){
     memory[i] = _op(memory[i - 1], memory[i - 2]);
     i++;
   }
-
+print('memory filled');
   // execute programm
   int a = 0;
   int c = 0;
@@ -171,24 +172,29 @@ malbolgeOutput interpretMalbolge(String program, String STDIN){
   String STDOUT = '';
 
   while (!halt){
-    if (memory[c] < 33 || memory[c] > 126) {
-      output.addAll([STDOUT,
-        '',
-        'malbolge_error_runtime',
-        'malbolge_error_invalid_opcode',
-        'opCode: '+memory[c].toString()+' '+String.fromCharCode(memory[c]),
-        'malbolge_error_infinite_loop',
-        '',
-        'STACK TRACE ----------',
-        'c = '+c.toString(),
-        'a = '+a.toString(),
-        'd = '+d.toString(),]);
-      return malbolgeOutput(output, assembler, memnonic, debug);
+    if (strict) {
+      if (memory[c] < 33 || memory[c] > 126) {
+        output.addAll([STDOUT,
+          '',
+          'malbolge_error_runtime',
+          'malbolge_error_invalid_opcode',
+          'opCode: '+memory[c].toString()+' '+String.fromCharCode(memory[c]),
+          'malbolge_error_infinite_loop',
+          '',
+          'STACK TRACE ----------',
+          'c = '+c.toString(),
+          'a = '+a.toString(),
+          'd = '+d.toString(),]);
+        return malbolgeOutput(output, assembler, memnonic, debug);
+      }
+      opcode = xlat1 [(memory[c] - 33 + c) % 94];
+      assembler.add(_format(c) + '   ' + opcode);
+      memnonic.add(opCodeList[opcode]);
+    } else {
+      opcode = xlat1 [(memory[c] - 33 + c) % 94];
+      assembler.add(_format(c) + '   ' + opCodeList[opcode]);
+      memnonic.add(opCodeList[opcode]);
     }
-    opcode = xlat1 [(memory[c] - 33 + c) % 94];
-    assembler.add(_format(c) + '   ' + opcode);
-    memnonic.add(opCodeList[opcode]);
-
     switch (opcode) {
       case 'j':  //    40     mov d, [d]
         d = memory[d];
@@ -233,25 +239,29 @@ malbolgeOutput interpretMalbolge(String program, String STDIN){
       case 'v':  //    81     end
         halt = true;
         break;
-      default:
     };
-
-    if (memory[c] < 33 || memory[c] > 126) {
-      output.addAll([STDOUT,
-        '',
-        'malbolge_error_runtime',
-        'malbolge_error_invalid_opcode',
-        'opCode: '+memory[c].toString()+' '+String.fromCharCode(memory[c]),
-        (opcode == 'i') ? 'malbolge_error_illegal_jump' : 'malbolge_error_illegal_write',
-        '',
-        'STACK TRACE ----------',
-        'c = '+c.toString(),
-        'a = '+a.toString(),
-        'd = '+d.toString(),]);
-      return malbolgeOutput(output, assembler, memnonic, debug);
-    };
-
-    memory[c] = xlat2 .codeUnitAt(memory[c] - 33);
+    if (strict) {
+      if (memory[c] < 33 || memory[c] > 126) {
+        output.addAll([STDOUT,
+          '',
+          'malbolge_error_runtime',
+          'malbolge_error_invalid_opcode',
+          'opCode: '+memory[c].toString()+' '+String.fromCharCode(memory[c]),
+          (opcode == 'i') ? 'malbolge_error_illegal_jump' : 'malbolge_error_illegal_write',
+          '',
+          'STACK TRACE ----------',
+          'c = '+c.toString(),
+          'a = '+a.toString(),
+          'd = '+d.toString(),]);
+        return malbolgeOutput(output, assembler, memnonic, debug);
+      };
+      memory[c] = xlat2 .codeUnitAt(memory[c] - 33);
+    }
+    else {
+      if (33 <= memory[c] && memory[c] <= 126) {
+        memory[c] = xlat2 .codeUnitAt(memory[c] - 33);
+      }
+    }
 
     if (c == 59048)
       c = 0;

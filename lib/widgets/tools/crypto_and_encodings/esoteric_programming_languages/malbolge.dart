@@ -28,6 +28,7 @@ class MalbolgeState extends State<Malbolge> {
   var _currentInput = '';
   var _currentOutput = '';
   bool _currentDebug = false;
+  bool _currentStrict = false;
 
   malbolgeOutput output = malbolgeOutput([], [], [], []);
 
@@ -91,6 +92,15 @@ class MalbolgeState extends State<Malbolge> {
               )
             : Column( // interpret malbolge-programm
                 children: <Widget>[
+                  GCWOnOffSwitch(
+                    title:i18n(context, 'malbolge_mode_interpret_strict'),
+                    value: _currentStrict,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentStrict = value;
+                      });
+                    },
+                  ),
                   GCWTextField(
                     controller: _programmController,
                     hintText: i18n(context, 'malbolge_hint_code'),
@@ -124,7 +134,7 @@ class MalbolgeState extends State<Malbolge> {
     List<List<String>> columnData = new List<List<String>>();
 
     if (_currentMode == GCWSwitchPosition.left) { // interpret malbolge
-      output = interpretMalbolge(_currentProgramm, _currentInput);
+      output = interpretMalbolge(_currentProgramm, _currentInput, _currentStrict);
     }
 
     outputData = buildOutputText(output);
