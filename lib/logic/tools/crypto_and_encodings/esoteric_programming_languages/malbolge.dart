@@ -16,22 +16,14 @@ class malbolgeOutput{
   final List<String> output;
   final List<String> assembler;
   final List<String> memnonic;
-  final List<DebugOutput> debug;
 
-  malbolgeOutput(this.output, this.assembler, this.memnonic, this.debug);
+  malbolgeOutput(this.output, this.assembler, this.memnonic);
 }
 
-class DebugOutput{
-  final String pc;
-  final String command;
-  final String stack;
-  final String output;
-
-  DebugOutput(this.pc, this.command, this.stack, this.output);
-}
 
 final xlat1  = '+b(29e*j1VMEKLyC})8&m#~W>qxdRp0wkrUo[D7,XTcA"lI.v%{gJh4G\\-=O@5`_3i<?Z\';FNQuY]szf\$!BS/|t:Pn6^Ha';
 final xlat2  = '5z]&gqtyfr\$(we4{WP)H-Zn,[%\\3dL+Q;>U!pJS72FhOA1CB6v^=I_0/8|jsb9m<.TVac`uY*MK\'X~xDl}REokN:#?G"i@';
+
 final validInstructions  = {'j', 'i', '*', 'p', '<', '/', 'v', 'o'};
 final opCodeList = {
   'i' : 'jmp [d]',                '4' : 'i',
@@ -123,8 +115,8 @@ int index(String s, c){
   return -1;
 }
 
-List<int> memory = new List<int>(59048);         // program
-List<int> memory_runtime = new List<int>(59048); // memory at runtime: with encrypted commands
+List<int> memory = new List<int>(59049);         // program
+List<int> memory_runtime = new List<int>(59049); // memory at runtime: with encrypted commands
 int last_A_val = 0;                              // last value of A register
 
 
@@ -133,7 +125,7 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
   if (program.length < 2)
     return malbolgeOutput([
       'malbolge_error_invalid_program',
-      'malbolge_error_program_to_short'], [], [], []);
+      'malbolge_error_program_to_short'], [], []);
 
   if (checkNormalize(program))
     program = reverseNormalize(program);
@@ -148,12 +140,12 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
       if (!validInstructions .contains(xlat1 [(charCode - 33 + i) % 94]))
         return malbolgeOutput([
           'malbolge_error_invalid_program',
-          'malbolge_error_invalid_character'], [], [], []);
+          'malbolge_error_invalid_character'], [], []);
     }
     if (i == 59049) {
       return malbolgeOutput([
         'malbolge_error_invalid_program',
-        'malbolge_error_program_to_big'], [], [], []);
+        'malbolge_error_program_to_big'], [], []);
     }
     memory[i] = charCode;
     i++;
@@ -173,7 +165,6 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
   List<String> output = new List<String>();
   List<String> assembler = new List<String>();
   List<String> memnonic = new List<String>();
-  List<DebugOutput> debug = new List<DebugOutput>();
   String STDOUT = '';
 
   while (!halt){
@@ -183,23 +174,20 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
           '',
           'malbolge_error_runtime',
           'malbolge_error_invalid_opcode',
-          'opCode: '+memory[c].toString()+' '+String.fromCharCode(memory[c]),
+          'opCode: ' + memory[c].toString() + ' ' + String.fromCharCode(memory[c]),
           'malbolge_error_infinite_loop',
           '',
           'STACK TRACE ----------',
-          'c = '+c.toString(),
-          'a = '+a.toString(),
-          'd = '+d.toString(),]);
-        return malbolgeOutput(output, assembler, memnonic, debug);
+          'c = ' + c.toString(),
+          'a = ' + a.toString(),
+          'd = ' + d.toString(),]);
+        return malbolgeOutput(output, assembler, memnonic);
       }
-      opcode = xlat1[(memory[c] - 33 + c) % 94];
-      assembler.add(format(c) + '   ' + opcode);
-      memnonic.add(opCodeList[opcode]);
-    } else {
-      opcode = xlat1[(memory[c] - 33 + c) % 94];
-      assembler.add(format(c) + '   ' + opCodeList[opcode]);
-      memnonic.add(opCodeList[opcode]);
     }
+    opcode = xlat1[(memory[c] - 33 + c) % 94];
+    assembler.add(format(c) + '   ' + opcode);
+    memnonic.add(opCodeList[opcode]);
+
     switch (opcode) {
       case 'j':  //    40     mov d, [d]
         d = memory[d];
@@ -233,7 +221,7 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
             '',
             'malbolge_error_runtime',
             'malbolge_error_no_input']);
-          return malbolgeOutput(output, assembler, memnonic, debug);
+          return malbolgeOutput(output, assembler, memnonic);
         }
         break;
 
@@ -250,14 +238,14 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
           '',
           'malbolge_error_runtime',
           'malbolge_error_invalid_opcode',
-          'opCode: '+memory[c].toString()+' '+String.fromCharCode(memory[c]),
+          'opCode: ' + memory[c].toString() + ' ' + String.fromCharCode(memory[c]),
           (opcode == 'i') ? 'malbolge_error_illegal_jump' : 'malbolge_error_illegal_write',
           '',
           'STACK TRACE ----------',
-          'c = '+c.toString(),
-          'a = '+a.toString(),
-          'd = '+d.toString(),]);
-        return malbolgeOutput(output, assembler, memnonic, debug);
+          'c = ' + c.toString(),
+          'a = ' + a.toString(),
+          'd = ' + d.toString(),]);
+        return malbolgeOutput(output, assembler, memnonic);
       };
       memory[c] = xlat2 .codeUnitAt(memory[c] - 33);
     }
@@ -277,14 +265,14 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
       d++;
   }
   output.add(STDOUT);
-  return malbolgeOutput(output, assembler, memnonic, debug);
+  return malbolgeOutput(output, assembler, memnonic);
 }
 
 
 malbolgeOutput generateMalbolge(String out_s){
   int index = 0;       // current char of out_s
   String malbolgeProgram = '';
-  int C = 0;           // current size of Malbolge program. respectively the value of the C register in Malbolge
+  int c = 0;           // current size of Malbolge program. respectively the value of the C register in Malbolge
 
   // initialize memory
   for (int i = 0; i < memory.length; i++)
@@ -299,48 +287,41 @@ malbolgeOutput generateMalbolge(String out_s){
 
   // Malbolge program execution continues with data pointer at 1 and program counter at 99
   // The data pointer is always D = C-98, so we needn't store its value.
-  C = 99;
+  c = 99;
   while (index < out_s.length){
-//while (*out_s != 0){
     int command_length = 0;
-    // load character to A register
-    do {
-      command_length = generate_character(C, out_s[index]);
+
+    do { // load character to A register
+      command_length = generate_character(c, out_s[index]);
       index++;
     } while(command_length < 0 && index < out_s.length);
     if (command_length == -1)
       break;
 
-    C += command_length;
-    if (C > 59047){
-      C = 59047;
+    c += command_length;
+    if (c > 59047){
+      c = 59047;
       break;
     } else {
-      // print A register
-      create_malbolge_command(MB_OUT, C);
-      C++;
+      create_malbolge_command(MB_OUT, c); // print A register
+      c++;
     }
   }
 
-  if (C > 59047){
-    C = 59047;
-  }
+  if (c > 59047)
+    c = 59047;
+
   // halt
-  create_malbolge_command(MB_HALT, C);
-  C++;
-  // create output
-  for (int i = 0; i < C; i++){
+  create_malbolge_command(MB_HALT, c);
+  c++;
+
+  for (int i = 0; i < c; i++){ // create output
     malbolgeProgram+= String.fromCharCode(memory[i]);
   }
-  return malbolgeOutput([malbolgeProgram], [normalize(malbolgeProgram)], [], []);
+  return malbolgeOutput([malbolgeProgram], [normalize(malbolgeProgram)], []);
 }
 
 
-
-// Searches and generates Malbolge instructions that generate goal's value in the A register.
-// Malbolge command sequence starts at position C.
-// Returns the length of the instruction set.
-// Returns -1 on failure.
 int generate_character(int C, String goal) {
 
   int window_size = 1;                    // Current size of the search window.
@@ -350,17 +331,12 @@ int generate_character(int C, String goal) {
     return -1;
   }
 
-  if (String.fromCharCode(last_A_val) == goal){
-    // goal's value is in the A register already.
+  if (String.fromCharCode(last_A_val) == goal){// goal's value is in the A register already.
     return 0;
   }
 
-  // search for instructions of format
-  // NOP* ROT? NOP* OPR? NOP* OPR
-  // or
-  // NOP* ROT
-  // that generate goal's value in the A register
-  // within the search window.
+  // search for instructions of format NOP* ROT? NOP* OPR? NOP* OPR  or  NOP* ROT
+  // that generate goal's value in the A register within the search window.
   while(window_size <= 700 && window_size + C < 59049){
     int rotPos = -1;
     do{
@@ -395,8 +371,7 @@ int generate_character(int C, String goal) {
         }
 
 
-        if (String.fromCharCode(cur_A_val) == goal){
-          // Success.
+        if (String.fromCharCode(cur_A_val) == goal){ // Success.
           // Update last_A_val and return length of Malbolge code sequence.
           last_A_val = cur_A_val;
           return window_size;

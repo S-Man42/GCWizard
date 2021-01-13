@@ -30,7 +30,7 @@ class MalbolgeState extends State<Malbolge> {
   bool _currentDebug = false;
   bool _currentStrict = false;
 
-  malbolgeOutput output = malbolgeOutput([], [], [], []);
+  malbolgeOutput output = malbolgeOutput([], [], []);
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;    // interpret
 
@@ -133,8 +133,6 @@ class MalbolgeState extends State<Malbolge> {
   Widget _buildOutput(BuildContext context) {
     String outputData = '';
 
-    List<List<String>> columnData = new List<List<String>>();
-
     if (_currentMode == GCWSwitchPosition.left) { // interpret malbolge
       output = interpretMalbolge(_currentProgramm, _currentInput, _currentStrict);
     }
@@ -143,11 +141,6 @@ class MalbolgeState extends State<Malbolge> {
     }
 
     outputData = buildOutputText(output);
-
-    for (int i = 0; i< output.debug.length; i++) {
-      columnData.add([output.debug[i].pc, output.debug[i].command, output.debug[i].stack, output.debug[i].output]);
-    }
-
 
     return Column(
       children: <Widget>[
