@@ -13,6 +13,7 @@ Isolate isolate;
 void start() async {
   ReceivePort receivePort= ReceivePort(); //port for this main isolate to receive messages.
   isolate = await Isolate.spawn(runTimer, receivePort.sendPort);
+
   receivePort.listen((data) {
     print('RECEIVE: ' + data + ', ');
   });

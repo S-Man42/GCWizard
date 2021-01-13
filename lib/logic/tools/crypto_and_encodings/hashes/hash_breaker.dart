@@ -5,21 +5,26 @@ import 'dart:isolate';
 
 final _ALARM_COUNT = 100000;
 
-ReceivePort receivePort= ReceivePort(); //port for this main isolate to receive output messages.
-ReceivePort receivePort1= ReceivePort(); //port for this main isolate to receive messages.
-ReceivePort receivePort2= ReceivePort(); //port for this main isolate to receive messages.
+ReceivePort outputPort= ReceivePort(); //port for this main isolate to receive output messages.
+ReceivePort progressPort= ReceivePort(); //port for this main isolate to receive messages.
+ReceivePort progressGetPort= ReceivePort(); //port for this main isolate to receive messages.
+
+ReceivePort testPort= ReceivePort(); //port for this main isolate to receive messages.
+
 
 class HashBreakerJobData {
   final String input;
   final String searchMask;
   final Map<String, String> substitutions;
   final Function hashFunction;
+  final SendPort sendPort ;
 
   HashBreakerJobData({
     this.input = '',
     this.searchMask = '',
     this.substitutions = null,
-    this.hashFunction = null
+    this.hashFunction = null,
+    this.sendPort = null,
   });
 }
 
@@ -44,22 +49,31 @@ Map<String, dynamic> preCheck(Map<String, String> substitutions) {
 }
 
 void breakHash(HashBreakerJobData jobData) async {
+  jobData.sendPort.send(0.5);
 
-  double progress = 0;
-  receivePort2.listen((progress) {
-    print('SEND: ' + progress.toString() + ' - ');
-    receivePort1.sendPort.send(progress);
-  });
+  ReceivePort receivePort= ReceivePort();
+  jobData.sendPort.send(receivePort.sendPort);
+
+  print("_calcCount " + _calcCount.toString());
 
   var _currentOutputFuture = breakHash1(jobData.input, jobData.searchMask, jobData.substitutions, jobData.hashFunction);
   _currentOutputFuture.then((output) {
     print('SEND: ' + output['state'] + ' - ');
-    receivePort.sendPort.send(output);
+    jobData.sendPort.send(output);
   });
 
+  receivePort.listen((get) {
+    print('RECEIVE: ' + get.toString() + ', ');
+    var progress = Progress;
+    print('SEND: ' + progress.toString() + ' - ');
+    jobData.sendPort.send(progress);
+  });
 }
 
 Future<Map<String, dynamic>> breakHash1(String input, String searchMask, Map<String, String> substitutions, Function hashFunction) async {
+
+
+
   if (
     input == null || input.length == 0
     || searchMask == null || searchMask.length == 0

@@ -83,6 +83,7 @@ class _HashBreakerState extends State<HashBreaker> {
   var _currentSubstitutions = <int, Map<String, String>>{};
   var _isStarted = false;
   var _progress = 0.0;
+  SendPort sendPort;
 
   @override
   void initState() {
@@ -179,8 +180,10 @@ class _HashBreakerState extends State<HashBreaker> {
     Timer.periodic(Duration(milliseconds: 500), (timer) {
       if (!_isStarted)
         timer.cancel();
-      print(DateTime.now().toString() + ' timer tick '+ _isStarted.toString());
-      receivePort2.sendPort.send("");
+      //print(DateTime.now().toString() + ' timer tick '+ _isStarted.toString());
+      if (sendPort != null)
+        sendPort.send("");
+      //print("progess " + Progress.toString());
     });
   }
 /*
@@ -218,6 +221,7 @@ class _HashBreakerState extends State<HashBreaker> {
       _calculateOutput1(_substitutions);
   }
 */
+
   _calculateOutput2() async {
     //Future<Map<String, dynamic>> _currentOutputFuture ;
     //var thread = new Thread(() async {
@@ -229,20 +233,32 @@ class _HashBreakerState extends State<HashBreaker> {
         _substitutions.putIfAbsent(
             entry.value.keys.first, () => entry.value.values.first);
       });
+      var preCheckResult = preCheck(_substitutions);
 
       _isStarted = true;
       _startProgressTimer();
-      var jobData = HashBreakerJobData(input: _currentInput, searchMask: _currentMask, substitutions: _substitutions, hashFunction: _currentHashFunction);
+      var jobData = HashBreakerJobData(input: _currentInput, searchMask: _currentMask, substitutions: _substitutions, hashFunction: _currentHashFunction, sendPort: progressPort.sendPort);
       var isolate = await Isolate.spawn(breakHash, jobData);
-      receivePort.listen((output) {
+      /*outputPort.listen((output) {
+        print('RECEIVE: ' + output.toString() + ', ');
         _currentOutput = output['text'];
         _isStarted = false;
         //print('RECEIVE: ' + data + ', ');
-      });
-      receivePort1.listen((progress) {
-        _progress = progress;
-        setState(() {});
+      });*/
+      progressPort.listen((data) {
+        print('RECEIVE: ' + data.toString() + ', ');
+
         //print('RECEIVE: ' + data + ', ');
+          if (data is SendPort) {
+            sendPort = data;
+          } else if (data is double) {
+            _progress = data;
+            setState(() {});
+          } else if (data is Map<String, dynamic>) {
+            _currentOutput = data['text'];
+            _isStarted = false;
+          }
+
       });
 /*
       var _currentOutputFuture = breakHash(
