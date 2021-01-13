@@ -14,7 +14,7 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'dart:async';
-import 'package:flutter/material.dart';
+import 'dart:isolate';
 
 
 class HashBreaker extends StatefulWidget {
@@ -82,6 +82,7 @@ class _HashBreakerState extends State<HashBreaker> {
   var _currentHashFunction = md5Digest;
   var _currentSubstitutions = <int, Map<String, String>>{};
   var _isStarted = false;
+  var _progress = 0.0;
 
   @override
   void initState() {
@@ -160,20 +161,17 @@ class _HashBreakerState extends State<HashBreaker> {
         width : 300.0,
         linearStrokeCap: LinearStrokeCap.butt,
         lineHeight: 30.0,
-        percent: Progress,
+        percent: _progress,
 
         center: (Text(
-            (Progress * 100).toStringAsFixed(1) + "%",
+          (_progress * 100).toStringAsFixed(1) + "%",
     //style : new TextStyle( fontSize: 16.0, color: Colors.white, fontStyle: FontStyle.italic),
     )))
         :
      GCWSubmitFlatButton(
-      onPressed: () {
-        setState(() {
-          _startProgressTimer();
-          _calculateOutput();
-        });
-      },
+       onPressed: _calculateOutput2
+         //Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new HomeTest()));
+
     );
   }
 
@@ -181,56 +179,114 @@ class _HashBreakerState extends State<HashBreaker> {
     Timer.periodic(Duration(milliseconds: 500), (timer) {
       if (!_isStarted)
         timer.cancel();
-print('timer tick');
-      this.setState(() {});
+      print(DateTime.now().toString() + ' timer tick '+ _isStarted.toString());
+      receivePort2.sendPort.send("");
     });
   }
-
-  _calculateOutput({calculateAll = false}) async {
+/*
+  _calculateOutput() async {
     if (_isStarted)
       return;
 
     var _substitutions = <String, String>{};
     _currentSubstitutions.entries.forEach((entry) {
-      _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
+      _substitutions.putIfAbsent(
+          entry.value.keys.first, () => entry.value.values.first);
     });
 
-    if (calculateAll == false) {
-      var preCheckResult = preCheck(_substitutions);
-      if (preCheckResult == null || preCheckResult['status'] == null)
-        return i18n(context, 'hashes_hashbreaker_solutionnotfound');
+    var preCheckResult = preCheck(_substitutions);
+    if (preCheckResult == null || preCheckResult['status'] == null)
+      return i18n(context, 'hashes_hashbreaker_solutionnotfound');
 
-      if (preCheckResult['status'] == 'high_count') {
-        showGCWAlertDialog(
-          context,
-          i18n(context, 'hashes_hashbreaker_alert_range_title'),
-          i18n(context, 'hashes_hashbreaker_alert_range_text', parameters: [preCheckResult['count']]),
-          () {
-            setState(() {
-              this.setState(() {});
-              _calculateOutput(calculateAll: true);
-            });
-          },
-        );
+    if (preCheckResult['status'] == 'high_count') {
+      showGCWAlertDialog(
+        context,
+        i18n(context, 'hashes_hashbreaker_alert_range_title'),
+        i18n(context, 'hashes_hashbreaker_alert_range_text',
+            parameters: [preCheckResult['count']]),
+            () {
+          setState(() {
+            this.setState(() {});
+            _calculateOutput1(_substitutions);
+          });
+        },
+      );
 
-        _currentOutput = '';
-        return;
-      }
-    }
-
-    _isStarted = true;
-    var _currentOutputFuture = breakHash(_currentInput, _currentMask, _substitutions, _currentHashFunction);
-
-    _currentOutputFuture.then((output) {
-      _isStarted = false;
-      if (output == null || output['state'] == null || output['state'] == 'not_found'){
-        return i18n(context, 'hashes_hashbreaker_solutionnotfound');
-      }
-
-      _currentOutput = output['text'];
-      this.setState(() {});
-    });
+      _currentOutput = '';
+      return;
+    } else
+      _calculateOutput1(_substitutions);
   }
+*/
+  _calculateOutput2() async {
+    //Future<Map<String, dynamic>> _currentOutputFuture ;
+    //var thread = new Thread(() async {
+      print(DateTime.now().toString() + ' BLA start');
+      //_isStarted = true;
+
+      var _substitutions = <String, String>{};
+      _currentSubstitutions.entries.forEach((entry) {
+        _substitutions.putIfAbsent(
+            entry.value.keys.first, () => entry.value.values.first);
+      });
+
+      _isStarted = true;
+      _startProgressTimer();
+      var jobData = HashBreakerJobData(input: _currentInput, searchMask: _currentMask, substitutions: _substitutions, hashFunction: _currentHashFunction);
+      var isolate = await Isolate.spawn(breakHash, jobData);
+      receivePort.listen((output) {
+        _currentOutput = output['text'];
+        _isStarted = false;
+        //print('RECEIVE: ' + data + ', ');
+      });
+      receivePort1.listen((progress) {
+        _progress = progress;
+        setState(() {});
+        //print('RECEIVE: ' + data + ', ');
+      });
+/*
+      var _currentOutputFuture = breakHash(
+
+      _currentOutputFuture.then((output) {
+        //_isStarted = false;
+        print(DateTime.now().toString() + ' finished');
+
+        if (output == null || output['state'] == null || output['state'] == 'not_found'){
+          return i18n(context, 'hashes_hashbreaker_solutionnotfound');
+        }
+
+        print(DateTime.now().toString() + ' BLA3');
+        _currentOutput = output['text'];
+        //this.setState(() {});
+
+      });
+      */
+
+    //});
+    //thread.start();
+
+    print(DateTime.now().toString() + ' BLA1');
+  }
+/*
+  _calculateOutput1(Map<String, String> _substitutions) async {
+    print(DateTime.now().toString() + ' BLA4');
+        ()async {
+          setState(() {
+            print(DateTime.now().toString() + ' BLA5');
+            _isStarted = true; //here you show a indicator
+            _startProgressTimer();
+          });
+          await _calculateOutput2(); //here you wait for function
+          setState(() {
+            print(DateTime.now().toString() + ' BLA6');
+            _isStarted = false; //here you hide the indicator
+          });
+        };
+    print(DateTime.now().toString() + ' BLA7');
+  }
+*/
+
+
 
   _buildVariablesInput() {
     return Column(

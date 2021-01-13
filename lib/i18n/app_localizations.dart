@@ -76,14 +76,11 @@ class _AppLocalizationsDelegate
  * ...
  */
 String i18n(BuildContext context, String key, {List<dynamic> parameters: const []}) {
-  print(key);
-
   Map<String, String> map = {};
   for (int i = parameters.length; i >= 1; i--) {
     map.putIfAbsent('%s' + i.toString(), () => parameters[i - 1].toString());
   }
 
   var text = AppLocalizations.of(context).translate(key);
-  print(text);
   return map.isEmpty ? text : substitution(text, map);
 }
