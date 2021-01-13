@@ -23,6 +23,15 @@ import 'package:gc_wizard/widgets/selector_lists/easter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_lucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_fibonacci_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_mersenne_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_fermat_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_pell_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_jacobsthal_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_pelllucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/numbersequence_jacobsthallucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
@@ -287,6 +296,7 @@ class _MainViewState extends State<MainView> {
           className(MoonPosition()),
           className(MoonRiseSet()),
           className(Morse()),
+          className(NumberSequenceSelection()),
           className(MultiDecoder()),
           className(NumeralBases()),
           className(NumeralWordsSelection()),
