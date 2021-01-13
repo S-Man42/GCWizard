@@ -1454,7 +1454,6 @@
   "morse_next_letter" : "Next",
   "morse_next_word" : "Next Word",
 
-
   "multidecoder_title" : "Multi Decoder",
   "multidecoder_description" : "Tries to decode one input with a set of pre-configured tools",
   "multidecoder_configuration_title" : "Multi Decoder: Configuration",
