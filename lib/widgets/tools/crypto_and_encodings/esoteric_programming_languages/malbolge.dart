@@ -11,7 +11,7 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+
 
 class Malbolge extends StatefulWidget {
 
@@ -76,6 +76,7 @@ class MalbolgeState extends State<Malbolge> {
                       });
                     },
                   ),
+/*
                   GCWToolBar(
                     children: [
                       GCWButton(
@@ -83,11 +84,14 @@ class MalbolgeState extends State<Malbolge> {
                         onPressed: () {
                           output = generateMalbolge(_currentOutput);
                           _currentDebug = false;
-                          setState((){});
+                          setState((){
+
+                          });
                         },
                       )
                     ],
                   )
+*/
                 ],
               )
             : Column( // interpret malbolge-programm
@@ -128,13 +132,14 @@ class MalbolgeState extends State<Malbolge> {
 
   Widget _buildOutput(BuildContext context) {
     String outputData = '';
-    var flexData;
-    flexData = [1, 2, 3, 3];
 
     List<List<String>> columnData = new List<List<String>>();
 
     if (_currentMode == GCWSwitchPosition.left) { // interpret malbolge
       output = interpretMalbolge(_currentProgramm, _currentInput, _currentStrict);
+    }
+    else {
+      output = generateMalbolge(_currentOutput);
     }
 
     outputData = buildOutputText(output);
