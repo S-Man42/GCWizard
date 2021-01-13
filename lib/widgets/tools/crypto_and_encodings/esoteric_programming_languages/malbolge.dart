@@ -137,6 +137,7 @@ class MalbolgeState extends State<Malbolge> {
       output = interpretMalbolge(_currentProgramm, _currentInput, _currentStrict);
     }
     else {
+      //output = generateMalbolgePy(_currentOutput);
       output = generateMalbolge(_currentOutput);
     }
 
