@@ -1461,16 +1461,6 @@ class Registry {
 
       //NumberSequenceSelection ****************************************************************************************
       GCWTool(
-        tool: NumberSequenceFermatSelection(),
-        i18nPrefix: 'numbersequence_fermat',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat oeis A000251',
-      ),
-      GCWTool(
-        tool: NumberSequenceMersenneFermatSelection(),
-        i18nPrefix: 'numbersequence_mersennefermat',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat oeis A000051',
-      ),
-      GCWTool(
         tool: NumberSequenceFactorialSelection(),
         i18nPrefix: 'numbersequence_factorial',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fakultaet faktorielle factorial',
@@ -1484,6 +1474,16 @@ class Registry {
         tool: NumberSequenceMersenneSelection(),
         i18nPrefix: 'numbersequence_mersenne',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne oeis A000225',
+      ),
+      GCWTool(
+        tool: NumberSequenceFermatSelection(),
+        i18nPrefix: 'numbersequence_fermat',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat oeis A000251',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneFermatSelection(),
+        i18nPrefix: 'numbersequence_mersennefermat',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat oeis A000051',
       ),
       GCWTool(
         tool: NumberSequenceLucasSelection(),

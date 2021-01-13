@@ -10,7 +10,7 @@ class NumberSequenceJacobsthalCheckNumber extends NumberSequenceCheckNumber {
 }
 
 class NumberSequenceJacobsthalDigits extends NumberSequenceDigits {
-  NumberSequenceJacobsthalDigits() : super(mode: NumberSequencesMode.JACOBSTAHL, maxDigits: 111);
+  NumberSequenceJacobsthalDigits() : super(mode: NumberSequencesMode.JACOBSTAHL, maxDigits: 1111);
 }
 
 class NumberSequenceJacobsthalRange extends NumberSequenceRange {

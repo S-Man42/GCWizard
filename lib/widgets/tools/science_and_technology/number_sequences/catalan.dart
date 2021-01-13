@@ -6,21 +6,21 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
 
 class NumberSequenceCatalanCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequenceCatalanCheckNumber() : super(mode: NumberSequencesMode.CATALAN, maxIndex: 111111);
+  NumberSequenceCatalanCheckNumber() : super(mode: NumberSequencesMode.CATALAN, maxIndex: 11111);
 }
 
 class NumberSequenceCatalanDigits extends NumberSequenceDigits {
-  NumberSequenceCatalanDigits() : super(mode: NumberSequencesMode.CATALAN, maxDigits: 111);
+  NumberSequenceCatalanDigits() : super(mode: NumberSequencesMode.CATALAN, maxDigits: 1111);
 }
 
 class NumberSequenceCatalanRange extends NumberSequenceRange {
-  NumberSequenceCatalanRange() : super(mode: NumberSequencesMode.CATALAN, maxIndex: 111111);
+  NumberSequenceCatalanRange() : super(mode: NumberSequencesMode.CATALAN, maxIndex: 11111);
 }
 
 class NumberSequenceCatalanNthNumber extends NumberSequenceNthNumber {
-  NumberSequenceCatalanNthNumber() : super(mode: NumberSequencesMode.CATALAN, maxIndex: 111111);
+  NumberSequenceCatalanNthNumber() : super(mode: NumberSequencesMode.CATALAN, maxIndex: 11111);
 }
 
 class NumberSequenceCatalanContains extends NumberSequenceContains {
-  NumberSequenceCatalanContains() : super(mode: NumberSequencesMode.CATALAN, maxIndex: 111111);
+  NumberSequenceCatalanContains() : super(mode: NumberSequencesMode.CATALAN, maxIndex: 11111);
 }

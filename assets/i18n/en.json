@@ -1500,7 +1500,7 @@
   "numbersequence_factorial_example" : "0, 1, 2, 6, 24, 120, 720, 5040, ...",
   "numbersequence_mersennefermat_title" : "Mersenne-like with Fermat-Numbers Sequence",
   "numbersequence_mersennefermat_description" : "Online Encyclopedia of Integer Sequences A000051",
-  "numbersequence_mersennefermat_example" : "2, 3, 5, 9, 17, 33, 65, ...",
+  "numbersequence_mersennefermat_example" : "2, 3, 5, 9, 17, 33, 65, 129, 257, 513, 1025, ...",
   "numbersequence_fermat_title" : "Fermat Sequence",
   "numbersequence_fermat_description" : "Online Encyclopedia of Integer Sequences A000251",
   "numbersequence_fermat_example" : "3, 5, 17, 257, 65537, 4294967297, ...",

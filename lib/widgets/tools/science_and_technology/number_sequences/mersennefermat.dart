@@ -10,7 +10,7 @@ class NumberSequenceMersenneFermatCheckNumber extends NumberSequenceCheckNumber 
 }
 
 class NumberSequenceMersenneFermatDigits extends NumberSequenceDigits {
-  NumberSequenceMersenneFermatDigits() : super(mode: NumberSequencesMode.MERSENNE_FERMAT, maxDigits: 111);
+  NumberSequenceMersenneFermatDigits() : super(mode: NumberSequencesMode.MERSENNE_FERMAT, maxDigits: 1111);
 }
 
 class NumberSequenceMersenneFermatRange extends NumberSequenceRange {

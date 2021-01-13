@@ -4,6 +4,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dar
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'dart:math';
 
 class NumberSequenceRange extends StatefulWidget {
   final NumberSequencesMode mode;
@@ -48,8 +49,8 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
         GCWIntegerSpinner(
           title: i18n(context, 'numbersequence_inputstop'),
           value: _currentInputStop,
-          min: 0,
-          max: 1000,
+          min: _currentInputStart,
+          max: widget.maxIndex,
           onChanged: (value) {
             setState(() {
               _currentInputStop = value;

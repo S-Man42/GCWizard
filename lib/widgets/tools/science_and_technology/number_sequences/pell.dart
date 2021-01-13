@@ -6,21 +6,21 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
 
 class NumberSequencePellCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequencePellCheckNumber() : super(mode: NumberSequencesMode.PELL, maxIndex: 111111);
+  NumberSequencePellCheckNumber() : super(mode: NumberSequencesMode.PELL, maxIndex: 55555);
 }
 
 class NumberSequencePellDigits extends NumberSequenceDigits {
-  NumberSequencePellDigits() : super(mode: NumberSequencesMode.PELL, maxDigits: 111);
+  NumberSequencePellDigits() : super(mode: NumberSequencesMode.PELL, maxDigits: 1111);
 }
 
 class NumberSequencePellRange extends NumberSequenceRange {
-  NumberSequencePellRange() : super(mode: NumberSequencesMode.PELL, maxIndex: 111111);
+  NumberSequencePellRange() : super(mode: NumberSequencesMode.PELL, maxIndex: 5555);
 }
 
 class NumberSequencePellNthNumber extends NumberSequenceNthNumber {
-  NumberSequencePellNthNumber() : super(mode: NumberSequencesMode.PELL, maxIndex: 111111);
+  NumberSequencePellNthNumber() : super(mode: NumberSequencesMode.PELL, maxIndex: 5555);
 }
 
 class NumberSequencePellContains extends NumberSequenceContains {
-  NumberSequencePellContains() : super(mode: NumberSequencesMode.PELL, maxIndex: 111111);
+  NumberSequencePellContains() : super(mode: NumberSequencesMode.PELL, maxIndex: 5555);
 }

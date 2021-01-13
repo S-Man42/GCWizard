@@ -6,21 +6,21 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
 
 class NumberSequenceFactorialCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequenceFactorialCheckNumber() : super(mode: NumberSequencesMode.FACTORIAL, maxIndex: 111111);
+  NumberSequenceFactorialCheckNumber() : super(mode: NumberSequencesMode.FACTORIAL, maxIndex: 11111);
 }
 
 class NumberSequenceFactorialDigits extends NumberSequenceDigits {
-  NumberSequenceFactorialDigits() : super(mode: NumberSequencesMode.FACTORIAL, maxDigits: 111);
+  NumberSequenceFactorialDigits() : super(mode: NumberSequencesMode.FACTORIAL, maxDigits: 1111);
 }
 
 class NumberSequenceFactorialRange extends NumberSequenceRange {
-  NumberSequenceFactorialRange() : super(mode: NumberSequencesMode.FACTORIAL, maxIndex: 111111);
+  NumberSequenceFactorialRange() : super(mode: NumberSequencesMode.FACTORIAL, maxIndex: 11111);
 }
 
 class NumberSequenceFactorialNthNumber extends NumberSequenceNthNumber {
-  NumberSequenceFactorialNthNumber() : super(mode: NumberSequencesMode.FACTORIAL, maxIndex: 111111);
+  NumberSequenceFactorialNthNumber() : super(mode: NumberSequencesMode.FACTORIAL, maxIndex: 11111);
 }
 
 class NumberSequenceFactorialContains extends NumberSequenceContains {
-  NumberSequenceFactorialContains() : super(mode: NumberSequencesMode.FACTORIAL, maxIndex: 111111);
+  NumberSequenceFactorialContains() : super(mode: NumberSequencesMode.FACTORIAL, maxIndex: 11111);
 }

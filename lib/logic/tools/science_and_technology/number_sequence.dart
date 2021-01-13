@@ -56,8 +56,11 @@ BigInt _getMersenne(int n){
 }
 
 BigInt _getCatalan(int n){
+  if (n == 0)
+    return BigInt.one;
+
   try {
-    return _getBinomialcoefficient(2 * n, n) ~/ (BigInt.from(n) + One);
+    return _getBinomialCoefficient(2 * n, n) ~/ (BigInt.from(n) + One);
   } catch (e) {
     return BigInt.from(-1);
   }
@@ -77,7 +80,7 @@ BigInt _getfactorial(int n){
     return n <= 1 ? One : BigInt.from(n) * _getfactorial(n - 1);
 }
 
-BigInt _getBinomialcoefficient(int n, k){
+BigInt _getBinomialCoefficient(int n, k){
   if (n == k)
     return Zero;
   else
@@ -124,7 +127,7 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
     int index = 0;
     while (index < stop + 1) {
       if (index == 0)
-        number = One;
+        number = Zero;
       else if (index == 1)
         number = One;
       else {
@@ -143,7 +146,7 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
     BigInt pn1 = One;
     int index = 0;
     while (index <= stop){
-      if (index ==0)
+      if (index == 0)
         number = pn0;
       else  if (index == 1)
         number = pn1;
@@ -163,7 +166,7 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
     BigInt pn1 = Two;
     int index = 0;
     while (index < stop + 1) {
-      if (index ==0)
+      if (index == 0)
         number = pn0;
       else  if (index == 1)
         number = pn1;
@@ -183,7 +186,7 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
     BigInt pn1 = One;
     int index = 0;
     while (index <= stop){
-      if (index ==0)
+      if (index == 0)
         number = pn0;
       else  if (index == 1)
         number = pn1;

@@ -10,7 +10,7 @@ class NumberSequenceLucasCheckNumber extends NumberSequenceCheckNumber {
 }
 
 class NumberSequenceLucasDigits extends NumberSequenceDigits {
-  NumberSequenceLucasDigits() : super(mode: NumberSequencesMode.LUCAS, maxDigits: 111);
+  NumberSequenceLucasDigits() : super(mode: NumberSequencesMode.LUCAS, maxDigits: 1111);
 }
 
 class NumberSequenceLucasRange extends NumberSequenceRange {

@@ -10,7 +10,7 @@ class NumberSequenceMersenneCheckNumber extends NumberSequenceCheckNumber {
 }
 
 class NumberSequenceMersenneDigits extends NumberSequenceDigits {
-  NumberSequenceMersenneDigits() : super(mode: NumberSequencesMode.MERSENNE, maxDigits: 111);
+  NumberSequenceMersenneDigits() : super(mode: NumberSequencesMode.MERSENNE, maxDigits: 1111);
 }
 
 class NumberSequenceMersenneRange extends NumberSequenceRange {

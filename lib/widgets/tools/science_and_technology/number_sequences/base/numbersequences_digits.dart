@@ -52,7 +52,7 @@ class NumberSequenceDigitsState extends State<NumberSequenceDigits> {
   _buildOutput() {
     List<List<String>> columnData = [];
     getNumbersWithNDigits(widget.mode, _currentInputN).forEach((element) {
-      columnData.add([element]);
+      columnData.add([element.toString()]);
     });
 
     return GCWDefaultOutput(

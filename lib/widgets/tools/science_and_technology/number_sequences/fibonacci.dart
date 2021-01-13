@@ -10,7 +10,7 @@ class NumberSequenceFibonacciCheckNumber extends NumberSequenceCheckNumber {
 }
 
 class NumberSequenceFibonacciDigits extends NumberSequenceDigits {
-  NumberSequenceFibonacciDigits() : super(mode: NumberSequencesMode.FIBONACCI, maxDigits: 111);
+  NumberSequenceFibonacciDigits() : super(mode: NumberSequencesMode.FIBONACCI, maxDigits: 1111);
 }
 
 class NumberSequenceFibonacciRange extends NumberSequenceRange {
