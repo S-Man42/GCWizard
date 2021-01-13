@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
@@ -37,17 +37,21 @@ defaultFontSize() {
   return fontSize;
 }
 
-List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data, {List<int> flexValues = const [], int copyColumn}) {
+List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data, {List<int> flexValues = const [], int copyColumn, hasHeader: false}) {
   var odd = true;
+  var isFirst = true;
   return data.where((row) => row != null).map((rowData) {
     Widget output;
 
     var columns = rowData.asMap().map((index, column) {
+      var textStyle = gcwTextStyle();
+
       return MapEntry(
         index,
         Expanded(
           child: GCWText(
-            text: column.toString()
+            text: column.toString(),
+            style: isFirst && hasHeader ? textStyle.copyWith(fontWeight: FontWeight.bold) : textStyle
           ),
           flex: index < flexValues.length ? flexValues[index] : 1
         )
@@ -68,14 +72,15 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
           ),
           context == null ? Container()
             : Container(
-              child: GCWIconButton(
-                iconData: Icons.content_copy,
-                size: IconButtonSize.TINY,
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: copyText));
-                  showToast(i18n(context, 'common_clipboard_copied') + ':\n' + copyText);
-                },
-              ),
+              child: (isFirst && hasHeader) ? Container() :
+                GCWIconButton(
+                  iconData: Icons.content_copy,
+                  size: IconButtonSize.TINY,
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: copyText));
+                    showToast(i18n(context, 'common_clipboard_copied') + ':\n' + copyText);
+                  },
+                ),
               width: 25,
               height: 22,
             )
@@ -99,6 +104,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
     }
     odd = !odd;
 
+    isFirst = false;
     return output;
   }).toList();
 }

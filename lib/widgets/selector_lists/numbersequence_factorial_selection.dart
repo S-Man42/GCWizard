@@ -17,7 +17,7 @@ class NumberSequenceFactorialSelection extends GCWSelection {
         className(NumberSequenceFactorialRange()),
         className(NumberSequenceFactorialDigits()),
         className(NumberSequenceFactorialCheckNumber()),
-        className(NumberSequenceFactorialContains()),
+        className(NumberSequenceFactorialContainsDigits()),
       ].contains(className(element.tool));
     }).toList();
 

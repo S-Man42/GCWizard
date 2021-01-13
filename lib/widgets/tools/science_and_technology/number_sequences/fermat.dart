@@ -1,6 +1,6 @@
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_check.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_contains.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_containsdigits.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_digits.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_nthnumber.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
@@ -21,6 +21,6 @@ class NumberSequenceFermatNthNumber extends NumberSequenceNthNumber {
   NumberSequenceFermatNthNumber() : super(mode: NumberSequencesMode.FERMAT, maxIndex: 18);
 }
 
-class NumberSequenceFermatContains extends NumberSequenceContains {
-  NumberSequenceFermatContains() : super(mode: NumberSequencesMode.FERMAT, maxIndex: 18);
+class NumberSequenceFermatContainsDigits extends NumberSequenceContainsDigits {
+  NumberSequenceFermatContainsDigits() : super(mode: NumberSequencesMode.FERMAT, maxIndex: 10);
 }

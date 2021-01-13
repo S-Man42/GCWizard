@@ -1,6 +1,6 @@
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_check.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_contains.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_containsdigits.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_digits.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_nthnumber.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
@@ -21,6 +21,6 @@ class NumberSequenceMersenneNthNumber extends NumberSequenceNthNumber {
   NumberSequenceMersenneNthNumber() : super(mode: NumberSequencesMode.MERSENNE, maxIndex: 111111);
 }
 
-class NumberSequenceMersenneContains extends NumberSequenceContains {
-  NumberSequenceMersenneContains() : super(mode: NumberSequencesMode.MERSENNE, maxIndex: 111111);
+class NumberSequenceMersenneContainsDigits extends NumberSequenceContainsDigits {
+  NumberSequenceMersenneContainsDigits() : super(mode: NumberSequencesMode.MERSENNE, maxIndex: 11111);
 }

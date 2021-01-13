@@ -17,7 +17,7 @@ class NumberSequencePellSelection extends GCWSelection {
         className(NumberSequencePellRange()),
         className(NumberSequencePellDigits()),
         className(NumberSequencePellCheckNumber()),
-        className(NumberSequencePellContains()),
+        className(NumberSequencePellContainsDigits()),
       ].contains(className(element.tool));
     }).toList();
 

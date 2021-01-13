@@ -96,8 +96,8 @@ Function _getNumberSequenceFunction(NumberSequencesMode mode) {
     case NumberSequencesMode.CATALAN:          return _getCatalan;
     case NumberSequencesMode.JACOBSTAHL:       return _getJacobsthal;
     case NumberSequencesMode.JACOBSTHAL_LUCAS: return _getJacobsthalLucas;
+    default: return null;
   }
-  return null;
 }
 
 

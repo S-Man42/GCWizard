@@ -4,23 +4,28 @@ import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dar
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 
-class NumberSequenceContains extends StatefulWidget {
+class NumberSequenceContainsDigits extends StatefulWidget {
   final NumberSequencesMode mode;
   final int maxIndex;
-  const NumberSequenceContains({Key key, this.mode, this.maxIndex}) : super(key: key);
+  const NumberSequenceContainsDigits({Key key, this.mode, this.maxIndex}) : super(key: key);
 
   @override
 
-  NumberSequenceContainsState createState() => NumberSequenceContainsState();
+  NumberSequenceContainsDigitsState createState() => NumberSequenceContainsDigitsState();
 }
 
-class NumberSequenceContainsState extends State<NumberSequenceContains> {
+class NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigits> {
   int currentInputN = 0;
+
+  Widget _currentOutput;
 
   @override
   void initState() {
     super.initState();
+
+    _currentOutput = GCWDefaultOutput();
   }
 
   @override
@@ -42,7 +47,14 @@ class NumberSequenceContainsState extends State<NumberSequenceContains> {
             });
           },
         ),
-        _buildOutput()
+        GCWSubmitFlatButton(
+          onPressed: () {
+            setState(() {
+              _buildOutput();
+            });
+          }
+        ),
+        _currentOutput
       ],
     );
   }
@@ -60,9 +72,9 @@ class NumberSequenceContainsState extends State<NumberSequenceContains> {
 
     flexData = [4, 2, 1];
 
-    return GCWDefaultOutput(
+    _currentOutput = GCWDefaultOutput(
       child: Column(
-        children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 0)
+        children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 0, hasHeader: true)
       )
     );
   }

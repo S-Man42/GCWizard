@@ -17,7 +17,7 @@ class NumberSequenceFibonacciSelection extends GCWSelection {
         className(NumberSequenceFibonacciRange()),
         className(NumberSequenceFibonacciDigits()),
         className(NumberSequenceFibonacciCheckNumber()),
-        className(NumberSequenceFibonacciContains()),
+        className(NumberSequenceFibonacciContainsDigits()),
       ].contains(className(element.tool));
     }).toList();
 

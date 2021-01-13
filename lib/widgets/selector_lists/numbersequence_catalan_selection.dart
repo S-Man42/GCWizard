@@ -17,7 +17,7 @@ class NumberSequenceCatalanSelection extends GCWSelection {
         className(NumberSequenceCatalanRange()),
         className(NumberSequenceCatalanDigits()),
         className(NumberSequenceCatalanCheckNumber()),
-        className(NumberSequenceCatalanContains()),
+        className(NumberSequenceCatalanContainsDigits()),
       ].contains(className(element.tool));
     }).toList();
 

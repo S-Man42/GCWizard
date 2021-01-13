@@ -17,7 +17,7 @@ class NumberSequenceJacobsthalSelection extends GCWSelection {
         className(NumberSequenceJacobsthalRange()),
         className(NumberSequenceJacobsthalDigits()),
         className(NumberSequenceJacobsthalCheckNumber()),
-        className(NumberSequenceJacobsthalContains()),
+        className(NumberSequenceJacobsthalContainsDigits()),
       ].contains(className(element.tool));
     }).toList();
 

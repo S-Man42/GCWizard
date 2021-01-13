@@ -17,7 +17,7 @@ class NumberSequenceRecamanSelection extends GCWSelection {
         className(NumberSequenceRecamanRange()),
         className(NumberSequenceRecamanDigits()),
         className(NumberSequenceRecamanCheckNumber()),
-        className(NumberSequenceRecamanContains()),
+        className(NumberSequenceRecamanContainsDigits()),
       ].contains(className(element.tool));
     }).toList();
 

@@ -1,6 +1,6 @@
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_check.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_contains.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_containsdigits.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_digits.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_nthnumber.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
@@ -21,6 +21,6 @@ class NumberSequenceLucasNthNumber extends NumberSequenceNthNumber {
   NumberSequenceLucasNthNumber() : super(mode: NumberSequencesMode.LUCAS, maxIndex: 111111);
 }
 
-class NumberSequenceLucasContains extends NumberSequenceContains {
-  NumberSequenceLucasContains() : super(mode: NumberSequencesMode.LUCAS, maxIndex: 111111);
+class NumberSequenceLucasContainsDigits extends NumberSequenceContainsDigits {
+  NumberSequenceLucasContainsDigits() : super(mode: NumberSequencesMode.LUCAS, maxIndex: 11111);
 }

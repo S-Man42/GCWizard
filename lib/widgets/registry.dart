@@ -265,7 +265,7 @@ class Registry {
   static final SEARCHSTRING_HASHES_SHA3 = SEARCHSTRING_HASHES_SHA + 'sha3 sha-3 ';
   static final SEARCHSTRING_IRRATIONALNUMBERS = 'irrational number irrationale zahlen fraction decimal digit nachkommastelle ';
   static final SEARCHSTRING_NUMERALWORDS = 'numeralwords zahlwoerter numberwords zaehlwort zahlwort zaehlwoerter numerals';
-  static final SEARCHSTRING_NUMBERSEQUENCES = 'zahlenfolgen number sequences';
+  static final SEARCHSTRING_NUMBERSEQUENCES = 'zahlenfolgen zahlenreihen numbersequences oeis integersequences ';
   static final SEARCHSTRING_PHI = SEARCHSTRING_IRRATIONALNUMBERS + 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PI = SEARCHSTRING_IRRATIONALNUMBERS + 'pi circle kreis 3,1415926535 3.1415926535 ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
@@ -1543,8 +1543,8 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'factorial fakultaet faktorielle',
       ),
       GCWTool(
-        tool: NumberSequenceFactorialContains(),
-        i18nPrefix: 'numbersequence_contains',
+        tool: NumberSequenceFactorialContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'factorial fakultaet faktorielle',
       ),
 
@@ -1570,8 +1570,8 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat',
       ),
       GCWTool(
-        tool: NumberSequenceMersenneFermatContains(),
-        i18nPrefix: 'numbersequence_contains',
+        tool: NumberSequenceMersenneFermatContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat',
       ),
 
@@ -1597,8 +1597,8 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat',
       ),
       GCWTool(
-        tool: NumberSequenceFermatContains(),
-        i18nPrefix: 'numbersequence_contains',
+        tool: NumberSequenceFermatContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat',
       ),
 
@@ -1624,8 +1624,8 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas',
       ),
       GCWTool(
-        tool: NumberSequenceLucasContains(),
-        i18nPrefix: 'numbersequence_contains',
+        tool: NumberSequenceLucasContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas',
       ),
 
@@ -1651,8 +1651,8 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fibonacci',
       ),
       GCWTool(
-        tool: NumberSequenceFibonacciContains(),
-        i18nPrefix: 'numbersequence_contains',
+        tool: NumberSequenceFibonacciContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fibonacci',
       ),
 
@@ -1678,8 +1678,8 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne',
       ),
       GCWTool(
-        tool: NumberSequenceMersenneContains(),
-        i18nPrefix: 'numbersequence_contains',
+        tool: NumberSequenceMersenneContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne',
       ),
 
@@ -1705,8 +1705,8 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell',
       ),
       GCWTool(
-        tool: NumberSequencePellContains(),
-        i18nPrefix: 'numbersequence_contains',
+        tool: NumberSequencePellContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell',
       ),
 
@@ -1732,8 +1732,8 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas',
       ),
       GCWTool(
-        tool: NumberSequencePellLucasContains(),
-        i18nPrefix: 'numbersequence_contains',
+        tool: NumberSequencePellLucasContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas',
       ),
 
@@ -1759,8 +1759,8 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal',
       ),
       GCWTool(
-        tool: NumberSequenceJacobsthalContains(),
-        i18nPrefix: 'numbersequence_contains',
+        tool: NumberSequenceJacobsthalContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal',
       ),
 
@@ -1786,8 +1786,8 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas',
       ),
       GCWTool(
-        tool: NumberSequenceJacobsthalLucasContains(),
-        i18nPrefix: 'numbersequence_contains',
+        tool: NumberSequenceJacobsthalLucasContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas',
       ),
 
@@ -1813,8 +1813,8 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan',
       ),
       GCWTool(
-        tool: NumberSequenceCatalanContains(),
-        i18nPrefix: 'numbersequence_contains',
+        tool: NumberSequenceCatalanContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan',
       ),
 
@@ -1840,8 +1840,8 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'recaman',
       ),
       GCWTool(
-        tool: NumberSequenceRecamanContains(),
-        i18nPrefix: 'numbersequence_contains',
+        tool: NumberSequenceRecamanContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES +'recaman',
       ),
 

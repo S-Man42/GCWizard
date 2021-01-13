@@ -17,7 +17,7 @@ class NumberSequencePellLucasSelection extends GCWSelection {
         className(NumberSequencePellLucasRange()),
         className(NumberSequencePellLucasDigits()),
         className(NumberSequencePellLucasCheckNumber()),
-        className(NumberSequencePellLucasContains()),
+        className(NumberSequencePellLucasContainsDigits()),
       ].contains(className(element.tool));
     }).toList();
 

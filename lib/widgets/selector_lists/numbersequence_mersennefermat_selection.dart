@@ -17,7 +17,7 @@ class NumberSequenceMersenneFermatSelection extends GCWSelection {
         className(NumberSequenceMersenneFermatRange()),
         className(NumberSequenceMersenneFermatDigits()),
         className(NumberSequenceMersenneFermatCheckNumber()),
-        className(NumberSequenceMersenneFermatContains()),
+        className(NumberSequenceMersenneFermatContainsDigits()),
       ].contains(className(element.tool));
     }).toList();
 
