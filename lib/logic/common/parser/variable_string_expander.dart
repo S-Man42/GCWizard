@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:isolate';
 
 enum VariableStringExpanderBreakCondition {RUN_ALL, BREAK_ON_FIRST_FOUND}
 
@@ -41,6 +42,7 @@ class VariableStringExpander {
   String _input;
   Map<String, String> _substitutions;
   Function addAsResult;
+  SendPort sendAsyncPort;
 
   VariableStringExpanderBreakCondition breakCondition;
   bool uniqueResults;
@@ -51,7 +53,8 @@ class VariableStringExpander {
     this.addAsResult,
     {
       this.breakCondition = VariableStringExpanderBreakCondition.RUN_ALL,
-      this.uniqueResults = false
+      this.uniqueResults = false,
+      this.sendAsyncPort
     }
   );
 
@@ -69,6 +72,8 @@ class VariableStringExpander {
   List<int> _variableValueIndexes = [];
   List<int> _countVariableValues = [];
   int _currentVariableIndex = -1;
+
+  int _countCombinations;
 
   // Expands a "compressed" variable group like "5-10" to "5,6,7,8,9,10"
   List<String> _expandVariableGroup(String group) {
@@ -159,6 +164,9 @@ class VariableStringExpander {
   }
 
   void _generateCartesianVariables() {
+    var progress = 0;
+    int progressStep = (_countCombinations / 100).toInt();
+
     do {
       _substitude();
 
@@ -174,6 +182,12 @@ class VariableStringExpander {
         if (breakCondition == VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND)
           break;
       }
+
+      progress++;
+      if (sendAsyncPort != null && (progress % progressStep == 0)) {
+        sendAsyncPort.send({'progress': progress/_countCombinations});
+      }
+
     } while(_setIndexes() == false);
   }
 
@@ -203,6 +217,7 @@ class VariableStringExpander {
   }
 
   List<Map<String, dynamic>> run({onlyPrecheck: false}) {
+
     if (_input == null || _input.length == 0)
       return [];
 
@@ -224,9 +239,9 @@ class VariableStringExpander {
     });
 
     // check number of combinations
+    _countCombinations = _countVariableValues.fold(1, (previousValue, element) => previousValue * element);
     if (onlyPrecheck) {
-      var countCombinations = _countVariableValues.fold(1, (previousValue, element) => previousValue * element);
-      return [{'count': countCombinations}];
+      return [{'count': _countCombinations}];
     }
 
     // Find matching formula groups

@@ -12,7 +12,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = breakHash1(elem['input'], elem['searchMask'], elem['substitutions'], elem['hashFunction']);
+        var _actual = breakHash(elem['input'], elem['searchMask'], elem['substitutions'], elem['hashFunction']);
         expect(_actual, elem['expectedOutput']);
       });
     });
