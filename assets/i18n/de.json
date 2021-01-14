@@ -1514,6 +1514,8 @@
   "mainmenu_changelog_title" : "Changelog",
   "mainmenu_callforcontribution_title" : "Möchtest du uns helfen?",
 
+  "mayanumbers_selection_title" : "Maya-Zahlen",
+  "mayanumbers_selection_description" : "Vigesimalsystem (Zahlenbasis 20) der Mayas",
   "mayanumbers_title" : "Maya-Zahlen",
   "mayanumbers_description" : "Vigesimalsystem (Zahlenbasis 20) der Mayas",
   "mayanumbers_single_numbers" : "Einzelne Zahlen",

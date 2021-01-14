@@ -14,7 +14,7 @@ import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/cistercian_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
@@ -22,6 +22,7 @@ import 'package:gc_wizard/widgets/selector_lists/easter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
@@ -87,7 +88,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/duck
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
@@ -238,7 +238,7 @@ class _MainViewState extends State<MainView> {
           className(Chef()),
           className(ChickenLanguage()),
           className(Chronogram()),
-          className(CistercianSelection()),
+          className(CistercianNumbersSelection()),
           className(ColorPicker()),
           className(Combination()),
           className(CombinationPermutation()),
@@ -285,7 +285,7 @@ class _MainViewState extends State<MainView> {
           className(Kamasutra()),
           className(Kenny()),
           className(Keyboard()),
-          className(MayaNumbers()),
+          className(MayaNumbersSelection()),
           className(MoonPosition()),
           className(MoonRiseSet()),
           className(Morse()),

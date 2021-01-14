@@ -14,7 +14,7 @@ import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/cistercian_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/crosssum_selection.dart';
@@ -28,6 +28,7 @@ import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/language_games_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_catalan_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_factorial_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fermat_selection.dart';
@@ -273,7 +274,7 @@ class Registry {
   static final SEARCHSTRING_HASHES_SHA2 = SEARCHSTRING_HASHES_SHA + 'sha2 sha-2 ';
   static final SEARCHSTRING_HASHES_SHA3 = SEARCHSTRING_HASHES_SHA + 'sha3 sha-3 ';
   static final SEARCHSTRING_IRRATIONALNUMBERS = 'irrational number irrationale zahlen fraction decimal digit nachkommastelle ';
-  static final SEARCHSTRING_MAYANUMBERS = 'maya zahlen ziffern numbers numerals vigesimalsystem 20 ';
+  static final SEARCHSTRING_MAYANUMBERS = 'mayas majas zahlen ziffern numbers numerals vigesimalsystem 20 ';
   static final SEARCHSTRING_NUMERALWORDS = 'numeralwords zahlwoerter numberwords zaehlwort zahlwort zaehlwoerter numerals';
   static final SEARCHSTRING_NUMBERSEQUENCES = 'zahlenfolgen zahlenreihen numbersequences oeis integersequences ';
   static final SEARCHSTRING_PHI = SEARCHSTRING_IRRATIONALNUMBERS + 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
@@ -429,7 +430,7 @@ class Registry {
         searchStrings: 'chao john francis byrne'
       ),
       GCWTool(
-        tool: CistercianSelection(),
+        tool: CistercianNumbersSelection(),
         i18nPrefix: 'cistercian_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_CISTERCIAN
@@ -592,8 +593,8 @@ class Registry {
         searchStrings: 'dvorak keyboard keys tasten azerty tastatur layout qwertz qwerty neo colemak ristome sprachen languages'
       ),
       GCWTool(
-        tool: MayaNumbers(),
-        i18nPrefix: 'mayanumbers',
+        tool: MayaNumbersSelection(),
+        i18nPrefix: 'mayanumbers_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_MAYANUMBERS
       ),
@@ -1474,6 +1475,13 @@ class Registry {
         tool: Licenses(),
         i18nPrefix: 'licenses',
         searchStrings: 'licenses licences lizenzen library libraries bibliotheken',
+      ),
+
+      //MayaNumbers Selection **************************************************************************************
+      GCWTool(
+        tool: MayaNumbers(),
+        i18nPrefix: 'mayanumbers',
+        searchStrings: SEARCHSTRING_MAYANUMBERS
       ),
 
       //Phi Selection **********************************************************************************************
