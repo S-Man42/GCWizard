@@ -5,7 +5,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/cistercian.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/cistercian_numbers.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -13,7 +13,7 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/cistercian_segment_display.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:prefs/prefs.dart';
 
@@ -154,7 +154,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: CistercianSegmentDisplay(
+                child: CistercianNumbersSegmentDisplay(
                   segments: currentDisplay,
                   onChanged: onChanged,
                 ),
@@ -163,33 +163,33 @@ class CistercianNumbersState extends State<CistercianNumbers> {
           ),
         ),
         GCWToolBar(
-            children: [
-              GCWIconButton(
-                iconData: Icons.space_bar,
-                onPressed: () {
-                  setState(() {
-                    _currentDisplays.add(_DEFAULT_SEGMENT);
-                  });
-                },
-              ),
-              GCWIconButton(
-                iconData: Icons.backspace,
-                onPressed: () {
-                  setState(() {
-                    if (_currentDisplays.length > 0)
-                      _currentDisplays.removeLast();
-                  });
-                },
-              ),
-              GCWIconButton(
-                iconData: Icons.clear,
-                onPressed: () {
-                  setState(() {
-                    _currentDisplays = [_DEFAULT_SEGMENT];
-                  });
-                },
-              )
-            ]
+          children: [
+            GCWIconButton(
+              iconData: Icons.space_bar,
+              onPressed: () {
+                setState(() {
+                  _currentDisplays.add(_DEFAULT_SEGMENT);
+                });
+              },
+            ),
+            GCWIconButton(
+              iconData: Icons.backspace,
+              onPressed: () {
+                setState(() {
+                  if (_currentDisplays.length > 0)
+                    _currentDisplays.removeLast();
+                });
+              },
+            ),
+            GCWIconButton(
+              iconData: Icons.clear,
+              onPressed: () {
+                setState(() {
+                  _currentDisplays = [_DEFAULT_SEGMENT];
+                });
+              },
+            )
+          ]
         )
       ],
     );
@@ -197,12 +197,12 @@ class CistercianNumbersState extends State<CistercianNumbers> {
 
   _buildDigitalOutput(countColumns, segments) {
     var displays = segments
-        .where((character) => character != null)
-        .map((character) {
-          var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
-          return CistercianSegmentDisplay(segments: displayedSegments, readOnly: true);
-        })
-        .toList();
+      .where((character) => character != null)
+      .map((character) {
+        var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
+        return CistercianNumbersSegmentDisplay(segments: displayedSegments, readOnly: true);
+      })
+      .toList();
     return buildSegmentDisplayOutput(countColumns, displays);
   }
 

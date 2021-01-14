@@ -1514,6 +1514,11 @@
   "mainmenu_changelog_title" : "Changelog",
   "mainmenu_callforcontribution_title" : "Möchtest du uns helfen?",
 
+  "mayanumbers_title" : "Maya-Zahlen",
+  "mayanumbers_description" : "Vigesimalsystem (Zahlenbasis 20) der Mayas",
+  "mayanumbers_single_numbers" : "Einzelne Zahlen",
+  "mayanumbers_vigesimal" : "Zahl im Vigesimalsystem (Zahlenbasis 20)",
+
   "morse_title" : "Morse",
   "morse_example" : "-- --- .-. ... .",
   "morse_short" : "Kurz",

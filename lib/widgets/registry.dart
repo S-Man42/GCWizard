@@ -107,7 +107,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
@@ -133,6 +133,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/duck
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
@@ -272,6 +273,7 @@ class Registry {
   static final SEARCHSTRING_HASHES_SHA2 = SEARCHSTRING_HASHES_SHA + 'sha2 sha-2 ';
   static final SEARCHSTRING_HASHES_SHA3 = SEARCHSTRING_HASHES_SHA + 'sha3 sha-3 ';
   static final SEARCHSTRING_IRRATIONALNUMBERS = 'irrational number irrationale zahlen fraction decimal digit nachkommastelle ';
+  static final SEARCHSTRING_MAYANUMBERS = 'maya zahlen ziffern numbers numerals vigesimalsystem 20 ';
   static final SEARCHSTRING_NUMERALWORDS = 'numeralwords zahlwoerter numberwords zaehlwort zahlwort zaehlwoerter numerals';
   static final SEARCHSTRING_NUMBERSEQUENCES = 'zahlenfolgen zahlenreihen numbersequences oeis integersequences ';
   static final SEARCHSTRING_PHI = SEARCHSTRING_IRRATIONALNUMBERS + 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
@@ -588,6 +590,12 @@ class Registry {
         i18nPrefix: 'languagegames_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'dvorak keyboard keys tasten azerty tastatur layout qwertz qwerty neo colemak ristome sprachen languages'
+      ),
+      GCWTool(
+        tool: MayaNumbers(),
+        i18nPrefix: 'mayanumbers',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_MAYANUMBERS
       ),
       GCWTool(
         tool: Morse(),
@@ -2526,7 +2534,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'maya_numerals',
         iconFilename: '18.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'maya zahlen ziffern numbers numerals vigesimalsystem 20'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_MAYANUMBERS
       ),
       GCWSymbolTableTool(
         symbolKey: 'maze',
