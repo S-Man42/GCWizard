@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/cross_sum.dart';
@@ -7,6 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 final _ALERT_MAX_OUTPUT = 200;
 final _ALERT_MAX_RANGE = 25000;
@@ -27,9 +30,18 @@ class CrossSumRangeState extends State<CrossSumRange> {
 
   var _currentOutput = [];
 
+  var _endController;
+
   @override
   void initState() {
     super.initState();
+    _endController = TextEditingController(text: _currentRangeEnd.toString());
+  }
+
+  @override
+  void dispose() {
+    _endController.dispose();
+    super.dispose();
   }
 
   @override
@@ -57,11 +69,15 @@ class CrossSumRangeState extends State<CrossSumRange> {
           onChanged: (value) {
             setState(() {
               _currentRangeStart = value;
+              _currentRangeEnd = max(_currentRangeStart, _currentRangeEnd);
+              _endController.text = _currentRangeEnd.toString();
             });
           },
         ),
         GCWIntegerSpinner(
           value: _currentRangeEnd,
+          min: _currentRangeStart,
+          controller: _endController,
           onChanged: (value) {
             setState(() {
               _currentRangeEnd = value;
@@ -99,7 +115,9 @@ class CrossSumRangeState extends State<CrossSumRange> {
           text: '${i18n(context, 'common_count')}: ${output.length}',
           copyText: output.length.toString(),
         ),
-        output.join('\n')
+        Column(
+          children: columnedMultiLineOutput(context, List<List<dynamic>>.from(output.map((element) => [element]).toList()))
+        )
       ];
     }
 

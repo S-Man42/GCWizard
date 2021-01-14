@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/summer_simmer.dart';
 import 'package:gc_wizard/logic/common/units/temperature.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
@@ -23,30 +24,44 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWDoubleSpinner(
-            title: i18n(context, 'heatindex_temperature'),
-            value: _currentTemperature,
-            onChanged: (value) {
-              setState(() {
-                _currentTemperature = value;
-              });
-            }
+        Row(
+          children: [
+            Expanded(
+              child: GCWText(text: i18n(context, 'summersimmerindex_temperature')),
+              flex: 1,
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  GCWTwoOptionsSwitch(
+                    notitle: true,
+                    leftValue: i18n(context, 'summersimmerindex_unit_celsius'),
+                    rightValue: i18n(context, 'summersimmerindex_unit_fahrenheit'),
+                    value: _isMetric ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+                    onChanged: (value) {
+                      setState(() {
+                        _isMetric = value == GCWSwitchPosition.left;
+                      });
+                    },
+                  ),
+
+                  GCWDoubleSpinner(
+                    value: _currentTemperature,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentTemperature = value;
+                      });
+                    }
+                  ),
+                ],
+              ),
+              flex: 3
+            )
+          ],
         ),
 
-        GCWTwoOptionsSwitch(
-          title: i18n(context, 'heatindex_unit'),
-          leftValue: i18n(context, 'heatindex_unit_celsius'),
-          rightValue: i18n(context, 'heatindex_unit_fahrenheit'),
-          value: _isMetric ? GCWSwitchPosition.left : GCWSwitchPosition.right,
-          onChanged: (value) {
-            setState(() {
-              _isMetric = value == GCWSwitchPosition.left;
-            });
-          },
-        ),
-
         GCWDoubleSpinner(
-            title: i18n(context, 'heatindex_humidity'),
+            title: i18n(context, 'summersimmerindex_humidity'),
             value: _currentHumidity,
             min: 0.0,
             max: 100.0,

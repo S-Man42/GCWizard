@@ -134,7 +134,9 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
         GCWOutputText(
           text: output,
         ),
-        output.length == 0 ? Container() : GCWOutput(
+        output.length == 0
+            ? Container()
+            : GCWOutput(
           title: i18n(context, 'common_outputdetail'),
           child: Column(
             children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)

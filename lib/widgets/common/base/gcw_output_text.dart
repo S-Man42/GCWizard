@@ -13,7 +13,7 @@ class GCWOutputText extends StatefulWidget {
   final bool isMonotype;
   final TextStyle style;
   final bool suppressCopyButton;
-  final String copyText;
+  final dynamic copyText;
 
   const GCWOutputText({
     Key key,
@@ -51,8 +51,8 @@ class _GCWOutputTextState extends State<GCWOutputText> {
               size: IconButtonSize.SMALL,
               iconData: Icons.content_copy,
               onPressed: () {
-                Clipboard.setData(ClipboardData(text: widget.copyText ?? widget.text));
-                insertIntoGCWClipboard(widget.copyText ?? widget.text);
+                Clipboard.setData(ClipboardData(text: widget.copyText != null ? widget.copyText.toString() : widget.text));
+                insertIntoGCWClipboard(widget.copyText != null ? widget.copyText.toString() : widget.text);
 
                 showToast(i18n(context, 'common_clipboard_copied'));
               },
