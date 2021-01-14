@@ -1601,6 +1601,8 @@
   "numbersequence_range_title" : "Suche Zahlen in einem Bereich",
   "numbersequence_check_title" : "Finde Zahl",
   "numbersequence_check_description" : "Prüft, ob die Zahl zur Zahlenfolge gehört und liefert Position",
+  "numbersequence_check_isinsequence" : "%s1. Zahl der Folge",
+  "numbersequence_check_isnotinsequence" : "In Zahlenfolge NICHT GEFUNDEN",
   "numbersequence_digits_title" : "Zahlenlänge",
   "numbersequence_digits_description" : "Sucht Zahlen einer bestimmten Länge",
   "numbersequence_containsdigits_title" : "Finde Ziffernfolge",

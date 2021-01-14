@@ -70,10 +70,17 @@ class ResistorEIA96State extends State<ResistorEIA96> {
             )
           ],
         ),
-        GCWDefaultOutput(
-          child: formatResistorValue(eia96(_currentCode, multiplicator: _currentMultiplicator))
-        )
+        _buildOutput()
       ],
+    );
+  }
+
+  _buildOutput() {
+    var output = formatResistorValue(eia96(_currentCode, multiplicator: _currentMultiplicator));
+
+    return GCWDefaultOutput(
+      child: output,
+      copyText: output.split(' ')[0]
     );
   }
 }

@@ -1,4 +1,4 @@
-
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/number_sequence.dart';
@@ -22,16 +22,19 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
   int _currentInputStart = 0;
 
   Widget _currentOutput;
+  TextEditingController _stopController;
 
   @override
   void initState() {
     super.initState();
 
     _currentOutput = GCWDefaultOutput();
+    _stopController = TextEditingController(text: _currentInputStop.toString());
   }
 
   @override
   void dispose() {
+    _stopController.dispose();
     super.dispose();
   }
 
@@ -48,12 +51,15 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
           onChanged: (value) {
             setState(() {
               _currentInputStart = value;
+              _currentInputStop = max(_currentInputStart, _currentInputStop);
+              _stopController.text = _currentInputStop.toString();
             });
           },
         ),
         GCWIntegerSpinner(
           title: i18n(context, 'numbersequence_inputstop'),
           value: _currentInputStop,
+          controller: _stopController,
           min: _currentInputStart,
           max: widget.maxIndex,
           onChanged: (value) {

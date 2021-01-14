@@ -5,6 +5,7 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:flutter/services.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 
 class NumberSequenceCheckNumber extends StatefulWidget {
   final NumberSequencesMode mode;
@@ -49,18 +50,25 @@ class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
             });
           },
         ),
-        GCWTextDivider(
-          text: i18n(context, 'common_output')
-        ),
-
         _buildOutput()
       ],
     );
   }
 
   _buildOutput() {
+    var checked = checkNumber(widget.mode, BigInt.parse(_currentInputN), widget.maxIndex);
+
+    var output;
+    if (checked >= 0) {
+      output = i18n(context, 'numbersequence_check_isinsequence', parameters: [checked]);
+    } else {
+      output = i18n(context, 'numbersequence_check_isnotinsequence');
+    }
+
     return GCWDefaultOutput(
-      child: checkNumber(widget.mode, BigInt.parse(_currentInputN), widget.maxIndex).toString(),
+      child: output.toString(),
+      copyText: checked.toString(),
+      suppressCopyButton: checked < 0,
     );
   }
 }
