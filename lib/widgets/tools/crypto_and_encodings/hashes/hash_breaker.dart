@@ -118,6 +118,64 @@ class _HashBreakerState extends State<HashBreaker> {
   }
 
   Widget _buildButtonProgressBar() {
+    return
+    GCWSubmitFlatButton(
+      onPressed: () async {
+        //Do NOT explicitly call your computation function or make the isolate here.
+        //Just show the dialog
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Container(
+              child: GCWAsyncExecuter(
+                isolatedFunction: breakHashAsync,
+                parameter: _buildJobData(),
+                onReady: (data) => _showOutput(data),
+              ),
+            height: 300,
+            width: 300,
+            margin: const EdgeInsets.only(
+            top: 10.0,
+            bottom: 10.0,
+            left: 5,
+            right: 5),
+            );
+          },
+        );
+      });
+  }
+
+  _calculateOutput() async {
+    _isStarted = true;
+    _currentOutput = '';
+    //setState(() {});
+ showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Container(
+            child: GCWAsyncExecuter(
+              isolatedFunction: breakHashAsync,
+              parameter: _buildJobData(),
+              onReady: (data) => _showOutput(data),
+            ),
+          height: 300,
+          width: 300,
+          margin: const EdgeInsets.only(
+          top: 10.0,
+          bottom: 10.0,
+          left: 5,
+          right: 5,
+          )
+          );
+        },
+      );
+
+  }
+
+  /*
+  Widget _buildButtonProgressBar() {
     return _isStarted ?
     Container(
       child:
@@ -126,11 +184,11 @@ class _HashBreakerState extends State<HashBreaker> {
         parameter: _buildJobData(),
         onReady: (data) => _showOutput(data),
         ),
-        height: 35,
-        width: 400,
+        height: 300,
+        width: 300,
         margin: const EdgeInsets.only(
           top: 10.0,
-          bottom: 22.0,
+          bottom: 10.0,
           left: 5,
           right: 5,
       ),
@@ -146,6 +204,7 @@ class _HashBreakerState extends State<HashBreaker> {
     _currentOutput = '';
     setState(() {});
   }
+  */
 
   _showOutput(Map<String, dynamic> output) {
     _isStarted = false;

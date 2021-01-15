@@ -1,5 +1,6 @@
 import 'dart:isolate';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class GCWAsyncExecuterParameters {
   SendPort sendAsyncPort;
@@ -58,14 +59,22 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
       stream: progress(),
       builder: (context, snapshot) {
         if(snapshot.connectionState == ConnectionState.done) {
+          Navigator.of(context).pop(); // Pop from dialog on completion (needen on overlay)
           widget.onReady(_result);
         }
         if(snapshot.hasData) {
-          return LinearProgressIndicator(
+          return CircularProgressIndicator(
             value: snapshot.data,
-          );
+            backgroundColor:  Colors.white,
+            valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
+            strokeWidth: 10,
+          ) ;
         }
-        return LinearProgressIndicator();
+        return CircularProgressIndicator(
+          backgroundColor:  Colors.white,
+          valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
+          strokeWidth: 10,
+        );
       }
     );
   }
