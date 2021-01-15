@@ -141,7 +141,8 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
       if (!validInstructions .contains(xlat1 [(charCode - 33 + i) % 94]))
         return malbolgeOutput([
           'malbolge_error_invalid_program',
-          'malbolge_error_invalid_character'], [], []);
+          'malbolge_error_invalid_character',
+          'Position '+i.toString()+': '+xlat1 [(charCode - 33 + i) % 94]], [], []);
     }
     if (i == 59049) {
       return malbolgeOutput([
