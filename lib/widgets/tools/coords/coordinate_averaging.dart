@@ -1,26 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/logic/tools/coords/antipodes.dart';
+import 'package:gc_wizard/logic/common/units/length.dart';
+import 'package:gc_wizard/logic/common/units/unit.dart';
+import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:gc_wizard/theme/fixed_colors.dart';
-import 'package:location/location.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
-import 'dart:async';
-import 'package:latlong/latlong.dart';
-import 'package:gc_wizard/logic/common/units/length.dart';
-import 'package:gc_wizard/logic/common/units/unit.dart';
-import 'package:prefs/prefs.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:intl/intl.dart';
-import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
+import 'package:latlong/latlong.dart';
+import 'package:location/location.dart';
+import 'package:prefs/prefs.dart';
 
 class CoordinateAveraging extends StatefulWidget {
   @override
@@ -28,15 +21,6 @@ class CoordinateAveraging extends StatefulWidget {
 }
 
 class CoordinateAveragingState extends State<CoordinateAveraging> {
-  var _currentCoords = defaultCoordinate;
-
-  var _currentValues = [defaultCoordinate];
-  var _currentMapPoints = <GCWMapPoint>[];
-  var _currentCoordsFormat = defaultCoordFormat();
-
-  var _currentOutputFormat = defaultCoordFormat();
-  List<String> _currentOutput = <String>[];
-
   var _currentLocationPermissionGranted;
   StreamSubscription<LocationData> _locationSubscription;
   Location _currentLocation = Location();
