@@ -4,8 +4,6 @@ import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
-import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
@@ -24,9 +22,9 @@ class MalbolgeState extends State<Malbolge> {
   var _inputController;
   var _outputController;
 
-  var _currentProgramm = '';
-  var _currentInput = '';
-  var _currentOutput = '';
+  String _currentProgramm = '';
+  String _currentInput = '';
+  String _currentOutput = '';
   bool _currentDebug = false;
   bool _currentStrict = false;
 
@@ -76,22 +74,6 @@ class MalbolgeState extends State<Malbolge> {
                 });
               },
             ),
-/*
-                  GCWToolBar(
-                    children: [
-                      GCWButton(
-                        text: 'Start',
-                        onPressed: () {
-                          output = generateMalbolge(_currentOutput);
-                          _currentDebug = false;
-                          setState((){
-
-                          });
-                        },
-                      )
-                    ],
-                  )
-*/
           ],
         )
             : Column( // interpret malbolge-programm
@@ -131,23 +113,22 @@ class MalbolgeState extends State<Malbolge> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    String outputData = '';
+    String _outputData = '';
 
     if (_currentMode == GCWSwitchPosition.left) { // interpret malbolge
       output = interpretMalbolge(_currentProgramm, _currentInput, _currentStrict);
     }
     else {
-      //output = generateMalbolgePy(_currentOutput);
       output = generateMalbolge(_currentOutput);
     }
 
-    outputData = buildOutputText(output);
+    _outputData = buildOutputText(output);
 
     return Column(
       children: <Widget>[
         GCWDefaultOutput(
           child: GCWOutputText(
-            text: outputData,
+            text: _outputData,
             isMonotype: true,
           ),
         ),

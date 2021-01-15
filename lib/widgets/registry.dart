@@ -1251,6 +1251,11 @@ class Registry {
         searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd toterfisch '
       ),
       GCWTool(
+        tool: Malbolge(),
+        i18nPrefix: 'malbolge',
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'malbolge olmstead dante hell hoelle '
+      ),
+      GCWTool(
         tool: Ook(),
         i18nPrefix: 'ook',
         searchStrings: SEARCHSTRING_BRAINFK + 'ook terry pratchett monkeys apes dots punkte questionsmarks exclamationmarks fragezeichen ausrufezeichen affen orang-utans orangutans'
