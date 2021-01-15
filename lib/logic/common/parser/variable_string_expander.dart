@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:collection';
 import 'dart:isolate';
 
@@ -58,7 +59,6 @@ class VariableStringExpander {
     }
   );
 
-  // Map<String, List<int>> expandedSubstitutions = {};
   List<List<String>> _expandedVariableGroups = [];
   List<String> _substitutionKeys = [];
 
@@ -165,7 +165,7 @@ class VariableStringExpander {
 
   void _generateCartesianVariables() {
     var progress = 0;
-    int progressStep = (_countCombinations / 100).toInt();
+    int progressStep = max((_countCombinations / 100).toInt(),1); // 100 steps
 
     do {
       _substitude();

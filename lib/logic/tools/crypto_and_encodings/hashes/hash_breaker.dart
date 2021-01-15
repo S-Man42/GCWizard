@@ -1,5 +1,4 @@
 import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
-import 'dart:io';
 import 'dart:isolate';
 
 final _ALARM_COUNT = 100000;
@@ -39,9 +38,7 @@ void breakHashAsync(dynamic jobData) async {
     jobData.parameters.hashFunction,
     sendAsyncPort: jobData.sendAsyncPort
   );
-  SendPort sp = jobData.sendAsyncPort;
-  //sleep(Duration(seconds: 1));
-    print('SEND: ' + output['state'] + ' - ' + output.toString());
+
   jobData.sendAsyncPort.send(output);
 }
 

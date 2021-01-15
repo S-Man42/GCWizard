@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hash_breaker.dart';
@@ -46,8 +45,7 @@ class _HashBreakerState extends State<HashBreaker> {
   var _currentOutput = '';
   var _currentHashFunction = md5Digest;
   var _currentSubstitutions = <int, Map<String, String>>{};
-
-  Map<String, dynamic> _currentCalculatedOutput;
+  var _isStarted = false;
 
   @override
   void initState() {
@@ -111,32 +109,7 @@ class _HashBreakerState extends State<HashBreaker> {
         ),
         _buildVariablesInput(),
         _buildSubstitutionList(context),
-        GCWSubmitFlatButton(
-          onPressed: () async {
-            //Do NOT explicitly call your computation function or make the isolate here.
-            //Just show the dialog
-            await showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) {
-                return SizedBox(
-                  child: GCWAsyncExecuter(
-                    isolatedFunction: breakHashAsync,
-                    parameter: _jobData(),
-                    onReady: (data) => {_currentCalculatedOutput = data} //print('AFTER READY $data'), //
-                  ),
-                  height: 20,
-                  width: 20,
-                );
-              },
-            ).whenComplete(() {
-              setState(() {
-                _showOutput(_currentCalculatedOutput);
-                print('Refresh Output: ' + _currentCalculatedOutput.toString());  // hier calcOutput() callen
-              });
-            });
-          },
-        ),
+        _buildButtonProgressBar(),
         GCWDefaultOutput(
           child: _currentOutput
         )
@@ -144,56 +117,60 @@ class _HashBreakerState extends State<HashBreaker> {
     );
   }
 
-  GCWAsyncExecuterParameters _jobData() {
+  Widget _buildButtonProgressBar() {
+    return _isStarted ?
+    Container(
+      child:
+      GCWAsyncExecuter(
+        isolatedFunction: breakHashAsync,
+        parameter: _buildJobData(),
+        onReady: (data) => _showOutput(data),
+        ),
+        height: 35,
+        width: 400,
+        margin: const EdgeInsets.only(
+          top: 10.0,
+          bottom: 22.0,
+          left: 5,
+          right: 5,
+      ),
+      )
+        :
+      GCWSubmitFlatButton(
+        onPressed: _calculateOutput,
+    );
+  }
+
+  _calculateOutput(){
+    _isStarted = true;
+    _currentOutput = '';
+    setState(() {});
+  }
+
+  _showOutput(Map<String, dynamic> output) {
+    _isStarted = false;
+
+    if (output == null || output['state'] == null || output['state'] == 'not_found') {
+      _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
+    } else
+      _currentOutput = output['text'];
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+  }
+
+  GCWAsyncExecuterParameters _buildJobData() {
     var _substitutions = <String, String>{};
     _currentSubstitutions.entries.forEach((entry) {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
     });
 
+    _isStarted = true;
+
     return GCWAsyncExecuterParameters(
       HashBreakerJobData(input: _currentInput, searchMask: _currentMask, substitutions: _substitutions, hashFunction: _currentHashFunction)
     );
-  }
-
-  _calculateOutput({calculateAll = false}) {
-    var _substitutions = <String, String>{};
-    _currentSubstitutions.entries.forEach((entry) {
-      _substitutions.putIfAbsent(
-          entry.value.keys.first, () => entry.value.values.first);
-    });
-
-    if (calculateAll == false) {
-      var preCheckResult = preCheck(_substitutions);
-      if (preCheckResult == null || preCheckResult['status'] == null) {
-        _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
-        return;
-      }
-
-      if (preCheckResult['status'] == 'high_count') {
-        showGCWAlertDialog(
-          context,
-          i18n(context, 'hashes_hashbreaker_alert_range_title'),
-          i18n(context, 'hashes_hashbreaker_alert_range_text',
-              parameters: [preCheckResult['count']]),
-              () {
-            setState(() {
-              _calculateOutput(calculateAll: true);
-            });
-          },
-        );
-
-        _currentOutput = '';
-        return;
-      }
-    }
-  }
-  _showOutput(Map<String, dynamic> output) {
-    if (output == null || output['state'] == null || output['state'] == 'not_found') {
-      _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
-      return;
-    }
-
-    _currentOutput = output['text'];
   }
 
   _buildVariablesInput() {

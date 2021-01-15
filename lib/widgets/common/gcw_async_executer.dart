@@ -44,17 +44,9 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
     Stream<double> progress() async* {
       ReceivePort receivePort = await _makeIsolate(widget.isolatedFunction, widget.parameter);
       await for(var event in receivePort) {
-        print(event);
         if(event is Map<String, dynamic> && event['progress'] != null) {
           yield event['progress'];
         } else {
-
-          print('ENDE ' );
-          if (event == null)
-            print ('null');
-            else
-          print(event);
-
           _result = event;
           receivePort.close();
           return;
@@ -66,15 +58,14 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
       stream: progress(),
       builder: (context, snapshot) {
         if(snapshot.connectionState == ConnectionState.done) {
-          Navigator.of(context).pop(); // Pop from dialog on completion          // wenn fertig, die berechnungsdaten rausgeben mit widget.onReady(snapshot.data) Callback oder so
           widget.onReady(_result);
         }
         if(snapshot.hasData) {
-          return CircularProgressIndicator(                                      //widget schöner machen
+          return LinearProgressIndicator(
             value: snapshot.data,
           );
         }
-        return CircularProgressIndicator();
+        return LinearProgressIndicator();
       }
     );
   }
