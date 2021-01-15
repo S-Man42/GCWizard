@@ -119,6 +119,7 @@ class MalbolgeState extends State<Malbolge> {
       output = interpretMalbolge(_currentProgramm, _currentInput, _currentStrict);
     }
     else {
+      _currentDebug == false;
       output = generateMalbolge(_currentOutput);
     }
 
@@ -133,76 +134,76 @@ class MalbolgeState extends State<Malbolge> {
           ),
         ),
         _currentMode == GCWSwitchPosition.right // generate malbolge-programm
-            ? GCWOutput(
-          title: i18n(context, 'malbolge_normalize'),
-          child: GCWOutputText(
-            text: output.assembler.join(''),
-            isMonotype: true,
-          ),
-        )
-            : Container(),
-        _currentMode == GCWSwitchPosition.left // interpret malbolge-programm
-            ? GCWOnOffSwitch(
-          title:i18n(context, 'malbolge_debug'),
-          value: _currentDebug,
-          onChanged: (value) {
-            setState(() {
-              _currentDebug = value;
-            });
-          },
-        )
-            : Container(),
-        _currentDebug == true
-            ? Column(
-            children: <Widget>[
-              Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                        flex: 3,
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            child: Column(
-                              children: <Widget>[
-                                GCWTextDivider(
-                                    text: i18n(context, 'malbolge_hint_code_assembler')
-                                ),
-                                GCWOutputText(
-                                  text: output.assembler.join('\n'),
-                                  isMonotype: true,
-                                ),
-                              ],
-                            ),
-                            padding: EdgeInsets.only(right: DEFAULT_MARGIN),
-                          ),
-                        )
-                    ),
-                    Expanded(
-                        flex: 5,
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            child: Column(
-                              children: <Widget>[
-                                GCWTextDivider(
-                                    text: i18n(context, 'malbolge_hint_code_memnonic')
-                                ),
-                                GCWOutputText(
-                                  text: output.memnonic.join('\n'),
-                                  isMonotype: true,
-                                ),
-                              ],
-                            ),
-                            padding: EdgeInsets.only(left: DEFAULT_MARGIN),
-                          ),
-                        )
-                    ),
-                  ]
+          ? GCWOutput(
+              title: i18n(context, 'malbolge_normalize'),
+              child: GCWOutputText(
+                text: output.assembler.join(''),
+                isMonotype: true,
               ),
-            ]
-        )
-            : Container(),
+            )
+          : Column(
+              children: <Widget>[
+                GCWOnOffSwitch(
+                  title:i18n(context, 'malbolge_debug'),
+                  value: _currentDebug,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentDebug = value;
+                    });
+                  },
+                ),
+                if (_currentDebug)
+                  Column(
+                    children: <Widget>[
+                      Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                                flex: 3,
+                                child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Container(
+                                    child: Column(
+                                      children: <Widget>[
+                                        GCWTextDivider(
+                                            text: i18n(context, 'malbolge_hint_code_assembler')
+                                        ),
+                                        GCWOutputText(
+                                          text: output.assembler.join('\n'),
+                                          isMonotype: true,
+                                        ),
+                                      ],
+                                    ),
+                                    padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                                  ),
+                                )
+                            ),
+                            Expanded(
+                                flex: 5,
+                                child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Container(
+                                    child: Column(
+                                      children: <Widget>[
+                                        GCWTextDivider(
+                                            text: i18n(context, 'malbolge_hint_code_memnonic')
+                                        ),
+                                        GCWOutputText(
+                                          text: output.memnonic.join('\n'),
+                                          isMonotype: true,
+                                        ),
+                                      ],
+                                    ),
+                                    padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+                                  ),
+                                )
+                            ),
+                          ]
+                      ),
+                    ]
+                )
+              ],
+            )
       ],
     );
   }
