@@ -84,7 +84,7 @@ class CrossSumRangeState extends State<CrossSumRange> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             var rangeLength = (_currentRangeStart - _currentRangeEnd).abs() + 1;
             if (rangeLength.abs() > _ALERT_MAX_RANGE) {

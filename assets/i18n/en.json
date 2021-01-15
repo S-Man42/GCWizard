@@ -1071,6 +1071,7 @@
   "coords_formatconverter_mercator_easting" : "Easting",
   "coords_formatconverter_mercator_northing" : "Northing",
   "coords_formatconverter_geohash_locator" : "Geohash",
+  "coords_formatconverter_geohex_locator" : "GeoHex",
   "coords_formatconverter_naturalareacode_x" : "X (East)",
   "coords_formatconverter_naturalareacode_y" : "Y (North)",
   "coords_formatconverter_openlocationcode_novalidcode" : "No valid OpenLocationCode input",
@@ -1145,6 +1146,9 @@
   "coords_openmap_removeeverything_text" : "This removes all points and lines.\n\nDo you want to continue?",
   "coords_openmap_linefromhere" : "Line from here",
   "coords_openmap_linetohere" : "Line to here",
+  "coords_averaging_title" : "Coordinate Measurement",
+  "coords_averaging_start" : "Start Measurement",
+  "coords_averaging_stop" : "Stop Measurement",
 
   "crosssum_selection_title" : "Cross Sum/Digit Sum",
   "crosssum_selection_description" : "Cross Sums of an Integer",
@@ -1505,7 +1509,7 @@
   "languagegames_selection_description" : "Secret languages for children",
 
   "licenses_title" : "Licenses",
-  "licenses_usedlibraries" : "Used Code Libraries (Flutter/Dart)",
+  "licenses_usedflutterlibraries" : "Used Code Libraries (Flutter/Dart)",
   "licenses_additionalcode" : "Additional Code",
   "licenses_symboltablesources" : "Symbol Table Sources",
 

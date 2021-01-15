@@ -1071,6 +1071,7 @@
   "coords_formatconverter_mercator_easting" : "Ost",
   "coords_formatconverter_mercator_northing" : "Nord",
   "coords_formatconverter_geohash_locator" : "Geohash",
+  "coords_formatconverter_geohex_locator" : "GeoHex",
   "coords_formatconverter_naturalareacode_x" : "X (Ost)",
   "coords_formatconverter_naturalareacode_y" : "Y (Nord)",
   "coords_formatconverter_openlocationcode_novalidcode" : "Kein valider OpenLocationCode input",
@@ -1145,6 +1146,9 @@
   "coords_openmap_removeeverything_text" : "Dies löscht alle Punkte und Linien.\n\nMöchtest du weiter machen?",
   "coords_openmap_linefromhere" : "Linie von hier",
   "coords_openmap_linetohere" : "Linie nach hier",
+  "coords_averaging_title" : "Koordinate einmessen",
+  "coords_averaging_start" : "Starte Messung",
+  "coords_averaging_stop" : "Beende Messung",
 
   "crosssum_selection_title" : "Quersumme",
   "crosssum_selection_description" : "Quersummen einer ganzen Zahl",
@@ -1505,7 +1509,7 @@
   "languagegames_selection_description" : "Geheimsprachen für Kinder",
 
   "licenses_title" : "Lizenzen",
-  "licenses_usedlibraries" : "Verwendete Code-Bibliotheken (Flutter/Dart)",
+  "licenses_usedflutterlibraries" : "Verwendete Code-Bibliotheken (Flutter/Dart)",
   "licenses_additionalcode" : "Weiterer Code",
   "licenses_symboltablesources" : "Quellen für Symboltabellen",
 
@@ -1583,7 +1587,7 @@
   "numbersequence_mersenne_title" : "Mersenne-Folge",
   "numbersequence_mersenne_description" : "OEIS A000225, bis n = 111111",
   "numbersequence_mersenne_example" : "0, 1, 3, 7, 15, 31, 63, 127, ...",
-  "numbersequence_lucas_title" : "Lucas Folge",
+  "numbersequence_lucas_title" : "Lucas-Folge",
   "numbersequence_lucas_description" : "OEIS A000032, bis n = 111111",
   "numbersequence_lucas_example" : "2, 1, 3, 4, 7, 11, 18, 29, 47, 76, ...",
   "numbersequence_pell_title" : "Pell-Folge",

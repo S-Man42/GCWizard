@@ -43,7 +43,7 @@ class RSADCheckerState extends State<RSADChecker> {
             _currentQ = text;
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {});
           },

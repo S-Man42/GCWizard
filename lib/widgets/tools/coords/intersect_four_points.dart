@@ -99,7 +99,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput(context);

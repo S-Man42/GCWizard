@@ -55,7 +55,7 @@ class CrossSumRangeFrequencyState extends State<CrossSumRangeFrequency> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             var rangeLength = (_currentRangeStart - _currentRangeEnd).abs() + 1;
             if (rangeLength.abs() > _ALERT_MAX_RANGE) {

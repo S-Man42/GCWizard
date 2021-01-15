@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
@@ -73,6 +74,9 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
               break;
             case keyCoordsGeohash:
               coords = geohashToLatLon(input);
+              break;
+            case keyCoordsGeoHex:
+              coords = geoHexToLatLon(input);
               break;
             case keyCoordsOpenLocationCode:
               coords = openLocationCodeToLatLon(input);

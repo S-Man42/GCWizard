@@ -110,7 +110,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput(context);

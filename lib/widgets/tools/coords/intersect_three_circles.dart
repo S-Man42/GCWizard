@@ -117,7 +117,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput();

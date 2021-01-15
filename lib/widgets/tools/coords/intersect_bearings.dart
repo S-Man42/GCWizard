@@ -91,7 +91,7 @@ class IntersectBearingsState extends State<IntersectBearings> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput();

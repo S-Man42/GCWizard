@@ -50,7 +50,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
         index,
         Expanded(
           child: GCWText(
-            text: column.toString(),
+            text: column != null ? column.toString() : '',
             style: isFirst && hasHeader ? textStyle.copyWith(fontWeight: FontWeight.bold) : textStyle
           ),
           flex: index < flexValues.length ? flexValues[index] : 1

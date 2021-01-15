@@ -6,6 +6,7 @@ import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
+import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/ellipsoid_transform.dart';
@@ -17,9 +18,9 @@ import 'package:gc_wizard/widgets/tools/coords/intersect_four_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_two_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersection.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/map_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
-import 'package:gc_wizard/widgets/tools/coords/map_view/map_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
@@ -35,6 +36,7 @@ class CoordsSelection extends GCWSelection {
           className(FormatConverter()),
           className(MapView()),
           className(VariableCoordinateFormulas()),
+          className(CoordinateAveraging()),
           className(CenterTwoPoints()),
           className(CenterThreePoints()),
           className(Antipodes()),

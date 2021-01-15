@@ -16,7 +16,7 @@ class LicensesState extends State<Licenses> {
     var content = Column(
       children: [
         GCWTextDivider(
-          text: i18n(context, 'licenses_usedlibraries')
+          text: i18n(context, 'licenses_usedflutterlibraries')
         ),
         Column(
           children: columnedMultiLineOutput(null, [
@@ -24,6 +24,7 @@ class LicensesState extends State<Licenses> {
             ['diacritic', 'BSD License'],
             ['flutter_map', 'BSD License'],
             ['flutter_map_marker_popup', 'BSD License'],
+            ['flutter_map_tappable_polyline', 'GPL 3.0 License'],
             ['fluttertoast', 'BSD License'],
             ['intl', 'MIT License'],
             ['location', 'MIT License'],
@@ -37,9 +38,10 @@ class LicensesState extends State<Licenses> {
             ['prefs', 'Apache 3.0 License'],
             ['provider', 'MIT License'],
             ['qr_flutter', 'BSD 3-Clause "New" or "Revised" License'],
+            ['share_extend', 'MIT License'],
             ['touchable', 'GPL 3.0 License'],
+            ['uuid', 'MIT License'],
             ['url_launcher', 'BSD License'],
-            ['Chef Interpreter', 'CC0 1.0 Universal Public Domain Dedication'],
           ]),
         ),
 
@@ -48,11 +50,14 @@ class LicensesState extends State<Licenses> {
         ),
         Column(
           children: columnedMultiLineOutput(null, [
-            ['moenk', 'Gauss-Krüger Code'],
-            ['astronomie.info, jgiesen.de', 'Astronomy Functions'],
-            ['flutter_hsvcolor_picker (minimized)', 'Color Picker'],
-            ['Jens Guballa (guballa.de)', 'Universal Code Breaker'],
-            ['Wesley Janssen, Joost Rijneveld, Mathijs Vos', 'Chef Interpreter'],
+            ['astronomie.info, jgiesen.de', 'Astronomy Functions', null],
+            ['Wesley Janssen, Joost Rijneveld, Mathijs Vos', 'Chef Interpreter', 'CC0 1.0 Universal Public Domain Dedication'],
+            ['flutter_hsvcolor_picker (minimized)', 'Color Picker', null],
+            ['David Vávra', 'Coordinate Measurement', 'Apache 2.0 License'],
+            ['moenk', 'Gauss-Krüger Code', null],
+            ['@chsii (geohex4j), @sa2da (geohex.org)', 'GeoHex Code', 'MIT License'],
+            ['Jens Guballa (guballa.de)', 'Substitution Breaker', 'MIT License'],
+            ['Jens Guballa (guballa.de)', 'Vigenère Breaker', null],
           ]),
         ),
 
@@ -63,8 +68,8 @@ class LicensesState extends State<Licenses> {
           children: columnedMultiLineOutput(null, [
             ['myGeoTools', 'several'],
             ['Wikipedia', 'several'],
-            ['www.breitkopf.de', 'Solmisation'],
             ['www.steinerverlag.de', 'Eurythmy'],
+            ['www.breitkopf.de', 'Solmisation'],
           ]),
         ),
       ]

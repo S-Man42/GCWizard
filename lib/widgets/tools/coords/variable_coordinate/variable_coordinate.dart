@@ -170,7 +170,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             _calculateOutput(context);
           },

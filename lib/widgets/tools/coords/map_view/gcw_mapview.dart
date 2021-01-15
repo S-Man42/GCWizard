@@ -17,15 +17,13 @@ import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
-import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
-import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_paste_button.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/mappoint_editor.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/mappolyline_editor.dart';
@@ -33,7 +31,6 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adap
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
@@ -114,7 +111,7 @@ class GCWMapViewState extends State<GCWMapView> {
     if (widget.isEditable)
       _persistanceAdapter = MapViewPersistenceAdapter(widget);
 
-    defaultLengthUnit = getUnitBySymbol(allLengths(), Prefs.get('i18n_default_length_unit'));
+    defaultLengthUnit = getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
   }
 
   @override

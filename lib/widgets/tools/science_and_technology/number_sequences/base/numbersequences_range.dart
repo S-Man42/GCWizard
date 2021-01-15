@@ -68,7 +68,7 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _buildOutput();

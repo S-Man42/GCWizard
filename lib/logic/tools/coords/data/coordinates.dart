@@ -20,6 +20,7 @@ const keyCoordsMercator = 'coords_mercator';
 const keyCoordsNaturalAreaCode = 'coords_naturalareacode';
 const keyCoordsSlippyMap = 'coords_slippymap';
 const keyCoordsGeohash = 'coords_geohash';
+const keyCoordsGeoHex = 'coords_geohex';
 const keyCoordsOpenLocationCode = 'coords_openlocationcode';
 const keyCoordsQuadtree = 'coords_quadtree';
 const keyCoordsReverseWhereIGoWaldmeister = 'coords_reversewhereigo_waldmeister';
@@ -53,6 +54,7 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsNaturalAreaCode, 'Natural Area Code (NAC)', 'X: 4RZ000, Y: QJFMGZ'),
   CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles', 'Z: 15, X: 5241, Y: 11749'),
   CoordinateFormat(keyCoordsGeohash, 'Geohash', 'c20cwkvr4'),
+  CoordinateFormat(keyCoordsGeoHex, 'GeoHex', 'RU568425483853568'),
   CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)', '84QV7HRP+CM3'),
   CoordinateFormat(keyCoordsQuadtree, 'Quadtree', '021230223311203323'),
   CoordinateFormat(keyCoordsReverseWhereIGoWaldmeister, 'Reverse WhereIGo (Waldmeister)', '042325, 436113, 935102'),

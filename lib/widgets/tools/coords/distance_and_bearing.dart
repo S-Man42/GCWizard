@@ -85,7 +85,7 @@ class DistanceBearingState extends State<DistanceBearing> {
             });
           }
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput(context);

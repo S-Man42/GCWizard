@@ -47,7 +47,7 @@ class NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigi
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _buildOutput();

@@ -94,7 +94,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput();
