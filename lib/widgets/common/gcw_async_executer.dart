@@ -13,16 +13,18 @@ class GCWAsyncExecuter extends StatefulWidget {
   final Function isolatedFunction;
   final dynamic parameter;
   final Function onReady;
+  final bool isOverlay;
 
   GCWAsyncExecuter({
     Key key,
     this.isolatedFunction,
     this.parameter,
     this.onReady,
+    this.isOverlay,
   }) : super(key: key);
 
   @override
-  _GCWAsyncExecuterState createState() => _GCWAsyncExecuterState();
+  _GCWAsyncExecuterState createState() => _GCWAsyncExecuterState(isOverlay);
 }
 
 Future<ReceivePort> _makeIsolate(Function isolatedFunction, GCWAsyncExecuterParameters parameters) async {
@@ -39,6 +41,11 @@ Future<ReceivePort> _makeIsolate(Function isolatedFunction, GCWAsyncExecuterPara
 class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
 
   var _result;
+  bool isOverlay;
+
+  _GCWAsyncExecuterState(
+    this.isOverlay,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -59,21 +66,35 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
       stream: progress(),
       builder: (context, snapshot) {
         if(snapshot.connectionState == ConnectionState.done) {
-          Navigator.of(context).pop(); // Pop from dialog on completion (needen on overlay)
+          if (widget.isOverlay != null && widget.isOverlay)
+            Navigator.of(context).pop(); // Pop from dialog on completion (needen on overlay)
           widget.onReady(_result);
         }
         if(snapshot.hasData) {
-          return CircularProgressIndicator(
-            value: snapshot.data,
-            backgroundColor:  Colors.white,
-            valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
-            strokeWidth: 10,
-          ) ;
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+            CircularProgressIndicator(
+              value: snapshot.data,
+              backgroundColor:  Colors.white,
+              valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
+              strokeWidth: 20,
+            ),
+            Positioned(
+              child: Center(
+                child: Text(
+                  (snapshot.data * 100).toStringAsFixed(0).toString() + '%',
+                  textAlign: TextAlign.center,
+                  style : TextStyle(color: Colors.white,  decoration: TextDecoration.none),
+                ),
+              ),
+            ),
+          ]);
         }
         return CircularProgressIndicator(
           backgroundColor:  Colors.white,
           valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
-          strokeWidth: 10,
+          strokeWidth: 20,
         );
       }
     );

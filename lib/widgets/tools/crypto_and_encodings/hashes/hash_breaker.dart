@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hash_breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hashes.dart';
@@ -127,84 +128,22 @@ class _HashBreakerState extends State<HashBreaker> {
           context: context,
           barrierDismissible: false,
           builder: (context) {
-            return Container(
-              child: GCWAsyncExecuter(
-                isolatedFunction: breakHashAsync,
-                parameter: _buildJobData(),
-                onReady: (data) => _showOutput(data),
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: breakHashAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 150,
+                width: 150,
               ),
-            height: 300,
-            width: 300,
-            margin: const EdgeInsets.only(
-            top: 10.0,
-            bottom: 10.0,
-            left: 5,
-            right: 5),
             );
           },
         );
       });
   }
-
-  _calculateOutput() async {
-    _isStarted = true;
-    _currentOutput = '';
-    //setState(() {});
- showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Container(
-            child: GCWAsyncExecuter(
-              isolatedFunction: breakHashAsync,
-              parameter: _buildJobData(),
-              onReady: (data) => _showOutput(data),
-            ),
-          height: 300,
-          width: 300,
-          margin: const EdgeInsets.only(
-          top: 10.0,
-          bottom: 10.0,
-          left: 5,
-          right: 5,
-          )
-          );
-        },
-      );
-
-  }
-
-  /*
-  Widget _buildButtonProgressBar() {
-    return _isStarted ?
-    Container(
-      child:
-      GCWAsyncExecuter(
-        isolatedFunction: breakHashAsync,
-        parameter: _buildJobData(),
-        onReady: (data) => _showOutput(data),
-        ),
-        height: 300,
-        width: 300,
-        margin: const EdgeInsets.only(
-          top: 10.0,
-          bottom: 10.0,
-          left: 5,
-          right: 5,
-      ),
-      )
-        :
-      GCWSubmitFlatButton(
-        onPressed: _calculateOutput,
-    );
-  }
-
-  _calculateOutput(){
-    _isStarted = true;
-    _currentOutput = '';
-    setState(() {});
-  }
-  */
 
   _showOutput(Map<String, dynamic> output) {
     _isStarted = false;
