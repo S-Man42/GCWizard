@@ -143,7 +143,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
@@ -296,6 +297,7 @@ class _MainViewState extends State<MainView> {
           className(OneTimePad()),
           className(Ook()),
           className(PeriodicTable()),
+          className(PeriodicTableDataView()),
           className(Permutation()),
           className(PhiSelection()),
           className(PiSelection()),

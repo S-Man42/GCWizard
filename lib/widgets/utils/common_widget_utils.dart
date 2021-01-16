@@ -37,9 +37,11 @@ defaultFontSize() {
   return fontSize;
 }
 
-List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data, {List<int> flexValues = const [], int copyColumn, hasHeader: false}) {
+List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data, {List<int> flexValues = const [], int copyColumn, hasHeader: false, List<Function> tappables}) {
   var odd = true;
   var isFirst = true;
+
+  int index = 0;
   return data.where((row) => row != null).map((rowData) {
     Widget output;
 
@@ -49,8 +51,8 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
       return MapEntry(
         index,
         Expanded(
-          child: GCWText(
-            text: column != null ? column.toString() : '',
+          child: Text(
+            column != null ? column.toString() : '',
             style: isFirst && hasHeader ? textStyle.copyWith(fontWeight: FontWeight.bold) : textStyle
           ),
           flex: index < flexValues.length ? flexValues[index] : 1
@@ -105,7 +107,15 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
     odd = !odd;
 
     isFirst = false;
-    return output;
+
+    if (tappables != null) {
+      return InkWell(
+        child: output,
+        onTap: tappables[index++],
+      );
+    } else {
+      return output;
+    }
   }).toList();
 }
 
