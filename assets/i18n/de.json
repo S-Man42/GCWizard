@@ -1513,14 +1513,19 @@
   "licenses_additionalcode" : "Weiterer Code",
   "licenses_symboltablesources" : "Quellen für Symboltabellen",
 
+  "mainmenu_about_title" : "Über",
+  "mainmenu_settings_title" : "Einstellungen",
+  "mainmenu_changelog_title" : "Changelog",
+  "mainmenu_callforcontribution_title" : "Möchtest du uns helfen?",
+
   "malbolge_title" : "Malbolge",
-  "malbolge_description" : "Esoterisce Programmiersprache",
+  "malbolge_description" : "Esoterische Programmiersprache",
   "malbolge_mode_interpret" : "Interpreter",
   "malbolge_mode_generate" : "Generator",
   "malbolge_mode_interpret_strict" : "Streng",
   "malbolge_hint_code" : "Malbolge-Programm",
   "malbolge_hint_code_assembler" : "Assembler",
-  "malbolge_hint_code_memnonic" : "Memnonic",
+  "malbolge_hint_code_mnemonic" : "Mnemonic",
   "malbolge_hint_input" : "Input",
   "malbolge_hint_output" : "Output",
   "malbolge_debug" : "Debug",
@@ -1535,11 +1540,6 @@
   "malbolge_error_illegal_jump" : "Ungültiger Sprung außerhalb des Speichers",
   "malbolge_error_illegal_write" : "Ungültiger Schreibversuch eines nicht-ASCII-Zeichens",
   "malbolge_error_no_input" : "Keine Eingabe gefunden",
-
-  "mainmenu_about_title" : "Über",
-  "mainmenu_settings_title" : "Einstellungen",
-  "mainmenu_changelog_title" : "Changelog",
-  "mainmenu_callforcontribution_title" : "Möchtest du uns helfen?",
 
   "mayanumbers_selection_title" : "Maya-Zahlen",
   "mayanumbers_selection_description" : "Vigesimalsystem (Zahlenbasis 20) der Mayas",

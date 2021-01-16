@@ -57,6 +57,7 @@ class LicensesState extends State<Licenses> {
             ['David Vávra', 'Coordinate Measurement', 'Apache 2.0 License'],
             ['moenk', 'Gauss-Krüger Code', null],
             ['@chsii (geohex4j), @sa2da (geohex.org)', 'GeoHex Code', 'MIT License'],
+            ['lscheffer.com, Matthias Ernst', 'Malbolge Code', 'CC0, Public Domain'],
             ['Jens Guballa (guballa.de)', 'Substitution Breaker', 'MIT License'],
             ['Jens Guballa (guballa.de)', 'Vigenère Breaker', null],
           ]),
