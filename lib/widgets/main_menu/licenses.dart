@@ -20,6 +20,7 @@ class LicensesState extends State<Licenses> {
         ),
         Column(
           children: columnedMultiLineOutput(null, [
+            ['auto_size_text', 'MIT License'],
             ['base32', 'MIT License'],
             ['diacritic', 'BSD License'],
             ['flutter_map', 'BSD License'],

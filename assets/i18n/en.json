@@ -1666,8 +1666,11 @@
   "ook_description" : "Esoteric programming language, derivate of Brainf**k",
   "ook_example" : "Ook? Ook. Ook! Ook.",
 
+  "periodictable_selection_title" : "Periodic Table of the Elements",
+  "periodictable_selection_description" : "Shows data to chemical elements",
   "periodictable_title" : "Periodic Table of the Elements",
-  "periodictable_description" : "Shows data to chemical elements, sort them by categories",
+  "periodictabledataview_title" : "Periodic Table of the Elements: Data View",
+  "periodictabledataview_description" : "Shows data to chemical elements, sort them by categories",
   "periodictable_element_actinium" : "Actinium",
   "periodictable_element_aluminium" : "Aluminium",
   "periodictable_element_americum" : "Americum",

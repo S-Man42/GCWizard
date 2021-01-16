@@ -1,5 +1,7 @@
 import 'package:gc_wizard/utils/common_utils.dart';
 
+enum GroupType {MAIN_GROUP, SUB_GROUP}
+
 enum StateOfMatter {SOLID, LIQUID, GAS, UNKNOWN}
 
 enum PeriodicTableCategory {
@@ -85,17 +87,11 @@ class PeriodicTableElement {
     this.halfLife,              //German: Halbwertszeit
     {this.comments: const []}
   ) {
-    if ([1,2].contains(this.iupacGroup)) {
-      this.mainGroup = this.iupacGroup;
-    } else if ([3,4,5,6,7].contains(this.iupacGroup)) {
-      this.subGroup = this.iupacGroup;
-    } else if ([8,9,10].contains(this.iupacGroup)) {
-      this.subGroup = 8;
-    } else if ([11,12].contains(this.iupacGroup)) {
-      this.subGroup = this.iupacGroup - 10;
-    } else if ([13,14,15,16,17,18].contains(this.iupacGroup)) {
-      this.mainGroup = this.iupacGroup - 10;
-    }
+    var group = iupacGroupToMainSubGroup(iupacGroup);
+    if (group['type'] == GroupType.MAIN_GROUP)
+      this.mainGroup = group['value'];
+    else
+      this.subGroup = group['value'];
 
     if (this.boilingPoint == -double.infinity && this.meltingPoint == -double.infinity) {
       this.stateOfMatter = StateOfMatter.UNKNOWN;
@@ -137,6 +133,30 @@ class PeriodicTableElement {
   String toString() {
     return 'name: $name ($chemicalSymbol, $atomicNumber)';
   }
+}
+
+Map<String, dynamic> iupacGroupToMainSubGroup(int iupacGroup) {
+  var value;
+  var type;
+
+  if ([1,2].contains(iupacGroup)) {
+    type = GroupType.MAIN_GROUP;
+    value = iupacGroup;
+  } else if ([3,4,5,6,7].contains(iupacGroup)) {
+    type = GroupType.SUB_GROUP;
+    value = iupacGroup;
+  } else if ([8,9,10].contains(iupacGroup)) {
+    type = GroupType.SUB_GROUP;
+    value = 8;
+  } else if ([11,12].contains(iupacGroup)) {
+    type = GroupType.SUB_GROUP;
+    value = iupacGroup - 10;
+  } else if ([13,14,15,16,17,18].contains(iupacGroup)) {
+    type = GroupType.MAIN_GROUP;
+    value = iupacGroup - 10;
+  }
+
+  return {'type': type, 'value': value};
 }
 
 final List<PeriodicTableElement> allPeriodicTableElements = [

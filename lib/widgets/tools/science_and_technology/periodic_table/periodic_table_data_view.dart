@@ -2,22 +2,28 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/common/units/temperature.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/roman_numbers/roman_numbers.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/periodic_table.dart';
-import 'package:gc_wizard/logic/common/units/temperature.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:intl/intl.dart';
 
-class PeriodicTable extends StatefulWidget {
+class PeriodicTableDataView extends StatefulWidget {
+  final int atomicNumber;
+
+  const PeriodicTableDataView({Key key, this.atomicNumber}) : super(key: key);
+
   @override
-  PeriodicTableState createState() => PeriodicTableState();
+  PeriodicTableDataViewState createState() => PeriodicTableDataViewState();
 }
 
-class PeriodicTableState extends State<PeriodicTable> {
+class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
   var _newCategory = true;
   var _currentCategory = PeriodicTableCategory.ELEMENT_NAME;
   var _currentValueCategoryValue;
@@ -34,6 +40,8 @@ class PeriodicTableState extends State<PeriodicTable> {
   List<int> _periods;
   List<String> _iupacGroupNames;
   List<String> _statesOfMatter;
+
+  var _setSpecificValue = false;
 
   final _valueCategories = [
     PeriodicTableCategory.MASS,
@@ -121,6 +129,11 @@ class PeriodicTableState extends State<PeriodicTable> {
       .map((element) => stateOfMatterToString[element.stateOfMatter])
       .toSet().toList();
     _statesOfMatter.sort();
+
+    if (widget.atomicNumber != null) {
+      _setSpecificValue = true;
+      _currentValueCategoryValue = widget.atomicNumber;
+    }
   }
 
   @override
@@ -128,6 +141,7 @@ class PeriodicTableState extends State<PeriodicTable> {
     if (_newCategory && !_valueCategories.contains(_currentCategory)) {
       _currentValueCategoryListItems = _buildNonValueCategoryItems(_currentCategory);
       _newCategory = false;
+      _setSpecificValue = false;
     }
 
     return Column(
@@ -223,7 +237,8 @@ class PeriodicTableState extends State<PeriodicTable> {
       default: break;
     }
 
-    _currentValueCategoryValue = listItems[listItems.firstKey()];
+    if (!_setSpecificValue)
+      _currentValueCategoryValue = listItems[listItems.firstKey()];
 
     return listItems.entries.map((entry) {
       return GCWDropDownMenuItem(
@@ -272,7 +287,7 @@ class PeriodicTableState extends State<PeriodicTable> {
     return filteredList.asMap().map((index, element) {
       return MapEntry(
         index,
-        [(index + 1).toString() + '.', element.atomicNumber.toString(), i18n(context, element.name), element.chemicalSymbol]
+        [(index + 1).toString() + '.', element.atomicNumber, i18n(context, element.name), element.chemicalSymbol]
       );
     })
     .values.toList();
@@ -346,7 +361,7 @@ class PeriodicTableState extends State<PeriodicTable> {
 
       return MapEntry(
         index,
-        [(index + 1).toString() + '.', relevantValue, i18n(context, element.name), element.chemicalSymbol, element.atomicNumber.toString()]
+        [(index + 1).toString() + '.', relevantValue, i18n(context, element.name), element.chemicalSymbol, element.atomicNumber]
       );
     })
     .values.toList();
@@ -405,6 +420,7 @@ class PeriodicTableState extends State<PeriodicTable> {
     var outputData = [[]];
     var flexValues = <int>[];
     var comments;
+    var tappables;
 
     switch (_currentCategory) {
       case PeriodicTableCategory.ELEMENT_NAME:
@@ -426,6 +442,9 @@ class PeriodicTableState extends State<PeriodicTable> {
       case PeriodicTableCategory.IS_RADIOACTIVE:
         outputData = _buildGroupOutputs();
         flexValues = [1, 1, 3, 1];
+        tappables = outputData.map((data) {
+          return () => _showElement(data[1]);
+        }).toList();
         break;
       case PeriodicTableCategory.MASS:
       case PeriodicTableCategory.MELTING_POINT:
@@ -436,10 +455,13 @@ class PeriodicTableState extends State<PeriodicTable> {
       case PeriodicTableCategory.MOST_COMMON_ISOTOP:
         outputData = _buildValueOutputs();
         flexValues = [1, 2, 3, 1, 1];
+        tappables = outputData.map((data) {
+          return () => _showElement(data[4]);
+        }).toList();
         break;
     }
 
-    var rows = columnedMultiLineOutput(context, outputData, flexValues: flexValues, copyColumn: 1);
+    var rows = columnedMultiLineOutput(context, outputData, flexValues: flexValues, copyColumn: 1, tappables: tappables);
 
     rows.insert(0,
       GCWTextDivider(
@@ -461,6 +483,14 @@ class PeriodicTableState extends State<PeriodicTable> {
     return Column(
       children: rows
     );
+  }
 
+  _showElement(int atomicNumber) {
+    Navigator.of(context).push(NoAnimationMaterialPageRoute(
+      builder: (context) => GCWTool(
+        tool: PeriodicTableDataView(atomicNumber: atomicNumber),
+        toolName: i18n(context, 'periodictablelists_title'),
+      ))
+    );
   }
 }
