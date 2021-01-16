@@ -1360,8 +1360,6 @@
   "hashes_hashbreaker_searchconfiguration_searchmask" : "Suchmaske",
   "hashes_hashbreaker_hashtobreak" : "Zu lösender Hash",
   "hashes_hashbreaker_solutionnotfound" : "Keine Lösung im angegebenen Bereich gefunden.",
-  "hashes_hashbreaker_alert_range_title" : "Sehr großer Suchbereich",
-  "hashes_hashbreaker_alert_range_text" : "Die Suche enthält %s1 Elemente.\n\nDie Suche könnte sehr lange dauern und das Gerät langsam werden lassen.\n\nMöchten Sie fortfahren?",
 
   "heatindex_title" : "Hitze-Index",
   "heatindex_description" : "Gefühlte Temperatur",

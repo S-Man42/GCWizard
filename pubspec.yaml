@@ -33,7 +33,6 @@ dependencies:
   touchable: ^0.2.0
   uuid: ^2.2.2
   url_launcher: ^5.7.10
-  percent_indicator: ^2.1.9
   threading: ^0.0.10
 
 dev_dependencies:

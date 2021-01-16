@@ -46,7 +46,6 @@ class _HashBreakerState extends State<HashBreaker> {
   var _currentOutput = '';
   var _currentHashFunction = md5Digest;
   var _currentSubstitutions = <int, Map<String, String>>{};
-  var _isStarted = false;
 
   @override
   void initState() {
@@ -119,11 +118,8 @@ class _HashBreakerState extends State<HashBreaker> {
   }
 
   Widget _buildButtonProgressBar() {
-    return
-    GCWSubmitFlatButton(
+    return GCWSubmitFlatButton(
       onPressed: () async {
-        //Do NOT explicitly call your computation function or make the isolate here.
-        //Just show the dialog
         await showDialog(
           context: context,
           barrierDismissible: false,
@@ -136,7 +132,7 @@ class _HashBreakerState extends State<HashBreaker> {
                   onReady: (data) => _showOutput(data),
                   isOverlay: true,
                 ),
-                height: 150,
+                height: 210,
                 width: 150,
               ),
             );
@@ -146,8 +142,6 @@ class _HashBreakerState extends State<HashBreaker> {
   }
 
   _showOutput(Map<String, dynamic> output) {
-    _isStarted = false;
-
     if (output == null || output['state'] == null || output['state'] == 'not_found') {
       _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
     } else
@@ -159,16 +153,20 @@ class _HashBreakerState extends State<HashBreaker> {
   }
 
   GCWAsyncExecuterParameters _buildJobData() {
+    _currentOutput ='';
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+
     var _substitutions = <String, String>{};
     _currentSubstitutions.entries.forEach((entry) {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
     });
 
-    _isStarted = true;
-
     return GCWAsyncExecuterParameters(
       HashBreakerJobData(input: _currentInput, searchMask: _currentMask, substitutions: _substitutions, hashFunction: _currentHashFunction)
     );
+
   }
 
   _buildVariablesInput() {

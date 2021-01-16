@@ -1,6 +1,9 @@
 import 'dart:isolate';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+
+Isolate _isolate;
 
 class GCWAsyncExecuterParameters {
   SendPort sendAsyncPort;
@@ -31,7 +34,7 @@ Future<ReceivePort> _makeIsolate(Function isolatedFunction, GCWAsyncExecuterPara
   ReceivePort receivePort = ReceivePort();
   parameters.sendAsyncPort = receivePort.sendPort;
 
-  await Isolate.spawn(
+  _isolate = await Isolate.spawn(
     isolatedFunction,
     parameters
   );
@@ -42,6 +45,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
 
   var _result;
   bool isOverlay;
+  ReceivePort _receivePort;
 
   _GCWAsyncExecuterState(
     this.isOverlay,
@@ -49,14 +53,16 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.parameter == null)
+      return Container();
     Stream<double> progress() async* {
-      ReceivePort receivePort = await _makeIsolate(widget.isolatedFunction, widget.parameter);
-      await for(var event in receivePort) {
+      _receivePort = await _makeIsolate(widget.isolatedFunction, widget.parameter);
+      await for(var event in _receivePort) {
         if(event is Map<String, dynamic> && event['progress'] != null) {
           yield event['progress'];
         } else {
           _result = event;
-          receivePort.close();
+          _receivePort.close();
           return;
         }
       }
@@ -65,38 +71,62 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
     return StreamBuilder(
       stream: progress(),
       builder: (context, snapshot) {
-        if(snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.connectionState == ConnectionState.done) {
           if (widget.isOverlay != null && widget.isOverlay)
             Navigator.of(context).pop(); // Pop from dialog on completion (needen on overlay)
           widget.onReady(_result);
         }
-        if(snapshot.hasData) {
-          return Stack(
-            fit: StackFit.expand,
-            children: [
-            CircularProgressIndicator(
-              value: snapshot.data,
-              backgroundColor:  Colors.white,
-              valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
-              strokeWidth: 20,
-            ),
-            Positioned(
-              child: Center(
-                child: Text(
-                  (snapshot.data * 100).toStringAsFixed(0).toString() + '%',
-                  textAlign: TextAlign.center,
-                  style : TextStyle(color: Colors.white,  decoration: TextDecoration.none),
-                ),
-              ),
-            ),
-          ]);
-        }
-        return CircularProgressIndicator(
-          backgroundColor:  Colors.white,
-          valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
-          strokeWidth: 20,
-        );
-      }
-    );
+        return Column(
+          children: <Widget>[
+          (snapshot.hasData) ?
+          Expanded(
+            child:
+              Stack(
+                fit: StackFit.expand,
+                children: [
+                  CircularProgressIndicator(
+                    value: snapshot.data,
+                    backgroundColor: Colors.white,
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                        Colors.amber),
+                    strokeWidth: 20,
+                  ),
+                  Positioned(
+                    child: Center(
+                      child: Text(
+                        (snapshot.data * 100).toStringAsFixed(0).toString() + '%',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white, decoration: TextDecoration.none),
+                      ),
+                    ),
+                  ),
+                ]
+              )
+            )
+          :
+          Expanded(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
+                  strokeWidth: 20,
+                )
+              ]
+            )
+          ),
+          GCWButton(
+            text: i18n(context, 'common_cancel'),
+            onPressed: () {
+              if (_isolate != null)
+                _isolate.kill( priority: Isolate.immediate);
+              if (_receivePort != null)
+                _receivePort.close();
+            },
+          )
+        ]
+      );
+    });
   }
 }

@@ -1360,8 +1360,6 @@
   "hashes_hashbreaker_searchconfiguration_searchmask" : "Search Mask",
   "hashes_hashbreaker_hashtobreak" : "Hash to find",
   "hashes_hashbreaker_solutionnotfound" : "No solution found within the given range.",
-  "hashes_hashbreaker_alert_range_title" : "Very large search range",
-  "hashes_hashbreaker_alert_range_text" : "The search contains %s1 elements.\n\nThe search could take a large amount of time and may slow down your device significantly.\n\nDo you want to continue?",
 
   "heatindex_title" : "Heat Index",
   "heatindex_description" : "Apparent Temperature",
