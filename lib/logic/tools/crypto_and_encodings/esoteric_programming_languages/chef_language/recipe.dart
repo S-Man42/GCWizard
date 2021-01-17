@@ -87,11 +87,11 @@ class Recipe {
   }
 
   void setOvenTemp(String oventemp, language) {
-    RegExp expr = new RegExp(r'^(pre-heat oven to |ofen auf )(\d*) (degrees|grad) cel(c|s)ius( \(gas (mark |skala )(\d*)\))?( vorheizen)?.$');
+    RegExp expr = new RegExp(r'^(pre(-| )heat oven to |ofen auf )(\d*) (degrees|grad) cel(c|s)ius( \(gas (mark |skala )(\d*)\))?( vorheizen)?.$');
     if (expr.hasMatch(oventemp)) {
-      this.oventemp = int.parse(expr.firstMatch(oventemp).group(2));
-      if (expr.firstMatch(oventemp).group(7)!= null) {
-        this.gasmark = int.parse(expr.firstMatch(oventemp).group(7));
+      this.oventemp = int.parse(expr.firstMatch(oventemp).group(3));
+      if (expr.firstMatch(oventemp).group(8)!= null) {
+        this.gasmark = int.parse(expr.firstMatch(oventemp).group(8));
       }
     } else {
       this.error = true;

@@ -35,7 +35,7 @@ class MapViewPersistenceAdapter {
   GCWMapPoint _mapPointDAOToGCWMapPoint(MapPointDAO mapPointDAO) {
     return GCWMapPoint(
       uuid: mapPointDAO.uuid,
-      markerText: _mapViewDAO.name,
+      markerText: mapPointDAO.name,
       point: LatLng(mapPointDAO.latitude, mapPointDAO.longitude),
       coordinateFormat: {'format': mapPointDAO.coordinateFormat},
       color: hexStringToColor(mapPointDAO.color),
@@ -73,15 +73,22 @@ class MapViewPersistenceAdapter {
       insertMapViewDAO(MapViewDAO([], []));
     }
     _mapViewDAO = mapViews.last;
-  
-    if (mapWidget.points != null) {
+
+    if (_mapViewDAO.points == null)
+      _mapViewDAO.points = List<MapPointDAO>();
+    if (mapWidget.points == null)
+      mapWidget.points = List<GCWMapPoint>();
+
+    if (mapWidget.points.length > 0) {
       _mapViewDAO.points.addAll(
         mapWidget.points
           .where((point) => !_mapViewDAO.points.map((pointDAO) => pointDAO.uuid).toList().contains(point.uuid))
           .map((point) => _gcwMapPointToMapPointDAO(point))
           .toList()
       );
-  
+    }
+
+    if (_mapViewDAO.points.length > 0) {
       mapWidget.points.addAll(
         _mapViewDAO.points
           .where((pointDAO) => !mapWidget.points.map((point) => point.uuid).toList().contains(pointDAO.uuid))
@@ -89,15 +96,22 @@ class MapViewPersistenceAdapter {
           .toList()
       );
     }
-  
-    if (mapWidget.polylines != null) {
+
+    if (_mapViewDAO.polylines == null)
+      _mapViewDAO.polylines = List<MapPolylineDAO>();
+    if (mapWidget.polylines == null)
+      mapWidget.polylines = List<GCWMapPolyline>();
+
+    if (mapWidget.polylines.length > 0) {
       _mapViewDAO.polylines.addAll(
         mapWidget.polylines
           .where((polyline) => !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
           .map((polyline) => _gcwMapPolylineToMapPolylineDAO(polyline))
           .toList()
       );
-  
+    }
+
+    if (_mapViewDAO.polylines.length > 0) {
       mapWidget.polylines.addAll(
         _mapViewDAO.polylines
           .where((polylineDAO) => !mapWidget.polylines.map((polyline) => polyline.uuid).toList().contains(polylineDAO.uuid))
@@ -109,11 +123,11 @@ class MapViewPersistenceAdapter {
     updateMapViews();
   }
   
-  GCWMapPoint addMapPoint(LatLng coordinate) {
+  GCWMapPoint addMapPoint(LatLng coordinate, {Map<String, String> coordinateFormat}) {
     var random = Random();
     var mapPoint = GCWMapPoint(
       point: coordinate,
-      coordinateFormat: defaultCoordFormat(),
+      coordinateFormat: coordinateFormat ?? defaultCoordFormat(),
       isEditable: true,
       color: HSVColor.fromAHSV(1.0, random.nextDouble() * 360.0, 1.0, random.nextDouble() / 2 + 0.5).toColor(),
       circleColorSameAsPointColor: true

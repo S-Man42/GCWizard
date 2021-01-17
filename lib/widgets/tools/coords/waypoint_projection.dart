@@ -78,7 +78,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput();

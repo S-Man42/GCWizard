@@ -19,8 +19,8 @@ class GCWCoordsOutput extends StatefulWidget {
   const GCWCoordsOutput({
     Key key,
     this.outputs,
-    this.points: const [],
-    this.polylines: const [],
+    this.points,
+    this.polylines,
     this.mapButtonTop: false
   }) : super(key: key);
 
@@ -93,7 +93,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
         polylines: widget.polylines,
         isEditable: freeMap,
       ),
-      toolName: freeMap ? i18n(context, 'coords_show_on_openmap') : i18n(context, 'coords_map_view_title'),
+      toolName: freeMap ? i18n(context, 'coords_openmap_title') : i18n(context, 'coords_map_view_title'),
       autoScroll: false,
     )));
   }

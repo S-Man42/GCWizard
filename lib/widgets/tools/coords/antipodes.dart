@@ -48,7 +48,7 @@ class AntipodesState extends State<Antipodes> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput();

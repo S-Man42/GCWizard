@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
-import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dec.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dmm.dart';
@@ -13,16 +11,19 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dms.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_gausskrueger.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geohash.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geohex.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_maidenhead.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mercator.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mgrs.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_naturalareacode.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_openlocationcode.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_paste_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_quadtree.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewhereigo_waldmeister.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_xyz.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:intl/intl.dart';
@@ -120,6 +121,16 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsXYZ),
+        'widget': GCWCoordsXYZ(
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
         'coordFormat': getCoordinateFormatByKey(keyCoordsSwissGrid),
         'widget': GCWCoordsSwissGrid(
           onChanged: (newValue) {
@@ -202,6 +213,16 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsGeoHex),
+        'widget': GCWCoordsGeoHex(
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
         'coordFormat': getCoordinateFormatByKey(keyCoordsOpenLocationCode),
         'widget': GCWCoordsOpenLocationCode(
           onChanged: (newValue) {
@@ -252,8 +273,9 @@ class GCWCoordsState extends State<GCWCoords> {
                 ),
                 padding: EdgeInsets.only(right: DEFAULT_MARGIN),
               ),
-              GCWPasteButton(
-                onSelected: _parseClipboardAndSetCoords
+              GCWCoordsPasteButton(
+                size: IconButtonSize.SMALL,
+                onPasted: _setCoords
               )
             ],
           )
@@ -290,16 +312,11 @@ class GCWCoordsState extends State<GCWCoords> {
     });
   }
 
-  _parseClipboardAndSetCoords(text) {
-    var parsed = parseLatLon(text);
-    if (parsed == null) {
-      showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
+  _setCoords(Map<String, dynamic> pastedCoords) {
+    if (pastedCoords == null)
       return;
-    }
 
-    _pastedCoords = parsed['coordinate'];
-    if (_pastedCoords == null)
-      return;
+    _pastedCoords = pastedCoords['coordinate'];
 
     _setPastedCoordsFormat();
     _currentValue = _pastedCoords;

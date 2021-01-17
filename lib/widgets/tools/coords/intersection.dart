@@ -93,7 +93,7 @@ class IntersectionState extends State<Intersection> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput();

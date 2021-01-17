@@ -7,12 +7,14 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
+import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/combinatorics_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/crosssum_selection.dart';
@@ -26,7 +28,22 @@ import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/language_games_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_catalan_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_factorial_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fermat_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fibonacci_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthal_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthallucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_lucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenne_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersennefermat_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pell_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pelllucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_recaman_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/periodic_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
@@ -39,9 +56,11 @@ import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/vigenere_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
+import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/ellipsoid_transform.dart';
@@ -53,8 +72,8 @@ import 'package:gc_wizard/widgets/tools/coords/intersect_four_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_two_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersection.dart';
-import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/map_view.dart';
+import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
@@ -92,17 +111,21 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
-// import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/substitution_breaker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gray.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gronsfeld.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker.dart';
@@ -115,6 +138,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/duck
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
@@ -149,6 +173,10 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/windchill.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_date.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/easter/easter_years.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_position.dart';
@@ -175,15 +203,26 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/catalan.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/factorial.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fermat.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fibonacci.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_lucas.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lucas.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersennefermat.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell_lucas.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/recaman.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nearestprime.dart';
@@ -195,11 +234,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/summer_simmer.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multiplenumbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singlenumbers.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/windchill.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 
 class Registry {
@@ -207,6 +244,7 @@ class Registry {
 
   static final SEARCHSTRING_SETTINGS = 'settings einstellungen preferences options optionen ';
 
+  static final SEARCHSTRING_APPARENTTEMPERATURE = 'apparent perceived gefuehltetemperatur temperature ';
   static final SEARCHSTRING_ASTRONOMY = 'astronomy astronomie stars sterne planets planeten astronomisches astronomical ';
   static final SEARCHSTRING_ASTRONOMY_RISESET = 'rise set transit noon aufgang aufgaenge untergang untergaenge dawn dusk mittag culmination kulmination ';
   static final SEARCHSTRING_ASTRONOMY_POSITION = 'declination position stand rektaszension zodiac astrology astrologischeszeichen astrologie astrologicalsign tierkreiszeichen sternzeichen azimuth altitude diameter durchmesser hoehe rightascension distance entfernung distanz observer beobachter juliandate julianischesdatum sternzeit siderealtime gmst lmst eclipticlongitude ekliptischelaenge ';
@@ -218,7 +256,8 @@ class Registry {
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
   static final SEARCHSTRING_CCITT1 = SEARCHSTRING_CCITT + 'ccitt1 ccitt-1 baudot-code baudotcode ';
   static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen lochkarten konrad zuse z-22 z22 punchedpapertape cards baudot-murray-code ';
-  static final SEARCHSTRING_CODEBREAKER = 'solver loeser universal universeller codebreaker codebrecher codeknacker cracker ';
+  static final SEARCHSTRING_CISTERCIAN = 'cistercian zisterzienser monastic order monk moenchsorden moenche zahlen numbers ';
+  static final SEARCHSTRING_CODEBREAKER = 'solver loeser universal universeller codebreaker codebrecher codeknacker cracker textersetzung replacement';
   static final SEARCHSTRING_COMBINATORICS = 'mathematics mathematik kombinatorik combinatorics ';
   static final SEARCHSTRING_COMBINATORICS_COMBINATION = SEARCHSTRING_COMBINATORICS + 'combinations kombinationen untergruppen subgroups ';
   static final SEARCHSTRING_COMBINATORICS_PERMUTATION = SEARCHSTRING_COMBINATORICS + 'permutationen permutations anordnungen reihenfolgen arrangements orders ';
@@ -240,9 +279,12 @@ class Registry {
   static final SEARCHSTRING_HASHES_SHA2 = SEARCHSTRING_HASHES_SHA + 'sha2 sha-2 ';
   static final SEARCHSTRING_HASHES_SHA3 = SEARCHSTRING_HASHES_SHA + 'sha3 sha-3 ';
   static final SEARCHSTRING_IRRATIONALNUMBERS = 'irrational number irrationale zahlen fraction decimal digit nachkommastelle ';
-  static final SEARCHSTRING_NUMERALWORDS = 'numeralwords zahlwoerter numberwords zaehlwort zahlwort zaehlwoerter numerals solresol esperanto volapuek ';
-  static final SEARCHSTRING_PHI = 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
-  static final SEARCHSTRING_PI = 'pi circle kreis 3,1415926535 3.1415926535 ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
+  static final SEARCHSTRING_MAYANUMBERS = 'mayas majas zahlen ziffern numbers numerals vigesimalsystem 20 ';
+  static final SEARCHSTRING_NUMERALWORDS = 'numeralwords zahlwoerter numberwords zaehlwort zahlwort zaehlwoerter numerals';
+  static final SEARCHSTRING_NUMBERSEQUENCES = 'zahlenfolgen zahlenreihen numbersequences oeis integersequences ';
+  static final SEARCHSTRING_PERIODICTABLE = 'periodictablesoftheelements periodensystemderelemente chemie chemistry';
+  static final SEARCHSTRING_PHI = SEARCHSTRING_IRRATIONALNUMBERS + 'phi goldener schnitt golden ratio fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
+  static final SEARCHSTRING_PI = SEARCHSTRING_IRRATIONALNUMBERS + 'pi circle kreis 3,1415926535 3.1415926535 ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
   static final SEARCHSTRING_PRIMES = 'primes primzahlen ';
   static final SEARCHSTRING_RESISTOR = 'resistors widerstand widerstaende resistance ohm ';
   static final SEARCHSTRING_RESISTOR_COLORCODE = SEARCHSTRING_RESISTOR + 'colorcodes farben farbcodes colors ';
@@ -262,7 +304,7 @@ class Registry {
   static final SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE = 'gebaarental deafmute deaf-mute deafblind hearing loss deaf-blind taub-stummes hands haende fingers daumen thumbs signs signlanguage gebaerdensprache deafblind gehoerloses taubstummes ';
   static final SEARCHSTRING_TOMTOM = 'a-tom-tom atomtom ';
   static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
-  static final SEARCHSTRING_VIGENERE = SEARCHSTRING_ROTATION + 'vigenere ';
+  static final SEARCHSTRING_VIGENERE = SEARCHSTRING_ROTATION + 'vigenere autokey ';
 
   static initialize(BuildContext context) {
     toolList = [
@@ -296,6 +338,12 @@ class Registry {
         i18nPrefix: 'amsco',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'amsco transposition spaltentausch swap columns'
+      ),
+      GCWTool(
+        tool: ApparentTemperatureSelection(),
+        i18nPrefix: 'apparenttemperature_selection',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: SEARCHSTRING_APPARENTTEMPERATURE
       ),
       GCWTool(
         tool: ASCIIValues(),
@@ -386,6 +434,12 @@ class Registry {
         i18nPrefix: 'chao',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'chao john francis byrne'
+      ),
+      GCWTool(
+        tool: CistercianNumbersSelection(),
+        i18nPrefix: 'cistercian_selection',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_CISTERCIAN
       ),
       GCWTool(
         tool: ColorPicker(),
@@ -497,22 +551,10 @@ class Registry {
         searchStrings: SEARCHSTRING_BINARY + 'gray hamming distance hamming-distanz'
       ),
       GCWTool(
-        tool: Gronsfeld(),
-        i18nPrefix: 'gronsfeld',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'
-      ),
-      GCWTool(
         tool: HashSelection(),
         i18nPrefix: 'hashes_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_HASHES
-      ),
-      GCWTool(
-        tool: HeatIndex(),
-        i18nPrefix: 'heatindex',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit hitzeindex heatindex'
       ),
       GCWTool(
         tool: Hexadecimal(),
@@ -525,12 +567,6 @@ class Registry {
         i18nPrefix: 'homophone',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'homophone monoalphabetische monoalphabetical letterfrequency buchstabenhaeufigkeiten'
-      ),
-      GCWTool(
-        tool: Humidex(),
-        i18nPrefix: 'humidex',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit canadian canada humidex dewpoint'
       ),
       GCWTool(
         tool: Kamasutra(),
@@ -557,6 +593,12 @@ class Registry {
         searchStrings: 'dvorak keyboard keys tasten azerty tastatur layout qwertz qwerty neo colemak ristome sprachen languages'
       ),
       GCWTool(
+        tool: MayaNumbersSelection(),
+        i18nPrefix: 'mayanumbers_selection',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_MAYANUMBERS
+      ),
+      GCWTool(
         tool: Morse(),
         i18nPrefix: 'morse',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -567,6 +609,12 @@ class Registry {
         i18nPrefix: 'multidecoder',
         category: ToolCategory.GENERAL_CODEBREAKERS,
         searchStrings: 'multidecoder multisolver multiloeser universal universeller',
+      ),
+      GCWTool(
+         tool: NumberSequenceSelection(),
+         i18nPrefix: 'numbersequence',
+         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+         searchStrings: SEARCHSTRING_NUMBERSEQUENCES
       ),
       GCWTool(
         tool: NumeralBases(),
@@ -587,10 +635,10 @@ class Registry {
         searchStrings: 'onetimepad einmalschluessel one-time-pad otp'
       ),
       GCWTool(
-        tool: PeriodicTable(),
-        i18nPrefix: 'periodictable',
+        tool: PeriodicTableSelection(),
+        i18nPrefix: 'periodictable_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'periodic tables of the elements periodensystem der elemente chemie chemistry'
+        searchStrings: SEARCHSTRING_PERIODICTABLE
       ),
       GCWTool(
         tool: PhiSelection(),
@@ -718,12 +766,6 @@ class Registry {
         searchStrings: 'sudoku grid gitter'
       ),
       GCWTool(
-        tool: SummerSimmerIndex(),
-        i18nPrefix: 'summersimmerindex',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'gefuehltetemperatur apparenttemperature humidity luftfeuchtigkeit ssi summersimmerindex'
-      ),
-      GCWTool(
         tool: SymbolTableSelection(),
         i18nPrefix: 'symboltables_selection',
         searchStrings: SEARCHSTRING_SYMBOLTABLES,
@@ -748,12 +790,6 @@ class Registry {
         searchStrings: SEARCHSTRING_TOMTOM
       ),
       GCWTool(
-        tool: Trithemius(),
-        i18nPrefix: 'trithemius',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'
-      ),
-      GCWTool(
         tool: UnitConverter(),
         i18nPrefix: 'unitconverter',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -766,22 +802,38 @@ class Registry {
         searchStrings: SEARCHSTRING_VANITY
       ),
       GCWTool(
-        tool: Vigenere(),
-        i18nPrefix: 'vigenere',
+        tool: VigenereSelection(),
+        i18nPrefix: 'vigenere_selection',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_VIGENERE + 'autokey'
-      ),
-      GCWTool(
-        tool: Windchill(),
-        i18nPrefix: 'windchill',
-        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: 'windchill gefuehltetemperatur apparenttemperature windgeschwindigkeit wind speed'
+        searchStrings: SEARCHSTRING_VIGENERE + 'trithemius gronsfeld'
       ),
       GCWTool(
         tool: Z22(),
         i18nPrefix: 'z22',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_CCITT2
+      ),
+
+      //ApparentTemperatureSelection  ********************************************************************************************
+      GCWTool(
+        tool: HeatIndex(),
+        i18nPrefix: 'heatindex',
+        searchStrings: SEARCHSTRING_APPARENTTEMPERATURE + 'humidity luftfeuchtigkeit hitzeindex heatindex'
+      ),
+      GCWTool(
+        tool: Humidex(),
+        i18nPrefix: 'humidex',
+        searchStrings: SEARCHSTRING_APPARENTTEMPERATURE + 'humidity luftfeuchtigkeit canadian canada humidex dewpoint'
+      ),
+      GCWTool(
+        tool: SummerSimmerIndex(),
+        i18nPrefix: 'summersimmerindex',
+        searchStrings: SEARCHSTRING_APPARENTTEMPERATURE + 'humidity luftfeuchtigkeit ssi summersimmerindex'
+      ),
+      GCWTool(
+        tool: Windchill(),
+        i18nPrefix: 'windchill',
+        searchStrings: SEARCHSTRING_APPARENTTEMPERATURE + 'windchill windgeschwindigkeit wind speed'
       ),
 
       //AstronomySelection  ********************************************************************************************
@@ -939,6 +991,13 @@ class Registry {
         searchStrings: SEARCHSTRING_CCITT2
       ),
 
+      //Cistercian Selection *****************************************************************************************
+      GCWTool(
+        tool: CistercianNumbers(),
+        i18nPrefix: 'cistercian',
+        searchStrings: SEARCHSTRING_CISTERCIAN
+      ),
+
       //CombinatoricsSelection ***************************************************************************************
       GCWTool(
         tool: Combination(),
@@ -973,13 +1032,13 @@ class Registry {
         tool: FormatConverter(),
         i18nPrefix: 'coords_formatconverter',
         iconPath: 'assets/coordinates/icon_format_converter.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'coordinateformatconverter converting koordinatenformatkonverter formate konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister reversewhereigo reversewig maidenhead geo-hash geohash qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
+        searchStrings: SEARCHSTRING_COORDINATES + 'coordinateformatconverter converting koordinatenformatkonverter formate konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister xyz ecef reversewhereigo reversewig maidenhead geo-hash geohash geohex qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
       ),
       GCWTool(
         tool: MapView(),
         autoScroll: false,
         i18nPrefix: 'coords_openmap',
-        iconPath: 'assets/coordinates/icon_variable_coordinate.png',
+        iconPath: 'assets/coordinates/icon_free_map.png',
         searchStrings: SEARCHSTRING_COORDINATES + 'mapview kartenansicht freiekarte openmap measurement messen messungen '
       ),
       GCWTool(
@@ -987,6 +1046,12 @@ class Registry {
         i18nPrefix: 'coords_variablecoordinate',
         iconPath: 'assets/coordinates/icon_variable_coordinate.png',
         searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_FORMULASOLVER + 'variable waypoints flex '
+      ),
+      GCWTool(
+        tool: CoordinateAveraging(),
+        i18nPrefix: 'coords_averaging',
+        iconPath: 'assets/coordinates/icon_coordinate_measurement.png',
+        searchStrings: SEARCHSTRING_COORDINATES + 'einmessen einmessung measurement averaging average ermitteln '
       ),
       GCWTool(
         tool: CenterTwoPoints(),
@@ -1158,11 +1223,16 @@ class Registry {
       ),
 
       //Esoteric Programming Language Selection ****************************************************************
-      // GCWTool(
-      //   tool: Chef(),
-      //   i18nPrefix: 'chef',
-      //   searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'chef kochrezepte kochen zutaten ingredients cookingrecipes cookrecipes'
-      // ),
+      GCWTool(
+        tool: Chef(),
+        i18nPrefix: 'chef',
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'chef chefkoch kochrezepte rezepte kochen zutaten ingredients cooking cook recipes'
+      ),
+      GCWTool(
+        tool: Beatnik(),
+        i18nPrefix: 'beatnik',
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'beatnik cliff biffle'
+      ),
       GCWTool(
         tool: Brainfk(),
         i18nPrefix: 'brainfk',
@@ -1172,6 +1242,11 @@ class Registry {
         tool: Deadfish(),
         i18nPrefix: 'deadfish',
         searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'deadfish idso xkcd toterfisch '
+      ),
+      GCWTool(
+        tool: Malbolge(),
+        i18nPrefix: 'malbolge',
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'malbolge olmstead dante hell hoelle '
       ),
       GCWTool(
         tool: Ook(),
@@ -1401,6 +1476,13 @@ class Registry {
         searchStrings: 'licenses licences lizenzen library libraries bibliotheken',
       ),
 
+      //MayaNumbers Selection **************************************************************************************
+      GCWTool(
+        tool: MayaNumbers(),
+        i18nPrefix: 'mayanumbers',
+        searchStrings: SEARCHSTRING_MAYANUMBERS
+      ),
+
       //Phi Selection **********************************************************************************************
       GCWTool(
         tool: PhiNthDecimal(),
@@ -1435,6 +1517,392 @@ class Registry {
         searchStrings: SEARCHSTRING_PI + 'occurrence vorkommen vorhanden contains containing enthaelt enthalten '
       ),
 
+      //NumberSequenceSelection ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceFactorialSelection(),
+        i18nPrefix: 'numbersequence_factorial',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fakultaet faktorielle factorial',
+      ),
+      GCWTool(
+        tool: NumberSequenceFibonacciSelection(),
+        i18nPrefix: 'numbersequence_fibonacci',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fibonacci oeis A000045',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneSelection(),
+        i18nPrefix: 'numbersequence_mersenne',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne oeis A000225',
+      ),
+      GCWTool(
+        tool: NumberSequenceFermatSelection(),
+        i18nPrefix: 'numbersequence_fermat',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat oeis A000251',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneFermatSelection(),
+        i18nPrefix: 'numbersequence_mersennefermat',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat oeis A000051',
+      ),
+      GCWTool(
+        tool: NumberSequenceLucasSelection(),
+        i18nPrefix: 'numbersequence_lucas',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas oeis A000032',
+      ),
+      GCWTool(
+        tool: NumberSequencePellSelection(),
+        i18nPrefix: 'numbersequence_pell',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell oeis A000129',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalSelection(),
+        i18nPrefix: 'numbersequence_jacobsthal',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oeis A001045',
+      ),
+      GCWTool(
+        tool: NumberSequencePellLucasSelection(),
+        i18nPrefix: 'numbersequence_pelllucas',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas oeis A002203',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalLucasSelection(),
+        i18nPrefix: 'numbersequence_jacobsthallucas',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas A014551',
+      ),
+      GCWTool(
+        tool: NumberSequenceCatalanSelection(),
+        i18nPrefix: 'numbersequence_catalan',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan oeis A000108',
+      ),
+      GCWTool(
+        tool: NumberSequenceRecamanSelection(),
+        i18nPrefix: 'numbersequence_recaman',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'recaman oeis A005132',
+      ),
+
+      //NumberSequenceSelection Factorial ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceFactorialNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'factorial fakultaet faktorielle positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceFactorialRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'factorial fakultaet faktorielle range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceFactorialCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'factorial fakultaet faktorielle tests is ist ueberpruefungen',
+      ),
+      GCWTool(
+        tool: NumberSequenceFactorialDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'factorial fakultaet faktorielle',
+      ),
+      GCWTool(
+        tool: NumberSequenceFactorialContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'factorial fakultaet faktorielle',
+      ),
+
+      //NumberSequenceSelection Mersenne-Fermat ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceMersenneFermatNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'mersenne fermat positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneFermatRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'mersenne fermat range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneFermatCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat tests is ist ueberpruefungen',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneFermatDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneFermatContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat',
+      ),
+
+      //NumberSequenceSelection Fermat ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceFermatNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'fermat positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceFermatRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceFermatCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceFermatDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat',
+      ),
+      GCWTool(
+        tool: NumberSequenceFermatContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat',
+      ),
+
+      //NumberSequenceSelection Lucas ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceLucasNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'lucas positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceLucasRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceLucasCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceLucasDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas',
+      ),
+      GCWTool(
+        tool: NumberSequenceLucasContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas',
+      ),
+
+      //NumberSequenceSelection Fibonacci ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceFibonacciNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'fibonacci positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceFibonacciRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fibonacci range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceFibonacciCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fibonacci tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceFibonacciDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fibonacci',
+      ),
+      GCWTool(
+        tool: NumberSequenceFibonacciContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fibonacci',
+      ),
+
+      //NumberSequenceSelection Mersenne ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceMersenneNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'mersenne positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne',
+      ),
+
+      //NumberSequenceSelection Pell ****************************************************************************************
+      GCWTool(
+        tool: NumberSequencePellNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'pell positions position',
+      ),
+      GCWTool(
+        tool: NumberSequencePellRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequencePellCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequencePellDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell',
+      ),
+      GCWTool(
+        tool: NumberSequencePellContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell',
+      ),
+
+      //NumberSequenceSelection Pell-Lucas ****************************************************************************************
+      GCWTool(
+        tool: NumberSequencePellLucasNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'pell lucas positions position',
+      ),
+      GCWTool(
+        tool: NumberSequencePellLucasRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequencePellLucasCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequencePellLucasDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas',
+      ),
+      GCWTool(
+        tool: NumberSequencePellLucasContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas',
+      ),
+
+      //NumberSequenceSelection Jacobsthal ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceJacobsthalNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'jacobsthal positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal',
+      ),
+
+      //NumberSequenceSelection Jacobsthal-Lucas ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceJacobsthalLucasNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'jacobsthal lucas positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalLucasRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalLucasCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalLucasDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalLucasContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas',
+      ),
+
+      //NumberSequenceSelection Catalan ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceCatalanNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'catalan positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceCatalanRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceCatalanCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceCatalanDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan',
+      ),
+      GCWTool(
+        tool: NumberSequenceCatalanContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan',
+      ),
+
+      //NumberSequenceSelection Recaman ****************************************************************************************
+      GCWTool(
+        tool: NumberSequenceRecamanNthNumber(),
+        i18nPrefix: 'numbersequence_nth',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'recaman positions position',
+      ),
+      GCWTool(
+        tool: NumberSequenceRecamanRange(),
+        i18nPrefix: 'numbersequence_range',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'recaman range bereich',
+      ),
+      GCWTool(
+        tool: NumberSequenceRecamanCheckNumber(),
+        i18nPrefix: 'numbersequence_check',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'recaman tests is ist ueberpruefungen' ,
+      ),
+      GCWTool(
+        tool: NumberSequenceRecamanDigits(),
+        i18nPrefix: 'numbersequence_digits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'recaman',
+      ),
+      GCWTool(
+        tool: NumberSequenceRecamanContainsDigits(),
+        i18nPrefix: 'numbersequence_containsdigits',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES +'recaman',
+      ),
+
       //NumeralWordsSelection ****************************************************************************************
       GCWTool(
         tool: NumeralWordsTextSearch(),
@@ -1445,6 +1913,18 @@ class Registry {
         tool: NumeralWordsLists(),
         i18nPrefix: 'numeralwords_lists',
         searchStrings: SEARCHSTRING_NUMERALWORDS,
+      ),
+
+      //PeriodicTableSelection ***************************************************************************************
+      GCWTool(
+        tool: PeriodicTable(),
+        i18nPrefix: 'periodictable',
+        searchStrings: SEARCHSTRING_PERIODICTABLE
+      ),
+      GCWTool(
+        tool: PeriodicTableDataView(),
+        i18nPrefix: 'periodictabledataview',
+        searchStrings: SEARCHSTRING_PERIODICTABLE
       ),
 
       //PrimesSelection **********************************************************************************************
@@ -1658,7 +2138,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'barbier',
         iconFilename: 'J.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'charles barbier nachtschrift militär military army armee lautschrift dots points punkte tactiles blindenschrift'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'charles barbier nachtschrift militaer military army armee lautschrift dots points punkte tactiles blindenschrift'
       ),
       GCWSymbolTableTool(
         symbolKey: 'barcode39',
@@ -1723,7 +2203,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'cistercian',
         iconFilename: '80.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'cistercian zisterzienser'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_CISTERCIAN
       ),
       GCWSymbolTableTool(
         symbolKey: 'color_code',
@@ -2073,7 +2553,7 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'maya_numerals',
         iconFilename: '18.png',
-        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'maya zahlen ziffern numbers numerals vigesimalsystem 20'
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + SEARCHSTRING_MAYANUMBERS
       ),
       GCWSymbolTableTool(
         symbolKey: 'maze',
@@ -2463,6 +2943,30 @@ class Registry {
         i18nPrefix: 'vanity_multiplenumbers',
         searchStrings: SEARCHSTRING_VANITY
       ),
+
+      //VigenereSelection *******************************************************************************************
+      GCWTool(
+        tool: VigenereBreaker(),
+        i18nPrefix: 'vigenerebreaker',
+        category: ToolCategory.GENERAL_CODEBREAKERS,
+        searchStrings: SEARCHSTRING_VIGENERE + 'solver loeser codebreaker codebrecher codeknacker cracker '
+      ),
+      GCWTool(
+        tool: Vigenere(),
+        i18nPrefix: 'vigenere',
+        searchStrings: SEARCHSTRING_VIGENERE
+      ),
+      GCWTool(
+        tool: Gronsfeld(),
+        i18nPrefix: 'gronsfeld',
+        searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'
+      ),
+      GCWTool(
+        tool: Trithemius(),
+        i18nPrefix: 'trithemius',
+        searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabularecta'
+      ),
+
     ].map((toolWidget) {
       toolWidget.toolName = i18n(context, toolWidget.i18nPrefix + '_title');
 

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 
-class GCWSubmitFlatButton extends StatefulWidget {
+class GCWSubmitButton extends StatefulWidget {
   final Function onPressed;
 
-  const GCWSubmitFlatButton({Key key, this.onPressed}) : super(key: key);
+  const GCWSubmitButton({Key key, this.onPressed}) : super(key: key);
 
   @override
-  _GCWSubmitFlatButtonState createState() => _GCWSubmitFlatButtonState();
+  _GCWSubmitButtonState createState() => _GCWSubmitButtonState();
 }
 
-class _GCWSubmitFlatButtonState extends State<GCWSubmitFlatButton> {
+class _GCWSubmitButtonState extends State<GCWSubmitButton> {
 
   @override
   Widget build(BuildContext context) {

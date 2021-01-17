@@ -40,7 +40,7 @@ class RSAPhiCalculatorState extends State<RSAPhiCalculator> {
             _currentQ = text;
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {});
           },

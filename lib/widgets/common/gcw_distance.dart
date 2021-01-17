@@ -36,7 +36,7 @@ class _GCWDistanceState extends State<GCWDistance> {
       text: _currentInput['text']
     );
 
-    _currentLengthUnit = widget.unit ?? getUnitBySymbol(allLengths(), Prefs.get('i18n_default_length_unit'));
+    _currentLengthUnit = widget.unit ?? getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
   }
 
   @override

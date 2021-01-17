@@ -49,7 +49,7 @@ class FormatConverterState extends State<FormatConverter> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput(context);

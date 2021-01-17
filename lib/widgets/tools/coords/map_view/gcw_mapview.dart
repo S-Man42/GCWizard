@@ -22,6 +22,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_paste_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/mappoint_editor.dart';
@@ -48,16 +49,21 @@ final _POLYGON_STROKEWIDTH = 3.0;
 final _BUTTONGROUP_MARGIN = 30.0;
 
 class GCWMapView extends StatefulWidget {
-  final List<GCWMapPoint> points;
-  final List<GCWMapPolyline> polylines;
+  List<GCWMapPoint> points;
+  List<GCWMapPolyline> polylines;
   final bool isEditable;
 
-  const GCWMapView({
+  GCWMapView({
     Key key,
-    this.points: const [],
-    this.polylines: const [],
+    this.points,
+    this.polylines,
     this.isEditable: false
-  }) : super(key: key);
+  }) : super(key: key) {
+    if (points == null)
+      points = [];
+    if (polylines == null)
+      polylines = [];
+  }
 
   @override
   GCWMapViewState createState() => GCWMapViewState();
@@ -105,7 +111,7 @@ class GCWMapViewState extends State<GCWMapView> {
     if (widget.isEditable)
       _persistanceAdapter = MapViewPersistenceAdapter(widget);
 
-    defaultLengthUnit = getUnitBySymbol(allLengths(), Prefs.get('i18n_default_length_unit'));
+    defaultLengthUnit = getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
   }
 
   @override
@@ -316,11 +322,11 @@ class GCWMapViewState extends State<GCWMapView> {
     var copyableText;
     var child = polyline.child;
     if (child is GCWMapPolyline) {
-      copyableText = _formatLengthOutput(child.length);
-      text = i18n(context, 'unitconverter_category_length') + ': $copyableText';
+      copyableText = child.length.toString();
+      text = i18n(context, 'unitconverter_category_length') + ': ${_formatLengthOutput(child.length)}';
     } else if (child is GCWMapCircle) {
-      copyableText = _formatLengthOutput(child.radius);
-      text = i18n(context, 'common_radius') + ': $copyableText';
+      copyableText = child.radius.toString();
+      text = i18n(context, 'common_radius') + ': ${_formatLengthOutput(child.radius)}';
     }
 
     var dialogButtons = <GCWDialogButton>[];
@@ -531,6 +537,19 @@ class GCWMapViewState extends State<GCWMapView> {
 
   _buildEditButtons() {
     var buttons = [
+      GCWCoordsPasteButton(
+        backgroundColor: COLOR_MAP_ICONBUTTONS,
+        customIcon: _createIconButtonIcons(Icons.content_paste),
+        onPasted: (pastedCoordinate) {
+          if (pastedCoordinate == null)
+            return;
+
+          setState(() {
+            _persistanceAdapter.addMapPoint(pastedCoordinate['coordinate'], coordinateFormat: {'format': pastedCoordinate['format']});
+            _mapController.move(pastedCoordinate['coordinate'], _mapController.zoom);
+          });
+        },
+      ),
       GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.my_location, stacked: Icons.add),
@@ -673,6 +692,8 @@ class GCWMapViewState extends State<GCWMapView> {
       containerHeightMultiplier += 3;
     if (gcwMarker.mapPoint.isEditable)
       containerHeightMultiplier += 2;
+    if (gcwMarker.coordinateDescription != null && gcwMarker.coordinateDescription.length > 0)
+      containerHeightMultiplier += 2;
 
     return Container(
       width: 250,
@@ -715,7 +736,7 @@ class GCWMapViewState extends State<GCWMapView> {
             ? GCWOutputText(
                 text: i18n(context, 'common_radius') + ': ' + _formatLengthOutput(gcwMarker.mapPoint.circle.radius),
                 style: gcwDialogTextStyle(),
-                copyText: _formatLengthOutput(gcwMarker.mapPoint.circle.radius),
+                copyText: gcwMarker.mapPoint.circle.radius.toString(),
               )
             : Container(),
           gcwMarker.mapPoint.isEditable

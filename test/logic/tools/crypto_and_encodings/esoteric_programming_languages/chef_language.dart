@@ -874,6 +874,68 @@ Zutaten:
 Zubereitung:
 Guacamole in die Schüssel geben.
 Kartoffeln kombinieren.''';
+      var testDEUgeneratedAuxDouble = '''So kocht Kladow mt Beilagen.
+
+Der finale Spaß bei N48° 44.859 E008° 00.282
+
+Zutaten:
+32 ml Ambra
+46 ml Tequila
+48 l Bitter Lemon
+176 l WodkaCalvados
+56 ml Öl
+69 l Gin
+44 g Bananenchips
+48 kg Anis
+78 Spritzer Rotwein
+
+Garzeit: 120 Minuten.
+
+Ofen auf 30 Grad Celsius vorheizen.
+
+Zubereitung:
+Serviere mit cremige bittere Ketchuptoppings.
+Tequila in die Schüssel geben.
+Bitter Lemon in die Schüssel geben.
+Ambra in die Schüssel geben.
+WodkaCalvados in die Schüssel geben.
+Öl in die Schüssel geben.
+Gin in die Schüssel geben.
+Ambra in die Schüssel geben.
+Schüssel in eine Servierschale stürzen.
+ Schüssel abwaschen.
+Serviere mit leichte bittere Currychips.
+Tequila in die Schüssel geben.
+Bananenchips in die Schüssel geben.
+Ambra in die Schüssel geben.
+WodkaCalvados in die Schüssel geben.
+Anis in die Schüssel geben.
+Rotwein in die Schüssel geben.
+Schüssel in eine Servierschale stürzen.
+
+Portionen: 1.
+
+
+cremige bittere Ketchuptoppings
+
+Zutaten:
+47 Prisen Zwiebeln
+6 Prisen Bohnen
+
+Zubereitung:
+Zwiebeln in die Schüssel geben.
+Bohnen kombinieren.
+
+
+leichte bittere Currychips
+
+Zutaten:
+342 g Eigelb
+517 g Salz
+
+Zubereitung:
+Eigelb in die Schüssel geben.
+Salz dazugeben.''';
       var testENGgeneratedNoAux = '''Mama Marias Masterpiece.
 
 Just try it
@@ -948,13 +1010,77 @@ Ingredients.
 Method.
 Put raisins into the mixing bowl.
 Combine wholemeal flour into mixing bowl.''';
+      var testENGgeneratedAuxDouble = '''Mama Marias Masterpiece with a little help.
+
+The final awaits you
+
+Ingredients.
+32 ml ambergris
+46 l bitter lemon
+48 dashes oil
+176 l ouzo
+56 dashes syrup
+69 ml lillet
+44 g milk chocolate
+48 g peas
+78 ml orange juice
+
+Cooking time: 120 minutes.
+
+Pre-heat oven to 50 degrees Celsius.
+
+Method.
+Serve with fluffy hot honeychips.
+Put bitter lemon into the mixing bowl.
+Put oil into the mixing bowl.
+Put ambergris into the mixing bowl.
+Put ouzo into the mixing bowl.
+Put syrup into the mixing bowl.
+Put lillet into the mixing bowl.
+Put ambergris into the mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+Clean mixing bowl.
+Serve with light bitter honeydressing.
+Put bitter lemon into the mixing bowl.
+Put milk chocolate into the mixing bowl.
+Put ambergris into the mixing bowl.
+Put ouzo into the mixing bowl.
+Put peas into the mixing bowl.
+Put orange juice into the mixing bowl.
+Pour contents of the mixing bowl into the baking dish.
+
+Serves 1.
+
+
+fluffy hot honeychips
+
+Ingredients.
+47 pinches jam
+6 kg shrimps
+
+Method.
+Put jam into the mixing bowl.
+Combine shrimps into mixing bowl.
+
+
+light bitter honeydressing
+
+Ingredients.
+342 kg powdered sugar
+517 kg cocoa powder
+
+Method.
+Put powdered sugar into the mixing bowl.
+Add cocoa powder into the mixing bowl.''';
 
       List<Map<String, dynamic>> _inputsToExpected = [
         {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgenerated, 'expectedOutput' : ['Test']},
         {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgenerateoNoAux, 'expectedOutput' : ['n 437 e 708']},
         {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgeneratedAux, 'expectedOutput' : ['n 437 e 708']},
+        {'language' : 'DEU', 'input' : '',  'recipe' : testDEUgeneratedAuxDouble, 'expectedOutput' : ['N48° 44.859 E8° 0.282']},
         {'language' : 'ENG', 'input' : '',  'recipe' : testENGgeneratedNoAux, 'expectedOutput' : ['n 437 e 708']},
         {'language' : 'ENG', 'input' : '',  'recipe' : testENGgeneratedAux, 'expectedOutput' : ['n 437 e 708']},
+        {'language' : 'ENG', 'input' : '',  'recipe' : testENGgeneratedAuxDouble, 'expectedOutput' : ['N48° 44.859 E8° 0.282']},
       ];
 
       _inputsToExpected.forEach((elem) {

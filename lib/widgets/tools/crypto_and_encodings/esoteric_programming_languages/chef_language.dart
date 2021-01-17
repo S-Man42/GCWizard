@@ -225,7 +225,8 @@ class ChefState extends State<Chef> {
         } catch (e) {
           output = buildOutputText([
             'chef_error_runtime',
-            'chef_error_runtime_exception']);
+            'chef_error_runtime_exception',
+            'chef_error_structure_recipe_missing_title']);
         }
       } else
         output = buildOutputText([
@@ -235,22 +236,6 @@ class ChefState extends State<Chef> {
     return GCWOutputText(
         text: output.trim(),
         isMonotype: true,
-    );
-  }
-
-  Widget chefDocumentationDownloadButton(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.article_outlined),
-      onPressed: () {
-        showGCWAlertDialog(
-          context,
-          i18n(context, 'chef_download_documentation_title'),
-          i18n(context, 'chef_download_documentation_text'),
-              () {
-            launch(i18n(context, 'https://misc.gcwizard.net/chef.pdf'));
-          },
-        );
-      },
     );
   }
 

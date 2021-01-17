@@ -68,8 +68,8 @@ void initDefaultSettings() {
     Prefs.setStringList('formulasolver_formulas', []);
   }
 
-  if (Prefs.get('i18n_default_length_unit') == null) {
-    Prefs.setString('i18n_default_length_unit', 'm');
+  if (Prefs.get('default_length_unit') == null) {
+    Prefs.setString('default_length_unit', 'm');
   }
 
   if (Prefs.get('mapview_mapviews') == null) {
