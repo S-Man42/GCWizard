@@ -23,6 +23,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewhereigo_w
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_xyz.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:intl/intl.dart';
@@ -112,6 +113,16 @@ class GCWCoordsState extends State<GCWCoords> {
       {
         'coordFormat': getCoordinateFormatByKey(keyCoordsMGRS),
         'widget': GCWCoordsMGRS(
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsXYZ),
+        'widget': GCWCoordsXYZ(
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);

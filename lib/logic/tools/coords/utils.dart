@@ -11,6 +11,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeis
 import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -49,6 +50,7 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
     case keyCoordsDMS: _formatted = DMS.from(_coords).format(); break;
     case keyCoordsUTM: return latLonToUTMString(_coords, ells);
     case keyCoordsMGRS: return latLonToMGRSString(_coords, ells);
+    case keyCoordsXYZ: return latLonToXYZString(_coords, ells);
     case keyCoordsSwissGrid: return decToSwissGridString(_coords, ells);
     case keyCoordsSwissGridPlus: return latLonToSwissGridPlusString(_coords, ells);
     case keyCoordsGaussKrueger: return latLonToGaussKruegerString(_coords, _getGKCode(), ells);

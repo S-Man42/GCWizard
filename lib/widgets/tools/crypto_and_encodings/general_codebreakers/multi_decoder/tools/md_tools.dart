@@ -212,6 +212,11 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(
       i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
       MDT_INTERNALNAMES_COORDINATEFORMATS,
+      options: [MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, keyCoordsXYZ)]
+    ),
+    MultiDecoderTool(
+      i18n(context, MDT_INTERNALNAMES_COORDINATEFORMATS),
+      MDT_INTERNALNAMES_COORDINATEFORMATS,
       options: [MultiDecoderToolOption(MDT_COORDINATEFORMATS_OPTION_FORMAT, keyCoordsMaidenhead)]
     ),
     MultiDecoderTool(

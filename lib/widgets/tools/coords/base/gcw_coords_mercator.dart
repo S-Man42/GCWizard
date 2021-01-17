@@ -41,7 +41,7 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
     return Column (
         children: <Widget>[
           GCWDoubleTextField(
-            hintText: i18n(context, 'coords_formatconverter_swissgrid_easting'),
+            hintText: i18n(context, 'coords_formatconverter_mercator_easting'),
             min: 0.0,
             controller: _EastingController,
             onChanged: (ret) {
@@ -52,15 +52,15 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
             }
           ),
           GCWDoubleTextField(
-              hintText: i18n(context, 'coords_formatconverter_swissgrid_northing'),
-              min: 0.0,
-              controller: _NorthingController,
-              onChanged: (ret) {
-                setState(() {
-                  _currentNorthing = ret;
-                  _setCurrentValueAndEmitOnChange();
-                });
-              }
+            hintText: i18n(context, 'coords_formatconverter_mercator_northing'),
+            min: 0.0,
+            controller: _NorthingController,
+            onChanged: (ret) {
+              setState(() {
+                _currentNorthing = ret;
+                _setCurrentValueAndEmitOnChange();
+              });
+            }
           ),
         ]
     );

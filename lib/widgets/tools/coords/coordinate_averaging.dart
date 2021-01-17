@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
@@ -81,7 +82,7 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
     return Column(
       children: <Widget>[
         GCWButton(
-          text: _isMeasuring ? 'Stop Measurement' : 'Start Measurement',
+          text: _isMeasuring ? i18n(context, 'coords_averaging_stop') : i18n(context, 'coords_averaging_start'),
           onPressed: () {
             setState(() {
               if (_currentLocationPermissionGranted == null) {

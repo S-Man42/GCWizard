@@ -12,6 +12,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
@@ -35,7 +36,6 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
       internalToolName: MDT_INTERNALNAMES_COORDINATEFORMATS,
       onDecode: (String input) {
         input = input.replaceAll(RegExp(r'\s+'), ' ').toUpperCase();
-        var inputParts = input.split(' ');
         LatLng coords;
         try {
           switch (options[MDT_COORDINATEFORMATS_OPTION_FORMAT]) {
@@ -53,6 +53,9 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
               break;
             case keyCoordsMGRS:
               coords = parseMGRS(input, defaultEllipsoid());
+              break;
+            case keyCoordsXYZ:
+              coords = parseXYZ(input, defaultEllipsoid());
               break;
             case keyCoordsSwissGrid:
               coords = parseSwissGrid(input, defaultEllipsoid());
