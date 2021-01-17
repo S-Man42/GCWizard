@@ -3,11 +3,29 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/guballa.de/breaker.dart' as guballa;
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa.de/breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/bigrams.dart';
-
+import 'dart:isolate';
 
 enum VigenereBreakerType{VIGENERE, AUTOKEYVIGENERE, BEAUFORT}
 enum VigenereBreakerAlphabet{ENGLISH, GERMAN, SPANISH, FRENCH}
 enum VigenereBreakerErrorCode{OK, KEY_LENGTH, KEY_TOO_LONG, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, ALPHABET_TOO_LONG, WRONG_GENERATE_TEXT}
+
+class VigenereBreakerJobData {
+  final String input;
+  final VigenereBreakerType vigenereBreakerType;
+  final VigenereBreakerAlphabet alphabet;
+  final int keyLengthMin;
+  final int keyLengthMax;
+  final SendPort sendAsyncPort ;
+
+  VigenereBreakerJobData({
+    this.input = '',
+    this.vigenereBreakerType = null,
+    this.alphabet = null,
+    this.keyLengthMin = 0,
+    this.keyLengthMax = 0,
+    this.sendAsyncPort = null,
+  });
+}
 
 class VigenereBreakerResult {
   String plaintext;
@@ -29,7 +47,24 @@ class VigenereBreakerResult {
 
 const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
-Future<VigenereBreakerResult> break_cipher(String input, VigenereBreakerType vigenereBreakerType, VigenereBreakerAlphabet alphabet, int keyLengthMin, int keyLengthMax) async {
+void break_cipherAsync(dynamic jobData) async {
+  if (jobData.parameters == null) {
+    jobData.sendAsyncPort.send(null);
+    return;
+  }
+
+  var output = break_cipher(
+      jobData.parameters.input,
+      jobData.parameters.vigenereBreakerType,
+      jobData.parameters.alphabet,
+      jobData.parameters.keyLengthMin,
+      jobData.parameters.keyLengthMax,
+  );
+
+  jobData.sendAsyncPort.send(output);
+}
+
+VigenereBreakerResult break_cipher(String input, VigenereBreakerType vigenereBreakerType, VigenereBreakerAlphabet alphabet, int keyLengthMin, int keyLengthMax) {
   if (input == null || input == '')
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
 

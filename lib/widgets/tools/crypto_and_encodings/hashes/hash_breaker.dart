@@ -116,7 +116,7 @@ class _HashBreakerState extends State<HashBreaker> {
   }
 
   Widget _buildSubmitButton() {
-    return GCWSubmitFlatButton(
+    return GCWSubmitButton(
       onPressed: () async {
         await showDialog(
           context: context,

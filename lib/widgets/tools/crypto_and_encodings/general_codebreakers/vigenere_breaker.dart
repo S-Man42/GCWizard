@@ -3,19 +3,18 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/vigenere_breaker.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
-
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 
 class VigenereBreaker extends StatefulWidget {
   @override
@@ -32,9 +31,6 @@ class VigenereBreakerState extends State<VigenereBreaker> {
   var _maxKeyLengthController;
   int _minKeyLength = 3;
   int _maxKeyLength = 30;
-
-
-  var _isStarted = false;
 
   @override
   void initState() {
@@ -127,17 +123,34 @@ class VigenereBreakerState extends State<VigenereBreaker> {
           },
         ),
 
-        GCWButton(
-          text: i18n(context, 'vigenerebreaker_start'),
-          onPressed: () {
-            setState(() {
-              _calcOutput();
-            });
-          },
-        ),
-
+        _buildSubmitButton(),
         _buildOutput(context),
       ],
+    );
+  }
+
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+        onPressed: () async {
+          await showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return Center (
+                child: Container(
+                  child: GCWAsyncExecuter(
+                    isolatedFunction: break_cipherAsync,
+                    parameter: _buildJobData(),
+                    onReady: (data) => _showOutput(data),
+                    isOverlay: true,
+                  ),
+                  height: 220,
+                  width: 150,
+                ),
+              );
+            },
+          );
+        }
     );
   }
 
@@ -170,19 +183,36 @@ class VigenereBreakerState extends State<VigenereBreaker> {
     );
   }
 
-
-  _calcOutput() async {
-    if (_currentInput == null || _currentInput.length == 0 || _isStarted)
-      return;
-
-    _isStarted = true;
-
-    var _currentOutputFuture = break_cipher(_currentInput, _currentAutokey ? VigenereBreakerType.AUTOKEYVIGENERE : VigenereBreakerType.VIGENERE, _currentAlphabet, _minKeyLength, _maxKeyLength);
-    _currentOutputFuture.then((output) {
-      _currentOutput = output;
-      _isStarted = false;
-      this.setState(() {});
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+    _currentOutput = null;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
     });
+
+    if (_currentInput == null || _currentInput.length == 0)
+      return null;
+
+    return GCWAsyncExecuterParameters (
+        VigenereBreakerJobData(
+          input: _currentInput,
+          vigenereBreakerType: _currentAutokey ? VigenereBreakerType.AUTOKEYVIGENERE : VigenereBreakerType.VIGENERE,
+          alphabet: _currentAlphabet,
+          keyLengthMin: _minKeyLength,
+          keyLengthMax: _maxKeyLength
+        )
+    );
   }
 
+  _showOutput(VigenereBreakerResult output) {
+    if (output == null) {
+      _currentOutput = null;
+      return;
+    }
+
+    _currentOutput = output;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+  }
 }

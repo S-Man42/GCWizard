@@ -2113,7 +2113,6 @@
   "substitutionbreaker_title" : "Substitution Breaker",
   "substitutionbreaker_description" : "Chance to automatically break monoalphabetic replacement ciphers",
   "substitutionbreaker_example" : "QFRQ → TEST",
-  "substitutionbreaker_start" : "Solve",
   "substitutionbreaker_error" : "An error occured: %s1",
   "substitutionbreaker_exporttosubstition" : "Export to 'Replacements' tool",
 
@@ -2847,7 +2846,6 @@
   "vigenerebreaker_key_length": "Key Length",
   "vigenerebreaker_key_length_min": "min",
   "vigenerebreaker_key_length_max": "max",
-  "vigenerebreaker_start": "Solve",
   "vigenerebreaker_error" : "An error occured: %s1",
 
   "whitespace_language_title" : "Whitespace",

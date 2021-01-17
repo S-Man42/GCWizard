@@ -2113,7 +2113,6 @@
   "substitutionbreaker_title" : "Codelöser für Textersetzungen",
   "substitutionbreaker_description" : "Chance, automatisch einen monoalphabetischen Code zu knacken",
   "substitutionbreaker_example" : "QFRQ → TEST",
-  "substitutionbreaker_start" : "Berechne",
   "substitutionbreaker_error" : "Ein Fehler trat auf: %s1",
   "substitutionbreaker_exporttosubstition" : "Export ins 'Ersetzen'-Tool",
 
@@ -2847,7 +2846,6 @@
   "vigenerebreaker_key_length": "Schlüssellänge",
   "vigenerebreaker_key_length_min": "min",
   "vigenerebreaker_key_length_max": "max",
-  "vigenerebreaker_start": "Berechne",
   "vigenerebreaker_error" : "Ein Fehler trat auf: %s1",
 
   "whitespace_language_title" : "Whitespace",
