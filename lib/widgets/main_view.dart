@@ -37,6 +37,7 @@ import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
+import 'package:gc_wizard/widgets/tools/coords/coordinate_averaging.dart';
 import 'package:gc_wizard/widgets/tools/coords/cross_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/ellipsoid_transform.dart';
@@ -48,6 +49,7 @@ import 'package:gc_wizard/widgets/tools/coords/intersect_four_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_two_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersection.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/map_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
@@ -70,6 +72,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
@@ -243,6 +246,7 @@ class _MainViewState extends State<MainView> {
           className(ColorPicker()),
           className(Combination()),
           className(CombinationPermutation()),
+          className(CoordinateAveraging()),
           className(CrossBearing()),
           className(CrossSum()),
           className(CrossSumRange()),
@@ -286,6 +290,8 @@ class _MainViewState extends State<MainView> {
           className(Kamasutra()),
           className(Kenny()),
           className(Keyboard()),
+          className(Malbolge()),
+          className(MapView()),
           className(MayaNumbersSelection()),
           className(MoonPosition()),
           className(MoonRiseSet()),

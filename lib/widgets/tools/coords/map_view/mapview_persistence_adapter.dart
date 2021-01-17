@@ -112,9 +112,6 @@ class MapViewPersistenceAdapter {
     }
 
     if (_mapViewDAO.polylines.length > 0) {
-      print(_mapViewDAO.polylines);
-      print(mapWidget.polylines);
-
       mapWidget.polylines.addAll(
         _mapViewDAO.polylines
           .where((polylineDAO) => !mapWidget.polylines.map((polyline) => polyline.uuid).toList().contains(polylineDAO.uuid))

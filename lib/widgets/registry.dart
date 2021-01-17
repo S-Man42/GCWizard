@@ -43,8 +43,8 @@ import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_recaman_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/periodic_table_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/pi_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
@@ -56,6 +56,7 @@ import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/vigenere_selection.dart';
 import 'package:gc_wizard/widgets/tools/coords/antipodes.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_three_points.dart';
 import 'package:gc_wizard/widgets/tools/coords/center_two_points.dart';
@@ -303,7 +304,7 @@ class Registry {
   static final SEARCHSTRING_SYMBOLTABLES_SIGNLANGUAGE = 'gebaarental deafmute deaf-mute deafblind hearing loss deaf-blind taub-stummes hands haende fingers daumen thumbs signs signlanguage gebaerdensprache deafblind gehoerloses taubstummes ';
   static final SEARCHSTRING_TOMTOM = 'a-tom-tom atomtom ';
   static final SEARCHSTRING_VANITY = 'telefontasten telephone keys buttons numbers ziffern telefonnummern vanity keypad sms mobile cellphone handy phoneword tasten tastatur ';
-  static final SEARCHSTRING_VIGENERE = SEARCHSTRING_ROTATION + 'vigenere ';
+  static final SEARCHSTRING_VIGENERE = SEARCHSTRING_ROTATION + 'vigenere autokey ';
 
   static initialize(BuildContext context) {
     toolList = [
@@ -550,12 +551,6 @@ class Registry {
         searchStrings: SEARCHSTRING_BINARY + 'gray hamming distance hamming-distanz'
       ),
       GCWTool(
-        tool: Gronsfeld(),
-        i18nPrefix: 'gronsfeld',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'
-      ),
-      GCWTool(
         tool: HashSelection(),
         i18nPrefix: 'hashes_selection',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -795,12 +790,6 @@ class Registry {
         searchStrings: SEARCHSTRING_TOMTOM
       ),
       GCWTool(
-        tool: Trithemius(),
-        i18nPrefix: 'trithemius',
-        category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabula recta'
-      ),
-      GCWTool(
         tool: UnitConverter(),
         i18nPrefix: 'unitconverter',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -813,16 +802,10 @@ class Registry {
         searchStrings: SEARCHSTRING_VANITY
       ),
       GCWTool(
-        tool: Vigenere(),
-        i18nPrefix: 'vigenere',
+        tool: VigenereSelection(),
+        i18nPrefix: 'vigenere_selection',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_VIGENERE + 'autokey'
-      ),
-      GCWTool(
-          tool: VigenereBreaker(),
-          i18nPrefix: 'vigenerebreaker',
-          category: ToolCategory.GENERAL_CODEBREAKERS,
-          searchStrings: SEARCHSTRING_VIGENERE + 'autokey solver loeser codebreaker codebrecher codeknacker cracker '
+        searchStrings: SEARCHSTRING_VIGENERE + 'trithemius gronsfeld'
       ),
       GCWTool(
         tool: Z22(),
@@ -1055,7 +1038,7 @@ class Registry {
         tool: MapView(),
         autoScroll: false,
         i18nPrefix: 'coords_openmap',
-        iconPath: 'assets/coordinates/icon_variable_coordinate.png',
+        iconPath: 'assets/coordinates/icon_free_map.png',
         searchStrings: SEARCHSTRING_COORDINATES + 'mapview kartenansicht freiekarte openmap measurement messen messungen '
       ),
       GCWTool(
@@ -1067,7 +1050,7 @@ class Registry {
       GCWTool(
         tool: CoordinateAveraging(),
         i18nPrefix: 'coords_averaging',
-        iconPath: 'assets/coordinates/icon_variable_coordinate.png',
+        iconPath: 'assets/coordinates/icon_coordinate_measurement.png',
         searchStrings: SEARCHSTRING_COORDINATES + 'einmessen einmessung measurement averaging average ermitteln '
       ),
       GCWTool(
@@ -2960,6 +2943,30 @@ class Registry {
         i18nPrefix: 'vanity_multiplenumbers',
         searchStrings: SEARCHSTRING_VANITY
       ),
+
+      //VigenereSelection *******************************************************************************************
+      GCWTool(
+        tool: VigenereBreaker(),
+        i18nPrefix: 'vigenerebreaker',
+        category: ToolCategory.GENERAL_CODEBREAKERS,
+        searchStrings: SEARCHSTRING_VIGENERE + 'solver loeser codebreaker codebrecher codeknacker cracker '
+      ),
+      GCWTool(
+        tool: Vigenere(),
+        i18nPrefix: 'vigenere',
+        searchStrings: SEARCHSTRING_VIGENERE
+      ),
+      GCWTool(
+        tool: Gronsfeld(),
+        i18nPrefix: 'gronsfeld',
+        searchStrings: SEARCHSTRING_VIGENERE + 'gronsfeld'
+      ),
+      GCWTool(
+        tool: Trithemius(),
+        i18nPrefix: 'trithemius',
+        searchStrings: SEARCHSTRING_VIGENERE + 'trithemius tabularecta'
+      ),
+
     ].map((toolWidget) {
       toolWidget.toolName = i18n(context, toolWidget.i18nPrefix + '_title');
 
