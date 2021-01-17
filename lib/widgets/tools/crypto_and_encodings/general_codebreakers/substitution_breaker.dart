@@ -14,6 +14,7 @@ import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
@@ -30,7 +31,6 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
 
   var _quadgrams = Map<SubstitutionBreakerAlphabet, Quadgrams>();
   var _isLoading = false;
-  var _isStarted = false;
 
   @override
   void initState() {
@@ -68,7 +68,6 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
           onChanged: (value) {
             setState(() {
               _currentAlphabet = value;
-              _loadQuadgramsAssets();
             });
           },
           items: BreakerAlphabetItems.entries.map((alphabet) {
@@ -78,17 +77,36 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
             );
           }).toList(),
         ),
-        GCWButton(
-          text: i18n(context, 'substitutionbreaker_start'),
-          onPressed: () {
-            setState(() {
-              _calcOutput();
-            });
-          },
-        ),
+        _buildSubmitButton(),
 
         _buildOutput(context),
       ],
+    );
+  }
+
+  Widget _buildSubmitButton() {
+    return GCWButton(
+        text: i18n(context, 'substitutionbreaker_start'),
+        onPressed: () async {
+          await showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return Center (
+                child: Container(
+                  child: GCWAsyncExecuter(
+                    isolatedFunction: break_cipherAsync,
+                    parameter: _buildJobData(),
+                    onReady: (data) => _showOutput(data),
+                    isOverlay: true,
+                  ),
+                  height: 220,
+                  width: 150,
+                ),
+              );
+            },
+          );
+        }
     );
   }
 
@@ -164,18 +182,31 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     _isLoading = false;
   }
 
-  _calcOutput() async {
-    if (_currentInput == null || _currentInput.length == 0 || _isStarted)
-      return;
-
-    _isStarted = true;
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+    _currentOutput = null;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+    if (_currentInput == null || _currentInput.length == 0)
+      return null;
 
     await _loadQuadgramsAssets();
-    var _currentOutputFuture = break_cipher(_currentInput, _quadgrams[_currentAlphabet]);
-    _currentOutputFuture.then((output) {
-      _currentOutput = output;
-      _isStarted = false;
-      this.setState(() {});
+
+    return GCWAsyncExecuterParameters (
+      SubstitutionBreakerJobData(input: _currentInput, quadgrams: _quadgrams[_currentAlphabet])
+    );
+  }
+
+  _showOutput(SubstitutionBreakerResult output) {
+    if (output == null) {
+      _currentOutput = null;
+      return;
+    }
+
+    _currentOutput = output;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
     });
   }
 }

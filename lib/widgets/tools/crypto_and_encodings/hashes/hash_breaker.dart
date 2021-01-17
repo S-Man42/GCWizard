@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hash_breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hashes.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -109,7 +107,7 @@ class _HashBreakerState extends State<HashBreaker> {
         ),
         _buildVariablesInput(),
         _buildSubstitutionList(context),
-        _buildButtonProgressBar(),
+        _buildSubmitButton(),
         GCWDefaultOutput(
           child: _currentOutput
         )
@@ -117,7 +115,7 @@ class _HashBreakerState extends State<HashBreaker> {
     );
   }
 
-  Widget _buildButtonProgressBar() {
+  Widget _buildSubmitButton() {
     return GCWSubmitFlatButton(
       onPressed: () async {
         await showDialog(
@@ -132,27 +130,17 @@ class _HashBreakerState extends State<HashBreaker> {
                   onReady: (data) => _showOutput(data),
                   isOverlay: true,
                 ),
-                height: 210,
+                height: 220,
                 width: 150,
               ),
             );
           },
         );
-      });
+      }
+    );
   }
 
-  _showOutput(Map<String, dynamic> output) {
-    if (output == null || output['state'] == null || output['state'] == 'not_found') {
-      _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
-    } else
-      _currentOutput = output['text'];
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {});
-    });
-  }
-
-  GCWAsyncExecuterParameters _buildJobData() {
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
     _currentOutput ='';
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
@@ -166,7 +154,17 @@ class _HashBreakerState extends State<HashBreaker> {
     return GCWAsyncExecuterParameters(
       HashBreakerJobData(input: _currentInput, searchMask: _currentMask, substitutions: _substitutions, hashFunction: _currentHashFunction)
     );
+  }
 
+  _showOutput(Map<String, dynamic> output) {
+    if (output == null || output['state'] == null || output['state'] == 'not_found') {
+      _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
+    } else
+      _currentOutput = output['text'];
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 
   _buildVariablesInput() {
@@ -178,14 +176,14 @@ class _HashBreakerState extends State<HashBreaker> {
         Row(
           children: <Widget>[
             Expanded(
-                child: GCWTextField(
-                  hintText: i18n(context, 'coords_variablecoordinate_variable'),
-                  controller: _fromController,
-                  onChanged: (text) {
-                    _currentFromInput = text;
-                  },
-                ),
-                flex: 1
+              child: GCWTextField(
+                hintText: i18n(context, 'coords_variablecoordinate_variable'),
+                controller: _fromController,
+                onChanged: (text) {
+                  _currentFromInput = text;
+                },
+              ),
+              flex: 1
             ),
             Icon(
               Icons.arrow_forward,

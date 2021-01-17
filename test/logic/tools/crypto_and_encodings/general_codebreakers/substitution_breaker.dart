@@ -154,17 +154,14 @@ void main() {
 //     ];
 //
 //     _inputsToExpected.forEach((elem) async {
-//       while(_isStarted){};
-//       _isStarted = true;
 //
 //       test('input: ${elem['input']}', () async {
 //
 //         var quad = await getQuadgram(elem['alphabet']);
-//         var _actual = await break_cipher(elem['input'], quad);
+//         var _actual = break_cipher(elem['input'], quad);
 //         expect(_actual.plaintext, elem['expectedOutput']);
 //         expect(_actual.errorCode, elem['errorCode']);
 //       });
-//       _isStarted = false;
 //     });
 //   });
 //

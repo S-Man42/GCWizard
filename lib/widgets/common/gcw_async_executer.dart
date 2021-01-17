@@ -14,7 +14,7 @@ class GCWAsyncExecuterParameters {
 
 class GCWAsyncExecuter extends StatefulWidget {
   final Function isolatedFunction;
-  final dynamic parameter;
+  final Future<dynamic> parameter;
   final Function onReady;
   final bool isOverlay;
 
@@ -56,7 +56,8 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
     if (widget.parameter == null)
       return Container();
     Stream<double> progress() async* {
-      _receivePort = await _makeIsolate(widget.isolatedFunction, widget.parameter);
+      var parameter = await widget.parameter;
+      _receivePort = await _makeIsolate(widget.isolatedFunction, parameter);
       await for(var event in _receivePort) {
         if(event is Map<String, dynamic> && event['progress'] != null) {
           yield event['progress'];
@@ -116,6 +117,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
               ]
             )
           ),
+          SizedBox(height: 10),
           GCWButton(
             text: i18n(context, 'common_cancel'),
             onPressed: () {
