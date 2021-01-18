@@ -1603,7 +1603,7 @@
   "numbersequence_mersenneprimes_title" : "Mersenne Primzahlen",
   "numbersequence_mersenneprimes_description" : "OEIS A000668, bis n = 11",
   "numbersequence_mersenneprimes_example" : "3, 7, 31, 127, 8191, 131071, 524287, ...",
-  "numbersequence_mersenneexponents_title" : "Exponenten für Mersenne-Primzahlen",
+  "numbersequence_mersenneexponents_title" : "Exponenten für Mersenne Primzahlen",
   "numbersequence_mersenneexponents_description" : "OEIS A005132, bis n = 46",
   "numbersequence_mersenneexponents_example" : "2, 3, 5, 7, 13, 17, 19, 31, 61, 89, ...",
   "numbersequence_mersennefermat_title" : "Mersenne-ähnliche Folge mit Fermat-Zahlen",
