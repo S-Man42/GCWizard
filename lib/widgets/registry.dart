@@ -1559,61 +1559,6 @@ class Registry {
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne oeis A000225',
       ),
       GCWTool(
-        tool: NumberSequenceFermatSelection(),
-        i18nPrefix: 'numbersequence_fermat',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat oeis A000251',
-      ),
-      GCWTool(
-        tool: NumberSequenceMersenneFermatSelection(),
-        i18nPrefix: 'numbersequence_mersennefermat',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat oeis A000051',
-      ),
-      GCWTool(
-        tool: NumberSequenceLucasSelection(),
-        i18nPrefix: 'numbersequence_lucas',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas oeis A000032',
-      ),
-      GCWTool(
-        tool: NumberSequencePellSelection(),
-        i18nPrefix: 'numbersequence_pell',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell oeis A000129',
-      ),
-      GCWTool(
-        tool: NumberSequenceBellSelection(),
-        i18nPrefix: 'numbersequence_bell',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'bell oeis A000110',
-      ),
-      GCWTool(
-        tool: NumberSequenceJacobsthalSelection(),
-        i18nPrefix: 'numbersequence_jacobsthal',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oeis A001045',
-      ),
-      GCWTool(
-        tool: NumberSequenceJacobsthalLucasSelection(),
-        i18nPrefix: 'numbersequence_jacobsthallucas',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas A014551',
-      ),
-      GCWTool(
-        tool: NumberSequenceJacobsthalOblongSelection(),
-        i18nPrefix: 'numbersequence_jacobsthaloblong',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oblong A084175',
-      ),
-      GCWTool(
-        tool: NumberSequencePellLucasSelection(),
-        i18nPrefix: 'numbersequence_pelllucas',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas oeis A002203',
-      ),
-      GCWTool(
-        tool: NumberSequenceCatalanSelection(),
-        i18nPrefix: 'numbersequence_catalan',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan oeis A000108',
-      ),
-      GCWTool(
-        tool: NumberSequenceRecamanSelection(),
-        i18nPrefix: 'numbersequence_recaman',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'recaman oeis A005132',
-      ),
-      GCWTool(
         tool: NumberSequenceMersennePrimesSelection(),
         i18nPrefix: 'numbersequence_mersenneprimes',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne primes primzahlen oeis A000668',
@@ -1622,6 +1567,16 @@ class Registry {
         tool: NumberSequenceMersenneExponentsSelection(),
         i18nPrefix: 'numbersequence_mersenneexponents',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne exponents hochzahlen exponenten oeis A000043',
+      ),
+      GCWTool(
+        tool: NumberSequenceMersenneFermatSelection(),
+        i18nPrefix: 'numbersequence_mersennefermat',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat oeis A000051',
+      ),
+      GCWTool(
+        tool: NumberSequenceFermatSelection(),
+        i18nPrefix: 'numbersequence_fermat',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat oeis A000251',
       ),
       GCWTool(
         tool: NumberSequencePerfectNumbersSelection(),
@@ -1647,6 +1602,51 @@ class Registry {
         tool: NumberSequenceSublimeNumbersSelection(),
         i18nPrefix: 'numbersequence_sublimenumbers',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'sublime erhabene numbers zahlen oeis A081357',
+      ),
+      GCWTool(
+        tool: NumberSequenceBellSelection(),
+        i18nPrefix: 'numbersequence_bell',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'bell oeis A000110',
+      ),
+      GCWTool(
+        tool: NumberSequencePellSelection(),
+        i18nPrefix: 'numbersequence_pell',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell oeis A000129',
+      ),
+      GCWTool(
+        tool: NumberSequenceLucasSelection(),
+        i18nPrefix: 'numbersequence_lucas',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas oeis A000032',
+      ),
+      GCWTool(
+        tool: NumberSequencePellLucasSelection(),
+        i18nPrefix: 'numbersequence_pelllucas',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas oeis A002203',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalSelection(),
+        i18nPrefix: 'numbersequence_jacobsthal',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oeis A001045',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalLucasSelection(),
+        i18nPrefix: 'numbersequence_jacobsthallucas',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas A014551',
+      ),
+      GCWTool(
+        tool: NumberSequenceJacobsthalOblongSelection(),
+        i18nPrefix: 'numbersequence_jacobsthaloblong',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oblong A084175',
+      ),
+      GCWTool(
+        tool: NumberSequenceCatalanSelection(),
+        i18nPrefix: 'numbersequence_catalan',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan oeis A000108',
+      ),
+      GCWTool(
+        tool: NumberSequenceRecamanSelection(),
+        i18nPrefix: 'numbersequence_recaman',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'recaman oeis A005132',
       ),
 
       //NumberSequenceSelection Factorial ****************************************************************************************

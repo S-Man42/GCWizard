@@ -6,7 +6,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/base/numbersequences_range.dart';
 
 class NumberSequenceBellCheckNumber extends NumberSequenceCheckNumber {
-  NumberSequenceBellCheckNumber() : super(mode: NumberSequencesMode.BELL, maxIndex: 55555);
+  NumberSequenceBellCheckNumber() : super(mode: NumberSequencesMode.BELL, maxIndex: 555);
 }
 
 class NumberSequenceBellDigits extends NumberSequenceDigits {
@@ -14,13 +14,13 @@ class NumberSequenceBellDigits extends NumberSequenceDigits {
 }
 
 class NumberSequenceBellRange extends NumberSequenceRange {
-  NumberSequenceBellRange() : super(mode: NumberSequencesMode.BELL, maxIndex: 55555);
+  NumberSequenceBellRange() : super(mode: NumberSequencesMode.BELL, maxIndex: 555);
 }
 
 class NumberSequenceBellNthNumber extends NumberSequenceNthNumber {
-  NumberSequenceBellNthNumber() : super(mode: NumberSequencesMode.BELL, maxIndex: 55555);
+  NumberSequenceBellNthNumber() : super(mode: NumberSequencesMode.BELL, maxIndex: 555);
 }
 
 class NumberSequenceBellContainsDigits extends NumberSequenceContainsDigits {
-  NumberSequenceBellContainsDigits() : super(mode: NumberSequencesMode.BELL, maxIndex: 5555);
+  NumberSequenceBellContainsDigits() : super(mode: NumberSequencesMode.BELL, maxIndex: 555);
 }
