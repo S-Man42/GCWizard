@@ -121,25 +121,33 @@ class IntersectBearingsState extends State<IntersectBearings> {
   GCWMapPoint _getEndLine1() {
     final _ells = defaultEllipsoid();
 
+    var mapPoint;
     if (_currentIntersection == null) {
       var distance1To2 = distanceBearing(_currentCoords1, _currentCoords2, _ells).distance;
-      return GCWMapPoint(point: projection(_currentCoords1, _currentBearing1['value'], distance1To2 * 3, _ells), isVisible: false);
+      mapPoint = GCWMapPoint(point: projection(_currentCoords1, _currentBearing1['value'], distance1To2 * 3, _ells), isVisible: false);
+    } else {
+      var distance1ToIntersect = distanceBearing(_currentCoords1, _currentIntersection, _ells).distance;
+      mapPoint = GCWMapPoint(point: projection(_currentCoords1, _currentBearing1['value'], distance1ToIntersect * 1.5, _ells), isVisible: false);
     }
 
-    var distance1ToIntersect = distanceBearing(_currentCoords1, _currentIntersection, _ells).distance;
-    return GCWMapPoint(point: projection(_currentCoords1, _currentBearing1['value'], distance1ToIntersect * 1.5, _ells), isVisible: false);
+    _currentMapPoints.add(mapPoint);
+    return mapPoint;
   }
 
   GCWMapPoint _getEndLine2() {
     final _ells = defaultEllipsoid();
 
+    var mapPoint;
     if (_currentIntersection == null) {
       var distance2To1 = distanceBearing(_currentCoords2, _currentCoords1, _ells).distance;
-      return GCWMapPoint(point: projection(_currentCoords2, _currentBearing2['value'], distance2To1 * 3, _ells), isVisible: false);
+      mapPoint = GCWMapPoint(point: projection(_currentCoords2, _currentBearing2['value'], distance2To1 * 3, _ells), isVisible: false);
+    } else {
+      var distance2ToIntersect = distanceBearing(_currentCoords2, _currentIntersection, _ells).distance;
+      mapPoint = GCWMapPoint(point: projection(_currentCoords2, _currentBearing2['value'], distance2ToIntersect * 1.5, _ells), isVisible: false);
     }
 
-    var distance2ToIntersect = distanceBearing(_currentCoords2, _currentIntersection, _ells).distance;
-    return GCWMapPoint(point: projection(_currentCoords2, _currentBearing2['value'], distance2ToIntersect * 1.5, _ells), isVisible: false);
+    _currentMapPoints.add(mapPoint);
+    return mapPoint;
   }
 
   _calculateOutput() {
