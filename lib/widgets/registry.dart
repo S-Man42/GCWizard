@@ -69,6 +69,8 @@ import 'package:gc_wizard/widgets/tools/coords/format_converter.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_bearing_and_circle.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_bearings.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_four_points.dart';
+import 'package:gc_wizard/widgets/tools/coords/segment_line.dart';
+import 'package:gc_wizard/widgets/tools/coords/segment_bearings.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_two_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersection.dart';
@@ -1020,18 +1022,21 @@ class Registry {
         tool: WaypointProjection(),
         i18nPrefix: 'coords_waypointprojection',
         iconPath: 'assets/coordinates/icon_waypoint_projection.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_COORDINATES_COMPASSROSE + 'winkel angles waypointprojections bearings wegpunktprojektionen wegpunktpeilungen cardinaldirections richtungen reverse projections rueckwaertspeilung kompassrose compassrose himmelsrichtungen '
       ),
       GCWTool(
         tool: DistanceBearing(),
         i18nPrefix: 'coords_distancebearing',
         iconPath: 'assets/coordinates/icon_distance_and_bearing.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'angles winkel bearings distances distanzen entfernungen abstand abstaende directions richtungen'
       ),
       GCWTool(
         tool: FormatConverter(),
         i18nPrefix: 'coords_formatconverter',
         iconPath: 'assets/coordinates/icon_format_converter.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'coordinateformatconverter converting koordinatenformatkonverter formate konvertieren umwandeln quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister xyz ecef reversewhereigo reversewig maidenhead geo-hash geohash geohex qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles'
       ),
       GCWTool(
@@ -1039,96 +1044,126 @@ class Registry {
         autoScroll: false,
         i18nPrefix: 'coords_openmap',
         iconPath: 'assets/coordinates/icon_free_map.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'mapview kartenansicht freiekarte openmap measurement messen messungen '
       ),
       GCWTool(
         tool: VariableCoordinateFormulas(),
         i18nPrefix: 'coords_variablecoordinate',
         iconPath: 'assets/coordinates/icon_variable_coordinate.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_FORMULASOLVER + 'variable waypoints flex '
       ),
       GCWTool(
         tool: CoordinateAveraging(),
         i18nPrefix: 'coords_averaging',
         iconPath: 'assets/coordinates/icon_coordinate_measurement.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'einmessen einmessung measurement averaging average ermitteln '
       ),
       GCWTool(
         tool: CenterTwoPoints(),
         i18nPrefix: 'coords_centertwopoints',
         iconPath: 'assets/coordinates/icon_center_two_points.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'midpoint center centre middle mittelpunkt zentrum zwei two 2 points punkte'
       ),
       GCWTool(
         tool: CenterThreePoints(),
         i18nPrefix: 'coords_centerthreepoints',
         iconPath: 'assets/coordinates/icon_center_three_points.png',
-        searchStrings: SEARCHSTRING_COORDINATES + 'midpoint center centre middle mittelpunkt zentrum three drei 3 umkreis circumcircle circumscribed points punkte'
+        category: ToolCategory.COORDINATES,
+        searchStrings: SEARCHSTRING_COORDINATES + 'midpoint center centre middle mittelpunkt zentrum three drei 3 umkreis circumcircle circumscribed points punkte seitenhalbierende medians '
+      ),
+      GCWTool(
+        tool: SegmentLine(),
+        i18nPrefix: 'coords_segmentline',
+        iconPath: 'assets/coordinates/icon_segment_line.png',
+        category: ToolCategory.COORDINATES,
+        searchStrings: SEARCHSTRING_COORDINATES + 'segments segmentlines unterteilen einteilen teilungen abschnitte gleichmaessig regularly bisectors'
+      ),
+      GCWTool(
+        tool: SegmentBearings(),
+        i18nPrefix: 'coords_segmentbearings',
+        iconPath: 'assets/coordinates/icon_segment_bearings.png',
+        category: ToolCategory.COORDINATES,
+        searchStrings: SEARCHSTRING_COORDINATES + 'segments segmentbearings unterteilen einteilen teilungen abschnitte gleichmaessig regularly angles winkel peilungen bearings courses winkelhalbierende bisectors'
       ),
       GCWTool(
         tool: CrossBearing(),
         i18nPrefix: 'coords_crossbearing',
         iconPath: 'assets/coordinates/icon_cross_bearing.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'bearings angles intersections winkel kreuzpeilungen directions richtungen'
       ),
       GCWTool(
         tool: IntersectBearings(),
         i18nPrefix: 'coords_intersectbearings',
         iconPath: 'assets/coordinates/icon_intersect_bearings.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_COORDINATES_COMPASSROSE + 'bearings angles winkel intersections winkel peilung'
       ),
       GCWTool(
         tool: IntersectFourPoints(),
         i18nPrefix: 'coords_intersectfourpoints',
         iconPath: 'assets/coordinates/icon_intersect_four_points.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'bearings richtungen directions lines arcs crossing intersection linien kreuzung four vier 4 points punkte'
       ),
       GCWTool(
         tool: IntersectGeodeticAndCircle(),
         i18nPrefix: 'coords_intersectbearingcircle',
         iconPath: 'assets/coordinates/icon_intersect_bearing_and_circle.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + SEARCHSTRING_COORDINATES_COMPASSROSE + 'bearings angles distances circles arcs intersection distanzen entfernungen abstand abstaende winkel kreisbogen kreise'
       ),
       GCWTool(
         tool: IntersectTwoCircles(),
         i18nPrefix: 'coords_intersecttwocircles',
         iconPath: 'assets/coordinates/icon_intersect_two_circles.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'multilateration bilateration distances intersection distanzen entfernungen abstand abstaende two zwei 2 circles kreise'
       ),
       GCWTool(
         tool: IntersectThreeCircles(),
         i18nPrefix: 'coords_intersectthreecircles',
         iconPath: 'assets/coordinates/icon_intersect_three_circles.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'multilateration trilateration distances intersection distanzen entfernungen abstand abstaende drei three 3 circles kreise'
       ),
       GCWTool(
-          tool: Antipodes(),
-          i18nPrefix: 'coords_antipodes',
-          iconPath: 'assets/coordinates/icon_antipodes.png',
-          searchStrings: SEARCHSTRING_COORDINATES + 'gegenueberliegende oppositeside antipodes antipoden gegenpunkte'
+        tool: Antipodes(),
+        i18nPrefix: 'coords_antipodes',
+        iconPath: 'assets/coordinates/icon_antipodes.png',
+        category: ToolCategory.COORDINATES,
+        searchStrings: SEARCHSTRING_COORDINATES + 'gegenueberliegende oppositeside antipodes antipoden gegenpunkte'
       ),
       GCWTool(
         tool: Intersection(),
         i18nPrefix: 'coords_intersection',
         iconPath: 'assets/coordinates/icon_intersection.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'intersection 2 angles bearings directions richtungen vorwaertseinschnitt vorwaertseinschneiden vorwaertsschnitt vorwaertsschneiden'
       ),
       GCWTool(
-          tool: Resection(),
+        tool: Resection(),
         i18nPrefix: 'coords_resection',
         iconPath: 'assets/coordinates/icon_resection.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'resection 2 two zwei angles winkel directions richtungen bearings 3 three drei rueckwaertseinschnitt rueckwaertseinschneiden rueckwaertsschnitt rueckwaertsschneiden'
       ),
       GCWTool(
         tool: EquilateralTriangle(),
         i18nPrefix: 'coords_equilateraltriangle',
         iconPath: 'assets/coordinates/icon_equilateral_triangle.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'equilateral triangles gleichseitiges dreiecke'
       ),
       GCWTool(
         tool: EllipsoidTransform(),
         i18nPrefix: 'coords_ellipsoidtransform',
         iconPath: 'assets/coordinates/icon_ellipsoid_transform.png',
+        category: ToolCategory.COORDINATES,
         searchStrings: SEARCHSTRING_COORDINATES + 'rotationsellipsoids rotationsellipsoiden converter converting konverter konvertieren umwandeln bessel 1841 bessel krassowski krasowksi krasovsky krassovsky 1950 airy 1830 modified potsdam dhdn2001 dhdn1995 pulkowo mgi lv95 ed50 clarke 1866 osgb36 date datum wgs84'
       ),
 

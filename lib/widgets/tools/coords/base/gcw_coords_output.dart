@@ -89,8 +89,8 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
 
     Navigator.push(context, MaterialPageRoute(builder: (context) => GCWTool (
       tool: GCWMapView(
-        points: widget.points,
-        polylines: widget.polylines,
+        points: List<GCWMapPoint>.from(widget.points),
+        polylines: List<GCWMapPolyline>.from(widget.polylines),
         isEditable: freeMap,
       ),
       toolName: freeMap ? i18n(context, 'coords_openmap_title') : i18n(context, 'coords_map_view_title'),

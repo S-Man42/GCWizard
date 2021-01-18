@@ -3,15 +3,16 @@ import 'dart:math';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
+import 'package:gc_wizard/logic/tools/coords/segment_line.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong/latlong.dart';
 
 Map<String, dynamic> centerPointTwoPoints(LatLng coord1, LatLng coord2, Ellipsoid ells) {
-  var distBear = distanceBearing(coord1, coord2, ells);
+  var segments = segmentLine(coord1, coord2, 2, ells);
 
   return {
-    'centerPoint': projection(coord1, distBear.bearingAToB, distBear.distance / 2.0, ells),
-    'distance': distBear.distance / 2.0
+    'centerPoint': segments['points'].first,
+    'distance': segments['segmentDistance']
   };
 }
 

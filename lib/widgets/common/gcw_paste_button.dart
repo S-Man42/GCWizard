@@ -44,6 +44,7 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
           style: gcwDialogTextStyle()
         ),
         action: () {
+          print('BLA');
           Clipboard.getData('text/plain').then((data) {
             if (data.text.length == 0) {
               showToast(i18n(context, 'common_clipboard_notextdatafound'));

@@ -27,31 +27,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class CoordsSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-
-    final List<GCWTool> _toolList =
-      Registry.toolList.where((element) {
-        return [
-          className(WaypointProjection()),
-          className(DistanceBearing()),
-          className(FormatConverter()),
-          className(MapView()),
-          className(VariableCoordinateFormulas()),
-          className(CoordinateAveraging()),
-          className(CenterTwoPoints()),
-          className(CenterThreePoints()),
-          className(Antipodes()),
-          className(CrossBearing()),
-          className(IntersectBearings()),
-          className(IntersectFourPoints()),
-          className(IntersectGeodeticAndCircle()),
-          className(IntersectTwoCircles()),
-          className(IntersectThreeCircles()),
-          className(Intersection()),
-          className(Resection()),
-          className(EquilateralTriangle()),
-          className(EllipsoidTransform()),
-        ].contains(className(element.tool));
-      }).toList();
+    final List<GCWTool> _toolList = Registry.toolList.where((element) => element.category == ToolCategory.COORDINATES).toList();
 
     return Container(
       child: GCWToolList(
