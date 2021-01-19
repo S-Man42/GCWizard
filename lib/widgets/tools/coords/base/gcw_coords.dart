@@ -35,8 +35,9 @@ class GCWCoords extends StatefulWidget {
   final Map<String, String> coordsFormat;
   final LatLng coordinates;
   final String title;
+  final bool notitle;
 
-  const GCWCoords({Key key, this.title, this.coordinates, this.onChanged, this.coordsFormat}) : super(key: key);
+  const GCWCoords({Key key, this.title, this.coordinates, this.onChanged, this.coordsFormat, this.notitle: false}) : super(key: key);
 
   @override
   GCWCoordsState createState() => GCWCoordsState();
@@ -256,46 +257,35 @@ class GCWCoordsState extends State<GCWCoords> {
 
     _pastedCoords = null;
 
-    Column _widget = Column(
-      children: <Widget>[
-        GCWTextDivider(
-          text: widget.title,
-          bottom: 0.0,
-          trailing: Row(
+    Column _widget;
+    if (widget.notitle) {
+      _widget = Column(
+        children: <Widget>[
+          Row(
             children: [
-              Container(
-                child:  GCWIconButton(
-                  iconData: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
-                  size: IconButtonSize.SMALL,
-                  onPressed: () {
-                    _setUserLocationCoords();
-                  },
-                ),
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+              Expanded(
+                child: _buildInputFormatSelector()
               ),
-              GCWCoordsPasteButton(
-                size: IconButtonSize.SMALL,
-                onPasted: _setCoords
+              Container(
+                child: _buildTrailingButtons(IconButtonSize.NORMAL),
+                padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN)
               )
             ],
           )
-        ),
-        GCWCoordsFormatSelector(
-          format: _currentCoordsFormat,
-          onChanged: (newValue){
-            setState(() {
-              if (_currentCoordsFormat != newValue) {
-                _currentCoordsFormat = newValue;
-                _currentValue = defaultCoordinate;
-
-                _setCurrentValueAndEmitOnChange();
-              }
-              FocusScope.of(context).requestFocus(new FocusNode()); //Release focus from previous edited field
-            });
-          },
-        ),
-      ],
-    );
+        ],
+      );
+    } else {
+      _widget = Column(
+        children: <Widget>[
+          GCWTextDivider(
+            text: widget.title,
+            bottom: 0.0,
+            trailing: _buildTrailingButtons(IconButtonSize.SMALL)
+          ),
+          _buildInputFormatSelector()
+        ],
+      );
+    }
 
     _currentWidget = _coordsWidgets
       .firstWhere((entry) => entry['coordFormat'].key == _currentCoordsFormat['format'])['widget'];
@@ -303,6 +293,44 @@ class GCWCoordsState extends State<GCWCoords> {
     _widget.children.add(_currentWidget);
 
     return _widget;
+  }
+
+  _buildInputFormatSelector() {
+    return GCWCoordsFormatSelector(
+      format: _currentCoordsFormat,
+      onChanged: (newValue){
+        setState(() {
+          if (_currentCoordsFormat != newValue) {
+            _currentCoordsFormat = newValue;
+            _currentValue = defaultCoordinate;
+
+            _setCurrentValueAndEmitOnChange();
+          }
+          FocusScope.of(context).requestFocus(new FocusNode()); //Release focus from previous edited field
+        });
+      },
+    );
+  }
+
+  _buildTrailingButtons(IconButtonSize size) {
+    return Row(
+      children: [
+        Container(
+          child:  GCWIconButton(
+            iconData: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
+            size: size,
+            onPressed: () {
+              _setUserLocationCoords();
+            },
+          ),
+          padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+        ),
+        GCWCoordsPasteButton(
+          size: size,
+          onPasted: _setCoords
+        )
+      ],
+    );
   }
 
   _setCurrentValueAndEmitOnChange([LatLng newValue]) {
