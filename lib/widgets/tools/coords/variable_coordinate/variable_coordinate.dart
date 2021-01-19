@@ -17,6 +17,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -193,11 +194,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
             });
           },
         ),
-        GCWSubmitButton(
-          onPressed: () {
-            _calculateOutput(context);
-          },
-        ),
+        _buildSubmitButton(),
         _output ?? Container(),
       ],
     );
@@ -455,7 +452,32 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     );
   }
 
-  _calculateOutput(BuildContext context) {
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+        onPressed: () async {
+          await showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return Center (
+                child: Container(
+                  child: GCWAsyncExecuter(
+                    isolatedFunction: parseVariableLatLonAsync,
+                    parameter: _buildJobData(),
+                    onReady: (data) => _showOutput(data),
+                    isOverlay: true,
+                  ),
+                  height: 220,
+                  width: 150,
+                ),
+              );
+            },
+          );
+        }
+    );
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
     _currentCoordMode = GCWSwitchPosition.left;
 
     Map<String, String> _substitutions = {};
@@ -474,24 +496,38 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       };
     }
 
-    var coords = parseVariableLatLon(_currentInput, _substitutions, projectionData: projectionData);
-
-    if (coords['coordinates'].length > MAX_COUNT_COORDINATES) {
-      showGCWAlertDialog(context, i18n(context, 'coords_variablecoordinate_alert_title'), i18n(context, 'coords_variablecoordinate_alert_text', parameters: [coords['coordinates'].length]), () {
-        setState(() {
-          _buildOutput(coords);
-        });
-      },);
-      return;
-    }
-
-    setState(() {
-      _buildOutput(coords);
-    });
+    return GCWAsyncExecuterParameters(
+        ParseVariableLatLonJobData(
+          coordinate: _currentInput,
+          substitutions: _substitutions,
+          projectionData: projectionData,
+        )
+    );
   }
 
   _formatVariables(variables) {
     return variables.entries.map((variable) => variable.key.toUpperCase() + ': ' + variable.value.toString()).join(', ');
+  }
+
+  _showOutput(Map<String, dynamic> output) {
+    var updateOutput = false;
+
+    if ((output != null) && output['coordinates'].length > MAX_COUNT_COORDINATES) {
+      showGCWAlertDialog(context, i18n(context, 'coords_variablecoordinate_alert_title'), i18n(context, 'coords_variablecoordinate_alert_text', parameters: [output['coordinates'].length]), () {
+        updateOutput = true;
+      },);
+    }
+    else
+      updateOutput = true;
+
+    if (updateOutput)
+      _buildOutput(output);
+    else
+      _output = null;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 
   _buildOutput(Map<String, dynamic> coords) {

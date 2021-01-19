@@ -6,6 +6,18 @@ import 'package:gc_wizard/logic/tools/formula_solver/parser.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:latlong/latlong.dart';
 
+class ParseVariableLatLonJobData {
+  final String coordinate;
+  final Map<String, String> substitutions;
+  final Map<String, dynamic> projectionData;
+
+  ParseVariableLatLonJobData({
+      this.coordinate = null,
+      this.substitutions = null,
+      this.projectionData = const {}
+  });
+}
+
 Map<String, LatLng> _parseCoordText(String text) {
   var parsedCoord = parseLatLon(text);
   if (parsedCoord == null)
@@ -33,6 +45,21 @@ _sanitizeForFormula(String formula) {
     return formula;
 
   return '[$formula]';
+}
+
+void parseVariableLatLonAsync(dynamic jobData) async {
+  if (jobData == null) {
+    jobData.sendAsyncPort.send(null);
+    return;
+  }
+
+  var output = parseVariableLatLon(
+      jobData.parameters.coordinate,
+      jobData.parameters.substitutions,
+      projectionData : jobData.parameters.projectionData
+  );
+
+  jobData.sendAsyncPort.send(output);
 }
 
 Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> substitutions, {Map<String, dynamic> projectionData = const {}}) {

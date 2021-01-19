@@ -131,26 +131,26 @@ class VigenereBreakerState extends State<VigenereBreaker> {
 
   Widget _buildSubmitButton() {
     return GCWSubmitButton(
-        onPressed: () async {
-          await showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) {
-              return Center (
-                child: Container(
-                  child: GCWAsyncExecuter(
-                    isolatedFunction: break_cipherAsync,
-                    parameter: _buildJobData(),
-                    onReady: (data) => _showOutput(data),
-                    isOverlay: true,
-                  ),
-                  height: 220,
-                  width: 150,
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: break_cipherAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
                 ),
-              );
-            },
-          );
-        }
+                height: 220,
+                width: 150,
+              ),
+            );
+          },
+        );
+      }
     );
   }
 
@@ -193,19 +193,22 @@ class VigenereBreakerState extends State<VigenereBreaker> {
       return null;
 
     return GCWAsyncExecuterParameters (
-        VigenereBreakerJobData(
-          input: _currentInput,
-          vigenereBreakerType: _currentAutokey ? VigenereBreakerType.AUTOKEYVIGENERE : VigenereBreakerType.VIGENERE,
-          alphabet: _currentAlphabet,
-          keyLengthMin: _minKeyLength,
-          keyLengthMax: _maxKeyLength
-        )
+      VigenereBreakerJobData(
+        input: _currentInput,
+        vigenereBreakerType: _currentAutokey ? VigenereBreakerType.AUTOKEYVIGENERE : VigenereBreakerType.VIGENERE,
+        alphabet: _currentAlphabet,
+        keyLengthMin: _minKeyLength,
+        keyLengthMax: _maxKeyLength
+      )
     );
   }
 
   _showOutput(VigenereBreakerResult output) {
     if (output == null) {
       _currentOutput = null;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
       return;
     }
 

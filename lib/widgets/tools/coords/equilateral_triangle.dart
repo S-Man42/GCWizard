@@ -4,12 +4,14 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/equilateral_triangle.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:latlong/latlong.dart';
 
 class EquilateralTriangle extends StatefulWidget {
   @override
@@ -71,13 +73,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
             });
           },
         ),
-        GCWSubmitButton(
-          onPressed: () {
-            setState(() {
-              _calculateOutput();
-            });
-          },
-        ),
+        _buildSubmitButton(),
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
@@ -87,8 +83,40 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
     );
   }
 
-  _calculateOutput() {
-    _currentIntersections = equilateralTriangle(_currentCoords1, _currentCoords2, defaultEllipsoid());
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: equilateralTriangleAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
+              ),
+            );
+          },
+        );
+      }
+    );
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+
+    return GCWAsyncExecuterParameters(
+        EquilateralTriangleJobData(coord1: _currentCoords1, coord2: _currentCoords2, ells: defaultEllipsoid())
+    );
+  }
+
+  _showOutput(List<LatLng> output) {
+    _currentIntersections = output;
 
     _currentMapPoints = [
       GCWMapPoint(
@@ -103,8 +131,11 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
       )
     ];
 
-    if (_currentIntersections.isEmpty) {
+    if (_currentIntersections == null || _currentIntersections.isEmpty) {
       _currentOutput = [i18n(context, "coords_intersect_nointersection")];
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
       return;
     }
 
@@ -146,5 +177,9 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
     _currentOutput = _currentIntersections
       .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
       .toList();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 }

@@ -4,6 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/intersect_lines.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
@@ -99,13 +100,7 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
             });
           },
         ),
-        GCWSubmitButton(
-          onPressed: () {
-            setState(() {
-              _calculateOutput(context);
-            });
-          },
-        ),
+        _buildSubmitButton(),
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
@@ -113,6 +108,107 @@ class IntersectFourPointsState extends State<IntersectFourPoints> {
         ),
       ],
     );
+  }
+
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: intersectFourPointsAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
+              ),
+            );
+          },
+        );
+      }
+    );
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+
+    return GCWAsyncExecuterParameters(
+        IntersectFourPointsJobData(
+            coord11: _currentCoords11,
+            coord12: _currentCoords12,
+            coord21: _currentCoords21,
+            coord22: _currentCoords22,
+            ells: defaultEllipsoid()
+        )
+      );
+  }
+
+  _showOutput(LatLng output) {
+    _currentIntersection = output;
+
+    _currentMapPoints = [
+      GCWMapPoint(
+        point: _currentCoords11,
+        markerText: i18n(context, 'coords_intersectfourpoints_coord11'),
+        coordinateFormat: _currentCoordsFormat11
+      ),
+      GCWMapPoint(
+        point: _currentCoords12,
+        markerText: i18n(context, 'coords_intersectfourpoints_coord12'),
+        coordinateFormat: _currentCoordsFormat12
+      ),
+      GCWMapPoint(
+        point: _currentCoords21,
+        markerText: i18n(context, 'coords_intersectfourpoints_coord21'),
+        coordinateFormat: _currentCoordsFormat21
+      ),
+      GCWMapPoint(
+        point: _currentCoords22,
+        markerText: i18n(context, 'coords_intersectfourpoints_coord22'),
+        coordinateFormat: _currentCoordsFormat22
+      )
+    ];
+
+    _currentMapPolylines = [
+      GCWMapPolyline(
+        points: [_currentMapPoints[0], _currentMapPoints[1]]
+      ),
+      GCWMapPolyline(
+        points: [_currentMapPoints[2], _currentMapPoints[3]],
+        color: HSLColor
+          .fromColor(COLOR_MAP_POLYLINE)
+          .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+          .toColor()
+      ),
+    ];
+
+    if (_currentIntersection == null) {
+      _currentOutput = [i18n(context, 'coords_intersect_nointersection')];
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+      return;
+    }
+
+    _currentMapPoints.add(
+      GCWMapPoint(
+        point: _currentIntersection,
+        color: COLOR_MAP_CALCULATEDPOINT,
+        markerText: i18n(context, 'coords_common_intersection'),
+        coordinateFormat: _currentOutputFormat
+      )
+    );
+
+    _currentOutput = [formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid())];
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 
   _calculateOutput(BuildContext context) {

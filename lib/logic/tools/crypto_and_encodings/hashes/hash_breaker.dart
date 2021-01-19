@@ -8,14 +8,12 @@ class HashBreakerJobData {
   final String searchMask;
   final Map<String, String> substitutions;
   final Function hashFunction;
-  final SendPort sendAsyncPort ;
 
   HashBreakerJobData({
     this.input = '',
     this.searchMask = '',
     this.substitutions = null,
     this.hashFunction = null,
-    this.sendAsyncPort = null,
   });
 }
 

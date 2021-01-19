@@ -1,6 +1,5 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa.de/breaker.dart' as guballa;
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
-import 'dart:isolate';
 
 enum SubstitutionBreakerAlphabet{ENGLISH, GERMAN, SPANISH, POLISH, GREEK, FRENCH, RUSSIAN}
 enum SubstitutionBreakerErrorCode{OK, MAX_ROUNDS_PARAMETER, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, ALPHABET_TOO_LONG, WRONG_GENERATE_TEXT}
@@ -8,12 +7,10 @@ enum SubstitutionBreakerErrorCode{OK, MAX_ROUNDS_PARAMETER, CONSOLIDATE_PARAMETE
 class SubstitutionBreakerJobData {
   final String input;
   final Quadgrams quadgrams;
-  final SendPort sendAsyncPort ;
 
   SubstitutionBreakerJobData({
-    this.input = '',
-    this.quadgrams = null,
-    this.sendAsyncPort = null,
+      this.input = '',
+      this.quadgrams = null
   });
 }
 

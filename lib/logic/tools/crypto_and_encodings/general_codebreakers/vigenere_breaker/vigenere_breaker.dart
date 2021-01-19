@@ -3,7 +3,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/guballa.de/breaker.dart' as guballa;
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa.de/breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/bigrams.dart';
-import 'dart:isolate';
 
 enum VigenereBreakerType{VIGENERE, AUTOKEYVIGENERE, BEAUFORT}
 enum VigenereBreakerAlphabet{ENGLISH, GERMAN, SPANISH, FRENCH}
@@ -15,15 +14,13 @@ class VigenereBreakerJobData {
   final VigenereBreakerAlphabet alphabet;
   final int keyLengthMin;
   final int keyLengthMax;
-  final SendPort sendAsyncPort ;
 
   VigenereBreakerJobData({
-    this.input = '',
-    this.vigenereBreakerType = null,
-    this.alphabet = null,
-    this.keyLengthMin = 0,
-    this.keyLengthMax = 0,
-    this.sendAsyncPort = null,
+      this.input = '',
+      this.vigenereBreakerType = null,
+      this.alphabet = null,
+      this.keyLengthMin = 0,
+      this.keyLengthMax = 0
   });
 }
 
@@ -58,7 +55,7 @@ void break_cipherAsync(dynamic jobData) async {
       jobData.parameters.vigenereBreakerType,
       jobData.parameters.alphabet,
       jobData.parameters.keyLengthMin,
-      jobData.parameters.keyLengthMax,
+      jobData.parameters.keyLengthMax
   );
 
   jobData.sendAsyncPort.send(output);

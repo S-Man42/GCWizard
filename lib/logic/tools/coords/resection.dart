@@ -4,6 +4,24 @@ import 'package:gc_wizard/logic/tools/coords/intervals/interval_calculator.dart'
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:latlong/latlong.dart';
 
+class ResectionJobData {
+  final LatLng coord1;
+  final double angle12;
+  final LatLng coord2;
+  final double angle23;
+  final LatLng coord3;
+  final Ellipsoid ells;
+
+  ResectionJobData({
+      this.coord1 = null,
+      this.angle12 = 0.0,
+      this.coord2 = null,
+      this.angle23 = 0.0,
+      this.coord3 = null,
+      this.ells = null
+  });
+}
+
 class _ResectionCalculator extends IntervalCalculator {
 
   _ResectionCalculator(Map<String, dynamic> parameters, Ellipsoid ells) : super(parameters, ells);
@@ -81,6 +99,24 @@ class _ResectionCalculator extends IntervalCalculator {
 
     return false;
   }
+}
+
+void resectionAsync(dynamic jobData) async {
+  if (jobData == null) {
+    jobData.sendAsyncPort.send(null);
+    return;
+  }
+
+  var output = resection(
+      jobData.parameters.coord1,
+      jobData.parameters.angle12,
+      jobData.parameters.coord2,
+      jobData.parameters.angle23,
+      jobData.parameters.coord3,
+      jobData.parameters.ells
+  );
+
+  jobData.sendAsyncPort.send(output);
 }
 
 List<LatLng> resection(LatLng coord1, double angle12, LatLng coord2, double angle23, LatLng coord3, Ellipsoid ells) {

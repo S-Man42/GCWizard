@@ -87,26 +87,26 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
 
   Widget _buildSubmitButton() {
     return GCWSubmitButton(
-        onPressed: () async {
-          await showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) {
-              return Center (
-                child: Container(
-                  child: GCWAsyncExecuter(
-                    isolatedFunction: break_cipherAsync,
-                    parameter: _buildJobData(),
-                    onReady: (data) => _showOutput(data),
-                    isOverlay: true,
-                  ),
-                  height: 220,
-                  width: 150,
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: break_cipherAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
                 ),
-              );
-            },
-          );
-        }
+                height: 220,
+                width: 150,
+              ),
+            );
+          },
+        );
+      }
     );
   }
 
@@ -193,13 +193,18 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     await _loadQuadgramsAssets();
 
     return GCWAsyncExecuterParameters (
-      SubstitutionBreakerJobData(input: _currentInput, quadgrams: _quadgrams[_currentAlphabet])
+      SubstitutionBreakerJobData(
+        input: _currentInput,
+        quadgrams: _quadgrams[_currentAlphabet])
     );
   }
 
   _showOutput(SubstitutionBreakerResult output) {
     if (output == null) {
       _currentOutput = null;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
       return;
     }
 

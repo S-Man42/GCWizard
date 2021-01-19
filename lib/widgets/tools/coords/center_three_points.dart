@@ -7,6 +7,7 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/utils/constants.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
@@ -110,13 +111,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
             });
           },
         ),
-        GCWSubmitButton(
-          onPressed: () {
-            setState(() {
-              _calculateOutput(context);
-            });
-          },
-        ),
+        _buildSubmitButton(),
 
         GCWCoordsOutput(
           outputs: _currentOutput,
@@ -150,15 +145,53 @@ class CenterThreePointsState extends State<CenterThreePoints> {
     );
   }
 
-  _calculateOutput(BuildContext context) {
-    var _result = centerPointThreePoints(_currentCoords1, _currentCoords2, _currentCoords3, defaultEllipsoid());
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: centerPointThreePointsAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
+              ),
+            );
+          },
+        );
+      }
+    );
+  }
 
-    _currentCenter = _result[0]['centerPoint'];
-    _currentDistance = _result[0]['distance'];
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+    return GCWAsyncExecuterParameters(
+      CenterPointJobData(
+          coord1: _currentCoords1,
+          coord2: _currentCoords2,
+          coord3: _currentCoords3,
+          ells: defaultEllipsoid()
+      )
+    );
+  }
 
-    _currentOutput = _result.map((coord) {
+  _showOutput(List<Map<String, dynamic>> output) {
+    _currentCenter = output[0]['centerPoint'];
+    _currentDistance = output[0]['distance'];
+
+    _currentOutput = output.map((coord) {
       return '${formatCoordOutput(coord['centerPoint'], _currentOutputFormat, defaultEllipsoid())}';
     }).toList();
     _currentOutput.add('${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentDistance))} ${_currentOutputUnit.symbol}');
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 }

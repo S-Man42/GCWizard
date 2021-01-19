@@ -152,7 +152,12 @@ class _HashBreakerState extends State<HashBreaker> {
     });
 
     return GCWAsyncExecuterParameters(
-      HashBreakerJobData(input: _currentInput, searchMask: _currentMask, substitutions: _substitutions, hashFunction: _currentHashFunction)
+      HashBreakerJobData(
+        input: _currentInput,
+        searchMask: _currentMask,
+        substitutions: _substitutions,
+        hashFunction: _currentHashFunction
+      )
     );
   }
 
