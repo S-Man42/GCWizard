@@ -79,6 +79,24 @@ void main() {
     });
   });
 
+  group("Vigenere.encryptKeyNumbers:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : 'AbCDeF', 'key': '12 13', 'autoKey': false, 'aValue': 1, 'expectedOutput' : 'MoOQqS'},
+      {'input' : 'AbCDeF', 'key': '12    13', 'autoKey': false, 'aValue': 13, 'expectedOutput' : 'MoOQqS'},
+      {'input' : 'AbCDeF', 'key': '12 ,13', 'autoKey': true, 'aValue': 1, 'expectedOutput' : 'MoDFhJ'},
+      {'input' : 'AbCDeF', 'key': '12, -13', 'autoKey': true, 'aValue': 13, 'expectedOutput' : 'MoDFhJ'},
+
+      {'input' : 'Unter', 'key': '1 17 24 16 0', 'autoKey': false, 'aValue': 13, 'expectedOutput' : 'Verur'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
+        var _actual = encryptVigenere(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue'], ignoreNonLetters: false);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
   group("Vigenere.decrypt:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'input' : null, 'key': null, 'autoKey': false, 'aValue': 0, 'expectedOutput' : ''},
@@ -146,6 +164,24 @@ void main() {
         'aValue': 0,
         'input' : 'XMXMKNWYGIDIWBFBVEZVASWEJYOSLUNOMCYXUWMCNOQTZXAPBBAVQGRSFCLKUDBIXZSJHVJOEPRYOWMAAGZCKRNEAFAAFJZHXATWNHLFVKMT'
       },
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, key: ${elem['key']}, aValue: ${elem['aValue']}, autoKey: ${elem['autoKey']}', () {
+        var _actual = decryptVigenere(elem['input'], elem['key'], elem['autoKey'], aValue: elem['aValue'], ignoreNonLetters: false);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("Vigenere.decryptKeyNumbers:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'expectedOutput' : 'AbCDeF', 'key': '12 13', 'autoKey': false, 'aValue': 1, 'input' : 'MoOQqS'},
+      {'expectedOutput' : 'AbCDeF', 'key': '12    13', 'autoKey': false, 'aValue': 13, 'input' : 'MoOQqS'},
+      {'expectedOutput' : 'AbCDeF', 'key': '12 ,13', 'autoKey': true, 'aValue': 1, 'input' : 'MoDFhJ'},
+      {'expectedOutput' : 'AbCDeF', 'key': '12, -13', 'autoKey': true, 'aValue': 13, 'input' : 'MoDFhJ'},
+
+      {'expectedOutput' : 'Unter', 'key': '1 17 24 16 0', 'autoKey': false, 'aValue': 13, 'input' : 'Verur'},
     ];
 
     _inputsToExpected.forEach((elem) {
