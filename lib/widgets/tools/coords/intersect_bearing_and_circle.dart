@@ -94,7 +94,7 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput();
@@ -108,28 +108,30 @@ class IntersectBearingAndCircleState extends State<IntersectGeodeticAndCircle> {
             GCWMapPolyline(
               points: [
                 _currentMapPoints[0],
-                GCWMapPoint(
-                  point: projection(
-                    _currentCoordsStart,
-                    _currentBearingStart['value'],
-                    max<double> (
-                      distanceBearing(
-                        _currentCoordsStart,
-                        _currentCoordsCircle,
-                        defaultEllipsoid()
-                      ).distance,
-                      _currentRadiusCircle
-                    ) * 2.5,
-                    defaultEllipsoid()
-                  ),
-                  isVisible: false
-                )
+                _getEndPoint()
               ]
             )
           ]
         ),
       ],
     );
+  }
+
+  _getEndPoint() {
+    var mapPoint = GCWMapPoint(
+      point: projection(_currentCoordsStart, _currentBearingStart['value'],
+        max<double>(
+          distanceBearing(_currentCoordsStart, _currentCoordsCircle, defaultEllipsoid()).distance,
+          _currentRadiusCircle
+        ) * 2.5,
+        defaultEllipsoid()
+      ),
+      isVisible: false
+    );
+
+    _currentMapPoints.add(mapPoint);
+
+    return mapPoint;
   }
 
   _calculateOutput() {

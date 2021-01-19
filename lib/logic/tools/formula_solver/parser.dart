@@ -64,7 +64,7 @@ class FormulaParser {
     //replace constants and formula names
     var safedFormulaNames = _safeFunctionsAndConstants(formula);
     //replace values
-    int i = values.length;
+    int i = pow(values.length, 2);
     var substitutedFormula = safedFormulaNames['formula'];
     var fullySubstituded = false;
     while (i > 0 && !fullySubstituded) {

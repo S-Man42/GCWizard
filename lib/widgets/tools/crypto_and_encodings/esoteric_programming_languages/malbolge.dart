@@ -186,10 +186,10 @@ class MalbolgeState extends State<Malbolge> {
                                     child: Column(
                                       children: <Widget>[
                                         GCWTextDivider(
-                                            text: i18n(context, 'malbolge_hint_code_memnonic')
+                                            text: i18n(context, 'malbolge_hint_code_mnemonic')
                                         ),
                                         GCWOutputText(
-                                          text: output.memnonic.join('\n'),
+                                          text: output.mnemonic.join('\n'),
                                           isMonotype: true,
                                         ),
                                       ],

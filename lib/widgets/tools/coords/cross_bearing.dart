@@ -91,7 +91,7 @@ class CrossBearingState extends State<CrossBearing> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput();
@@ -133,39 +133,47 @@ class CrossBearingState extends State<CrossBearing> {
   }
 
   GCWMapPoint _getEndLine1() {
-     final _ells = defaultEllipsoid();
+    final _ells = defaultEllipsoid();
 
-     if (_currentIntersection == null) {
-       var distance1To2 = distanceBearing(_currentCoords1, _currentCoords2, _ells).distance;
-       return GCWMapPoint(
-         point: projection(_currentCoords1, _currentBearing1['value'], distance1To2 / 2.0, _ells),
-         isVisible: false
-       );
-     }
+    var mapPoint;
+    if (_currentIntersection == null) {
+      var distance1To2 = distanceBearing(_currentCoords1, _currentCoords2, _ells).distance;
+      mapPoint = GCWMapPoint(
+        point: projection(_currentCoords1, _currentBearing1['value'], distance1To2 / 2.0, _ells),
+        isVisible: false
+      );
+    } else {
+      var distance1ToIntersect = distanceBearing(_currentIntersection, _currentCoords1, _ells).distance;
+      mapPoint = GCWMapPoint(
+        point: projection(_currentIntersection, _currentBearing1['value'], distance1ToIntersect * 1.5, _ells),
+        isVisible: false
+      );
+    }
 
-     var distance1ToIntersect = distanceBearing(_currentIntersection, _currentCoords1, _ells).distance;
-     return GCWMapPoint(
-       point: projection(_currentIntersection, _currentBearing1['value'], distance1ToIntersect * 1.5, _ells),
-       isVisible: false
-     );
+    _currentMapPoints.add(mapPoint);
+    return mapPoint;
   }
 
   GCWMapPoint _getEndLine2() {
     final _ells = defaultEllipsoid();
 
+    var mapPoint;
     if (_currentIntersection == null) {
       var distance2To1 = distanceBearing(_currentCoords2, _currentCoords1, _ells).distance;
-      return GCWMapPoint(
+      mapPoint = GCWMapPoint(
         point: projection(_currentCoords2, _currentBearing2['value'], distance2To1 / 2.0, _ells),
+        isVisible: false
+      );
+    } else {
+      var distance2ToIntersect = distanceBearing(_currentIntersection, _currentCoords2, _ells).distance;
+      mapPoint = GCWMapPoint(
+        point: projection(_currentIntersection, _currentBearing2['value'], distance2ToIntersect * 1.5, _ells),
         isVisible: false
       );
     }
 
-    var distance2ToIntersect = distanceBearing(_currentIntersection, _currentCoords2, _ells).distance;
-    return GCWMapPoint(
-      point: projection(_currentIntersection, _currentBearing2['value'], distance2ToIntersect * 1.5, _ells),
-      isVisible: false
-    );
+    _currentMapPoints.add(mapPoint);
+    return mapPoint;
   }
 
   _calculateOutput() {

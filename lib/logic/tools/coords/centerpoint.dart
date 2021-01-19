@@ -3,15 +3,16 @@ import 'dart:math';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
+import 'package:gc_wizard/logic/tools/coords/segment_line.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong/latlong.dart';
 
 Map<String, dynamic> centerPointTwoPoints(LatLng coord1, LatLng coord2, Ellipsoid ells) {
-  var distBear = distanceBearing(coord1, coord2, ells);
+  var segments = segmentLine(coord1, coord2, 2, ells);
 
   return {
-    'centerPoint': projection(coord1, distBear.bearingAToB, distBear.distance / 2.0, ells),
-    'distance': distBear.distance / 2.0
+    'centerPoint': segments['points'].first,
+    'distance': segments['segmentDistance']
   };
 }
 
@@ -30,20 +31,22 @@ List<Map<String, dynamic>> centerPointThreePoints (LatLng coord1, LatLng coord2,
 
   var _result = [_calculateCenterPointThreePoints(coord1, coord2, coord3, ells)];
 
+  // Commented out (S-Man42, 01/2021): Created some problems in a few cases. Don't know why, but hangs here
   //find a possible second point
-  var _maxRuns = 100;
-  while (_maxRuns > 0) {
-    var _temp = _calculateCenterPointThreePoints(coord1, coord2, coord3, ells);
-    double _dist1 = _temp['distance'];
-    double _dist2 = _result[0]['distance'];
-
-    if ((_dist1 - _dist2).abs() > 1) {
-      _result.add(_temp);
-      break;
-    }
-
-    _maxRuns--;
-  }
+  // var _maxRuns = 100;
+  // while (_maxRuns > 0) {
+  //   print(_maxRuns);
+  //   var _temp = _calculateCenterPointThreePoints(coord1, coord2, coord3, ells);
+  //   double _dist1 = _temp['distance'];
+  //   double _dist2 = _result[0]['distance'];
+  //
+  //   if ((_dist1 - _dist2).abs() > 1) {
+  //     _result.add(_temp);
+  //     break;
+  //   }
+  //
+  //   _maxRuns--;
+  // }
 
   _result.sort((a, b) {
     return a['distance'].compareTo(b['distance']);
@@ -67,6 +70,7 @@ Map<String, dynamic> _calculateCenterPointThreePoints (LatLng coord1, LatLng coo
   double dist3 = distanceBearing(calculatedPoint, coord3, ells).distance;
 
   double dist = max(dist1, max(dist2, dist3));
+  double originalDist = dist;
 
   double d = _checkDist(dist1, dist2, dist3);
   double distSum = dist1 + dist2 + dist3;
@@ -77,8 +81,9 @@ Map<String, dynamic> _calculateCenterPointThreePoints (LatLng coord1, LatLng coo
     c++;
     if (c > 1000) {
 
-      dist = 100;
+      dist = originalDist;
       c = 0;
+      calculatedPoint = LatLng(lat, lon);
     }
 
     double bearing = Random().nextDouble() * 360.0;

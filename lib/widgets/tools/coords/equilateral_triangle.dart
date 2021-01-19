@@ -71,7 +71,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput();

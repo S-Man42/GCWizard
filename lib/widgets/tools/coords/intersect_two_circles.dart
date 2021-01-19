@@ -89,7 +89,7 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput();

@@ -11,6 +11,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_dms.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_formatselector.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_gausskrueger.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geohash.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_geohex.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_maidenhead.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mercator.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_mgrs.dart';
@@ -22,6 +23,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewhereigo_w
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_xyz.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:intl/intl.dart';
@@ -33,8 +35,9 @@ class GCWCoords extends StatefulWidget {
   final Map<String, String> coordsFormat;
   final LatLng coordinates;
   final String title;
+  final bool notitle;
 
-  const GCWCoords({Key key, this.title, this.coordinates, this.onChanged, this.coordsFormat}) : super(key: key);
+  const GCWCoords({Key key, this.title, this.coordinates, this.onChanged, this.coordsFormat, this.notitle: false}) : super(key: key);
 
   @override
   GCWCoordsState createState() => GCWCoordsState();
@@ -111,6 +114,16 @@ class GCWCoordsState extends State<GCWCoords> {
       {
         'coordFormat': getCoordinateFormatByKey(keyCoordsMGRS),
         'widget': GCWCoordsMGRS(
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsXYZ),
+        'widget': GCWCoordsXYZ(
           onChanged: (newValue) {
             setState(() {
               _setCurrentValueAndEmitOnChange(newValue);
@@ -201,6 +214,16 @@ class GCWCoordsState extends State<GCWCoords> {
         ),
       },
       {
+        'coordFormat': getCoordinateFormatByKey(keyCoordsGeoHex),
+        'widget': GCWCoordsGeoHex(
+          onChanged: (newValue) {
+            setState(() {
+              _setCurrentValueAndEmitOnChange(newValue);
+            });
+          },
+        ),
+      },
+      {
         'coordFormat': getCoordinateFormatByKey(keyCoordsOpenLocationCode),
         'widget': GCWCoordsOpenLocationCode(
           onChanged: (newValue) {
@@ -234,46 +257,35 @@ class GCWCoordsState extends State<GCWCoords> {
 
     _pastedCoords = null;
 
-    Column _widget = Column(
-      children: <Widget>[
-        GCWTextDivider(
-          text: widget.title,
-          bottom: 0.0,
-          trailing: Row(
+    Column _widget;
+    if (widget.notitle) {
+      _widget = Column(
+        children: <Widget>[
+          Row(
             children: [
-              Container(
-                child:  GCWIconButton(
-                  iconData: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
-                  size: IconButtonSize.SMALL,
-                  onPressed: () {
-                    _setUserLocationCoords();
-                  },
-                ),
-                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+              Expanded(
+                child: _buildInputFormatSelector()
               ),
-              GCWCoordsPasteButton(
-                size: IconButtonSize.SMALL,
-                onPasted: _setCoords
+              Container(
+                child: _buildTrailingButtons(IconButtonSize.NORMAL),
+                padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN)
               )
             ],
           )
-        ),
-        GCWCoordsFormatSelector(
-          format: _currentCoordsFormat,
-          onChanged: (newValue){
-            setState(() {
-              if (_currentCoordsFormat != newValue) {
-                _currentCoordsFormat = newValue;
-                _currentValue = defaultCoordinate;
-
-                _setCurrentValueAndEmitOnChange();
-              }
-              FocusScope.of(context).requestFocus(new FocusNode()); //Release focus from previous edited field
-            });
-          },
-        ),
-      ],
-    );
+        ],
+      );
+    } else {
+      _widget = Column(
+        children: <Widget>[
+          GCWTextDivider(
+            text: widget.title,
+            bottom: 0.0,
+            trailing: _buildTrailingButtons(IconButtonSize.SMALL)
+          ),
+          _buildInputFormatSelector()
+        ],
+      );
+    }
 
     _currentWidget = _coordsWidgets
       .firstWhere((entry) => entry['coordFormat'].key == _currentCoordsFormat['format'])['widget'];
@@ -281,6 +293,44 @@ class GCWCoordsState extends State<GCWCoords> {
     _widget.children.add(_currentWidget);
 
     return _widget;
+  }
+
+  _buildInputFormatSelector() {
+    return GCWCoordsFormatSelector(
+      format: _currentCoordsFormat,
+      onChanged: (newValue){
+        setState(() {
+          if (_currentCoordsFormat != newValue) {
+            _currentCoordsFormat = newValue;
+            _currentValue = defaultCoordinate;
+
+            _setCurrentValueAndEmitOnChange();
+          }
+          FocusScope.of(context).requestFocus(new FocusNode()); //Release focus from previous edited field
+        });
+      },
+    );
+  }
+
+  _buildTrailingButtons(IconButtonSize size) {
+    return Row(
+      children: [
+        Container(
+          child:  GCWIconButton(
+            iconData: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
+            size: size,
+            onPressed: () {
+              _setUserLocationCoords();
+            },
+          ),
+          padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+        ),
+        GCWCoordsPasteButton(
+          size: size,
+          onPasted: _setCoords
+        )
+      ],
+    );
   }
 
   _setCurrentValueAndEmitOnChange([LatLng newValue]) {

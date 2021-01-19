@@ -48,7 +48,7 @@ class RSAECheckerState extends State<RSAEChecker> {
             _currentQ = text;
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {});
           },

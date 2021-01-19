@@ -16,9 +16,9 @@ import 'dart:math';
 class malbolgeOutput{
   final List<String> output;
   final List<String> assembler;
-  final List<String> memnonic;
+  final List<String> mnemonic;
 
-  malbolgeOutput(this.output, this.assembler, this.memnonic);
+  malbolgeOutput(this.output, this.assembler, this.mnemonic);
 }
 
 final xlat1 = "+b(29e*j1VMEKLyC})8&m#~W>qxdRp0wkrUo[D7,XTcA\"lI.v%{gJh4G\\-=O@5`_3i<?Z';FNQuY]szf\$!BS/|t:Pn6^Ha";
@@ -166,7 +166,7 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
   int input = 0;
   List<String> output = new List<String>();
   List<String> assembler = new List<String>();
-  List<String> memnonic = new List<String>();
+  List<String> mnemonic = new List<String>();
   String STDOUT = '';
 
   while (!halt){
@@ -183,12 +183,12 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
           'c = ' + c.toString(),
           'a = ' + a.toString(),
           'd = ' + d.toString(),]);
-        return malbolgeOutput(output, assembler, memnonic);
+        return malbolgeOutput(output, assembler, mnemonic);
       }
     }
     opcode = xlat1[(memory[c] - 33 + c) % 94];
     assembler.add(format(c) + '   ' + opcode);
-    memnonic.add(opCodeList[opcode]);
+    mnemonic.add(opCodeList[opcode]);
 
     switch (opcode) {
       case 'j':  //    40     mov d, [d]
@@ -223,7 +223,7 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
             '',
             'malbolge_error_runtime',
             'malbolge_error_no_input']);
-          return malbolgeOutput(output, assembler, memnonic);
+          return malbolgeOutput(output, assembler, mnemonic);
         }
         break;
 
@@ -247,7 +247,7 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
           'c = ' + c.toString(),
           'a = ' + a.toString(),
           'd = ' + d.toString(),]);
-        return malbolgeOutput(output, assembler, memnonic);
+        return malbolgeOutput(output, assembler, mnemonic);
       };
       memory[c] = xlat2 .codeUnitAt(memory[c] - 33);
     }
@@ -267,7 +267,7 @@ malbolgeOutput interpretMalbolge(String program, String STDIN, bool strict){
       d++;
   }
   output.add(STDOUT);
-  return malbolgeOutput(output, assembler, memnonic);
+  return malbolgeOutput(output, assembler, mnemonic);
 }
 
 malbolgeOutput generateMalbolge(String out_s){

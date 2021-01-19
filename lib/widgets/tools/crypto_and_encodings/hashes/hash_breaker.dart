@@ -126,7 +126,7 @@ class _HashBreakerState extends State<HashBreaker> {
         ),
         _buildVariablesInput(),
         _buildSubstitutionList(context),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput();

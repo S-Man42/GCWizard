@@ -88,7 +88,7 @@ class EllipsoidTransformState extends State<EllipsoidTransform> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput(context);
