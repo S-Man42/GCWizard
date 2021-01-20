@@ -456,8 +456,6 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   _calculateOutput(BuildContext context) {
-    _currentCoordMode = GCWSwitchPosition.left;
-
     Map<String, String> _substitutions = {};
     widget.formula.values.forEach((value) {
       _substitutions.putIfAbsent(value.key, () => value.value);
