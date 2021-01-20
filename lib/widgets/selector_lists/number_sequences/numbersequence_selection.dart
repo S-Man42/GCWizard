@@ -10,11 +10,20 @@ import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersennefermat_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_factorial_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pell_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_bell_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthal_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthaloblong_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pelllucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthallucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_recaman_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_catalan_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenneprimes_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenneexponents_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_weirdnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_sublimenumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_perfectnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_superperfectnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pseudoperfectnumbers_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class NumberSequenceSelection extends GCWSelection {
@@ -26,15 +35,24 @@ class NumberSequenceSelection extends GCWSelection {
       return [
         className(NumberSequenceFactorialSelection()),
         className(NumberSequenceFibonacciSelection()),
-        className(NumberSequenceLucasSelection()),
-        className(NumberSequenceFermatSelection()),
         className(NumberSequenceMersenneSelection()),
+        className(NumberSequenceMersennePrimesSelection()),
+        className(NumberSequenceMersenneExponentsSelection()),
         className(NumberSequenceMersenneFermatSelection()),
-        className(NumberSequencePellSelection()),
-        className(NumberSequenceJacobsthalSelection()),
-        className(NumberSequencePellLucasSelection()),
-        className(NumberSequenceJacobsthalLucasSelection()),
+        className(NumberSequenceFermatSelection()),
+        className(NumberSequencePerfectNumbersSelection()),
+        className(NumberSequenceSuperPerfectNumbersSelection()),
+        className(NumberSequencePseudoPerfectNumbersSelection()),
+        className(NumberSequenceWeirdNumbersSelection()),
+        className(NumberSequenceSublimeNumbersSelection()),
+        className(NumberSequenceBellSelection()),
         className(NumberSequenceCatalanSelection()),
+        className(NumberSequenceJacobsthalSelection()),
+        className(NumberSequenceJacobsthalLucasSelection()),
+        className(NumberSequenceJacobsthalOblongSelection()),
+        className(NumberSequenceLucasSelection()),
+        className(NumberSequencePellSelection()),
+        className(NumberSequencePellLucasSelection()),
         className(NumberSequenceRecamanSelection()),
       ].contains(className(element.tool));
     }).toList();
