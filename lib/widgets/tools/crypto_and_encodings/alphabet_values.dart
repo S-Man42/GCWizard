@@ -305,7 +305,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
               ),
               flex: 2
             ),
-            isCustomAlphabet ? Container() : Expanded(child: Container(), flex: 1)
+            if (!isCustomAlphabet) Expanded(child: Container(), flex: 1)
           ],
         ),
         Container(

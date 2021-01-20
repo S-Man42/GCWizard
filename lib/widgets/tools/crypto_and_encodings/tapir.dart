@@ -72,17 +72,16 @@ class TapirState extends State<Tapir> {
             });
           },
         ),
-        _currentOneTimePadMode
-          ? GCWTextField(
-              inputFormatters: [_maskFormatter],
-              hintText: '12345 67890 12...',
-              onChanged: (value) {
-                setState(() {
-                  _currentOneTimePad = value;
-                });
-              },
-            )
-          : Container(),
+        if (_currentOneTimePadMode)
+          GCWTextField(
+            inputFormatters: [_maskFormatter],
+            hintText: '12345 67890 12...',
+            onChanged: (value) {
+              setState(() {
+                _currentOneTimePad = value;
+              });
+            },
+          ),
         GCWDefaultOutput(
           child: _buildOutput()
         ),

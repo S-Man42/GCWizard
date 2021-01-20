@@ -266,8 +266,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                   ),
               flex: 1,
             ),
-            _currentEditId == formula.id
-              ? GCWIconButton(
+            if (_currentEditId == formula.id)
+              GCWIconButton(
                 iconData: Icons.check,
                 onPressed: () {
                   formula.formula = _currentEditedFormula;
@@ -278,8 +278,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                     _editFormulaController.clear();
                   });
                 },
-              )
-              : Container(),
+              ),
             GCWPopupMenu(
               iconData: Icons.settings,
               menuItemBuilder: (context) => [

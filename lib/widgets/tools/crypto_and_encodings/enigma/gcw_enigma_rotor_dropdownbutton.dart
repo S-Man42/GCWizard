@@ -69,40 +69,38 @@ class GCWEnigmaRotorDropDownButtonState extends State<GCWEnigmaRotorDropDownButt
           ),
           flex: 2
         ),
-        widget.type == EnigmaRotorType.STANDARD
-          ? Expanded(
-              child: Container(
-                child: GCWABCDropDownButton(
-                  value: _currentOffset,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentOffset = value;
-                      _setCurrentValueAndEmitOnChange();
-                    });
-                  },
-                ),
-                padding: EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
+        if (widget.type == EnigmaRotorType.STANDARD)
+          Expanded(
+            child: Container(
+              child: GCWABCDropDownButton(
+                value: _currentOffset,
+                onChanged: (value) {
+                  setState(() {
+                    _currentOffset = value;
+                    _setCurrentValueAndEmitOnChange();
+                  });
+                },
               ),
-              flex: 1
-            )
-          : Container(),
-        widget.type == EnigmaRotorType.STANDARD
-          ? Expanded(
-              child: Container(
-                child: GCWABCDropDownButton(
-                  value: _currentSetting,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentSetting = value;
-                      _setCurrentValueAndEmitOnChange();
-                    });
-                  },
-                ),
-                padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+              padding: EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
+            ),
+            flex: 1
+          ),
+        if (widget.type == EnigmaRotorType.STANDARD)
+          Expanded(
+            child: Container(
+              child: GCWABCDropDownButton(
+                value: _currentSetting,
+                onChanged: (value) {
+                  setState(() {
+                    _currentSetting = value;
+                    _setCurrentValueAndEmitOnChange();
+                  });
+                },
               ),
-              flex: 1
-            )
-          : Container(),
+              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+            ),
+            flex: 1
+            ),
       ],
     );
   }

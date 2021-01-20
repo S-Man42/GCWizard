@@ -61,83 +61,80 @@ class DTMFState extends State<DTMF> {
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              controller: _encodeController,
-              inputFormatters: [_maskInputFormatter],
-              onChanged: (text) {
-                setState(() {
-                  _currentEncodeInput = text;
-                });
-              },
-            )
-          : Container(),
-        _currentMode == GCWSwitchPosition.right
-          ? Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    child: GCWDropDownButton(
-                      value: _currentDecryptLowFrequency,
-                      items: DTMF_FREQUENCIES_LOW.map((frequency) {
-                        return GCWDropDownMenuItem(
-                          value: frequency,
-                          child: frequency.toString(),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _currentDecryptLowFrequency = value;
-                        });
-                      },
-                    ),
-                    padding: EdgeInsets.only(right: DEFAULT_MARGIN),
-                  )
-                ),
-                Expanded(
-                  child: Container(
-                    child: GCWDropDownButton(
-                      value: _currentDecryptHighFrequency,
-                      items: DTMF_FREQUENCIES_HIGH.map((frequency) {
-                        return GCWDropDownMenuItem(
-                          value: frequency,
-                          child: frequency.toString(),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _currentDecryptHighFrequency = value;
-                        });
-                      },
-                    ),
-                    padding: EdgeInsets.only(
-                      left: DEFAULT_MARGIN,
-                      right: DEFAULT_MARGIN
-                    ),
-                  )
-                ),
-                GCWIconButton(
-                  iconData: Icons.add,
-                  onPressed: () {
-                    setState(() {
-                      var input = ' [$_currentDecryptLowFrequency, $_currentDecryptHighFrequency] ';
-                      _currentDecodeInput = textControllerInsertText(input, _currentDecodeInput, _decodeController);
-                    });
-                  },
+        if (_currentMode == GCWSwitchPosition.left)
+          GCWTextField(
+            controller: _encodeController,
+            inputFormatters: [_maskInputFormatter],
+            onChanged: (text) {
+              setState(() {
+                _currentEncodeInput = text;
+              });
+            },
+          ),
+        if (_currentMode == GCWSwitchPosition.right)
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  child: GCWDropDownButton(
+                    value: _currentDecryptLowFrequency,
+                    items: DTMF_FREQUENCIES_LOW.map((frequency) {
+                      return GCWDropDownMenuItem(
+                        value: frequency,
+                        child: frequency.toString(),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentDecryptLowFrequency = value;
+                      });
+                    },
+                  ),
+                  padding: EdgeInsets.only(right: DEFAULT_MARGIN),
                 )
-              ],
-            )
-          : Container(),
-        _currentMode == GCWSwitchPosition.right
-          ? GCWTextField(
-              controller: _decodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecodeInput = text;
-                });
-              },
-            )
-          : Container(),
+              ),
+              Expanded(
+                child: Container(
+                  child: GCWDropDownButton(
+                    value: _currentDecryptHighFrequency,
+                    items: DTMF_FREQUENCIES_HIGH.map((frequency) {
+                      return GCWDropDownMenuItem(
+                        value: frequency,
+                        child: frequency.toString(),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentDecryptHighFrequency = value;
+                      });
+                    },
+                  ),
+                  padding: EdgeInsets.only(
+                    left: DEFAULT_MARGIN,
+                    right: DEFAULT_MARGIN
+                  ),
+                )
+              ),
+              GCWIconButton(
+                iconData: Icons.add,
+                onPressed: () {
+                  setState(() {
+                    var input = ' [$_currentDecryptLowFrequency, $_currentDecryptHighFrequency] ';
+                    _currentDecodeInput = textControllerInsertText(input, _currentDecodeInput, _decodeController);
+                  });
+                },
+              )
+            ],
+          ),
+        if (_currentMode == GCWSwitchPosition.right)
+          GCWTextField(
+            controller: _decodeController,
+            onChanged: (text) {
+              setState(() {
+                _currentDecodeInput = text;
+              });
+            },
+          ),
         GCWTextDivider(
             text: i18n(context, 'common_output')
         ),

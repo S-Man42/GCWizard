@@ -95,26 +95,25 @@ class GeneralSettingsState extends State<GeneralSettings> {
             });
           },
         ),
-        Prefs.getBool('tabs_use_default_tab')
-          ? GCWDropDownButton(
-              value: Prefs.get('tabs_default_tab'),
-              items: [
-                  {'index': 0, 'text': i18n(context, 'common_tabs_categories')},
-                  {'index': 1, 'text': i18n(context, 'common_tabs_all')},
-                  {'index': 2, 'text': i18n(context, 'common_tabs_favorites')}
-                ].map((item) {
-                  return GCWDropDownMenuItem(
-                    value: item['index'],
-                    child: item['text'],
-                  );
-                }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  Prefs.setInt('tabs_default_tab', value);
-                });
-              },
-            )
-          : Container(),
+        if (Prefs.getBool('tabs_use_default_tab'))
+          GCWDropDownButton(
+            value: Prefs.get('tabs_default_tab'),
+            items: [
+                {'index': 0, 'text': i18n(context, 'common_tabs_categories')},
+                {'index': 1, 'text': i18n(context, 'common_tabs_all')},
+                {'index': 2, 'text': i18n(context, 'common_tabs_favorites')}
+              ].map((item) {
+                return GCWDropDownMenuItem(
+                  value: item['index'],
+                  child: item['text'],
+                );
+              }).toList(),
+            onChanged: (value) {
+              setState(() {
+                Prefs.setInt('tabs_default_tab', value);
+              });
+            },
+          ),
         GCWTextDivider(
           text: i18n(context, 'settings_general_clipboard')
         ),

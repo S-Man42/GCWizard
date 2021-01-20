@@ -103,9 +103,8 @@ class TomTomState extends State<TomTom> {
         GCWTextDivider(
           text: i18n(context, 'common_input')
         ),
-        _currentMode == GCWSwitchPosition.right
-          ? _buildButtonBar()
-          : Container(),
+        if (_currentMode == GCWSwitchPosition.right)
+          _buildButtonBar(),
         _currentMode == GCWSwitchPosition.left
           ? GCWTextField(
               controller: _inputEncryptController,

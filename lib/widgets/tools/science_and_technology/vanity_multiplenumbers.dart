@@ -66,19 +66,18 @@ class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.left
-          ? GCWTwoOptionsSwitch(
-              title: i18n(context, 'vanity_numberforspace'),
-              leftValue: '0',
-              rightValue: '1',
-              value: _currentNumberForSpaceMode,
-              onChanged: (value) {
-                setState(() {
-                  _currentNumberForSpaceMode = value;
-                });
-              },
-            )
-          : Container(),
+        if (_currentMode == GCWSwitchPosition.left)
+          GCWTwoOptionsSwitch(
+            title: i18n(context, 'vanity_numberforspace'),
+            leftValue: '0',
+            rightValue: '1',
+            value: _currentNumberForSpaceMode,
+            onChanged: (value) {
+              setState(() {
+                _currentNumberForSpaceMode = value;
+              });
+            },
+          ),
         GCWDefaultOutput(
           child: _buildOutput()
         )

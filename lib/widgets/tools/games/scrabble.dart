@@ -88,10 +88,11 @@ class ScrabbleState extends State<Scrabble> {
         GCWDefaultOutput(
           child: _output
         ),
-        _currentCrosstotalMode ? GCWCrosstotalOutput(
-          text: _currentInput,
-          values: _currentValues
-        ) : Container()
+        if (_currentCrosstotalMode)
+          GCWCrosstotalOutput(
+            text: _currentInput,
+            values: _currentValues
+          )
       ],
     );
   }

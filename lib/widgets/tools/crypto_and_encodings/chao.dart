@@ -95,19 +95,18 @@ class ChaoState extends State<Chao> {
             );
           }).toList(),
         ),
-        _currentAlphabetTypeChiffre == ChaoAlphabet.CUSTOM
-          ? GCWTextField(
-          hintText: i18n(context, 'common_alphabet'),
-          controller: _alphabetControllerChiffre,
-          onChanged: (text) {
-            setState(() {
-              _currentAlphabetChiffre = text;
-            });
-          },
-        )
-          : Container(),
+        if (_currentAlphabetTypeChiffre == ChaoAlphabet.CUSTOM)
+          GCWTextField(
+            hintText: i18n(context, 'common_alphabet'),
+            controller: _alphabetControllerChiffre,
+            onChanged: (text) {
+              setState(() {
+                _currentAlphabetChiffre = text;
+              });
+            },
+          ),
         GCWTextDivider(
-            text: i18n(context, 'chao_alphabet_plain')
+          text: i18n(context, 'chao_alphabet_plain')
         ),
         GCWDropDownButton(
           value: _currentAlphabetTypePlain,
@@ -123,17 +122,16 @@ class ChaoState extends State<Chao> {
             );
           }).toList(),
         ),
-        _currentAlphabetTypePlain == ChaoAlphabet.CUSTOM
-          ? GCWTextField(
-          hintText: i18n(context, 'chao_alphabet_plain'),
-          controller: _alphabetControllerPlain,
-          onChanged: (text) {
-            setState(() {
-              _currentAlphabetPlain = text;
-            });
-          },
-        )
-          : Container(),
+        if (_currentAlphabetTypePlain == ChaoAlphabet.CUSTOM)
+          GCWTextField(
+            hintText: i18n(context, 'chao_alphabet_plain'),
+            controller: _alphabetControllerPlain,
+            onChanged: (text) {
+              setState(() {
+                _currentAlphabetPlain = text;
+              });
+            },
+          ),
         _buildOutput()
       ],
     );

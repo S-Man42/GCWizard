@@ -67,42 +67,39 @@ class ProjectilesState extends State<Projectiles> {
             );
           }).toList(),
         ),
-        _currentMode != UNITCATEGORY_MASS
-          ? GCWUnitInput(
-              value: _currentInputMass,
-              title: i18n(context, 'projectiles_mass'),
-              unitList: allMasses(),
-              onChanged: (value) {
-                setState(() {
-                  _currentInputMass = value;
-                });
-              },
-            )
-          : Container(),
-        _currentMode != UNITCATEGORY_ENERGY
-          ? GCWUnitInput(
-              value: _currentInputEnergy,
-              title: i18n(context, 'projectiles_energy'),
-              unitCategory: UNITCATEGORY_ENERGY,
-              onChanged: (value) {
-                setState(() {
-                  _currentInputEnergy = value;
-                });
-              },
-            )
-          : Container(),
-        _currentMode != UNITCATEGORY_VELOCITY
-          ? GCWUnitInput(
-              value: _currentInputVelocity,
-              title: i18n(context, 'projectiles_velocity'),
-              unitCategory: UNITCATEGORY_VELOCITY,
-              onChanged: (value) {
-                setState(() {
-                  _currentInputVelocity = value;
-                });
-              },
-            )
-          : Container(),
+        if (_currentMode != UNITCATEGORY_MASS)
+          GCWUnitInput(
+            value: _currentInputMass,
+            title: i18n(context, 'projectiles_mass'),
+            unitList: allMasses(),
+            onChanged: (value) {
+              setState(() {
+                _currentInputMass = value;
+              });
+            },
+          ),
+        if (_currentMode != UNITCATEGORY_ENERGY)
+          GCWUnitInput(
+            value: _currentInputEnergy,
+            title: i18n(context, 'projectiles_energy'),
+            unitCategory: UNITCATEGORY_ENERGY,
+            onChanged: (value) {
+              setState(() {
+                _currentInputEnergy = value;
+              });
+            },
+          ),
+        if (_currentMode != UNITCATEGORY_VELOCITY)
+          GCWUnitInput(
+            value: _currentInputVelocity,
+            title: i18n(context, 'projectiles_velocity'),
+            unitCategory: UNITCATEGORY_VELOCITY,
+            onChanged: (value) {
+              setState(() {
+                _currentInputVelocity = value;
+              });
+            },
+          ),
         GCWTextDivider(text: i18n(context, 'common_outputunit')),
         GCWUnits(
           value: _currentOutputUnit,
