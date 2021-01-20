@@ -478,8 +478,6 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
-    _currentCoordMode = GCWSwitchPosition.left;
-
     Map<String, String> _substitutions = {};
     widget.formula.values.forEach((value) {
       _substitutions.putIfAbsent(value.key, () => value.value);
@@ -517,13 +515,13 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         updateOutput = true;
       },);
     }
-    else
+    else if (output != null)
       updateOutput = true;
 
     if (updateOutput)
       _buildOutput(output);
     else
-      _output = null;
+      _output = GCWCoordsOutput(outputs : List<dynamic>());
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
