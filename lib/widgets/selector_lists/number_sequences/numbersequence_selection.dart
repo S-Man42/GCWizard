@@ -23,7 +23,7 @@ import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_sublimenumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_perfectnumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_superperfectnumbers_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pseudoperfectnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_primarypseudoperfectnumbers_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class NumberSequenceSelection extends GCWSelection {
@@ -42,7 +42,7 @@ class NumberSequenceSelection extends GCWSelection {
         className(NumberSequenceFermatSelection()),
         className(NumberSequencePerfectNumbersSelection()),
         className(NumberSequenceSuperPerfectNumbersSelection()),
-        className(NumberSequencePseudoPerfectNumbersSelection()),
+        className(NumberSequencePrimaryPseudoPerfectNumbersSelection()),
         className(NumberSequenceWeirdNumbersSelection()),
         className(NumberSequenceSublimeNumbersSelection()),
         className(NumberSequenceBellSelection()),
