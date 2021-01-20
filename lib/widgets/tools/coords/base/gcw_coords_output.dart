@@ -12,22 +12,26 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
 
 class GCWCoordsOutput extends StatefulWidget {
   final List<dynamic> outputs;
-  final List<GCWMapPoint> points;
-  final List<GCWMapPolyline> polylines;
+  List<GCWMapPoint> points;
+  List<GCWMapPolyline> polylines;
   final bool mapButtonTop;
 
-  const GCWCoordsOutput({
+  GCWCoordsOutput({
     Key key,
     this.outputs,
     this.points,
     this.polylines,
     this.mapButtonTop: false
-  }) : super(key: key);
+  }) : super(key: key) {
+    if (points == null)
+      this.points = [];
+    if (polylines == null)
+      this.polylines = [];
+  }
 
   @override
   _GCWCoordsOutputState createState() => _GCWCoordsOutputState();
 }
-
 
 class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
 
