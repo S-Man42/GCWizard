@@ -49,7 +49,7 @@ import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_weirdnumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_perfectnumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_superperfectnumbers_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pseudoperfectnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_primarypseudoperfectnumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/periodic_table_selection.dart';
@@ -237,7 +237,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_exponents.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/perfect_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/superperfect_numbers.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pseudoperfect_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/primarypseudoperfect_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/weird_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/sublime_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
@@ -1614,12 +1614,12 @@ class Registry {
       GCWTool(
         tool: NumberSequenceSuperPerfectNumbersSelection(),
         i18nPrefix: 'numbersequence_superperfectnumbers',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'super perfect numbers perfekte vollkommene zahlen oeis A000396',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'superperfect numbers superperfekte vollkommene zahlen oeis A000396',
       ),
       GCWTool(
-        tool: NumberSequencePseudoPerfectNumbersSelection(),
-        i18nPrefix: 'numbersequence_pseudoperfectnumbers',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pseudo perfect numbers perfekte vollkommene zahlen oeis A054377',
+        tool: NumberSequencePrimaryPseudoPerfectNumbersSelection(),
+        i18nPrefix: 'numbersequence_primarypseudoperfectnumbers',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'primarypseudoperfect numbers primaerpseudoperfekte vollkommene zahlen oeis A054377',
       ),
       GCWTool(
         tool: NumberSequenceWeirdNumbersSelection(),
@@ -2219,27 +2219,27 @@ class Registry {
 
       //NumberSequenceSelection PseudoPerfect numbers ****************************************************************************************
       GCWTool(
-        tool: NumberSequencePseudoPerfectNumbersNthNumber(),
+        tool: NumberSequencePrimaryPseudoPerfectNumbersNthNumber(),
         i18nPrefix: 'numbersequence_nth',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'pseudoperfect numbers pseudoperfekte zahlen positions position',
       ),
       GCWTool(
-        tool: NumberSequencePseudoPerfectNumbersRange(),
+        tool: NumberSequencePrimaryPseudoPerfectNumbersRange(),
         i18nPrefix: 'numbersequence_range',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pseudoperfect numbers pseudoperfekte zahlen range bereich',
       ),
       GCWTool(
-        tool: NumberSequencePseudoPerfectNumbersCheckNumber(),
+        tool: NumberSequencePrimaryPseudoPerfectNumbersCheckNumber(),
         i18nPrefix: 'numbersequence_check',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pseudoperfect numbers pseudoperfekte zahlen tests is ist ueberpruefungen' ,
       ),
       GCWTool(
-        tool: NumberSequencePseudoPerfectNumbersDigits(),
+        tool: NumberSequencePrimaryPseudoPerfectNumbersDigits(),
         i18nPrefix: 'numbersequence_digits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pseudoperfect numbers pseudoperfekte zahlen',
       ),
       GCWTool(
-        tool: NumberSequencePseudoPerfectNumbersContainsDigits(),
+        tool: NumberSequencePrimaryPseudoPerfectNumbersContainsDigits(),
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pseudoperfect numbers pseudoperfekte zahlen',
       ),
