@@ -122,7 +122,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
         _buildSubmitButton(),
         GCWCoordsOutput(
           outputs: _currentOutput,
-          points: _currentMapPoints,
+          points: _currentMapPoints
         ),
       ],
     );
@@ -170,6 +170,15 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
   }
 
   _showOutput(List<Intersect> output) {
+    if (output == null) {
+      _currentIntersections = [];
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+      return;
+    }
+
     _currentIntersections = output;
 
     _currentMapPoints = [

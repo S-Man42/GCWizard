@@ -575,7 +575,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         GCWCoordsOutput(
           mapButtonTop: true,
           outputs: _currentOutput,
-          points: _currentMapPoints,
+          points: _currentMapPoints
         )
       ]
     );

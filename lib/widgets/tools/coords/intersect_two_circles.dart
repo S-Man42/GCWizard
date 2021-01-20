@@ -139,6 +139,15 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
   }
 
   _showOutput(List<LatLng> output) {
+    if (output == null) {
+      _currentIntersections = [];
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+      return;
+    }
+
     _currentIntersections = output;
 
     _currentMapPoints = [

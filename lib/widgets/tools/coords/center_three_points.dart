@@ -182,6 +182,15 @@ class CenterThreePointsState extends State<CenterThreePoints> {
   }
 
   _showOutput(List<Map<String, dynamic>> output) {
+    if (output == null) {
+      _currentOutput = [];
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+      return;
+    }
+
     _currentCenter = output[0]['centerPoint'];
     _currentDistance = output[0]['distance'];
 
