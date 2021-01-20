@@ -167,6 +167,15 @@ class ResectionState extends State<Resection> {
   }
 
   _showOutput(List<LatLng> output) {
+    if (output == null) {
+      _currentOutput = [];
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+      return;
+    }
+
     _currentIntersections = output;
 
     var ells = _ells;
@@ -189,7 +198,7 @@ class ResectionState extends State<Resection> {
       ),
     ];
 
-    if (_currentIntersections[0] == null || (_currentIntersections[0] == null && _currentIntersections[1] == null)) {
+    if (_currentIntersections.length == 0 || (_currentIntersections[0] == null && _currentIntersections[1] == null)) {
       _currentOutput = [i18n(context, "coords_intersect_nointersection")];
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {});

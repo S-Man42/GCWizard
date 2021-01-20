@@ -116,6 +116,15 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
   }
 
   _showOutput(List<LatLng> output) {
+    if (output == null) {
+      _currentOutput = [];
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+      return;
+    }
+
     _currentIntersections = output;
 
     _currentMapPoints = [

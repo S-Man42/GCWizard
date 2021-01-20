@@ -146,6 +146,15 @@ class IntersectionState extends State<Intersection> {
   }
 
   _showOutput(List<LatLng> output) {
+    if (output == null) {
+      _currentOutput = [];
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+      return;
+    }
+
     _currentIntersections = output;
 
     var ells = _ells;
