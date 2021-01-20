@@ -1189,7 +1189,7 @@
   "crosssum_crosssum_example" : "42 → 6",
   "crosssum_range_title" : "Cross Sum in Range",
   "crosssum_range_description" : "Finds all integers within a range with a specific digit sum",
-  "crosssum_range_expected" : "Expected Cross Sum",
+  "crosssum_range_expected" : "Expected Value",
   "crosssum_range_range" : "Search Range (Start, End)",
   "crosssum_range_alert_result_title" : "Warning: Many results!",
   "crosssum_range_alert_result_text" : "You generated %s1 results.\n\nDo you really want to list them all?",
