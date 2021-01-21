@@ -58,6 +58,7 @@ class CipherWheelState extends State<CipherWheel> {
             Expanded(
               child: GCWABCSpinner(
                 value: _currentLetterValue,
+                suppressLetterValues: true,
                 onChanged: (value) {
                   setState(() {
                     _currentLetterValue = value;
