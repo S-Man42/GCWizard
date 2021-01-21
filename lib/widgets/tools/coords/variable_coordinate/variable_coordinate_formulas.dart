@@ -100,6 +100,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
   }
 
   _buildFormulaList(BuildContext context) {
+
     var odd = true;
     var rows = formulas.map((formula) {
       var formulaTool = GCWTool(
