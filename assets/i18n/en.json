@@ -512,12 +512,16 @@
   "chickenlanguage_description" : "Game Language, Secret Language",
   "chickenlanguage_example" : "code → cohodefodehedefe",
 
+  "cipherwheel_title": "Cipher Wheel",
+  "cipherwheel_description": "Rotates the alphabet values as on a rotating disc",
+  "cipherwheel_example": "ABCTUV → 8 9 10 1 2 3",
+
   "cistercian_selection_title" : "Cistercian Numbers",
   "cistercian_selection_description" : "Numbering system of the Cistercian monastic order",
-  "cistercian_selection_example" : "11 202 1000  → ⊺ ⊧ ⌋",
+  "cistercian_selection_example" : "11 202 1000 → ⊺ ⊧ ⌋",
   "cistercian_title" : "Cistercian Numbers",
   "cistercian_description" : "Numbering system of the Cistercian monastic order",
-  "cistercian_example" : "11 202 1000  → ⊺ ⊧ ⌋",
+  "cistercian_example" : "11 202 1000 → ⊺ ⊧ ⌋",
 
   "chronogram_title" : "Chronogram",
   "chronogram_description" : "Finds and adds roman numerals in texts",
@@ -1579,6 +1583,8 @@
   "mayanumbers_description" : "Vigesimal System (Numeral Base 20) of the Mayas",
   "mayanumbers_single_numbers" : "Separate Numbers",
   "mayanumbers_vigesimal" : "Number in Vigesimal System (Numeral Base 20)",
+
+  "mexicanarmycipherwheel_title": "Mexican Army Cipher Wheel",
 
   "morse_title" : "Morse",
   "morse_example" : "-- --- .-. ... .",

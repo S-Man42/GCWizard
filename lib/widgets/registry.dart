@@ -123,6 +123,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
@@ -169,6 +170,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_g
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_checker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_e_checker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
@@ -276,6 +278,7 @@ class Registry {
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
   static final SEARCHSTRING_CCITT1 = SEARCHSTRING_CCITT + 'ccitt1 ccitt-1 baudot-code baudotcode ';
   static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen lochkarten konrad zuse z-22 z22 punchedpapertape cards baudot-murray-code ';
+  static final SEARCHSTRING_CIPHERWHEEL = 'dechiffrierscheiben decipherwheels drehscheiben stages ';
   static final SEARCHSTRING_CISTERCIAN = 'cistercian zisterzienser monastic order monk moenchsorden moenche zahlen numbers ';
   static final SEARCHSTRING_CODEBREAKER = 'solver loeser universal universeller codebreaker codebrecher codeknacker cracker textersetzung replacement';
   static final SEARCHSTRING_COMBINATORICS = 'mathematics mathematik kombinatorik combinatorics ';
@@ -456,6 +459,12 @@ class Registry {
         searchStrings: 'chao john francis byrne'
       ),
       GCWTool(
+        tool: CipherWheel(),
+        i18nPrefix: 'cipherwheel',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_CIPHERWHEEL
+      ),
+      GCWTool(
         tool: CistercianNumbersSelection(),
         i18nPrefix: 'cistercian_selection',
         category: ToolCategory.CRYPTOGRAPHY,
@@ -617,6 +626,12 @@ class Registry {
         i18nPrefix: 'mayanumbers_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_MAYANUMBERS
+      ),
+      GCWTool(
+        tool: MexicanArmyCipherWheel(),
+        i18nPrefix: 'mexicanarmycipherwheel',
+        category: ToolCategory.CRYPTOGRAPHY,
+        searchStrings: SEARCHSTRING_CIPHERWHEEL + 'mexicanarmycipherwheel mexanischearmee mexiko mexico'
       ),
       GCWTool(
         tool: Morse(),
