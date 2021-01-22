@@ -1148,8 +1148,6 @@
   "coords_variablecoordinate_variable" : "Variable",
   "coords_variablecoordinate_possiblevalues" : "Mögliche Werte",
   "coords_variablecoordinate_nooutputs" : "Keine Koordinaten berechnet!\n\nMögliche Gründe:\n- invalides/nicht berechenbares Koordinatenformat\n- Unterformeln müssen in [ ] eingebettet sein\n- fehlende Variablen\n- Nord N/Ost E als Variablen behandelt und ersetzt worden (Versuche 'N [Werte] E [Werte]', oder lass N/E weg und ersetze S/W mit Minus)\n- negatives oder dezimales Ergebnis in einer Unterformel\n- Rückwärtsprojektion hat keine Koordinate gefunden",
-  "coords_variablecoordinate_alert_title" : "Warnung: Sehr viele Koordinaten!",
-  "coords_variablecoordinate_alert_text" : "Du hast %s1 Koordinaten generiert.\n\nWillst du sie alle sehen?\n\nDas könnte dein Gerät drastisch verlangsamen.",
   "coords_variablecoordinate_decleftpad" : "Kommastellen",
   "coords_variablecoordinate_decleftpad_left" : "rechts auffüllen\nXX° XX.X00",
   "coords_variablecoordinate_decleftpad_right" : "links auffüllen\nXX° XX.00X",
