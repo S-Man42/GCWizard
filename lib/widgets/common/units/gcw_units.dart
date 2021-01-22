@@ -44,8 +44,8 @@ class _GCWUnitsState extends State<GCWUnits> {
       children: <Widget>[
         Row(
           children: <Widget>[
-            if (widget.unitCategory.usesPrefixes)
-              Expanded(
+            widget.unitCategory.usesPrefixes
+              ? Expanded(
                   child: Container(
                     child: GCWUnitPrefixDropDownButton(
                       onlyShowSymbols: widget.onlyShowPrefixSymbols,
@@ -60,7 +60,8 @@ class _GCWUnitsState extends State<GCWUnits> {
                     padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                   ),
                   flex: 1
-                ),
+                )
+              : Container(),
             Expanded(
               child: GCWUnitDropDownButton(
                 value: _currentUnit,

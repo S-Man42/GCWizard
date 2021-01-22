@@ -227,14 +227,13 @@ class GCWMapViewState extends State<GCWMapView> {
             )
           ),
 
-          if (widget.isEditable)
-            Positioned(
-              top: 15.0,
-              left: 15.0,
-              child: Column(
-                children: _buildEditButtons()
-              )
-          ),
+          widget.isEditable ? Positioned(
+            top: 15.0,
+            left: 15.0,
+            child: Column(
+              children: _buildEditButtons()
+            )
+          ) : Container(),
 
           Positioned(
             bottom: 5.0,
@@ -733,14 +732,15 @@ class GCWMapViewState extends State<GCWMapView> {
             text: gcwMarker.coordinateText,
             style: gcwDialogTextStyle()
           ),
-          if (gcwMarker.mapPoint.hasCircle())
-            GCWOutputText(
-              text: i18n(context, 'common_radius') + ': ' + _formatLengthOutput(gcwMarker.mapPoint.circle.radius),
-              style: gcwDialogTextStyle(),
-              copyText: gcwMarker.mapPoint.circle.radius.toString(),
-              ),
-          if (gcwMarker.mapPoint.isEditable)
-            Row(
+          gcwMarker.mapPoint.hasCircle()
+            ? GCWOutputText(
+                text: i18n(context, 'common_radius') + ': ' + _formatLengthOutput(gcwMarker.mapPoint.circle.radius),
+                style: gcwDialogTextStyle(),
+                copyText: gcwMarker.mapPoint.circle.radius.toString(),
+              )
+            : Container(),
+          gcwMarker.mapPoint.isEditable
+            ? Row(
                 children: [
                   _isPolylineDrawing
                     ? GCWDialogButton(
@@ -800,6 +800,7 @@ class GCWMapViewState extends State<GCWMapView> {
                   )
                 ]
               )
+            : Container()
         ],
       )
     );

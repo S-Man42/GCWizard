@@ -69,21 +69,22 @@ class SegmentDisplayState extends State<SegmentDisplay> {
             });
           },
         ),
-        if (_currentMode == GCWSwitchPosition.left) // encrypt
-          GCWTwoOptionsSwitch(
-            value: _currentEncryptMode,
-            title: i18n(context, 'segmentdisplay_encodemode'),
-            leftValue: i18n(context, 'segmentdisplay_encodemode_text'),
-            rightValue: i18n(context, 'segmentdisplay_encodemode_visualsegments'),
-            onChanged: (value) {
-              setState(() {
-                _currentEncryptMode = value;
-                if (_currentEncryptMode == GCWSwitchPosition.right) {
-                  _currentDisplays = encodeSegment(_currentEncodeInput, widget.type);
-                }
-              });
-            },
-          ),
+        _currentMode == GCWSwitchPosition.left // encrypt
+          ? GCWTwoOptionsSwitch(
+              value: _currentEncryptMode,
+              title: i18n(context, 'segmentdisplay_encodemode'),
+              leftValue: i18n(context, 'segmentdisplay_encodemode_text'),
+              rightValue: i18n(context, 'segmentdisplay_encodemode_visualsegments'),
+              onChanged: (value) {
+                setState(() {
+                  _currentEncryptMode = value;
+                  if (_currentEncryptMode == GCWSwitchPosition.right) {
+                    _currentDisplays = encodeSegment(_currentEncodeInput, widget.type);
+                  }
+                });
+              },
+            )
+          : Container(),
           _currentMode == GCWSwitchPosition.left // encrypt
           ? (
             _currentEncryptMode == GCWSwitchPosition.left

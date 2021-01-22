@@ -27,10 +27,11 @@ class _GCWOutputState extends State<GCWOutput> {
   Widget build(BuildContext context) {
     return Column (
       children: <Widget>[
-        if (widget.title != null && widget.title.length > 0)
-          GCWTextDivider(
+        widget.title != null && widget.title.length > 0
+          ? GCWTextDivider(
               text: widget.title
-            ),
+            )
+          : Container(),
         widget.child is Widget
           ? widget.child
           : GCWOutputText(

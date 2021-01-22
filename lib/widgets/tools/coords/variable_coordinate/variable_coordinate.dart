@@ -252,8 +252,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   _buildProjectionInput() {
-    if (_currentProjectionMode)
-      return Column(
+    return _currentProjectionMode
+      ? Column(
           children: [
             Row(
               children: <Widget>[
@@ -335,7 +335,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
               ]
             )
           ],
-        );
+        )
+      : Container();
   }
 
   _buildSubstitutionList(BuildContext context) {
@@ -507,7 +508,17 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   _showOutput(Map<String, dynamic> output) {
-    if (output != null)
+    var updateOutput = false;
+
+    if ((output != null) && output['coordinates'].length > MAX_COUNT_COORDINATES) {
+      showGCWAlertDialog(context, i18n(context, 'coords_variablecoordinate_alert_title'), i18n(context, 'coords_variablecoordinate_alert_text', parameters: [output['coordinates'].length]), () {
+        updateOutput = true;
+      },);
+    }
+    else if (output != null)
+      updateOutput = true;
+
+    if (updateOutput)
       _buildOutput(output);
     else
       _output = GCWCoordsOutput(outputs : List<dynamic>());
@@ -545,20 +556,20 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
     _output = Column(
       children: [
-        if (_currentOutputFormat['format'] == keyCoordsDMM && hasLeftPaddedCoords)
-          GCWTwoOptionsSwitch(
-            title: i18n(context, 'coords_variablecoordinate_decleftpad'),
-            leftValue: i18n(context, 'coords_variablecoordinate_decleftpad_left'),
-            rightValue: i18n(context, 'coords_variablecoordinate_decleftpad_right'),
-            value: _currentCoordMode,
-            onChanged: (value) {
-              setState(() {
-                _currentCoordMode = value;
-                _buildOutput(coords);
-              });
-            },
-          ),
-
+        _currentOutputFormat['format'] == keyCoordsDMM && hasLeftPaddedCoords
+          ? GCWTwoOptionsSwitch(
+              title: i18n(context, 'coords_variablecoordinate_decleftpad'),
+              leftValue: i18n(context, 'coords_variablecoordinate_decleftpad_left'),
+              rightValue: i18n(context, 'coords_variablecoordinate_decleftpad_right'),
+              value: _currentCoordMode,
+              onChanged: (value) {
+                setState(() {
+                  _currentCoordMode = value;
+                  _buildOutput(coords);
+                });
+              },
+            )
+          : Container(),
         GCWCoordsOutput(
           mapButtonTop: true,
           outputs: _currentOutput,
