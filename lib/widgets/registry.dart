@@ -278,7 +278,7 @@ class Registry {
   static final SEARCHSTRING_CCITT = 'ccitt jean-maurice-emile baudot telex telegraph telegraf ';
   static final SEARCHSTRING_CCITT1 = SEARCHSTRING_CCITT + 'ccitt1 ccitt-1 baudot-code baudotcode ';
   static final SEARCHSTRING_CCITT2 = SEARCHSTRING_CCITT + 'ccitt2 ccitt-2 donald murray lochstreifen lochkarten konrad zuse z-22 z22 punchedpapertape cards baudot-murray-code ';
-  static final SEARCHSTRING_CIPHERWHEEL = 'dechiffrierscheiben decipherwheels drehscheiben stages ';
+  static final SEARCHSTRING_CIPHERWHEEL = 'dechiffrierscheiben decipherwheels drehscheiben stages decipherdisks decipherdiscs ';
   static final SEARCHSTRING_CISTERCIAN = 'cistercian zisterzienser monastic order monk moenchsorden moenche zahlen numbers ';
   static final SEARCHSTRING_CODEBREAKER = 'solver loeser universal universeller codebreaker codebrecher codeknacker cracker textersetzung replacement';
   static final SEARCHSTRING_COMBINATORICS = 'mathematics mathematik kombinatorik combinatorics ';
@@ -631,13 +631,13 @@ class Registry {
         tool: MexicanArmyCipherWheel(),
         i18nPrefix: 'mexicanarmycipherwheel',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: SEARCHSTRING_CIPHERWHEEL + 'mexicanarmycipherwheel mexanischearmee mexiko mexico'
+        searchStrings: SEARCHSTRING_CIPHERWHEEL + 'mexicanarmy mexanischearmee mexiko mexico'
       ),
       GCWTool(
         tool: Morse(),
         i18nPrefix: 'morse',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'samuel morse morsecode morsen punkte striche dots dashes'
+        searchStrings: 'samuelmorsecode morsen punkte striche dots dashes'
       ),
       GCWTool(
         tool: MultiDecoder(),

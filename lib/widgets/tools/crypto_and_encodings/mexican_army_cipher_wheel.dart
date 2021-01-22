@@ -1,52 +1,49 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/abaddon.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_letter_value_relation.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_abc_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
+
 
 class MexicanArmyCipherWheel extends StatefulWidget {
+  const MexicanArmyCipherWheel();
+
   @override
   MexicanArmyCipherWheelState createState() => MexicanArmyCipherWheelState();
 }
 
 class MexicanArmyCipherWheelState extends State<MexicanArmyCipherWheel> {
-  var _inputController;
-  var _aController;
-  var _bController;
-  var _cController;
+  var _controller;
+  var _key4Controller;
 
-  var _currentInput = '';
-  var _currentA = '¥';
-  var _currentB = 'µ';
-  var _currentC = 'þ';
+  String _currentInput = '';
+  int _currentKey1 = 1;
+  int _currentKey2 = 27;
+  int _currentKey3 = 53;
+  int _currentKey4 = 79;
+  int _currentLetterValue4 = 1;
+  String _currentKey4Text = '79';
+  String _output = '';
 
-  var _currentMode = GCWSwitchPosition.right;
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   @override
   void initState() {
     super.initState();
-
-    _inputController = TextEditingController(text: _currentInput);
-    _aController = TextEditingController(text: _currentA);
-    _bController = TextEditingController(text: _currentB);
-    _cController = TextEditingController(text: _currentC);
+    _controller = TextEditingController(text: _currentInput);
+    _key4Controller = TextEditingController(text: _currentKey4Text);
   }
 
   @override
   void dispose() {
-    _inputController.dispose();
-    _aController.dispose();
-    _bController.dispose();
-    _cController.dispose();
-
+    _controller.dispose();
+    _key4Controller.dispose();
     super.dispose();
   }
 
@@ -55,67 +52,82 @@ class MexicanArmyCipherWheelState extends State<MexicanArmyCipherWheel> {
     return Column(
       children: <Widget>[
         GCWTextField(
-          controller: _inputController,
+          controller: _controller,
           onChanged: (text) {
             setState(() {
               _currentInput = text;
+              _calculateOutput();
             });
           },
         ),
-        _buildInputButtons(context),
-        GCWTextDivider(
-          text: i18n(context, 'common_key')
+        GCWLetterValueRelation(
+          onChanged: (value) {
+            setState(() {
+              _currentKey1 = value;
+              _calculateOutput();
+            });
+          },
+        ),
+        GCWLetterValueRelation(
+          minValue: 27,
+          startValue: 27,
+          onChanged: (value) {
+            setState(() {
+              _currentKey2 = value;
+              _calculateOutput();
+            });
+          },
+        ),
+        GCWLetterValueRelation(
+          minValue: 53,
+          startValue: 53,
+          onChanged: (value) {
+            setState(() {
+              _currentKey3 = value;
+              _calculateOutput();
+            });
+          },
         ),
         Row(
-          children: <Widget>[
+          children: [
             Expanded(
-              child: Container(
-                child: GCWTextField(
-                  controller: _aController,
-                  onChanged: (text) {
+                child: GCWABCSpinner(
+                  value: _currentLetterValue4,
+                  suppressLetterValues: true,
+                  onChanged: (value) {
                     setState(() {
-                      _currentA = text;
+                      _currentLetterValue4 = value;
+                      _calculateOutput();
                     });
                   },
-                ),
-                padding: EdgeInsets.only(
-                  left: 6,
-                  right: 6
                 )
-              ),
+            ),
+            Container(
+              child: GCWText(text: '=', textAlign: TextAlign.center,),
+              padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN, right: 2 * DEFAULT_MARGIN),
             ),
             Expanded(
-              child: Container(
-                child: GCWTextField(
-                  controller: _bController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentB = text;
-                    });
-                  },
-                ),
-                padding: EdgeInsets.only(
-                  left: 6,
-                  right: 6
-                )
+              child: GCWIntegerSpinner(
+                controller: _key4Controller,
+                value: _currentKey4,
+                min: 79,
+                max: 104,
+                onChanged: (value) {
+                  setState(() {
+                    _currentKey4 = value;
+
+                    if (_currentKey4 == 100) {
+                      _key4Controller.text = '00';
+                    }
+                    if (_currentKey4 >= 101) {
+                      _key4Controller.text = '--- (${_currentKey4 - 100})';
+                    }
+
+                    _calculateOutput();
+                  });
+                },
               ),
-            ),
-            Expanded(
-              child: Container(
-                child: GCWTextField(
-                  controller: _cController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentC = text;
-                    });
-                  },
-                ),
-                padding: EdgeInsets.only(
-                  left: 6,
-                  right: 6
-                )
-              ),
-            ),
+            )
           ],
         ),
         GCWTwoOptionsSwitch(
@@ -123,71 +135,24 @@ class MexicanArmyCipherWheelState extends State<MexicanArmyCipherWheel> {
           onChanged: (value) {
             setState(() {
               _currentMode = value;
+              _calculateOutput();
             });
           },
         ),
         GCWDefaultOutput(
-          child: _buildOutput()
+          child: _output
         )
       ],
     );
   }
 
-  Widget _buildInputButtons(BuildContext context) {
-    if (_currentMode == GCWSwitchPosition.left)
-      return Container();
+  _calculateOutput() {
+    var keys = [_currentKey1, _currentKey2, _currentKey3, _currentKey4 - _currentLetterValue4 + 1];
 
-    return GCWToolBar(
-        children: [
-          GCWButton(
-            text: _currentA,
-            onPressed: () {
-              setState(() {
-                _addCharacter(_currentA);
-              });
-            },
-          ),
-          GCWButton(
-            text: _currentB,
-            onPressed: () {
-              setState(() {
-                _addCharacter(_currentB);
-              });
-            },
-          ),
-          GCWButton(
-            text: _currentC,
-            onPressed: () {
-              setState(() {
-                _addCharacter(_currentC);
-              });
-            },
-          ),
-
-          GCWIconButton(
-            iconData: Icons.backspace,
-            onPressed: () {
-              setState(() {
-                _currentInput = textControllerDoBackSpace(_currentInput, _inputController);
-              });
-            },
-          ),
-        ]
-    );
-  }
-
-  _addCharacter(String input) {
-    _currentInput = textControllerInsertText(input, _currentInput, _inputController);
-  }
-
-  _buildOutput() {
-    if (_currentInput.length == 0
-      || _currentA.length == 0
-      || _currentB.length == 0
-      || _currentC.length == 0)
-      return '';
-
-    var key = {YEN: _currentA, MY: _currentB, THORN: _currentC};
-    return _currentMode == GCWSwitchPosition.left ? encryptAbaddon(_currentInput, key) : decryptAbaddon(_currentInput, key);
+    if (_currentMode == GCWSwitchPosition.right) {
+      _output = decryptMexicanArmyCipherWheel(_currentInput, keys);
+    } else {
+      _output = encryptMexicanArmyCipherWheel(_currentInput, keys);
+    }
   }
 }
