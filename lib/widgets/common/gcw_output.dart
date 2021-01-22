@@ -29,8 +29,8 @@ class _GCWOutputState extends State<GCWOutput> {
       children: <Widget>[
         if (widget.title != null && widget.title.length > 0)
           GCWTextDivider(
-              text: widget.title
-            ),
+            text: widget.title
+          ),
         widget.child is Widget
           ? widget.child
           : GCWOutputText(

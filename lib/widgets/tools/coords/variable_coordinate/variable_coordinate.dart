@@ -10,14 +10,13 @@ import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart';
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -183,7 +182,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
             });
           },
         ),
-        _buildProjectionInput(),
+        if (_currentProjectionMode)
+           _buildProjectionInput(),
         _buildVariablesInput(),
         _buildSubstitutionList(context),
         GCWCoordsOutputFormat(
@@ -252,7 +252,6 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   _buildProjectionInput() {
-    if (_currentProjectionMode)
       return Column(
           children: [
             Row(
@@ -591,7 +590,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
           showToast(i18n(context, 'coords_common_location_lowaccuracy', parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
 
         var insertedCoord = formatCoordOutput(LatLng(locationData.latitude, locationData.longitude), defaultCoordFormat(), defaultEllipsoid());
-        _currentInput = insertedCoord.replaceAll('\n', '');
+        _currentInput = insertedCoord.replaceAll('\n', ' ');
         _inputController.text = _currentInput;
 
         setState(() {
