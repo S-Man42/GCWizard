@@ -294,8 +294,8 @@ class _HashBreakerState extends State<HashBreaker> {
                     onPressed: () {
                       setState(() {
                         _currentEditId = substitution.key;
-                        _editKeyController.title = substitution.value.keys.first;
-                        _editValueController.title = substitution.value.values.first;
+                        _editKeyController.text = substitution.value.keys.first;
+                        _editValueController.text = substitution.value.values.first;
                         _currentEditedKey = substitution.value.keys.first;
                         _currentEditedValue = substitution.value.values.first;
                       });
