@@ -54,8 +54,8 @@ class DNAAminoAcidsState extends State<DNAAminoAcids> {
           GCWDefaultOutput(
             child: output
           ),
-          includesM ? GCWTextDivider(text: i18n(context, 'common_note')) : Container(),
-          includesM ? GCWText(text: i18n(context, 'dna_aminoacids_notem')) : Container()
+          if (includesM) GCWTextDivider(text: i18n(context, 'common_note')),
+          if (includesM) GCWText(text: i18n(context, 'dna_aminoacids_notem'))
         ],
       );
     }

@@ -100,31 +100,30 @@ class HomophoneState extends State<Homophone> {
           ]
         ),
 
-        _currentKeyType == KeyType.GENERATED
-          ? Row(
-          children: <Widget>[
-            Expanded(
-              child: GCWText(
-                text: i18n(context, 'homophone_rotation') + ':'
+        if (_currentKeyType == KeyType.GENERATED)
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: GCWText(
+                  text: i18n(context, 'homophone_rotation') + ':'
+                ),
+                flex: 1
               ),
-              flex: 1
-            ),
-            Expanded(
-              child: GCWIntegerSpinner(
-                controller: _currentRotationController,
-                min: 0,
-                max: 999999,
-                onChanged: (value) {
-                  setState(() {
-                    _currentRotation = value;
-                  });
-                },
+              Expanded(
+                child: GCWIntegerSpinner(
+                  controller: _currentRotationController,
+                  min: 0,
+                  max: 999999,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentRotation = value;
+                    });
+                  },
+                ),
+                flex: 2
               ),
-              flex: 2
-            ),
-          ]
-        )
-        : Container(),
+            ]
+          ),
         _currentKeyType == KeyType.GENERATED
         ? Row(
           children: <Widget>[

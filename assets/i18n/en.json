@@ -1151,8 +1151,6 @@
   "coords_variablecoordinate_variable" : "Variable",
   "coords_variablecoordinate_possiblevalues" : "Possible Values",
   "coords_variablecoordinate_nooutputs" : "No coordinates calculated!\n\nReasons may be:\n- invalid/unparseable coordinate format\n- subformulas need to be wrapped into [ ]\n- missing variables\n- North's N/East's E handled as variables and therefore replaced (Try 'N [value] E [value]' or remove N/E and replace S/W with Minus)\n- negative or decimal result in a subformula\n- Reverse projection found no result",
-  "coords_variablecoordinate_alert_title" : "Warning: Many coordinates!",
-  "coords_variablecoordinate_alert_text" : "You generated %s1 coordinates.\n\nDo you want to see them?\n\nThis might slow down you device dramatically.",
   "coords_variablecoordinate_decleftpad" : "Decimal Places",
   "coords_variablecoordinate_decleftpad_left" : "Pad right\nXX° XX.X00",
   "coords_variablecoordinate_decleftpad_right" : "Pad left\nXX° XX.00X",
@@ -1444,8 +1442,6 @@
   "hashes_hashbreaker_searchconfiguration_searchmask" : "Search Mask",
   "hashes_hashbreaker_hashtobreak" : "Hash to find",
   "hashes_hashbreaker_solutionnotfound" : "No solution found within the given range.",
-  "hashes_hashbreaker_alert_range_title" : "Very large search range",
-  "hashes_hashbreaker_alert_range_text" : "The search contains %s1 elements.\n\nThe search could take a large amount of time and may slow down your device significantly.\n\nDo you want to continue?",
 
   "heatindex_title" : "Heat Index",
   "heatindex_description" : "Apparent temperature from temperature and humidity",
@@ -2171,7 +2167,6 @@
   "substitutionbreaker_title" : "Substitution Breaker",
   "substitutionbreaker_description" : "Chance to automatically break monoalphabetic replacement ciphers",
   "substitutionbreaker_example" : "QFRQ → TEST",
-  "substitutionbreaker_start" : "Solve",
   "substitutionbreaker_error" : "An error occured: %s1",
   "substitutionbreaker_exporttosubstition" : "Export to 'Replacements' tool",
 
@@ -2905,7 +2900,6 @@
   "vigenerebreaker_key_length": "Key Length",
   "vigenerebreaker_key_length_min": "min",
   "vigenerebreaker_key_length_max": "max",
-  "vigenerebreaker_start": "Solve",
   "vigenerebreaker_error" : "An error occured: %s1",
 
   "whitespace_language_title" : "Whitespace",

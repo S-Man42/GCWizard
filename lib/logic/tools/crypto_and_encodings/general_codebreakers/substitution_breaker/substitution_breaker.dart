@@ -4,6 +4,16 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/
 enum SubstitutionBreakerAlphabet{ENGLISH, GERMAN, SPANISH, POLISH, GREEK, FRENCH, RUSSIAN}
 enum SubstitutionBreakerErrorCode{OK, MAX_ROUNDS_PARAMETER, CONSOLIDATE_PARAMETER, TEXT_TOO_SHORT, ALPHABET_TOO_LONG, WRONG_GENERATE_TEXT}
 
+class SubstitutionBreakerJobData {
+  final String input;
+  final Quadgrams quadgrams;
+
+  SubstitutionBreakerJobData({
+      this.input = '',
+      this.quadgrams = null
+  });
+}
+
 class SubstitutionBreakerResult {
   final String ciphertext;
   final String plaintext;
@@ -20,8 +30,22 @@ class SubstitutionBreakerResult {
   });
 }
 
-Future<SubstitutionBreakerResult> break_cipher(String input, Quadgrams quadgrams) async {
-  if (input == null || input == '')
+void break_cipherAsync(dynamic jobData) async {
+  if (jobData.parameters == null) {
+    jobData.sendAsyncPort.send(null);
+    return;
+  }
+
+  var output = break_cipher(
+      jobData.parameters.input,
+      jobData.parameters.quadgrams
+  );
+
+  jobData.sendAsyncPort.send(output);
+}
+
+SubstitutionBreakerResult break_cipher(String input, Quadgrams quadgrams)  {
+  if (input == null || input == '' || quadgrams == null)
     return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
 
   return _convertBreakerResult(guballa.break_cipher(quadgrams, input));

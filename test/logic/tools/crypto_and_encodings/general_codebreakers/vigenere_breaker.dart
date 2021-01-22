@@ -44,7 +44,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}', () async {
-        var _actual = await break_cipher(elem['input'], elem['VigenereBreakerType'], elem['alphabet'], elem['keyLengthMin'], elem['keyLengthMax']);
+        var _actual = break_cipher(elem['input'], elem['VigenereBreakerType'], elem['alphabet'], elem['keyLengthMin'], elem['keyLengthMax']);
         expect(_actual.plaintext, elem['expectedOutput']);
         expect(_actual.key, elem['key']);
         expect(_actual.errorCode, elem['errorCode']);

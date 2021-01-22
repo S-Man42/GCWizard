@@ -61,17 +61,16 @@ class BrainfkState extends State<Brainfk> {
             });
           },
         ),
-        _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              controller: _inputController,
-              hintText: i18n(context, 'brainfk_input'),
-              onChanged: (text) {
-                setState(() {
-                  _currentInput = text;
-                });
-              },
-            )
-          : Container(),
+        if (_currentMode == GCWSwitchPosition.left)
+          GCWTextField(
+            controller: _inputController,
+            hintText: i18n(context, 'brainfk_input'),
+            onChanged: (text) {
+              setState(() {
+                _currentInput = text;
+              });
+            },
+          ),
         GCWDefaultOutput(
           child: _calculateOutput()
         )

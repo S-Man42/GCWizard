@@ -7,6 +7,7 @@ import 'package:gc_wizard/logic/tools/coords/intersection.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_angle.dart';
@@ -14,6 +15,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:latlong/latlong.dart';
 
 class Intersection extends StatefulWidget {
   @override
@@ -35,6 +37,7 @@ class IntersectionState extends State<Intersection> {
   List<String> _currentOutput = [];
   var _currentMapPoints;
   List<GCWMapPolyline> _currentMapPolylines = [];
+  dynamic _ells;
 
   @override
   void initState() {
@@ -93,13 +96,7 @@ class IntersectionState extends State<Intersection> {
             });
           },
         ),
-        GCWSubmitButton(
-          onPressed: () {
-            setState(() {
-              _calculateOutput();
-            });
-          },
-        ),
+        _buildSubmitButton(),
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
@@ -109,10 +106,58 @@ class IntersectionState extends State<Intersection> {
     );
   }
 
-  _calculateOutput() {
-    var ells = defaultEllipsoid();
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: intersectionAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
+              ),
+            );
+          },
+        );
+      }
+    );
+  }
 
-    _currentIntersections = intersection(_currentCoords1, _currentAngle1['value'], _currentCoords2, _currentAngle2['value'], ells);
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+
+    _ells = defaultEllipsoid();
+    return GCWAsyncExecuterParameters(
+        IntersectionJobData(
+            coord1: _currentCoords1,
+            alpha: _currentAngle1['value'],
+            coord2: _currentCoords2,
+            beta: _currentAngle2['value'],
+            ells: defaultEllipsoid()
+        )
+    );
+  }
+
+  _showOutput(List<LatLng> output) {
+    if (output == null) {
+      _currentOutput = [];
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+      return;
+    }
+
+    _currentIntersections = output;
+
+    var ells = _ells;
 
     _currentMapPoints = [
       GCWMapPoint(
@@ -193,8 +238,11 @@ class IntersectionState extends State<Intersection> {
       }
     });
 
-    if (_currentIntersections[0] == null && _currentIntersections[1] == null) {
+    if (_currentIntersections == null || (_currentIntersections[0] == null && _currentIntersections[1] == null)) {
       _currentOutput = [i18n(context, "coords_intersect_nointersection")];
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
       return;
     }
 
@@ -212,5 +260,9 @@ class IntersectionState extends State<Intersection> {
     _currentOutput = _currentIntersections
       .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
       .toList();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 }

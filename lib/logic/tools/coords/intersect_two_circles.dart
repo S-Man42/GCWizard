@@ -3,6 +3,22 @@ import 'package:gc_wizard/logic/tools/coords/intervals/coordinate_cell.dart';
 import 'package:gc_wizard/logic/tools/coords/intervals/interval_calculator.dart';
 import 'package:latlong/latlong.dart';
 
+class IntersectTwoCirclesJobData {
+  final LatLng coord1;
+  final double radius1;
+  final LatLng coord2;
+  final double radius2;
+  final Ellipsoid ells;
+
+  IntersectTwoCirclesJobData({
+      this.coord1 = null,
+      this.radius1 = 0.0,
+      this.coord2 = null,
+      this.radius2 = 0.0,
+      this.ells = null
+  });
+}
+
 class _IntersectTwoCirclesCalculator extends IntervalCalculator {
 
   _IntersectTwoCirclesCalculator(Map<String, dynamic> parameters, Ellipsoid ellipsoid) : super(parameters, ellipsoid);
@@ -17,6 +33,23 @@ class _IntersectTwoCirclesCalculator extends IntervalCalculator {
 
     return (distanceToCoord1.a <= r1) && (r1 <= distanceToCoord1.b) && (distanceToCoord2.a <= r2) && (r2 <= distanceToCoord2.b);
   }
+}
+
+void intersectTwoCirclesAsync(dynamic jobData) async {
+  if (jobData == null) {
+    jobData.sendAsyncPort.send(null);
+    return;
+  }
+
+  var output = intersectTwoCircles(
+      jobData.parameters.coord1,
+      jobData.parameters.radius1,
+      jobData.parameters.coord2,
+      jobData.parameters.radius2,
+      jobData.parameters.ells
+  );
+
+  jobData.sendAsyncPort.send(output);
 }
 
 List<LatLng> intersectTwoCircles(LatLng coord1, double radius1, LatLng coord2, double radius2, Ellipsoid ellipsoid) {

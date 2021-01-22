@@ -45,8 +45,8 @@ class _GCWOutputTextState extends State<GCWOutputText> {
             )
           ),
         ),
-        widget.text != null && widget.text.length > 0 && !widget.suppressCopyButton
-          ? GCWIconButton(
+        if (widget.text != null && widget.text.length > 0 && !widget.suppressCopyButton)
+          GCWIconButton(
               iconColor: widget.style != null ? widget.style.color : themeColors().mainFont(),
               size: IconButtonSize.SMALL,
               iconData: Icons.content_copy,
@@ -57,7 +57,6 @@ class _GCWOutputTextState extends State<GCWOutputText> {
                 showToast(i18n(context, 'common_clipboard_copied'));
               },
             )
-          : Container()
       ],
     );
   }

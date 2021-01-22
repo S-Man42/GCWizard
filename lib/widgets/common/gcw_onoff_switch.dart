@@ -23,12 +23,13 @@ class GCWOnOffSwitchState extends State<GCWOnOffSwitch> {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        widget.notitle ? Container() : Expanded(
-          child: GCWText(
-            text: (widget.title ?? i18n(context, 'common_switch_title')) + ':'
+        if (!widget.notitle)
+          Expanded(
+            child: GCWText(
+              text: (widget.title ?? i18n(context, 'common_switch_title')) + ':'
+            ),
+            flex: 1
           ),
-          flex: 1
-        ),
         Expanded(
           child: Container(
             child: Row(

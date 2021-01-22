@@ -1,6 +1,21 @@
 import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
+import 'dart:isolate';
 
 final _ALARM_COUNT = 100000;
+
+class HashBreakerJobData {
+  final String input;
+  final String searchMask;
+  final Map<String, String> substitutions;
+  final Function hashFunction;
+
+  HashBreakerJobData({
+    this.input = '',
+    this.searchMask = '',
+    this.substitutions = null,
+    this.hashFunction = null,
+  });
+}
 
 Map<String, dynamic> preCheck(Map<String, String> substitutions) {
   var expander = VariableStringExpander('DUMMY', substitutions, (e) => false);
@@ -12,7 +27,20 @@ Map<String, dynamic> preCheck(Map<String, String> substitutions) {
   return {'status' : 'ok'};
 }
 
-Map<String, dynamic> breakHash(String input, String searchMask, Map<String, String> substitutions, Function hashFunction) {
+void breakHashAsync(dynamic jobData) async {
+
+  var output = breakHash(
+    jobData.parameters.input,
+    jobData.parameters.searchMask,
+    jobData.parameters.substitutions,
+    jobData.parameters.hashFunction,
+    sendAsyncPort: jobData.sendAsyncPort
+  );
+
+  jobData.sendAsyncPort.send(output);
+}
+
+Map<String, dynamic> breakHash(String input, String searchMask, Map<String, String> substitutions, Function hashFunction, {SendPort sendAsyncPort}) {
   if (
     input == null || input.length == 0
     || searchMask == null || searchMask.length == 0
@@ -28,7 +56,7 @@ Map<String, dynamic> breakHash(String input, String searchMask, Map<String, Stri
     if (hashValue == input)
       return withoutBrackets;
     else return null;
-  }, breakCondition: VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND);
+  }, breakCondition: VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND, sendAsyncPort: sendAsyncPort);
 
   var results = expander.run();
 

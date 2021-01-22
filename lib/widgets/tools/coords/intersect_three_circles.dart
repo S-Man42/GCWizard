@@ -8,12 +8,14 @@ import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat_distance.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:latlong/latlong.dart';
 
 class IntersectThreeCircles extends StatefulWidget {
   @override
@@ -117,29 +119,67 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
             });
           },
         ),
-        GCWSubmitButton(
-          onPressed: () {
-            setState(() {
-              _calculateOutput();
-            });
-          },
-        ),
+        _buildSubmitButton(),
         GCWCoordsOutput(
           outputs: _currentOutput,
-          points: _currentMapPoints,
+          points: _currentMapPoints
         ),
       ],
     );
   }
 
-  _calculateOutput() {
-    _currentIntersections = intersectThreeCircles(
-        _currentCoords1, _currentRadius1,
-        _currentCoords2, _currentRadius2,
-        _currentCoords3, _currentRadius3,
-        10, //accuracy
-        defaultEllipsoid()
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: intersectThreeCirclesAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
+              ),
+            );
+          },
+        );
+      }
     );
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+
+    return GCWAsyncExecuterParameters(
+        IntersectThreeCirclesJobData(
+            coord1: _currentCoords1,
+            dist14: _currentRadius1,
+            coord2: _currentCoords2,
+            dist24: _currentRadius2,
+            coord3: _currentCoords3,
+            dist34: _currentRadius3,
+            accuracy: 10,
+            ells: defaultEllipsoid()
+        )
+    );
+  }
+
+  _showOutput(List<Intersect> output) {
+    if (output == null) {
+      _currentIntersections = [];
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+      return;
+    }
+
+    _currentIntersections = output;
 
     _currentMapPoints = [
       GCWMapPoint(
@@ -179,8 +219,11 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
       )
     ];
 
-    if (_currentIntersections.isEmpty) {
+    if (_currentIntersections == null ||_currentIntersections.isEmpty) {
       _currentOutput = [i18n(context, "coords_intersect_nointersection")];
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
       return;
     }
 
@@ -203,5 +246,9 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
 
       })
       .toList();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 }

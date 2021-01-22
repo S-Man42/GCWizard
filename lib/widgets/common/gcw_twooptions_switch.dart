@@ -44,13 +44,14 @@ class GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
 
     return Row(
       children: <Widget>[
-        widget.notitle ? Container() : Expanded(
-          child: GCWText(
-            text: (widget.title ?? i18n(context, 'common_switch_title')) + ':',
-            style: textStyle,
+        if (!widget.notitle)
+          Expanded(
+            child: GCWText(
+              text: (widget.title ?? i18n(context, 'common_switch_title')) + ':',
+              style: textStyle,
+            ),
+            flex: 1
           ),
-          flex: 1
-        ),
         Expanded(
           child: Container(
             child: Row(

@@ -17,6 +17,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -193,11 +194,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
             });
           },
         ),
-        GCWSubmitButton(
-          onPressed: () {
-            _calculateOutput(context);
-          },
-        ),
+        _buildSubmitButton(),
         _output ?? Container(),
       ],
     );
@@ -255,8 +252,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   _buildProjectionInput() {
-    return _currentProjectionMode
-      ? Column(
+    if (_currentProjectionMode)
+      return Column(
           children: [
             Row(
               children: <Widget>[
@@ -338,8 +335,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
               ]
             )
           ],
-        )
-      : Container();
+        );
   }
 
   _buildSubstitutionList(BuildContext context) {
@@ -455,7 +451,32 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     );
   }
 
-  _calculateOutput(BuildContext context) {
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+        onPressed: () async {
+          await showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return Center (
+                child: Container(
+                  child: GCWAsyncExecuter(
+                    isolatedFunction: parseVariableLatLonAsync,
+                    parameter: _buildJobData(),
+                    onReady: (data) => _showOutput(data),
+                    isOverlay: true,
+                  ),
+                  height: 220,
+                  width: 150,
+                ),
+              );
+            },
+          );
+        }
+    );
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
     Map<String, String> _substitutions = {};
     widget.formula.values.forEach((value) {
       _substitutions.putIfAbsent(value.key, () => value.value);
@@ -472,24 +493,28 @@ class VariableCoordinateState extends State<VariableCoordinate> {
       };
     }
 
-    var coords = parseVariableLatLon(_currentInput, _substitutions, projectionData: projectionData);
-
-    if (coords['coordinates'].length > MAX_COUNT_COORDINATES) {
-      showGCWAlertDialog(context, i18n(context, 'coords_variablecoordinate_alert_title'), i18n(context, 'coords_variablecoordinate_alert_text', parameters: [coords['coordinates'].length]), () {
-        setState(() {
-          _buildOutput(coords);
-        });
-      },);
-      return;
-    }
-
-    setState(() {
-      _buildOutput(coords);
-    });
+    return GCWAsyncExecuterParameters(
+        ParseVariableLatLonJobData(
+          coordinate: _currentInput,
+          substitutions: _substitutions,
+          projectionData: projectionData,
+        )
+    );
   }
 
   _formatVariables(variables) {
     return variables.entries.map((variable) => variable.key.toUpperCase() + ': ' + variable.value.toString()).join(', ');
+  }
+
+  _showOutput(Map<String, dynamic> output) {
+    if (output != null)
+      _buildOutput(output);
+    else
+      _output = GCWCoordsOutput(outputs : List<dynamic>());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 
   _buildOutput(Map<String, dynamic> coords) {
@@ -520,24 +545,24 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
     _output = Column(
       children: [
-        _currentOutputFormat['format'] == keyCoordsDMM && hasLeftPaddedCoords
-          ? GCWTwoOptionsSwitch(
-              title: i18n(context, 'coords_variablecoordinate_decleftpad'),
-              leftValue: i18n(context, 'coords_variablecoordinate_decleftpad_left'),
-              rightValue: i18n(context, 'coords_variablecoordinate_decleftpad_right'),
-              value: _currentCoordMode,
-              onChanged: (value) {
-                setState(() {
-                  _currentCoordMode = value;
-                  _buildOutput(coords);
-                });
-              },
-            )
-          : Container(),
+        if (_currentOutputFormat['format'] == keyCoordsDMM && hasLeftPaddedCoords)
+          GCWTwoOptionsSwitch(
+            title: i18n(context, 'coords_variablecoordinate_decleftpad'),
+            leftValue: i18n(context, 'coords_variablecoordinate_decleftpad_left'),
+            rightValue: i18n(context, 'coords_variablecoordinate_decleftpad_right'),
+            value: _currentCoordMode,
+            onChanged: (value) {
+              setState(() {
+                _currentCoordMode = value;
+                _buildOutput(coords);
+              });
+            },
+          ),
+
         GCWCoordsOutput(
           mapButtonTop: true,
           outputs: _currentOutput,
-          points: _currentMapPoints,
+          points: _currentMapPoints
         )
       ]
     );
@@ -566,7 +591,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
           showToast(i18n(context, 'coords_common_location_lowaccuracy', parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
 
         var insertedCoord = formatCoordOutput(LatLng(locationData.latitude, locationData.longitude), defaultCoordFormat(), defaultEllipsoid());
-        _currentInput = insertedCoord.replaceAll('\n', ' ');
+        _currentInput = insertedCoord.replaceAll('\n', '');
         _inputController.text = _currentInput;
 
         setState(() {

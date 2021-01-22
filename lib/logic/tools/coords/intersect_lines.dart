@@ -7,6 +7,42 @@ import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong/latlong.dart';
 
+class IntersectBearingJobData {
+  final LatLng coord1;
+  final double az13;
+  final LatLng coord2;
+  final double az23;
+  final Ellipsoid ells;
+  final bool crossbearing;
+
+  IntersectBearingJobData({
+      this.coord1 = null,
+      this.az13 = 0.0,
+      this.coord2 = null,
+      this.az23 = 0.0,
+      this.ells = null,
+      this.crossbearing = false
+  });
+}
+
+void intersectBearingsAsync(dynamic jobData) async {
+  if (jobData == null) {
+    jobData.sendAsyncPort.send(null);
+    return;
+  }
+
+  var output = intersectBearings(
+      jobData.parameters.coord1,
+      jobData.parameters.az13,
+      jobData.parameters.coord2,
+      jobData.parameters.az23,
+      jobData.parameters.ells,
+      jobData.parameters.crossbearing
+  );
+
+  jobData.sendAsyncPort.send(output);
+}
+
 // Using "evolutional algorithms": Take state, add some random value.
 // If result is better, repeat with new value until a certain tolance value is reached.
 // Because of its random factor it is not necessarily given that an intersection point is found
@@ -81,6 +117,35 @@ LatLng intersectBearings(LatLng coord1, double az13, LatLng coord2, double az23,
     return null;
 
   return calculatedPoint;
+}
+
+class IntersectFourPointsJobData {
+  final LatLng coord11;
+  final LatLng coord12;
+  final LatLng coord21;
+  final LatLng coord22;
+  final Ellipsoid ells;
+
+  IntersectFourPointsJobData({
+    this.coord11 = null,
+    this.coord12 = null,
+    this.coord21 = null,
+    this.coord22 = null,
+    this.ells = null
+  });
+}
+
+void intersectFourPointsAsync(dynamic jobData) async {
+
+  var output = intersectFourPoints(
+    jobData.parameters.coord11,
+    jobData.parameters.coord12,
+    jobData.parameters.coord21,
+    jobData.parameters.coord22,
+    jobData.parameters.ells
+  );
+
+  jobData.sendAsyncPort.send(output);
 }
 
 LatLng intersectFourPoints(LatLng coord11, LatLng coord12, LatLng coord21, LatLng coord22, Ellipsoid ells) {

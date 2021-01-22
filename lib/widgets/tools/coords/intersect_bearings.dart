@@ -6,6 +6,7 @@ import 'package:gc_wizard/logic/tools/coords/intersect_lines.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_bearing.dart';
@@ -91,13 +92,7 @@ class IntersectBearingsState extends State<IntersectBearings> {
             });
           },
         ),
-        GCWSubmitButton(
-          onPressed: () {
-            setState(() {
-              _calculateOutput();
-            });
-          },
-        ),
+        _buildSubmitButton(),
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
@@ -150,8 +145,47 @@ class IntersectBearingsState extends State<IntersectBearings> {
     return mapPoint;
   }
 
-  _calculateOutput() {
-    _currentIntersection = intersectBearings(_currentCoords1, _currentBearing1['value'], _currentCoords2, _currentBearing2['value'], defaultEllipsoid(), false);
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: intersectBearingsAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
+              ),
+            );
+          },
+        );
+      }
+    );
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+
+    return GCWAsyncExecuterParameters(
+      IntersectBearingJobData(
+          coord1: _currentCoords1,
+          az13: _currentBearing1['value'],
+          coord2: _currentCoords2,
+          az23: _currentBearing2['value'],
+          ells: defaultEllipsoid(),
+          crossbearing: false
+      )
+    );
+  }
+
+  _showOutput(LatLng output) {
+    _currentIntersection = output;
 
     _currentMapPoints = [
       GCWMapPoint(
@@ -168,18 +202,26 @@ class IntersectBearingsState extends State<IntersectBearings> {
 
     if (_currentIntersection == null) {
       _currentOutput = [i18n(context, 'coords_intersect_nointersection')];
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
       return;
     }
 
     _currentMapPoints.add(
-      GCWMapPoint(
-        point: _currentIntersection,
-        color: COLOR_MAP_CALCULATEDPOINT,
-        markerText: i18n(context, 'coords_common_intersection'),
-        coordinateFormat: _currentOutputFormat
-      )
+        GCWMapPoint(
+            point: _currentIntersection,
+            color: COLOR_MAP_CALCULATEDPOINT,
+            markerText: i18n(context, 'coords_common_intersection'),
+            coordinateFormat: _currentOutputFormat
+        )
     );
 
     _currentOutput = [formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid())];
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
+
 }

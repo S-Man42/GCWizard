@@ -51,36 +51,36 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
 
     var _isNoOutput = widget.outputs == null || widget.outputs.length == 0 || widget.points.length == 0 ;
     var _button = Visibility (
-      visible: !_isNoOutput,
-      child: GCWToolBar(
-        children: [
-          GCWButton (
-            text: i18n(context, 'coords_show_on_map'),
-            onPressed: () {
-              _openInMap();
-            },
-          ),
-          GCWButton(
-            text: i18n(context, 'coords_show_on_openmap'),
-            onPressed: () {
-              _openInMap(freeMap: true);
-            },
-          )
-        ],
-      )
+        visible: !_isNoOutput,
+        child: GCWToolBar(
+          children: [
+            GCWButton (
+              text: i18n(context, 'coords_show_on_map'),
+              onPressed: () {
+                _openInMap();
+              },
+            ),
+            GCWButton(
+              text: i18n(context, 'coords_show_on_openmap'),
+              onPressed: () {
+                _openInMap(freeMap: true);
+              },
+            )
+          ],
+        )
     );
 
     var _children = widget.mapButtonTop ? [_button, _outputText] : [_outputText, _button];
     return GCWMultipleOutput(
-      children: _children,
-      trailing: GCWIconButton(
-        iconData: Icons.save,
-        size: IconButtonSize.SMALL,
-        iconColor: _isNoOutput ? Colors.grey : null,
-        onPressed: () {
-          _isNoOutput ? null : _exportCoordinates(context, widget.points, widget.polylines);
-        },
-      )
+        children: _children,
+        trailing: GCWIconButton(
+          iconData: Icons.save,
+          size: IconButtonSize.SMALL,
+          iconColor: _isNoOutput ? Colors.grey : null,
+          onPressed: () {
+            _isNoOutput ? null : _exportCoordinates(context, widget.points, widget.polylines);
+          },
+        )
     );
   }
 

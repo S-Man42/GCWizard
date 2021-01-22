@@ -7,6 +7,7 @@ import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/resection.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_angle.dart';
@@ -14,6 +15,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:latlong/latlong.dart';
 
 class Resection extends StatefulWidget {
   @override
@@ -40,6 +42,7 @@ class ResectionState extends State<Resection> {
   List<String> _currentOutput = [];
   var _currentMapPoints;
   List<GCWMapPolyline> _currentMapPolylines = [];
+  dynamic _ells;
 
   @override
   void initState() {
@@ -108,13 +111,7 @@ class ResectionState extends State<Resection> {
             });
           },
         ),
-        GCWSubmitButton(
-          onPressed: () {
-            setState(() {
-              _calculateOutput();
-            });
-          },
-        ),
+        _buildSubmitButton(),
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
@@ -124,20 +121,64 @@ class ResectionState extends State<Resection> {
     );
   }
 
-  _calculateOutput() {
-    _currentMapPoints = <GCWMapPoint>[];
-    _currentMapPolylines = <GCWMapPolyline>[];
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: resectionAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
+              ),
+            );
+          },
+        );
+      }
+    );
+  }
 
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
     if (_currentCoords1 == _currentCoords2
-      || _currentCoords2 == _currentCoords3
-      || _currentCoords1 == _currentCoords3) {
+        || _currentCoords2 == _currentCoords3
+        || _currentCoords1 == _currentCoords3) {
       _currentOutput = [i18n(context, "coords_intersect_nointersection")];
+      return null;
+    }
+    _ells = defaultEllipsoid();
+    return GCWAsyncExecuterParameters(
+        ResectionJobData(
+            coord1: _currentCoords1,
+            angle12: _currentAngle12['value'],
+            coord2: _currentCoords2,
+            angle23: _currentAngle23['value'],
+            coord3: _currentCoords3,
+            ells: _ells
+        )
+    );
+  }
+
+  _showOutput(List<LatLng> output) {
+    if (output == null) {
+      _currentOutput = [];
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
       return;
     }
 
-    var ells = defaultEllipsoid();
+    _currentIntersections = output;
 
-    _currentIntersections = resection(_currentCoords1, _currentAngle12['value'], _currentCoords2, _currentAngle23['value'], _currentCoords3, ells);
+    var ells = _ells;
 
     _currentMapPoints = [
       GCWMapPoint(
@@ -157,8 +198,11 @@ class ResectionState extends State<Resection> {
       ),
     ];
 
-    if (_currentIntersections[0] == null && _currentIntersections[1] == null) {
+    if (_currentIntersections.length == 0 || (_currentIntersections[0] == null && _currentIntersections[1] == null)) {
       _currentOutput = [i18n(context, "coords_intersect_nointersection")];
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
       return;
     }
 
@@ -200,5 +244,9 @@ class ResectionState extends State<Resection> {
     _currentOutput = _currentIntersections
       .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
       .toList();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 }

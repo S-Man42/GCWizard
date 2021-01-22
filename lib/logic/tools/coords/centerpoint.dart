@@ -7,6 +7,20 @@ import 'package:gc_wizard/logic/tools/coords/segment_line.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong/latlong.dart';
 
+class CenterPointJobData {
+  final LatLng coord1;
+  final LatLng coord2;
+  final LatLng coord3;
+  final Ellipsoid ells;
+
+  CenterPointJobData({
+      this.coord1 = null,
+      this.coord2 = null,
+      this.coord3 = null,
+      this.ells = null
+  });
+}
+
 Map<String, dynamic> centerPointTwoPoints(LatLng coord1, LatLng coord2, Ellipsoid ells) {
   var segments = segmentLine(coord1, coord2, 2, ells);
 
@@ -14,6 +28,22 @@ Map<String, dynamic> centerPointTwoPoints(LatLng coord1, LatLng coord2, Ellipsoi
     'centerPoint': segments['points'].first,
     'distance': segments['segmentDistance']
   };
+}
+
+void centerPointThreePointsAsync(dynamic jobData) async {
+  if (jobData == null) {
+    jobData.sendAsyncPort.send(null);
+    return;
+  }
+
+  var output = centerPointThreePoints(
+      jobData.parameters.coord1,
+      jobData.parameters.coord2,
+      jobData.parameters.coord3,
+      jobData.parameters.ells
+  );
+
+  jobData.sendAsyncPort.send(output);
 }
 
 List<Map<String, dynamic>> centerPointThreePoints (LatLng coord1, LatLng coord2, LatLng coord3, Ellipsoid ells) {

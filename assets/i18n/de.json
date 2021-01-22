@@ -1151,8 +1151,6 @@
   "coords_variablecoordinate_variable" : "Variable",
   "coords_variablecoordinate_possiblevalues" : "Mögliche Werte",
   "coords_variablecoordinate_nooutputs" : "Keine Koordinaten berechnet!\n\nMögliche Gründe:\n- invalides/nicht berechenbares Koordinatenformat\n- Unterformeln müssen in [ ] eingebettet sein\n- fehlende Variablen\n- Nord N/Ost E als Variablen behandelt und ersetzt worden (Versuche 'N [Werte] E [Werte]', oder lass N/E weg und ersetze S/W mit Minus)\n- negatives oder dezimales Ergebnis in einer Unterformel\n- Rückwärtsprojektion hat keine Koordinate gefunden",
-  "coords_variablecoordinate_alert_title" : "Warnung: Sehr viele Koordinaten!",
-  "coords_variablecoordinate_alert_text" : "Du hast %s1 Koordinaten generiert.\n\nWillst du sie alle sehen?\n\nDas könnte dein Gerät drastisch verlangsamen.",
   "coords_variablecoordinate_decleftpad" : "Kommastellen",
   "coords_variablecoordinate_decleftpad_left" : "rechts auffüllen\nXX° XX.X00",
   "coords_variablecoordinate_decleftpad_right" : "links auffüllen\nXX° XX.00X",
@@ -1444,8 +1442,6 @@
   "hashes_hashbreaker_searchconfiguration_searchmask" : "Suchmaske",
   "hashes_hashbreaker_hashtobreak" : "Zu lösender Hash",
   "hashes_hashbreaker_solutionnotfound" : "Keine Lösung im angegebenen Bereich gefunden.",
-  "hashes_hashbreaker_alert_range_title" : "Sehr großer Suchbereich",
-  "hashes_hashbreaker_alert_range_text" : "Die Suche enthält %s1 Elemente.\n\nDie Suche könnte sehr lange dauern und das Gerät langsam werden lassen.\n\nMöchten Sie fortfahren?",
 
   "heatindex_title" : "Hitze-Index",
   "heatindex_description" : "Gefühlte Temperatur aufgrund Temperatur und Luftfeuchtigkeit",
@@ -2171,7 +2167,6 @@
   "substitutionbreaker_title" : "Codelöser für Textersetzungen",
   "substitutionbreaker_description" : "Chance, automatisch einen monoalphabetischen Code zu knacken",
   "substitutionbreaker_example" : "QFRQ → TEST",
-  "substitutionbreaker_start" : "Berechne",
   "substitutionbreaker_error" : "Ein Fehler trat auf: %s1",
   "substitutionbreaker_exporttosubstition" : "Export ins 'Ersetzen'-Tool",
 
@@ -2905,7 +2900,6 @@
   "vigenerebreaker_key_length": "Schlüssellänge",
   "vigenerebreaker_key_length_min": "min",
   "vigenerebreaker_key_length_max": "max",
-  "vigenerebreaker_start": "Berechne",
   "vigenerebreaker_error" : "Ein Fehler trat auf: %s1",
 
   "whitespace_language_title" : "Whitespace",
