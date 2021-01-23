@@ -2326,6 +2326,8 @@
   "symboltables_dni_colors_red" : "ROT",
   "symboltables_dni_colors_violet" : "VIOLETT",
   "symboltables_dni_colors_yellow" : "GELB",
+  "symboltables_dni_numbers_title" : "D'ni (Zahlen)",
+  "symboltables_dni_numbers_description" : "Aus dem Videospiel 'Myst'",
   "symboltables_doremi_title" : "DoReMi Zeichen (Solmisation)",
   "symboltables_doremi_description" : "Notensystem, Tonstufen",
   "symboltables_dragon_language_title" : "Drachensprache",

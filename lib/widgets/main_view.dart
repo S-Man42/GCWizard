@@ -66,6 +66,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
@@ -242,6 +244,7 @@ class _MainViewState extends State<MainView> {
           className(Chef()),
           className(ChickenLanguage()),
           className(Chronogram()),
+          className(CipherWheel()),
           className(CistercianNumbersSelection()),
           className(ColorPicker()),
           className(Combination()),
@@ -293,6 +296,7 @@ class _MainViewState extends State<MainView> {
           className(Malbolge()),
           className(MapView()),
           className(MayaNumbersSelection()),
+          className(MexicanArmyCipherWheel()),
           className(MoonPosition()),
           className(MoonRiseSet()),
           className(Morse()),

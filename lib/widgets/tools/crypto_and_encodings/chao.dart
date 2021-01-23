@@ -4,7 +4,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/reverse.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';

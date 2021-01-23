@@ -51,10 +51,12 @@ class _GCWOutputTextState extends State<GCWOutputText> {
             size: IconButtonSize.SMALL,
             iconData: Icons.content_copy,
             onPressed: () {
-              Clipboard.setData(ClipboardData(text: widget.copyText != null ? widget.copyText.toString() : widget.text));
-              insertIntoGCWClipboard(widget.copyText != null ? widget.copyText.toString() : widget.text);
+              var copyText = widget.copyText != null ? widget.copyText.toString() : widget.text;
 
-              showToast(i18n(context, 'common_clipboard_copied'));
+              Clipboard.setData(ClipboardData(text: copyText));
+              insertIntoGCWClipboard(copyText);
+
+              showToast(i18n(context, 'common_clipboard_copied' + ':\n' + copyText));
             },
           )
       ],

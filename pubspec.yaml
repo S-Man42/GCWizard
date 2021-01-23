@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 1.4.0+79
+version: 1.4.0+80
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -91,6 +91,7 @@ flutter:
     - assets/symbol_tables/devanagari_numerals/
     - assets/symbol_tables/dni/
     - assets/symbol_tables/dni_colors/
+    - assets/symbol_tables/dni_numbers/
     - assets/symbol_tables/doremi/
     - assets/symbol_tables/dragon_language/
     - assets/symbol_tables/dragon_runes/
