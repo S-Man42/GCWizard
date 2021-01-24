@@ -7,7 +7,6 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:prefs/prefs.dart';
 
@@ -80,6 +79,8 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
                   size: IconButtonSize.TINY,
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: copyText));
+                    insertIntoGCWClipboard(copyText);
+
                     showToast(i18n(context, 'common_clipboard_copied') + ':\n' + copyText);
                   },
                 ),

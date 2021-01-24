@@ -24,7 +24,7 @@ class TapirState extends State<Tapir> {
 
   var _maskFormatter = WrapperForMaskTextInputFormatter(
     mask: '##### ' * 100000 + '#####',
-    filter: {"#": RegExp(r'[aaaa0-9]')}
+    filter: {"#": RegExp(r'[0-9]')}
   );
 
   @override
@@ -72,16 +72,17 @@ class TapirState extends State<Tapir> {
             });
           },
         ),
-        if (_currentOneTimePadMode)
-          GCWTextField(
-            inputFormatters: [_maskFormatter],
-            hintText: '12345 67890 12...',
-            onChanged: (value) {
-              setState(() {
-                _currentOneTimePad = value;
-              });
-            },
-          ),
+        _currentOneTimePadMode
+          ? GCWTextField(
+              inputFormatters: [_maskFormatter],
+              hintText: '12345 67890 12...',
+              onChanged: (value) {
+                setState(() {
+                  _currentOneTimePad = value;
+                });
+              },
+            )
+          : Container(),
         GCWDefaultOutput(
           child: _buildOutput()
         ),

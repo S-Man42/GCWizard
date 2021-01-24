@@ -196,7 +196,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
                 )
               ],
             ),
-            if (_currentIsEditingAlphabet) _buildEditingAlphabet(),
+            _currentIsEditingAlphabet ? _buildEditingAlphabet() : Container(),
           ],
         ),
         GCWTwoOptionsSwitch(

@@ -141,7 +141,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
               onPressed: () {
                 Map<String, String> substitutions = {};
                 for (int i = 0; i < _currentOutput.alphabet.length; i++)
-                  substitutions.putIfAbsent(_currentOutput.key[i], () => _currentOutput.alphabet[i]);
+                  substitutions.putIfAbsent(_currentOutput.key[i].toUpperCase(), () => _currentOutput.alphabet[i].toUpperCase());
 
                 Navigator.push(context, NoAnimationMaterialPageRoute(
                   builder: (context) => GCWTool(

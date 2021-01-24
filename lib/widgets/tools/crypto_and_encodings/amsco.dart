@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/amsco.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
-import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlydigitsandspace_textinputformatter.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 
 class Amsco extends StatefulWidget {
   @override
@@ -26,6 +25,11 @@ class AmscoState extends State<Amsco> {
 
   var _currentMode = GCWSwitchPosition.right;
   var _currentOneCharStart = GCWSwitchPosition.left;
+
+  var _maskFormatter = WrapperForMaskTextInputFormatter(
+    mask: '#' * 9,
+    filter: {"#": RegExp(r'[ 0-9]')}
+  );
 
   @override
   void initState() {
@@ -77,8 +81,7 @@ class AmscoState extends State<Amsco> {
         ),
         GCWTextField(
           hintText: i18n(context, 'amsco_key_hint'),
-          maxLength: 9,
-          inputFormatters: [TextOnlyDigitsAndSpaceInputFormatter()],
+          inputFormatters: [_maskFormatter],
           controller: _keyController,
           onChanged: (text) {
             setState(() {

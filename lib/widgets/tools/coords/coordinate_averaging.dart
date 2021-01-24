@@ -7,6 +7,7 @@ import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
@@ -123,8 +124,10 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
   }
 
   _toggleLocationListening() {
-    if (_currentLocationPermissionGranted == false)
+    if (_currentLocationPermissionGranted == false) {
+      showToast(i18n(context, 'coords_common_location_permissiondenied'));
       return;
+    }
 
     if (_locationSubscription == null) {
       _locationSubscription = _currentLocation.onLocationChanged
@@ -146,8 +149,7 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
         _isMeasuring = true;
         _locationSubscription.resume();
       } else {
-        _isMeasuring = false;
-        _locationSubscription.pause();
+        _cancelLocationSubscription();
       }
     });
   }

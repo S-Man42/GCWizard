@@ -213,19 +213,20 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
                   ),
               flex: 1,
             ),
-            if (_currentEditId == group.id)
-              GCWIconButton(
-                iconData: Icons.check,
-                onPressed: () {
-                  group.name = _currentEditedName;
-                  _updateGroup();
+            _currentEditId == group.id
+              ? GCWIconButton(
+                  iconData: Icons.check,
+                  onPressed: () {
+                    group.name = _currentEditedName;
+                    _updateGroup();
 
-                  setState(() {
-                    _currentEditId = null;
-                    _editGroupController.clear();
-                  });
-                },
-              ),
+                    setState(() {
+                      _currentEditId = null;
+                      _editGroupController.clear();
+                    });
+                  },
+                )
+                : Container(),
             GCWPopupMenu(
               iconData: Icons.settings,
               menuItemBuilder: (context) => [

@@ -2622,6 +2622,11 @@ class Registry {
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dni colours colors farben d\'ni myst'
       ),
       GCWSymbolTableTool(
+        symbolKey: 'dni_numbers',
+        iconFilename: '14.png',
+        searchStrings: SEARCHSTRING_SYMBOLTABLES + 'dni colours numbers zahlen ziffern numerals d\'ni myst'
+      ),
+      GCWSymbolTableTool(
         symbolKey: 'doremi',
         iconFilename: '6.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'doremifalamiresisol notesystem musictheory musiktheorie solmisation notensystem tonstufen degrees octal oktal'

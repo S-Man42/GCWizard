@@ -94,8 +94,8 @@ class DNANucleicAcidSequenceState extends State<DNANucleicAcidSequence> {
           GCWDefaultOutput(
             child: outputText
           ),
-          if (includesM) GCWTextDivider(text: i18n(context, 'common_note')) ,
-          if (includesM) GCWText(text: i18n(context, 'dna_nucleicacidsequence_notem', parameters: [_currentDNAMode == GCWSwitchPosition.left ? 'ATG' : 'AUG']))
+          includesM ? GCWTextDivider(text: i18n(context, 'common_note')) : Container(),
+          includesM ? GCWText(text: i18n(context, 'dna_nucleicacidsequence_notem', parameters: [_currentDNAMode == GCWSwitchPosition.left ? 'ATG' : 'AUG'])) : Container()
         ],
       );
     }

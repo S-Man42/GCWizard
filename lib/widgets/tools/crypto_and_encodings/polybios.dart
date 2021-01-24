@@ -104,25 +104,27 @@ class PolybiosState extends State<Polybios> {
             );
           }).toList(),
         ),
-        if (_currentPolybiosMode == PolybiosMode.CUSTOM)
-          GCWTextField(
-            hintText: i18n(context, 'common_alphabet'),
-            controller: _alphabetController,
-            onChanged: (text) {
-              setState(() {
-                _currentAlphabet = text;
-              });
-            },
-          ),
-        if (_currentKey != null && _currentKey.length < 6)
-          GCWAlphabetModificationDropDownButton(
-            value: _currentModificationMode,
-            onChanged: (value) {
-              setState(() {
-                _currentModificationMode = value;
-              });
-            },
-          ),
+        _currentPolybiosMode == PolybiosMode.CUSTOM
+          ? GCWTextField(
+              hintText: i18n(context, 'common_alphabet'),
+              controller: _alphabetController,
+              onChanged: (text) {
+                setState(() {
+                  _currentAlphabet = text;
+                });
+              },
+            )
+          : Container(),
+        _currentKey != null && _currentKey.length < 6
+          ? GCWAlphabetModificationDropDownButton(
+              value: _currentModificationMode,
+              onChanged: (value) {
+                setState(() {
+                  _currentModificationMode = value;
+                });
+              },
+            )
+          : Container(),
         _buildOutput(context)
       ],
     );

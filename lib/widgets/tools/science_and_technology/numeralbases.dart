@@ -73,15 +73,16 @@ class NumeralBasesState extends State<NumeralBases> {
             });
           },
         ),
-        if (_currentToMode == GCWSwitchPosition.right)
-          GCWNumeralBaseSpinner(
-            value: _currentToKey,
-            onChanged: (value) {
-              setState(() {
-                _currentToKey = value;
-              });
-            },
-          ),
+        _currentToMode == GCWSwitchPosition.right
+          ? GCWNumeralBaseSpinner(
+              value: _currentToKey,
+              onChanged: (value) {
+                setState(() {
+                  _currentToKey = value;
+                });
+              },
+            )
+          : Container(),
         _buildOutput(context)
       ],
     );
