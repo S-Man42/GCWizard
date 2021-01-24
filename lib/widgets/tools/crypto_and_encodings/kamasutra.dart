@@ -38,14 +38,15 @@ class KamasutraState extends State<Kamasutra> {
             });
           },
         ),
-        if (_currentAlphabetMode == GCWSwitchPosition.right)
-          GCWTextField(
-            onChanged: (text) {
-              setState(() {
-                _currentAlphabet = text;
-              });
-            }
-          ),
+        _currentAlphabetMode == GCWSwitchPosition.right
+          ? GCWTextField(
+              onChanged: (text) {
+                setState(() {
+                  _currentAlphabet = text;
+                });
+              }
+            )
+          : Container(),
         GCWDefaultOutput(
           child: _calculateOutput()
         )

@@ -94,16 +94,17 @@ class ChaoState extends State<Chao> {
             );
           }).toList(),
         ),
-        if (_currentAlphabetTypeChiffre == ChaoAlphabet.CUSTOM)
-          GCWTextField(
-            hintText: i18n(context, 'common_alphabet'),
-            controller: _alphabetControllerChiffre,
-            onChanged: (text) {
-              setState(() {
-                _currentAlphabetChiffre = text;
-              });
-            },
-          ),
+        _currentAlphabetTypeChiffre == ChaoAlphabet.CUSTOM
+          ? GCWTextField(
+              hintText: i18n(context, 'common_alphabet'),
+              controller: _alphabetControllerChiffre,
+              onChanged: (text) {
+                setState(() {
+                  _currentAlphabetChiffre = text;
+                });
+              },
+            )
+          : Container(),
         GCWTextDivider(
           text: i18n(context, 'chao_alphabet_plain')
         ),
@@ -121,16 +122,17 @@ class ChaoState extends State<Chao> {
             );
           }).toList(),
         ),
-        if (_currentAlphabetTypePlain == ChaoAlphabet.CUSTOM)
-          GCWTextField(
-            hintText: i18n(context, 'chao_alphabet_plain'),
-            controller: _alphabetControllerPlain,
-            onChanged: (text) {
-              setState(() {
-                _currentAlphabetPlain = text;
-              });
-            },
-          ),
+        _currentAlphabetTypePlain == ChaoAlphabet.CUSTOM
+          ? GCWTextField(
+              hintText: i18n(context, 'chao_alphabet_plain'),
+              controller: _alphabetControllerPlain,
+              onChanged: (text) {
+                setState(() {
+                  _currentAlphabetPlain = text;
+                });
+              },
+            )
+          : Container(),
         _buildOutput()
       ],
     );

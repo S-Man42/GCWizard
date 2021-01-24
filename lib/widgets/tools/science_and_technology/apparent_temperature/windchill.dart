@@ -53,18 +53,19 @@ class WindchillState extends State<Windchill> {
             });
           },
         ),
-        if (_isMetric)
-          GCWTwoOptionsSwitch(
-            title: i18n(context, 'windchill_metricunit'),
-            leftValue: VELOCITY_KMH.symbol,
-            rightValue: VELOCITY_MS.symbol,
-            value: _currentSpeedUnit,
-            onChanged: (value) {
-              setState(() {
-                _currentSpeedUnit = value;
-              });
-            },
-          ),
+        _isMetric
+          ? GCWTwoOptionsSwitch(
+              title: i18n(context, 'windchill_metricunit'),
+              leftValue: VELOCITY_KMH.symbol,
+              rightValue: VELOCITY_MS.symbol,
+              value: _currentSpeedUnit,
+              onChanged: (value) {
+                setState(() {
+                  _currentSpeedUnit = value;
+                });
+              },
+            )
+          : Container(),
         GCWDefaultOutput(
           child: _buildOutput()
         )

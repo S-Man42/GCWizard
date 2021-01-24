@@ -45,20 +45,21 @@ class _GCWOutputTextState extends State<GCWOutputText> {
             )
           ),
         ),
-        if (widget.text != null && widget.text.length > 0 && !widget.suppressCopyButton)
-          GCWIconButton(
-            iconColor: widget.style != null ? widget.style.color : themeColors().mainFont(),
-            size: IconButtonSize.SMALL,
-            iconData: Icons.content_copy,
-            onPressed: () {
-              var copyText = widget.copyText != null ? widget.copyText.toString() : widget.text;
+        widget.text != null && widget.text.length > 0 && !widget.suppressCopyButton
+          ? GCWIconButton(
+              iconColor: widget.style != null ? widget.style.color : themeColors().mainFont(),
+              size: IconButtonSize.SMALL,
+              iconData: Icons.content_copy,
+              onPressed: () {
+                var copyText = widget.copyText != null ? widget.copyText.toString() : widget.text;
 
-              Clipboard.setData(ClipboardData(text: copyText));
-              insertIntoGCWClipboard(copyText);
+                Clipboard.setData(ClipboardData(text: copyText));
+                insertIntoGCWClipboard(copyText);
 
-              showToast(i18n(context, 'common_clipboard_copied' + ':\n' + copyText));
-            },
-          )
+                showToast(i18n(context, 'common_clipboard_copied' + ':\n' + copyText));
+              },
+            )
+          : Container()
       ],
     );
   }

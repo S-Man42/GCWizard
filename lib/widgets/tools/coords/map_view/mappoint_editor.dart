@@ -121,8 +121,8 @@ class MapPointEditorState extends State<MapPointEditor> {
             });
           },
         ),
-        if (widget.mapPoint.hasCircle())
-          Column(
+        widget.mapPoint.hasCircle()
+          ? Column(
               children: [
                 GCWDistance(
                   value: _currentRadius,
@@ -143,23 +143,24 @@ class MapPointEditorState extends State<MapPointEditor> {
                     });
                   },
                 ),
-                if (!widget.mapPoint.circleColorSameAsPointColor)
-                  Container(
-                    child: HSVPicker(
-                      color: _currentCircleColorPickerColor,
-                      onChanged: (color) {
-                        setState(() {
-                          _currentCircleColorPickerColor = color;
-                          widget.mapPoint.circle.color = _currentCircleColorPickerColor.toColor();
-                        });
-                      },
+                widget.mapPoint.circleColorSameAsPointColor ? Container()
+                  : Container(
+                      child: HSVPicker(
+                        color: _currentCircleColorPickerColor,
+                        onChanged: (color) {
+                          setState(() {
+                            _currentCircleColorPickerColor = color;
+                            widget.mapPoint.circle.color = _currentCircleColorPickerColor.toColor();
+                          });
+                        },
+                      ),
+                      padding: EdgeInsets.only(
+                        bottom: 20.0
+                      ),
                     ),
-                    padding: EdgeInsets.only(
-                      bottom: 20.0
-                    ),
-                  ),
               ],
-            ),
+            )
+            : Container(),
       ]
     );
   }

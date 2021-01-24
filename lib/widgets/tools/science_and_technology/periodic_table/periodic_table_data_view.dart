@@ -177,18 +177,19 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
                 });
               },
             ),
-        if (_sortableCategories.contains(_currentCategory))
-          GCWTwoOptionsSwitch(
-            value: _currentSortingOrder,
-            title: i18n(context, 'common_sorting'),
-            leftValue: i18n(context, 'common_sorting_asc'),
-            rightValue: i18n(context, 'common_sorting_desc'),
-            onChanged: (value) {
-              setState(() {
-                _currentSortingOrder = value;
-              });
-            },
-          ),
+        _sortableCategories.contains(_currentCategory)
+          ? GCWTwoOptionsSwitch(
+              value: _currentSortingOrder,
+              title: i18n(context, 'common_sorting'),
+              leftValue: i18n(context, 'common_sorting_asc'),
+              rightValue: i18n(context, 'common_sorting_desc'),
+              onChanged: (value) {
+                setState(() {
+                  _currentSortingOrder = value;
+                });
+              },
+            )
+          : Container(),
         _buildOutput()
       ],
     );

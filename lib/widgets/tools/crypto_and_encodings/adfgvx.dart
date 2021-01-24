@@ -121,16 +121,15 @@ class ADFGVXState extends State<ADFGVX> {
             );
           }).toList(),
         ),
-        if (_currentPolybiosMode == PolybiosMode.CUSTOM)
-          GCWTextField(
-            hintText: i18n(context, 'common_alphabet'),
-            controller: _alphabetController,
-            onChanged: (text) {
-              setState(() {
-                _currentAlphabet = text;
-              });
-            },
-          ),
+        _currentPolybiosMode == PolybiosMode.CUSTOM ? GCWTextField(
+          hintText: i18n(context, 'common_alphabet'),
+          controller: _alphabetController,
+          onChanged: (text) {
+            setState(() {
+              _currentAlphabet = text;
+            });
+          },
+        ) : Container(),
         GCWDefaultOutput(
           child: _calculateOutput()//_currentOutput == null ? '' : _currentOutput
         )

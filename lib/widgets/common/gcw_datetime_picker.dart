@@ -318,8 +318,9 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
         Row(
           children: datetimeChildren,
         ),
-        if (widget.withTimezones)
-          _buildTimeZonesDropdownButton()
+        widget.withTimezones
+          ? _buildTimeZonesDropdownButton()
+          : Container()
       ],
     );
   }

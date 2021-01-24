@@ -182,8 +182,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
             });
           },
         ),
-        if (_currentProjectionMode)
-           _buildProjectionInput(),
+        _buildProjectionInput(),
         _buildVariablesInput(),
         _buildSubstitutionList(context),
         GCWCoordsOutputFormat(
@@ -252,7 +251,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   _buildProjectionInput() {
-      return Column(
+    return _currentProjectionMode
+      ? Column(
           children: [
             Row(
               children: <Widget>[
@@ -334,7 +334,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
               ]
             )
           ],
-        );
+      )
+      : Container();
   }
 
   _buildSubstitutionList(BuildContext context) {
@@ -544,20 +545,20 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
     _output = Column(
       children: [
-        if (_currentOutputFormat['format'] == keyCoordsDMM && hasLeftPaddedCoords)
-          GCWTwoOptionsSwitch(
-            title: i18n(context, 'coords_variablecoordinate_decleftpad'),
-            leftValue: i18n(context, 'coords_variablecoordinate_decleftpad_left'),
-            rightValue: i18n(context, 'coords_variablecoordinate_decleftpad_right'),
-            value: _currentCoordMode,
-            onChanged: (value) {
-              setState(() {
-                _currentCoordMode = value;
-                _buildOutput(coords);
-              });
-            },
-          ),
-
+        _currentOutputFormat['format'] == keyCoordsDMM && hasLeftPaddedCoords
+          ? GCWTwoOptionsSwitch(
+              title: i18n(context, 'coords_variablecoordinate_decleftpad'),
+              leftValue: i18n(context, 'coords_variablecoordinate_decleftpad_left'),
+              rightValue: i18n(context, 'coords_variablecoordinate_decleftpad_right'),
+              value: _currentCoordMode,
+              onChanged: (value) {
+                setState(() {
+                  _currentCoordMode = value;
+                  _buildOutput(coords);
+                });
+              },
+            )
+          : Container(),
         GCWCoordsOutput(
           mapButtonTop: true,
           outputs: _currentOutput,
