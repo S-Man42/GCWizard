@@ -88,8 +88,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
                   CircularProgressIndicator(
                     value: snapshot.data,
                     backgroundColor: Colors.white,
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                        Colors.amber),
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
                     strokeWidth: 20,
                   ),
                   Positioned(

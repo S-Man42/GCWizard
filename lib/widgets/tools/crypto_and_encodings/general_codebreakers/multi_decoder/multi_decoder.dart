@@ -8,6 +8,8 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool.dart';
@@ -16,6 +18,16 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tools.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
+class MultiDecoderJobData {
+  final List<GCWMultiDecoderTool> mdtTools;
+  final String input;
+
+  MultiDecoderJobData({
+    this.mdtTools = null,
+    this.input = ''
+  });
+}
+
 class MultiDecoder extends StatefulWidget {
   @override
   MultiDecoderState createState() => MultiDecoderState();
@@ -23,7 +35,7 @@ class MultiDecoder extends StatefulWidget {
 
 class MultiDecoderState extends State<MultiDecoder> {
   var _controller;
-  List<GCWMultiDecoderTool> mdtTools;
+  List<GCWMultiDecoderTool> _mdtTools;
 
   String _currentInput = '';
   Widget _currentOutput;
@@ -45,7 +57,7 @@ class MultiDecoderState extends State<MultiDecoder> {
   }
 
   _refreshMDTTools() {
-    mdtTools = multiDecoderTools.map((mdtTool) {
+    _mdtTools = multiDecoderTools.map((mdtTool) {
       return multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
   }
@@ -100,15 +112,34 @@ class MultiDecoderState extends State<MultiDecoder> {
             )
           ],
         ),
-        GCWSubmitButton(
-          onPressed: () {
-            setState(() {
-              _calculateOutput();
-            });
-          },
-        ),
+        _buildSubmitButton(),
         _currentOutput
       ],
+    );
+  }
+
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+        onPressed: () async {
+          await showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return Center (
+                child: Container(
+                  child: GCWAsyncExecuter(
+                    isolatedFunction: _calculateOutputAsync,
+                    parameter: _buildJobData(),
+                    onReady: (data) => _showOutput(data),
+                    isOverlay: true,
+                  ),
+                  height: 220,
+                  width: 150,
+                ),
+              );
+            },
+          );
+        }
     );
   }
 
@@ -132,18 +163,36 @@ class MultiDecoderState extends State<MultiDecoder> {
 
   _initOutput() {
     _currentOutput = Column(
-      children: mdtTools.map((tool) {
+      children: _mdtTools.map((tool) {
         return GCWTextDivider(text: _toolTitle(tool));
       }).toList()
     );
   }
 
-  _calculateOutput() {
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+    return GCWAsyncExecuterParameters(
+        MultiDecoderJobData(
+            mdtTools : _mdtTools,
+            input: _currentInput
+        )
+    );
+  }
+
+  void _calculateOutputAsync(dynamic jobData)  {
+    var output = _calculateOutput(
+        jobData.mdtTools,
+        jobData.parameters.input
+    );
+
+    jobData.sendAsyncPort.send(output);
+  }
+
+  _calculateOutput(List<GCWMultiDecoderTool> mdtTools, String input) {
     var results = mdtTools.map((tool) {
       var result;
 
       try {
-        result = tool.onDecode(_currentInput);
+        result = tool.onDecode(input);
       } catch(e){}
 
       if (result == null || result.toString().length == 0)
@@ -155,8 +204,16 @@ class MultiDecoderState extends State<MultiDecoder> {
       );
     }).toList();
 
-    _currentOutput = Column(
+    return Column(
       children: results
     );
+  }
+
+  _showOutput(Widget output) {
+    _currentOutput = output;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 }
