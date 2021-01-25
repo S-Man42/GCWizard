@@ -56,7 +56,7 @@ class _GCWOutputTextState extends State<GCWOutputText> {
                 Clipboard.setData(ClipboardData(text: copyText));
                 insertIntoGCWClipboard(copyText);
 
-                showToast(i18n(context, 'common_clipboard_copied' + ':\n' + copyText));
+                showToast(i18n(context, 'common_clipboard_copied') + ':\n' + copyText);
               },
             )
           : Container()
