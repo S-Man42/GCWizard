@@ -18,19 +18,20 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
 //import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/substitution_breaker.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/vigenere_breaker.dart';
+//import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/vigenere_breaker.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoderX.dart';
 
-class MultiDecoderJobData {
-  final List<GCWMultiDecoderTool> mdtTools;
-  final BuildContext context;
-  final String input;
-
-  MultiDecoderJobData({
-    this.mdtTools = null,
-    this.context = null,
-    this.input = ''
-  });
-}
+// class MultiDecoderJobData {
+//   final List<GCWMultiDecoderTool> mdtTools;
+//   final BuildContext context;
+//   final String input;
+//
+//   MultiDecoderJobData({
+//     this.mdtTools = null,
+//     this.context = null,
+//     this.input = ''
+//   });
+// }
 
 class MultiDecoder extends StatefulWidget {
   @override
@@ -132,7 +133,7 @@ class MultiDecoderState extends State<MultiDecoder> {
               return Center (
                 child: Container(
                   child: GCWAsyncExecuter(
-                    isolatedFunction: _calculateOutputAsync,
+                    isolatedFunction: calculateOutputAsync,
                     parameter: _buildJobData(),
                     onReady: (data) => _showOutput(data),
                     isOverlay: true,
@@ -183,37 +184,37 @@ class MultiDecoderState extends State<MultiDecoder> {
     );
   }
 
-  void _calculateOutputAsync(dynamic jobData) async {
-    var output = _calculateOutput(
-        jobData.mdtTools,
-        jobData.context,
-        jobData.parameters.input
-    );
+  // void _calculateOutputAsync(dynamic jobData) async {
+  //   var output = _calculateOutput(
+  //       jobData.mdtTools,
+  //       jobData.context,
+  //       jobData.parameters.input
+  //   );
+  //
+  //   jobData.sendAsyncPort.send(output);
+  // }
 
-    jobData.sendAsyncPort.send(output);
-  }
-
-  _calculateOutput(List<GCWMultiDecoderTool> mdtTools, BuildContext context, String input) {
-    var results = mdtTools.map((tool) {
-      var result;
-
-      try {
-        result = 'ww'; //tool.onDecode(input);
-      } catch(e){}
-
-      if (result == null || result.toString().length == 0)
-        return Container();
-
-      return GCWOutput(
-        title: 'xx', //_toolTitle(context, tool),
-        child: result,
-      );
-    }).toList();
-
-    return Column(
-      children: results
-    );
-  }
+  // _calculateOutput(List<GCWMultiDecoderTool> mdtTools, BuildContext context, String input) {
+  //   var results = mdtTools.map((tool) {
+  //     var result;
+  //
+  //     try {
+  //       result = 'ww'; //tool.onDecode(input);
+  //     } catch(e){}
+  //
+  //     if (result == null || result.toString().length == 0)
+  //       return Container();
+  //
+  //     return GCWOutput(
+  //       title: 'xx', //_toolTitle(context, tool),
+  //       child: result,
+  //     );
+  //   }).toList();
+  //
+  //   return Column(
+  //     children: results
+  //   );
+  // }
 
   _showOutput(Widget output) {
     _currentOutput = output;
@@ -224,37 +225,37 @@ class MultiDecoderState extends State<MultiDecoder> {
   }
 }
 
-void _calculateOutputAsync1(dynamic jobData) async {
-  var output = _calculateOutput(
-      jobData.mdtTools,
-      jobData.context,
-      jobData.parameters.input
-  );
+// void _calculateOutputAsync1(dynamic jobData) async {
+//   var output = _calculateOutput(
+//       jobData.mdtTools,
+//       jobData.context,
+//       jobData.parameters.input
+//   );
+//
+//   jobData.sendAsyncPort.send(output);
+// }
 
-  jobData.sendAsyncPort.send(output);
-}
-
-_calculateOutput(List<GCWMultiDecoderTool> mdtTools, BuildContext context, String input) {
-  var results = mdtTools.map((tool) {
-    var result;
-
-    try {
-      result = tool.onDecode(input);
-    } catch(e){}
-
-    if (result == null || result.toString().length == 0)
-      return Container();
-
-    return GCWOutput(
-      title: _toolTitle(context, tool),
-      child: result,
-    );
-  }).toList();
-
-  return Column(
-      children: results
-  );
-}
+// _calculateOutput(List<GCWMultiDecoderTool> mdtTools, BuildContext context, String input) {
+//   var results = mdtTools.map((tool) {
+//     var result;
+//
+//     try {
+//       result = tool.onDecode(input);
+//     } catch(e){}
+//
+//     if (result == null || result.toString().length == 0)
+//       return Container();
+//
+//     return GCWOutput(
+//       title: _toolTitle(context, tool),
+//       child: result,
+//     );
+//   }).toList();
+//
+//   return Column(
+//       children: results
+//   );
+// }
 
 _toolTitle(BuildContext context, GCWMultiDecoderTool tool) {
   var optionValues = tool.options.values.map((value) {
