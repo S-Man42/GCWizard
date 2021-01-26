@@ -102,6 +102,12 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
   @override
   void dispose() {
+    if (_currentFromInput != null && _currentFromInput.length > 0
+        && _currentToInput != null && _currentToInput.length > 0
+    ) {
+      _addNewValue();
+    }
+
     _inputController.dispose();
     _fromController.dispose();
     _toController.dispose();
@@ -453,26 +459,26 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
   Widget _buildSubmitButton() {
     return GCWSubmitButton(
-        onPressed: () async {
-          await showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) {
-              return Center (
-                child: Container(
-                  child: GCWAsyncExecuter(
-                    isolatedFunction: parseVariableLatLonAsync,
-                    parameter: _buildJobData(),
-                    onReady: (data) => _showOutput(data),
-                    isOverlay: true,
-                  ),
-                  height: 220,
-                  width: 150,
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: parseVariableLatLonAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
                 ),
-              );
-            },
-          );
-        }
+                height: 220,
+                width: 150,
+              ),
+            );
+          },
+        );
+      }
     );
   }
 
@@ -481,6 +487,12 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     widget.formula.values.forEach((value) {
       _substitutions.putIfAbsent(value.key, () => value.value);
     });
+
+    if (_currentFromInput != null && _currentFromInput.length > 0
+      && _currentToInput != null && _currentToInput.length > 0
+    ) {
+      _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
+    }
 
     Map<String, dynamic> projectionData;
     if (_currentProjectionMode) {
