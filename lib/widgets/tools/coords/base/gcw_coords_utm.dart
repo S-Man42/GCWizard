@@ -12,8 +12,9 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsUTM extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsUTM({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsUTM({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsUTMState createState() => GCWCoordsUTMState();
@@ -49,6 +50,18 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.coordinates != null) {
+      var utm = latLonToUTM(widget.coordinates, defaultEllipsoid());
+      _currentLonZone['value'] = utm.zone.lonZone;
+      _currentEasting['value'] = utm.easting;
+      _currentNorthing['value'] = utm.easting;
+      _currentHemisphere = utm.zone.latZone == "N" ? 1 : -1;
+
+      _LonZoneController.text = _currentLonZone['value'].toString();
+      _EastingController.text = _currentEasting['value'].toString();
+      _NorthingController.text = _currentNorthing['value'].toString();
+    }
+
     return Column (
         children: <Widget>[
           Row(

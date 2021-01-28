@@ -10,25 +10,28 @@ LatLng maidenheadToLatLon (String maidenhead) {
 
   double lat = 0.0;
   double lon = 0.0;
-
-  for (int i = 0; i < maidenhead.length; i += 2) {
-    if (res == 1) {
-      lon = ((alphabet_AZ[maidenhead[0]] - 1) * 20).toDouble();
-      lat = ((alphabet_AZ[maidenhead[1]] - 1) * 10).toDouble();
-      res = 2;
-    } else if (res % 2 == 1)  {
-      reslon /= 24;
-      reslat /= 24;
-      lon += (alphabet_AZ[maidenhead[i]] - 1).toDouble() * reslon;
-      lat += (alphabet_AZ[maidenhead[i + 1]] - 1).toDouble() * reslat;
-      ++res;
-    } else {
-      reslon /= 10;
-      reslat /= 10;
-      lon += int.tryParse(maidenhead[i]) * reslon;
-      lat += int.tryParse(maidenhead[i + 1]) * reslat;
-      ++res;
+  try {
+    for (int i = 0; i < maidenhead.length; i += 2) {
+      if (res == 1) {
+        lon = ((alphabet_AZ[maidenhead[0]] - 1) * 20).toDouble();
+        lat = ((alphabet_AZ[maidenhead[1]] - 1) * 10).toDouble();
+        res = 2;
+      } else if (res % 2 == 1)  {
+        reslon /= 24;
+        reslat /= 24;
+        lon += (alphabet_AZ[maidenhead[i]] - 1).toDouble() * reslon;
+        lat += (alphabet_AZ[maidenhead[i + 1]] - 1).toDouble() * reslat;
+        ++res;
+      } else {
+        reslon /= 10;
+        reslat /= 10;
+        lon += int.tryParse(maidenhead[i]) * reslon;
+        lat += int.tryParse(maidenhead[i + 1]) * reslat;
+        ++res;
+      }
     }
+  } catch(e) {
+    return null;
   }
 
   lon -= 180;

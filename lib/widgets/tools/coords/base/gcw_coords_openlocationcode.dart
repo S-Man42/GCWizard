@@ -7,8 +7,9 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class GCWCoordsOpenLocationCode extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsOpenLocationCode({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsOpenLocationCode({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsOpenLocationCodeState createState() => GCWCoordsOpenLocationCodeState();
@@ -37,6 +38,12 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.coordinates != null) {
+      _currentCoord = latLonToOpenLocationCode(widget.coordinates, codeLength: 14);
+
+      _controller.text = _currentCoord;
+    }
+
     return Column (
       children: <Widget>[
         GCWTextField(

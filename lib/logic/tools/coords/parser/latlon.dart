@@ -1,5 +1,19 @@
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:latlong/latlong.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 
 final PATTERN_NO_NUMBERS = r'\s+?';
 final PATTERN_NOTHING_OR_NO_NUMBERS = r'\s*?';
@@ -393,6 +407,62 @@ Map<String, dynamic> parseLatLon(String text, {wholeString = false}) {
   coord = parseDEC(text, wholeString: wholeString);
   if (coord != null)
     return {'format': keyCoordsDEC, 'coordinate': coord};
+
+  coord = parseUTM(text, defaultEllipsoid());
+  if (coord != null)
+    return {'format': keyCoordsUTM, 'coordinate': coord};
+
+  coord = parseMGRS(text, defaultEllipsoid());
+  if (coord != null)
+    return {'format': keyCoordsMGRS, 'coordinate': coord};
+
+  coord = parseWaldmeister(text);
+  if (coord != null)
+    return {'format': keyCoordsReverseWhereIGoWaldmeister, 'coordinate': coord};
+
+  coord = parseXYZ(text, defaultEllipsoid());
+  if (coord != null)
+    return {'format': keyCoordsXYZ, 'coordinate': coord};
+
+  coord = parseSwissGrid(text, defaultEllipsoid());
+  if (coord != null)
+    return {'format': keyCoordsSwissGrid, 'coordinate': coord};
+
+  coord = parseSwissGrid(text, defaultEllipsoid(), isSwissGridPlus: true);
+  if (coord != null)
+    return {'format': keyCoordsSwissGridPlus, 'coordinate': coord};
+
+  coord = parseGaussKrueger(text, defaultEllipsoid());
+  if (coord != null)
+    return {'format': keyCoordsGaussKrueger, 'coordinate': coord};
+
+  coord = maidenheadToLatLon(text);
+  if (coord != null)
+    return {'format': keyCoordsMaidenhead, 'coordinate': coord};
+
+  coord = parseMercator(text, defaultEllipsoid());
+  if (coord != null)
+    return {'format': keyCoordsMercator, 'coordinate': coord};
+
+  coord = parseNaturalAreaCode(text);
+  if (coord != null)
+    return {'format': keyCoordsNaturalAreaCode, 'coordinate': coord};
+
+  coord = geohashToLatLon(text);
+  if (coord != null)
+    return {'format': geohashToLatLon, 'coordinate': coord};
+
+  coord = geoHexToLatLon(text);
+  if (coord != null)
+    return {'format': keyCoordsGeoHex, 'coordinate': coord};
+
+  coord = openLocationCodeToLatLon(text);
+  if (coord != null)
+    return {'format': keyCoordsOpenLocationCode, 'coordinate': coord};
+
+  coord = parseQuadtree(text);
+  if (coord != null)
+    return {'format': keyCoordsQuadtree, 'coordinate': coord};
 
   return null;
 }

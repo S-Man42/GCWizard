@@ -110,15 +110,15 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
       _currentLonMilliSeconds = lon['seconds'].split('.')[1];
       _currentLonSign = lon['sign']['value'];
 
-      _LatDegreesController = TextEditingController(text: _currentLatDegrees);
-      _LatMinutesController = TextEditingController(text: _currentLatMinutes);
-      _LatSecondsController = TextEditingController(text: _currentLatSeconds);
-      _LatMilliSecondsController = TextEditingController(text: _currentLatMilliSeconds);
+      _LatDegreesController.text = _currentLatDegrees;
+      _LatMinutesController.text = _currentLatMinutes;
+      _LatSecondsController.text = _currentLatSeconds;
+      _LatMilliSecondsController.text = _currentLatMilliSeconds;
 
-      _LonDegreesController = TextEditingController(text: _currentLonDegrees);
-      _LonMinutesController = TextEditingController(text: _currentLonMinutes);
-      _LonSecondsController = TextEditingController(text: _currentLonSeconds);
-      _LonMilliSecondsController = TextEditingController(text: _currentLonMilliSeconds);
+      _LonDegreesController.text = _currentLonDegrees;
+      _LonMinutesController.text = _currentLonMinutes;
+      _LonSecondsController.text = _currentLonSeconds;
+      _LonMilliSecondsController.text = _currentLonMilliSeconds;
     }
 
     return Column (    

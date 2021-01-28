@@ -96,13 +96,13 @@ class GCWCoordsDMMState extends State<GCWCoordsDMM> {
       _currentLonMilliMinutes = lon['minutes'].split('.')[1];
       _currentLonSign = lon['sign']['value'];
 
-      _LatDegreesController = TextEditingController(text: _currentLatDegrees);
-      _LatMinutesController = TextEditingController(text: _currentLatMinutes);
-      _LatMilliMinutesController = TextEditingController(text: _currentLatMilliMinutes);
+      _LatDegreesController.text = _currentLatDegrees;
+      _LatMinutesController.text = _currentLatMinutes;
+      _LatMilliMinutesController.text = _currentLatMilliMinutes;
 
-      _LonDegreesController = TextEditingController(text: _currentLonDegrees);
-      _LonMinutesController = TextEditingController(text: _currentLonMinutes);
-      _LonMilliMinutesController = TextEditingController(text: _currentLonMilliMinutes);
+      _LonDegreesController.text = _currentLonDegrees;
+      _LonMinutesController.text = _currentLonMinutes;
+      _LonMilliMinutesController.text = _currentLonMilliMinutes;
     }
 
     return Column (

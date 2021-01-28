@@ -58,9 +58,6 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
     _LonDegreesController.dispose();
     _LonMilliDegreesController.dispose();
 
-    _latMilliDegreesFocusNode.dispose();
-    _lonMilliDegreesFocusNode.dispose();
-
     super.dispose();
   }
 
@@ -75,11 +72,11 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
       _currentLonMilliDegrees = widget.coordinates.longitude.toString().split('.')[1];
       _currentLonSign = coordinateSign(widget.coordinates.longitude);
 
-      _LatDegreesController = TextEditingController(text: _currentLatDegrees);
-      _LatMilliDegreesController = TextEditingController(text: _currentLatMilliDegrees);
+      _LatDegreesController.text = _currentLatDegrees;
+      _LatMilliDegreesController.text = _currentLatMilliDegrees;
 
-      _LonDegreesController = TextEditingController(text: _currentLonDegrees);
-      _LonMilliDegreesController = TextEditingController(text: _currentLonMilliDegrees);
+      _LonDegreesController.text = _currentLonDegrees;
+      _LonMilliDegreesController.text = _currentLonMilliDegrees;
     }
 
     return Column (
