@@ -302,62 +302,67 @@ String latLonToOpenLocationCode(LatLng coords, {int codeLength = pairCodeLength}
 
 /// Decodes an Open Location Code into the location coordinates.
 LatLng openLocationCodeToLatLon(String code) {
-  if (!isFull(code)) {
-    throw ArgumentError('coords_formatconverter_openlocationcode_novalidcode');
-  }
-  // Strip out separator character (we've already established the code is
-  // valid so the maximum is one), padding characters and convert to upper
-  // case.
-  code = code.replaceAll(separator, '');
-  code = code.replaceAll(RegExp('$padding+'), '');
-  code = code.toUpperCase();
-  // Initialise the values for each section. We work them out as integers and
-  // convert them to floats at the end.
-  var normalLat = -latitudeMax * pairPrecision;
-  var normalLng = -longitudeMax * pairPrecision;
-  var gridLat = 0;
-  var gridLng = 0;
-  // How many digits do we have to process?
-  var digits = min(code.length, pairCodeLength);
-  // Define the place value for the most significant pair.
-  var pv = pairFirstPlaceValue;
-  // Decode the paired digits.
-  for (var i = 0; i < digits; i += 2) {
-    normalLat += codeAlphabet.indexOf(code[i]) * pv;
-    normalLng += codeAlphabet.indexOf(code[i + 1]) * pv;
-    if (i < digits - 2) {
-      pv = pv ~/ encodingBase;
+  try{
+    if (!isFull(code)) {
+      return null;
+      //throw ArgumentError('coords_formatconverter_openlocationcode_novalidcode');
     }
-  }
-  // Convert the place value to a float in degrees.
-  var latPrecision = pv / pairPrecision;
-  var lngPrecision = pv / pairPrecision;
-  // Process any extra precision digits.
-  if (code.length > pairCodeLength) {
-    // Initialise the place values for the grid.
-    var rowpv = gridLatFirstPlaceValue;
-    var colpv = gridLngFirstPlaceValue;
+    // Strip out separator character (we've already established the code is
+    // valid so the maximum is one), padding characters and convert to upper
+    // case.
+    code = code.replaceAll(separator, '');
+    code = code.replaceAll(RegExp('$padding+'), '');
+    code = code.toUpperCase();
+    // Initialise the values for each section. We work them out as integers and
+    // convert them to floats at the end.
+    var normalLat = -latitudeMax * pairPrecision;
+    var normalLng = -longitudeMax * pairPrecision;
+    var gridLat = 0;
+    var gridLng = 0;
     // How many digits do we have to process?
-    digits = min(code.length, maxDigitCount);
-    for (var i = pairCodeLength; i < digits; i++) {
-      var digitVal = codeAlphabet.indexOf(code[i]);
-      var row = digitVal ~/ gridColumns;
-      var col = digitVal % gridColumns;
-      gridLat += row * rowpv;
-      gridLng += col * colpv;
-      if (i < digits - 1) {
-        rowpv = rowpv ~/ gridRows;
-        colpv = colpv ~/ gridColumns;
+    var digits = min(code.length, pairCodeLength);
+    // Define the place value for the most significant pair.
+    var pv = pairFirstPlaceValue;
+    // Decode the paired digits.
+    for (var i = 0; i < digits; i += 2) {
+      normalLat += codeAlphabet.indexOf(code[i]) * pv;
+      normalLng += codeAlphabet.indexOf(code[i + 1]) * pv;
+      if (i < digits - 2) {
+        pv = pv ~/ encodingBase;
       }
     }
-    // Adjust the precisions from the integer values to degrees.
-    latPrecision = rowpv / finalLatPrecision;
-    lngPrecision = colpv / finalLngPrecision;
-  }
-  // Merge the values from the normal and extra precision parts of the code.
-  var lat = normalLat / pairPrecision + gridLat / finalLatPrecision;
-  var lng = normalLng / pairPrecision + gridLng / finalLngPrecision;
+    // Convert the place value to a float in degrees.
+    var latPrecision = pv / pairPrecision;
+    var lngPrecision = pv / pairPrecision;
+    // Process any extra precision digits.
+    if (code.length > pairCodeLength) {
+      // Initialise the place values for the grid.
+      var rowpv = gridLatFirstPlaceValue;
+      var colpv = gridLngFirstPlaceValue;
+      // How many digits do we have to process?
+      digits = min(code.length, maxDigitCount);
+      for (var i = pairCodeLength; i < digits; i++) {
+        var digitVal = codeAlphabet.indexOf(code[i]);
+        var row = digitVal ~/ gridColumns;
+        var col = digitVal % gridColumns;
+        gridLat += row * rowpv;
+        gridLng += col * colpv;
+        if (i < digits - 1) {
+          rowpv = rowpv ~/ gridRows;
+          colpv = colpv ~/ gridColumns;
+        }
+      }
+      // Adjust the precisions from the integer values to degrees.
+      latPrecision = rowpv / finalLatPrecision;
+      lngPrecision = colpv / finalLngPrecision;
+    }
+    // Merge the values from the normal and extra precision parts of the code.
+    var lat = normalLat / pairPrecision + gridLat / finalLatPrecision;
+    var lng = normalLng / pairPrecision + gridLng / finalLngPrecision;
 
-  // Return center of code area
-  return LatLng((2 * lat + latPrecision) / 2, (2 * lng + lngPrecision) / 2);
+    // Return center of code area
+    return LatLng((2 * lat + latPrecision) / 2, (2 * lng + lngPrecision) / 2);
+  } catch(e) {}
+
+  return null;
 }

@@ -3,7 +3,6 @@ import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 import 'package:latlong/latlong.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class GCWCoordsOpenLocationCode extends StatefulWidget {
   final Function onChanged;

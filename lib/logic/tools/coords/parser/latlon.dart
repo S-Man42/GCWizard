@@ -395,74 +395,78 @@ LatLng parseDMS(String text, {wholeString = false}) {
 
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
-Map<String, dynamic> parseLatLon(String text, {wholeString = false}) {
-  LatLng coord = parseDMS(text, wholeString: wholeString);
-  if (coord != null)
-    return {'format': keyCoordsDMS, 'coordinate': coord};
+Map<String, LatLng> parseLatLon(String text, {wholeString = false}) {
+  var coords = Map<String, LatLng>();
 
-  coord = parseDMM(text, wholeString: wholeString);
-  if (coord != null)
-    return {'format': keyCoordsDMM, 'coordinate': coord};
+  try{
+    LatLng coord = parseDMS(text, wholeString: wholeString);
+    if (coord != null)
+      coords.addAll ({keyCoordsDMS: coord});
 
-  coord = parseDEC(text, wholeString: wholeString);
-  if (coord != null)
-    return {'format': keyCoordsDEC, 'coordinate': coord};
+    coord = parseDMM(text, wholeString: wholeString);
+    if (coord != null)
+      coords.addAll ({keyCoordsDMM : coord });
 
-  coord = parseUTM(text, defaultEllipsoid());
-  if (coord != null)
-    return {'format': keyCoordsUTM, 'coordinate': coord};
+    coord = parseDEC(text, wholeString: wholeString);
+    if (coord != null)
+      coords.addAll ({keyCoordsDEC : coord });
 
-  coord = parseMGRS(text, defaultEllipsoid());
-  if (coord != null)
-    return {'format': keyCoordsMGRS, 'coordinate': coord};
+    coord = parseUTM(text, defaultEllipsoid());
+    if (coord != null)
+      coords.addAll ({keyCoordsUTM : coord });
 
-  coord = parseWaldmeister(text);
-  if (coord != null)
-    return {'format': keyCoordsReverseWhereIGoWaldmeister, 'coordinate': coord};
+    coord = parseMGRS(text, defaultEllipsoid());
+    if (coord != null)
+      coords.addAll ({keyCoordsMGRS : coord });
 
-  coord = parseXYZ(text, defaultEllipsoid());
-  if (coord != null)
-    return {'format': keyCoordsXYZ, 'coordinate': coord};
+    coord = parseWaldmeister(text);
+    if (coord != null)
+      coords.addAll ({keyCoordsReverseWhereIGoWaldmeister : coord });
 
-  coord = parseSwissGrid(text, defaultEllipsoid());
-  if (coord != null)
-    return {'format': keyCoordsSwissGrid, 'coordinate': coord};
+    coord = parseXYZ(text, defaultEllipsoid());
+    if (coord != null)
+      coords.addAll ({keyCoordsXYZ : coord });
 
-  coord = parseSwissGrid(text, defaultEllipsoid(), isSwissGridPlus: true);
-  if (coord != null)
-    return {'format': keyCoordsSwissGridPlus, 'coordinate': coord};
+    coord = parseSwissGrid(text, defaultEllipsoid());
+    if (coord != null)
+      coords.addAll ({keyCoordsSwissGrid : coord });
 
-  coord = parseGaussKrueger(text, defaultEllipsoid());
-  if (coord != null)
-    return {'format': keyCoordsGaussKrueger, 'coordinate': coord};
+    coord = parseSwissGrid(text, defaultEllipsoid(), isSwissGridPlus: true);
+    if (coord != null)
+      coords.addAll ({keyCoordsSwissGridPlus : coord });
 
-  coord = maidenheadToLatLon(text);
-  if (coord != null)
-    return {'format': keyCoordsMaidenhead, 'coordinate': coord};
+    coord = parseGaussKrueger(text, defaultEllipsoid());
+    if (coord != null)
+      coords.addAll ({keyCoordsGaussKrueger : coord });
 
-  coord = parseMercator(text, defaultEllipsoid());
-  if (coord != null)
-    return {'format': keyCoordsMercator, 'coordinate': coord};
+    coord = maidenheadToLatLon(text);
+    if (coord != null)
+      coords.addAll ({keyCoordsMaidenhead : coord });
 
-  coord = parseNaturalAreaCode(text);
-  if (coord != null)
-    return {'format': keyCoordsNaturalAreaCode, 'coordinate': coord};
+    coord = parseMercator(text, defaultEllipsoid());
+    if (coord != null)
+      coords.addAll ({keyCoordsMercator : coord });
 
-  coord = geohashToLatLon(text);
-  if (coord != null)
-    return {'format': geohashToLatLon, 'coordinate': coord};
+    coord = parseNaturalAreaCode(text);
+    if (coord != null)
+      coords.addAll ({keyCoordsNaturalAreaCode : coord });
 
-  coord = geoHexToLatLon(text);
-  if (coord != null)
-    return {'format': keyCoordsGeoHex, 'coordinate': coord};
+    coord = geohashToLatLon(text);
+    if (coord != null)
+      coords.addAll ({keyCoordsGeohash : coord });
 
-  coord = openLocationCodeToLatLon(text);
-  if (coord != null)
-    return {'format': keyCoordsOpenLocationCode, 'coordinate': coord};
+    coord = geoHexToLatLon(text);
+    if (coord != null)
+      coords.addAll ({keyCoordsGeoHex : coord });
 
-  coord = parseQuadtree(text);
-  if (coord != null)
-    return {'format': keyCoordsQuadtree, 'coordinate': coord};
+    coord = openLocationCodeToLatLon(text);
+    if (coord != null)
+      coords.addAll ({keyCoordsOpenLocationCode : coord });
 
-  return null;
+    coord = parseQuadtree(text);
+    if (coord != null)
+      coords.addAll ({keyCoordsQuadtree : coord });
+
+  } catch(e) {}
+  return coords;
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
@@ -36,10 +37,21 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
 
   _parseClipboardAndSetCoords(text) {
     var parsed = parseLatLon(text);
-    if (parsed == null || parsed['coordinate'] == null) {
+    if (parsed == null  || parsed.length == 0) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
       widget.onPasted(null);
       return;
+    } else if (parsed.length > 1) {
+      var alternateformates = parsed.keys.map((key)  {
+        var text = '\r\n';
+        var coordFormat = allCoordFormats.firstWhere((format) => format.key == key);
+        if (coordFormat.subtypes == null)
+          text += coordFormat.name;
+        else
+          text += i18n(context, coordFormat.name);
+        return text;
+      }).join();
+      showToast(i18n(context, 'coords_common_clipboard_alternatecoordformat') + ':' + alternateformates);
     }
 
     widget.onPasted(parsed);

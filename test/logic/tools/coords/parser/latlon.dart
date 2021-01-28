@@ -224,9 +224,9 @@ void main() {
       .forEach((elem) {
         test('text: ${elem['text']}', () {
           var _actual = parseLatLon(elem['text']);
-          expect(_actual['format'], elem['expectedOutput']['format']);
-          expect((_actual['coordinate'].latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
-          expect((_actual['coordinate'].longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+          expect(_actual.keys.elementAt(0), elem['expectedOutput']['format']);
+          expect((_actual.values.elementAt(0).latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.values.elementAt(0).longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
         });
       });
   });

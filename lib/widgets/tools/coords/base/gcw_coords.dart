@@ -355,11 +355,16 @@ class GCWCoordsState extends State<GCWCoords> {
     });
   }
 
-  _setCoords(Map<String, dynamic> pastedCoords) {
-    if (pastedCoords == null)
+  _setCoords(Map<String, LatLng> pastedCoords) {
+    if (pastedCoords == null || pastedCoords.length == 0)
       return;
 
-    _pastedCoords = pastedCoords['coordinate'];
+    if (pastedCoords.keys.contains(_currentCoordsFormat['format'].toString())) {
+      _pastedCoords = pastedCoords[_currentCoordsFormat['format']];
+    } else {
+      _pastedCoords = pastedCoords.values.elementAt(0);
+      _currentCoordsFormat = {'format': pastedCoords.keys.elementAt(0)};
+    }
 
     _setPastedCoordsFormat();
     _currentValue = _pastedCoords;
