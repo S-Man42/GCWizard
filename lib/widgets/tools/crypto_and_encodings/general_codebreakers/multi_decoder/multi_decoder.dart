@@ -8,7 +8,6 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool.dart';
@@ -17,18 +16,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tools.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
-class MultiDecoderJobData {
-  final List<GCWMultiDecoderTool> mdtTools;
-  final BuildContext context;
-  final String input;
-
-  MultiDecoderJobData({
-    this.mdtTools = null,
-    this.context = null,
-    this.input = ''
-  });
-}
-
 class MultiDecoder extends StatefulWidget {
   @override
   MultiDecoderState createState() => MultiDecoderState();
@@ -36,7 +23,7 @@ class MultiDecoder extends StatefulWidget {
 
 class MultiDecoderState extends State<MultiDecoder> {
   var _controller;
-  List<GCWMultiDecoderTool> _mdtTools;
+  List<GCWMultiDecoderTool> mdtTools;
 
   String _currentInput = '';
   Widget _currentOutput;
@@ -58,7 +45,7 @@ class MultiDecoderState extends State<MultiDecoder> {
   }
 
   _refreshMDTTools() {
-    _mdtTools = multiDecoderTools.map((mdtTool) {
+    mdtTools = multiDecoderTools.map((mdtTool) {
       return multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
   }
@@ -80,31 +67,31 @@ class MultiDecoderState extends State<MultiDecoder> {
         Row(
           children: [
             Expanded(
-              child: Container(
-                child: GCWTextField(
-                  controller: _controller,
-                  onChanged: (text) {
-                    _currentInput = text;
-                    if (_currentInput == null || _currentInput.length == 0) {
-                      setState(() {
-                        _currentOutput = null;
-                      });
-                    }
-                  },
-                ),
-                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
-              )
+                child: Container(
+                    child: GCWTextField(
+                      controller: _controller,
+                      onChanged: (text) {
+                        _currentInput = text;
+                        if (_currentInput == null || _currentInput.length == 0) {
+                          setState(() {
+                            _currentOutput = null;
+                          });
+                        }
+                      },
+                    ),
+                    padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
+                )
             ),
             GCWIconButton(
               iconData: Icons.settings,
               onPressed: () {
                 Navigator.push(context, NoAnimationMaterialPageRoute(
-                  builder: (context) => GCWTool(
-                    tool: MultiDecoderConfiguration(),
-                    toolName: i18n(context, 'multidecoder_configuration_title')
-                  )
+                    builder: (context) => GCWTool(
+                        tool: MultiDecoderConfiguration(),
+                        toolName: i18n(context, 'multidecoder_configuration_title')
+                    )
                 ))
-                .whenComplete(() {
+                    .whenComplete(() {
                   setState(() {
                     _currentOutput = null;
                   });
@@ -113,38 +100,19 @@ class MultiDecoderState extends State<MultiDecoder> {
             )
           ],
         ),
-        _buildSubmitButton(),
+        GCWSubmitButton(
+          onPressed: () {
+            setState(() {
+              _calculateOutput();
+            });
+          },
+        ),
         _currentOutput
       ],
     );
   }
 
-  Widget _buildSubmitButton() {
-    return GCWSubmitButton(
-        onPressed: () async {
-          await showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) {
-              return Center (
-                child: Container(
-                  child: GCWAsyncExecuter(
-                    isolatedFunction: _calculateOutputAsync,
-                    parameter: _buildJobData(),
-                    onReady: (data) => _showOutput(data),
-                    isOverlay: true,
-                  ),
-                  height: 220,
-                  width: 150,
-                ),
-              );
-            },
-          );
-        }
-    );
-  }
-
-  _toolTitle(BuildContext context, GCWMultiDecoderTool tool) {
+  _toolTitle(GCWMultiDecoderTool tool) {
     var optionValues = tool.options.values.map((value) {
       var result = value;
 
@@ -164,110 +132,31 @@ class MultiDecoderState extends State<MultiDecoder> {
 
   _initOutput() {
     _currentOutput = Column(
-      children: _mdtTools.map((tool) {
-        return GCWTextDivider(text: _toolTitle(context, tool));
-      }).toList()
+        children: mdtTools.map((tool) {
+          return GCWTextDivider(text: _toolTitle(tool));
+        }).toList()
     );
   }
 
-  Future<GCWAsyncExecuterParameters> _buildJobData() async {
-    return GCWAsyncExecuterParameters(
-        MultiDecoderJobData(
-            mdtTools : _mdtTools,
-            context: context,
-            input: _currentInput
-        )
-    );
-  }
-
-  void _calculateOutputAsync(dynamic jobData) async {
-    var output = _calculateOutput(
-        jobData.parameters.mdtTools,
-        jobData.parameters.context,
-        jobData.parameters.input
-    );
-
-    jobData.sendAsyncPort.send(output);
-  }
-
-  _calculateOutput(List<GCWMultiDecoderTool> mdtTools, BuildContext context, String input) {
+  _calculateOutput() {
     var results = mdtTools.map((tool) {
       var result;
 
       try {
-        result = 'ww'; //tool.onDecode(input);
+        result = tool.onDecode(_currentInput);
       } catch(e){}
 
       if (result == null || result.toString().length == 0)
         return Container();
 
       return GCWOutput(
-        title: 'xx', //_toolTitle(context, tool),
+        title: _toolTitle(tool),
         child: result,
       );
     }).toList();
 
-    return Column(
-      children: results
+    _currentOutput = Column(
+        children: results
     );
   }
-
-  _showOutput(Widget output) {
-    _currentOutput = output;
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {});
-    });
-  }
 }
-
-// void _calculateOutputAsync1(dynamic jobData) async {
-//   var output = _calculateOutput(
-//       jobData.mdtTools,
-//       jobData.context,
-//       jobData.parameters.input
-//   );
-//
-//   jobData.sendAsyncPort.send(output);
-// }
-
-// _calculateOutput(List<GCWMultiDecoderTool> mdtTools, BuildContext context, String input) {
-//   var results = mdtTools.map((tool) {
-//     var result;
-//
-//     try {
-//       result = tool.onDecode(input);
-//     } catch(e){}
-//
-//     if (result == null || result.toString().length == 0)
-//       return Container();
-//
-//     return GCWOutput(
-//       title: _toolTitle(context, tool),
-//       child: result,
-//     );
-//   }).toList();
-//
-//   return Column(
-//       children: results
-//   );
-// }
-
-_toolTitle(BuildContext context, GCWMultiDecoderTool tool) {
-  var optionValues = tool.options.values.map((value) {
-    var result = value;
-
-    if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-      result = getCoordinateFormatByKey(value).name;
-    }
-
-    return i18n(context, result.toString()) ?? result;
-  }).join(', ');
-
-  var result = tool.name;
-  if (optionValues != null && optionValues.length > 0)
-    result += ' ($optionValues)';
-
-  return result;
-}
-
