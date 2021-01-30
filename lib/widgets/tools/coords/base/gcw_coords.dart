@@ -382,16 +382,29 @@ class GCWCoordsState extends State<GCWCoords> {
       case keyCoordsXYZ:
       case keyCoordsSwissGrid:
       case keyCoordsSwissGridPlus:
+        break;
       case keyCoordsGaussKrueger:
       case keyCoordsGaussKruegerGK1:
+        _currentCoordsFormat.addAll({'subtype' : keyCoordsGaussKruegerGK1});
+        break;
       case keyCoordsGaussKruegerGK2:
+        _currentCoordsFormat.addAll({'subtype' : keyCoordsGaussKruegerGK2});
+        break;
       case keyCoordsGaussKruegerGK3:
+        _currentCoordsFormat.addAll({'subtype' : keyCoordsGaussKruegerGK3});
+        break;
       case keyCoordsGaussKruegerGK4:
+        _currentCoordsFormat.addAll({'subtype' : keyCoordsGaussKruegerGK4});
+        break;
       case keyCoordsGaussKruegerGK5:
+        _currentCoordsFormat.addAll({'subtype' : keyCoordsGaussKruegerGK5});
+        break;
       case keyCoordsMaidenhead:
       case keyCoordsMercator:
       case keyCoordsNaturalAreaCode:
       case keyCoordsSlippyMap:
+        _currentCoordsFormat.addAll({'subtype' : '10.0'});
+        break;
       case keyCoordsGeohash:
       case keyCoordsGeoHex:
       case keyCoordsOpenLocationCode:

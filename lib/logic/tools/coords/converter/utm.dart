@@ -148,7 +148,7 @@ LatLng parseUTM(String input, Ellipsoid ells) {
     return null;
 
   var _hemisphere = match.group(2);
-  if (['N', 'M'].contains(_hemisphere) == false)
+  if (['N', 'S'].contains(_hemisphere) == false)
     return null;
 
   var _easting = double.tryParse(match.group(3));

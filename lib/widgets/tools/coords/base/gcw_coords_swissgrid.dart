@@ -42,7 +42,7 @@ class GCWCoordsSwissGridState extends State<GCWCoordsSwissGrid> {
     if (widget.coordinates != null) {
       var swissGrid = latLonToSwissGrid(widget.coordinates, defaultEllipsoid());
       _currentEasting['value'] = swissGrid.easting;
-      _currentNorthing['value'] = swissGrid.easting;
+      _currentNorthing['value'] = swissGrid.northing;
 
       _EastingController.text = _currentEasting['value'].toString();
       _NorthingController.text = _currentNorthing['value'].toString();

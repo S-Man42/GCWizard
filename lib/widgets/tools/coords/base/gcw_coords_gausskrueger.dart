@@ -24,13 +24,13 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
   var _currentEasting = {'text': '', 'value': 0.0};
   var _currentNorthing = {'text': '', 'value': 0.0};
 
-  var _currentSubtype ='';
+  var _currentSubtype = 1;
 
   @override
   void initState() {
     super.initState();
 
-    _currentSubtype = widget.subtype;
+    _currentSubtype = _getSubTypeCode(widget.subtype);
 
     _eastingController = TextEditingController(text: _currentEasting['text']);
     _northingController = TextEditingController(text: _currentNorthing['text']);
@@ -47,19 +47,13 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var gauskrueger = latLonToGaussKrueger(widget.coordinates, _getSubTypeCode(_currentSubtype), defaultEllipsoid());
+      var gauskrueger = latLonToGaussKrueger(widget.coordinates, _currentSubtype, defaultEllipsoid());
       _currentEasting['value'] = gauskrueger.easting;
       _currentNorthing['value'] = gauskrueger.northing;
-      _currentSubtype = _getSubTypeString(gauskrueger.code);
+      _currentSubtype = gauskrueger.code;
 
       _eastingController.text = _currentEasting['value'].toString();
       _northingController.text = _currentNorthing['value'].toString();
-    }
-    if (_currentSubtype != widget.subtype) {
-      _eastingController.clear();
-      _northingController.clear();
-
-      _currentSubtype = widget.subtype;
     }
 
     return Column (
@@ -116,7 +110,7 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    var code = _getSubTypeCode(_currentSubtype);
+    var code = _currentSubtype;
     var gaussKrueger = GaussKrueger(code, _currentEasting['value'], _currentNorthing['value']);
     LatLng coords = gaussKruegerToLatLon(gaussKrueger, defaultEllipsoid());
 

@@ -88,7 +88,7 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
           min: 0.0,
           max: 30.0,
           title: i18n(context, 'coords_formatconverter_slippymap_zoom') + ' (Z)',
-          value: double.tryParse(_currentSubtype),
+          value: double.tryParse(_currentSubtype == null ? '10' : _currentSubtype),
           onChanged: (value) {
             setState(() {
               _currentSubtype = NumberFormat('0.00000').format(value);

@@ -10,6 +10,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
@@ -89,6 +90,9 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
               break;
             case keyCoordsReverseWhereIGoWaldmeister:
               coords = parseWaldmeister(input);
+              break;
+            case keyCoordsSlippyMap:
+              coords = parseSlippyMap(input);
               break;
           }
         } catch(e) {}

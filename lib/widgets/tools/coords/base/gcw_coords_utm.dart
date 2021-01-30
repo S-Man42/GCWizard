@@ -54,7 +54,7 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
       var utm = latLonToUTM(widget.coordinates, defaultEllipsoid());
       _currentLonZone['value'] = utm.zone.lonZone;
       _currentEasting['value'] = utm.easting;
-      _currentNorthing['value'] = utm.easting;
+      _currentNorthing['value'] = utm.northing;
       _currentHemisphere = utm.zone.latZone == "N" ? 1 : -1;
 
       _LonZoneController.text = _currentLonZone['value'].toString();

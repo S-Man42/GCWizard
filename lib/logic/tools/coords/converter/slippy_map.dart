@@ -29,3 +29,38 @@ String latLonToSlippyMapString(LatLng coords, double zoom) {
   var numberFormat = NumberFormat('0.######');
   return 'X: ${numberFormat.format(slippyMap.x)}\nY: ${numberFormat.format(slippyMap.y)}';
 }
+
+LatLng parseSlippyMap(String input, {zoom: 10.0}) {
+  RegExp regExp = RegExp(r'^\s*([\0-9\.]+)(\s*,\s*|\s+)([\0-9\.]+)\s*$');
+  var matches = regExp.allMatches(input);
+  var xString = '';
+  var yString = '';
+
+  if (matches.length > 0) {
+    var match = matches.elementAt(0);
+    xString = match.group(1);
+    yString = match.group(3);
+  }
+  if (matches.length == 0) {
+    regExp = RegExp(r'^\s*(X|x)\:?\s*([\0-9\.]+)(\s*,\s*|\s+)(Y|h)\:?\s*([\0-9\.]+)\s*$');
+    matches = regExp.allMatches(input);
+    if (matches.length > 0) {
+      var match = matches.elementAt(0);
+      xString = match.group(2);
+      yString = match.group(5);
+    }
+  }
+
+  if (matches.length == 0)
+    return null;
+
+  var x = double.tryParse(xString);
+  if (x == null)
+    return null;
+
+  var y = double.tryParse(yString);
+  if (y == null)
+    return null;
+
+  return slippyMapToLatLon(SlippyMap( x, y, zoom));
+}
