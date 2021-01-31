@@ -3,9 +3,9 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_utm_lonzone_textinputformatter.dart';
 import 'package:latlong/latlong.dart';
@@ -25,8 +25,7 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
   var _EastingController;
   var _NorthingController;
 
-  var _currentHemisphere = defaultHemiphereLatitude();
-
+  var _currentLatZone = 'U';
   var _currentLonZone = {'text': '', 'value': 0};
   var _currentEasting = {'text': '', 'value': 0.0};
   var _currentNorthing = {'text': '', 'value': 0.0};
@@ -55,7 +54,7 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
       _currentLonZone['value'] = utm.zone.lonZone;
       _currentEasting['value'] = utm.easting;
       _currentNorthing['value'] = utm.northing;
-      _currentHemisphere = utm.zone.latZone == "N" ? 1 : -1;
+      _currentLatZone = utm.zone.latZone;
 
       _LonZoneController.text = _currentLonZone['value'].toString();
       _EastingController.text = _currentEasting['value'].toString();
@@ -81,15 +80,20 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
               ),
               Expanded(
                 child: Container(
-                  child: GCWCoordsSignDropDownButton(
-                    itemList: ['N','S'],
-                    value: _currentHemisphere,
-                    onChanged: (value) {
+                  child: GCWDropDownButton(
+                    value: _currentLatZone,
+                    onChanged: (newValue) {
                       setState(() {
-                        _currentHemisphere = value;
-                        _setCurrentValueAndEmitOnChange();
+                        _currentLatZone = newValue;
+                        // _setCurrentValueAndEmitOnChange();
                       });
-                    }
+                    },
+                    items: latZones.split('').map((char) {
+                      return GCWDropDownMenuItem(
+                        value: char,
+                        child: char,
+                      );
+                    }).toList(),
                   ),
                   padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
                 )
@@ -125,7 +129,7 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
   _setCurrentValueAndEmitOnChange() {
     var _lonZone = _currentLonZone['value'];
 
-    var zone = UTMZone(_lonZone, _lonZone, _currentHemisphere > 0 ? 'N' : 'M');
+    var zone = UTMZone(_lonZone, _lonZone, _currentLatZone);
     var utm = UTMREF(zone, _currentEasting['value'], _currentNorthing['value']);
 
     LatLng coords = UTMREFtoLatLon(utm, defaultEllipsoid());

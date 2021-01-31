@@ -988,7 +988,7 @@
   "coords_common_centerpoint": "Center Point",
   "coords_common_intersection": "Intersection",
   "coords_common_clipboard_nocoordsfound": "No coordinates found within the paste data.",
-  "coords_common_clipboard_alternatecoordformat": "Alternative coordinate format ",
+  "coords_common_clipboard_recognizedcoordformats": "Recognized coordinate formats",
   "coords_common_location_permissiondenied":  "Access to position data denied.",
   "coords_common_location_lowaccuracy":  "WARNING: Low accuracy (%s1 m)",
   "coords_export" : "Save Output",

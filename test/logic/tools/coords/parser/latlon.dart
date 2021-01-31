@@ -1,6 +1,9 @@
 import "package:flutter_test/flutter_test.dart";
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:latlong/latlong.dart';
 
 void main() {
@@ -135,8 +138,10 @@ void main() {
     {'text': '52°12\'30.15" North, 20°12\'30.15"O', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},
     {'text': '52°12\'30.15" Süden 20°12\'30.15" Westen', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(-52.208375, -20.208375)}},
     {'text': '052°12\'30.15" Süden 20°12\'30.15" Westen', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(-52.208375, -20.208375)}},
+    {'text': '52° 12\′ 30\″ N, 20°12\′ 31\″ O', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.2083333333, 020.2086111111)}},
 
     {'text': 'N 52° 12\' 30.15" E 20° 12\' 30.15"', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},
+    {'text': 'N 52° 12\′ 30\″,O 20°12\′ 31\″', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.2083333333, 020.2086111111)}},
     {'text': 'N 52°12\'30.15" E 20°12\'30.15"', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},
     {'text': '52°12\'30.15" 20°12\'30.15"', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},
     {'text': 'N 52 12 30.15 E 20 12 30.15', 'expectedOutput': {'format': keyCoordsDMS, 'coordinate': LatLng(52.208375, 20.208375)}},

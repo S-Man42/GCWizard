@@ -42,7 +42,7 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
       widget.onPasted(null);
       return;
     } else if (parsed.length > 1) {
-      var alternateformates = parsed.keys.map((key)  {
+      var recognizedformates = parsed.keys.map((key)  {
         var text = '\r\n';
         var coordFormat = allCoordFormats.firstWhere((format) => format.key == key);
         if (coordFormat.subtypes == null)
@@ -51,7 +51,7 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
           text += i18n(context, coordFormat.name);
         return text;
       }).join();
-      showToast(i18n(context, 'coords_common_clipboard_alternatecoordformat') + ':' + alternateformates);
+      showToast(i18n(context, 'coords_common_clipboard_recognizedcoordformats') + ':' + recognizedformates);
     }
 
     widget.onPasted(parsed);

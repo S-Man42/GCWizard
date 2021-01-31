@@ -100,7 +100,7 @@ final PATTERN_DMS_TRAILINGSIGN =
     '([0-5]?\\d)\\s*?[\\s\'´′`]\\s*?'      //lat minutes + symbol
     '([0-5]?\\d)\\s*?'                     //lat seconds
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat milliseconds
-    '[\\s"]?\\s*?'                         //lat seconds symbol
+    '[\\s"″]?\\s*?'                        //lat seconds symbol
     '([NS]$_LETTER*?|[\\+\\-])\\s*?'       //lat sign
 
     '[,\\s]\\s*?'                          //delimiter lat lon
@@ -109,18 +109,18 @@ final PATTERN_DMS_TRAILINGSIGN =
     '([0-5]?\\d)\\s*?[\\s\'´′`]\\s*?'      //lon minutes + symbol
     '([0-5]?\\d)\\s*?'                     //lon seconds
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon milliseconds
-    '[\\s"]?\\s*?'                         //lon seconds symbol
-    '([EWO]$_LETTER*?|[\\+\\-])'          //lon sign;
+    '[\\s"″]?\\s*?'                        //lon seconds symbol
+    '([EWO]$_LETTER*?|[\\+\\-])'           //lon sign;
     '\\s*?';
 
 final PATTERN_DMS =
     '^\\s*?'
     '([NS]$_LETTER*?|[\\+\\-])?\\s*?'      //lat sign
     '(\\d{1,3})\\s*?[\\s°]\\s*?'           //lat degrees + symbol
-    '([0-5]?\\d)\\s*?[\\s\'´′`]\\s*?'        //lat minutes + symbol
+    '([0-5]?\\d)\\s*?[\\s\'´′`]\\s*?'      //lat minutes + symbol
     '([0-5]?\\d)\\s*?'                     //lat seconds
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat milliseconds
-    '[\\s"]?\\s*?'                         //lat seconds symbol
+    '[\\s"″]?\\s*?'                        //lat seconds symbol
 
     '\\s*?[,\\s]\\s*?'                     //delimiter lat lon
 
@@ -129,7 +129,7 @@ final PATTERN_DMS =
     '([0-5]?\\d)\\s*?[\\s\'´′`]\\s*?'      //lon minutes + symbol
     '([0-5]?\\d)\\s*?'                     //lon seconds
     '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon milliseconds
-    '[\\s"]?'                              //lon seconds symbol
+    '[\\s"″]?'                             //lon seconds symbol
     '\\s*?';
 
 int _sign(String match) {
