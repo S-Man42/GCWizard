@@ -61,7 +61,7 @@ LatLng parseXYZ(String input, Ellipsoid ells) {
     zString = match.group(5);
   }
   if (matches.length == 0) {
-    regExp = RegExp(r'^\s*(Xx)\:?\s*([\-0-9\.]+)(\s*,\s*|\s+)(Yy)\:?\s*([\-0-9\.]+)(\s*,\s*|\s+)(Z|z)\:?\s*([\-0-9\.]+)\s*$');
+    regExp = RegExp(r'^\s*(Xx)\:?\s*([\-0-9\.]+)(\s*,\s*|\s+)(Yy)\:?\s*([\-0-9\.]+)(\s*,\s*|\s+)(Zz)\:?\s*([\-0-9\.]+)\s*$');
     matches = regExp.allMatches(input);
     if (matches.length > 0) {
       var match = matches.elementAt(0);
