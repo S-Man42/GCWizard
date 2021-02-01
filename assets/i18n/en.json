@@ -1183,6 +1183,16 @@
   "coords_averaging_start" : "Start Measurement",
   "coords_averaging_stop" : "Stop Measurement",
 
+  "cow_title" : "Cow",
+  "cow_description" : "Esoteric programming language with 11 characters",
+  "cow_example" : "MoO moO MoO mOo MOO OOM MMM",
+  "cow_interpret" : "Interpreter",
+  "cow_generate" : "Generator",
+  "cow_code" : "Code",
+  "cow_text" : "Text",
+  "cow_input" : "Input",
+  "cow_error_invalidcode" : "Invalid Code",
+
   "crosssum_selection_title" : "Cross Sum/Digit Sum",
   "crosssum_selection_description" : "Cross Sums of an Integer",
   "crosssum_crosssum_title" : "Cross Sum/Digit Sum",
