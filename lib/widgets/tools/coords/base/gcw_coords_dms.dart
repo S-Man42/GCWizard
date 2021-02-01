@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -94,7 +95,7 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var dms = DMS.from(widget.coordinates);
+      var dms = latLonToDMS(widget.coordinates);
       var lat = dms.latitude.formatParts(10);
       var lon = dms.longitude.formatParts(10);
 
@@ -374,6 +375,6 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
     _secondsD = double.parse('$_seconds.$_currentLonMilliSeconds');
     var _currentLon = DMSLongitude(_currentLonSign, _degrees, _minutes, _secondsD);
 
-    widget.onChanged(DMS(_currentLat, _currentLon).toLatLng());
+    widget.onChanged(dmsToLatLon(DMS(_currentLat, _currentLon)));
   }
 }

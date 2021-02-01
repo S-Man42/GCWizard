@@ -1,3 +1,6 @@
+import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
@@ -45,9 +48,9 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
   var _formatted;
 
   switch (_outputFormat['format']) {
-    case keyCoordsDEC: _formatted = DEC.from(_coords).format(); break;
-    case keyCoordsDMM: _formatted = DMM.from(_coords).format(); break;
-    case keyCoordsDMS: _formatted = DMS.from(_coords).format(); break;
+    case keyCoordsDEC: return latLonToDECString(_coords);
+    case keyCoordsDMM: return latLonToDMMString(_coords);
+    case keyCoordsDMS: return latLonToDMSString(_coords);
     case keyCoordsUTM: return latLonToUTMString(_coords, ells);
     case keyCoordsMGRS: return latLonToMGRSString(_coords, ells);
     case keyCoordsXYZ: return latLonToXYZString(_coords, ells);
@@ -63,10 +66,8 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
     case keyCoordsOpenLocationCode: return latLonToOpenLocationCode(_coords, codeLength: 14);
     case keyCoordsQuadtree: return latLonToQuadtree(_coords).join();
     case keyCoordsReverseWhereIGoWaldmeister: return latLonToWaldmeisterString(_coords);
-    default: _formatted = DEC.from(_coords).format();
+    default: return latLonToDECString(_coords);
   }
-
-  return '${_formatted['latitude']}\n${_formatted['longitude']}';
 }
 
 int coordinateSign(double value) {

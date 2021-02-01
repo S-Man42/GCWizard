@@ -1,9 +1,9 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:latlong/latlong.dart';
 
 void main() {

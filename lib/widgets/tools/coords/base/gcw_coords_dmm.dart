@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -82,7 +83,7 @@ class GCWCoordsDMMState extends State<GCWCoordsDMM> {
   Widget build(BuildContext context) {
 
     if (widget.coordinates != null) {
-      var dmm = DMM.from(widget.coordinates);
+      var dmm = latLonToDMM(widget.coordinates);
       var lat = dmm.latitude.formatParts(10);
       var lon = dmm.longitude.formatParts(10);
 
@@ -304,6 +305,6 @@ class GCWCoordsDMMState extends State<GCWCoordsDMM> {
     _minutesD = double.parse('$_minutes.$_currentLonMilliMinutes');
     var _currentLon = DMMLongitude(_currentLonSign, _degrees, _minutesD);
 
-    widget.onChanged(DMM(_currentLat, _currentLon).toLatLng());
+    widget.onChanged(dmmToLatLon(DMM(_currentLat, _currentLon)));
   }
 }

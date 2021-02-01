@@ -1,4 +1,3 @@
-import 'package:gc_wizard/logic/tools/coords/converter/latlon.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 
@@ -100,31 +99,6 @@ class DEC {
   double longitude;
   
   DEC(this.latitude, this.longitude);
-
-  static DEC from(LatLng coord) {
-    return DEC(coord.latitude, coord.longitude);
-  }
-
-  LatLng toLatLng() {
-    var normalized = this.normalize();
-    return LatLng(normalized.latitude, normalized.longitude);
-  }
-
-  Map<String, String> format([int precision]) {
-    return {
-      'latitude': NumberFormat('00.000#######').format(latitude),
-      'longitude': NumberFormat('000.000#######').format(longitude)
-    };
-  }
-
-  DEC normalize() {
-    return normalizeDEC(this);
-  }
-
-  @override
-  String toString() {
-    return 'latitude: $latitude, longitude: $longitude';
-  }
 }
 
 class DMMPart {
@@ -203,27 +177,6 @@ class DMM {
   DMMLongitude longitude;
 
   DMM(this.latitude, this.longitude);
-
-  static DMM from(LatLng coord) {
-    return DECToDMM(DEC.from(coord));
-  }
-
-  LatLng toLatLng() {
-    return DMMToDEC(this).toLatLng();
-  }
-
-  Map<String, String> format([int precision]) {
-    return {'latitude': latitude.format(precision), 'longitude': longitude.format(precision)};
-  }
-
-  DMM normalize() {
-    return DECToDMM(DMMToDEC(this));
-  }
-
-  @override
-  String toString() {
-    return 'latitude: $latitude, longitude: $longitude';
-  }
 }
 
 class DMSPart {
@@ -312,27 +265,6 @@ class DMS {
   DMSLongitude longitude;
 
   DMS(this.latitude, this.longitude);
-
-  static DMS from(LatLng coord) {
-    return DECToDMS(DEC.from(coord));
-  }
-
-  LatLng toLatLng() {
-    return DMSToDEC(this).toLatLng();
-  }
-
-  Map<String, String> format([int precision]) {
-    return {'latitude': latitude.format(precision), 'longitude': longitude.format(precision)};
-  }
-
-  DMS normalize() {
-    return DECToDMS(DMSToDEC(this));
-  }
-
-  @override
-  String toString() {
-    return 'latitude: $latitude, longitude: $longitude';
-  }
 }
 
 enum HemisphereLatitude {North, South}

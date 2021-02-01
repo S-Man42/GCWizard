@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -226,6 +227,6 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
     _degreesD = double.parse('$_degrees.$_currentLonMilliDegrees');
     double _currentLon = _currentLonSign * _degreesD;
 
-    widget.onChanged(DEC(_currentLat, _currentLon).toLatLng());
+    widget.onChanged(decToLatLon(DEC(_currentLat, _currentLon)));
   }
 }
