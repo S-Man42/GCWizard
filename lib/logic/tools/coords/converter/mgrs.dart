@@ -36,7 +36,7 @@ MGRS latLonToMGRS(LatLng coord, Ellipsoid ells) {
 
 String latLonToMGRSString(LatLng coord, Ellipsoid ells) {
   MGRS mgrs = latLonToMGRS(coord, ells);
-  return '${mgrs.utmZone.lonZone} ${mgrs.utmZone.latZone} ${mgrs.digraph} ${doubleFormat.format(mgrs.easting)} ${doubleFormat.format(mgrs.northing)}';
+  return '${mgrs.utmZone.lonZone}${mgrs.utmZone.latZone} ${mgrs.digraph} ${doubleFormat.format(mgrs.easting)} ${doubleFormat.format(mgrs.northing)}';
 }
 
 List<List<dynamic>>latitudeBandConstants = [

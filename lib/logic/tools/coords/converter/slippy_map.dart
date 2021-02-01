@@ -42,7 +42,7 @@ LatLng parseSlippyMap(String input, {zoom: 10.0}) {
     yString = match.group(3);
   }
   if (matches.length == 0) {
-    regExp = RegExp(r'^\s*(X|x)\:?\s*([\0-9\.]+)(\s*,\s*|\s+)(Y|h)\:?\s*([\0-9\.]+)\s*$');
+    regExp = RegExp(r'^\s*(Xx)\:?\s*([\0-9\.]+)(\s*,\s*|\s+)(Yy)\:?\s*([\0-9\.]+)\s*$');
     matches = regExp.allMatches(input);
     if (matches.length > 0) {
       var match = matches.elementAt(0);

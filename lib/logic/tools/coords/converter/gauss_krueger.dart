@@ -137,7 +137,7 @@ LatLng parseGaussKrueger(String input, Ellipsoid ells, {gaussKruegerCode: 1}) {
     _northingString = match.group(3);
   }
   if (matches.length == 0) {
-    regExp = RegExp(r'^\s*(R|r)\:?\s*([\0-9\.]+)(\s*,\s*|\s+)(H|h)\:?\s*([\0-9\.]+)\s*$');
+    regExp = RegExp(r'^\s*(Rr)\:?\s*([\0-9\.]+)(\s*,\s*|\s+)(Hh)\:?\s*([\0-9\.]+)\s*$');
     matches = regExp.allMatches(input);
     if (matches.length > 0) {
       var match = matches.elementAt(0);

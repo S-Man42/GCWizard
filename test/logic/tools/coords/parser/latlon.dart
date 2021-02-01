@@ -273,19 +273,19 @@ void main() {
       {'text': '52 6.3 20 06.4', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.10005, 20.100066666666)}},
       {'text': '52 6.31 20 06.45', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.100516666666, 20.10075)}},
       {'text': '52 6.312 20 06.458', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.1052, 20.10763333333333)}},
-      {'text': '52 6.3127 20 06.4589', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.15211666666, 20.17648333333333)}},
+      {'text': '52 6.3127 20 06.4589', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.105211666666, 20.107648333333333)}},
 
       {'text': 'N 52° 12\' E 20° 12\'', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.2, 20.2)}},
       {'text': 'N 52° 12.3\' E 20° 12.4\'', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.20005, 20.200066666666)}},
       {'text': 'N 52° 12.31\' E 20° 12.45\'', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.200516666666, 20.20075)}},
       {'text': 'N 52° 12.312\' E 20° 12.458\'', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.2052, 20.20763333333333)}},
-      {'text': 'N 52° 12.3127\' E 20° 12.4589\'', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.25211666666666, 20.2764833333333)}},
+      {'text': 'N 52° 12.3127\' E 20° 12.4589\'', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.205211666666666, 20.20764833333333)}},
 
       {'text': 'N 52° 12\' E 20° 12.458\'', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.2, 20.20763333333333)}},
       {'text': 'N 52° 12.312\' E 20° 12\'', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.2052, 20.2)}},
-      {'text': 'N 52° 12.31\' E 20° 12.4589\'', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.200516666666, 20.2764833333333)}},
+      {'text': 'N 52° 12.31\' E 20° 12.4589\'', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.200516666666665, 20.207648333333335)}},
 
-      {'text': 'N 52° 12.3189452\' E 20° 12.15846874\'', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(74.64246666666666, 104.31456666666668)}},
+      {'text': 'N 52° 12.3189452\' E 20° 12.15846874\'', 'leftPadMilliMinutes': true, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.2053157533, 20.2026411457)}},
     ];
 
     _inputsToExpected.forEach((elem) {

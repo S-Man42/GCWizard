@@ -40,7 +40,7 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsDMM, 'DMM: DD° MM.MMM\'', 'N 45° 17.460\' W 122° 24.800\''),
   CoordinateFormat(keyCoordsDMS, 'DMS: DD° MM\' SS.SSS"', 'N 45° 17\' 27.60" W 122° 24\' 48.00"'),
   CoordinateFormat(keyCoordsUTM, 'UTM', '10 N 546003.6 5015445.0'),
-  CoordinateFormat(keyCoordsMGRS, 'MGRS', '10 T ER 46003.6 15445.0'),
+  CoordinateFormat(keyCoordsMGRS, 'MGRS', '10T ER 46003.6 15445.0'),
   CoordinateFormat(keyCoordsXYZ, 'XYZ (ECEF)', 'X: -2409244, Y: -3794410, Z: 4510158'),
   CoordinateFormat(keyCoordsSwissGrid, 'SwissGrid (CH1903)', 'Y: 4295317.7, X: 1202252.3'),
   CoordinateFormat(keyCoordsSwissGridPlus, 'SwissGrid (CH1903+)', 'Y: 6295317.7, X: 2202252.3'),
