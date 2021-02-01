@@ -19,7 +19,6 @@ double _DMSPartToDouble(DMSPart dmsPart) {
   return dmsPart.sign * (dmsPart.degrees.abs() + dmsPart.minutes / 60.0 + dmsPart.seconds / 60.0 / 60.0);
 }
 
-
 DMS latLonToDMS (LatLng coord) {
   return _DECToDMS(latLonToDEC(coord));
 }

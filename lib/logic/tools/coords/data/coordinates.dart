@@ -99,6 +99,11 @@ class DEC {
   double longitude;
   
   DEC(this.latitude, this.longitude);
+
+  @override
+  String toString() {
+    return 'latitude: $latitude, longitude: $longitude';
+  }
 }
 
 class DMMPart {
@@ -177,6 +182,11 @@ class DMM {
   DMMLongitude longitude;
 
   DMM(this.latitude, this.longitude);
+
+  @override
+  String toString() {
+    return 'latitude: $latitude, longitude: $longitude';
+  }
 }
 
 class DMSPart {
@@ -265,6 +275,11 @@ class DMS {
   DMSLongitude longitude;
 
   DMS(this.latitude, this.longitude);
+
+  @override
+  String toString() {
+    return 'latitude: $latitude, longitude: $longitude';
+  }
 }
 
 enum HemisphereLatitude {North, South}
