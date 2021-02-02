@@ -1191,7 +1191,11 @@
   "cow_code" : "Code",
   "cow_text" : "Text",
   "cow_input" : "Eingabe",
-  "cow_error_invalidcode" :"Ungültiger Sourcecode",
+  "cow_error_invalidcode" :"FEHLER: Ungültiger Sourcecode",
+  "cow_error_nomatchingMOO" :"FEHLER: Kein passender MOO-Befehl",
+  "cow_error_nomatchingmoo" :"FEHLER: Kein passender moo-Befehl",
+  "cow_error_memoryoutofbounds" :"FEHLER: Ungültiger Speicherzugriff",
+  "cow_error_infiniteloop" :"FEHLER: Endlosschleife",
 
   "crosssum_selection_title" : "Quersumme",
   "crosssum_selection_description" : "Quersummen einer ganzen Zahl",

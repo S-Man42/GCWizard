@@ -9,10 +9,6 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class Cow extends StatefulWidget {
-  final Function interpret;
-  final Function generate;
-
-  const Cow({Key key, this.interpret, this.generate}) : super(key: key);
 
   @override
   CowState createState() => CowState();
@@ -84,12 +80,16 @@ class CowState extends State<Cow> {
   _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       try {
-        return widget.interpret == null ? interpretCow(_currentText, input: _currentInput) : widget.interpret(_currentText, input: _currentInput);
+        CowOutput output = interpretCow(_currentText, STDIN: _currentInput);
+        if (output.error == '')
+          return output.output;
+        else
+          return output.output + '\n' + i18n(context, output.error);
       } on FormatException catch(e) {
         return printErrorMessage(context, e.message);
       }
     } else {
-      return widget.generate == null ? substitution(generateBrainfk(_currentText), {'>' : 'moO', '<' : 'mOo', '+' : 'MoO', '-' : 'MOo', '.' : 'OOM', ',' : 'oom', '[' : 'MOO', ']' : 'moo', }) : widget.generate(_currentText);
+      return generateCow(_currentText);
     }
   }
 }

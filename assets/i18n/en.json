@@ -1191,7 +1191,11 @@
   "cow_code" : "Code",
   "cow_text" : "Text",
   "cow_input" : "Input",
-  "cow_error_invalidcode" : "Invalid Code",
+  "cow_error_invalidcode" : "ERROR: Invalid Code",
+  "cow_error_nomatchingMOO" :"ERROR: No matching MOO-Command",
+  "cow_error_nomatchingmoo" :"ERROR: No matching moo-Command",
+  "cow_error_memoryoutofbounds" :"ERROR: Trying to access a memory block before the first one",
+  "cow_error_infiniteloop" :"ERROR: Infinite Loop",
 
   "crosssum_selection_title" : "Cross Sum/Digit Sum",
   "crosssum_selection_description" : "Cross Sums of an Integer",

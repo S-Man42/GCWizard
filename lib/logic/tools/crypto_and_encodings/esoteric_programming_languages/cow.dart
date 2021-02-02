@@ -1,94 +1,264 @@
-import 'dart:math';
+//---------------------------------------------------------
+// COW Programming language
+// by BigZaphod sean@fifthace.com
+// http://www.bigzaphod.org/cow
+//
+// Licencse: Public Domain
+//
+// Marco F. atomK
+// https://github.com/Atomk/C-COW-Interpreter/blob/master/cow-interpreter.c
+//
+// Frank Buss
+// https://frank-buss.de/cow.html
+//---------------------------------------------------------
 
-final ERROR_BRAINFK_LOOPNOTCLOSED = 'brainfk_error_loopnotclosed';
-final ERROR_BRAINFK_LOOPNOTOPENED = 'brainfk_error_loopnotopened';
+
 final ERROR_COW_INVALIDCODE = 'cow_error_invalidcode';
+final ERROR_COW_LOOPNOTOPEND = 'cow_error_nomatchingMOO';
+final ERROR_COW_LOOPNOTCLOSED = 'cow_error_nomatchingmoo';
+final ERROR_COW_MEMORYOUTOFBOUNDS = 'cow_error_memoryoutofbounds';
+final ERROR_COW_INFINITELOOP = 'cow_error_infiniteloop';
 
 final commands = {'moo' : 0, 'mOo' : 1, 'moO' : 2, 'mOO' : 3, 'Moo' : 4, 'MOo' : 5, 'MoO' : 6, 'MOO' : 7, 'OOO' : 8, 'MMM' : 9, 'OOM' : 10, 'oom' : 11};
 
-final MAX_MEMORY = 32768;
+final MAX_MEMORY = 1024;
+final MAX_ITERATIONS = 32768;
 
-String interpretCow(String code, {String input}) {
+class CowOutput {
+  String output = '';
+  String error = '';
+
+  CowOutput(this.output, this.error);
+}
+
+String error = '';
+bool halt = false;
+int mem_pos = 0;
+List<int> memory = List<int>.generate(MAX_MEMORY, (index) => 0);
+String STDOUT = '';
+int inputPointer = 0;
+int register = 0;
+bool has_register_val = false;
+
+CowOutput interpretCow(String code, {String STDIN}) {
+  STDOUT = '';
+  halt = false;
+  mem_pos = 0;
+  inputPointer = 0;
+  register = 0;
+  has_register_val = false;
+  memory.forEach((element) {element = 0;});
+
   if (code == null || code.length == 0)
-    return '';
+    return CowOutput('', '');
 
+  code = code.replaceAll(new RegExp(r'\s'), '');
   List<int> instructions = new List<int>();
-  for (int i = 0; i < code.length; i = i + 2)
+  print(code);
+  print(commands);
+  for (int i = 0; i < code.length ~/3; i++) {
+    print(i.toString()+' '+code.substring(i * 3, i * 3 + 3));
+    print(instructions.toString());
     if (commands[code.substring(i * 3, i * 3 + 3)] == null)
-      return ERROR_COW_INVALIDCODE;
+      return CowOutput('', ERROR_COW_INVALIDCODE);
     else
       instructions.add(commands[code.substring(i * 3, i * 3 + 3)]);
+  }
 
+  int iterations = 0;
+  int prog_pos = 0;
 
-  var pointer = 0;
-  var data = List<int>.generate(MAX_MEMORY, (index) => 0);
-  var out = '';
-
-  var inputPointer = 0;
-
-  List<int> loopStack = [];
-
-  int i = 0;
-  while (i < instructions.length) {
-    switch(instructions[i]) {
-      case '>':
-        pointer++;
-        if (pointer >= data.length)
-          pointer = 0;
-        break;
-      case '<':
-        pointer--;
-        if (pointer < 0) {
-          pointer = data.length - 1;
-        }
-        break;
-      case '+':
-        data[pointer] = (data[pointer] + 1) % 256;
-        break;
-      case '-':
-        data[pointer] = (data[pointer] - 1 + 256) % 256;
-        break;
-      case '.':
-        out += String.fromCharCode(data[pointer]);
-        break;
-      case ',':
-        if (input == null || inputPointer >= input.length)
-          return out;
-
-        data[pointer] = input.codeUnitAt(inputPointer++);
-        break;
-      case '[':
-        if (data[pointer] == 0) {
-          var nestedLoopCount = 1;
-          while (nestedLoopCount > 0) {
-            i++;
-            if (i >= instructions.length)
-              throw FormatException(ERROR_BRAINFK_LOOPNOTCLOSED);
-
-            switch (instructions[i]) {
-              case '[': nestedLoopCount++; break;
-              case ']': nestedLoopCount--; break;
-            }
-          }
-
-          i++;
-          continue;
-        } else {
-          loopStack.add(i);
-        }
-        break;
-      case ']':
-        if (loopStack.isEmpty)
-          throw FormatException(ERROR_BRAINFK_LOOPNOTOPENED);
-
-        i = loopStack.removeLast();
-        continue;
+  while (prog_pos < instructions.length && !halt) {
+    prog_pos = _execCommand(instructions[prog_pos], instructions, prog_pos, instructions.length, STDIN);
+    iterations++;
+    if (iterations > MAX_ITERATIONS) {
+      halt = true;
     }
-
-    i++;
   };
 
-  return out;
+  return CowOutput(STDOUT, error);
 }
+
+
+int _execCommand(int commandCode, List<int> instructionsArray, int instructionIndex, int numberOfInstructions, String STDIN){
+  int MOO_count = 0;
+  int moo_count = 0;
+
+  switch (commandCode){
+    case 0: // moo
+      instructionIndex -= 2;  // Skip previous instruction
+      moo_count = 0;
+
+      while (instructionIndex >= 0){
+        switch (instructionsArray[instructionIndex]){
+          case 0: //moo
+            moo_count++;
+            break;
+          case 7: //MOO
+            if(moo_count == 0)
+              return instructionIndex;
+            else
+              moo_count--;
+            break;
+        }
+        instructionIndex--;
+      }
+      halt = true;
+      error = ERROR_COW_LOOPNOTOPEND;
+      break;
+
+    case 1: // mOo
+      if (mem_pos > 0) {
+        mem_pos--;
+      } else {
+        halt = true;
+        error = ERROR_COW_MEMORYOUTOFBOUNDS;
+      }
+      break;
+
+    case 2: // moO
+      if (mem_pos < MAX_MEMORY - 1) {
+        mem_pos++;
+      } else {
+        halt = true;
+        error = ERROR_COW_MEMORYOUTOFBOUNDS;
+      }
+      break;
+
+    case 3: // mOO
+      if (memory[mem_pos] == commandCode) {
+        halt = true;
+        error = ERROR_COW_INFINITELOOP;
+      }
+      else {
+        if(memory[mem_pos] >= 0 && memory[mem_pos] <= 11) {
+          _execCommand(memory[mem_pos], instructionsArray, instructionIndex, instructionIndex, STDIN);
+        } else {
+          halt = true;
+          error = ERROR_COW_INVALIDCODE;
+        }
+      }
+      break;
+
+    case 4: // Moo
+      if(memory[mem_pos] == 0) {
+        memory[mem_pos] = STDIN.codeUnitAt(inputPointer);
+        inputPointer++;
+      } else {
+        STDOUT = STDOUT + String.fromCharCode(memory[mem_pos]);
+      }
+      break;
+
+    case 5: // MOo
+      memory[mem_pos]--;
+      break;
+
+    case 6: // MoO
+      memory[mem_pos]++;
+      break;
+
+    case 7: // MOO
+      if(memory[mem_pos] == 0) {
+        MOO_count = 0;
+        instructionIndex += 2;  // Skip next instruction
+
+        while (instructionIndex < numberOfInstructions) {
+          switch (instructionsArray[instructionIndex]) {
+            case 0:
+              if (MOO_count == 0)
+                return instructionIndex + 1;
+              else
+                MOO_count--;
+              break;
+            case 7:
+              MOO_count++;
+            break;
+          }
+          instructionIndex++;
+        }
+        halt = true;
+        error = ERROR_COW_LOOPNOTCLOSED;
+      }
+      break;
+
+    case 8: // OOO
+      memory[mem_pos] = 0;
+    break;
+
+    case 9: // MMM
+      if(!has_register_val)
+        register = memory[mem_pos];
+      else
+        memory[mem_pos] = register;
+      has_register_val = !has_register_val;
+      break;
+
+    case 10: // OOM - Print value of current memory block to STDOUT as an integer
+      STDOUT = STDOUT + memory[mem_pos].toString();
+      break;
+
+    case 11: // oom - Read an integer from STDIN and put it into the current memory block
+      String digit = '';
+      while (int.tryParse(STDIN[inputPointer]) != null) {
+        digit = digit + STDIN[inputPointer];
+        inputPointer++;
+      }
+      memory[mem_pos] = int.parse(digit);
+      break;
+
+    default:
+      halt = true;
+      error = ERROR_COW_INVALIDCODE;
+  }
+  return instructionIndex + 1;
+}
+
+String generateCow(String cowOut){
+  // initial program: store 8, 16, 32 and 64 in memory positions 1, 2, 3 and 4, current memory position is 5
+  var program = 'OOOMoOMoOMoOMoOMoOMoOMoOMoOMMMmoOMMMMMMmoOMMMMOOMOomOoMoOmoOmoomOoMMMmoOMMMMMMmoOMMMMOOMOomOoMoOmoOmoomOoMMMmoOMMMMMMmoOMMMMOOMOomOoMoOmoOmoo';
+
+  for (var i = 0; i < cowOut.length; i++) {
+    // next character, ignore non-ASCII
+    var c = cowOut.codeUnitAt(i);
+    if (c > 127) continue;
+
+    // clear position 5 and 6
+    program += 'OOOmoOOOOmOo';
+
+    // add bits
+    for (var j = 6; j > 3; j--) {
+      var mask = 1 << j;
+      if (c > mask) {
+        switch (j) {
+          case 6:
+          // position 5 = 64
+            program += 'mOoMMMmoOMMM';
+            break;
+          case 5:
+          // position 5 = 32
+            program += 'mOomOoMMMmoOmoOMMM';
+            break;
+          case 4:
+          // position 5 = 16
+            program += 'mOomOomOoMMMmoOmoOmoOMMM';
+            break;
+        }
+        // add position 5 and 6, result in position 6
+        program += 'MOOMOomoOMoOmOomoo';
+        c -= mask;
+      }
+    }
+
+    // add rest to position 6 and print
+    program += "moO";
+    for (var j = 0; j < c; j++) {
+      program += "MoO";
+    }
+    program += "MoomOo";
+  }
+
+  return program;
+}
+
 
 
