@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/common/units/length.dart';
+import 'package:gc_wizard/logic/common/units/unit.dart';
+import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
-import 'package:gc_wizard/logic/common/units/length.dart';
-import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
@@ -12,8 +13,9 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
+import 'package:prefs/prefs.dart';
 
 class DistanceBearing extends StatefulWidget {
   @override
@@ -35,14 +37,27 @@ class DistanceBearingState extends State<DistanceBearing> {
   @override
   void initState() {
     super.initState();
+
+    _currentOutputUnit = getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
   }
 
   @override
   Widget build(BuildContext context) {
+    var mapPoint1 = GCWMapPoint(
+      point: _currentCoords1,
+      markerText: i18n(context, 'coords_distancebearing_coorda'),
+      coordinateFormat: _currentCoordsFormat1
+    );
+    var mapPoint2 = GCWMapPoint(
+      point: _currentCoords2,
+      markerText: i18n(context, 'coords_distancebearing_coordb'),
+      coordinateFormat: _currentCoordsFormat2
+    );
+
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_distancebearing_coorda'),
+          title: i18n(context, 'coords_distancebearing_coorda'),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -52,7 +67,7 @@ class DistanceBearingState extends State<DistanceBearing> {
           },
         ),
         GCWCoords(
-          text: i18n(context, 'coords_distancebearing_coordb'),
+          title: i18n(context, 'coords_distancebearing_coordb'),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {
@@ -74,7 +89,7 @@ class DistanceBearingState extends State<DistanceBearing> {
             });
           }
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput(context);
@@ -84,21 +99,12 @@ class DistanceBearingState extends State<DistanceBearing> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: [
-            MapPoint(
-              point: _currentCoords1,
-              markerText: i18n(context, 'coords_distancebearing_coorda'),
-              coordinateFormat: _currentCoordsFormat1
-            ),
-            MapPoint(
-              point: _currentCoords2,
-              markerText: i18n(context, 'coords_distancebearing_coordb'),
-              coordinateFormat: _currentCoordsFormat2
-            ),
+            mapPoint1,
+            mapPoint2
           ],
-          geodetics: [
-            MapGeodetic(
-              start: _currentCoords1,
-              end: _currentCoords2
+          polylines: [
+            GCWMapPolyline(
+              points: [mapPoint1, mapPoint2]
             )
           ],
         ),

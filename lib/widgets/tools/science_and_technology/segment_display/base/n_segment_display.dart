@@ -12,7 +12,9 @@ class NSegmentDisplay extends StatefulWidget {
   final bool readOnly;
   final Function onChanged;
 
-  NSegmentDisplay({Key key, this.initialSegments, this.type, this.segments, this.readOnly: false, this.onChanged}) : super(key: key);
+  final Function customPaint;
+
+  NSegmentDisplay({Key key, this.initialSegments, this.type, this.segments, this.readOnly: false, this.onChanged, this.customPaint}) : super(key: key);
 
   @override
   NSegmentDisplayState createState() => NSegmentDisplayState();
@@ -39,7 +41,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
       children: <Widget>[
         Expanded(
           child: AspectRatio(
-            aspectRatio: RELATIVE_DISPLAY_WIDTH / RELATIVE_DISPLAY_HEIGHT,
+            aspectRatio: SEGMENTS_RELATIVE_DISPLAY_WIDTH / SEGMENTS_RELATIVE_DISPLAY_HEIGHT,
             child: CanvasTouchDetector(
               builder: (context) {
                 return CustomPaint(
@@ -51,7 +53,8 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
                       _segments[key] = value;
                       widget.onChanged(_segments);
                     });
-                  })
+                  },
+                  customPaint: widget.customPaint)
                 );
               },
             )

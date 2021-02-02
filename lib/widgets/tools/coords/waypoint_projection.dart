@@ -11,7 +11,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_bearing.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 
 class WaypointProjection extends StatefulWidget {
@@ -26,8 +26,8 @@ class WaypointProjectionState extends State<WaypointProjection> {
   var _currentReverse = false;
 
   var _currentValues = [defaultCoordinate];
-  var _currentMapPoints = <MapPoint>[];
-  var _currentGeodetics = <MapGeodetic>[];
+  var _currentMapPoints = <GCWMapPoint>[];
+  var _currentMapPolylines = <GCWMapPolyline>[];
   var _currentCoordsFormat = defaultCoordFormat();
 
   var _currentOutputFormat = defaultCoordFormat();
@@ -38,7 +38,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_waypointprojection_start'),
+          title: i18n(context, 'coords_waypointprojection_start'),
           coordsFormat: _currentCoordsFormat,
           onChanged: (ret) {
             setState(() {
@@ -78,7 +78,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput();
@@ -88,7 +88,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
-          geodetics: _currentGeodetics,
+          polylines: _currentMapPolylines,
         ),
       ],
     );
@@ -103,29 +103,28 @@ class WaypointProjectionState extends State<WaypointProjection> {
       }
 
       _currentMapPoints = [
-        MapPoint(
+        GCWMapPoint(
           point: _currentCoords,
           markerText: i18n(context, 'coords_waypointprojection_start'),
           coordinateFormat: _currentCoordsFormat
         )
       ];
 
-      _currentGeodetics = <MapGeodetic>[];
+      _currentMapPolylines = <GCWMapPolyline>[];
 
       _currentValues.forEach((projection) {
-        _currentMapPoints.add(
-          MapPoint(
-            point: projection,
-            color: COLOR_MAP_CALCULATEDPOINT,
-            markerText: i18n(context, 'coords_waypointprojection_end'),
-            coordinateFormat: _currentOutputFormat
-          )
+        var projectionMapPoint = GCWMapPoint(
+          point: projection,
+          color: COLOR_MAP_CALCULATEDPOINT,
+          markerText: i18n(context, 'coords_waypointprojection_end'),
+          coordinateFormat: _currentOutputFormat
         );
 
-        _currentGeodetics.add(
-          MapGeodetic(
-            start: projection,
-            end: _currentCoords
+        _currentMapPoints.add(projectionMapPoint);
+
+        _currentMapPolylines.add(
+          GCWMapPolyline(
+            points: [projectionMapPoint, _currentMapPoints[0]]
           )
         );
       });
@@ -133,12 +132,12 @@ class WaypointProjectionState extends State<WaypointProjection> {
       _currentValues = [projection(_currentCoords, _currentBearing['value'], _currentDistance, defaultEllipsoid())];
 
       _currentMapPoints = [
-        MapPoint(
+        GCWMapPoint(
           point: _currentCoords,
           markerText: i18n(context, 'coords_waypointprojection_start'),
           coordinateFormat: _currentCoordsFormat
         ),
-        MapPoint(
+        GCWMapPoint(
           point: _currentValues[0],
           color: COLOR_MAP_CALCULATEDPOINT,
           markerText: i18n(context, 'coords_waypointprojection_end'),
@@ -146,10 +145,11 @@ class WaypointProjectionState extends State<WaypointProjection> {
         )
       ];
 
-      _currentGeodetics = [MapGeodetic(
-        start: _currentCoords,
-        end: _currentValues[0]
-      )];
+      _currentMapPolylines = [
+        GCWMapPolyline(
+          points: [_currentMapPoints[0], _currentMapPoints[1]]
+        )
+      ];
     }
 
     _currentOutput = _currentValues.map((projection) {

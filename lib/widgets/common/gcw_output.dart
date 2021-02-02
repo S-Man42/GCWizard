@@ -5,12 +5,16 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 class GCWOutput extends StatefulWidget {
   final dynamic child; // could be Widget or String
   final String title;
+  final bool suppressCopyButton;
+  final String copyText;
 
   const GCWOutput({
     Key key,
     @required
     this.child,
-    this.title
+    this.title,
+    this.suppressCopyButton: false,
+    this.copyText
   }) : super(key: key);
 
   @override
@@ -32,6 +36,8 @@ class _GCWOutputState extends State<GCWOutput> {
           ? widget.child
           : GCWOutputText(
               text: widget.child.toString(),
+              suppressCopyButton: widget.suppressCopyButton,
+              copyText: widget.copyText,
             )
       ]
     );

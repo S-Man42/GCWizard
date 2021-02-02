@@ -13,11 +13,11 @@ import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
+import 'package:gc_wizard/widgets/common/gcw_popup_menu.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_export.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulas.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
 class FormulaSolverFormulaGroups extends StatefulWidget {
@@ -227,73 +227,42 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
                   },
                 )
                 : Container(),
-            Container(
-              width: DEFAULT_POPUPBUTTON_SIZE,
-              height: DEFAULT_POPUPBUTTON_SIZE,
-              decoration: ShapeDecoration(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(roundedBorderRadius),
-                  side:  BorderSide(
-                    width: 1,
-                    color: _themeColors.accent(),
+            GCWPopupMenu(
+              iconData: Icons.settings,
+              menuItemBuilder: (context) => [
+                GCWPopupMenuItem(
+                  child: iconedGCWPopupMenuItem(
+                    context,
+                    Icons.edit,
+                    'formulasolver_groups_editgroup'
                   ),
+                  action: (index) => setState(() {
+                    _currentEditId = group.id;
+                    _currentEditedName = group.name;
+                    _editGroupController.text = group.name;
+                  })
                 ),
-              ),
-              child: PopupMenuButton(
-                offset: Offset(0, DEFAULT_POPUPBUTTON_SIZE),
-                icon: Icon(Icons.settings, color: _themeColors.mainFont()),
-                color: _themeColors.accent(),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(roundedBorderRadius),
+                GCWPopupMenuItem(
+                  child: iconedGCWPopupMenuItem(
+                    context,
+                    Icons.delete,
+                    'formulasolver_groups_removegroup'
+                  ),
+                  action: (index) => showDeleteAlertDialog(context, group.name, () {
+                    _removeGroup(group);
+                    setState(() {});
+                  })
                 ),
-                onSelected: (value) {
-                  switch (value) {
-                    case 1:
-                      setState(() {
-                        _currentEditId = group.id;
-                        _currentEditedName = group.name;
-                        _editGroupController.text = group.name;
-                      });
-                      break;
-                    case 2:
-                      showDeleteAlertDialog(context, group.name, () {
-                        _removeGroup(group);
-                        setState(() {});
-                      });
-                      break;
-                    case 3:
-                      _exportGroup(group);
-                      break;
-                  }
-                },
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    value: 1,
-                    child: buildPopupItem(
-                      context,
-                      Icons.edit,
-                      'formulasolver_groups_editgroup'
-                    )
+                GCWPopupMenuItem(
+                  child: iconedGCWPopupMenuItem(
+                    context,
+                    Icons.forward,
+                    'formulasolver_groups_exportgroup'
                   ),
-                  PopupMenuItem(
-                    value: 2,
-                    child: buildPopupItem(
-                      context,
-                      Icons.delete,
-                      'formulasolver_groups_removegroup'
-                    )
-                  ),
-                  PopupMenuItem(
-                    value: 3,
-                    child: buildPopupItem(
-                      context,
-                      Icons.forward,
-                      'formulasolver_groups_exportgroup'
-                    )
-                  ),
-                ],
-              ),
-            ),
+                  action: (index) => _exportGroup(group)
+                ),
+              ]
+            )
           ],
         ),
         onTap: () {

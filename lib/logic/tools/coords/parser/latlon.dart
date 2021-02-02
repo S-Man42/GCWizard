@@ -275,7 +275,7 @@ LatLng parseDMM(String text, {leftPadMilliMinutes: false, wholeString: false}) {
     var latDegrees = int.tryParse(matches.group(2));
     var latMinutes = 0.0;
     if (matches.group(4) != null) {
-      if (leftPadMilliMinutes)
+      if (leftPadMilliMinutes && (matches.group(4).length) < 3)
         latMinutes = _leftPadDMMMilliMinutes(matches.group(3), matches.group(4));
       else
         latMinutes = double.parse('${matches.group(3)}.${matches.group(4)}');
@@ -288,7 +288,7 @@ LatLng parseDMM(String text, {leftPadMilliMinutes: false, wholeString: false}) {
     var lonDegrees = int.tryParse(matches.group(6));
     var lonMinutes = 0.0;
     if (matches.group(8) != null) {
-      if (leftPadMilliMinutes)
+      if (leftPadMilliMinutes && matches.group(8).length < 3)
         lonMinutes = _leftPadDMMMilliMinutes(matches.group(7), matches.group(8));
       else
         lonMinutes = double.parse('${matches.group(7)}.${matches.group(8)}');

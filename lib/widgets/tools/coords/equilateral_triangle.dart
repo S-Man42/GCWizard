@@ -4,12 +4,14 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/equilateral_triangle.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:latlong/latlong.dart';
 
 class EquilateralTriangle extends StatefulWidget {
   @override
@@ -28,14 +30,14 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
   var _currentMapPoints;
-  List<MapGeodetic> _currentMapGeodetics;
+  List<GCWMapPolyline> _currentMapPolylines;
 
   @override
   void initState() {
     super.initState();
     _currentMapPoints = [
-      MapPoint(point: _currentCoords1),
-      MapPoint(point: _currentCoords2)
+      GCWMapPoint(point: _currentCoords1),
+      GCWMapPoint(point: _currentCoords2)
     ];
   }
 
@@ -44,7 +46,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, "coords_equilateraltriangle_coorda"),
+          title: i18n(context, "coords_equilateraltriangle_coorda"),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -54,7 +56,7 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
           },
         ),
         GCWCoords(
-          text: i18n(context, "coords_equilateraltriangle_coordb"),
+          title: i18n(context, "coords_equilateraltriangle_coordb"),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {
@@ -71,84 +73,122 @@ class EquilateralTriangleState extends State<EquilateralTriangle> {
             });
           },
         ),
-        GCWSubmitFlatButton(
-          onPressed: () {
-            setState(() {
-              _calculateOutput();
-            });
-          },
-        ),
+        _buildSubmitButton(),
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: _currentMapPoints,
-          geodetics: _currentMapGeodetics,
+          polylines: _currentMapPolylines,
         ),
       ],
     );
   }
 
-  _calculateOutput() {
-    _currentIntersections = equilateralTriangle(_currentCoords1, _currentCoords2, defaultEllipsoid());
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: equilateralTriangleAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
+              ),
+            );
+          },
+        );
+      }
+    );
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+
+    return GCWAsyncExecuterParameters(
+        EquilateralTriangleJobData(coord1: _currentCoords1, coord2: _currentCoords2, ells: defaultEllipsoid())
+    );
+  }
+
+  _showOutput(List<LatLng> output) {
+    if (output == null) {
+      _currentOutput = [];
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+      return;
+    }
+
+    _currentIntersections = output;
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords1,
         markerText: i18n(context, 'coords_equilateraltriangle_coorda'),
         coordinateFormat: _currentCoordsFormat1
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords2,
         markerText: i18n(context, 'coords_equilateraltriangle_coordb'),
         coordinateFormat: _currentCoordsFormat2
       )
     ];
 
-    if (_currentIntersections.isEmpty) {
+    if (_currentIntersections == null || _currentIntersections.isEmpty) {
       _currentOutput = [i18n(context, "coords_intersect_nointersection")];
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
       return;
     }
 
-    _currentMapPoints.addAll(
-      _currentIntersections
-        .map((intersection) => MapPoint(
-          point: intersection,
-          color: COLOR_MAP_CALCULATEDPOINT,
-          markerText: i18n(context, 'coords_common_intersection'),
-          coordinateFormat: _currentOutputFormat
-        ))
-        .toList()
-    );
+    var intersectionMapPoints = _currentIntersections
+      .map((intersection) => GCWMapPoint(
+        point: intersection,
+        color: COLOR_MAP_CALCULATEDPOINT,
+        markerText: i18n(context, 'coords_common_intersection'),
+        coordinateFormat: _currentOutputFormat
+      )).toList();
 
-    _currentMapGeodetics = [
-      MapGeodetic(
-        start: _currentCoords1,
-        end: _currentCoords2
+    _currentMapPoints.addAll(intersectionMapPoints);
+
+    _currentMapPolylines = [
+      GCWMapPolyline(
+        points: [_currentMapPoints[0], _currentMapPoints[1]]
       ),
     ];
-    
-    _currentIntersections.forEach((intersection) {
-      _currentMapGeodetics.addAll([
-        MapGeodetic(
-          start: _currentCoords1,
-          end: intersection,
+
+    intersectionMapPoints.forEach((intersection) {
+      _currentMapPolylines.addAll([
+        GCWMapPolyline(
+          points: [_currentMapPoints[0], intersection],
           color: HSLColor
             .fromColor(COLOR_MAP_POLYLINE)
             .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
             .toColor()
         ),
-        MapGeodetic(
-          start: _currentCoords2,
-          end: intersection,
+        GCWMapPolyline(
+          points: [_currentMapPoints[1], intersection],
           color: HSLColor
             .fromColor(COLOR_MAP_POLYLINE)
             .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness -0.3)
             .toColor()
-        ),
+        )
       ]);
     });
 
     _currentOutput = _currentIntersections
       .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
       .toList();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 }

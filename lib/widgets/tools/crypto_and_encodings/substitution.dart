@@ -29,7 +29,14 @@ class SubstitutionState extends State<Substitution> {
   var _currentToInput = '';
   var _currentCaseSensitive = false;
 
-  Map<String, String> _currentSubstitutions;
+  var _currentEditedKey = '';
+  var _currentEditedValue = '';
+  var _currentEditId;
+  var _editKeyController;
+  var _editValueController;
+
+  var _currentIdCount = 0;
+  var _currentSubstitutions = <int, Map<String, String>>{};
 
   String _output = '';
 
@@ -37,7 +44,11 @@ class SubstitutionState extends State<Substitution> {
   void initState() {
     super.initState();
 
-    _currentSubstitutions = widget.substitutions != null ? Map<String, String>.from(widget.substitutions) : {};
+    if (widget.substitutions != null) {
+      widget.substitutions.entries.forEach((element) {
+        _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {element.key: element.value});
+      });
+    }
 
     if (widget.input != null) {
       _currentInput = widget.input;
@@ -47,6 +58,9 @@ class SubstitutionState extends State<Substitution> {
     _inputController = TextEditingController(text: _currentInput);
     _fromController = TextEditingController(text: _currentFromInput);
     _toController = TextEditingController(text: _currentToInput);
+
+    _editKeyController = TextEditingController(text: _currentEditedKey);
+    _editValueController = TextEditingController(text: _currentEditedValue);
   }
 
   @override
@@ -54,6 +68,10 @@ class SubstitutionState extends State<Substitution> {
     _inputController.dispose();
     _fromController.dispose();
     _toController.dispose();
+
+    _editKeyController.dispose();
+    _editValueController.dispose();
+
     super.dispose();
   }
 
@@ -131,63 +149,109 @@ class SubstitutionState extends State<Substitution> {
 
   _addNewSubstitution() {
     if (_currentFromInput.length > 0) {
-      _currentSubstitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
+      _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {_currentFromInput: _currentToInput});
+
       _fromController.clear();
       _toController.clear();
       _currentFromInput = '';
       _currentToInput = '';
     }
-   }
-
-  _removeSubstitution(String key) {
-    _currentSubstitutions.remove(key);
   }
 
   _buildSubstitutionList(BuildContext context) {
     var odd = true;
-    var rows = _currentSubstitutions.entries.map((entry) {
+    var rows = _currentSubstitutions.entries.map((substitution) {
       Widget output;
 
-      ThemeColors colors = themeColors();
-
       var row = Container(
-        child: Row (
-          children: <Widget>[
-            Expanded(
-              child: GCWText (
-                text: entry.key
+          child: Row (
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  child: _currentEditId == substitution.key
+                    ? GCWTextField (
+                        controller: _editKeyController,
+                        onChanged: (text) {
+                          setState(() {
+                            _currentEditedKey = text;
+                          });
+                        },
+                      )
+                    : GCWText (
+                        text: substitution.value.keys.first
+                      ),
+                  margin: EdgeInsets.only(left: 10),
+                ),
+                flex: 1,
               ),
-              flex: 1,
-            ),
-            Icon(
-              Icons.arrow_forward,
-              color: colors.mainFont(),
-            ),
-            Expanded(
-              child: GCWText (
-                text: entry.value.toString()
+              Icon(
+                Icons.arrow_forward,
+                color: themeColors().mainFont(),
               ),
-              flex: 1
-            ),
-            GCWIconButton(
-              iconData: Icons.remove,
-              onPressed: () {
-                setState(() {
-                  _removeSubstitution(entry.key);
-                  _calculateOutput();
-                });
-              },
-            )
-          ],
-        ),
-        margin: EdgeInsets.only(
-          left: 10
-        ),
+              Expanded(
+                  child: Container(
+                    child: _currentEditId == substitution.key
+                      ? GCWTextField(
+                          controller: _editValueController,
+                          autofocus: true,
+                          onChanged: (text) {
+                            setState(() {
+                              _currentEditedValue = text;
+                            });
+                          },
+                        )
+                      : GCWText (
+                          text: substitution.value.values.first
+                        ),
+                    margin: EdgeInsets.only(left: 10),
+                  ),
+                  flex: 3
+              ),
+              _currentEditId == substitution.key
+                ? GCWIconButton(
+                    iconData: Icons.check,
+                    onPressed: () {
+
+                      _currentSubstitutions[_currentEditId] = {_currentEditedKey: _currentEditedValue};
+
+                      setState(() {
+                        _currentEditId = null;
+                        _editKeyController.clear();
+                        _editValueController.clear();
+
+                        _calculateOutput();
+                      });
+                    },
+                  )
+                : GCWIconButton(
+                    iconData: Icons.edit,
+                    onPressed: () {
+                      setState(() {
+                        _currentEditId = substitution.key;
+                        _editKeyController.text = substitution.value.keys.first;
+                        _editValueController.text = substitution.value.values.first;
+                        _currentEditedKey = substitution.value.keys.first;
+                        _currentEditedValue = substitution.value.values.first;
+                      });
+                    },
+                  ),
+              GCWIconButton(
+                iconData: Icons.remove,
+                onPressed: () {
+                  setState(() {
+                    _currentSubstitutions.remove(substitution.key);
+
+                    _calculateOutput();
+                  });
+                },
+              )
+            ],
+          )
       );
 
       if (odd) {
         output = Container(
-          color: colors.outputListOddRows(),
+          color: themeColors().outputListOddRows(),
           child: row
         );
       } else {
@@ -214,6 +278,15 @@ class SubstitutionState extends State<Substitution> {
   }
 
   _calculateOutput() {
-    _output = substitution(_currentInput, _currentSubstitutions, caseSensitive: _currentCaseSensitive);
+    var _substitutions = <String, String>{};
+    _currentSubstitutions.entries.forEach((entry) {
+      _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
+    });
+
+    if (_currentFromInput != null && _currentFromInput.length > 0 && _currentToInput != null) {
+      _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
+    }
+
+    _output = substitution(_currentInput, _substitutions, caseSensitive: _currentCaseSensitive);
   }
 }

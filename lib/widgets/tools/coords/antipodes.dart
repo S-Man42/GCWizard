@@ -7,7 +7,7 @@ import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 
@@ -20,7 +20,7 @@ class AntipodesState extends State<Antipodes> {
   var _currentCoords = defaultCoordinate;
 
   var _currentValues = [defaultCoordinate];
-  var _currentMapPoints = <MapPoint>[];
+  var _currentMapPoints = <GCWMapPoint>[];
   var _currentCoordsFormat = defaultCoordFormat();
 
   var _currentOutputFormat = defaultCoordFormat();
@@ -31,7 +31,7 @@ class AntipodesState extends State<Antipodes> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, 'coords_antipodes_coorda'),
+          title: i18n(context, 'coords_antipodes_coorda'),
           coordsFormat: _currentCoordsFormat,
           onChanged: (ret) {
             setState(() {
@@ -48,7 +48,7 @@ class AntipodesState extends State<Antipodes> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput();
@@ -67,12 +67,12 @@ class AntipodesState extends State<Antipodes> {
     _currentValues = [antipodes(_currentCoords)];
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords,
         markerText: i18n(context, 'coords_antipodes_coorda'),
         coordinateFormat: _currentCoordsFormat
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentValues[0],
         color: COLOR_MAP_CALCULATEDPOINT,
         markerText: i18n(context, 'coords_antipodes_coordb'),

@@ -4,7 +4,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/chao.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/reverse.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -97,17 +96,17 @@ class ChaoState extends State<Chao> {
         ),
         _currentAlphabetTypeChiffre == ChaoAlphabet.CUSTOM
           ? GCWTextField(
-          hintText: i18n(context, 'common_alphabet'),
-          controller: _alphabetControllerChiffre,
-          onChanged: (text) {
-            setState(() {
-              _currentAlphabetChiffre = text;
-            });
-          },
-        )
+              hintText: i18n(context, 'common_alphabet'),
+              controller: _alphabetControllerChiffre,
+              onChanged: (text) {
+                setState(() {
+                  _currentAlphabetChiffre = text;
+                });
+              },
+            )
           : Container(),
         GCWTextDivider(
-            text: i18n(context, 'chao_alphabet_plain')
+          text: i18n(context, 'chao_alphabet_plain')
         ),
         GCWDropDownButton(
           value: _currentAlphabetTypePlain,
@@ -125,14 +124,14 @@ class ChaoState extends State<Chao> {
         ),
         _currentAlphabetTypePlain == ChaoAlphabet.CUSTOM
           ? GCWTextField(
-          hintText: i18n(context, 'chao_alphabet_plain'),
-          controller: _alphabetControllerPlain,
-          onChanged: (text) {
-            setState(() {
-              _currentAlphabetPlain = text;
-            });
-          },
-        )
+              hintText: i18n(context, 'chao_alphabet_plain'),
+              controller: _alphabetControllerPlain,
+              onChanged: (text) {
+                setState(() {
+                  _currentAlphabetPlain = text;
+                });
+              },
+            )
           : Container(),
         _buildOutput()
       ],

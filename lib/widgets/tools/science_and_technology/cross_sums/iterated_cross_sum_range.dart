@@ -5,5 +5,5 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_
 class IteratedCrossSumRange extends CrossSumRange {
 
   IteratedCrossSumRange({Key key}) :
-      super(key: key, type: CrossSumType.ITERATED);
+    super(key: key, type: CrossSumType.ITERATED);
 }

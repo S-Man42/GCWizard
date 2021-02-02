@@ -1,36 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
-import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/logic/common/units/length.dart';
-import 'package:gc_wizard/logic/common/units/unit_category.dart';
-import 'package:gc_wizard/persistence/formula_solver/model.dart' as formula_base;
-import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart';
-import 'package:gc_wizard/persistence/variable_coordinate/model.dart';
-import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hash_breaker.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hashes.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
+import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
-import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hashes.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hash_breaker.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 
 class HashBreaker extends StatefulWidget {
   final Function hashFunction;
@@ -126,13 +107,7 @@ class _HashBreakerState extends State<HashBreaker> {
         ),
         _buildVariablesInput(),
         _buildSubstitutionList(context),
-        GCWSubmitFlatButton(
-          onPressed: () {
-            setState(() {
-              _calculateOutput();
-            });
-          },
-        ),
+        _buildSubmitButton(),
         GCWDefaultOutput(
           child: _currentOutput
         )
@@ -140,43 +115,67 @@ class _HashBreakerState extends State<HashBreaker> {
     );
   }
 
-  _calculateOutput({calculateAll = false}) {
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: breakHashAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
+              ),
+            );
+          },
+        );
+      }
+    );
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+    _currentOutput ='';
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+
     var _substitutions = <String, String>{};
     _currentSubstitutions.entries.forEach((entry) {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
     });
 
-    if (calculateAll == false) {
-      var preCheckResult = preCheck(_substitutions);
-      if (preCheckResult == null || preCheckResult['status'] == null) {
-        _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
-        return;
-      }
-
-      if (preCheckResult['status'] == 'high_count') {
-        showGCWAlertDialog(
-          context,
-          i18n(context, 'hashes_hashbreaker_alert_range_title'),
-          i18n(context, 'hashes_hashbreaker_alert_range_text', parameters: [preCheckResult['count']]),
-          () {
-            setState(() {
-              _calculateOutput(calculateAll: true);
-            });
-          },
-        );
-
-        _currentOutput = '';
-        return;
-      }
+    if (_currentFromInput != null && _currentFromInput.length > 0
+      && _currentToInput != null && _currentToInput.length > 0
+    ) {
+      _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
 
-    Map<String, dynamic> output = breakHash(_currentInput, _currentMask, _substitutions, _currentHashFunction);
+    return GCWAsyncExecuterParameters(
+      HashBreakerJobData(
+        input: _currentInput,
+        searchMask: _currentMask,
+        substitutions: _substitutions,
+        hashFunction: _currentHashFunction
+      )
+    );
+  }
+
+  _showOutput(Map<String, dynamic> output) {
     if (output == null || output['state'] == null || output['state'] == 'not_found') {
       _currentOutput = i18n(context, 'hashes_hashbreaker_solutionnotfound');
-      return;
-    }
+    } else
+      _currentOutput = output['text'];
 
-    _currentOutput = output['text'];
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 
   _buildVariablesInput() {
@@ -188,14 +187,14 @@ class _HashBreakerState extends State<HashBreaker> {
         Row(
           children: <Widget>[
             Expanded(
-                child: GCWTextField(
-                  hintText: i18n(context, 'coords_variablecoordinate_variable'),
-                  controller: _fromController,
-                  onChanged: (text) {
-                    _currentFromInput = text;
-                  },
-                ),
-                flex: 1
+              child: GCWTextField(
+                hintText: i18n(context, 'coords_variablecoordinate_variable'),
+                controller: _fromController,
+                onChanged: (text) {
+                  _currentFromInput = text;
+                },
+              ),
+              flex: 1
             ),
             Icon(
               Icons.arrow_forward,

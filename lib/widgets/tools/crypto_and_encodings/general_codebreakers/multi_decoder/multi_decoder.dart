@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
 import 'package:gc_wizard/persistence/multi_decoder/model.dart';
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
@@ -100,8 +100,7 @@ class MultiDecoderState extends State<MultiDecoder> {
             )
           ],
         ),
-        GCWButton(
-          text: i18n(context, 'common_submit_button_text'),
+        GCWSubmitButton(
           onPressed: () {
             setState(() {
               _calculateOutput();

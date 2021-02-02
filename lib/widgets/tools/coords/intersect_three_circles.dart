@@ -8,12 +8,14 @@ import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
+import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat_distance.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:latlong/latlong.dart';
 
 class IntersectThreeCircles extends StatefulWidget {
   @override
@@ -44,9 +46,9 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
   void initState() {
     super.initState();
     _currentMapPoints = [
-      MapPoint(point: _currentCoords1),
-      MapPoint(point: _currentCoords2),
-      MapPoint(point: _currentCoords3),
+      GCWMapPoint(point: _currentCoords1),
+      GCWMapPoint(point: _currentCoords2),
+      GCWMapPoint(point: _currentCoords3),
     ];
   }
 
@@ -55,7 +57,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
     return Column(
       children: <Widget>[
         GCWCoords(
-          text: i18n(context, "coords_intersectcircles_centerpoint1"),
+          title: i18n(context, "coords_intersectcircles_centerpoint1"),
           coordsFormat: _currentCoordsFormat1,
           onChanged: (ret) {
             setState(() {
@@ -73,7 +75,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
           },
         ),
         GCWCoords(
-          text: i18n(context, "coords_intersectcircles_centerpoint2"),
+          title: i18n(context, "coords_intersectcircles_centerpoint2"),
           coordsFormat: _currentCoordsFormat2,
           onChanged: (ret) {
             setState(() {
@@ -91,7 +93,7 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
           },
         ),
         GCWCoords(
-          text: i18n(context, "coords_intersectcircles_centerpoint3"),
+          title: i18n(context, "coords_intersectcircles_centerpoint3"),
           coordsFormat: _currentCoordsFormat3,
           onChanged: (ret) {
             setState(() {
@@ -117,80 +119,117 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
             });
           },
         ),
-        GCWSubmitFlatButton(
-          onPressed: () {
-            setState(() {
-              _calculateOutput();
-            });
-          },
-        ),
+        _buildSubmitButton(),
         GCWCoordsOutput(
           outputs: _currentOutput,
-          points: _currentMapPoints,
-          circles: [
-            MapCircle(
-              centerPoint: _currentCoords1,
-              radius: _currentRadius1,
-              color:
-                HSLColor
-                  .fromColor(COLOR_MAP_CIRCLE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness - 0.3)
-                  .toColor()
-            ),
-            MapCircle(
-              centerPoint: _currentCoords2,
-              radius: _currentRadius2
-            ),
-            MapCircle(
-              centerPoint: _currentCoords3,
-              radius: _currentRadius3,
-              color:
-              HSLColor
-                  .fromColor(COLOR_MAP_CIRCLE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness + 0.2)
-                  .toColor()
-            ),
-          ],
+          points: _currentMapPoints
         ),
       ],
     );
   }
 
-  _calculateOutput() {
-    _currentIntersections = intersectThreeCircles(
-        _currentCoords1, _currentRadius1,
-        _currentCoords2, _currentRadius2,
-        _currentCoords3, _currentRadius3,
-        10, //accuracy
-        defaultEllipsoid()
+  Widget _buildSubmitButton() {
+    return GCWSubmitButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: intersectThreeCirclesAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
+              ),
+            );
+          },
+        );
+      }
     );
+  }
+
+  Future<GCWAsyncExecuterParameters> _buildJobData() async {
+
+    return GCWAsyncExecuterParameters(
+        IntersectThreeCirclesJobData(
+            coord1: _currentCoords1,
+            dist14: _currentRadius1,
+            coord2: _currentCoords2,
+            dist24: _currentRadius2,
+            coord3: _currentCoords3,
+            dist34: _currentRadius3,
+            accuracy: 10,
+            ells: defaultEllipsoid()
+        )
+    );
+  }
+
+  _showOutput(List<Intersect> output) {
+    if (output == null) {
+      _currentIntersections = [];
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+      return;
+    }
+
+    _currentIntersections = output;
 
     _currentMapPoints = [
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords1,
         markerText: i18n(context, 'coords_intersectcircles_centerpoint1'),
-        coordinateFormat: _currentCoordsFormat1
+        coordinateFormat: _currentCoordsFormat1,
+        circleColorSameAsPointColor: false,
+        circle: GCWMapCircle(
+          radius: _currentRadius1,
+          color: HSLColor
+            .fromColor(COLOR_MAP_CIRCLE)
+            .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness - 0.3)
+            .toColor()
+        ),
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords2,
         markerText: i18n(context, 'coords_intersectcircles_centerpoint2'),
-        coordinateFormat: _currentCoordsFormat2
+        coordinateFormat: _currentCoordsFormat2,
+        circleColorSameAsPointColor: false,
+        circle: GCWMapCircle(
+          radius: _currentRadius2
+        ),
       ),
-      MapPoint(
+      GCWMapPoint(
         point: _currentCoords3,
         markerText: i18n(context, 'coords_intersectcircles_centerpoint3'),
-        coordinateFormat: _currentCoordsFormat3
+        coordinateFormat: _currentCoordsFormat3,
+        circleColorSameAsPointColor: false,
+        circle: GCWMapCircle(
+          radius: _currentRadius3,
+          color: HSLColor
+            .fromColor(COLOR_MAP_CIRCLE)
+            .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness + 0.2)
+            .toColor()
+        ),
       )
     ];
 
-    if (_currentIntersections.isEmpty) {
+    if (_currentIntersections == null ||_currentIntersections.isEmpty) {
       _currentOutput = [i18n(context, "coords_intersect_nointersection")];
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
       return;
     }
 
     _currentMapPoints.addAll(
       _currentIntersections
-        .map((intersection) => MapPoint(
+        .map((intersection) => GCWMapPoint(
           point: intersection.coords,
           color: COLOR_MAP_CALCULATEDPOINT,
           markerText: i18n(context, 'coords_common_intersection'),
@@ -207,5 +246,9 @@ class IntersectThreeCirclesState extends State<IntersectThreeCircles> {
 
       })
       .toList();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
   }
 }

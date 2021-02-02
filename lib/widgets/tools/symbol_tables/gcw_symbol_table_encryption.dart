@@ -101,31 +101,31 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
             )
         ),
         _buildEncryptionOutput(widget.countColumns),
-        !kIsWeb && _encryptionHasImages // TODO: save is currently not support on web
-            ? GCWButton(
-          text: i18n(context, 'symboltables_exportimage'),
-          onPressed: () {
-            _exportEncryption(widget.countColumns, _data.isCaseSensitive()).then((value) {
-              if (value == null) {
-                showToast(i18n(context, 'common_exportfile_nowritepermission'));
-                return;
-              }
+        !kIsWeb && _encryptionHasImages // TODO: save is currently not supported on web
+          ? GCWButton(
+              text: i18n(context, 'symboltables_exportimage'),
+              onPressed: () {
+                _exportEncryption(widget.countColumns, _data.isCaseSensitive()).then((value) {
+                  if (value == null) {
+                    showToast(i18n(context, 'common_exportfile_nowritepermission'));
+                    return;
+                  }
 
-              showExportedFileDialog(
-                context,
-                value['path'],
-                contentWidget: Container(
-                  child: Image.file(value['file']),
-                  margin: EdgeInsets.only(top: 25),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: themeColors().dialogText())
-                  ),
-                ),
-              );
-            });
-          },
-        )
-            : Container()
+                  showExportedFileDialog(
+                    context,
+                    value['path'],
+                    contentWidget: Container(
+                      child: Image.file(value['file']),
+                      margin: EdgeInsets.only(top: 25),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: themeColors().dialogText())
+                        ),
+                      ),
+                    );
+                  });
+                },
+              )
+          : Container()
       ],
     );
   }

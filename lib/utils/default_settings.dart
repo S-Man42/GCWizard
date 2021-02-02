@@ -64,12 +64,16 @@ void initDefaultSettings() {
     Prefs.setString('coord_default_hemisphere_longitude', HemisphereLongitude.East.toString());
   }
 
-  if (Prefs.get('coord_variablecoordinate_formulas') == null) {
-    Prefs.setStringList('coord_variablecoordinate_formulas', []);
-  }
-
   if (Prefs.get('formulasolver_formulas') == null) {
     Prefs.setStringList('formulasolver_formulas', []);
+  }
+
+  if (Prefs.get('default_length_unit') == null) {
+    Prefs.setString('default_length_unit', 'm');
+  }
+
+  if (Prefs.get('mapview_mapviews') == null) {
+    Prefs.setStringList('mapview_mapviews', []);
   }
   
   if (Prefs.get('multidecoder_tools') == null) {
@@ -110,5 +114,9 @@ void initDefaultSettings() {
 
   if (Prefs.get('toollist_show_examples') == null) {
     Prefs.setBool('toollist_show_examples', true);
+  }
+
+  if (Prefs.get('coord_variablecoordinate_formulas') == null) {
+    Prefs.setStringList('coord_variablecoordinate_formulas', []);
   }
 }

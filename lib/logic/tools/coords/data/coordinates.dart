@@ -7,6 +7,7 @@ const keyCoordsDMM = 'coords_dmm';
 const keyCoordsDMS = 'coords_dms';
 const keyCoordsUTM = 'coords_utm';
 const keyCoordsMGRS = 'coords_mgrs';
+const keyCoordsXYZ = 'coords_xyz';
 const keyCoordsSwissGrid = 'coords_swissgrid';
 const keyCoordsSwissGridPlus = 'coords_swissgridplus';
 const keyCoordsGaussKrueger = 'coords_gausskrueger';
@@ -20,6 +21,7 @@ const keyCoordsMercator = 'coords_mercator';
 const keyCoordsNaturalAreaCode = 'coords_naturalareacode';
 const keyCoordsSlippyMap = 'coords_slippymap';
 const keyCoordsGeohash = 'coords_geohash';
+const keyCoordsGeoHex = 'coords_geohex';
 const keyCoordsOpenLocationCode = 'coords_openlocationcode';
 const keyCoordsQuadtree = 'coords_quadtree';
 const keyCoordsReverseWhereIGoWaldmeister = 'coords_reversewhereigo_waldmeister';
@@ -39,6 +41,7 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsDMS, 'DMS: DD° MM\' SS.SSS"', 'N 45° 17\' 27.60" W 122° 24\' 48.00"'),
   CoordinateFormat(keyCoordsUTM, 'UTM', '10 N 546003.6 5015445.0'),
   CoordinateFormat(keyCoordsMGRS, 'MGRS', '10 T ER 46003.6 15445.0'),
+  CoordinateFormat(keyCoordsXYZ, 'XYZ (ECEF)', 'X: -2409244, Y: -3794410, Z: 4510158'),
   CoordinateFormat(keyCoordsSwissGrid, 'SwissGrid (CH1903)', 'Y: 4295317.7, X: 1202252.3'),
   CoordinateFormat(keyCoordsSwissGridPlus, 'SwissGrid (CH1903+)', 'Y: 6295317.7, X: 2202252.3'),
   CoordinateFormat(keyCoordsGaussKrueger, 'coords_formatconverter_gausskrueger', 'R: 8837763.4, H: 5978799.1', subtypes: [
@@ -53,6 +56,7 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsNaturalAreaCode, 'Natural Area Code (NAC)', 'X: 4RZ000, Y: QJFMGZ'),
   CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles', 'Z: 15, X: 5241, Y: 11749'),
   CoordinateFormat(keyCoordsGeohash, 'Geohash', 'c20cwkvr4'),
+  CoordinateFormat(keyCoordsGeoHex, 'GeoHex', 'RU568425483853568'),
   CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)', '84QV7HRP+CM3'),
   CoordinateFormat(keyCoordsQuadtree, 'Quadtree', '021230223311203323'),
   CoordinateFormat(keyCoordsReverseWhereIGoWaldmeister, 'Reverse WhereIGo (Waldmeister)', '042325, 436113, 935102'),
@@ -413,5 +417,16 @@ class SlippyMap {
   @override
   String toString() {
     return 'X: $x\nY: $y\nZoom: $zoom';
+  }
+}
+
+class XYZ {
+  double x, y, z;
+
+  XYZ(this.x, this.y, this.z);
+
+  @override
+  String toString() {
+    return 'X: $x\nY: $y\Z: $z';
   }
 }

@@ -10,7 +10,6 @@ final DOUBLE_DEFAULT_MARGIN = 2 * DEFAULT_MARGIN;
 final DEFAULT_DESCRIPTION_MARGIN = 10.0;
 
 final DEFAULT_LISTITEM_SIZE = 42.0;
-final DEFAULT_POPUPBUTTON_SIZE = 40.0;
 
 TextStyle gcwTextStyle() {
  return TextStyle(
@@ -39,6 +38,12 @@ TextStyle gcwDescriptionTextStyle() {
   return gcwTextStyle().copyWith(
     color: themeColors().listSubtitle(),
     fontSize: defaultFontSize() - 2,
+  );
+}
+
+TextStyle gcwDialogTextStyle() {
+  return gcwTextStyle().copyWith(
+    color: themeColors().dialogText()
   );
 }
 

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/common/units/length.dart';
+import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
 import 'package:prefs/prefs.dart';
 
@@ -135,6 +139,29 @@ class GeneralSettingsState extends State<GeneralSettings> {
               Prefs.setInt('clipboard_keep_entries_in_days', value);
             });
           },
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'settings_general_i18n_title')
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: GCWText (
+                text: i18n(context, 'settings_general_i18n_defaultlengthunit')
+              )
+            ),
+            Expanded(
+              child: GCWUnitDropDownButton(
+                unitList: allLengths(),
+                value: getUnitBySymbol(allLengths(), Prefs.get('default_length_unit')),
+                onChanged: (Length value) {
+                  setState(() {
+                    Prefs.setString('default_length_unit', value.symbol);
+                  });
+                }
+              ),
+            )
+          ],
         )
       ],
     );

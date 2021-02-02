@@ -4,10 +4,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:prefs/prefs.dart';
 
@@ -37,17 +36,23 @@ defaultFontSize() {
   return fontSize;
 }
 
-List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data, {List<int> flexValues = const [], int copyColumn}) {
+List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data, {List<int> flexValues = const [], int copyColumn, hasHeader: false, List<Function> tappables}) {
   var odd = true;
+  var isFirst = true;
+
+  int index = 0;
   return data.where((row) => row != null).map((rowData) {
     Widget output;
 
     var columns = rowData.asMap().map((index, column) {
+      var textStyle = gcwTextStyle();
+
       return MapEntry(
         index,
         Expanded(
-          child: GCWText(
-            text: column.toString()
+          child: Text(
+            column != null ? column.toString() : '',
+            style: isFirst && hasHeader ? textStyle.copyWith(fontWeight: FontWeight.bold) : textStyle
           ),
           flex: index < flexValues.length ? flexValues[index] : 1
         )
@@ -68,14 +73,17 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
           ),
           context == null ? Container()
             : Container(
-              child: GCWIconButton(
-                iconData: Icons.content_copy,
-                size: IconButtonSize.TINY,
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: copyText));
-                  showToast(i18n(context, 'common_clipboard_copied') + ':\n' + copyText);
-                },
-              ),
+              child: (isFirst && hasHeader) ? Container() :
+                GCWIconButton(
+                  iconData: Icons.content_copy,
+                  size: IconButtonSize.TINY,
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: copyText));
+                    insertIntoGCWClipboard(copyText);
+
+                    showToast(i18n(context, 'common_clipboard_copied') + ':\n' + copyText);
+                  },
+                ),
               width: 25,
               height: 22,
             )
@@ -99,7 +107,16 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
     }
     odd = !odd;
 
-    return output;
+    isFirst = false;
+
+    if (tappables != null) {
+      return InkWell(
+        child: output,
+        onTap: tappables[index++],
+      );
+    } else {
+      return output;
+    }
   }).toList();
 }
 
@@ -118,27 +135,6 @@ insertIntoGCWClipboard(String text) {
   }
 
   Prefs.setStringList('clipboard_items', gcwClipboard);
-}
-
-buildPopupItem(BuildContext context, IconData icon, String i18nKey) {
-  var color = themeColors().dialogText();
-
-  return  Row(
-    children: [
-      Container(
-        child: Icon(icon, color: color),
-        padding: EdgeInsets.only(
-          right: 10
-        ),
-      ),
-      Text(
-        i18n(context, i18nKey),
-        style: TextStyle(
-          color: color
-        )
-      )
-    ],
-  );
 }
 
 String textControllerInsertText(String input, String currentText, TextEditingController textController) {

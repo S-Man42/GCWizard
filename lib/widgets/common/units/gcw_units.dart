@@ -60,7 +60,7 @@ class _GCWUnitsState extends State<GCWUnits> {
                     padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                   ),
                   flex: 1
-                )
+                  )
               : Container(),
             Expanded(
               child: GCWUnitDropDownButton(

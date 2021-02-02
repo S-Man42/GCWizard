@@ -56,8 +56,8 @@ class BaconState extends State<Bacon> {
 
         GCWTwoOptionsSwitch(
           title: i18n(context, 'bacon_coding'),
-          leftValue: i18n(context, 'alphabetvalues_letters'),
-          rightValue: i18n(context, 'common_numeralbase_binary'),
+          leftValue: 'AB',
+          rightValue: '01',
           value: _binaryMode,
           onChanged: (value) {
             setState(() {
@@ -66,7 +66,7 @@ class BaconState extends State<Bacon> {
           },
         ),
         GCWOnOffSwitch(
-          title: i18n(context, 'bacon_invers'),
+          title: _binaryMode == GCWSwitchPosition.left ? 'AAAAB → BBBBA' : '00001 → 11110',
           value: _inversMode,
           onChanged: (value) {
             setState(() {

@@ -40,7 +40,7 @@ class RSANCalculatorState extends State<RSANCalculator> {
             _currentQ = text;
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {});
           },

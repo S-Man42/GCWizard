@@ -1,5 +1,6 @@
 import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
@@ -10,6 +11,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeis
 import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -48,6 +50,7 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
     case keyCoordsDMS: _formatted = DMS.from(_coords).format(); break;
     case keyCoordsUTM: return latLonToUTMString(_coords, ells);
     case keyCoordsMGRS: return latLonToMGRSString(_coords, ells);
+    case keyCoordsXYZ: return latLonToXYZString(_coords, ells);
     case keyCoordsSwissGrid: return decToSwissGridString(_coords, ells);
     case keyCoordsSwissGridPlus: return latLonToSwissGridPlusString(_coords, ells);
     case keyCoordsGaussKrueger: return latLonToGaussKruegerString(_coords, _getGKCode(), ells);
@@ -56,6 +59,7 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
     case keyCoordsNaturalAreaCode: return latLonToNaturalAreaCode(_coords).toString();
     case keyCoordsSlippyMap: return latLonToSlippyMapString(_coords, double.tryParse(_outputFormat['subtype']));
     case keyCoordsGeohash: return latLonToGeohash(_coords, 14);
+    case keyCoordsGeoHex: return latLonToGeoHex(_coords, 20);
     case keyCoordsOpenLocationCode: return latLonToOpenLocationCode(_coords, codeLength: 14);
     case keyCoordsQuadtree: return latLonToQuadtree(_coords).join();
     case keyCoordsReverseWhereIGoWaldmeister: return latLonToWaldmeisterString(_coords);

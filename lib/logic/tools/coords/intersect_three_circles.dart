@@ -5,6 +5,28 @@ import 'package:latlong/latlong.dart';
 
 //TODO: REFACTORING
 
+class IntersectThreeCirclesJobData {
+  final LatLng coord1;
+  final double dist14;
+  final LatLng coord2;
+  final double dist24;
+  final LatLng coord3;
+  final double dist34;
+  final double accuracy;
+  final Ellipsoid ells;
+
+  IntersectThreeCirclesJobData({
+      this.coord1 = null,
+      this.dist14 = 0.0,
+      this.coord2 = null,
+      this.dist24 = 0.0,
+      this.coord3 = null,
+      this.dist34 = 0.0,
+      this.accuracy = 0.0,
+      this.ells = null
+  });
+}
+
 class Intersect {
   LatLng coords;
   double accuracy;
@@ -40,6 +62,26 @@ List<Intersect> _distIntersection(LatLng coord1, double dist14,
   }
 
   return _output;
+}
+
+void intersectThreeCirclesAsync(dynamic jobData) async {
+  if (jobData == null) {
+    jobData.sendAsyncPort.send(null);
+    return;
+  }
+
+  var output = intersectThreeCircles(
+      jobData.parameters.coord1,
+      jobData.parameters.dist14,
+      jobData.parameters.coord2,
+      jobData.parameters.dist24,
+      jobData.parameters.coord3,
+      jobData.parameters.dist34,
+      jobData.parameters.accuracy,
+      jobData.parameters.ells
+  );
+
+  jobData.sendAsyncPort.send(output);
 }
 
 List<Intersect> intersectThreeCircles(LatLng coord1, double dist14,

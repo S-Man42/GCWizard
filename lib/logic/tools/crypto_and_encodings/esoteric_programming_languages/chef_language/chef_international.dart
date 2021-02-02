@@ -187,60 +187,60 @@ final List<String> measuresDEU = ['Teelöffel', 'Esslöffel', 'Tasse'];
 final List<String> measuresENG = ['teaspoons', 'tablespoons', 'cups'];
 
 final List<String> itemListLiquidENG = [
-  'milk', 'water', 'oil', 'liquid vanilla', 'lemon juice', 'lime juice', 'orange juice', 'egg white', 'soda', 'bitter lemon',
-  'amaretto', 'espresso', 'cream', 'aquavit', 'white wine', 'red wine', 'tabasco', 'sour cream', 'beer', 'sake',
-  'vodka', 'calvados', 'whisky', 'grand marnier',  'grenadine', 'gin', 'rum', 'tonic', 'raki', 'beaten eggs',
-  'ouzo', 'fruit brandy', 'cider', 'tequila', 'cointreau', 'agave nectar', 'white vermouth', 'red vermouth', 'angustora', 'blue curacao',
-  'white rum', 'tomato juice', 'limoncello', 'honey syrup', 'syrup', 'ginger beer', 'brandy', 'grappa', 'port', 'sherry',
-  'bourbon', 'scotch'
+  'milk',      'water',        'oil',        'liquid vanilla', 'lemon juice', 'lime juice',   'orange juice',   'egg white',    'soda',      'bitter lemon',
+  'amaretto',  'espresso',     'cream',      'aquavit',        'white wine',  'red wine',     'tabasco',        'sour cream',   'beer',      'sake',
+  'vodka',     'calvados',     'whisky',     'grand marnier',  'grenadine',   'gin',           'rum',           'tonic',        'raki',      'beaten eggs',
+  'ouzo',      'fruit brandy', 'cider',      'tequila',        'cointreau',   'agave nectar', 'white vermouth', 'red vermouth', 'angustora', 'blue curacao',
+  'white rum', 'tomato juice', 'limoncello', 'honey syrup',    'syrup',       'ginger beer',  'brandy',         'grappa',       'port',      'sherry',
+  'bourbon',   'scotch',       'lillet'
 ];
 
 final List<String> itemListLiquidDEU = [
-  'Milch', 'Wasser', 'Öl', 'flüssige Vanille', 'Zitronensaft',  'Orangensaft', 'Limettensaft', 'Eiweiß', 'Soda', 'Bitter Lemon',
-  'Amaretto', 'Espresso', 'Sahne',   'Aquavit',  'Weißwein', 'Rotwein', 'Tabasco', 'Schmand', 'Bier', 'Sake',
-  'Wodka' 'Calvados', 'Whisky',  'Grand Marnier', 'Grenadine', 'Gin', 'Rum', 'Tonic', 'Raki',  'geschlagene Eier',
-  'Ouzo', 'Obstler', 'Cidre', 'Tequila', 'Cointreau', 'Agavensaft', 'weißer Wermut', 'roter Wermut', 'Angustora', 'Blue Curacao'
-  'weißer Rum', 'Tomatensaft', 'Limoncello', 'Honigsirup', 'Zuckersirup', 'Ginger Ale', 'Weinbrand', 'Grappa', 'Portwein', 'Sherry',
-  'Bourbon Whisky', 'Scotch Whisky'
+  'Milch',          'Wasser',        'Öl',         'flüssige Vanille', 'Zitronensaft', 'Orangensaft', 'Limettensaft', 'Eiweiß',        'Soda',      'Bitter Lemon',
+  'Amaretto',       'Espresso',      'Sahne',      'Aquavit',          'Weißwein',     'Rotwein',     'Tabasco',       'Schmand',      'Bier',      'Sake',
+  'Wodka'           'Calvados',      'Whisky',     'Grand Marnier',    'Grenadine',    'Gin',         'Rum',           'Tonic',        'Raki',      'geschlagene Eier',
+  'Ouzo',           'Obstler',       'Cidre',      'Tequila',          'Cointreau',    'Agavensaft',  'weißer Wermut', 'roter Wermut', 'Angustora', 'Blue Curacao',
+  'weißer Rum',     'Tomatensaft',   'Limoncello', 'Honigsirup',       'Zuckersirup',  'Ginger Ale',  'Weinbrand',     'Grappa',       'Portwein',  'Sherry',
+  'Bourbon Whisky', 'Scotch Whisky', 'Lillet'
 ];
 
 final List<String> itemListDryENG = [
-  'g','flour', 'white sugar', 'salt', 'baking soda', 'butter',
-  'vanilla bean', 'brown sugar', 'pepper', 'haricot beans',
-  'red salmon', 'lemon juice', 'powdered sugar', 'almonds', 'onions',
-  'garlic cloves', 'cinnamon', 'pinches', 'kummel', 'aniseed', 'cream cheese',
-  'cheese', 'pumpkin', 'cucumber', 'potatoes', 'sweet potatoes','eggs',
-  'apple pieces ', 'shrimps', 'guacamole', 'wholemeal flour', 'tofu',
-  'chili', 'curry', 'mustard', 'jam', 'mixed fruits','egg yolk',
-  'zucchini', 'lard', 'corn starch', 'bread', 'bacon',
-  'dark chocolate','milk chocolate', 'double cream', 'cocoa powder',
-  'peas', 'carrots', 'raisins', 'mexican spices','banana chips'
+  'flour',         'white sugar',    'salt',           'baking soda',     'butter',
+  'vanilla bean',  'brown sugar',    'pepper',         'haricot beans',
+  'red salmon',    'lemon juice',    'powdered sugar', 'almonds',         'onions',
+  'garlic cloves', 'cinnamon',       'kummel',         'aniseed',         'cream cheese',
+  'cheese',        'pumpkin',        'cucumber',       'potatoes',        'sweet potatoes','eggs',
+  'apple pieces',  'shrimps',        'guacamole',      'wholemeal flour', 'tofu',
+  'chili',         'curry',          'mustard',        'jam',             'mixed fruits','egg yolk',
+  'zucchini',      'lard',           'corn starch',    'bread',           'bacon',
+  'dark chocolate','milk chocolate', 'double cream',   'cocoa powder',
+  'peas',          'carrots',        'raisins',        'mexican spices',  'banana chips'
 ];
 
 final List<String> itemListDryDEU = [
-  'Mehl', 'weißer Zucker', 'Salz', 'Backsoda', 'Butter', 	'Vanilleschote',
-  'brauner Zucker', 'Pfeffer', 'Bohnen', 	'roter Lachs', 'Eigelb',
-  'Puderzucker', 'Mandeln', 'Zwiebeln' , 	'gehackter Knoblauch', 'Zimt',
-  'Kümmel', 'Anis', 'Frischkäse', 'Käse', 'Kürbis' ,
-  'Gurke', 'Kartoffeln', 'Süßkartoffeln', 'Apfelstücke', 'Garnelen',
-  'Guacamole', 'Vollkornmehl', 'Tofu', 'Chili', 'Curry',
-  'Senf', 'Marmelade', 'gemischte Früchte', 'Zucchini', 'Schmalz', 'Eier',
-  'Maisstärke', 'Brot', 'Speck',	'dunkle Schokolade', 'Milchschokolade',
-  'Kakaopulver', 'Erbsen', 'Karotten', 'Rosinen',	'mexikanische Gewürze', 'Bananenchips'
+  'Mehl',           'weißer Zucker', 'Salz',              'Backsoda',            'Butter',              'Vanilleschote',
+  'brauner Zucker', 'Pfeffer',       'Bohnen',            'roter Lachs',         'Eigelb',
+  'Puderzucker',    'Mandeln',       'Zwiebeln' ,         'gehackter Knoblauch', 'Zimt',
+  'Kümmel',         'Anis',          'Frischkäse',        'Käse',                'Kürbis' ,
+  'Gurke',          'Kartoffeln',    'Süßkartoffeln',     'Apfelstücke',         'Garnelen',
+  'Guacamole',      'Vollkornmehl',  'Tofu',              'Chili',               'Curry',
+  'Senf',           'Marmelade',     'gemischte Früchte', 'Zucchini',            'Schmalz', 'Eier',
+  'Maisstärke',     'Brot',          'Speck',             'dunkle Schokolade',   'Milchschokolade',
+  'Kakaopulver',    'Erbsen',        'Karotten',          'Rosinen',             'mexikanische Gewürze', 'Bananenchips'
 ];
 
 final List<List<String>> itemListAuxiliaryDEU = [
-  ['fluffige ', 'leichte ', 'cremige ', 'schwere '],
-  ['bittere ', 'sauere ', 'süße ', 'scharfe ', 'salzige '],
-  ['Honig', 'Senf', 'Ketchup', 'Curry'],
-  ['soße', 'dressings', 'toppings', 'chips']
+  ['fluffige ', 'leichte ',  'cremige ', 'schwere ', 'luftige '],
+  ['bittere ',  'sauere ',   'süße ',    'scharfe ', 'salzige '],
+  ['Honig',     'Senf',      'Ketchup',  'Curry',    'Preiselbeeren'],
+  ['soße',      'dressings', 'toppings', 'chips',    'relish']
 ];
 
 final List<List<String>> itemListAuxiliaryENG = [
-  ['fluffy ', 'light ', 'creamy ', 'heavy '],
-  ['bitter ', 'sour ', 'sweet ', 'hot ', 'salty '],
-  ['honey', 'mustard', 'ketchup', 'curry'],
-  ['sauce', 'dressing', 'topping', 'chips']
+  ['fluffy ',  'light ',   'creamy ', 'heavy ', 'uncongested '],
+  ['bitter ',  'sour ',    'sweet ',  'hot ',   'salty '],
+  ['honey',    'mustard',  'ketchup', 'curry',  'cranberry'],
+  ['sauce',    'dressing', 'topping', 'chips',  'relish']
 ];
 
 String getText(textId id, String parameter, language) {

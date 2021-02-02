@@ -50,7 +50,7 @@ class RSADCalculatorState extends State<RSADCalculator> {
             });
           },
         ),
-        GCWSubmitFlatButton(
+        GCWSubmitButton(
           onPressed: () {
             setState(() {});
           },
