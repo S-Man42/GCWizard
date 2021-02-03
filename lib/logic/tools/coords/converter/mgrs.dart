@@ -1,4 +1,3 @@
-import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
@@ -168,13 +167,25 @@ LatLng parseMGRS(String input, Ellipsoid ells) {
   var _easting = double.tryParse(match.group(4));
   if (_easting == null)
     return null;
+  _easting = fillUpNumber(_easting, match.group(4), 5);
 
   var _northing = double.tryParse(match.group(5));
   if (_northing == null)
     return null;
+  _northing = fillUpNumber(_northing, match.group(5), 5);
 
   var zone = UTMZone(_lonZone, _lonZone, _latZone);
   var mgrs = MGRS(zone, _digraph, _easting, _northing);
 
   return mgrsToLatLon(mgrs, ells);
+}
+
+double fillUpNumber(double number, String text, int length){
+
+  if (text.contains('.'))
+    return number;
+  else {
+    text = text.padRight( length,'0');
+    return double.parse(text);
+  }
 }
