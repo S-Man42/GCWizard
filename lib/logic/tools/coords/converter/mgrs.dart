@@ -203,6 +203,11 @@ LatLng parseMGRS(String input, Ellipsoid ells) {
   return mgrsToLatLon(mgrs, ells);
 }
 
+// East values must be between 1 and 99 999. Missing digits are filled in at the back.
+// North values must be between 1 and 99,999. Missing digits are filled in at the back.
+// Values below 10,000 must be filled with zeros accordingly so that the two numbers each 5 digits long.
+// Values with a point are not changed
+// discussed with Mark on 3.2.2021
 double fillUpNumber(double number, String text, int length){
 
   if (text.contains('.'))
