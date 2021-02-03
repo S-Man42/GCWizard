@@ -215,7 +215,7 @@ int _execCommand(int commandCode, List<int> instructionsArray, int instructionIn
 
 String generateCow(String cowOut){
   // initial program: store 8, 16, 32 and 64 in memory positions 1, 2, 3 and 4, current memory position is 5
-  var program = 'OOOMoOMoOMoOMoOMoOMoOMoOMoOMMMmoOMMMMMMmoOMMMMOOMOomOoMoOmoOmoomOoMMMmoOMMMMMMmoOMMMMOOMOomOoMoOmoOmoomOoMMMmoOMMMMMMmoOMMMMOOMOomOoMoOmoOmoo';
+  var program = 'OOO MoO MoO MoO MoO MoO MoO MoO MoO MMM moO MMM MMM moO MMM MOO MOo mOo MoO moO moo mOo MMM moO MMM MMM moO MMM MOO MOo mOo MoO moO moo mOo MMM moO MMM MMM moO MMM MOO MOo mOo MoO moO moo';
 
   for (var i = 0; i < cowOut.length; i++) {
     // next character, ignore non-ASCII
@@ -223,7 +223,7 @@ String generateCow(String cowOut){
     if (c > 127) continue;
 
     // clear position 5 and 6
-    program += 'OOOmoOOOOmOo';
+    program += ' OOO moO OOO mOo';
 
     // add bits
     for (var j = 6; j > 3; j--) {
@@ -232,29 +232,29 @@ String generateCow(String cowOut){
         switch (j) {
           case 6:
           // position 5 = 64
-            program += 'mOoMMMmoOMMM';
+            program += ' mOo MMM moO MMM';
             break;
           case 5:
           // position 5 = 32
-            program += 'mOomOoMMMmoOmoOMMM';
+            program += ' mOo mOo MMM moO moO MMM';
             break;
           case 4:
           // position 5 = 16
-            program += 'mOomOomOoMMMmoOmoOmoOMMM';
+            program += ' mOo mOo mOo MMM moO moO moO MMM';
             break;
         }
         // add position 5 and 6, result in position 6
-        program += 'MOOMOomoOMoOmOomoo';
+        program += ' MOO MOo moO MoO mOo moo';
         c -= mask;
       }
     }
 
     // add rest to position 6 and print
-    program += "moO";
+    program += " moO";
     for (var j = 0; j < c; j++) {
-      program += "MoO";
+      program += " MoO";
     }
-    program += "MoomOo";
+    program += " Moo mOo";
   }
 
   return program;
