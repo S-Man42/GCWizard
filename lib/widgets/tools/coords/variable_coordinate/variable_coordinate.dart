@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/common/units/length.dart';
+import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/variable_latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
-import 'package:gc_wizard/logic/common/units/length.dart';
-import 'package:gc_wizard/logic/common/units/unit_category.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart' as formula_base;
 import 'package:gc_wizard/persistence/variable_coordinate/json_provider.dart';
 import 'package:gc_wizard/persistence/variable_coordinate/model.dart';
@@ -15,6 +15,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -22,9 +23,13 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
-import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
+import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
+import 'package:intl/intl.dart';
+import 'package:latlong/latlong.dart';
+import 'package:location/location.dart';
 
 
 class VariableCoordinate extends StatefulWidget {
@@ -67,6 +72,9 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
   List<dynamic> _currentOutput = [];
   List<GCWMapPoint> _currentMapPoints = [];
+
+  bool _isOnLocationAccess = false;
+  var _location = Location();
 
   @override
   void initState() {
@@ -128,13 +136,28 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(
-          controller: _inputController,
-          onChanged: (value) {
-            _currentInput = value;
-            widget.formula.formula = _currentInput;
-            updateFormula(widget.formula);
-          },
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                child: GCWTextField(
+                  controller: _inputController,
+                  onChanged: (value) {
+                    _currentInput = value;
+                    widget.formula.formula = _currentInput;
+                    updateFormula(widget.formula);
+                  },
+                ),
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+              ),
+            ),
+            GCWIconButton(
+              iconData: _isOnLocationAccess ? Icons.refresh : Icons.location_on,
+              onPressed: () {
+                _setUserLocationCoords();
+              },
+            ),
+          ],
         ),
         GCWOnOffSwitch(
           title: i18n(context, 'coords_variablecoordinate_projection'),
@@ -234,10 +257,10 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   _buildProjectionInput() {
     return _currentProjectionMode
         ? Column(
-      children: [
-        Row(
-          children: <Widget>[
-            Expanded(
+          children: [
+            Row(
+              children: <Widget>[
+              Expanded(
                 flex: 3,
                 child: Container(
                   child: GCWTextField(
@@ -252,25 +275,25 @@ class VariableCoordinateState extends State<VariableCoordinate> {
                   ),
                   padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                 )
-            ),
-            Expanded(
+              ),
+              Expanded(
                 flex: 1,
                 child: GCWUnitDropDownButton(
-                    unitList: allLengths(),
-                    value: _currentLengthUnit,
-                    onChanged: (Length value) {
-                      setState(() {
-                        _currentLengthUnit = value;
+                  unitList: allLengths(),
+                  value: _currentLengthUnit,
+                  onChanged: (Length value) {
+                    setState(() {
+                      _currentLengthUnit = value;
 
-                        widget.formula.projection.distanceUnit = _currentLengthUnit.name;
-                        updateFormula(widget.formula);
-                      });
-                    }
+                      widget.formula.projection.distanceUnit = _currentLengthUnit.name;
+                      updateFormula(widget.formula);
+                    });
+                  }
                 )
-            )
-          ],
-        ),
-        Row(
+              )
+              ],
+            ),
+          Row(
             children: <Widget>[
               Expanded(
                 flex: 9,
@@ -298,19 +321,19 @@ class VariableCoordinateState extends State<VariableCoordinate> {
                 ),
               ),
               Expanded(
-                  flex: 3,
-                  child: GCWOnOffSwitch(
-                    value: _currentReverseBearing,
-                    notitle: true,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentReverseBearing = value;
+                flex: 3,
+                child: GCWOnOffSwitch(
+                  value: _currentReverseBearing,
+                  notitle: true,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentReverseBearing = value;
 
-                        widget.formula.projection.reverse = _currentReverseBearing;
-                        updateFormula(widget.formula);
-                      });
-                    },
-                  )
+                      widget.formula.projection.reverse = _currentReverseBearing;
+                      updateFormula(widget.formula);
+                    });
+                  },
+                )
               )
             ]
         )
@@ -498,27 +521,60 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     }
 
     _output = Column(
-        children: [
-          _currentOutputFormat['format'] == keyCoordsDMM && hasLeftPaddedCoords
-              ? GCWTwoOptionsSwitch(
-            title: i18n(context, 'coords_variablecoordinate_decleftpad'),
-            leftValue: i18n(context, 'coords_variablecoordinate_decleftpad_left'),
-            rightValue: i18n(context, 'coords_variablecoordinate_decleftpad_right'),
-            value: _currentCoordMode,
-            onChanged: (value) {
-              setState(() {
-                _currentCoordMode = value;
-                _buildOutput(coords);
-              });
-            },
-          )
-              : Container(),
-          GCWCoordsOutput(
-            mapButtonTop: true,
-            outputs: _currentOutput,
-            points: _currentMapPoints,
-          )
-        ]
+      children: [
+        _currentOutputFormat['format'] == keyCoordsDMM && hasLeftPaddedCoords
+            ? GCWTwoOptionsSwitch(
+          title: i18n(context, 'coords_variablecoordinate_decleftpad'),
+          leftValue: i18n(context, 'coords_variablecoordinate_decleftpad_left'),
+          rightValue: i18n(context, 'coords_variablecoordinate_decleftpad_right'),
+          value: _currentCoordMode,
+          onChanged: (value) {
+            setState(() {
+              _currentCoordMode = value;
+              _buildOutput(coords);
+            });
+          },
+        )
+            : Container(),
+        GCWCoordsOutput(
+          mapButtonTop: true,
+          outputs: _currentOutput,
+          points: _currentMapPoints,
+        )
+      ]
     );
+  }
+
+  _setUserLocationCoords() {
+    if (_isOnLocationAccess)
+      return;
+
+    setState(() {
+      _isOnLocationAccess = true;
+    });
+
+    checkLocationPermission(_location).then((value) {
+      if (value == null || value == false) {
+        setState(() {
+          _isOnLocationAccess = false;
+        });
+        showToast(i18n(context, 'coords_common_location_permissiondenied'));
+
+        return;
+      }
+
+      _location.getLocation().then((locationData) {
+        if (locationData.accuracy > 20)
+          showToast(i18n(context, 'coords_common_location_lowaccuracy', parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
+
+        var insertedCoord = formatCoordOutput(LatLng(locationData.latitude, locationData.longitude), defaultCoordFormat(), defaultEllipsoid());
+        _currentInput = insertedCoord.replaceAll('\n', ' ');
+        _inputController.text = _currentInput;
+
+        setState(() {
+          _isOnLocationAccess = false;
+        });
+      });
+    });
   }
 }
