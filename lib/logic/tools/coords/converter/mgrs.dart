@@ -190,13 +190,25 @@ LatLng parseMGRS(String input, Ellipsoid ells) {
   var _easting = double.tryParse(_eastingString);
   if (_easting == null)
     return null;
+  _easting = fillUpNumber(_easting, _eastingString, 5);
 
   var _northing = double.tryParse(_northingString);
   if (_northing == null)
     return null;
+  _northing = fillUpNumber(_northing, _northingString, 5);
 
   var zone = UTMZone(_lonZone, _lonZone, _latZone);
   var mgrs = MGRS(zone, _digraph, _easting, _northing);
 
   return mgrsToLatLon(mgrs, ells);
+}
+
+double fillUpNumber(double number, String text, int length){
+
+  if (text.contains('.'))
+    return number;
+  else {
+    text = text.padRight( length,'0');
+    return double.parse(text);
+  }
 }

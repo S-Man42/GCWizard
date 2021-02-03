@@ -152,7 +152,18 @@ LatLng parseUTM(String input, Ellipsoid ells) {
     _northingString = match.group(4);
   }
   if (matches.length == 0) {
-    regExp = RegExp(r'^\s*(\d+)\s?(['+ latZones + r'])\s?([E|W])\s?([0-9\.]+)\s?([N|S])\s?([0-9\.]+)\s*$');
+    regExp = RegExp(r'^\s*(\d+)\s?(['+ latZones + r'])\s?m\s?([EW])\s?([0-9\.]+)\s?m\s?([NS])\s?([0-9\.]+)\s*$');
+    matches = regExp.allMatches(input);
+    if (matches.length > 0) {
+      var match = matches.elementAt(0);
+      _lonZoneString = match.group(1);
+      _latZone = match.group(2);
+      _eastingString = match.group(4);
+      _northingString = match.group(6);
+    }
+  }
+  if (matches.length == 0) {
+    regExp = RegExp(r'^\s*(\d+)\s?(['+ latZones + r'])\s?([0-9\.]+)\s?m?\s?([EW])\s?([0-9\.]+)\s?m?\s?([NS])\s*$');
     matches = regExp.allMatches(input);
     if (matches.length > 0) {
       var match = matches.elementAt(0);
