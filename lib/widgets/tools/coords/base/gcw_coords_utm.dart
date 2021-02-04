@@ -85,7 +85,7 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
                     onChanged: (newValue) {
                       setState(() {
                         _currentLatZone = newValue;
-                        // _setCurrentValueAndEmitOnChange();
+                        _setCurrentValueAndEmitOnChange();
                       });
                     },
                     items: latZones.split('').map((char) {
