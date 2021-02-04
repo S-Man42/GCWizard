@@ -60,7 +60,7 @@ final Map<String, String> ITAWordToNum = {'zero' : '0', 'uno' : '1', 'due' : '2'
   'dieci' : '10', 'undici' : '11', 'dodici' : '12', 'tredici' : '13', 'quattordici' : '14', 'quindici' : '15', 'sedici' : '16', 'diciasette' : '17', 'diciotto' : '18', 'diciannove' : '19',
   'venti' : '20', 'trenta' : '30', 'quaranta' : '40', 'cinquanta' : '50', 'sessanta' : '60', 'settanta' : '70', 'ottanta' : '80', 'novanta' : '90', 'cento' : '100', 'mille' : '1000' };
 
-final Map<String, String> FRAWordToNum = {'zéro' : '0', 'un' : '1', 'une': '1', 'deux' : '2', 'trois' : '3', 'quatre' : '4', 'cinq' : '5', 'sis' : '6', 'sept' : '7', 'huit' : '8', 'neuf' : '9',
+final Map<String, String> FRAWordToNum = {'zéro' : '0', 'un' : '1', 'une': '1', 'deux' : '2', 'trois' : '3', 'quatre' : '4', 'cinq' : '5', 'six' : '6', 'sept' : '7', 'huit' : '8', 'neuf' : '9',
   'dix' : '10', 'onze' : '11', 'douze' : '12', 'treize' : '13', 'quatorze' : '14', 'quinze' : '15', 'seize' : '16', 'dix-sept' : '17', 'dix-huit' : '18', 'dix-neuf' : '19',
   'vingt' : '20', 'trente' : '30', 'quarante' : '40', 'cinqante' : '50', 'soixante' : '60', 'soixante-dix' : '70', 'quatre-vingt' : '80', 'quatre-vingt-dix' : '90', 'cent' : '100', 'mille' : '1000' };
 
