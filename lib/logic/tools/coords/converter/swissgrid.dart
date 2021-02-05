@@ -133,7 +133,7 @@ String decToSwissGridString(LatLng coord, Ellipsoid ells) {
 }
 
 LatLng parseSwissGrid(String input, Ellipsoid ells, {isSwissGridPlus: false}) {
-  RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)\s*$');
+  RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*\,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
   var _eastingString = '';
   var _northingString = '';
@@ -144,7 +144,7 @@ LatLng parseSwissGrid(String input, Ellipsoid ells, {isSwissGridPlus: false}) {
     _northingString = match.group(3);
   }
   if (matches.length == 0) {
-    regExp = RegExp(r'^\s*(Yy)\:?\s*([\-0-9\.]+)(\s*,\s*|\s+)(Xx)\:?\s*([\-0-9\.]+)\s*$');
+    regExp = RegExp(r'^\s*(Y|y)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(X|x)\:?\s*([\-0-9\.]+)\s*$');
     matches = regExp.allMatches(input);
     if (matches.length > 0) {
       var match = matches.elementAt(0);

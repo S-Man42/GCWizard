@@ -2,9 +2,25 @@ import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:latlong/latlong.dart';
+
 
 void main() {
   final List<Map<String, dynamic>> _inputsToExpectedDEC = [
@@ -178,7 +194,7 @@ void main() {
     {'text': '52 12.312 N 20 12.312 E', 'expectedOutput': null},
   ];
 
-  group("Parser.latlon.parseDEC:", () {
+  group("Parser.dec.parseDEC:", () {
     List<Map<String, dynamic>> _inputsToExpected = _inputsToExpectedDEC;
 
     _inputsToExpected.forEach((elem) {
@@ -189,7 +205,7 @@ void main() {
     });
   });
 
-  group("Parser.latlon.parseDMM:", () {
+  group("Parser.dmm.parseDMM:", () {
     List<Map<String, dynamic>> _inputsToExpected = _inputsToExpectedDMM;
 
     _inputsToExpected.forEach((elem) {
@@ -203,7 +219,7 @@ void main() {
     });
   });
 
-  group("Parser.latlon.parseDMS:", () {
+  group("Parser.dms.parseDMS:", () {
     List<Map<String, dynamic>> _inputsToExpected = _inputsToExpectedDMS;
 
     _inputsToExpected.forEach((elem) {
@@ -236,7 +252,7 @@ void main() {
       });
   });
 
-  group("Parser.latlon.parseDMMWithLeftPadMilliminutes:", () {
+  group("Parser.dmm.parseDMMWithLeftPadMilliminutes:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       {'text': '52 12\'N 20°12\'East', 'leftPadMilliMinutes': false, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.2, 20.2)}},
       {'text': '52 12.3\'N 20°12.4\'East', 'leftPadMilliMinutes': false, 'expectedOutput': {'format': keyCoordsDMM, 'coordinate': LatLng(52.205, 20.206666666666)}},
@@ -293,6 +309,371 @@ void main() {
         var _actual = parseDMM(elem['text'], leftPadMilliMinutes: elem['leftPadMilliMinutes']);
         expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
         expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+      });
+    });
+  });
+
+  group("Parser.gauss_krueger.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': '9392110.611090261', 'expectedOutput': null},
+      {'text': '9392110.611090261\n5120027.146589669', 'expectedOutput': {'format': keyCoordsGaussKrueger, 'coordinate': LatLng(46.211024251, 025.5985061856)}},
+      {'text': '9392110.611090261, 5120027.146589669', 'expectedOutput': {'format': keyCoordsGaussKrueger, 'coordinate': LatLng(46.211024251, 025.5985061856)}},
+      {'text': '9392110.611090261 5120027.146589669', 'expectedOutput': {'format': keyCoordsGaussKrueger, 'coordinate': LatLng(46.211024251, 025.5985061856)}},
+      {'text': 'R: 9392110.611090261\nH: 5120027.146589669', 'expectedOutput': {'format': keyCoordsGaussKrueger, 'coordinate': LatLng(46.211024251, 025.5985061856)}},
+      {'text': 'r: 9392110.611090261\nh: 5120027.146589669', 'expectedOutput': {'format': keyCoordsGaussKrueger, 'coordinate': LatLng(46.211024251, 025.5985061856)}},
+      {'text': 'R:9392110.611090261\nH:5120027.146589669', 'expectedOutput': {'format': keyCoordsGaussKrueger, 'coordinate': LatLng(46.211024251, 025.5985061856)}},
+      {'text': 'R 9392110.611090261\nH 5120027.146589669', 'expectedOutput': {'format': keyCoordsGaussKrueger, 'coordinate': LatLng(46.211024251, 025.5985061856)}},
+      {'text': 'R9392110.611090261\nH5120027.146589669', 'expectedOutput': {'format': keyCoordsGaussKrueger, 'coordinate': LatLng(46.211024251, 025.5985061856)}},
+    ];
+
+    var ells = getEllipsoidByName('coords_ellipsoid_earthsphere');
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = parseGaussKrueger(elem['text'], ells);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
+      });
+    });
+  });
+
+  group("Parser.geohash.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': 'ö84nys2q8rm9j3', 'expectedOutput': null},
+      {'text': 'u84nys2q8rm9j3', 'expectedOutput': {'format': keyCoordsGeoHex, 'coordinate': LatLng(46.211024251, 025.5985061856)}},
+      {'text': 'U84nys2q8rm9j3', 'expectedOutput': {'format': keyCoordsGeoHex, 'coordinate': LatLng(46.211024251, 025.5985061856)}},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = geohashToLatLon(elem['text']);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
+      });
+    });
+  });
+
+  group("Parser.geohex.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': 'ÖD31365480657013431886', 'expectedOutput': null},
+      {'text': 'QD31365480657013431886', 'expectedOutput': {'format': keyCoordsGeoHex, 'coordinate': LatLng(46.211024251, 025.5985061856)}},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = geoHexToLatLon(elem['text']);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
+      });
+    });
+  });
+
+  group("Parser.maidenhead.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': 'ÖD31365480657013431886', 'expectedOutput': null},
+      {'text': 'KN26TF10TP64XX49', 'expectedOutput': {'format': keyCoordsMaidenhead, 'coordinate': LatLng(46.2110242332, 025.5985060764)}},
+      {'text': 'kn26tf10tp64xx49', 'expectedOutput': {'format': keyCoordsMaidenhead, 'coordinate': LatLng(46.2110242332, 025.5985060764)}},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = maidenheadToLatLon(elem['text']);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
+      });
+    });
+  });
+
+  group("Parser.mercator.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': 'Y: 5814230.730194772 X: 2849612.661492129', 'expectedOutput': {'format': keyCoordsMercator, 'coordinate': LatLng(46.25149839125229, 25.62718234979449)}},
+      {'text': 'Y:5814230.730194772X:2849612.661492129', 'expectedOutput': {'format': keyCoordsMercator, 'coordinate': LatLng(46.25149839125229, 25.62718234979449)}},
+      {'text': 'Y5814230.730194772X2849612.661492129', 'expectedOutput': {'format': keyCoordsMercator, 'coordinate': LatLng(46.25149839125229, 25.62718234979449)}},
+      {'text': '5814230.730194772 2849612.661492129', 'expectedOutput': {'format': keyCoordsMercator, 'coordinate': LatLng(46.25149839125229, 25.62718234979449)}},
+    ];
+
+    var ells = getEllipsoidByName('coords_ellipsoid_earthsphere');
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = parseMercator(elem['text'], ells);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
+      });
+    });
+  });
+
+  group("Parser.mgrs.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': 'ÖD31365480657013431886', 'expectedOutput': null},
+      {'text': '35T LM 91892.8208 18448.7408', 'expectedOutput': {'format': keyCoordsMGRS, 'coordinate': LatLng(46.04117356610081, 25.598809996225977)}},
+      {'text': '35 T LM 91892.8208 18448.7408', 'expectedOutput': {'format': keyCoordsMGRS, 'coordinate': LatLng(46.04117356610081, 25.598809996225977)}},
+      {'text': '35T LM 91892 18448', 'expectedOutput': {'format': keyCoordsMGRS, 'coordinate': LatLng(46.04116677326809, 25.59879952996897)}},
+      {'text': '35T LM 9189218448', 'expectedOutput': {'format': keyCoordsMGRS, 'coordinate': LatLng(46.04116677326809, 25.59879952996897)}},
+      {'text': '35TLM9189218448', 'expectedOutput': {'format': keyCoordsMGRS, 'coordinate': LatLng(46.04116677326809, 25.59879952996897)}},
+    ];
+
+    var ells = getEllipsoidByName('coords_ellipsoid_earthsphere');
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = parseMGRS(elem['text'], ells);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
+      });
+    });
+  });
+
+  group("Parser.natural_area_code.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': 'K3ZVLFSSQP1MKBNZ', 'expectedOutput': null},
+      {'text': 'K3ZVLFSS QP1MKBNZ', 'expectedOutput': {'format': keyCoordsNaturalAreaCode, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'X: K3ZVLFSS Y: QP1MKBNZ', 'expectedOutput': {'format': keyCoordsNaturalAreaCode, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'X:K3ZVLFSS Y:QP1MKBNZ', 'expectedOutput': {'format': keyCoordsNaturalAreaCode, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'X K3ZVLFSS Y QP1MKBNZ', 'expectedOutput': {'format': keyCoordsNaturalAreaCode, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = parseNaturalAreaCode(elem['text']);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
+      });
+    });
+  });
+
+  group("Parser.open_location_code.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': 'AGR76H6X+C95QFH', 'expectedOutput': null},
+      {'text': '1GR76H6X+C95QFH', 'expectedOutput': null},
+      {'text': '8GR76H6X+C95QFH', 'expectedOutput': {'format': keyCoordsOpenLocationCode, 'coordinate': LatLng(46.2110175, 025.5984958496)}},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = openLocationCodeToLatLon(elem['text']);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
+      });
+    });
+  });
+
+  group("Parser.quadtree.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': '1203203022132122220122000301310333201333', 'expectedOutput': {'format': keyCoordsQuadtree, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': '41203203022132122220122000301310333201333', 'expectedOutput': null},
+      {'text': 'A1203203022132122220122000301310333201333', 'expectedOutput': null},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = parseQuadtree(elem['text']);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
+      });
+    });
+  });
+
+  group("Parser.reverse_whereigo_waldmeister.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': '104181 924569 248105', 'expectedOutput': {'format': keyCoordsReverseWhereIGoWaldmeister, 'coordinate': LatLng(46.21101, 025.59849)}},
+      {'text': '104181\n924569\n248105', 'expectedOutput': {'format': keyCoordsReverseWhereIGoWaldmeister, 'coordinate': LatLng(46.21101, 025.59849)}},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = parseWaldmeister(elem['text']);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
+      });
+    });
+  });
+
+  group("Parser.slippy_map.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': '584.813499 363.434344', 'expectedOutput': {'format': keyCoordsSlippyMap, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
+      {'text': 'X: 584.813499 Y: 363.434344', 'expectedOutput': {'format': keyCoordsSlippyMap, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
+      {'text': 'X:584.813499 Y:363.434344', 'expectedOutput': {'format': keyCoordsSlippyMap, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
+      {'text': 'X:584.813499 Y:363.434344', 'expectedOutput': {'format': keyCoordsSlippyMap, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
+      {'text': 'X584.813499Y363.434344', 'expectedOutput': {'format': keyCoordsSlippyMap, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
+      {'text': 'x584.813499y363.434344', 'expectedOutput': {'format': keyCoordsSlippyMap, 'coordinate': LatLng(46.211017406, 025.5984957422)}},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = parseSlippyMap(elem['text']);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
+      });
+    });
+  });
+
+  group("Parser.swissgrid.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': '1989048.7411670878 278659.94052181806', 'expectedOutput': {'format': keyCoordsSwissGrid, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'Y: 1989048.7411670878 X: 278659.94052181806', 'expectedOutput': {'format': keyCoordsSwissGrid, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'Y:1989048.7411670878 X:278659.94052181806', 'expectedOutput': {'format': keyCoordsSwissGrid, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'Y:1989048.7411670878X:278659.94052181806', 'expectedOutput': {'format': keyCoordsSwissGrid, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'Y1989048.7411670878X278659.94052181806', 'expectedOutput': {'format': keyCoordsSwissGrid, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'y1989048.7411670878x278659.94052181806', 'expectedOutput': {'format': keyCoordsSwissGrid, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+    ];
+
+    var ells = getEllipsoidByName('coords_ellipsoid_earthsphere');
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = parseSwissGrid(elem['text'], ells);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
+      });
+    });
+  });
+
+  group("Parser.swissgrid_plus.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': '3989048.741167088 1278659.9405218181', 'expectedOutput': {'format': keyCoordsSwissGrid, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'Y: 3989048.741167088 X: 1278659.9405218181', 'expectedOutput': {'format': keyCoordsSwissGrid, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'Y:3989048.741167088 X:1278659.9405218181', 'expectedOutput': {'format': keyCoordsSwissGrid, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'Y:3989048.741167088X:1278659.9405218181', 'expectedOutput': {'format': keyCoordsSwissGrid, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'Y3989048.741167088X1278659.9405218181', 'expectedOutput': {'format': keyCoordsSwissGrid, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'y3989048.741167088x1278659.9405218181', 'expectedOutput': {'format': keyCoordsSwissGrid, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+    ];
+
+    var ells = getEllipsoidByName('coords_ellipsoid_earthsphere');
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = parseSwissGrid(elem['text'], ells, isSwissGridPlus: true);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
+      });
+    });
+  });
+
+  group("Parser.utm.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': '35 T 391892.0 5118448.0002', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(46.04116677506691, 25.59879952992334)}},
+      {'text': '35T 391892.0 5118448.0002', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(46.04116677506691, 25.59879952992334)}},
+      {'text': '35T391892.0 5118448.0002', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(46.04116677506691, 25.59879952992334)}},
+      {'text': '35T W 391892.0 N 5118448.0002', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(46.04116677506691, 25.59879952992334)}},
+      {'text': '35T mW 391892.0 mN 5118448.0002', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(46.04116677506691, 25.59879952992334)}},
+      {'text': '35T m W 391892.0 m N 5118448.0002', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(46.04116677506691, 25.59879952992334)}},
+      {'text': '35TmW391892mN5118448', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(46.04116677506691, 25.59879952992334)}},
+      {'text': '35TW391892N5118448', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(46.04116677506691, 25.59879952992334)}},
+
+      {'text': '35T 391892.0 W 5118448.0002 N', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(46.04116677506691, 25.59879952992334)}},
+      {'text': '35T 391892.0 mW 5118448.0002 mN', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(46.04116677506691, 25.59879952992334)}},
+      {'text': '35T 391892.0 m W 5118448.0002 m N', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(46.04116677506691, 25.59879952992334)}},
+      {'text': '35T391892mW5118448mN', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(46.04116677506691, 25.59879952992334)}},
+      {'text': '35T391892W5118448N', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(46.04116677506691, 25.59879952992334)}},
+
+      {'text': '35T3918925118448', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(46.04116677506691, 25.59879952992334)}},
+      {'text': '35T5701685650300', 'expectedOutput': {'format': keyCoordsUTM, 'coordinate': LatLng(50.83043359228835, 27.99948922153779)}},
+
+    ];
+
+    var ells = getEllipsoidByName('coords_ellipsoid_earthsphere');
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = parseUTM(elem['text'], ells);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
+      });
+    });
+  });
+
+  group("Parser.xyz.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': 'X: 3987428.547121 Y: 1910326.935629 Z: 4581509.856737', 'expectedOutput': {'format': keyCoordsXYZ, 'coordinate': LatLng(46.01873890823172, 25.598495717002137)}},
+      {'text': 'X: 3987428.547121\nY: 1910326.935629\nZ: 4581509.856737', 'expectedOutput': {'format': keyCoordsXYZ, 'coordinate': LatLng(46.01873890823172, 25.598495717002137)}},
+      {'text': 'X:3987428.547121Y:1910326.935629Z:4581509.856737', 'expectedOutput': {'format': keyCoordsXYZ, 'coordinate': LatLng(46.01873890823172, 25.598495717002137)}},
+      {'text': 'X3987428.547121Y1910326.935629Z4581509.856737', 'expectedOutput': {'format': keyCoordsXYZ, 'coordinate': LatLng(46.01873890823172, 25.598495717002137)}},
+      {'text': '3987428.547121 1910326.935629 4581509.856737', 'expectedOutput': {'format': keyCoordsXYZ, 'coordinate': LatLng(46.01873890823172, 25.598495717002137)}},
+    ];
+
+    var ells = getEllipsoidByName('coords_ellipsoid_earthsphere');
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = parseXYZ(elem['text'], ells);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
       });
     });
   });

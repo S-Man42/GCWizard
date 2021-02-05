@@ -18,7 +18,6 @@ import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';

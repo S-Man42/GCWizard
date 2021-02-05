@@ -111,6 +111,9 @@ LatLng geohashToLatLon(String geohash) {
     var lat = _getCoordFromBinary(latBinary, -90.0, 90.0);
     var lon = _getCoordFromBinary(lonBinary, -180.0, 180.0);
 
+    if (lat == 0.0 && lon == 0.0)
+      return null;
+
     return LatLng(lat, lon);
   } catch(e) {}
 

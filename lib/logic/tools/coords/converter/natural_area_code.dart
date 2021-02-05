@@ -70,7 +70,7 @@ LatLng parseNaturalAreaCode(String input) {
     yString = match.group(3);
   }
   if (matches.length == 0) {
-    regExp = RegExp(r'^\s*(Xx)\:?\s*([0-9A-Z]+)(\s*,\s*|\s+)(Yy)\:?\s*([0-9A-Z]+)\s*$');
+    regExp = RegExp(r'^\s*(X|x)\:?\s*([0-9A-Z]+)(\s*,\s*|\s+)(Y|y)\:?\s*([0-9A-Z]+)\s*$');
     matches = regExp.allMatches(input);
     if (matches.length > 0) {
       var match = matches.elementAt(0);

@@ -2,6 +2,8 @@ import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:latlong/latlong.dart';
 
 LatLng maidenheadToLatLon (String maidenhead) {
+  if (maidenhead == null || maidenhead == '')
+    return null;
   maidenhead = maidenhead.toUpperCase();
 
   int res = 1;
@@ -33,6 +35,8 @@ LatLng maidenheadToLatLon (String maidenhead) {
   } catch(e) {
     return null;
   }
+  if (lat == 0.0 && lon == 0.0)
+    return null;
 
   lon -= 180;
   lat -= 90;
