@@ -85,7 +85,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
         }
         return Column(
           children: <Widget>[
-          (snapshot.hasData) ? //
+          (snapshot.hasData) ?
           Expanded(
             child:
               Stack(
