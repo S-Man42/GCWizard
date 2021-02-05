@@ -45,6 +45,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
 
   var _result;
   bool isOverlay;
+  bool _cancel = false;
   ReceivePort _receivePort;
 
   _GCWAsyncExecuterState(
@@ -57,14 +58,19 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
       return Container();
     Stream<double> progress() async* {
       var parameter = await widget.parameter;
-      _receivePort = await _makeIsolate(widget.isolatedFunction, parameter);
-      await for(var event in _receivePort) {
-        if(event is Map<String, dynamic> && event['progress'] != null) {
-          yield event['progress'];
-        } else {
-          _result = event;
-          _receivePort.close();
-          return;
+      if (!_cancel) {
+        _receivePort = await _makeIsolate(widget.isolatedFunction, parameter);
+        if (_cancel)
+          _cancelProcess();
+
+        await for(var event in _receivePort) {
+          if (event is Map<String, dynamic> && event['progress'] != null) {
+            yield event['progress'];
+          } else {
+            _result = event;
+            _receivePort.close();
+            return;
+          }
         }
       }
     }
@@ -120,14 +126,19 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
           GCWButton(
             text: i18n(context, 'common_cancel'),
             onPressed: () {
-              if (_isolate != null)
-                _isolate.kill( priority: Isolate.immediate);
-              if (_receivePort != null)
-                _receivePort.close();
+              _cancelProcess();
+              _cancel = true;
             },
           )
         ]
       );
     });
+  }
+
+  _cancelProcess() {
+    if (_isolate != null)
+      _isolate.kill( priority: Isolate.immediate);
+    if (_receivePort != null)
+      _receivePort.close();
   }
 }
