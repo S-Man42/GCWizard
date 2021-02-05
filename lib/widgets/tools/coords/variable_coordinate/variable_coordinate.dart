@@ -102,6 +102,12 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
   @override
   void dispose() {
+    if (_currentFromInput != null && _currentFromInput.length > 0
+        && _currentToInput != null && _currentToInput.length > 0
+    ) {
+      _addNewValue();
+    }
+
     _inputController.dispose();
     _fromController.dispose();
     _toController.dispose();
@@ -168,10 +174,10 @@ class VariableCoordinateState extends State<VariableCoordinate> {
 
               if (_currentProjectionMode) {
                 var projection = ProjectionFormula(
-                    _currentDistanceInput,
-                    _currentLengthUnit.name,
-                    _currentBearingInput,
-                    _currentReverseBearing
+                  _currentDistanceInput,
+                  _currentLengthUnit.name,
+                  _currentBearingInput,
+                  _currentReverseBearing
                 );
 
                 widget.formula.projection = projection;
@@ -456,12 +462,16 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   _calculateOutput(BuildContext context) {
-    _currentCoordMode = GCWSwitchPosition.left;
-
     Map<String, String> _substitutions = {};
     widget.formula.values.forEach((value) {
       _substitutions.putIfAbsent(value.key, () => value.value);
     });
+
+    if (_currentFromInput != null && _currentFromInput.length > 0
+      && _currentToInput != null && _currentToInput.length > 0
+    ) {
+      _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
+    }
 
     Map<String, dynamic> projectionData;
     if (_currentProjectionMode) {

@@ -1264,18 +1264,15 @@ class Registry {
       //E Selection *************************************************************************************************
       GCWTool(
         tool: ENthDecimal(),
-        i18nPrefix: 'irrationalnumbers_nthdecimal',
-        searchStrings: SEARCHSTRING_E + 'positions positionen'
+        i18nPrefix: 'irrationalnumbers_nthdecimal'
       ),
       GCWTool(
         tool: EDecimalRange(),
-        i18nPrefix: 'irrationalnumbers_decimalrange',
-        searchStrings: SEARCHSTRING_E + 'ranges bereiche'
+        i18nPrefix: 'irrationalnumbers_decimalrange'
       ),
       GCWTool(
         tool: ESearch(),
-        i18nPrefix: 'irrationalnumbers_search',
-        searchStrings: SEARCHSTRING_E + 'occurrence vorkommen vorhanden contains containing enthaelt enthalten '
+        i18nPrefix: 'irrationalnumbers_search'
       ),
 
       //Easter Selection ***************************************************************************************
@@ -1706,7 +1703,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceFactorialCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'factorial fakultaet faktorielle tests is ist ueberpruefungen',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'factorial fakultaet faktorielle ueberpruefungen ueberpruefen checked',
       ),
       GCWTool(
         tool: NumberSequenceFactorialDigits(),
@@ -1733,7 +1730,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceMersenneFermatCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat tests is ist ueberpruefungen',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne fermat ueberpruefungen ueberpruefen checked',
       ),
       GCWTool(
         tool: NumberSequenceMersenneFermatDigits(),
@@ -1760,7 +1757,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceFermatCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fermat ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceFermatDigits(),
@@ -1787,7 +1784,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceLucasCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'lucas ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceLucasDigits(),
@@ -1814,7 +1811,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceFibonacciCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fibonacci tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'fibonacci ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceFibonacciDigits(),
@@ -1841,7 +1838,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceMersenneCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceMersenneDigits(),
@@ -1868,7 +1865,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceBellCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'bell tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'bell ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceBellDigits(),
@@ -1895,7 +1892,7 @@ class Registry {
       GCWTool(
         tool: NumberSequencePellCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequencePellDigits(),
@@ -1912,27 +1909,27 @@ class Registry {
       GCWTool(
         tool: NumberSequencePellLucasNthNumber(),
         i18nPrefix: 'numbersequence_nth',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'pell lucas positions position',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'pell-lucas positions position',
       ),
       GCWTool(
         tool: NumberSequencePellLucasRange(),
         i18nPrefix: 'numbersequence_range',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas range bereich',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell-lucas range bereich',
       ),
       GCWTool(
         tool: NumberSequencePellLucasCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell-lucas ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequencePellLucasDigits(),
         i18nPrefix: 'numbersequence_digits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell-lucas',
       ),
       GCWTool(
         tool: NumberSequencePellLucasContainsDigits(),
         i18nPrefix: 'numbersequence_containsdigits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell lucas',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pell-lucas',
       ),
 
       //NumberSequenceSelection Jacobsthal ****************************************************************************************
@@ -1949,7 +1946,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceJacobsthalCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalDigits(),
@@ -1966,54 +1963,54 @@ class Registry {
       GCWTool(
         tool: NumberSequenceJacobsthalLucasNthNumber(),
         i18nPrefix: 'numbersequence_nth',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'jacobsthal lucas positions position',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'jacobsthal-lucas positions position',
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalLucasRange(),
         i18nPrefix: 'numbersequence_range',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas range bereich',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal-lucas range bereich',
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalLucasCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal-lucas ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalLucasDigits(),
         i18nPrefix: 'numbersequence_digits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal-lucas',
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalLucasContainsDigits(),
         i18nPrefix: 'numbersequence_containsdigits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal lucas',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal-lucas',
       ),
 
       //NumberSequenceSelection Jacobsthal Oblong ****************************************************************************************
       GCWTool(
         tool: NumberSequenceJacobsthalOblongNthNumber(),
         i18nPrefix: 'numbersequence_nth',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'jacobsthal oblong positions position',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES  + 'jacobsthal-oblong positions position',
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalOblongRange(),
         i18nPrefix: 'numbersequence_range',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oblong range bereich',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal-oblong range bereich',
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalOblongCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oblong tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal-oblong ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalOblongDigits(),
         i18nPrefix: 'numbersequence_digits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oblong',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal-oblong',
       ),
       GCWTool(
         tool: NumberSequenceJacobsthalOblongContainsDigits(),
         i18nPrefix: 'numbersequence_containsdigits',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal oblong',
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'jacobsthal-oblong',
       ),
 
       //NumberSequenceSelection Catalan ****************************************************************************************
@@ -2030,7 +2027,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceCatalanCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'catalan ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceCatalanDigits(),
@@ -2057,7 +2054,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceRecamanCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'recaman tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'recaman ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceRecamanDigits(),
@@ -2084,7 +2081,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceMersennePrimesCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne primes primzahlen tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne primes primzahlen ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceMersennePrimesDigits(),
@@ -2111,7 +2108,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceMersenneExponentsCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne exponents hochzahlen exponenten tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'mersenne exponents hochzahlen exponenten ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceMersenneExponentsDigits(),
@@ -2138,7 +2135,7 @@ class Registry {
       GCWTool(
         tool: NumberSequencePerfectNumbersCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'perfect numbers perfekte zahlen tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'perfect numbers perfekte zahlen ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequencePerfectNumbersDigits(),
@@ -2165,7 +2162,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceSuperPerfectNumbersCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'superperfect numbers superperfekte zahlen tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'superperfect numbers superperfekte zahlen ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceSuperPerfectNumbersDigits(),
@@ -2192,7 +2189,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceWeirdNumbersCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'weird numbers merkwuerdige zahlen tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'weird numbers merkwuerdige zahlen ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceWeirdNumbersDigits(),
@@ -2219,7 +2216,7 @@ class Registry {
       GCWTool(
         tool: NumberSequenceSublimeNumbersCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'sublime numbers erhabene zahlen tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'sublime numbers erhabene zahlen ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequenceSublimeNumbersDigits(),
@@ -2246,7 +2243,7 @@ class Registry {
       GCWTool(
         tool: NumberSequencePrimaryPseudoPerfectNumbersCheckNumber(),
         i18nPrefix: 'numbersequence_check',
-        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pseudoperfect numbers pseudoperfekte zahlen tests is ist ueberpruefungen' ,
+        searchStrings: SEARCHSTRING_NUMBERSEQUENCES + 'pseudoperfect numbers pseudoperfekte zahlen ueberpruefungen ueberpruefen checked' ,
       ),
       GCWTool(
         tool: NumberSequencePrimaryPseudoPerfectNumbersDigits(),
