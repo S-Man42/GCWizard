@@ -19,11 +19,11 @@ class GCWAsyncExecuter extends StatefulWidget {
   final bool isOverlay;
 
   GCWAsyncExecuter({
-    Key key,
-    this.isolatedFunction,
-    this.parameter,
-    this.onReady,
-    this.isOverlay,
+      Key key,
+      this.isolatedFunction,
+      this.parameter,
+      this.onReady,
+      this.isOverlay,
   }) : super(key: key);
 
   @override
@@ -35,8 +35,8 @@ Future<ReceivePort> _makeIsolate(Function isolatedFunction, GCWAsyncExecuterPara
   parameters.sendAsyncPort = receivePort.sendPort;
 
   _isolate = await Isolate.spawn(
-    isolatedFunction,
-    parameters
+      isolatedFunction,
+      parameters
   );
   return receivePort;
 }
@@ -48,7 +48,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
   ReceivePort _receivePort;
 
   _GCWAsyncExecuterState(
-    this.isOverlay,
+      this.isOverlay,
   );
 
   @override
@@ -88,8 +88,7 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
                   CircularProgressIndicator(
                     value: snapshot.data,
                     backgroundColor: Colors.white,
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                        Colors.amber),
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
                     strokeWidth: 20,
                   ),
                   Positioned(

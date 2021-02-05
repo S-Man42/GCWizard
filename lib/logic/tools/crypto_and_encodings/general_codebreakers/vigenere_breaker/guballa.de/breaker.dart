@@ -12,7 +12,7 @@ class BreakerResult {
   });
 }
 
-BreakerResult break_vigenere (List<int> cipher_bin, int keyLength, List<List<int>> vigenereSquare, List<List<int>> bigrams, bool autoKey) {
+BreakerResult break_vigenere (List<int> cipher_bin, int keyLength, List<List<int>> vigenereSquare, List<List<int>> bigrams, bool autoKey, {Function counterFunction}) {
   if (autoKey)
     return break_vigenereAutoKey(cipher_bin, keyLength, vigenereSquare, bigrams);
 
@@ -42,6 +42,8 @@ BreakerResult break_vigenere (List<int> cipher_bin, int keyLength, List<List<int
           best_key_ch1 = key_ch1;
           best_key_ch2 = key_ch2;
         }
+        if (counterFunction != null)
+          counterFunction();
       }
     }
     if (key_idx == 0) {
