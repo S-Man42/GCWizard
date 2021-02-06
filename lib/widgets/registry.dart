@@ -2725,7 +2725,7 @@ class Registry {
       ),
       GCWSymbolTableTool(
         symbolKey: 'gallifreyan',
-        iconFilename: 'M.png',
+        iconFilename: 'Q.png',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'doctorwho timelords gallifreyan gallifreyisch drwho'
       ),
       GCWSymbolTableTool(
