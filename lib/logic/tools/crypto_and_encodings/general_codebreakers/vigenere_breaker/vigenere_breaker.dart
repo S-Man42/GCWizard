@@ -43,25 +43,38 @@ class VigenereBreakerResult {
 }
 
 const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+var _progress = 0;
+var _countCombinations = 0;
+var _progressStep = 1;
+var _sendAsyncPort;
+
 
 void break_cipherAsync(dynamic jobData) async {
   if (jobData.parameters == null) {
     jobData.sendAsyncPort.send(null);
     return;
   }
+  _sendAsyncPort = jobData.sendAsyncPort;
 
   var output = break_cipher(
       jobData.parameters.input,
       jobData.parameters.vigenereBreakerType,
       jobData.parameters.alphabet,
       jobData.parameters.keyLengthMin,
-      jobData.parameters.keyLengthMax
+      jobData.parameters.keyLengthMax,
+      counterFunction : progressCounter
   );
 
   jobData.sendAsyncPort.send(output);
 }
 
-VigenereBreakerResult break_cipher(String input, VigenereBreakerType vigenereBreakerType, VigenereBreakerAlphabet alphabet, int keyLengthMin, int keyLengthMax) {
+progressCounter() {
+  _progress++;
+  if (_sendAsyncPort != null && (_progress % _progressStep == 0))
+    _sendAsyncPort.send({'progress': _progress / _countCombinations});
+}
+
+VigenereBreakerResult break_cipher(String input, VigenereBreakerType vigenereBreakerType, VigenereBreakerAlphabet alphabet, int keyLengthMin, int keyLengthMax, {Function counterFunction}) {
   if (input == null || input == '')
     return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);
 
@@ -87,8 +100,15 @@ VigenereBreakerResult break_cipher(String input, VigenereBreakerType vigenereBre
 
   keyLengthMax = min(keyLengthMax, cipher_bin.length);
 
+  _progress = 0;
+  _countCombinations = 0;
+  for (int keyLength = keyLengthMin; keyLength <= keyLengthMax; keyLength++)
+    _countCombinations += pow(bigrams.alphabet.length, 2) * keyLength;
+
+  _progressStep = max((_countCombinations / 100).toInt(),1); // 100 steps
+
   for (int keyLength = keyLengthMin; keyLength <= keyLengthMax; keyLength++) {
-    var breakerResult = guballa.break_vigenere(cipher_bin, keyLength, vigenereSquare, bigrams.bigrams, vigenereBreakerType == VigenereBreakerType.AUTOKEYVIGENERE);
+    var breakerResult = guballa.break_vigenere(cipher_bin, keyLength, vigenereSquare, bigrams.bigrams, vigenereBreakerType == VigenereBreakerType.AUTOKEYVIGENERE, counterFunction : counterFunction);
     var result = VigenereBreakerResult();
 
     resultList.add(result);
