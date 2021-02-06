@@ -437,6 +437,8 @@ void main() {
       {'text': '35T LM 91892 18448', 'expectedOutput': {'format': keyCoordsMGRS, 'coordinate': LatLng(46.04116677326809, 25.59879952996897)}},
       {'text': '35T LM 9189218448', 'expectedOutput': {'format': keyCoordsMGRS, 'coordinate': LatLng(46.04116677326809, 25.59879952996897)}},
       {'text': '35TLM9189218448', 'expectedOutput': {'format': keyCoordsMGRS, 'coordinate': LatLng(46.04116677326809, 25.59879952996897)}},
+      {'text': '35T LM 9189 1844', 'expectedOutput': {'format': keyCoordsMGRS, 'coordinate': LatLng(46.04109450354022, 25.598775440767994)}},
+      {'text': '35T LM 918 184', 'expectedOutput': {'format': keyCoordsMGRS, 'coordinate': LatLng(46.0407204797636, 25.59761842865664)}},
     ];
 
     var ells = getEllipsoidByName('coords_ellipsoid_earthsphere');
