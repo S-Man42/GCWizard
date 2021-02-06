@@ -67,31 +67,31 @@ class MultiDecoderState extends State<MultiDecoder> {
         Row(
           children: [
             Expanded(
-              child: Container(
-                child: GCWTextField(
-                  controller: _controller,
-                  onChanged: (text) {
-                    _currentInput = text;
-                    if (_currentInput == null || _currentInput.length == 0) {
-                      setState(() {
-                        _currentOutput = null;
-                      });
-                    }
-                  },
-                ),
-                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
-              )
+                child: Container(
+                    child: GCWTextField(
+                      controller: _controller,
+                      onChanged: (text) {
+                        _currentInput = text;
+                        if (_currentInput == null || _currentInput.length == 0) {
+                          setState(() {
+                            _currentOutput = null;
+                          });
+                        }
+                      },
+                    ),
+                    padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
+                )
             ),
             GCWIconButton(
               iconData: Icons.settings,
               onPressed: () {
                 Navigator.push(context, NoAnimationMaterialPageRoute(
-                  builder: (context) => GCWTool(
-                    tool: MultiDecoderConfiguration(),
-                    toolName: i18n(context, 'multidecoder_configuration_title')
-                  )
+                    builder: (context) => GCWTool(
+                        tool: MultiDecoderConfiguration(),
+                        toolName: i18n(context, 'multidecoder_configuration_title')
+                    )
                 ))
-                .whenComplete(() {
+                    .whenComplete(() {
                   setState(() {
                     _currentOutput = null;
                   });
@@ -132,9 +132,9 @@ class MultiDecoderState extends State<MultiDecoder> {
 
   _initOutput() {
     _currentOutput = Column(
-      children: mdtTools.map((tool) {
-        return GCWTextDivider(text: _toolTitle(tool));
-      }).toList()
+        children: mdtTools.map((tool) {
+          return GCWTextDivider(text: _toolTitle(tool));
+        }).toList()
     );
   }
 
@@ -156,7 +156,7 @@ class MultiDecoderState extends State<MultiDecoder> {
     }).toList();
 
     _currentOutput = Column(
-      children: results
+        children: results
     );
   }
 }
