@@ -261,7 +261,6 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                           )
                         ],
                       )
-
                     ]
                   ),
               flex: 1,
@@ -403,34 +402,6 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
       children: rows
     );
   }
-  //
-  // _buildMenuItems(BuildContext context, Formula formula, Map<String, dynamic> foundCoordinate) {
-  //   var items = ;
-  //
-  //   if (foundCoordinate != null) {
-  //     items.add(
-  //       GCWPopupMenuItem(
-  //         child: iconedGCWPopupMenuItem(
-  //           context,
-  //           Icons.my_location,
-  //           'formulasolver_formulas_showonmap',
-  //         ),
-  //         action: (index) {
-  //           if (foundCoordinate == null)
-  //             return;
-  //
-  //           _showFormulaResultOnMap([
-  //             GCWMapPoint(
-  //               point: foundCoordinate['coordinate'],
-  //               markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext'),
-  //               coordinateFormat: {'format': foundCoordinate['format']}
-  //             )
-  //           ]);
-  //         }
-  //       ),
-  //     );
-  //   }
-  // }
 
   _showFormulaResultOnMap(coordinates) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => GCWTool (
