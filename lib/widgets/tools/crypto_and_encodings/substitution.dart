@@ -283,6 +283,10 @@ class SubstitutionState extends State<Substitution> {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
     });
 
+    if (_currentFromInput != null && _currentFromInput.length > 0 && _currentToInput != null) {
+      _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
+    }
+
     _output = substitution(_currentInput, _substitutions, caseSensitive: _currentCaseSensitive);
   }
 }
