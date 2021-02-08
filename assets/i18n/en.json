@@ -195,6 +195,13 @@
   "atbash_title" : "Atbash",
   "atbash_example" : "ABC → ZYX",
 
+  "babylonnumbers_selection_title" : "Babylonian Numbers",
+  "babylonnumbers_selection_description" : "Sexagesimal System (Numeral Base 60) of the Babylonian",
+  "babylonnumbers_title" : "Babylonian Numbers",
+  "babylonnumbers_description" : "Sexagesimal System (Numeral Base 60) of the Babylonian",
+  "babylonnumbers_single_numbers" : "Separate Numbers",
+  "babylonnumbers_sexagesimal" : "Number in Sexagesimal System (Numeral Base 60)",
+
   "bacon_title" : "Bacon Cipher",
   "bacon_description" : "Letters to five-element groups of A and B",
   "bacon_example" : "XYZ → BABABBABBABABBB / 101011011010111",
