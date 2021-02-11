@@ -613,7 +613,7 @@ class Registry {
         tool: Keyboard(),
         i18nPrefix: 'keyboard',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: SEARCHSTRING_LANGUAGEGAMES
+        searchStrings: 'keyboard tastatur layout qwerty qwertz bepo azerty ristome neo colamk dvorak t1 nf z71-300'
       ),
       GCWTool(
         tool: LanguageGamesSelection(),
