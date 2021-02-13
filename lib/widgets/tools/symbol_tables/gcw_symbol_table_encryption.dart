@@ -1,5 +1,7 @@
 import 'dart:math';
+import 'dart:io';
 import 'dart:ui' as ui;
+import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -45,7 +47,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
   var _currentEncryptionInput = '';
   var _encryptionInputController;
 
-  var _alphabetMap = <String, String>{};
+  var _alphabetMap = <String, int>{};
 
   var _currentIgnoreUnknown = false;
   var _encryptionHasImages = false;
@@ -58,7 +60,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
 
     _data = widget.data;
     _data.images.forEach((element) {
-      _alphabetMap.putIfAbsent(element.keys.first, () => element.values.first);
+      _alphabetMap.putIfAbsent(element.keys.first, () => _data.images.indexOf(element));
     });
 
     _encryptionInputController = TextEditingController(text: _currentEncryptionInput);
@@ -130,12 +132,12 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
     );
   }
 
-  List<String> _getImages(bool isCaseSensitive) {
+  List<int> _getImages(bool isCaseSensitive) {
     var _text = _currentEncryptionInput;
-    var imagePaths = <String>[];
+    var imageIndexes = <int>[];
 
     while (_text.length > 0) {
-      var imagePath;
+      var imageIndex;
       int i;
       String chunk;
       for (i = min(_data.maxSymbolTextLength, _text.length); i > 0; i--) {
@@ -143,27 +145,27 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
 
         if (isCaseSensitive) {
           if (_alphabetMap.containsKey(chunk)) {
-            imagePath = _alphabetMap[chunk];
+            imageIndex = _alphabetMap[chunk];
             break;
           }
         } else {
           if (_alphabetMap.containsKey(chunk.toUpperCase())) {
-            imagePath = _alphabetMap[chunk.toUpperCase()];
+            imageIndex = _alphabetMap[chunk.toUpperCase()];
             break;
           }
         }
       }
 
-      if ((_currentIgnoreUnknown && imagePath != null) || !_currentIgnoreUnknown)
-        imagePaths.add(imagePath);
+      if ((_currentIgnoreUnknown && imageIndex != null ) || !_currentIgnoreUnknown)
+        imageIndexes.add(imageIndex);
 
-      if (imagePath == null)
+      if (imageIndex == null)
         _text = _text.substring(1, _text.length);
       else
         _text = _text.substring(i, _text.length);
     }
 
-    return imagePaths;
+    return imageIndexes;
   }
 
   _buildEncryptionOutput(countColumns) {
@@ -193,7 +195,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
           if (images[imageIndex] == null) {
             image = Image.asset(_SYMBOL_NOT_FOUND_PATH);
           } else {
-            image = Image.asset(images[imageIndex]);
+            image = Image.memory(_data.images[images[imageIndex]].values.first.bytes);
           }
 
           widget = GCWSymbolContainer(
@@ -224,11 +226,17 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
 
   Future<ui.Image> _loadImage(String asset) async {
     ByteData data = await rootBundle.load(asset);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
+
+    return _buildImage(data.buffer.asUint8List());
+  }
+
+  Future<ui.Image> _buildImage(Uint8List bytes) async {
+    ui.Codec codec = await ui.instantiateImageCodec(bytes);
     ui.FrameInfo fi = await codec.getNextFrame();
 
     return fi.image;
   }
+
 
   Future<Map<String, dynamic>> _exportEncryption(int countColumns, isCaseSensitive) async {
     var images = _getImages(isCaseSensitive);
@@ -257,11 +265,12 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
         var imageIndex = i * countColumns + j;
 
         if (imageIndex < images.length) {
-          var image;
+          ui.Image image;
+
           if (images[imageIndex] == null) {
             image = await _loadImage(_SYMBOL_NOT_FOUND_PATH);
           } else {
-            image = await _loadImage(images[imageIndex]);
+            image = await _buildImage(_data.images[images[imageIndex]].values.first.bytes);
           }
 
           canvas.drawImage(image, Offset(j * _EXPORT_SYMBOL_SIZE, i * _EXPORT_SYMBOL_SIZE), paint);
