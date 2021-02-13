@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -7,6 +6,7 @@ import 'package:latlong/latlong.dart';
 
 final double _k0 = 0.9996;
 final double _drad = PI / 180.0;
+final String latZones = 'CDEFGHJKLMNPQRSTUVWX';
 
 UTMREF latLonToUTM(LatLng coord, Ellipsoid ells) {
   double a = ells.a;
@@ -109,7 +109,7 @@ UTMZone getZone(LatLng coord) {
         lonZone = 32;
     }
 
-    latZone = 'CDEFGHJKLMNPQRSTUVWX'[latZone];
+    latZone = latZones[latZone];
 
   } else if (lat >= 72 && lat <= 84) {
     latZone = 'X';
@@ -133,33 +133,85 @@ UTMZone getZone(LatLng coord) {
 
 String latLonToUTMString(LatLng coord, Ellipsoid ells) {
   UTMREF utm = latLonToUTM(coord, ells);
-  return '${utm.zone.lonZone} ${utm.hemisphere == HemisphereLatitude.North ? 'N' : 'S'} ${doubleFormat.format(utm.easting)} ${doubleFormat.format(utm.northing)}';
+  return '${utm.zone.lonZone} ${utm.zone.latZone} ${doubleFormat.format(utm.easting)} ${doubleFormat.format(utm.northing)}';
 }
 
 LatLng parseUTM(String input, Ellipsoid ells) {
-  RegExp regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s?([0-9\.]+)\s+([0-9\.]+)\s*$');
+  RegExp regExp = RegExp(r'^\s*(\d+)\s?(['+ latZones + r'])\s?([0-9\.]+)\s+([0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
+  var _lonZoneString = '';
+  var _latZone = '';
+  var _eastingString = '';
+  var _northingString = '';
+
+  if (matches.length > 0) {
+    var match = matches.elementAt(0);
+    _lonZoneString = match.group(1);
+    _latZone = match.group(2);
+    _eastingString = match.group(3);
+    _northingString = match.group(4);
+  }
+  if (matches.length == 0) {
+    regExp = RegExp(r'^\s*(\d+)\s?(['+ latZones + r'])\s?m\s?([EW])\s?([0-9\.]+)\s?m\s?([NS])\s?([0-9\.]+)\s*$');
+    matches = regExp.allMatches(input);
+    if (matches.length > 0) {
+      var match = matches.elementAt(0);
+      _lonZoneString = match.group(1);
+      _latZone = match.group(2);
+      _eastingString = match.group(4);
+      _northingString = match.group(6);
+    }
+  }
+  if (matches.length == 0) {
+    regExp = RegExp(r'^\s*(\d+)\s?(['+ latZones + r'])\s?([0-9\.]+)\s?m?\s?([EW])\s?([0-9\.]+)\s?m?\s?([NS])\s*$');
+    matches = regExp.allMatches(input);
+    if (matches.length > 0) {
+      var match = matches.elementAt(0);
+      _lonZoneString = match.group(1);
+      _latZone = match.group(2);
+      _eastingString = match.group(4);
+      _northingString = match.group(6);
+    }
+  }
+  if (matches.length == 0) {
+    regExp = RegExp(r'^\s*(\d+)\s?(['+ latZones + r'])\s?([0-9]{13})\s*$');
+    matches = regExp.allMatches(input);
+    if (matches.length > 0) {
+      var match = matches.elementAt(0);
+      _lonZoneString = match.group(1);
+      _latZone = match.group(2);
+      _eastingString = match.group(3).substring(0,6);
+      _northingString = match.group(3).substring(6);
+    }
+  }
+  if (matches.length == 0) {
+    regExp = RegExp(r'^\s*(\d+)\s?(['+ latZones + r'])\s?([0-9]{10})\s*$');
+    matches = regExp.allMatches(input);
+    if (matches.length > 0) {
+      var match = matches.elementAt(0);
+      _lonZoneString = match.group(1);
+      _latZone = match.group(2);
+      _eastingString = match.group(3).substring(0,5);
+      _northingString = match.group(3).substring(5);
+    }
+  }
+
   if (matches.length == 0)
     return null;
 
-  var match = matches.elementAt(0);
-  var _lonZone = int.tryParse(match.group(1));
+  var _lonZone = int.tryParse(_lonZoneString);
   if (_lonZone == null)
     return null;
 
-  var _hemisphere = match.group(2);
-  if (['N', 'M'].contains(_hemisphere) == false)
-    return null;
-
-  var _easting = double.tryParse(match.group(3));
+  var _easting = double.tryParse(_eastingString);
   if (_easting == null)
     return null;
 
-  var _northing = double.tryParse(match.group(4));
+  var _northing = double.tryParse(_northingString);
   if (_northing == null)
     return null;
 
-  var zone = UTMZone(_lonZone, _lonZone, _hemisphere);
+  var zone = UTMZone(_lonZone, _lonZone, _latZone);
   var utm = UTMREF(zone, _easting, _northing);
 
   return UTMREFtoLatLon(utm, ells);
