@@ -1332,6 +1332,41 @@ class Registry {
         searchStrings: SEARCHSTRING_HASHES + SEARCHSTRING_CODEBREAKER + 'hashbreaker hashsolver hashloeser hashknacker hashcracker'
       ),
       GCWTool(
+        tool: BLAKE2b_160(),
+        i18nPrefix: 'hashes_blake2b160',
+        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '160bits'
+      ),
+      GCWTool(
+        tool: BLAKE2b_224(),
+        i18nPrefix: 'hashes_blake2b224',
+        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '224bits'
+      ),
+      GCWTool(
+        tool: BLAKE2b_224(),
+        i18nPrefix: 'hashes_blake2b256',
+        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '256bits'
+      ),
+      GCWTool(
+        tool: BLAKE2b_224(),
+        i18nPrefix: 'hashes_blake2b384',
+        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '384bits'
+      ),
+      GCWTool(
+        tool: BLAKE2b_224(),
+        i18nPrefix: 'hashes_blake2b512',
+        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '512bits'
+      ),
+      GCWTool(
+        tool: MD2(),
+        i18nPrefix: 'hashes_md2',
+        searchStrings: SEARCHSTRING_HASHES + 'md2 md-2'
+      ),
+      GCWTool(
+        tool: MD4(),
+        i18nPrefix: 'hashes_md4',
+        searchStrings: SEARCHSTRING_HASHES + 'md4 md-4'
+      ),
+      GCWTool(
         tool: MD5(),
         i18nPrefix: 'hashes_md5',
         searchStrings: SEARCHSTRING_HASHES + 'md5 md-5'
@@ -1437,16 +1472,6 @@ class Registry {
         searchStrings: SEARCHSTRING_HASHES_RIPEMD + '320bits'
       ),
       GCWTool(
-        tool: MD2(),
-        i18nPrefix: 'hashes_md2',
-        searchStrings: SEARCHSTRING_HASHES + 'md2 md-2'
-      ),
-      GCWTool(
-        tool: MD4(),
-        i18nPrefix: 'hashes_md4',
-        searchStrings: SEARCHSTRING_HASHES + 'md4 md-4'
-      ),
-      GCWTool(
         tool: Tiger_192(),
         i18nPrefix: 'hashes_tiger192',
         searchStrings: SEARCHSTRING_HASHES + 'tiger192 tiger-192'
@@ -1455,31 +1480,6 @@ class Registry {
         tool: Whirlpool_512(),
         i18nPrefix: 'hashes_whirlpool512',
         searchStrings: SEARCHSTRING_HASHES + 'whirlpool512 whirlpool-512'
-      ),
-      GCWTool(
-        tool: BLAKE2b_160(),
-        i18nPrefix: 'hashes_blake2b160',
-        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '160bits'
-      ),
-      GCWTool(
-        tool: BLAKE2b_224(),
-        i18nPrefix: 'hashes_blake2b224',
-        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '224bits'
-      ),
-      GCWTool(
-        tool: BLAKE2b_224(),
-        i18nPrefix: 'hashes_blake2b256',
-        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '256bits'
-      ),
-      GCWTool(
-        tool: BLAKE2b_224(),
-        i18nPrefix: 'hashes_blake2b384',
-        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '384bits'
-      ),
-      GCWTool(
-        tool: BLAKE2b_224(),
-        i18nPrefix: 'hashes_blake2b512',
-        searchStrings: SEARCHSTRING_HASHES_BLAKE2B + '512bits'
       ),
 
       //Language Games Selection *******************************************************************************
