@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'dart:html' as webFile;
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_extend/share_extend.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 // import 'package:open_file/open_file.dart';
 
 Future<String> MainPath() async {
@@ -30,34 +32,60 @@ Future<String> MainPath() async {
 }
 
 Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) async {
+  var filePath = '';
+  File file;
 
-  var path = await MainPath();
-  if (path == null)
-    return null;
-  var filePath = '$path/$fileName';
-  var file = File(filePath);
+  if (kIsWeb) {
+    var blob = new webFile.Blob([data], 'image/png');
 
-  if (! await file.exists())
-    file.create();
+    var anchorElement = webFile.AnchorElement(
+      href: webFile.Url.createObjectUrl(blob),
+    )..setAttribute("download", fileName)..click();
 
-  await file.writeAsBytes(data.buffer.asUint8List());
+    filePath = 'Downloads/$fileName';
+  } else {
 
+    var path = await MainPath();
+    if (path == null)
+      return null;
+    filePath = '$path/$fileName';
+    var file = File(filePath);
+
+    if (! await file.exists())
+      file.create();
+
+    await file.writeAsBytes(data.buffer.asUint8List());
+  }
   return {'path': filePath, 'file': file};
+
 }
 
 Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {String subDirectory}) async {
+  var filePath = '';
+  File file;
 
-  var path = await MainPath();
-  if (path == null)
-    return null;
-  var filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
-  var file = await File(filePath).create(recursive: true);
+  if (kIsWeb) {
+    var blob = webFile.Blob([data], 'text/plain', 'native');
 
-  if (! await file.exists())
-    file.create();
+    var anchorElement = webFile.AnchorElement(
+      href: webFile.Url.createObjectUrl(blob),
+    )..setAttribute("download", fileName)..click();
 
-  await file.writeAsString(data);
+    filePath = 'Downloads/$fileName';
+  } else {
 
+    var path = await MainPath();
+    if (path == null)
+      return null;
+    filePath =
+    subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
+    file = await File(filePath).create(recursive: true);
+
+    if (!await file.exists())
+      file.create();
+
+    await file.writeAsString(data);
+  }
   return {'path': filePath, 'file': file};
 }
 
