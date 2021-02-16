@@ -9,7 +9,7 @@ final SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
 class _SymbolTableConstants {
   final IMAGE_SUFFIXES = RegExp(r'\.(png|jpg|bmp|gif)', caseSensitive: false);
 
-  final CONFIG_FILENAME = 'config.json';
+  final CONFIG_FILENAME = 'config.file';
   final CONFIG_SPECIALMAPPINGS = 'special_mappings';
   final CONFIG_TRANSLATE = 'translate';
   final CONFIG_CASESENSITIVE = 'case_sensitive';
