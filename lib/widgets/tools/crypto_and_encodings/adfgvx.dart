@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_alphabetdropdown.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -107,29 +106,22 @@ class ADFGVXState extends State<ADFGVX> {
         GCWTextDivider(
           text: i18n(context, 'common_alphabet')
         ),
-        GCWDropDownButton(
+        GCWAlphabetDropDown(
           value: _currentPolybiosMode,
+          items: polybiosModeItems,
+          customModeKey: PolybiosMode.CUSTOM,
+          textFieldController: _alphabetController,
           onChanged: (value) {
             setState(() {
               _currentPolybiosMode = value;
             });
           },
-          items: polybiosModeItems.entries.map((mode) {
-            return GCWDropDownMenuItem(
-              value: mode.key,
-              child: mode.value,
-            );
-          }).toList(),
-        ),
-        _currentPolybiosMode == PolybiosMode.CUSTOM ? GCWTextField(
-          hintText: i18n(context, 'common_alphabet'),
-          controller: _alphabetController,
-          onChanged: (text) {
+          onCustomAlphabetChanged: (text) {
             setState(() {
               _currentAlphabet = text;
             });
           },
-        ) : Container(),
+        ),
         GCWDefaultOutput(
           child: _calculateOutput()//_currentOutput == null ? '' : _currentOutput
         )

@@ -1,0 +1,63 @@
+import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
+
+class GCWAlphabetDropDown extends StatefulWidget {
+  final Function onChanged;
+  final Function onCustomAlphabetChanged;
+  final Map<dynamic, String>items;
+  final customModeKey;
+  final value;
+  final textFieldController;
+
+  const GCWAlphabetDropDown({
+    Key key,
+    this.value,
+    this.items,
+    this.onChanged,
+    this.onCustomAlphabetChanged,
+    this.customModeKey,
+    this.textFieldController,
+  }) : super(key: key);
+
+  @override
+  _GCWAlphabetDropDownState createState() => _GCWAlphabetDropDownState();
+}
+
+class _GCWAlphabetDropDownState extends State<GCWAlphabetDropDown> {
+  dynamic _currentMode;
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeColors colors = themeColors();
+
+    return Column(
+        children: <Widget>[
+          GCWDropDownButton(
+            value: widget.value,
+            onChanged: (value) {
+              setState(() {
+                _currentMode = value;
+                widget.onChanged(_currentMode);
+              });
+            },
+            items: widget.items.entries.map((mode) {
+              return GCWDropDownMenuItem(
+                  value: mode.key,
+                  child: mode.value
+              );
+            }).toList(),
+          ),
+          if (_currentMode == widget.customModeKey)
+            GCWTextField(
+              hintText: i18n(context, 'common_alphabet'),
+              controller: widget.textFieldController,
+              onChanged: widget.onCustomAlphabetChanged,
+            ),
+        ]
+    );
+  }
+}
+
