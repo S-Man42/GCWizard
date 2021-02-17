@@ -11,6 +11,7 @@ class GCWAlphabetDropDown extends StatefulWidget {
   final customModeKey;
   final value;
   final textFieldController;
+  final textFieldHintText;
 
   const GCWAlphabetDropDown({
     Key key,
@@ -20,6 +21,7 @@ class GCWAlphabetDropDown extends StatefulWidget {
     this.onCustomAlphabetChanged,
     this.customModeKey,
     this.textFieldController,
+    this.textFieldHintText,
   }) : super(key: key);
 
   @override
@@ -52,7 +54,7 @@ class _GCWAlphabetDropDownState extends State<GCWAlphabetDropDown> {
           ),
           if (_currentMode == widget.customModeKey)
             GCWTextField(
-              hintText: i18n(context, 'common_alphabet'),
+              hintText: widget.textFieldHintText == null ? i18n(context, 'common_alphabet') : widget.textFieldHintText,
               controller: widget.textFieldController,
               onChanged: widget.onCustomAlphabetChanged,
             ),

@@ -100,31 +100,23 @@ class ChaoState extends State<Chao> {
         GCWTextDivider(
           text: i18n(context, 'chao_alphabet_plain')
         ),
-        GCWDropDownButton(
+        GCWAlphabetDropDown(
           value: _currentAlphabetTypePlain,
+          items: ChaoPlainAlphabetItems,
+          customModeKey: ChaoAlphabet.CUSTOM,
+          textFieldController: _alphabetControllerPlain,
+          textFieldHintText: i18n(context, 'chao_alphabet_plain'),
           onChanged: (value) {
             setState(() {
               _currentAlphabetTypePlain = value;
             });
           },
-          items: ChaoPlainAlphabetItems.entries.map((alphabetPlain) {
-            return GCWDropDownMenuItem(
-              value: alphabetPlain.key,
-              child: alphabetPlain.value,
-            );
-          }).toList(),
-        ),
-        _currentAlphabetTypePlain == ChaoAlphabet.CUSTOM
-          ? GCWTextField(
-              hintText: i18n(context, 'chao_alphabet_plain'),
-              controller: _alphabetControllerPlain,
-              onChanged: (text) {
-                setState(() {
-                  _currentAlphabetPlain = text;
-                });
-              },
-            )
-          : Container(),
+          onCustomAlphabetChanged: (text) {
+              setState(() {
+                _currentAlphabetPlain = text;
+              });
+            },
+          ),
         _buildOutput()
       ],
     );
