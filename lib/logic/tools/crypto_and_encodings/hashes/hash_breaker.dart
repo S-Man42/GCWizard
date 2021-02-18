@@ -27,7 +27,7 @@ Map<String, dynamic> preCheck(Map<String, String> substitutions) {
   return {'status' : 'ok'};
 }
 
-void breakHashAsync(dynamic jobData) async {
+Future<Map<String, dynamic>> breakHashAsync(dynamic jobData) async {
 
   var output = breakHash(
     jobData.parameters.input,
@@ -37,7 +37,10 @@ void breakHashAsync(dynamic jobData) async {
     sendAsyncPort: jobData.sendAsyncPort
   );
 
-  jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null)
+    jobData.sendAsyncPort.send(output);
+
+  return output;
 }
 
 Map<String, dynamic> breakHash(String input, String searchMask, Map<String, String> substitutions, Function hashFunction, {SendPort sendAsyncPort}) {

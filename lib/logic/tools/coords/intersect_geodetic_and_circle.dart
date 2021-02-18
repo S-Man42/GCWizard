@@ -20,10 +20,10 @@ class IntersectGeodeticAndCircleJobData {
   });
 }
 
-void intersectGeodeticAndCircleAsync(dynamic jobData) async {
+Future<List<LatLng>> intersectGeodeticAndCircleAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
-    return;
+    return null;
   }
 
   var output = intersectGeodeticAndCircle(
@@ -34,7 +34,10 @@ void intersectGeodeticAndCircleAsync(dynamic jobData) async {
       jobData.parameters.ells
   );
 
-  jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null)
+    jobData.sendAsyncPort.send(output);
+
+  return output;
 }
 
 List<LatLng> intersectGeodeticAndCircle(LatLng startGeodetic, double bearingGeodetic, LatLng centerPoint, double radiusCircle, Ellipsoid ells) {

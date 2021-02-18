@@ -101,10 +101,10 @@ class _ResectionCalculator extends IntervalCalculator {
   }
 }
 
-void resectionAsync(dynamic jobData) async {
+Future<List<LatLng>> resectionAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
-    return;
+    return null;
   }
 
   var output = resection(
@@ -116,7 +116,10 @@ void resectionAsync(dynamic jobData) async {
       jobData.parameters.ells
   );
 
-  jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null)
+    jobData.sendAsyncPort.send(output);
+
+  return output;
 }
 
 List<LatLng> resection(LatLng coord1, double angle12, LatLng coord2, double angle23, LatLng coord3, Ellipsoid ells) {
