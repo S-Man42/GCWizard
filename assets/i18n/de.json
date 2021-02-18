@@ -2127,6 +2127,7 @@
   "settings_general_defaulttab_usedefaulttab" : "Zeige Standard-Tab",
   "settings_general_i18n_title" : "Internationalisierung",
   "settings_general_i18n_defaultlengthunit" : "Standard Längeneinheit",
+  "settings_general_i18n_defaultlengthunit" : "Sprächen",
   "settings_general_theme" : "Oberfläche",
   "settings_general_theme_color" : "Farbe",
   "settings_general_theme_color_dark" : "Dunkel",

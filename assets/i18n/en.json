@@ -2127,6 +2127,7 @@
   "settings_general_defaulttab_usedefaulttab" : "Show default tab",
   "settings_general_i18n_title" : "Internationalization",
   "settings_general_i18n_defaultlengthunit" : "Default Length Unit",
+  "settings_general_i18n_language" : "Language",
   "settings_general_theme" : "Theme",
   "settings_general_theme_color" : "Color",
   "settings_general_theme_color_dark" : "Dark",
