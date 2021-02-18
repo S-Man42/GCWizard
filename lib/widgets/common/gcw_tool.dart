@@ -101,9 +101,6 @@ class _GCWToolState extends State<GCWTool> {
       appBar: AppBar(
         title: Text(widget.toolName),
           actions: _buildButtons(),
-//        actions: <Widget>[
-//          widget.titleTrailing ?? _buildHelpButton()
-//        ],
       ),
       body: _buildBody()
     );
