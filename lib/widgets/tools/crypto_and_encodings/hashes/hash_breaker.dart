@@ -11,7 +11,9 @@ import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_key_value_multicolumn.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
+
 
 class HashBreaker extends StatefulWidget {
   final Function hashFunction;
@@ -184,52 +186,32 @@ class _HashBreakerState extends State<HashBreaker> {
         GCWTextDivider(
           text: i18n(context, 'coords_variablecoordinate_variables'),
         ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: GCWTextField(
-                hintText: i18n(context, 'coords_variablecoordinate_variable'),
-                controller: _fromController,
-                onChanged: (text) {
-                  _currentFromInput = text;
-                },
-              ),
-              flex: 1
-            ),
-            Icon(
-              Icons.arrow_forward,
-              color: themeColors().mainFont(),
-            ),
-            Expanded(
-              child: GCWTextField(
-                hintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
-                controller: _toController,
-                inputFormatters: [CoordsTextVariableCoordinateTextInputFormatter()],
-                onChanged: (text) {
-                  _currentToInput = text;
-                },
-              ),
-              flex: 2,
-            ),
-            GCWIconButton(
-              iconData: Icons.add,
-              onPressed: () {
-                setState(() {
-                  if (_currentFromInput.length > 0) {
-                    _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {_currentFromInput: _currentToInput});
+        GCWKeyValueMultiColumn(
+          keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
+          keyController: _fromController,
+          onKeyChanged: (text) {
+            _currentFromInput = text;
+          },
+          valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
+          valueController: _toController,
+          valueInputFormatters: [CoordsTextVariableCoordinateTextInputFormatter()],
+          onValueChanged: (text) {
+            _currentToInput = text;
+          },
+          onAddPressed: () {
+            setState(() {
+              if (_currentFromInput.length > 0) {
+                _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {_currentFromInput: _currentToInput});
 
-                    _fromController.clear();
-                    _toController.clear();
-                    _currentFromInput = '';
-                    _currentToInput = '';
-                  }
-                });
-              },
-            )
-          ],
-        ),
-      ],
-    );
+                _fromController.clear();
+                _toController.clear();
+                _currentFromInput = '';
+                _currentToInput = '';
+              }
+            });
+          },
+        )
+    ]);
   }
 
   _buildSubstitutionList(BuildContext context) {

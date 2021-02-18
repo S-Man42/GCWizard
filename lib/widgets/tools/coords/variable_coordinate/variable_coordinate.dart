@@ -20,6 +20,7 @@ import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_key_value_multicolumn.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
@@ -215,49 +216,29 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         GCWTextDivider(
           text: i18n(context, 'coords_variablecoordinate_variables'),
         ),
-        Row(
-          children: <Widget>[
-            Expanded(
-                child: GCWTextField(
-                  hintText: i18n(context, 'coords_variablecoordinate_variable'),
-                  controller: _fromController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentFromInput = text;
-                    });
-                  },
-                ),
-                flex: 1
-            ),
-            Icon(
-              Icons.arrow_forward,
-              color: themeColors().mainFont(),
-            ),
-            Expanded(
-              child: GCWTextField(
-                hintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
-                controller: _toController,
-                inputFormatters: [CoordsTextVariableCoordinateTextInputFormatter()],
-                onChanged: (text) {
-                  setState(() {
-                    _currentToInput = text;
-                  });
-                },
-              ),
-              flex: 2,
-            ),
-            GCWIconButton(
-              iconData: Icons.add,
-              onPressed: () {
-                setState(() {
-                  _addNewValue();
-                });
-              },
-            )
-          ],
-        ),
-      ],
-    );
+        GCWKeyValueMultiColumn(
+          keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
+          keyController: _fromController,
+          onKeyChanged: (text) {
+            setState(() {
+              _currentFromInput = text;
+            });
+          },
+          valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
+          valueController: _toController,
+          valueInputFormatters: [CoordsTextVariableCoordinateTextInputFormatter()],
+          onValueChanged: (text) {
+            setState(() {
+              _currentToInput = text;
+            });
+          },
+          onAddPressed: () {
+            setState(() {
+              _addNewValue();
+            });
+          },
+        )
+      ]);
   }
 
   _buildProjectionInput() {

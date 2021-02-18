@@ -21,6 +21,7 @@ import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_key_value_multicolumn.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlydigitsandcomma_textinputformatter.dart';
 import 'package:prefs/prefs.dart';
 

@@ -8,6 +8,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_key_value_multicolumn.dart';
 
 class Substitution extends StatefulWidget {
   final String input;
@@ -88,46 +89,29 @@ class SubstitutionState extends State<Substitution> {
             });
           },
         ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: GCWTextField(
-                hintText: i18n(context, 'substitution_from'),
-                controller: _fromController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentFromInput = text;
-                    _calculateOutput();
-                  });
-                },
-              )
-            ),
-            Icon(
-              Icons.arrow_forward,
-              color: themeColors().mainFont(),
-            ),
-            Expanded(
-              child: GCWTextField(
-                hintText: i18n(context, 'substitution_to'),
-                controller: _toController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentToInput = text;
-                    _calculateOutput();
-                  });
-                },
-              ),
-            ),
-            GCWIconButton(
-              iconData: Icons.add,
-              onPressed: () {
-                setState(() {
-                  _addNewSubstitution();
-                  _calculateOutput();
-                });
-              },
-            )
-          ],
+        GCWKeyValueMultiColumn(
+          keyHintText: i18n(context, 'substitution_from'),
+          keyController: _fromController,
+          onKeyChanged: (text) {
+            setState(() {
+              _currentFromInput = text;
+              _calculateOutput();
+            });
+          },
+          valueHintText: i18n(context, 'substitution_to'),
+          valueController: _toController,
+          onValueChanged: (text) {
+            setState(() {
+              _currentToInput = text;
+              _calculateOutput();
+            });
+          },
+          onAddPressed: () {
+            setState(() {
+              _addNewSubstitution();
+              _calculateOutput();
+            });
+          },
         ),
         GCWOnOffSwitch(
           title: i18n(context, 'substitution_case_sensitive'),
