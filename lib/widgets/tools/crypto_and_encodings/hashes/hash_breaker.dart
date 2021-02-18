@@ -151,6 +151,12 @@ class _HashBreakerState extends State<HashBreaker> {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
     });
 
+    if (_currentFromInput != null && _currentFromInput.length > 0
+      && _currentToInput != null && _currentToInput.length > 0
+    ) {
+      _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
+    }
+
     return GCWAsyncExecuterParameters(
       HashBreakerJobData(
         input: _currentInput,
