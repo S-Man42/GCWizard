@@ -101,7 +101,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
             )
         ),
         _buildEncryptionOutput(widget.countColumns),
-         _encryptionHasImages // TODO: save is currently not supported on web
+         _encryptionHasImages
           ? GCWButton(
               text: i18n(context, 'symboltables_exportimage'),
               onPressed: () {
