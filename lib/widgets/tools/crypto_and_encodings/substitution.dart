@@ -100,6 +100,7 @@ class SubstitutionState extends State<Substitution> {
           },
           valueHintText: i18n(context, 'substitution_to'),
           valueController: _toController,
+          valueFlex : 1,
           onValueChanged: (text) {
             setState(() {
               _currentToInput = text;

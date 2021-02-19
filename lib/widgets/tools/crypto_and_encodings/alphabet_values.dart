@@ -309,62 +309,48 @@ class AlphabetValuesState extends State<AlphabetValues> {
             isCustomAlphabet ? Container() : Expanded(child: Container(), flex: 1)
           ],
         ),
-        Container(
-          padding: EdgeInsets.only(bottom: 10),
-          child:  Row(
-            children: [
-              Expanded(
-                child: GCWTextField(
-                  hintText: i18n(context, 'alphabetvalues_edit_mode_customize_letter'),
-                  controller: _fromController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentFromInput = text;
-                    });
-                  },
-                )
-              ),
-              Icon(
-                Icons.arrow_forward,
-                color: themeColors().mainFont(),
-              ),
-              Expanded(
-                child: GCWTextField(
-                  hintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
-                  inputFormatters: [TextOnlyDigitsAndCommaInputFormatter()],
-                  controller: _toController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentToInput = text;
-                    });
-                  },
-                ),
-              ),
-              Container(
-                child: GCWButton(
-                  text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter'),
-                  onPressed: () {
-                    setState(() {
-                      _addNewLetter(context, _currentFromInput, _currentToInput, adjust: false);
-                    });
-                  },
-                ),
-                padding: EdgeInsets.only(left: 4, right: 2)
-              ),
-              Container(
-                child: GCWButton(
-                  text: i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),
-                  onPressed: _isAddAndAdjustEnabled() ? () {
-                    setState(() {
-                      _addNewLetter(context, _currentFromInput, _currentToInput);
-                    });
-                  } : null,
-                ),
-                padding: EdgeInsets.only(left: 2)
-              )
-            ],
-          )
+        SizedBox(height: 10),
+        GCWKeyValueMultiColumn(
+          keyHintText: i18n(context, 'alphabetvalues_edit_mode_customize_letter'),
+          keyController: _fromController,
+          onKeyChanged: (text) {
+            setState(() {
+              _currentFromInput = text;
+            });
+          },
+          valueHintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
+          valueController: _toController,
+          valueInputFormatters: [TextOnlyDigitsAndCommaInputFormatter()],
+          valueFlex: 1,
+          onValueChanged: (text) {
+            setState(() {
+              _currentToInput = text;
+            });
+          },
+          replaceAdd: Container(
+            child: GCWButton(
+              text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter'),
+              onPressed: () {
+                setState(() {
+                  _addNewLetter(context, _currentFromInput, _currentToInput, adjust: false);
+                });
+              },
+            ),
+            padding: EdgeInsets.only(left: 4, right: 2)
+          ),
+          trailing: Container(
+            child: GCWButton(
+              text: i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),
+              onPressed: _isAddAndAdjustEnabled() ? () {
+                setState(() {
+                  _addNewLetter(context, _currentFromInput, _currentToInput);
+                });
+              } : null,
+            ),
+            padding: EdgeInsets.only(left: 2)
+          ),
         ),
+
         _buildCustomizeableAlphabet(),
         GCWDivider()
       ],

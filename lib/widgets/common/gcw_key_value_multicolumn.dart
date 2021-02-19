@@ -12,7 +12,10 @@ class GCWKeyValueMultiColumn extends StatefulWidget {
   final List<TextInputFormatter> valueInputFormatters;
   final Function onValueChanged;
   final String valueHintText;
+  final int valueFlex;
   final Function onAddPressed;
+  final Widget replaceAdd;
+  final Widget trailing;
 
   const GCWKeyValueMultiColumn({
     Key key,
@@ -23,7 +26,10 @@ class GCWKeyValueMultiColumn extends StatefulWidget {
     this.valueInputFormatters,
     this.onValueChanged,
     this.valueHintText,
-    this.onAddPressed
+    this.valueFlex,
+    this.onAddPressed,
+    this.replaceAdd,
+    this.trailing
   }) : super(key: key);
 
   @override
@@ -40,11 +46,12 @@ class _GCWKeyValueMultiColumn extends State<GCWKeyValueMultiColumn> {
         Row(
           children: <Widget>[
             Expanded(
-                child: GCWTextField(
-                  hintText: widget.keyHintText,
-                  controller: widget.keyController,
-                  onChanged: widget.onKeyChanged,
-                )
+              child: GCWTextField(
+                hintText: widget.keyHintText,
+                controller: widget.keyController,
+                onChanged: widget.onKeyChanged,
+              ),
+              flex: 1
             ),
             Icon(
               Icons.arrow_forward,
@@ -57,11 +64,14 @@ class _GCWKeyValueMultiColumn extends State<GCWKeyValueMultiColumn> {
                 inputFormatters: widget.valueInputFormatters,
                 onChanged: widget.onValueChanged,
               ),
+              flex: widget.valueFlex ?? 2,
             ),
+            widget.replaceAdd ??
             GCWIconButton(
               iconData: Icons.add,
               onPressed: widget.onAddPressed,
-            )
+            ),
+            widget.trailing ?? Container()
           ],
         ),
       ],
