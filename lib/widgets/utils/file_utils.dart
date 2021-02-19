@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:html' as webFile;
+import 'package:universal_html/html.dart' as html;
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -36,28 +36,26 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) 
   File file;
 
   if (kIsWeb) {
-    var blob = new webFile.Blob([data], 'image/png');
+    var blob = new html.Blob([data], 'image/png');
 
-    var anchorElement = webFile.AnchorElement(
-      href: webFile.Url.createObjectUrl(blob),
-    )..setAttribute("download", fileName)..click();
+    var anchorElement = html.AnchorElement(
+      href: html.Url.createObjectUrl(blob),
+      )..setAttribute("download", fileName)..click();
 
     filePath = 'Downloads/$fileName';
   } else {
-
     var path = await MainPath();
     if (path == null)
       return null;
     filePath = '$path/$fileName';
-    var file = File(filePath);
+    file = File(filePath);
 
-    if (! await file.exists())
+    if (!await file.exists())
       file.create();
 
     await file.writeAsBytes(data.buffer.asUint8List());
   }
   return {'path': filePath, 'file': file};
-
 }
 
 Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {String subDirectory}) async {
@@ -65,20 +63,18 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
   File file;
 
   if (kIsWeb) {
-    var blob = webFile.Blob([data], 'text/plain', 'native');
+    var blob = html.Blob([data], 'text/plain', 'native');
 
-    var anchorElement = webFile.AnchorElement(
-      href: webFile.Url.createObjectUrl(blob),
+    var anchorElement = html.AnchorElement(
+      href: html.Url.createObjectUrl(blob),
     )..setAttribute("download", fileName)..click();
 
     filePath = 'Downloads/$fileName';
   } else {
-
     var path = await MainPath();
     if (path == null)
       return null;
-    filePath =
-    subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
+    filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
     file = await File(filePath).create(recursive: true);
 
     if (!await file.exists())
