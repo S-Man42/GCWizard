@@ -106,7 +106,7 @@ class _SymbolTableConstants {
 
 class SymbolData {
   final String path;
-  final Uint8List bytes;
+  final List<int> bytes;
 
   SymbolData({
     this.path = null,
