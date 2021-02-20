@@ -11,7 +11,8 @@ import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
-import 'package:gc_wizard/widgets/common/gcw_key_value_multicolumn.dart';
+import 'package:gc_wizard/widgets/common/gcw_key_value_input.dart';
+import 'package:gc_wizard/widgets/common/gcw_key_value_list.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
 
 
@@ -108,6 +109,7 @@ class _HashBreakerState extends State<HashBreaker> {
           },
         ),
         _buildVariablesInput(),
+        SizedBox(height: 10),
         _buildSubstitutionList(context),
         _buildSubmitButton(),
         GCWDefaultOutput(
@@ -186,7 +188,7 @@ class _HashBreakerState extends State<HashBreaker> {
         GCWTextDivider(
           text: i18n(context, 'coords_variablecoordinate_variables'),
         ),
-        GCWKeyValueMultiColumn(
+        GCWKeyValueInput(
           keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
           keyController: _fromController,
           onKeyChanged: (text) {
@@ -195,6 +197,7 @@ class _HashBreakerState extends State<HashBreaker> {
           valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
           valueController: _toController,
           valueInputFormatters: [CoordsTextVariableCoordinateTextInputFormatter()],
+          valueFlex: 2,
           onValueChanged: (text) {
             _currentToInput = text;
           },
@@ -215,114 +218,118 @@ class _HashBreakerState extends State<HashBreaker> {
   }
 
   _buildSubstitutionList(BuildContext context) {
-    var odd = true;
-    var rows = _currentSubstitutions.entries.map((substitution) {
-      Widget output;
-
-      var row = Container(
-          child: Row (
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  child: _currentEditId == substitution.key
-                    ? GCWTextField (
-                      controller: _editKeyController,
-                      onChanged: (text) {
-                        setState(() {
-                          _currentEditedKey = text;
-                        });
-                      },
-                    )
-                    : GCWText (
-                      text: substitution.value.keys.first
-                    ),
-                  margin: EdgeInsets.only(left: 10),
-                ),
-                flex: 1,
-              ),
-              Icon(
-                Icons.arrow_forward,
-                color: themeColors().mainFont(),
-              ),
-              Expanded(
-                  child: Container(
-                    child: _currentEditId == substitution.key
-                      ? GCWTextField(
-                        controller: _editValueController,
-                        autofocus: true,
-                        onChanged: (text) {
-                          setState(() {
-                            _currentEditedValue = text;
-                          });
-                        },
-                      )
-                      : GCWText (
-                        text: substitution.value.values.first
-                      ),
-                    margin: EdgeInsets.only(left: 10),
-                  ),
-                  flex: 3
-              ),
-              _currentEditId == substitution.key
-                ? GCWIconButton(
-                    iconData: Icons.check,
-                    onPressed: () {
-
-                      _currentSubstitutions[_currentEditId] = {_currentEditedKey: _currentEditedValue};
-
-                      setState(() {
-                        _currentEditId = null;
-                        _editKeyController.clear();
-                        _editValueController.clear();
-                      });
-                    },
-                  )
-                : GCWIconButton(
-                    iconData: Icons.edit,
-                    onPressed: () {
-                      setState(() {
-                        _currentEditId = substitution.key;
-                        _editKeyController.text = substitution.value.keys.first;
-                        _editValueController.text = substitution.value.values.first;
-                        _currentEditedKey = substitution.value.keys.first;
-                        _currentEditedValue = substitution.value.values.first;
-                      });
-                    },
-                  ),
-              GCWIconButton(
-                iconData: Icons.remove,
-                onPressed: () {
-                  setState(() {
-                    _currentSubstitutions.remove(substitution.key);
-                  });
-                },
-              )
-            ],
-          )
-      );
-
-      if (odd) {
-        output = Container(
-          color: themeColors().outputListOddRows(),
-          child: row
-        );
-      } else {
-        output = Container(
-            child: row
-        );
-      }
-      odd = !odd;
-
-      return output;
-    }).toList();
-
-    return Container(
-      child: Column(
-        children: rows
-      ),
-      padding: EdgeInsets.only(
-        top: 10
-      ),
+    return GCWKeyValueList(
+      keyKeyValueMap: _currentSubstitutions,
     );
-  }
+
+  //   var odd = true;
+  //   var rows = _currentSubstitutions.entries.map((substitution) {
+  //     Widget output;
+  //
+  //     var row = Container(
+  //         child: Row (
+  //           children: <Widget>[
+  //             Expanded(
+  //               child: Container(
+  //                 child: _currentEditId == substitution.key
+  //                   ? GCWTextField (
+  //                     controller: _editKeyController,
+  //                     onChanged: (text) {
+  //                       setState(() {
+  //                         _currentEditedKey = text;
+  //                       });
+  //                     },
+  //                   )
+  //                   : GCWText (
+  //                     text: substitution.value.keys.first
+  //                   ),
+  //                 margin: EdgeInsets.only(left: 10),
+  //               ),
+  //               flex: 1,
+  //             ),
+  //             Icon(
+  //               Icons.arrow_forward,
+  //               color: themeColors().mainFont(),
+  //             ),
+  //             Expanded(
+  //                 child: Container(
+  //                   child: _currentEditId == substitution.key
+  //                     ? GCWTextField(
+  //                       controller: _editValueController,
+  //                       autofocus: true,
+  //                       onChanged: (text) {
+  //                         setState(() {
+  //                           _currentEditedValue = text;
+  //                         });
+  //                       },
+  //                     )
+  //                     : GCWText (
+  //                       text: substitution.value.values.first
+  //                     ),
+  //                   margin: EdgeInsets.only(left: 10),
+  //                 ),
+  //                 flex: 3
+  //             ),
+  //             _currentEditId == substitution.key
+  //               ? GCWIconButton(
+  //                   iconData: Icons.check,
+  //                   onPressed: () {
+  //
+  //                     _currentSubstitutions[_currentEditId] = {_currentEditedKey: _currentEditedValue};
+  //
+  //                     setState(() {
+  //                       _currentEditId = null;
+  //                       _editKeyController.clear();
+  //                       _editValueController.clear();
+  //                     });
+  //                   },
+  //                 )
+  //               : GCWIconButton(
+  //                   iconData: Icons.edit,
+  //                   onPressed: () {
+  //                     setState(() {
+  //                       _currentEditId = substitution.key;
+  //                       _editKeyController.text = substitution.value.keys.first;
+  //                       _editValueController.text = substitution.value.values.first;
+  //                       _currentEditedKey = substitution.value.keys.first;
+  //                       _currentEditedValue = substitution.value.values.first;
+  //                     });
+  //                   },
+  //                 ),
+  //             GCWIconButton(
+  //               iconData: Icons.remove,
+  //               onPressed: () {
+  //                 setState(() {
+  //                   _currentSubstitutions.remove(substitution.key);
+  //                 });
+  //               },
+  //             )
+  //           ],
+  //         )
+  //     );
+  //
+  //     if (odd) {
+  //       output = Container(
+  //         color: themeColors().outputListOddRows(),
+  //         child: row
+  //       );
+  //     } else {
+  //       output = Container(
+  //           child: row
+  //       );
+  //     }
+  //     odd = !odd;
+  //
+  //     return output;
+  //   }).toList();
+  //
+  //   return Container(
+  //     child: Column(
+  //       children: rows
+  //     ),
+  //     padding: EdgeInsets.only(
+  //       top: 10
+  //     ),
+  //   );
+   }
 }

@@ -4,7 +4,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 
-class GCWKeyValueMultiColumn extends StatefulWidget {
+class GCWKeyValueInput extends StatefulWidget {
   final TextEditingController keyController;
   final Function onKeyChanged;
   final String keyHintText;
@@ -17,15 +17,15 @@ class GCWKeyValueMultiColumn extends StatefulWidget {
   final Widget replaceAdd;
   final Widget trailing;
 
-  const GCWKeyValueMultiColumn({
+  const GCWKeyValueInput({
     Key key,
-    this.onKeyChanged,
-    this.keyHintText,
     this.keyController,
+    this.keyHintText,
+    this.onKeyChanged,
+    this.valueHintText,
     this.valueController,
     this.valueInputFormatters,
     this.onValueChanged,
-    this.valueHintText,
     this.valueFlex,
     this.onAddPressed,
     this.replaceAdd,
@@ -33,11 +33,10 @@ class GCWKeyValueMultiColumn extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GCWKeyValueMultiColumn createState() => _GCWKeyValueMultiColumn();
+  _GCWKeyValueInput createState() => _GCWKeyValueInput();
 }
 
-class _GCWKeyValueMultiColumn extends State<GCWKeyValueMultiColumn> {
-  TextEditingController _controller;
+class _GCWKeyValueInput extends State<GCWKeyValueInput> {
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +63,7 @@ class _GCWKeyValueMultiColumn extends State<GCWKeyValueMultiColumn> {
                 inputFormatters: widget.valueInputFormatters,
                 onChanged: widget.onValueChanged,
               ),
-              flex: widget.valueFlex ?? 2,
+              flex: widget.valueFlex ?? 1,
             ),
             widget.replaceAdd ??
             GCWIconButton(

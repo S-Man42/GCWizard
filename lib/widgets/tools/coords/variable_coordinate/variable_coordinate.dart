@@ -20,7 +20,8 @@ import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_key_value_multicolumn.dart';
+import 'package:gc_wizard/widgets/common/gcw_key_value_input.dart';
+import 'package:gc_wizard/widgets/common/gcw_key_value_list.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_outputformat.dart';
@@ -191,6 +192,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         ),
         _buildProjectionInput(),
         _buildVariablesInput(),
+        //SizedBox(height: 10),
         _buildSubstitutionList(context),
         GCWCoordsOutputFormat(
           coordFormat: _currentOutputFormat,
@@ -216,7 +218,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         GCWTextDivider(
           text: i18n(context, 'coords_variablecoordinate_variables'),
         ),
-        GCWKeyValueMultiColumn(
+        GCWKeyValueInput(
           keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
           keyController: _fromController,
           onKeyChanged: (text) {
@@ -227,6 +229,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
           valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
           valueController: _toController,
           valueInputFormatters: [CoordsTextVariableCoordinateTextInputFormatter()],
+          valueFlex: 2,
           onValueChanged: (text) {
             setState(() {
               _currentToInput = text;
@@ -330,6 +333,10 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   }
 
   _buildSubstitutionList(BuildContext context) {
+    // return GCWKeyValueList(
+    //   keyValueList: widget.formula.values,
+    // );
+
     var odd = true;
     var rows = widget.formula.values.map((value) {
       Widget output;
