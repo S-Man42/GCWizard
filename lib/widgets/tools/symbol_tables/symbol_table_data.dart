@@ -1,13 +1,17 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data_specialsorts.dart';
+import 'package:archive/archive.dart';
+import 'package:archive/archive_io.dart';
 
 final SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
 
 class _SymbolTableConstants {
   final IMAGE_SUFFIXES = RegExp(r'\.(png|jpg|bmp|gif)', caseSensitive: false);
+  final ARCHIVE_SUFFIX = RegExp(r'\.(zip)', caseSensitive: false);
 
   final CONFIG_FILENAME = 'config.json';
   final CONFIG_SPECIALMAPPINGS = 'special_mappings';
@@ -100,6 +104,16 @@ class _SymbolTableConstants {
   };
 }
 
+class SymbolData {
+  final String path;
+  final List<int> bytes;
+
+  SymbolData({
+    this.path = null,
+    this.bytes = null
+  });
+}
+
 class SymbolTableData {
   final BuildContext _context;
   final String _symbolKey;
@@ -108,7 +122,7 @@ class SymbolTableData {
   SymbolTableData(this._context, this._symbolKey);
 
   Map<String, dynamic> config;
-  List<Map<String, String>> images;
+  List<Map<String, SymbolData>> images;
   int maxSymbolTextLength = 0;
 
   var _translateables = [];
@@ -163,8 +177,8 @@ class SymbolTableData {
     }
   }
 
-  String _createKey(String filePath) {
-    var imageKey = filePath.split(_pathKey())[1].split(_constants.IMAGE_SUFFIXES)[0];
+  String _createKey(String filename) {
+    var imageKey = filenameWithoutSuffix(filename);
     imageKey = imageKey.replaceAll(RegExp(r'(^_*|_*$)'), '');
 
     var setTranslateable = false;
@@ -197,27 +211,41 @@ class SymbolTableData {
     final manifestContent = await DefaultAssetBundle.of(_context).loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
 
+
+
     final imagePaths = manifestMap.keys
       .where((String key) => key.contains(_pathKey()))
-      .where((String key) => _constants.IMAGE_SUFFIXES.hasMatch(key))
+      .where((String key) => _constants.ARCHIVE_SUFFIX.hasMatch(key))
       .toList();
 
-    images = imagePaths
-      .map((filePath) {
-        var key = _createKey(filePath);
-        var imagePath = _constants.IMAGE_SUFFIXES.hasMatch(filePath) ? filePath : null;
-        var value = imagePath;
+    if (imagePaths.isEmpty)
+      return;
 
-        return {key : value};
+    // Read the Zip file from disk.
+    final bytes = await DefaultAssetBundle.of(_context).load(imagePaths.first);
+    InputStream input = new InputStream(bytes.buffer.asByteData());
+    // Decode the Zip file
+    final archive = ZipDecoder().decodeBuffer(input);
+
+
+
+    images = archive
+      .map((file) {
+        var key = _createKey(file.name);
+        var imagePath = (file.isFile && _constants.IMAGE_SUFFIXES.hasMatch(file.name)) ? file.name : null;
+        var value = imagePath;
+        var data = file.content;
+
+        return {key : new SymbolData(path: value, bytes : data)};
       })
       .where((element) => !config[_constants.CONFIG_IGNORE].contains(element.keys.first.toLowerCase()))
-      .where((element) => element.values.first != null)
+      .where((element) => element.values.first.path != null)
       .toList();
 
     images.sort(_sort);
   }
 
-  int _defaultSort(Map<String, String> a, Map<String, String> b) {
+  int _defaultSort(Map<String, SymbolData> a, Map<String, SymbolData> b) {
     var keyA = a.keys.first;
     var keyB = b.keys.first;
 
@@ -250,4 +278,8 @@ class SymbolTableData {
       }
     }
   }
+}
+
+String filenameWithoutSuffix(String filename) {
+  return filename.split('.').first;
 }
