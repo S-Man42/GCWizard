@@ -607,7 +607,7 @@ class Registry {
         tool: Kenny(),
         i18nPrefix: 'kenny',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'they killed kenny sie haben kenny getoetet kennys kenny\'s code southpark'
+        searchStrings: 'they killed kenny sie haben kenny getoetet kennys kenny\'s code southpark mpf mfp fmp fpm pmf pfm'
       ),
       GCWTool(
         tool: Keyboard(),
