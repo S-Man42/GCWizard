@@ -1291,13 +1291,13 @@ class Registry {
       GCWTool(
         tool: Chef(),
         i18nPrefix: 'chef',
-        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'chef chefkoch kochrezepte rezepte kochen zutaten ingredients cooking cook recipes'
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'chef chefkoch kochrezepte rezepte kochen zutaten ingredients cooking cook recipes',
       ),
       GCWTool(
         tool: Beatnik(),
         i18nPrefix: 'beatnik',
-        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'beatnik cliff biffle'
-      ),
+        searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'beatnik cliff biffle',
+    ),
       GCWTool(
         tool: Brainfk(),
         i18nPrefix: 'brainfk',
