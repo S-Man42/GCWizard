@@ -10,25 +10,15 @@ import 'package:url_launcher/url_launcher.dart';
 
 enum ToolCategory {CRYPTOGRAPHY, COORDINATES, FORMULA_SOLVER, GAMES, GENERAL_CODEBREAKERS, SCIENCE_AND_TECHNOLOGY, SYMBOL_TABLES}
 
-class GCWToolActionButtonsEntry {
-  final bool showDialog; // true, if the button should provide a dialog
-  final String url; // url for a download or website
-  final String title; // title-string to be shown in the dialog
-  final String text; // message-text to be shown in the dialog
-  final IconData icon; // icon tto be shown in the appbar
+class GCWToolActionButtonsEntry { // to be used in registry to define a buttonlist which will be displayed in the app bar
+  final bool showDialog;          // - true, if the button should provide a dialog
+  final String url;               // - url for a download or website
+  final String title;             // - title-string to be shown in the dialog
+  final String text;              // - message-text to be shown in the dialog
+  final IconData icon;            // - icon tto be shown in the appbar
 
   GCWToolActionButtonsEntry(this.showDialog, this.url, this.title, this.text,
       this.icon);
-/*  Example for usage in the registry.dart
-      GCWTool(
-        tool: Chef(),
-        i18nPrefix: 'chef',
-        searchStrings: 'chef koch rezept recipe language programming sprache esoteric esoterisch programmiersprache',
-        buttonList: [
-          GCWToolActionButtonsEntry(true, 'chef_download_documentation_url', 'chef_download_documentation_title', 'chef_download_documentation_text', Icons.file_download),
-          GCWToolActionButtonsEntry(false, 'chef_online_help_url', '', '', Icons.help)],
-      ),
-  */
 }
 
 class GCWTool extends StatefulWidget {

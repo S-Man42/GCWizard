@@ -1292,17 +1292,11 @@ class Registry {
         tool: Chef(),
         i18nPrefix: 'chef',
         searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'chef chefkoch kochrezepte rezepte kochen zutaten ingredients cooking cook recipes',
-        buttonList: [
-          GCWToolActionButtonsEntry(true, 'chef_download_documentation_url', 'chef_download_documentation_title', 'chef_download_documentation_text', Icons.file_download),
-          GCWToolActionButtonsEntry(false, 'chef_online_help_url', '', '', Icons.help)],
       ),
       GCWTool(
         tool: Beatnik(),
         i18nPrefix: 'beatnik',
         searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE + 'beatnik cliff biffle',
-        buttonList: [
-          GCWToolActionButtonsEntry(true, 'beatnik_download_documentation_url', 'beatnik_download_documentation_title', 'beatnik_download_documentation_text', Icons.file_download),
-          GCWToolActionButtonsEntry(false, 'beatnik_online_help_url', '', '', Icons.help)],
     ),
       GCWTool(
         tool: Brainfk(),
