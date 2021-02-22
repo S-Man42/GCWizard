@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/alphabet_values.dart' as logic;
 import 'package:gc_wizard/theme/theme.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
@@ -14,15 +13,13 @@ import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_crosstotal_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_list_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_key_value_input.dart';
-import 'package:gc_wizard/widgets/common/gcw_key_value_list.dart';
+import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/text_onlydigitsandcomma_textinputformatter.dart';
 import 'package:prefs/prefs.dart';
 
@@ -33,11 +30,6 @@ class AlphabetValues extends StatefulWidget {
 
 class AlphabetValuesState extends State<AlphabetValues> {
   List<Alphabet> _alphabets;
-
-  var _fromController;
-  var _toController;
-  var _currentFromInput = '';
-  var _currentToInput = '';
 
   var _encodeController;
   var _decodeController;
@@ -66,9 +58,6 @@ class AlphabetValuesState extends State<AlphabetValues> {
     _encodeController = TextEditingController(text: _currentEncodeInput);
     _decodeController = TextEditingController(text: _currentDecodeInput['text']);
 
-    _fromController = TextEditingController(text: _currentFromInput);
-    _toController = TextEditingController(text: _currentToInput);
-
     _storedAlphabets = Prefs.getStringList('alphabetvalues_custom_alphabets');
     _alphabets = List<Alphabet>.from(ALL_ALPHABETS);
     _alphabets.addAll(_storedAlphabets.map<Alphabet>((storedAlphabet) {
@@ -89,8 +78,6 @@ class AlphabetValuesState extends State<AlphabetValues> {
   void dispose() {
     _encodeController.dispose();
     _decodeController.dispose();
-    _fromController.dispose();
-    _toController.dispose();
 
     super.dispose();
   }
@@ -143,6 +130,112 @@ class AlphabetValuesState extends State<AlphabetValues> {
     }
 
     return Map<String, String>.fromEntries(reversedMap.entries);
+  }
+
+  _addNewLetter2(String letter, String value, BuildContext context) {
+    _addNewLetter(letter, value, context, adjust: true);
+  }
+
+  _addNewLetter(String letter, String value, BuildContext context, {adjust: false}) {
+    if (letter == null || letter.length == 0 || value == null)
+      return;
+
+    value = value.split(',')
+        .where((character) => character != null && character.length > 0)
+        .map((character) => character.toUpperCase())
+        .join(',');
+
+    if (value.length == 0)
+      return;
+
+    letter = letter.toUpperCase();
+    if (_currentCustomizedAlphabet.containsKey(letter)) {
+      showGCWDialog(
+          context,
+          i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_title'),
+          Text(i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_text', parameters: [letter])),
+          [
+            GCWDialogButton(
+                text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace'),
+                onPressed: () {
+                  setState(() {
+                    _currentCustomizedAlphabet.addAll({letter : value});
+                  });
+                }
+            )
+          ]
+      );
+    } else {
+      setState(() {
+        if (adjust) {
+          var insertedValue = int.tryParse(value);
+          _currentCustomizedAlphabet = _currentCustomizedAlphabet.map((currentKey, currentValue) {
+            var newValue = currentValue.split(',').map((value) {
+              var intValue = int.tryParse(value);
+              if (intValue >= insertedValue)
+                intValue++;
+
+              return intValue.toString();
+            }).join(',');
+
+            return MapEntry(currentKey, newValue);
+          });
+        }
+
+        _currentCustomizedAlphabet.putIfAbsent(letter, () => value);
+      });
+    }
+  }
+
+
+  _removeEntry(dynamic id, BuildContext context) {
+    var _valueToDelete = _currentCustomizedAlphabet[id];
+    var _isList = _valueToDelete.contains(',');
+
+    var buttons = [
+      GCWDialogButton(
+          text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_remove'),
+          onPressed: () {
+            setState(() {
+              _currentCustomizedAlphabet.remove(id);
+            });
+          }
+      )
+    ];
+
+    if (!_isList) {
+      var deleteValue = int.tryParse(_valueToDelete);
+
+      buttons.add(
+          GCWDialogButton(
+            text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_removeandadjust'),
+            onPressed: () {
+              _currentCustomizedAlphabet = _currentCustomizedAlphabet.map((currentKey, currentValue) {
+                var newValue = currentValue.split(',').map((value) {
+                  var intValue = int.tryParse(value);
+                  if (intValue > deleteValue)
+                    intValue--;
+
+                  return intValue.toString();
+                }).join(',');
+
+                return MapEntry(currentKey, newValue);
+              });
+
+              setState(() {
+                _currentCustomizedAlphabet.remove(id);
+              });
+            },
+          )
+      );
+    }
+
+    showGCWDialog(
+        context,
+        i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_title'),
+        Text(i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_text', parameters: [id])),
+        buttons
+    );
   }
 
   @override
@@ -311,53 +404,26 @@ class AlphabetValuesState extends State<AlphabetValues> {
           ],
         ),
         SizedBox(height: 10),
-        GCWKeyValueInput(
+        GCWKeyValueEditor(
           keyHintText: i18n(context, 'alphabetvalues_edit_mode_customize_letter'),
-          keyController: _fromController,
-          onKeyChanged: (text) {
-            setState(() {
-              _currentFromInput = text;
-            });
-          },
           valueHintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
-          valueController: _toController,
           valueInputFormatters: [TextOnlyDigitsAndCommaInputFormatter()],
-          onValueChanged: (text) {
-            setState(() {
-              _currentToInput = text;
-            });
-          },
-          replaceAdd: Container(
-            child: GCWButton(
-              text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter'),
-              onPressed: () {
-                setState(() {
-                  _addNewLetter(context, _currentFromInput, _currentToInput, adjust: false);
-                });
-              },
-            ),
-            padding: EdgeInsets.only(left: 4, right: 2)
-          ),
-          trailing: Container(
-            child: GCWButton(
-              text: i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),
-              onPressed: _isAddAndAdjustEnabled() ? () {
-                setState(() {
-                  _addNewLetter(context, _currentFromInput, _currentToInput);
-                });
-              } : null,
-            ),
-            padding: EdgeInsets.only(left: 2)
-          ),
+          alphabetButton1Label: i18n(context, 'alphabetvalues_edit_mode_customize_addletter'),
+          alphabetButton2Label: i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),
+          onAddEntry: _addNewLetter,
+          onAddEntry2: _addNewLetter2,
+
+          keyValueMap: _currentCustomizedAlphabet,
+          onRemoveEntry: _removeEntry,
+          editAllowed: false
         ),
 
-        _buildCustomizeableAlphabet(),
         GCWDivider()
       ],
     );
   }
 
-  _buildEditingAlphabetAdjusting() {
+  Widget _buildEditingAlphabetAdjusting() {
     return Column(
       children: [
         GCWIntegerSpinner(
@@ -468,191 +534,6 @@ class AlphabetValuesState extends State<AlphabetValues> {
     );
   }
 
-  _isAddAndAdjustEnabled() {
-    if (_currentCustomizedAlphabet.containsKey(_currentFromInput.toUpperCase()))
-      return false;
-
-    if (_currentToInput.contains(','))
-      return false;
-
-    return true;
-  }
-
-  _addNewLetter(BuildContext context, String letter, String value, {adjust: true}) {
-    if (letter == null || letter.length == 0 || value == null)
-      return;
-
-    value = value.split(',')
-      .where((character) => character != null && character.length > 0)
-      .map((character) => character.toUpperCase())
-      .join(',');
-
-    if (value.length == 0)
-      return;
-
-    letter = letter.toUpperCase();
-    if (_currentCustomizedAlphabet.containsKey(letter)) {
-      showGCWDialog(
-        context,
-        i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_title'),
-        Text(i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_text', parameters: [letter])),
-        [
-          GCWDialogButton(
-            text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace'),
-            onPressed: () {
-              setState(() {
-                _currentCustomizedAlphabet.addAll({letter : value});
-              });
-            }
-          )
-        ]
-      );
-    } else {
-      setState(() {
-        if (adjust) {
-          var insertedValue = int.tryParse(value);
-          _currentCustomizedAlphabet = _currentCustomizedAlphabet.map((currentKey, currentValue) {
-            var newValue = currentValue.split(',').map((value) {
-              var intValue = int.tryParse(value);
-              if (intValue >= insertedValue)
-                intValue++;
-
-              return intValue.toString();
-            }).join(',');
-
-            return MapEntry(currentKey, newValue);
-          });
-        }
-
-        _currentCustomizedAlphabet.putIfAbsent(letter, () => value);
-      });
-    }
-
-    setState(() {
-      _fromController.clear();
-      _toController.clear();
-      _currentFromInput = '';
-      _currentToInput = '';
-    });
-  }
-
-  _removeLetter(BuildContext context, String key) {
-    var _valueToDelete = _currentCustomizedAlphabet[key];
-    var _isList = _valueToDelete.contains(',');
-
-    var buttons = [
-      GCWDialogButton(
-        text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_remove'),
-        onPressed: () {
-          setState(() {
-            _currentCustomizedAlphabet.remove(key);
-          });
-        }
-      )
-    ];
-
-    if (!_isList) {
-      var deleteValue = int.tryParse(_valueToDelete);
-
-      buttons.add(
-        GCWDialogButton(
-          text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_removeandadjust'),
-          onPressed: () {
-            _currentCustomizedAlphabet = _currentCustomizedAlphabet.map((currentKey, currentValue) {
-              var newValue = currentValue.split(',').map((value) {
-                var intValue = int.tryParse(value);
-                if (intValue > deleteValue)
-                  intValue--;
-
-                return intValue.toString();
-              }).join(',');
-
-              return MapEntry(currentKey, newValue);
-            });
-
-            setState(() {
-              _currentCustomizedAlphabet.remove(key);
-            });
-          },
-        )
-      );
-    }
-
-    showGCWDialog(
-      context,
-      i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_title'),
-      Text(i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_text', parameters: [key])),
-      buttons
-    );
-  }
-
-  _buildCustomizeableAlphabet() {
-    return GCWKeyValueList(
-      keyValueMap: _currentCustomizedAlphabet,
-      editAllowed: false
-    );
-
-    var odd = true;
-    var rows = _currentCustomizedAlphabet.entries.map((entry) {
-      Widget output;
-
-      ThemeColors colors = themeColors();
-
-      var row = Container(
-        child: Row (
-          children: <Widget>[
-            Expanded(
-              child: GCWText (
-                text: entry.key
-              ),
-              flex: 1,
-            ),
-            Icon(
-              Icons.arrow_forward,
-              color: colors.mainFont(),
-            ),
-            Expanded(
-              child: GCWText (
-                text: entry.value.toString()
-              ),
-              flex: 1
-            ),
-            GCWIconButton(
-              iconData: Icons.remove,
-              onPressed: () {
-                setState(() {
-                  _removeLetter(context, entry.key);
-                  _calculateOutput();
-                });
-              },
-            )
-          ],
-        ),
-        margin: EdgeInsets.only(
-          left: 10
-        ),
-      );
-
-      if (odd) {
-        output = Container(
-          color: colors.outputListOddRows(),
-          child: row
-        );
-      } else {
-        output = Container(
-          child: row
-        );
-      }
-      odd = !odd;
-
-      return output;
-    }).toList();
-
-    return Column(
-      children: rows
-    );
-  }
-
   _getFinalAlphabet() {
     var alphabet = _currentAlphabet;
     if (_currentCustomizeAlphabet == GCWSwitchPosition.right) {
@@ -665,7 +546,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
     return alphabet;
   }
 
-  _buildCrossTotals() {
+  Widget _buildCrossTotals() {
     var alphabet = _getFinalAlphabet();
 
     if (_currentMode == GCWSwitchPosition.left) {
