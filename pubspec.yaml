@@ -18,7 +18,7 @@ dependencies:
   flutter_map_marker_popup: ^0.1.4
   flutter_map_tappable_polyline: ^1.2.0
   fluttertoast: ^7.1.1
-  intl: ^0.17.0-nullsafety.1
+  intl: ^0.16.1
   location: ^3.0.2
   mask_text_input_formatter: ^1.1.0
   math_expressions: ^2.0.2
