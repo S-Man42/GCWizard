@@ -122,6 +122,7 @@ class AboutState extends State<About> {
         ),
         GCWDivider(),
         _buildUrl('contact_email'),
+        _buildUrl('manual'),
         _buildUrl('faq'),
         _buildUrl('blog'),
         _buildUrl('twitter'),

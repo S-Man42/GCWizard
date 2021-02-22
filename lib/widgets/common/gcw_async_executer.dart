@@ -2,6 +2,7 @@ import 'dart:isolate';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 Isolate _isolate;
 
@@ -59,7 +60,11 @@ class _GCWAsyncExecuterState extends State<GCWAsyncExecuter> {
     Stream<double> progress() async* {
       var parameter = await widget.parameter;
       if (!_cancel) {
-        _receivePort = await _makeIsolate(widget.isolatedFunction, parameter);
+        if(kIsWeb) {
+          _result = await widget.isolatedFunction(parameter);
+          return;
+        } else
+          _receivePort = await _makeIsolate(widget.isolatedFunction, parameter);
         if (_cancel)
           _cancelProcess();
 

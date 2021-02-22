@@ -557,12 +557,8 @@ namespace GC_Wizard_SymbolTables_Pdf
             XFont font = new XFont("Verdana", FontSizeOverlay, XFontStyle.Regular);
             if (name == " ")
             {
-                //    name = '\u2423'.ToString();
-                //    font = new XFont("Consolas", FontSizeOverlay, XFontStyle.Regular);
-                if (Language == LanguageEnum.de)
-                    name = "Leerzeichen";
-                else
-                    name = "Space";
+                drawSpaceSymbol(offset, XColors.Blue, font, gfx);
+                return offset;
             }
 
             // Draw the name
@@ -574,10 +570,24 @@ namespace GC_Wizard_SymbolTables_Pdf
                 var text = name.Split('\n');
 
                 for (int i = 0; i < text.Length; i++)
+                {
+                    text[i] = text[i].Replace("\r", "");
                     gfx.DrawString(text[i], font, XBrushes.Blue, new XRect(offset.X, offset.Y + i * FontSizeOverlay, ImageSize, RowDistance), XStringFormats.TopLeft);
+                }
             }
 
             return offset;
+        }
+
+        private void drawSpaceSymbol(PointF position, XColor color, XFont font, XGraphics gfx)
+        {
+            var size = gfx.MeasureString("M", font);
+            var pen = new XPen(color, 1);
+
+            gfx.DrawLine(pen, new XPoint(position.X, position.Y + size.Height), new XPoint(position.X + size.Width, position.Y + size.Height));
+            gfx.DrawLine(pen, new XPoint(position.X, position.Y + size.Height), new XPoint(position.X, position.Y + size.Height * 0.8));
+            gfx.DrawLine(pen, new XPoint(position.X + size.Width, position.Y + size.Height), new XPoint(position.X + size.Width, position.Y + size.Height * 0.8));
+
         }
 
         private string checkTextLength(string text, int maxLength, XFont font, XGraphics gfx)

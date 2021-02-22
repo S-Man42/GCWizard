@@ -30,10 +30,10 @@ class SubstitutionBreakerResult {
   });
 }
 
-void break_cipherAsync(dynamic jobData) async {
+Future<SubstitutionBreakerResult> break_cipherAsync(dynamic jobData) async {
   if (jobData.parameters == null) {
     jobData.sendAsyncPort.send(null);
-    return;
+    return SubstitutionBreakerResult(errorCode: SubstitutionBreakerErrorCode.OK);
   }
 
   var output = break_cipher(
@@ -41,7 +41,10 @@ void break_cipherAsync(dynamic jobData) async {
       jobData.parameters.quadgrams
   );
 
-  jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null)
+    jobData.sendAsyncPort.send(output);
+
+  return output;
 }
 
 SubstitutionBreakerResult break_cipher(String input, Quadgrams quadgrams)  {

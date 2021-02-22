@@ -20,10 +20,10 @@ class IntersectionJobData {
   });
 }
 
-void intersectionAsync(dynamic jobData) async {
+Future<List<LatLng>> intersectionAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
-    return;
+    return null;
   }
 
   var output = intersection(
@@ -34,7 +34,10 @@ void intersectionAsync(dynamic jobData) async {
       jobData.parameters.ells
   );
 
-  jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null)
+    jobData.sendAsyncPort.send(output);
+
+  return output;
 }
 
 List<LatLng> intersection (LatLng coord1, double alpha, LatLng coord2, double beta, Ellipsoid ells) {

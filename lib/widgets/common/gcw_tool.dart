@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -9,6 +10,17 @@ import 'package:url_launcher/url_launcher.dart';
 
 enum ToolCategory {CRYPTOGRAPHY, COORDINATES, FORMULA_SOLVER, GAMES, GENERAL_CODEBREAKERS, SCIENCE_AND_TECHNOLOGY, SYMBOL_TABLES}
 
+class GCWToolActionButtonsEntry { // to be used in registry to define a buttonlist which will be displayed in the app bar
+  final bool showDialog;          // - true, if the button should provide a dialog
+  final String url;               // - url for a download or website
+  final String title;             // - title-string to be shown in the dialog
+  final String text;              // - message-text to be shown in the dialog
+  final IconData icon;            // - icon tto be shown in the appbar
+
+  GCWToolActionButtonsEntry(this.showDialog, this.url, this.title, this.text,
+      this.icon);
+}
+
 class GCWTool extends StatefulWidget {
   final Widget tool;
   final String i18nPrefix;
@@ -16,6 +28,7 @@ class GCWTool extends StatefulWidget {
   final autoScroll;
   final iconPath;
   final String searchStrings;
+  final List<GCWToolActionButtonsEntry> buttonList;
 
   var icon;
   var _id = '';
@@ -36,7 +49,8 @@ class GCWTool extends StatefulWidget {
     this.autoScroll: true,
     this.iconPath,
     this.searchStrings: '',
-    this.titleTrailing
+    this.titleTrailing,
+    this.buttonList
   }) : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
     this._isFavorite = Prefs.getStringList('favorites').contains('$_id');
@@ -76,12 +90,44 @@ class _GCWToolState extends State<GCWTool> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.toolName),
-        actions: <Widget>[
-          widget.titleTrailing ?? _buildHelpButton()
-        ],
+          actions: _buildButtons(),
       ),
       body: _buildBody()
     );
+  }
+
+  List<Widget>_buildButtons() {
+    List<Widget> buttonList = new List<Widget>();
+
+    if (widget.titleTrailing.toString() != 'null')
+      return [widget.titleTrailing];
+
+    if (widget.buttonList == null)
+      return [_buildHelpButton()];
+
+    widget.buttonList.forEach((button) {
+      if (button.url != null && button.url.length != 0)
+        buttonList.add(
+            IconButton(
+              icon: Icon(button.icon),
+              onPressed: () {
+                if (button.showDialog) {
+                  showGCWAlertDialog(
+                    context,
+                    i18n(context, button.title),
+                    i18n(context, button.text),
+                    () {
+                          launch(i18n(context, button.url));
+                       },
+                  );
+                }
+                else
+                  launch(i18n(context, button.url));
+              },
+            )
+      );
+    });
+    return buttonList;
   }
 
   _buildHelpButton() {
