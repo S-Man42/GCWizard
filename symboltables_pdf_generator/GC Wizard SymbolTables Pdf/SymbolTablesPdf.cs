@@ -920,8 +920,8 @@ namespace GC_Wizard_SymbolTables_Pdf
             {
                 int intA;
                 int intB;
-                String keyA = _a.ToString();
-                String keyB = _b.ToString();
+                String keyA = ((SymbolInfo)_a).Overlay.ToString();
+                String keyB = ((SymbolInfo)_b).Overlay.ToString();
 
 
                 if (!int.TryParse(keyA, out intA))
@@ -994,7 +994,6 @@ namespace GC_Wizard_SymbolTables_Pdf
                 var keyA = Path.GetFileNameWithoutExtension(_a.ToString()); // get filename from path without suffix
                 var keyB = Path.GetFileNameWithoutExtension(_b.ToString());
 
-
                 var aSplit = keyA.Split('_');
                 var aMain = 0;
                 int.TryParse(aSplit[0], out aMain);
@@ -1065,8 +1064,8 @@ namespace GC_Wizard_SymbolTables_Pdf
 
             override public int Compare(Object _a, Object _b)
             {
-                var keyA = _a.ToString();
-                var keyB = _b.ToString();
+                var keyA = ((SymbolInfo)_a).Overlay.ToString();
+                var keyB = ((SymbolInfo)_b).Overlay.ToString();
 
                 var aSplitDash = keyA.Split('-');
                 var bSplitDash = keyB.Split('-');
