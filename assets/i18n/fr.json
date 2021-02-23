@@ -2127,7 +2127,7 @@
   "settings_general_defaulttab_usedefaulttab" : "Onglet par défaut",
   "settings_general_i18n_title" : "International",
   "settings_general_i18n_defaultlengthunit" : "Unité de longueur par défaut",
-  "settings_general_i18n_langage" : "Langue",
+  "settings_general_i18n_language" : "Langue",
   "settings_general_theme" : "Thème",
   "settings_general_theme_color" : "Couleur",
   "settings_general_theme_color_dark" : "Sombre",

@@ -173,13 +173,13 @@ class GeneralSettingsState extends State<GeneralSettings> {
                         return GCWStatefulDropDownButton(
                             items: supportedLocales.map((locale) {
                               return GCWDropDownMenuItem(
-                                value: locale,
-                                //value: locale.languageCode,
+                                value: locale.languageCode ?? "en",
                                 child: i18n(context, locale.languageCode) ??  locale.languageCode,
                               );
                             }).toList(),
-                            value: currentLocale,
+                            value: currentLocale.languageCode ?? "en",
                             onChanged: (newValue) {
+                              //appLanguage.changeLocale(newValue);
                               appLanguage.changeLanguage(newValue);
                             });
                       }
