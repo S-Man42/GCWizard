@@ -5,3 +5,4 @@ final supportedLocales = [
   Locale('de'), //, 'DE'),
   Locale('fr'), //, 'FR'),
 ];
+const String defaultLanguage = 'en';
