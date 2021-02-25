@@ -230,6 +230,7 @@
   "bcd_selection_description" : "Codiert Zahlen ziffernweise jeweils mit einem 4- oder 5-Bit-Wert (0 und 1)",
   "bcd_original_title" : "BCD",
   "bcd_original_example" : "19 → 0001 1001",
+  "bcd_original_onlinehelp" : "",
   "bcd_aiken_title" : "BCD (Aiken)",
   "bcd_aiken_example" : "19 → 0001 1111",
   "bcd_aiken_onlinehelp" : "https://blog.gcwizard.net/manual/de/bcd-codierungen/03-wie-ent-bzw-verschlusselt-der-gc-wizard/",
@@ -1250,6 +1251,7 @@
   "coords_openmap_linefromhere" : "Linie von hier",
   "coords_openmap_linetohere" : "Linie nach hier",
   "coords_averaging_title" : "Koordinate einmessen",
+  "coords_avaraging_onlinehelp" : "",
   "coords_averaging_start" : "Starte Messung",
   "coords_averaging_stop" : "Beende Messung",
 
