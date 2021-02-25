@@ -39,7 +39,7 @@ class WhitespaceState {
   int pos;
   bool loading;
   bool inputNumber;
-  int debugCounter;
+  int dbgCounter;
   String plainTextCharacter;
 
   storeState(int posOffset) {
@@ -54,7 +54,7 @@ class WhitespaceState {
     this.pos = _pos + posOffset;
     this.loading = _loading;
     this.inputNumber = _input_required_number;
-    this.debugCounter = _debugCounter;
+    this.dbgCounter = _dbgCounter;
     this.plainTextCharacter = _plainTextCharacter;
   }
 
@@ -73,7 +73,7 @@ class WhitespaceState {
     _labels = this.labels;
     _pos = this.pos;
     _loading = this.loading;
-    _debugCounter = this.debugCounter;
+    _dbgCounter = this.dbgCounter;
     _plainTextCharacter = this.plainTextCharacter;
 
     _code_length = _code.length;
@@ -187,8 +187,8 @@ var _loading = true;
 var _command = '';
 var _input_required = false;
 var _input_required_number = false;
-var _debug = false;
-var _debugCounter = 1;
+var _dbg = false;
+var _dbgCounter = 1;
 var _timeOut = 30000;
 
 const _inputRequired = "input required";
@@ -245,7 +245,7 @@ class _Interpreter {
     }
 
     start_time = DateTime.now();
-    _debugCounter = 1;
+    _dbgCounter = 1;
 
     while (_pos + 1 <= _code_length) {
       if ((DateTime.now().difference(start_time)).inMilliseconds > _timeOut) {
@@ -285,7 +285,7 @@ class _Interpreter {
       ;
     }
     if (_loading) {
-      if (_debug) print('Finished marking labels. Starting program sequence...');
+      if (_dbg) print('Finished marking labels. Starting program sequence...');
       _pos = 0;
       _loading = false;
       run();
@@ -336,7 +336,7 @@ class _Stack {
       var index = parameter.item1;
       var item = parameter.item2;
       if (!_loading) {
-        _debugOutput(_command, item.toString());
+        _dbgOutput(_command, item.toString());
         _duplicate_nth(item);
       }
       _pos = index + 1;
@@ -345,23 +345,23 @@ class _Stack {
       var index = parameter.item1;
       var item = parameter.item2;
       if (!_loading) {
-        _debugOutput(_command, item.toString());
+        _dbgOutput(_command, item.toString());
         _discard_n(item);
       }
       _pos = index + 1;
     } else if (_command == 'duplicate_top') {
       if (!_loading) {
-        _debugOutput(_command, null);
+        _dbgOutput(_command, null);
         _duplicate_nth(0);
       }
     } else if (_command == 'swap') {
       if (!_loading) {
-        _debugOutput(_command, null);
+        _dbgOutput(_command, null);
         _swap();
       }
     } else if (_command == 'discard_top') {
       if (!_loading) {
-        _debugOutput(_command, null);
+        _dbgOutput(_command, null);
         _discard_top();
       }
     }
@@ -427,7 +427,7 @@ class _IO {
     if (_loading) {
       return;
     }
-    _debugOutput(_command, null);
+    _dbgOutput(_command, null);
     if (_command == 'output_char') {
       _output_char();
     } else if (_command == 'output_num') {
@@ -442,13 +442,13 @@ class _IO {
   void _output_char() {
     var char = new String.fromCharCode(_stack_pop());
     _output += char;
-    _debugOutput('output char', char);
+    _dbgOutput('output char', char);
   }
 
   void _output_num() {
     var num = _stack_pop();
     _output += num.toString();
-    _debugOutput('output num', num.toString());
+    _dbgOutput('output num', num.toString());
   }
 
   void _input_char() {
@@ -460,7 +460,7 @@ class _IO {
     var b = _stack_pop();
 
     _heap.addAll({b : a.codeUnits[0]});
-    _debugOutput('input_char', a);
+    _dbgOutput('input_char', a);
   }
 
   void _input_num() {
@@ -519,7 +519,7 @@ class _FlowControl {
     _get_command(_FLOW_IMP);
     if (_command == 'exit') {
       if (!_loading) {
-        _debugOutput(_command, null);
+        _dbgOutput(_command, null);
         _exit();
       }
     } else if (_command == 'mark_label') {
@@ -527,10 +527,10 @@ class _FlowControl {
       var index = parameter.item1;
       var label = parameter.item2;
       if (_loading) {
-        _debugOutput(_command, _clean(label) + ' index:' + index.toString());
+        _dbgOutput(_command, _clean(label) + ' index:' + index.toString());
         _mark_label(label);
       } else {
-        if (_debug) print('Ignoring label marker');
+        if (_dbg) print('Ignoring label marker');
       }
       _pos = index;
     } else if (_command == 'jump') {
@@ -538,7 +538,7 @@ class _FlowControl {
       var index = parameter.item1;
       var label = parameter.item2;
       if (!_loading) {
-        _debugOutput(_command, _clean(label));
+        _dbgOutput(_command, _clean(label));
         _jump(label);
       } else {
         _pos = index;
@@ -548,7 +548,7 @@ class _FlowControl {
       var index = parameter.item1;
       var label = parameter.item2;
       if (!_loading) {
-        _debugOutput(_command, _clean(label));
+        _dbgOutput(_command, _clean(label));
         var num = _stack_pop();
         if (num == 0) {
           _jump(label);
@@ -563,7 +563,7 @@ class _FlowControl {
       var index = parameter.item1;
       var label = parameter.item2;
       if (!_loading) {
-        _debugOutput(_command, _clean(label));
+        _dbgOutput(_command, _clean(label));
         var num = _stack_pop();
         if (num < 0) {
           _jump(label);
@@ -575,7 +575,7 @@ class _FlowControl {
       }
     } else if (_command == 'exit_subroutine') {
       if (!_loading) {
-        _debugOutput(_command, null);
+        _dbgOutput(_command, null);
         _exit_subroutine();
       }
     } else if (_command == 'call_subroutine') {
@@ -584,14 +584,14 @@ class _FlowControl {
       var label = parameter.item2;
       _pos = index;
       if (!_loading) {
-        _debugOutput(_command, _clean(label));
+        _dbgOutput(_command, _clean(label));
         _call_subroutine(label);
       }
     }
   }
 
   void _exit() {
-    if (_debug) print('Program terminated.');
+    if (_dbg) print('Program terminated.');
     _pos = 9999999;
   }
 
@@ -657,19 +657,19 @@ class _Arithmetic {
     if (_loading) {
       return;
     } else if (_command == 'add') {
-      _debugOutput(_command, null);
+      _dbgOutput(_command, null);
       add();
     } else if (_command == 'sub') {
-      _debugOutput(_command, null);
+      _dbgOutput(_command, null);
       _sub();
     } else if (_command == 'mul') {
-      _debugOutput(_command, null);
+      _dbgOutput(_command, null);
       _mul();
     } else if (_command == 'floordiv') {
-      _debugOutput(_command, null);
+      _dbgOutput(_command, null);
       _floordiv();
     } else if (_command == 'mod') {
-      _debugOutput(_command, null);
+      _dbgOutput(_command, null);
       _mod();
     }
   }
@@ -733,10 +733,10 @@ class _Heap {
     _get_command(_HEAP_IMP);
     if (_loading) return;
     if (_command == 'store') {
-      _debugOutput(_command, null);
+      _dbgOutput(_command, null);
       _store();
     } else if (_command == 'push') {
-      _debugOutput(_command, null);
+      _dbgOutput(_command, null);
       _push();
     }
   }
@@ -745,13 +745,13 @@ class _Heap {
     var a = _stack_pop();
     var b = _stack_pop();
     _heap[b] = a;
-    _debugOutput('heap store', _heap[b].toString());
+    _dbgOutput('heap store', _heap[b].toString());
   }
 
   void _push() {
     var a = _stack_pop();
     _stack_append(_heap[a]);
-    _debugOutput('heap push', _heap[a].toString());
+    _dbgOutput('heap push', _heap[a].toString());
   }
 }
 
@@ -763,7 +763,7 @@ String _uncomment(String s) {
 }
 
 void _stack_append(int item) {
-  _debugOutput('stack append', item.toString());
+  _dbgOutput('stack append', item.toString());
   _stack.insert(0,item);
 }
 
@@ -771,7 +771,7 @@ int _stack_pop() {
   if (_stack.length == 0) return null;
   var item = _stack.first;
   _stack.removeAt(0);
-  _debugOutput('stack pop', item.toString());
+  _dbgOutput('stack pop', item.toString());
   return item;
 }
 
@@ -856,14 +856,14 @@ Tuple2<int, String> _label_parameter() {
 }
 
 
-void _debugOutput(String command, String label) {
-    if (_debug) {
+void _dbgOutput(String command, String label) {
+    if (_dbg) {
       label = label != null ? ' (' + label + ')' : '';
-      print('[' + _debugCounter.toString() + '] ' +
+      print('[' + _dbgCounter.toString() + '] ' +
           'Command: ' +
           command +
           label);
-      _debugCounter += 1;
+      _dbgCounter += 1;
   }
 }
 
