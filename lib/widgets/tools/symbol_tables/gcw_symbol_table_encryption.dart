@@ -104,7 +104,7 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
         _buildEncryptionOutput(widget.countColumns),
          _encryptionHasImages
           ? GCWButton(
-              text: i18n(context, 'symboltables_exportimage'),
+              text: i18n(context, 'common_exportfile_saveoutput'),
               onPressed: () {
                 _exportEncryption(widget.countColumns, _data.isCaseSensitive()).then((value) {
                   if (value == null) {

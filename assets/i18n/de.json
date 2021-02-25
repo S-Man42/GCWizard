@@ -733,6 +733,7 @@
   "common_exportfile_nowritepermission" : "Berechtigung zum Schreiben von Dateien verwehrt.",
   "common_exportfile_sharefile" : "Datei teilen",
   "common_exportfile_openfile" : "Datei öffnen",
+  "common_exportfile_saveoutput" : "Ausgabe speichern",
 
   "common_language_czech" : "Tschechisch",
   "common_language_danish" : "Dänisch",
@@ -2208,7 +2209,6 @@
   "symboltables_selection_download_dialog_text" : "Möchtest du alle Symboltabellen in einer PDF-Datei herunterladen (ca. 25 MB)?",
   "symboltables_selection_download_link" : "https://misc.gcwizard.net/symboltables_de.pdf",
   "symboltables_showoverlay" : "Overlays",
-  "symboltables_exportimage" : "Ausgabe speichern",
   "symboltables_ignoreunknown" : "Ignoriere Unbekanntes",
   "symboltables_adlam_title" : "Adlam (Fulani)",
   "symboltables_alchemy_title" : "Alchemie",
