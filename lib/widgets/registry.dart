@@ -334,48 +334,56 @@ class Registry {
       //MainSelection
       GCWTool(
         tool: Abaddon(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'abaddon_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'abaddon',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'abaddon abbaddon abbadon yen renminbi mi thorn ternaer gc11eky ' + [165, 181, 254].map((char) => String.fromCharCode(char)).join(' ')
       ),
       GCWTool(
         tool: ADFGVX(),
+        buttonList: [GCWToolActionButtonsEntry(false, '_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'adfgvx',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'adfgx adfgvx polybius polybios transposition substitution'
       ),
       GCWTool(
         tool: Affine(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'affine_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'affine',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'affine'
       ),
       GCWTool(
         tool: AlphabetValues(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'alphabetvalues_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'alphabetvalues',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'buchstabenwortwerte bww alphabetvalues russian russisch kyrillisch cyrillic greek griechisch spanish spanisch deutsch german polish polnisch alphanumeric lettervalues checksums crosssums digits alternate buchstabenwerte quersummen alphanumerisch produkt alternierend'
       ),
       GCWTool(
         tool: Amsco(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'amsco_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'amsco',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'amsco transposition spaltentausch swap columns'
       ),
       GCWTool(
         tool: ApparentTemperatureSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'apparenttemperature_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'apparenttemperature_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_APPARENTTEMPERATURE
       ),
       GCWTool(
         tool: ASCIIValues(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'asciivalues_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'asciivalues',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_BINARY + 'ascii utf8 utf-8 unicode american standard information interchange'
       ),
       GCWTool(
         tool: AstronomySelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'astronomy_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'astronomy_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_ASTRONOMY
@@ -383,11 +391,13 @@ class Registry {
       GCWTool(
         tool: Atbash(),
         i18nPrefix: 'atbash',
+        buttonList: [GCWToolActionButtonsEntry(false, 'atbash_online_help_url', '', '', Icons.help)],
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'atbash atbasch hebrew hebraeisches umkehren umkehrungen reverse rueckwaerts'
       ),
       GCWTool(
         tool: Bacon(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'bacon_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bacon',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_BINARY + 'francis bacon'
@@ -412,30 +422,35 @@ class Registry {
       ),
       GCWTool(
         tool: Binary(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'binary_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'binary',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_BINARY
       ),
       GCWTool(
         tool: Bifid(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'bifid_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bifid',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'bifid felix delastelle polybios polybius transposition'
       ),
       GCWTool(
         tool: BookCipher(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'book_cipher_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'book_cipher',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'bookcipher buchcode word wort position zeile row line absatz section letter buchstabe buechercode buchchiffre buecherchiffre'
       ),
       GCWTool(
         tool: BurrowsWheeler(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'burrowswheeler_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'burrowswheeler',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'burrows wheeler transformation bwt bzip2'
       ),
       GCWTool(
         tool: Caesar(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'caesar_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'caesar',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_ROTATION + 'caesar'
@@ -454,12 +469,14 @@ class Registry {
       ),
       GCWTool(
         tool: Chao(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'chao_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'chao',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'chao john francis byrne'
       ),
       GCWTool(
         tool: CipherWheel(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'cipherwheel_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'cipherwheel',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_CIPHERWHEEL
@@ -472,6 +489,7 @@ class Registry {
       ),
       GCWTool(
         tool: ColorPicker(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'colors_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'colors',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'colors colours pal ntsc farben rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode picker red green blue yellow black key magenta orange cyan luminanz hellwert farbwert helligkeit saettigung luminance chrominanz chrominance saturation lightness hue cmyk luma chroma'
@@ -506,6 +524,7 @@ class Registry {
       ),
       GCWTool(
         tool: Decabit(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'decabit_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'decabit',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'decabit impulsraster zellweger plus minus rundsteuertechnik ripple control'
@@ -518,24 +537,28 @@ class Registry {
       ),
       GCWTool(
         tool: DTMF(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'dtmf_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'dtmf',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'dual-tone multi-frequency dualtonemultifrequency touchtone mehrfrequenzwahlverfahren mfwv mfv tonwahl dtmf mehrfrequenzton tonwahlverfahren mfc mf4'
       ),
       GCWTool(
         tool: EnclosedAreas(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'enclosedareas_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'enclosedareas',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'enclosedareas eingeschlosseneflaechen countholes countingholes zaehleloecherzaehlen zaehleloch anzahlloecher numberholes'
       ),
       GCWTool(
         tool: ESelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'e_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'e_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_IRRATIONALNUMBERS + SEARCHSTRING_E
       ),
       GCWTool(
         tool: Enigma(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'enigma_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'enigma',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'enigma rotors walzen'
@@ -548,6 +571,7 @@ class Registry {
       ),
       GCWTool(
         tool: FormulaSolverFormulaGroups(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'formulasolver_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'formulasolver',
         searchStrings: SEARCHSTRING_FORMULASOLVER
       ),
@@ -558,12 +582,14 @@ class Registry {
       ),
       GCWTool(
         tool: Gade(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'gade_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'gade',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'gade'
       ),
       GCWTool(
         tool: GCCode(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'gccode_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'gccode',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'geocaching geocache code gccode gc-code base31 hexadecimal hexadezimal'
@@ -575,6 +601,7 @@ class Registry {
       ),
       GCWTool(
         tool: Gray(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'gray_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'gray',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_BINARY + 'gray hamming distance hamming-distanz'
@@ -587,30 +614,35 @@ class Registry {
       ),
       GCWTool(
         tool: Hexadecimal(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'hexadecimal_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'hexadecimal',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'hexadecimal hexadezimalzahlen numbers dezimalzahlen decimal 16'
       ),
       GCWTool(
         tool: Homophone(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'homophone_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'homophone',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'homophone monoalphabetische monoalphabetical letterfrequency buchstabenhaeufigkeiten'
       ),
       GCWTool(
         tool: Kamasutra(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'kamasutra_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'kamasutra',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_ROTATION + 'kama-sutra kamasutra 44 vatsyayana mlecchita vikalpa '
       ),
       GCWTool(
         tool: Kenny(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'kenny_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'kenny',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'they killed kenny sie haben kenny getoetet kennys kenny\'s code southpark'
       ),
       GCWTool(
         tool: Keyboard(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'keyboard_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'keyboard',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'keyboard tastatur layout qwerty qwertz bepo azerty ristome neo colamk dvorak t1 nf z71-300'
@@ -629,18 +661,21 @@ class Registry {
       ),
       GCWTool(
         tool: MexicanArmyCipherWheel(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'mexicanarmycipherwheel_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'mexicanarmycipherwheel',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_CIPHERWHEEL + 'mexicanarmy mexanischearmee mexiko mexico'
       ),
       GCWTool(
         tool: Morse(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'morse_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'morse',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'samuelmorsecode morsen punkte striche dots dashes'
       ),
       GCWTool(
         tool: MultiDecoder(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'multidecoder_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'multidecoder',
         category: ToolCategory.GENERAL_CODEBREAKERS,
         searchStrings: 'multidecoder multisolver multiloeser universal universeller',
@@ -653,6 +688,7 @@ class Registry {
       ),
       GCWTool(
         tool: NumeralBases(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'numeralbases_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numeralbases',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_BINARY + 'radix numeral systems zahlenbasis zahlenbasen zahlensysteme octal octenary oktal dual hexadecimal hexadezimal'
@@ -666,6 +702,7 @@ class Registry {
       GCWTool(
         tool: OneTimePad(),
         i18nPrefix: 'onetimepad',
+        buttonList: [GCWToolActionButtonsEntry(false, 'onetimepad_online_help_url', '', '', Icons.help)],
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'onetimepad einmalschluessel one-time-pad otp'
       ),
@@ -678,23 +715,27 @@ class Registry {
       GCWTool(
         tool: PhiSelection(),
         i18nPrefix: 'phi_selection',
+        buttonList: [GCWToolActionButtonsEntry(false, 'phi_selection_online_help_url', '', '', Icons.help)],
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_IRRATIONALNUMBERS + SEARCHSTRING_PHI
       ),
       GCWTool(
         tool: PiSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'pi_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'pi_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_IRRATIONALNUMBERS + SEARCHSTRING_PI
       ),
       GCWTool(
         tool: Playfair(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'playfair_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'playfair',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'playfair transposition substitution'
       ),
       GCWTool(
         tool: Polybios(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'polybios_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'polybios',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'polybios polybius transposition'
@@ -707,18 +748,21 @@ class Registry {
       ),
       GCWTool(
         tool: Projectiles(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'projectiles_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'projectiles',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'geschosse projektile bullets projectiles ballistik ballistics kugeln'
       ),
       GCWTool(
         tool: RailFence(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'railfence_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'railfence',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'railfence lattenzaun jaegerzaun zigzag redefence zig-zag palisadenzaun gartenzaun transposition'
       ),
       GCWTool(
         tool: RC4(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'rc4_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'rc4',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'rc4 arc4 arcfour stream cipher stromverschluesselung https ssh ssl wep wpa'
@@ -731,6 +775,7 @@ class Registry {
       ),
       GCWTool(
         tool: Reverse(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'reverse_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'reverse',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'reversed backwards umkehren umgekehrt rueckwaerts inversed inverted invertieren invertierung invertiert inverse '
@@ -761,6 +806,7 @@ class Registry {
       GCWTool(
         tool: Scrabble(),
         i18nPrefix: 'scrabble',
+        buttonList: [GCWToolActionButtonsEntry(false, 'scrabble_online_help_url', '', '', Icons.help)],
         category: ToolCategory.GAMES,
         searchStrings: 'scrabble deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers zahlen ziffern zeichen checksums crosssums digits alternated crosstotals iterated iteriert products buchstabenwerte quersummen alphanumerisch produkte alternierend'
       ),
@@ -772,48 +818,56 @@ class Registry {
       ),
       GCWTool(
         tool: Skytale(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'skytale_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'skytale',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'scytale skytale stick stock stab transposition'
       ),
       GCWTool(
         tool: Solitaire(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'solitaire_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'solitaire',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'solitaire solitaer carddeck cardgame joker kartenspiel kartendeck cryptonomicon pontifex bruceschneier stromchiffrierung streamcipher nealstephenson'
       ),
       GCWTool(
         tool: Substitution(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'substitution_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'substitution',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'substitution ersetzen replacements alphabet change austauschen change switch'
       ),
       GCWTool(
-          tool: SubstitutionBreaker(),
+        tool: SubstitutionBreaker(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'substitutionbreaker_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'substitutionbreaker',
         category: ToolCategory.GENERAL_CODEBREAKERS,
         searchStrings: SEARCHSTRING_CODEBREAKER + 'substitution monoalphabetische monoalphabetic ersetzen replacements alphabet change austauschen change switch '
       ),
       GCWTool(
         tool: SudokuSolver(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'sudokusolver_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'sudokusolver',
         category: ToolCategory.GAMES,
         searchStrings: 'sudoku grid gitter'
       ),
       GCWTool(
         tool: SymbolTableSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'symboltables_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'symboltables_selection',
         searchStrings: SEARCHSTRING_SYMBOLTABLES,
         titleTrailing: symboltablesDownloadButton(context),
       ),
       GCWTool(
         tool: TapCode(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'tapcode_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'tapcode',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'tapcode klopfcode klopfen'
       ),
       GCWTool(
         tool: Tapir(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'tapir_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'tapir',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'tapir ddr nva mfs stasi nationale volksarmee'
@@ -826,6 +880,7 @@ class Registry {
       ),
       GCWTool(
         tool: UnitConverter(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'unitconverter_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'unitconverter',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: 'einheiten groessen units konvertieren umwandeln umrechnen converter switch konvertierer laengen lengths geschwindigkeiten speeds velocity velocities energies energy force kraft power leistung times uhrzeiten areas flaechen volumen volumes denisities density dichten watt newton meters inches zoll pounds pfund pferdestaerken horsepowers gallonen gallons barrels yoda soccerfields fussballfelder badewannen bathtubs atm psi bar pressures druecke druck angles winkel radiant degrees grad temperaturen temperatures celsius kelvin fahrenheit rankine reaumur masses gewichte massen kilogramm feinunze troyounce pints',
@@ -844,6 +899,7 @@ class Registry {
       ),
       GCWTool(
         tool: Z22(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'z22_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'z22',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_CCITT2
@@ -852,21 +908,25 @@ class Registry {
       //ApparentTemperatureSelection  ********************************************************************************************
       GCWTool(
         tool: HeatIndex(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'heatindex_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'heatindex',
         searchStrings: SEARCHSTRING_APPARENTTEMPERATURE + 'humidity luftfeuchtigkeit hitzeindex heatindex'
       ),
       GCWTool(
         tool: Humidex(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'humidex_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'humidex',
         searchStrings: SEARCHSTRING_APPARENTTEMPERATURE + 'humidity luftfeuchtigkeit canadian canada humidex dewpoint'
       ),
       GCWTool(
         tool: SummerSimmerIndex(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'summersimmerindex_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'summersimmerindex',
         searchStrings: SEARCHSTRING_APPARENTTEMPERATURE + 'humidity luftfeuchtigkeit ssi summersimmerindex'
       ),
       GCWTool(
         tool: Windchill(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'windchill_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'windchill',
         searchStrings: SEARCHSTRING_APPARENTTEMPERATURE + 'windchill windgeschwindigkeit wind speed'
       ),
