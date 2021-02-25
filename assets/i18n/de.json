@@ -2123,6 +2123,7 @@
   "primes_nearestprime_title" : "Näheste Primzahl",
   "primes_nearestprime_description" : "Gibt die nächstgelegene Primzahl aus",
   "primes_nearestprime_example" : "7 ist die nächstgelegene Primzahl zur 8",
+  "primes_nearestprime_onlinehelp" : "",
   "primes_primeindex_title" : "Wievielte Primzahl",
   "primes_primeindex_description" : "Gibt aus, die wie vielte Primzahl eine Zahl ist",
   "primes_primeindex_example" : "3 ist die 2. Primzahl",
