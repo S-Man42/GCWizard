@@ -404,18 +404,21 @@ class Registry {
       ),
       GCWTool(
         tool: BaseSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'base_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'base_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_BASE
       ),
       GCWTool(
         tool: BCDSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'bcd_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_BCD
       ),
       GCWTool(
         tool: BeaufortSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'beaufort_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'beaufort_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_BEAUFORT
@@ -457,12 +460,14 @@ class Registry {
       ),
       GCWTool(
         tool: CCITT1Selection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'ccitt1_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'ccitt1_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_CCITT1
       ),
       GCWTool(
         tool: CCITT2Selection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'ccitt2_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'ccitt2_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_CCITT2
@@ -483,6 +488,7 @@ class Registry {
       ),
       GCWTool(
         tool: CistercianNumbersSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'cistercian_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'cistercian_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_CISTERCIAN
@@ -496,17 +502,20 @@ class Registry {
       ),
       GCWTool(
         tool: CombinatoricsSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'colors_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'combinatorics_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_COMBINATORICS
       ),
       GCWTool(
         tool: CoordsSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'coords_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'coords_selection',
         searchStrings: SEARCHSTRING_COORDINATES
       ),
       GCWTool(
         tool: CrossSumSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'crosssum_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'crosssum_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_COORDINATES
@@ -518,6 +527,7 @@ class Registry {
       ),
       GCWTool(
         tool: DatesSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'dates_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'dates_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_DATES
@@ -531,6 +541,7 @@ class Registry {
       ),
       GCWTool(
         tool: DNASelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'dna_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'dna_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_DNA
@@ -565,6 +576,7 @@ class Registry {
       ),
       GCWTool(
         tool: EsotericProgrammingLanguageSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'esotericprogramminglanguages_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'esotericprogramminglanguages_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_ESOTERICPROGRAMMINGLANGUAGE
@@ -577,6 +589,7 @@ class Registry {
       ),
       GCWTool(
         tool: GamesSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'games_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'games_selection',
         searchStrings: 'games spiele'
       ),
@@ -608,6 +621,7 @@ class Registry {
       ),
       GCWTool(
         tool: HashSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'hashes_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'hashes_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_HASHES
@@ -649,12 +663,14 @@ class Registry {
       ),
       GCWTool(
         tool: LanguageGamesSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'languagegames_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'languagegames_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'dvorak keyboard keys tasten azerty tastatur layout qwertz qwerty neo colemak ristome sprachen languages'
       ),
       GCWTool(
         tool: MayaNumbersSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'mayanumbers_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'mayanumbers_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_MAYANUMBERS
@@ -682,6 +698,7 @@ class Registry {
       ),
       GCWTool(
          tool: NumberSequenceSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_online_help_url', '', '', Icons.help)],
          i18nPrefix: 'numbersequence',
          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
          searchStrings: SEARCHSTRING_NUMBERSEQUENCES
@@ -695,6 +712,7 @@ class Registry {
       ),
       GCWTool(
         tool: NumeralWordsSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'numeralwords_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numeralwords_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_NUMERALWORDS
@@ -708,6 +726,7 @@ class Registry {
       ),
       GCWTool(
         tool: PeriodicTableSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'periodictable_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'periodictable_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_PERIODICTABLE
@@ -742,6 +761,7 @@ class Registry {
       ),
       GCWTool(
         tool: PrimesSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'primes_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'primes_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_PRIMES
@@ -769,6 +789,7 @@ class Registry {
       ),
       GCWTool(
         tool: ResistorSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'resistor_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'resistor_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_RESISTOR
@@ -782,18 +803,21 @@ class Registry {
       ),
       GCWTool(
         tool: RomanNumbersSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'romannumbers_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'romannumbers',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_ROMAN_NUMBERS
       ),
       GCWTool(
         tool: RotationSelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'rotation_selection_description', '', '', Icons.help)],
         i18nPrefix: 'rotation_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_ROTATION
       ),
       GCWTool(
         tool: RSASelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'rsa_selection_online_help', '', '', Icons.help)],
         i18nPrefix: 'rsa_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_RSA
@@ -812,6 +836,7 @@ class Registry {
       ),
       GCWTool(
         tool: SegmentDisplaySelection(),
+        buttonList: [GCWToolActionButtonsEntry(false, 'segmentdisplay_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'segmentdisplay_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: SEARCHSTRING_SEGMENTDISPLAY
