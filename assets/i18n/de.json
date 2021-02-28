@@ -20,9 +20,7 @@
   "about_blog_url_text" : "blog.gcwizard.net",
   "about_manual" : "Online-Handbuch",
   "about_manual_url" : "https://blog.gcwizard.net/manual/de/",
-
   "about_manual_url_text" : "blog.gcwizard.net/manual/de/",
-
   "about_twitter" : "Twitter",
   "about_twitter_url" : "https://twitter.com/gc_wizard",
   "about_twitter_url_text" : "@gc_wizard",
@@ -1308,7 +1306,7 @@
   "crosssum_range_frequency_sortby_frequency" : "Häufigkeit",
   "crosssum_range_iterated_frequency_title" : "Häufigkeiten von iter. Quersummen in Bereich",
   "crosssum_range_iterated_frequency_description" : "Ermittelt, welche iterierten Quersummen wie oft in einem Bereich auftreten",
-  "crosssum_range_iterated_frequency_online_help_url" : "",
+  "crosssum_range_iterated_frequency_online_help_url" : "https://blog.gcwizard.net/manual/de/quersumme/06-wie-finde-ich-die-haufigkeit-von-iterierten-quersummen-in-einem-bereich/",
 
   "crosstotal_title" : "Zeige Summen",
   "crosstotal_output" : "Summen, Quersummen, Produkte",
@@ -1648,9 +1646,9 @@
   "irrationalnumbers_decimalrange_pi_online_help_url" : "https://blog.gcwizard.net/manual/de/pi/03-wie-zeige-ich-den-gewunschten-bereich-an-3/",
   "irrationalnumbers_search_title" : "Suche Vorkommen",
   "irrationalnumbers_search_description" : "Durchsucht die ersten 1 000 000 Nachkommastellen auf ein Vorkommen einer Zahlengruppe",
-  "irrationalnumbers_search_online_e_help_url": "https://blog.gcwizard.net/manual/de/e/04-wie-suche-ich-nach-vorkommen-einer-ziffernfolge/",
-  "irrationalnumbers_search_online_phi_help_url": "https://blog.gcwizard.net/manual/de/phi/04-wie-suche-ich-nach-vorkommen-einer-ziffernfolge-2/",
-  "irrationalnumbers_search_online_pi_help_url": "https://blog.gcwizard.net/manual/de/pi/04-wie-suche-ich-nach-vorkommen-einer-ziffernfolge-3/",
+  "irrationalnumbers_search_e_online_help_url": "https://blog.gcwizard.net/manual/de/e/04-wie-suche-ich-nach-vorkommen-einer-ziffernfolge/",
+  "irrationalnumbers_search_phi_online_help_url": "https://blog.gcwizard.net/manual/de/phi/04-wie-suche-ich-nach-vorkommen-einer-ziffernfolge-2/",
+  "irrationalnumbers_search_pi_online_help_url": "https://blog.gcwizard.net/manual/de/pi/04-wie-suche-ich-nach-vorkommen-einer-ziffernfolge-3/",
 
   "kamasutra_title" : "Kamasutra",
   "kamasutra_description" : "Standard: ROT-13; Modifiziert mit eigenem Alphabet: Rotation um die Hälfte der Alphabetlänge",
@@ -2273,7 +2271,7 @@
   "rsa_e" : "Öffentlicher Schlüssel e",
   "rsa_selection_title" : "RSA Verschlüsselung",
   "rsa_selection_description" : "Asymmetrische Verschlüsselung (Öffentlicher/Privater Schlüssel) von Rivest, Shamir und Adleman",
-  "rsa_selection_online_help" : "https://blog.gcwizard.net/manual/de/rsa-verschlusselung/01-was-ist-rsa/",
+  "rsa_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/rsa-verschlusselung/01-was-ist-rsa/",
   "rsa_rsa_title" : "RSA Verschlüsselung",
   "rsa_rsa_description" : "Ver-/Entschlüsselt RSA",
   "rsa_rsa_online_help_url" : "https://blog.gcwizard.net/manual/de/rsa-verschlusselung/02-wie-wird-mit-rsa-ent-bzw-verschlusselt/",

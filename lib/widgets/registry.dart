@@ -818,7 +818,7 @@ class Registry {
       ),
       GCWTool(
         tool: RSASelection(),
-        buttonList: [GCWToolActionButtonsEntry(false, 'rsa_selection_online_help', '', '', Icons.help)],
+        buttonList: [GCWToolActionButtonsEntry(false, 'rsa_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'rsa_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: SEARCHSTRING_RSA
@@ -1430,7 +1430,7 @@ class Registry {
       ),
       GCWTool(
         tool: ESearch(),
-        buttonList: [GCWToolActionButtonsEntry(false, 'irrationalnumbers_search_online_e_help_url', '', '', Icons.help)],
+        buttonList: [GCWToolActionButtonsEntry(false, 'irrationalnumbers_search_e_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'irrationalnumbers_search'
       ),
 
@@ -1772,7 +1772,7 @@ class Registry {
       ),
       GCWTool(
         tool: PhiSearch(),
-        buttonList: [GCWToolActionButtonsEntry(false, 'irrationalnumbers_search_online_phi_help_url', '', '', Icons.help)],
+        buttonList: [GCWToolActionButtonsEntry(false, 'irrationalnumbers_search_phi_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'irrationalnumbers_search',
         searchStrings: SEARCHSTRING_PHI + 'occurrence vorkommen vorhanden contains containing enthaelt enthalten '
       ),
@@ -1792,7 +1792,7 @@ class Registry {
       ),
       GCWTool(
         tool: PiSearch(),
-        buttonList: [GCWToolActionButtonsEntry(false, 'irrationalnumbers_search_online_pi_help_url', '', '', Icons.help)],
+        buttonList: [GCWToolActionButtonsEntry(false, 'irrationalnumbers_search_pi_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'irrationalnumbers_search',
         searchStrings: SEARCHSTRING_PI + 'occurrence vorkommen vorhanden contains containing enthaelt enthalten '
       ),
