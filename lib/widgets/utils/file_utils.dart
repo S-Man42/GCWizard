@@ -36,13 +36,13 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) 
   File file;
 
   if (kIsWeb) {
-    var blob = new html.Blob([data], 'image/png');
-
-    var anchorElement = html.AnchorElement(
-      href: html.Url.createObjectUrl(blob),
-      )..setAttribute("download", fileName)..click();
-
-    filePath = 'Downloads/$fileName';
+    // var blob = new html.Blob([data], 'image/png');
+    //
+    // var anchorElement = html.AnchorElement(
+    //   href: html.Url.createObjectUrl(blob),
+    //   )..setAttribute("download", fileName)..click();
+    //
+    // filePath = 'Downloads/$fileName';
   } else {
     var path = await MainPath();
     if (path == null)
@@ -63,13 +63,13 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
   File file;
 
   if (kIsWeb) {
-    var blob = html.Blob([data], 'text/plain', 'native');
-
-    var anchorElement = html.AnchorElement(
-      href: html.Url.createObjectUrl(blob),
-    )..setAttribute("download", fileName)..click();
-
-    filePath = 'Downloads/$fileName';
+    // var blob = html.Blob([data], 'text/plain', 'native');
+    //
+    // var anchorElement = html.AnchorElement(
+    //   href: html.Url.createObjectUrl(blob),
+    // )..setAttribute("download", fileName)..click();
+    //
+    // filePath = 'Downloads/$fileName';
   } else {
     var path = await MainPath();
     if (path == null)
