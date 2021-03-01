@@ -1515,7 +1515,7 @@
 
   "generalcodebreakers_selection_title" : "Allgemeine Codelöser",
   "generalcodebreakers_selection_description" : "Tools, die versuchen, Codes ohne spezifische Angaben zu identifizieren oder zu brechen (z.B. Multi-Dekodierer, Hash-Suche)",
-  "generalcodebreakers_selection_online_help_url" : "",
+  "generalcodebreakers_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/allgemeine-codeloser/00-was-sind-allgemeine-codeloser/",
 
   "gray_title" : "Gray-Code",
   "gray_description" : "Konvertiert eine Binär-/Dezimalzahl in eine Gray-codierte Dezimal-/Binärzahl",
@@ -1911,7 +1911,7 @@
   "numeralwords_lists_title" : "Zahlwörter: Überblick",
   "numeralwords_lists_description" : "Zeigt die wichtigsten Zahlwörter verschiedener Sprachen",
   "numeralwords_example" : "eins → 1",
-  "numeralwords_lists_online_help_url" : "",
+  "numeralwords_lists_online_help_url" : "https://blog.gcwizard.net/manual/de/zahlworter/03-welche-zahlworter-listet-der-gc-wizard-auf/",
   "numeralwords_language_kyr" : "Russisch (kyrillisch)",
   "numeralwords_language_all" : "Alle Sprachen",
   "numeralwords_language_num" : "Zahl",

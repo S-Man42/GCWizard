@@ -435,7 +435,7 @@
   "ccitt1_selection_title" : "CCITT-1",
   "ccitt1_selection_description" : "Baudot Code",
   "ccitt1_selection_example" : "ABC → 00100 01001 01101",
-  "ccitt1_selection_online_help_url" : "",
+  "ccitt1_selection_online_help_url" : "https://blog.gcwizard.net/manual/en/ccitt-1-baudot-code-codes/02-how-does-gc-wizard-encode-and-decode-using-the-ccitt-1-code/",
   "ccitt1_title" : "CCITT-1",
   "ccitt1_description" : "Baudot Code",
   "ccitt1_example" : "ABC → 00100 01001 01101",
@@ -445,7 +445,7 @@
   "ccitt2_selection_title" : "CCITT-2",
   "ccitt2_selection_description" : "Baudot Murray Code; Binary Punched Tape Encoding ",
   "ccitt2_selection_example" : "ABC → 00011 11001 01110",
-  "ccitt2_selection_online_help_url" : "",
+  "ccitt2_selection_online_help_url" : "https://blog.gcwizard.net/manual/en/ccitt-2-baudot-murray-code-codes/02-how-does-gc-wizard-encode-and-decode-using-the-ccitt-2-code/",
   "ccitt2_title" : "CCITT-2",
   "ccitt2_description" : "Baudot Murray Code; Binary Punched Tape Encoding ",
   "ccitt2_example" : "ABC → 00011 11001 01110",
@@ -1515,12 +1515,12 @@
 
   "generalcodebreakers_selection_title" : "General Code Solvers",
   "generalcodebreakers_selection_description" : "Tools, which try to identify or break codes without any further information (Multi Decoder, Hash Search, ...)",
-  "generalcodebreakers_selection_online_help_url" : "",
+  "generalcodebreakers_selection_online_help_url" : "https://blog.gcwizard.net/manual/en/general-code-solver/00-what-are-general-codesolvers/",
 
   "gray_title" : "Gray Code",
   "gray_description" : "Encodes a binary/decimal number to a Gray encoded decimal/binary number",
   "gray_example" : "4 | 100 → 6 | 110",
-  "gray_online_help_url" : "",
+  "gray_online_help_url" : "https://blog.gcwizard.net/manual/en/gray-code-codes/02-how-does-gc-wizard-encode-and-decode-using-the-gray-code/",
   "gray_mode" : "Mode",
   "gray_mode_decimal" : "Decimal",
   "gray_mode_binary" : "Binary",
@@ -1910,7 +1910,7 @@
   "numeralwords_textsearch_online_help_url" : "https://blog.gcwizard.net/manual/en/numeral-words/02-how-does-gc-wizard-searches-numeral-words/",
   "numeralwords_lists_title" : "Numeral Words: Overview",
   "numeralwords_lists_description" : "Shows the most important numeral words of different languages",
-  "numeralwords_lists_online_help_url" : "",
+  "numeralwords_lists_online_help_url" : "https://blog.gcwizard.net/manual/en/numeral-words/03-which-numeral-words-does-the-gc-wizard-list/",
   "numeralwords_example" : "one → 1",
   "numeralwords_language_kyr" : "Russian (cyrillic)",
   "numeralwords_language_all" : "All Languages",
@@ -3174,5 +3174,5 @@
   "z22_title" : "Z22",
   "z22_description" : "Usage of the CCITT-2 code",
   "z22_example" : "ABC → 00011 11001 01110",
-  "z22_online_help_url" : ""
+  "z22_online_help_url" : "https://blog.gcwizard.net/manual/en/z22-codes/02-how-does-gc-wizard-encode-and-decode-using-the-z22-code/"
 }
