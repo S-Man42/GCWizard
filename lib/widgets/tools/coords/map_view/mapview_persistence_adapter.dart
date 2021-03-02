@@ -257,10 +257,15 @@ class MapViewPersistenceAdapter {
   }
 
   bool setJsonMapViewData(String view) {
-    var viewData =  restoreJsonMapViewData(view);
-    if (viewData != null) {
-      _mapViewDAO = viewData;
-      _restoreMapViewDAO();
+    try {
+      var viewData =  restoreJsonMapViewData(view);
+      if (viewData != null) {
+        _mapViewDAO = viewData;
+        _restoreMapViewDAO();
+        return true;
+      }
+    } on Exception {
     }
+    return false;
   }
 }
