@@ -68,7 +68,7 @@ class MapViewPersistenceAdapter {
   
   _initializeMapView() {
     refreshMapViews();
-  
+
     if (mapViews.length == 0) {
       insertMapViewDAO(MapViewDAO([], []));
     }

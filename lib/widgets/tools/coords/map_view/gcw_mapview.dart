@@ -13,6 +13,7 @@ import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
@@ -20,9 +21,10 @@ import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
+import 'package:gc_wizard/widgets/common/gcw_paste_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_export_dialog.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_paste_button.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/mappoint_editor.dart';
@@ -36,6 +38,8 @@ import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+
 
 enum _LayerType {OPENSTREETMAP_MAPNIK, MAPBOX_SATELLITE}
 
@@ -539,17 +543,20 @@ class GCWMapViewState extends State<GCWMapView> {
 
   _buildEditButtons() {
     var buttons = [
-      GCWCoordsPasteButton(
+      GCWPasteButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.content_paste),
-        onPasted: (pastedCoordinate) {
-          if (pastedCoordinate == null)
+        onSelected: (text) {
+          if (!_persistanceAdapter.setJsonMapViewData(text)) {
+            var pastedCoordinate = _parseCoords(text);
+            if (pastedCoordinate == null)
             return;
 
-          setState(() {
+            setState(() {
             _persistanceAdapter.addMapPoint(pastedCoordinate['coordinate'], coordinateFormat: {'format': pastedCoordinate['format']});
             _mapController.move(pastedCoordinate['coordinate'], _mapController.zoom);
-          });
+            });
+          }
         },
       ),
       GCWIconButton(
@@ -834,6 +841,16 @@ class GCWMapViewState extends State<GCWMapView> {
       }).toList();
 
     return _polylines;
+  }
+
+  Map<String, dynamic> _parseCoords(text) {
+    var parsed = parseLatLon(text);
+    if (parsed == null || parsed['coordinate'] == null) {
+      showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
+      return null;
+    }
+
+    return parsed;
   }
 }
 
