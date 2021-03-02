@@ -885,7 +885,6 @@ class Registry {
         ],
         i18nPrefix: 'symboltables_selection',
         searchStrings: SEARCHSTRING_SYMBOLTABLES,
-        titleTrailing: symboltablesDownloadButton(context),
       ),
       GCWTool(
         tool: TapCode(),
