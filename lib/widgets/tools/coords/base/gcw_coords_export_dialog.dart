@@ -6,7 +6,7 @@ import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:intl/intl.dart';
 
-showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
+showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines, {String json}) {
   var fileName = 'GC Wizard Export ' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
 
   showGCWDialog(
@@ -14,6 +14,17 @@ showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List
     i18n(context, 'coords_export_saved'),
     Text(i18n(context, 'coords_export_fileformat')),
     [
+      json != null  ?
+        GCWDialogButton(
+          text: 'JSON',
+          onPressed: () async {
+            coordinatesExport.exportCoordinates(fileName, null, null, json : json)
+                .then((value) {
+              _showExportedFileDialog(context, value, '.json');
+            });
+          },
+        )
+      : null,
       GCWDialogButton(
         text: 'GPX',
         onPressed: () async {

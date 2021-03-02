@@ -73,7 +73,10 @@ class MapViewPersistenceAdapter {
       insertMapViewDAO(MapViewDAO([], []));
     }
     _mapViewDAO = mapViews.last;
+    _restoreMapViewDAO();
+  }
 
+  _restoreMapViewDAO() {
     if (_mapViewDAO.points == null)
       _mapViewDAO.points = List<MapPointDAO>();
     if (mapWidget.points == null)
@@ -247,5 +250,17 @@ class MapViewPersistenceAdapter {
     var polylineDAO = _mapPolylineDAOByUUID(polyline.uuid);
     polylineDAO.pointUUIDs.add(mapPoint.uuid);
     updateMapPolylineDAO(polylineDAO, _mapViewDAO);
+  }
+
+  String getJsonMapViewData() {
+    return jsonMapViewData(_mapViewDAO);
+  }
+
+  bool setJsonMapViewData(String view) {
+    var viewData =  restoreJsonMapViewData(view);
+    if (viewData != null) {
+      _mapViewDAO = viewData;
+      _restoreMapViewDAO();
+    }
   }
 }

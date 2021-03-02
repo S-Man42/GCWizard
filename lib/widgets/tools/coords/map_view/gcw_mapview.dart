@@ -51,12 +51,14 @@ final _BUTTONGROUP_MARGIN = 30.0;
 class GCWMapView extends StatefulWidget {
   List<GCWMapPoint> points;
   List<GCWMapPolyline> polylines;
+  String json;
   final bool isEditable;
 
   GCWMapView({
     Key key,
     this.points,
     this.polylines,
+    this.json,
     this.isEditable: false
   }) : super(key: key) {
     if (points == null)
@@ -610,7 +612,7 @@ class GCWMapViewState extends State<GCWMapView> {
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.save),
         onPressed: () {
-          showCoordinatesExportDialog(context, widget.points, widget.polylines);
+          showCoordinatesExportDialog(context, widget.points, widget.polylines, json : _persistanceAdapter.getJsonMapViewData());
         },
       ),
     ];
