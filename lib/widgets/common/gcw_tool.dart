@@ -107,32 +107,35 @@ class _GCWToolState extends State<GCWTool> {
 
     String url = '';
 
-    widget.buttonList.forEach((button) {
-      if (button.url == '') // 404-Page asking for help
-        url = 'https://blog.gcwizard.net/manual/uncategorized/404/';
-      else
-        url = button.url;
-      if (button.url != null && button.url.length != 0)
-        buttonList.add(
-            IconButton(
-              icon: Icon(button.icon),
-              onPressed: () {
-                if (button.showDialog) {
-                  showGCWAlertDialog(
-                    context,
-                    i18n(context, button.title),
-                    i18n(context, button.text),
-                    () {
-                          launch(i18n(context, url));
-                       },
-                  );
-                }
-                else
-                  launch(i18n(context, url));
-              },
-            )
-      );
-    });
+    if (widget.buttonList != null) {
+      widget.buttonList.forEach((button) {
+        if (button.url == '') // 404-Page asking for help
+          url = 'https://blog.gcwizard.net/manual/uncategorized/404/';
+        else
+          url = button.url;
+        if (button.url != null && button.url.length != 0)
+          buttonList.add(
+              IconButton(
+                icon: Icon(button.icon),
+                onPressed: () {
+                  if (button.showDialog) {
+                    showGCWAlertDialog(
+                      context,
+                      i18n(context, button.title),
+                      i18n(context, button.text),
+                          () {
+                        launch(i18n(context, url));
+                      },
+                    );
+                  }
+                  else
+                    launch(i18n(context, url));
+                },
+              )
+          );
+      });
+    }
+
     return buttonList;
   }
 
