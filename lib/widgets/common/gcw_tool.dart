@@ -38,7 +38,7 @@ class GCWTool extends StatefulWidget {
   var description;
   var example;
 
-  Widget titleTrailing;
+//  Widget titleTrailing;
 
   GCWTool({
     Key key,
@@ -49,7 +49,7 @@ class GCWTool extends StatefulWidget {
     this.autoScroll: true,
     this.iconPath,
     this.searchStrings: '',
-    this.titleTrailing,
+//    this.titleTrailing,
     this.buttonList
   }) : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
@@ -99,13 +99,19 @@ class _GCWToolState extends State<GCWTool> {
   List<Widget>_buildButtons() {
     List<Widget> buttonList = new List<Widget>();
 
-    if (widget.titleTrailing.toString() != 'null')
-      return [widget.titleTrailing];
+//    if (widget.titleTrailing.toString() != 'null')
+//      return [widget.titleTrailing];
 
-    if (widget.buttonList == null)
-      return [_buildHelpButton()];
+//    if (widget.buttonList == null)
+//      return [_buildHelpButton()];
+
+    String url = '';
 
     widget.buttonList.forEach((button) {
+      if (button.url == '') // 404-Page asking for help
+        url = 'https://blog.gcwizard.net/manual/uncategorized/404/';
+      else
+        url = button.url;
       if (button.url != null && button.url.length != 0)
         buttonList.add(
             IconButton(
@@ -117,12 +123,12 @@ class _GCWToolState extends State<GCWTool> {
                     i18n(context, button.title),
                     i18n(context, button.text),
                     () {
-                          launch(i18n(context, button.url));
+                          launch(i18n(context, url));
                        },
                   );
                 }
                 else
-                  launch(i18n(context, button.url));
+                  launch(i18n(context, url));
               },
             )
       );
@@ -130,7 +136,7 @@ class _GCWToolState extends State<GCWTool> {
     return buttonList;
   }
 
-  _buildHelpButton() {
+ /* _buildHelpButton() {
     if (widget.i18nPrefix == null)
       return Container();
 
@@ -146,7 +152,7 @@ class _GCWToolState extends State<GCWTool> {
         launch(onlineHelpUrl);
       },
     );
-  }
+  }*/
 
   Widget _buildBody() {
     if (widget.tool is GCWSelection)
