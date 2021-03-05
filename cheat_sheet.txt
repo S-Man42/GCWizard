@@ -1,9 +1,23 @@
 Android Release Build command:
 flutter build appbundle --release --target-platform android-arm,android-arm64
 
+==============================
 Web Build:
+
+flutter channel beta
+flutter upgrade --force
+flutter pub cache repair
+flutter clean
+
+First time:
+flutter config --enable-web
 flutter create .
+
+Else:
 flutter build web
+
+2021/02: Currently problems with HTML objects: Please uncomment lines in lib\widgets\utils\file_utils.dart
+===============================
 
 Icons:
 Android: android/app/src/main/res/mipmap-*/ic_launcher.png
@@ -28,16 +42,6 @@ flutter upgrade --force
 flutter pub cache repair
 cd <YOUR APP FOLDER>
 flutter clean
------------
-"build web" is not currently supported
-
-->
-flutter channel beta
-flutter upgrade --force
-flutter pub cache repair
-flutter clean
-
-flutter config --enable-web
 -----------
 iOS build: GeneratedPluginRegistrant.m Module not found.
 

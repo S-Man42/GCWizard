@@ -653,7 +653,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'kenny_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'kenny',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: 'they killed kenny sie haben kenny getoetet kennys kenny\'s code southpark'
+        searchStrings: 'they killed kenny sie haben kenny getoetet kennys kenny\'s code southpark mpf mfp fmp fpm pmf pfm'
       ),
       GCWTool(
         tool: Keyboard(),
