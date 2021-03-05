@@ -61,11 +61,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) {
-    // Include all of your supported language codes here
-    return supportedLocales
-        .map((locale) => locale.languageCode)
-        .toList()
-        .contains(locale.languageCode);
+    return isLocaleSupported(locale);
   }
 
   @override
