@@ -152,7 +152,7 @@ LatLng parseUTM(String input, Ellipsoid ells) {
     _northingString = match.group(4);
   }
   if (matches.length == 0) {
-    regExp = RegExp(r'^\s*(\d+)\s?([T])\s*m?\s*([E|W])\s*([0-9\.]+)\s*m?\s*([N|S])\s?([0-9\.]+)\s*$');
+    regExp = RegExp(r'^\s*(\d+)\s?(['+ latZones + r'])\s*m?\s*([E|W])\s*([0-9\.]+)\s*m?\s*([N|S])\s?([0-9\.]+)\s*$');
     matches = regExp.allMatches(input);
     if (matches.length > 0) {
       var match = matches.elementAt(0);

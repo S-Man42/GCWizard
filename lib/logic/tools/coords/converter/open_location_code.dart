@@ -305,7 +305,6 @@ LatLng openLocationCodeToLatLon(String code) {
   try{
     if (!isFull(code)) {
       return null;
-      //throw ArgumentError('coords_formatconverter_openlocationcode_novalidcode');
     }
     // Strip out separator character (we've already established the code is
     // valid so the maximum is one), padding characters and convert to upper

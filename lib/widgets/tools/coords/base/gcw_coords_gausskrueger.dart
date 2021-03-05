@@ -60,7 +60,6 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
       children: <Widget>[
         GCWDoubleTextField(
           hintText: i18n(context, 'coords_formatconverter_gausskrueger_easting'),
-          min: 0.0,
           controller: _eastingController,
           onChanged: (ret) {
             setState(() {
@@ -71,7 +70,6 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
         ),
         GCWDoubleTextField(
           hintText: i18n(context, 'coords_formatconverter_gausskrueger_northing'),
-          min: 0.0,
           controller: _northingController,
           onChanged: (ret) {
             setState(() {
