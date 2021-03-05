@@ -27,7 +27,7 @@ class GCWTool extends StatefulWidget {
   final ToolCategory category;
   final autoScroll;
   final iconPath;
-  final String searchStrings;
+  final List<String> searchStrings;
   final List<GCWToolActionButtonsEntry> buttonList;
 
   var icon;
@@ -38,8 +38,6 @@ class GCWTool extends StatefulWidget {
   var description;
   var example;
 
-//  Widget titleTrailing;
-
   GCWTool({
     Key key,
     this.tool,
@@ -48,8 +46,7 @@ class GCWTool extends StatefulWidget {
     this.category,
     this.autoScroll: true,
     this.iconPath,
-    this.searchStrings: '',
-//    this.titleTrailing,
+    this.searchStrings,
     this.buttonList
   }) : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
@@ -138,24 +135,6 @@ class _GCWToolState extends State<GCWTool> {
 
     return buttonList;
   }
-
- /* _buildHelpButton() {
-    if (widget.i18nPrefix == null)
-      return Container();
-
-    var onlineHelpKey = widget.i18nPrefix + '_onlinehelp';
-
-    var onlineHelpUrl = i18n(context, onlineHelpKey);
-    if (onlineHelpUrl == null || onlineHelpUrl.length == 0)
-      return Container();
-
-    return IconButton(
-      icon: Icon(Icons.help),
-      onPressed: () {
-        launch(onlineHelpUrl);
-      },
-    );
-  }*/
 
   Widget _buildBody() {
     if (widget.tool is GCWSelection)

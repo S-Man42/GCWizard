@@ -476,16 +476,18 @@ class _MainViewState extends State<MainView> {
 
   List<GCWTool> _getSearchedList() {
     var list = Registry.toolList;
+    String searchstring = '';
 
     list = list.where((tool) {
-      if (tool.searchStrings == null || tool.searchStrings.length == 0)
+      searchstring = tool.searchStrings.join(' ').toLowerCase();
+      if (searchstring == null || searchstring.length == 0)
         return false;
 
       var found = true;
 
       //Search result as AND result of separated words
       _searchText.toLowerCase().split(RegExp(r'[\s,]')).forEach((word) {
-        var searchStrings = tool.searchStrings.toLowerCase();
+        var searchStrings = searchstring;
         if (!searchStrings.contains(word) && !searchStrings.contains(removeAccents(word))) //search with and without accents
           found = false;
       });
