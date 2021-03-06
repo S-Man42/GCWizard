@@ -642,7 +642,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_online_help_url', '', '', Icons.help)],
          i18nPrefix: 'numbersequence',
          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-         searchStrings: [SEARCHSTRING_COMMON_NUMBERSEQUENCES]
+         searchStrings: [SEARCHSTRING_COMMON_NUMBERSEQUENCE]
       ),
       GCWTool(
         tool: NumeralBases(),
@@ -754,7 +754,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'rotation_selection_description', '', '', Icons.help)],
         i18nPrefix: 'rotation_selection',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_ROTATIONSELECTION]
+        searchStrings: [SEARCHSTRING_COMMON_ROTATION_ROTATIONSELECTION]
       ),
       GCWTool(
         tool: RSASelection(),
@@ -824,7 +824,7 @@ class Registry {
                      GCWToolActionButtonsEntry(true, 'symboltables_selection_download_link', 'symboltables_selection_download_dialog_title', 'symboltables_selection_download_dialog_text', Icons.file_download),
         ],
         i18nPrefix: 'symboltables_selection',
-        searchStrings: [SEARCHSTRING_COMMON_SYMBOLTABLESELECTION],
+        searchStrings: [],
       ),
       GCWTool(
         tool: TapCode(),
