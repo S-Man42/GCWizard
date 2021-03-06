@@ -11,6 +11,7 @@ import 'package:gc_wizard/persistence/formula_solver/model.dart';
 class GCWKeyValueEditor extends StatefulWidget {
   final Function onNewEntryChanged;
   final String keyHintText;
+  final TextEditingController keyController;
   final List<TextInputFormatter> valueInputFormatters;
   final String valueHintText;
   final int valueFlex;
@@ -21,6 +22,7 @@ class GCWKeyValueEditor extends StatefulWidget {
   final String alphabetAddAndAdjustLetterButtonLabel;
 
   final Widget middleWidget;
+  final Widget listHeaderWidget;
 
   final Map<int, Map<String, String>> keyKeyValueMap;
   final Map<String, String> keyValueMap;
@@ -33,6 +35,7 @@ class GCWKeyValueEditor extends StatefulWidget {
   const GCWKeyValueEditor({
     Key key,
     this.keyHintText,
+    this.keyController,
     this.onNewEntryChanged,
     this.valueHintText,
     this.valueInputFormatters,
@@ -44,6 +47,7 @@ class GCWKeyValueEditor extends StatefulWidget {
     this.alphabetAddAndAdjustLetterButtonLabel,
 
     this.middleWidget,
+    this.listHeaderWidget,
 
     this.keyKeyValueMap,
     this.keyValueMap,
@@ -59,12 +63,12 @@ class GCWKeyValueEditor extends StatefulWidget {
 }
 
 class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
-  var _inputController;
-  var _keyController;
-  var _valueController;
+  TextEditingController _inputController;
+  TextEditingController _keyController;
+  TextEditingController _valueController;
 
-  var _editKeyController;
-  var _editValueController;
+  TextEditingController _editKeyController;
+  TextEditingController _editValueController;
 
   var _currentInput = '';
   var _currentKeyInput = '';
@@ -79,7 +83,12 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     super.initState();
 
     _inputController = TextEditingController(text: _currentInput);
-    _keyController = TextEditingController(text: _currentKeyInput);
+    if (widget.keyController == null)
+      _keyController = TextEditingController(text: _currentKeyInput);
+    else {
+      _keyController = widget.keyController;
+      _currentKeyInput = _keyController.text;
+    }
     _valueController = TextEditingController(text: _currentValueInput);
 
     _editKeyController = TextEditingController(text: _currentEditedKey);
@@ -92,7 +101,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
       widget.onDispose(_currentKeyInput, _currentValueInput, context);
 
     _inputController.dispose();
-    _keyController.dispose();
+    if (widget.keyController == null)
+      _keyController.dispose();
     _valueController.dispose();
 
     _editKeyController.dispose();
@@ -204,9 +214,14 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
   _onNewEntryChanged(bool resetInput) {
     if (resetInput) {
-      _keyController.clear();
+      if (widget.keyController == null) {
+        _keyController.clear();
+        _currentKeyInput = '';
+      } else
+        _currentKeyInput = _keyController.text;
+
       _valueController.clear();
-      _currentKeyInput = '';
+
       _currentValueInput = '';
     }
     if (widget.onNewEntryChanged != null)
@@ -243,6 +258,10 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     }
     if (rows.length > 0 && widget.dividerText != null) {
       rows.insert(0, GCWTextDivider(text: widget.dividerText));
+    }
+
+    if (rows.length > 0 && widget.listHeaderWidget != null) {
+      rows.insert(0, widget.listHeaderWidget);
     }
 
     return Column(
