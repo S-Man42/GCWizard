@@ -8,8 +8,9 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsNaturalAreaCode extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsNaturalAreaCode({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsNaturalAreaCode({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsNaturalAreaCodeState createState() => GCWCoordsNaturalAreaCodeState();
@@ -39,6 +40,15 @@ class GCWCoordsNaturalAreaCodeState extends State<GCWCoordsNaturalAreaCode> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.coordinates != null) {
+      var naturalAreaCode = latLonToNaturalAreaCode(widget.coordinates);
+      _currentX = naturalAreaCode.x;
+      _currentY = naturalAreaCode.y;
+
+      _controllerX.text = _currentX;
+      _controllerY.text = _currentY;
+    }
+
     return Column (
         children: <Widget>[
           GCWTextField(

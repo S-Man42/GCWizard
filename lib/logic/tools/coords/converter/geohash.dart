@@ -93,24 +93,31 @@ String latLonToGeohash(LatLng coords, int geohashLength) {
 }
 
 LatLng geohashToLatLon(String geohash) {
-  geohash = geohash.toLowerCase();
-  var binary = geohash.split('').map((character) => _getBinaryByCharacter(character)).join();
+  try{
+    geohash = geohash.toLowerCase();
+    var binary = geohash.split('').map((character) => _getBinaryByCharacter(character)).join();
 
-  var latBinary = '';
-  var lonBinary = '';
+    var latBinary = '';
+    var lonBinary = '';
 
-  var i = 0;
-  while (i < binary.length) {
-    lonBinary += binary[i];
-    if ((i + 1) < binary.length)
-      latBinary += binary[i + 1];
-    i += 2;
-  }
+    var i = 0;
+    while (i < binary.length) {
+      lonBinary += binary[i];
+      if ((i + 1) < binary.length)
+        latBinary += binary[i + 1];
+      i += 2;
+    }
 
-  var lat = _getCoordFromBinary(latBinary, -90.0, 90.0);
-  var lon = _getCoordFromBinary(lonBinary, -180.0, 180.0);
+    var lat = _getCoordFromBinary(latBinary, -90.0, 90.0);
+    var lon = _getCoordFromBinary(lonBinary, -180.0, 180.0);
 
-  return LatLng(lat, lon);
+    if (lat == 0.0 && lon == 0.0)
+      return null;
+
+    return LatLng(lat, lon);
+  } catch(e) {}
+
+  return null;
 }
 
 double _getCoordFromBinary(String binary, double lowerBound, double upperBound) {

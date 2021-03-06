@@ -7,8 +7,9 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsGeoHex extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsGeoHex({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsGeoHex({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsGeoHexState createState() => GCWCoordsGeoHexState();
@@ -32,6 +33,12 @@ class GCWCoordsGeoHexState extends State<GCWCoordsGeoHex> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.coordinates != null) {
+      _currentCoord = latLonToGeoHex(widget.coordinates, 20);
+
+      _controller.text = _currentCoord;
+    }
+
     return Column (
       children: <Widget>[
         GCWTextField(
