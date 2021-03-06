@@ -277,49 +277,57 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'abaddon_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'abaddon',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_ABADDON, SEARCHSTRING_DE_ABADDON, SEARCHSTRING_EN_ABADDON, SEARCHSTRING_FR_ABADDON]
+        searchStrings: [
+          SEARCHSTRING_COMMON_ABADDON, SEARCHSTRING_DE_ABADDON, SEARCHSTRING_EN_ABADDON, SEARCHSTRING_FR_ABADDON]
       ),
       GCWTool(
         tool: ADFGVX(),
         buttonList: [GCWToolActionButtonsEntry(false, '_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'adfgvx',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_ADFGVX, SEARCHSTRING_DE_ADFGVX, SEARCHSTRING_EN_ADFGVX, SEARCHSTRING_FR_ADFGVX]
+        searchStrings: [
+          SEARCHSTRING_COMMON_ADFGVX, SEARCHSTRING_DE_ADFGVX, SEARCHSTRING_EN_ADFGVX, SEARCHSTRING_FR_ADFGVX]
       ),
       GCWTool(
         tool: Affine(),
         buttonList: [GCWToolActionButtonsEntry(false, 'affine_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'affine',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_AFFINE, SEARCHSTRING_DE_AFFINE, SEARCHSTRING_EN_AFFINE, SEARCHSTRING_FR_AFFINE]
+        searchStrings: [
+          SEARCHSTRING_COMMON_AFFINE, SEARCHSTRING_DE_AFFINE, SEARCHSTRING_EN_AFFINE, SEARCHSTRING_FR_AFFINE]
       ),
       GCWTool(
         tool: AlphabetValues(),
         buttonList: [GCWToolActionButtonsEntry(false, 'alphabetvalues_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'alphabetvalues',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_ALPHABETVALUES, SEARCHSTRING_DE_ALPHABETVALUES, SEARCHSTRING_EN_ALPHABETVALUES, SEARCHSTRING_FR_ALPHABETVALUES]
+        searchStrings: [
+          SEARCHSTRING_COMMON_ALPHABETVALUES, SEARCHSTRING_DE_ALPHABETVALUES, SEARCHSTRING_EN_ALPHABETVALUES, SEARCHSTRING_FR_ALPHABETVALUES]
       ),
       GCWTool(
         tool: Amsco(),
         buttonList: [GCWToolActionButtonsEntry(false, 'amsco_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'amsco',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_AMSCO, SEARCHSTRING_DE_AMSCO, SEARCHSTRING_EN_AMSCO, SEARCHSTRING_FR_AMSCO]
+        searchStrings: [
+          SEARCHSTRING_COMMON_AMSCO, SEARCHSTRING_DE_AMSCO, SEARCHSTRING_EN_AMSCO, SEARCHSTRING_FR_AMSCO]
       ),
       GCWTool(
         tool: ApparentTemperatureSelection(),
         buttonList: [GCWToolActionButtonsEntry(false, 'apparenttemperature_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'apparenttemperature_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: [SEARCHSTRING_COMMON_APPARENTTEMPERATURE, SEARCHSTRING_DE_APPARENTTEMPERATURE, SEARCHSTRING_EN_APPARENTTEMPERATURE, SEARCHSTRING_FR_APPARENTTEMPERATURE]
+        searchStrings: [
+          SEARCHSTRING_COMMON_APPARENTTEMPERATURE, SEARCHSTRING_DE_APPARENTTEMPERATURE, SEARCHSTRING_EN_APPARENTTEMPERATURE, SEARCHSTRING_FR_APPARENTTEMPERATURE]
       ),
       GCWTool(
         tool: ASCIIValues(),
         buttonList: [GCWToolActionButtonsEntry(false, 'asciivalues_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'asciivalues',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_ASCIIVALUES, SEARCHSTRING_DE_ASCIIVALUES, SEARCHSTRING_EN_ASCIIVALUES, SEARCHSTRING_FR_ASCIIVALUES]
+        searchStrings: [
+          SEARCHSTRING_COMMON_ASCIIVALUES, SEARCHSTRING_DE_ASCIIVALUES, SEARCHSTRING_EN_ASCIIVALUES, SEARCHSTRING_FR_ASCIIVALUES,
+          SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY]
       ),
       GCWTool(
         tool: AstronomySelection(),
@@ -1675,7 +1683,7 @@ class Registry {
       GCWTool(
         tool: About(),
         i18nPrefix: 'mainmenu_about',
-        searchStrings: []
+        searchStrings: [SEARCHSTRING_COMMON_ABOUT, SEARCHSTRING_DE_ABOUT, SEARCHSTRING_EN_ABOUT, SEARCHSTRING_FR_ABOUT]
       ),
       GCWTool(
         tool: CallForContribution(),
