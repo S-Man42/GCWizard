@@ -334,119 +334,141 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'astronomy_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'astronomy_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: [SEARCHSTRING_COMMON_ASTRONOMY, SEARCHSTRING_DE_ASTRONOMY, SEARCHSTRING_EN_ASTRONOMY, SEARCHSTRING_FR_ASTRONOMY]
+        searchStrings: [
+          SEARCHSTRING_COMMON_ASTRONOMY, SEARCHSTRING_DE_ASTRONOMY, SEARCHSTRING_EN_ASTRONOMY, SEARCHSTRING_FR_ASTRONOMY]
       ),
       GCWTool(
         tool: Atbash(),
         i18nPrefix: 'atbash',
         buttonList: [GCWToolActionButtonsEntry(false, 'atbash_online_help_url', '', '', Icons.help)],
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_ATBASH, SEARCHSTRING_DE_ATBASH, SEARCHSTRING_EN_ATBASH, SEARCHSTRING_FR_ATBASH]
+        searchStrings: [
+          SEARCHSTRING_COMMON_ATBASH, SEARCHSTRING_DE_ATBASH, SEARCHSTRING_EN_ATBASH, SEARCHSTRING_FR_ATBASH]
       ),
       GCWTool(
         tool: Bacon(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bacon_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bacon',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_BACON, SEARCHSTRING_DE_BACON, SEARCHSTRING_EN_BACON, SEARCHSTRING_FR_BACON]
+        searchStrings: [
+          SEARCHSTRING_COMMON_BACON, SEARCHSTRING_DE_BACON, SEARCHSTRING_EN_BACON, SEARCHSTRING_FR_BACON,
+          SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY]
       ),
       GCWTool(
         tool: BaseSelection(),
         buttonList: [GCWToolActionButtonsEntry(false, 'base_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'base_selection',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_BASESELECTION, SEARCHSTRING_DE_BASESELECTION, SEARCHSTRING_EN_BASESELECTION, SEARCHSTRING_FR_BASESELECTION]
+        searchStrings: [
+          SEARCHSTRING_COMMON_BASE, SEARCHSTRING_DE_BASE, SEARCHSTRING_EN_BASE, SEARCHSTRING_FR_BASE]
       ),
       GCWTool(
         tool: BCDSelection(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_selection',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_BCDSELECTION, SEARCHSTRING_DE_BCDSELECTION, SEARCHSTRING_EN_BCDSELECTION, SEARCHSTRING_FR_BCDSELECTION]
+        searchStrings: [
+          SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+          SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY]
       ),
       GCWTool(
         tool: BeaufortSelection(),
         buttonList: [GCWToolActionButtonsEntry(false, 'beaufort_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'beaufort_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: [SEARCHSTRING_COMMON_BEAUFORTSELECTION, SEARCHSTRING_DE_BEAUFORTSELECTION, SEARCHSTRING_EN_BEAUFORTSELECTION, SEARCHSTRING_FR_BEAUFORTSELECTION]
+        searchStrings: [
+          SEARCHSTRING_COMMON_BEAUFORT, SEARCHSTRING_DE_BEAUFORT, SEARCHSTRING_EN_BEAUFORT, SEARCHSTRING_FR_BEAUFORT]
       ),
       GCWTool(
         tool: Binary(),
         buttonList: [GCWToolActionButtonsEntry(false, 'binary_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'binary',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: [SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY, SEARCHSTRING_FR_BINARY]
+        searchStrings: [
+          SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY, SEARCHSTRING_FR_BINARY]
       ),
       GCWTool(
         tool: Bifid(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bifid_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bifid',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_BIFID, SEARCHSTRING_COMMON_BIFID, SEARCHSTRING_COMMON_BIFID, SEARCHSTRING_COMMON_BIFID]
       ),
       GCWTool(
         tool: BookCipher(),
         buttonList: [GCWToolActionButtonsEntry(false, 'book_cipher_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'book_cipher',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_BOOKCIPHER, SEARCHSTRING_DE_BOOKCIPHER, SEARCHSTRING_EN_BOOKCIPHER, SEARCHSTRING_FR_BOOKCIPHER]
       ),
       GCWTool(
         tool: BurrowsWheeler(),
         buttonList: [GCWToolActionButtonsEntry(false, 'burrowswheeler_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'burrowswheeler',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_BURROESWHEELER, SEARCHSTRING_DE_BURROESWHEELER, SEARCHSTRING_EN_BURROESWHEELER, SEARCHSTRING_FR_BURROESWHEELER]
       ),
       GCWTool(
         tool: Caesar(),
         buttonList: [GCWToolActionButtonsEntry(false, 'caesar_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'caesar',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_ROTATION, SEARCHSTRING_DE_ROTATION, SEARCHSTRING_EN_ROTATION, SEARCHSTRING_FR_ROTATION,
+          SEARCHSTRING_COMMON_CAESAR, SEARCHSTRING_DE_CAESAR, SEARCHSTRING_EN_CAESAR, SEARCHSTRING_FR_CAESAR]
       ),
       GCWTool(
         tool: CCITT1Selection(),
         buttonList: [GCWToolActionButtonsEntry(false, 'ccitt1_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'ccitt1_selection',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_CCITT1]
+        searchStrings: [
+          SEARCHSTRING_COMMON_CCITT, SEARCHSTRING_DE_CCITT, SEARCHSTRING_EN_CCITT, SEARCHSTRING_FR_CCITT,
+          SEARCHSTRING_COMMON_CCITT1, SEARCHSTRING_DE_CCITT1, SEARCHSTRING_EN_CCITT1, SEARCHSTRING_FR_CCITT1]
       ),
       GCWTool(
         tool: CCITT2Selection(),
         buttonList: [GCWToolActionButtonsEntry(false, 'ccitt2_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'ccitt2_selection',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_CCITT2]
+        searchStrings: [
+          SEARCHSTRING_COMMON_CCITT, SEARCHSTRING_DE_CCITT, SEARCHSTRING_EN_CCITT, SEARCHSTRING_FR_CCITT,
+          SEARCHSTRING_COMMON_CCITT2, SEARCHSTRING_DE_CCITT2, SEARCHSTRING_EN_CCITT2, SEARCHSTRING_FR_CCITT2]
       ),
       GCWTool(
         tool: Chao(),
         buttonList: [GCWToolActionButtonsEntry(false, 'chao_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'chao',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_CHAO, SEARCHSTRING_DE_CHAO, SEARCHSTRING_EN_CHAO, SEARCHSTRING_FR_CHAO]
       ),
       GCWTool(
         tool: CipherWheel(),
         buttonList: [GCWToolActionButtonsEntry(false, 'cipherwheel_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'cipherwheel',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_CIPHERWHEEL]
+        searchStrings: [
+          SEARCHSTRING_COMMON_CIPHERWHEEL, SEARCHSTRING_DE_CIPHERWHEEL, SEARCHSTRING_EN_CIPHERWHEEL, SEARCHSTRING_FR_CIPHERWHEEL]
       ),
       GCWTool(
         tool: CistercianNumbersSelection(),
         buttonList: [GCWToolActionButtonsEntry(false, 'cistercian_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'cistercian_selection',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_CISTERCIAN]
+        searchStrings: [
+          SEARCHSTRING_COMMON_CISTERCIAN, SEARCHSTRING_DE_CISTERCIAN, SEARCHSTRING_EN_CISTERCIAN, SEARCHSTRING_FR_CISTERCIAN]
       ),
       GCWTool(
         tool: ColorPicker(),
         buttonList: [GCWToolActionButtonsEntry(false, 'colors_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'colors',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COLORPICKER, SEARCHSTRING_DE_COLORPICKER, SEARCHSTRING_EN_COLORPICKER, SEARCHSTRING_FR_COLORPICKER]
       ),
       GCWTool(
         tool: CombinatoricsSelection(),
@@ -952,25 +974,33 @@ class Registry {
         tool: Base16(),
         buttonList: [GCWToolActionButtonsEntry(false, 'base_base16_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'base_base16',
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_BASE, SEARCHSTRING_DE_BASE, SEARCHSTRING_EN_BASE, SEARCHSTRING_FR_BASE,
+          SEARCHSTRING_COMMON_BASE16, SEARCHSTRING_DE_BASE16, SEARCHSTRING_EN_BASE16, SEARCHSTRING_FR_BASE16]
       ),
       GCWTool(
         tool: Base32(),
         buttonList: [GCWToolActionButtonsEntry(false, 'base_base32_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'base_base32',
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_BASE, SEARCHSTRING_DE_BASE, SEARCHSTRING_EN_BASE, SEARCHSTRING_FR_BASE,
+          SEARCHSTRING_COMMON_BASE32, SEARCHSTRING_DE_BASE32, SEARCHSTRING_EN_BASE32, SEARCHSTRING_FR_BASE32]
       ),
       GCWTool(
         buttonList: [GCWToolActionButtonsEntry(false, 'base_base64_online_help_url', '', '', Icons.help)],
         tool: Base64(),
         i18nPrefix: 'base_base64',
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_BASE, SEARCHSTRING_DE_BASE, SEARCHSTRING_EN_BASE, SEARCHSTRING_FR_BASE,
+          SEARCHSTRING_COMMON_BASE64, SEARCHSTRING_DE_BASE64, SEARCHSTRING_EN_BASE64, SEARCHSTRING_FR_BASE64]
       ),
       GCWTool(
         buttonList: [GCWToolActionButtonsEntry(false, 'base_base85_online_help_url', '', '', Icons.help)],
         tool: Base85(),
         i18nPrefix: 'base_base85',
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_BASE, SEARCHSTRING_DE_BASE, SEARCHSTRING_EN_BASE, SEARCHSTRING_FR_BASE,
+          SEARCHSTRING_COMMON_BASE85, SEARCHSTRING_DE_BASE85, SEARCHSTRING_EN_BASE85, SEARCHSTRING_FR_BASE85]
       ),
 
       //BCD selection **************************************************************************************************
@@ -978,97 +1008,148 @@ class Registry {
         tool: BCDOriginal(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_original_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_original',
-        searchStrings: [SEARCHSTRING_COMMON_BCDORIGINAL]
+        searchStrings: [
+          SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+          SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+          SEARCHSTRING_COMMON_BCDORIGINAL, SEARCHSTRING_DE_BCDORIGINAL, SEARCHSTRING_EN_BCDORIGINAL, SEARCHSTRING_FR_BCDORIGINAL]
       ),
       GCWTool(
         tool: BCDAiken(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_aiken_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_aiken',
-        searchStrings: [SEARCHSTRING_COMMON_BCDAIKEN]
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCDAIKEN, SEARCHSTRING_DE_BCDAIKEN, SEARCHSTRING_EN_BCDAIKEN, SEARCHSTRING_FR_BCDAIKEN]
       ),
       GCWTool(
         tool: BCDGlixon(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_glixon_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_glixon',
-        searchStrings: [SEARCHSTRING_COMMON_BCDGLIXON]
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCDGLIXON, SEARCHSTRING_DE_BCDGLIXON, SEARCHSTRING_EN_BCDGLIXON, SEARCHSTRING_FR_BCDGLIXON]
       ),
       GCWTool(
         tool: BCDGray(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_gray_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_gray',
-        searchStrings: []
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCDGRAY, SEARCHSTRING_DE_BCDGRAY, SEARCHSTRING_EN_BCDGRAY, SEARCHSTRING_FR_BCDGRAY]
       ),
       GCWTool(
         tool: BCDLibawCraig(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_libawcraig_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_libawcraig',
-        searchStrings: []
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCDLIBAWCRAIG, SEARCHSTRING_DE_BCDLIBAWCRAIG, SEARCHSTRING_EN_BCDLIBAWCRAIG, SEARCHSTRING_FR_BCDLIBAWCRAIG]
       ),
       GCWTool(
         tool: BCDOBrien(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_obrien_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_obrien',
-        searchStrings: []
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCDOBRIEN, SEARCHSTRING_DE_BCDOBRIEN, SEARCHSTRING_EN_BCDOBRIEN, SEARCHSTRING_FR_BCDOBRIEN]
       ),
       GCWTool(
         tool: BCDPetherick(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_petherick_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_petherick',
-        searchStrings: []
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCDPETHERICK, SEARCHSTRING_DE_BCDPETHERICK, SEARCHSTRING_EN_BCDPETHERICK, SEARCHSTRING_FR_BCDPETHERICK]
       ),
       GCWTool(
         tool: BCDStibitz(),
         buttonList: [GCWToolActionButtonsEntry(false, 'base_base85_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_stibitz',
-        searchStrings: []
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCDSTIBITZ, SEARCHSTRING_DE_BCDSTIBITZ, SEARCHSTRING_EN_BCDSTIBITZ, SEARCHSTRING_FR_BCDSTIBITZ]
       ),
       GCWTool(
         tool: BCDTompkins(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_stibitz_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_tompkins',
-        searchStrings: []
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCDTOMPKINS, SEARCHSTRING_DE_BCDTOMPKINS, SEARCHSTRING_EN_BCDTOMPKINS, SEARCHSTRING_FR_BCDTOMPKINS]
       ),
       GCWTool(
         tool: BCDHamming(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_hamming_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_hamming',
-        searchStrings: []
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCDHAMMING, SEARCHSTRING_DE_BCDHAMMING, SEARCHSTRING_EN_BCDHAMMING, SEARCHSTRING_FR_BCDHAMMING]
       ),
       GCWTool(
         tool: BCDBiquinary(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_biquinary_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_biquinary',
-        searchStrings: []
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCD2OF5, SEARCHSTRING_DE_BCD2OF5, SEARCHSTRING_EN_BCD2OF5, SEARCHSTRING_FR_BCD2OF5,
+            SEARCHSTRING_COMMON_BCDBIQUINARY, SEARCHSTRING_DE_BCDBIQUINARY, SEARCHSTRING_EN_BCDBIQUINARY, SEARCHSTRING_FR_BCDBIQUINARY]
       ),
       GCWTool(
         tool: BCD2of5Planet(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_2of5planet_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_2of5planet',
-        searchStrings: []
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCD2OF5, SEARCHSTRING_DE_BCD2OF5, SEARCHSTRING_EN_BCD2OF5, SEARCHSTRING_FR_BCD2OF5,
+            SEARCHSTRING_COMMON_BCD2OF5PLANET, SEARCHSTRING_DE_BCD2OF5PLANET, SEARCHSTRING_EN_BCD2OF5PLANET, SEARCHSTRING_FR_BCD2OF5PLANET]
       ),
       GCWTool(
         tool: BCD2of5Postnet(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_2of5postnet_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_2of5postnet',
-        searchStrings: []
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCD2OF5, SEARCHSTRING_DE_BCD2OF5, SEARCHSTRING_EN_BCD2OF5, SEARCHSTRING_FR_BCD2OF5,
+            SEARCHSTRING_COMMON_BCD2OF5POSTNET, SEARCHSTRING_DE_BCD2OF5POSTNET, SEARCHSTRING_EN_BCD2OF5POSTNET, SEARCHSTRING_FR_BCD2OF5POSTNET]
       ),
       GCWTool(
         tool: BCD2of5(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_2of5_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_2of5',
-        searchStrings: []
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCD2OF5, SEARCHSTRING_DE_BCD2OF5, SEARCHSTRING_EN_BCD2OF5, SEARCHSTRING_FR_BCD2OF5]
       ),
       GCWTool(
         tool: BCD1of10(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_1of10_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_1of10',
-        searchStrings: []
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCD1OF10, SEARCHSTRING_DE_BCD1OF10, SEARCHSTRING_EN_BCD1OF10, SEARCHSTRING_FR_BCD1OF10]
       ),
       GCWTool(
         tool: BCDGrayExcess(),
         buttonList: [GCWToolActionButtonsEntry(false, 'bcd_grayexcess_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'bcd_grayexcess',
-        searchStrings: []
+          searchStrings: [
+            SEARCHSTRING_COMMON_BCD, SEARCHSTRING_DE_BCD, SEARCHSTRING_EN_BCD, SEARCHSTRING_FR_BCD,
+            SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY,SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_BCDGRAYEXCESS, SEARCHSTRING_DE_BCDGRAYEXCESS, SEARCHSTRING_EN_BCDGRAYEXCESS, SEARCHSTRING_FR_BCDGRAYEXCESS]
       ),
 
       // Beaufort Selection *******************************************************************************************
