@@ -475,20 +475,23 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'colors_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'combinatorics_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: [SEARCHSTRING_COMMON_COMBINATORICS]
+        searchStrings: [
+          SEARCHSTRING_COMMON_COMBINATORICS, SEARCHSTRING_DE_COMBINATORICS, SEARCHSTRING_EN_COMBINATORICS, SEARCHSTRING_FR_COMBINATORICS]
       ),
       GCWTool(
         tool: CoordsSelection(),
         buttonList: [GCWToolActionButtonsEntry(false, 'coords_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'coords_selection',
-        searchStrings: [SEARCHSTRING_COMMON_COORDINATES]
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES]
       ),
       GCWTool(
         tool: CrossSumSelection(),
         buttonList: [GCWToolActionButtonsEntry(false, 'crosssum_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'crosssum_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_CROSSSUMS, SEARCHSTRING_DE_CROSSSUMS, SEARCHSTRING_EN_CROSSSUMS, SEARCHSTRING_FR_CROSSSUMS]
       ),
       GCWTool(
         tool: CryptographySelection(),
@@ -1187,19 +1190,26 @@ class Registry {
         tool: Combination(),
         buttonList: [GCWToolActionButtonsEntry(false, 'combinatorics_combination_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'combinatorics_combination',
-        searchStrings: [SEARCHSTRING_COMMON_COMBINATION]
+        searchStrings: [
+          SEARCHSTRING_COMMON_COMBINATORICS, SEARCHSTRING_DE_COMBINATORICS, SEARCHSTRING_EN_COMBINATORICS, SEARCHSTRING_FR_COMBINATORICS,
+          SEARCHSTRING_COMMON_COMBINATORICS_COMBINATION, SEARCHSTRING_DE_COMBINATORICS_COMBINATION, SEARCHSTRING_EN_COMBINATORICS_COMBINATION, SEARCHSTRING_FR_COMBINATORICS_COMBINATION]
       ),
       GCWTool(
         tool: Permutation(),
         buttonList: [GCWToolActionButtonsEntry(false, 'combinatorics_permutation_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'combinatorics_permutation',
-        searchStrings: [SEARCHSTRING_COMMON_PERMUTATION]
+        searchStrings: [
+          SEARCHSTRING_COMMON_COMBINATORICS, SEARCHSTRING_DE_COMBINATORICS, SEARCHSTRING_EN_COMBINATORICS, SEARCHSTRING_FR_COMBINATORICS,
+          SEARCHSTRING_COMMON_COMBINATORICS_PERMUTATION, SEARCHSTRING_DE_COMBINATORICS_PERMUTATION, SEARCHSTRING_EN_COMBINATORICS_PERMUTATION, SEARCHSTRING_FR_COMBINATORICS_PERMUTATION]
       ),
       GCWTool(
         tool: CombinationPermutation(),
         buttonList: [GCWToolActionButtonsEntry(false, 'combinatorics_combinationpermutation_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'combinatorics_combinationpermutation',
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COMBINATORICS, SEARCHSTRING_DE_COMBINATORICS, SEARCHSTRING_EN_COMBINATORICS, SEARCHSTRING_FR_COMBINATORICS,
+          SEARCHSTRING_COMMON_COMBINATORICS_COMBINATION, SEARCHSTRING_DE_COMBINATORICS_COMBINATION, SEARCHSTRING_EN_COMBINATORICS_COMBINATION, SEARCHSTRING_FR_COMBINATORICS_COMBINATION,
+          SEARCHSTRING_COMMON_COMBINATORICS_PERMUTATION, SEARCHSTRING_DE_COMBINATORICS_PERMUTATION, SEARCHSTRING_EN_COMBINATORICS_PERMUTATION, SEARCHSTRING_FR_COMBINATORICS_PERMUTATION]
       ),
 
       //CoordsSelection **********************************************************************************************
@@ -1209,7 +1219,10 @@ class Registry {
         i18nPrefix: 'coords_waypointprojection',
         iconPath: 'assets/coordinates/icon_waypoint_projection.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_COMPASSROSE, SEARCHSTRING_DE_COORDINATES_COMPASSROSE, SEARCHSTRING_EN_COORDINATES_COMPASSROSE, SEARCHSTRING_FR_COORDINATES_COMPASSROSE,
+          SEARCHSTRING_COMMON_COORDINATES_WAYPOINTPROJECTION, SEARCHSTRING_DE_COORDINATES_WAYPOINTPROJECTION, SEARCHSTRING_EN_COORDINATES_WAYPOINTPROJECTION, SEARCHSTRING_FR_COORDINATES_WAYPOINTPROJECTION]
       ),
       GCWTool(
         tool: DistanceBearing(),
@@ -1217,7 +1230,9 @@ class Registry {
         i18nPrefix: 'coords_distancebearing',
         iconPath: 'assets/coordinates/icon_distance_and_bearing.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_DISTANCEBEARING, SEARCHSTRING_DE_COORDINATES_DISTANCEBEARING, SEARCHSTRING_EN_COORDINATES_DISTANCEBEARING, SEARCHSTRING_FR_COORDINATES_DISTANCEBEARING]
       ),
       GCWTool(
         tool: FormatConverter(),
@@ -1225,7 +1240,9 @@ class Registry {
         i18nPrefix: 'coords_formatconverter',
         iconPath: 'assets/coordinates/icon_format_converter.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_FORMATCONVERTER, SEARCHSTRING_DE_COORDINATES_FORMATCONVERTER, SEARCHSTRING_EN_COORDINATES_FORMATCONVERTER, SEARCHSTRING_FR_COORDINATES_FORMATCONVERTER]
       ),
       GCWTool(
         tool: MapView(),
@@ -1234,7 +1251,9 @@ class Registry {
         i18nPrefix: 'coords_openmap',
         iconPath: 'assets/coordinates/icon_free_map.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_MAPVIEW, SEARCHSTRING_DE_COORDINATES_MAPVIEW, SEARCHSTRING_EN_COORDINATES_MAPVIEW, SEARCHSTRING_FR_COORDINATES_MAPVIEW]
       ),
       GCWTool(
         tool: VariableCoordinateFormulas(),
@@ -1242,7 +1261,10 @@ class Registry {
         i18nPrefix: 'coords_variablecoordinate',
         iconPath: 'assets/coordinates/icon_variable_coordinate.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_FORMULASOLVER, SEARCHSTRING_DE_FORMULASOLVER, SEARCHSTRING_EN_FORMULASOLVER, SEARCHSTRING_FR_FORMULASOLVER,
+          SEARCHSTRING_COMMON_COORDINATES_VARIABLECOORDINATEFORMULAS, SEARCHSTRING_DE_COORDINATES_VARIABLECOORDINATEFORMULAS, SEARCHSTRING_EN_COORDINATES_VARIABLECOORDINATEFORMULAS, SEARCHSTRING_FR_COORDINATES_VARIABLECOORDINATEFORMULAS]
       ),
       GCWTool(
         tool: CoordinateAveraging(),
@@ -1250,7 +1272,9 @@ class Registry {
         i18nPrefix: 'coords_averaging',
         iconPath: 'assets/coordinates/icon_coordinate_measurement.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_COORDINATEAVARAGING, SEARCHSTRING_EN_COORDINATES_COORDINATEAVARAGING, SEARCHSTRING_EN_COORDINATES_COORDINATEAVARAGING, SEARCHSTRING_FR_COORDINATES_COORDINATEAVARAGING]
       ),
       GCWTool(
         tool: CenterTwoPoints(),
@@ -1258,7 +1282,9 @@ class Registry {
         i18nPrefix: 'coords_centertwopoints',
         iconPath: 'assets/coordinates/icon_center_two_points.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_CENTERTWOPOINTS, SEARCHSTRING_DE_COORDINATES_CENTERTWOPOINTS, SEARCHSTRING_EN_COORDINATES_CENTERTWOPOINTS, SEARCHSTRING_FR_COORDINATES_CENTERTWOPOINTS]
       ),
       GCWTool(
         tool: CenterThreePoints(),
@@ -1266,7 +1292,9 @@ class Registry {
         i18nPrefix: 'coords_centerthreepoints',
         iconPath: 'assets/coordinates/icon_center_three_points.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_CENTERTHREEPOINTS, SEARCHSTRING_DE_COORDINATES_CENTERTHREEPOINTS, SEARCHSTRING_EN_COORDINATES_CENTERTHREEPOINTS, SEARCHSTRING_FR_COORDINATES_CENTERTHREEPOINTS]
       ),
       GCWTool(
         tool: SegmentLine(),
@@ -1274,7 +1302,9 @@ class Registry {
         i18nPrefix: 'coords_segmentline',
         iconPath: 'assets/coordinates/icon_segment_line.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_SEGMENTLINE, SEARCHSTRING_DE_COORDINATES_SEGMENTLINE, SEARCHSTRING_EN_COORDINATES_SEGMENTLINE, SEARCHSTRING_FR_COORDINATES_SEGMENTLINE]
       ),
       GCWTool(
         tool: SegmentBearings(),
@@ -1282,7 +1312,9 @@ class Registry {
         i18nPrefix: 'coords_segmentbearings',
         iconPath: 'assets/coordinates/icon_segment_bearings.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_SEGMENTBEARING, SEARCHSTRING_DE_COORDINATES_SEGMENTBEARING, SEARCHSTRING_EN_COORDINATES_SEGMENTBEARING, SEARCHSTRING_FR_COORDINATES_SEGMENTBEARING]
       ),
       GCWTool(
         tool: CrossBearing(),
@@ -1290,7 +1322,9 @@ class Registry {
         i18nPrefix: 'coords_crossbearing',
         iconPath: 'assets/coordinates/icon_cross_bearing.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_CROSSBEARING, SEARCHSTRING_DE_COORDINATES_CROSSBEARING, SEARCHSTRING_EN_COORDINATES_CROSSBEARING, SEARCHSTRING_FR_COORDINATES_CROSSBEARING]
       ),
       GCWTool(
         tool: IntersectBearings(),
@@ -1298,7 +1332,10 @@ class Registry {
         i18nPrefix: 'coords_intersectbearings',
         iconPath: 'assets/coordinates/icon_intersect_bearings.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_COMPASSROSE, SEARCHSTRING_DE_COORDINATES_COMPASSROSE, SEARCHSTRING_EN_COORDINATES_COMPASSROSE, SEARCHSTRING_FR_COORDINATES_COMPASSROSE,
+          SEARCHSTRING_COMMON_COORDINATES_INTERSECTBEARING, SEARCHSTRING_DE_COORDINATES_INTERSECTBEARING, SEARCHSTRING_EN_COORDINATES_INTERSECTBEARING, SEARCHSTRING_FR_COORDINATES_INTERSECTBEARING]
       ),
       GCWTool(
         tool: IntersectFourPoints(),
@@ -1306,7 +1343,9 @@ class Registry {
         i18nPrefix: 'coords_intersectfourpoints',
         iconPath: 'assets/coordinates/icon_intersect_four_points.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_INTERSECTFOURPOINTS, SEARCHSTRING_DE_COORDINATES_INTERSECTFOURPOINTS, SEARCHSTRING_EN_COORDINATES_INTERSECTFOURPOINTS, SEARCHSTRING_FR_COORDINATES_INTERSECTFOURPOINTS]
       ),
       GCWTool(
         tool: IntersectGeodeticAndCircle(),
@@ -1314,7 +1353,10 @@ class Registry {
         i18nPrefix: 'coords_intersectbearingcircle',
         iconPath: 'assets/coordinates/icon_intersect_bearing_and_circle.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_COMPASSROSE, SEARCHSTRING_DE_COORDINATES_COMPASSROSE, SEARCHSTRING_EN_COORDINATES_COMPASSROSE, SEARCHSTRING_FR_COORDINATES_COMPASSROSE,
+          SEARCHSTRING_COMMON_COORDINATES_INTERSECTGEODETICANDCIRCLE, SEARCHSTRING_DE_COORDINATES_INTERSECTGEODETICANDCIRCLE, SEARCHSTRING_EN_COORDINATES_INTERSECTGEODETICANDCIRCLE, SEARCHSTRING_FR_COORDINATES_INTERSECTGEODETICANDCIRCLE]
       ),
       GCWTool(
         tool: IntersectTwoCircles(),
@@ -1322,7 +1364,9 @@ class Registry {
         i18nPrefix: 'coords_intersecttwocircles',
         iconPath: 'assets/coordinates/icon_intersect_two_circles.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_INTERSECTTWOCIRCLES, SEARCHSTRING_DE_COORDINATES_INTERSECTTWOCIRCLES, SEARCHSTRING_EN_COORDINATES_INTERSECTTWOCIRCLES, SEARCHSTRING_FR_COORDINATES_INTERSECTTWOCIRCLES]
       ),
       GCWTool(
         tool: IntersectThreeCircles(),
@@ -1330,7 +1374,9 @@ class Registry {
         i18nPrefix: 'coords_intersectthreecircles',
         iconPath: 'assets/coordinates/icon_intersect_three_circles.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_INTERSECTTHREECIRCLES, SEARCHSTRING_DE_COORDINATES_INTERSECTTHREECIRCLES, SEARCHSTRING_EN_COORDINATES_INTERSECTTHREECIRCLES, SEARCHSTRING_FR_COORDINATES_INTERSECTTHREECIRCLES]
       ),
       GCWTool(
         tool: Antipodes(),
@@ -1338,7 +1384,9 @@ class Registry {
         i18nPrefix: 'coords_antipodes',
         iconPath: 'assets/coordinates/icon_antipodes.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_ANTIPODES, SEARCHSTRING_DE_COORDINATES_ANTIPODES, SEARCHSTRING_EN_COORDINATES_ANTIPODES, SEARCHSTRING_FR_COORDINATES_ANTIPODES]
       ),
       GCWTool(
         tool: Intersection(),
@@ -1346,7 +1394,9 @@ class Registry {
         i18nPrefix: 'coords_intersection',
         iconPath: 'assets/coordinates/icon_intersection.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_INTERSECTION, SEARCHSTRING_DE_COORDINATES_INTERSECTION, SEARCHSTRING_EN_COORDINATES_INTERSECTION, SEARCHSTRING_R_COORDINATES_INTERSECTION]
       ),
       GCWTool(
         tool: Resection(),
@@ -1354,7 +1404,9 @@ class Registry {
         i18nPrefix: 'coords_resection',
         iconPath: 'assets/coordinates/icon_resection.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_RESECTION, SEARCHSTRING_DE_COORDINATES_RESECTION, SEARCHSTRING_EN_COORDINATES_RESECTION, SEARCHSTRING_FR_COORDINATES_RESECTION]
       ),
       GCWTool(
         tool: EquilateralTriangle(),
@@ -1362,7 +1414,9 @@ class Registry {
         i18nPrefix: 'coords_equilateraltriangle',
         iconPath: 'assets/coordinates/icon_equilateral_triangle.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_EQUILATERALTRIANGLE, SEARCHSTRING_DE_COORDINATES_EQUILATERALTRIANGLE, SEARCHSTRING_EN_COORDINATES_EQUILATERALTRIANGLE, SEARCHSTRING_R_COORDINATES_EQUILATERALTRIANGLE]
       ),
       GCWTool(
         tool: EllipsoidTransform(),
@@ -1370,7 +1424,9 @@ class Registry {
         i18nPrefix: 'coords_ellipsoidtransform',
         iconPath: 'assets/coordinates/icon_ellipsoid_transform.png',
         category: ToolCategory.COORDINATES,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_COORDINATES, SEARCHSTRING_DE_COORDINATES, SEARCHSTRING_EN_COORDINATES, SEARCHSTRING_FR_COORDINATES,
+          SEARCHSTRING_COMMON_COORDINATES_ELLIPSOIDTRANSFORM, SEARCHSTRING_DE_COORDINATES_ELLIPSOIDTRANSFORM, SEARCHSTRING_EN_COORDINATES_ELLIPSOIDTRANSFORM, SEARCHSTRING_FR_COORDINATES_ELLIPSOIDTRANSFORM]
       ),
 
       //CrossSumSelection *******************************************************************************************
@@ -1378,31 +1434,42 @@ class Registry {
         tool: CrossSum(),
         buttonList: [GCWToolActionButtonsEntry(false, 'crosssum_crosssum_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'crosssum_crosssum',
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_CROSSSUMS, SEARCHSTRING_DE_CROSSSUMS, SEARCHSTRING_EN_CROSSSUMS, SEARCHSTRING_FR_CROSSSUMS]
       ),
       GCWTool(
         tool: CrossSumRange(),
         buttonList: [GCWToolActionButtonsEntry(false, 'crosssum_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'crosssum_range',
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_CROSSSUMS, SEARCHSTRING_DE_CROSSSUMS, SEARCHSTRING_EN_CROSSSUMS, SEARCHSTRING_FR_CROSSSUMS,
+          SEARCHSTRING_COMMON_CROSSUMRANGE, SEARCHSTRING_DE_CROSSUMRANGE, SEARCHSTRING_EN_CROSSUMRANGE, SEARCHSTRING_FR_CROSSUMRANGE]
       ),
       GCWTool(
         tool: IteratedCrossSumRange(),
         buttonList: [GCWToolActionButtonsEntry(false, 'crosssum_range_iterated_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'crosssum_range_iterated',
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_CROSSSUMS, SEARCHSTRING_DE_CROSSSUMS, SEARCHSTRING_EN_CROSSSUMS, SEARCHSTRING_FR_CROSSSUMS,
+          SEARCHSTRING_COMMON_ITERATEDCROSSSUMRANGE, SEARCHSTRING_DE_ITERATEDCROSSSUMRANGE, SEARCHSTRING_EN_ITERATEDCROSSSUMRANGE, SEARCHSTRING_FR_ITERATEDCROSSSUMRANGE]
       ),
       GCWTool(
         tool: CrossSumRangeFrequency(),
         buttonList: [GCWToolActionButtonsEntry(false, 'crosssum_range_frequency_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'crosssum_range_frequency',
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_CROSSSUMS, SEARCHSTRING_DE_CROSSSUMS, SEARCHSTRING_EN_CROSSSUMS, SEARCHSTRING_FR_CROSSSUMS,
+          SEARCHSTRING_COMMON_CROSSUMRANGE, SEARCHSTRING_DE_CROSSUMRANGE, SEARCHSTRING_EN_CROSSUMRANGE, SEARCHSTRING_FR_CROSSUMRANGE,
+          SEARCHSTRING_COMMON_ITERATEDCROSSUMRANGEFREQUENCY, SEARCHSTRING_DE_ITERATEDCROSSUMRANGEFREQUENCY, SEARCHSTRING_EN_ITERATEDCROSSUMRANGEFREQUENCY, SEARCHSTRING_FR_ITERATEDCROSSUMRANGEFREQUENCY]
       ),
       GCWTool(
         tool: IteratedCrossSumRangeFrequency(),
         buttonList: [GCWToolActionButtonsEntry(false, 'crosssum_range_iterated_frequency_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'crosssum_range_iterated_frequency',
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_CROSSSUMS, SEARCHSTRING_DE_CROSSSUMS, SEARCHSTRING_EN_CROSSSUMS, SEARCHSTRING_FR_CROSSSUMS,
+          SEARCHSTRING_COMMON_CROSSUMRANGE, SEARCHSTRING_DE_CROSSUMRANGE, SEARCHSTRING_EN_CROSSUMRANGE, SEARCHSTRING_FR_CROSSUMRANGE,
+          SEARCHSTRING_COMMON_CROSSSUMRANGEFREQUENCY, SEARCHSTRING_DE_CROSSSUMRANGEFREQUENCY,SEARCHSTRING_EN_CROSSSUMRANGEFREQUENCY,SEARCHSTRING_FR_CROSSSUMRANGEFREQUENCY]
       ),
 
       //DatesSelection **********************************************************************************************
