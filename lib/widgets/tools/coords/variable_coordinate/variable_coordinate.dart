@@ -106,10 +106,6 @@ class VariableCoordinateState extends State<VariableCoordinate> {
     }
   }
 
-  _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
-    _calculateOutput(context, currentFromInput : currentFromInput, currentToInput : currentToInput);
-  }
-
   _updateEntry(dynamic id, String key, String value) {
     var entry = widget.formula.values.firstWhere((element) => element.id == id);
     entry.key = key;
@@ -211,7 +207,6 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         valueInputFormatters: [CoordsTextVariableCoordinateTextInputFormatter()],
         valueFlex: 2,
         onAddEntry: _addEntry,
-        onNewEntryChanged: _updateNewEntry,
         onDispose: _disposeEntry,
 
         middleWidget: SizedBox(height: 10),
