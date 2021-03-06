@@ -148,10 +148,25 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
   }
 
   _exportGroup(FormulaGroup group) {
+    var mode = TextExportMode.QR;
+    String text = jsonEncode(group.toMap()).toString();
+    var contentWidget = GCWTextExport(
+        text: text,
+        onModeChanged: (value) {
+          mode = value;
+        },
+    );
     showGCWDialog(context, i18n(context, 'formulasolver_groups_exportgroup'),
-      GCWTextExport(text: jsonEncode(group.toMap()).toString()),
-      [GCWDialogButton(
-        text: 'OK',
+        contentWidget,
+      [
+        GCWDialogButton(
+          text: i18n(context, 'common_exportfile_saveoutput'),
+          onPressed: () {
+            exportFile(text, group.name, mode, context);
+          },
+        ),
+        GCWDialogButton(
+          text: 'OK',
       )],
       cancelButton: false
     );
