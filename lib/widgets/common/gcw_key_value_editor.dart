@@ -17,8 +17,8 @@ class GCWKeyValueEditor extends StatefulWidget {
   final Function onAddEntry;
   final Function onAddEntry2;
   final Function onDispose;
-  final String alphabetButton1Label;
-  final String alphabetButton2Label;
+  final String alphabetInstertButtonLabel;
+  final String alphabetAddAndAdjustLetterButtonLabel;
 
   final Widget middleWidget;
 
@@ -40,8 +40,8 @@ class GCWKeyValueEditor extends StatefulWidget {
     this.onAddEntry,
     this.onAddEntry2,
     this.onDispose,
-    this.alphabetButton1Label,
-    this.alphabetButton2Label,
+    this.alphabetInstertButtonLabel,
+    this.alphabetAddAndAdjustLetterButtonLabel,
 
     this.middleWidget,
 
@@ -148,8 +148,8 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
               ),
               flex: widget.valueFlex ?? 1,
             ),
-            widget.alphabetButton1Label != null
-              ? _alphabetButton1()
+            widget.alphabetInstertButtonLabel != null
+              ? _alphabetAddLetterButton()
               : GCWIconButton(
                   iconData: Icons.add,
                   onPressed: () {
@@ -161,17 +161,17 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
                     });
                   }
                 ),
-            widget.alphabetButton2Label != null ? _alphabetButton2() : Container()
+            widget.alphabetAddAndAdjustLetterButtonLabel != null ? _alphabetAddAndAdjustLetterButton() : Container()
           ],
         ),
       ],
     );
   }
 
-  Widget _alphabetButton1() {
+  Widget _alphabetAddLetterButton() {
     return Container(
         child: GCWButton(
-          text: widget.alphabetButton1Label,
+          text: widget.alphabetInstertButtonLabel,
           onPressed: () {
             setState(() {
               if (widget.onAddEntry != null)
@@ -185,10 +185,10 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
     );
   }
 
-  Widget _alphabetButton2() {
+  Widget _alphabetAddAndAdjustLetterButton() {
     return Container(
         child: GCWButton(
-          text: widget.alphabetButton2Label,
+          text: widget.alphabetAddAndAdjustLetterButtonLabel,
           onPressed: _isAddAndAdjustEnabled() ? () {
             setState(() {
               if (widget.onAddEntry2 != null)
