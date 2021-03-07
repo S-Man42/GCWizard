@@ -857,7 +857,7 @@ class Registry {
         i18nPrefix: 'railfence',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_RAILFENCE, SEARCHSTRING_DE_RAILFENCE, SEARCHSTRING_EN_RAILFENCE, SEARCHSTRING_FR_RAILFENCE
         ]
       ),
       GCWTool(
@@ -866,7 +866,7 @@ class Registry {
         i18nPrefix: 'rc4',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_RC4, SEARCHSTRING_DE_RC4, SEARCHSTRING_EN_RC4, SEARCHSTRING_FR_RC4
         ]
       ),
       GCWTool(
@@ -875,7 +875,7 @@ class Registry {
         i18nPrefix: 'resistor_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: [
-          SEARCHSTRING_COMMON_RESISTORSELECTION
+          SEARCHSTRING_COMMON_RESISTOR, SEARCHSTRING_DE_RESISTOR, SEARCHSTRING_EN_RESISTOR, SEARCHSTRING_FR_RESISTOR
         ]
       ),
       GCWTool(
@@ -884,7 +884,7 @@ class Registry {
         i18nPrefix: 'reverse',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_REVERSE, SEARCHSTRING_DE_REVERSE, SEARCHSTRING_EN_REVERSE, SEARCHSTRING_FR_REVERSE
         ]
       ),
       GCWTool(
@@ -893,7 +893,7 @@ class Registry {
         i18nPrefix: 'romannumbers',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-          SEARCHSTRING_COMMON_ROMANNUMBERSSELECTION
+          SEARCHSTRING_COMMON_ROMAN_NUMBERS, SEARCHSTRING_DE_ROMAN_NUMBERS, SEARCHSTRING_EN_ROMAN_NUMBERS, SEARCHSTRING_FR_ROMAN_NUMBERS
         ]
       ),
       GCWTool(
@@ -902,7 +902,7 @@ class Registry {
         i18nPrefix: 'rotation_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-          SEARCHSTRING_COMMON_ROTATION_ROTATIONSELECTION
+          SEARCHSTRING_COMMON_ROTATION, SEARCHSTRING_DE_ROTATION, SEARCHSTRING_EN_ROTATION, SEARCHSTRING_FR_ROTATION
         ]
       ),
       GCWTool(
@@ -911,7 +911,8 @@ class Registry {
         i18nPrefix: 'rsa_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-          SEARCHSTRING_COMMON_RSASELECTION
+          SEARCHSTRING_COMMON_RSA, SEARCHSTRING_DE_RSA, SEARCHSTRING_EN_RSA, SEARCHSTRING_FR_RSA,
+          SEARCHSTRING_COMMON_PRIMES, SEARCHSTRING_DE_PRIMES, SEARCHSTRING_EN_PRIMES, SEARCHSTRING_FR_PRIMES
         ]
       ),
       GCWTool(
@@ -919,7 +920,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'scienceandtechnology_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'scienceandtechnology_selection',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_SCIENCEANDTECHNOLOGYSELECTION, SEARCHSTRING_DE_SCIENCEANDTECHNOLOGYSELECTION, SEARCHSTRING_EN_SCIENCEANDTECHNOLOGYSELECTION, SEARCHSTRING_FR_SCIENCEANDTECHNOLOGYSELECTION
         ]
       ),
       GCWTool(
@@ -3494,7 +3495,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'resistor_colorcodecalculator_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'resistor_colorcodecalculator',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_RESISTOR, SEARCHSTRING_DE_RESISTOR, SEARCHSTRING_EN_RESISTOR, SEARCHSTRING_FR_RESISTOR,
+          SEARCHSTRING_COMMON_RESISTOR_COLORCODE, SEARCHSTRING_DE_RESISTOR_COLORCODE, SEARCHSTRING_EN_RESISTOR_COLORCODE, SEARCHSTRING_FR_RESISTOR_COLORCODE
         ]
       ),
       GCWTool(
@@ -3502,7 +3504,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'resistor_eia96_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'resistor_eia96',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_RESISTOR, SEARCHSTRING_DE_RESISTOR, SEARCHSTRING_EN_RESISTOR, SEARCHSTRING_FR_RESISTOR,
+          SEARCHSTRING_COMMON_RESISTOREIA96, SEARCHSTRING_DE_RESISTOREIA96, SEARCHSTRING_EN_RESISTOREIA96, SEARCHSTRING_FR_RESISTOREIA96
         ]
       ),
 
@@ -3512,7 +3515,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'romannumbers_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'romannumbers',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_ROMAN_NUMBERS, SEARCHSTRING_DE_ROMAN_NUMBERS, SEARCHSTRING_EN_ROMAN_NUMBERS, SEARCHSTRING_FR_ROMAN_NUMBERS,
         ]
       ),
       GCWTool(
@@ -3520,7 +3523,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'chronogram_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'chronogram',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_ROMAN_NUMBERS, SEARCHSTRING_DE_ROMAN_NUMBERS, SEARCHSTRING_EN_ROMAN_NUMBERS, SEARCHSTRING_FR_ROMAN_NUMBERS,
+          SEARCHSTRING_COMMON_CHRONOGRAM, SEARCHSTRING_DE_CHRONOGRAM, SEARCHSTRING_EN_CHRONOGRAM, SEARCHSTRING_FR_CHRONOGRAM
         ]
       ),
 
@@ -3530,7 +3534,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'rotation_rot13_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'rotation_rot13',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_ROTATION, SEARCHSTRING_DE_ROTATION, SEARCHSTRING_EN_ROTATION, SEARCHSTRING_FR_ROTATION,
+          SEARCHSTRING_COMMON_ROTATION_ROT13, SEARCHSTRING_DE_ROTATION_ROT13, SEARCHSTRING_EN_ROTATION_ROT13, SEARCHSTRING_FR_ROTATION_ROT13
         ]
       ),
       GCWTool(
@@ -3538,7 +3543,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'rotation_rot5_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'rotation_rot5',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_ROTATION, SEARCHSTRING_DE_ROTATION, SEARCHSTRING_EN_ROTATION, SEARCHSTRING_FR_ROTATION,
+          SEARCHSTRING_COMMON_ROTATION_ROT5, SEARCHSTRING_DE_ROTATION_ROT5, SEARCHSTRING_EN_ROTATION_ROT5, SEARCHSTRING_FR_ROTATION_ROT5
         ]
       ),
       GCWTool(
@@ -3546,7 +3552,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'rotation_rot18_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'rotation_rot18',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_ROTATION, SEARCHSTRING_DE_ROTATION, SEARCHSTRING_EN_ROTATION, SEARCHSTRING_FR_ROTATION,
+          SEARCHSTRING_COMMON_ROTATION_ROT18, SEARCHSTRING_DE_ROTATION_ROT18, SEARCHSTRING_EN_ROTATION_ROT18, SEARCHSTRING_FR_ROTATION_ROT18
         ]
       ),
       GCWTool(
@@ -3554,7 +3561,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'rotation_rot47_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'rotation_rot47',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_ROTATION, SEARCHSTRING_DE_ROTATION, SEARCHSTRING_EN_ROTATION, SEARCHSTRING_FR_ROTATION,
+          SEARCHSTRING_COMMON_ROTATION_ROT47, SEARCHSTRING_DE_ROTATION_ROT47, SEARCHSTRING_EN_ROTATION_ROT47, SEARCHSTRING_FR_ROTATION_ROT47
         ]
       ),
       GCWTool(
@@ -3562,7 +3570,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'rotation_general_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'rotation_general',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_ROTATION, SEARCHSTRING_DE_ROTATION, SEARCHSTRING_EN_ROTATION, SEARCHSTRING_FR_ROTATION
         ]
       ),
 
@@ -3572,7 +3580,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'rsa_rsa_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'rsa_rsa',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_RSA, SEARCHSTRING_DE_RSA, SEARCHSTRING_EN_RSA, SEARCHSTRING_FR_RSA,
+          SEARCHSTRING_COMMON_PRIMES, SEARCHSTRING_DE_PRIMES, SEARCHSTRING_EN_PRIMES, SEARCHSTRING_FR_PRIMES
         ]
       ),
       GCWTool(
@@ -3580,7 +3589,9 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'rsa_e.checker_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'rsa_e.checker',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_RSA, SEARCHSTRING_DE_RSA, SEARCHSTRING_EN_RSA, SEARCHSTRING_FR_RSA,
+          SEARCHSTRING_COMMON_PRIMES, SEARCHSTRING_DE_PRIMES, SEARCHSTRING_EN_PRIMES, SEARCHSTRING_FR_PRIMES,
+          SEARCHSTRING_COMMON_RSA_ECHECKER, SEARCHSTRING_DE_RSA_ECHECKER, SEARCHSTRING_EN_RSA_ECHECKER, SEARCHSTRING_FR_RSA_ECHECKER
         ]
       ),
       GCWTool(
@@ -3588,7 +3599,9 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'rsa_d.checker_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'rsa_d.checker',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_RSA, SEARCHSTRING_DE_RSA, SEARCHSTRING_EN_RSA, SEARCHSTRING_FR_RSA,
+          SEARCHSTRING_COMMON_PRIMES, SEARCHSTRING_DE_PRIMES, SEARCHSTRING_EN_PRIMES, SEARCHSTRING_FR_PRIMES,
+          SEARCHSTRING_COMMON_RSA_DCHECKER, SEARCHSTRING_DE_RSA_DCHECKER, SEARCHSTRING_EN_RSA_DCHECKER, SEARCHSTRING_FR_RSA_DCHECKER
         ]
       ),
       GCWTool(
@@ -3596,7 +3609,9 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'rsa_d.calculator_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'rsa_d.calculator',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_RSA, SEARCHSTRING_DE_RSA, SEARCHSTRING_EN_RSA, SEARCHSTRING_FR_RSA,
+          SEARCHSTRING_COMMON_PRIMES, SEARCHSTRING_DE_PRIMES, SEARCHSTRING_EN_PRIMES, SEARCHSTRING_FR_PRIMES,
+          SEARCHSTRING_COMMON_RSA_DCALCULATOR, SEARCHSTRING_DE_RSA_DCALCULATOR, SEARCHSTRING_EN_RSA_DCALCULATOR, SEARCHSTRING_FR_RSA_DCALCULATOR
         ]
       ),
       GCWTool(
@@ -3604,7 +3619,9 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'rsa_n.calculator_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'rsa_n.calculator',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_RSA, SEARCHSTRING_DE_RSA, SEARCHSTRING_EN_RSA, SEARCHSTRING_FR_RSA,
+          SEARCHSTRING_COMMON_PRIMES, SEARCHSTRING_DE_PRIMES, SEARCHSTRING_EN_PRIMES, SEARCHSTRING_FR_PRIMES,
+          SEARCHSTRING_COMMON_RSA_NCALCULATOR, SEARCHSTRING_DE_RSA_NCALCULATOR, SEARCHSTRING_EN_RSA_NCALCULATOR, SEARCHSTRING_FR_RSA_NCALCULATOR
         ]
       ),
       GCWTool(
@@ -3612,6 +3629,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'rsa_phi.calculator_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'rsa_phi.calculator',
         searchStrings: [
+          SEARCHSTRING_COMMON_RSA, SEARCHSTRING_DE_RSA, SEARCHSTRING_EN_RSA, SEARCHSTRING_FR_RSA,
+          SEARCHSTRING_COMMON_PRIMES, SEARCHSTRING_DE_PRIMES, SEARCHSTRING_EN_PRIMES, SEARCHSTRING_FR_PRIMES,
 
         ]
       ),
