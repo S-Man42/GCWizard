@@ -646,7 +646,8 @@ class Registry {
         i18nPrefix: 'gray',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY, SEARCHSTRING_FR_BINARY,
+          SEARCHSTRING_COMMON_GRAY, SEARCHSTRING_DE_GRAY, SEARCHSTRING_EN_GRAY, SEARCHSTRING_FR_GRAY
         ]
       ),
       GCWTool(
@@ -663,7 +664,7 @@ class Registry {
         i18nPrefix: 'hexadecimal',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_HEXADECIMAL, SEARCHSTRING_DE_HEXADECIMAL, SEARCHSTRING_EN_HEXADECIMAL, SEARCHSTRING_FR_HEXADECIMAL
         ]
       ),
       GCWTool(
@@ -672,7 +673,7 @@ class Registry {
         i18nPrefix: 'homophone',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_HOMOPHONE, SEARCHSTRING_DE_HOMOPHONE, SEARCHSTRING_EN_HOMOPHONE, SEARCHSTRING_FR_HOMOPHONE
         ]
       ),
       GCWTool(
@@ -681,7 +682,8 @@ class Registry {
         i18nPrefix: 'kamasutra',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_ROTATION, SEARCHSTRING_DE_ROTATION, SEARCHSTRING_EN_ROTATION, SEARCHSTRING_FR_ROTATION,
+          SEARCHSTRING_COMMON_KAMASUTRA, SEARCHSTRING_DE_KAMASUTRA, SEARCHSTRING_EN_KAMASUTRA, SEARCHSTRING_FR_KAMASUTRA
         ]
       ),
       GCWTool(
@@ -690,7 +692,7 @@ class Registry {
         i18nPrefix: 'kenny',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_KENNY, SEARCHSTRING_DE_KENNY, SEARCHSTRING_EN_KENNY, SEARCHSTRING_FR_KENNY
         ]
       ),
       GCWTool(
@@ -699,7 +701,7 @@ class Registry {
         i18nPrefix: 'keyboard',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_KEYBOARD, SEARCHSTRING_DE_KEYBOARD, SEARCHSTRING_EN_KEYBOARD, SEARCHSTRING_FR_KEYBOARD
         ]
       ),
       GCWTool(
@@ -707,7 +709,9 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'languagegames_selection_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'languagegames_selection',
         category: ToolCategory.CRYPTOGRAPHY,
-        searchStrings: [SEARCHSTRING_COMMON_LANGUAGEGAMES, SEARCHSTRING_DE_LANGUAGEGAMES, SEARCHSTRING_EN_LANGUAGEGAMES, SEARCHSTRING_FR_LANGUAGEGAMES]
+        searchStrings: [
+          SEARCHSTRING_COMMON_LANGUAGEGAMES, SEARCHSTRING_DE_LANGUAGEGAMES, SEARCHSTRING_EN_LANGUAGEGAMES, SEARCHSTRING_FR_LANGUAGEGAMES
+        ]
       ),
       GCWTool(
         tool: MayaNumbersSelection(),
@@ -715,7 +719,7 @@ class Registry {
         i18nPrefix: 'mayanumbers_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-          SEARCHSTRING_COMMON_MAYANUMBERSELECTION
+          SEARCHSTRING_COMMON_MAYANUMBERS, SEARCHSTRING_DE_MAYANUMBERS, SEARCHSTRING_EN_MAYANUMBERS, SEARCHSTRING_FR_MAYANUMBERS
         ]
       ),
       GCWTool(
@@ -724,7 +728,8 @@ class Registry {
         i18nPrefix: 'mexicanarmycipherwheel',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-          SEARCHSTRING_COMMON_MEXICANARMYCIPHERWHEEL
+          SEARCHSTRING_COMMON_CIPHERWHEEL, SEARCHSTRING_DE_CIPHERWHEEL, SEARCHSTRING_EN_CIPHERWHEEL, SEARCHSTRING_FR_CIPHERWHEEL,
+          SEARCHSTRING_COMMON_MEXICANARMYCIPHERWHEEL, SEARCHSTRING_DE_MEXICANARMYCIPHERWHEEL, SEARCHSTRING_EN_MEXICANARMYCIPHERWHEEL, SEARCHSTRING_FR_MEXICANARMYCIPHERWHEEL
         ]
       ),
       GCWTool(
@@ -733,7 +738,7 @@ class Registry {
         i18nPrefix: 'morse',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_MORSE, SEARCHSTRING_DE_MORSE, SEARCHSTRING_EN_MORSE, SEARCHSTRING_FR_MORSE
         ]
       ),
       GCWTool(
@@ -742,7 +747,7 @@ class Registry {
         i18nPrefix: 'multidecoder',
         category: ToolCategory.GENERAL_CODEBREAKERS,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_MULTIDECODER, SEARCHSTRING_DE_MULTIDECODER, SEARCHSTRING_EN_MULTIDECODER, SEARCHSTRING_FR_MULTIDECODER
         ]
       ),
       GCWTool(
@@ -760,7 +765,8 @@ class Registry {
         i18nPrefix: 'numeralbases',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_BINARY, SEARCHSTRING_DE_BINARY, SEARCHSTRING_EN_BINARY, SEARCHSTRING_FR_BINARY,
+          SEARCHSTRING_COMMON_NUMERALBASES, SEARCHSTRING_DE_NUMERALBASES, SEARCHSTRING_EN_NUMERALBASES, SEARCHSTRING_FR_NUMERALBASES
         ]
       ),
       GCWTool(
@@ -769,7 +775,7 @@ class Registry {
         i18nPrefix: 'numeralwords_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-          SEARCHSTRING_COMMON_NUMERALWORDSSELECTION
+          SEARCHSTRING_COMMON_NUMERALWORDS, SEARCHSTRING_DE_NUMERALWORDS, SEARCHSTRING_EN_NUMERALWORDS, SEARCHSTRING_FR_NUMERALWORDS
         ]
       ),
       GCWTool(
@@ -778,7 +784,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'onetimepad_online_help_url', '', '', Icons.help)],
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_ONETIMEPAD, SEARCHSTRING_DE_ONETIMEPAD, SEARCHSTRING_EN_ONETIMEPAD, SEARCHSTRING_FR_ONETIMEPAD
         ]
       ),
       GCWTool(
@@ -787,7 +793,7 @@ class Registry {
         i18nPrefix: 'periodictable_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: [
-          SEARCHSTRING_COMMON_PERIODICTABLESELECTION
+          SEARCHSTRING_COMMON_PERIODICTABLE, SEARCHSTRING_DE_PERIODICTABLE, SEARCHSTRING_EN_PERIODICTABLE, SEARCHSTRING_FR_PERIODICTABLE
         ]
       ),
       GCWTool(
@@ -815,7 +821,7 @@ class Registry {
         i18nPrefix: 'playfair',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_PLAYFAIR, SEARCHSTRING_DE_PLAYFAIR, SEARCHSTRING_EN_PLAYFAIR, SEARCHSTRING_FR_PLAYFAIR
         ]
       ),
       GCWTool(
@@ -824,7 +830,7 @@ class Registry {
         i18nPrefix: 'polybios',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_POLYBIOS, SEARCHSTRING_DE_POLYBIOS, SEARCHSTRING_EN_POLYBIOS, SEARCHSTRING_FR_POLYBIOS
         ]
       ),
       GCWTool(
@@ -833,7 +839,7 @@ class Registry {
         i18nPrefix: 'primes_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: [
-          SEARCHSTRING_COMMON_PRIMESSELECTION
+          SEARCHSTRING_COMMON_PRIMES, SEARCHSTRING_DE_PRIMES, SEARCHSTRING_EN_PRIMES, SEARCHSTRING_FR_PRIMES
         ]
       ),
       GCWTool(
@@ -841,7 +847,9 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'projectiles_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'projectiles',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: []
+        searchStrings: [
+          SEARCHSTRING_COMMON_PROJECTILES, SEARCHSTRING_DE_PROJECTILES, SEARCHSTRING_EN_PROJECTILES, SEARCHSTRING_FR_PROJECTILES
+        ]
       ),
       GCWTool(
         tool: RailFence(),
@@ -1021,7 +1029,9 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'unitconverter_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'unitconverter',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        searchStrings: []
+        searchStrings: [
+
+        ]
       ),
       GCWTool(
         tool: VanitySelection(),
@@ -2254,8 +2264,9 @@ class Registry {
       GCWTool(
         tool: CallForContribution(),
         i18nPrefix: 'mainmenu_callforcontribution',
-        searchStrings:
+        searchStrings: [
 
+        ]
       ),
       GCWTool(
         tool: Licenses(),
@@ -2270,8 +2281,9 @@ class Registry {
         tool: MayaNumbers(),
         buttonList: [GCWToolActionButtonsEntry(false, 'mayanumbers_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'mayanumbers',
-        searchStrings:
+        searchStrings: [
 
+        ]
       ),
 
       //Phi Selection **********************************************************************************************
@@ -2343,8 +2355,9 @@ class Registry {
         tool: NumberSequenceFactorialSelection(),
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_factorial_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_factorial',
-        searchStrings:
+        searchStrings: [
 
+        ]
       ),
       GCWTool(
         tool: NumberSequenceFibonacciSelection(),
@@ -2358,8 +2371,9 @@ class Registry {
         tool: NumberSequenceMersenneSelection(),
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_mersenne_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_mersenne',
-        searchStrings:
+        searchStrings: [
 
+        ]
       ),
       GCWTool(
         tool: NumberSequenceMersennePrimesSelection(),
@@ -2453,8 +2467,9 @@ class Registry {
         tool: NumberSequenceLucasSelection(),
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_lucas_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_lucas',
-        searchStrings:
+        searchStrings: [
 
+        ]
       ),
       GCWTool(
         tool: NumberSequencePellLucasSelection(),
@@ -2526,8 +2541,9 @@ class Registry {
         tool: NumberSequenceFactorialCheckNumber(),
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
-        searchStrings:
+        searchStrings:[
 
+        ]
       ),
       GCWTool(
         tool: NumberSequenceFactorialDigits(),
@@ -3392,7 +3408,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numeralwords_textsearch_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numeralwords_textsearch',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMERALWORDS, SEARCHSTRING_DE_NUMERALWORDS, SEARCHSTRING_EN_NUMERALWORDS, SEARCHSTRING_FR_NUMERALWORDS,
+          SEARCHSTRING_COMMON_NUMERALWORDSTEXTSEARCH, SEARCHSTRING_DE_NUMERALWORDSTEXTSEARCH, SEARCHSTRING_EN_NUMERALWORDSTEXTSEARCH, SEARCHSTRING_FR_NUMERALWORDSTEXTSEARCH
         ]
       ),
       GCWTool(
@@ -3400,7 +3417,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numeralwords_lists_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numeralwords_lists',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMERALWORDS, SEARCHSTRING_DE_NUMERALWORDS, SEARCHSTRING_EN_NUMERALWORDS, SEARCHSTRING_FR_NUMERALWORDS,
+          SEARCHSTRING_COMMON_NUMERALWORDSLISTS, SEARCHSTRING_DE_NUMERALWORDSLISTS, SEARCHSTRING_EN_NUMERALWORDSLISTS, SEARCHSTRING_FR_NUMERALWORDSLISTS
         ]
       ),
 
@@ -3410,7 +3428,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'periodictable_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'periodictable',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_PERIODICTABLE, SEARCHSTRING_DE_PERIODICTABLE, SEARCHSTRING_EN_PERIODICTABLE, SEARCHSTRING_FR_PERIODICTABLE,
         ]
       ),
       GCWTool(
@@ -3418,7 +3436,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'periodictabledataview_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'periodictabledataview',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_PERIODICTABLE, SEARCHSTRING_DE_PERIODICTABLE, SEARCHSTRING_EN_PERIODICTABLE, SEARCHSTRING_FR_PERIODICTABLE,
+          SEARCHSTRING_COMMON_PERIODICTABLEDATAVIEW, SEARCHSTRING_DE_PERIODICTABLEDATAVIEW, SEARCHSTRING_EN_PERIODICTABLEDATAVIEW,SEARCHSTRING_FR_PERIODICTABLEDATAVIEW
         ]
       ),
 
@@ -3428,7 +3447,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'primes_nthprime_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'primes_nthprime',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_PRIMES, SEARCHSTRING_DE_PRIMES, SEARCHSTRING_EN_PRIMES, SEARCHSTRING_FR_PRIMES,
+          SEARCHSTRING_COMMON_PRIMES_NTHPRIME, SEARCHSTRING_DE_PRIMES_NTHPRIME, SEARCHSTRING_EN_PRIMES_NTHPRIME, SEARCHSTRING_FR_PRIMES_NTHPRIME
         ]
       ),
       GCWTool(
@@ -3436,7 +3456,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'primes_isprime_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'primes_isprime',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_PRIMES, SEARCHSTRING_DE_PRIMES, SEARCHSTRING_EN_PRIMES, SEARCHSTRING_FR_PRIMES,
+          SEARCHSTRING_COMMON_PRIMES_ISPRIME, SEARCHSTRING_DE_PRIMES_ISPRIME, SEARCHSTRING_EN_PRIMES_ISPRIME, SEARCHSTRING_FR_PRIMES_ISPRIME
         ]
       ),
       GCWTool(
@@ -3444,7 +3465,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'primes_nearestprime_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'primes_nearestprime',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_PRIMES, SEARCHSTRING_DE_PRIMES, SEARCHSTRING_EN_PRIMES, SEARCHSTRING_FR_PRIMES,
+          SEARCHSTRING_COMMON_PRIMES_NEARESTPRIME, SEARCHSTRING_DE_PRIMES_NEARESTPRIME, SEARCHSTRING_EN_PRIMES_NEARESTPRIME, SEARCHSTRING_FR_PRIMES_NEARESTPRIME
         ]
       ),
       GCWTool(
@@ -3452,7 +3474,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'primes_primeindex_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'primes_primeindex',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_PRIMES, SEARCHSTRING_DE_PRIMES, SEARCHSTRING_EN_PRIMES, SEARCHSTRING_FR_PRIMES,
+          SEARCHSTRING_COMMON_PRIMES_PRIMEINDEX, SEARCHSTRING_DE_PRIMES_PRIMEINDEX, SEARCHSTRING_EN_PRIMES_PRIMEINDEX, SEARCHSTRING_FR_PRIMES_PRIMEINDEX
         ]
       ),
       GCWTool(
@@ -3460,7 +3483,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'primes_integerfactorization_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'primes_integerfactorization',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_PRIMES, SEARCHSTRING_DE_PRIMES, SEARCHSTRING_EN_PRIMES, SEARCHSTRING_FR_PRIMES,
+          SEARCHSTRING_COMMON_PRIMES_INTEGERFACTORIZATION, SEARCHSTRING_DE_PRIMES_INTEGERFACTORIZATION, SEARCHSTRING_EN_PRIMES_INTEGERFACTORIZATION, SEARCHSTRING_FR_PRIMES_INTEGERFACTORIZATION
         ]
       ),
 

@@ -686,30 +686,110 @@ final SEARCHSTRING_COMMON_HASHES_SHA512_256 = 'sha512t sha-512t sha2-512t 256bit
 final SEARCHSTRING_DE_HASHES_SHA512_256 = '';
 final SEARCHSTRING_EN_HASHES_SHA512_256 = '';
 final SEARCHSTRING_FR_HASHES_SHA512_256 = '';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+final SEARCHSTRING_COMMON_GRAY = 'gray hamming  hamming';
+final SEARCHSTRING_DE_GRAY = 'distanz';
+final SEARCHSTRING_EN_GRAY = 'distance';
+final SEARCHSTRING_FR_GRAY = '';
+final SEARCHSTRING_COMMON_HEXADECIMAL = '16';
+final SEARCHSTRING_DE_HEXADECIMAL = 'hexadezimalzahlen dezimalzahlen';
+final SEARCHSTRING_EN_HEXADECIMAL = 'hexadecimal decimal';
+final SEARCHSTRING_FR_HEXADECIMAL = '';
+final SEARCHSTRING_COMMON_HOMOPHONE = 'homophone';
+final SEARCHSTRING_DE_HOMOPHONE = 'monoalphabetische buchstabenhaeufigkeiten';
+final SEARCHSTRING_EN_HOMOPHONE = 'monoalphabetical letterfrequency';
+final SEARCHSTRING_FR_HOMOPHONE = 'monoalphabetique lettres frequences';
+final SEARCHSTRING_COMMON_KAMASUTRA = 'kama-sutra kamasutra 44 vatsyayana mlecchita vikalpa';
+final SEARCHSTRING_DE_KAMASUTRA = '';
+final SEARCHSTRING_EN_KAMASUTRA = '';
+final SEARCHSTRING_FR_KAMASUTRA = '';
+final SEARCHSTRING_COMMON_KENNY = 'kennys kenny\'s code southpark mpf mfp fmp fpm pmf pfm';
+final SEARCHSTRING_DE_KENNY = '';
+final SEARCHSTRING_EN_KENNY = '';
+final SEARCHSTRING_FR_KENNY = '';
+final SEARCHSTRING_COMMON_KEYBOARD = 'layout qwerty qwertz bepo azerty ristome neo colamk dvorak t1 nf z71-300';
+final SEARCHSTRING_DE_KEYBOARD = 'tastatur';
+final SEARCHSTRING_EN_KEYBOARD = 'keyboard';
+final SEARCHSTRING_FR_KEYBOARD = 'clavier';
+final SEARCHSTRING_COMMON_MEXICANARMYCIPHERWHEEL = '  ';
+final SEARCHSTRING_DE_MEXICANARMYCIPHERWHEEL = 'mexiko mexanischearmee';
+final SEARCHSTRING_EN_MEXICANARMYCIPHERWHEEL = 'mexicanarmy mexico';
+final SEARCHSTRING_FR_MEXICANARMYCIPHERWHEEL = 'mexique armee';
+final SEARCHSTRING_COMMON_MAYANUMBERS = 'mayas majas vigesimalsystem 20';
+final SEARCHSTRING_DE_MAYANUMBERS = 'zahlen ziffern';
+final SEARCHSTRING_EN_MAYANUMBERS = 'numbers numerals';
+final SEARCHSTRING_FR_MAYANUMBERS = 'nombres ';
+final SEARCHSTRING_COMMON_MORSE = 'samuel morse ';
+final SEARCHSTRING_DE_MORSE = 'punkte striche';
+final SEARCHSTRING_EN_MORSE = 'dots dashes';
+final SEARCHSTRING_FR_MORSE = 'points tirets';
+final SEARCHSTRING_COMMON_MULTIDECODER = '';
+final SEARCHSTRING_DE_MULTIDECODER = 'universal universeller multiloeser';
+final SEARCHSTRING_EN_MULTIDECODER = 'multisolver multidecoder';
+final SEARCHSTRING_FR_MULTIDECODER = 'solveur ';
+final SEARCHSTRING_COMMON_NUMERALBASES =  'radix';
+final SEARCHSTRING_DE_NUMERALBASES = 'zahlenbasis zahlenbasen zahlensysteme hexadezimal oktal dual';
+final SEARCHSTRING_EN_NUMERALBASES = 'hexadecimal octal octenary numeral systems';
+final SEARCHSTRING_FR_NUMERALBASES = 'base numeros systeme numeration';
+final SEARCHSTRING_COMMON_NUMERALWORDS = '';
+final SEARCHSTRING_DE_NUMERALWORDS = 'zahlwoerter zaehlwort  zahlwort zaehlwoerter';
+final SEARCHSTRING_EN_NUMERALWORDS = 'numeralwords  numberwords  numerals';
+final SEARCHSTRING_FR_NUMERALWORDS = 'mots nombres';
+final SEARCHSTRING_COMMON_NUMERALWORDSLISTS = '';
+final SEARCHSTRING_DE_NUMERALWORDSLISTS = '';
+final SEARCHSTRING_EN_NUMERALWORDSLISTS = '';
+final SEARCHSTRING_FR_NUMERALWORDSLISTS = '';
+final SEARCHSTRING_COMMON_NUMERALWORDSTEXTSEARCH = '';
+final SEARCHSTRING_DE_NUMERALWORDSTEXTSEARCH = 'textanalyse textsuche';
+final SEARCHSTRING_EN_NUMERALWORDSTEXTSEARCH = 'textanalysis textsearch';
+final SEARCHSTRING_FR_NUMERALWORDSTEXTSEARCH = 'recherche texte';
+final SEARCHSTRING_COMMON_ONETIMEPAD = 'onetimepad  one-time-pad otp';
+final SEARCHSTRING_DE_ONETIMEPAD = 'einmalschluessel';
+final SEARCHSTRING_EN_ONETIMEPAD = '';
+final SEARCHSTRING_FR_ONETIMEPAD = 'cle unique';
+final SEARCHSTRING_COMMON_PERIODICTABLE = '';
+final SEARCHSTRING_DE_PERIODICTABLE = 'chemie periodensystemderelemente elemente';
+final SEARCHSTRING_EN_PERIODICTABLE = 'chemistry periodictablesoftheelements elements';
+final SEARCHSTRING_FR_PERIODICTABLE = 'chimie systeme periodique';
+final SEARCHSTRING_COMMON_PERIODICTABLEDATAVIEW = SEARCHSTRING_COMMON_PERIODICTABLE;
+final SEARCHSTRING_DE_PERIODICTABLEDATAVIEW = 'tabelle';
+final SEARCHSTRING_EN_PERIODICTABLEDATAVIEW = 'table';
+final SEARCHSTRING_FR_PERIODICTABLEDATAVIEW = 'tableau';
+final SEARCHSTRING_COMMON_PLAYFAIR = 'playfair transposition substitution';
+final SEARCHSTRING_DE_PLAYFAIR = '';
+final SEARCHSTRING_EN_PLAYFAIR = '';
+final SEARCHSTRING_FR_PLAYFAIR = '';
+final SEARCHSTRING_COMMON_POLYBIOS = 'polybios polybius transposition';
+final SEARCHSTRING_DE_POLYBIOS = '';
+final SEARCHSTRING_EN_POLYBIOS = '';
+final SEARCHSTRING_FR_POLYBIOS = '';
+final SEARCHSTRING_COMMON_PROJECTILES = '';
+final SEARCHSTRING_DE_PROJECTILES = 'geschosse projektile ballistik';
+final SEARCHSTRING_EN_PROJECTILES = 'bullets projectiles ballistics ';
+final SEARCHSTRING_FR_PROJECTILES = 'ballistique';
+final SEARCHSTRING_COMMON_PRIMES = '';
+final SEARCHSTRING_DE_PRIMES = 'primzahlen';
+final SEARCHSTRING_EN_PRIMES = 'primes';
+final SEARCHSTRING_FR_PRIMES = 'nombres premiers';
+final SEARCHSTRING_COMMON_PRIMES_PRIMEINDEX = 'index';
+final SEARCHSTRING_DE_PRIMES_PRIMEINDEX = 'positionen';
+final SEARCHSTRING_EN_PRIMES_PRIMEINDEX = 'positions';
+final SEARCHSTRING_FR_PRIMES_PRIMEINDEX = '';
+final SEARCHSTRING_COMMON_PRIMES_NTHPRIME = '';
+final SEARCHSTRING_DE_PRIMES_NTHPRIME = 'positionen';
+final SEARCHSTRING_EN_PRIMES_NTHPRIME = 'positions';
+final SEARCHSTRING_FR_PRIMES_NTHPRIME = '';
+final SEARCHSTRING_COMMON_PRIMES_NEARESTPRIME = '';
+final SEARCHSTRING_DE_PRIMES_NEARESTPRIME = 'naechsten nachfolger naehester vorgaenger';
+final SEARCHSTRING_EN_PRIMES_NEARESTPRIME = 'next successor follower closest nearest';
+final SEARCHSTRING_FR_PRIMES_NEARESTPRIME = 'successeur predecesseur suivant proche';
+final SEARCHSTRING_COMMON_PRIMES_ISPRIME = '';
+final SEARCHSTRING_DE_PRIMES_ISPRIME = 'ist tests  ueberpruefungen';
+final SEARCHSTRING_EN_PRIMES_ISPRIME = 'is';
+final SEARCHSTRING_FR_PRIMES_ISPRIME = 'est examiner verifier';
+final SEARCHSTRING_COMMON_PRIMES_INTEGERFACTORIZATION = '';
+final SEARCHSTRING_DE_PRIMES_INTEGERFACTORIZATION = 'faktorisierung primfaktorzerlegungen faktoren';
+final SEARCHSTRING_EN_PRIMES_INTEGERFACTORIZATION = 'integer factorizations factors';
+final SEARCHSTRING_FR_PRIMES_INTEGERFACTORIZATION = 'factorisation primaires facteurs';
 
 
 
