@@ -939,7 +939,7 @@ class Registry {
         i18nPrefix: 'segmentdisplay_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
         searchStrings: [
-          SEARCHSTRING_COMMON_SEGMENTDISPLAYSELECTION
+          SEARCHSTRING_COMMON_SEGMENTS, SEARCHSTRING_DE_SEGMENTS, SEARCHSTRING_EN_SEGMENTS, SEARCHSTRING_FR_SEGMENTS
         ]
       ),
       GCWTool(
@@ -948,7 +948,7 @@ class Registry {
         i18nPrefix: 'skytale',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_SKYTALE, SEARCHSTRING_DE_SKYTALE, SEARCHSTRING_EN_SKYTALE, SEARCHSTRING_FR_SKYTALE
         ]
       ),
       GCWTool(
@@ -957,7 +957,7 @@ class Registry {
         i18nPrefix: 'solitaire',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_SOLITAIRE, SEARCHSTRING_DE_SOLITAIRE, SEARCHSTRING_EN_SOLITAIRE, SEARCHSTRING_FR_SOLITAIRE
         ]
       ),
       GCWTool(
@@ -966,7 +966,7 @@ class Registry {
         i18nPrefix: 'substitution',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_SUBSTITUTION, SEARCHSTRING_DE_SUBSTITUTION, SEARCHSTRING_EN_SUBSTITUTION, SEARCHSTRING_FR_SUBSTITUTION
         ]
       ),
       GCWTool(
@@ -1004,7 +1004,7 @@ class Registry {
         i18nPrefix: 'tapcode',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_TAPCODE, SEARCHSTRING_DE_TAPCODE, SEARCHSTRING_EN_TAPCODE, SEARCHSTRING_FR_TAPCODE
         ]
       ),
       GCWTool(
@@ -1013,7 +1013,7 @@ class Registry {
         i18nPrefix: 'tapir',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-
+          SEARCHSTRING_COMMON_TAPIR, SEARCHSTRING_DE_TAPIR, SEARCHSTRING_EN_TAPIR, SEARCHSTRING_FR_TAPIR
         ]
       ),
       GCWTool(
@@ -1022,7 +1022,7 @@ class Registry {
         i18nPrefix: 'tomtom_selection',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: [
-          SEARCHSTRING_COMMON_TOMTOMSELECTION
+          SEARCHSTRING_COMMON_TOMTOM, SEARCHSTRING_DE_TOMTOM, SEARCHSTRING_EN_TOMTOM, SEARCHSTRING_FR_TOMTOM
         ]
       ),
       GCWTool(
@@ -3641,7 +3641,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'segmentdisplay_7segments_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'segmentdisplay_7segments',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_SEGMENTS, SEARCHSTRING_DE_SEGMENTS, SEARCHSTRING_EN_SEGMENTS, SEARCHSTRING_FR_SEGMENTS,
+          SEARCHSTRING_COMMON_SEGMENTS_SEVEN, SEARCHSTRING_DE_SEGMENTS_SEVEN, SEARCHSTRING_EN_SEGMENTS_SEVEN, SEARCHSTRING_FR_SEGMENTS_SEVEN
         ]
       ),
       GCWTool(
@@ -3649,7 +3650,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'segmentdisplay_14segments_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'segmentdisplay_14segments',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_SEGMENTS, SEARCHSTRING_DE_SEGMENTS, SEARCHSTRING_EN_SEGMENTS, SEARCHSTRING_FR_SEGMENTS,
+          SEARCHSTRING_COMMON_SEGMENTS_FOURTEEN, SEARCHSTRING_DE_SEGMENTS_FOURTEEN, SEARCHSTRING_EN_SEGMENTS_FOURTEEN, SEARCHSTRING_FR_SEGMENTS_FOURTEEN
         ]
       ),
       GCWTool(
@@ -3657,7 +3659,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'segmentdisplay_16segments_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'segmentdisplay_16segments',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_SEGMENTS, SEARCHSTRING_DE_SEGMENTS, SEARCHSTRING_EN_SEGMENTS, SEARCHSTRING_FR_SEGMENTS,
+          SEARCHSTRING_COMMON_SEGMENTS_SIXTEEN, SEARCHSTRING_DE_SEGMENTS_SIXTEEN, SEARCHSTRING_EN_SEGMENTS_SIXTEEN, SEARCHSTRING_FR_SEGMENTS_SIXTEEN
         ]
       ),
 
@@ -4719,7 +4722,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'tomtom_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'tomtom',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_TOMTOM, SEARCHSTRING_DE_TOMTOM, SEARCHSTRING_EN_TOMTOM, SEARCHSTRING_FR_TOMTOM
         ]
       ),
 
