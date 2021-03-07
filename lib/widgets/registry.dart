@@ -2374,7 +2374,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_factorial_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_factorial',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION
         ]
       ),
       GCWTool(
@@ -2382,7 +2383,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_fibonacci_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_fibonacci',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION
         ]
       ),
       GCWTool(
@@ -2390,7 +2392,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_mersenne_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_mersenne',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION
         ]
       ),
       GCWTool(
@@ -2398,7 +2401,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_mersenneprimes_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_mersenneprimes',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION
         ]
       ),
       GCWTool(
@@ -2406,7 +2410,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_mersenneexponents_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_mersenneexponents',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
         ]
       ),
       GCWTool(
@@ -2414,7 +2419,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_mersennefermat_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_mersennefermat',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
         ]
       ),
       GCWTool(
@@ -2422,7 +2428,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_fermat_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_fermat',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
         ]
       ),
       GCWTool(
@@ -2430,7 +2437,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_perfectnumbers_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_perfectnumbers',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
         ]
       ),
       GCWTool(
@@ -2438,7 +2446,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_superperfectnumbers_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_superperfectnumbers',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
         ]
       ),
       GCWTool(
@@ -2446,7 +2455,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_primarypseudoperfectnumbers_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_primarypseudoperfectnumbers',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
         ]
       ),
       GCWTool(
@@ -2454,7 +2464,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_weirdnumbers_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_weirdnumbers',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
         ]
       ),
       GCWTool(
@@ -2462,7 +2473,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_sublimenumbers_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_sublimenumbers',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
         ]
       ),
       GCWTool(
@@ -2470,7 +2482,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_bell_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_bell',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
         ]
       ),
       GCWTool(
@@ -2478,6 +2491,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_pell_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_pell',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2486,6 +2500,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_lucas_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_lucas',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2494,6 +2509,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_jacobsthal_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_pelllucas',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2502,6 +2518,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'irrationalnumbers_search_online_pi_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_jacobsthal',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2510,6 +2527,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_jacobsthallucas_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_jacobsthallucas',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2518,6 +2536,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_jacobsthaloblong_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_jacobsthaloblong',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2526,6 +2545,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_catalan_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_catalan',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2534,6 +2554,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_recaman_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_recaman',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2544,6 +2565,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION
 
         ]
       ),
@@ -2552,6 +2575,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION
 
         ]
       ),
@@ -2560,6 +2585,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings:[
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION
 
         ]
       ),
@@ -2568,6 +2595,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION
 
         ]
       ),
@@ -2576,6 +2605,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION
 
         ]
       ),
@@ -2586,6 +2617,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
 
         ]
       ),
@@ -2594,6 +2627,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
 
         ]
       ),
@@ -2602,6 +2637,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
 
         ]
       ),
@@ -2610,6 +2647,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
 
         ]
       ),
@@ -2618,6 +2657,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
 
         ]
       ),
@@ -2628,6 +2669,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
 
         ]
       ),
@@ -2636,6 +2679,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
 
         ]
       ),
@@ -2644,6 +2689,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
 
         ]
       ),
@@ -2652,6 +2699,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
 
         ]
       ),
@@ -2660,6 +2709,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
 
         ]
       ),
@@ -2670,6 +2721,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2678,6 +2730,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2686,6 +2739,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2694,6 +2748,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2702,6 +2757,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2712,7 +2768,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION
         ]
       ),
       GCWTool(
@@ -2720,7 +2777,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
-
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
         ]
       ),
       GCWTool(
@@ -2728,6 +2786,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
 
         ]
       ),
@@ -2736,6 +2796,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
 
         ]
       ),
@@ -2744,6 +2806,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
 
         ]
       ),
@@ -2754,6 +2818,9 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION
+,
 
         ]
       ),
@@ -2762,6 +2829,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
 
         ]
       ),
@@ -2770,6 +2839,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
 
         ]
       ),
@@ -2778,6 +2849,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
 
         ]
       ),
@@ -2786,6 +2859,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
 
         ]
       ),
@@ -2796,6 +2871,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
 
         ]
       ),
@@ -2804,6 +2881,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
 
         ]
       ),
@@ -2812,6 +2891,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
 
         ]
       ),
@@ -2820,6 +2901,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
 
         ]
       ),
@@ -2828,6 +2911,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
 
         ]
       ),
@@ -2838,6 +2923,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2846,6 +2932,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2854,6 +2941,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2862,6 +2950,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2870,6 +2959,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2880,6 +2970,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2888,6 +2979,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2896,6 +2988,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2904,6 +2997,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2912,6 +3006,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2922,6 +3017,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2930,6 +3026,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2938,6 +3035,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2946,6 +3044,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2954,6 +3053,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2964,6 +3064,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2972,6 +3073,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2980,6 +3082,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2988,6 +3091,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -2996,6 +3100,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3006,6 +3111,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3014,6 +3120,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3022,6 +3129,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3030,6 +3138,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3038,6 +3147,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3048,6 +3158,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3056,6 +3167,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3064,6 +3176,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3072,6 +3185,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3080,6 +3194,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3090,6 +3205,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3098,6 +3214,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3106,6 +3223,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3114,6 +3232,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3122,6 +3241,7 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
 
         ]
       ),
@@ -3132,6 +3252,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
 
         ]
       ),
@@ -3140,6 +3262,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
 
         ]
       ),
@@ -3148,6 +3272,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
 
         ]
       ),
@@ -3156,6 +3282,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
 
         ]
       ),
@@ -3164,6 +3292,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
 
         ]
       ),
@@ -3174,6 +3304,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
 
         ]
       ),
@@ -3182,6 +3314,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
 
         ]
       ),
@@ -3190,6 +3324,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
 
         ]
       ),
@@ -3198,6 +3334,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
 
         ]
       ),
@@ -3206,6 +3344,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
 
         ]
       ),
@@ -3216,6 +3356,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
 
         ]
       ),
@@ -3224,6 +3366,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
 
         ]
       ),
@@ -3232,6 +3376,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
 
         ]
       ),
@@ -3240,6 +3386,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
 
         ]
       ),
@@ -3248,6 +3396,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
 
         ]
       ),
@@ -3258,6 +3408,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
 
         ]
       ),
@@ -3266,6 +3418,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
 
         ]
       ),
@@ -3274,6 +3428,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
 
         ]
       ),
@@ -3282,6 +3438,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
 
         ]
       ),
@@ -3290,6 +3448,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
 
         ]
       ),
@@ -3300,6 +3460,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
 
         ]
       ),
@@ -3308,6 +3470,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
 
         ]
       ),
@@ -3316,6 +3480,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
 
         ]
       ),
@@ -3324,6 +3490,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
 
         ]
       ),
@@ -3332,6 +3500,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
 
         ]
       ),
@@ -3342,6 +3512,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
 
         ]
       ),
@@ -3350,6 +3522,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
 
         ]
       ),
@@ -3358,6 +3532,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
 
         ]
       ),
@@ -3366,6 +3542,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
 
         ]
       ),
@@ -3374,6 +3552,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
 
         ]
       ),
@@ -3384,6 +3564,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_nth_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_nth',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
 
         ]
       ),
@@ -3392,6 +3574,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_range_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_range',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
 
         ]
       ),
@@ -3400,6 +3584,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_check_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_check',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
 
         ]
       ),
@@ -3408,6 +3594,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_digits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_digits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
 
         ]
       ),
@@ -3416,6 +3604,8 @@ class Registry {
         buttonList: [GCWToolActionButtonsEntry(false, 'numbersequence_containsdigits_online_help_url', '', '', Icons.help)],
         i18nPrefix: 'numbersequence_containsdigits',
         searchStrings: [
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE, SEARCHSTRING_DE_NUMBERSEQUENCE, SEARCHSTRING_EN_NUMBERSEQUENCE, SEARCHSTRING_FR_NUMBERSEQUENCE,
+          SEARCHSTRING_COMMON_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_DE_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_EN_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION, SEARCHSTRING_FR_NUMBERSEQUENCE_PRIMARYPSEUDOPERFECTNUMBERSSELECTION,
 
         ]
       ),
