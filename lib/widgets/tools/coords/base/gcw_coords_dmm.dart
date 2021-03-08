@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -82,7 +83,7 @@ class GCWCoordsDMMState extends State<GCWCoordsDMM> {
   Widget build(BuildContext context) {
 
     if (widget.coordinates != null) {
-      var dmm = DMM.from(widget.coordinates);
+      var dmm = latLonToDMM(widget.coordinates);
       var lat = dmm.latitude.formatParts(10);
       var lon = dmm.longitude.formatParts(10);
 
@@ -96,13 +97,13 @@ class GCWCoordsDMMState extends State<GCWCoordsDMM> {
       _currentLonMilliMinutes = lon['minutes'].split('.')[1];
       _currentLonSign = lon['sign']['value'];
 
-      _LatDegreesController = TextEditingController(text: _currentLatDegrees);
-      _LatMinutesController = TextEditingController(text: _currentLatMinutes);
-      _LatMilliMinutesController = TextEditingController(text: _currentLatMilliMinutes);
+      _LatDegreesController.text = _currentLatDegrees;
+      _LatMinutesController.text = _currentLatMinutes;
+      _LatMilliMinutesController.text = _currentLatMilliMinutes;
 
-      _LonDegreesController = TextEditingController(text: _currentLonDegrees);
-      _LonMinutesController = TextEditingController(text: _currentLonMinutes);
-      _LonMilliMinutesController = TextEditingController(text: _currentLonMilliMinutes);
+      _LonDegreesController.text = _currentLonDegrees;
+      _LonMinutesController.text = _currentLonMinutes;
+      _LonMilliMinutesController.text = _currentLonMilliMinutes;
     }
 
     return Column (
@@ -304,6 +305,6 @@ class GCWCoordsDMMState extends State<GCWCoordsDMM> {
     _minutesD = double.parse('$_minutes.$_currentLonMilliMinutes');
     var _currentLon = DMMLongitude(_currentLonSign, _degrees, _minutesD);
 
-    widget.onChanged(DMM(_currentLat, _currentLon).toLatLng());
+    widget.onChanged(dmmToLatLon(DMM(_currentLat, _currentLon)));
   }
 }

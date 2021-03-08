@@ -205,7 +205,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
       Widget output;
 
       var _foundCoordinate = parseLatLon(calculated['result'], wholeString: true);
-      if (_foundCoordinate != null)
+      if (_foundCoordinate != null && _foundCoordinate.length > 0)
         _foundCoordinates.putIfAbsent(index + 1, () => _foundCoordinate);
 
       var row = Container(
@@ -345,10 +345,10 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
                       _showFormulaResultOnMap([
                         GCWMapPoint(
-                          point: _foundCoordinate['coordinate'],
+                          point: _foundCoordinate[0],
                           markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext'),
                           coordinateFormat: {
-                            'format': _foundCoordinate['format']
+                            'format': _foundCoordinate.keys.elementAt(0)
                           }
                         )
                       ]);

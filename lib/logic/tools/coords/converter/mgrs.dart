@@ -36,7 +36,7 @@ MGRS latLonToMGRS(LatLng coord, Ellipsoid ells) {
 
 String latLonToMGRSString(LatLng coord, Ellipsoid ells) {
   MGRS mgrs = latLonToMGRS(coord, ells);
-  return '${mgrs.utmZone.lonZone} ${mgrs.utmZone.latZone} ${mgrs.digraph} ${doubleFormat.format(mgrs.easting)} ${doubleFormat.format(mgrs.northing)}';
+  return '${mgrs.utmZone.lonZone}${mgrs.utmZone.latZone} ${mgrs.digraph} ${doubleFormat.format(mgrs.easting)} ${doubleFormat.format(mgrs.northing)}';
 }
 
 List<List<dynamic>>latitudeBandConstants = [
@@ -151,28 +151,51 @@ LatLng mgrsToLatLon(MGRS mgrs, Ellipsoid ells) {
 }
 
 LatLng parseMGRS(String input, Ellipsoid ells) {
-  RegExp regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s+([A-Z]{2})\s?([0-9\.]+)\s+([0-9\.]+)\s*$');
+  RegExp regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s?([A-Z]{2})\s?([0-9\.]+)\s+([0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
+  var _lonZoneString = '';
+  var _latZone = '';
+  var _digraph = '';
+  var _eastingString = '';
+  var _northingString = '';
+
+  if (matches.length > 0) {
+    var match = matches.elementAt(0);
+    _lonZoneString = match.group(1);
+    _latZone = match.group(2);
+    _digraph = match.group(3);
+    _eastingString = match.group(4);
+    _northingString = match.group(5);
+  }
+  if (matches.length == 0) {
+    regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s?([A-Z]{2})\s?([0-9]{10})\s*$');
+    matches = regExp.allMatches(input);
+    if (matches.length > 0) {
+      var match = matches.elementAt(0);
+      _lonZoneString = match.group(1);
+      _latZone = match.group(2);
+      _digraph = match.group(3);
+      _eastingString = match.group(4).substring(0,5);
+      _northingString = match.group(4).substring(5);
+    }
+  }
+
   if (matches.length == 0)
     return null;
 
-  var match = matches.elementAt(0);
-  var _lonZone = int.tryParse(match.group(1));
+  var _lonZone = int.tryParse(_lonZoneString);
   if (_lonZone == null)
     return null;
 
-  var _latZone = match.group(2);
-  var _digraph = match.group(3);
-
-  var _easting = double.tryParse(match.group(4));
+  var _easting = double.tryParse(_eastingString);
   if (_easting == null)
     return null;
-  _easting = fillUpNumber(_easting, match.group(4), 5);
+  _easting = fillUpNumber(_easting, _eastingString, 5);
 
-  var _northing = double.tryParse(match.group(5));
+  var _northing = double.tryParse(_northingString);
   if (_northing == null)
     return null;
-  _northing = fillUpNumber(_northing, match.group(5), 5);
+  _northing = fillUpNumber(_northing, _northingString, 5);
 
   var zone = UTMZone(_lonZone, _lonZone, _latZone);
   var mgrs = MGRS(zone, _digraph, _easting, _northing);
