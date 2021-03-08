@@ -1,4 +1,3 @@
-
 final SEARCHSTRING_COMMON_ABADDON = 'abaddon abbaddon abbadon yen renminbi mi thorn ternaer gc11eky ' + [165, 181, 254].map((char) => String.fromCharCode(char)).join(' ');
 final SEARCHSTRING_COMMON_ABOUT = 'gcwizard';
 final SEARCHSTRING_COMMON_ADFGVX = 'adfgx adfgvx polybius polybios transposition substitution';
