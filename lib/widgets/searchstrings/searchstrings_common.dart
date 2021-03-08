@@ -1086,6 +1086,10 @@ final SEARCHSTRING_COMMON_NUMBERSEQUENCE_CONTAINSDIGITS = '';
 final SEARCHSTRING_DE_NUMBERSEQUENCE_CONTAINSDIGITS = 'enthalten enthaelt ziffern';
 final SEARCHSTRING_EN_NUMBERSEQUENCE_CONTAINSDIGITS = 'contains digits';
 final SEARCHSTRING_FR_NUMBERSEQUENCE_CONTAINSDIGITS = 'contenir inclus chiffres';
+final SEARCHSTRING_COMMON_SYMBOL = ' ';
+final SEARCHSTRING_DE_SYMBOL = 'symbole zeichen tabellen codes bilder schriften';
+final SEARCHSTRING_EN_SYMBOL = 'images pictures fonts symbols signs tables';
+final SEARCHSTRING_FR_SYMBOL = 'symboles caracteres tableaux codes images polices';
 
 
 
