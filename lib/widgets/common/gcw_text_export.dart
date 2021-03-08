@@ -9,11 +9,14 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 enum TextExportMode {TEXT, QR}
+enum PossibileExportMode {TEXTONLY, QRONLY, BOTH}
 
 class GCWTextExport extends StatefulWidget {
   final String text;
+  final PossibileExportMode possibileExportMode;
+  final TextExportMode initMode;
 
-  const GCWTextExport({Key key, this.text}) : super(key: key);
+  const GCWTextExport({Key key, this.text, this.possibileExportMode = PossibileExportMode.BOTH, this.initMode = TextExportMode.QR}) : super(key: key);
 
   @override
   GCWTextExportState createState() => GCWTextExportState();
@@ -30,6 +33,7 @@ class GCWTextExportState extends State<GCWTextExport> {
     super.initState();
 
     _currentExportText = widget.text ?? '';
+    _currentMode = widget.initMode;
     _textExportController = TextEditingController(text: _currentExportText);
   }
 
@@ -47,17 +51,19 @@ class GCWTextExportState extends State<GCWTextExport> {
       height: 360,
       child: Column(
         children: <Widget>[
-          GCWTwoOptionsSwitch(
-            leftValue: 'QR',
-            rightValue: i18n(context, 'common_text'),
-            alternativeColor: true,
-            value: _currentMode == TextExportMode.QR ? GCWSwitchPosition.left : GCWSwitchPosition.right,
-            onChanged: (value) {
-              setState(() {
-                _currentMode = value == GCWSwitchPosition.left ? TextExportMode.QR : TextExportMode.TEXT;
-              });
-            },
-          ),
+          widget.possibileExportMode == PossibileExportMode.BOTH
+            ? GCWTwoOptionsSwitch(
+                leftValue: 'QR',
+                rightValue: i18n(context, 'common_text'),
+                alternativeColor: true,
+                value: _currentMode == TextExportMode.QR ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+                onChanged: (value) {
+                  setState(() {
+                    _currentMode = value == GCWSwitchPosition.left ? TextExportMode.QR : TextExportMode.TEXT;
+                  });
+                },
+              )
+            : Container(),
           _currentMode == TextExportMode.QR
             ? QrImage(
                 data: _currentExportText,

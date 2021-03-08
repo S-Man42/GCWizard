@@ -95,7 +95,7 @@ class GCWMapViewState extends State<GCWMapView> {
 
   Length defaultLengthUnit;
 
-  _getInitialBounds() {
+  LatLngBounds _getBounds() {
     if (widget.points == null || widget.points.length == 0)
       return _DEFAULT_BOUNDS;
 
@@ -207,7 +207,7 @@ class GCWMapViewState extends State<GCWMapView> {
           FlutterMap(
             mapController: _mapController,
             options: MapOptions(
-              bounds: _getInitialBounds(),
+              bounds: _getBounds(),
               boundsOptions: FitBoundsOptions(padding: EdgeInsets.all(30.0)),
               minZoom: 1.0,
               maxZoom: 18.0,
@@ -547,17 +547,21 @@ class GCWMapViewState extends State<GCWMapView> {
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.content_paste),
         onSelected: (text) {
-          if (!_persistanceAdapter.setJsonMapViewData(text)) {
+          if (_persistanceAdapter.setJsonMapViewData(text)) {
+            setState(() {
+              _mapController.fitBounds(_getBounds());
+            });
+          } else {
             var pastedCoordinate = _parseCoords(text);
             if (pastedCoordinate == null)
-            return;
+              return;
 
             setState(() {
-            _persistanceAdapter.addMapPoint(pastedCoordinate['coordinate'], coordinateFormat: {'format': pastedCoordinate['format']});
-            _mapController.move(pastedCoordinate['coordinate'], _mapController.zoom);
+              _persistanceAdapter.addMapPoint(pastedCoordinate['coordinate'], coordinateFormat: {'format': pastedCoordinate['format']});
+              _mapController.move(pastedCoordinate['coordinate'], _mapController.zoom);
             });
-          }
-        },
+          };
+        }
       ),
       GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,

@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 
 showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines, {String json}) {
   var fileName = 'GC Wizard Export ' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
+  const maxQrTextLength = 1000;
 
   showGCWDialog(
     context,
@@ -19,10 +20,11 @@ showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List
         GCWDialogButton(
           text: 'JSON',
           onPressed: () async {
+            var possibileExportMode = json.length < maxQrTextLength ? PossibileExportMode.BOTH : PossibileExportMode.TEXTONLY;
             showGCWDialog(context, 'JSON ' + i18n(context, 'common_text'),
-              GCWTextExport(text: json),
+              GCWTextExport(text: json, initMode: TextExportMode.TEXT, possibileExportMode: possibileExportMode),
               [GCWDialogButton(
-                text: 'OK',
+                text: 'OK'
               )],
               cancelButton: false
             );
