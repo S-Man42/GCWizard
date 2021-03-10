@@ -24,7 +24,13 @@ class GCWTextExport extends StatefulWidget {
   final PossibileExportMode possibileExportMode;
   final TextExportMode initMode;
 
-  const GCWTextExport({Key key, this.text, this.possibileExportMode = PossibileExportMode.BOTH, this.initMode = TextExportMode.QR}) : super(key: key);
+  const GCWTextExport({
+    Key key,
+    this.text,
+    this.onModeChanged,
+    this.possibileExportMode = PossibileExportMode.BOTH,
+    this.initMode = TextExportMode.QR
+  }) : super(key: key);
 
   @override
   GCWTextExportState createState() => GCWTextExportState();
