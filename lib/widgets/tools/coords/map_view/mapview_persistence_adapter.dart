@@ -78,9 +78,9 @@ class MapViewPersistenceAdapter {
 
   _restoreMapViewDAO() {
     if (_mapViewDAO.points == null)
-      _mapViewDAO.points = List<MapPointDAO>();
+      _mapViewDAO.points = <MapPointDAO>[];
     if (mapWidget.points == null)
-      mapWidget.points = List<GCWMapPoint>();
+      mapWidget.points = <GCWMapPoint>[];
 
     if (mapWidget.points.length > 0) {
       _mapViewDAO.points.addAll(
@@ -101,9 +101,9 @@ class MapViewPersistenceAdapter {
     }
 
     if (_mapViewDAO.polylines == null)
-      _mapViewDAO.polylines = List<MapPolylineDAO>();
+      _mapViewDAO.polylines = <MapPolylineDAO>[];
     if (mapWidget.polylines == null)
-      mapWidget.polylines = List<GCWMapPolyline>();
+      mapWidget.polylines = <GCWMapPolyline>[];
 
     if (mapWidget.polylines.length > 0) {
       _mapViewDAO.polylines.addAll(
@@ -260,12 +260,31 @@ class MapViewPersistenceAdapter {
     try {
       var viewData =  restoreJsonMapViewData(view);
       if (viewData != null) {
-        _mapViewDAO = viewData;
+        _addMapViewDAO(viewData);
         _restoreMapViewDAO();
+        updateMapViews();
         return true;
       }
     } on Exception {
     }
     return false;
+  }
+
+  _addMapViewDAO(MapViewDAO viewData) {
+    if (viewData.points.length > 0) {
+      _mapViewDAO.points.addAll(
+          viewData.points
+              .where((pointDAO) => !_mapViewDAO.points.map((point) => point.uuid).toList().contains(pointDAO.uuid))
+              .toList()
+      );
+    }
+
+    if (viewData.polylines.length > 0) {
+      _mapViewDAO.polylines.addAll(
+          viewData.polylines
+              .where((polyline) => !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
+              .toList()
+      );
+    }
   }
 }
