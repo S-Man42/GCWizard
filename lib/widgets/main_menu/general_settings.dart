@@ -7,7 +7,6 @@ import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/common/gcw_abc_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
@@ -27,21 +26,17 @@ class GeneralSettingsState extends State<GeneralSettings> {
   @override
   Widget build(BuildContext context) {
     var appLanguage = Provider.of<AppLanguage>(context);
-    //var currentLocale = await appLanguage.fetchLocale();
 
     return Column(
       children: <Widget>[
         GCWTextDivider(text: i18n(context, 'settings_general_i18n_title')),
         Row(
           children: [
-            Expanded(
-                child: GCWText(
-                    text: i18n(context, 'settings_general_i18n_language'))),
+            Expanded(child: GCWText(text: i18n(context, 'settings_general_i18n_language'))),
             Expanded(
                 child: FutureBuilder<Locale>(
                     future: appLanguage.fetchLocale(),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<Locale> snapshot) {
+                    builder: (BuildContext context, AsyncSnapshot<Locale> snapshot) {
                       if (!snapshot.hasData) {
                         // while data is loading:
                         return Center(
@@ -55,8 +50,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                             items: supportedLocales.map((locale) {
                               return GCWDropDownMenuItem(
                                 value: locale.languageCode ?? "en",
-                                child: i18n(context, locale.languageCode) ??
-                                    locale.languageCode,
+                                child: i18n(context, locale.languageCode) ?? locale.languageCode,
                               );
                             }).toList(),
                             value: currentLocale.languageCode ?? "en",
@@ -68,15 +62,11 @@ class GeneralSettingsState extends State<GeneralSettings> {
           ],
         ),
         Row(children: [
-          Expanded(
-              child: GCWText(
-                  text: i18n(
-                      context, 'settings_general_i18n_defaultlengthunit'))),
+          Expanded(child: GCWText(text: i18n(context, 'settings_general_i18n_defaultlengthunit'))),
           Expanded(
             child: GCWUnitDropDownButton(
                 unitList: allLengths(),
-                value: getUnitBySymbol(
-                    allLengths(), Prefs.get('default_length_unit')),
+                value: getUnitBySymbol(allLengths(), Prefs.get('default_length_unit')),
                 onChanged: (Length value) {
                   setState(() {
                     Prefs.setString('default_length_unit', value.symbol);
@@ -140,16 +130,12 @@ class GeneralSettingsState extends State<GeneralSettings> {
         GCWTextDivider(text: i18n(context, 'settings_general_defaulttab')),
         GCWTwoOptionsSwitch(
           title: i18n(context, 'settings_general_defaulttab_atstart'),
-          value: Prefs.getBool('tabs_use_default_tab')
-              ? GCWSwitchPosition.right
-              : GCWSwitchPosition.left,
+          value: Prefs.getBool('tabs_use_default_tab') ? GCWSwitchPosition.right : GCWSwitchPosition.left,
           leftValue: i18n(context, 'settings_general_defaulttab_uselasttab'),
-          rightValue:
-              i18n(context, 'settings_general_defaulttab_usedefaulttab'),
+          rightValue: i18n(context, 'settings_general_defaulttab_usedefaulttab'),
           onChanged: (value) {
             setState(() {
-              Prefs.setBool(
-                  'tabs_use_default_tab', value == GCWSwitchPosition.right);
+              Prefs.setBool('tabs_use_default_tab', value == GCWSwitchPosition.right);
             });
           },
         ),
@@ -186,8 +172,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
           },
         ),
         GCWIntegerSpinner(
-          title:
-              i18n(context, 'settings_general_clipboard_keep.entries.in.days'),
+          title: i18n(context, 'settings_general_clipboard_keep.entries.in.days'),
           value: Prefs.getInt('clipboard_keep_entries_in_days'),
           min: 1,
           max: 1000,
@@ -197,7 +182,6 @@ class GeneralSettingsState extends State<GeneralSettings> {
             });
           },
         ),
-
       ],
     );
   }
