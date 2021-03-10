@@ -59,6 +59,8 @@ class VariableCoordinateState extends State<VariableCoordinate> {
   var _currentBearingInput = '';
   var _currentDistanceInput = '';
   var _currentReverseBearing = false;
+  var _currentFromInput = '';
+  var _currentToInput = '';
 
   List<dynamic> _currentOutput = [];
   List<GCWMapPoint> _currentMapPoints = [];
@@ -104,6 +106,11 @@ class VariableCoordinateState extends State<VariableCoordinate> {
           formula_base.FormulaValue(currentFromInput, currentToInput),
           widget.formula);
     }
+  }
+
+  _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
+    _currentFromInput = currentFromInput;
+    _currentToInput = currentToInput;
   }
 
   _updateEntry(dynamic id, String key, String value) {
@@ -207,6 +214,7 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         valueInputFormatters: [CoordsTextVariableCoordinateTextInputFormatter()],
         valueFlex: 2,
         onAddEntry: _addEntry,
+        onNewEntryChanged: _updateNewEntry,
         onDispose: _disposeEntry,
 
         middleWidget: SizedBox(height: 10),
@@ -305,16 +313,16 @@ class VariableCoordinateState extends State<VariableCoordinate> {
         : Container();
   }
 
-  _calculateOutput(BuildContext context, {String currentFromInput, String currentToInput}) {
+  _calculateOutput(BuildContext context) {
     Map<String, String> _substitutions = {};
     widget.formula.values.forEach((value) {
       _substitutions.putIfAbsent(value.key, () => value.value);
     });
 
-    if (currentFromInput != null && currentFromInput.length > 0
-      && currentToInput != null && currentToInput.length > 0
+    if (_currentFromInput != null && _currentFromInput.length > 0
+        && _currentToInput != null && _currentToInput.length > 0
     ) {
-      _substitutions.putIfAbsent(currentFromInput, () => currentToInput);
+      _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
 
     Map<String, dynamic> projectionData;
