@@ -6,8 +6,9 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsQuadtree extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsQuadtree({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsQuadtree({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsQuadtreeState createState() => GCWCoordsQuadtreeState();
@@ -36,6 +37,12 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.coordinates != null) {
+      _currentCoord = latLonToQuadtree(widget.coordinates).join();
+
+      _controller.text = _currentCoord;
+    }
+
     return Column (
       children: <Widget>[
         GCWTextField(

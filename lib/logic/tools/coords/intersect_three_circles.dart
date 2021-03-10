@@ -64,10 +64,10 @@ List<Intersect> _distIntersection(LatLng coord1, double dist14,
   return _output;
 }
 
-void intersectThreeCirclesAsync(dynamic jobData) async {
+Future<List<Intersect>> intersectThreeCirclesAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
-    return;
+    return null;
   }
 
   var output = intersectThreeCircles(
@@ -81,7 +81,10 @@ void intersectThreeCirclesAsync(dynamic jobData) async {
       jobData.parameters.ells
   );
 
-  jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null)
+    jobData.sendAsyncPort.send(output);
+
+  return output;
 }
 
 List<Intersect> intersectThreeCircles(LatLng coord1, double dist14,

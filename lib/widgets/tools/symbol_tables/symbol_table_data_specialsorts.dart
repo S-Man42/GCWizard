@@ -1,6 +1,8 @@
-int specialSortNoteNames(Map<String, String> a, Map<String, String> b) {
-  var keyA = a.values.first.split('/').last.split('.').first; // get filename from path without suffix
-  var keyB = b.values.first.split('/').last.split('.').first;
+import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data.dart';
+
+int specialSortNoteNames(Map<String, SymbolData> a, Map<String, SymbolData> b) {
+  var keyA = filenameWithoutSuffix(a.values.first.path); // get filename from path without suffix
+  var keyB = filenameWithoutSuffix(b.values.first.path);
 
   var aSplit = keyA.split('_');
   var aMain = int.tryParse(aSplit[0]);
@@ -21,9 +23,9 @@ int specialSortNoteNames(Map<String, String> a, Map<String, String> b) {
   return aMain.compareTo(bMain);
 }
 
-int specialSortNoteValues(Map<String, String> a, Map<String, String> b) {
-  var keyA = a.values.first.split('/').last.split('.').first; // get filename from path without suffix
-  var keyB = b.values.first.split('/').last.split('.').first;
+int specialSortNoteValues(Map<String, SymbolData> a, Map<String, SymbolData> b) {
+  var keyA = filenameWithoutSuffix(a.values.first.path); // get filename from path without suffix
+  var keyB = filenameWithoutSuffix(b.values.first.path);
 
   var aSplit = keyA.replaceAll(RegExp(r'(^_*|_*$)'), '').split('_');
   var aDotted = int.tryParse(aSplit[0]);
@@ -40,7 +42,7 @@ int specialSortNoteValues(Map<String, String> a, Map<String, String> b) {
   return bValue.compareTo(aValue);
 }
 
-int specialSortTrafficSignsGermany(Map<String, String> a, Map<String, String> b) {
+int specialSortTrafficSignsGermany(Map<String, SymbolData> a, Map<String, SymbolData> b) {
   var keyA = a.keys.first;
   var keyB = b.keys.first;
 

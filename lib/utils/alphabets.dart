@@ -206,6 +206,66 @@ final Alphabet alphabetGerman3 = Alphabet(
   }
 );
 
+final Alphabet alphabetEnglish = Alphabet(
+    key: 'alphabet_name_english',
+    type: AlphabetType.STANDARD,
+    alphabet: {
+        'A' : '1', 'B' : '2', 'C' : '3', 'D' : '4', 'E' : '5', 'F' : '6', 'G' : '7', 'H' : '8', 'I' : '9', 'J' : '10', 'K' : '11', 'L' : '12', 'M' : '13',
+        'N' : '14', 'O' : '15', 'P' : '16', 'Q' : '17', 'R' : '18', 'S' : '19', 'T' : '20', 'U' : '21', 'V' : '22', 'W' : '23', 'X' : '24', 'Y' : '25', 'Z' : '26',
+        String.fromCharCode(207) : '9', // Ï
+    }
+);
+
+final Alphabet alphabetFrench1 = Alphabet(
+    key: 'alphabet_name_french1',
+    type: AlphabetType.STANDARD,
+    alphabet: {
+        'A' : '1', 'B' : '2', 'C' : '3', 'D' : '4', 'E' : '5', 'F' : '6', 'G' : '7', 'H' : '8', 'I' : '9', 'J' : '10', 'K' : '11', 'L' : '12', 'M' : '13',
+        'N' : '14', 'O' : '15', 'P' : '16', 'Q' : '17', 'R' : '18', 'S' : '19', 'T' : '20', 'U' : '21', 'V' : '22', 'W' : '23', 'X' : '24', 'Y' : '25', 'Z' : '26',
+        String.fromCharCode(192) : '1', // À
+        String.fromCharCode(194) : '1', // Â
+        String.fromCharCode(201) : '5', // É
+        String.fromCharCode(200) : '5', // È
+        String.fromCharCode(202) : '5', // Ê
+        String.fromCharCode(203) : '5', // Ë
+        String.fromCharCode(206) : '9', // Î
+        String.fromCharCode(207) : '9', // Ï
+        String.fromCharCode(212) : '15', // Ô
+        String.fromCharCode(217) : '21', // Ù
+        String.fromCharCode(219) : '21', // Û
+        String.fromCharCode(220) : '21', // Ü
+        String.fromCharCode(376) : '25', // Ÿ
+        String.fromCharCode(198) : '1,5', // Æ
+        String.fromCharCode(338) : '15,5', // Œ
+        String.fromCharCode(199) : '3', // Ç
+    }
+);
+
+final Alphabet alphabetFrench2 = Alphabet(
+    key: 'alphabet_name_french2',
+    type: AlphabetType.STANDARD,
+    alphabet: {
+        'A' : '1', 'B' : '2', 'C' : '3', 'D' : '4', 'E' : '5', 'F' : '6', 'G' : '7', 'H' : '8', 'I' : '9', 'J' : '10', 'K' : '11', 'L' : '12', 'M' : '13',
+        'N' : '14', 'O' : '15', 'P' : '16', 'Q' : '17', 'R' : '18', 'S' : '19', 'T' : '20', 'U' : '21', 'V' : '22', 'W' : '23', 'X' : '24', 'Y' : '25', 'Z' : '26',
+        String.fromCharCode(192) : '1', // À
+        String.fromCharCode(194) : '1', // Â
+        String.fromCharCode(201) : '5', // É
+        String.fromCharCode(200) : '5', // È
+        String.fromCharCode(202) : '5', // Ê
+        String.fromCharCode(203) : '5', // Ë
+        String.fromCharCode(206) : '9', // Î
+        String.fromCharCode(207) : '9', // Ï
+        String.fromCharCode(212) : '15', // Ô
+        String.fromCharCode(217) : '21', // Ù
+        String.fromCharCode(219) : '21', // Û
+        String.fromCharCode(220) : '21', // Ü
+        String.fromCharCode(376) : '25', // Ÿ
+        String.fromCharCode(198) : '6', // Æ
+        String.fromCharCode(338) : '20', // Œ
+        String.fromCharCode(199) : '3', // Ç
+    }
+);
+
 final Alphabet alphabetSpanish1 = Alphabet(
   key: 'alphabet_name_spanish1',
   type: AlphabetType.STANDARD,
@@ -327,9 +387,12 @@ final List<Alphabet> ALL_ALPHABETS = [
     alphabetGerman1,
     alphabetGerman2,
     alphabetGerman3,
+    alphabetEnglish,
+    alphabetFrench1,
+    alphabetFrench2,
+    alphabetPolish1,
     alphabetSpanish1,
     alphabetSpanish2,
-    alphabetPolish1,
     alphabetGreek1,
     alphabetRussian1,
 ];

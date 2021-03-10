@@ -213,7 +213,7 @@ final List<PeriodicTableElement> allPeriodicTableElements = [
   PeriodicTableElement('periodictable_element_antimony', 'Sb', 51, 121.76, 2.05, 630.63, 1587, false, false, 5, 15, 6.697, 121, double.infinity),
   PeriodicTableElement('periodictable_element_tellurium', 'Te', 52, 127.6, 2.1, 449.51, 988, false, false, 5, 16, 6.24, 130, double.infinity),
   PeriodicTableElement('periodictable_element_iodine', 'I', 53, 126.9, 2.66, 113.70, 184.3, false, false, 5, 17, 4.94, 127, double.infinity),
-  PeriodicTableElement('periodictable_element_xenon', 'Xe', 54, 131.29, 2.6, -111.7, -108.0, false, false, 5, 18, 0.005898, 132, double.infinity, comments: ['periodictable_comment_mayreactwithf' + 'periodictable_comment_xe']),
+  PeriodicTableElement('periodictable_element_xenon', 'Xe', 54, 131.29, 2.6, -111.7, -108.0, false, false, 5, 18, 0.005898, 132, double.infinity, comments: ['periodictable_comment_mayreactwithf', 'periodictable_comment_xe']),
   PeriodicTableElement('periodictable_element_caesium', 'Cs', 55, 132.91, 0.79, 28.44, 671, false, false, 6, 1, 1.90, 133, double.infinity),
   PeriodicTableElement('periodictable_element_barium', 'Ba', 56, 137.33, 0.89, 727, 1870, false, false, 6, 2, 3.62, 138, double.infinity),
   PeriodicTableElement('periodictable_element_lanthanum', 'La', 57, 138.91, 1.1, 920, 3470, false, false, 6, 3, 6.17, 139, double.infinity, comments: ['periodictable_comment_la']),

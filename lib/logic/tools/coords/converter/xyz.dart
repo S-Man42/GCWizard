@@ -49,14 +49,34 @@ String latLonToXYZString(LatLng coord, Ellipsoid ells, {double h: 0.0}) {
 LatLng parseXYZ(String input, Ellipsoid ells) {
   RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
+
+  var xString = '';
+  var yString = '';
+  var zString = '';
+
+  if (matches.length > 0) {
+    var match = matches.elementAt(0);
+    xString = match.group(1);
+    yString = match.group(3);
+    zString = match.group(5);
+  }
+  if (matches.length == 0) {
+    regExp = RegExp(r'^\s*(X|x)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(Y|y)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(Z|z)\:?\s*([\-0-9\.]+)\s*$');
+    matches = regExp.allMatches(input);
+    if (matches.length > 0) {
+      var match = matches.elementAt(0);
+      xString = match.group(2);
+      yString = match.group(5);
+      zString = match.group(8);
+    }
+  }
+
   if (matches.length == 0)
     return null;
 
-  var match = matches.elementAt(0);
-
-  var x = double.tryParse(match.group(1));
-  var y = double.tryParse(match.group(3));
-  var z = double.tryParse(match.group(5));
+  var x = double.tryParse(xString);
+  var y = double.tryParse(yString);
+  var z = double.tryParse(zString);
 
   if (x == null || y == null || z == null)
     return null;

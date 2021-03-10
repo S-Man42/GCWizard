@@ -67,49 +67,49 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
             children: <Widget>[
               Expanded(
                 child: GCWIntegerTextField(
-                    hintText: i18n(context, 'coords_formatconverter_utm_lonzone'),
-                    textInputFormatter: CoordsIntegerUTMLonZoneTextInputFormatter(),
-                    controller: _LonZoneController,
-                    onChanged: (ret) {
-                      setState(() {
-                        _currentLonZone = ret;
-                        _setCurrentValueAndEmitOnChange();
-                      });
-                    }
+                  hintText: i18n(context, 'coords_formatconverter_utm_lonzone'),
+                  textInputFormatter: CoordsIntegerUTMLonZoneTextInputFormatter(),
+                  controller: _LonZoneController,
+                  onChanged: (ret) {
+                    setState(() {
+                      _currentLonZone = ret;
+                      _setCurrentValueAndEmitOnChange();
+                    });
+                  }
                 ),
               ),
               Expanded(
-                  child: Container(
-                    child: GCWDropDownButton(
-                      value: _currentLatZone,
-                      onChanged: (newValue) {
-                        setState(() {
-                          _currentLatZone = newValue;
-                          _setCurrentValueAndEmitOnChange();
-                        });
-                      },
-                      items: latZones.split('').map((char) {
-                        return GCWDropDownMenuItem(
-                          value: char,
-                          child: char,
-                        );
-                      }).toList(),
-                    ),
-                    padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
-                  )
+                child: Container(
+                  child: GCWDropDownButton(
+                    value: _currentLatZone,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _currentLatZone = newValue;
+                        _setCurrentValueAndEmitOnChange();
+                      });
+                    },
+                    items: latZones.split('').map((char) {
+                      return GCWDropDownMenuItem(
+                        value: char,
+                        child: char,
+                      );
+                    }).toList(),
+                  ),
+                  padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+                )
               ),
             ],
           ),
           GCWDoubleTextField(
-              hintText: i18n(context, 'coords_formatconverter_utm_easting'),
-              min: 0.0,
-              controller: _EastingController,
-              onChanged: (ret) {
-                setState(() {
-                  _currentEasting = ret;
-                  _setCurrentValueAndEmitOnChange();
-                });
-              }
+            hintText: i18n(context, 'coords_formatconverter_utm_easting'),
+            min: 0.0,
+            controller: _EastingController,
+            onChanged: (ret) {
+              setState(() {
+                _currentEasting = ret;
+                _setCurrentValueAndEmitOnChange();
+              });
+            }
           ),
           GCWDoubleTextField(
               hintText: i18n(context, 'coords_formatconverter_utm_northing'),

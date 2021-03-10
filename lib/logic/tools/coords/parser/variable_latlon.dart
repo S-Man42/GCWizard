@@ -1,4 +1,5 @@
 import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
@@ -20,12 +21,12 @@ class ParseVariableLatLonJobData {
 
 Map<String, LatLng> _parseCoordText(String text) {
   var parsedCoord = parseLatLon(text);
-  if (parsedCoord == null)
+  if (parsedCoord == null || parsedCoord.length == 0)
     return null;
 
-  var out = <String, LatLng>{'coordinate': parsedCoord['coordinate']};
+  var out = <String, LatLng>{'coordinate': parsedCoord.values.elementAt(0)};
 
-  if (parsedCoord['format'] == keyCoordsDMM) {
+  if (parsedCoord.keys.elementAt(0) == keyCoordsDMM) {
     out.putIfAbsent('leftPadCoordinate', () => parseDMM(text, leftPadMilliMinutes: true));
   }
 
@@ -47,10 +48,10 @@ _sanitizeForFormula(String formula) {
   return '[$formula]';
 }
 
-void parseVariableLatLonAsync(dynamic jobData) async {
+Future<Map<String, dynamic>> parseVariableLatLonAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
-    return;
+    return null;
   }
 
   var output = parseVariableLatLon(
@@ -59,7 +60,10 @@ void parseVariableLatLonAsync(dynamic jobData) async {
       projectionData : jobData.parameters.projectionData
   );
 
-  jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null)
+    jobData.sendAsyncPort.send(output);
+
+  return output;
 }
 
 Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> substitutions, {Map<String, dynamic> projectionData = const {}}) {

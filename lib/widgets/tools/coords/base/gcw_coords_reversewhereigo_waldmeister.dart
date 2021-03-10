@@ -5,42 +5,97 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsReverseWhereIGoWaldmeister extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsReverseWhereIGoWaldmeister({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsReverseWhereIGoWaldmeister({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsReverseWhereIGoWaldmeisterState createState() => GCWCoordsReverseWhereIGoWaldmeisterState();
 }
 
 class GCWCoordsReverseWhereIGoWaldmeisterState extends State<GCWCoordsReverseWhereIGoWaldmeister> {
+  var _ControllerA;
+  var _ControllerB;
+  var _ControllerC;
+
+  FocusNode _FocusNodeA;
+  FocusNode _FocusNodeB;
+  FocusNode _FocusNodeC;
+
   var _currentA = 0;
   var _currentB = 0;
   var _currentC = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    _ControllerA = TextEditingController(text: _currentA.toString());
+    _ControllerB = TextEditingController(text: _currentB.toString());
+    _ControllerC = TextEditingController(text: _currentC.toString());
+
+    _FocusNodeA = FocusNode();
+    _FocusNodeB = FocusNode();
+    _FocusNodeC = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _ControllerA.dispose();
+    _ControllerB.dispose();
+    _ControllerC.dispose();
+
+    _FocusNodeA.dispose();
+    _FocusNodeB.dispose();
+    _FocusNodeC.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.coordinates != null) {
+      var waldmeister = latLonToWaldmeister(widget.coordinates);
+      _currentA = int.tryParse(waldmeister[0]);
+      _currentB = int.tryParse(waldmeister[1]);
+      _currentC = int.tryParse(waldmeister[2]);
+
+      _ControllerA.text = _currentA.toString();
+      _ControllerB.text = _currentB.toString();
+      _ControllerC.text = _currentC.toString();
+    }
+
     return Column (
       children: <Widget>[
         GCWIntegerSpinner(
+          controller: _ControllerA,
+          focusNode: _FocusNodeA,
           value: _currentA,
           min: 0,
           max: 999999,
           onChanged: (value) {
             _currentA = value;
+
+            if (_ControllerA.text.length == 6)
+              FocusScope.of(context).requestFocus(_FocusNodeB);
             _setCurrentValueAndEmitOnChange();
           },
         ),
         GCWIntegerSpinner(
+          controller: _ControllerB,
+          focusNode: _FocusNodeB,
           value: _currentB,
           min: 0,
           max: 999999,
           onChanged: (value) {
             _currentB = value;
+
+            if (_ControllerB.text.toString().length == 6)
+              FocusScope.of(context).requestFocus(_FocusNodeC);
             _setCurrentValueAndEmitOnChange();
           },
         ),
         GCWIntegerSpinner(
+          controller: _ControllerC,
+          focusNode: _FocusNodeC,
           value: _currentC,
           min: 0,
           max: 999999,

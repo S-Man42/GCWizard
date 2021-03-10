@@ -25,10 +25,10 @@ class IntersectBearingJobData {
   });
 }
 
-void intersectBearingsAsync(dynamic jobData) async {
+Future<LatLng> intersectBearingsAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
-    return;
+    return null;
   }
 
   var output = intersectBearings(
@@ -40,7 +40,10 @@ void intersectBearingsAsync(dynamic jobData) async {
       jobData.parameters.crossbearing
   );
 
-  jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null)
+    jobData.sendAsyncPort.send(output);
+
+  return output;
 }
 
 // Using "evolutional algorithms": Take state, add some random value.
@@ -135,7 +138,7 @@ class IntersectFourPointsJobData {
   });
 }
 
-void intersectFourPointsAsync(dynamic jobData) async {
+Future<LatLng> intersectFourPointsAsync(dynamic jobData) async {
 
   var output = intersectFourPoints(
     jobData.parameters.coord11,
@@ -145,7 +148,10 @@ void intersectFourPointsAsync(dynamic jobData) async {
     jobData.parameters.ells
   );
 
-  jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null)
+    jobData.sendAsyncPort.send(output);
+
+  return output;
 }
 
 LatLng intersectFourPoints(LatLng coord11, LatLng coord12, LatLng coord21, LatLng coord22, Ellipsoid ells) {

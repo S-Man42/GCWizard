@@ -8,8 +8,9 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsSwissGrid extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsSwissGrid({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsSwissGrid({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsSwissGridState createState() => GCWCoordsSwissGridState();
@@ -38,6 +39,15 @@ class GCWCoordsSwissGridState extends State<GCWCoordsSwissGrid> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.coordinates != null) {
+      var swissGrid = latLonToSwissGrid(widget.coordinates, defaultEllipsoid());
+      _currentEasting['value'] = swissGrid.easting;
+      _currentNorthing['value'] = swissGrid.northing;
+
+      _EastingController.text = _currentEasting['value'].toString();
+      _NorthingController.text = _currentNorthing['value'].toString();
+    }
+
     return Column (
         children: <Widget>[
           GCWDoubleTextField(

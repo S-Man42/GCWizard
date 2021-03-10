@@ -49,10 +49,10 @@ var _progressStep = 1;
 var _sendAsyncPort;
 
 
-void break_cipherAsync(dynamic jobData) async {
+Future<VigenereBreakerResult> break_cipherAsync(dynamic jobData) async {
   if (jobData.parameters == null) {
     jobData.sendAsyncPort.send(null);
-    return;
+    return VigenereBreakerResult(errorCode: VigenereBreakerErrorCode.OK);;
   }
   _sendAsyncPort = jobData.sendAsyncPort;
 
@@ -65,7 +65,10 @@ void break_cipherAsync(dynamic jobData) async {
       counterFunction : progressCounter
   );
 
-  jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null)
+    jobData.sendAsyncPort.send(output);
+
+  return output;
 }
 
 progressCounter() {

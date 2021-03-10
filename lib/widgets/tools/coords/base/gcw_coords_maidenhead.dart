@@ -7,8 +7,9 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsMaidenhead extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsMaidenhead({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsMaidenhead({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsMaidenheadState createState() => GCWCoordsMaidenheadState();
@@ -32,6 +33,12 @@ class GCWCoordsMaidenheadState extends State<GCWCoordsMaidenhead> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.coordinates != null) {
+      _currentCoord = latLonToMaidenhead(widget.coordinates);
+
+      _controller.text = _currentCoord;
+    }
+
     return Column (
         children: <Widget>[
           GCWTextField(

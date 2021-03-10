@@ -15,10 +15,10 @@ class EquilateralTriangleJobData {
   });
 }
 
-void equilateralTriangleAsync(dynamic jobData) async {
+Future<List<LatLng>> equilateralTriangleAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
-    return;
+    return null;
   }
 
   var output = equilateralTriangle(
@@ -27,7 +27,10 @@ void equilateralTriangleAsync(dynamic jobData) async {
       jobData.parameters.ells
   );
 
-  jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null)
+    jobData.sendAsyncPort.send(output);
+
+  return output;
 }
 
 List<LatLng> equilateralTriangle(LatLng coord1, LatLng coord2, Ellipsoid ells) {
