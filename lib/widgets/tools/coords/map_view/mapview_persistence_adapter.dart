@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_mapview.dart';
 import 'package:latlong/latlong.dart';
+import 'package:uuid/uuid.dart';
 
 class MapViewPersistenceAdapter {
   final GCWMapView mapWidget;
@@ -253,12 +254,20 @@ class MapViewPersistenceAdapter {
   }
 
   String getJsonMapViewData() {
-    return jsonMapViewData(_mapViewDAO);
+    var json = jsonMapViewData(_mapViewDAO);
+    var regExp = RegExp("(\"uuid\":\")([\^\"]+)(\")");
+    var id = 1;
+    regExp.allMatches(json).forEach((uuid) {
+      json = json.replaceAll(uuid.group(2), id.toString());
+      id++;
+    });
+    return json;
   }
 
-  bool setJsonMapViewData(String view) {
+  bool setJsonMapViewData(String json) {
     try {
-      var viewData =  restoreJsonMapViewData(view);
+      json = _restoreUUIDs(json);
+      var viewData =  restoreJsonMapViewData(json);
       if (viewData != null) {
         _addMapViewDAO(viewData);
         _restoreMapViewDAO();
@@ -268,6 +277,18 @@ class MapViewPersistenceAdapter {
     } on Exception {
     }
     return false;
+  }
+
+  String _restoreUUIDs(String json) {
+    var regExp = RegExp("(\"uuid\":\")([\^\"]+)(\")");
+
+    regExp.allMatches(json).forEach((uuid) {
+      var oldUuid = "\"uuid\":\"" + uuid.group(2) + "\"";
+      var newUuid = "\"uuid\":\"" + Uuid().v4() + "\"";
+
+      json = json.replaceAll(oldUuid, newUuid);
+    });
+    return json;
   }
 
   _addMapViewDAO(MapViewDAO viewData) {
