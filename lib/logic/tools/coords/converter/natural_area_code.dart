@@ -60,13 +60,27 @@ LatLng naturalAreaCodeToLatLon(NaturalAreaCode nac) {
 LatLng parseNaturalAreaCode(String input) {
   RegExp regExp = RegExp(r'^\s*([0-9A-Z]+)(\s*,\s*|\s+)([0-9A-Z]+)\s*$');
   var matches = regExp.allMatches(input);
+
+  var xString = '';
+  var yString = '';
+
+  if (matches.length > 0) {
+    var match = matches.elementAt(0);
+    xString = match.group(1);
+    yString = match.group(3);
+  }
+  if (matches.length == 0) {
+    regExp = RegExp(r'^\s*(X|x)\:?\s*([0-9A-Z]+)(\s*,\s*|\s+)(Y|y)\:?\s*([0-9A-Z]+)\s*$');
+    matches = regExp.allMatches(input);
+    if (matches.length > 0) {
+      var match = matches.elementAt(0);
+      xString = match.group(2);
+      yString = match.group(5);
+    }
+  }
+
   if (matches.length == 0)
     return null;
 
-  var match = matches.elementAt(0);
-
-  var x = match.group(1);
-  var y = match.group(3);
-
-  return naturalAreaCodeToLatLon(NaturalAreaCode(x, y));
+  return naturalAreaCodeToLatLon(NaturalAreaCode(xString, yString));
 }

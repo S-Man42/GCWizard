@@ -39,6 +39,7 @@ class App extends StatelessWidget {
               return MaterialApp(
                 title: 'GC Wizard',
                 supportedLocales: supportedLocales,
+                locale: model.appLocal,
                 localizationsDelegates: [
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,

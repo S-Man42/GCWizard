@@ -24,16 +24,27 @@ class AppLocalizations {
   Map<String, String> _localizedStrings;
 
   Future<bool> load() async {
-    // Load the language JSON file from the "lang" folder
-    String jsonString =
-        await rootBundle.loadString('assets/i18n/${locale.languageCode}.json');
-    Map<String, dynamic> jsonMap = json.decode(jsonString);
+    Map<String, String>  _defaultLocalizedStrings = await loadLang(defaultLanguage);
+    Map<String, String>  _localStrings = await loadLang(locale.languageCode);
 
-    _localizedStrings = jsonMap.map((key, value) {
-      return MapEntry(key, value.toString());
-    });
+    _localizedStrings = {
+      ..._defaultLocalizedStrings,
+      ..._localStrings,
+    };
 
     return true;
+  }
+
+  Future<Map<String, String>> loadLang(langCode) async {
+    // Load the language JSON file from the "lang" folder
+    String jsonString =
+        await rootBundle.loadString('assets/i18n/${langCode}.json');
+    Map<String, dynamic> jsonMap = json.decode(jsonString);
+
+    Map<String, String>  _strings = jsonMap.map((key, value) {
+      return MapEntry(key, value.toString());
+    });
+    return _strings;
   }
 
   // This method will be called from every widget which needs a localized text
@@ -50,11 +61,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) {
-    // Include all of your supported language codes here
-    return supportedLocales
-        .map((locale) => locale.languageCode)
-        .toList()
-        .contains(locale.languageCode);
+    return isLocaleSupported(locale);
   }
 
   @override
