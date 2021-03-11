@@ -27,6 +27,7 @@ import 'package:gc_wizard/widgets/selector_lists/esoteric_programminglanguages_s
 import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/icecodes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/language_games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_catalan_selection.dart';
@@ -217,6 +218,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
@@ -301,6 +303,7 @@ class Registry {
   static final SEARCHSTRING_HASHES_SHA = SEARCHSTRING_HASHES + 'sha secure hash algorithm ';
   static final SEARCHSTRING_HASHES_SHA2 = SEARCHSTRING_HASHES_SHA + 'sha2 sha-2 ';
   static final SEARCHSTRING_HASHES_SHA3 = SEARCHSTRING_HASHES_SHA + 'sha3 sha-3 ';
+  static final SEARCHSTRING_ICECODES = 'balticsea ostsee wmo sigrid ice codes ';
   static final SEARCHSTRING_IRRATIONALNUMBERS = 'irrational number irrationale zahlen fraction decimal digit nachkommastelle ';
   static final SEARCHSTRING_MAYANUMBERS = 'mayas majas zahlen ziffern numbers numerals vigesimalsystem 20 ';
   static final SEARCHSTRING_NUMERALWORDS = 'numeralwords zahlwoerter numberwords zaehlwort zahlwort zaehlwoerter numerals';
@@ -596,6 +599,12 @@ class Registry {
         i18nPrefix: 'homophone',
         category: ToolCategory.CRYPTOGRAPHY,
         searchStrings: 'homophone monoalphabetische monoalphabetical letterfrequency buchstabenhaeufigkeiten'
+      ),
+      GCWTool(
+        tool: IceCodesSelection(),
+        i18nPrefix: 'icecodes_selection',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        searchStrings: SEARCHSTRING_ICECODES,
       ),
       GCWTool(
         tool: Kamasutra(),
@@ -1508,6 +1517,14 @@ class Registry {
         i18nPrefix: 'spoonlanguage',
         searchStrings: SEARCHSTRING_LANGUAGEGAMES + 'spoonlanguage loeffelsprache'
       ),
+
+      //IceCodes Selection **************************************************************************************
+      GCWTool(
+        tool: IceCodes(),
+        i18nPrefix: 'icecodes',
+        searchStrings: SEARCHSTRING_ICECODES
+      ),
+
 
       //Main Menu **********************************************************************************************
       GCWTool(
@@ -2731,6 +2748,10 @@ class Registry {
       GCWSymbolTableTool(
         symbolKey: 'hymmnos',
         searchStrings: SEARCHSTRING_SYMBOLTABLES + 'hymmnos artonelico '
+      ),
+      GCWSymbolTableTool(
+          symbolKey: 'icecodes',
+          searchStrings: SEARCHSTRING_SYMBOLTABLES + 'icecode'
       ),
       GCWSymbolTableTool(
         symbolKey: 'iching',
