@@ -38,7 +38,7 @@ class GCWMapPoint {
     update();
   }
 
-  hasCircle() {
+  bool hasCircle() {
     return circle != null && circle.radius != null && circle.radius > 0.0;
   }
 

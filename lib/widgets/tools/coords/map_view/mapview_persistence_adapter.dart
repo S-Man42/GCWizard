@@ -18,7 +18,7 @@ class MapViewPersistenceAdapter {
     _initializeMapView();
   }
   
-  MapPointDAO _gcwMapPointToMapPointDAO(GCWMapPoint gcwMapPoint) {
+  MapPointDAO gcwMapPointToMapPointDAO(GCWMapPoint gcwMapPoint) {
     return MapPointDAO(
       gcwMapPoint.uuid,
       gcwMapPoint.markerText,
@@ -48,7 +48,7 @@ class MapViewPersistenceAdapter {
     );
   }
   
-  MapPolylineDAO _gcwMapPolylineToMapPolylineDAO(GCWMapPolyline gcwMapPolyline) {
+  MapPolylineDAO gcwMapPolylineToMapPolylineDAO(GCWMapPolyline gcwMapPolyline) {
     return MapPolylineDAO(
       gcwMapPolyline.uuid,
       gcwMapPolyline.points.map((point) => point.uuid).toList(),
@@ -83,7 +83,7 @@ class MapViewPersistenceAdapter {
       _mapViewDAO.points.addAll(
         mapWidget.points
           .where((point) => !_mapViewDAO.points.map((pointDAO) => pointDAO.uuid).toList().contains(point.uuid))
-          .map((point) => _gcwMapPointToMapPointDAO(point))
+          .map((point) => gcwMapPointToMapPointDAO(point))
           .toList()
       );
     }
@@ -106,7 +106,7 @@ class MapViewPersistenceAdapter {
       _mapViewDAO.polylines.addAll(
         mapWidget.polylines
           .where((polyline) => !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
-          .map((polyline) => _gcwMapPolylineToMapPolylineDAO(polyline))
+          .map((polyline) => gcwMapPolylineToMapPolylineDAO(polyline))
           .toList()
       );
     }
@@ -133,7 +133,7 @@ class MapViewPersistenceAdapter {
       circleColorSameAsPointColor: true
     );
   
-    insertMapPointDAO(_gcwMapPointToMapPointDAO(mapPoint), _mapViewDAO);
+    insertMapPointDAO(gcwMapPointToMapPointDAO(mapPoint), _mapViewDAO);
   
     mapWidget.points.add(mapPoint);
     return mapPoint;
@@ -235,7 +235,7 @@ class MapViewPersistenceAdapter {
   GCWMapPolyline createMapPolyline() {
     var polyline = GCWMapPolyline(points: []);
     mapWidget.polylines.add(polyline);
-    insertMapPolylineDAO(_gcwMapPolylineToMapPolylineDAO(polyline), _mapViewDAO);
+    insertMapPolylineDAO(gcwMapPolylineToMapPolylineDAO(polyline), _mapViewDAO);
   
     return polyline;
   }
