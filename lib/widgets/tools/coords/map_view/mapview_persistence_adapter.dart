@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/persistence/map_view/json_provider.dart';
 import 'package:gc_wizard/persistence/map_view/model.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
@@ -261,11 +262,12 @@ class MapViewPersistenceAdapter {
       json = json.replaceAll(uuid.group(2), id.toString());
       id++;
     });
-    return json;
+    return _replaceJsonMarker(json, false);;
   }
 
   bool setJsonMapViewData(String json) {
     try {
+      json = _replaceJsonMarker(json, true);
       json = _restoreUUIDs(json);
       var viewData =  restoreJsonMapViewData(json);
       if (viewData != null) {
@@ -279,14 +281,40 @@ class MapViewPersistenceAdapter {
     return false;
   }
 
+  String _replaceJsonMarker(String json, bool restore) {
+     var replaceMap = {
+       "\"uuid\":" : "\"uid\":",
+       "\"pointUUIDs\":" : "\"pointIDs\":",
+       "\"latitude\":" : "\"lat\":",
+       "\"longitude\":" : "\"lon\":",
+       "\"coordinateFormat\":" : "\"format\":",
+       "\"circleColorSameAsColor\":" : "\"sameColor\":"
+    };
+
+     if (restore)
+       replaceMap = switchMapKeyValue(replaceMap);
+
+     return substitution(json, replaceMap);;
+  }
+
   String _restoreUUIDs(String json) {
     var regExp = RegExp("(\"uuid\":\")([\^\"]+)(\")");
+    var regExpPoly = RegExp("(\"pointUUIDs\":\\[)([^\\]]+)(\\])");
 
     regExp.allMatches(json).forEach((uuid) {
+      var newId = Uuid().v4();
       var oldUuid = "\"uuid\":\"" + uuid.group(2) + "\"";
-      var newUuid = "\"uuid\":\"" + Uuid().v4() + "\"";
+      var newUuid = "\"uuid\":\"" + newId + "\"";
 
       json = json.replaceAll(oldUuid, newUuid);
+
+      oldUuid = "\"" + uuid.group(2) + "\"";
+      newUuid = "\"" + newId + "\"";
+
+      regExpPoly.allMatches(json).forEach((oldPolyIDs) {
+        var newPolyIDs = oldPolyIDs.group(2).replaceAll(oldUuid, newUuid);
+        json = json.replaceAll(oldPolyIDs.group(2), newPolyIDs);
+      });
     });
     return json;
   }
