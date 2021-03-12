@@ -107,7 +107,7 @@ class _GCWToolState extends State<GCWTool> {
     if (widget.buttonList != null) {
       widget.buttonList.forEach((button) {
         if (button.url == '') // 404-Page asking for help
-          url = 'https://blog.gcwizard.net/manual/uncategorized/404/';
+          url = i18n(context, 'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
         else
           url = button.url;
         if (button.url != null && button.url.length != 0)

@@ -44,13 +44,13 @@
   "about_notfornazis" : "Nicht für Nazis, Rassisten und Faschisten!",
 
   "adfgvx_title" : "ADFG(V)X",
+  "adfgvx_description" : "Deutscher Militärcode aus dem 1. Weltkrieg",
+  "adfgvx_example" : "XXFXD FGAFF XAFX",
   "adfgvx_online_help_url" : "https://blog.gcwizard.net/manual/de/adfgvx-chiffre/02-wie-wird-mit-adfgvx-ent-bzw-verschlusselt/",
   "adfgvx_mode_adfgx" : "ADFGX (5)",
   "adfgvx_mode_adfgvx" : "ADFGVX (6)",
   "adfgvx_key_substitution" : "Substitutionsschlüssel",
   "adfgvx_key_transposition" : "Transpositionsschlüssel",
-  "adfgvx_description" : "Deutscher Militärcode aus dem 1. Weltkrieg",
-  "adfgvx_example" : "XXFXD FGAFF XAFX",
 
   "affine_title" : "Affine Chiffre",
   "affine_description" : "Eine Substitutionschiffre",
@@ -126,10 +126,10 @@
   "apparenttemperature_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/temperaturen/01-was-sind-gefuhlte-temperaturen/",
 
   "asciivalues_title" : "ASCII und Unicode (UTF-8)",
+  "asciivalues_description" : "ASCII und UTF-8/Unicode Zeichencodes",
   "asciivalues_online_help_url": "https://blog.gcwizard.net/manual/de/ascii-und-unicode-utf-8-umwandlungen/04-wie-wandelt-der-gc-wizard-zwischen-ascii-und-unicode-utf-8-um/",
   "asciivalues_mode_left" : "A-Z → ASCII",
   "asciivalues_mode_right" : "ASCII → A-Z",
-  "asciivalues_description" : "ASCII und UTF-8/Unicode Zeichencodes",
   "asciivalues_example" : "6 → 54, A → 65, a → 97, ä → 228",
   "asciivalues_numeralbase" : "Kodierung",
 
@@ -686,6 +686,7 @@
   "common_distance_hint" : "Distanz eingeben",
   "common_encrypt" : "Verschlüsseln",
   "common_error" : "Fehler",
+  "common_error_url" : "https:\\",
   "common_example" : "Beispiel",
   "common_hinttext_default" : "Wert eingeben",
   "common_import" : "Import",

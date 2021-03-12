@@ -686,6 +686,7 @@
   "common_distance_hint" : "Enter distance",
   "common_encrypt" : "Encrypt",
   "common_error" : "Error",
+  "common_error_url" : "https:\\",
   "common_example" : "Example",
   "common_hinttext_default" : "Enter value",
   "common_import" : "Import",
