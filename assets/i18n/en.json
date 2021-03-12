@@ -2331,6 +2331,7 @@
   "symboltables_selection_download_dialog_text" : "Do you want to download all symbol tables as a PDF file (ca. 25 MB)?",
   "symboltables_selection_download_link" : "https://misc.gcwizard.net/symboltables_en.pdf",
   "symboltables_showoverlay" : "Overlays",
+  "symboltables_exportimage": "Export results",
   "symboltables_ignoreunknown" : "Ignore unknown",
   "symboltables_adlam_title" : "Adlam (Fulani)",
   "symboltables_alchemy_title" : "Alchemy",
