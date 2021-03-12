@@ -156,7 +156,8 @@ class MapViewPersistenceAdapter {
     mapPoint.update();
   
     var mapPointDAO = _mapPointDAOByUUID(mapPoint.uuid);
-  
+
+    mapPointDAO.name =mapPoint.markerText;
     mapPointDAO.latitude = mapPoint.point.latitude;
     mapPointDAO.longitude = mapPoint.point.longitude;
     mapPointDAO.coordinateFormat = mapPoint.coordinateFormat['format'];

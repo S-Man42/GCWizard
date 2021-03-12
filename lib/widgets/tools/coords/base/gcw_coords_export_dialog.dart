@@ -20,7 +20,7 @@ showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List
         GCWDialogButton(
           text: 'JSON',
           onPressed: () async {
-            var possibileExportMode = json.length < maxQrTextLength ? PossibileExportMode.BOTH : PossibileExportMode.TEXTONLY;
+            var possibileExportMode = json.length < maxQrTextLength ? PossibleExportMode.BOTH : PossibleExportMode.TEXTONLY;
             showGCWDialog(context, 'JSON ' + i18n(context, 'common_text'),
               GCWTextExport(text: json, initMode: TextExportMode.TEXT, possibileExportMode: possibileExportMode),
               [GCWDialogButton(

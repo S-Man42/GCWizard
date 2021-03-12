@@ -16,19 +16,19 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'gcw_exported_file_dialog.dart';
 
 enum TextExportMode {TEXT, QR}
-enum PossibileExportMode {TEXTONLY, QRONLY, BOTH}
+enum PossibleExportMode {TEXTONLY, QRONLY, BOTH}
 
 class GCWTextExport extends StatefulWidget {
   final String text;
   final Function onModeChanged;
-  final PossibileExportMode possibileExportMode;
+  final PossibleExportMode possibileExportMode;
   final TextExportMode initMode;
 
   const GCWTextExport({
     Key key,
     this.text,
     this.onModeChanged,
-    this.possibileExportMode = PossibileExportMode.BOTH,
+    this.possibileExportMode = PossibleExportMode.BOTH,
     this.initMode = TextExportMode.QR
   }) : super(key: key);
 
@@ -65,7 +65,7 @@ class GCWTextExportState extends State<GCWTextExport> {
       height: 360,
       child: Column(
         children: <Widget>[
-          widget.possibileExportMode == PossibileExportMode.BOTH
+          widget.possibileExportMode == PossibleExportMode.BOTH
             ? GCWTwoOptionsSwitch(
                 leftValue: 'QR',
                 rightValue: i18n(context, 'common_text'),
