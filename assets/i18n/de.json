@@ -3,7 +3,6 @@
   "abaddon_description" : "Ein Buchstabe zu einer Dreigruppe aus ¥, µ, þ",
   "abaddon_example" : "þ¥µþµ¥¥¥¥þµþ",
   "abaddon_online_help_url" : "https://blog.gcwizard.net/manual/de/abaddon-chiffre/02-wie-wird-mit-abbadon-ent-bzw-verschlusselt/",
-
   "about_version" : "Version",
   "about_maintainer" : "Maintainer & Entwickler",
   "about_contact_email" : "eMail",
@@ -42,7 +41,6 @@
   "about_contributors" : "Mitwirkende",
   "about_testers" : "Tester",
   "about_notfornazis" : "Nicht für Nazis, Rassisten und Faschisten!",
-
   "adfgvx_title" : "ADFG(V)X",
   "adfgvx_description" : "Deutscher Militärcode aus dem 1. Weltkrieg",
   "adfgvx_example" : "XXFXD FGAFF XAFX",
@@ -51,14 +49,12 @@
   "adfgvx_mode_adfgvx" : "ADFGVX (6)",
   "adfgvx_key_substitution" : "Substitutionsschlüssel",
   "adfgvx_key_transposition" : "Transpositionsschlüssel",
-
   "affine_title" : "Affine Chiffre",
   "affine_description" : "Eine Substitutionschiffre",
   "affine_example" : "HALLO → LWBBA",
   "affine_online_help_url" : "https://blog.gcwizard.net/manual/de/affine-chiffre/02-wie-wird-mit-affine-entschlusselt-bzw-verschlusselt/",
   "affine_key_a" : "Schlüssel A",
   "affine_key_b" : "Schlüssel B",
-
   "alphabet_name_az" : "Standard Alphabet",
   "alphabet_name_az_description" : "A-Z → 1-26",
   "alphabet_name_german1" : "Deutsch, Version 1",
@@ -78,7 +74,6 @@
   "alphabet_name_spanish2" : "Spanisch, Version 2",
   "alphabet_name_spanish2_description" : "27 Zeichen: Ñ → 15",
   "alphabet_name_polish1_description" : "A Ą B C Ć D E Ę F G H I J K L Ł M N Ń O Ó P R S Ś T U W Y Z Ź Ż",
-
   "alphabetvalues_title" : "Buchstabenwerte",
   "alphabetvalues_description" : "Buchstaben zu ihrer Position im Alphabet",
   "alphabetvalues_online_help_url" : "https://blog.gcwizard.net/de/2020/05/28/buchstabenwerte-jetzt-mit-sonderzeichen-umlauten-und-eigenen-alphabeten/",
@@ -109,7 +104,6 @@
   "alphabetvalues_edit_mode_customize_deleteletter_text" : "Möchtest du wirklich den Buchstaben '%s1' aus dem aktuellen Alphabet entfernen?\n\nWähle 'Löschen' für einfaches Löschen. Wähle 'Löschen und Anpassen', um alle Folgewerte um -1 anzupassen.",
   "alphabetvalues_edit_mode_customize_deleteletter_remove" : "Löschen",
   "alphabetvalues_edit_mode_customize_deleteletter_removeandadjust" : "Löschen &\nAnpassen",
-
   "amsco_title" : "AMSCO Chiffre",
   "amsco_description" : "Spaltentausch-Chiffre",
   "amsco_example" : "Beispiel → IIELSPBE",
@@ -120,11 +114,9 @@
   "amsco_key_hint" : "Fortlaufenden Ziffern von 1 bis 9",
   "amsco_error_key" : "Schlüssel fehlerhaft!",
   "amsco_usedgrid" : "Verwendete Matrix",
-
   "apparenttemperature_selection_title" : "Gefühlte Temperatur",
   "apparenttemperature_selection_description" : "Berechnet den Wohlfühlfaktor in Abhängigkeit von Temperatur, Luftfeuchtigkeit und Wind",
   "apparenttemperature_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/temperaturen/01-was-sind-gefuhlte-temperaturen/",
-
   "asciivalues_title" : "ASCII und Unicode (UTF-8)",
   "asciivalues_description" : "ASCII und UTF-8/Unicode Zeichencodes",
   "asciivalues_online_help_url": "https://blog.gcwizard.net/manual/de/ascii-und-unicode-utf-8-umwandlungen/04-wie-wandelt-der-gc-wizard-zwischen-ascii-und-unicode-utf-8-um/",
@@ -132,7 +124,6 @@
   "asciivalues_mode_right" : "ASCII → A-Z",
   "asciivalues_example" : "6 → 54, A → 65, a → 97, ä → 228",
   "asciivalues_numeralbase" : "Kodierung",
-
   "astronomy_selection_title" : "Astronomie",
   "astronomy_selection_description": "Sonnen- und Mondaufgang/-untergang, Ostern, Jahreszeiten",
   "astronomy_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/astronomie/01-welche-funktionen-fallen-unter-den-bereich-astronomie/",
@@ -199,8 +190,8 @@
   "astronomy_easter_selection_title" : "Ostern",
   "astronomy_easter_selection_description" : "Berechnet das Osterdatum eines Jahres",
   "astronomy_easter_easterdate_title" : "Datum Ostersonntag",
-  "astronomy_easter_easterdate_online_help_url" : "https://blog.gcwizard.net/manual/de/astronomie/06-wie-berechne-ich-das-osterdatum-in-einem-bestimmten-jahr/",
   "astronomy_easter_easterdate_description" : "Datum von Ostersonntag für ein bestimmtes Jahr (zwischen 1583 und 3042)",
+  "astronomy_easter_easterdate_online_help_url" : "https://blog.gcwizard.net/manual/de/astronomie/06-wie-berechne-ich-das-osterdatum-in-einem-bestimmten-jahr/",
   "astronomy_easter_easteryears_title" : "Jahre mit Osterdatum",
   "astronomy_easter_easteryears_description" : "Alle Jahre mit einem bestimmten Datum für Ostersonntag (zwischen 1583 und 3042)",
   "astronomy_easter_easteryears_online_help_url" : "https://blog.gcwizard.net/manual/de/astronomie/07-wie-zeige-ich-die-jahre-eines-bestimmten-ostersonntags-mon-tag/",
@@ -214,19 +205,16 @@
   "astronomy_seasons_perihelion" : "Perihelion (Sonnennächster Punkt)",
   "astronomy_seasons_aphelion" : "Aphelion (Sonnenfernster Punkt)",
   "astronomy_seasons_distance" : "Entfernung",
-
   "atbash_title" : "Atbasch",
   "atbash_example" : "ABC → ZYX",
   "atbash_online_help_url" : "https://blog.gcwizard.net/manual/de/atbasch/02-wie-wird-mit-atbasch-ent-bzw-verschlusselt/",
-
   "bacon_title" : "Bacon Chiffre",
   "bacon_description" : "Buchstaben zu Fünfergruppen aus A, B",
   "bacon_example" : "XYZ → BABABBABBABABBB / 101011011010111",
   "bacon_online_help_url" : "https://blog.gcwizard.net/manual/de/bacon-chiffre/02-wie-wird-mit-bacon-ent-bzw-verschlusselt/",
   "bacon_coding" : "Kodierung",
-
   "base_selection_title" : "Base Codierungen",
-  "base_selection_online_help_url": "https://blog.gcwizard.net/manual/de/base-codierungen/01-was-sind-base-codierungen/",
+  "base_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/base-codierungen/01-was-sind-base-codierungen/",
   "base_base16_title" : "Base16",
   "base_base16_example" : "414e535745523f",
   "base_base16_online_help_url" : "https://blog.gcwizard.net/manual/de/base-codierungen/05-was-ist-die-base16-kodierung/",
@@ -239,7 +227,6 @@
   "base_base85_title" : "Base85 (ASCII85)",
   "base_base85_example" : "<~<+oue+DGm>FD,5.@;^.1AT@~>",
   "base_base85_online_help_url" : "https://blog.gcwizard.net/manual/de/base-codierungen/05-was-ist-die-base85-kodierung/",
-
   "bcd_selection_title" : "BCD Codierungen",
   "bcd_selection_description" : "Codiert Zahlen ziffernweise jeweils mit einem 4- oder 5-Bit-Wert (0 und 1)",
   "bcd_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/bcd-codierungen/01-was-sind-bcd-codierungen/",
@@ -291,7 +278,6 @@
   "bcd_biquinary_title" : "BCD (Biquinär)",
   "bcd_biquinary_example" : "19 → 1000010 0110000",
   "bcd_biquinary_online_help_url" : "https://blog.gcwizard.net/manual/de/bcd-codierungen/03-wie-ent-bzw-verschlusselt-der-gc-wizard/",
-
   "beatnik_title" : "Beatnik",
   "beatnik_description" : "Esoterisch Programmiersprache",
   "beatnik_example" : "baa mikrobiotechnologie stinkt →  $",
@@ -332,7 +318,6 @@
   "beatnik_error_runtime_jmpnz_f" : "Versuch POP -> JUMP NOT ZERO VORWÄRTS",
   "beatnik_error_runtime_jmpz_b" : "Versuch POP -> JUMP ZERO RÜCKWÄRTS",
   "beatnik_error_runtime_jmpnz_b" : "Versuch POP -> JUMP NOT ZERO RÜCKWÄRTS",
-
   "beaufort_selection_title" : "Windstärke (Beaufort)",
   "beaufort_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/windstarke-beaufort/03-wie-unterstutzt-der-gc-wizard-bei-der-umrechnung-von-windstarken/",
   "beaufort_title" : "Windstärke (Beaufort)",
@@ -341,7 +326,6 @@
   "beaufort_online_help_url" : "https://blog.gcwizard.net/manual/de/windstarke-beaufort/03-wie-unterstutzt-der-gc-wizard-bei-der-umrechnung-von-windstarken/",
   "beaufort_mode_left" : "Nach Beaufort",
   "beaufort_mode_right" : "Von Beaufort",
-
   "bifid_title" : "Bifid Chiffre",
   "bifid_description" : "Verschlüsselung basierend auf einem Quadrat mit zusätzlicher Transposition",
   "bifid_example" : "HALLO → FNNAD",
@@ -358,12 +342,10 @@
   "bifid_error_wrong_griddimension" : "FEHLER: falsche Quadratgröße",
   "bifid_error_no_alphabet" : "FEHLER: kein Alphabet",
   "bifid_error_no_output" : "FEHLER: kein Chiffretext",
-
   "binary_title" : "Binärzahlen",
   "binary_description" : "Wandelt Binärzahlen in Dezimalzahlen um",
   "binary_example" : "101010 → 42",
   "binary_online_help_url" : "https://blog.gcwizard.net/manual/de/binarzahlen/01-wie-kann-ich-binarzahlen-ent-verschlusseln/",
-
   "book_cipher_title" : "Buch Chiffre",
   "book_cipher_description" : "Ermittelt die Position eines Wortes oder das Wort an der angegebenen Position",
   "book_cipher_example" : "Text → 4.3.1 9.8.2 7.3.2 5.9.4",
@@ -379,7 +361,6 @@
   "book_cipher_output_format": "Ausgabeformat",
   "book_cipher_input_format": "Positionsformat",
   "book_cipher_random_output_hint" : "Buchstaben werden zufällig ausgewählt",
-
   "brainfk_title" : "Brainf**k",
   "brainfk_description" : "Esoterische Programmiersprache aus 8 Zeichen",
   "brainfk_example" : ">++++++++[<++++++++>-]<++.",
@@ -392,7 +373,6 @@
   "brainfk_error_pointertoosmall" : "Zeiger zu klein",
   "brainfk_error_loopnotclosed" : "Schleife nicht geschlossen",
   "brainfk_error_loopnotopened" : "Schleife nicht geöffnet",
-
   "burrowswheeler_title" : "Burrows-Wheeler Transformation",
   "burrowswheeler_description" : "Grundlage für bzip-Komprimierung",
   "burrowswheeler_example" : "Ananas → #SNNAAA",
@@ -406,12 +386,10 @@
   "burrowswheeler_inputcipher" : "Chiffretext",
   "burrowswheeler_error_no_index" : "FEHLER: Das Index-Zeichen fehlt",
   "burrowswheeler_error_char_index" : "FEHLER: Index-Zeichen darf nicht Teil des Textes sein",
-
   "caesar_title" : "Caesar Chiffre",
   "caesar_description" : "Verschiebt Buchstaben im Alphabet um 13 Stellen (ROT-13)",
   "caesar_example" : "ABC → NOP",
   "caesar_online_help_url" : "https://blog.gcwizard.net/manual/de/caesar-chiffre/02-wie-wird-mit-caesar-ent-bzw-verschlusselt/",
-
   "callforcontribution_1" : "GC Wizard ist ein Tool von Geocachern für Geocacher.\n\n",
   "callforcontribution_2" : "Die Entwickler und alle Beitragenden haben ausschließlich in ihrer Freizeit daran entwickelt. Bei einer so umfangreichen App kommen schnell viele Wochen oder Monate Arbeit zusammen. Das ist eine für wenige Mitarbeiter nur sehr schwer zu bewältigende Aufgabe.\n\n",
   "callforcontribution_3" : "Deshalb brauchen wir DICH!\n\n",
@@ -437,7 +415,6 @@
   "callforcontribution_23" : " in Foren und auf Social Media Seiten?\n\nAm besten, ihr fragt einfach bei uns an:\n\n",
   "callforcontribution_24" : "Kontakt\n\n",
   "callforcontribution_25" : "Lass GC Wizard ein Community-Projekt werden!",
-
   "ccitt1_selection_title" : "CCITT-1",
   "ccitt1_selection_description" : "Baudot-Code",
   "ccitt1_selection_example" : "ABC → 00100 01001 01101",
@@ -447,7 +424,6 @@
   "ccitt1_example" : "ABC → 00100 01001 01101",
   "ccitt1_online_help_url" : "https://blog.gcwizard.net/manual/de/ccitt-1-baudot-code/02-wie-wird-mit-ccitt-1-ent-bzw-verschlusselt/",
   "ccitt1_numeralbase" : "Kodierung",
-
   "ccitt2_selection_title" : "CCITT-2",
   "ccitt2_selection_description" : "Baudot-Murray-Code; Binärer Lochkartencode",
   "ccitt2_selection_example" : "ABC → 00011 11001 01110",
@@ -457,7 +433,6 @@
   "ccitt2_example" : "ABC → 00011 11001 01110",
   "ccitt2_online_help_url" : "https://blog.gcwizard.net/manual/de/ccitt-2-baudot-murray-code/02-wie-wird-mit-ccitt-2-ent-bzw-verschlusselt/",
   "ccitt2_numeralbase" : "Kodierung",
-
   "changelog_1.4.1" : "[chg] Koordinatenformat UTM: Lat-Zone (Danke, Mike)\n[fix] Koordinatenformat MGRS (Danke, Mike & Thomas)\n[fix] Variable Koordinaten: Projektion (Danke, Frank)\n[fix] Zahlwörter: Französisch (Danke, 'Don Rodolphos')\n[fix] Fortschrittsanzeiger (Danke, Mike)\n[fix] Symboltabellen: Gallifreyisch, Flaggenalphabet",
   "changelog_1.4.0" : "[new] Freie Karte\n[new] Vigenère Codeknacker (Danke, Mike, guballa.de)\n[new] Malbolge (Danke, Thomas)\n[new] Fortschrittsanzeiger (Danke, Mike)\n[new] Chef (Danke, Thomas)\n[new] Zahlenfolgen (Danke, Thomas)\n[new] Periodensystem: Tabellenansicht\n[new] Koordinate einmessen\n[new] Koordinaten: Linien-/Winkelabschnitte\n[new] Zisterzienser (Danke, Thomas)\n[new] Maya\n[new] Koordinatenformat: GeoHex\n[new] Koordinatenformat: XYZ\n[new] Ellipsoiden: Sonne, Mond, Planeten\n[new] Var. Koordinate: Eingabe des eigenen Standortes\n[new] Chiffrierscheibe/Mexican Army Chiffrierscheibe\n[new] Vigenère: Buchstabenwerte als Schlüssel\n[new] Symboltabelle: D'ni (Zahlen) (Danke, Andreas)\n[chg] Periodensystem: Elemente in Listen anklickbar",
   "changelog_1.3.0" : "[new] Hash-Suche\n[new] Multi-Dekodierer\n[new] Neue Kategorie: Allgemeine Codelöser\n[new] Whitespace (Danke, Mike)\n[new] Burrows-Wheeler-Transformation (Danke, Thomas)\n[new] GPX/KML Export (Danke, Mike)\n[new] Quersummen: Häufigkeitsverteilung\n[new] Formelrechner: Verschachtelte Variablen\n[new] Formelrechner: Koordinatenprüfer/Kartenansicht\n[new] Zahlwörter: Sprache 'Solresol' (Danke, Thomas)\n[new] Koordinaten: Antipode (Danke, Mike)\n[new] Vigenère: Modus 'Nur Buchstaben beachten' (Danke, Andy)\n[new] Viele Symboltabellen (Danke, Andreas)\n[chg] Verschlüsselungen: Standard auf 'Entschlüsseln'\n[chg] Name von 'Universeller Codebrecher' in 'Codelöser für Textersetzungen' geändert\n[chg] Interner Code für Symboltabellen\n[chg] 'Alle Tools'-Tab: Zeigt mehr Tools\n[chg] Suche in 'Favoriten'-Tab sucht in allen Tools\n[fix] TAPIR: Punkt wurde nicht berücksichtigt (Danke, 'MrDosinger')\n[fix] (EN) About-Seite ging nicht (Danke, 'MrDosinger')\n[fix] Koordinaten-Tools: Gleiche Kreise führten zum Absturz (Danke, Mike)",
@@ -478,7 +453,6 @@
   "changelog_0.3.0" : "[new] Aussagekräftige Versionsnummers\n[new] Primzahlen\n[new] Zahlensysteme\n[new] Morse\n[new] Playfair\n[new] ADFG(V)X\n[new] Bacon\n[chg] Datum- und Koordinateneingaben: Workflow\n[chg] Verschiedene Layout- und Architekturänderungen\n[fix] Rechtschreibung",
   "changelog_0.0.4" : "[fix] Berechnung von Stunden/Minuten/Sekunden in 'Anzahl Tage'",
   "changelog_0.0.1" : "[new] Google PlayStore Initialisierung",
-
   "chao_title" : "Chao Chiffre",
   "chao_description" : "Symmetrisches Verschlüsselungsverfahren, das 1918 von John Francis Byrne entwickelt wurde ",
   "chao_example" : "HALLO → SYMLH",
@@ -487,7 +461,6 @@
   "chao_alphabet_cipher" : "Chiffretext Alphabet",
   "chao_alphabet_az" : "A-Z",
   "chao_alphabet_za" : "Z-A",
-
   "chef_title" : "Chef",
   "chef_description" : "Esoterische Programmiersprache, die wie ein Kochrezept aussieht",
   "chef_online_help_url" : "https://blog.gcwizard.net/manual/de/chef/01-was-ist-die-programmiersprache-chef/",
@@ -575,17 +548,14 @@
   "chef_hint_recipe_methods_en" : "Wurde das Schlüsselwort 'Methods.' definiert über der Methodenliste?",
   "chef_hint_recipe_oven_temperature" : "Wurde die Ofentemperatur korrekt vorgegeben?",
   "chef_hint_no_hint_available" : "Kein Hinweis verfügbar",
-
   "chickenlanguage_title" : "Hühnersprache",
   "chickenlanguage_description" : "Spielsprache, Geheimsprache",
   "chickenlanguage_example" : "Huhn → huhudefuhn",
   "chickenlanguage_online_help_url" : "https://blog.gcwizard.net/manual/de/huhnersprache/02-wie-wird-die-huhnersprache-ent-bzw-verschlusselt/",
-
   "cipherwheel_title": "Chiffrierscheibe",
   "cipherwheel_description": "Verschiebt das Alphabet wie auf einer Drehscheibe",
   "cipherwheel_example": "ABCTUV → 8 9 10 1 2 3",
   "cipherwheel_online_help_url" : "https://blog.gcwizard.net/manual/de/chifrierscheibe/02-wie-wird-mit-der-chiffrierscheibe-ent-bzw-verschlusselt/",
-
   "cistercian_selection_title" : "Zisterzienserzahlen",
   "cistercian_selection_description" : "Zahlensystem der Zisterzienser-Mönche",
   "cistercian_selection_example" : "11 202 1000 → ⊺ ⊧ ⌋",
@@ -594,7 +564,6 @@
   "cistercian_description" : "Zahlensystem der Zisterzienser-Mönche",
   "cistercian_example" : "11 202 1000 → ⊺ ⊧ ⌋",
   "cistercian_online_help_url" : "https://blog.gcwizard.net/manual/de/zisterzienser-zahlen/01-was-sind-zisterzienser-zahlen/",
-
   "chronogram_title" : "Chronogramm",
   "chronogram_description" : "Finded und addiert römische Zahlen in Texten",
   "chronogram_example" : "AMORE MATVRITAS → MMVI → 2006",
@@ -602,7 +571,6 @@
   "chronogram_ju.to.iv" : "J, U → I, V",
   "chronogram_y.to.ii" : "Y → II",
   "chronogram_w.to.vv" : "W → VV",
-
   "colors_title" : "Farben",
   "colors_description" : "Farbwähler und Farbraum-Konvertierer",
   "colors_online_help_url" : "https://blog.gcwizard.net/manual/de/farben/01-wie-kann-verschiedene-farbraume-umrechnen/",
@@ -651,7 +619,6 @@
   "colors_colorspace_yiq_y" : "Y (Luminanz)",
   "colors_colorspace_yiq_i" : "I (Cyan/Orange)",
   "colors_colorspace_yiq_q" : "Q (Mag./Grün)",
-
   "combinatorics_selection_title" : "Kombinatorik",
   "combinatorics_selection_description" : "Permutation und Kombination",
   "combinatorics_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/kombinatorik/01-welche-funktionen-stehen-im-bereich-kombinatorik-zur-verfugung/",
@@ -668,17 +635,16 @@
   "combinatorics_combinationpermutation_description" : "Alle Untergruppen und Anordnungen von Zeichen",
   "combinatorics_combinationpermutation_example" : "ABC → A B C AB AC BA BC CA CB ABC ACB BAC BCA CAB CBA",
   "combinatorics_combinationpermutation_online_help_url" : "https://blog.gcwizard.net/manual/de/kombinatorik/04-was-wird-in-der-funktion-permutierte-kombinationen-aufgelistet/",
-
   "common_alphabet" : "Alphabet",
   "common_app_title" : "GC Wizard",
-  "common_cancel" : "Abbrechen",
+  "common_bearing_hint": "Peilung (Grad) eingeben",
+  "common_cancel" : "Abbruch",
   "common_clipboard_fromdeviceclipboard" : "Aus Standard-Zwischenablage",
   "common_clipboard_notextdatafound" : "Kein Text in der Zwischenablage gefunden",
   "common_clipboard_copied" : "In die Zwischenablage kopiert",
   "common_copy" : "Kopieren",
   "common_count" : "Anzahl",
   "common_custom" : "Eigenes",
-  "common_bearing_hint" : "Peilung (Grad) eingeben",
   "common_day" : "Tag",
   "common_decrypt" : "Entschlüsseln",
   "common_deletealtert_title" : "Wirklich löschen?",
@@ -686,7 +652,7 @@
   "common_distance_hint" : "Distanz eingeben",
   "common_encrypt" : "Verschlüsseln",
   "common_error" : "Fehler",
-  "common_error_url" : "https:\\",
+  "common_error_url" : "https://blog.gcwizard.net/manual/uncategorized/404/",
   "common_example" : "Beispiel",
   "common_hinttext_default" : "Wert eingeben",
   "common_import" : "Import",
@@ -716,13 +682,11 @@
   "common_unknown" : "Unbekannt",
   "common_userposition" : "Eigene Position",
   "common_year" : "Jahr",
-
   "common_alphabetmodification_title" : "Modifikation",
   "common_alphabetmodification_jtoi" : "J → I",
   "common_alphabetmodification_ctok" : "C → K",
   "common_alphabetmodification_wtovv" : "W → VV",
   "common_alphabetmodification_removeq" : "Ignoriere Q",
-
   "common_color_black" : "Schwarz",
   "common_color_blue" : "Blau",
   "common_color_brown" : "Braun",
@@ -736,7 +700,6 @@
   "common_color_violet" : "Violett",
   "common_color_white" : "Weiß",
   "common_color_yellow" : "Gelb",
-
   "common_compassrose_n_symbol" : "N",
   "common_compassrose_n_name" : "Nord",
   "common_compassrose_nbe_symbol" : "NzO",
@@ -801,14 +764,12 @@
   "common_compassrose_nnw_name" : "Nordnordwest",
   "common_compassrose_nbw_symbol" : "NzW",
   "common_compassrose_nbw_name" : "Nord zu West",
-
   "common_exportfile_saved" : "Datei gespeichert",
   "common_exportfile_savepath" : "Datei gespeichert unter\n\n%s1",
   "common_exportfile_nowritepermission" : "Berechtigung zum Schreiben von Dateien verwehrt.",
   "common_exportfile_sharefile" : "Datei teilen",
   "common_exportfile_openfile" : "Datei öffnen",
   "common_exportfile_saveoutput" : "Ausgabe speichern",
-
   "common_language_czech" : "Tschechisch",
   "common_language_danish" : "Dänisch",
   "common_language_dutch" : "Niederländisch",
@@ -830,7 +791,6 @@
   "common_language_spanish" : "Spanisch",
   "common_language_swedish" : "Schwedisch",
   "common_language_volapuek" : "Volapük",
-
   "common_month_january" : "Januar",
   "common_month_february" : "Februar",
   "common_month_march" : "März",
@@ -843,7 +803,6 @@
   "common_month_october" : "Oktober",
   "common_month_november" : "November",
   "common_month_december" : "Dezember",
-
   "common_numeralbase_binary" : "Binär",
   "common_numeralbase_ternary" : "Ternär",
   "common_numeralbase_quaternary" : "Quaternär",
@@ -858,11 +817,9 @@
   "common_numeralbase_hexadecimal" : "Hexadezimal",
   "common_numeralbase_vigesimal" : "Vigesimal",
   "common_numeralbase_sexagesimal" : "Sexagesimal",
-
   "common_support_title" : "Möchtest du uns unterstützen?",
   "common_support_text" : "Du hast den GC Wizard %s1 mal geöffnet.\n\nDanke, dass du ihn benutzt!\n\n- Möchtest du uns mit einem Kaffee unterstützen?\n- Möchtest du selbst etwas beitragen?",
   "common_support_link" : "https://blog.gcwizard.net/de/unterstutzen-und-beitragen/",
-
   "common_unit_prefix_exa" : "Exa",
   "common_unit_prefix_peta" : "Peta",
   "common_unit_prefix_tera" : "Tera",
@@ -1057,7 +1014,6 @@
   "common_unit_volume_smi_name" : "US Smidgen (trocken)",
   "common_unit_volume_pn_name" : "US Pinch (trocken)",
   "common_unit_volume_ds_name" : "US Dash (Spritzer)",
-
   "coords_selection_title" : "Koordinaten",
   "coords_selection_description" : "Koordinatenberechnungen",
   "coords_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/koordinaten/01-welche-werkzeuge-stehen-fur-die-koordinatenberechnung-zur-verfugung/",
@@ -1123,7 +1079,7 @@
   "coords_intersectbearings_coord2" : "Startpunkt der zweiten Linie",
   "coords_intersectfourpoints_title" : "Schnittpunkt zweier Linien aus vier Punkten",
   "coords_intersectfourpoints_description" : "Berechnet Schnittpunkt aus 2 Linien, definiert durch 4 Punkte",
-  "coords_intersectfourpoints_online_help_url": "https://blog.gcwizard.net/manual/de/schnittpunkt-zweier-linien-aus-vier-punkten/01-wie-funktioniert-ein-schnittpunkt-zweier-linien-aus-vier-punkten/",
+  "coords_intersectfourpoints_online_help_url" : "https://blog.gcwizard.net/manual/de/schnittpunkt-zweier-linien-aus-vier-punkten/01-wie-funktioniert-ein-schnittpunkt-zweier-linien-aus-vier-punkten/",
   "coords_intersectfourpoints_coord11" : "Startpunkt der ersten Linie",
   "coords_intersectfourpoints_coord12" : "Endpunkt der ersten Linie",
   "coords_intersectfourpoints_coord21" : "Startpunkt der zweiten Linie",
@@ -1287,7 +1243,6 @@
   "coords_avaraging_online_help_url" : "https://blog.gcwizard.net/manual/de/koordinate-einmessen/01-wie-messe-ich-meine-koordinate-ein/",
   "coords_averaging_start" : "Starte Messung",
   "coords_averaging_stop" : "Beende Messung",
-
   "crosssum_selection_title" : "Quersumme",
   "crosssum_selection_description" : "Quersummen einer ganzen Zahl",
   "crosssum_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/quersumme/01-welche-funktionen-stehen-im-bereich-quersummen-zur-verfugung/",
@@ -1316,7 +1271,6 @@
   "crosssum_range_iterated_frequency_title" : "Häufigkeiten von iter. Quersummen in Bereich",
   "crosssum_range_iterated_frequency_description" : "Ermittelt, welche iterierten Quersummen wie oft in einem Bereich auftreten",
   "crosssum_range_iterated_frequency_online_help_url" : "https://blog.gcwizard.net/manual/de/quersumme/06-wie-finde-ich-die-haufigkeit-von-iterierten-quersummen-in-einem-bereich/",
-
   "crosstotal_title" : "Zeige Summen",
   "crosstotal_output" : "Summen, Quersummen, Produkte",
   "crosstotal_count_characters" : "Anzahl Zeichen des Alphabets",
@@ -1342,11 +1296,9 @@
   "crosstotal_crossproduct" : "Querprodukt",
   "crosstotal_crossproduct_iterated" : "Iteriertes Querprodukt",
   "crosstotal_crossproduct_alternated" : "Alternierendes Querprodukt",
-
   "cryptography_selection_title" : "Verschlüsselungen und Codes",
   "cryptography_selection_description" : "Kryptografie- und Encoding-Tools",
   "cryptography_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/verschlusselungen-und-codes/00-was-bietet-das-menu-verschlusselungen-und-codes/",
-
   "dates_selection_title" : "Datums- und Zeitfunktionen",
   "dates_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/datums-und-zeitfunktionen/01-welche-berechnungen-werden-unter-datums-und-zeitfunktionen-abgebildet/",
   "dates_selection_description" : "Datums- und Uhrzeitberechnungen",
@@ -1379,7 +1331,6 @@
   "dates_weekday_friday" : "Freitag",
   "dates_weekday_saturday" : "Samstag",
   "dates_weekday_sunday" : "Sonntag",
-
   "deadfish_title" : "Deadfish",
   "deadfish_description" : "Esoterische Programmiersprache mit 4 Zeichen (IDSO oder XKCD)",
   "deadfish_online_help_url" : "https://blog.gcwizard.net/manual/de/deadfish/01-was-ist-die-programmiersprache-deadfish/",
@@ -1388,13 +1339,11 @@
   "deadfish_mode_right" : "XKCD",
   "deadfish_interpreter" : "Interpreter",
   "deadfish_generator" : "Generator",
-
   "decabit_title" : "Decabit",
   "decabit_description" : "Binärer Code in der Energiewirtschaft",
   "decabit_example" : "ABC → ++-+++---- ++++--+--- +--++++---",
   "decabit_online_help_url" : "https://blog.gcwizard.net/manual/de/decabit/02-wie-kann-ich-decabit-ent-verschlusseln/",
   "decabit_numeric_mode" : "Numerisch",
-
   "dna_selection_title" : "DNA/mRNA",
   "dna_selection_description" : "Kodiert Text als DNA/mRNA-Sequenzen",
   "dna_selection_example" : "AE → GCTGAG oder GCUGAG",
@@ -1437,27 +1386,22 @@
   "dna_aminoacid_asparticacid" : "Asparaginsäure",
   "dna_aminoacid_glutamicacid" : "Glutaminsäure",
   "dna_aminoacid_glycine" : "Glycin",
-
   "dtmf_title" : "DTMF (MFV)",
   "dtmf_description" : "Dualton-Mehrfrequenz(wahl)verfahren",
   "dtmf_example" : "5 → [770, 1336]",
   "dtmf_online_help_url" : "https://blog.gcwizard.net/manual/de/dtmf-mfv/01-was-ist-dtmf/",
-
   "duckspeak_title": "Entensprache",
   "duckspeak_description" : "Eine Spaß-Sprache die aus 'Nak'-Lauten besteht",
   "duckspeak_example" : "Ente → Nak? nak? Naknak nak. Naknaknak Nak? Naknak nak?",
   "duckspeak_online_help_url" : "https://blog.gcwizard.net/manual/de/entensprache/02-wie-wird-die-entensprache-ent-bzw-verschlusselt/",
-
   "e_selection_title" : "e (e = 2,7182818...)",
   "e_selection_description" : "Mathematische Konstante: Eulers Zahl",
   "e_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/e/01-welche-funktionen-werden-fur-ee27182818-bereitgestellt/",
-
   "enclosedareas_title": "Eingeschlossene Flächen",
   "enclosedareas_description" : "Anzahl der Löcher in Buchstaben und Zahlen",
   "enclosedareas_online_help_url" : "https://blog.gcwizard.net/manual/de/eingeschlossene-flachen/02-wie-berechnet-der-gc-wizard-eingeschlossene-flachen/",
   "enclosedareas_with4" : "Geschlossene 4",
   "enclosedareas_without4" : "Offene 4",
-
   "enigma_title": "Enigma",
   "enigma_description" : "Deutsche Verschlüsselungsmaschine im 2. Weltkrieg",
   "enigma_example" : "SJDSF TTVWB ZXPDU",
@@ -1470,11 +1414,9 @@
   "enigma_numberrotors" : "Anzahl",
   "enigma_input" : "Eingabe",
   "enigma_usedmessagekey" : "Angewandter Nachrichtenschlüssel",
-
   "esotericprogramminglanguages_selection_title" : "Esoterische Programmiersprachen",
   "esotericprogramminglanguages_selection_description" : "Interpreter und Generatoren für seltsame Programmiersprachen (z.B. Brainf**k, Ook, Whitespace, ...)",
   "esotericprogramminglanguages_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/esoterische-programmiersprachen/01-was-sind-esoterische-programmiersprachen/",
-
   "formulasolver_title" : "Formelrechner",
   "formulasolver_description" : "Erstelle Formeln für Stationen und Finals, füge Variablen hinzu, errechne Ergebnis",
   "formulasolver_online_help_url" : "https://blog.gcwizard.net/de/2020/06/11/formelrechner/",
@@ -1507,25 +1449,20 @@
   "formulasolver_values_key" : "Name",
   "formulasolver_values_value" : "Wert",
   "formulasolver_values_currentvalues" : "Erstellte Variablen",
-
   "gade_title" : "Gade",
   "gade_description" : "Berechnen der Buchstaben nach Gade",
   "gade_online_help_url" : "https://blog.gcwizard.net/manual/de/gade/02-wie-wird-eine-gade-berechnet/",
-
   "games_selection_title" : "Spiele",
   "games_selection_description" : "Unterstützung für bekannte Spiele (z.B. Scrabble, Sudoku)",
   "games_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/spiele/01-welche-spiele-sind-umgesetzt/",
-
   "gccode_title" : "GC-Code",
   "gccode_description" : "Konvertiert den GC-Code eines Geocaches zu seiner internen ID (Base31)",
   "gccode_example" : "GCK25B → 156997",
   "gccode_online_help_url" : "https://blog.gcwizard.net/manual/de/gc-code/02-wie-wird-der-gc-code-ent-bzw-verschlusselt/",
   "gccode_novalidgcode" : "Kein valider GC-Code",
-
   "generalcodebreakers_selection_title" : "Allgemeine Codelöser",
   "generalcodebreakers_selection_description" : "Tools, die versuchen, Codes ohne spezifische Angaben zu identifizieren oder zu brechen (z.B. Multi-Dekodierer, Hash-Suche)",
   "generalcodebreakers_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/allgemeine-codeloser/00-was-sind-allgemeine-codeloser/",
-
   "gray_title" : "Gray-Code",
   "gray_description" : "Konvertiert eine Binär-/Dezimalzahl in eine Gray-codierte Dezimal-/Binärzahl",
   "gray_example" : "4 | 100 → 6 | 110",
@@ -1533,11 +1470,9 @@
   "gray_mode" : "Modus",
   "gray_mode_decimal" : "Dezimal",
   "gray_mode_binary" : "Binär",
-
   "gronsfeld_title" : "Gronsfeld Chiffre",
   "gronsfeld_description" : "Spezialfall der Vigenère-Verschlüsselung mit Zahlen als Schlüssel",
   "gronsfeld_online_help_url" : "https://blog.gcwizard.net/manual/de/gronsfeld-chiffre/02-wie-wird-mit-gronsfeld-ent-bzw-verschlusselt/",
-
   "hashes_selection_title" : "Hashes",
   "hashes_selection_description" : "Einwegverschlüsselung",
   "hashes_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/hashes/01-was-sind-hashes/",
@@ -1579,7 +1514,6 @@
   "hashes_hashbreaker_searchconfiguration_searchmask" : "Suchmaske",
   "hashes_hashbreaker_hashtobreak" : "Zu lösender Hash",
   "hashes_hashbreaker_solutionnotfound" : "Keine Lösung im angegebenen Bereich gefunden.",
-
   "heatindex_title" : "Hitze-Index",
   "heatindex_description" : "Gefühlte Temperatur aufgrund Temperatur und Luftfeuchtigkeit",
   "heatindex_example" : "39°C (86°F) / 60% → 33° (91°F)",
@@ -1597,12 +1531,10 @@
   "heatindex_index_32" : "Erhöhte Vorsicht – Es besteht die Möglichkeit von Hitzeschäden wie Sonnenstich, Hitzekrampf und Hitzekollaps.",
   "heatindex_index_40" : "Gefahr – Sonnenstich, Hitzekrampf und Hitzekollaps sind wahrscheinlich; Hitzschlag ist möglich.",
   "heatindex_index_54" : "Erhöhte Gefahr – Hitzschlag und Sonnenstich sind wahrscheinlich.",
-
   "hexadecimal_title" : "Hexadezimalzahlen",
   "hexadecimal_description" : "Wandelt Hexadezimalzahlen in Dezimalzahlen um",
   "hexadecimal_example" : "2A → 42",
   "hexadecimal_online_help_url" : "https://blog.gcwizard.net/manual/de/hexadezimalzahlen/01-wie-kann-ich-hexadezimalzahlen-ent-verschlusseln/",
-
   "homophone_title" : "Homophon",
   "homophone_description" : "Monoalphabetische Verschlüsselungsmethode basierend auf Buchstabenhäufigkeiten",
   "homophone_example" : "ABC → 07 09 12",
@@ -1619,7 +1551,6 @@
   "homophone_multiplier" : "Multiplikator",
   "homophone_used_key" : "Verwendeter Schlüssel",
   "homophone_error_own_keys" : "Es werden 100 Schlüsselwerte benötigt!",
-
   "humidex_title" : "Humidex",
   "humidex_description" : "Gefühlte Temperatur aufgrund Temperatur und Luftfeuchtigkeit oder Taupunkt",
   "humidex_example" : "30°C (86°F) / 60% → 38.6",
@@ -1637,7 +1568,6 @@
   "humidex_index_30" : "Einiges Unbehagen.",
   "humidex_index_40" : "Großes Unbehagen; vermeiden Sie Anstrengungen.",
   "humidex_index_45" : "Gefährlich; Hitzschlag ist möglich.",
-
   "irrationalnumbers_error_indextoosmall" : "Index zu klein",
   "irrationalnumbers_error_indextoobig" : "Index zu groß",
   "irrationalnumbers_decimalrange_start" : "Startindex",
@@ -1658,18 +1588,15 @@
   "irrationalnumbers_search_e_online_help_url": "https://blog.gcwizard.net/manual/de/e/04-wie-suche-ich-nach-vorkommen-einer-ziffernfolge/",
   "irrationalnumbers_search_phi_online_help_url": "https://blog.gcwizard.net/manual/de/phi/04-wie-suche-ich-nach-vorkommen-einer-ziffernfolge-2/",
   "irrationalnumbers_search_pi_online_help_url": "https://blog.gcwizard.net/manual/de/pi/04-wie-suche-ich-nach-vorkommen-einer-ziffernfolge-3/",
-
   "kamasutra_title" : "Kamasutra",
   "kamasutra_description" : "Standard: ROT-13; Modifiziert mit eigenem Alphabet: Rotation um die Hälfte der Alphabetlänge",
   "kamasutra_example" : "ABC → NOP",
   "kamasutra_online_help_url" : "https://blog.gcwizard.net/manual/de/kamasutra/02-wie-wird-mit-der-kamasutra-chiffre-ent-bzw-verschlusselt/",
-
   "kenny_title" : "Kennys Code",
   "kenny_description" : "Buchstaben zu einer Dreiergruppe aus m, p, f; inspiriert durch 'South Park'",
   "kenny_example" : "pmpmffpmfpmf",
   "kenny_online_help_url" : "https://blog.gcwizard.net/manual/de/kennys-code/02-wie-wird-kennys-code-ent-bzw-verschlusselt/",
   "kenny_case_sensitive" : "Beachte Groß-/Kleinschreibung",
-
   "keyboard_title" : "Tastatur-Layouts",
   "keyboard_description" : "Konvertiert von/nach u.a. QWERTZ, QWERTY, DVORAK, AZERTY",
   "keyboard_example" : "QWERTZ → Ü;:PY",
@@ -1688,21 +1615,17 @@
   "keyboard_mode_neo" : "NEO (Deutsch)",
   "keyboard_mode_fra_azerty" : "NF Z71-300 AZERTY (Franz.)",
   "keyboard_mode_fra_bepo" : "NF Z71-300 BÉPO (Franz.)",
-
   "languagegames_selection_title" : "Spielsprachen",
   "languagegames_selection_description" : "Geheimsprachen für Kinder",
   "languagegames_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/spas-sprachen/01-was-sind-spassprachen/",
-
   "licenses_title" : "Lizenzen",
   "licenses_usedflutterlibraries" : "Verwendete Code-Bibliotheken (Flutter/Dart)",
   "licenses_additionalcode" : "Weiterer Code",
   "licenses_symboltablesources" : "Quellen für Symboltabellen",
-
   "mainmenu_about_title" : "Über",
   "mainmenu_settings_title" : "Einstellungen",
   "mainmenu_changelog_title" : "Changelog",
   "mainmenu_callforcontribution_title" : "Möchtest du uns helfen?",
-
   "malbolge_title" : "Malbolge",
   "malbolge_description" : "Esoterische Programmiersprache",
   "malbolge_online_help_url" : "https://blog.gcwizard.net/manual/de/malbolge/01-was-ist-die-programmiersprache-malbolge/",
@@ -1726,7 +1649,6 @@
   "malbolge_error_illegal_jump" : "Ungültiger Sprung außerhalb des Speichers",
   "malbolge_error_illegal_write" : "Ungültiger Schreibversuch eines nicht-ASCII-Zeichens",
   "malbolge_error_no_input" : "Keine Eingabe gefunden",
-
   "mayanumbers_selection_title" : "Maya-Zahlen",
   "mayanumbers_selection_description" : "Vigesimalsystem (Zahlenbasis 20) der Mayas",
   "mayanumbers_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/maya/01-was-ist-die-maya-zahlschrift/",
@@ -1735,12 +1657,10 @@
   "mayanumbers_online_help_url" : "https://blog.gcwizard.net/manual/de/maya/02-wie-werden-maya-zahlen-ent-bzw-verschlusselt/",
   "mayanumbers_single_numbers" : "Einzelne Zahlen",
   "mayanumbers_vigesimal" : "Zahl im Vigesimalsystem (Zahlenbasis 20)",
-
   "mexicanarmycipherwheel_title": "Mexican Army Chiffrierscheibe",
   "mexicanarmycipherwheel_description": "Verwendet von der Mexican Army im Krieg gegen die USA kurz vor dem 1. Weltkrieg",
   "mexicanarmycipherwheel_example": "TEST → 09580897",
   "mexicanarmycipherwheel_online_help_url" : "https://blog.gcwizard.net/manual/de/mexican-army/02-wie-wird-mit-dem-mexican-army-cipher-wheel-ent-bzw-verschlusselt/",
-
   "morse_title" : "Morse",
   "morse_example" : "-- --- .-. ... .",
   "morse_online_help_url" : "https://blog.gcwizard.net/manual/de/morsecode/02-wie-wird-ein-morse-code-ent-oder-verschlusselt/",
@@ -1748,7 +1668,6 @@
   "morse_long" : "Lang",
   "morse_next_letter" : "Weiter",
   "morse_next_word" : "Pause",
-
   "multidecoder_title" : "Multi-Dekodierer",
   "multidecoder_description" : "Versucht eine Eingabe mit mehreren konfigurierbaren Tools zu dekodieren",
   "multidecoder_online_help_url" : "https://blog.gcwizard.net/manual/de/allgemeine-codeloser/03-wie-funktioniert-der-multi-dekodierer/",
@@ -1787,7 +1706,6 @@
   "multidecoder_tool_rotation_option_key" : "Wert",
   "multidecoder_tool_segmentdisplay_title" : "Segmentanzeige",
   "multidecoder_tool_segmentdisplay_option_numbersegments" : "Anzahl",
-
   "numbersequence_title" : "Zahlenfolgen",
   "numbersequence_description" : "Berechnungen zu Fibonacci-, Lucas-, Mersenne-, Fermat-, Pell-, Jacobsthal-, Catalan- und Recamán-Zahlenfolgen",
   "numbersequence_online_help_url" : "https://blog.gcwizard.net/manual/de/zahlenfolgen/02-welche-zahlenfolgen-stehen-fur-berechnungen-zur-verfugung/",
@@ -1901,7 +1819,6 @@
   "numbersequence_output_col_2" : "Index",
   "numbersequence_output_col_3" : "Beginnt",
   "numbersequence_notfound" : "Nicht gefunden",
-
   "numeralbases_title" : "Zahlensysteme",
   "numeralbases_description" : "Konvertiert Zahlen zwischen verschiedenen Zahlensystemen (z.B. binär oder hexadezimal zu dezimal)",
   "numeralbases_example" : "101010 → 42, 2A → 42",
@@ -1910,7 +1827,6 @@
   "numeralbases_to" : "Nach",
   "numeralbases_showfrequent" : "Zeige häufigste",
   "numeralbases_chooseoutput" : "Wählen",
-
   "numeralwords_selection_title" : "Zahlwörter",
   "numeralwords_selection_description" : "Sucht nach Zahlwörtern in verschiedenen Sprachen",
   "numeralwords_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/zahlworter/01-was-macht-die-funktion-zahlworter/",
@@ -1932,7 +1848,6 @@
   "numeralwords_mode_right" : "Decodieren",
   "numeralwords_decodemode_left" : "Ganze Wörter",
   "numeralwords_decodemode_right" : "Teilwörter",
-
   "onetimepad_title" : "One-Time Pad",
   "onetimepad_description" : "Einmalschlüssel: Addiere Schlüsselwort zu Text",
   "onetimepad_example" : "ABC + ABC → BDF",
@@ -1940,12 +1855,10 @@
   "onetimepad_key" : "Schlüssel",
   "onetimepad_input" : "Eingabe",
   "onetimepad_keyoffset" : "A",
-
   "ook_title" : "Ook",
   "ook_description" : "Esoterische Programmiersprache, Derivat von Brainf**k",
   "ook_example" : "Ook? Ook. Ook! Ook.",
   "ook_online_help_url" : "https://blog.gcwizard.net/manual/de/ook-esoterische-programmiersprachen/01-was-ist-ook/",
-
   "periodictable_selection_title" : "Periodensystem der Elemente",
   "periodictable_selection_description" : "Zeigt Eigenschaften chemischer Elemente",
   "periodictable_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/periodensystem-der-elemente/01-welche-funktionen-gibt-es-im-periodensystem-der-elemente/",
@@ -2140,24 +2053,19 @@
   "periodictable_attribute_halflife_stable" : "Stabil",
   "periodictable_attribute_mostcommonisotop" : "Häufigstes Isotop",
   "periodictable_attribute_comments" : "Anmerkungen",
-
   "phi_selection_title" : "Phi (Φ = 1,6180339...)",
   "phi_selection_description" : "Mathematische Konstante: Goldener Schnitt",
   "phi_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/phi/01-welche-funktionen-werden-fur-phi-%cf%8616180339-bereitgestellt/",
-
   "pi_selection_title" : "Pi (π = 3,1415926...)",
   "pi_selection_description" : "Mathematische Konstante: Kreiszahl",
   "pi_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/pi/01-welche-funktionen-werden-fur-pi-%cf%8031415926-bereitgestellt/",
-
   "piglatin_title" : "Pig Latin",
   "piglatin_description" : "Spielsprache, Geheimsprache",
   "piglatin_example" : "Pig Latin → Ig-pay Atin-lay",
   "piglatin_online_help_url" : "https://blog.gcwizard.net/manual/de/pig-latain/02-wie-wird-pig-latin-ent-bzw-verschlusselt/",
-
   "playfair_title" : "Playfair",
   "playfair_example" : "AM EF KP RC PQ CW CB",
   "playfair_online_help_url" : "https://blog.gcwizard.net/manual/de/playfair-chiffre/02-wie-wird-mit-playfair-ent-bzw-verschlusselt/",
-
   "polybios_title" : "Polybios Chiffre",
   "polybios_description" : "Verschlüsselung basierend auf einem Quadrat",
   "polybios_example" : "ABCXYZ → 11 12 13 53 54 55",
@@ -2165,7 +2073,6 @@
   "polybios_mode_az09" : "A-Z 0-9",
   "polybios_mode_za90" : "Z-A 9-0",
   "polybios_usedgrid" : "Verwendete Matrix",
-
   "primes_selection_title" : "Primzahlen",
   "primes_selection_description" : "Berechnungen für Primzahlen (für alle Primzahlen bis 1 000 000)",
   "primes_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/primzahlen/01-was-sind-primzahlen/",
@@ -2191,21 +2098,18 @@
   "primes_integerfactorization_description" : "Primfaktorzerlegung einer Zahl",
   "primes_integerfactorization_example" : "42 = 2 × 3 × 7",
   "primes_integerfactorization_online_help_url" : "https://blog.gcwizard.net/manual/de/primzahlen/06-wie-zerlege-ich-eine-zahl-in-primzahlen/",
-
   "projectiles_title" : "Projektile/Geschosse",
   "projectiles_description" : "Berechnet kinetische Energie, Masse und Geschwindigkeit von Projektilen",
   "projectiles_online_help_url" : "https://blog.gcwizard.net/manual/de/projektile-geschosse/01-wie-berechne-ich-die-energie-masse-oder-geschwindigkeit-eines-projektils/",
   "projectiles_energy" : "Kin. Energie",
   "projectiles_mass" : "Masse",
   "projectiles_velocity" : "Geschwindigkeit",
-
   "railfence_title" : "Jägerzaun/Lattenzaun",
   "railfence_description" : "Chiffre, bei der der Text diagonal über Latten eines imaginären Zauns geschrieben wird",
   "railfence_online_help_url" : "https://blog.gcwizard.net/manual/de/jagerzaun-lattenzaun/02-wie-wird-mit-der-jagerzaun-lattenzaun-chiffre-ent-bzw-verschlusselt/",
   "railfence_key" : "Schlüssel",
   "railfence_optionalpassword" : "Optionales Passwort",
   "railfence_offset" : "Verschiebung",
-
   "rc4_title" : "RC4",
   "rc4_description" : "Stromverschlüsselung (HTTPS, SSH 1, WEP, WPA)",
   "rc4_example" : "abcdef → CD 14",
@@ -2217,7 +2121,6 @@
   "rc4_error_input_format" : "Eingabetyp passt nicht zur Eingabe!",
   "rc4_error_key_format" : "Schlüsseltyp passt nicht zum Schlüssel!",
   "rc4_error_missing_key" : "Bitte Schlüssel eingeben!",
-
   "resistor_selection_title" : "Widerstand",
   "resistor_selection_description" : "Elektrischer Widerstand",
   "resistor_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/widerstand/01-was-sind-widerstandscodes/",
@@ -2229,17 +2132,14 @@
   "resistor_value" : "Wert",
   "resistor_value_range" : "Wertebereich",
   "resistor_temperaturecoefficient" : "Temp. Koeffizient",
-
   "reverse_title" : "Rückwärts",
   "reverse_description" : "Gibt die Eingabe rückwärts aus",
   "reverse_example" : "ABCdef → fedCBA",
   "reverse_online_help_url" : "https://blog.gcwizard.net/manual/de/ruckwarts/01-was-macht-die-funktion-ruckwarts/",
-
   "robberlanguage_title" : "Räubersprache",
   "robberlanguage_description" : "Spielsprache, Geheimsprache",
   "robberlanguage_example" : "Räuber → roräuboberor",
   "robberlanguage_online_help_url" : "https://blog.gcwizard.net/manual/de/raubersprache/02-wie-wird-die-raubersprache-ent-bzw-verschlusselt/",
-
   "romannumbers_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/romische-zahlen/01-was-sind-romische-zahlen/",
   "romannumbers_title" : "Römische Zahlen",
   "romannumbers_description" : "Römische Zahlen mit und ohne Subtraktionsregel",
@@ -2248,7 +2148,6 @@
   "romannumbers_subtractionrule" : "IIII → IV",
   "romannumbers_numberstoroman" : "123 → Römisch",
   "romannumbers_romantonumbers" : "Römisch → 123",
-
   "rotation_selection_title" : "Rotation (ROT-X)",
   "rotation_selection_description" : "Verschiebt Zeichen auf einem Alphabet",
   "rotation_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/rotations-chiffre/01-was-ist-eine-rotation/",
@@ -2271,7 +2170,6 @@
   "rotation_general_title" : "Rotation",
   "rotation_general_description" : "Verschiebt Buchstaben auf dem Alphabet um einen beliebigen Wert",
   "rotation_general_online_help_url" : "https://blog.gcwizard.net/manual/de/rotations-chiffre/02-wie-wird-mit-rotation-ent-bzw-verschlusselt/",
-
   "rsa_n" : "N",
   "rsa_phi" : "φ(N)",
   "rsa_primep" : "Primzahl p",
@@ -2313,11 +2211,9 @@
   "rsa_error_could.not.calc.d" : "d konnte nicht berechnet werden",
   "rsa_error_p.not.prime" : "p ist keine Primzahl",
   "rsa_error_q.not.prime" : "q ist keine Primzahl",
-
   "scienceandtechnology_selection_title" : "Wissenschaft und Technik",
   "scienceandtechnology_selection_description" : "Mathematik, Physik, Chemie, Technik, Astronomie, Wetter, Elektronik, ...",
   "scienceandtechnology_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/wissenschaft-und-technik/00-was-bietet-das-menu-wissenschaft-und-technik/",
-
   "scrabble_title" : "Scrabble",
   "scrabble_description" : "Buchstaben zu Scrabble-Buchstabenwerte und -häufigkeiten",
   "scrabble_online_help_url" : "https://blog.gcwizard.net/manual/de/scrabble/01-was-kann-scrabble/",
@@ -2331,7 +2227,6 @@
   "scrabble_version_e_northamerica" : "Spanisch (Nordamerika)",
   "scrabble_version_sk_until2013" : "Slowakisch (bis 2013)",
   "scrabble_version_pl_until2000" : "Polnisch (bis 2000)",
-
   "segmentdisplay_selection_title" : "Segment-Anzeigen",
   "segmentdisplay_selection_description" : "Kodieren von 7, 14 oder 16-Segment-Anzeigen",
   "segmentdisplay_selection_example" : "2 → abdeg",
@@ -2349,7 +2244,6 @@
   "segmentdisplay_encodemode_text" : "Text",
   "segmentdisplay_encodemode_visualsegments" : "Visuelle Segmente",
   "segmentdisplay_displayoutput" : "Display-Ausgabe",
-
   "settings_general_title" : "Allgemein",
   "settings_general_clipboard" : "Zwischenablage",
   "settings_general_clipboard_maxitems" : "Max. Anzahl Einträge",
@@ -2375,7 +2269,6 @@
   "settings_coordinates_defaultrotationellipsoid" : "Standardellipsoid",
   "settings_coordinates_defaultrotationellipsoid_existing" : "Aus Liste",
   "settings_coordinates_defaultrotationellipsoid_user" : "Eigener",
-
   "skytale_title" : "Skytale",
   "skytale_description" : "Schreibe Buchstaben auf ein um einen Stock gewickeltes Lederband (Transposition)",
   "skytale_example" : "ABCDEF → ADBECF",
@@ -2383,19 +2276,16 @@
   "skytale_perimeter" : "Umfang",
   "skytale_stripwidth" : "Bandbreite",
   "skytale_countcolumns" : "Spalten",
-
   "solitaire_title" : "Solitaire",
   "solitaire_description" : "Stromchiffre basierend auf einem Kartendeck. Aus dem Buch 'Cryptonomicon'",
   "solitaire_example" : "ABCDEF → ITHZU JIWGR",
   "solitaire_online_help_url" : "https://blog.gcwizard.net/manual/de/solitaire-chiffre/02-wie-wird-mit-solitaire-ent-bzw-verschlusselt/",
   "solitaire_keystream" : "Schlüsselstrom",
   "solitaire_resultdeck" : "Resultierendes Deck",
-
   "spoonlanguage_title" : "Löffelsprache",
   "spoonlanguage_description" : "Spielsprache, Geheimsprache",
   "spoonlanguage_example" : "Löffel → lölewöffelewel",
   "spoonlanguage_online_help_url" : "https://blog.gcwizard.net/manual/de/loffelsprache/02-wie-wird-die-loffelsprache-ent-bzw-verschlusselt/",
-
   "substitution_title" : "Ersetzen",
   "substitution_description" : "Ersetze Buchstaben und Buchstabengruppen mit beliebigen anderen",
   "substitution_example" : "ABCBA with (A → a, B → 01) → a01C01a",
@@ -2404,14 +2294,12 @@
   "substitution_to" : "...mit",
   "substitution_current_substitutions" : "Erstellte Ersetzungen",
   "substitution_case_sensitive" : "Beachte Groß-/Kleinschreibung",
-
   "substitutionbreaker_title" : "Codelöser für Textersetzungen",
   "substitutionbreaker_description" : "Chance, automatisch einen monoalphabetischen Code zu knacken",
   "substitutionbreaker_example" : "QFRQ → TEST",
   "substitutionbreaker_online_help_url" : "https://blog.gcwizard.net/manual/de/allgemeine-codeloser/01-wie-funktioniert-der-codeloser-fur-textersetzungen/",
   "substitutionbreaker_error" : "Ein Fehler trat auf: %s1",
   "substitutionbreaker_exporttosubstition" : "Export ins 'Ersetzen'-Tool",
-
   "sudokusolver_title" : "Sudoku-Löser",
   "sudokusolver_description" : "Berechnet eine Lösung für ein Sudoku",
   "sudokusolver_online_help_url" : "https://blog.gcwizard.net/manual/de/sudoku/01-wie-funktioniert-der-sudoku-loser/",
@@ -2421,7 +2309,6 @@
   "sudokusolver_clearcalculated" : "Lösche Ergebnis",
   "sudokusolver_clearall" : "Alles löschen",
   "sudokusolver_error" : "Konnte nicht gelöst werden.",
-
   "summersimmerindex_title" : "Summer-Simmer-Index",
   "summersimmerindex_description" : "Gefühlte Temperatur aufgrund Temperatur und Luftfeuchtigkeit",
   "summersimmerindex_example" : "30°C (86°F) / 60% → 38°C (102°F)",
@@ -2437,7 +2324,6 @@
   "summersimmerindex_index_37.8" : "Gut heiß. Unwohlsein. Gefahr von Hitzeschlag.",
   "summersimmerindex_index_44.4" : "Sehr heiß. Gefahr von Hitzeschlag.",
   "summersimmerindex_index_51.7" : "Extrem Heiß. Sehr große Gefahr eines Hitzeschlages.",
-
   "symboltables_selection_title" : "Symboltabellen",
   "symboltables_selection_description" : "Symbole, die Zahlen und Buchstaben repräsentieren",
   "symboltables_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/symboltabellen/01-welche-symboltabellen-stehen-zur-verfugung/",
@@ -3082,31 +2968,26 @@
   "symboltables_zodiac_z340_description" : "Ohne die Buchstaben JKQXZ, da diese nicht in der Nachricht vorkommen",
   "symboltables_zodiac_z408_title" : "Zodiac-Killer Z408",
   "symboltables_zodiac_z408_description" : "Ohne die Buchstaben JQZ, da diese nicht in der Nachricht vorkommen",
-
   "tapcode_title": "Klopfcode",
   "tapcode_description" : "Spezialfall der Polybios-Verschlüsselung",
   "tapcode_example" : "ABCXYZ → 11 12 13 53 54 55",
   "tapcode_online_help_url" : "https://blog.gcwizard.net/manual/de/klopfcode/02-wie-wird-ein-klopfcode-ent-bzw-verschlusselt/",
   "tapcode_mode_jtoi": "J → I",
   "tapcode_mode_ctok": "C → K",
-
   "tapir_title" : "Tapir",
   "tapir_description" : "Code der DDR-Armee (NVA) und der StaSi",
   "tapir_example" : "ABCDEFG → 05052 55565 78383",
   "tapir_online_help_url" : "https://blog.gcwizard.net/manual/de/tapir-chiffre/02-wie-wird-mit-tapir-ent-bzw-verschlusselt/",
   "tapir_onetimepad" : "OTP Schlüssel",
-
   "tomtom_selection_title" : "TomTom Code",
   "tomtom_selection_example" : "A → /, D → ////, E → /\\",
   "tomtom_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/tomtom-code/01-was-ist-der-tomtom-code/",
   "tomtom_title" : "TomTom Code",
   "tomtom_example" : "A → /, D → ////, E → /\\",
   "tomtom_online_help_url" : "https://blog.gcwizard.net/maual/de/tomtom-code/02-wie-wird-mit-tomtom-code-ent-bzw-verschlusselt/",
-
   "trithemius_title" : "Trithemius Chiffre",
   "trithemius_description" : "Spezialfall der Vigenère-Verschlüsselung",
   "trithemius_online_help_url" : "https://blog.gcwizard.net/manual/de/trithemus-chiffre/02-wie-wird-mit-der-trithemius-chiffre-ent-bzw-verschlusselt/",
-
   "unitconverter_title" : "Einheiten umrechnen",
   "unitconverter_description" : "Rechnet Werte von einer Einheit in eine andere um",
   "unitconverter_example" : "km/h → mph, °C  → °F",
@@ -3128,7 +3009,6 @@
   "unitconverter_category_typography" : "Typographie",
   "unitconverter_category_velocity" : "Geschwindigkeit",
   "unitconverter_category_volume" : "Volumen",
-
   "vanity_selection_title" : "Telefontasten (Vanity)",
   "vanity_selection_description" : "Telefontasten zu ihren Buchstaben",
   "vanity_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/telefontasten-vanity/01-was-bedeutet-telefontasten-vanity/",
@@ -3139,7 +3019,6 @@
   "vanity_multiplenumbers_title" : "Vanity: Zifferngruppen",
   "vanity_multiplenumbers_example" : "A → 2, B → 22, Z → 9999",
   "vanity_multinumbers_online_help_url" : "https://blog.gcwizard.net/manual/de/telefontasten-vanity/02-wie-unterstutzt-der-gc-wizard-bei-der-umrechnung-von-vanity-codes/",
-
   "vigenere_selection_title" : "Vigenère Chiffre",
   "vigenere_selection_description" : "Verschiebt Buchstaben um den Buchstabenwert des Schlüssels, inkl. Gronsfeld und Trithemius",
   "vigenere_selection_example" : "ABC mit Schlüssel DEF → DFH",
@@ -3150,7 +3029,6 @@
   "vigenere_online_help_url" : "https://blog.gcwizard.net/manual/de/vigenere-chiffre/02-wie-wird-mit-vigenere-ent-bzw-verschlusselt/",
   "vigenere_autokey" : "Autokey",
   "vigenere_ignorenonletters" : "Nur Buchstaben beachten",
-
   "vigenerebreaker_title": "Vigenère Codeknacker",
   "vigenerebreaker_description": "Chance, automatisch einen polyalphabetischen Code zu knacken",
   "vigenerebreaker_example": "ABC mit Schlüssel DEF → DFH",
@@ -3159,7 +3037,6 @@
   "vigenerebreaker_key_length_min": "min",
   "vigenerebreaker_key_length_max": "max",
   "vigenerebreaker_error" : "Ein Fehler trat auf: %s1",
-
   "whitespace_language_title" : "Whitespace",
   "whitespace_language_description" : "Esoterische Programmiersprache aus 3 Zeichen (Leerzeichen, Tab, Enter)",
   "whitespace_language_example" : "      → DFH",
@@ -3168,7 +3045,6 @@
   "whitespace_interpreter" : "Interpreter",
   "whitespace_language_start" : "Start",
   "whitespace_language_readable_code" : "Lesbarer Code",
-
   "windchill_title": "Windchill",
   "windchill_description" : "Gefühlte Temperatur aufgrund Temperatur und Windgeschwindigkeit",
   "windchill_example" : "5°C (41°F) / 20km/h (12,4mph) → 1°C (34°F)",
@@ -3179,7 +3055,6 @@
   "windchill_imperial" : "imperial\n(°F, mph)",
   "windchill_system" : "System",
   "windchill_metricunit" : "v Einheit",
-
   "z22_title" : "Z22",
   "z22_description" : "Anwendung des CCITT-2-Codes",
   "z22_example" : "ABC → 00011 11001 01110",
