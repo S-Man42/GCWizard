@@ -59,9 +59,8 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
       _currentZoom = widget.zoom;
     }
 
-    return Column (
-      children: <Widget>[
-        GCWDoubleTextField(
+    return Column(children: <Widget>[
+      GCWDoubleTextField(
           hintText: 'X',
           min: 0.0,
           controller: _xController,
@@ -70,9 +69,8 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
               _currentX = ret;
               _setCurrentValueAndEmitOnChange();
             });
-          }
-        ),
-        GCWDoubleTextField(
+          }),
+      GCWDoubleTextField(
           hintText: 'Y',
           min: 0.0,
           controller: _yController,
@@ -81,10 +79,8 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
               _currentY = ret;
               _setCurrentValueAndEmitOnChange();
             });
-          }
-        ),
-      ]
-    );
+          }),
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {

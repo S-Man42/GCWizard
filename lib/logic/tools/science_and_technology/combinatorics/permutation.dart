@@ -21,8 +21,7 @@ _permutation(List<String> characters, endIndex, List<String> out) {
 }
 
 List<String> generatePermutations(String input, {bool avoidDuplicates}) {
-  if (input == null || input == '')
-    return [];
+  if (input == null || input == '') return [];
 
   var characters = input.split('');
   var out = <String>[];

@@ -37,20 +37,17 @@ class IrrationalNumbersNthDecimalState extends State<IrrationalNumbersNthDecimal
             });
           },
         ),
-        GCWDefaultOutput(
-          child: _calculateOutput()
-        )
+        GCWDefaultOutput(child: _calculateOutput())
       ],
     );
   }
 
   _calculateOutput() {
-    if (_currentValue < 1)
-      return '';
+    if (_currentValue < 1) return '';
 
     try {
       return _calculator.decimalAt(_currentValue);
-    } on FormatException catch(e) {
+    } on FormatException catch (e) {
       return printErrorMessage(context, e.message);
     }
   }

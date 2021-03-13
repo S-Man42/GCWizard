@@ -24,24 +24,22 @@ class WindchillState extends State<Windchill> {
     return Column(
       children: <Widget>[
         GCWDoubleSpinner(
-          title: i18n(context, 'windchill_temperature'),
-          value: _currentTemperature,
-          onChanged: (value) {
-            setState(() {
-              _currentTemperature = value;
-            });
-          }
-        ),
+            title: i18n(context, 'windchill_temperature'),
+            value: _currentTemperature,
+            onChanged: (value) {
+              setState(() {
+                _currentTemperature = value;
+              });
+            }),
         GCWDoubleSpinner(
-          title: i18n(context, 'windchill_windspeed'),
-          value: _currentWindSpeed,
-          min: 0.0,
-          onChanged: (value) {
-            setState(() {
-              _currentWindSpeed = value;
-            });
-          }
-        ),
+            title: i18n(context, 'windchill_windspeed'),
+            value: _currentWindSpeed,
+            min: 0.0,
+            onChanged: (value) {
+              setState(() {
+                _currentWindSpeed = value;
+              });
+            }),
         GCWTwoOptionsSwitch(
           title: i18n(context, 'windchill_system'),
           leftValue: i18n(context, 'windchill_metric'),
@@ -54,21 +52,19 @@ class WindchillState extends State<Windchill> {
           },
         ),
         _isMetric
-          ? GCWTwoOptionsSwitch(
-              title: i18n(context, 'windchill_metricunit'),
-              leftValue: VELOCITY_KMH.symbol,
-              rightValue: VELOCITY_MS.symbol,
-              value: _currentSpeedUnit,
-              onChanged: (value) {
-                setState(() {
-                  _currentSpeedUnit = value;
-                });
-              },
-            )
-          : Container(),
-        GCWDefaultOutput(
-          child: _buildOutput()
-        )
+            ? GCWTwoOptionsSwitch(
+                title: i18n(context, 'windchill_metricunit'),
+                leftValue: VELOCITY_KMH.symbol,
+                rightValue: VELOCITY_MS.symbol,
+                value: _currentSpeedUnit,
+                onChanged: (value) {
+                  setState(() {
+                    _currentSpeedUnit = value;
+                  });
+                },
+              )
+            : Container(),
+        GCWDefaultOutput(child: _buildOutput())
       ],
     );
   }
@@ -79,8 +75,8 @@ class WindchillState extends State<Windchill> {
 
     if (_isMetric) {
       windchill = _currentSpeedUnit == GCWSwitchPosition.left
-        ? calcWindchillMetric(_currentTemperature, _currentWindSpeed)
-        : calcWindchillMetricMS(_currentTemperature, _currentWindSpeed);
+          ? calcWindchillMetric(_currentTemperature, _currentWindSpeed)
+          : calcWindchillMetricMS(_currentTemperature, _currentWindSpeed);
 
       temperature = TEMPERATURE_CELSIUS;
     } else {

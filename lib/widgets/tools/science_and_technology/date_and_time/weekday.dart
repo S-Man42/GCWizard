@@ -23,9 +23,7 @@ class WeekdayState extends State<Weekday> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextDivider(
-          text: i18n(context, 'dates_weekday_date')
-        ),
+        GCWTextDivider(text: i18n(context, 'dates_weekday_date')),
         GCWDateTimePicker(
           type: DateTimePickerType.DATE_ONLY,
           datetime: _currentDate,
@@ -45,17 +43,29 @@ class WeekdayState extends State<Weekday> {
 
     var output;
     switch (weekday) {
-      case 1: output = i18n(context, 'dates_weekday_monday'); break;
-      case 2: output = i18n(context, 'dates_weekday_tuesday'); break;
-      case 3: output = i18n(context, 'dates_weekday_wednesday'); break;
-      case 4: output = i18n(context, 'dates_weekday_thursday'); break;
-      case 5: output = i18n(context, 'dates_weekday_friday'); break;
-      case 6: output = i18n(context, 'dates_weekday_saturday'); break;
-      case 7: output = i18n(context, 'dates_weekday_sunday'); break;
+      case 1:
+        output = i18n(context, 'dates_weekday_monday');
+        break;
+      case 2:
+        output = i18n(context, 'dates_weekday_tuesday');
+        break;
+      case 3:
+        output = i18n(context, 'dates_weekday_wednesday');
+        break;
+      case 4:
+        output = i18n(context, 'dates_weekday_thursday');
+        break;
+      case 5:
+        output = i18n(context, 'dates_weekday_friday');
+        break;
+      case 6:
+        output = i18n(context, 'dates_weekday_saturday');
+        break;
+      case 7:
+        output = i18n(context, 'dates_weekday_sunday');
+        break;
     }
 
-    return GCWDefaultOutput(
-      child: output
-    );
+    return GCWDefaultOutput(child: output);
   }
 }

@@ -2,7 +2,8 @@ final SEARCHSTRING_EN_ABADDON = '';
 final SEARCHSTRING_EN_ABOUT = 'about';
 final SEARCHSTRING_EN_ADFGVX = '';
 final SEARCHSTRING_EN_AFFINE = '';
-final SEARCHSTRING_EN_ALPHABETVALUES = 'alphanumeric lettervalues checksums crosssums digits alternate alphabetvalues cyrillic greek german spanish polish russian';
+final SEARCHSTRING_EN_ALPHABETVALUES =
+    'alphanumeric lettervalues checksums crosssums digits alternate alphabetvalues cyrillic greek german spanish polish russian';
 final SEARCHSTRING_EN_AMSCO = '';
 final SEARCHSTRING_EN_APPARENTTEMPERATURE = 'apparent perceived temperature';
 final SEARCHSTRING_EN_APPARENTTEMPERATURE_HEATINDEX = 'humidity heatindex';
@@ -13,7 +14,8 @@ final SEARCHSTRING_EN_ASCIIVALUES = '';
 final SEARCHSTRING_EN_ASTRONOMY = 'astronomy stars planets astronomical';
 final SEARCHSTRING_EN_ASTRONOMY_MOON = 'moon';
 final SEARCHSTRING_EN_ASTRONOMY_MOONPOSITION = 'eclipticlatitude moonphase moonage moonsign illumination illuminated';
-final SEARCHSTRING_EN_ASTRONOMY_POSITION = 'astrology  astrologicalsign distance observer altitude declination eclipticlongitude siderealtime juliandate rightascension diameter';
+final SEARCHSTRING_EN_ASTRONOMY_POSITION =
+    'astrology  astrologicalsign distance observer altitude declination eclipticlongitude siderealtime juliandate rightascension diameter';
 final SEARCHSTRING_EN_ASTRONOMY_RISESET = 'rise set transit noon dawn dusk culmination';
 final SEARCHSTRING_EN_ASTRONOMY_SEASONS = 'seasons spring summer winter autumn fall nearest closest farthest furthest';
 final SEARCHSTRING_EN_ASTRONOMY_SUN = 'sun';
@@ -61,13 +63,15 @@ final SEARCHSTRING_EN_CHRONOGRAM = 'chronogram';
 final SEARCHSTRING_EN_CIPHERWHEEL = 'decipherwheels  stages decipherdisks decipherdiscs';
 final SEARCHSTRING_EN_CISTERCIAN = 'cistercian monastic order monk numbers';
 final SEARCHSTRING_EN_CODEBREAKER = 'solver cracker codebreaker';
-final SEARCHSTRING_EN_COLORPICKER = 'colors colours red green blue yellow black orange luminance chrominance saturation lightness hue picker';
+final SEARCHSTRING_EN_COLORPICKER =
+    'colors colours red green blue yellow black orange luminance chrominance saturation lightness hue picker';
 final SEARCHSTRING_EN_COMBINATORICS = 'mathematics combinatorics';
 final SEARCHSTRING_EN_COMBINATORICS_COMBINATION = 'combinations subgroups';
 final SEARCHSTRING_EN_COMBINATORICS_PERMUTATION = 'permutations arrangements orders';
 final SEARCHSTRING_EN_COORDINATES = 'coordinates';
 final SEARCHSTRING_EN_COORDINATES_ANTIPODES = 'oppositeside';
-final SEARCHSTRING_EN_COORDINATES_CENTERTHREEPOINTS = 'three midpoint center middle circumcircle circumscribed points medians';
+final SEARCHSTRING_EN_COORDINATES_CENTERTHREEPOINTS =
+    'three midpoint center middle circumcircle circumscribed points medians';
 final SEARCHSTRING_EN_COORDINATES_CENTERTWOPOINTS = 'midpoint center middle  two points';
 final SEARCHSTRING_EN_COORDINATES_COMPASSROSE = 'compassrose intercardinaldirections';
 final SEARCHSTRING_EN_COORDINATES_COORDINATEAVARAGING = 'measurement averaging average';
@@ -79,22 +83,26 @@ final SEARCHSTRING_EN_COORDINATES_ELLIPSOIDTRANSFORM = 'rotationsellipsoids conv
 final SEARCHSTRING_EN_COORDINATES_EQUILATERALTRIANGLE = 'triangles equilateral';
 final SEARCHSTRING_EN_COORDINATES_FORMATCONVERTER = 'coordinateformatconverter converting';
 final SEARCHSTRING_EN_COORDINATES_INTERSECTBEARING = 'intersections bearings angles';
-final SEARCHSTRING_EN_COORDINATES_INTERSECTFOURPOINTS = 'points four lines crossing bearings arcs intersection directions';
+final SEARCHSTRING_EN_COORDINATES_INTERSECTFOURPOINTS =
+    'points four lines crossing bearings arcs intersection directions';
 final SEARCHSTRING_EN_COORDINATES_INTERSECTGEODETICANDCIRCLE = 'bearings angles distances circles arcs intersection';
 final SEARCHSTRING_EN_COORDINATES_INTERSECTION = 'two intersection angles bearings directions';
 final SEARCHSTRING_EN_COORDINATES_INTERSECTTHREECIRCLES = 'three circles distances intersection';
 final SEARCHSTRING_EN_COORDINATES_INTERSECTTWOCIRCLES = 'two circles distances intersection ';
 final SEARCHSTRING_EN_COORDINATES_MAPVIEW = 'mapview  openmap measurement';
 final SEARCHSTRING_EN_COORDINATES_RESECTION = 'two three angles directions resection bearings';
-final SEARCHSTRING_EN_COORDINATES_SEGMENTBEARING = 'segments segmentbearings regularly angles bearings courses bisectors';
+final SEARCHSTRING_EN_COORDINATES_SEGMENTBEARING =
+    'segments segmentbearings regularly angles bearings courses bisectors';
 final SEARCHSTRING_EN_COORDINATES_SEGMENTLINE = 'segments segmentlines  regularly bisectors';
 final SEARCHSTRING_EN_COORDINATES_VARIABLECOORDINATEFORMULAS = 'waypoints flex';
-final SEARCHSTRING_EN_COORDINATES_WAYPOINTPROJECTION = 'angles waypointprojections bearings cardinaldirections reverse projections ';
+final SEARCHSTRING_EN_COORDINATES_WAYPOINTPROJECTION =
+    'angles waypointprojections bearings cardinaldirections reverse projections ';
 final SEARCHSTRING_EN_CROSSSUMRANGEFREQUENCY = 'frequency  occurrences';
 final SEARCHSTRING_EN_CROSSSUMS = 'crosssums digits alternated crosstotals iterated products digitalroot digitroot';
 final SEARCHSTRING_EN_CROSSUM = '';
 final SEARCHSTRING_EN_CROSSUMRANGE = 'range';
-final SEARCHSTRING_EN_CRYPTOGRAPHYSELECTION = 'cryptography encoding decoding encode decode encryption encrypt decrypt decryption';
+final SEARCHSTRING_EN_CRYPTOGRAPHYSELECTION =
+    'cryptography encoding decoding encode decode encryption encrypt decrypt decryption';
 final SEARCHSTRING_EN_DATES = 'dates';
 final SEARCHSTRING_EN_DATES_DAYCALCULATOR = 'daycalculator countdays';
 final SEARCHSTRING_EN_DATES_TIMECALCULATOR = 'times timecalculator clockcalculator minutes hours seconds';
@@ -126,7 +134,8 @@ final SEARCHSTRING_EN_ESOTERIC_WHITESPACELANGUAGE = 'space linefeed';
 final SEARCHSTRING_EN_FORMULASOLVER = 'formulasolver formelsolver';
 final SEARCHSTRING_EN_GADE = 'street';
 final SEARCHSTRING_EN_GAMES = 'games';
-final SEARCHSTRING_EN_GAMES_SCRABBLE = 'germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers';
+final SEARCHSTRING_EN_GAMES_SCRABBLE =
+    'germany english spanish french dutch france spain netherlands northamerica alphanumeric letters values characters chars numbers';
 final SEARCHSTRING_EN_GAMES_SUDOKUSOLVER = 'grid';
 final SEARCHSTRING_EN_GCCODE = 'hexadecimal';
 final SEARCHSTRING_EN_GLAGOLITIC = 'glagolitic slavic slavian';
@@ -189,7 +198,7 @@ final SEARCHSTRING_EN_MAYANUMBERS = 'numbers numerals';
 final SEARCHSTRING_EN_MEXICANARMYCIPHERWHEEL = 'mexicanarmy mexico';
 final SEARCHSTRING_EN_MORSE = 'dots dashes';
 final SEARCHSTRING_EN_MULTIDECODER = 'multisolver multidecoder';
-final SEARCHSTRING_EN_NUMBERSEQUENCE= 'numbersequence integersequences';
+final SEARCHSTRING_EN_NUMBERSEQUENCE = 'numbersequence integersequences';
 final SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION = '';
 final SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION = '';
 final SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER = 'test';
@@ -259,7 +268,8 @@ final SEARCHSTRING_EN_RSA_DCHECKER = 'check private key';
 final SEARCHSTRING_EN_RSA_ECHECKER = 'check public key';
 final SEARCHSTRING_EN_RSA_NCALCULATOR = 'calculate';
 final SEARCHSTRING_EN_RSA_PHICALCULATOR = 'calculate';
-final SEARCHSTRING_EN_SCIENCEANDTECHNOLOGYSELECTION = 'sciences technology technologies maths mathematics physics chemistry electronics biology';
+final SEARCHSTRING_EN_SCIENCEANDTECHNOLOGYSELECTION =
+    'sciences technology technologies maths mathematics physics chemistry electronics biology';
 final SEARCHSTRING_EN_SEGMENTS = 'display segments';
 final SEARCHSTRING_EN_SEGMENTS_FOURTEEN = 'fourteen';
 final SEARCHSTRING_EN_SEGMENTS_SEVEN = 'seven';
@@ -312,7 +322,8 @@ final SEARCHSTRING_EN_SYMBOL_DNI = '';
 final SEARCHSTRING_EN_SYMBOL_DNI_COLORS = 'colours colors';
 final SEARCHSTRING_EN_SYMBOL_DNI_NUMBERS = 'numbers numerals digits';
 final SEARCHSTRING_EN_SYMBOL_DOREMI = 'musictheory';
-final SEARCHSTRING_EN_SYMBOL_DRAGON_LANGUAGE = 'dragonish dragonlanguage dragontongue draconian simplydovah dragonsfont dragonborn dragonshouts';
+final SEARCHSTRING_EN_SYMBOL_DRAGON_LANGUAGE =
+    'dragonish dragonlanguage dragontongue draconian simplydovah dragonsfont dragonborn dragonshouts';
 final SEARCHSTRING_EN_SYMBOL_DRAGON_RUNES = 'dragonrunes dragonlords drunes d-runes drunen';
 final SEARCHSTRING_EN_SYMBOL_EASTERN_ARABIC_INDIAN_NUMERALS = 'numbers numerals indian arabian eastern arabic persian';
 final SEARCHSTRING_EN_SYMBOL_EGYPTIAN_NUMERALS = 'numerals numbers eyptian hieroglyphs';
@@ -353,10 +364,12 @@ final SEARCHSTRING_EN_SYMBOL_ILLUMINATI = '';
 final SEARCHSTRING_EN_SYMBOL_ILLUMINATI_V1 = '';
 final SEARCHSTRING_EN_SYMBOL_ILLUMINATI_V2 = '';
 final SEARCHSTRING_EN_SYMBOL_INTERGALACTIC = 'intergalactical galaxy';
-final SEARCHSTRING_EN_SYMBOL_IOKHARIC = 'dragonscript dragonlanguage runes chinese draconicgrates wizardsofthecoasts chromaticdragonsbook mandarinstylizedrunictypeface';
+final SEARCHSTRING_EN_SYMBOL_IOKHARIC =
+    'dragonscript dragonlanguage runes chinese draconicgrates wizardsofthecoasts chromaticdragonsbook mandarinstylizedrunictypeface';
 final SEARCHSTRING_EN_SYMBOL_KABOUTER_ABC = 'boyscouts cobolds netherlands dutch  scouting nederlands gnoms';
 final SEARCHSTRING_EN_SYMBOL_KABOUTER_ABC_1947 = 'boyscouts';
-final SEARCHSTRING_EN_SYMBOL_KARTRAK = 'freighttrains freight coach railway colouredbarcode coloredbarcode colours colors';
+final SEARCHSTRING_EN_SYMBOL_KARTRAK =
+    'freighttrains freight coach railway colouredbarcode coloredbarcode colours colors';
 final SEARCHSTRING_EN_SYMBOL_KHAROSHTHI = 'indian';
 final SEARCHSTRING_EN_SYMBOL_KLINGON = 'klingonlanguageinstitute klingons';
 final SEARCHSTRING_EN_SYMBOL_KLINGON_KLINZHAI = '';
@@ -373,7 +386,8 @@ final SEARCHSTRING_EN_SYMBOL_MINIMOYS = '';
 final SEARCHSTRING_EN_SYMBOL_MOON = 'moonalphabet eyeless blinded';
 final SEARCHSTRING_EN_SYMBOL_MURRAY = 'shuttertelegraph';
 final SEARCHSTRING_EN_SYMBOL_MURRAYBAUDOT = '';
-final SEARCHSTRING_EN_SYMBOL_MUSICA = 'notes instruments piano piano drums flute oboe viola trumpet guitar trombone violin flute';
+final SEARCHSTRING_EN_SYMBOL_MUSICA =
+    'notes instruments piano piano drums flute oboe viola trumpet guitar trombone violin flute';
 final SEARCHSTRING_EN_SYMBOL_NEW_ZEALAND_SIGN_LANGUAGE = 'newzealand';
 final SEARCHSTRING_EN_SYMBOL_NOTES_DOREMI = 'music notesystem';
 final SEARCHSTRING_EN_SYMBOL_NOTES_NAMES_ALTOCLEF = 'music notenames hashtag flat sharp';
@@ -396,7 +410,8 @@ final SEARCHSTRING_EN_SYMBOL_QUADOO = 'tactiles dots points';
 final SEARCHSTRING_EN_SYMBOL_REALITY = 'reality';
 final SEARCHSTRING_EN_SYMBOL_RED_HERRING = 'red herring fish';
 final SEARCHSTRING_EN_SYMBOL_RHESUS_A = 'inkblots bloodsplatter bloodgroup bloodtype';
-final SEARCHSTRING_EN_SYMBOL_RM4SCC = 'cleanmail postcodes delivery point royalmail4statecustomercode singapore netherlands switzerland austria denmark australia';
+final SEARCHSTRING_EN_SYMBOL_RM4SCC =
+    'cleanmail postcodes delivery point royalmail4statecustomercode singapore netherlands switzerland austria denmark australia';
 final SEARCHSTRING_EN_SYMBOL_ROMULAN = 'romulans';
 final SEARCHSTRING_EN_SYMBOL_RUNES = 'runes';
 final SEARCHSTRING_EN_SYMBOL_SANLUCA = 'kalabrian';
@@ -415,7 +430,8 @@ final SEARCHSTRING_EN_SYMBOL_TAMIL_NUMERALS = 'numbers numerals indian';
 final SEARCHSTRING_EN_SYMBOL_TEMPLERS = 'templeknights';
 final SEARCHSTRING_EN_SYMBOL_TENCTONESE = '';
 final SEARCHSTRING_EN_SYMBOL_TENGWAR_BELERIAND = 'thelordoftherings elves elvish middleearth thirdera';
-final SEARCHSTRING_EN_SYMBOL_TENGWAR_CLASSIC = 'thelordoftherings elves elvish middleearth thirdera classices classic classical';
+final SEARCHSTRING_EN_SYMBOL_TENGWAR_CLASSIC =
+    'thelordoftherings elves elvish middleearth thirdera classices classic classical';
 final SEARCHSTRING_EN_SYMBOL_TENGWAR_GENERAL = 'thelordoftherings elves elvish middleearth thirdera generale';
 final SEARCHSTRING_EN_SYMBOL_TERZI = 'square dots points eyeless relief tactiles';
 final SEARCHSTRING_EN_SYMBOL_THEBAN = 'witches witchalphabet angels';
@@ -443,7 +459,8 @@ final SEARCHSTRING_EN_TAPCODE = 'tap tapcode';
 final SEARCHSTRING_EN_TAPIR = 'security army';
 final SEARCHSTRING_EN_TOMTOM = '';
 final SEARCHSTRING_EN_TRITHEMIUS = '';
-final SEARCHSTRING_EN_UNITCONVERTER = 'units converter lengths speeds velocity velocities energies energy force power times areas volumes denisities density masses bathtubs pressures angles temperatures degrees soccerfields';
+final SEARCHSTRING_EN_UNITCONVERTER =
+    'units converter lengths speeds velocity velocities energies energy force power times areas volumes denisities density masses bathtubs pressures angles temperatures degrees soccerfields';
 final SEARCHSTRING_EN_VANITY = 'telephone keys buttons numbers keypad sms mobile cellphone phoneword';
 final SEARCHSTRING_EN_VANITYMULTIPLENUMBERS = '';
 final SEARCHSTRING_EN_VANITYSINGLENUMBERS = '';

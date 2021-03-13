@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
@@ -9,7 +8,6 @@ import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_abc_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
-
 
 class MexicanArmyCipherWheel extends StatefulWidget {
   const MexicanArmyCipherWheel();
@@ -92,18 +90,20 @@ class MexicanArmyCipherWheelState extends State<MexicanArmyCipherWheel> {
           children: [
             Expanded(
                 child: GCWABCSpinner(
-                  value: _currentLetterValue4,
-                  suppressLetterValues: true,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentLetterValue4 = value;
-                      _calculateOutput();
-                    });
-                  },
-                )
-            ),
+              value: _currentLetterValue4,
+              suppressLetterValues: true,
+              onChanged: (value) {
+                setState(() {
+                  _currentLetterValue4 = value;
+                  _calculateOutput();
+                });
+              },
+            )),
             Container(
-              child: GCWText(text: '=', textAlign: TextAlign.center,),
+              child: GCWText(
+                text: '=',
+                textAlign: TextAlign.center,
+              ),
               padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN, right: 2 * DEFAULT_MARGIN),
             ),
             Expanded(
@@ -139,9 +139,7 @@ class MexicanArmyCipherWheelState extends State<MexicanArmyCipherWheel> {
             });
           },
         ),
-        GCWDefaultOutput(
-          child: _output
-        )
+        GCWDefaultOutput(child: _output)
       ],
     );
   }

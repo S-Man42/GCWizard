@@ -1,4 +1,5 @@
-final SEARCHSTRING_COMMON_ABADDON = 'abaddon abbaddon abbadon yen renminbi mi thorn ternaer gc11eky ' + [165, 181, 254].map((char) => String.fromCharCode(char)).join(' ');
+final SEARCHSTRING_COMMON_ABADDON = 'abaddon abbaddon abbadon yen renminbi mi thorn ternaer gc11eky ' +
+    [165, 181, 254].map((char) => String.fromCharCode(char)).join(' ');
 final SEARCHSTRING_COMMON_ABOUT = 'gcwizard';
 final SEARCHSTRING_COMMON_ADFGVX = 'adfgx adfgvx polybius polybios transposition substitution';
 final SEARCHSTRING_COMMON_AFFINE = 'affine';
@@ -17,7 +18,7 @@ final SEARCHSTRING_COMMON_ASTRONOMY_POSITION = 'rektaszension zodiac azimuth gms
 final SEARCHSTRING_COMMON_ASTRONOMY_RISESET = '';
 final SEARCHSTRING_COMMON_ASTRONOMY_SEASONS = 'aphelion perihelion';
 final SEARCHSTRING_COMMON_ASTRONOMY_SUN = 'solar';
-final SEARCHSTRING_COMMON_ASTRONOMY_SUNRISESET =  '';
+final SEARCHSTRING_COMMON_ASTRONOMY_SUNRISESET = '';
 final SEARCHSTRING_COMMON_ATBASH = 'atbash atbasch';
 final SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS = '';
 final SEARCHSTRING_COMMON_BACON = 'francis bacon';
@@ -61,7 +62,8 @@ final SEARCHSTRING_COMMON_CHRONOGRAM = '';
 final SEARCHSTRING_COMMON_CIPHERWHEEL = '';
 final SEARCHSTRING_COMMON_CISTERCIAN = '';
 final SEARCHSTRING_COMMON_CODEBREAKER = '';
-final SEARCHSTRING_COMMON_COLORPICKER = 'pal ntsc rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode key magenta cyan  cmyk luma chroma';
+final SEARCHSTRING_COMMON_COLORPICKER =
+    'pal ntsc rgb hexcode hsl hsi hsv yuv yiq ypbpr ycbcr shorthexcode key magenta cyan  cmyk luma chroma';
 final SEARCHSTRING_COMMON_COMBINATORICS = '';
 final SEARCHSTRING_COMMON_COMBINATORICS_COMBINATION = '';
 final SEARCHSTRING_COMMON_COMBINATORICS_PERMUTATION = '';
@@ -71,13 +73,16 @@ final SEARCHSTRING_COMMON_COORDINATES_CENTERTHREEPOINTS = '3';
 final SEARCHSTRING_COMMON_COORDINATES_CENTERTWOPOINTS = '2';
 final SEARCHSTRING_COMMON_COORDINATES_COMPASSROSE = '';
 final SEARCHSTRING_COMMON_COORDINATES_COORDINATEAVARAGING = '';
-final SEARCHSTRING_COMMON_COORDINATES_COORDINATESSETTINGS = SEARCHSTRING_COMMON_SETTINGS + 'rotationsellipsoids rotationsellipsoiden';
+final SEARCHSTRING_COMMON_COORDINATES_COORDINATESSETTINGS =
+    SEARCHSTRING_COMMON_SETTINGS + 'rotationsellipsoids rotationsellipsoiden';
 final SEARCHSTRING_COMMON_COORDINATES_CROSSBEARING = '';
 final SEARCHSTRING_COMMON_COORDINATES_CROSSSUMSELECTION = SEARCHSTRING_COMMON_COORDINATES;
 final SEARCHSTRING_COMMON_COORDINATES_DISTANCEBEARING = '';
-final SEARCHSTRING_COMMON_COORDINATES_ELLIPSOIDTRANSFORM = 'bessel 1841 bessel krassowski krasowksi krasovsky krassovsky 1950 1830 potsdam dhdn2001 dhdn1995 pulkowo mgi lv95 ed50 clarke 1866 osgb36 wgs84';
+final SEARCHSTRING_COMMON_COORDINATES_ELLIPSOIDTRANSFORM =
+    'bessel 1841 bessel krassowski krasowksi krasovsky krassovsky 1950 1830 potsdam dhdn2001 dhdn1995 pulkowo mgi lv95 ed50 clarke 1866 osgb36 wgs84';
 final SEARCHSTRING_COMMON_COORDINATES_EQUILATERALTRIANGLE = '';
-final SEARCHSTRING_COMMON_COORDINATES_FORMATCONVERTER = 'quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister xyz ecef reversewhereigo reversewig maidenhead geo-hash geohash geohex qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles';
+final SEARCHSTRING_COMMON_COORDINATES_FORMATCONVERTER =
+    'quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister xyz ecef reversewhereigo reversewig maidenhead geo-hash geohash geohex qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles';
 final SEARCHSTRING_COMMON_COORDINATES_INTERSECTBEARING = '';
 final SEARCHSTRING_COMMON_COORDINATES_INTERSECTFOURPOINTS = '4';
 final SEARCHSTRING_COMMON_COORDINATES_INTERSECTGEODETICANDCIRCLE = '';
@@ -134,13 +139,14 @@ final SEARCHSTRING_COMMON_GRAY = 'gray hamming  hamming';
 final SEARCHSTRING_COMMON_GRONSFELD = 'gronsfeld';
 final SEARCHSTRING_COMMON_HASHBREAKER = '';
 final SEARCHSTRING_COMMON_HASHES = 'hashes';
-final SEARCHSTRING_COMMON_HASHES_BLAKE2B = 'blake2b jean-philippe aumasson samuel neves zooko wilcox-O' + "'" + 'hearnd christian winnerlein';
+final SEARCHSTRING_COMMON_HASHES_BLAKE2B =
+    'blake2b jean-philippe aumasson samuel neves zooko wilcox-O' + "'" + 'hearnd christian winnerlein';
 final SEARCHSTRING_COMMON_HASHES_BLAKE2B_160 = '160bits';
 final SEARCHSTRING_COMMON_HASHES_BLAKE2B_224 = '224bits';
 final SEARCHSTRING_COMMON_HASHES_BLAKE2B_256 = '256bits';
 final SEARCHSTRING_COMMON_HASHES_BLAKE2B_384 = '384bits';
 final SEARCHSTRING_COMMON_HASHES_BLAKE2B_512 = '512bits';
-final SEARCHSTRING_COMMON_HASHES_KECCAK =  'keccak guido bertoni joan daemen michael peeters gilles nan assche';
+final SEARCHSTRING_COMMON_HASHES_KECCAK = 'keccak guido bertoni joan daemen michael peeters gilles nan assche';
 final SEARCHSTRING_COMMON_HASHES_KECCAK_224 = '224bits';
 final SEARCHSTRING_COMMON_HASHES_KECCAK_256 = '256bits';
 final SEARCHSTRING_COMMON_HASHES_KECCAK_288 = '288bits';
@@ -192,7 +198,7 @@ final SEARCHSTRING_COMMON_MULTIDECODER = '';
 final SEARCHSTRING_COMMON_NUMBERSEQUENCE = 'oeis';
 final SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION = 'bell A000110';
 final SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION = 'catalan A000108';
-final SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER = '' ;
+final SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER = '';
 final SEARCHSTRING_COMMON_NUMBERSEQUENCE_CONTAINSDIGITS = '';
 final SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS = '';
 final SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION = '';
@@ -216,7 +222,7 @@ final SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION = 'recaman A005132';
 final SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION = 'sublime A081357';
 final SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION = 'A000396';
 final SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION = 'A006037';
-final SEARCHSTRING_COMMON_NUMERALBASES =  'radix';
+final SEARCHSTRING_COMMON_NUMERALBASES = 'radix';
 final SEARCHSTRING_COMMON_NUMERALWORDS = '';
 final SEARCHSTRING_COMMON_NUMERALWORDSLISTS = '';
 final SEARCHSTRING_COMMON_NUMERALWORDSTEXTSEARCH = '';
@@ -224,11 +230,13 @@ final SEARCHSTRING_COMMON_ONETIMEPAD = 'onetimepad  one-time-pad otp';
 final SEARCHSTRING_COMMON_OPTICAL_FIBER_SWISSCOM = 'swisscom';
 final SEARCHSTRING_COMMON_PERIODICTABLE = '';
 final SEARCHSTRING_COMMON_PERIODICTABLEDATAVIEW = SEARCHSTRING_COMMON_PERIODICTABLE;
-final SEARCHSTRING_COMMON_PHI = 'phi fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +  [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
+final SEARCHSTRING_COMMON_PHI = 'phi fibonacci 1,6180339887 1.6180339887 0,6180339887 0.6180339887 ' +
+    [934, 966, 981].map((char) => String.fromCharCode(char)).join(' ');
 final SEARCHSTRING_COMMON_PHIDECIMALRANGE = '';
 final SEARCHSTRING_COMMON_PHINTHDECIMAL = '';
 final SEARCHSTRING_COMMON_PHISEARCH = '';
-final SEARCHSTRING_COMMON_PI = 'pi   3,1415926535 3.1415926535 ' +  [928, 960].map((char) => String.fromCharCode(char)).join(' ');
+final SEARCHSTRING_COMMON_PI =
+    'pi   3,1415926535 3.1415926535 ' + [928, 960].map((char) => String.fromCharCode(char)).join(' ');
 final SEARCHSTRING_COMMON_PIDECIMALRANGE = '';
 final SEARCHSTRING_COMMON_PINTHDECIMAL = '';
 final SEARCHSTRING_COMMON_PISEARCH = '';
@@ -281,7 +289,8 @@ final SEARCHSTRING_COMMON_SYMBOL_ANTIKER = 'antiker stargate';
 final SEARCHSTRING_COMMON_SYMBOL_ARABIC_INDIAN_NUMERALS = '';
 final SEARCHSTRING_COMMON_SYMBOL_ARCADIAN = '';
 final SEARCHSTRING_COMMON_SYMBOL_ATH = 'ath baronh';
-final SEARCHSTRING_COMMON_SYMBOL_ATLANTEAN = 'atlantisch atlantean marcokrand thelostempire dasverlorenekoenigreich atlantis';
+final SEARCHSTRING_COMMON_SYMBOL_ATLANTEAN =
+    'atlantisch atlantean marcokrand thelostempire dasverlorenekoenigreich atlantis';
 final SEARCHSTRING_COMMON_SYMBOL_AUREBESH = 'aurebesh starwars wookies clonewars outerrim';
 final SEARCHSTRING_COMMON_SYMBOL_AUSTRALIAN_SIGN_LANGUAGE = '';
 final SEARCHSTRING_COMMON_SYMBOL_BALLET = 'ballett primaballerina';
@@ -358,8 +367,10 @@ final SEARCHSTRING_COMMON_SYMBOL_KABOUTER_ABC = 'kabouter bambilie bambiliaanse'
 final SEARCHSTRING_COMMON_SYMBOL_KABOUTER_ABC_1947 = 'kabouter bambilie bambiliaanse 1947';
 final SEARCHSTRING_COMMON_SYMBOL_KARTRAK = 'kartrak aci automaticcaridentification rfid ';
 final SEARCHSTRING_COMMON_SYMBOL_KHAROSHTHI = 'kharoshthi gandhari gandhara prakrit sanskrit';
-final SEARCHSTRING_COMMON_SYMBOL_KLINGON = 'startrek kli ussenterprise u.s.s.enterprise officersmanual officer\'smanual';
-final SEARCHSTRING_COMMON_SYMBOL_KLINGON_KLINZHAI = 'startrek klinzhai ussenterprise u.s.s.enterprise officersmanual officer\'smanual';
+final SEARCHSTRING_COMMON_SYMBOL_KLINGON =
+    'startrek kli ussenterprise u.s.s.enterprise officersmanual officer\'smanual';
+final SEARCHSTRING_COMMON_SYMBOL_KLINGON_KLINZHAI =
+    'startrek klinzhai ussenterprise u.s.s.enterprise officersmanual officer\'smanual';
 final SEARCHSTRING_COMMON_SYMBOL_KREMPEL = 'ralfkrempel';
 final SEARCHSTRING_COMMON_SYMBOL_KRYPTON = 'superman ';
 final SEARCHSTRING_COMMON_SYMBOL_LORM = 'lormen heinrich landesmann hieronymus lorm';
@@ -379,8 +390,10 @@ final SEARCHSTRING_COMMON_SYMBOL_NOTES_DOREMI = 'doremifalamiresisol solmisation
 final SEARCHSTRING_COMMON_SYMBOL_NOTES_NAMES_ALTOCLEF = '';
 final SEARCHSTRING_COMMON_SYMBOL_NOTES_NAMES_BASSCLEF = '';
 final SEARCHSTRING_COMMON_SYMBOL_NOTES_NAMES_TREBLECLEF = 'hashtag flat sharp';
-final SEARCHSTRING_COMMON_SYMBOL_NOTES_NOTEVALUES = 'dotted punkt gepunktete punktierte viertel halbe ganze achtel sechzehntel whole half quarter eightth sixteenth semibreve minim crotchet semihemidemisemiquaver';
-final SEARCHSTRING_COMMON_SYMBOL_NOTES_RESTVALUES = 'dotted punkt gepunktete punktierte viertel halbe ganze achtel sechzehntel whole half quarter eightth sixteenth semibreve minim crotchet semihemidemisemiquaver';
+final SEARCHSTRING_COMMON_SYMBOL_NOTES_NOTEVALUES =
+    'dotted punkt gepunktete punktierte viertel halbe ganze achtel sechzehntel whole half quarter eightth sixteenth semibreve minim crotchet semihemidemisemiquaver';
+final SEARCHSTRING_COMMON_SYMBOL_NOTES_RESTVALUES =
+    'dotted punkt gepunktete punktierte viertel halbe ganze achtel sechzehntel whole half quarter eightth sixteenth semibreve minim crotchet semihemidemisemiquaver';
 final SEARCHSTRING_COMMON_SYMBOL_OGHAM = 'ogham ogam';
 final SEARCHSTRING_COMMON_SYMBOL_OPTICALFIBER = 'lwl llk ';
 final SEARCHSTRING_COMMON_SYMBOL_OPTICAL_FIBER_FOTAG = 'fotag';
@@ -399,8 +412,10 @@ final SEARCHSTRING_COMMON_SYMBOL_RHESUS_A = 'rhesusa';
 final SEARCHSTRING_COMMON_SYMBOL_RM4SCC = 'rm4scc cbc kix klantindex ';
 final SEARCHSTRING_COMMON_SYMBOL_ROMULAN = 'startrek';
 final SEARCHSTRING_COMMON_SYMBOL_RUNES = '';
-final SEARCHSTRING_COMMON_SYMBOL_SANLUCA = 'ndrangheta mafia codic di san luca sanluca cosa nostra lombardei piemont ligurien emilia romagna stele di rosetta stein';
-final SEARCHSTRING_COMMON_SYMBOL_SARATI = 'thesaratiofrumil tirionsarati rumilofvalinor ardainthevalian thetengwarofrumil sarati  j.r.r. jrr tolkien rumil quenya';
+final SEARCHSTRING_COMMON_SYMBOL_SANLUCA =
+    'ndrangheta mafia codic di san luca sanluca cosa nostra lombardei piemont ligurien emilia romagna stele di rosetta stein';
+final SEARCHSTRING_COMMON_SYMBOL_SARATI =
+    'thesaratiofrumil tirionsarati rumilofvalinor ardainthevalian thetengwarofrumil sarati  j.r.r. jrr tolkien rumil quenya';
 final SEARCHSTRING_COMMON_SYMBOL_SEMAPHORE = 'semaphores ';
 final SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE = '';
 final SEARCHSTRING_COMMON_SYMBOL_SKULLZ = '';
@@ -443,11 +458,12 @@ final SEARCHSTRING_COMMON_TAPCODE = '';
 final SEARCHSTRING_COMMON_TAPIR = 'tapir ddr nva mfs ';
 final SEARCHSTRING_COMMON_TOMTOM = 'a-tom-tom atomtom';
 final SEARCHSTRING_COMMON_TRITHEMIUS = 'trithemius tabularecta';
-final SEARCHSTRING_COMMON_UNITCONVERTER = 'watt newton meters inches zoll pounds pfund pferdestaerken horsepowers gallonen gallons barrels yoda atm psi bar radiant celsius kelvin fahrenheit rankine reaumur kilogramm feinunze troyounce pints';
+final SEARCHSTRING_COMMON_UNITCONVERTER =
+    'watt newton meters inches zoll pounds pfund pferdestaerken horsepowers gallonen gallons barrels yoda atm psi bar radiant celsius kelvin fahrenheit rankine reaumur kilogramm feinunze troyounce pints';
 final SEARCHSTRING_COMMON_VANITY = 'vanity';
 final SEARCHSTRING_COMMON_VANITYMULTIPLENUMBERS = SEARCHSTRING_COMMON_VANITY;
 final SEARCHSTRING_COMMON_VANITYSINGLENUMBERS = SEARCHSTRING_COMMON_VANITY;
 final SEARCHSTRING_COMMON_VIGENERE = 'vigenere';
 final SEARCHSTRING_COMMON_VIGENEREBREAKER = '';
 final SEARCHSTRING_COMMON_WINDOW = 'johannes balthasar friderici cryptographia';
-final SEARCHSTRING_COMMON_Z22 = 'konrad zuse z-22 z22' ;
+final SEARCHSTRING_COMMON_Z22 = 'konrad zuse z-22 z22';

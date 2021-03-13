@@ -12,7 +12,6 @@ class NumberSequenceContainsDigits extends StatefulWidget {
   const NumberSequenceContainsDigits({Key key, this.mode, this.maxIndex}) : super(key: key);
 
   @override
-
   NumberSequenceContainsDigitsState createState() => NumberSequenceContainsDigitsState();
 }
 
@@ -35,7 +34,6 @@ class NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigi
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
@@ -47,13 +45,11 @@ class NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigi
             });
           },
         ),
-        GCWSubmitButton(
-          onPressed: () {
-            setState(() {
-              _buildOutput();
-            });
-          }
-        ),
+        GCWSubmitButton(onPressed: () {
+          setState(() {
+            _buildOutput();
+          });
+        }),
         _currentOutput
       ],
     );
@@ -67,15 +63,19 @@ class NumberSequenceContainsDigitsState extends State<NumberSequenceContainsDigi
 
     detailedOutput = getFirstPositionOfSequence(widget.mode, currentInputN.toString(), widget.maxIndex);
 
-    columnData.add([i18n(context, 'numbersequence_output_col_1'), i18n(context, 'numbersequence_output_col_2'), i18n(context, 'numbersequence_output_col_3')]);
-    columnData.add([detailedOutput.number, detailedOutput.positionSequence.toString(), detailedOutput.positionDigits.toString()]);
+    columnData.add([
+      i18n(context, 'numbersequence_output_col_1'),
+      i18n(context, 'numbersequence_output_col_2'),
+      i18n(context, 'numbersequence_output_col_3')
+    ]);
+    columnData.add(
+        [detailedOutput.number, detailedOutput.positionSequence.toString(), detailedOutput.positionDigits.toString()]);
 
     flexData = [4, 2, 1];
 
     _currentOutput = GCWDefaultOutput(
-      child: Column(
-        children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 0, hasHeader: true)
-      )
-    );
+        child: Column(
+            children:
+                columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 0, hasHeader: true)));
   }
 }

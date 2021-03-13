@@ -6,11 +6,10 @@ final ERROR_BRAINFK_LOOPNOTOPENED = 'brainfk_error_loopnotopened';
 final MAX_MEMORY = 32768;
 
 String interpretBrainfk(String code, {String input}) {
-  if (code == null || code.length == 0)
-    return '';
+  if (code == null || code.length == 0) return '';
 
   var instructions = code.split('');
-  
+
   var pointer = 0;
   var data = List<int>.generate(MAX_MEMORY, (index) => 0);
   var out = '';
@@ -21,11 +20,10 @@ String interpretBrainfk(String code, {String input}) {
 
   int i = 0;
   while (i < instructions.length) {
-    switch(instructions[i]) {
+    switch (instructions[i]) {
       case '>':
         pointer++;
-        if (pointer >= data.length)
-          pointer = 0;
+        if (pointer >= data.length) pointer = 0;
         break;
       case '<':
         pointer--;
@@ -43,8 +41,7 @@ String interpretBrainfk(String code, {String input}) {
         out += String.fromCharCode(data[pointer]);
         break;
       case ',':
-        if (input == null || inputPointer >= input.length)
-          return out;
+        if (input == null || inputPointer >= input.length) return out;
 
         data[pointer] = input.codeUnitAt(inputPointer++);
         break;
@@ -53,12 +50,15 @@ String interpretBrainfk(String code, {String input}) {
           var nestedLoopCount = 1;
           while (nestedLoopCount > 0) {
             i++;
-            if (i >= instructions.length)
-              throw FormatException(ERROR_BRAINFK_LOOPNOTCLOSED);
+            if (i >= instructions.length) throw FormatException(ERROR_BRAINFK_LOOPNOTCLOSED);
 
             switch (instructions[i]) {
-              case '[': nestedLoopCount++; break;
-              case ']': nestedLoopCount--; break;
+              case '[':
+                nestedLoopCount++;
+                break;
+              case ']':
+                nestedLoopCount--;
+                break;
             }
           }
 
@@ -69,15 +69,15 @@ String interpretBrainfk(String code, {String input}) {
         }
         break;
       case ']':
-        if (loopStack.isEmpty)
-          throw FormatException(ERROR_BRAINFK_LOOPNOTOPENED);
+        if (loopStack.isEmpty) throw FormatException(ERROR_BRAINFK_LOOPNOTOPENED);
 
         i = loopStack.removeLast();
         continue;
     }
-    
+
     i++;
-  };
+  }
+  ;
 
   return out;
 }
@@ -106,21 +106,20 @@ String interpretBrainfk(String code, {String input}) {
 String generateBrainfk(String text) {
   var output = '';
   int prevCharacter = 0;
-  for(int i = 0; i < text.length; i++) {
+  for (int i = 0; i < text.length; i++) {
     int character = 0xFF & text.codeUnitAt(i);
     int difference = prevCharacter - character;
 
     String instruction = (difference < 0 ? '+' : '-');
     difference = difference.abs();
 
-    if(difference > 0 && difference < 8)  {
+    if (difference > 0 && difference < 8) {
       output += instruction * difference;
-
-    } else if(difference >= 8) {
+    } else if (difference >= 8) {
       int loopCount = sqrt(difference).floor();
       int multiplier = loopCount;
 
-      while(loopCount * (multiplier + 1) <= difference) {
+      while (loopCount * (multiplier + 1) <= difference) {
         multiplier++;
       }
 
@@ -136,7 +135,7 @@ String generateBrainfk(String text) {
       output += ']';
       output += '<';
 
-      if(remainder > 0) {
+      if (remainder > 0) {
         output += instruction * remainder;
       }
     }
@@ -147,4 +146,3 @@ String generateBrainfk(String text) {
 
   return output;
 }
-

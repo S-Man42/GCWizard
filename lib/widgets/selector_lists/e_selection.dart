@@ -9,20 +9,14 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class ESelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
+    final List<GCWTool> _toolList = Registry.toolList.where((element) {
+      return [
+        className(ENthDecimal()),
+        className(EDecimalRange()),
+        className(ESearch()),
+      ].contains(className(element.tool));
+    }).toList();
 
-    final List<GCWTool> _toolList =
-      Registry.toolList.where((element) {
-        return [
-          className(ENthDecimal()),
-          className(EDecimalRange()),
-          className(ESearch()),
-        ].contains(className(element.tool));
-      }).toList();
-
-    return Container(
-      child: GCWToolList(
-        toolList: _toolList
-      )
-    );
+    return Container(child: GCWToolList(toolList: _toolList));
   }
 }

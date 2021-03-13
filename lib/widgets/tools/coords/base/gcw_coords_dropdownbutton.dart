@@ -13,7 +13,6 @@ class GCWCoordsDropDownButton extends StatefulWidget {
 }
 
 class _GCWCoordsDropDownButtonState extends State<GCWCoordsDropDownButton> {
-
   var _dropdownValue;
 
   @override

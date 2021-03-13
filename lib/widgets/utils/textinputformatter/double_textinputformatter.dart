@@ -25,7 +25,7 @@ class DoubleTextInputFormatter extends TextInputFormatter {
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     var value = newValue.text.replaceAll(',', '.');
 
-    if(!_exp.hasMatch(value)){
+    if (!_exp.hasMatch(value)) {
       return oldValue;
     }
 
@@ -67,30 +67,23 @@ class DoubleTextInputFormatter extends TextInputFormatter {
     var numberCurrentDecimals = value.contains('.') ? value.split('.')[1].length : 0;
 
     if (integerPart.startsWith('-')) {
-      if (min == null)
-        return true;
+      if (min == null) return true;
 
-      if (_minIntegerLength > integerPart.substring(1).length)
-        return true;
+      if (_minIntegerLength > integerPart.substring(1).length) return true;
     } else {
-      if (max == null)
-        return true;
+      if (max == null) return true;
 
-      if (_maxIntegerLength > integerPart.length)
-        return true;
+      if (_maxIntegerLength > integerPart.length) return true;
     }
 
     var _newDouble = double.tryParse(value);
-    if (_newDouble == null)
-      return false;
+    if (_newDouble == null) return false;
 
     _truncateDigits(min, numberCurrentDecimals);
 
-    if (min != null && _newDouble < _truncateDigits(min, numberCurrentDecimals))
-      return false;
+    if (min != null && _newDouble < _truncateDigits(min, numberCurrentDecimals)) return false;
 
-    if (max != null && _newDouble > _truncateDigits(max, numberCurrentDecimals))
-      return false;
+    if (max != null && _newDouble > _truncateDigits(max, numberCurrentDecimals)) return false;
 
     return true;
   }

@@ -49,9 +49,7 @@ class RotationGeneralState extends State<RotationGeneral> {
             });
           },
         ),
-        GCWDefaultOutput(
-          child: _output
-        )
+        GCWDefaultOutput(child: _output)
       ],
     );
   }

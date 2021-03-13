@@ -79,21 +79,15 @@ class _GCWToolListState extends State<GCWToolList> {
     var descriptionText;
     if (Prefs.getBool('toollist_show_descriptions') && tool.description != null && tool.description.length > 0) {
       descriptionText = IgnorePointer(
-        child: GCWText(
-          text: tool.description,
-          style: gcwDescriptionTextStyle(),
-        )
-      );
+          child: GCWText(
+        text: tool.description,
+        style: gcwDescriptionTextStyle(),
+      ));
     }
 
     var exampleText;
     if (Prefs.getBool('toollist_show_examples') && tool.example != null && tool.example.length > 0) {
-      exampleText = IgnorePointer(
-        child: GCWText(
-          text: tool.example,
-          style: gcwDescriptionTextStyle()
-        )
-      );
+      exampleText = IgnorePointer(child: GCWText(text: tool.example, style: gcwDescriptionTextStyle()));
     }
 
     var content;
@@ -101,12 +95,7 @@ class _GCWToolListState extends State<GCWToolList> {
       content = Column(
         children: [
           descriptionText,
-          Container(
-            child: exampleText,
-            padding: EdgeInsets.only(
-              top: DEFAULT_DESCRIPTION_MARGIN
-            )
-          )
+          Container(child: exampleText, padding: EdgeInsets.only(top: DEFAULT_DESCRIPTION_MARGIN))
         ],
       );
     } else if (exampleText != null) {
@@ -115,11 +104,11 @@ class _GCWToolListState extends State<GCWToolList> {
       content = descriptionText;
     }
 
-    return (exampleText ?? descriptionText) != null ? Container(
-      child: content,
-      padding: EdgeInsets.only(
-        left: 10.0
-      ),
-    ) : null;
+    return (exampleText ?? descriptionText) != null
+        ? Container(
+            child: content,
+            padding: EdgeInsets.only(left: 10.0),
+          )
+        : null;
   }
 }

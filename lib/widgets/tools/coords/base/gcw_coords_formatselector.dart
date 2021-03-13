@@ -17,7 +17,6 @@ class GCWCoordsFormatSelector extends StatefulWidget {
 }
 
 class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
-
   var _currentFormat = defaultCoordFormat()['format'];
   var _currentSubtype = defaultCoordFormat()['subtype'];
 
@@ -28,8 +27,7 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
     if (widget.format != null) {
       _currentFormat = widget.format['format'];
 
-      if (widget.format['subtype'] != null)
-        _currentSubtype = widget.format['subtype'];
+      if (widget.format['subtype'] != null) _currentSubtype = widget.format['subtype'];
     }
   }
 
@@ -43,10 +41,15 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
             setState(() {
               _currentFormat = newValue;
 
-              switch(_currentFormat) {
-                case keyCoordsGaussKrueger: _currentSubtype = keyCoordsGaussKruegerGK1; break;
-                case keyCoordsSlippyMap: _currentSubtype = '10'; break;
-                default: _currentSubtype = null;
+              switch (_currentFormat) {
+                case keyCoordsGaussKrueger:
+                  _currentSubtype = keyCoordsGaussKruegerGK1;
+                  break;
+                case keyCoordsSlippyMap:
+                  _currentSubtype = '10';
+                  break;
+                default:
+                  _currentSubtype = null;
               }
 
               _emitOnChange();
@@ -54,10 +57,7 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
           },
           items: allCoordFormats.map((entry) {
             return GCWDropDownMenuItem(
-              value: entry.key,
-              child: i18n(context, entry.name) ?? entry.name,
-              subtitle: entry.example
-            );
+                value: entry.key, child: i18n(context, entry.name) ?? entry.name, subtitle: entry.example);
           }).toList(),
         ),
         _buildSubtype()

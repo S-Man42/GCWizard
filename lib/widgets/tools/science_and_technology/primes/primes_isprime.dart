@@ -30,8 +30,9 @@ class IsPrimeState extends State<IsPrime> {
           },
         ),
         GCWDefaultOutput(
-          child: isPrime(BigInt.from(_currentNumber)) ? i18n(context, 'primes_isprime_isprime') : i18n(context, 'primes_noprime')
-        )
+            child: isPrime(BigInt.from(_currentNumber))
+                ? i18n(context, 'primes_isprime_isprime')
+                : i18n(context, 'primes_noprime'))
       ],
     );
   }

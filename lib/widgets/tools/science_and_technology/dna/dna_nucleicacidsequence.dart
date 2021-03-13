@@ -62,9 +62,7 @@ class DNANucleicAcidSequenceState extends State<DNANucleicAcidSequence> {
         output = encodeRNANucleobaseSequence(_currentInput);
       }
 
-      return GCWDefaultOutput(
-        child: output
-      );
+      return GCWDefaultOutput(child: output);
     } else {
       var acids = <AminoAcid>[];
       if (_currentDNAMode == GCWSwitchPosition.left) {
@@ -77,25 +75,29 @@ class DNANucleicAcidSequenceState extends State<DNANucleicAcidSequence> {
       var outputText = acids.map((acid) {
         if (acid.symbolShort == null) {
           switch (acid.type) {
-            case NucleobaseSequenceType.START: return i18n(context, 'dna_start');
-            case NucleobaseSequenceType.STOP: return i18n(context, 'dna_stop');
-            default: return '';
+            case NucleobaseSequenceType.START:
+              return i18n(context, 'dna_start');
+            case NucleobaseSequenceType.STOP:
+              return i18n(context, 'dna_stop');
+            default:
+              return '';
           }
         }
 
-        if (acid.symbolShort == 'M')
-          includesM = true;
+        if (acid.symbolShort == 'M') includesM = true;
 
         return acid.symbolShort;
       }).join();
 
       return Column(
         children: <Widget>[
-          GCWDefaultOutput(
-            child: outputText
-          ),
+          GCWDefaultOutput(child: outputText),
           includesM ? GCWTextDivider(text: i18n(context, 'common_note')) : Container(),
-          includesM ? GCWText(text: i18n(context, 'dna_nucleicacidsequence_notem', parameters: [_currentDNAMode == GCWSwitchPosition.left ? 'ATG' : 'AUG'])) : Container()
+          includesM
+              ? GCWText(
+                  text: i18n(context, 'dna_nucleicacidsequence_notem',
+                      parameters: [_currentDNAMode == GCWSwitchPosition.left ? 'ATG' : 'AUG']))
+              : Container()
         ],
       );
     }

@@ -45,13 +45,11 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, 
     // filePath = 'Downloads/$fileName';
   } else {
     var path = await MainPath();
-    if (path == null)
-      return null;
+    if (path == null) return null;
     filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
     file = File(filePath);
 
-    if (!await file.exists())
-      file.create();
+    if (!await file.exists()) file.create();
 
     await file.writeAsBytes(data.buffer.asUint8List());
   }
@@ -72,13 +70,11 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
     // filePath = 'Downloads/$fileName';
   } else {
     var path = await MainPath();
-    if (path == null)
-      return null;
+    if (path == null) return null;
     filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
     file = await File(filePath).create(recursive: true);
 
-    if (!await file.exists())
-      file.create();
+    if (!await file.exists()) file.create();
 
     await file.writeAsString(data);
   }

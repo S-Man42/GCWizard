@@ -8,8 +8,7 @@ class AlphabetValues {
   Map<String, String> alphabet;
 
   AlphabetValues({alphabet}) {
-    if (alphabet == null)
-      alphabet = alphabetAZ.alphabet;
+    if (alphabet == null) alphabet = alphabetAZ.alphabet;
 
     this.alphabet = alphabet;
   }
@@ -30,11 +29,10 @@ class AlphabetValues {
     }).join();
   }
 
-  List<int> textToValues(String text,{bool keepNumbers: false}) {
+  List<int> textToValues(String text, {bool keepNumbers: false}) {
     var output = <int>[];
 
-    if (text == null || text.length == 0)
-      return output;
+    if (text == null || text.length == 0) return output;
 
     text = _toUpperCase(text);
 
@@ -42,8 +40,7 @@ class AlphabetValues {
 
     if (keepNumbers) {
       alphabet_09.entries.forEach((entry) {
-        if (!entries.contains(entry.key))
-          entries.add(MapEntry(entry.key, entry.value.toString()));
+        if (!entries.contains(entry.key)) entries.add(MapEntry(entry.key, entry.value.toString()));
       });
     }
 
@@ -73,7 +70,8 @@ class AlphabetValues {
         });
 
         text = text.substring(i);
-      };
+      }
+      ;
     }
 
     return output;
@@ -82,9 +80,12 @@ class AlphabetValues {
   String valuesToText(List<int> values) {
     var alphabetMap = switchMapKeyValue(alphabet, keepFirstOccurence: true);
 
-    return values.map((value) {
-      var character = alphabetMap[value.toString()];
-      return character == null ? UNKNOWN_ELEMENT : character;
-    }).toList().join();
+    return values
+        .map((value) {
+          var character = alphabetMap[value.toString()];
+          return character == null ? UNKNOWN_ELEMENT : character;
+        })
+        .toList()
+        .join();
   }
 }

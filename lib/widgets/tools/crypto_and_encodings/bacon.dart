@@ -53,7 +53,6 @@ class BaconState extends State<Bacon> {
             });
           },
         ),
-
         GCWTwoOptionsSwitch(
           title: i18n(context, 'bacon_coding'),
           leftValue: 'AB',
@@ -81,13 +80,11 @@ class BaconState extends State<Bacon> {
 
   _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      _output = encodeBacon(_currentInput, _inversMode , _binaryMode == GCWSwitchPosition.right);
+      _output = encodeBacon(_currentInput, _inversMode, _binaryMode == GCWSwitchPosition.right);
     } else {
-      _output = decodeBacon(_currentInput,  _inversMode , _binaryMode == GCWSwitchPosition.right);
+      _output = decodeBacon(_currentInput, _inversMode, _binaryMode == GCWSwitchPosition.right);
     }
 
-    return GCWDefaultOutput(
-      child: _output
-    );
+    return GCWDefaultOutput(child: _output);
   }
 }

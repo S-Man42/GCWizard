@@ -5,29 +5,28 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:latlong/latlong.dart';
 
-Future<Map<String, dynamic>> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines, {bool kmlFormat = false, String json }) async {
+Future<Map<String, dynamic>> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines,
+    {bool kmlFormat = false, String json}) async {
   String data;
   String extension;
 
   if ((points == null || points.length == 0) && (polylines == null || polylines.length == 0) && (json == null))
     return null;
 
-  if ( json != null) {
+  if (json != null) {
     data = json;
     extension = '.json';
-  }
-  else if (kmlFormat) {
+  } else if (kmlFormat) {
     data = _KmlWriter().asString(name, points, polylines);
     extension = '.kml';
-  }
-  else {
+  } else {
     data = _GpxWriter().asString(name, points, polylines);
     extension = '.gpx';
   }
 
   try {
     var fileName = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '_' + 'coordinates' + extension;
-    return saveStringToFile(data, fileName,  subDirectory : 'coordinate_export');
+    return saveStringToFile(data, fileName, subDirectory: 'coordinate_export');
   } on Exception {
     return null;
   }
@@ -36,39 +35,37 @@ Future<Map<String, dynamic>> exportCoordinates(String name, List<GCWMapPoint> po
 /// Convert points into GPX
 class _GpxWriter {
   /// Convert points into GPX XML (v1.0) as String
-  String asString(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) => _build(name, points, polylines).toXmlString(pretty: true, indent: '\t');
+  String asString(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) =>
+      _build(name, points, polylines).toXmlString(pretty: true, indent: '\t');
 
   /// Convert Gpx into GPX XML (v1.0) as XmlNode
-  XmlNode asXml(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) => _build(name, points, polylines);
+  XmlNode asXml(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) =>
+      _build(name, points, polylines);
 
+  XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
+    final builder = XmlBuilder();
 
-  XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {final builder = XmlBuilder();
-
-    if ((points == null || points.length == 0) && (polylines == null || polylines.length == 0))
-      return null;
+    if ((points == null || points.length == 0) && (polylines == null || polylines.length == 0)) return null;
 
     builder.processing('xml', 'version="1.0" encoding="UTF-8"');
     builder.element('gpx', nest: () {
       builder.attribute('version', '1.0');
       builder.attribute('creator', 'GC Wizard');
-      builder.attribute('xsi:schemaLocation', '"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd http://www.groundspeak.com/cache/1/0/1 http://www.groundspeak.com/cache/1/0/1/cache.xsd http://www.gsak.net/xmlv1/6 http://www.gsak.net/xmlv1/6/gsak.xsd');
+      builder.attribute('xsi:schemaLocation',
+          '"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd http://www.groundspeak.com/cache/1/0/1 http://www.groundspeak.com/cache/1/0/1/cache.xsd http://www.gsak.net/xmlv1/6 http://www.gsak.net/xmlv1/6/gsak.xsd');
       builder.attribute('xmlns', 'http://www.topografix.com/GPX/1/0');
       builder.attribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
       builder.attribute('xmlns:groundspeak', 'http://www.groundspeak.com/cache/1/0/1');
       builder.attribute('xmlns:gsak', 'http://www.gsak.net/xmlv1/6');
 
       if (points != null) {
-        for (var i=0; i < points.length; i++) {
-          if (i==0)
-            _writePoint(builder, false, name, 'S' + i.toString(), points[i]);
+        for (var i = 0; i < points.length; i++) {
+          if (i == 0) _writePoint(builder, false, name, 'S' + i.toString(), points[i]);
           _writePoint(builder, true, name, 'S' + i.toString(), points[i]);
         }
       }
 
-      var circles = points
-        .where((point) => point.hasCircle())
-        .map((point) => point.circle)
-        .toList();
+      var circles = points.where((point) => point.hasCircle()).map((point) => point.circle).toList();
 
       if (circles != null) {
         circles.forEach((circle) {
@@ -148,23 +145,23 @@ class _GpxWriter {
       builder.attribute(tagName, value);
     }
   }
-
 }
 
 /// Convert Gpx into KML
 class _KmlWriter {
   /// Convert points into KML as String
-  String asString(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) => _build(name, points, polylines).toXmlString(pretty: true, indent: '\t');
+  String asString(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) =>
+      _build(name, points, polylines).toXmlString(pretty: true, indent: '\t');
 
   /// Convert points into KML as XmlNode
-  XmlNode asXml(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) => _build(name, points, polylines);
+  XmlNode asXml(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) =>
+      _build(name, points, polylines);
 
   XmlNode _build(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
     final builder = XmlBuilder();
     var i = 0;
 
-    if ((points == null || points.length == 0) && (polylines == null || polylines.length == 0))
-      return null;
+    if ((points == null || points.length == 0) && (polylines == null || polylines.length == 0)) return null;
 
     builder.processing('xml', 'version="1.0" encoding="UTF-8"');
     builder.element('kml', nest: () {
@@ -174,7 +171,7 @@ class _KmlWriter {
         _writeElement(builder, 'name', 'GC Wizard');
 
         if (points != null) {
-          for (i=0; i < points.length; i++) {
+          for (i = 0; i < points.length; i++) {
             builder.element('StyleMap', nest: () {
               builder.attribute('id', 'waypoint' + i.toString());
 
@@ -184,7 +181,7 @@ class _KmlWriter {
               });
             });
           }
-          for (i=0; i < points.length; i++) {
+          for (i = 0; i < points.length; i++) {
             builder.element('Style', nest: () {
               builder.attribute('id', 'waypoint' + i.toString());
               _writeElement(builder, 'color', _ColorCode(points[i].color));
@@ -197,13 +194,10 @@ class _KmlWriter {
           }
         }
 
-        var circles = points
-          .where((point) => point.hasCircle())
-          .map((point) => point.circle)
-          .toList();
+        var circles = points.where((point) => point.hasCircle()).map((point) => point.circle).toList();
 
         if (circles != null) {
-          for (i=0; i < circles.length; i++) {
+          for (i = 0; i < circles.length; i++) {
             builder.element('StyleMap', nest: () {
               builder.attribute('id', 'circle' + i.toString());
 
@@ -213,7 +207,7 @@ class _KmlWriter {
               });
             });
           }
-          for (i=0; i < circles.length; i++) {
+          for (i = 0; i < circles.length; i++) {
             builder.element('Style', nest: () {
               builder.attribute('id', 'circle' + i.toString());
               builder.element('LineStyle', nest: () {
@@ -226,7 +220,7 @@ class _KmlWriter {
         }
 
         if (polylines != null) {
-          for (i=0; i < polylines.length; i++) {
+          for (i = 0; i < polylines.length; i++) {
             builder.element('StyleMap', nest: () {
               builder.attribute('id', 'polyline' + i.toString());
 
@@ -236,7 +230,7 @@ class _KmlWriter {
               });
             });
           }
-          for (i=0; i < polylines.length; i++) {
+          for (i = 0; i < polylines.length; i++) {
             builder.element('Style', nest: () {
               builder.attribute('id', 'polyline' + i.toString());
               builder.element('LineStyle', nest: () {
@@ -251,22 +245,21 @@ class _KmlWriter {
         builder.element('Folder', nest: () {
           _writeElement(builder, 'name', 'Waypoints');
           if (points != null) {
-            for (i=0; i < points.length; i++) {
-              if (i==0)
-                _writePoint(builder, false, name, 'S' + i.toString(), points[i], '#waypoint' + i.toString());
+            for (i = 0; i < points.length; i++) {
+              if (i == 0) _writePoint(builder, false, name, 'S' + i.toString(), points[i], '#waypoint' + i.toString());
               _writePoint(builder, true, name, 'S' + i.toString(), points[i], '#waypoint' + i.toString());
             }
           }
         });
 
         if (circles != null) {
-          for (i=0; i < circles.length; i++) {
+          for (i = 0; i < circles.length; i++) {
             _writeLines(builder, 'circle', circles[i].shape, '#circle' + i.toString());
           }
         }
 
         if (polylines != null && polylines.length > 0) {
-          for (i=0; i < polylines.length; i++) {
+          for (i = 0; i < polylines.length; i++) {
             _writeLines(builder, 'line', polylines[i].shape, '#polyline' + i.toString());
           }
         }
@@ -276,7 +269,8 @@ class _KmlWriter {
     return builder.buildDocument();
   }
 
-  void _writePoint(XmlBuilder builder, bool waypoint, String cacheName, String stageName, GCWMapPoint wpt, String styleId) {
+  void _writePoint(
+      XmlBuilder builder, bool waypoint, String cacheName, String stageName, GCWMapPoint wpt, String styleId) {
     if (wpt != null) {
       builder.element('Placemark', nest: () {
         if (!waypoint) {
@@ -304,8 +298,8 @@ class _KmlWriter {
         builder.element('LineString', nest: () {
           _writeElement(builder, 'tesselerate', 1);
           _writeElement(builder, 'altitudeMode', 'absolute');
-          _writeElement(builder, 'coordinates',
-            shapes.map((point) => [point.longitude, point.latitude].join(',') + ' \n'));
+          _writeElement(
+              builder, 'coordinates', shapes.map((point) => [point.longitude, point.latitude].join(',') + ' \n'));
         });
       });
     }
@@ -317,8 +311,8 @@ class _KmlWriter {
     }
   }
 
-  String _ColorCode(Color color){
+  String _ColorCode(Color color) {
     var s = color.value.toRadixString(16);
-    return s.substring(0,2) + s.substring(6,8) + s.substring(4,6) + s.substring(2,4) ;
+    return s.substring(0, 2) + s.substring(6, 8) + s.substring(4, 6) + s.substring(2, 4);
   }
 }

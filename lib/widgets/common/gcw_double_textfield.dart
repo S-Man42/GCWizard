@@ -12,17 +12,17 @@ class GCWDoubleTextField extends StatefulWidget {
   final FocusNode focusNode;
   final numberDecimalDigits;
 
-  const GCWDoubleTextField({
-    Key key,
-    this.onChanged,
-    this.controller,
-    this.textInputFormatter,
-    this.hintText,
-    this.min,
-    this.max,
-    this.focusNode,
-    this.numberDecimalDigits
-  }) : super(key: key);
+  const GCWDoubleTextField(
+      {Key key,
+      this.onChanged,
+      this.controller,
+      this.textInputFormatter,
+      this.hintText,
+      this.min,
+      this.max,
+      this.focusNode,
+      this.numberDecimalDigits})
+      : super(key: key);
 
   @override
   _GCWDoubleTextFieldState createState() => _GCWDoubleTextFieldState();
@@ -35,11 +35,8 @@ class _GCWDoubleTextFieldState extends State<GCWDoubleTextField> {
   void initState() {
     super.initState();
 
-    _doubleInputFormatter = DoubleTextInputFormatter(
-      min: widget.min,
-      max: widget.max,
-      numberDecimalDigits: widget.numberDecimalDigits
-    );
+    _doubleInputFormatter =
+        DoubleTextInputFormatter(min: widget.min, max: widget.max, numberDecimalDigits: widget.numberDecimalDigits);
   }
 
   @override
@@ -59,21 +56,16 @@ class _GCWDoubleTextFieldState extends State<GCWDoubleTextField> {
             _value = double.tryParse(text);
           }
 
-          if (widget.min != null && _value < widget.min)
-            _value = widget.min;
+          if (widget.min != null && _value < widget.min) _value = widget.min;
 
-          if (widget.max != null && _value > widget.max)
-            _value = widget.max;
+          if (widget.max != null && _value > widget.max) _value = widget.max;
 
           widget.onChanged({'text': text, 'value': _value});
         });
       },
       controller: widget.controller,
       inputFormatters: [widget.textInputFormatter ?? _doubleInputFormatter],
-      keyboardType: TextInputType.numberWithOptions(
-        signed: true,
-        decimal: true
-      ),
+      keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
     );
   }
 }

@@ -4,8 +4,7 @@ import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 
 Map<String, List<int>> _createKeyGrid(String key, AlphabetModificationMode mode) {
-  if (key == null)
-    key = '';
+  if (key == null) key = '';
 
   key = key.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
   var characters = key.split('').toList();
@@ -14,16 +13,13 @@ Map<String, List<int>> _createKeyGrid(String key, AlphabetModificationMode mode)
       .map((character) {
         switch (mode) {
           case AlphabetModificationMode.J_TO_I:
-            if (character == 'J')
-              return '';
+            if (character == 'J') return '';
             break;
           case AlphabetModificationMode.W_TO_VV:
-            if (character == 'W')
-              return '';
+            if (character == 'W') return '';
             break;
           case AlphabetModificationMode.C_TO_K:
-            if (character == 'C')
-              return '';
+            if (character == 'C') return '';
             break;
         }
 
@@ -36,15 +32,20 @@ Map<String, List<int>> _createKeyGrid(String key, AlphabetModificationMode mode)
 }
 
 String _sanitizeInput(String input, AlphabetModificationMode mode) {
-  if (input == null)
-    return '';
+  if (input == null) return '';
 
   input = input.toUpperCase().replaceAll(RegExp(r'[^A-Z]'), '');
 
   switch (mode) {
-    case AlphabetModificationMode.J_TO_I: input = input.replaceAll('J', 'I'); break;
-    case AlphabetModificationMode.W_TO_VV: input = input.replaceAll('W', 'VV'); break;
-    case AlphabetModificationMode.C_TO_K: input = input.replaceAll('C', 'K'); break;
+    case AlphabetModificationMode.J_TO_I:
+      input = input.replaceAll('J', 'I');
+      break;
+    case AlphabetModificationMode.W_TO_VV:
+      input = input.replaceAll('W', 'VV');
+      break;
+    case AlphabetModificationMode.C_TO_K:
+      input = input.replaceAll('C', 'K');
+      break;
   }
 
   return input;
@@ -93,7 +94,7 @@ String encryptPlayfair(String input, String key, {AlphabetModificationMode mode:
     out += ' ';
     i += 2;
   }
-  
+
   return out.trim();
 }
 

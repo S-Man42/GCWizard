@@ -1,9 +1,7 @@
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 
-enum FavoriteChangeStatus {
-  add, remove
-}
+enum FavoriteChangeStatus { add, remove }
 
 class Favorites {
   static List<GCWTool> toolList;

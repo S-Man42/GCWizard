@@ -7,10 +7,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/base/hsv_p
 class MapPolylineEditor extends StatefulWidget {
   final dynamic polyline;
 
-  const MapPolylineEditor({
-    Key key,
-    this.polyline
-  }) : super(key: key);
+  const MapPolylineEditor({Key key, this.polyline}) : super(key: key);
 
   @override
   MapPolylineEditorState createState() => MapPolylineEditorState();
@@ -23,34 +20,26 @@ class MapPolylineEditorState extends State<MapPolylineEditor> {
   void initState() {
     super.initState();
 
-    if (widget.polyline is GCWMapPolyline)
-      _currentColorPickerColor = HSVColor.fromColor(widget.polyline.color);
+    if (widget.polyline is GCWMapPolyline) _currentColorPickerColor = HSVColor.fromColor(widget.polyline.color);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GCWTextDivider(
-          text: i18n(context, 'coords_openmap_lineeditor_line_color')
-        ),
-        Container(
-          child: HSVPicker(
-            color: _currentColorPickerColor,
-            onChanged: (color) {
-              setState(() {
-                _currentColorPickerColor = color;
+    return Column(children: [
+      GCWTextDivider(text: i18n(context, 'coords_openmap_lineeditor_line_color')),
+      Container(
+        child: HSVPicker(
+          color: _currentColorPickerColor,
+          onChanged: (color) {
+            setState(() {
+              _currentColorPickerColor = color;
 
-                if (widget.polyline is GCWMapPolyline)
-                  widget.polyline.color = _currentColorPickerColor.toColor();
-              });
-            },
-          ),
-          padding: EdgeInsets.only(
-            bottom: 20.0
-          ),
-        )
-      ]
-    );
+              if (widget.polyline is GCWMapPolyline) widget.polyline.color = _currentColorPickerColor.toColor();
+            });
+          },
+        ),
+        padding: EdgeInsets.only(bottom: 20.0),
+      )
+    ]);
   }
 }

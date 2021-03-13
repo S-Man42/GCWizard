@@ -11,8 +11,7 @@ class ThemeColorsLight extends ThemeColors {
 
   @override
   ThemeData base() {
-    if (_base == null)
-      _base = ThemeData.light();
+    if (_base == null) _base = ThemeData.light();
 
     return _base;
   }

@@ -3,9 +3,8 @@ import 'dart:io';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/guballa.de/breaker.dart';
 
-
 /// Basic functions for encoding/decoding substitution ciphers with a given key
-class Key{
+class Key {
   /*
    The first character of the alphabet corresponds to the first character of the
   key, the second character of the alphabet to the second character of the key,
@@ -26,21 +25,18 @@ class Key{
 
   String _alphabet = null;
   String _key = null;
-  Map<String,String> _encode = null;
-  Map<String,String> _decode = null;
+  Map<String, String> _encode = null;
+  Map<String, String> _decode = null;
 
   /// Uses a key and an alphabet for transcoding substitution ciphers.
   /// :param key: The key to use. Must have the same length than alphabet. (It is case insensitive.)
   /// :param str alphabet: The set of characters which define the alphabet.
   ///         Characters which are not in the alphabet will be ignored when transcoding.
-  Key (String key, {String alphabet=DEFAULT_ALPHABET}) {
-
+  Key(String key, {String alphabet = DEFAULT_ALPHABET}) {
     this._alphabet = check_alphabet(alphabet);
-    if (this._alphabet == null)
-        return;
+    if (this._alphabet == null) return;
     this._key = check_key(key, this._alphabet);
-    if (this._key == null)
-        return;
+    if (this._key == null) return;
 
     var camel_key = (key.toUpperCase() + key.toLowerCase()).split('').toList();
     var camel_alphabet = (alphabet.toUpperCase() + alphabet.toLowerCase()).split('').toList();
@@ -53,8 +49,7 @@ class Key{
   /// return: the alphabet in normalized form (i.e., in lower cases)
   ///      null -> alphabet is invalid
   static String check_alphabet(String alphabet) {
-    if ((alphabet == null) || (alphabet == ''))
-      return null;
+    if ((alphabet == null) || (alphabet == '')) return null;
     alphabet = alphabet.toLowerCase();
     if (alphabet.length != _set(alphabet).length)
       // alphabet characters must be unique
@@ -67,10 +62,8 @@ class Key{
   /// :param alphabet: the alphabet against which the key is validated
   /// return: the validated key in normalized form (i.e., in lower cases)
   ///      null -> key is invalid
-  static String check_key(String key, String alphabet){
-
-    if ((key == null) || (key == ''))
-      return null;
+  static String check_key(String key, String alphabet) {
+    if ((key == null) || (key == '')) return null;
     key = key.toLowerCase();
     if (key.length != _set(key).length)
       // key characters must be unique
@@ -81,7 +74,7 @@ class Key{
       return null;
 
     bool result = true;
-    key.split('').map((char) =>  result & alphabet.contains(char));
+    key.split('').map((char) => result & alphabet.contains(char));
     if (!result)
       // key must use the same set of characters than the alphabet
       return null;
@@ -92,14 +85,14 @@ class Key{
   /// Decodes a ciphertext with the given key into the plaintext
   /// param ciphertext: the ciphertext to decode with the given key
   /// :return: the resulting plaintext
-  String decode(String ciphertext){
+  String decode(String ciphertext) {
     return substitution(ciphertext, this._decode);
   }
 
   /// Encodes a plaintext with the given key into the ciphertext
   /// :param plaintext: the plaintext to encode with the given key
   /// :return: the resulting ciphertext
-  String encode(String plaintext){
+  String encode(String plaintext) {
     return substitution(plaintext, this._encode);
   }
 
@@ -107,28 +100,23 @@ class Key{
   /// :param ciphertext_fh: the file handle the ciphertext is read from.
   /// :param plaintext_fh: the file handle the resulting plaintext is written to.
   decode_file(String ciphertext, File plaintext_fh) {
-    ciphertext
-      .split('\n')
-      .forEach((line) {
-        plaintext_fh.writeAsString(this.decode(line));
-      });
+    ciphertext.split('\n').forEach((line) {
+      plaintext_fh.writeAsString(this.decode(line));
+    });
   }
 
   /// Encodes plaintext read from the given file handle
   /// :param plaintext_fh: the file handle the plaintext is read from.
   /// :param ciphertext_fh: the file handle the resulting ciphertext is written to.
   encode_file(String plaintext, File ciphertext_fh) {
-    plaintext
-      .split('\n')
-      .forEach((line) {
-        ciphertext_fh.writeAsString(this.encode(line));
-      });
+    plaintext.split('\n').forEach((line) {
+      ciphertext_fh.writeAsString(this.encode(line));
+    });
   }
 
-  static Map<String,String> _maketrans(List<String> keyList, List<String> valueList) {
+  static Map<String, String> _maketrans(List<String> keyList, List<String> valueList) {
     Map<String, String> map = {};
-    for (int i = keyList.length -1; i >= 0; i--)
-      map.putIfAbsent(keyList[i], () => valueList[i]);
+    for (int i = keyList.length - 1; i >= 0; i--) map.putIfAbsent(keyList[i], () => valueList[i]);
 
     return map;
   }

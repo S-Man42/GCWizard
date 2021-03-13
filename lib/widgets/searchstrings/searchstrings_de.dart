@@ -2,7 +2,8 @@ final SEARCHSTRING_DE_ABADDON = '';
 final SEARCHSTRING_DE_ABOUT = 'ueber';
 final SEARCHSTRING_DE_ADFGVX = '';
 final SEARCHSTRING_DE_AFFINE = '';
-final SEARCHSTRING_DE_ALPHABETVALUES = 'bww buchstabenwerte quersummen alphanumerisch produkt alternierend buchstabenwortwerte kyrillisch russisch griechisch spanisch deutsch polnisch';
+final SEARCHSTRING_DE_ALPHABETVALUES =
+    'bww buchstabenwerte quersummen alphanumerisch produkt alternierend buchstabenwortwerte kyrillisch russisch griechisch spanisch deutsch polnisch';
 final SEARCHSTRING_DE_AMSCO = '';
 final SEARCHSTRING_DE_APPARENTTEMPERATURE = 'gefuehlte temperatur';
 final SEARCHSTRING_DE_APPARENTTEMPERATURE_HEATINDEX = 'luftfeuchtigkeit hitzeindex';
@@ -12,12 +13,16 @@ final SEARCHSTRING_DE_APPARENTTEMPERATURE_WINDCHILL = 'windgeschwindigkeit';
 final SEARCHSTRING_DE_ASCIIVALUES = '';
 final SEARCHSTRING_DE_ASTRONOMY = 'astronomie sterne planeten astronomisches';
 final SEARCHSTRING_DE_ASTRONOMY_MOON = 'mond';
-final SEARCHSTRING_DE_ASTRONOMY_MOONPOSITION = 'ekliptischebreite mondphase mondalter mondzeichen beleuchtung beleuchtet';
-final SEARCHSTRING_DE_ASTRONOMY_POSITION = 'astrologischeszeichen astrologie sternzeichen tierkreiszeichen deklination durchmesser hoehe position stand distanz beobachter entfernung sternzeit ekliptischelaenge julianischesdatum';
+final SEARCHSTRING_DE_ASTRONOMY_MOONPOSITION =
+    'ekliptischebreite mondphase mondalter mondzeichen beleuchtung beleuchtet';
+final SEARCHSTRING_DE_ASTRONOMY_POSITION =
+    'astrologischeszeichen astrologie sternzeichen tierkreiszeichen deklination durchmesser hoehe position stand distanz beobachter entfernung sternzeit ekliptischelaenge julianischesdatum';
 final SEARCHSTRING_DE_ASTRONOMY_RISESET = 'aufgang aufgaenge untergang untergaenge mittag kulmination';
-final SEARCHSTRING_DE_ASTRONOMY_SEASONS = 'jahreszeiten herbst fruehling sommer winter sonnennaechster sonnenaehester sonnennahster sonnennahester sonnenfernster';
+final SEARCHSTRING_DE_ASTRONOMY_SEASONS =
+    'jahreszeiten herbst fruehling sommer winter sonnennaechster sonnenaehester sonnennahster sonnennahester sonnenfernster';
 final SEARCHSTRING_DE_ASTRONOMY_SUN = 'sonne';
-final SEARCHSTRING_DE_ASTRONOMY_SUNRISESET = 'morgendaemmerung abenddaemmerung zivile buergerliche astronomische nautische';
+final SEARCHSTRING_DE_ASTRONOMY_SUNRISESET =
+    'morgendaemmerung abenddaemmerung zivile buergerliche astronomische nautische';
 final SEARCHSTRING_DE_ATBASH = 'hebraeisches umkehrungen  rueckwaerts umkehren';
 final SEARCHSTRING_DE_BABYLONIAN_NUMERALS = 'babylonisches  zahlen ziffern keilschrift';
 final SEARCHSTRING_DE_BACON = '';
@@ -61,7 +66,8 @@ final SEARCHSTRING_DE_CHRONOGRAM = 'chronogramm';
 final SEARCHSTRING_DE_CIPHERWHEEL = 'dechiffrierscheiben drehscheiben';
 final SEARCHSTRING_DE_CISTERCIAN = 'zisterzienser moenche zahlen moenchsorden';
 final SEARCHSTRING_DE_CODEBREAKER = 'loeser universal universeller codeknacker codebrecher';
-final SEARCHSTRING_DE_COLORPICKER = 'farben luminanz hellwert farbwert helligkeit saettigung chrominanz rot blau schwarz gelb';
+final SEARCHSTRING_DE_COLORPICKER =
+    'farben luminanz hellwert farbwert helligkeit saettigung chrominanz rot blau schwarz gelb';
 final SEARCHSTRING_DE_COMBINATORICS = 'mathematik kombinatorik';
 final SEARCHSTRING_DE_COMBINATORICS_COMBINATION = 'kombinationen untergruppen';
 final SEARCHSTRING_DE_COMBINATORICS_PERMUTATION = 'permutationen anordnungen reihenfolgen';
@@ -80,27 +86,34 @@ final SEARCHSTRING_DE_COORDINATES_EQUILATERALTRIANGLE = 'gleichseitiges dreiecke
 final SEARCHSTRING_DE_COORDINATES_FORMATCONVERTER = 'koordinatenformatkonverter formate konvertieren umwandeln';
 final SEARCHSTRING_DE_COORDINATES_INTERSECTBEARING = 'winkel peilung';
 final SEARCHSTRING_DE_COORDINATES_INTERSECTFOURPOINTS = 'punkte vier linien kreuzung richtungen';
-final SEARCHSTRING_DE_COORDINATES_INTERSECTGEODETICANDCIRCLE = 'distanzen entfernungen abstand abstaende winkel kreisbogen kreise';
-final SEARCHSTRING_DE_COORDINATES_INTERSECTION = 'zwei richtungen vorwaertseinschnitt vorwaertseinschneiden vorwaertsschnitt vorwaertsschneiden';
+final SEARCHSTRING_DE_COORDINATES_INTERSECTGEODETICANDCIRCLE =
+    'distanzen entfernungen abstand abstaende winkel kreisbogen kreise';
+final SEARCHSTRING_DE_COORDINATES_INTERSECTION =
+    'zwei richtungen vorwaertseinschnitt vorwaertseinschneiden vorwaertsschnitt vorwaertsschneiden';
 final SEARCHSTRING_DE_COORDINATES_INTERSECTTHREECIRCLES = 'drei kreise distanzen entfernungen abstand abstaende';
 final SEARCHSTRING_DE_COORDINATES_INTERSECTTWOCIRCLES = 'zwei kreise distanzen entfernungen abstand abstaende';
 final SEARCHSTRING_DE_COORDINATES_MAPVIEW = 'kartenansicht freiekarte messen messungen';
-final SEARCHSTRING_DE_COORDINATES_RESECTION = 'zwei drei winkel richtungen rueckwaertseinschnitt rueckwaertseinschneiden rueckwaertsschnitt rueckwaertsschneiden';
-final SEARCHSTRING_DE_COORDINATES_SEGMENTBEARING = 'unterteilen einteilen teilungen abschnitte gleichmaessig winkelhalbierende winkel peilungen';
+final SEARCHSTRING_DE_COORDINATES_RESECTION =
+    'zwei drei winkel richtungen rueckwaertseinschnitt rueckwaertseinschneiden rueckwaertsschnitt rueckwaertsschneiden';
+final SEARCHSTRING_DE_COORDINATES_SEGMENTBEARING =
+    'unterteilen einteilen teilungen abschnitte gleichmaessig winkelhalbierende winkel peilungen';
 final SEARCHSTRING_DE_COORDINATES_SEGMENTLINE = 'unterteilen einteilen teilungen abschnitte gleichmaessig';
 final SEARCHSTRING_DE_COORDINATES_VARIABLECOORDINATEFORMULAS = 'variable wegpunkte';
-final SEARCHSTRING_DE_COORDINATES_WAYPOINTPROJECTION = 'winkel wegpunktprojektionen wegpunktpeilungen richtungen rueckwaertspeilung';
+final SEARCHSTRING_DE_COORDINATES_WAYPOINTPROJECTION =
+    'winkel wegpunktprojektionen wegpunktpeilungen richtungen rueckwaertspeilung';
 final SEARCHSTRING_DE_CROSSSUMRANGEFREQUENCY = 'frequenzen haeufigkeiten auftreten';
 final SEARCHSTRING_DE_CROSSSUMS = 'iteriert  quersummen produkte alternierend alterniert iterierend';
 final SEARCHSTRING_DE_CROSSUM = '';
 final SEARCHSTRING_DE_CROSSUMRANGE = 'bereich';
-final SEARCHSTRING_DE_CRYPTOGRAPHYSELECTION = 'verschluesselung entschluesselung verschluesseln entschluesseln kryptographie kryptografie codes chiffre';
+final SEARCHSTRING_DE_CRYPTOGRAPHYSELECTION =
+    'verschluesselung entschluesselung verschluesseln entschluesseln kryptographie kryptografie codes chiffre';
 final SEARCHSTRING_DE_DATES = 'datum';
 final SEARCHSTRING_DE_DATES_DAYCALCULATOR = 'tagesrechner tagerechner';
 final SEARCHSTRING_DE_DATES_TIMECALCULATOR = 'uhrzeit uhrzeitrechner stunden minuten sekunden';
 final SEARCHSTRING_DE_DATES_WEEKDAY = 'wochentage';
 final SEARCHSTRING_DE_DECABIT = 'impulsraster rundsteuertechnik';
-final SEARCHSTRING_DE_DNA = 'code-sonne codesonne desoxyribonukleinsaeure sequenz nukleotid genetik genetisches dns rns mrns';
+final SEARCHSTRING_DE_DNA =
+    'code-sonne codesonne desoxyribonukleinsaeure sequenz nukleotid genetik genetisches dns rns mrns';
 final SEARCHSTRING_DE_DNAAMINOACIDS = 'aminosaeuren';
 final SEARCHSTRING_DE_DNAAMONOACIDSTABLE = 'aminosaeuren  tabelle';
 final SEARCHSTRING_DE_DNANUCLEICACIDSEQUENCE = 'nukleotidsequenz nukleitide nukleinsaeure basenpaare';
@@ -126,7 +139,8 @@ final SEARCHSTRING_DE_ESOTERIC_WHITESPACELANGUAGE = 'leerzeichen tabulator zeile
 final SEARCHSTRING_DE_FORMULASOLVER = 'formelrechner';
 final SEARCHSTRING_DE_GADE = 'straße';
 final SEARCHSTRING_DE_GAMES = 'spiele';
-final SEARCHSTRING_DE_GAMES_SCRABBLE = 'deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika zahlen ziffern zeichen';
+final SEARCHSTRING_DE_GAMES_SCRABBLE =
+    'deutsch englisch spanisch niederlaendisch franzoesisch frankreich spanien niederlande deutschland nordamerika zahlen ziffern zeichen';
 final SEARCHSTRING_DE_GAMES_SUDOKUSOLVER = 'gitter';
 final SEARCHSTRING_DE_GCCODE = 'hexadezimal';
 final SEARCHSTRING_DE_GLAGOLITIC = 'glagolitisch slawische';
@@ -189,7 +203,7 @@ final SEARCHSTRING_DE_MAYANUMBERS = 'zahlen ziffern';
 final SEARCHSTRING_DE_MEXICANARMYCIPHERWHEEL = 'mexiko mexanischearmee';
 final SEARCHSTRING_DE_MORSE = 'punkte striche';
 final SEARCHSTRING_DE_MULTIDECODER = 'universal universeller multiloeser';
-final SEARCHSTRING_DE_NUMBERSEQUENCE= 'zahlenfolgen zahlenreihen';
+final SEARCHSTRING_DE_NUMBERSEQUENCE = 'zahlenfolgen zahlenreihen';
 final SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION = '';
 final SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION = '';
 final SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER = 'pruefen';
@@ -259,7 +273,8 @@ final SEARCHSTRING_DE_RSA_DCHECKER = 'testen pruefen';
 final SEARCHSTRING_DE_RSA_ECHECKER = 'testen pruefen  ';
 final SEARCHSTRING_DE_RSA_NCALCULATOR = 'berechnen';
 final SEARCHSTRING_DE_RSA_PHICALCULATOR = 'berechnen';
-final SEARCHSTRING_DE_SCIENCEANDTECHNOLOGYSELECTION = 'naturwissenschaften technologien technik mathematik  physik  chemie  elektronik biologie';
+final SEARCHSTRING_DE_SCIENCEANDTECHNOLOGYSELECTION =
+    'naturwissenschaften technologien technik mathematik  physik  chemie  elektronik biologie';
 final SEARCHSTRING_DE_SEGMENTS = 'segmentanzeige segmente';
 final SEARCHSTRING_DE_SEGMENTS_FOURTEEN = 'vierzehn';
 final SEARCHSTRING_DE_SEGMENTS_SEVEN = 'sieben';
@@ -314,7 +329,8 @@ final SEARCHSTRING_DE_SYMBOL_DNI_NUMBERS = 'zahlen ziffern';
 final SEARCHSTRING_DE_SYMBOL_DOREMI = 'notesystem musiktheorie tonstufen musik';
 final SEARCHSTRING_DE_SYMBOL_DRAGON_LANGUAGE = 'drachenschrift';
 final SEARCHSTRING_DE_SYMBOL_DRAGON_RUNES = 'drachenrunen d-runen';
-final SEARCHSTRING_DE_SYMBOL_EASTERN_ARABIC_INDIAN_NUMERALS = 'zahlen ziffern oestliche ostarabische ostarabisch-indische arabische indische persisch';
+final SEARCHSTRING_DE_SYMBOL_EASTERN_ARABIC_INDIAN_NUMERALS =
+    'zahlen ziffern oestliche ostarabische ostarabisch-indische arabische indische persisch';
 final SEARCHSTRING_DE_SYMBOL_EGYPTIAN_NUMERALS = 'zahlen ziffern altaegyptische hieroglyphen';
 final SEARCHSTRING_DE_SYMBOL_ENOCHIAN = 'henochisch magische sprache magie';
 final SEARCHSTRING_DE_SYMBOL_EURYTHMY = 'anthroposophisches eurythmie waldorfschulen rudolfsteiner tanzdeinennamen';
@@ -335,7 +351,8 @@ final SEARCHSTRING_DE_SYMBOL_GARGISH = 'gargisch';
 final SEARCHSTRING_DE_SYMBOL_GENREICH = 'genreich';
 final SEARCHSTRING_DE_SYMBOL_GNOMMISH = 'gnomisch';
 final SEARCHSTRING_DE_SYMBOL_GREEK_NUMERALS = 'zahlen ziffern griechisches zahlschrift';
-final SEARCHSTRING_DE_SYMBOL_HAZARD = 'gefahren gebotsschilder gebotszeichen verbotsschilder verbotszeichen warnschilder warnzeichen';
+final SEARCHSTRING_DE_SYMBOL_HAZARD =
+    'gefahren gebotsschilder gebotszeichen verbotsschilder verbotszeichen warnschilder warnzeichen';
 final SEARCHSTRING_DE_SYMBOL_HEBREW = 'hebraeisches juden';
 final SEARCHSTRING_DE_SYMBOL_HEBREW_V2 = 'hebraeisches juden';
 final SEARCHSTRING_DE_SYMBOL_HEXAHUE = 'farben farbcodes';
@@ -373,12 +390,16 @@ final SEARCHSTRING_DE_SYMBOL_MINIMOYS = '';
 final SEARCHSTRING_DE_SYMBOL_MOON = 'mondalphabet';
 final SEARCHSTRING_DE_SYMBOL_MURRAY = 'klappentelegraph klappentelegraf';
 final SEARCHSTRING_DE_SYMBOL_MURRAYBAUDOT = '';
-final SEARCHSTRING_DE_SYMBOL_MUSICA = 'noten instrumente piano klavier schlagzeug floete oboe bratsche trompete gitarre posaune geige fluegel';
+final SEARCHSTRING_DE_SYMBOL_MUSICA =
+    'noten instrumente piano klavier schlagzeug floete oboe bratsche trompete gitarre posaune geige fluegel';
 final SEARCHSTRING_DE_SYMBOL_NEW_ZEALAND_SIGN_LANGUAGE = 'neuseeland neuseelaendisches';
 final SEARCHSTRING_DE_SYMBOL_NOTES_DOREMI = 'musik notensystem';
-final SEARCHSTRING_DE_SYMBOL_NOTES_NAMES_ALTOCLEF = 'musik notennamen altschluessel tonleiter bassvorzeichen kreuzvorzeichen';
-final SEARCHSTRING_DE_SYMBOL_NOTES_NAMES_BASSCLEF = 'musik notennamen bassschluessel tonleiter bassvorzeichen kreuzvorzeichen';
-final SEARCHSTRING_DE_SYMBOL_NOTES_NAMES_TREBLECLEF = 'musik notennamen violinschluessel tonleiter bassvorzeichen kreuzvorzeichen';
+final SEARCHSTRING_DE_SYMBOL_NOTES_NAMES_ALTOCLEF =
+    'musik notennamen altschluessel tonleiter bassvorzeichen kreuzvorzeichen';
+final SEARCHSTRING_DE_SYMBOL_NOTES_NAMES_BASSCLEF =
+    'musik notennamen bassschluessel tonleiter bassvorzeichen kreuzvorzeichen';
+final SEARCHSTRING_DE_SYMBOL_NOTES_NAMES_TREBLECLEF =
+    'musik notennamen violinschluessel tonleiter bassvorzeichen kreuzvorzeichen';
 final SEARCHSTRING_DE_SYMBOL_NOTES_NOTEVALUES = 'musik notenwerte ';
 final SEARCHSTRING_DE_SYMBOL_NOTES_RESTVALUES = 'musik  pausenwerte';
 final SEARCHSTRING_DE_SYMBOL_OGHAM = 'irland irisch runen';
@@ -395,7 +416,8 @@ final SEARCHSTRING_DE_SYMBOL_PUZZLE = 'puzzles puzzleteile';
 final SEARCHSTRING_DE_SYMBOL_QUADOO = 'blindenschrift punkte taktile reliefschrift';
 final SEARCHSTRING_DE_SYMBOL_REALITY = 'realitaet';
 final SEARCHSTRING_DE_SYMBOL_RED_HERRING = 'roter hering  fische';
-final SEARCHSTRING_DE_SYMBOL_RHESUS_A = 'tintenkleckse farbkleckse farbspritzer blutspritzer blutgruppen  bluttropfen blutstropfen farbtropfen';
+final SEARCHSTRING_DE_SYMBOL_RHESUS_A =
+    'tintenkleckse farbkleckse farbspritzer blutspritzer blutgruppen  bluttropfen blutstropfen farbtropfen';
 final SEARCHSTRING_DE_SYMBOL_RM4SCC = 'australien daenemark oesterreich schweiz holland niederlande singapur england';
 final SEARCHSTRING_DE_SYMBOL_ROMULAN = 'romulaner romulanisch';
 final SEARCHSTRING_DE_SYMBOL_RUNES = 'runen';
@@ -415,7 +437,8 @@ final SEARCHSTRING_DE_SYMBOL_TAMIL_NUMERALS = 'zahlen ziffern indien indisch';
 final SEARCHSTRING_DE_SYMBOL_TEMPLERS = 'tempelritter';
 final SEARCHSTRING_DE_SYMBOL_TENCTONESE = '';
 final SEARCHSTRING_DE_SYMBOL_TENGWAR_BELERIAND = 'derherrderringe elben elbisches mittelerde dritteszeitalter';
-final SEARCHSTRING_DE_SYMBOL_TENGWAR_CLASSIC = 'derherrderringe elben elbisches mittelerde dritteszeitalter klassischer';
+final SEARCHSTRING_DE_SYMBOL_TENGWAR_CLASSIC =
+    'derherrderringe elben elbisches mittelerde dritteszeitalter klassischer';
 final SEARCHSTRING_DE_SYMBOL_TENGWAR_GENERAL = 'derherrderringe elben elbisches mittelerde dritteszeitalter general';
 final SEARCHSTRING_DE_SYMBOL_TERZI = 'alphabet punkte blindenschrift quadrat taktil';
 final SEARCHSTRING_DE_SYMBOL_THEBAN = 'thebanisches hexenalphabet engelsschrift';
@@ -443,7 +466,8 @@ final SEARCHSTRING_DE_TAPCODE = 'klopfcode klopfen';
 final SEARCHSTRING_DE_TAPIR = 'stasi nationale volksarmee';
 final SEARCHSTRING_DE_TOMTOM = '';
 final SEARCHSTRING_DE_TRITHEMIUS = '';
-final SEARCHSTRING_DE_UNITCONVERTER = 'einheiten groessen konvertieren umwandeln umrechnen konvertierer laengen geschwindigkeiten kraft leistung uhrzeiten flaechen volumen dichten gewichte massen badewannen druecke druck winkel temperaturen grad fussballfelder';
+final SEARCHSTRING_DE_UNITCONVERTER =
+    'einheiten groessen konvertieren umwandeln umrechnen konvertierer laengen geschwindigkeiten kraft leistung uhrzeiten flaechen volumen dichten gewichte massen badewannen druecke druck winkel temperaturen grad fussballfelder';
 final SEARCHSTRING_DE_VANITY = 'telefontasten ziffern telefonnummern handy tasten tastatur';
 final SEARCHSTRING_DE_VANITYMULTIPLENUMBERS = '';
 final SEARCHSTRING_DE_VANITYSINGLENUMBERS = '';

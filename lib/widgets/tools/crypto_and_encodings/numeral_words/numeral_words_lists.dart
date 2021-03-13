@@ -56,13 +56,13 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
     numeralWordsOverview = NumWords[_currentLanguage];
 
     return GCWDefaultOutput(
-      child: Column(
-        children: columnedMultiLineOutput(
+        child: Column(
+      children: columnedMultiLineOutput(
           context,
-          numeralWordsOverview.entries.map((entry) {return [entry.value, entry.key];}).toList(),
-          flexValues: [1, 3]
-        ),
-      )
-    );
+          numeralWordsOverview.entries.map((entry) {
+            return [entry.value, entry.key];
+          }).toList(),
+          flexValues: [1, 3]),
+    ));
   }
 }

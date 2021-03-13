@@ -1,4 +1,4 @@
-abstract class Unit{
+abstract class Unit {
   final String name;
   final String symbol;
   final bool isReferenceUnit;

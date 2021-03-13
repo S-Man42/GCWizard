@@ -39,7 +39,7 @@ String latLonToMGRSString(LatLng coord, Ellipsoid ells) {
   return '${mgrs.utmZone.lonZone}${mgrs.utmZone.latZone} ${mgrs.digraph} ${doubleFormat.format(mgrs.easting)} ${doubleFormat.format(mgrs.northing)}';
 }
 
-List<List<dynamic>>latitudeBandConstants = [
+List<List<dynamic>> latitudeBandConstants = [
   [2, 1100000.0, -72.0, -80.5, 0.0],
   [3, 2000000.0, -64.0, -72.0, 2000000.0],
   [4, 2800000.0, -56.0, -64.0, 2000000.0],
@@ -48,41 +48,40 @@ List<List<dynamic>>latitudeBandConstants = [
   [7, 5500000.0, -32.0, -40.0, 4000000.0],
   [9, 6400000.0, -24.0, -32.0, 6000000.0],
   [10, 7300000.0, -16.0, -24.0, 6000000.0],
-  [11,  8200000.0, -8.0, -16.0, 8000000.0],
-  [12,  9100000.0, 0.0, -8.0, 8000000.0],
-  [13,  0.0, 8.0, 0.0, 0.0],
-  [14,  800000.0, 16.0, 8.0, 0.0],
-  [16,  1700000.0, 24.0, 16.0, 0.0],
-  [17,  2600000.0, 32.0, 24.0, 2000000.0],
-  [18,  3500000.0, 40.0, 32.0, 2000000.0],
-  [19,  4400000.0, 48.0, 40.0, 4000000.0],
-  [20,  5300000.0, 56.0, 48.0, 4000000.0],
-  [21,  6200000.0, 64.0, 56.0, 6000000.0],
-  [22,  7000000.0, 72.0, 64.0, 6000000.0],
-  [23,  7900000.0, 84.5, 72.0, 6000000.0]
+  [11, 8200000.0, -8.0, -16.0, 8000000.0],
+  [12, 9100000.0, 0.0, -8.0, 8000000.0],
+  [13, 0.0, 8.0, 0.0, 0.0],
+  [14, 800000.0, 16.0, 8.0, 0.0],
+  [16, 1700000.0, 24.0, 16.0, 0.0],
+  [17, 2600000.0, 32.0, 24.0, 2000000.0],
+  [18, 3500000.0, 40.0, 32.0, 2000000.0],
+  [19, 4400000.0, 48.0, 40.0, 4000000.0],
+  [20, 5300000.0, 56.0, 48.0, 4000000.0],
+  [21, 6200000.0, 64.0, 56.0, 6000000.0],
+  [22, 7000000.0, 72.0, 64.0, 6000000.0],
+  [23, 7900000.0, 84.5, 72.0, 6000000.0]
 ];
 
 // ported from NASA Worldwind
 UTMREF convertMGRSToUTM(MGRS mgrs) {
   String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  
-  double grid_easting;        /* Easting for 100,000 meter grid square      */
-  double grid_northing;       /* Northing for 100,000 meter grid square     */
+
+  double grid_easting; /* Easting for 100,000 meter grid square      */
+  double grid_northing; /* Northing for 100,000 meter grid square     */
 
   double easting = 0;
   double northing = 0;
 
-  int set_number;    /* Set number (1-6) based on UTM zone number */
+  int set_number; /* Set number (1-6) based on UTM zone number */
 
   set_number = mgrs.utmZone.lonZone % 6;
 
-  if (set_number == 0)
-    set_number = 6;
+  if (set_number == 0) set_number = 6;
 
   var ltr2_low_value;
   if ((set_number == 1) || (set_number == 4)) {
     ltr2_low_value = alphabet.indexOf('A');
-  } else if ((set_number == 2) || (set_number == 5))  {
+  } else if ((set_number == 2) || (set_number == 5)) {
     ltr2_low_value = alphabet.indexOf('J');
   } else if ((set_number == 3) || (set_number == 6)) {
     ltr2_low_value = alphabet.indexOf('S');
@@ -103,14 +102,11 @@ UTMREF convertMGRSToUTM(MGRS mgrs) {
   if ((ltr2_low_value == alphabet.indexOf('J')) && (squareLetter1 > alphabet.indexOf('O')))
     grid_easting = grid_easting - 100000;
 
-  if (squareLetter2 > alphabet.indexOf('O'))
-    grid_northing = grid_northing - 100000;
+  if (squareLetter2 > alphabet.indexOf('O')) grid_northing = grid_northing - 100000;
 
-  if (squareLetter2 > alphabet.indexOf('I'))
-    grid_northing = grid_northing - 100000;
+  if (squareLetter2 > alphabet.indexOf('I')) grid_northing = grid_northing - 100000;
 
-  if (grid_northing >= 2000000)
-    grid_northing = grid_northing - 2000000;
+  if (grid_northing >= 2000000) grid_northing = grid_northing - 2000000;
 
   var letter = alphabet.indexOf(mgrs.utmZone.latZone);
   var min_northing;
@@ -119,25 +115,21 @@ UTMREF convertMGRSToUTM(MGRS mgrs) {
   if ((letter >= alphabet.indexOf('C')) && (letter <= alphabet.indexOf('H'))) {
     min_northing = latitudeBandConstants[letter - 2][1];
     northing_offset = latitudeBandConstants[letter - 2][4];
-  }
-  else if ((letter >= alphabet.indexOf('J')) && (letter <= alphabet.indexOf('N'))) {
+  } else if ((letter >= alphabet.indexOf('J')) && (letter <= alphabet.indexOf('N'))) {
     min_northing = latitudeBandConstants[letter - 3][1];
     northing_offset = latitudeBandConstants[letter - 3][4];
-  }
-  else if ((letter >= alphabet.indexOf('P')) && (letter <= alphabet.indexOf('X'))) {
+  } else if ((letter >= alphabet.indexOf('P')) && (letter <= alphabet.indexOf('X'))) {
     min_northing = latitudeBandConstants[letter - 4][1];
     northing_offset = latitudeBandConstants[letter - 4][4];
   }
 
   grid_northing = grid_northing - false_northing;
 
-  if (grid_northing < 0.0)
-    grid_northing += 2000000;
+  if (grid_northing < 0.0) grid_northing += 2000000;
 
   grid_northing += northing_offset;
 
-  if (grid_northing < min_northing)
-    grid_northing += 2000000;
+  if (grid_northing < min_northing) grid_northing += 2000000;
 
   easting = grid_easting + mgrs.easting;
   northing = grid_northing + mgrs.northing;
@@ -175,26 +167,22 @@ LatLng parseMGRS(String input, Ellipsoid ells) {
       _lonZoneString = match.group(1);
       _latZone = match.group(2);
       _digraph = match.group(3);
-      _eastingString = match.group(4).substring(0,5);
+      _eastingString = match.group(4).substring(0, 5);
       _northingString = match.group(4).substring(5);
     }
   }
 
-  if (matches.length == 0)
-    return null;
+  if (matches.length == 0) return null;
 
   var _lonZone = int.tryParse(_lonZoneString);
-  if (_lonZone == null)
-    return null;
+  if (_lonZone == null) return null;
 
   var _easting = double.tryParse(_eastingString);
-  if (_easting == null)
-    return null;
+  if (_easting == null) return null;
   _easting = fillUpNumber(_easting, _eastingString, 5);
 
   var _northing = double.tryParse(_northingString);
-  if (_northing == null)
-    return null;
+  if (_northing == null) return null;
   _northing = fillUpNumber(_northing, _northingString, 5);
 
   var zone = UTMZone(_lonZone, _lonZone, _latZone);
@@ -208,12 +196,11 @@ LatLng parseMGRS(String input, Ellipsoid ells) {
 // Values below 10,000 must be filled with zeros accordingly so that the two numbers each 5 digits long.
 // Values with a point are not changed
 // discussed with Mark on 3.2.2021
-double fillUpNumber(double number, String text, int length){
-
+double fillUpNumber(double number, String text, int length) {
   if (text.contains('.'))
     return number;
   else {
-    text = text.padRight( length,'0');
+    text = text.padRight(length, '0');
     return double.parse(text);
   }
 }

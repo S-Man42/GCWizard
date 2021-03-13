@@ -22,10 +22,8 @@ class TapirState extends State<Tapir> {
 
   var _currentOneTimePad = '';
 
-  var _maskFormatter = WrapperForMaskTextInputFormatter(
-    mask: '##### ' * 100000 + '#####',
-    filter: {"#": RegExp(r'[0-9]')}
-  );
+  var _maskFormatter =
+      WrapperForMaskTextInputFormatter(mask: '##### ' * 100000 + '#####', filter: {"#": RegExp(r'[0-9]')});
 
   @override
   void initState() {
@@ -73,19 +71,17 @@ class TapirState extends State<Tapir> {
           },
         ),
         _currentOneTimePadMode
-          ? GCWTextField(
-              inputFormatters: [_maskFormatter],
-              hintText: '12345 67890 12...',
-              onChanged: (value) {
-                setState(() {
-                  _currentOneTimePad = value;
-                });
-              },
-            )
-          : Container(),
-        GCWDefaultOutput(
-          child: _buildOutput()
-        ),
+            ? GCWTextField(
+                inputFormatters: [_maskFormatter],
+                hintText: '12345 67890 12...',
+                onChanged: (value) {
+                  setState(() {
+                    _currentOneTimePad = value;
+                  });
+                },
+              )
+            : Container(),
+        GCWDefaultOutput(child: _buildOutput()),
       ],
     );
   }

@@ -10,9 +10,7 @@ import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 
-
 class Malbolge extends StatefulWidget {
-
   @override
   MalbolgeState createState() => MalbolgeState();
 }
@@ -30,7 +28,7 @@ class MalbolgeState extends State<Malbolge> {
 
   malbolgeOutput output = malbolgeOutput([], [], []);
 
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;    // interpret
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.left; // interpret
 
   @override
   void initState() {
@@ -64,49 +62,50 @@ class MalbolgeState extends State<Malbolge> {
         ),
         _currentMode == GCWSwitchPosition.right // generate malbolge-programm
             ? Column(
-          children: <Widget>[
-            GCWTextField(
-              controller: _outputController,
-              hintText: i18n(context, 'malbolge_hint_output'),
-              onChanged: (text) {
-                setState(() {
-                  _currentOutput = text;
-                });
-              },
-            ),
-          ],
-        )
-            : Column( // interpret malbolge-programm
-          children: <Widget>[
-            GCWOnOffSwitch(
-              title:i18n(context, 'malbolge_mode_interpret_strict'),
-              value: _currentStrict,
-              onChanged: (value) {
-                setState(() {
-                  _currentStrict = value;
-                });
-              },
-            ),
-            GCWTextField(
-              controller: _programmController,
-              hintText: i18n(context, 'malbolge_hint_code'),
-              onChanged: (text) {
-                setState(() {
-                  _currentProgramm = text;
-                });
-              },
-            ),
-            GCWTextField(
-              controller: _inputController,
-              hintText: i18n(context, 'malbolge_hint_input'),
-              onChanged: (text) {
-                setState(() {
-                  _currentInput = text;
-                });
-              },
-            ),
-          ],
-        ),
+                children: <Widget>[
+                  GCWTextField(
+                    controller: _outputController,
+                    hintText: i18n(context, 'malbolge_hint_output'),
+                    onChanged: (text) {
+                      setState(() {
+                        _currentOutput = text;
+                      });
+                    },
+                  ),
+                ],
+              )
+            : Column(
+                // interpret malbolge-programm
+                children: <Widget>[
+                  GCWOnOffSwitch(
+                    title: i18n(context, 'malbolge_mode_interpret_strict'),
+                    value: _currentStrict,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentStrict = value;
+                      });
+                    },
+                  ),
+                  GCWTextField(
+                    controller: _programmController,
+                    hintText: i18n(context, 'malbolge_hint_code'),
+                    onChanged: (text) {
+                      setState(() {
+                        _currentProgramm = text;
+                      });
+                    },
+                  ),
+                  GCWTextField(
+                    controller: _inputController,
+                    hintText: i18n(context, 'malbolge_hint_input'),
+                    onChanged: (text) {
+                      setState(() {
+                        _currentInput = text;
+                      });
+                    },
+                  ),
+                ],
+              ),
         _buildOutput(context)
       ],
     );
@@ -115,10 +114,10 @@ class MalbolgeState extends State<Malbolge> {
   Widget _buildOutput(BuildContext context) {
     String _outputData = '';
 
-    if (_currentMode == GCWSwitchPosition.left) { // interpret malbolge
+    if (_currentMode == GCWSwitchPosition.left) {
+      // interpret malbolge
       output = interpretMalbolge(_currentProgramm, _currentInput, _currentStrict);
-    }
-    else {
+    } else {
       _currentDebug == false;
       output = generateMalbolge(_currentOutput);
     }
@@ -134,90 +133,77 @@ class MalbolgeState extends State<Malbolge> {
           ),
         ),
         _currentMode == GCWSwitchPosition.right // generate malbolge-programm
-          ? GCWOutput(
-              title: i18n(context, 'malbolge_normalize'),
-              child: GCWOutputText(
-                text: output.assembler.join(''),
-                isMonotype: true,
-              ),
-            )
-          : Column(
-              children: <Widget>[
-                GCWOnOffSwitch(
-                  title:i18n(context, 'malbolge_debug'),
-                  value: _currentDebug,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentDebug = value;
-                    });
-                  },
+            ? GCWOutput(
+                title: i18n(context, 'malbolge_normalize'),
+                child: GCWOutputText(
+                  text: output.assembler.join(''),
+                  isMonotype: true,
                 ),
-                if (_currentDebug)
-                  Column(
-                    children: <Widget>[
-                      Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                                flex: 3,
-                                child: Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Container(
-                                    child: Column(
-                                      children: <Widget>[
-                                        GCWTextDivider(
-                                            text: i18n(context, 'malbolge_hint_code_assembler')
-                                        ),
-                                        GCWOutputText(
-                                          text: output.assembler.join('\n'),
-                                          isMonotype: true,
-                                        ),
-                                      ],
+              )
+            : Column(
+                children: <Widget>[
+                  GCWOnOffSwitch(
+                    title: i18n(context, 'malbolge_debug'),
+                    value: _currentDebug,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentDebug = value;
+                      });
+                    },
+                  ),
+                  if (_currentDebug)
+                    Column(children: <Widget>[
+                      Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                        Expanded(
+                            flex: 3,
+                            child: Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    GCWTextDivider(text: i18n(context, 'malbolge_hint_code_assembler')),
+                                    GCWOutputText(
+                                      text: output.assembler.join('\n'),
+                                      isMonotype: true,
                                     ),
-                                    padding: EdgeInsets.only(right: DEFAULT_MARGIN),
-                                  ),
-                                )
-                            ),
-                            Expanded(
-                                flex: 5,
-                                child: Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Container(
-                                    child: Column(
-                                      children: <Widget>[
-                                        GCWTextDivider(
-                                            text: i18n(context, 'malbolge_hint_code_mnemonic')
-                                        ),
-                                        GCWOutputText(
-                                          text: output.mnemonic.join('\n'),
-                                          isMonotype: true,
-                                        ),
-                                      ],
+                                  ],
+                                ),
+                                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                              ),
+                            )),
+                        Expanded(
+                            flex: 5,
+                            child: Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    GCWTextDivider(text: i18n(context, 'malbolge_hint_code_mnemonic')),
+                                    GCWOutputText(
+                                      text: output.mnemonic.join('\n'),
+                                      isMonotype: true,
                                     ),
-                                    padding: EdgeInsets.only(left: DEFAULT_MARGIN),
-                                  ),
-                                )
-                            ),
-                          ]
-                      ),
-                    ]
-                )
-              ],
-            )
+                                  ],
+                                ),
+                                padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+                              ),
+                            )),
+                      ]),
+                    ])
+                ],
+              )
       ],
     );
   }
 
-  String buildOutputText(malbolgeOutput outputList){
+  String buildOutputText(malbolgeOutput outputList) {
     String output = '';
     outputList.output.forEach((element) {
-      if (element != null)
-        if (element.startsWith('malbolge_')) {
-          output = output + i18n(context, element) + '\n';
-        } else
-          output = output + element + '\n';
+      if (element != null) if (element.startsWith('malbolge_')) {
+        output = output + i18n(context, element) + '\n';
+      } else
+        output = output + element + '\n';
     });
     return output;
   }
-
 }

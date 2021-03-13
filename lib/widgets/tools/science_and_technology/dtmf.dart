@@ -30,10 +30,8 @@ class DTMFState extends State<DTMF> {
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  var _maskInputFormatter = WrapperForMaskTextInputFormatter(
-    mask: '#' * 10000,
-    filter: {"#": RegExp(r'[0-9\*\#a-dA-D]')}
-  );
+  var _maskInputFormatter =
+      WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[0-9\*\#a-dA-D]')});
 
   @override
   void initState() {
@@ -62,21 +60,21 @@ class DTMFState extends State<DTMF> {
           },
         ),
         _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              controller: _encodeController,
-              inputFormatters: [_maskInputFormatter],
-              onChanged: (text) {
-                setState(() {
-                  _currentEncodeInput = text;
-                });
-              },
-            )
-          : Container(),
+            ? GCWTextField(
+                controller: _encodeController,
+                inputFormatters: [_maskInputFormatter],
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
+            : Container(),
         _currentMode == GCWSwitchPosition.right
-          ? Row(
-              children: [
-                Expanded(
-                  child: Container(
+            ? Row(
+                children: [
+                  Expanded(
+                      child: Container(
                     child: GCWDropDownButton(
                       value: _currentDecryptLowFrequency,
                       items: DTMF_FREQUENCIES_LOW.map((frequency) {
@@ -92,10 +90,9 @@ class DTMFState extends State<DTMF> {
                       },
                     ),
                     padding: EdgeInsets.only(right: DEFAULT_MARGIN),
-                  )
-                ),
-                Expanded(
-                  child: Container(
+                  )),
+                  Expanded(
+                      child: Container(
                     child: GCWDropDownButton(
                       value: _currentDecryptHighFrequency,
                       items: DTMF_FREQUENCIES_HIGH.map((frequency) {
@@ -110,42 +107,35 @@ class DTMFState extends State<DTMF> {
                         });
                       },
                     ),
-                    padding: EdgeInsets.only(
-                      left: DEFAULT_MARGIN,
-                      right: DEFAULT_MARGIN
-                    ),
+                    padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+                  )),
+                  GCWIconButton(
+                    iconData: Icons.add,
+                    onPressed: () {
+                      setState(() {
+                        var input = ' [$_currentDecryptLowFrequency, $_currentDecryptHighFrequency] ';
+                        _currentDecodeInput = textControllerInsertText(input, _currentDecodeInput, _decodeController);
+                      });
+                    },
                   )
-                ),
-                GCWIconButton(
-                  iconData: Icons.add,
-                  onPressed: () {
-                    setState(() {
-                      var input = ' [$_currentDecryptLowFrequency, $_currentDecryptHighFrequency] ';
-                      _currentDecodeInput = textControllerInsertText(input, _currentDecodeInput, _decodeController);
-                    });
-                  },
-                )
-              ],
-            )
-          : Container(),
+                ],
+              )
+            : Container(),
         _currentMode == GCWSwitchPosition.right
-          ? GCWTextField(
-              controller: _decodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecodeInput = text;
-                });
-              },
-            )
-          : Container(),
-        GCWTextDivider(
-            text: i18n(context, 'common_output')
-        ),
+            ? GCWTextField(
+                controller: _decodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                  });
+                },
+              )
+            : Container(),
+        GCWTextDivider(text: i18n(context, 'common_output')),
         _buildOutput(context)
       ],
     );
   }
-
 
   Widget _buildOutput(BuildContext context) {
     var output = '';

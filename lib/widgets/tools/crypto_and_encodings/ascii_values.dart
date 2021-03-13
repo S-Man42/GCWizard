@@ -46,22 +46,22 @@ class ASCIIValuesState extends State<ASCIIValues> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              controller: _encodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentEncodeInput = text;
-                });
-              },
-            )
-          : GCWIntegerListTextField(
-              controller: _decodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecodeInput = text;
-                });
-              },
-            ),
+            ? GCWTextField(
+                controller: _encodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
+            : GCWIntegerListTextField(
+                controller: _decodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           leftValue: i18n(context, 'asciivalues_mode_left'),
@@ -89,9 +89,7 @@ class ASCIIValuesState extends State<ASCIIValues> {
             });
           },
         ),
-        GCWDefaultOutput(
-          child: _calculateOutput()
-        ),
+        GCWDefaultOutput(child: _calculateOutput()),
         _buildCrossTotals()
       ],
     );
@@ -111,23 +109,16 @@ class ASCIIValuesState extends State<ASCIIValues> {
   }
 
   _buildCrossTotals() {
-    if (!_currentCrosstotalMode)
-      return Container();
+    if (!_currentCrosstotalMode) return Container();
 
     if (_currentMode == GCWSwitchPosition.left) {
-      return GCWCrosstotalOutput(
-        text: _currentEncodeInput,
-        values: _currentEncodeInput.codeUnits
-      );
+      return GCWCrosstotalOutput(text: _currentEncodeInput, values: _currentEncodeInput.codeUnits);
     } else {
       var isBinary = _currentRadix == GCWSwitchPosition.right;
       var sanitizedValues = _sanitizeDecodeInput(isBinary: isBinary);
 
       var text = String.fromCharCodes(sanitizedValues);
-      return GCWCrosstotalOutput(
-        text: text,
-        values: sanitizedValues
-      );
+      return GCWCrosstotalOutput(text: text, values: sanitizedValues);
     }
   }
 

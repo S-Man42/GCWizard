@@ -1,7 +1,6 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
 
 class RussianQuadgrams extends Quadgrams {
-
   RussianQuadgrams() {
     alphabet = 'абвгдежзиклмнопрстуфхцчшэюя';
     nbr_quadgrams = 81030876;
