@@ -16,12 +16,21 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'gcw_exported_file_dialog.dart';
 
 enum TextExportMode {TEXT, QR}
+enum PossibleExportMode {TEXTONLY, QRONLY, BOTH}
 
 class GCWTextExport extends StatefulWidget {
   final String text;
   final Function onModeChanged;
+  final PossibleExportMode possibileExportMode;
+  final TextExportMode initMode;
 
-  const GCWTextExport({Key key, this.text, this.onModeChanged}) : super(key: key);
+  const GCWTextExport({
+    Key key,
+    this.text,
+    this.onModeChanged,
+    this.possibileExportMode = PossibleExportMode.BOTH,
+    this.initMode = TextExportMode.QR
+  }) : super(key: key);
 
   @override
   GCWTextExportState createState() => GCWTextExportState();
@@ -38,6 +47,7 @@ class GCWTextExportState extends State<GCWTextExport> {
     super.initState();
 
     _currentExportText = widget.text ?? '';
+    _currentMode = widget.initMode;
     _textExportController = TextEditingController(text: _currentExportText);
   }
 
@@ -55,19 +65,21 @@ class GCWTextExportState extends State<GCWTextExport> {
       height: 360,
       child: Column(
         children: <Widget>[
-          GCWTwoOptionsSwitch(
-            leftValue: 'QR',
-            rightValue: i18n(context, 'common_text'),
-            alternativeColor: true,
-            value: _currentMode == TextExportMode.QR ? GCWSwitchPosition.left : GCWSwitchPosition.right,
-            onChanged: (value) {
-              setState(() {
-                _currentMode = value == GCWSwitchPosition.left ? TextExportMode.QR : TextExportMode.TEXT;
-                if (widget.onModeChanged != null)
-                  widget.onModeChanged(_currentMode);
-              });
-            },
-          ),
+          widget.possibileExportMode == PossibleExportMode.BOTH
+            ? GCWTwoOptionsSwitch(
+                leftValue: 'QR',
+                rightValue: i18n(context, 'common_text'),
+                alternativeColor: true,
+                value: _currentMode == TextExportMode.QR ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+                onChanged: (value) {
+                  setState(() {
+                    _currentMode = value == GCWSwitchPosition.left ? TextExportMode.QR : TextExportMode.TEXT;
+                    if (widget.onModeChanged != null)
+                      widget.onModeChanged(_currentMode);
+                  });
+                },
+              )
+            : Container(),
           _currentMode == TextExportMode.QR
             ? QrImage(
                 data: _currentExportText,

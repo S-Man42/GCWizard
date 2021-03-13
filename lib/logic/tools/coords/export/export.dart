@@ -5,20 +5,29 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:latlong/latlong.dart';
 
-Future<Map<String, dynamic>> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines, {bool kmlFormat = false}) async {
-  String xml;
+Future<Map<String, dynamic>> exportCoordinates(String name, List<GCWMapPoint> points, List<GCWMapPolyline> polylines, {bool kmlFormat = false, String json }) async {
+  String data;
+  String extension;
 
-  if ((points == null || points.length == 0) && (polylines == null || polylines.length == 0))
+  if ((points == null || points.length == 0) && (polylines == null || polylines.length == 0) && (json == null))
     return null;
 
-  if (kmlFormat)
-    xml = _KmlWriter().asString(name, points, polylines);
-  else
-    xml = _GpxWriter().asString(name, points, polylines);
+  if ( json != null) {
+    data = json;
+    extension = '.json';
+  }
+  else if (kmlFormat) {
+    data = _KmlWriter().asString(name, points, polylines);
+    extension = '.kml';
+  }
+  else {
+    data = _GpxWriter().asString(name, points, polylines);
+    extension = '.gpx';
+  }
 
   try {
-    var fileName = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '_' + 'coordinates' + (kmlFormat ? '.kml' : '.gpx');
-    return saveStringToFile(xml, fileName,  subDirectory : 'coordinate_export');
+    var fileName = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '_' + 'coordinates' + extension;
+    return saveStringToFile(data, fileName,  subDirectory : 'coordinate_export');
   } on Exception {
     return null;
   }

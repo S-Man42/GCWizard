@@ -102,3 +102,11 @@ void deleteMapPolylineDAO(String polylineUUID, MapViewDAO mapView) {
 
   _saveData();
 }
+
+String jsonMapViewData(MapViewDAO view) {
+  return jsonEncode(view.toMap());
+}
+
+MapViewDAO restoreJsonMapViewData(String view) {
+  return MapViewDAO.fromJson(jsonDecode(view));
+}
