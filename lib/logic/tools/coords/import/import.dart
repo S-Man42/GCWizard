@@ -1,18 +1,19 @@
+import 'dart:io';
 import 'dart:ui';
+import 'package:xml/xml.dart';
+import 'package:latlong/latlong.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as path;
+import 'package:archive/archive_io.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:gc_wizard/persistence/map_view/model.dart';
-import 'package:xml/xml.dart';
-import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
-import 'package:latlong/latlong.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/intersect_lines.dart';
+import 'package:gc_wizard/persistence/map_view/model.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:archive/archive_io.dart';
-import 'package:path/path.dart' as path;
+import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adapter.dart';
 
 Future<MapViewDAO> importCoordinatesFile(String fileName) async {
@@ -33,8 +34,9 @@ Future<MapViewDAO> importCoordinatesFile(String fileName) async {
         InputStream input = new InputStream(bytes.buffer.asByteData());
         // Decode the Zip file
         final archive = ZipDecoder().decodeBuffer(input);
-        archive.map((file) {
-          var xml = file.content;
+        archive.forEach((file) {
+          file.decompress();
+          var xml = String.fromCharCodes(file.content); //file.content.toString();//.readAsStringSync();File.fromRawPath(
           return parseCoordinatesFile(xml, kmlFormat: true);
         });
       });
@@ -58,7 +60,6 @@ class _GpxReader {
   MapViewDAO _parse(XmlDocument xmlDocument) {
     var parent = xmlDocument.getElement('gpx');
     if (parent != null) {
-      var elements = new Map<String, dynamic>();
       var points = <GCWMapPoint>[];
       var lines = <GCWMapPolyline>[];
       
@@ -70,16 +71,14 @@ class _GpxReader {
       parent.findAllElements('trk').forEach((xmlTrk) {
         xmlTrk.findElements('trkseg').forEach((xmlTrkseg) {
           var line = _readLine(xmlTrkseg);
-          if (line?.points != null && line.points.length > 0)
+          if (line?.points != null && line.points.length > 0){
             lines.add(line);
+            points.addAll(line.points);
+          }
         });
       });
 
-      for (int i = lines.length-1; i >= 0; i--) {
-        if (_isClosedLine(lines[i]) && _completeCircle(lines[i], points))
-          lines.removeAt(i);
-      }
-
+      _restoreCircles(points, lines);
       return _convertToMapViewDAO(points, lines);
     };
     return null;
@@ -90,7 +89,7 @@ class _GpxReader {
     var lon = xmlElement.getAttribute('lon');
     if (lat != null && lon != null) {
       // Todo: Format wieder raus
-      var wpt = GCWMapPoint(point : new LatLng(double.tryParse(lat), double.tryParse(lon)), coordinateFormat: {'format' : keyCoordsDMS});
+      var wpt = GCWMapPoint(point : new LatLng(double.tryParse(lat), double.tryParse(lon)), isEditable: true, coordinateFormat: {'format' : keyCoordsDMS});
       wpt.markerText = xmlElement.getElement('desc').innerText;
       return wpt;
     }
@@ -101,12 +100,11 @@ class _GpxReader {
     var line = new GCWMapPolyline(points : <GCWMapPoint>[]);
 
     xmlElement.findAllElements('trkpt').forEach((trkpt) {
-
       var lat = trkpt.getAttribute('lat');
       var lon = trkpt.getAttribute('lon');
       if (lat != null && lon != null) {
         // Todo: Format wieder raus
-        line.points.add(GCWMapPoint(point : new LatLng(double.tryParse(lat), double.tryParse(lon)), coordinateFormat: {'format' : keyCoordsDMS}));
+        line.points.add(GCWMapPoint(point : new LatLng(double.tryParse(lat), double.tryParse(lon)), isEditable: true, coordinateFormat: {'format' : keyCoordsDMS}));
       };
     });
     return line;
@@ -118,49 +116,23 @@ class _KmlReader {
   MapViewDAO _parse(XmlDocument xmlDocument) {
     var parent = xmlDocument.getElement('kml');
     if (parent != null) {
-      var elements = new Map<String, dynamic>();
-      var points = <GCWMapPoint>[];
-      var lines = <GCWMapPolyline>[];
-
       var document = parent.getElement('Document');
       if (document != null) {
-        lines.addAll(_parseElements(document, parent));
+        var points = <GCWMapPoint>[];
+        var lines = <GCWMapPolyline>[];
 
-        document.findElements('Folder').forEach((folder) {
-          lines.addAll(_parseElements(folder, parent));
+        document.findAllElements('Placemark').forEach((xmlPlacemark) {
+          var points = _readPoints(xmlPlacemark, parent);
+          if (points != null)
+            lines.add(points);
         });
+
+        _restorePoints(points, lines);
+        _restoreCircles(points, lines);
+        return _convertToMapViewDAO(points, lines);
       }
-
-      for (int i = lines.length-1; i >= 0; i--) {
-        if (lines[i].points.length == 1) {
-          points.add(lines[i].points[0]);
-          lines.removeAt(i);
-        } else {
-          lines[i].color = lines[i].points[0].color;
-          lines[i].points[0].color = null;
-        }
-
-      }
-
-      for (int i = lines.length-1; i >= 0; i--) {
-        if (_isClosedLine(lines[i]) && _completeCircle(lines[i], points))
-          lines.removeAt(i);
-      }
-
-      return _convertToMapViewDAO(points, lines);;
     };
     return null;
-  }
-
-  List<GCWMapPolyline> _parseElements(XmlElement xmlElement, XmlElement styleParent) {
-    var lines = <GCWMapPolyline>[];
-
-    xmlElement.findElements('Placemark').forEach((xmlPlacemark) {
-      var points = _readPoints(xmlPlacemark, styleParent);
-      if (points != null)
-        lines.add(points);
-    });
-    return lines;
   }
 
   GCWMapPolyline _readPoints(XmlElement xmlElement, XmlElement styleParent) {
@@ -201,15 +173,6 @@ class _KmlReader {
     if (styleUrl.startsWith('#'))
       styleUrl = styleUrl.replaceFirst('#', '');
 
-    //styleParent.children.forEach((x) {print(x.innerText);});
-    // print("styleParent.innerXml");
-    //
-    // print(styleParent.innerXml);
-    // print("styleParent.Child");
-    // print(styleParent.firstChild.innerXml);
-    // //print(styleParent.getElement('StyleMap'));
-    
-
     styleParent.findAllElements('StyleMap').forEach((xmlElement) {
       if (xmlElement.getAttribute('id') == styleUrl) {
         var pair = xmlElement.getElement('Pair');
@@ -239,8 +202,33 @@ class _KmlReader {
     return point;
   }
 
+  _restorePoints(List<GCWMapPoint> points , List<GCWMapPolyline> lines) {
+    for (int i = lines.length-1; i >= 0; i--) {
+      points.addAll(lines[i].points);
+      if (lines[i].points.length == 1) {
+        lines.removeAt(i);
+      } else {
+        lines[i].color = lines[i].points[0].color;
+        lines[i].points[0].color = null;
+      }
+    }
+  }
+
   Color _ColorCode(String color){
+    if (color.length == 8)
+      color = color.substring(0,2) + color.substring(6,8) + color.substring(4,6) + color.substring(2,4);
     return Color(int.parse(color, radix: 16));
+  }
+}
+
+_restoreCircles(List<GCWMapPoint> points , List<GCWMapPolyline> lines) {
+  for (int i = lines.length-1; i >= 0; i--) {
+    if (_isClosedLine(lines[i]) && _completeCircle(lines[i], points)){
+      lines[i].points.forEach((point) {
+        points.remove(point);
+      });
+      lines.removeAt(i);
+    }
   }
 }
 
@@ -268,7 +256,7 @@ bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
     return false;
 
   var crossPoint = intersectFourPoints(pt1, pt2, pt3, pt4, ells);
-  GCWMapPoint center ;
+  GCWMapPoint center;
   double minDist = double.maxFinite;
 
   points.forEach((wpt) {
@@ -289,11 +277,12 @@ bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
       return false;
   });
 //ToDo: Color entfernen
-  center.circle = new GCWMapCircle(radius: radius, color: Colors.black);
+  center.circle = new GCWMapCircle(centerPoint: center.point, radius: radius, color: line.color ?? Colors.cyan);
+  center.circleColorSameAsPointColor = (center.color == line.color);
   return true;
 }
 
-MapViewDAO _convertToMapViewDAO(List<GCWMapPoint> points ,List<GCWMapPolyline> lines ) {
+MapViewDAO _convertToMapViewDAO(List<GCWMapPoint> points , List<GCWMapPolyline> lines) {
   var t = MapViewPersistenceAdapter(null);
   var daoPoints = <MapPointDAO>[];
   var daoLines = <MapPolylineDAO>[];
