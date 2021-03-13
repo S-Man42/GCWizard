@@ -32,7 +32,7 @@ Future<String> MainPath() async {
   return path;
 }
 
-Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) async {
+Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, {String subDirectory}) async {
   var filePath = '';
   File file;
 
@@ -48,7 +48,7 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName) 
     var path = await MainPath();
     if (path == null)
       return null;
-    filePath = '$path/$fileName';
+    filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
     file = File(filePath);
 
     if (!await file.exists())

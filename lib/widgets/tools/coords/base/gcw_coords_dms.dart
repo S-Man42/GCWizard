@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -94,7 +95,7 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var dms = DMS.from(widget.coordinates);
+      var dms = latLonToDMS(widget.coordinates);
       var lat = dms.latitude.formatParts(10);
       var lon = dms.longitude.formatParts(10);
 
@@ -110,15 +111,15 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
       _currentLonMilliSeconds = lon['seconds'].split('.')[1];
       _currentLonSign = lon['sign']['value'];
 
-      _LatDegreesController = TextEditingController(text: _currentLatDegrees);
-      _LatMinutesController = TextEditingController(text: _currentLatMinutes);
-      _LatSecondsController = TextEditingController(text: _currentLatSeconds);
-      _LatMilliSecondsController = TextEditingController(text: _currentLatMilliSeconds);
+      _LatDegreesController.text = _currentLatDegrees;
+      _LatMinutesController.text = _currentLatMinutes;
+      _LatSecondsController.text = _currentLatSeconds;
+      _LatMilliSecondsController.text = _currentLatMilliSeconds;
 
-      _LonDegreesController = TextEditingController(text: _currentLonDegrees);
-      _LonMinutesController = TextEditingController(text: _currentLonMinutes);
-      _LonSecondsController = TextEditingController(text: _currentLonSeconds);
-      _LonMilliSecondsController = TextEditingController(text: _currentLonMilliSeconds);
+      _LonDegreesController.text = _currentLonDegrees;
+      _LonMinutesController.text = _currentLonMinutes;
+      _LonSecondsController.text = _currentLonSeconds;
+      _LonMilliSecondsController.text = _currentLonMilliSeconds;
     }
 
     return Column (    
@@ -374,6 +375,6 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
     _secondsD = double.parse('$_seconds.$_currentLonMilliSeconds');
     var _currentLon = DMSLongitude(_currentLonSign, _degrees, _minutes, _secondsD);
 
-    widget.onChanged(DMS(_currentLat, _currentLon).toLatLng());
+    widget.onChanged(dmsToLatLon(DMS(_currentLat, _currentLon)));
   }
 }

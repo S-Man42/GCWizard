@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:intl/intl.dart';
 
@@ -90,7 +88,7 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
           min: 0.0,
           max: 30.0,
           title: i18n(context, 'coords_formatconverter_slippymap_zoom') + ' (Z)',
-          value: double.tryParse(_currentSubtype),
+          value: double.tryParse(_currentSubtype == null ? '10' : _currentSubtype),
           onChanged: (value) {
             setState(() {
               _currentSubtype = NumberFormat('0.00000').format(value);
