@@ -1,3 +1,9 @@
+Format code:
+
+flutter dartfmt lib -l 120
+
+==============================
+
 Android Release Build command:
 flutter build appbundle --release --target-platform android-arm,android-arm64
 
