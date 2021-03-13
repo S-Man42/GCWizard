@@ -27,7 +27,7 @@ class GCWTool extends StatefulWidget {
   final ToolCategory category;
   final autoScroll;
   final iconPath;
-  final String searchStrings;
+  final List<String> searchStrings;
   final List<GCWToolActionButtonsEntry> buttonList;
 
   var icon;
@@ -38,8 +38,6 @@ class GCWTool extends StatefulWidget {
   var description;
   var example;
 
-  Widget titleTrailing;
-
   GCWTool({
     Key key,
     this.tool,
@@ -48,8 +46,7 @@ class GCWTool extends StatefulWidget {
     this.category,
     this.autoScroll: true,
     this.iconPath,
-    this.searchStrings: '',
-    this.titleTrailing,
+    this.searchStrings,
     this.buttonList
   }) : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
@@ -99,53 +96,44 @@ class _GCWToolState extends State<GCWTool> {
   List<Widget>_buildButtons() {
     List<Widget> buttonList = new List<Widget>();
 
-    if (widget.titleTrailing.toString() != 'null')
-      return [widget.titleTrailing];
+//    if (widget.titleTrailing.toString() != 'null')
+//      return [widget.titleTrailing];
 
-    if (widget.buttonList == null)
-      return [_buildHelpButton()];
+//    if (widget.buttonList == null)
+//      return [_buildHelpButton()];
 
-    widget.buttonList.forEach((button) {
-      if (button.url != null && button.url.length != 0)
-        buttonList.add(
-            IconButton(
-              icon: Icon(button.icon),
-              onPressed: () {
-                if (button.showDialog) {
-                  showGCWAlertDialog(
-                    context,
-                    i18n(context, button.title),
-                    i18n(context, button.text),
-                    () {
-                          launch(i18n(context, button.url));
-                       },
-                  );
-                }
-                else
-                  launch(i18n(context, button.url));
-              },
-            )
-      );
-    });
+    String url = '';
+
+    if (widget.buttonList != null) {
+      widget.buttonList.forEach((button) {
+        if (button.url == '') // 404-Page asking for help
+          url = i18n(context, 'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
+        else
+          url = button.url;
+        if (button.url != null && button.url.length != 0)
+          buttonList.add(
+              IconButton(
+                icon: Icon(button.icon),
+                onPressed: () {
+                  if (button.showDialog) {
+                    showGCWAlertDialog(
+                      context,
+                      i18n(context, button.title),
+                      i18n(context, button.text),
+                          () {
+                        launch(i18n(context, url));
+                      },
+                    );
+                  }
+                  else
+                    launch(i18n(context, url));
+                },
+              )
+          );
+      });
+    }
+
     return buttonList;
-  }
-
-  _buildHelpButton() {
-    if (widget.i18nPrefix == null)
-      return Container();
-
-    var onlineHelpKey = widget.i18nPrefix + '_onlinehelp';
-
-    var onlineHelpUrl = i18n(context, onlineHelpKey);
-    if (onlineHelpUrl == null || onlineHelpUrl.length == 0)
-      return Container();
-
-    return IconButton(
-      icon: Icon(Icons.help),
-      onPressed: () {
-        launch(onlineHelpUrl);
-      },
-    );
   }
 
   Widget _buildBody() {
