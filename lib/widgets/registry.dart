@@ -6609,7 +6609,7 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_DNI_NUMBERS,
         SEARCHSTRING_FR_SYMBOL_DNI_NUMBERS
       ]),
-      GCWSymbolTableTool(symbolKey: 'doop', searchStrings: [
+      GCWSymbolTableTool(symbolKey: 'doop_speak', searchStrings: [
         SEARCHSTRING_COMMON_SYMBOL,
         SEARCHSTRING_DE_SYMBOL,
         SEARCHSTRING_EN_SYMBOL,
