@@ -10,8 +10,7 @@ List<int> latLonToQuadtree(LatLng coord, {int precision: _DEFAULT_PRECISION}) {
   var x = (_TILESIZE / 2.0) + coord.longitude * (_TILESIZE / 360.0);
 
   var siny = sin(degreesToRadian(coord.latitude));
-  var y = (_TILESIZE / 2.0)
-    + 0.5 * log((1.0 + siny) / (1.0 - siny)) * -(_TILESIZE / (2.0 * PI));
+  var y = (_TILESIZE / 2.0) + 0.5 * log((1.0 + siny) / (1.0 - siny)) * -(_TILESIZE / (2.0 * PI));
 
   var countTiles = 1 << precision;
 
@@ -52,11 +51,9 @@ LatLng quadtreeToLatLon(List<int> quadtree) {
 }
 
 LatLng parseQuadtree(String input) {
-  if (input == null || input == '')
-    return null;
+  if (input == null || input == '') return null;
 
-  if (input.length != input.replaceAll(RegExp(r'[^0123]'), '').length)
-    return null;
+  if (input.length != input.replaceAll(RegExp(r'[^0123]'), '').length) return null;
 
   return quadtreeToLatLon(input.split('').map((character) => int.tryParse(character)).toList());
 }

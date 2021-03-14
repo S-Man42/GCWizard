@@ -6,11 +6,7 @@ class GCWDatePicker extends StatefulWidget {
   final Function onChanged;
   final date;
 
-  const GCWDatePicker({
-    Key key,
-    this.onChanged,
-    this.date
-  }) : super(key: key);
+  const GCWDatePicker({Key key, this.onChanged, this.date}) : super(key: key);
 
   @override
   GCWDatePickerState createState() => GCWDatePickerState();
@@ -48,76 +44,65 @@ class GCWDatePickerState extends State<GCWDatePicker> {
   @override
   Widget build(BuildContext context) {
     return Row(
-    //  mainAxisSize: MainAxisSize.min,
+      //  mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Expanded(
           child: Padding(
-            child: GCWIntegerSpinner(
-              layout: SpinnerLayout.VERTICAL,
-              value: _currentYear,
-              min: -5000,
-              max: 5000,
-              onChanged: (value) {
-                setState(() {
-                  _currentYear = value;
-                  _setCurrentValueAndEmitOnChange();
+              child: GCWIntegerSpinner(
+                layout: SpinnerLayout.VERTICAL,
+                value: _currentYear,
+                min: -5000,
+                max: 5000,
+                onChanged: (value) {
+                  setState(() {
+                    _currentYear = value;
+                    _setCurrentValueAndEmitOnChange();
 
-                  if (_currentYear.toString().length == 4) {
-                    FocusScope.of(context).requestFocus(_monthFocusNode);
-                  }
-                });
-              },
-            ),
-            padding: EdgeInsets.only (
-              right: 2
-            )
+                    if (_currentYear.toString().length == 4) {
+                      FocusScope.of(context).requestFocus(_monthFocusNode);
+                    }
+                  });
+                },
+              ),
+              padding: EdgeInsets.only(right: 2)),
+        ),
+        Expanded(
+            child: Padding(
+                child: GCWIntegerSpinner(
+                  focusNode: _monthFocusNode,
+                  layout: SpinnerLayout.VERTICAL,
+                  value: _currentMonth,
+                  min: 1,
+                  max: 12,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentMonth = value;
+                      _setCurrentValueAndEmitOnChange();
+
+                      if (_currentMonth.toString().length == 2) {
+                        FocusScope.of(context).requestFocus(_dayFocusNode);
+                      }
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(left: 2, right: 2))),
+        Expanded(
+            child: Padding(
+          child: GCWIntegerSpinner(
+            focusNode: _dayFocusNode,
+            layout: SpinnerLayout.VERTICAL,
+            value: _currentDay,
+            min: 1,
+            max: 31,
+            onChanged: (value) {
+              setState(() {
+                _currentDay = value;
+                _setCurrentValueAndEmitOnChange();
+              });
+            },
           ),
-        ),
-        Expanded(
-          child: Padding(
-            child: GCWIntegerSpinner(
-              focusNode: _monthFocusNode,
-              layout: SpinnerLayout.VERTICAL,
-              value: _currentMonth,
-              min: 1,
-              max: 12,
-              onChanged: (value) {
-                setState(() {
-                  _currentMonth = value;
-                  _setCurrentValueAndEmitOnChange();
-
-                  if (_currentMonth.toString().length == 2) {
-                    FocusScope.of(context).requestFocus(_dayFocusNode);
-                  }
-                });
-              },
-            ),
-            padding: EdgeInsets.only(
-              left: 2,
-              right: 2
-            )
-          )
-        ),
-        Expanded(
-          child: Padding(
-            child: GCWIntegerSpinner(
-              focusNode: _dayFocusNode,
-              layout: SpinnerLayout.VERTICAL,
-              value: _currentDay,
-              min: 1,
-              max: 31,
-              onChanged: (value) {
-                setState(() {
-                  _currentDay = value;
-                  _setCurrentValueAndEmitOnChange();
-                });
-              },
-            ),
-            padding: EdgeInsets.only(
-              left: 2
-            ),
-          )
-        )
+          padding: EdgeInsets.only(left: 2),
+        ))
       ],
     );
   }

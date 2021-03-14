@@ -63,11 +63,10 @@ class AlphabetValuesState extends State<AlphabetValues> {
     _alphabets.addAll(_storedAlphabets.map<Alphabet>((storedAlphabet) {
       var alphabet = Map<String, dynamic>.from(jsonDecode(storedAlphabet));
       return Alphabet(
-        key: alphabet['key'],
-        name: alphabet['name'],
-        type: AlphabetType.CUSTOM,
-        alphabet: Map<String, String>.from(alphabet['alphabet'])
-      );
+          key: alphabet['key'],
+          name: alphabet['name'],
+          type: AlphabetType.CUSTOM,
+          alphabet: Map<String, String>.from(alphabet['alphabet']));
     }).toList());
 
     _currentAlphabetKey = Prefs.get('alphabetvalues_default_alphabet');
@@ -105,8 +104,10 @@ class AlphabetValuesState extends State<AlphabetValues> {
     var firstValue = _setValueOffset(firstEntry.value);
     var lastValue = _setValueOffset(lastEntry.value);
 
-    _reverseSwitchTitleLeft = firstEntry.key + '-' + lastEntry.key + ' ' + String.fromCharCode(8594) + ' ' + firstValue + '-' + lastValue;
-    _reverseSwitchTitleRight = lastEntry.key + '-' + firstEntry.key + ' ' + String.fromCharCode(8594) + ' ' + firstValue + '-' + lastValue;
+    _reverseSwitchTitleLeft =
+        firstEntry.key + '-' + lastEntry.key + ' ' + String.fromCharCode(8594) + ' ' + firstValue + '-' + lastValue;
+    _reverseSwitchTitleRight =
+        lastEntry.key + '-' + firstEntry.key + ' ' + String.fromCharCode(8594) + ' ' + firstValue + '-' + lastValue;
   }
 
   _setValueOffset(String value) {
@@ -118,8 +119,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
   }
 
   Map<String, String> _setReverse(Map<String, String> alphabet) {
-    if (_currentReverseAlphabet == GCWSwitchPosition.left)
-      return alphabet;
+    if (_currentReverseAlphabet == GCWSwitchPosition.left) return alphabet;
 
     var reversedMap = <String, String>{};
     var entries = alphabet.entries.toList();
@@ -137,34 +137,28 @@ class AlphabetValuesState extends State<AlphabetValues> {
   }
 
   _addNewLetter(String letter, String value, BuildContext context, {adjust: false}) {
-    if (letter == null || letter.length == 0 || value == null)
-      return;
+    if (letter == null || letter.length == 0 || value == null) return;
 
-    value = value.split(',')
+    value = value
+        .split(',')
         .where((character) => character != null && character.length > 0)
         .map((character) => character.toUpperCase())
         .join(',');
 
-    if (value.length == 0)
-      return;
+    if (value.length == 0) return;
 
     letter = letter.toUpperCase();
     if (_currentCustomizedAlphabet.containsKey(letter)) {
-      showGCWDialog(
-          context,
-          i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_title'),
-          Text(i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_text', parameters: [letter])),
-          [
-            GCWDialogButton(
-                text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace'),
-                onPressed: () {
-                  setState(() {
-                    _currentCustomizedAlphabet.addAll({letter : value});
-                  });
-                }
-            )
-          ]
-      );
+      showGCWDialog(context, i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_title'),
+          Text(i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace_text', parameters: [letter])), [
+        GCWDialogButton(
+            text: i18n(context, 'alphabetvalues_edit_mode_customize_addletter_replace'),
+            onPressed: () {
+              setState(() {
+                _currentCustomizedAlphabet.addAll({letter: value});
+              });
+            })
+      ]);
     } else {
       setState(() {
         if (adjust) {
@@ -172,8 +166,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
           _currentCustomizedAlphabet = _currentCustomizedAlphabet.map((currentKey, currentValue) {
             var newValue = currentValue.split(',').map((value) {
               var intValue = int.tryParse(value);
-              if (intValue >= insertedValue)
-                intValue++;
+              if (intValue >= insertedValue) intValue++;
 
               return intValue.toString();
             }).join(',');
@@ -187,7 +180,6 @@ class AlphabetValuesState extends State<AlphabetValues> {
     }
   }
 
-
   _removeEntry(dynamic id, BuildContext context) {
     var _valueToDelete = _currentCustomizedAlphabet[id];
     var _isList = _valueToDelete.contains(',');
@@ -199,43 +191,35 @@ class AlphabetValuesState extends State<AlphabetValues> {
             setState(() {
               _currentCustomizedAlphabet.remove(id);
             });
-          }
-      )
+          })
     ];
 
     if (!_isList) {
       var deleteValue = int.tryParse(_valueToDelete);
 
-      buttons.add(
-          GCWDialogButton(
-            text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_removeandadjust'),
-            onPressed: () {
-              _currentCustomizedAlphabet = _currentCustomizedAlphabet.map((currentKey, currentValue) {
-                var newValue = currentValue.split(',').map((value) {
-                  var intValue = int.tryParse(value);
-                  if (intValue > deleteValue)
-                    intValue--;
+      buttons.add(GCWDialogButton(
+        text: i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_removeandadjust'),
+        onPressed: () {
+          _currentCustomizedAlphabet = _currentCustomizedAlphabet.map((currentKey, currentValue) {
+            var newValue = currentValue.split(',').map((value) {
+              var intValue = int.tryParse(value);
+              if (intValue > deleteValue) intValue--;
 
-                  return intValue.toString();
-                }).join(',');
+              return intValue.toString();
+            }).join(',');
 
-                return MapEntry(currentKey, newValue);
-              });
+            return MapEntry(currentKey, newValue);
+          });
 
-              setState(() {
-                _currentCustomizedAlphabet.remove(id);
-              });
-            },
-          )
-      );
+          setState(() {
+            _currentCustomizedAlphabet.remove(id);
+          });
+        },
+      ));
     }
 
-    showGCWDialog(
-        context,
-        i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_title'),
-        Text(i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_text', parameters: [id])),
-        buttons
-    );
+    showGCWDialog(context, i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_title'),
+        Text(i18n(context, 'alphabetvalues_edit_mode_customize_deleteletter_text', parameters: [id])), buttons);
   }
 
   @override
@@ -243,22 +227,22 @@ class AlphabetValuesState extends State<AlphabetValues> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              controller: _encodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentEncodeInput = text;
-                });
-              },
-            )
-          : GCWIntegerListTextField(
-              controller: _decodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecodeInput = text;
-                });
-              },
-            ),
+            ? GCWTextField(
+                controller: _encodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
+            : GCWIntegerListTextField(
+                controller: _decodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                  });
+                },
+              ),
         Column(
           children: [
             Row(
@@ -268,10 +252,9 @@ class AlphabetValuesState extends State<AlphabetValues> {
                     value: _currentAlphabetKey,
                     items: _alphabets.map((Alphabet alphabet) {
                       return GCWDropDownMenuItem(
-                        value: alphabet.key,
-                        child: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
-                        subtitle: _generateItemDescription(alphabet)
-                      );
+                          value: alphabet.key,
+                          child: alphabet.type == AlphabetType.STANDARD ? i18n(context, alphabet.key) : alphabet.name,
+                          subtitle: _generateItemDescription(alphabet));
                     }).toList(),
                     onChanged: (value) {
                       setState(() {
@@ -303,9 +286,7 @@ class AlphabetValuesState extends State<AlphabetValues> {
             });
           },
         ),
-        GCWDefaultOutput(
-          child: _calculateOutput()
-        ),
+        GCWDefaultOutput(child: _calculateOutput()),
         _buildCrossTotals()
       ],
     );
@@ -313,23 +294,20 @@ class AlphabetValuesState extends State<AlphabetValues> {
 
   _generateItemDescription(Alphabet alphabet) {
     var description = i18n(context, alphabet.key + '_description');
-    if (description != null && description.length > 0)
-      return description;
+    if (description != null && description.length > 0) return description;
 
     var entries = alphabet.alphabet.entries.toList();
 
     description = '';
-    if (alphabet.type == AlphabetType.CUSTOM)
-      description = '[' + i18n(context, 'alphabetvalues_custom') + '] ';
+    if (alphabet.type == AlphabetType.CUSTOM) description = '[' + i18n(context, 'alphabetvalues_custom') + '] ';
 
     description += '${entries.length} ${i18n(context, 'alphabetvalues_letters')}';
-    if (entries.length == 0)
-      return description;
+    if (entries.length == 0) return description;
 
     description += ': ';
-    description += entries.first.key + ' ' +  String.fromCharCode(8594) + ' ' + entries.first.value;
+    description += entries.first.key + ' ' + String.fromCharCode(8594) + ' ' + entries.first.value;
     description += ' ... ';
-    description += entries.last.key + ' ' +  String.fromCharCode(8594) + ' ' + entries.last.value;
+    description += entries.last.key + ' ' + String.fromCharCode(8594) + ' ' + entries.last.value;
 
     return description;
   }
@@ -356,7 +334,9 @@ class AlphabetValuesState extends State<AlphabetValues> {
             });
           },
         ),
-        _currentCustomizeAlphabet == GCWSwitchPosition.left ? _buildEditingAlphabetAdjusting() : _buildEditingAlphabetCustomizing()
+        _currentCustomizeAlphabet == GCWSwitchPosition.left
+            ? _buildEditingAlphabetAdjusting()
+            : _buildEditingAlphabetCustomizing()
       ],
     );
   }
@@ -370,54 +350,46 @@ class AlphabetValuesState extends State<AlphabetValues> {
           children: [
             Expanded(
               child: isCustomAlphabet
-                ? Container(
-                    child: GCWButton(
-                      text: i18n(context, 'alphabetvalues_edit_mode_customize_deletealphabet'),
-                      onPressed: () {
-                        _removeAlphabet();
-                      }
-                    ),
-                    padding: EdgeInsets.only(
-                      right: DEFAULT_MARGIN
-                    ),
-                  )
-                : Container(),
+                  ? Container(
+                      child: GCWButton(
+                          text: i18n(context, 'alphabetvalues_edit_mode_customize_deletealphabet'),
+                          onPressed: () {
+                            _removeAlphabet();
+                          }),
+                      padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+                    )
+                  : Container(),
               flex: isCustomAlphabet ? 2 : 1,
             ),
             Expanded(
-              child: Container(
-                child: GCWButton(
-                  text: i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet'),
-                  onPressed: () {
-                    setState(() {
-                      _saveAlphabet();
-                    });
-                  },
+                child: Container(
+                  child: GCWButton(
+                    text: i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet'),
+                    onPressed: () {
+                      setState(() {
+                        _saveAlphabet();
+                      });
+                    },
+                  ),
+                  padding: EdgeInsets.only(left: isCustomAlphabet ? DEFAULT_MARGIN : 0),
                 ),
-                padding: EdgeInsets.only(
-                  left: isCustomAlphabet ? DEFAULT_MARGIN : 0
-                ),
-              ),
-              flex: 2
-            ),
+                flex: 2),
             isCustomAlphabet ? Container() : Expanded(child: Container(), flex: 1)
           ],
         ),
         SizedBox(height: 10),
         GCWKeyValueEditor(
-          keyHintText: i18n(context, 'alphabetvalues_edit_mode_customize_letter'),
-          valueHintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
-          valueInputFormatters: [TextOnlyDigitsAndCommaInputFormatter()],
-          alphabetInstertButtonLabel: i18n(context, 'alphabetvalues_edit_mode_customize_addletter'),
-          alphabetAddAndAdjustLetterButtonLabel: i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),
-          onAddEntry: _addNewLetter,
-          onAddEntry2: _addNewLetter2,
-
-          keyValueMap: _currentCustomizedAlphabet,
-          onRemoveEntry: _removeEntry,
-          editAllowed: false
-        ),
-
+            keyHintText: i18n(context, 'alphabetvalues_edit_mode_customize_letter'),
+            valueHintText: i18n(context, 'alphabetvalues_edit_mode_customize_value'),
+            valueInputFormatters: [TextOnlyDigitsAndCommaInputFormatter()],
+            alphabetInstertButtonLabel: i18n(context, 'alphabetvalues_edit_mode_customize_addletter'),
+            alphabetAddAndAdjustLetterButtonLabel:
+                i18n(context, 'alphabetvalues_edit_mode_customize_addandadjustletter'),
+            onAddEntry: _addNewLetter,
+            onAddEntry2: _addNewLetter2,
+            keyValueMap: _currentCustomizedAlphabet,
+            onRemoveEntry: _removeEntry,
+            editAllowed: false),
         GCWDivider()
       ],
     );
@@ -454,84 +426,73 @@ class AlphabetValuesState extends State<AlphabetValues> {
 
   _removeAlphabet() {
     showGCWAlertDialog(
-      context,
-      i18n(context, 'alphabetvalues_edit_mode_customize_deletealphabet'),
-      i18n(context, 'alphabetvalues_edit_mode_customize_deletealphabet_text', parameters: [ _getAlphabetByKey(_currentAlphabetKey).name]),
-      () {
-        setState(() {
-          var removeableKey = _currentAlphabetKey;
-          _currentAlphabetKey = alphabetAZ.key;
-          _setAlphabet();
+        context,
+        i18n(context, 'alphabetvalues_edit_mode_customize_deletealphabet'),
+        i18n(context, 'alphabetvalues_edit_mode_customize_deletealphabet_text',
+            parameters: [_getAlphabetByKey(_currentAlphabetKey).name]), () {
+      setState(() {
+        var removeableKey = _currentAlphabetKey;
+        _currentAlphabetKey = alphabetAZ.key;
+        _setAlphabet();
 
-          _storedAlphabets.removeWhere((storedAlphabet) => jsonDecode(storedAlphabet)['key'] == removeableKey);
-          Prefs.setStringList('alphabetvalues_custom_alphabets', _storedAlphabets);
-          _alphabets.removeWhere((alphabet) => alphabet.key == removeableKey);
-        });
-      }
-    );
+        _storedAlphabets.removeWhere((storedAlphabet) => jsonDecode(storedAlphabet)['key'] == removeableKey);
+        Prefs.setStringList('alphabetvalues_custom_alphabets', _storedAlphabets);
+        _alphabets.removeWhere((alphabet) => alphabet.key == removeableKey);
+      });
+    });
   }
 
   _saveAlphabet() {
     showGCWDialog(
-      context,
-      i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet'),
-      Container(
-        width: 300,
-        height: 100,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet_name')),
-            GCWTextField(
-              autofocus: true,
-              filled: true,
-              onChanged: (text) {
-                _currentCustomAlphabetName = text;
-              },
-            ),
-          ],
+        context,
+        i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet'),
+        Container(
+          width: 300,
+          height: 100,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet_name')),
+              GCWTextField(
+                autofocus: true,
+                filled: true,
+                onChanged: (text) {
+                  _currentCustomAlphabetName = text;
+                },
+              ),
+            ],
+          ),
         ),
-      ),
-      [
-        GCWDialogButton(
-          text: i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet_save'),
-          onPressed: () {
-            var name = _currentCustomAlphabetName;
-            if (name == null || name.length == 0)
-              name = i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet_customname');
+        [
+          GCWDialogButton(
+            text: i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet_save'),
+            onPressed: () {
+              var name = _currentCustomAlphabetName;
+              if (name == null || name.length == 0)
+                name = i18n(context, 'alphabetvalues_edit_mode_customize_savealphabet_customname');
 
-            var entries = _currentCustomizedAlphabet.entries.toList();
-            entries.sort((a, b) {
-              var intA = int.tryParse(a.value.split(',')[0]);
-              var intB = int.tryParse(b.value.split(',')[0]);
+              var entries = _currentCustomizedAlphabet.entries.toList();
+              entries.sort((a, b) {
+                var intA = int.tryParse(a.value.split(',')[0]);
+                var intB = int.tryParse(b.value.split(',')[0]);
 
-              return intA.compareTo(intB);
-            });
-            var orderedAlphabet = LinkedHashMap.fromEntries(entries);
+                return intA.compareTo(intB);
+              });
+              var orderedAlphabet = LinkedHashMap.fromEntries(entries);
 
-            var newAlphabet = Alphabet(
-              key: UniqueKey().toString(),
-              name: name,
-              type: AlphabetType.CUSTOM,
-              alphabet: orderedAlphabet
-            );
+              var newAlphabet = Alphabet(
+                  key: UniqueKey().toString(), name: name, type: AlphabetType.CUSTOM, alphabet: orderedAlphabet);
 
-            _storedAlphabets.add(jsonEncode(
-              {
-                'key': newAlphabet.key,
-                'name': newAlphabet.name,
-                'alphabet': newAlphabet.alphabet
-              }
-            ));
-            Prefs.setStringList('alphabetvalues_custom_alphabets', _storedAlphabets);
+              _storedAlphabets.add(
+                  jsonEncode({'key': newAlphabet.key, 'name': newAlphabet.name, 'alphabet': newAlphabet.alphabet}));
+              Prefs.setStringList('alphabetvalues_custom_alphabets', _storedAlphabets);
 
-            setState(() {
-              _alphabets.add(newAlphabet);
-            });
-          },
-        )
-      ]
-    );
+              setState(() {
+                _alphabets.add(newAlphabet);
+              });
+            },
+          )
+        ]);
   }
 
   _getFinalAlphabet() {
@@ -551,15 +512,11 @@ class AlphabetValuesState extends State<AlphabetValues> {
 
     if (_currentMode == GCWSwitchPosition.left) {
       return GCWCrosstotalOutput(
-        text: _currentEncodeInput,
-        values: logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true)
-      );
+          text: _currentEncodeInput,
+          values: logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true));
     } else {
       var text = logic.AlphabetValues(alphabet: alphabet).valuesToText(List<int>.from(_currentDecodeInput['values']));
-      return GCWCrosstotalOutput(
-        text: text,
-        values: _currentDecodeInput['values']
-      );
+      return GCWCrosstotalOutput(text: text, values: _currentDecodeInput['values']);
     }
   }
 
@@ -567,7 +524,9 @@ class AlphabetValuesState extends State<AlphabetValues> {
     var alphabet = _getFinalAlphabet();
 
     if (_currentMode == GCWSwitchPosition.left) {
-      return intListToString(logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true), delimiter: ' ');
+      return intListToString(
+          logic.AlphabetValues(alphabet: alphabet).textToValues(_currentEncodeInput, keepNumbers: true),
+          delimiter: ' ');
     } else {
       return logic.AlphabetValues(alphabet: alphabet).valuesToText(List<int>.from(_currentDecodeInput['values']));
     }

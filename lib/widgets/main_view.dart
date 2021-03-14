@@ -159,7 +159,6 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class MainView extends StatefulWidget {
   @override
   _MainViewState createState() => _MainViewState();
@@ -214,159 +213,157 @@ class _MainViewState extends State<MainView> {
     Registry.initialize(context);
     Favorites.initialize();
 
-    final List<GCWTool> _toolList =
-      Registry.toolList.where((element) {
-        return [
-          className(Abaddon()),
-          className(ADFGVX()),
-          className(Affine()),
-          className(AlphabetValues()),
-          className(Amsco()),
-          className(Antipodes()),
-          className(ASCIIValues()),
-          className(Atbash()),
-          className(Bacon()),
-          className(BaseSelection()),
-          className(BCDSelection()),
-          className(Beatnik()),
-          className(BeaufortSelection()),
-          className(Bifid()),
-          className(Binary()),
-          className(BookCipher()),
-          className(Brainfk()),
-          className(BurrowsWheeler()),
-          className(Caesar()),
-          className(CCITT1Selection()),
-          className(CCITT2Selection()),
-          className(CenterThreePoints()),
-          className(CenterTwoPoints()),
-          className(Chao()),
-          className(Chef()),
-          className(ChickenLanguage()),
-          className(Chronogram()),
-          className(CipherWheel()),
-          className(CistercianNumbersSelection()),
-          className(ColorPicker()),
-          className(Combination()),
-          className(CombinationPermutation()),
-          className(CoordinateAveraging()),
-          className(CrossBearing()),
-          className(CrossSum()),
-          className(CrossSumRange()),
-          className(CrossSumRangeFrequency()),
-          className(DayCalculator()),
-          className(Deadfish()),
-          className(Decabit()),
-          className(DistanceBearing()),
-          className(DTMF()),
-          className(DNAAminoAcids()),
-          className(DNAAminoAcidsTable()),
-          className(DNANucleicAcidSequence()),
-          className(DuckSpeak()),
-          className(EasterSelection()),
-          className(EllipsoidTransform()),
-          className(EnclosedAreas()),
-          className(Enigma()),
-          className(EquilateralTriangle()),
-          className(ESelection()),
-          className(FormatConverter()),
-          className(FormulaSolverFormulaGroups()),
-          className(FourteenSegments()),
-          className(Gade()),
-          className(GCCode()),
-          className(Gray()),
-          className(Gronsfeld()),
-          className(HeatIndex()),
-          className(HashBreaker()),
-          className(HashSelection()),
-          className(Hexadecimal()),
-          className(Homophone()),
-          className(Humidex()),
-          className(IntersectBearings()),
-          className(IntersectFourPoints()),
-          className(IntersectGeodeticAndCircle()),
-          className(Intersection()),
-          className(IntersectThreeCircles()),
-          className(IntersectTwoCircles()),
-          className(IteratedCrossSumRange()),
-          className(IteratedCrossSumRangeFrequency()),
-          className(Kamasutra()),
-          className(Kenny()),
-          className(Keyboard()),
-          className(Malbolge()),
-          className(MapView()),
-          className(MayaNumbersSelection()),
-          className(MexicanArmyCipherWheel()),
-          className(MoonPosition()),
-          className(MoonRiseSet()),
-          className(Morse()),
-          className(NumberSequenceSelection()),
-          className(MultiDecoder()),
-          className(NumeralBases()),
-          className(NumeralWordsSelection()),
-          className(OneTimePad()),
-          className(Ook()),
-          className(PeriodicTable()),
-          className(PeriodicTableDataView()),
-          className(Permutation()),
-          className(PhiSelection()),
-          className(PiSelection()),
-          className(PigLatin()),
-          className(Playfair()),
-          className(Polybios()),
-          className(PrimesSelection()),
-          className(Projectiles()),
-          className(RailFence()),
-          className(RC4()),
-          className(Resection()),
-          className(ResistorSelection()),
-          className(Reverse()),
-          className(RobberLanguage()),
-          className(RomanNumbers()),
-          className(Rot13()),
-          className(Rot18()),
-          className(Rot5()),
-          className(Rot47()),
-          className(RotationGeneral()),
-          className(RSASelection()),
-          className(Scrabble()),
-          className(Seasons()),
-          className(SevenSegments()),
-          className(SixteenSegments()),
-          className(Skytale()),
-          className(Solitaire()),
-          className(SpoonLanguage()),
-          className(Substitution()),
-          className(SubstitutionBreaker()),
-          className(SudokuSolver()),
-          className(SummerSimmerIndex()),
-          className(SunPosition()),
-          className(SunRiseSet()),
-          className(SymbolTableSelection()),
-          className(TapCode()),
-          className(Tapir()),
-          className(TimeCalculator()),
-          className(TomTomSelection()),
-          className(Trithemius()),
-          className(UnitConverter()),
-          className(VanitySelection()),
-          className(VariableCoordinateFormulas()),
-          className(Vigenere()),
-          className(VigenereBreaker()),
-          className(Weekday()),
-          className(WhitespaceLanguage()),
-          className(WaypointProjection()),
-          className(Windchill()),
-          className(Z22()),
-        ].contains(className(element.tool));
-      }).toList();
+    final List<GCWTool> _toolList = Registry.toolList.where((element) {
+      return [
+        className(Abaddon()),
+        className(ADFGVX()),
+        className(Affine()),
+        className(AlphabetValues()),
+        className(Amsco()),
+        className(Antipodes()),
+        className(ASCIIValues()),
+        className(Atbash()),
+        className(Bacon()),
+        className(BaseSelection()),
+        className(BCDSelection()),
+        className(Beatnik()),
+        className(BeaufortSelection()),
+        className(Bifid()),
+        className(Binary()),
+        className(BookCipher()),
+        className(Brainfk()),
+        className(BurrowsWheeler()),
+        className(Caesar()),
+        className(CCITT1Selection()),
+        className(CCITT2Selection()),
+        className(CenterThreePoints()),
+        className(CenterTwoPoints()),
+        className(Chao()),
+        className(Chef()),
+        className(ChickenLanguage()),
+        className(Chronogram()),
+        className(CipherWheel()),
+        className(CistercianNumbersSelection()),
+        className(ColorPicker()),
+        className(Combination()),
+        className(CombinationPermutation()),
+        className(CoordinateAveraging()),
+        className(CrossBearing()),
+        className(CrossSum()),
+        className(CrossSumRange()),
+        className(CrossSumRangeFrequency()),
+        className(DayCalculator()),
+        className(Deadfish()),
+        className(Decabit()),
+        className(DistanceBearing()),
+        className(DTMF()),
+        className(DNAAminoAcids()),
+        className(DNAAminoAcidsTable()),
+        className(DNANucleicAcidSequence()),
+        className(DuckSpeak()),
+        className(EasterSelection()),
+        className(EllipsoidTransform()),
+        className(EnclosedAreas()),
+        className(Enigma()),
+        className(EquilateralTriangle()),
+        className(ESelection()),
+        className(FormatConverter()),
+        className(FormulaSolverFormulaGroups()),
+        className(FourteenSegments()),
+        className(Gade()),
+        className(GCCode()),
+        className(Gray()),
+        className(Gronsfeld()),
+        className(HeatIndex()),
+        className(HashBreaker()),
+        className(HashSelection()),
+        className(Hexadecimal()),
+        className(Homophone()),
+        className(Humidex()),
+        className(IntersectBearings()),
+        className(IntersectFourPoints()),
+        className(IntersectGeodeticAndCircle()),
+        className(Intersection()),
+        className(IntersectThreeCircles()),
+        className(IntersectTwoCircles()),
+        className(IteratedCrossSumRange()),
+        className(IteratedCrossSumRangeFrequency()),
+        className(Kamasutra()),
+        className(Kenny()),
+        className(Keyboard()),
+        className(Malbolge()),
+        className(MapView()),
+        className(MayaNumbersSelection()),
+        className(MexicanArmyCipherWheel()),
+        className(MoonPosition()),
+        className(MoonRiseSet()),
+        className(Morse()),
+        className(NumberSequenceSelection()),
+        className(MultiDecoder()),
+        className(NumeralBases()),
+        className(NumeralWordsSelection()),
+        className(OneTimePad()),
+        className(Ook()),
+        className(PeriodicTable()),
+        className(PeriodicTableDataView()),
+        className(Permutation()),
+        className(PhiSelection()),
+        className(PiSelection()),
+        className(PigLatin()),
+        className(Playfair()),
+        className(Polybios()),
+        className(PrimesSelection()),
+        className(Projectiles()),
+        className(RailFence()),
+        className(RC4()),
+        className(Resection()),
+        className(ResistorSelection()),
+        className(Reverse()),
+        className(RobberLanguage()),
+        className(RomanNumbers()),
+        className(Rot13()),
+        className(Rot18()),
+        className(Rot5()),
+        className(Rot47()),
+        className(RotationGeneral()),
+        className(RSASelection()),
+        className(Scrabble()),
+        className(Seasons()),
+        className(SevenSegments()),
+        className(SixteenSegments()),
+        className(Skytale()),
+        className(Solitaire()),
+        className(SpoonLanguage()),
+        className(Substitution()),
+        className(SubstitutionBreaker()),
+        className(SudokuSolver()),
+        className(SummerSimmerIndex()),
+        className(SunPosition()),
+        className(SunRiseSet()),
+        className(SymbolTableSelection()),
+        className(TapCode()),
+        className(Tapir()),
+        className(TimeCalculator()),
+        className(TomTomSelection()),
+        className(Trithemius()),
+        className(UnitConverter()),
+        className(VanitySelection()),
+        className(VariableCoordinateFormulas()),
+        className(Vigenere()),
+        className(VigenereBreaker()),
+        className(Weekday()),
+        className(WhitespaceLanguage()),
+        className(WaypointProjection()),
+        className(Windchill()),
+        className(Z22()),
+      ].contains(className(element.tool));
+    }).toList();
 
-    _toolList.sort((a, b){
+    _toolList.sort((a, b) {
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });
 
-    final List<GCWTool> _categoryList =
-    Registry.toolList.where((element) {
+    final List<GCWTool> _categoryList = Registry.toolList.where((element) {
       return [
         className(CoordsSelection()),
         className(CryptographySelection()),
@@ -378,61 +375,42 @@ class _MainViewState extends State<MainView> {
       ].contains(className(element.tool));
     }).toList();
 
-    _categoryList.sort((a, b){
+    _categoryList.sort((a, b) {
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });
 
     return DefaultTabController(
       length: 3,
-      initialIndex: Prefs.getBool('tabs_use_default_tab') ? Prefs.get('tabs_default_tab') : Prefs.get('tabs_last_viewed_tab'),
+      initialIndex:
+          Prefs.getBool('tabs_use_default_tab') ? Prefs.get('tabs_default_tab') : Prefs.get('tabs_last_viewed_tab'),
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          bottom: TabBar(
-            onTap: (value) {
-              Prefs.setInt('tabs_last_viewed_tab', value);
-            },
-            tabs: [
-              Tab(
-                icon: Icon(Icons.category)
-              ),
-              Tab(
-                icon: Icon(Icons.list)
-              ),
-              Tab(
-                icon: Icon(Icons.star)
-              ),
-            ],
-          ),
-          leading: _buildIcon(),
-          title: _buildTitleAndSearchTextField(),
-          actions: <Widget>[
-            _buildSearchActionButton()
-          ]
-        ),
+            bottom: TabBar(
+              onTap: (value) {
+                Prefs.setInt('tabs_last_viewed_tab', value);
+              },
+              tabs: [
+                Tab(icon: Icon(Icons.category)),
+                Tab(icon: Icon(Icons.list)),
+                Tab(icon: Icon(Icons.star)),
+              ],
+            ),
+            leading: _buildIcon(),
+            title: _buildTitleAndSearchTextField(),
+            actions: <Widget>[_buildSearchActionButton()]),
         drawer: buildMainMenu(context),
         body: TabBarView(
           children: [
-            GCWToolList(
-              toolList: _isSearching && _searchText.length > 0
-                ? _getSearchedList()
-                : _categoryList
-            ),
-            GCWToolList(
-              toolList: _isSearching && _searchText.length > 0
-                ? _getSearchedList()
-                : _toolList
-            ),
-            GCWToolList(
-              toolList: _isSearching && _searchText.length > 0
-                ? _getSearchedList()
-                : Favorites.toolList
-            ),
+            GCWToolList(toolList: _isSearching && _searchText.length > 0 ? _getSearchedList() : _categoryList),
+            GCWToolList(toolList: _isSearching && _searchText.length > 0 ? _getSearchedList() : _toolList),
+            GCWToolList(toolList: _isSearching && _searchText.length > 0 ? _getSearchedList() : Favorites.toolList),
           ],
         ),
       ),
     );
   }
+
   _buildSearchActionButton() {
     return IconButton(
       icon: Icon(_isSearching ? Icons.close : Icons.search),
@@ -451,42 +429,37 @@ class _MainViewState extends State<MainView> {
 
   _buildTitleAndSearchTextField() {
     return _isSearching
-      ? GCWTextField(
-          autofocus: true,
-          controller: _searchController,
-          icon: Icon(
-            Icons.search,
-            color: themeColors().mainFont()
-          ),
-          hintText: i18n(context, 'common_search_hint')
-        )
-      : Text(i18n(context, 'common_app_title'));
+        ? GCWTextField(
+            autofocus: true,
+            controller: _searchController,
+            icon: Icon(Icons.search, color: themeColors().mainFont()),
+            hintText: i18n(context, 'common_search_hint'))
+        : Text(i18n(context, 'common_app_title'));
   }
 
   _buildIcon() {
     return IconButton(
-      icon: Image.asset(
-        'assets/logo/circle_border_128.png',
-        width: 35.0,
-        height: 35.0,
-      ),
-      onPressed: () => _scaffoldKey.currentState.openDrawer()
-    );
+        icon: Image.asset(
+          'assets/logo/circle_border_128.png',
+          width: 35.0,
+          height: 35.0,
+        ),
+        onPressed: () => _scaffoldKey.currentState.openDrawer());
   }
 
   List<GCWTool> _getSearchedList() {
     var list = Registry.toolList;
 
     list = list.where((tool) {
-      if (tool.searchStrings == null || tool.searchStrings.length == 0)
-        return false;
+      if (tool.searchStrings == null || tool.searchStrings.length == 0) return false;
 
       var found = true;
 
       //Search result as AND result of separated words
       _searchText.toLowerCase().split(RegExp(r'[\s,]')).forEach((word) {
         var searchStrings = tool.searchStrings.toLowerCase();
-        if (!searchStrings.contains(word) && !searchStrings.contains(removeAccents(word))) //search with and without accents
+        if (!searchStrings.contains(word) &&
+            !searchStrings.contains(removeAccents(word))) //search with and without accents
           found = false;
       });
 

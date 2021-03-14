@@ -14,7 +14,6 @@ class GCWDefaultOutput extends StatefulWidget {
 }
 
 class _GCWDefaultOutputState extends State<GCWDefaultOutput> {
-
   @override
   Widget build(BuildContext context) {
     return GCWOutput(

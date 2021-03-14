@@ -1,4 +1,3 @@
-
 /// Class representing the result for breaking a vigenere cipher
 /// :param str key: the best key found by the breaker
 /// :param float fitness: the fitness of the resulting plaintext
@@ -12,9 +11,10 @@ class BreakerResult {
   });
 }
 
-BreakerResult break_vigenere (List<int> cipher_bin, int keyLength, List<List<int>> vigenereSquare, List<List<int>> bigrams, bool autoKey, {Function counterFunction}) {
-  if (autoKey)
-    return break_vigenereAutoKey(cipher_bin, keyLength, vigenereSquare, bigrams);
+BreakerResult break_vigenere(
+    List<int> cipher_bin, int keyLength, List<List<int>> vigenereSquare, List<List<int>> bigrams, bool autoKey,
+    {Function counterFunction}) {
+  if (autoKey) return break_vigenereAutoKey(cipher_bin, keyLength, vigenereSquare, bigrams);
 
   var key = List<int>();
   var best_fitness_0 = 0;
@@ -33,8 +33,8 @@ BreakerResult break_vigenere (List<int> cipher_bin, int keyLength, List<List<int
       for (var key_ch2 = 0; key_ch2 < vigenereSquare.length; key_ch2++) {
         var fitness = 0;
         for (var text_idx = key_idx; text_idx < (cipher_bin.length - 1); text_idx += keyLength) {
-          var clear_ch1 = vigenereSquare[cipher_bin[text_idx  ]][key_ch1];
-          var clear_ch2 = vigenereSquare[cipher_bin[text_idx+1]][key_ch2];
+          var clear_ch1 = vigenereSquare[cipher_bin[text_idx]][key_ch1];
+          var clear_ch2 = vigenereSquare[cipher_bin[text_idx + 1]][key_ch2];
           fitness += bigrams[clear_ch1][clear_ch2];
         }
         if (fitness > best_fitness) {
@@ -42,8 +42,7 @@ BreakerResult break_vigenere (List<int> cipher_bin, int keyLength, List<List<int
           best_key_ch1 = key_ch1;
           best_key_ch2 = key_ch2;
         }
-        if (counterFunction != null)
-          counterFunction();
+        if (counterFunction != null) counterFunction();
       }
     }
     if (key_idx == 0) {
@@ -58,12 +57,11 @@ BreakerResult break_vigenere (List<int> cipher_bin, int keyLength, List<List<int
   }
   key[0] = (best_fitness > best_fitness_0) ? best_key_ch2 : best_key_ch1_0;
 
-  return BreakerResult(
-    key: key
-  );
+  return BreakerResult(key: key);
 }
 
-BreakerResult break_vigenereAutoKey (List<int> cipher_bin, int keyLength, List<List<int>> vigenereSquare, List<List<int>> bigrams) {
+BreakerResult break_vigenereAutoKey(
+    List<int> cipher_bin, int keyLength, List<List<int>> vigenereSquare, List<List<int>> bigrams) {
   var key = List<int>();
   var best_fitness_0 = 0;
   var best_key_ch1_0 = 0;
@@ -85,16 +83,15 @@ BreakerResult break_vigenereAutoKey (List<int> cipher_bin, int keyLength, List<L
           var clear_ch1 = 0;
           var clear_ch2 = 0;
           if (text_idx < keyLength) {
-            clear_ch1 = vigenereSquare[cipher_bin[text_idx  ]][key_ch1];
-            clear_ch2 = vigenereSquare[cipher_bin[text_idx+1]][key_ch2];
+            clear_ch1 = vigenereSquare[cipher_bin[text_idx]][key_ch1];
+            clear_ch2 = vigenereSquare[cipher_bin[text_idx + 1]][key_ch2];
           } else {
-            clear_ch1 = vigenereSquare[cipher_bin[text_idx  ]][autoKey[text_idx  ]];
-            clear_ch2 = vigenereSquare[cipher_bin[text_idx+1]][autoKey[text_idx+1]];
+            clear_ch1 = vigenereSquare[cipher_bin[text_idx]][autoKey[text_idx]];
+            clear_ch2 = vigenereSquare[cipher_bin[text_idx + 1]][autoKey[text_idx + 1]];
           }
-          autoKey[text_idx  +keyLength] = clear_ch1;
-          autoKey[text_idx+1+keyLength] = clear_ch2;
+          autoKey[text_idx + keyLength] = clear_ch1;
+          autoKey[text_idx + 1 + keyLength] = clear_ch2;
           fitness += bigrams[clear_ch1][clear_ch2];
-
         }
         if (fitness > best_fitness) {
           best_fitness = fitness;
@@ -115,7 +112,5 @@ BreakerResult break_vigenereAutoKey (List<int> cipher_bin, int keyLength, List<L
   }
   key[0] = (best_fitness > best_fitness_0) ? best_key_ch2 : best_key_ch1_0;
 
-  return BreakerResult(
-      key: key
-  );
+  return BreakerResult(key: key);
 }

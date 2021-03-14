@@ -70,9 +70,6 @@ class TrithemiusState extends State<Trithemius> {
       output = decryptTrithemius(_currentInput, aValue: _currentAValue);
     }
 
-    return GCWDefaultOutput(
-      child: output
-    );
-
+    return GCWDefaultOutput(child: output);
   }
 }

@@ -37,7 +37,7 @@ import 'package:location/location.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-enum _LayerType {OPENSTREETMAP_MAPNIK, MAPBOX_SATELLITE}
+enum _LayerType { OPENSTREETMAP_MAPNIK, MAPBOX_SATELLITE }
 
 final OSM_TEXT = 'coords_mapview_osm';
 final OSM_URL = 'coords_mapview_osm_url';
@@ -53,16 +53,9 @@ class GCWMapView extends StatefulWidget {
   List<GCWMapPolyline> polylines;
   final bool isEditable;
 
-  GCWMapView({
-    Key key,
-    this.points,
-    this.polylines,
-    this.isEditable: false
-  }) : super(key: key) {
-    if (points == null)
-      points = [];
-    if (polylines == null)
-      polylines = [];
+  GCWMapView({Key key, this.points, this.polylines, this.isEditable: false}) : super(key: key) {
+    if (points == null) points = [];
+    if (polylines == null) polylines = [];
   }
 
   @override
@@ -90,8 +83,7 @@ class GCWMapViewState extends State<GCWMapView> {
   Length defaultLengthUnit;
 
   _getInitialBounds() {
-    if (widget.points == null || widget.points.length == 0)
-      return _DEFAULT_BOUNDS;
+    if (widget.points == null || widget.points.length == 0) return _DEFAULT_BOUNDS;
 
     var _bounds = LatLngBounds();
     widget.points.forEach((point) => _bounds.extend(point.point));
@@ -108,8 +100,7 @@ class GCWMapViewState extends State<GCWMapView> {
     super.initState();
     _popupLayerController.mapController = _mapController;
 
-    if (widget.isEditable)
-      _persistanceAdapter = MapViewPersistenceAdapter(widget);
+    if (widget.isEditable) _persistanceAdapter = MapViewPersistenceAdapter(widget);
 
     defaultLengthUnit = getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
   }
@@ -130,12 +121,10 @@ class GCWMapViewState extends State<GCWMapView> {
   }
 
   _toggleLocationListening() {
-    if (_currentLocationPermissionGranted == false)
-      return;
+    if (_currentLocationPermissionGranted == false) return;
 
     if (_locationSubscription == null) {
-      _locationSubscription = _location.onLocationChanged
-          .handleError((error) {
+      _locationSubscription = _location.onLocationChanged.handleError((error) {
         _cancelLocationSubscription();
       }).listen((LocationData currentLocation) {
         setState(() {
@@ -178,113 +167,92 @@ class GCWMapViewState extends State<GCWMapView> {
     }
 
     var layer = _currentLayer == _LayerType.MAPBOX_SATELLITE && _mapBoxToken != null && _mapBoxToken != ''
-      ? TileLayerOptions(
-          urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
-          additionalOptions: {
-            'accessToken': _mapBoxToken
-          },
-          tileProvider: CachedNetworkTileProvider()
-        )
-      : TileLayerOptions(
-          urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          subdomains: ['a', 'b', 'c'],
-          tileProvider: CachedNetworkTileProvider()
-        );
+        ? TileLayerOptions(
+            urlTemplate: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={accessToken}',
+            additionalOptions: {'accessToken': _mapBoxToken},
+            tileProvider: CachedNetworkTileProvider())
+        : TileLayerOptions(
+            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            subdomains: ['a', 'b', 'c'],
+            tileProvider: CachedNetworkTileProvider());
 
     var layers = <LayerOptions>[layer];
     layers.addAll(_buildLinesAndMarkersLayers());
 
     return Listener(
-      onPointerSignal: handleSignal,
-      child: Stack(
-        children: [
-          FlutterMap(
-            mapController: _mapController,
-            options: MapOptions(
-              bounds: _getInitialBounds(),
-              boundsOptions: FitBoundsOptions(padding: EdgeInsets.all(30.0)),
-              minZoom: 1.0,
-              maxZoom: 18.0,
-              plugins: [PopupMarkerPlugin(), TappablePolylineMapPlugin()],
-              onTap: (_) => _popupLayerController.hidePopup(),
-              onLongPress: widget.isEditable ? (LatLng coordinate) {
-                setState(() {
-                  var newPoint = _persistanceAdapter.addMapPoint(coordinate);
+        onPointerSignal: handleSignal,
+        child: Stack(
+          children: [
+            FlutterMap(
+              mapController: _mapController,
+              options: MapOptions(
+                  bounds: _getInitialBounds(),
+                  boundsOptions: FitBoundsOptions(padding: EdgeInsets.all(30.0)),
+                  minZoom: 1.0,
+                  maxZoom: 18.0,
+                  plugins: [PopupMarkerPlugin(), TappablePolylineMapPlugin()],
+                  onTap: (_) => _popupLayerController.hidePopup(),
+                  onLongPress: widget.isEditable
+                      ? (LatLng coordinate) {
+                          setState(() {
+                            var newPoint = _persistanceAdapter.addMapPoint(coordinate);
 
-                  if (_isPolylineDrawing) {
-                    _persistanceAdapter.addMapPointIntoPolyline(newPoint, widget.polylines.last);
-                  }
-                });
-              } : null
+                            if (_isPolylineDrawing) {
+                              _persistanceAdapter.addMapPointIntoPolyline(newPoint, widget.polylines.last);
+                            }
+                          });
+                        }
+                      : null),
+              layers: layers,
             ),
-            layers: layers,
-          ),
-          Positioned(
-            top: 15.0,
-            right: 15.0,
-            child: Column(
-              children: _buildLayerButtons()
-            )
-          ),
-
-          widget.isEditable ? Positioned(
-            top: 15.0,
-            left: 15.0,
-            child: Column(
-              children: _buildEditButtons()
-            )
-          ) : Container(),
-
-          Positioned(
-            bottom: 5.0,
-            left: 5.0,
-            child: InkWell(
-              child: Opacity(
-                child: Container(
-                  color: COLOR_MAP_LICENSETEXT_BACKGROUND,
-                  child: Text(
-                    i18n(context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_TEXT : MAPBOX_SATELLITE_TEXT),
-                    style: TextStyle(
-                      color: COLOR_MAP_LICENSETEXT,
-                      fontSize: defaultFontSize() - 4,
-                      decoration: TextDecoration.underline
-                    )
-                  )
+            Positioned(top: 15.0, right: 15.0, child: Column(children: _buildLayerButtons())),
+            widget.isEditable
+                ? Positioned(top: 15.0, left: 15.0, child: Column(children: _buildEditButtons()))
+                : Container(),
+            Positioned(
+              bottom: 5.0,
+              left: 5.0,
+              child: InkWell(
+                child: Opacity(
+                  child: Container(
+                      color: COLOR_MAP_LICENSETEXT_BACKGROUND,
+                      child: Text(
+                          i18n(context,
+                              _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_TEXT : MAPBOX_SATELLITE_TEXT),
+                          style: TextStyle(
+                              color: COLOR_MAP_LICENSETEXT,
+                              fontSize: defaultFontSize() - 4,
+                              decoration: TextDecoration.underline))),
+                  opacity: 0.7,
                 ),
-                opacity: 0.7,
+                onTap: () {
+                  launch(
+                      i18n(context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_URL : MAPBOX_SATELLITE_URL));
+                },
               ),
-              onTap: () {
-                launch(i18n(context, _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? OSM_URL : MAPBOX_SATELLITE_URL));
-              },
-            ),
-          )
-        ],
-      )
-    );
+            )
+          ],
+        ));
   }
 
   List<LayerOptions> _buildLinesAndMarkersLayers() {
     var layers = <LayerOptions>[];
 
     // build accuracy circle for user position
-    if (
-         _locationSubscription != null && !_locationSubscription.isPaused
-      && _currentAccuracy != null && _currentPosition != null
-    ) {
-      layers.add(
-        CircleLayerOptions(
-          circles: [
-            CircleMarker(
-              point: _currentPosition,
-              borderStrokeWidth: 1,
-              useRadiusInMeter: true,
-              radius: _currentAccuracy,
-              color: Colors.white.withOpacity(0.0), // hack for: without color
-              borderColor: COLOR_MAP_USERPOSITION,
-            )
-          ]
+    if (_locationSubscription != null &&
+        !_locationSubscription.isPaused &&
+        _currentAccuracy != null &&
+        _currentPosition != null) {
+      layers.add(CircleLayerOptions(circles: [
+        CircleMarker(
+          point: _currentPosition,
+          borderStrokeWidth: 1,
+          useRadiusInMeter: true,
+          radius: _currentAccuracy,
+          color: Colors.white.withOpacity(0.0), // hack for: without color
+          borderColor: COLOR_MAP_USERPOSITION,
         )
-      );
+      ]));
     }
 
     List<Marker> _markers = _buildMarkers();
@@ -295,28 +263,24 @@ class GCWMapViewState extends State<GCWMapView> {
 
     layers.addAll([
       TappablePolylineLayerOptions(
-        polylineCulling: true,
-        polylines: _polylines,
-        onTap: (polyline) => _showPolylineDialog(polyline),
-        onMiss: () {} //Bug in framework: https://github.com/OwnWeb/flutter_map_tappable_polyline/issues/20
-      ),
-      MarkerLayerOptions(
-        markers: _markers
-      ),
+          polylineCulling: true,
+          polylines: _polylines,
+          onTap: (polyline) => _showPolylineDialog(polyline),
+          onMiss: () {} //Bug in framework: https://github.com/OwnWeb/flutter_map_tappable_polyline/issues/20
+          ),
+      MarkerLayerOptions(markers: _markers),
       PopupMarkerLayerOptions(
-        markers: _markers,
-        popupSnap: PopupSnap.top,
-        popupController: _popupLayerController,
-        popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker)
-      ),
+          markers: _markers,
+          popupSnap: PopupSnap.top,
+          popupController: _popupLayerController,
+          popupBuilder: (BuildContext _, Marker marker) => _buildPopup(marker)),
     ]);
 
     return layers;
   }
 
   _showPolylineDialog(_GCWTappablePolyline polyline) {
-    if (polyline == null)
-      return;
+    if (polyline == null) return;
 
     var text;
     var copyableText;
@@ -333,114 +297,102 @@ class GCWMapViewState extends State<GCWMapView> {
     if (widget.isEditable) {
       dialogButtons.addAll([
         GCWDialogButton(
-          text: 'Edit',
-          onPressed: () {
-            if (child is GCWMapPolyline) {
-              Navigator.push(context, NoAnimationMaterialPageRoute(
-                builder: (context) => GCWTool(
-                  tool: MapPolylineEditor(polyline: child),
-                  toolName: i18n(context, 'coords_openmap_lineeditor')
-                )
-              ))
-              .whenComplete(() {
-                setState(() {
-                  if (child is GCWMapPolyline) {
-                    _persistanceAdapter.updateMapPolyline(child);
-                  }
-                });
-              });
-            } else if (child is GCWMapCircle) {
-              var mapPoint = widget.points.firstWhere((element) => element.circle == child);
-              Navigator.push(context, NoAnimationMaterialPageRoute(
-                builder: (context) => GCWTool(
-                  tool: MapPointEditor(mapPoint: mapPoint, lengthUnit: defaultLengthUnit),
-                  toolName: i18n(context, 'coords_openmap_lineeditor')
-                )
-              ))
-              .whenComplete(() {
-                setState(() {
-                  _persistanceAdapter.updateMapPoint(mapPoint);
-                  _mapController.move(mapPoint.point, _mapController.zoom);
-                });
-              });
-            }
-          }
-        ),
-        GCWDialogButton(
-          text: i18n(context, 'coords_openmap_lineremove_button'),
-          onPressed: () {
-            if (child is GCWMapPolyline) {
-              showGCWDialog(
-                context,
-                i18n(context, 'coords_openmap_lineremove_dialog_title'),
-                Container(
-                  width: 250,
-                  height: 100,
-                  child: GCWText(
-                    text: i18n(context, 'coords_openmap_lineremove_dialog_text'),
-                    style: gcwDialogTextStyle()
-                  ),
-                ),
-                [
-                  GCWDialogButton(
-                    text: i18n(context, 'coords_openmap_lineremove_dialog_keeppoints'),
-                    onPressed: () {
-                      setState(() {
-                        _persistanceAdapter.removeMapPolyline(child);
-                      });
+            text: 'Edit',
+            onPressed: () {
+              if (child is GCWMapPolyline) {
+                Navigator.push(
+                    context,
+                    NoAnimationMaterialPageRoute(
+                        builder: (context) => GCWTool(
+                            tool: MapPolylineEditor(polyline: child),
+                            toolName: i18n(context, 'coords_openmap_lineeditor')))).whenComplete(() {
+                  setState(() {
+                    if (child is GCWMapPolyline) {
+                      _persistanceAdapter.updateMapPolyline(child);
                     }
-                  ),
-                  GCWDialogButton(
-                    text: i18n(context, 'coords_openmap_lineremove_dialog_removepoints'),
-                    onPressed: () {
-                      setState(() {
-                        _persistanceAdapter.removeMapPolyline(child, removePoints: true);
-                      });
-                    }
-                  ),
-                ]
-              );
-            } else if (child is GCWMapCircle) {
-              setState(() {
+                  });
+                });
+              } else if (child is GCWMapCircle) {
                 var mapPoint = widget.points.firstWhere((element) => element.circle == child);
-                mapPoint.circle = null;
-                _persistanceAdapter.updateMapPoint(mapPoint);
-              });
-            }
-          }
-        ),
+                Navigator.push(
+                    context,
+                    NoAnimationMaterialPageRoute(
+                        builder: (context) => GCWTool(
+                            tool: MapPointEditor(mapPoint: mapPoint, lengthUnit: defaultLengthUnit),
+                            toolName: i18n(context, 'coords_openmap_lineeditor')))).whenComplete(() {
+                  setState(() {
+                    _persistanceAdapter.updateMapPoint(mapPoint);
+                    _mapController.move(mapPoint.point, _mapController.zoom);
+                  });
+                });
+              }
+            }),
+        GCWDialogButton(
+            text: i18n(context, 'coords_openmap_lineremove_button'),
+            onPressed: () {
+              if (child is GCWMapPolyline) {
+                showGCWDialog(
+                    context,
+                    i18n(context, 'coords_openmap_lineremove_dialog_title'),
+                    Container(
+                      width: 250,
+                      height: 100,
+                      child: GCWText(
+                          text: i18n(context, 'coords_openmap_lineremove_dialog_text'), style: gcwDialogTextStyle()),
+                    ),
+                    [
+                      GCWDialogButton(
+                          text: i18n(context, 'coords_openmap_lineremove_dialog_keeppoints'),
+                          onPressed: () {
+                            setState(() {
+                              _persistanceAdapter.removeMapPolyline(child);
+                            });
+                          }),
+                      GCWDialogButton(
+                          text: i18n(context, 'coords_openmap_lineremove_dialog_removepoints'),
+                          onPressed: () {
+                            setState(() {
+                              _persistanceAdapter.removeMapPolyline(child, removePoints: true);
+                            });
+                          }),
+                    ]);
+              } else if (child is GCWMapCircle) {
+                setState(() {
+                  var mapPoint = widget.points.firstWhere((element) => element.circle == child);
+                  mapPoint.circle = null;
+                  _persistanceAdapter.updateMapPoint(mapPoint);
+                });
+              }
+            }),
       ]);
     }
 
-    showGCWDialog(context, '',
-      Container(
-        width: 250,
-        height: defaultFontSize() * 2,
-        child: GCWOutputText(
-          text: text,
-          style: gcwDialogTextStyle(),
-          copyText: copyableText,
-        ) ,
-      ),
-      dialogButtons,
-      closeOnOutsideTouch: true
-    );
+    showGCWDialog(
+        context,
+        '',
+        Container(
+          width: 250,
+          height: defaultFontSize() * 2,
+          child: GCWOutputText(
+            text: text,
+            style: gcwDialogTextStyle(),
+            copyText: copyableText,
+          ),
+        ),
+        dialogButtons,
+        closeOnOutsideTouch: true);
   }
 
   _buildMarkers() {
     var points = List<GCWMapPoint>.from(widget.points.where((point) => point.isVisible));
 
     // Add User Position
-    if (
-         _locationSubscription != null && !_locationSubscription.isPaused
-      && _currentPosition != null
-    ) {
+    if (_locationSubscription != null && !_locationSubscription.isPaused && _currentPosition != null) {
       points.add(GCWMapPoint(
-        point: _currentPosition,
-        markerText: i18n(context, 'common_userposition'),
-        color: COLOR_MAP_USERPOSITION,
-        coordinateFormat: defaultCoordFormat()
-      ));
+          point: _currentPosition,
+          markerText: i18n(context, 'common_userposition'),
+          color: COLOR_MAP_USERPOSITION,
+          coordinateFormat: defaultCoordFormat()));
     }
 
     return points.map((_point) {
@@ -463,13 +415,12 @@ class GCWMapViewState extends State<GCWMapView> {
       var marker = _point.isEditable ? _createDragableIcon(_point, icon) : icon;
 
       return _GCWMarker(
-        coordinateDescription: _buildPopupCoordinateDescription(_point),
-        coordinateText: _buildPopupCoordinateText(_point),
-        width: 28.3,
-        height: 28.3,
-        mapPoint: _point,
-        builder: (context) => marker
-      );
+          coordinateDescription: _buildPopupCoordinateDescription(_point),
+          coordinateText: _buildPopupCoordinateText(_point),
+          width: 28.3,
+          height: 28.3,
+          mapPoint: _point,
+          builder: (context) => marker);
     }).toList();
   }
 
@@ -480,7 +431,8 @@ class GCWMapViewState extends State<GCWMapView> {
 
         CustomPoint position = Epsg3857().latLngToPoint(point.point, _mapController.zoom);
         Offset delta = details.delta;
-        LatLng pointToLatLng = Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom);
+        LatLng pointToLatLng =
+            Epsg3857().pointToLatLng(position + CustomPoint(delta.dx, delta.dy), _mapController.zoom);
 
         point.point = pointToLatLng;
 
@@ -509,8 +461,7 @@ class GCWMapViewState extends State<GCWMapView> {
       ],
     );
 
-    if (stacked == null)
-      return icon;
+    if (stacked == null) return icon;
 
     return Stack(
       alignment: Alignment.bottomRight,
@@ -541,11 +492,11 @@ class GCWMapViewState extends State<GCWMapView> {
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.content_paste),
         onPasted: (pastedCoordinate) {
-          if (pastedCoordinate == null)
-            return;
+          if (pastedCoordinate == null) return;
 
           setState(() {
-            _persistanceAdapter.addMapPoint(pastedCoordinate['coordinate'], coordinateFormat: {'format': pastedCoordinate['format']});
+            _persistanceAdapter
+                .addMapPoint(pastedCoordinate['coordinate'], coordinateFormat: {'format': pastedCoordinate['format']});
             _mapController.move(pastedCoordinate['coordinate'], _mapController.zoom);
           });
         },
@@ -562,8 +513,8 @@ class GCWMapViewState extends State<GCWMapView> {
       GCWIconButton(
         backgroundColor: _isPolylineDrawing ? COLOR_MAP_DRAWLINE_ICONBUTTON : COLOR_MAP_ICONBUTTONS,
         customIcon: _isPolylineDrawing
-          ? _createIconButtonIcons(Icons.timeline, stacked: Icons.priority_high)
-          : _createIconButtonIcons(Icons.timeline, stacked: Icons.add),
+            ? _createIconButtonIcons(Icons.timeline, stacked: Icons.priority_high)
+            : _createIconButtonIcons(Icons.timeline, stacked: Icons.add),
         onPressed: () {
           setState(() {
             if (_isPolylineDrawing) {
@@ -576,36 +527,33 @@ class GCWMapViewState extends State<GCWMapView> {
         },
       ),
       Container(
-        padding: EdgeInsets.only(top: _BUTTONGROUP_MARGIN),
-        child: GCWIconButton(
-          backgroundColor: COLOR_MAP_ICONBUTTONS,
-          customIcon: _createIconButtonIcons(Icons.delete),
-          onPressed: () {
-            showGCWDialog(
-              context,
-              i18n(context, 'coords_openmap_removeeverything_title'),
-              Container(
-                width: 250,
-                height: 100,
-                child: GCWText(
-                  text: i18n(context, 'coords_openmap_removeeverything_text'),
-                  style: gcwDialogTextStyle(),
-                ),
-              ),
-              [
-                GCWDialogButton(
-                  text: i18n(context, 'common_ok'),
-                  onPressed: () {
-                    setState(() {
-                      _persistanceAdapter.clearMapView();
-                    });
-                  }
-                ),
-              ]
-            );
-          },
-        )
-      ),
+          padding: EdgeInsets.only(top: _BUTTONGROUP_MARGIN),
+          child: GCWIconButton(
+            backgroundColor: COLOR_MAP_ICONBUTTONS,
+            customIcon: _createIconButtonIcons(Icons.delete),
+            onPressed: () {
+              showGCWDialog(
+                  context,
+                  i18n(context, 'coords_openmap_removeeverything_title'),
+                  Container(
+                    width: 250,
+                    height: 100,
+                    child: GCWText(
+                      text: i18n(context, 'coords_openmap_removeeverything_text'),
+                      style: gcwDialogTextStyle(),
+                    ),
+                  ),
+                  [
+                    GCWDialogButton(
+                        text: i18n(context, 'common_ok'),
+                        onPressed: () {
+                          setState(() {
+                            _persistanceAdapter.clearMapView();
+                          });
+                        }),
+                  ]);
+            },
+          )),
       GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.save),
@@ -621,39 +569,35 @@ class GCWMapViewState extends State<GCWMapView> {
   _buildLayerButtons() {
     var buttons = [
       GCWIconButton(
-        backgroundColor: COLOR_MAP_ICONBUTTONS,
-        customIcon: _createIconButtonIcons(Icons.layers),
-        onPressed: () {
-          _currentLayer = _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK ? _LayerType.MAPBOX_SATELLITE : _LayerType.OPENSTREETMAP_MAPNIK;
+          backgroundColor: COLOR_MAP_ICONBUTTONS,
+          customIcon: _createIconButtonIcons(Icons.layers),
+          onPressed: () {
+            _currentLayer = _currentLayer == _LayerType.OPENSTREETMAP_MAPNIK
+                ? _LayerType.MAPBOX_SATELLITE
+                : _LayerType.OPENSTREETMAP_MAPNIK;
 
-          if (_currentLayer == _LayerType.MAPBOX_SATELLITE && (_mapBoxToken == null || _mapBoxToken == '')) {
-            _loadToken('mapbox').then((token) {
-              setState(() {
-                _mapBoxToken = token;
+            if (_currentLayer == _LayerType.MAPBOX_SATELLITE && (_mapBoxToken == null || _mapBoxToken == '')) {
+              _loadToken('mapbox').then((token) {
+                setState(() {
+                  _mapBoxToken = token;
+                });
               });
-            });
-          } else {
-            setState(() {});
-          }
-        }
-      ),
+            } else {
+              setState(() {});
+            }
+          }),
     ];
 
-    if (
-         _currentLocationPermissionGranted != null && _currentLocationPermissionGranted
-      && _locationSubscription != null
-    ) {
-      buttons.add(
-        GCWIconButton(
+    if (_currentLocationPermissionGranted != null &&
+        _currentLocationPermissionGranted &&
+        _locationSubscription != null) {
+      buttons.add(GCWIconButton(
           backgroundColor: COLOR_MAP_ICONBUTTONS,
           customIcon: _createIconButtonIcons(_locationSubscription.isPaused ? Icons.location_off : Icons.location_on),
           onPressed: () {
             _toggleLocationListening();
-            if (!_locationSubscription.isPaused)
-              _manuallyToggledPosition = true;
-          }
-        )
-      );
+            if (!_locationSubscription.isPaused) _manuallyToggledPosition = true;
+          }));
     }
 
     return buttons;
@@ -669,167 +613,140 @@ class GCWMapViewState extends State<GCWMapView> {
 
   _buildPopupCoordinateText(GCWMapPoint point) {
     var coordinateFormat = defaultCoordFormat();
-    if (point.coordinateFormat != null)
-      coordinateFormat = point.coordinateFormat;
+    if (point.coordinateFormat != null) coordinateFormat = point.coordinateFormat;
 
     return formatCoordOutput(point.point, coordinateFormat, getEllipsoidByName(ELLIPSOID_NAME_WGS84));
   }
 
   _buildPopupCoordinateDescription(GCWMapPoint point) {
-    if (point.markerText == null || point.markerText.length == 0)
-      return null;
+    if (point.markerText == null || point.markerText.length == 0) return null;
 
     return point.markerText;
   }
 
   _buildPopup(Marker marker) {
-
     ThemeColors colors = themeColors();
     _GCWMarker gcwMarker = marker as _GCWMarker;
 
     var containerHeightMultiplier = 7;
-    if (gcwMarker.mapPoint.hasCircle())
-      containerHeightMultiplier += 3;
-    if (gcwMarker.mapPoint.isEditable)
-      containerHeightMultiplier += 2;
+    if (gcwMarker.mapPoint.hasCircle()) containerHeightMultiplier += 3;
+    if (gcwMarker.mapPoint.isEditable) containerHeightMultiplier += 2;
     if (gcwMarker.coordinateDescription != null && gcwMarker.coordinateDescription.length > 0)
       containerHeightMultiplier += 2;
 
     return Container(
-      width: 250,
-      height: defaultFontSize() * containerHeightMultiplier,
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.only(
-        bottom: 5
-      ),
-      decoration: ShapeDecoration(
-        color: colors.dialog(),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(roundedBorderRadius),
-          side:  BorderSide(
-            width: 1,
-            color: colors.dialogText(),
+        width: 250,
+        height: defaultFontSize() * containerHeightMultiplier,
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.only(bottom: 5),
+        decoration: ShapeDecoration(
+          color: colors.dialog(),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(roundedBorderRadius),
+            side: BorderSide(
+              width: 1,
+              color: colors.dialogText(),
+            ),
           ),
         ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          gcwMarker.coordinateDescription == null ? Container()
-            : Container(
-                child: GCWText(
-                  text: gcwMarker.coordinateDescription,
-                  style: gcwDialogTextStyle().copyWith(
-                    fontWeight: FontWeight.bold
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            gcwMarker.coordinateDescription == null
+                ? Container()
+                : Container(
+                    child: GCWText(
+                        text: gcwMarker.coordinateDescription,
+                        style: gcwDialogTextStyle().copyWith(fontWeight: FontWeight.bold)),
+                    padding: EdgeInsets.only(bottom: 10),
+                  ),
+            GCWOutputText(text: gcwMarker.coordinateText, style: gcwDialogTextStyle()),
+            gcwMarker.mapPoint.hasCircle()
+                ? GCWOutputText(
+                    text: i18n(context, 'common_radius') + ': ' + _formatLengthOutput(gcwMarker.mapPoint.circle.radius),
+                    style: gcwDialogTextStyle(),
+                    copyText: gcwMarker.mapPoint.circle.radius.toString(),
                   )
-                ),
-                padding: EdgeInsets.only(
-                  bottom: 10
-                ),
-              ),
-          GCWOutputText(
-            text: gcwMarker.coordinateText,
-            style: gcwDialogTextStyle()
-          ),
-          gcwMarker.mapPoint.hasCircle()
-            ? GCWOutputText(
-                text: i18n(context, 'common_radius') + ': ' + _formatLengthOutput(gcwMarker.mapPoint.circle.radius),
-                style: gcwDialogTextStyle(),
-                copyText: gcwMarker.mapPoint.circle.radius.toString(),
-              )
-            : Container(),
-          gcwMarker.mapPoint.isEditable
-            ? Row(
-                children: [
-                  _isPolylineDrawing
-                    ? GCWDialogButton(
-                        text: i18n(context, 'coords_openmap_linetohere'),
-                        suppressClose: true,
+                : Container(),
+            gcwMarker.mapPoint.isEditable
+                ? Row(children: [
+                    _isPolylineDrawing
+                        ? GCWDialogButton(
+                            text: i18n(context, 'coords_openmap_linetohere'),
+                            suppressClose: true,
+                            onPressed: () {
+                              setState(() {
+                                var polyline = widget.polylines.last;
+                                _persistanceAdapter.addMapPointIntoPolyline(gcwMarker.mapPoint, polyline);
+
+                                _popupLayerController.hidePopup();
+                              });
+                            })
+                        : GCWDialogButton(
+                            text: i18n(context, 'coords_openmap_linefromhere'),
+                            suppressClose: true,
+                            onPressed: () {
+                              setState(() {
+                                _isPolylineDrawing = true;
+
+                                var newPolyline = _persistanceAdapter.createMapPolyline();
+                                _persistanceAdapter.addMapPointIntoPolyline(gcwMarker.mapPoint, newPolyline);
+
+                                _popupLayerController.hidePopup();
+                              });
+                            }),
+                    GCWIconButton(
+                        iconData: Icons.edit,
+                        iconColor: colors.dialogText(),
                         onPressed: () {
-                          setState(() {
-                            var polyline = widget.polylines.last;
-                            _persistanceAdapter.addMapPointIntoPolyline(gcwMarker.mapPoint, polyline);
-
-                            _popupLayerController.hidePopup();
+                          Navigator.push(
+                              context,
+                              NoAnimationMaterialPageRoute(
+                                  builder: (context) => GCWTool(
+                                      tool: MapPointEditor(mapPoint: gcwMarker.mapPoint, lengthUnit: defaultLengthUnit),
+                                      toolName: i18n(context, 'coords_openmap_pointeditor')))).whenComplete(() {
+                            setState(() {
+                              _persistanceAdapter.updateMapPoint(gcwMarker.mapPoint);
+                              _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);
+                              _popupLayerController.hidePopup();
+                            });
                           });
-                        }
-                      )
-                    : GCWDialogButton(
-                        text: i18n(context, 'coords_openmap_linefromhere'),
-                        suppressClose: true,
-                        onPressed: () {
-                          setState(() {
-                            _isPolylineDrawing = true;
-
-                            var newPolyline = _persistanceAdapter.createMapPolyline();
-                            _persistanceAdapter.addMapPointIntoPolyline(gcwMarker.mapPoint, newPolyline);
-
-                            _popupLayerController.hidePopup();
-                          });
-                        }
-                      ),
-                  GCWIconButton(
-                    iconData: Icons.edit,
-                    iconColor: colors.dialogText(),
-                    onPressed: () {
-                      Navigator.push(context, NoAnimationMaterialPageRoute(
-                        builder: (context) => GCWTool(
-                          tool: MapPointEditor(mapPoint: gcwMarker.mapPoint, lengthUnit: defaultLengthUnit),
-                          toolName: i18n(context, 'coords_openmap_pointeditor')
-                          )
-                      ))
-                      .whenComplete(() {
+                        }),
+                    GCWIconButton(
+                      iconData: Icons.delete,
+                      iconColor: colors.dialogText(),
+                      onPressed: () {
                         setState(() {
-                          _persistanceAdapter.updateMapPoint(gcwMarker.mapPoint);
-                          _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);
+                          _persistanceAdapter.removeMapPoint(gcwMarker.mapPoint);
                           _popupLayerController.hidePopup();
                         });
-                      });
-                    }
-                  ),
-                  GCWIconButton(
-                    iconData: Icons.delete,
-                    iconColor: colors.dialogText(),
-                    onPressed: () {
-                      setState(() {
-                        _persistanceAdapter.removeMapPoint(gcwMarker.mapPoint);
-                        _popupLayerController.hidePopup();
-                      });
-                    },
-                  )
-                ]
-              )
-            : Container()
-        ],
-      )
-    );
+                      },
+                    )
+                  ])
+                : Container()
+          ],
+        ));
   }
 
   List<Polyline> _addPolylines() {
     List<Polyline> _polylines = widget.polylines.map((polyline) {
       return _GCWTappablePolyline(
-        points: polyline.shape,
-        strokeWidth: _POLYGON_STROKEWIDTH,
-        color: polyline.color,
-        child: polyline
-      );
+          points: polyline.shape, strokeWidth: _POLYGON_STROKEWIDTH, color: polyline.color, child: polyline);
     }).toList();
 
     return _polylines;
   }
 
   List<Polyline> _addCircles() {
-    List<Polyline> _polylines = widget.points
-      .where((point) => point.circle != null && point.circle.shape != null)
-      .map((point) {
-        return _GCWTappablePolyline(
+    List<Polyline> _polylines =
+        widget.points.where((point) => point.circle != null && point.circle.shape != null).map((point) {
+      return _GCWTappablePolyline(
           points: point.circle.shape,
           strokeWidth: _POLYGON_STROKEWIDTH,
           color: point.circle.color,
-          child: point.circle
-        );
-      }).toList();
+          child: point.circle);
+    }).toList();
 
     return _polylines;
   }
@@ -853,16 +770,12 @@ class _GCWMarker extends Marker {
 class _GCWTappablePolyline extends TaggedPolyline {
   dynamic child;
 
-  _GCWTappablePolyline({
-    points,
-    strokeWidth,
-    color,
-    this.child
-  }) : super(
-    points: points,
-    strokeWidth: strokeWidth,
-    color: color,
-  );
+  _GCWTappablePolyline({points, strokeWidth, color, this.child})
+      : super(
+          points: points,
+          strokeWidth: strokeWidth,
+          color: color,
+        );
 }
 
 class _GCWMapPopupController extends PopupController {
@@ -870,8 +783,7 @@ class _GCWMapPopupController extends PopupController {
 
   @override
   void togglePopup(Marker marker) {
-    if (mapController != null)
-    mapController.move(marker.point, mapController.zoom);
+    if (mapController != null) mapController.move(marker.point, mapController.zoom);
     super.togglePopup(marker);
   }
 }

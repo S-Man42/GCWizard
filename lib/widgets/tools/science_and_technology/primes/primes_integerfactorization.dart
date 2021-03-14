@@ -38,8 +38,6 @@ class IntegerFactorizationState extends State<IntegerFactorization> {
   }
 
   Widget _buildOutput() {
-    return GCWMultipleOutput(
-      children: integerFactorization(_currentNumber)
-    );
+    return GCWMultipleOutput(children: integerFactorization(_currentNumber));
   }
 }

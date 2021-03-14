@@ -60,11 +60,8 @@ class SunPositionState extends State<SunPosition> {
 
     var julianDate = JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']);
 
-    var sunPosition = logic.SunPosition(
-      _currentCoords,
-      julianDate,
-      getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name'))
-    );
+    var sunPosition =
+        logic.SunPosition(_currentCoords, julianDate, getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name')));
 
     var outputsSun = [
       [i18n(context, 'astronomy_position_eclipticlongitude'), format.format(sunPosition.eclipticLongitude) + '°'],
@@ -73,18 +70,20 @@ class SunPositionState extends State<SunPosition> {
       [i18n(context, 'astronomy_position_azimuth'), format.format(sunPosition.azimuth) + '°'],
       [i18n(context, 'astronomy_position_altitude'), format.format(sunPosition.altitude) + '°'],
       [i18n(context, 'astronomy_position_diameter'), format.format(sunPosition.diameter) + '\''],
-      [i18n(context, 'astronomy_position_distancetoearthcenter'), format.format(sunPosition.distanceToEarthCenter) + ' km'],
+      [
+        i18n(context, 'astronomy_position_distancetoearthcenter'),
+        format.format(sunPosition.distanceToEarthCenter) + ' km'
+      ],
       [i18n(context, 'astronomy_position_distancetoobserver'), format.format(sunPosition.distanceToObserver) + ' km'],
-      [i18n(context, 'astronomy_position_astrologicalsign'), i18n(context, getAstrologicalSign(sunPosition.astrologicalSign))],
+      [
+        i18n(context, 'astronomy_position_astrologicalsign'),
+        i18n(context, getAstrologicalSign(sunPosition.astrologicalSign))
+      ],
     ];
 
     var rowsSunData = columnedMultiLineOutput(context, outputsSun);
 
-    rowsSunData.insert(0,
-      GCWTextDivider(
-        text: i18n(context, 'common_output')
-      )
-    );
+    rowsSunData.insert(0, GCWTextDivider(text: i18n(context, 'common_output')));
 
     var outputsJD = [
       [i18n(context, 'astronomy_position_juliandate'), NumberFormat('0.00000').format(julianDate.julianDate)],
@@ -95,17 +94,11 @@ class SunPositionState extends State<SunPosition> {
 
     var rowsJDData = columnedMultiLineOutput(context, outputsJD);
 
-    rowsJDData.insert(0,
-      GCWTextDivider(
-        text: i18n(context, 'astronomy_position_juliandate')
-      )
-    );
+    rowsJDData.insert(0, GCWTextDivider(text: i18n(context, 'astronomy_position_juliandate')));
 
     var output = rowsSunData;
     output.addAll(rowsJDData);
 
-    return Column(
-      children: output
-    );
+    return Column(children: output);
   }
 }

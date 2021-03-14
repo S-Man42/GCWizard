@@ -1,14 +1,11 @@
 _sanitizePassword(String password, int key) {
-  if (password == null)
-    password = '';
+  if (password == null) password = '';
 
   password = password.toUpperCase().replaceAll(RegExp('[^A-Z]'), 'Z');
 
-  if (password.length < key)
-    password = password.padRight(key, 'Z');
+  if (password.length < key) password = password.padRight(key, 'Z');
 
-  if (password.length > key)
-    password = password.substring(0, key);
+  if (password.length > key) password = password.substring(0, key);
 
   return password;
 }
@@ -56,14 +53,11 @@ List<List<String>> _fillMatrix(String input, int key) {
 }
 
 String encryptRailFence(String input, int key, {int offset, String password}) {
-  if (input == null || input.length == 0)
-    return '';
+  if (input == null || input.length == 0) return '';
 
-  if (key < 2)
-    return input;
+  if (key < 2) return input;
 
-  if (offset == null || offset < 0)
-    offset = 0;
+  if (offset == null || offset < 0) offset = 0;
 
   password = _sanitizePassword(password, key);
 
@@ -75,8 +69,7 @@ String encryptRailFence(String input, int key, {int offset, String password}) {
   var out = '';
   matrix.forEach((row) {
     row.forEach((cell) {
-      if (cell != '.')
-        out += cell;
+      if (cell != '.') out += cell;
     });
   });
 
@@ -84,14 +77,11 @@ String encryptRailFence(String input, int key, {int offset, String password}) {
 }
 
 String decryptRailFence(String input, int key, {int offset, String password}) {
-  if (input == null || input.length == 0)
-    return '';
+  if (input == null || input.length == 0) return '';
 
-  if (key < 2)
-    return input;
+  if (key < 2) return input;
 
-  if (offset == null || offset < 0)
-    offset = 0;
+  if (offset == null || offset < 0) offset = 0;
 
   password = _sanitizePassword(password, key);
 
@@ -103,16 +93,14 @@ String decryptRailFence(String input, int key, {int offset, String password}) {
   int i = 0;
   mapMatrix.asMap().forEach((rowIndex, row) {
     row.asMap().forEach((columnIndex, cell) {
-      if (cell == '\x00')
-        matrix[rowIndex][columnIndex] = input[i++];
+      if (cell == '\x00') matrix[rowIndex][columnIndex] = input[i++];
     });
   });
 
   var out = '';
   for (i = 0; i < input.length + offset; i++) {
     for (int j = 0; j < key; j++) {
-      if (matrix[j][i] != '.')
-        out += matrix[j][i];
+      if (matrix[j][i] != '.') out += matrix[j][i];
     }
   }
 

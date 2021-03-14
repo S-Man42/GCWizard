@@ -17,13 +17,11 @@ class SpoonLanguageState extends State<SpoonLanguage> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(
-          onChanged: (text) {
-            setState(() {
-              _currentInput = text;
-            });
-          }
-        ),
+        GCWTextField(onChanged: (text) {
+          setState(() {
+            _currentInput = text;
+          });
+        }),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -32,20 +30,17 @@ class SpoonLanguageState extends State<SpoonLanguage> {
             });
           },
         ),
-        GCWDefaultOutput(
-          child: _buildOutput()
-        )
+        GCWDefaultOutput(child: _buildOutput())
       ],
     );
   }
 
   _buildOutput() {
-    if (_currentInput == null)
-      return '';
+    if (_currentInput == null) return '';
 
     var out = _currentMode == GCWSwitchPosition.left
-      ? encryptSpoonLanguage(_currentInput)
-      : decryptSpoonLanguage(_currentInput);
+        ? encryptSpoonLanguage(_currentInput)
+        : decryptSpoonLanguage(_currentInput);
 
     return out;
   }

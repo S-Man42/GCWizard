@@ -63,49 +63,45 @@ class GCWCoordsReverseWhereIGoWaldmeisterState extends State<GCWCoordsReverseWhe
       _ControllerC.text = _currentC.toString();
     }
 
-    return Column (
-      children: <Widget>[
-        GCWIntegerSpinner(
-          controller: _ControllerA,
-          focusNode: _FocusNodeA,
-          value: _currentA,
-          min: 0,
-          max: 999999,
-          onChanged: (value) {
-            _currentA = value;
+    return Column(children: <Widget>[
+      GCWIntegerSpinner(
+        controller: _ControllerA,
+        focusNode: _FocusNodeA,
+        value: _currentA,
+        min: 0,
+        max: 999999,
+        onChanged: (value) {
+          _currentA = value;
 
-            if (_ControllerA.text.length == 6)
-              FocusScope.of(context).requestFocus(_FocusNodeB);
-            _setCurrentValueAndEmitOnChange();
-          },
-        ),
-        GCWIntegerSpinner(
-          controller: _ControllerB,
-          focusNode: _FocusNodeB,
-          value: _currentB,
-          min: 0,
-          max: 999999,
-          onChanged: (value) {
-            _currentB = value;
+          if (_ControllerA.text.length == 6) FocusScope.of(context).requestFocus(_FocusNodeB);
+          _setCurrentValueAndEmitOnChange();
+        },
+      ),
+      GCWIntegerSpinner(
+        controller: _ControllerB,
+        focusNode: _FocusNodeB,
+        value: _currentB,
+        min: 0,
+        max: 999999,
+        onChanged: (value) {
+          _currentB = value;
 
-            if (_ControllerB.text.toString().length == 6)
-              FocusScope.of(context).requestFocus(_FocusNodeC);
-            _setCurrentValueAndEmitOnChange();
-          },
-        ),
-        GCWIntegerSpinner(
-          controller: _ControllerC,
-          focusNode: _FocusNodeC,
-          value: _currentC,
-          min: 0,
-          max: 999999,
-          onChanged: (value) {
-            _currentC = value;
-            _setCurrentValueAndEmitOnChange();
-          },
-        )
-      ]
-    );
+          if (_ControllerB.text.toString().length == 6) FocusScope.of(context).requestFocus(_FocusNodeC);
+          _setCurrentValueAndEmitOnChange();
+        },
+      ),
+      GCWIntegerSpinner(
+        controller: _ControllerC,
+        focusNode: _FocusNodeC,
+        value: _currentC,
+        min: 0,
+        max: 999999,
+        onChanged: (value) {
+          _currentC = value;
+          _setCurrentValueAndEmitOnChange();
+        },
+      )
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {

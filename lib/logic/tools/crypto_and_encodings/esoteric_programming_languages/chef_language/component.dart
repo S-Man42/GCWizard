@@ -1,7 +1,6 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/ingredient.dart';
 
 class Component {
-
   State _state;
   int _value;
   String _name;
@@ -44,7 +43,7 @@ class Component {
 
   //@Override
   Component clone() {
-    return Component(_value, _state,_name);
+    return Component(_value, _state, _name);
   }
 
   void liquefy() {

@@ -49,32 +49,28 @@ class GCWCoordsNaturalAreaCodeState extends State<GCWCoordsNaturalAreaCode> {
       _controllerY.text = _currentY;
     }
 
-    return Column (
-        children: <Widget>[
-          GCWTextField(
-            hintText: i18n(context, 'coords_formatconverter_naturalareacode_x'),
-            controller: _controllerX,
-            inputFormatters: [CoordsTextNaturalAreaCodeTextInputFormatter()],
-            onChanged: (ret) {
-              setState(() {
-                _currentX = ret;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
-          GCWTextField(
-            hintText: i18n(context, 'coords_formatconverter_naturalareacode_y'),
-            controller: _controllerY,
-            inputFormatters: [CoordsTextNaturalAreaCodeTextInputFormatter()],
-            onChanged: (ret) {
-              setState(() {
-                _currentY = ret;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
-        ]
-    );
+    return Column(children: <Widget>[
+      GCWTextField(
+          hintText: i18n(context, 'coords_formatconverter_naturalareacode_x'),
+          controller: _controllerX,
+          inputFormatters: [CoordsTextNaturalAreaCodeTextInputFormatter()],
+          onChanged: (ret) {
+            setState(() {
+              _currentX = ret;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+      GCWTextField(
+          hintText: i18n(context, 'coords_formatconverter_naturalareacode_y'),
+          controller: _controllerY,
+          inputFormatters: [CoordsTextNaturalAreaCodeTextInputFormatter()],
+          onChanged: (ret) {
+            setState(() {
+              _currentY = ret;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {

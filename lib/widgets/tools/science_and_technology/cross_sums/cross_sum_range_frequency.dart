@@ -36,9 +36,7 @@ class CrossSumRangeFrequencyState extends State<CrossSumRangeFrequency> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextDivider(
-          text: i18n(context, 'crosssum_range_range')
-        ),
+        GCWTextDivider(text: i18n(context, 'crosssum_range_range')),
         GCWIntegerSpinner(
           value: _currentRangeStart,
           onChanged: (value) {
@@ -83,9 +81,7 @@ class CrossSumRangeFrequencyState extends State<CrossSumRangeFrequency> {
             });
           },
         ),
-        GCWDefaultOutput(
-          child: _calculateOutput()
-        )
+        GCWDefaultOutput(child: _calculateOutput())
       ],
     );
   }
@@ -97,7 +93,8 @@ class CrossSumRangeFrequencyState extends State<CrossSumRangeFrequency> {
           _currentFrequencies = crossSumRangeFrequencies(_currentRangeStart, _currentRangeEnd);
           break;
         case CrossSumType.ITERATED:
-          _currentFrequencies = crossSumRangeFrequencies(_currentRangeStart, _currentRangeEnd, type: CrossSumType.ITERATED);
+          _currentFrequencies =
+              crossSumRangeFrequencies(_currentRangeStart, _currentRangeEnd, type: CrossSumType.ITERATED);
           break;
       }
     });
@@ -114,8 +111,6 @@ class CrossSumRangeFrequencyState extends State<CrossSumRangeFrequency> {
       outputData.sort((a, b) => b[1].compareTo(a[1]));
     }
 
-    return Column(
-      children: columnedMultiLineOutput(context, outputData)
-    );
+    return Column(children: columnedMultiLineOutput(context, outputData));
   }
 }

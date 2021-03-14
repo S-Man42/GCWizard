@@ -59,36 +59,35 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
 
       _currentLonZone['value'] = mgrs.utmZone.lonZone;
       _currentLatZone = mgrs.utmZone.latZone;
-      _currentDigraphEasting = mgrs.digraph[0];;
-      _currentDigraphNorthing = mgrs.digraph[1];;
+      _currentDigraphEasting = mgrs.digraph[0];
+      ;
+      _currentDigraphNorthing = mgrs.digraph[1];
+      ;
 
       _LonZoneController.text = _currentLonZone['value'].toString();
       _EastingController.text = _currentEasting['value'].toString();
       _NorthingController.text = _currentNorthing['value'].toString();
     }
 
-    return Column (
+    return Column(children: <Widget>[
+      Row(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  child: GCWIntegerTextField(
-                    hintText: i18n(context, 'coords_formatconverter_mgrs_lonzone'),
-                    textInputFormatter: CoordsIntegerUTMLonZoneTextInputFormatter(),
-                    controller: _LonZoneController,
-                    onChanged: (ret) {
-                      setState(() {
-                        _currentLonZone = ret;
-                        //   _setCurrentValueAndEmitOnChange();
-                      });
-                    }
-                  ),
-                  padding: EdgeInsets.only(right: DEFAULT_MARGIN),
-                )
-              ),
-              Expanded(
-                child: Container(
+          Expanded(
+              child: Container(
+            child: GCWIntegerTextField(
+                hintText: i18n(context, 'coords_formatconverter_mgrs_lonzone'),
+                textInputFormatter: CoordsIntegerUTMLonZoneTextInputFormatter(),
+                controller: _LonZoneController,
+                onChanged: (ret) {
+                  setState(() {
+                    _currentLonZone = ret;
+                    //   _setCurrentValueAndEmitOnChange();
+                  });
+                }),
+            padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+          )),
+          Expanded(
+              child: Container(
                   child: GCWDropDownButton(
                     value: _currentLatZone,
                     onChanged: (newValue) {
@@ -104,79 +103,72 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
                       );
                     }).toList(),
                   ),
-                  padding: EdgeInsets.only(left: DEFAULT_MARGIN)
-                )
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  child: GCWDropDownButton(
-                    value: _currentDigraphEasting,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _currentDigraphEasting = newValue;
-                        // _setCurrentValueAndEmitOnChange();
-                      });
-                    },
-                    items: digraphLettersEast.split('').map((char) {
-                      return GCWDropDownMenuItem(
-                        value: char,
-                        child: char,
-                      );
-                    }).toList(),
-                  ),
-                  padding: EdgeInsets.only(right: DEFAULT_MARGIN),
-                )
-              ),
-              Expanded(
-                child: Container(
-                  child: GCWDropDownButton(
-                    value: _currentDigraphNorthing,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _currentDigraphNorthing = newValue;
-                        //_setCurrentValueAndEmitOnChange();
-                      });
-                    },
-                    items: digraphLettersNorth.split('').map((char) {
-                      return GCWDropDownMenuItem(
-                        value: char,
-                        child: char,
-                      );
-                    }).toList(),
-                  ),
-                  padding: EdgeInsets.only(left: DEFAULT_MARGIN),
-                )
-              )
-            ],
-          ),
-          GCWDoubleTextField(
-            hintText: i18n(context, 'coords_formatconverter_mgrs_easting'),
-            min: 0.0,
-            controller: _EastingController,
-            onChanged: (ret) {
-              setState(() {
-                _currentEasting = ret;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
-          GCWDoubleTextField(
-              hintText: i18n(context, 'coords_formatconverter_mgrs_northing'),
-              min: 0.0,
-              controller: _NorthingController,
-              onChanged: (ret) {
+                  padding: EdgeInsets.only(left: DEFAULT_MARGIN))),
+        ],
+      ),
+      Row(
+        children: <Widget>[
+          Expanded(
+              child: Container(
+            child: GCWDropDownButton(
+              value: _currentDigraphEasting,
+              onChanged: (newValue) {
                 setState(() {
-                  _currentNorthing = ret;
-                  _setCurrentValueAndEmitOnChange();
+                  _currentDigraphEasting = newValue;
+                  // _setCurrentValueAndEmitOnChange();
                 });
-              }
-          ),
-        ]
-    );
+              },
+              items: digraphLettersEast.split('').map((char) {
+                return GCWDropDownMenuItem(
+                  value: char,
+                  child: char,
+                );
+              }).toList(),
+            ),
+            padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+          )),
+          Expanded(
+              child: Container(
+            child: GCWDropDownButton(
+              value: _currentDigraphNorthing,
+              onChanged: (newValue) {
+                setState(() {
+                  _currentDigraphNorthing = newValue;
+                  //_setCurrentValueAndEmitOnChange();
+                });
+              },
+              items: digraphLettersNorth.split('').map((char) {
+                return GCWDropDownMenuItem(
+                  value: char,
+                  child: char,
+                );
+              }).toList(),
+            ),
+            padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+          ))
+        ],
+      ),
+      GCWDoubleTextField(
+          hintText: i18n(context, 'coords_formatconverter_mgrs_easting'),
+          min: 0.0,
+          controller: _EastingController,
+          onChanged: (ret) {
+            setState(() {
+              _currentEasting = ret;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+      GCWDoubleTextField(
+          hintText: i18n(context, 'coords_formatconverter_mgrs_northing'),
+          min: 0.0,
+          controller: _NorthingController,
+          onChanged: (ret) {
+            setState(() {
+              _currentNorthing = ret;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {

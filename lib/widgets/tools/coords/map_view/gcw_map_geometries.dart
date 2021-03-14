@@ -20,21 +20,18 @@ class GCWMapPoint {
   bool circleColorSameAsPointColor;
   bool isVisible;
 
-  GCWMapPoint({
-    this.uuid,
-    @required this.point,
-    this.markerText,
-    this.color: COLOR_MAP_POINT,
-    this.coordinateFormat,
-    this.isEditable: false,
-    this.circle,
-    this.circleColorSameAsPointColor: false,
-    this.isVisible: true
-  }) {
-    if (uuid == null || uuid.length == 0)
-      uuid = Uuid().v4();
-    if (coordinateFormat == null)
-      coordinateFormat = defaultCoordFormat();
+  GCWMapPoint(
+      {this.uuid,
+      @required this.point,
+      this.markerText,
+      this.color: COLOR_MAP_POINT,
+      this.coordinateFormat,
+      this.isEditable: false,
+      this.circle,
+      this.circleColorSameAsPointColor: false,
+      this.isVisible: true}) {
+    if (uuid == null || uuid.length == 0) uuid = Uuid().v4();
+    if (coordinateFormat == null) coordinateFormat = defaultCoordFormat();
     update();
   }
 
@@ -46,8 +43,7 @@ class GCWMapPoint {
     if (circle != null) {
       circle.centerPoint = point;
 
-      if (circleColorSameAsPointColor)
-        circle.color = color;
+      if (circleColorSameAsPointColor) circle.color = color;
 
       circle._update();
     }
@@ -67,8 +63,7 @@ class GCWMapPolyline {
     @required this.points,
     this.color: COLOR_MAP_POLYLINE,
   }) {
-    if (uuid == null || uuid.length == 0)
-      uuid = Uuid().v4();
+    if (uuid == null || uuid.length == 0) uuid = Uuid().v4();
     update();
   }
 
@@ -81,12 +76,7 @@ class GCWMapPolyline {
     var _countSteps = (_distBear.distance / _stepLength).floor();
 
     for (int _i = 1; _i < _countSteps; _i++) {
-      var _nextPoint = projection(
-        start.point,
-        _distBear.bearingAToB,
-        _stepLength * _i,
-        defaultEllipsoid()
-      );
+      var _nextPoint = projection(start.point, _distBear.bearingAToB, _stepLength * _i, defaultEllipsoid());
       shape.add(_nextPoint);
     }
 
@@ -101,11 +91,9 @@ class GCWMapPolyline {
       return;
     }
 
-    if (points.length > 0)
-      shape.add(points[0].point);
+    if (points.length > 0) shape.add(points[0].point);
 
-    if (points.length < 2)
-      return;
+    if (points.length < 2) return;
 
     for (int i = 1; i < points.length; i++) {
       _calculateGeodetics(points[i - 1], points[i]);
@@ -120,17 +108,12 @@ class GCWMapCircle {
 
   List<LatLng> shape;
 
-  GCWMapCircle({
-    this.centerPoint,
-    @required this.radius,
-    this.color: COLOR_MAP_CIRCLE
-  }) {
+  GCWMapCircle({this.centerPoint, @required this.radius, this.color: COLOR_MAP_CIRCLE}) {
     _update();
   }
 
   void _update() {
-    if (this.centerPoint == null)
-      this.centerPoint = defaultCoordinate;
+    if (this.centerPoint == null) this.centerPoint = defaultCoordinate;
 
     if (this.radius == null || this.radius <= 0.0) {
       shape = null;
@@ -142,7 +125,7 @@ class GCWMapCircle {
     double _prevLongitude;
     bool shouldSort = false;
 
-    shape = List.generate(((360.0 + _degrees) /_degrees).floor(), (index) => index * _degrees).map((e) {
+    shape = List.generate(((360.0 + _degrees) / _degrees).floor(), (index) => index * _degrees).map((e) {
       LatLng coord = projection(this.centerPoint, e, this.radius, defaultEllipsoid());
 
       // if there is a huge longitude step around the world (nearly 360°)
@@ -151,8 +134,7 @@ class GCWMapCircle {
       // To avoid this the coordinate should be sorted. This works only in that case.
       // In normal cases, this would ruin your circle
       if (_prevLongitude != null) {
-        if ((_prevLongitude - coord.longitude).abs() > 350)
-          shouldSort = true;
+        if ((_prevLongitude - coord.longitude).abs() > 350) shouldSort = true;
       }
       _prevLongitude = coord.longitude;
 

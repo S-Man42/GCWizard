@@ -6,7 +6,6 @@ import 'dart:math';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 double _r0(double t) {
-  
   var LArray = [
     [100013989, 0, 0],
     [1670700, 3.0984635, 6283.0758500],
@@ -51,15 +50,12 @@ double _r0(double t) {
   ];
 
   double r0 = 0;
-  for (int i=0; i < LArray.length; ++i)
-    r0 = r0 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
+  for (int i = 0; i < LArray.length; ++i) r0 = r0 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
 
   return r0;
 }
 
-
 double _r1(double t) {
-
   var LArray = [
     [103019, 1.107490, 6283.075850],
     [1721, 1.0644, 12566.1517],
@@ -74,14 +70,12 @@ double _r1(double t) {
   ];
 
   double r1 = 0;
-  for (int i=0; i<LArray.length; ++i)
-    r1 = r1 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
-  
+  for (int i = 0; i < LArray.length; ++i) r1 = r1 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
+
   return r1;
 }
 
 double _r2(double t) {
-
   var LArray = [
     [4359, 5.7846, 6283.0758],
     [124, 5.579, 12566.152],
@@ -92,28 +86,24 @@ double _r2(double t) {
   ];
 
   double r2 = 0;
-  for (int i = 0; i < LArray.length; ++i)
-    r2 = r2 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
+  for (int i = 0; i < LArray.length; ++i) r2 = r2 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
 
   return r2;
 }
 
-double _r3 (double t) {
-
+double _r3(double t) {
   var LArray = [
     [145, 4.273, 6283.076],
     [7, 3.92, 12566.15]
   ];
 
   double r3 = 0;
-  for (int i=0; i < LArray.length; ++i)
-    r3 = r3 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
+  for (int i = 0; i < LArray.length; ++i) r3 = r3 + LArray[i][0] * cos(LArray[i][1] + LArray[i][2] * t);
 
   return r3;
 }
 
-double _r4 (double t) {
-
+double _r4(double t) {
   var LArray = [4, 2.56, 6283.08];
   double r4 = LArray[0] * cos(LArray[1] + LArray[2] * t);
 
@@ -129,7 +119,7 @@ double _quad(double y0, double yM, double yP, double dX) {
   return -b / (2 * a);
 }
 
-double _JD (int date, month, year, STD) {
+double _JD(int date, month, year, STD) {
   var A;
   var B;
   var MJD;
@@ -150,14 +140,13 @@ double _JD (int date, month, year, STD) {
   return MJD + 2400000.5;
 }
 
-double _earthR (int date, month, year, UT) {
+double _earthR(int date, month, year, UT) {
   double JDE = _JD(date, month, year, UT);
   double T = (JDE - 2451545.0) / 365250.0;
-  return (_r0(T) + _r1(T)*T + _r2(T)*T* T + _r3(T)*T*T*T + _r4(T)*T*T*T*T) / (1.0E8);
+  return (_r0(T) + _r1(T) * T + _r2(T) * T * T + _r3(T) * T * T * T + _r4(T) * T * T * T * T) / (1.0E8);
 }
 
 Map<String, dynamic> perihelion(int year) {
-
   double minR = 10;
   var d = 0;
   var h = 100.0;
@@ -190,7 +179,7 @@ Map<String, dynamic> perihelion(int year) {
   R = 10;
   var min = 0;
   for (int i = 0; i < 121; ++i) {
-    R = _earthR(d, 1, year , h + i / 60.0);
+    R = _earthR(d, 1, year, h + i / 60.0);
     if (R < minR) {
       minR = R;
       min = i;
@@ -214,21 +203,17 @@ Map<String, dynamic> perihelion(int year) {
 
   var time = hoursToHHmmss(h);
 
-  return {
-    'datetime': DateTime(year, 1, d, time.hour, time.minute, time.second, time.millisecond),
-    'distance': rp
-  };
+  return {'datetime': DateTime(year, 1, d, time.hour, time.minute, time.second, time.millisecond), 'distance': rp};
 }
 
-Map<String, dynamic> aphelion (int year) {
-
+Map<String, dynamic> aphelion(int year) {
   var minR = 0.0;
   var d = 0;
   var h = 100.0;
   var R;
 
   for (int i = 3; i < 7; ++i) {
-    R = _earthR(i, 7 , year, 12);
+    R = _earthR(i, 7, year, 12);
     if (R > minR) {
       minR = R;
       d = i;
@@ -238,7 +223,7 @@ Map<String, dynamic> aphelion (int year) {
   minR = 0;
   --d;
   for (int i = 0; i < 49; ++i) {
-    R = _earthR(d, 7, year ,i);
+    R = _earthR(d, 7, year, i);
     if (R > minR) {
       minR = R;
       h = i.toDouble();
@@ -255,7 +240,7 @@ Map<String, dynamic> aphelion (int year) {
   var min = 0;
 
   for (int i = 0; i < 121; ++i) {
-    R = _earthR(d, 7 ,year , h + i / 60.0);
+    R = _earthR(d, 7, year, h + i / 60.0);
     if (R > minR) {
       minR = R;
       min = i;
@@ -264,7 +249,7 @@ Map<String, dynamic> aphelion (int year) {
   h = h + min / 60.0;
 
   if (h >= 24) {
-    h = h- 24;
+    h = h - 24;
     d = d + 1;
   }
 
@@ -279,8 +264,5 @@ Map<String, dynamic> aphelion (int year) {
 
   var time = hoursToHHmmss(h);
 
-  return {
-    'datetime': DateTime(year, 7, d, time.hour, time.minute, time.second, time.millisecond),
-    'distance': ra
-  };
+  return {'datetime': DateTime(year, 7, d, time.hour, time.minute, time.second, time.millisecond), 'distance': ra};
 }

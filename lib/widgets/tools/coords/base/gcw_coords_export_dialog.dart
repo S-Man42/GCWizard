@@ -9,38 +9,26 @@ import 'package:intl/intl.dart';
 showCoordinatesExportDialog(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) {
   var fileName = 'GC Wizard Export ' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
 
-  showGCWDialog(
-    context,
-    i18n(context, 'coords_export_saved'),
-    Text(i18n(context, 'coords_export_fileformat')),
-    [
-      GCWDialogButton(
-        text: 'GPX',
-        onPressed: () async {
-          coordinatesExport.exportCoordinates(fileName, points, polylines)
-            .then((value) {
-              _showExportedFileDialog(context, value, '.gpx');
-            });
-        },
-      ),
-      GCWDialogButton(
-        text: 'KML',
-        onPressed: () async {
-          coordinatesExport.exportCoordinates(fileName, points, polylines, kmlFormat: true)
-            .then((value) {
-              _showExportedFileDialog(context, value, '.kml');
-            });
-        },
-      )
-    ]
-  );
+  showGCWDialog(context, i18n(context, 'coords_export_saved'), Text(i18n(context, 'coords_export_fileformat')), [
+    GCWDialogButton(
+      text: 'GPX',
+      onPressed: () async {
+        coordinatesExport.exportCoordinates(fileName, points, polylines).then((value) {
+          _showExportedFileDialog(context, value, '.gpx');
+        });
+      },
+    ),
+    GCWDialogButton(
+      text: 'KML',
+      onPressed: () async {
+        coordinatesExport.exportCoordinates(fileName, points, polylines, kmlFormat: true).then((value) {
+          _showExportedFileDialog(context, value, '.kml');
+        });
+      },
+    )
+  ]);
 }
 
 _showExportedFileDialog(BuildContext context, Map<String, dynamic> value, String type) {
-  if (value != null)
-    showExportedFileDialog(
-      context,
-      value['path'],
-      fileType: type
-    );
+  if (value != null) showExportedFileDialog(context, value['path'], fileType: type);
 }

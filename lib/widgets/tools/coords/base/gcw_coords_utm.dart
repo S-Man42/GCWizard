@@ -61,69 +61,63 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
       _NorthingController.text = _currentNorthing['value'].toString();
     }
 
-    return Column (
+    return Column(children: <Widget>[
+      Row(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: GCWIntegerTextField(
-                  hintText: i18n(context, 'coords_formatconverter_utm_lonzone'),
-                  textInputFormatter: CoordsIntegerUTMLonZoneTextInputFormatter(),
-                  controller: _LonZoneController,
-                  onChanged: (ret) {
-                    setState(() {
-                      _currentLonZone = ret;
-                      _setCurrentValueAndEmitOnChange();
-                    });
-                  }
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  child: GCWDropDownButton(
-                    value: _currentLatZone,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _currentLatZone = newValue;
-                        _setCurrentValueAndEmitOnChange();
-                      });
-                    },
-                    items: latZones.split('').map((char) {
-                      return GCWDropDownMenuItem(
-                        value: char,
-                        child: char,
-                      );
-                    }).toList(),
-                  ),
-                  padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
-                )
-              ),
-            ],
+          Expanded(
+            child: GCWIntegerTextField(
+                hintText: i18n(context, 'coords_formatconverter_utm_lonzone'),
+                textInputFormatter: CoordsIntegerUTMLonZoneTextInputFormatter(),
+                controller: _LonZoneController,
+                onChanged: (ret) {
+                  setState(() {
+                    _currentLonZone = ret;
+                    _setCurrentValueAndEmitOnChange();
+                  });
+                }),
           ),
-          GCWDoubleTextField(
-            hintText: i18n(context, 'coords_formatconverter_utm_easting'),
-            min: 0.0,
-            controller: _EastingController,
-            onChanged: (ret) {
-              setState(() {
-                _currentEasting = ret;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
-          GCWDoubleTextField(
-              hintText: i18n(context, 'coords_formatconverter_utm_northing'),
-              min: 0.0,
-              controller: _NorthingController,
-              onChanged: (ret) {
+          Expanded(
+              child: Container(
+            child: GCWDropDownButton(
+              value: _currentLatZone,
+              onChanged: (newValue) {
                 setState(() {
-                  _currentNorthing = ret;
+                  _currentLatZone = newValue;
                   _setCurrentValueAndEmitOnChange();
                 });
-              }
-          ),
-        ]
-    );
+              },
+              items: latZones.split('').map((char) {
+                return GCWDropDownMenuItem(
+                  value: char,
+                  child: char,
+                );
+              }).toList(),
+            ),
+            padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+          )),
+        ],
+      ),
+      GCWDoubleTextField(
+          hintText: i18n(context, 'coords_formatconverter_utm_easting'),
+          min: 0.0,
+          controller: _EastingController,
+          onChanged: (ret) {
+            setState(() {
+              _currentEasting = ret;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+      GCWDoubleTextField(
+          hintText: i18n(context, 'coords_formatconverter_utm_northing'),
+          min: 0.0,
+          controller: _NorthingController,
+          onChanged: (ret) {
+            setState(() {
+              _currentNorthing = ret;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {

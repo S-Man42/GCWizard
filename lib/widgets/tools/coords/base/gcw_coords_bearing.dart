@@ -58,7 +58,7 @@ class GCWBearing extends StatefulWidget {
 
 class _GCWBearingState extends State<GCWBearing> {
   var _bearingController;
-  var _currentBearing = {'text': '','value': 0.0};
+  var _currentBearing = {'text': '', 'value': 0.0};
 
   var _currentCompassValue;
 
@@ -77,88 +77,80 @@ class _GCWBearingState extends State<GCWBearing> {
   @override
   Widget build(BuildContext context) {
     if (_currentCompassValue == null) {
-      _currentCompassValue = COMPASS_ROSE.firstWhere((direction) => direction['symbol'] == 'common_compassrose_n_symbol')['symbol'];
+      _currentCompassValue =
+          COMPASS_ROSE.firstWhere((direction) => direction['symbol'] == 'common_compassrose_n_symbol')['symbol'];
     }
 
-    return Row(
-      children: <Widget>[
-        Expanded(
-          flex: 5,
-          child: GCWDoubleTextField(
-            hintText: widget.hintText ?? i18n(context, 'common_bearing_hint'),
-            controller: _bearingController,
-            textInputFormatter: DoubleBearingTextInputFormatter(),
-            onChanged: (ret) {
-              setState(() {
-                _currentBearing['value'] = ret['value'];
-                _currentBearing['text'] = ret['text'];
+    return Row(children: <Widget>[
+      Expanded(
+        flex: 5,
+        child: GCWDoubleTextField(
+          hintText: widget.hintText ?? i18n(context, 'common_bearing_hint'),
+          controller: _bearingController,
+          textInputFormatter: DoubleBearingTextInputFormatter(),
+          onChanged: (ret) {
+            setState(() {
+              _currentBearing['value'] = ret['value'];
+              _currentBearing['text'] = ret['text'];
 
-                var normalizedBearing = modulo(_currentBearing['value'], 360.0);
+              var normalizedBearing = modulo(_currentBearing['value'], 360.0);
 
-                var compassValue = COMPASS_ROSE.firstWhere((direction) => direction['value'] == normalizedBearing, orElse: () => null);
-                if (compassValue != null)
-                  _currentCompassValue = compassValue['symbol'];
-                else
-                  _currentCompassValue = _NO_COMPASS_DIRECTION;
+              var compassValue =
+                  COMPASS_ROSE.firstWhere((direction) => direction['value'] == normalizedBearing, orElse: () => null);
+              if (compassValue != null)
+                _currentCompassValue = compassValue['symbol'];
+              else
+                _currentCompassValue = _NO_COMPASS_DIRECTION;
 
-                widget.onChanged(_currentBearing);
-              });
-            },
-          ),
+              widget.onChanged(_currentBearing);
+            });
+          },
         ),
-        Expanded(
-          flex: 1,
-          child: GCWText(
-            text: ' °  = '
-          ),
-        ),
-        Expanded(
-          flex: 5,
-          child: GCWDropDownButton(
-            value: _currentCompassValue,
-            items: COMPASS_ROSE.map((direction) {
-              if (direction['symbol'] == _NO_COMPASS_DIRECTION) {
-                return GCWDropDownMenuItem(
-                  value: _NO_COMPASS_DIRECTION,
-                  child: _NO_COMPASS_DIRECTION
-                );
-              }
+      ),
+      Expanded(
+        flex: 1,
+        child: GCWText(text: ' °  = '),
+      ),
+      Expanded(
+        flex: 5,
+        child: GCWDropDownButton(
+          value: _currentCompassValue,
+          items: COMPASS_ROSE.map((direction) {
+            if (direction['symbol'] == _NO_COMPASS_DIRECTION) {
+              return GCWDropDownMenuItem(value: _NO_COMPASS_DIRECTION, child: _NO_COMPASS_DIRECTION);
+            }
 
-              var fontweight;
-              var level = direction['level'];
-              if (level == 0)
-                fontweight = FontWeight.w900;
-              else if (level == 1)
-                fontweight = FontWeight.w600;
-              else if (level == 2)
-                fontweight = FontWeight.w400;
-              else if (level == 3)
-                fontweight = FontWeight.w300;
+            var fontweight;
+            var level = direction['level'];
+            if (level == 0)
+              fontweight = FontWeight.w900;
+            else if (level == 1)
+              fontweight = FontWeight.w600;
+            else if (level == 2)
+              fontweight = FontWeight.w400;
+            else if (level == 3) fontweight = FontWeight.w300;
 
-              return GCWDropDownMenuItem(
+            return GCWDropDownMenuItem(
                 value: direction['symbol'],
                 child: i18n(context, direction['symbol']),
                 subtitle: i18n(context, direction['name']) + ' (${direction['value']}°)',
-                style: gcwTextStyle().copyWith(fontSize: defaultFontSize() + 10 - 4 * level, fontWeight: fontweight)
-              );
-            }).toList(),
-            onChanged: (value) {
-              setState(() {
-                _currentCompassValue = value;
-                if (value == _NO_COMPASS_DIRECTION)
-                  return;
+                style: gcwTextStyle().copyWith(fontSize: defaultFontSize() + 10 - 4 * level, fontWeight: fontweight));
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              _currentCompassValue = value;
+              if (value == _NO_COMPASS_DIRECTION) return;
 
-                var compassValue = COMPASS_ROSE.firstWhere((direction) => direction['symbol'] == value)['value'];
+              var compassValue = COMPASS_ROSE.firstWhere((direction) => direction['symbol'] == value)['value'];
 
-                _currentBearing = {'text': compassValue.toString(), 'value': compassValue};
-                _bearingController.text = compassValue.toString();
+              _currentBearing = {'text': compassValue.toString(), 'value': compassValue};
+              _bearingController.text = compassValue.toString();
 
-                widget.onChanged(_currentBearing);
-              });
-            },
-          ),
-        )
-      ]
-    );
+              widget.onChanged(_currentBearing);
+            });
+          },
+        ),
+      )
+    ]);
   }
 }

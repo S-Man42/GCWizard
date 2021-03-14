@@ -59,10 +59,7 @@ class FormatConverterState extends State<FormatConverter> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: [
-            GCWMapPoint(
-              point: _currentCoords,
-              coordinateFormat: _currentOutputFormat
-            ),
+            GCWMapPoint(point: _currentCoords, coordinateFormat: _currentOutputFormat),
           ],
         ),
       ],

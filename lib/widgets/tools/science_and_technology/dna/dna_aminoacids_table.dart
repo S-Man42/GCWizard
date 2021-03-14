@@ -20,16 +20,20 @@ class DNAAminoAcidsTableState extends State<DNAAminoAcidsTable> {
       var name;
       if (acid.name == null) {
         switch (acid.type) {
-          case NucleobaseSequenceType.START: name = i18n(context, 'dna_start'); break;
-          case NucleobaseSequenceType.STOP: name = i18n(context, 'dna_stop'); break;
-          default: name = '';
+          case NucleobaseSequenceType.START:
+            name = i18n(context, 'dna_start');
+            break;
+          case NucleobaseSequenceType.STOP:
+            name = i18n(context, 'dna_stop');
+            break;
+          default:
+            name = '';
         }
       } else {
         name = i18n(context, acid.name);
       }
 
-      if (acid.symbolShort == 'M')
-        name += '\n${i18n(context, 'dna_start')}';
+      if (acid.symbolShort == 'M') name += '\n${i18n(context, 'dna_start')}';
 
       var sequences = acid.nucleobaseSequences;
       sequences.sort();

@@ -11,17 +11,17 @@ import 'package:latlong/latlong.dart';
 // Refactoring could be a lot of fun...
 
 bool _isApprox(double a, double b) {
-  return((a - b).abs() <= doubleTolerance * min(a.abs(), b.abs()));
+  return ((a - b).abs() <= doubleTolerance * min(a.abs(), b.abs()));
 }
 
-double _signAzimuthDifference (double az1, double az2) {
+double _signAzimuthDifference(double az1, double az2) {
   return mod(az1 - az2 + PI, 2 * PI) - PI;
 }
 
 double _findLinearRoot(List<double> x, List<double> errArray) {
   double root;
 
-  if((errArray[0] - errArray[1]).abs() < epsilon) {
+  if ((errArray[0] - errArray[1]).abs() < epsilon) {
     root = x[0];
   } else {
     root = -errArray[0] * (x[1] - x[0]) / (errArray[1] - errArray[0]) + x[0];
@@ -31,7 +31,6 @@ double _findLinearRoot(List<double> x, List<double> errArray) {
 }
 
 Map<String, dynamic> _perpIntercept(LatLng pt1, double dCrs13, LatLng pt2, Ellipsoid ells) {
-
   var distBear = distanceBearing(pt1, pt2, ells);
 
   double dist12 = distBear.distance;
@@ -42,7 +41,7 @@ Map<String, dynamic> _perpIntercept(LatLng pt1, double dCrs13, LatLng pt2, Ellip
 
   Map<String, dynamic> output = {'coordinate': pt1, 'distance': 0.0, 'bearing': 0.0};
 
-  if(dist12 <= doubleTolerance) {
+  if (dist12 <= doubleTolerance) {
     return output;
   }
 
@@ -50,14 +49,14 @@ Map<String, dynamic> _perpIntercept(LatLng pt1, double dCrs13, LatLng pt2, Ellip
   double dist13 = ells.sphereRad * atan(tan(dA) * (cos(dAngle))).abs();
 
   var _threshold = 275000.0; //This mysterious number has been found in the original source... whatever it does...
-  if(dAngle > PI * 2) {
+  if (dAngle > PI * 2) {
     LatLng newPoint = projectionRadian(pt1, crs13 + PI, dist13 + _threshold, ells);
     dist13 = _threshold;
     distBear = distanceBearing(newPoint, pt1, ells);
 
     crs13 = distBear.bearingAToBInRadian;
     pt1 = newPoint;
-  } else if((dist13).abs() < _threshold) {
+  } else if ((dist13).abs() < _threshold) {
     LatLng newPoint = projectionRadian(pt1, crs13 + PI, _threshold, ells);
     dist13 = dist13 + _threshold;
     distBear = distanceBearing(newPoint, pt1, ells);
@@ -86,17 +85,16 @@ Map<String, dynamic> _perpIntercept(LatLng pt1, double dCrs13, LatLng pt2, Ellip
   distBear = distanceBearing(pt3, pt2, ells);
   crs32 = distBear.bearingAToBInRadian;
 
-  errarray.add(_signAzimuthDifference(crs31, crs32).abs() - PI/2);
+  errarray.add(_signAzimuthDifference(crs31, crs32).abs() - PI / 2);
 
   int k = 0;
   double dError = 0;
 
-  while(k == 0 || ((dError > doubleTolerance) && (k < 15))) {
+  while (k == 0 || ((dError > doubleTolerance) && (k < 15))) {
     double oldDist13 = dist13;
     dist13 = _findLinearRoot(distarray, errarray);
 
-    if(dist13.isNaN)
-      dist13 = oldDist13;
+    if (dist13.isNaN) dist13 = oldDist13;
 
     pt3 = projectionRadian(pt1, crs13, dist13, ells);
 
@@ -110,7 +108,7 @@ Map<String, dynamic> _perpIntercept(LatLng pt1, double dCrs13, LatLng pt2, Ellip
     distarray[0] = distarray[1];
     distarray[1] = dist13;
     errarray[0] = errarray[1];
-    errarray[1] = _signAzimuthDifference(crs31, crs32).abs() - PI/2;
+    errarray[1] = _signAzimuthDifference(crs31, crs32).abs() - PI / 2;
     dError = (distarray[1] - distarray[0]).abs();
     k++;
   }
@@ -119,7 +117,8 @@ Map<String, dynamic> _perpIntercept(LatLng pt1, double dCrs13, LatLng pt2, Ellip
   return output;
 }
 
-List<LatLng> geodesicArcIntercept(LatLng startGeodetic, double bearingGeodetic, LatLng centerPoint, double radiusCircle, Ellipsoid ells) {
+List<LatLng> geodesicArcIntercept(
+    LatLng startGeodetic, double bearingGeodetic, LatLng centerPoint, double radiusCircle, Ellipsoid ells) {
   LatLng pt1 = startGeodetic;
   LatLng ptC = centerPoint;
   var crs1 = bearingGeodetic;
@@ -130,28 +129,28 @@ List<LatLng> geodesicArcIntercept(LatLng startGeodetic, double bearingGeodetic, 
   var distBear = distanceBearing(perpPt, ptC, ells);
   double perpDist = distBear.distance;
 
-  if(perpDist > radiusCircle) {
+  if (perpDist > radiusCircle) {
     return [];
   }
 
-  if((perpDist - radiusCircle).abs() < doubleTolerance) {
+  if ((perpDist - radiusCircle).abs() < doubleTolerance) {
     return [perpPt];
   }
 
   distBear = distanceBearing(perpPt, pt1, ells);
   double crs = distBear.bearingAToBInRadian;
 
-  if(_isApprox(cos(perpDist / ells.sphereRad), 0.0)) {
+  if (_isApprox(cos(perpDist / ells.sphereRad), 0.0)) {
     return [];
   }
 
-  double dist = ells.sphereRad * acos(cos(radiusCircle/ells.sphereRad) / cos(perpDist / ells.sphereRad));
+  double dist = ells.sphereRad * acos(cos(radiusCircle / ells.sphereRad) / cos(perpDist / ells.sphereRad));
   var pt = projectionRadian(perpPt, crs, dist, ells);
 
   List<LatLng> output = [];
 
   int nIntersects = 2;
-  for(int i = 0; i < nIntersects; i++) {
+  for (int i = 0; i < nIntersects; i++) {
     int k = 10;
     distBear = distanceBearing(ptC, pt, ells);
     double radDist = distBear.distance;
@@ -171,14 +170,14 @@ List<LatLng> geodesicArcIntercept(LatLng startGeodetic, double bearingGeodetic, 
     double A = acos(sin(B) * cos(dErr.abs() / ells.sphereRad));
     double c;
 
-    if(sin(A).abs() < doubleTolerance)
+    if (sin(A).abs() < doubleTolerance)
       c = dErr;
-    else if(A.abs() < doubleTolerance)
+    else if (A.abs() < doubleTolerance)
       c = dErr / cos(B);
     else
       c = ells.sphereRad * asin(sin(dErr / ells.sphereRad) / sin(A));
 
-    if(dErr > 0)
+    if (dErr > 0)
       dist = dist + c;
     else
       dist = dist - c;
@@ -190,7 +189,7 @@ List<LatLng> geodesicArcIntercept(LatLng startGeodetic, double bearingGeodetic, 
     distarray.add(dist);
     errarray.add(radiusCircle - radDist);
 
-    while(dErr.abs() > doubleTolerance && k <= 10) {
+    while (dErr.abs() > doubleTolerance && k <= 10) {
       dist = _findLinearRoot(distarray, errarray);
       pt = projectionRadian(perpPt, crs, dist, ells);
       distBear = distanceBearing(ptC, pt, ells);

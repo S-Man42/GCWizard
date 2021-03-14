@@ -9,12 +9,8 @@ class GCWEnigmaRotorDropDownButton extends StatefulWidget {
   final EnigmaRotorType type;
   final position;
 
-  const GCWEnigmaRotorDropDownButton({
-    Key key,
-    this.position,
-    this.type: EnigmaRotorType.STANDARD,
-    this.onChanged
-  }) : super(key: key);
+  const GCWEnigmaRotorDropDownButton({Key key, this.position, this.type: EnigmaRotorType.STANDARD, this.onChanged})
+      : super(key: key);
 
   @override
   GCWEnigmaRotorDropDownButtonState createState() => GCWEnigmaRotorDropDownButtonState();
@@ -47,62 +43,56 @@ class GCWEnigmaRotorDropDownButtonState extends State<GCWEnigmaRotorDropDownButt
     return Row(
       children: <Widget>[
         Expanded(
-          child: Container(
-            child: GCWDropDownButton(
-              value: _currentRotor,
-              items: allEnigmaRotors
-                .where((rotor) => rotor.type == widget.type)
-                .map((rotor) {
-                  return GCWDropDownMenuItem(
-                    value: rotor.name,
-                    child: '${rotor.name}',
-                  );
-                }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _currentRotor = value;
-                  _setCurrentValueAndEmitOnChange();
-                });
-              },
-            ),
-            padding: EdgeInsets.only(right: DEFAULT_MARGIN)
-          ),
-          flex: 2
-        ),
-        widget.type == EnigmaRotorType.STANDARD
-          ? Expanded(
-              child: Container(
-                child: GCWABCDropDownButton(
-                  value: _currentOffset,
+            child: Container(
+                child: GCWDropDownButton(
+                  value: _currentRotor,
+                  items: allEnigmaRotors.where((rotor) => rotor.type == widget.type).map((rotor) {
+                    return GCWDropDownMenuItem(
+                      value: rotor.name,
+                      child: '${rotor.name}',
+                    );
+                  }).toList(),
                   onChanged: (value) {
                     setState(() {
-                      _currentOffset = value;
+                      _currentRotor = value;
                       _setCurrentValueAndEmitOnChange();
                     });
                   },
                 ),
-                padding: EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
-              ),
-              flex: 1
-            )
-          : Container(),
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN)),
+            flex: 2),
         widget.type == EnigmaRotorType.STANDARD
-          ? Expanded(
-              child: Container(
-                child: GCWABCDropDownButton(
-                  value: _currentSetting,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentSetting = value;
-                      _setCurrentValueAndEmitOnChange();
-                    });
-                  },
+            ? Expanded(
+                child: Container(
+                  child: GCWABCDropDownButton(
+                    value: _currentOffset,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentOffset = value;
+                        _setCurrentValueAndEmitOnChange();
+                      });
+                    },
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
                 ),
-                padding: EdgeInsets.only(left: DEFAULT_MARGIN),
-              ),
-              flex: 1
-            )
-          : Container(),
+                flex: 1)
+            : Container(),
+        widget.type == EnigmaRotorType.STANDARD
+            ? Expanded(
+                child: Container(
+                  child: GCWABCDropDownButton(
+                    value: _currentSetting,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentSetting = value;
+                        _setCurrentValueAndEmitOnChange();
+                      });
+                    },
+                  ),
+                  padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+                ),
+                flex: 1)
+            : Container(),
       ],
     );
   }
@@ -110,11 +100,8 @@ class GCWEnigmaRotorDropDownButtonState extends State<GCWEnigmaRotorDropDownButt
   _setCurrentValueAndEmitOnChange() {
     widget.onChanged({
       'position': widget.position,
-      'rotorConfiguration': EnigmaRotorConfiguration(
-          getEnigmaRotorByName(_currentRotor),
-          offset: _currentOffset,
-          setting: _currentSetting
-      )
+      'rotorConfiguration': EnigmaRotorConfiguration(getEnigmaRotorByName(_currentRotor),
+          offset: _currentOffset, setting: _currentSetting)
     });
   }
 }

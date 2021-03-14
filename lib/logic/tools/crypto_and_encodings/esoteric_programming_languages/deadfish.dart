@@ -3,8 +3,7 @@ import 'dart:math';
 import 'package:intl/intl.dart';
 
 String encodeDeadfish(text) {
-  if (text == null ||  text == '')
-    return '';
+  if (text == null || text == '') return '';
 
   var out = '';
   var memory = 0;
@@ -39,8 +38,7 @@ String encodeDeadfish(text) {
 }
 
 String decodeDeadfish(text) {
-  if (text == null || text == '')
-    return '';
+  if (text == null || text == '') return '';
 
   var memory = 0;
   List<int> ascii = [];
@@ -49,22 +47,24 @@ String decodeDeadfish(text) {
 
   text.toLowerCase().split('').forEach((character) {
     switch (character) {
-      case 'i': memory++; break;
+      case 'i':
+        memory++;
+        break;
       case 'd':
         memory = max(0, memory - 1);
         break;
-      case 's': memory *= memory; break;
+      case 's':
+        memory *= memory;
+        break;
       case 'o':
-        if (memory < 32 || memory > 255)
-          isASCII = false;
+        if (memory < 32 || memory > 255) isASCII = false;
 
         ascii.add(memory);
         break;
     }
   });
 
-  if (isASCII)
-    return String.fromCharCodes(ascii).replaceAll('\x00', '');
+  if (isASCII) return String.fromCharCodes(ascii).replaceAll('\x00', '');
 
   return ascii.join(' ');
 }

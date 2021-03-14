@@ -2,8 +2,32 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 const AZToBacon = {
-  'A' : 'AAAAA', 'B' : 'AAAAB', 'C' : 'AAABA', 'D' : 'AAABB', 'E' : 'AABAA', 'F' : 'AABAB', 'G' : 'AABBA', 'H' : 'AABBB', 'J' : 'ABAAA', 'I' : 'ABAAA', 'K' : 'ABAAB', 'L' : 'ABABA', 'M' : 'ABABB',
-  'N' : 'ABBAA', 'O' : 'ABBAB', 'P' : 'ABBBA', 'Q' : 'ABBBB', 'R' : 'BAAAA', 'S' : 'BAAAB', 'T' : 'BAABA', 'V' : 'BAABB', 'U' : 'BAABB', 'W' : 'BABAA', 'X' : 'BABAB', 'Y' : 'BABBA', 'Z' : 'BABBB',
+  'A': 'AAAAA',
+  'B': 'AAAAB',
+  'C': 'AAABA',
+  'D': 'AAABB',
+  'E': 'AABAA',
+  'F': 'AABAB',
+  'G': 'AABBA',
+  'H': 'AABBB',
+  'J': 'ABAAA',
+  'I': 'ABAAA',
+  'K': 'ABAAB',
+  'L': 'ABABA',
+  'M': 'ABABB',
+  'N': 'ABBAA',
+  'O': 'ABBAB',
+  'P': 'ABBBA',
+  'Q': 'ABBBB',
+  'R': 'BAAAA',
+  'S': 'BAAAB',
+  'T': 'BAABA',
+  'V': 'BAABB',
+  'U': 'BAABB',
+  'W': 'BABAA',
+  'X': 'BABAB',
+  'Y': 'BABBA',
+  'Z': 'BABBB',
 };
 
 // I has same code as J, so I replaces J in mapping; J will not occur in this map
@@ -11,40 +35,32 @@ const AZToBacon = {
 final BaconToAZ = switchMapKeyValue(AZToBacon);
 
 String encodeBacon(String input, bool inverse, bool binary) {
-  if (input == null || input == '')
-    return '';
+  if (input == null || input == '') return '';
 
-  var out = input
-      .toUpperCase()
-      .split('')
-      .map((character) {
-        var bacon = AZToBacon[character];
-        return bacon != null ? bacon : '';
-      })
-      .join();
+  var out = input.toUpperCase().split('').map((character) {
+    var bacon = AZToBacon[character];
+    return bacon != null ? bacon : '';
+  }).join();
 
-  if (inverse)
-    out = _inverseString(out);
+  if (inverse) out = _inverseString(out);
 
   if (binary & (out != null)) {
-    out = substitution(out, {'A' : '0', 'B' : '1'});
+    out = substitution(out, {'A': '0', 'B': '1'});
   }
 
   return out;
 }
 
 String decodeBacon(String input, bool invers, bool binary) {
-  if (input == null || input == '')
-    return '';
+  if (input == null || input == '') return '';
 
   if (binary) {
     input = input.toUpperCase().replaceAll(RegExp('[A-B]'), '');
-    input = substitution(input, {'0' : 'A', '1' : 'B'});
+    input = substitution(input, {'0': 'A', '1': 'B'});
   }
 
   input = input.toUpperCase().replaceAll(RegExp(r'[^A-B]'), '');
-  if (invers)
-    input = _inverseString(input);
+  if (invers) input = _inverseString(input);
 
   input = input.substring(0, input.length - (input.length % 5));
 
@@ -59,5 +75,5 @@ String decodeBacon(String input, bool invers, bool binary) {
 }
 
 String _inverseString(String text) {
-  return substitution(text, {'A' : 'B', 'B' : 'A'});
+  return substitution(text, {'A': 'B', 'B': 'A'});
 }

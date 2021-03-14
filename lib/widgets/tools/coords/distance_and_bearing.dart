@@ -44,15 +44,13 @@ class DistanceBearingState extends State<DistanceBearing> {
   @override
   Widget build(BuildContext context) {
     var mapPoint1 = GCWMapPoint(
-      point: _currentCoords1,
-      markerText: i18n(context, 'coords_distancebearing_coorda'),
-      coordinateFormat: _currentCoordsFormat1
-    );
+        point: _currentCoords1,
+        markerText: i18n(context, 'coords_distancebearing_coorda'),
+        coordinateFormat: _currentCoordsFormat1);
     var mapPoint2 = GCWMapPoint(
-      point: _currentCoords2,
-      markerText: i18n(context, 'coords_distancebearing_coordb'),
-      coordinateFormat: _currentCoordsFormat2
-    );
+        point: _currentCoords2,
+        markerText: i18n(context, 'coords_distancebearing_coordb'),
+        coordinateFormat: _currentCoordsFormat2);
 
     return Column(
       children: <Widget>[
@@ -80,15 +78,14 @@ class DistanceBearingState extends State<DistanceBearing> {
           text: i18n(context, 'coords_distancebearing_outputunit'),
         ),
         GCWUnitDropDownButton(
-          unitList: allLengths(),
-          value: _currentOutputUnit,
-          onlyShowSymbols: false,
-          onChanged: (Length value) {
-            setState(() {
-              _currentOutputUnit = value;
-            });
-          }
-        ),
+            unitList: allLengths(),
+            value: _currentOutputUnit,
+            onlyShowSymbols: false,
+            onChanged: (Length value) {
+              setState(() {
+                _currentOutputUnit = value;
+              });
+            }),
         GCWSubmitButton(
           onPressed: () {
             setState(() {
@@ -98,14 +95,9 @@ class DistanceBearingState extends State<DistanceBearing> {
         ),
         GCWCoordsOutput(
           outputs: _currentOutput,
-          points: [
-            mapPoint1,
-            mapPoint2
-          ],
+          points: [mapPoint1, mapPoint2],
           polylines: [
-            GCWMapPolyline(
-              points: [mapPoint1, mapPoint2]
-            )
+            GCWMapPolyline(points: [mapPoint1, mapPoint2])
           ],
         ),
       ],
@@ -117,15 +109,18 @@ class DistanceBearingState extends State<DistanceBearing> {
 
     _currentOutput = [];
     _currentOutput.add(GCWOutputText(
-      text: '${i18n(context, 'coords_distancebearing_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentValue.distance))} ${_currentOutputUnit.symbol}',
+      text:
+          '${i18n(context, 'coords_distancebearing_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentValue.distance))} ${_currentOutputUnit.symbol}',
       copyText: doubleFormat.format(_currentOutputUnit.fromMeter(_currentValue.distance)),
     ));
     _currentOutput.add(GCWOutputText(
-      text: '${i18n(context, 'coords_distancebearing_bearingatob')}: ${doubleFormat.format(_currentValue.bearingAToB)}°',
+      text:
+          '${i18n(context, 'coords_distancebearing_bearingatob')}: ${doubleFormat.format(_currentValue.bearingAToB)}°',
       copyText: doubleFormat.format(_currentValue.bearingAToB),
     ));
     _currentOutput.add(GCWOutputText(
-      text: '${i18n(context, 'coords_distancebearing_bearingbtoa')}: ${doubleFormat.format(_currentValue.bearingBToA)}°',
+      text:
+          '${i18n(context, 'coords_distancebearing_bearingbtoa')}: ${doubleFormat.format(_currentValue.bearingBToA)}°',
       copyText: doubleFormat.format(_currentValue.bearingBToA),
     ));
   }

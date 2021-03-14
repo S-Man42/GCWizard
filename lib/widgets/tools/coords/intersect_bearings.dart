@@ -26,11 +26,11 @@ class IntersectBearingsState extends State<IntersectBearings> {
 
   var _currentCoordsFormat1 = defaultCoordFormat();
   var _currentCoords1 = defaultCoordinate;
-  var _currentBearing1 = {'text': '','value': 0.0};
+  var _currentBearing1 = {'text': '', 'value': 0.0};
 
   var _currentCoordsFormat2 = defaultCoordFormat();
   var _currentCoords2 = defaultCoordinate;
-  var _currentBearing2 = {'text': '','value': 0.0};
+  var _currentBearing2 = {'text': '', 'value': 0.0};
 
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
@@ -40,10 +40,7 @@ class IntersectBearingsState extends State<IntersectBearings> {
   void initState() {
     super.initState();
 
-    _currentMapPoints = [
-      GCWMapPoint(point: _currentCoords1),
-      GCWMapPoint(point: _currentCoords2)
-    ];
+    _currentMapPoints = [GCWMapPoint(point: _currentCoords1), GCWMapPoint(point: _currentCoords2)];
   }
 
   @override
@@ -97,16 +94,12 @@ class IntersectBearingsState extends State<IntersectBearings> {
           outputs: _currentOutput,
           points: _currentMapPoints,
           polylines: [
+            GCWMapPolyline(points: [_currentMapPoints[0], _getEndLine1()]),
             GCWMapPolyline(
-              points: [_currentMapPoints[0], _getEndLine1()]
-            ),
-            GCWMapPolyline(
-              points: [_currentMapPoints[1], _getEndLine2()],
-              color: HSLColor
-                .fromColor(COLOR_MAP_POLYLINE)
-                .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
-                .toColor()
-            )
+                points: [_currentMapPoints[1], _getEndLine2()],
+                color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
+                    .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+                    .toColor())
           ],
         ),
       ],
@@ -119,10 +112,13 @@ class IntersectBearingsState extends State<IntersectBearings> {
     var mapPoint;
     if (_currentIntersection == null) {
       var distance1To2 = distanceBearing(_currentCoords1, _currentCoords2, _ells).distance;
-      mapPoint = GCWMapPoint(point: projection(_currentCoords1, _currentBearing1['value'], distance1To2 * 3, _ells), isVisible: false);
+      mapPoint = GCWMapPoint(
+          point: projection(_currentCoords1, _currentBearing1['value'], distance1To2 * 3, _ells), isVisible: false);
     } else {
       var distance1ToIntersect = distanceBearing(_currentCoords1, _currentIntersection, _ells).distance;
-      mapPoint = GCWMapPoint(point: projection(_currentCoords1, _currentBearing1['value'], distance1ToIntersect * 1.5, _ells), isVisible: false);
+      mapPoint = GCWMapPoint(
+          point: projection(_currentCoords1, _currentBearing1['value'], distance1ToIntersect * 1.5, _ells),
+          isVisible: false);
     }
 
     _currentMapPoints.add(mapPoint);
@@ -135,10 +131,13 @@ class IntersectBearingsState extends State<IntersectBearings> {
     var mapPoint;
     if (_currentIntersection == null) {
       var distance2To1 = distanceBearing(_currentCoords2, _currentCoords1, _ells).distance;
-      mapPoint = GCWMapPoint(point: projection(_currentCoords2, _currentBearing2['value'], distance2To1 * 3, _ells), isVisible: false);
+      mapPoint = GCWMapPoint(
+          point: projection(_currentCoords2, _currentBearing2['value'], distance2To1 * 3, _ells), isVisible: false);
     } else {
       var distance2ToIntersect = distanceBearing(_currentCoords2, _currentIntersection, _ells).distance;
-      mapPoint = GCWMapPoint(point: projection(_currentCoords2, _currentBearing2['value'], distance2ToIntersect * 1.5, _ells), isVisible: false);
+      mapPoint = GCWMapPoint(
+          point: projection(_currentCoords2, _currentBearing2['value'], distance2ToIntersect * 1.5, _ells),
+          isVisible: false);
     }
 
     _currentMapPoints.add(mapPoint);
@@ -146,42 +145,36 @@ class IntersectBearingsState extends State<IntersectBearings> {
   }
 
   Widget _buildSubmitButton() {
-    return GCWSubmitButton(
-      onPressed: () async {
-        await showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) {
-            return Center (
-              child: Container(
-                child: GCWAsyncExecuter(
-                  isolatedFunction: intersectBearingsAsync,
-                  parameter: _buildJobData(),
-                  onReady: (data) => _showOutput(data),
-                  isOverlay: true,
-                ),
-                height: 220,
-                width: 150,
+    return GCWSubmitButton(onPressed: () async {
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Center(
+            child: Container(
+              child: GCWAsyncExecuter(
+                isolatedFunction: intersectBearingsAsync,
+                parameter: _buildJobData(),
+                onReady: (data) => _showOutput(data),
+                isOverlay: true,
               ),
-            );
-          },
-        );
-      }
-    );
+              height: 220,
+              width: 150,
+            ),
+          );
+        },
+      );
+    });
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
-
-    return GCWAsyncExecuterParameters(
-      IntersectBearingJobData(
-          coord1: _currentCoords1,
-          az13: _currentBearing1['value'],
-          coord2: _currentCoords2,
-          az23: _currentBearing2['value'],
-          ells: defaultEllipsoid(),
-          crossbearing: false
-      )
-    );
+    return GCWAsyncExecuterParameters(IntersectBearingJobData(
+        coord1: _currentCoords1,
+        az13: _currentBearing1['value'],
+        coord2: _currentCoords2,
+        az23: _currentBearing2['value'],
+        ells: defaultEllipsoid(),
+        crossbearing: false));
   }
 
   _showOutput(LatLng output) {
@@ -189,15 +182,13 @@ class IntersectBearingsState extends State<IntersectBearings> {
 
     _currentMapPoints = [
       GCWMapPoint(
-        point: _currentCoords1,
-        markerText: i18n(context, 'coords_intersectbearings_coord1'),
-        coordinateFormat: _currentCoordsFormat1
-      ),
+          point: _currentCoords1,
+          markerText: i18n(context, 'coords_intersectbearings_coord1'),
+          coordinateFormat: _currentCoordsFormat1),
       GCWMapPoint(
-        point: _currentCoords2,
-        markerText: i18n(context, 'coords_intersectbearings_coord2'),
-        coordinateFormat: _currentCoordsFormat2
-      )
+          point: _currentCoords2,
+          markerText: i18n(context, 'coords_intersectbearings_coord2'),
+          coordinateFormat: _currentCoordsFormat2)
     ];
 
     if (_currentIntersection == null) {
@@ -208,14 +199,11 @@ class IntersectBearingsState extends State<IntersectBearings> {
       return;
     }
 
-    _currentMapPoints.add(
-        GCWMapPoint(
-            point: _currentIntersection,
-            color: COLOR_MAP_CALCULATEDPOINT,
-            markerText: i18n(context, 'coords_common_intersection'),
-            coordinateFormat: _currentOutputFormat
-        )
-    );
+    _currentMapPoints.add(GCWMapPoint(
+        point: _currentIntersection,
+        color: COLOR_MAP_CALCULATEDPOINT,
+        markerText: i18n(context, 'coords_common_intersection'),
+        coordinateFormat: _currentOutputFormat));
 
     _currentOutput = [formatCoordOutput(_currentIntersection, _currentOutputFormat, defaultEllipsoid())];
 
@@ -223,5 +211,4 @@ class IntersectBearingsState extends State<IntersectBearings> {
       setState(() {});
     });
   }
-
 }

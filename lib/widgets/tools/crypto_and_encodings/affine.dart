@@ -15,7 +15,6 @@ class Affine extends StatefulWidget {
 }
 
 class AffineState extends State<Affine> {
-
   TextEditingController _encodeController;
   TextEditingController _decodeController;
 
@@ -27,7 +26,7 @@ class AffineState extends State<Affine> {
   int _currentKeyAIndex = 0;
   int _currentKeyBIndex = 0;
 
-  final aKeys = [1,3,5,7,9,11,15,17,19,21,25];
+  final aKeys = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 25];
   final bKeys = List<int>.generate(26, (index) => index);
 
   @override
@@ -46,7 +45,6 @@ class AffineState extends State<Affine> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWTwoOptionsSwitch(
@@ -57,25 +55,23 @@ class AffineState extends State<Affine> {
             });
           },
         ),
-
         _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              controller: _encodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentEncodeInput = text;
-                });
-              },
-            )
-          : GCWTextField(
-              controller: _decodeController,
+            ? GCWTextField(
+                controller: _encodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
+            : GCWTextField(
+                controller: _decodeController,
                 onChanged: (text) {
                   setState(() {
                     _currentDecodeInput = text;
                   });
                 },
-          ),
-
+              ),
         GCWDropDownSpinner(
           title: i18n(context, 'affine_key_a'),
           index: _currentKeyAIndex,
@@ -86,7 +82,6 @@ class AffineState extends State<Affine> {
             });
           },
         ),
-
         GCWIntegerSpinner(
           title: i18n(context, 'affine_key_b'),
           min: 0,
@@ -98,11 +93,7 @@ class AffineState extends State<Affine> {
             });
           },
         ),
-
-        GCWTextDivider(
-          text: i18n(context, 'common_output')
-        ),
-
+        GCWTextDivider(text: i18n(context, 'common_output')),
         _buildOutput(context)
       ],
     );

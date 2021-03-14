@@ -12,10 +12,9 @@ class GCWSymbolTableTool extends GCWTool {
     this.symbolKey,
     this.searchStrings: '',
   }) : super(
-    key: key,
-    tool: SymbolTable(symbolKey: symbolKey),
-    i18nPrefix: 'symboltables_' + symbolKey,
-    iconPath: SYMBOLTABLES_ASSETPATH + symbolKey + '/logo.png',
-    searchStrings: searchStrings
-  );
+            key: key,
+            tool: SymbolTable(symbolKey: symbolKey),
+            i18nPrefix: 'symboltables_' + symbolKey,
+            iconPath: SYMBOLTABLES_ASSETPATH + symbolKey + '/logo.png',
+            searchStrings: searchStrings);
 }
