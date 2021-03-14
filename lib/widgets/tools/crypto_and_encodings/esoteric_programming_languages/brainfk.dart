@@ -54,7 +54,8 @@ class BrainfkState extends State<Brainfk> {
         ),
         GCWTextField(
           controller: _textController,
-          hintText: _currentMode == GCWSwitchPosition.left ? i18n(context, 'brainfk_code') : i18n(context, 'brainfk_text'),
+          hintText:
+              _currentMode == GCWSwitchPosition.left ? i18n(context, 'brainfk_code') : i18n(context, 'brainfk_text'),
           onChanged: (text) {
             setState(() {
               _currentText = text;
@@ -62,19 +63,17 @@ class BrainfkState extends State<Brainfk> {
           },
         ),
         _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              controller: _inputController,
-              hintText: i18n(context, 'brainfk_input'),
-              onChanged: (text) {
-                setState(() {
-                  _currentInput = text;
-                });
-              },
-            )
-          : Container(),
-        GCWDefaultOutput(
-          child: _calculateOutput()
-        )
+            ? GCWTextField(
+                controller: _inputController,
+                hintText: i18n(context, 'brainfk_input'),
+                onChanged: (text) {
+                  setState(() {
+                    _currentInput = text;
+                  });
+                },
+              )
+            : Container(),
+        GCWDefaultOutput(child: _calculateOutput())
       ],
     );
   }
@@ -82,8 +81,10 @@ class BrainfkState extends State<Brainfk> {
   _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
       try {
-        return widget.interpret == null ? interpretBrainfk(_currentText, input: _currentInput) : widget.interpret(_currentText, input: _currentInput);
-      } on FormatException catch(e) {
+        return widget.interpret == null
+            ? interpretBrainfk(_currentText, input: _currentInput)
+            : widget.interpret(_currentText, input: _currentInput);
+      } on FormatException catch (e) {
         return printErrorMessage(context, e.message);
       }
     } else {

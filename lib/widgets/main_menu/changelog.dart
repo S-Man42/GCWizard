@@ -12,26 +12,26 @@ class Changelog extends StatefulWidget {
 
 class ChangelogState extends State<Changelog> {
   final _changelogs = {
-    '1.4.1' : DateTime(2021, 02, 10),
-    '1.4.0' : DateTime(2021, 02, 3),
-    '1.3.0' : DateTime(2021, 01, 7),
-    '1.2.0' : DateTime(2020, 11, 4),
-    '1.1.0' : DateTime(2020, 9, 8),
-    '1.0.0' : DateTime(2020, 7, 21),
-    '0.8.1' : DateTime(2020, 6, 4),
-    '0.8.0' : DateTime(2020, 5, 28),
-    '0.7.1' : DateTime(2020, 4, 30),
-    '0.7.0' : DateTime(2020, 4, 27),
-    '0.6.2' : DateTime(2020, 4, 9),
-    '0.6.1' : DateTime(2020, 4, 8),
-    '0.6.0' : DateTime(2020, 4, 1),
-    '0.5.1' : DateTime(2020, 3, 20),
-    '0.5.0' : DateTime(2020, 3, 19),
-    '0.4.0' : DateTime(2020, 3, 7),
-    '0.3.2' : DateTime(2020, 2, 18),
-    '0.3.0' : DateTime(2020, 1, 9),
-    '0.0.4' : DateTime(2020, 1, 4),
-    '0.0.1' : DateTime(2019, 12, 28)
+    '1.4.1': DateTime(2021, 02, 10),
+    '1.4.0': DateTime(2021, 02, 3),
+    '1.3.0': DateTime(2021, 01, 7),
+    '1.2.0': DateTime(2020, 11, 4),
+    '1.1.0': DateTime(2020, 9, 8),
+    '1.0.0': DateTime(2020, 7, 21),
+    '0.8.1': DateTime(2020, 6, 4),
+    '0.8.0': DateTime(2020, 5, 28),
+    '0.7.1': DateTime(2020, 4, 30),
+    '0.7.0': DateTime(2020, 4, 27),
+    '0.6.2': DateTime(2020, 4, 9),
+    '0.6.1': DateTime(2020, 4, 8),
+    '0.6.0': DateTime(2020, 4, 1),
+    '0.5.1': DateTime(2020, 3, 20),
+    '0.5.0': DateTime(2020, 3, 19),
+    '0.4.0': DateTime(2020, 3, 7),
+    '0.3.2': DateTime(2020, 2, 18),
+    '0.3.0': DateTime(2020, 1, 9),
+    '0.0.4': DateTime(2020, 1, 4),
+    '0.0.1': DateTime(2019, 12, 28)
   };
 
   @override
@@ -39,22 +39,15 @@ class ChangelogState extends State<Changelog> {
     var dateFormat = DateFormat('yMd', Localizations.localeOf(context).toString());
 
     var content = Column(
-      children: _changelogs.entries.map((changelog) {
-        return Column(
-          children: <Widget>[
-            GCWTextDivider(
-              text: '${changelog.key} (${dateFormat.format(changelog.value)})'
-            ),
-            GCWText(
-              text: i18n(context, 'changelog_' + changelog.key)
-            )
-          ],
-        );
-      }).toList()
-    );
+        children: _changelogs.entries.map((changelog) {
+      return Column(
+        children: <Widget>[
+          GCWTextDivider(text: '${changelog.key} (${dateFormat.format(changelog.value)})'),
+          GCWText(text: i18n(context, 'changelog_' + changelog.key))
+        ],
+      );
+    }).toList());
 
-    return GCWMainMenuEntryStub(
-      content: content
-    );
+    return GCWMainMenuEntryStub(content: content);
   }
 }

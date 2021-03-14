@@ -74,9 +74,7 @@ class SegmentLineState extends State<SegmentLine> {
             });
           },
         ),
-        GCWTextDivider(
-          text: i18n(context, 'coords_segmentline_numbersegments')
-        ),
+        GCWTextDivider(text: i18n(context, 'coords_segmentline_numbersegments')),
         GCWIntegerSpinner(
           value: _currentSegmentCount,
           min: 2,
@@ -96,15 +94,14 @@ class SegmentLineState extends State<SegmentLine> {
           },
         ),
         GCWUnitDropDownButton(
-          unitList: allLengths(),
-          value: _currentOutputUnit,
-          onlyShowSymbols: false,
-          onChanged: (Length value) {
-            setState(() {
-              _currentOutputUnit = value;
-            });
-          }
-        ),
+            unitList: allLengths(),
+            value: _currentOutputUnit,
+            onlyShowSymbols: false,
+            onChanged: (Length value) {
+              setState(() {
+                _currentOutputUnit = value;
+              });
+            }),
         GCWSubmitButton(
           onPressed: () {
             setState(() {
@@ -126,34 +123,26 @@ class SegmentLineState extends State<SegmentLine> {
     var segments = segmentLine(_currentCoords1, _currentCoords2, _currentSegmentCount, defaultEllipsoid());
 
     var startMapPoint = GCWMapPoint(
-      point: _currentCoords1,
-      markerText: i18n(context, 'coords_segmentline_start'),
-      coordinateFormat: _currentCoordsFormat1
-    );
+        point: _currentCoords1,
+        markerText: i18n(context, 'coords_segmentline_start'),
+        coordinateFormat: _currentCoordsFormat1);
     var endMapPoint = GCWMapPoint(
-      point: _currentCoords2,
-      markerText: i18n(context, 'coords_segmentline_end'),
-      coordinateFormat: _currentCoordsFormat2
-    );
+        point: _currentCoords2,
+        markerText: i18n(context, 'coords_segmentline_end'),
+        coordinateFormat: _currentCoordsFormat2);
 
     _currentMapPoints = [startMapPoint];
     segments['points'].asMap().forEach((index, point) {
-      _currentMapPoints.add(
-        GCWMapPoint(
-          point: point,
-          markerText: i18n(context, 'coords_segmentline_segmentdivider') + ' ' + (index + 1).toString(),
-          coordinateFormat: _currentOutputFormat,
-          color: COLOR_MAP_CALCULATEDPOINT,
-        )
-      );
+      _currentMapPoints.add(GCWMapPoint(
+        point: point,
+        markerText: i18n(context, 'coords_segmentline_segmentdivider') + ' ' + (index + 1).toString(),
+        coordinateFormat: _currentOutputFormat,
+        color: COLOR_MAP_CALCULATEDPOINT,
+      ));
     });
     _currentMapPoints.add(endMapPoint);
 
-    _currentMapPolylines = [
-      GCWMapPolyline(
-        points: List<GCWMapPoint>.from(_currentMapPoints)
-      )
-    ];
+    _currentMapPolylines = [GCWMapPolyline(points: List<GCWMapPoint>.from(_currentMapPoints))];
 
     _currentOutputs = List<String>.from(segments['points'].map((point) {
       return formatCoordOutput(point, _currentOutputFormat, defaultEllipsoid());
@@ -161,7 +150,8 @@ class SegmentLineState extends State<SegmentLine> {
 
     var distanceOutput = doubleFormat.format(_currentOutputUnit.fromMeter(segments['segmentDistance']));
     _currentDistanceOutput = GCWDefaultOutput(
-      child: i18n(context, 'coords_segmentline_segmentdistance') + ': ' + distanceOutput + ' ' + _currentOutputUnit.symbol,
+      child:
+          i18n(context, 'coords_segmentline_segmentdistance') + ': ' + distanceOutput + ' ' + _currentOutputUnit.symbol,
       copyText: distanceOutput,
     );
   }

@@ -19,9 +19,7 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
   var _currentCoord = '';
 
   var _maskInputFormatter = WrapperForMaskTextInputFormatter(
-    mask: '########+##########',
-    filter: {"#": RegExp(r'[23456789CFGHJMPQRVWXcfghjmpqrvwx]')}
-  );
+      mask: '########+##########', filter: {"#": RegExp(r'[23456789CFGHJMPQRVWXcfghjmpqrvwx]')});
 
   @override
   void initState() {
@@ -43,9 +41,8 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
       _controller.text = _currentCoord;
     }
 
-    return Column (
-      children: <Widget>[
-        GCWTextField(
+    return Column(children: <Widget>[
+      GCWTextField(
           controller: _controller,
           inputFormatters: [_maskInputFormatter],
           onChanged: (ret) {
@@ -53,16 +50,14 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
               _currentCoord = ret;
               _setCurrentValueAndEmitOnChange();
             });
-          }
-        ),
-      ]
-    );
+          }),
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {
     try {
       LatLng coords = openLocationCodeToLatLon(_currentCoord);
       widget.onChanged(coords);
-    } catch(e) {}
+    } catch (e) {}
   }
 }

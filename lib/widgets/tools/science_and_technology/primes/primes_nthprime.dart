@@ -30,9 +30,7 @@ class NthPrimeState extends State<NthPrime> {
             });
           },
         ),
-        GCWDefaultOutput(
-          child: getNthPrime(_currentNumber)
-        )
+        GCWDefaultOutput(child: getNthPrime(_currentNumber))
       ],
     );
   }

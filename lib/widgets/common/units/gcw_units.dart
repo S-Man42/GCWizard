@@ -13,14 +13,14 @@ class GCWUnits extends StatefulWidget {
   final bool onlyShowPrefixSymbols;
   final Map<String, dynamic> value;
 
-  GCWUnits({
-    Key key,
-    this.unitCategory,
-    this.onChanged,
-    this.onlyShowUnitSymbols: false,
-    this.onlyShowPrefixSymbols: true,
-    this.value
-  }) : super(key: key);
+  GCWUnits(
+      {Key key,
+      this.unitCategory,
+      this.onChanged,
+      this.onlyShowUnitSymbols: false,
+      this.onlyShowPrefixSymbols: true,
+      this.value})
+      : super(key: key);
 
   @override
   _GCWUnitsState createState() => _GCWUnitsState();
@@ -45,37 +45,35 @@ class _GCWUnitsState extends State<GCWUnits> {
         Row(
           children: <Widget>[
             widget.unitCategory.usesPrefixes
-              ? Expanded(
-                  child: Container(
-                    child: GCWUnitPrefixDropDownButton(
-                      onlyShowSymbols: widget.onlyShowPrefixSymbols,
-                      value: _currentPrefix,
-                      onChanged: (value) {
-                        setState(() {
-                          _currentPrefix = value;
-                          _emitOnChange();
-                        });
-                      },
+                ? Expanded(
+                    child: Container(
+                      child: GCWUnitPrefixDropDownButton(
+                        onlyShowSymbols: widget.onlyShowPrefixSymbols,
+                        value: _currentPrefix,
+                        onChanged: (value) {
+                          setState(() {
+                            _currentPrefix = value;
+                            _emitOnChange();
+                          });
+                        },
+                      ),
+                      padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
                     ),
-                    padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-                  ),
-                  flex: 1
-                  )
-              : Container(),
+                    flex: 1)
+                : Container(),
             Expanded(
-              child: GCWUnitDropDownButton(
-                value: _currentUnit,
-                unitList: widget.unitCategory.units,
-                onlyShowSymbols: widget.onlyShowUnitSymbols,
-                onChanged: (value) {
-                  setState(() {
-                    _currentUnit = value;
-                    _emitOnChange();
-                  });
-                },
-              ),
-              flex: widget.unitCategory.usesPrefixes ? 2 : 1
-            )
+                child: GCWUnitDropDownButton(
+                  value: _currentUnit,
+                  unitList: widget.unitCategory.units,
+                  onlyShowSymbols: widget.onlyShowUnitSymbols,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentUnit = value;
+                      _emitOnChange();
+                    });
+                  },
+                ),
+                flex: widget.unitCategory.usesPrefixes ? 2 : 1)
           ],
         ),
       ],

@@ -18,20 +18,14 @@ class GCWEncryptButtonBar extends StatefulWidget {
 }
 
 class _GCWEncryptButtonBarState extends State<GCWEncryptButtonBar> {
-
   @override
   Widget build(BuildContext context) {
-    return GCWToolBar(
-      children: [
-        GCWButton(
-          text: i18n(context, 'common_encrypt'),
-          onPressed: widget.onPressedEncode
-        ),
-        GCWButton(
-          text: i18n(context, 'common_decrypt'),
-          onPressed: widget.onPressedDecode,
-        ),
-      ]
-    );
+    return GCWToolBar(children: [
+      GCWButton(text: i18n(context, 'common_encrypt'), onPressed: widget.onPressedEncode),
+      GCWButton(
+        text: i18n(context, 'common_decrypt'),
+        onPressed: widget.onPressedDecode,
+      ),
+    ]);
   }
 }

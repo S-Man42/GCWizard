@@ -1,16 +1,15 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/chef_international.dart';
 
-enum State {Dry, Liquid}
+enum State { Dry, Liquid }
 
 class Ingredient {
-
   String _name;
   int _amount;
   State _state;
   bool _error;
   List<String> _errorList;
 
-  Ingredient(String ingredient)  {
+  Ingredient(String ingredient) {
     _errorList = new List<String>();
 
     var tokens = ingredient.replaceAll('-', ' ').split(' ');
@@ -23,12 +22,10 @@ class Ingredient {
         if (MeasureType.hasMatch(tokens[i])) {
           _state = State.Dry;
           i++;
-        } else
-        if (MeasureDry.hasMatch(tokens[i])) {
+        } else if (MeasureDry.hasMatch(tokens[i])) {
           _state = State.Dry;
           i++;
-        } else
-        if (MeasureLiquid.hasMatch(tokens[i])) {
+        } else if (MeasureLiquid.hasMatch(tokens[i])) {
           _state = State.Liquid;
           i++;
         } else if (MeasureElse.hasMatch(tokens[i])) {
@@ -37,7 +34,8 @@ class Ingredient {
       } else {
         _name = 'INVALID';
       }
-    } else { // no amount
+    } else {
+      // no amount
       _amount = 0;
       _state = State.Dry;
     }
@@ -79,15 +77,15 @@ class Ingredient {
     return _name;
   }
 
-  void setName(String n){
+  void setName(String n) {
     _name = n;
   }
 
-  bool isValid(){
+  bool isValid() {
     return _error;
   }
 
-  List<String> getError(){
+  List<String> getError() {
     return _errorList;
   }
 }

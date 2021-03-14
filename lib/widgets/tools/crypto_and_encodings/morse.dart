@@ -56,78 +56,73 @@ class MorseState extends State<Morse> {
         ),
         _buildMorseButtons(context),
         _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              controller: _encodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentEncodeInput = text;
-                });
-              },
-            )
-          : GCWTextField(
-              controller: _decodeController,
-              onChanged: (text) {
-                setState(() {
-                  _currentDecodeInput = text;
-                });
-              },
-            ),
-        GCWTextDivider(
-          text: i18n(context, 'common_output')
-        ),
+            ? GCWTextField(
+                controller: _encodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
+            : GCWTextField(
+                controller: _decodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                  });
+                },
+              ),
+        GCWTextDivider(text: i18n(context, 'common_output')),
         _buildOutput(context)
       ],
     );
   }
 
   Widget _buildMorseButtons(BuildContext context) {
-    if (_currentMode == GCWSwitchPosition.left)
-      return Container();
+    if (_currentMode == GCWSwitchPosition.left) return Container();
 
-    return GCWToolBar(
-      children: [
-        GCWButton(
-          text: i18n(context, 'morse_short'),
-          onPressed: () {
-            setState(() {
-              _addCharacter('.');
-            });
-          },
-        ),
-        GCWButton(
-          text: i18n(context, 'morse_long'),
-          onPressed: () {
-            setState(() {
-              _addCharacter('-');
-            });
-          },
-        ),
-        GCWButton(
-          text: i18n(context, 'morse_next_letter'),
-          onPressed: () {
-            setState(() {
-              _addCharacter(' ');
-            });
-          },
-        ),
-        GCWButton(
-          text: i18n(context, 'morse_next_word'),
-          onPressed: () {
-            setState(() {
-              _addCharacter(' | ');
-            });
-          },
-        ),
-        GCWIconButton(
-          iconData: Icons.backspace,
-          onPressed: () {
-            setState(() {
-              _currentDecodeInput = textControllerDoBackSpace(_currentDecodeInput, _decodeController);
-            });
-          },
-        ),
-      ]
-    );
+    return GCWToolBar(children: [
+      GCWButton(
+        text: i18n(context, 'morse_short'),
+        onPressed: () {
+          setState(() {
+            _addCharacter('.');
+          });
+        },
+      ),
+      GCWButton(
+        text: i18n(context, 'morse_long'),
+        onPressed: () {
+          setState(() {
+            _addCharacter('-');
+          });
+        },
+      ),
+      GCWButton(
+        text: i18n(context, 'morse_next_letter'),
+        onPressed: () {
+          setState(() {
+            _addCharacter(' ');
+          });
+        },
+      ),
+      GCWButton(
+        text: i18n(context, 'morse_next_word'),
+        onPressed: () {
+          setState(() {
+            _addCharacter(' | ');
+          });
+        },
+      ),
+      GCWIconButton(
+        iconData: Icons.backspace,
+        onPressed: () {
+          setState(() {
+            _currentDecodeInput = textControllerDoBackSpace(_currentDecodeInput, _decodeController);
+          });
+        },
+      ),
+    ]);
   }
 
   _addCharacter(String input) {
@@ -140,17 +135,11 @@ class MorseState extends State<Morse> {
     var textStyle = gcwTextStyle();
     if (_currentMode == GCWSwitchPosition.left) {
       output = encodeMorse(_currentEncodeInput);
-      textStyle = TextStyle(
-        fontSize: textStyle.fontSize + 15,
-        fontFamily: textStyle.fontFamily,
-        fontWeight: FontWeight.bold
-      );
+      textStyle =
+          TextStyle(fontSize: textStyle.fontSize + 15, fontFamily: textStyle.fontFamily, fontWeight: FontWeight.bold);
     } else
       output = decodeMorse(_currentDecodeInput);
 
-    return GCWOutputText(
-      text: output,
-      style: textStyle
-    );
+    return GCWOutputText(text: output, style: textStyle);
   }
 }

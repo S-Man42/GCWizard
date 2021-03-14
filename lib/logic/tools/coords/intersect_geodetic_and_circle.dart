@@ -11,13 +11,12 @@ class IntersectGeodeticAndCircleJobData {
   final double radiusCircle;
   final Ellipsoid ells;
 
-  IntersectGeodeticAndCircleJobData({
-      this.startGeodetic = null,
+  IntersectGeodeticAndCircleJobData(
+      {this.startGeodetic = null,
       this.bearingGeodetic = 0.0,
       this.centerPoint = null,
       this.radiusCircle = 0.0,
-      this.ells = null
-  });
+      this.ells = null});
 }
 
 Future<List<LatLng>> intersectGeodeticAndCircleAsync(dynamic jobData) async {
@@ -26,26 +25,21 @@ Future<List<LatLng>> intersectGeodeticAndCircleAsync(dynamic jobData) async {
     return null;
   }
 
-  var output = intersectGeodeticAndCircle(
-      jobData.parameters.startGeodetic,
-      jobData.parameters.bearingGeodetic,
-      jobData.parameters.centerPoint,
-      jobData.parameters.radiusCircle,
-      jobData.parameters.ells
-  );
+  var output = intersectGeodeticAndCircle(jobData.parameters.startGeodetic, jobData.parameters.bearingGeodetic,
+      jobData.parameters.centerPoint, jobData.parameters.radiusCircle, jobData.parameters.ells);
 
-  if (jobData.sendAsyncPort != null)
-    jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
 
   return output;
 }
 
-List<LatLng> intersectGeodeticAndCircle(LatLng startGeodetic, double bearingGeodetic, LatLng centerPoint, double radiusCircle, Ellipsoid ells) {
+List<LatLng> intersectGeodeticAndCircle(
+    LatLng startGeodetic, double bearingGeodetic, LatLng centerPoint, double radiusCircle, Ellipsoid ells) {
   bearingGeodetic = degToRadian(bearingGeodetic);
 
   var help = distanceBearing(startGeodetic, centerPoint, ells);
 
-   // If start point is in circle, move it out
+  // If start point is in circle, move it out
   bool isInCircle = false;
   if (help.distance < radiusCircle) {
     isInCircle = true;

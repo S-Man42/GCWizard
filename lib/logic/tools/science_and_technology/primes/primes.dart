@@ -4,7 +4,6 @@ import 'package:gc_wizard/logic/tools/science_and_technology/primes/primes_list.
 import 'package:gc_wizard/logic/tools/science_and_technology/primes/probably_prime.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
-
 bool isPrime(BigInt x) {
   return isProbablePrime(x, 16);
 }
@@ -31,14 +30,12 @@ BigInt _findPrimeFactor(BigInt n) {
   return fac;
 }
 
-List<BigInt> integerFactorization (int x) {
-  if (x == null || x <= 1)
-    return [BigInt.one];
+List<BigInt> integerFactorization(int x) {
+  if (x == null || x <= 1) return [BigInt.one];
 
   BigInt n = BigInt.from(x), fac;
 
-  if (n < BigInt.one)
-    return []; //TODO: Exception
+  if (n < BigInt.one) return []; //TODO: Exception
 
   List<BigInt> out = [];
 
@@ -58,31 +55,26 @@ List<BigInt> integerFactorization (int x) {
   return out;
 }
 
-int getNthPrime (int n) {
-  if (n == null || n <= 0 || n > 78499)
-    return -1; //TODO: Exception
+int getNthPrime(int n) {
+  if (n == null || n <= 0 || n > 78499) return -1; //TODO: Exception
 
   return primes[n - 1];
 }
 
-int getPrimeIndex (int n) {
-  if (n == null)
-    return -1; //TODO: Exception
+int getPrimeIndex(int n) {
+  if (n == null) return -1; //TODO: Exception
 
   var output = binarySearch(primes, n);
   return (output < 0) ? -1 : output + 1;
 }
 
-List<int> getNearestPrime (int n) {
-  if (n == null || n > 1000000)
-    return null; //TODO: Exception('Too big');
+List<int> getNearestPrime(int n) {
+  if (n == null || n > 1000000) return null; //TODO: Exception('Too big');
 
-  if (n <= 2)
-    return [2];
-  
-  if (getPrimeIndex(n) >= 0)
-    return [n];
-  
+  if (n <= 2) return [2];
+
+  if (getPrimeIndex(n) >= 0) return [n];
+
   var diff = 0;
   var valueBefore = -1;
   var valueAfter = -1;
@@ -92,14 +84,11 @@ List<int> getNearestPrime (int n) {
     valueAfter = getPrimeIndex(n + diff);
   } while (valueBefore == -1 && valueAfter == -1);
 
-  if (valueBefore >= 0)
-    valueBefore = getNthPrime(valueBefore);
+  if (valueBefore >= 0) valueBefore = getNthPrime(valueBefore);
 
-  if (valueAfter >= 0)
-    valueAfter = getNthPrime(valueAfter);
+  if (valueAfter >= 0) valueAfter = getNthPrime(valueAfter);
 
-  if (valueBefore >= 0 && valueAfter >= 0)
-    return [valueBefore, valueAfter];
+  if (valueBefore >= 0 && valueAfter >= 0) return [valueBefore, valueAfter];
 
   return [max(valueBefore, valueAfter)];
 }

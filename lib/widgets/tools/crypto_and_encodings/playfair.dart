@@ -92,9 +92,6 @@ class PlayfairState extends State<Playfair> {
       output = decryptPlayfair(_currentInput, _currentKey, mode: _currentModificationMode);
     }
 
-    return GCWDefaultOutput(
-      child: output
-    );
-
+    return GCWDefaultOutput(child: output);
   }
 }

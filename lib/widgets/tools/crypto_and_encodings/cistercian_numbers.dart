@@ -17,14 +17,12 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers_
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:prefs/prefs.dart';
 
-
 class CistercianNumbers extends StatefulWidget {
   @override
   CistercianNumbersState createState() => CistercianNumbersState();
 }
 
 class CistercianNumbersState extends State<CistercianNumbers> {
-
   final _DEFAULT_SEGMENT = ['k'];
 
   var _inputEncodeController;
@@ -55,65 +53,62 @@ class CistercianNumbersState extends State<CistercianNumbers> {
         : Prefs.get('symboltables_countcolumns_landscape');
 
     //_currentEncryptMode == GCWSwitchPosition.left;
-      return Column(
-          children: <Widget>[
-            GCWTwoOptionsSwitch(
-              value: _currentMode,
-              onChanged: (value) {
+    return Column(children: <Widget>[
+      GCWTwoOptionsSwitch(
+        value: _currentMode,
+        onChanged: (value) {
+          setState(() {
+            _currentMode = value;
+          });
+        },
+      ),
+      _currentMode == GCWSwitchPosition.left // encrypt: input number => output segment
+          ? GCWTextField(
+              controller: _inputEncodeController,
+              onChanged: (text) {
                 setState(() {
-                  _currentMode = value;
+                  _currentEncodeInput = text;
+                });
+              },
+            )
+          : Column(
+              // decrpyt: input segment => output number
+              children: <Widget>[_buildVisualDecryption()],
+            ),
+      GCWTextDivider(
+        text: i18n(context, 'segmentdisplay_displayoutput'),
+        trailing: Row(
+          children: <Widget>[
+            GCWIconButton(
+              size: IconButtonSize.SMALL,
+              iconData: Icons.zoom_in,
+              onPressed: () {
+                setState(() {
+                  int newCountColumn = max(countColumns - 1, 1);
+                  mediaQueryData.orientation == Orientation.portrait
+                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
                 });
               },
             ),
-            _currentMode == GCWSwitchPosition.left  // encrypt: input number => output segment
-              ? GCWTextField(
-                  controller: _inputEncodeController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentEncodeInput = text;
-                    });
-                  },
-                )
-              : Column( // decrpyt: input segment => output number
-                  children: <Widget>[
-                    _buildVisualDecryption()
-                  ],
-            ),
-            GCWTextDivider(
-              text: i18n(context, 'segmentdisplay_displayoutput'),
-              trailing: Row(
-                children: <Widget>[
-                  GCWIconButton(
-                    size: IconButtonSize.SMALL,
-                    iconData: Icons.zoom_in,
-                    onPressed: () {
-                      setState(() {
-                        int newCountColumn = max(countColumns - 1, 1);
-                        mediaQueryData.orientation == Orientation.portrait
-                          ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                          : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                      });
-                    },
-                  ),
-                  GCWIconButton(
-                    size: IconButtonSize.SMALL,
-                    iconData: Icons.zoom_out,
-                    onPressed: () {
-                      setState(() {
-                        int newCountColumn = countColumns + 1;
+            GCWIconButton(
+              size: IconButtonSize.SMALL,
+              iconData: Icons.zoom_out,
+              onPressed: () {
+                setState(() {
+                  int newCountColumn = countColumns + 1;
 
-                        mediaQueryData.orientation == Orientation.portrait
-                          ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                          : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
-                      });
-                    },
-                  )
-                ],
-              ),
-            ),
-            _buildOutput(countColumns)
-          ]
-      );
+                  mediaQueryData.orientation == Orientation.portrait
+                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                });
+              },
+            )
+          ],
+        ),
+      ),
+      _buildOutput(countColumns)
+    ]);
   }
 
   _buildVisualDecryption() {
@@ -121,7 +116,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
 
     var displays = _currentDisplays; //<List<String>>[];
     if (displays != null && displays.length > 0)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [] , key: (e) => e, value: (e) => true);
+      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
     else
       currentDisplay = {};
 
@@ -129,15 +124,13 @@ class CistercianNumbersState extends State<CistercianNumbers> {
       setState(() {
         var newSegments = <String>[];
         d.forEach((key, value) {
-          if (!value)
-            return;
+          if (!value) return;
           newSegments.add(key);
         });
 
         newSegments.sort();
 
-        if (_currentDisplays.length == 0)
-          _currentDisplays.add([]);
+        if (_currentDisplays.length == 0) _currentDisplays.add([]);
 
         _currentDisplays[_currentDisplays.length - 1] = newSegments;
       });
@@ -147,10 +140,7 @@ class CistercianNumbersState extends State<CistercianNumbers> {
       children: <Widget>[
         Container(
           width: 180,
-          padding: EdgeInsets.only(
-            top: DEFAULT_MARGIN * 2,
-            bottom: DEFAULT_MARGIN * 4
-          ),
+          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(
@@ -162,72 +152,64 @@ class CistercianNumbersState extends State<CistercianNumbers> {
             ],
           ),
         ),
-        GCWToolBar(
-          children: [
-            GCWIconButton(
-              iconData: Icons.space_bar,
-              onPressed: () {
-                setState(() {
-                  _currentDisplays.add(_DEFAULT_SEGMENT);
-                });
-              },
-            ),
-            GCWIconButton(
-              iconData: Icons.backspace,
-              onPressed: () {
-                setState(() {
-                  if (_currentDisplays.length > 0)
-                    _currentDisplays.removeLast();
-                });
-              },
-            ),
-            GCWIconButton(
-              iconData: Icons.clear,
-              onPressed: () {
-                setState(() {
-                  _currentDisplays = [_DEFAULT_SEGMENT];
-                });
-              },
-            )
-          ]
-        )
+        GCWToolBar(children: [
+          GCWIconButton(
+            iconData: Icons.space_bar,
+            onPressed: () {
+              setState(() {
+                _currentDisplays.add(_DEFAULT_SEGMENT);
+              });
+            },
+          ),
+          GCWIconButton(
+            iconData: Icons.backspace,
+            onPressed: () {
+              setState(() {
+                if (_currentDisplays.length > 0) _currentDisplays.removeLast();
+              });
+            },
+          ),
+          GCWIconButton(
+            iconData: Icons.clear,
+            onPressed: () {
+              setState(() {
+                _currentDisplays = [_DEFAULT_SEGMENT];
+              });
+            },
+          )
+        ])
       ],
     );
   }
 
   _buildDigitalOutput(countColumns, segments) {
-    var displays = segments
-      .where((character) => character != null)
-      .map((character) {
-        var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
-        return CistercianNumbersSegmentDisplay(segments: displayedSegments, readOnly: true);
-      })
-      .toList();
+    var displays = segments.where((character) => character != null).map((character) {
+      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
+      return CistercianNumbersSegmentDisplay(segments: displayedSegments, readOnly: true);
+    }).toList();
     return buildSegmentDisplayOutput(countColumns, displays);
   }
 
   _buildOutput(countColumns) {
     var segments;
-    if (_currentMode == GCWSwitchPosition.left) { //encode
+    if (_currentMode == GCWSwitchPosition.left) {
+      //encode
       segments = encodeCistercian(_currentEncodeInput);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments),
         ],
       );
-    }
-    else { //decode
+    } else {
+      //decode
       var output = _currentDisplays.map((character) {
-        if (character != null)
-          return character.join();
+        if (character != null) return character.join();
       }).join(' ');
       segments = decodeCistercian(output);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
-          GCWDefaultOutput(
-            child: segments['text']
-          )
+          GCWDefaultOutput(child: segments['text'])
         ],
       );
     }

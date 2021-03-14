@@ -17,34 +17,24 @@ Map<String, int> _createSolitaireAlphabetMap() {
   return alphabet_AZ;
 }
 
-SolitaireOutput encryptSolitaire (String input, String key) {
+SolitaireOutput encryptSolitaire(String input, String key) {
   return _solitaireBase(input, key, true);
 }
 
-SolitaireOutput decryptSolitaire (String input, String key) {
+SolitaireOutput decryptSolitaire(String input, String key) {
   return _solitaireBase(input, key, false);
 }
 
-SolitaireOutput _solitaireBase (String input, String key,bool encrypt) {
-  if (input == null || input.length == 0)
-    return null;
+SolitaireOutput _solitaireBase(String input, String key, bool encrypt) {
+  if (input == null || input.length == 0) return null;
 
   var alphabet = _createSolitaireAlphabetMap();
-  if (alphabet == null)
-    return null;
+  if (alphabet == null) return null;
 
-  input = input
-    .toUpperCase()
-    .split('')
-    .map((character) => alphabet.containsKey(character) ? character : '')
-    .join();
+  input = input.toUpperCase().split('').map((character) => alphabet.containsKey(character) ? character : '').join();
 
   if (key != null) {
-    key = key
-      .toUpperCase()
-      .split('')
-      .map((character) => alphabet.containsKey(character) ? character : '')
-      .join();
+    key = key.toUpperCase().split('').map((character) => alphabet.containsKey(character) ? character : '').join();
   }
 
   if (encrypt) {
@@ -62,8 +52,7 @@ SolitaireOutput _solitaireBase (String input, String key,bool encrypt) {
   if (encrypt) {
     output = _createEncryptOutput(input, keyStream, alphabet);
     output = insertSpaceEveryNthCharacter(output, 5);
-  }
-  else
+  } else
     output = _createDecryptOutput(input, keyStream, alphabet);
 
   return SolitaireOutput(output, keyStream, deck.join(', '));
@@ -71,26 +60,22 @@ SolitaireOutput _solitaireBase (String input, String key,bool encrypt) {
 
 String _createEncryptOutput(String input, String keyStream, Map<String, int> alphabet) {
   var output = '';
-  for (int i = 0; i < input.length; i++)
-    output += _chr(alphabet[input[i]] + alphabet[keyStream[i]], alphabet);
+  for (int i = 0; i < input.length; i++) output += _chr(alphabet[input[i]] + alphabet[keyStream[i]], alphabet);
 
   return output;
 }
 
 String _createDecryptOutput(String input, String keyStream, Map<String, int> alphabet) {
   var output = "";
-  for (int i = 0; i < input.length; i++)
-    output += _chr(alphabet[input[i]] - alphabet[keyStream[i]], alphabet);
+  for (int i = 0; i < input.length; i++) output += _chr(alphabet[input[i]] - alphabet[keyStream[i]], alphabet);
 
   return output;
 }
 
-
 List<int> createDeck() {
   var deck = new List<int>();
   // Bridge cards +2 joker
-  for (int i = 0; i < 54; i++)
-    deck.add(i + 1);
+  for (int i = 0; i < 54; i++) deck.add(i + 1);
 
   return deck;
 }
@@ -100,7 +85,7 @@ Tuple2<String, List<int>> createKeyStream(String input, String key, List<int> de
   int issueCard;
 
   // use key -> init deck
-  if (key != null && key!= "") {
+  if (key != null && key != "") {
     for (int i = 0; i < key.length; i++) {
       deck = _cycleDeck(deck);
       // Step 4 (position -> value from key letter)
@@ -117,34 +102,30 @@ Tuple2<String, List<int>> createKeyStream(String input, String key, List<int> de
       deck = _cycleDeck(deck);
       issueCard = _issueCard(key, i, deck);
     }
-    streamLetters += _chr(issueCard,alphabet);
+    streamLetters += _chr(issueCard, alphabet);
   }
 
-  return Tuple2<String, List<int>>( streamLetters,deck);
+  return Tuple2<String, List<int>>(streamLetters, deck);
 }
 
 String _chr(int letter, Map<String, int> alphabet) {
   letter = letter % alphabet.length;
 
-  if (letter == 0)
-    letter = alphabet.length;
+  if (letter == 0) letter = alphabet.length;
 
-  var letterString = alphabet.keys.firstWhere(
-        (k) => alphabet[k] == letter, orElse: () => null);
+  var letterString = alphabet.keys.firstWhere((k) => alphabet[k] == letter, orElse: () => null);
 
   return letterString;
 }
 
 int _issueCard(String key, int index, List<int> deck) {
-  int cardIndex= deck[0];
+  int cardIndex = deck[0];
 
-  if (cardIndex == _JOKER_B)
-    cardIndex = _JOKER_A;
+  if (cardIndex == _JOKER_B) cardIndex = _JOKER_A;
   return deck[cardIndex];
 }
 
 List<int> _cycleDeck(List<int> deck) {
-
   // Step 1 (Joker A. Move it down one card)
   var deckSize = deck.length;
   var offet = 1;
@@ -192,12 +173,11 @@ List<int> _cycleDeck(List<int> deck) {
 }
 
 // Step 4 (take off and leave the bottom card on the bottom)
-List<int> _takeOff(List<int> deck, int liftOffPosition)  {
+List<int> _takeOff(List<int> deck, int liftOffPosition) {
   var deckSize = deck.length;
   var newDeck = new List<int>();
   var positionFrom = liftOffPosition;
-  if (positionFrom == _JOKER_B)
-    positionFrom = _JOKER_A;
+  if (positionFrom == _JOKER_B) positionFrom = _JOKER_A;
   var count = (deckSize - 1) - positionFrom;
 
   newDeck = _copyToDeck(deck, newDeck, positionFrom, count);
@@ -212,9 +192,7 @@ List<int> _takeOff(List<int> deck, int liftOffPosition)  {
 }
 
 List<int> _copyToDeck(List<int> deck, List<int> targetDeck, int positionFrom, int count) {
-
-  for (int i = 0; i < count; i++)
-    targetDeck.add(deck[positionFrom + i]);
+  for (int i = 0; i < count; i++) targetDeck.add(deck[positionFrom + i]);
 
   return targetDeck;
 }
@@ -222,9 +200,7 @@ List<int> _copyToDeck(List<int> deck, List<int> targetDeck, int positionFrom, in
 String _solitaireDeckToString(List<int> deck) {
   var output = '';
 
-  output = deck
-    .map((entry) => entry.toString() + ", ")
-    .join();
+  output = deck.map((entry) => entry.toString() + ", ").join();
 
-  return  output.replaceFirst(', ', '', output.length-2);
+  return output.replaceFirst(', ', '', output.length - 2);
 }

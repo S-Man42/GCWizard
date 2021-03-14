@@ -105,18 +105,18 @@ class SkytaleState extends State<Skytale> {
     var _output = '';
 
     _currentCountColumnsMin = ((_currentInput.length / _currentStripWidth).ceil() / _currentPerimeter).ceil();
-    _currentCountColumns = _fromColumnSpinner ? max(_currentCountColumns, _currentCountColumnsMin) : _currentCountColumnsMin;
+    _currentCountColumns =
+        _fromColumnSpinner ? max(_currentCountColumns, _currentCountColumnsMin) : _currentCountColumnsMin;
     _fromColumnSpinner = false;
     _columnController.text = _currentCountColumns.toString();
 
     if (_currentMode == GCWSwitchPosition.left)
-      _output = encryptSkytale(_currentInput, countRows: _currentPerimeter, countColumns: _currentCountColumns, countLettersPerCell: _currentStripWidth);
+      _output = encryptSkytale(_currentInput,
+          countRows: _currentPerimeter, countColumns: _currentCountColumns, countLettersPerCell: _currentStripWidth);
     else
-      _output = decryptSkytale(_currentInput, countRows: _currentPerimeter, countColumns: _currentCountColumns, countLettersPerCell: _currentStripWidth);
+      _output = decryptSkytale(_currentInput,
+          countRows: _currentPerimeter, countColumns: _currentCountColumns, countLettersPerCell: _currentStripWidth);
 
-    return GCWDefaultOutput(
-      child: _output
-    );
-
+    return GCWDefaultOutput(child: _output);
   }
 }

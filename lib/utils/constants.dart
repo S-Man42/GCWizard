@@ -8,8 +8,8 @@ const Map<String, dynamic> defaultIntegerText = {'text': '', 'value': 0};
 const Map<String, dynamic> defaultIntegerListText = {'text': '', 'values': []};
 const Map<String, dynamic> defaultDoubleText = {'text': '', 'value': 0.0};
 
-enum CryptMode {encrypt, decrypt}
+enum CryptMode { encrypt, decrypt }
 
 const UNKNOWN_ELEMENT = '<?>';
 
-enum AlphabetModificationMode{J_TO_I, C_TO_K, W_TO_VV, REMOVE_Q}
+enum AlphabetModificationMode { J_TO_I, C_TO_K, W_TO_VV, REMOVE_Q }

@@ -27,11 +27,11 @@ class IntersectionState extends State<Intersection> {
 
   var _currentCoordsFormat1 = defaultCoordFormat();
   var _currentCoords1 = defaultCoordinate;
-  var _currentAngle1 = {'text': '','value': 0.0};
+  var _currentAngle1 = {'text': '', 'value': 0.0};
 
   var _currentCoordsFormat2 = defaultCoordFormat();
   var _currentCoords2 = defaultCoordinate;
-  var _currentAngle2 = {'text': '','value': 0.0};
+  var _currentAngle2 = {'text': '', 'value': 0.0};
 
   var _currentOutputFormat = defaultCoordFormat();
   List<String> _currentOutput = [];
@@ -42,10 +42,7 @@ class IntersectionState extends State<Intersection> {
   @override
   void initState() {
     super.initState();
-    _currentMapPoints = [
-      GCWMapPoint(point: _currentCoords1),
-      GCWMapPoint(point: _currentCoords2)
-    ];
+    _currentMapPoints = [GCWMapPoint(point: _currentCoords1), GCWMapPoint(point: _currentCoords2)];
   }
 
   @override
@@ -97,52 +94,42 @@ class IntersectionState extends State<Intersection> {
           },
         ),
         _buildSubmitButton(),
-        GCWCoordsOutput(
-          outputs: _currentOutput,
-          points: _currentMapPoints,
-          polylines: _currentMapPolylines
-        ),
+        GCWCoordsOutput(outputs: _currentOutput, points: _currentMapPoints, polylines: _currentMapPolylines),
       ],
     );
   }
 
   Widget _buildSubmitButton() {
-    return GCWSubmitButton(
-      onPressed: () async {
-        await showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) {
-            return Center (
-              child: Container(
-                child: GCWAsyncExecuter(
-                  isolatedFunction: intersectionAsync,
-                  parameter: _buildJobData(),
-                  onReady: (data) => _showOutput(data),
-                  isOverlay: true,
-                ),
-                height: 220,
-                width: 150,
+    return GCWSubmitButton(onPressed: () async {
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Center(
+            child: Container(
+              child: GCWAsyncExecuter(
+                isolatedFunction: intersectionAsync,
+                parameter: _buildJobData(),
+                onReady: (data) => _showOutput(data),
+                isOverlay: true,
               ),
-            );
-          },
-        );
-      }
-    );
+              height: 220,
+              width: 150,
+            ),
+          );
+        },
+      );
+    });
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
-
     _ells = defaultEllipsoid();
-    return GCWAsyncExecuterParameters(
-        IntersectionJobData(
-            coord1: _currentCoords1,
-            alpha: _currentAngle1['value'],
-            coord2: _currentCoords2,
-            beta: _currentAngle2['value'],
-            ells: defaultEllipsoid()
-        )
-    );
+    return GCWAsyncExecuterParameters(IntersectionJobData(
+        coord1: _currentCoords1,
+        alpha: _currentAngle1['value'],
+        coord2: _currentCoords2,
+        beta: _currentAngle2['value'],
+        ells: defaultEllipsoid()));
   }
 
   _showOutput(List<LatLng> output) {
@@ -161,25 +148,21 @@ class IntersectionState extends State<Intersection> {
 
     _currentMapPoints = [
       GCWMapPoint(
-        point: _currentCoords1,
-        markerText: i18n(context, 'coords_intersection_coorda'),
-        coordinateFormat: _currentCoordsFormat1
-      ),
+          point: _currentCoords1,
+          markerText: i18n(context, 'coords_intersection_coorda'),
+          coordinateFormat: _currentCoordsFormat1),
       GCWMapPoint(
-        point: _currentCoords2,
-        markerText: i18n(context, 'coords_intersection_coordb'),
-        coordinateFormat: _currentCoordsFormat2
-      )
+          point: _currentCoords2,
+          markerText: i18n(context, 'coords_intersection_coordb'),
+          coordinateFormat: _currentCoordsFormat2)
     ];
 
     _currentMapPolylines = [
-      GCWMapPolyline(
-        points: [_currentMapPoints[0], _currentMapPoints[1]]
-      )
+      GCWMapPolyline(points: [_currentMapPoints[0], _currentMapPoints[1]])
     ];
 
     DistanceBearingData crs = distanceBearing(_currentCoords1, _currentCoords2, ells);
-    _currentIntersections.asMap().forEach((index, intersection){
+    _currentIntersections.asMap().forEach((index, intersection) {
       var _crsAB;
       var _crsBA;
 
@@ -198,19 +181,15 @@ class IntersectionState extends State<Intersection> {
 
         _currentMapPolylines.addAll([
           GCWMapPolyline(
-            points: [_currentMapPoints[0], GCWMapPoint(point: endPoint1, isVisible: false)],
-            color: HSLColor
-              .fromColor(COLOR_MAP_POLYLINE)
-              .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
-              .toColor()
-          ),
+              points: [_currentMapPoints[0], GCWMapPoint(point: endPoint1, isVisible: false)],
+              color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
+                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
+                  .toColor()),
           GCWMapPolyline(
-            points: [_currentMapPoints[1], GCWMapPoint(point: endPoint2, isVisible: false)],
-            color: HSLColor
-              .fromColor(COLOR_MAP_POLYLINE)
-              .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness -0.3)
-              .toColor()
-          ),
+              points: [_currentMapPoints[1], GCWMapPoint(point: endPoint2, isVisible: false)],
+              color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
+                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+                  .toColor()),
         ]);
       } else {
         var distance1ToIntersect = distanceBearing(_currentCoords1, intersection, ells).distance;
@@ -221,19 +200,15 @@ class IntersectionState extends State<Intersection> {
 
         _currentMapPolylines.addAll([
           GCWMapPolyline(
-            points: [_currentMapPoints[0], GCWMapPoint(point: endPoint1, isVisible: false)],
-            color: HSLColor
-              .fromColor(COLOR_MAP_POLYLINE)
-              .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
-              .toColor()
-          ),
+              points: [_currentMapPoints[0], GCWMapPoint(point: endPoint1, isVisible: false)],
+              color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
+                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
+                  .toColor()),
           GCWMapPolyline(
-            points: [_currentMapPoints[1], GCWMapPoint(point: endPoint2, isVisible: false)],
-            color: HSLColor
-              .fromColor(COLOR_MAP_POLYLINE)
-              .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness -0.3)
-              .toColor()
-          ),
+              points: [_currentMapPoints[1], GCWMapPoint(point: endPoint2, isVisible: false)],
+              color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
+                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+                  .toColor()),
         ]);
       }
     });
@@ -246,20 +221,17 @@ class IntersectionState extends State<Intersection> {
       return;
     }
 
-    _currentMapPoints.addAll(
-      _currentIntersections
+    _currentMapPoints.addAll(_currentIntersections
         .map((intersection) => GCWMapPoint(
-          point: intersection,
-          color: COLOR_MAP_CALCULATEDPOINT,
-          markerText: i18n(context, 'coords_common_intersection'),
-          coordinateFormat: _currentOutputFormat
-        ))
-        .toList()
-    );
+            point: intersection,
+            color: COLOR_MAP_CALCULATEDPOINT,
+            markerText: i18n(context, 'coords_common_intersection'),
+            coordinateFormat: _currentOutputFormat))
+        .toList());
 
     _currentOutput = _currentIntersections
-      .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
-      .toList();
+        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
+        .toList();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

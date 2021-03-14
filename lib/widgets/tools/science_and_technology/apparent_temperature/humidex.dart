@@ -14,7 +14,6 @@ class Humidex extends StatefulWidget {
 }
 
 class HumidexState extends State<Humidex> {
-
   double _currentTemperature = 0.0;
   double _currentDewPoint = 0.0;
 
@@ -38,13 +37,12 @@ class HumidexState extends State<Humidex> {
           },
         ),
         GCWDoubleSpinner(
-          value: _currentTemperature,
-          onChanged: (value) {
-            setState(() {
-              _currentTemperature = value;
-            });
-          }
-        ),
+            value: _currentTemperature,
+            onChanged: (value) {
+              setState(() {
+                _currentTemperature = value;
+              });
+            }),
         Container(
           child: GCWDivider(),
           padding: EdgeInsets.only(top: 10),
@@ -56,7 +54,7 @@ class HumidexState extends State<Humidex> {
           onChanged: (value) {
             setState(() {
               _isHumidity = value == GCWSwitchPosition.left;
-              if (_isHumidity){
+              if (_isHumidity) {
                 mode = 'humidex_mode_humidity';
               } else {
                 mode = 'humidex_mode_dewpoint';
@@ -65,15 +63,14 @@ class HumidexState extends State<Humidex> {
           },
         ),
         GCWDoubleSpinner(
-          value: _currentDewPoint,
-          min: 0.0,
-          max: 100.0,
-          onChanged: (value) {
-            setState(() {
-              _currentDewPoint = value;
-            });
-          }
-        ),
+            value: _currentDewPoint,
+            min: 0.0,
+            max: 100.0,
+            onChanged: (value) {
+              setState(() {
+                _currentDewPoint = value;
+              });
+            }),
         _buildOutput(context)
       ],
     );
@@ -91,34 +88,26 @@ class HumidexState extends State<Humidex> {
     }
 
     String hintT;
-    if (
-    (_isMetric && _currentTemperature < 27)
-        || (!_isMetric && _currentTemperature < 80)
-    ) {
+    if ((_isMetric && _currentTemperature < 27) || (!_isMetric && _currentTemperature < 80)) {
       hintT = i18n(context, 'heatindex_hint_temperature', parameters: ['${_isMetric ? 27 : 80} $unit']);
     }
 
     String hintH;
-    if (_isHumidity){
-      if (_currentDewPoint < 40)
-        hintH = i18n(context, 'heatindex_hint_humidity');
+    if (_isHumidity) {
+      if (_currentDewPoint < 40) hintH = i18n(context, 'heatindex_hint_humidity');
     } else
-       hintH = '';
+      hintH = '';
 
     var hint = [hintT, hintH].where((element) => element != null && element.length > 0).join('\n');
 
     String hintM = '';
     if (output > 45)
       hintM = 'humidex_index_45';
-    else
-    if (output > 39)
+    else if (output > 39)
       hintM = 'humidex_index_40';
-    else
-    if (output > 29)
+    else if (output > 29)
       hintM = 'humidex_index_30';
-    else
-    if (output > 19)
-      hintM = 'humidex_index_20';
+    else if (output > 19) hintM = 'humidex_index_20';
 
     var outputs = [
       GCWOutput(
@@ -127,21 +116,13 @@ class HumidexState extends State<Humidex> {
       )
     ];
 
-    if (hint != null && hint.length > 0)
-      outputs.add(
-        GCWOutput(
-          title: i18n(context, 'heatindex_hint'),
-          child: hint
-        )
-      );
+    if (hint != null && hint.length > 0) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
 
     if (hintM != null && hintM.length > 0)
-      outputs.add(
-        GCWOutput(
-          title: i18n(context, 'humidex_meaning'),
-          child: i18n(context, hintM),
-        )
-      );
+      outputs.add(GCWOutput(
+        title: i18n(context, 'humidex_meaning'),
+        child: i18n(context, hintM),
+      ));
 
     return GCWMultipleOutput(
       children: outputs,

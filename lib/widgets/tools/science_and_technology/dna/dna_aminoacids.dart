@@ -42,18 +42,14 @@ class DNAAminoAcidsState extends State<DNAAminoAcids> {
 
   _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      return GCWDefaultOutput(
-        child: encodeRNASymbolLong(_currentInput)
-      );
+      return GCWDefaultOutput(child: encodeRNASymbolLong(_currentInput));
     } else {
       var output = decodeRNASymbolLong(_currentInput);
       var includesM = output.indexOf('M') > -1;
 
       return Column(
         children: <Widget>[
-          GCWDefaultOutput(
-            child: output
-          ),
+          GCWDefaultOutput(child: output),
           includesM ? GCWTextDivider(text: i18n(context, 'common_note')) : Container(),
           includesM ? GCWText(text: i18n(context, 'dna_aminoacids_notem')) : Container()
         ],

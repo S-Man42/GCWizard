@@ -59,7 +59,6 @@ List<String> _splitIntoBinaryChunks(String binary) {
 }
 
 String _generateBinaryFromCoord(double coord, double lowerBound, double upperBound, int length) {
-
   var binaryOut = '';
 
   while (binaryOut.length < length) {
@@ -93,7 +92,7 @@ String latLonToGeohash(LatLng coords, int geohashLength) {
 }
 
 LatLng geohashToLatLon(String geohash) {
-  try{
+  try {
     geohash = geohash.toLowerCase();
     var binary = geohash.split('').map((character) => _getBinaryByCharacter(character)).join();
 
@@ -103,19 +102,17 @@ LatLng geohashToLatLon(String geohash) {
     var i = 0;
     while (i < binary.length) {
       lonBinary += binary[i];
-      if ((i + 1) < binary.length)
-        latBinary += binary[i + 1];
+      if ((i + 1) < binary.length) latBinary += binary[i + 1];
       i += 2;
     }
 
     var lat = _getCoordFromBinary(latBinary, -90.0, 90.0);
     var lon = _getCoordFromBinary(lonBinary, -180.0, 180.0);
 
-    if (lat == 0.0 && lon == 0.0)
-      return null;
+    if (lat == 0.0 && lon == 0.0) return null;
 
     return LatLng(lat, lon);
-  } catch(e) {}
+  } catch (e) {}
 
   return null;
 }

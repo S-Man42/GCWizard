@@ -14,23 +14,17 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class RSASelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
+    final List<GCWTool> _toolList = Registry.toolList.where((element) {
+      return [
+        className(RSA()),
+        className(RSAEChecker()),
+        className(RSADChecker()),
+        className(RSADCalculator()),
+        className(RSANCalculator()),
+        className(RSAPhiCalculator()),
+      ].contains(className(element.tool));
+    }).toList();
 
-    final List<GCWTool> _toolList =
-      Registry.toolList.where((element) {
-        return [
-          className(RSA()),
-          className(RSAEChecker()),
-          className(RSADChecker()),
-          className(RSADCalculator()),
-          className(RSANCalculator()),
-          className(RSAPhiCalculator()),
-        ].contains(className(element.tool));
-      }).toList();
-
-    return Container(
-      child: GCWToolList(
-        toolList: _toolList
-      )
-    );
+    return Container(child: GCWToolList(toolList: _toolList));
   }
 }

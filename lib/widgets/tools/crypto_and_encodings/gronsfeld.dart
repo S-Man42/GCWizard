@@ -96,9 +96,6 @@ class GronsfeldState extends State<Gronsfeld> {
       output = decryptGronsfeld(_currentInput, _currentKey, _currentAutokey, aValue: _currentAValue);
     }
 
-    return GCWDefaultOutput(
-      child: output
-    );
-
+    return GCWDefaultOutput(child: output);
   }
 }

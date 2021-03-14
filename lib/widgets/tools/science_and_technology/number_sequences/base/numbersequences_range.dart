@@ -13,7 +13,6 @@ class NumberSequenceRange extends StatefulWidget {
   const NumberSequenceRange({Key key, this.mode, this.maxIndex}) : super(key: key);
 
   @override
-
   NumberSequenceRangeState createState() => NumberSequenceRangeState();
 }
 
@@ -40,7 +39,6 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
@@ -68,13 +66,11 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
             });
           },
         ),
-        GCWSubmitButton(
-          onPressed: () {
-            setState(() {
-              _buildOutput();
-            });
-          }
-        ),
+        GCWSubmitButton(onPressed: () {
+          setState(() {
+            _buildOutput();
+          });
+        }),
         _currentOutput
       ],
     );
@@ -86,10 +82,6 @@ class NumberSequenceRangeState extends State<NumberSequenceRange> {
       columnData.add([element.toString()]);
     });
 
-    _currentOutput = GCWDefaultOutput(
-      child: Column(
-        children: columnedMultiLineOutput(context, columnData)
-      )
-    );
+    _currentOutput = GCWDefaultOutput(child: Column(children: columnedMultiLineOutput(context, columnData)));
   }
 }

@@ -1,6 +1,6 @@
 import 'package:gc_wizard/logic/tools/games/scrabble_sets.dart';
 
-List<int> textToLetterValues (String text, String scrabbleVersion) {
+List<int> textToLetterValues(String text, String scrabbleVersion) {
   List<int> output = [];
   ScrabbleSet set = scrabbleSets[scrabbleVersion];
 
@@ -32,7 +32,7 @@ List<int> textToLetterValues (String text, String scrabbleVersion) {
   return output;
 }
 
-List<int> textToLetterFrequencies (String text, String scrabbleVersion) {
+List<int> textToLetterFrequencies(String text, String scrabbleVersion) {
   List<int> output = [];
   ScrabbleSet set = scrabbleSets[scrabbleVersion];
 
