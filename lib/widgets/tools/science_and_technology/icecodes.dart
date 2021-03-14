@@ -14,8 +14,7 @@ class IceCodes extends StatefulWidget {
 }
 
 class IceCodesState extends State<IceCodes> {
-
-  IceCodeLanguage _currentIceCodeLanguage= IceCodeLanguage.EN;
+  IceCodeLanguage _currentIceCodeLanguage = IceCodeLanguage.EN;
   IceCodeSystem _currentIceCodeSystem = IceCodeSystem.BALTIC;
   IceCodeSubSystem _currentIceCodeSubSystemBaltic = IceCodeSubSystem.A;
   IceCodeSubSystem _currentIceCodeSubSystemEU = IceCodeSubSystem.CONDITION;
@@ -42,18 +41,26 @@ class IceCodesState extends State<IceCodes> {
             setState(() {
               _currentIceCodeSystem = value;
               switch (_currentIceCodeSystem) {
-                case IceCodeSystem.BALTIC: _currentIceCodeSubSystemBaltic = IceCodeSubSystem.A; break;
-                case IceCodeSystem.EU: _currentIceCodeSubSystemBaltic = IceCodeSubSystem.CONDITION; break;
-                case IceCodeSystem.WMO: _currentIceCodeSubSystemBaltic = IceCodeSubSystem.CONCENTRATION; break;
-                case IceCodeSystem.SIGRID: _currentIceCodeSubSystemBaltic = IceCodeSubSystem.SIGRID; break;
+                case IceCodeSystem.BALTIC:
+                  _currentIceCodeSubSystemBaltic = IceCodeSubSystem.A;
+                  break;
+                case IceCodeSystem.EU:
+                  _currentIceCodeSubSystemBaltic = IceCodeSubSystem.CONDITION;
+                  break;
+                case IceCodeSystem.WMO:
+                  _currentIceCodeSubSystemBaltic = IceCodeSubSystem.CONCENTRATION;
+                  break;
+                case IceCodeSystem.SIGRID:
+                  _currentIceCodeSubSystemBaltic = IceCodeSubSystem.SIGRID;
+                  break;
               }
               _currentIceCodeSubSystem = _currentIceCodeSubSystemBaltic;
             });
           },
           items: ICECODE_SYSTEM.entries.map((system) {
             return GCWDropDownMenuItem(
-                value: system.key,
-                child: i18n(context, system.value),
+              value: system.key,
+              child: i18n(context, system.value),
             );
           }).toList(),
         ),
@@ -124,17 +131,16 @@ class IceCodesState extends State<IceCodes> {
     );
   }
 
-
   _buildOutput() {
     var iceCode = ICECODES[_currentIceCodeLanguage][_currentIceCodeSystem];
     return GCWDefaultOutput(
         child: Column(
-          children: columnedMultiLineOutput(
-              context,
-              iceCode[_currentIceCodeSubSystem].entries.map((entry) {return [entry.key, entry.value];}).toList(),
-              flexValues: [1, 5]
-          ),
-        )
-    );
+      children: columnedMultiLineOutput(
+          context,
+          iceCode[_currentIceCodeSubSystem].entries.map((entry) {
+            return [entry.key, entry.value];
+          }).toList(),
+          flexValues: [1, 5]),
+    ));
   }
 }

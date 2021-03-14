@@ -175,6 +175,7 @@ final SEARCHSTRING_FR_HASHES_TIGER_192 = '';
 final SEARCHSTRING_FR_HASHES_WHIRLPOOL_512 = '';
 final SEARCHSTRING_FR_HEXADECIMAL = '';
 final SEARCHSTRING_FR_HOMOPHONE = 'monoalphabetique lettres frequences';
+final SEARCHSTRING_FR_ICECODES = 'mer baltique codes glace eau neige fonte';
 final SEARCHSTRING_FR_IRRATIONALNUMBERS = 'irrationalite';
 final SEARCHSTRING_FR_ITERATEDCROSSSUMRANGE = 'section';
 final SEARCHSTRING_FR_ITERATEDCROSSUMRANGEFREQUENCY = 'frequences presence apparition';

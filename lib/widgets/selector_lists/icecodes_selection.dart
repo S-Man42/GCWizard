@@ -10,11 +10,8 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class IceCodesSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-
-    final List<GCWTool> _toolList =
-    Registry.toolList.where((element) {
-      if (className(element.tool) == className(SymbolTable())
-          && (element.tool as SymbolTable).symbolKey == 'icecodes')
+    final List<GCWTool> _toolList = Registry.toolList.where((element) {
+      if (className(element.tool) == className(SymbolTable()) && (element.tool as SymbolTable).symbolKey == 'icecodes')
         return true;
 
       return [
@@ -22,10 +19,6 @@ class IceCodesSelection extends GCWSelection {
       ].contains(className(element.tool));
     }).toList();
 
-    return Container(
-        child: GCWToolList(
-            toolList: _toolList
-        )
-    );
+    return Container(child: GCWToolList(toolList: _toolList));
   }
 }

@@ -181,6 +181,7 @@ final SEARCHSTRING_EN_HASHES_TIGER_192 = '';
 final SEARCHSTRING_EN_HASHES_WHIRLPOOL_512 = '';
 final SEARCHSTRING_EN_HEXADECIMAL = 'hexadecimal decimal';
 final SEARCHSTRING_EN_HOMOPHONE = 'monoalphabetical letterfrequency';
+final SEARCHSTRING_EN_ICECODES = 'balticsea ice floe melting snow iceberg';
 final SEARCHSTRING_EN_IRRATIONALNUMBERS = 'irrational number  fraction decimal digit';
 final SEARCHSTRING_EN_ITERATEDCROSSSUMRANGE = 'range';
 final SEARCHSTRING_EN_ITERATEDCROSSUMRANGEFREQUENCY = 'frequency  occurrences';

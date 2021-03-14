@@ -186,6 +186,7 @@ final SEARCHSTRING_DE_HASHES_TIGER_192 = '';
 final SEARCHSTRING_DE_HASHES_WHIRLPOOL_512 = '';
 final SEARCHSTRING_DE_HEXADECIMAL = 'hexadezimalzahlen dezimalzahlen';
 final SEARCHSTRING_DE_HOMOPHONE = 'monoalphabetische buchstabenhaeufigkeiten';
+final SEARCHSTRING_DE_ICECODES = 'ostsee eiscodes gewaesser schnee schnelzen eisberg';
 final SEARCHSTRING_DE_IRRATIONALNUMBERS = 'irrationale zahlen nachkommastelle';
 final SEARCHSTRING_DE_ITERATEDCROSSSUMRANGE = 'bereich';
 final SEARCHSTRING_DE_ITERATEDCROSSUMRANGEFREQUENCY = 'frequenzen haeufigkeiten auftreten';
