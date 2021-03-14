@@ -76,8 +76,8 @@ flutter:
     - assets/symbol_tables/brahmi_numerals/
     - assets/symbol_tables/braille/
     - assets/symbol_tables/british_sign_language/
-    - assets/symbol_tables/chain_of_death_direction
-    - assets/symbol_tables/chain_of_death_pairs
+    - assets/symbol_tables/chain_of_death_direction/
+    - assets/symbol_tables/chain_of_death_pairs/
     - assets/symbol_tables/chappe_v1/
     - assets/symbol_tables/chappe_v2/
     - assets/symbol_tables/chappe_v3/
@@ -87,7 +87,7 @@ flutter:
     - assets/symbol_tables/color_code/
     - assets/symbol_tables/color_honey/
     - assets/symbol_tables/color_tokki/
-    - assets/symbol_tables/covenant
+    - assets/symbol_tables/covenant/
     - assets/symbol_tables/cyrillic/
     - assets/symbol_tables/cyrillic_numbers/
     - assets/symbol_tables/daedric/
@@ -98,7 +98,7 @@ flutter:
     - assets/symbol_tables/dni/
     - assets/symbol_tables/dni_colors/
     - assets/symbol_tables/dni_numbers/
-    - assets/symbol_tables/doop_speak
+    - assets/symbol_tables/doop_speak/
     - assets/symbol_tables/doremi/
     - assets/symbol_tables/dragon_language/
     - assets/symbol_tables/dragon_runes/
@@ -137,7 +137,7 @@ flutter:
     - assets/symbol_tables/hylian_twilight_princess_wii/
     - assets/symbol_tables/hylian_wind_waker/
     - assets/symbol_tables/hymmnos/
-    - assets/symbol_tables/hieroglyphs
+    - assets/symbol_tables/hieroglyphs/
     - assets/symbol_tables/iching/
     - assets/symbol_tables/illuminati_v1/
     - assets/symbol_tables/illuminati_v2/
@@ -165,7 +165,7 @@ flutter:
     - assets/symbol_tables/murray/
     - assets/symbol_tables/murraybaudot/
     - assets/symbol_tables/musica/
-    - assets/symbol_tables/nazcaan
+    - assets/symbol_tables/nazcaan/
     - assets/symbol_tables/new_zealand_sign_language/
     - assets/symbol_tables/notes_doremi/
     - assets/symbol_tables/notes_notevalues/
@@ -173,7 +173,7 @@ flutter:
     - assets/symbol_tables/notes_names_bassclef/
     - assets/symbol_tables/notes_names_trebleclef/
     - assets/symbol_tables/notes_restvalues/
-    - assets/symbol_tables/nyctographic
+    - assets/symbol_tables/nyctography/
     - assets/symbol_tables/ogham/
     - assets/symbol_tables/optical_fiber_fotag/
     - assets/symbol_tables/optical_fiber_iec60304/
