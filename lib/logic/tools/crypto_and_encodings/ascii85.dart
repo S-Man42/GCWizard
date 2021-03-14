@@ -19,13 +19,7 @@ import 'dart:typed_data';
 
 const ASCII_SHIFT = 33;
 
-const BASE85_POW = [
-  1,
-  85,
-  85 * 85,
-  85 * 85 * 85,
-  85 * 85 * 85 *85
-];
+const BASE85_POW = [1, 85, 85 * 85, 85 * 85 * 85, 85 * 85 * 85 * 85];
 
 /**
  * A very simple method that helps encode for Ascii85 / base85
@@ -41,7 +35,7 @@ String encodeASCII85(Uint8List payload) {
   //We break the payload into int (4 bytes)
   Uint8List chunk = Uint8List(4);
   int chunkIndex = 0;
-  for(int i = 0; i < payload.length; i++) {
+  for (int i = 0; i < payload.length; i++) {
     var currByte = payload[i];
     chunk[chunkIndex++] = currByte;
 
@@ -75,7 +69,7 @@ String _encodeChunk(int value) {
   var longValue = value & 0x00000000ffffffff;
   var encodedChunk = '';
 
-  for(int i = 0 ; i <= 4; i++) {
+  for (int i = 0; i <= 4; i++) {
     encodedChunk += String.fromCharCode((longValue / BASE85_POW[4 - i]).floor() + ASCII_SHIFT);
     longValue = longValue % BASE85_POW[4 - i];
   }
@@ -103,7 +97,7 @@ Uint8List decodeASCII85(String chars) {
   Uint8List payload = ascii.encode(chars);
   Uint8List chunk = Uint8List(5);
   int chunkIndex = 0;
-  for(int i = 0 ; i < payload.length; i++) {
+  for (int i = 0; i < payload.length; i++) {
     var currByte = payload[i];
     //Because all-zero data is quite common, an exception is made for the sake of data compression,
     //and an all-zero group is encoded as a single character "z" instead of "!!!!!".
@@ -122,11 +116,9 @@ Uint8List decodeASCII85(String chars) {
 
     if (chunkIndex == 5) {
       var decodedChunk = _decodeChunk(chunk);
-      if (decodedChunk == null)
-        return null;
+      if (decodedChunk == null) return null;
 
-      for (int j = 0; j < decodedChunk.length; j++)
-        bytebuff[bufferIndex++] = decodedChunk[j];
+      for (int j = 0; j < decodedChunk.length; j++) bytebuff[bufferIndex++] = decodedChunk[j];
 
       chunk = Uint8List(5);
       chunkIndex = 0;
@@ -136,11 +128,10 @@ Uint8List decodeASCII85(String chars) {
   //If we didn't end on 0, then we need some padding
   if (chunkIndex > 0) {
     int numPadded = chunk.length - chunkIndex;
-    for (int j = chunkIndex; j < chunk.length; j++)
-      chunk[j] = 'u'.codeUnitAt(0);
+    for (int j = chunkIndex; j < chunk.length; j++) chunk[j] = 'u'.codeUnitAt(0);
 
     Uint8List paddedDecode = _decodeChunk(chunk);
-    for(int i = 0 ; i < paddedDecode.length - numPadded; i++) {
+    for (int i = 0; i < paddedDecode.length - numPadded; i++) {
       bytebuff[bufferIndex++] = paddedDecode[i];
     }
   }
@@ -164,10 +155,5 @@ Uint8List _decodeChunk(Uint8List chunk) {
 }
 
 Uint8List _intToByte(int value) {
-  return Uint8List.fromList([
-    (value >> 24),
-    (value >> 16),
-    (value >> 8),
-    (value)
-  ]);
+  return Uint8List.fromList([(value >> 24), (value >> 16), (value >> 8), (value)]);
 }

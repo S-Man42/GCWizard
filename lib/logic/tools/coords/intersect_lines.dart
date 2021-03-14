@@ -15,14 +15,13 @@ class IntersectBearingJobData {
   final Ellipsoid ells;
   final bool crossbearing;
 
-  IntersectBearingJobData({
-      this.coord1 = null,
+  IntersectBearingJobData(
+      {this.coord1 = null,
       this.az13 = 0.0,
       this.coord2 = null,
       this.az23 = 0.0,
       this.ells = null,
-      this.crossbearing = false
-  });
+      this.crossbearing = false});
 }
 
 Future<LatLng> intersectBearingsAsync(dynamic jobData) async {
@@ -31,17 +30,10 @@ Future<LatLng> intersectBearingsAsync(dynamic jobData) async {
     return null;
   }
 
-  var output = intersectBearings(
-      jobData.parameters.coord1,
-      jobData.parameters.az13,
-      jobData.parameters.coord2,
-      jobData.parameters.az23,
-      jobData.parameters.ells,
-      jobData.parameters.crossbearing
-  );
+  var output = intersectBearings(jobData.parameters.coord1, jobData.parameters.az13, jobData.parameters.coord2,
+      jobData.parameters.az23, jobData.parameters.ells, jobData.parameters.crossbearing);
 
-  if (jobData.sendAsyncPort != null)
-    jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
 
   return output;
 }
@@ -52,7 +44,6 @@ Future<LatLng> intersectBearingsAsync(dynamic jobData) async {
 // although there is always such a point between to geodetics (e.g. at the back side of the sphere)
 
 LatLng intersectBearings(LatLng coord1, double az13, LatLng coord2, double az23, Ellipsoid ells, bool crossbearing) {
-
   var _centerCalc = centerPointTwoPoints(coord1, coord2, ells);
   LatLng calculatedPoint = _centerCalc['centerPoint'];
   double dist = _centerCalc['distance'];
@@ -77,7 +68,8 @@ LatLng intersectBearings(LatLng coord1, double az13, LatLng coord2, double az23,
   bool broke = false;
 
   while (d > epsilon) {
-    if (br > 50) {      //adjusted these values empirical
+    if (br > 50) {
+      //adjusted these values empirical
       broke = true;
       break;
     }
@@ -110,14 +102,12 @@ LatLng intersectBearings(LatLng coord1, double az13, LatLng coord2, double az23,
     if (newD < d) {
       calculatedPoint = projectedPoint;
 
-      dist *= 1.5;          //adjusted these values empirical
+      dist *= 1.5; //adjusted these values empirical
       d = newD;
-    } else if (newD > d )
-      dist /= 1.2;
+    } else if (newD > d) dist /= 1.2;
   }
 
-  if (broke)
-    return null;
+  if (broke) return null;
 
   return calculatedPoint;
 }
@@ -129,27 +119,15 @@ class IntersectFourPointsJobData {
   final LatLng coord22;
   final Ellipsoid ells;
 
-  IntersectFourPointsJobData({
-    this.coord11 = null,
-    this.coord12 = null,
-    this.coord21 = null,
-    this.coord22 = null,
-    this.ells = null
-  });
+  IntersectFourPointsJobData(
+      {this.coord11 = null, this.coord12 = null, this.coord21 = null, this.coord22 = null, this.ells = null});
 }
 
 Future<LatLng> intersectFourPointsAsync(dynamic jobData) async {
+  var output = intersectFourPoints(jobData.parameters.coord11, jobData.parameters.coord12, jobData.parameters.coord21,
+      jobData.parameters.coord22, jobData.parameters.ells);
 
-  var output = intersectFourPoints(
-    jobData.parameters.coord11,
-    jobData.parameters.coord12,
-    jobData.parameters.coord21,
-    jobData.parameters.coord22,
-    jobData.parameters.ells
-  );
-
-  if (jobData.sendAsyncPort != null)
-    jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
 
   return output;
 }

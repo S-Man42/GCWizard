@@ -48,30 +48,26 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
       _NorthingController.text = _currentNorthing['value'].toString();
     }
 
-    return Column (
-        children: <Widget>[
-          GCWDoubleTextField(
-            hintText: i18n(context, 'coords_formatconverter_mercator_easting'),
-            controller: _EastingController,
-            onChanged: (ret) {
-              setState(() {
-                _currentEasting = ret;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
-          GCWDoubleTextField(
-            hintText: i18n(context, 'coords_formatconverter_mercator_northing'),
-            controller: _NorthingController,
-            onChanged: (ret) {
-              setState(() {
-                _currentNorthing = ret;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
-        ]
-    );
+    return Column(children: <Widget>[
+      GCWDoubleTextField(
+          hintText: i18n(context, 'coords_formatconverter_mercator_easting'),
+          controller: _EastingController,
+          onChanged: (ret) {
+            setState(() {
+              _currentEasting = ret;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+      GCWDoubleTextField(
+          hintText: i18n(context, 'coords_formatconverter_mercator_northing'),
+          controller: _NorthingController,
+          onChanged: (ret) {
+            setState(() {
+              _currentNorthing = ret;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {

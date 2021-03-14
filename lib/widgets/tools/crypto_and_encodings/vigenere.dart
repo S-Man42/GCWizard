@@ -99,14 +99,13 @@ class VigenereState extends State<Vigenere> {
     var output = '';
 
     if (_currentMode == GCWSwitchPosition.left) {
-      output = encryptVigenere(_currentInput, _currentKey, _currentAutokey, aValue: _currentAValue, ignoreNonLetters: _currentNonLetters);
+      output = encryptVigenere(_currentInput, _currentKey, _currentAutokey,
+          aValue: _currentAValue, ignoreNonLetters: _currentNonLetters);
     } else {
-      output = decryptVigenere(_currentInput, _currentKey, _currentAutokey, aValue: _currentAValue, ignoreNonLetters: _currentNonLetters);
+      output = decryptVigenere(_currentInput, _currentKey, _currentAutokey,
+          aValue: _currentAValue, ignoreNonLetters: _currentNonLetters);
     }
 
-    return GCWDefaultOutput(
-      child: output
-    );
-
+    return GCWDefaultOutput(child: output);
   }
 }

@@ -60,11 +60,8 @@ class MoonPositionState extends State<MoonPosition> {
 
     var julianDate = JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']);
 
-    var moonPosition = logic.MoonPosition(
-      _currentCoords,
-      julianDate,
-      getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name'))
-    );
+    var moonPosition =
+        logic.MoonPosition(_currentCoords, julianDate, getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name')));
 
     var outputsMoon = [
       [i18n(context, 'astronomy_position_eclipticlongitude'), format.format(moonPosition.eclipticLongitude) + '°'],
@@ -74,21 +71,23 @@ class MoonPositionState extends State<MoonPosition> {
       [i18n(context, 'astronomy_position_azimuth'), format.format(moonPosition.azimuth) + '°'],
       [i18n(context, 'astronomy_position_altitude'), format.format(moonPosition.altitude) + '°'],
       [i18n(context, 'astronomy_position_diameter'), format.format(moonPosition.diameter) + '\''],
-      [i18n(context, 'astronomy_position_distancetoearthcenter'), format.format(moonPosition.distanceToEarthCenter) + ' km'],
+      [
+        i18n(context, 'astronomy_position_distancetoearthcenter'),
+        format.format(moonPosition.distanceToEarthCenter) + ' km'
+      ],
       [i18n(context, 'astronomy_position_distancetoobserver'), format.format(moonPosition.distanceToObserver) + ' km'],
       [i18n(context, 'astronomy_position_moonage'), format.format(moonPosition.age) + ' d'],
       [i18n(context, 'astronomy_position_illumination'), format.format(moonPosition.illumination) + '%'],
       [i18n(context, 'astronomy_position_moonphase'), i18n(context, getMoonPhase(moonPosition.phaseName))],
-      [i18n(context, 'astronomy_position_astrologicalsign'), i18n(context, getAstrologicalSign(moonPosition.astrologicalSign))],
+      [
+        i18n(context, 'astronomy_position_astrologicalsign'),
+        i18n(context, getAstrologicalSign(moonPosition.astrologicalSign))
+      ],
     ];
 
     var rowsSunData = columnedMultiLineOutput(context, outputsMoon);
 
-    rowsSunData.insert(0,
-      GCWTextDivider(
-        text: i18n(context, 'common_output')
-      )
-    );
+    rowsSunData.insert(0, GCWTextDivider(text: i18n(context, 'common_output')));
 
     var outputsJD = [
       [i18n(context, 'astronomy_position_juliandate'), NumberFormat('0.00000').format(julianDate.julianDate)],
@@ -99,17 +98,11 @@ class MoonPositionState extends State<MoonPosition> {
 
     var rowsJDData = columnedMultiLineOutput(context, outputsJD);
 
-    rowsJDData.insert(0,
-      GCWTextDivider(
-        text: i18n(context, 'astronomy_position_juliandate')
-      )
-    );
+    rowsJDData.insert(0, GCWTextDivider(text: i18n(context, 'astronomy_position_juliandate')));
 
     var output = rowsSunData;
     output.addAll(rowsJDData);
 
-    return Column(
-      children: output
-    );
+    return Column(children: output);
   }
 }

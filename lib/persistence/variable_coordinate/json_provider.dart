@@ -7,36 +7,25 @@ import 'package:prefs/prefs.dart';
 
 void refreshFormulas() {
   var formulasList = Prefs.getStringList('coord_variablecoordinate_formulas');
-  if (formulasList == null || formulasList.length == 0)
-    return;
+  if (formulasList == null || formulasList.length == 0) return;
 
-  formulas = formulasList
-    .where((formula) => formula.length > 0)
-    .map((formula) {
-      return Formula.fromJson(jsonDecode(formula));
-    })
-    .toList();
+  formulas = formulasList.where((formula) => formula.length > 0).map((formula) {
+    return Formula.fromJson(jsonDecode(formula));
+  }).toList();
 }
 
 _saveData() {
-  var jsonData = formulas
-    .map((formula) => jsonEncode(formula.toMap()))
-    .toList();
+  var jsonData = formulas.map((formula) => jsonEncode(formula.toMap())).toList();
 
   Prefs.setStringList('coord_variablecoordinate_formulas', jsonData);
 }
-
 
 void updateFormulas() {
   _saveData();
 }
 
 int insertFormula(Formula formula) {
-  var id = newID(
-    formulas
-      .map((formula) => formula.id)
-      .toList()
-  );
+  var id = newID(formulas.map((formula) => formula.id).toList());
   formula.id = id;
   formulas.add(formula);
 
@@ -58,19 +47,14 @@ void updateFormula(Formula formula) {
 
 void _updateFormula(Formula formula) {
   formulas = formulas.map((f) {
-    if (f.id == formula.id)
-      return formula;
+    if (f.id == formula.id) return formula;
 
     return f;
   }).toList();
 }
 
 int insertFormulaValue(formula_model.FormulaValue formulaValue, Formula formula) {
-  var id = newID(
-    formula.values
-      .map((value) => value.id)
-      .toList()
-  );
+  var id = newID(formula.values.map((value) => value.id).toList());
   formulaValue.id = id;
   formula.values.add(formulaValue);
 
@@ -82,8 +66,7 @@ int insertFormulaValue(formula_model.FormulaValue formulaValue, Formula formula)
 
 void updateFormulaValue(formula_model.FormulaValue formulaValue, Formula formula) {
   formula.values = formula.values.map((value) {
-    if (value.id == formulaValue.id)
-      return formulaValue;
+    if (value.id == formulaValue.id) return formulaValue;
 
     return value;
   }).toList();

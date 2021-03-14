@@ -13,21 +13,13 @@ class CenterPointJobData {
   final LatLng coord3;
   final Ellipsoid ells;
 
-  CenterPointJobData({
-      this.coord1 = null,
-      this.coord2 = null,
-      this.coord3 = null,
-      this.ells = null
-  });
+  CenterPointJobData({this.coord1 = null, this.coord2 = null, this.coord3 = null, this.ells = null});
 }
 
 Map<String, dynamic> centerPointTwoPoints(LatLng coord1, LatLng coord2, Ellipsoid ells) {
   var segments = segmentLine(coord1, coord2, 2, ells);
 
-  return {
-    'centerPoint': segments['points'].first,
-    'distance': segments['segmentDistance']
-  };
+  return {'centerPoint': segments['points'].first, 'distance': segments['segmentDistance']};
 }
 
 Future<List<Map<String, dynamic>>> centerPointThreePointsAsync(dynamic jobData) async {
@@ -37,19 +29,14 @@ Future<List<Map<String, dynamic>>> centerPointThreePointsAsync(dynamic jobData) 
   }
 
   var output = centerPointThreePoints(
-      jobData.parameters.coord1,
-      jobData.parameters.coord2,
-      jobData.parameters.coord3,
-      jobData.parameters.ells
-  );
+      jobData.parameters.coord1, jobData.parameters.coord2, jobData.parameters.coord3, jobData.parameters.ells);
 
-  if (jobData.sendAsyncPort != null)
-    jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
 
   return output;
 }
 
-List<Map<String, dynamic>> centerPointThreePoints (LatLng coord1, LatLng coord2, LatLng coord3, Ellipsoid ells) {
+List<Map<String, dynamic>> centerPointThreePoints(LatLng coord1, LatLng coord2, LatLng coord3, Ellipsoid ells) {
   if (coord1 == coord2) {
     return [centerPointTwoPoints(coord1, coord3, ells)];
   }
@@ -93,7 +80,7 @@ List<Map<String, dynamic>> centerPointThreePoints (LatLng coord1, LatLng coord2,
 // Because of its random factor it is not necessarily given that an intersection point is found
 // although there is always such a point between to geodetics (e.g. at the back side of the sphere)
 
-Map<String, dynamic> _calculateCenterPointThreePoints (LatLng coord1, LatLng coord2, LatLng coord3, Ellipsoid ells) {
+Map<String, dynamic> _calculateCenterPointThreePoints(LatLng coord1, LatLng coord2, LatLng coord3, Ellipsoid ells) {
   double lat = (coord1.latitude + coord2.latitude + coord3.latitude) / 3.0;
   double lon = (coord1.longitude + coord2.longitude + coord3.longitude) / 3.0;
   var calculatedPoint = LatLng(lat, lon);
@@ -113,7 +100,6 @@ Map<String, dynamic> _calculateCenterPointThreePoints (LatLng coord1, LatLng coo
   while (d > epsilon) {
     c++;
     if (c > 1000) {
-
       dist = originalDist;
       c = 0;
       calculatedPoint = LatLng(lat, lon);
@@ -129,19 +115,18 @@ Map<String, dynamic> _calculateCenterPointThreePoints (LatLng coord1, LatLng coo
     double newD = _checkDist(dist1, dist2, dist3);
     double newDistSum = dist1 + dist2 + dist3;
 
-    if (newD < d  && newDistSum < distSum  + 1000000) {
+    if (newD < d && newDistSum < distSum + 1000000) {
       calculatedPoint = projectedPoint;
 
-      dist *= 1.5;             //adjusted these values empirical
+      dist *= 1.5; //adjusted these values empirical
       d = newD;
       distSum = newDistSum;
-    } else if (newD > d || newDistSum> distSum + 1000000)
-      dist /= 1.2;
+    } else if (newD > d || newDistSum > distSum + 1000000) dist /= 1.2;
   }
 
-  return {'centerPoint' : calculatedPoint, 'distance' : dist1};
+  return {'centerPoint': calculatedPoint, 'distance': dist1};
 }
 
-double _checkDist (double dist1, double dist2, double dist3) {
+double _checkDist(double dist1, double dist2, double dist3) {
   return (dist1 - dist2) * (dist1 - dist2) + (dist1 - dist3) * (dist1 - dist3) + (dist2 - dist3) * (dist2 - dist3);
 }

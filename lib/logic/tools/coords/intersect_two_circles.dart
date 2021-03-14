@@ -10,17 +10,11 @@ class IntersectTwoCirclesJobData {
   final double radius2;
   final Ellipsoid ells;
 
-  IntersectTwoCirclesJobData({
-      this.coord1 = null,
-      this.radius1 = 0.0,
-      this.coord2 = null,
-      this.radius2 = 0.0,
-      this.ells = null
-  });
+  IntersectTwoCirclesJobData(
+      {this.coord1 = null, this.radius1 = 0.0, this.coord2 = null, this.radius2 = 0.0, this.ells = null});
 }
 
 class _IntersectTwoCirclesCalculator extends IntervalCalculator {
-
   _IntersectTwoCirclesCalculator(Map<String, dynamic> parameters, Ellipsoid ellipsoid) : super(parameters, ellipsoid);
 
   @override
@@ -31,7 +25,10 @@ class _IntersectTwoCirclesCalculator extends IntervalCalculator {
     var r1 = parameters['radius1'];
     var r2 = parameters['radius2'];
 
-    return (distanceToCoord1.a <= r1) && (r1 <= distanceToCoord1.b) && (distanceToCoord2.a <= r2) && (r2 <= distanceToCoord2.b);
+    return (distanceToCoord1.a <= r1) &&
+        (r1 <= distanceToCoord1.b) &&
+        (distanceToCoord2.a <= r2) &&
+        (r2 <= distanceToCoord2.b);
   }
 }
 
@@ -41,26 +38,19 @@ Future<List<LatLng>> intersectTwoCirclesAsync(dynamic jobData) async {
     return null;
   }
 
-  var output = intersectTwoCircles(
-      jobData.parameters.coord1,
-      jobData.parameters.radius1,
-      jobData.parameters.coord2,
-      jobData.parameters.radius2,
-      jobData.parameters.ells
-  );
+  var output = intersectTwoCircles(jobData.parameters.coord1, jobData.parameters.radius1, jobData.parameters.coord2,
+      jobData.parameters.radius2, jobData.parameters.ells);
 
-  if (jobData.sendAsyncPort != null)
-    jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
 
   return output;
 }
 
 List<LatLng> intersectTwoCircles(LatLng coord1, double radius1, LatLng coord2, double radius2, Ellipsoid ellipsoid) {
-
   // same position
-  if ((coord1.latitude == coord2.latitude) &
-      (coord1.longitude == coord2.longitude))
-    return [];
+  if ((coord1.latitude == coord2.latitude) & (coord1.longitude == coord2.longitude)) return [];
 
-  return _IntersectTwoCirclesCalculator({'coord1': coord1, 'radius1': radius1, 'coord2': coord2, 'radius2': radius2}, ellipsoid).check();
+  return _IntersectTwoCirclesCalculator(
+          {'coord1': coord1, 'radius1': radius1, 'coord2': coord2, 'radius2': radius2}, ellipsoid)
+      .check();
 }

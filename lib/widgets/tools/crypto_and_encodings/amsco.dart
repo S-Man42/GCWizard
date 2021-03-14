@@ -26,10 +26,7 @@ class AmscoState extends State<Amsco> {
   var _currentMode = GCWSwitchPosition.right;
   var _currentOneCharStart = GCWSwitchPosition.left;
 
-  var _maskFormatter = WrapperForMaskTextInputFormatter(
-    mask: '#' * 9,
-    filter: {"#": RegExp(r'[ 0-9]')}
-  );
+  var _maskFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 9, filter: {"#": RegExp(r'[ 0-9]')});
 
   @override
   void initState() {
@@ -66,7 +63,7 @@ class AmscoState extends State<Amsco> {
           },
         ),
         GCWTwoOptionsSwitch(
-          title:  i18n(context, 'amsco_mode'),
+          title: i18n(context, 'amsco_mode'),
           leftValue: i18n(context, 'amsco_mode_left'),
           rightValue: i18n(context, 'amsco_mode_right'),
           value: _currentOneCharStart,
@@ -76,9 +73,7 @@ class AmscoState extends State<Amsco> {
             });
           },
         ),
-        GCWTextDivider(
-          text: i18n(context, 'common_key')
-        ),
+        GCWTextDivider(text: i18n(context, 'common_key')),
         GCWTextField(
           hintText: i18n(context, 'amsco_key_hint'),
           inputFormatters: [_maskFormatter],
@@ -102,7 +97,7 @@ class AmscoState extends State<Amsco> {
       _currentOutput = decryptAmsco(_currentInput, _currentKey, _currentOneCharStart == GCWSwitchPosition.left);
     }
 
-    if (_currentOutput == null)  {
+    if (_currentOutput == null) {
       return GCWDefaultOutput();
     } else if (_currentOutput.errorCode != ErrorCode.OK) {
       switch (_currentOutput.errorCode) {
@@ -113,7 +108,8 @@ class AmscoState extends State<Amsco> {
       return GCWDefaultOutput();
     } else if (_currentOutput.output == '') {
       return GCWDefaultOutput();
-    };
+    }
+    ;
 
     return GCWMultipleOutput(
       children: [

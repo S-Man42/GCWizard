@@ -10,22 +10,20 @@ class GCWSymbolContainer extends StatefulWidget {
   final bool showBackground;
   final bool showBorder;
 
-  const GCWSymbolContainer({
-    Key key,
-    @required
-    this.symbol,
-    this.backgroundColor,
-    this.borderColor,
-    this.showBackground: true,
-    this.showBorder: true
-  }) : super(key: key);
+  const GCWSymbolContainer(
+      {Key key,
+      @required this.symbol,
+      this.backgroundColor,
+      this.borderColor,
+      this.showBackground: true,
+      this.showBorder: true})
+      : super(key: key);
 
   @override
   _GCWSymbolContainerState createState() => _GCWSymbolContainerState();
 }
 
 class _GCWSymbolContainerState extends State<GCWSymbolContainer> {
-
   @override
   Widget build(BuildContext context) {
     var backgroundColor;
@@ -39,10 +37,7 @@ class _GCWSymbolContainerState extends State<GCWSymbolContainer> {
 
     return Container(
       child: widget.symbol,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        border: Border.all(color: borderColor)
-      ),
+      decoration: BoxDecoration(color: backgroundColor, border: Border.all(color: borderColor)),
       padding: EdgeInsets.all(2),
     );
   }

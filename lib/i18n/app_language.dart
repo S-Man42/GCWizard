@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // from: https://medium.com/flutter-community/flutter-internationalization-the-easy-way-using-provider-and-json-c47caa4212b2
 class AppLanguage extends ChangeNotifier {
-
   static const Locale _defaultAppLocale = Locale(defaultLanguage); // Locale('en', 'US');
   Locale _appLocale = _defaultAppLocale;
 
@@ -45,5 +44,4 @@ class AppLanguage extends ChangeNotifier {
     Locale locale = Locale(languageCode);
     changeLocale(locale);
   }
-
 }

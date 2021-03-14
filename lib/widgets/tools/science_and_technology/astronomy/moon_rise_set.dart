@@ -55,28 +55,30 @@ class MoonRiseSetState extends State<MoonRiseSet> {
 
   _buildOutput() {
     var moonRise = logic.MoonRiseSet(
-      _currentCoords,
-      JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']),
-      _currentDateTime['timezone'],
-      getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name'))
-    );
+        _currentCoords,
+        JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']),
+        _currentDateTime['timezone'],
+        getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name')));
 
     var outputs = [
-      [i18n(context, 'astronomy_riseset_rise'), moonRise.rise.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(moonRise.rise)],
-      [i18n(context, 'astronomy_riseset_transit'), moonRise.transit.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(moonRise.transit)],
-      [i18n(context, 'astronomy_riseset_set'), moonRise.set.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(moonRise.set)],
+      [
+        i18n(context, 'astronomy_riseset_rise'),
+        moonRise.rise.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(moonRise.rise)
+      ],
+      [
+        i18n(context, 'astronomy_riseset_transit'),
+        moonRise.transit.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(moonRise.transit)
+      ],
+      [
+        i18n(context, 'astronomy_riseset_set'),
+        moonRise.set.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(moonRise.set)
+      ],
     ];
 
     var rows = columnedMultiLineOutput(context, outputs);
 
-    rows.insert(0,
-      GCWTextDivider(
-        text: i18n(context, 'common_output')
-      )
-    );
+    rows.insert(0, GCWTextDivider(text: i18n(context, 'common_output')));
 
-    return Column(
-      children: rows
-    );
+    return Column(children: rows);
   }
 }

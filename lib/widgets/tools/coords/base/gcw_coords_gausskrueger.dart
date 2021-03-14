@@ -11,7 +11,8 @@ class GCWCoordsGaussKrueger extends StatefulWidget {
   final LatLng coordinates;
   final String subtype;
 
-  const GCWCoordsGaussKrueger({Key key, this.onChanged, this.coordinates, this.subtype: keyCoordsGaussKruegerGK1}) : super(key: key);
+  const GCWCoordsGaussKrueger({Key key, this.onChanged, this.coordinates, this.subtype: keyCoordsGaussKruegerGK1})
+      : super(key: key);
 
   @override
   GCWCoordsGaussKruegerState createState() => GCWCoordsGaussKruegerState();
@@ -56,9 +57,8 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
       _northingController.text = _currentNorthing['value'].toString();
     }
 
-    return Column (
-      children: <Widget>[
-        GCWDoubleTextField(
+    return Column(children: <Widget>[
+      GCWDoubleTextField(
           hintText: i18n(context, 'coords_formatconverter_gausskrueger_easting'),
           controller: _eastingController,
           onChanged: (ret) {
@@ -66,9 +66,8 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
               _currentEasting = ret;
               _setCurrentValueAndEmitOnChange();
             });
-          }
-        ),
-        GCWDoubleTextField(
+          }),
+      GCWDoubleTextField(
           hintText: i18n(context, 'coords_formatconverter_gausskrueger_northing'),
           controller: _northingController,
           onChanged: (ret) {
@@ -76,33 +75,51 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
               _currentNorthing = ret;
               _setCurrentValueAndEmitOnChange();
             });
-          }
-        ),
-      ]
-    );
+          }),
+    ]);
   }
 
   int _getSubTypeCode(String subtype) {
     var code = 1;
     switch (subtype) {
-      case keyCoordsGaussKruegerGK1: code = 1; break;
-      case keyCoordsGaussKruegerGK2: code = 2; break;
-      case keyCoordsGaussKruegerGK3: code = 3; break;
-      case keyCoordsGaussKruegerGK4: code = 4; break;
-      case keyCoordsGaussKruegerGK5: code = 5; break;
+      case keyCoordsGaussKruegerGK1:
+        code = 1;
+        break;
+      case keyCoordsGaussKruegerGK2:
+        code = 2;
+        break;
+      case keyCoordsGaussKruegerGK3:
+        code = 3;
+        break;
+      case keyCoordsGaussKruegerGK4:
+        code = 4;
+        break;
+      case keyCoordsGaussKruegerGK5:
+        code = 5;
+        break;
     }
     return code;
   }
 
-    String _getSubTypeString(int code) {
-      var subtype = keyCoordsGaussKruegerGK1;
-      switch (code) {
-        case 1: subtype = keyCoordsGaussKruegerGK1; break;
-        case 2: subtype = keyCoordsGaussKruegerGK2; break;
-        case 3: subtype = keyCoordsGaussKruegerGK3; break;
-        case 4: subtype = keyCoordsGaussKruegerGK4; break;
-        case 5: subtype = keyCoordsGaussKruegerGK5; break;
-      }
+  String _getSubTypeString(int code) {
+    var subtype = keyCoordsGaussKruegerGK1;
+    switch (code) {
+      case 1:
+        subtype = keyCoordsGaussKruegerGK1;
+        break;
+      case 2:
+        subtype = keyCoordsGaussKruegerGK2;
+        break;
+      case 3:
+        subtype = keyCoordsGaussKruegerGK3;
+        break;
+      case 4:
+        subtype = keyCoordsGaussKruegerGK4;
+        break;
+      case 5:
+        subtype = keyCoordsGaussKruegerGK5;
+        break;
+    }
 
     return subtype;
   }

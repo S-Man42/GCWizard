@@ -37,7 +37,7 @@ void initDefaultSettings() {
       try {
         var created = DateTime.fromMillisecondsSinceEpoch(int.tryParse(jsonDecode(item)['created']));
         return created.isBefore(DateTime.now().subtract(Duration(days: Prefs.get('clipboard_keep_entries_in_days'))));
-      } catch(e) {
+      } catch (e) {
         return true;
       }
     });
@@ -49,10 +49,9 @@ void initDefaultSettings() {
     Prefs.setString('coord_default_ellipsoid_name', ELLIPSOID_NAME_WGS84);
   }
 
-  if (
-       Prefs.get('coord_default_format') == null
-    || Prefs.get('coord_default_format') == 'coords_deg' //old name for DMM until v1.1.0
-  ) {
+  if (Prefs.get('coord_default_format') == null ||
+          Prefs.get('coord_default_format') == 'coords_deg' //old name for DMM until v1.1.0
+      ) {
     Prefs.setString('coord_default_format', keyCoordsDMM);
   }
 
@@ -75,7 +74,7 @@ void initDefaultSettings() {
   if (Prefs.get('mapview_mapviews') == null) {
     Prefs.setStringList('mapview_mapviews', []);
   }
-  
+
   if (Prefs.get('multidecoder_tools') == null) {
     Prefs.setStringList('multidecoder_tools', []);
   }

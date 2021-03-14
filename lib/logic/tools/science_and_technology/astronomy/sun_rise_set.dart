@@ -15,15 +15,8 @@ class SunRiseSet {
   double astronomicalEvening;
 
   SunRiseSet(LatLng coords, JulianDate julianDate, Duration timezone, Ellipsoid ellipsoid) {
-    RiseSet riseSet = sunRise(
-      julianDate.julianDateUTCNoon,
-      julianDate.deltaT,
-      coords.longitudeInRad,
-      coords.latitudeInRad,
-      timezone.inMinutes / 60.0,
-      false,
-      ellipsoid
-    );
+    RiseSet riseSet = sunRise(julianDate.julianDateUTCNoon, julianDate.deltaT, coords.longitudeInRad,
+        coords.latitudeInRad, timezone.inMinutes / 60.0, false, ellipsoid);
 
     astronomicalMorning = riseSet.astronomicalTwilightMorning;
     astronomicalEvening = riseSet.astronomicalTwilightEvening;

@@ -1,4 +1,5 @@
-import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/jgiesen_de/seasons2/aphelion_perihelion.dart' as helion;
+import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/jgiesen_de/seasons2/aphelion_perihelion.dart'
+    as helion;
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/jgiesen_de/seasons2/seasons.dart';
 
 Map<String, DateTime> seasons(int year) {

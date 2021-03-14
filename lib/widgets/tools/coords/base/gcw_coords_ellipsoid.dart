@@ -73,20 +73,19 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
       {'key': keyFlattening, 'name': i18n(context, 'coords_ellipsoid_flattening')},
     ];
 
-    return Column (    
-      children: <Widget>[
-        GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'settings_coordinates_defaultrotationellipsoid_existing'),
-          rightValue: i18n(context, 'settings_coordinates_defaultrotationellipsoid_user'),
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-              _setCurrentEllipsoidAndEmitOnChange(context);
-            });
-          },
-        ),
-        _currentMode == GCWSwitchPosition.left
+    return Column(children: <Widget>[
+      GCWTwoOptionsSwitch(
+        leftValue: i18n(context, 'settings_coordinates_defaultrotationellipsoid_existing'),
+        rightValue: i18n(context, 'settings_coordinates_defaultrotationellipsoid_user'),
+        value: _currentMode,
+        onChanged: (value) {
+          setState(() {
+            _currentMode = value;
+            _setCurrentEllipsoidAndEmitOnChange(context);
+          });
+        },
+      ),
+      _currentMode == GCWSwitchPosition.left
           ? GCWDropDownButton(
               value: _currentStandardEllipsoid,
               items: allEllipsoids.map((ellipsoid) {
@@ -106,71 +105,61 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
+                    Expanded(child: GCWText(text: i18n(context, 'coords_ellipsoid_majoraxis')), flex: 2),
                     Expanded(
-                      child: GCWText(
-                        text: i18n(context, 'coords_ellipsoid_majoraxis')
-                      ),
-                      flex: 2
-                    ),
-                    Expanded(
-                      child: GCWDoubleTextField(
-                        controller: _firstUserValueController,
-                        min: 0.0,
-                        onChanged: (ret) {
-                          setState(() {
-                            _firstUserValue = ret;
-                            _setCurrentEllipsoidAndEmitOnChange(context);
-                          });
-                        },
-                      ),
-                      flex: 3
-                    )
+                        child: GCWDoubleTextField(
+                          controller: _firstUserValueController,
+                          min: 0.0,
+                          onChanged: (ret) {
+                            setState(() {
+                              _firstUserValue = ret;
+                              _setCurrentEllipsoidAndEmitOnChange(context);
+                            });
+                          },
+                        ),
+                        flex: 3)
                   ],
                 ),
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: GCWDropDownButton(
-                        value: _currentEllipsoidUser2ndValue,
-                        items: _secondUserValues.map((value) {
-                          return GCWDropDownMenuItem(
-                            value: value['key'],
-                            child: value['name'],
-                          );
-                        }).toList(),
-                        onChanged: (newValue) {
-                          setState(() {
-                            _currentEllipsoidUser2ndValue = newValue;
-                            _setCurrentEllipsoidAndEmitOnChange(context);
-                          });
-                        },
-                      ),
-                      flex: 2
-                    ),
+                        child: GCWDropDownButton(
+                          value: _currentEllipsoidUser2ndValue,
+                          items: _secondUserValues.map((value) {
+                            return GCWDropDownMenuItem(
+                              value: value['key'],
+                              child: value['name'],
+                            );
+                          }).toList(),
+                          onChanged: (newValue) {
+                            setState(() {
+                              _currentEllipsoidUser2ndValue = newValue;
+                              _setCurrentEllipsoidAndEmitOnChange(context);
+                            });
+                          },
+                        ),
+                        flex: 2),
                     Expanded(
-                      child: GCWDoubleTextField(
-                        controller: _secondUserValueController,
-                        min: 0.0,
-                        onChanged: (ret) {
-                          setState(() {
-                            _secondUserValue = ret;
-                            _setCurrentEllipsoidAndEmitOnChange(context);
-                          });
-                        },
-                      ),
-                      flex: 3
-                    )
+                        child: GCWDoubleTextField(
+                          controller: _secondUserValueController,
+                          min: 0.0,
+                          onChanged: (ret) {
+                            setState(() {
+                              _secondUserValue = ret;
+                              _setCurrentEllipsoidAndEmitOnChange(context);
+                            });
+                          },
+                        ),
+                        flex: 3)
                   ],
                 ),
               ],
             ),
-        _buildOutput(context)
-      ]
-    );
+      _buildOutput(context)
+    ]);
   }
 
   Widget _buildOutput(BuildContext context) {
-
     var ellipsoidData = [
       [i18n(context, 'coords_ellipsoid_majoraxis'), _currentEllipsoid.a],
       [i18n(context, 'coords_ellipsoid_minoraxis'), _currentEllipsoid.b],
@@ -181,12 +170,8 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
     var rows = columnedMultiLineOutput(context, ellipsoidData);
 
     return Padding(
-      child: Column(
-        children: rows
-      ),
-      padding: EdgeInsets.only(
-        top: 20
-      ),
+      child: Column(children: rows),
+      padding: EdgeInsets.only(top: 20),
     );
   }
 
@@ -213,7 +198,8 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
           _currentEllipsoid = Ellipsoid(null, a, invF, type: EllipsoidType.USER_DEFINED);
           break;
         case keyFlattening:
-          _currentEllipsoid = Ellipsoid(null, a, 1.0/min<double>(1.0/1.01, max<double>(second, epsilon)), type: EllipsoidType.USER_DEFINED);
+          _currentEllipsoid = Ellipsoid(null, a, 1.0 / min<double>(1.0 / 1.01, max<double>(second, epsilon)),
+              type: EllipsoidType.USER_DEFINED);
           break;
       }
     }

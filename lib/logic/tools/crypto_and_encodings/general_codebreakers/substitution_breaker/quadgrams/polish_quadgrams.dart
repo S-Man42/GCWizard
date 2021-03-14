@@ -1,7 +1,6 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
 
 class PolishQuadgrams extends Quadgrams {
-
   PolishQuadgrams() {
     alphabet = 'abcdefghijklmnopqrstuvwxyz';
     nbr_quadgrams = 80053472;

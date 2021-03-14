@@ -3,8 +3,7 @@ import 'dart:math';
 final int COMBINATION_MAX_LENGTH = 12;
 
 List<String> generateCombinations(String input, {bool avoidDuplicates}) {
-  if (input == null || input == '')
-    return [];
+  if (input == null || input == '') return [];
 
   var out = <String>[];
 
@@ -14,8 +13,7 @@ List<String> generateCombinations(String input, {bool avoidDuplicates}) {
     var combination = '';
 
     for (int j = 0; j < bitmask.length; j++) {
-      if (bitmask[j] == '0')
-        continue;
+      if (bitmask[j] == '0') continue;
 
       combination += input[j];
     }
@@ -25,8 +23,7 @@ List<String> generateCombinations(String input, {bool avoidDuplicates}) {
 
   out.sort((a, b) {
     var lengthCompared = a.length.compareTo(b.length);
-    if (lengthCompared != 0)
-      return lengthCompared;
+    if (lengthCompared != 0) return lengthCompared;
 
     return a.toLowerCase().compareTo(b.toLowerCase());
   });

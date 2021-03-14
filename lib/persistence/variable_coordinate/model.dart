@@ -11,17 +11,17 @@ class ProjectionFormula {
   ProjectionFormula(this.distance, this.distanceUnit, this.bearing, this.reverse);
 
   Map<String, dynamic> toMap() => {
-    'distance': distance,
-    'distanceUnit': distanceUnit,
-    'bearing': bearing,
-    'reverse' : reverse,
-  };
+        'distance': distance,
+        'distanceUnit': distanceUnit,
+        'bearing': bearing,
+        'reverse': reverse,
+      };
 
-  ProjectionFormula.fromJson(Map<String, dynamic> json):
-    distance = json['distance'],
-    distanceUnit = json['distanceUnit'],
-    bearing = json['bearing'],
-    reverse = json['reverse'];
+  ProjectionFormula.fromJson(Map<String, dynamic> json)
+      : distance = json['distance'],
+        distanceUnit = json['distanceUnit'],
+        bearing = json['bearing'],
+        reverse = json['reverse'];
 
   @override
   String toString() {
@@ -39,19 +39,19 @@ class Formula {
   Formula(this.name);
 
   Map<String, dynamic> toMap() => {
-    'id': id,
-    'name': name,
-    'formula': formula,
-    'projection': projection == null ? {} : projection.toMap(),
-    'values' : values.map((value) => value.toMap()).toList(),
-  };
+        'id': id,
+        'name': name,
+        'formula': formula,
+        'projection': projection == null ? {} : projection.toMap(),
+        'values': values.map((value) => value.toMap()).toList(),
+      };
 
-  Formula.fromJson(Map<String, dynamic> json):
-    id = json['id'],
-    name = json['name'],
-    formula = json['formula'],
-    projection = ProjectionFormula.fromJson(json['projection']),
-    values = List<FormulaValue>.from(json['values'].map((value) => FormulaValue.fromJson(value)));
+  Formula.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'],
+        formula = json['formula'],
+        projection = ProjectionFormula.fromJson(json['projection']),
+        values = List<FormulaValue>.from(json['values'].map((value) => FormulaValue.fromJson(value)));
 
   @override
   String toString() {

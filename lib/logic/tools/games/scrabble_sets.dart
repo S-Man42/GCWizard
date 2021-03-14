@@ -36,39 +36,34 @@ class ScrabbleSet {
   ScrabbleSet(this.key, this.i18nNameId, this.letters, {this.caseSensitive: false});
 
   int letterValue(String letter) {
-    if (!caseSensitive)
-      letter = letter.toUpperCase();
+    if (!caseSensitive) letter = letter.toUpperCase();
 
     var l = letters[letter];
 
-    if (l == null)
-      return 0;
+    if (l == null) return 0;
 
     return l.value;
   }
 
   int letterFrequency(String letter) {
-    if (!caseSensitive)
-      letter = letter.toUpperCase();
+    if (!caseSensitive) letter = letter.toUpperCase();
 
     var l = letters[letter];
 
-    if (l == null)
-      return 0;
+    if (l == null) return 0;
 
     return l.frequency;
   }
 
   bool existLetter(String letter) {
-    if (!caseSensitive)
-      letter = letter.toUpperCase();
+    if (!caseSensitive) letter = letter.toUpperCase();
 
     return letters[letter] != null;
   }
 }
 
 final scrabbleSets = {
-  scrabbleID_EN : ScrabbleSet(scrabbleID_EN, 'common_language_english', {
+  scrabbleID_EN: ScrabbleSet(scrabbleID_EN, 'common_language_english', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 9),
     'B': _LetterAttribute(3, 2),
@@ -97,7 +92,7 @@ final scrabbleSets = {
     'Y': _LetterAttribute(4, 2),
     'Z': _LetterAttribute(10, 1),
   }),
-  scrabbleID_ENSuperScrabble : ScrabbleSet(scrabbleID_ENSuperScrabble, 'scrabble_version_en_superscrabble', {
+  scrabbleID_ENSuperScrabble: ScrabbleSet(scrabbleID_ENSuperScrabble, 'scrabble_version_en_superscrabble', {
     ' ': _LetterAttribute(0, 4),
     'A': _LetterAttribute(1, 16),
     'B': _LetterAttribute(3, 4),
@@ -126,7 +121,7 @@ final scrabbleSets = {
     'Y': _LetterAttribute(4, 4),
     'Z': _LetterAttribute(10, 2),
   }),
-  scrabbleID_D : ScrabbleSet(scrabbleID_D, 'common_language_german', {
+  scrabbleID_D: ScrabbleSet(scrabbleID_D, 'common_language_german', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 5),
     'B': _LetterAttribute(3, 2),
@@ -154,11 +149,11 @@ final scrabbleSets = {
     'X': _LetterAttribute(8, 1),
     'Y': _LetterAttribute(10, 1),
     'Z': _LetterAttribute(3, 1),
-    String.fromCharCode(196) : _LetterAttribute(6, 1), //Ä
-    String.fromCharCode(214) : _LetterAttribute(8, 1), //Ö
-    String.fromCharCode(220) : _LetterAttribute(6, 1), //Ü
+    String.fromCharCode(196): _LetterAttribute(6, 1), //Ä
+    String.fromCharCode(214): _LetterAttribute(8, 1), //Ö
+    String.fromCharCode(220): _LetterAttribute(6, 1), //Ü
   }),
-  scrabbleID_D1955 : ScrabbleSet(scrabbleID_D1955, 'scrabble_version_d_1955', {
+  scrabbleID_D1955: ScrabbleSet(scrabbleID_D1955, 'scrabble_version_d_1955', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 6),
     'B': _LetterAttribute(3, 2),
@@ -186,11 +181,11 @@ final scrabbleSets = {
     'X': _LetterAttribute(10, 1),
     'Y': _LetterAttribute(8, 1),
     'Z': _LetterAttribute(8, 1),
-    String.fromCharCode(196) : _LetterAttribute(2, 1), //Ä
-    String.fromCharCode(214) : _LetterAttribute(2, 1), //Ö
-    String.fromCharCode(220) : _LetterAttribute(2, 1), //Ü
+    String.fromCharCode(196): _LetterAttribute(2, 1), //Ä
+    String.fromCharCode(214): _LetterAttribute(2, 1), //Ö
+    String.fromCharCode(220): _LetterAttribute(2, 1), //Ü
   }),
-  scrabbleID_D55_87 : ScrabbleSet(scrabbleID_D55_87, 'scrabble_version_d_19551987', {
+  scrabbleID_D55_87: ScrabbleSet(scrabbleID_D55_87, 'scrabble_version_d_19551987', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 6),
     'B': _LetterAttribute(3, 2),
@@ -218,11 +213,11 @@ final scrabbleSets = {
     'X': _LetterAttribute(8, 1),
     'Y': _LetterAttribute(10, 1),
     'Z': _LetterAttribute(3, 2),
-    String.fromCharCode(196) : _LetterAttribute(6, 1), //Ä
-    String.fromCharCode(214) : _LetterAttribute(8, 1), //Ö
-    String.fromCharCode(220) : _LetterAttribute(5, 1), //Ü
+    String.fromCharCode(196): _LetterAttribute(6, 1), //Ä
+    String.fromCharCode(214): _LetterAttribute(8, 1), //Ö
+    String.fromCharCode(220): _LetterAttribute(5, 1), //Ü
   }),
-  scrabbleID_DNorthAmerica : ScrabbleSet(scrabbleID_DNorthAmerica, 'scrabble_version_d_northamerica', {
+  scrabbleID_DNorthAmerica: ScrabbleSet(scrabbleID_DNorthAmerica, 'scrabble_version_d_northamerica', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 6),
     'B': _LetterAttribute(3, 2),
@@ -250,11 +245,11 @@ final scrabbleSets = {
     'X': _LetterAttribute(10, 1),
     'Y': _LetterAttribute(10, 1),
     'Z': _LetterAttribute(4, 3),
-    String.fromCharCode(196) : _LetterAttribute(2, 1), //Ä
-    String.fromCharCode(214) : _LetterAttribute(2, 1), //Ö
-    String.fromCharCode(220) : _LetterAttribute(2, 1), //Ü
+    String.fromCharCode(196): _LetterAttribute(2, 1), //Ä
+    String.fromCharCode(214): _LetterAttribute(2, 1), //Ö
+    String.fromCharCode(220): _LetterAttribute(2, 1), //Ü
   }),
-  scrabbleID_NL : ScrabbleSet(scrabbleID_NL, 'common_language_dutch', {
+  scrabbleID_NL: ScrabbleSet(scrabbleID_NL, 'common_language_dutch', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 6),
     'B': _LetterAttribute(3, 2),
@@ -283,7 +278,7 @@ final scrabbleSets = {
     'Y': _LetterAttribute(8, 1),
     'Z': _LetterAttribute(4, 2),
   }),
-  scrabbleID_F : ScrabbleSet(scrabbleID_F, 'common_language_french', {
+  scrabbleID_F: ScrabbleSet(scrabbleID_F, 'common_language_french', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 9),
     'B': _LetterAttribute(2, 2),
@@ -312,7 +307,7 @@ final scrabbleSets = {
     'Y': _LetterAttribute(10, 1),
     'Z': _LetterAttribute(10, 1),
   }),
-  scrabbleID_E : ScrabbleSet(scrabbleID_E, 'common_language_spanish', {
+  scrabbleID_E: ScrabbleSet(scrabbleID_E, 'common_language_spanish', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 12),
     'B': _LetterAttribute(3, 2),
@@ -341,9 +336,9 @@ final scrabbleSets = {
     'CH': _LetterAttribute(5, 1),
     'LL': _LetterAttribute(8, 1),
     'RR': _LetterAttribute(8, 1),
-    String.fromCharCode(209) : _LetterAttribute(8, 1), //Ñ
+    String.fromCharCode(209): _LetterAttribute(8, 1), //Ñ
   }),
-  scrabbleID_E_NorthAmerica : ScrabbleSet(scrabbleID_E_NorthAmerica, 'scrabble_version_e_northamerica', {
+  scrabbleID_E_NorthAmerica: ScrabbleSet(scrabbleID_E_NorthAmerica, 'scrabble_version_e_northamerica', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 11),
     'B': _LetterAttribute(3, 3),
@@ -373,9 +368,9 @@ final scrabbleSets = {
     'Z': _LetterAttribute(10, 1),
     'LL': _LetterAttribute(8, 1),
     'RR': _LetterAttribute(8, 1),
-    String.fromCharCode(209) : _LetterAttribute(8, 1), //Ñ
+    String.fromCharCode(209): _LetterAttribute(8, 1), //Ñ
   }),
-  scrabbleID_I : ScrabbleSet(scrabbleID_I, 'common_language_italian', {
+  scrabbleID_I: ScrabbleSet(scrabbleID_I, 'common_language_italian', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 14),
     'B': _LetterAttribute(5, 3),
@@ -399,7 +394,7 @@ final scrabbleSets = {
     'V': _LetterAttribute(5, 3),
     'Z': _LetterAttribute(8, 2),
   }),
-  scrabbleID_CZ : ScrabbleSet(scrabbleID_CZ, 'common_language_czech', {
+  scrabbleID_CZ: ScrabbleSet(scrabbleID_CZ, 'common_language_czech', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 5),
     'B': _LetterAttribute(3, 2),
@@ -425,23 +420,23 @@ final scrabbleSets = {
     'X': _LetterAttribute(10, 1),
     'Y': _LetterAttribute(2, 2),
     'Z': _LetterAttribute(2, 2),
-    String.fromCharCode(205) : _LetterAttribute(2, 3), //Í
-    String.fromCharCode(193) : _LetterAttribute(2, 2), //Á
-    String.fromCharCode(201) : _LetterAttribute(3, 2), //É
-    String.fromCharCode(282) : _LetterAttribute(3, 2), //Ě
-    String.fromCharCode(344) : _LetterAttribute(4, 2), //Ř
-    String.fromCharCode(352) : _LetterAttribute(4, 2), //Š
-    String.fromCharCode(221) : _LetterAttribute(4, 2), //Ý
-    String.fromCharCode(268) : _LetterAttribute(4, 1), //Č
-    String.fromCharCode(366) : _LetterAttribute(4, 1), //Ů
-    String.fromCharCode(381) : _LetterAttribute(4, 1), //Ž
-    String.fromCharCode(218) : _LetterAttribute(5, 1), //Ú
-    String.fromCharCode(327) : _LetterAttribute(6, 1), //Ň
-    String.fromCharCode(211) : _LetterAttribute(7, 1), //Ó
-    String.fromCharCode(356) : _LetterAttribute(7, 1), //Ť
-    String.fromCharCode(270) : _LetterAttribute(8, 1), //Ď
+    String.fromCharCode(205): _LetterAttribute(2, 3), //Í
+    String.fromCharCode(193): _LetterAttribute(2, 2), //Á
+    String.fromCharCode(201): _LetterAttribute(3, 2), //É
+    String.fromCharCode(282): _LetterAttribute(3, 2), //Ě
+    String.fromCharCode(344): _LetterAttribute(4, 2), //Ř
+    String.fromCharCode(352): _LetterAttribute(4, 2), //Š
+    String.fromCharCode(221): _LetterAttribute(4, 2), //Ý
+    String.fromCharCode(268): _LetterAttribute(4, 1), //Č
+    String.fromCharCode(366): _LetterAttribute(4, 1), //Ů
+    String.fromCharCode(381): _LetterAttribute(4, 1), //Ž
+    String.fromCharCode(218): _LetterAttribute(5, 1), //Ú
+    String.fromCharCode(327): _LetterAttribute(6, 1), //Ň
+    String.fromCharCode(211): _LetterAttribute(7, 1), //Ó
+    String.fromCharCode(356): _LetterAttribute(7, 1), //Ť
+    String.fromCharCode(270): _LetterAttribute(8, 1), //Ď
   }),
-  scrabbleID_SK : ScrabbleSet(scrabbleID_SK, 'common_language_slovak', {
+  scrabbleID_SK: ScrabbleSet(scrabbleID_SK, 'common_language_slovak', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 9),
     'B': _LetterAttribute(2, 2),
@@ -469,25 +464,25 @@ final scrabbleSets = {
     'X': _LetterAttribute(9, 1),
     'Y': _LetterAttribute(2, 2),
     'Z': _LetterAttribute(2, 2),
-    String.fromCharCode(193) : _LetterAttribute(2, 2), //Á
-    String.fromCharCode(268) : _LetterAttribute(3, 1), //Č
-    String.fromCharCode(381) : _LetterAttribute(3, 1), //Ž
-    String.fromCharCode(352) : _LetterAttribute(3, 1), //Š
-    String.fromCharCode(205) : _LetterAttribute(3, 1), //Í
-    String.fromCharCode(221) : _LetterAttribute(3, 1), //Ý
-    String.fromCharCode(317) : _LetterAttribute(5, 1), //Ľ
-    String.fromCharCode(356) : _LetterAttribute(4, 1), //Ť
-    String.fromCharCode(201) : _LetterAttribute(3, 1), //É
-    String.fromCharCode(218) : _LetterAttribute(3, 1), //Ú
-    String.fromCharCode(270) : _LetterAttribute(8, 1), //Ď
-    String.fromCharCode(327) : _LetterAttribute(7, 1), //Ň
-    String.fromCharCode(212) : _LetterAttribute(7, 1), //Ô
-    String.fromCharCode(313) : _LetterAttribute(9, 1), //Ĺ
-    String.fromCharCode(340) : _LetterAttribute(9, 1), //Ŕ
-    String.fromCharCode(196) : _LetterAttribute(8, 1), //Ä
-    String.fromCharCode(211) : _LetterAttribute(8, 1), //Ó
+    String.fromCharCode(193): _LetterAttribute(2, 2), //Á
+    String.fromCharCode(268): _LetterAttribute(3, 1), //Č
+    String.fromCharCode(381): _LetterAttribute(3, 1), //Ž
+    String.fromCharCode(352): _LetterAttribute(3, 1), //Š
+    String.fromCharCode(205): _LetterAttribute(3, 1), //Í
+    String.fromCharCode(221): _LetterAttribute(3, 1), //Ý
+    String.fromCharCode(317): _LetterAttribute(5, 1), //Ľ
+    String.fromCharCode(356): _LetterAttribute(4, 1), //Ť
+    String.fromCharCode(201): _LetterAttribute(3, 1), //É
+    String.fromCharCode(218): _LetterAttribute(3, 1), //Ú
+    String.fromCharCode(270): _LetterAttribute(8, 1), //Ď
+    String.fromCharCode(327): _LetterAttribute(7, 1), //Ň
+    String.fromCharCode(212): _LetterAttribute(7, 1), //Ô
+    String.fromCharCode(313): _LetterAttribute(9, 1), //Ĺ
+    String.fromCharCode(340): _LetterAttribute(9, 1), //Ŕ
+    String.fromCharCode(196): _LetterAttribute(8, 1), //Ä
+    String.fromCharCode(211): _LetterAttribute(8, 1), //Ó
   }),
-  scrabbleID_SKUntil2013 : ScrabbleSet(scrabbleID_SKUntil2013, 'scrabble_version_sk_until2013', {
+  scrabbleID_SKUntil2013: ScrabbleSet(scrabbleID_SKUntil2013, 'scrabble_version_sk_until2013', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 9),
     'B': _LetterAttribute(4, 2),
@@ -513,25 +508,25 @@ final scrabbleSets = {
     'X': _LetterAttribute(10, 1),
     'Y': _LetterAttribute(4, 1),
     'Z': _LetterAttribute(4, 1),
-    String.fromCharCode(193) : _LetterAttribute(4, 1), //Á
-    String.fromCharCode(268) : _LetterAttribute(5, 1), //Č
-    String.fromCharCode(381) : _LetterAttribute(5, 1), //Ž
-    String.fromCharCode(352) : _LetterAttribute(5, 1), //Š
-    String.fromCharCode(205) : _LetterAttribute(5, 1), //Í
-    String.fromCharCode(221) : _LetterAttribute(5, 1), //Ý
-    String.fromCharCode(317) : _LetterAttribute(7, 1), //Ľ
-    String.fromCharCode(356) : _LetterAttribute(7, 1), //Ť
-    String.fromCharCode(201) : _LetterAttribute(7, 1), //É
-    String.fromCharCode(218) : _LetterAttribute(7, 1), //Ú
-    String.fromCharCode(270) : _LetterAttribute(8, 1), //Ď
-    String.fromCharCode(327) : _LetterAttribute(8, 1), //Ň
-    String.fromCharCode(212) : _LetterAttribute(8, 1), //Ô
-    String.fromCharCode(313) : _LetterAttribute(10, 1), //Ĺ
-    String.fromCharCode(340) : _LetterAttribute(10, 1), //Ŕ
-    String.fromCharCode(196) : _LetterAttribute(10, 1), //Ä
-    String.fromCharCode(211) : _LetterAttribute(10, 1), //Ó
+    String.fromCharCode(193): _LetterAttribute(4, 1), //Á
+    String.fromCharCode(268): _LetterAttribute(5, 1), //Č
+    String.fromCharCode(381): _LetterAttribute(5, 1), //Ž
+    String.fromCharCode(352): _LetterAttribute(5, 1), //Š
+    String.fromCharCode(205): _LetterAttribute(5, 1), //Í
+    String.fromCharCode(221): _LetterAttribute(5, 1), //Ý
+    String.fromCharCode(317): _LetterAttribute(7, 1), //Ľ
+    String.fromCharCode(356): _LetterAttribute(7, 1), //Ť
+    String.fromCharCode(201): _LetterAttribute(7, 1), //É
+    String.fromCharCode(218): _LetterAttribute(7, 1), //Ú
+    String.fromCharCode(270): _LetterAttribute(8, 1), //Ď
+    String.fromCharCode(327): _LetterAttribute(8, 1), //Ň
+    String.fromCharCode(212): _LetterAttribute(8, 1), //Ô
+    String.fromCharCode(313): _LetterAttribute(10, 1), //Ĺ
+    String.fromCharCode(340): _LetterAttribute(10, 1), //Ŕ
+    String.fromCharCode(196): _LetterAttribute(10, 1), //Ä
+    String.fromCharCode(211): _LetterAttribute(10, 1), //Ó
   }),
-  scrabbleID_IRL : ScrabbleSet(scrabbleID_IRL, 'common_language_irish', {
+  scrabbleID_IRL: ScrabbleSet(scrabbleID_IRL, 'common_language_irish', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 13),
     'B': _LetterAttribute(10, 1),
@@ -551,13 +546,13 @@ final scrabbleSets = {
     'S': _LetterAttribute(1, 6),
     'T': _LetterAttribute(2, 4),
     'U': _LetterAttribute(2, 3),
-    String.fromCharCode(193) : _LetterAttribute(4, 2), //Á
-    String.fromCharCode(205) : _LetterAttribute(4, 2), //Í
-    String.fromCharCode(201) : _LetterAttribute(8, 1), //É
-    String.fromCharCode(211) : _LetterAttribute(8, 1), //Ó
-    String.fromCharCode(218) : _LetterAttribute(8, 1), //Ú
+    String.fromCharCode(193): _LetterAttribute(4, 2), //Á
+    String.fromCharCode(205): _LetterAttribute(4, 2), //Í
+    String.fromCharCode(201): _LetterAttribute(8, 1), //É
+    String.fromCharCode(211): _LetterAttribute(8, 1), //Ó
+    String.fromCharCode(218): _LetterAttribute(8, 1), //Ú
   }),
-  scrabbleID_PL : ScrabbleSet(scrabbleID_PL, 'common_language_polish', {
+  scrabbleID_PL: ScrabbleSet(scrabbleID_PL, 'common_language_polish', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 9),
     'B': _LetterAttribute(3, 2),
@@ -582,17 +577,17 @@ final scrabbleSets = {
     'W': _LetterAttribute(1, 4),
     'Y': _LetterAttribute(2, 4),
     'Z': _LetterAttribute(1, 5),
-    String.fromCharCode(321) : _LetterAttribute(3, 2), //Ł
-    String.fromCharCode(260) : _LetterAttribute(5, 1), //Ą
-    String.fromCharCode(280) : _LetterAttribute(5, 1), //Ę
-    String.fromCharCode(211) : _LetterAttribute(5, 1), //Ó
-    String.fromCharCode(346) : _LetterAttribute(5, 1), //Ś
-    String.fromCharCode(379) : _LetterAttribute(5, 1), //Ż
-    String.fromCharCode(262) : _LetterAttribute(6, 1), //Ć
-    String.fromCharCode(323) : _LetterAttribute(7, 1), //Ń
-    String.fromCharCode(377) : _LetterAttribute(9, 1), //Ź
+    String.fromCharCode(321): _LetterAttribute(3, 2), //Ł
+    String.fromCharCode(260): _LetterAttribute(5, 1), //Ą
+    String.fromCharCode(280): _LetterAttribute(5, 1), //Ę
+    String.fromCharCode(211): _LetterAttribute(5, 1), //Ó
+    String.fromCharCode(346): _LetterAttribute(5, 1), //Ś
+    String.fromCharCode(379): _LetterAttribute(5, 1), //Ż
+    String.fromCharCode(262): _LetterAttribute(6, 1), //Ć
+    String.fromCharCode(323): _LetterAttribute(7, 1), //Ń
+    String.fromCharCode(377): _LetterAttribute(9, 1), //Ź
   }),
-  scrabbleID_PLUntil2000 : ScrabbleSet(scrabbleID_PLUntil2000, 'scrabble_version_pl_until2000', {
+  scrabbleID_PLUntil2000: ScrabbleSet(scrabbleID_PLUntil2000, 'scrabble_version_pl_until2000', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 8),
     'B': _LetterAttribute(3, 2),
@@ -617,17 +612,17 @@ final scrabbleSets = {
     'W': _LetterAttribute(1, 4),
     'Y': _LetterAttribute(2, 4),
     'Z': _LetterAttribute(1, 5),
-    String.fromCharCode(321) : _LetterAttribute(3, 2), //Ł
-    String.fromCharCode(260) : _LetterAttribute(5, 1), //Ą
-    String.fromCharCode(280) : _LetterAttribute(5, 1), //Ę
-    String.fromCharCode(211) : _LetterAttribute(5, 1), //Ó
-    String.fromCharCode(346) : _LetterAttribute(5, 1), //Ś
-    String.fromCharCode(379) : _LetterAttribute(5, 1), //Ż
-    String.fromCharCode(262) : _LetterAttribute(6, 1), //Ć
-    String.fromCharCode(323) : _LetterAttribute(7, 1), //Ń
-    String.fromCharCode(377) : _LetterAttribute(7, 1), //Ź
+    String.fromCharCode(321): _LetterAttribute(3, 2), //Ł
+    String.fromCharCode(260): _LetterAttribute(5, 1), //Ą
+    String.fromCharCode(280): _LetterAttribute(5, 1), //Ę
+    String.fromCharCode(211): _LetterAttribute(5, 1), //Ó
+    String.fromCharCode(346): _LetterAttribute(5, 1), //Ś
+    String.fromCharCode(379): _LetterAttribute(5, 1), //Ż
+    String.fromCharCode(262): _LetterAttribute(6, 1), //Ć
+    String.fromCharCode(323): _LetterAttribute(7, 1), //Ń
+    String.fromCharCode(377): _LetterAttribute(7, 1), //Ź
   }),
-  scrabbleID_P : ScrabbleSet(scrabbleID_P, 'common_language_portuguese', {
+  scrabbleID_P: ScrabbleSet(scrabbleID_P, 'common_language_portuguese', {
     ' ': _LetterAttribute(0, 3),
     'A': _LetterAttribute(1, 14),
     'B': _LetterAttribute(3, 3),
@@ -652,9 +647,9 @@ final scrabbleSets = {
     'V': _LetterAttribute(4, 2),
     'X': _LetterAttribute(8, 1),
     'Z': _LetterAttribute(8, 1),
-    String.fromCharCode(199) : _LetterAttribute(3, 2), //Ç
+    String.fromCharCode(199): _LetterAttribute(3, 2), //Ç
   }),
-  scrabbleID_FIN : ScrabbleSet(scrabbleID_FIN, 'common_language_finnish', {
+  scrabbleID_FIN: ScrabbleSet(scrabbleID_FIN, 'common_language_finnish', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 10),
     'B': _LetterAttribute(8, 1),
@@ -678,10 +673,10 @@ final scrabbleSets = {
     'U': _LetterAttribute(3, 4),
     'V': _LetterAttribute(4, 2),
     'Y': _LetterAttribute(4, 2),
-    String.fromCharCode(196) : _LetterAttribute(2, 5), //Ä
-    String.fromCharCode(214) : _LetterAttribute(7, 1), //Ö
+    String.fromCharCode(196): _LetterAttribute(2, 5), //Ä
+    String.fromCharCode(214): _LetterAttribute(7, 1), //Ö
   }),
-  scrabbleID_SWE : ScrabbleSet(scrabbleID_SWE, 'common_language_swedish', {
+  scrabbleID_SWE: ScrabbleSet(scrabbleID_SWE, 'common_language_swedish', {
     ' ': _LetterAttribute(0, 2),
     'A': _LetterAttribute(1, 8),
     'B': _LetterAttribute(4, 2),
@@ -707,42 +702,47 @@ final scrabbleSets = {
     'X': _LetterAttribute(8, 1),
     'Y': _LetterAttribute(7, 1),
     'Z': _LetterAttribute(10, 1),
-    String.fromCharCode(196) : _LetterAttribute(2, 2), //Ä
-    String.fromCharCode(214) : _LetterAttribute(7, 2), //Ö
-    String.fromCharCode(220) : _LetterAttribute(0, 0), //Ü //There's no real letter but the rules allow them as blanko
-    String.fromCharCode(197) : _LetterAttribute(4, 2), //Å
-    String.fromCharCode(198) : _LetterAttribute(0, 0), //There's no real letter but the rules allow them as blanko
-    'Q' : _LetterAttribute(0, 0), //There's no real letter but the rules allow them as blanko
-    'W' : _LetterAttribute(0, 0), //There's no real letter but the rules allow them as blanko
+    String.fromCharCode(196): _LetterAttribute(2, 2), //Ä
+    String.fromCharCode(214): _LetterAttribute(7, 2), //Ö
+    String.fromCharCode(220): _LetterAttribute(0, 0), //Ü //There's no real letter but the rules allow them as blanko
+    String.fromCharCode(197): _LetterAttribute(4, 2), //Å
+    String.fromCharCode(198): _LetterAttribute(0, 0), //There's no real letter but the rules allow them as blanko
+    'Q': _LetterAttribute(0, 0), //There's no real letter but the rules allow them as blanko
+    'W': _LetterAttribute(0, 0), //There's no real letter but the rules allow them as blanko
   }),
-  scrabbleID_KLINGON : ScrabbleSet(scrabbleID_KLINGON, 'common_language_klingon', {
-    ' ': _LetterAttribute(0, 2),
-    'a': _LetterAttribute(1, 10),
-    'e': _LetterAttribute(1, 8),
-    'o': _LetterAttribute(1, 6),
-    'u': _LetterAttribute(1, 6),
-    'H': _LetterAttribute(1, 5),
-    'j': _LetterAttribute(2, 5),
-    'm': _LetterAttribute(2, 5),
-    'D': _LetterAttribute(2, 4),
-    'v': _LetterAttribute(2, 4),
-    'l': _LetterAttribute(3, 3),
-    'b': _LetterAttribute(3, 2),
-    'ch': _LetterAttribute(3, 2),
-    'gh': _LetterAttribute(3, 2),
-    'n': _LetterAttribute(3, 2),
-    'q': _LetterAttribute(3, 2),
-    'S': _LetterAttribute(3, 2),
-    'p': _LetterAttribute(4, 2),
-    't': _LetterAttribute(4, 2),
-    'w': _LetterAttribute(5, 2),
-    'y': _LetterAttribute(5, 2),
-    'Q': _LetterAttribute(6, 1),
-    'r': _LetterAttribute(6, 1),
-    'tlh': _LetterAttribute(8, 1),
-    'ng': _LetterAttribute(10, 1),
-    '\'': _LetterAttribute(1, 10),
-    String.fromCharCode(618) : _LetterAttribute(1, 8), //ɪ --> Same as I, so both variants are included here
-    'I': _LetterAttribute(1, 8) //It's not really in the game, but simulates the 618 character... for less frustrations on input ;)
-  }, caseSensitive: true),
+  scrabbleID_KLINGON: ScrabbleSet(
+      scrabbleID_KLINGON,
+      'common_language_klingon',
+      {
+        ' ': _LetterAttribute(0, 2),
+        'a': _LetterAttribute(1, 10),
+        'e': _LetterAttribute(1, 8),
+        'o': _LetterAttribute(1, 6),
+        'u': _LetterAttribute(1, 6),
+        'H': _LetterAttribute(1, 5),
+        'j': _LetterAttribute(2, 5),
+        'm': _LetterAttribute(2, 5),
+        'D': _LetterAttribute(2, 4),
+        'v': _LetterAttribute(2, 4),
+        'l': _LetterAttribute(3, 3),
+        'b': _LetterAttribute(3, 2),
+        'ch': _LetterAttribute(3, 2),
+        'gh': _LetterAttribute(3, 2),
+        'n': _LetterAttribute(3, 2),
+        'q': _LetterAttribute(3, 2),
+        'S': _LetterAttribute(3, 2),
+        'p': _LetterAttribute(4, 2),
+        't': _LetterAttribute(4, 2),
+        'w': _LetterAttribute(5, 2),
+        'y': _LetterAttribute(5, 2),
+        'Q': _LetterAttribute(6, 1),
+        'r': _LetterAttribute(6, 1),
+        'tlh': _LetterAttribute(8, 1),
+        'ng': _LetterAttribute(10, 1),
+        '\'': _LetterAttribute(1, 10),
+        String.fromCharCode(618): _LetterAttribute(1, 8), //ɪ --> Same as I, so both variants are included here
+        'I': _LetterAttribute(
+            1, 8) //It's not really in the game, but simulates the 618 character... for less frustrations on input ;)
+      },
+      caseSensitive: true),
 };

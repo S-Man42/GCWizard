@@ -37,22 +37,22 @@ class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              controller: _controller,
-              onChanged: (text) {
-                setState(() {
-                  _currentInput = {'text': text, 'values' : []};
-                });
-              },
-            )
-          : GCWIntegerListTextField(
-              controller: _controller,
-              onChanged: (text) {
-                setState(() {
-                  _currentInput = text;
-                });
-              },
-            ),
+            ? GCWTextField(
+                controller: _controller,
+                onChanged: (text) {
+                  setState(() {
+                    _currentInput = {'text': text, 'values': []};
+                  });
+                },
+              )
+            : GCWIntegerListTextField(
+                controller: _controller,
+                onChanged: (text) {
+                  setState(() {
+                    _currentInput = text;
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -67,28 +67,27 @@ class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
           },
         ),
         _currentMode == GCWSwitchPosition.left
-          ? GCWTwoOptionsSwitch(
-              title: i18n(context, 'vanity_numberforspace'),
-              leftValue: '0',
-              rightValue: '1',
-              value: _currentNumberForSpaceMode,
-              onChanged: (value) {
-                setState(() {
-                  _currentNumberForSpaceMode = value;
-                });
-              },
-            )
-          : Container(),
-        GCWDefaultOutput(
-          child: _buildOutput()
-        )
+            ? GCWTwoOptionsSwitch(
+                title: i18n(context, 'vanity_numberforspace'),
+                leftValue: '0',
+                rightValue: '1',
+                value: _currentNumberForSpaceMode,
+                onChanged: (value) {
+                  setState(() {
+                    _currentNumberForSpaceMode = value;
+                  });
+                },
+              )
+            : Container(),
+        GCWDefaultOutput(child: _buildOutput())
       ],
     );
   }
 
   _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      return encodeVanityMultipleNumbers(_currentInput['text'], numberForSpace: _currentNumberForSpaceMode == GCWSwitchPosition.right ? '1' : '0');
+      return encodeVanityMultipleNumbers(_currentInput['text'],
+          numberForSpace: _currentNumberForSpaceMode == GCWSwitchPosition.right ? '1' : '0');
     } else {
       return decodeVanityMultipleNumbers(List<int>.from(_currentInput['values']));
     }

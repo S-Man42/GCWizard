@@ -53,46 +53,41 @@ class GCWCoordsXYZState extends State<GCWCoordsXYZ> {
       _ControllerZ.text = _currentZ.toString();
     }
 
-    return Column (
-        children: <Widget>[
-          GCWDistance(
-            controller: _ControllerX,
-            value: _currentX,
-            hintText: 'X',
-            allowNegativeValues: true,
-            onChanged: (value) {
-              setState(() {
-                _currentX = value;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
-          GCWDistance(
-            controller: _ControllerY,
-            value: _currentY,
-            hintText: 'Y',
-            allowNegativeValues: true,
-            onChanged: (value) {
-              setState(() {
-                _currentY = value;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
-          GCWDistance(
-            controller: _ControllerZ,
-            value: _currentZ,
-            hintText: 'Z',
-            allowNegativeValues: true,
-            onChanged: (value) {
-              setState(() {
-                _currentZ = value;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
-        ]
-    );
+    return Column(children: <Widget>[
+      GCWDistance(
+          controller: _ControllerX,
+          value: _currentX,
+          hintText: 'X',
+          allowNegativeValues: true,
+          onChanged: (value) {
+            setState(() {
+              _currentX = value;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+      GCWDistance(
+          controller: _ControllerY,
+          value: _currentY,
+          hintText: 'Y',
+          allowNegativeValues: true,
+          onChanged: (value) {
+            setState(() {
+              _currentY = value;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+      GCWDistance(
+          controller: _ControllerZ,
+          value: _currentZ,
+          hintText: 'Z',
+          allowNegativeValues: true,
+          onChanged: (value) {
+            setState(() {
+              _currentZ = value;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {

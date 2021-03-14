@@ -52,29 +52,23 @@ class CombinationPermutationState extends State<CombinationPermutation> {
     List<String> combinations = generateCombinations(_currentInput, avoidDuplicates: !_currentShowDuplicates);
 
     var count = 0;
-    List<List<dynamic>> outputData = combinations
-      .map((combination) {
-        var permutations = generatePermutations(combination, avoidDuplicates: !_currentShowDuplicates);
-        count += permutations.length;
-        return [combination, permutations.join(' ')];
-      })
-      .toList();
+    List<List<dynamic>> outputData = combinations.map((combination) {
+      var permutations = generatePermutations(combination, avoidDuplicates: !_currentShowDuplicates);
+      count += permutations.length;
+      return [combination, permutations.join(' ')];
+    }).toList();
 
     var rows = columnedMultiLineOutput(context, outputData, flexValues: [1, 3]);
 
-    rows.insert(0, GCWOutputText(
-      text: '${i18n(context, 'common_count')}: $count',
-      copyText: count.toString(),
-    ));
+    rows.insert(
+        0,
+        GCWOutputText(
+          text: '${i18n(context, 'common_count')}: $count',
+          copyText: count.toString(),
+        ));
 
-    rows.insert(0,
-      GCWTextDivider(
-         text: i18n(context, 'common_output')
-      )
-    );
+    rows.insert(0, GCWTextDivider(text: i18n(context, 'common_output')));
 
-    return Column(
-      children: rows
-    );
+    return Column(children: rows);
   }
 }
