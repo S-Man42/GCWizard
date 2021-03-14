@@ -1,6 +1,9 @@
+==============================
 Format code:
 
-flutter dartfmt lib -l 120
+Activation of dart format:
+flutter pub global activate dart_style
+dart format lib -l 120
 
 ==============================
 
