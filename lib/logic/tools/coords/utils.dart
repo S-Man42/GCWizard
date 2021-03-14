@@ -27,7 +27,8 @@ double mod(double x, double y) {
 double modLon(double x) {
   x = mod(x, 360);
 
-  if (x > 180) x -= 360;
+  if (x > 180)
+    x -= 360;
 
   return x;
 }
@@ -35,62 +36,37 @@ double modLon(double x) {
 String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Ellipsoid ells) {
   int _getGKCode() {
     switch (_outputFormat['subtype']) {
-      case keyCoordsGaussKruegerGK1:
-        return 1;
-      case keyCoordsGaussKruegerGK2:
-        return 2;
-      case keyCoordsGaussKruegerGK3:
-        return 3;
-      case keyCoordsGaussKruegerGK4:
-        return 4;
-      case keyCoordsGaussKruegerGK5:
-        return 5;
-      default:
-        return 0;
+      case keyCoordsGaussKruegerGK1: return 1;
+      case keyCoordsGaussKruegerGK2: return 2;
+      case keyCoordsGaussKruegerGK3: return 3;
+      case keyCoordsGaussKruegerGK4: return 4;
+      case keyCoordsGaussKruegerGK5: return 5;
+      default: return 0;
     }
   }
 
   var _formatted;
 
   switch (_outputFormat['format']) {
-    case keyCoordsDEC:
-      return latLonToDECString(_coords);
-    case keyCoordsDMM:
-      return latLonToDMMString(_coords);
-    case keyCoordsDMS:
-      return latLonToDMSString(_coords);
-    case keyCoordsUTM:
-      return latLonToUTMString(_coords, ells);
-    case keyCoordsMGRS:
-      return latLonToMGRSString(_coords, ells);
-    case keyCoordsXYZ:
-      return latLonToXYZString(_coords, ells);
-    case keyCoordsSwissGrid:
-      return decToSwissGridString(_coords, ells);
-    case keyCoordsSwissGridPlus:
-      return latLonToSwissGridPlusString(_coords, ells);
-    case keyCoordsGaussKrueger:
-      return latLonToGaussKruegerString(_coords, _getGKCode(), ells);
-    case keyCoordsMaidenhead:
-      return latLonToMaidenhead(_coords);
-    case keyCoordsMercator:
-      return latLonToMercator(_coords, ells).toString();
-    case keyCoordsNaturalAreaCode:
-      return latLonToNaturalAreaCode(_coords).toString();
-    case keyCoordsSlippyMap:
-      return latLonToSlippyMapString(_coords, double.tryParse(_outputFormat['subtype']));
-    case keyCoordsGeohash:
-      return latLonToGeohash(_coords, 14);
-    case keyCoordsGeoHex:
-      return latLonToGeoHex(_coords, 20);
-    case keyCoordsOpenLocationCode:
-      return latLonToOpenLocationCode(_coords, codeLength: 14);
-    case keyCoordsQuadtree:
-      return latLonToQuadtree(_coords).join();
-    case keyCoordsReverseWhereIGoWaldmeister:
-      return latLonToWaldmeisterString(_coords);
-    default:
-      return latLonToDECString(_coords);
+    case keyCoordsDEC: return latLonToDECString(_coords);
+    case keyCoordsDMM: return latLonToDMMString(_coords);
+    case keyCoordsDMS: return latLonToDMSString(_coords);
+    case keyCoordsUTM: return latLonToUTMString(_coords, ells);
+    case keyCoordsMGRS: return latLonToMGRSString(_coords, ells);
+    case keyCoordsXYZ: return latLonToXYZString(_coords, ells);
+    case keyCoordsSwissGrid: return decToSwissGridString(_coords, ells);
+    case keyCoordsSwissGridPlus: return latLonToSwissGridPlusString(_coords, ells);
+    case keyCoordsGaussKrueger: return latLonToGaussKruegerString(_coords, _getGKCode(), ells);
+    case keyCoordsMaidenhead: return latLonToMaidenhead(_coords);
+    case keyCoordsMercator: return latLonToMercator(_coords, ells).toString();
+    case keyCoordsNaturalAreaCode: return latLonToNaturalAreaCode(_coords).toString();
+    case keyCoordsSlippyMap: return latLonToSlippyMapString(_coords, double.tryParse(_outputFormat['subtype']));
+    case keyCoordsGeohash: return latLonToGeohash(_coords, 14);
+    case keyCoordsGeoHex: return latLonToGeoHex(_coords, 20);
+    case keyCoordsOpenLocationCode: return latLonToOpenLocationCode(_coords, codeLength: 14);
+    case keyCoordsQuadtree: return latLonToQuadtree(_coords).join();
+    case keyCoordsReverseWhereIGoWaldmeister: return latLonToWaldmeisterString(_coords);
+    default: return latLonToDECString(_coords);
   }
 }
 
@@ -99,5 +75,6 @@ int coordinateSign(double value) {
 }
 
 bool coordEquals(LatLng coords1, LatLng coords2, {tolerance: 1e-10}) {
-  return doubleEquals(coords1.latitude, coords2.latitude) && doubleEquals(coords1.longitude, coords2.longitude);
+  return doubleEquals(coords1.latitude, coords2.latitude)
+    && doubleEquals(coords1.longitude, coords2.longitude);
 }

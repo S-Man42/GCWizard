@@ -12,15 +12,21 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class BaseSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = Registry.toolList.where((element) {
-      return [
-        className(Base16()),
-        className(Base32()),
-        className(Base64()),
-        className(Base85()),
-      ].contains(className(element.tool));
-    }).toList();
 
-    return Container(child: GCWToolList(toolList: _toolList));
+    final List<GCWTool> _toolList =
+      Registry.toolList.where((element) {
+        return [
+          className(Base16()),
+          className(Base32()),
+          className(Base64()),
+          className(Base85()),
+        ].contains(className(element.tool));
+      }).toList();
+
+    return Container(
+      child: GCWToolList(
+        toolList: _toolList
+      )
+    );
   }
 }

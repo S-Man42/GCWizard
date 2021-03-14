@@ -6,11 +6,15 @@ import 'package:prefs/prefs.dart';
 
 void refreshMapViews() {
   var rawMapViews = Prefs.getStringList('mapview_mapviews');
-  if (rawMapViews == null || rawMapViews.length == 0) return;
+  if (rawMapViews == null || rawMapViews.length == 0)
+    return;
 
-  mapViews = rawMapViews.where((view) => view.length > 0).map((view) {
-    return MapViewDAO.fromJson(jsonDecode(view));
-  }).toList();
+  mapViews = rawMapViews
+    .where((view) => view.length > 0)
+    .map((view) {
+      return MapViewDAO.fromJson(jsonDecode(view));
+    })
+    .toList();
 }
 
 clearMapViewDAO(MapViewDAO view) {
@@ -21,14 +25,20 @@ clearMapViewDAO(MapViewDAO view) {
 }
 
 _saveData() {
-  var jsonData = mapViews.map((view) => jsonEncode(view.toMap())).toList();
+  var jsonData = mapViews
+    .map((view) => jsonEncode(view.toMap()))
+    .toList();
 
   Prefs.setStringList('mapview_mapviews', jsonData);
 }
 
 int insertMapViewDAO(MapViewDAO view) {
   view.name = view.name ?? '';
-  var id = newID(mapViews.map((view) => view.id).toList());
+  var id = newID(
+    mapViews
+      .map((view) => view.id)
+      .toList()
+  );
   view.id = id;
   mapViews.add(view);
 
@@ -55,7 +65,8 @@ void insertMapPointDAO(MapPointDAO point, MapViewDAO mapView) {
 
 void updateMapPointDAO(MapPointDAO point, MapViewDAO mapView) {
   mapView.points = mapView.points.map((mapPoint) {
-    if (mapPoint.uuid == point.uuid) return point;
+    if (mapPoint.uuid == point.uuid)
+      return point;
 
     return mapPoint;
   }).toList();
@@ -77,7 +88,8 @@ void insertMapPolylineDAO(MapPolylineDAO polyline, MapViewDAO mapView) {
 
 void updateMapPolylineDAO(MapPolylineDAO polyline, MapViewDAO mapView) {
   mapView.polylines = mapView.polylines.map((mapPolyline) {
-    if (mapPolyline.uuid == polyline.uuid) return polyline;
+    if (mapPolyline.uuid == polyline.uuid)
+      return polyline;
 
     return mapPolyline;
   }).toList();

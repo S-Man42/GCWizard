@@ -54,27 +54,16 @@ convertColorSpace(dynamic color, String oldColorSpace, String newColorSpace) {
   }
 
   switch (newColorSpace) {
-    case keyColorSpaceRGB:
-      return color;
-    case keyColorSpaceHex:
-      return HexCode.fromRGB(color);
-    case keyColorSpaceHSV:
-      return HSV.fromRGB(color);
-    case keyColorSpaceHSL:
-      return HSL.fromRGB(color);
-    case keyColorSpaceHSI:
-      return HSI.fromRGB(color);
-    case keyColorSpaceCMYK:
-      return CMYK.fromRGB(color);
-    case keyColorSpaceCMY:
-      return CMY.fromRGB(color);
-    case keyColorSpaceYUV:
-      return YUV.fromRGB(color);
-    case keyColorSpaceYPbPr:
-      return YPbPr.fromRGB(color);
-    case keyColorSpaceYCbCr:
-      return YCbCr.fromRGB(color);
-    case keyColorSpaceYIQ:
-      return YIQ.fromRGB(color);
+    case keyColorSpaceRGB: return color;
+    case keyColorSpaceHex: return HexCode.fromRGB(color);
+    case keyColorSpaceHSV: return HSV.fromRGB(color);
+    case keyColorSpaceHSL: return HSL.fromRGB(color);
+    case keyColorSpaceHSI: return HSI.fromRGB(color);
+    case keyColorSpaceCMYK: return CMYK.fromRGB(color);
+    case keyColorSpaceCMY: return CMY.fromRGB(color);
+    case keyColorSpaceYUV: return YUV.fromRGB(color);
+    case keyColorSpaceYPbPr: return YPbPr.fromRGB(color);
+    case keyColorSpaceYCbCr: return YCbCr.fromRGB(color);
+    case keyColorSpaceYIQ: return YIQ.fromRGB(color);
   }
 }

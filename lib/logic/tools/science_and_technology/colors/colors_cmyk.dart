@@ -38,9 +38,12 @@ class CMYK {
 
     double k = 1.0;
 
-    if (c < k) k = c;
-    if (m < k) k = m;
-    if (y < k) k = y;
+    if (c < k)
+      k = c;
+    if (m < k)
+      k = m;
+    if (y < k)
+      k = y;
 
     k *= key;
 

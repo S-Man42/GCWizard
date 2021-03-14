@@ -32,65 +32,85 @@ final LETTER = '[A-ZÄÖÜ]';
 
 var regexEnd = '';
 
+
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
 Map<String, LatLng> parseLatLon(String text, {wholeString = false}) {
   var coords = Map<String, LatLng>();
 
-  try {
+  try{
     LatLng coord = parseDMS(text, wholeString: wholeString);
-    if (coord != null) coords.addAll({keyCoordsDMS: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsDMS: coord});
 
     coord = parseDMM(text, wholeString: wholeString);
-    if (coord != null) coords.addAll({keyCoordsDMM: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsDMM : coord });
 
     coord = parseDEC(text, wholeString: wholeString);
-    if (coord != null) coords.addAll({keyCoordsDEC: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsDEC : coord });
 
     coord = parseUTM(text, defaultEllipsoid());
-    if (coord != null) coords.addAll({keyCoordsUTM: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsUTM : coord });
 
     coord = parseMGRS(text, defaultEllipsoid());
-    if (coord != null) coords.addAll({keyCoordsMGRS: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsMGRS : coord });
 
     coord = parseWaldmeister(text);
-    if (coord != null) coords.addAll({keyCoordsReverseWhereIGoWaldmeister: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsReverseWhereIGoWaldmeister : coord });
 
     coord = parseXYZ(text, defaultEllipsoid());
-    if (coord != null) coords.addAll({keyCoordsXYZ: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsXYZ : coord });
 
     coord = parseSwissGrid(text, defaultEllipsoid());
-    if (coord != null) coords.addAll({keyCoordsSwissGrid: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsSwissGrid : coord });
 
     coord = parseSwissGrid(text, defaultEllipsoid(), isSwissGridPlus: true);
-    if (coord != null) coords.addAll({keyCoordsSwissGridPlus: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsSwissGridPlus : coord });
 
     coord = parseGaussKrueger(text, defaultEllipsoid());
-    if (coord != null) coords.addAll({keyCoordsGaussKrueger: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsGaussKrueger : coord });
 
     coord = maidenheadToLatLon(text);
-    if (coord != null) coords.addAll({keyCoordsMaidenhead: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsMaidenhead : coord });
 
     coord = parseMercator(text, defaultEllipsoid());
-    if (coord != null) coords.addAll({keyCoordsMercator: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsMercator : coord });
 
     coord = parseNaturalAreaCode(text);
-    if (coord != null) coords.addAll({keyCoordsNaturalAreaCode: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsNaturalAreaCode : coord });
 
     coord = geohashToLatLon(text);
-    if (coord != null) coords.addAll({keyCoordsGeohash: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsGeohash : coord });
 
     coord = geoHexToLatLon(text);
-    if (coord != null) coords.addAll({keyCoordsGeoHex: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsGeoHex : coord });
 
     coord = openLocationCodeToLatLon(text);
-    if (coord != null) coords.addAll({keyCoordsOpenLocationCode: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsOpenLocationCode : coord });
 
     coord = parseQuadtree(text);
-    if (coord != null) coords.addAll({keyCoordsQuadtree: coord});
+    if (coord != null)
+      coords.addAll ({keyCoordsQuadtree : coord });
 
     coord = parseSlippyMap(text);
-    if (coord != null) coords.addAll({keyCoordsSlippyMap: coord});
-  } catch (e) {}
+    if (coord != null)
+      coords.addAll ({keyCoordsSlippyMap : coord });
+
+  } catch(e) {}
   return coords;
 }

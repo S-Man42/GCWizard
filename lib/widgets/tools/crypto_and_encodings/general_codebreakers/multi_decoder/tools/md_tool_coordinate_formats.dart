@@ -30,91 +30,98 @@ const MDT_INTERNALNAMES_COORDINATEFORMATS = 'multidecoder_tool_coordinateformats
 const MDT_COORDINATEFORMATS_OPTION_FORMAT = 'multidecoder_tool_coordinateformats_option_format';
 
 class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
-  MultiDecoderToolCoordinateFormats({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
-      : super(
-            key: key,
-            id: id,
-            name: name,
-            internalToolName: MDT_INTERNALNAMES_COORDINATEFORMATS,
-            onDecode: (String input) {
-              input = input.replaceAll(RegExp(r'\s+'), ' ').toUpperCase();
-              LatLng coords;
-              try {
-                switch (options[MDT_COORDINATEFORMATS_OPTION_FORMAT]) {
-                  case keyCoordsDEC:
-                    coords = parseDEC(input, wholeString: true);
-                    break;
-                  case keyCoordsDMM:
-                    coords = parseDMM(input, wholeString: true);
-                    break;
-                  case keyCoordsDMS:
-                    coords = parseDMS(input, wholeString: true);
-                    break;
-                  case keyCoordsUTM:
-                    coords = parseUTM(input, defaultEllipsoid());
-                    break;
-                  case keyCoordsMGRS:
-                    coords = parseMGRS(input, defaultEllipsoid());
-                    break;
-                  case keyCoordsXYZ:
-                    coords = parseXYZ(input, defaultEllipsoid());
-                    break;
-                  case keyCoordsSwissGrid:
-                    coords = parseSwissGrid(input, defaultEllipsoid());
-                    break;
-                  case keyCoordsSwissGridPlus:
-                    coords = parseSwissGrid(input, defaultEllipsoid(), isSwissGridPlus: true);
-                    break;
-                  case keyCoordsGaussKrueger:
-                    coords = parseGaussKrueger(input, defaultEllipsoid());
-                    break;
-                  case keyCoordsMaidenhead:
-                    coords = maidenheadToLatLon(input);
-                    break;
-                  case keyCoordsMercator:
-                    coords = parseMercator(input, defaultEllipsoid());
-                    break;
-                  case keyCoordsNaturalAreaCode:
-                    coords = parseNaturalAreaCode(input);
-                    break;
-                  case keyCoordsGeohash:
-                    coords = geohashToLatLon(input);
-                    break;
-                  case keyCoordsGeoHex:
-                    coords = geoHexToLatLon(input);
-                    break;
-                  case keyCoordsOpenLocationCode:
-                    coords = openLocationCodeToLatLon(input);
-                    break;
-                  case keyCoordsQuadtree:
-                    coords = parseQuadtree(input);
-                    break;
-                  case keyCoordsReverseWhereIGoWaldmeister:
-                    coords = parseWaldmeister(input);
-                    break;
-                  case keyCoordsSlippyMap:
-                    coords = parseSlippyMap(input);
-                    break;
-                }
-              } catch (e) {}
 
-              if (coords == null) return null;
+  MultiDecoderToolCoordinateFormats({Key key, int id, String name, Map<String, dynamic> options, BuildContext context}) :
+    super(
+      key: key,
+      id: id,
+      name: name,
+      internalToolName: MDT_INTERNALNAMES_COORDINATEFORMATS,
+      onDecode: (String input) {
+        input = input.replaceAll(RegExp(r'\s+'), ' ').toUpperCase();
+        LatLng coords;
+        try {
+          switch (options[MDT_COORDINATEFORMATS_OPTION_FORMAT]) {
+            case keyCoordsDEC:
+              coords = parseDEC(input, wholeString: true);
+              break;
+            case keyCoordsDMM:
+              coords = parseDMM(input, wholeString: true);
+              break;
+            case keyCoordsDMS:
+              coords = parseDMS(input, wholeString: true);
+              break;
+            case keyCoordsUTM:
+              coords = parseUTM(input, defaultEllipsoid());
+              break;
+            case keyCoordsMGRS:
+              coords = parseMGRS(input, defaultEllipsoid());
+              break;
+            case keyCoordsXYZ:
+              coords = parseXYZ(input, defaultEllipsoid());
+              break;
+            case keyCoordsSwissGrid:
+              coords = parseSwissGrid(input, defaultEllipsoid());
+              break;
+            case keyCoordsSwissGridPlus:
+              coords = parseSwissGrid(input, defaultEllipsoid(), isSwissGridPlus: true);
+              break;
+            case keyCoordsGaussKrueger:
+              coords = parseGaussKrueger(input, defaultEllipsoid());
+              break;
+            case keyCoordsMaidenhead:
+              coords = maidenheadToLatLon(input);
+              break;
+            case keyCoordsMercator:
+              coords = parseMercator(input, defaultEllipsoid());
+              break;
+            case keyCoordsNaturalAreaCode:
+              coords = parseNaturalAreaCode(input);
+              break;
+            case keyCoordsGeohash:
+              coords = geohashToLatLon(input);
+              break;
+            case keyCoordsGeoHex:
+              coords = geoHexToLatLon(input);
+              break;
+            case keyCoordsOpenLocationCode:
+              coords = openLocationCodeToLatLon(input);
+              break;
+            case keyCoordsQuadtree:
+              coords = parseQuadtree(input);
+              break;
+            case keyCoordsReverseWhereIGoWaldmeister:
+              coords = parseWaldmeister(input);
+              break;
+            case keyCoordsSlippyMap:
+              coords = parseSlippyMap(input);
+              break;
+          }
+        } catch(e) {}
 
-              return formatCoordOutput(coords, defaultCoordFormat(), defaultEllipsoid());
+        if (coords == null)
+          return null;
+
+        return formatCoordOutput(coords, defaultCoordFormat(), defaultEllipsoid());
+      },
+      options: options,
+      configurationWidget: GCWMultiDecoderToolConfiguration(
+        widgets: {
+          MDT_COORDINATEFORMATS_OPTION_FORMAT: GCWStatefulDropDownButton(
+            value: options[MDT_COORDINATEFORMATS_OPTION_FORMAT],
+            onChanged: (newValue) {
+              options[MDT_COORDINATEFORMATS_OPTION_FORMAT] = newValue;
             },
-            options: options,
-            configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
-              MDT_COORDINATEFORMATS_OPTION_FORMAT: GCWStatefulDropDownButton(
-                value: options[MDT_COORDINATEFORMATS_OPTION_FORMAT],
-                onChanged: (newValue) {
-                  options[MDT_COORDINATEFORMATS_OPTION_FORMAT] = newValue;
-                },
-                items: allCoordFormats.where((format) => format.key != keyCoordsSlippyMap).map((format) {
-                  return GCWDropDownMenuItem(
-                    value: format.key,
-                    child: i18n(context, format.name) ?? format.name,
-                  );
-                }).toList(),
-              ),
-            }));
+            items: allCoordFormats
+              .where((format) => format.key != keyCoordsSlippyMap)
+              .map((format) {
+                return GCWDropDownMenuItem(
+                  value: format.key,
+                  child: i18n(context, format.name) ?? format.name,
+                );
+              }).toList(),
+            ),
+        }
+      )
+    );
 }

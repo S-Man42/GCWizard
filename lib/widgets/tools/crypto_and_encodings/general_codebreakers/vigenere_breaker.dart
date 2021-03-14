@@ -22,6 +22,7 @@ class VigenereBreaker extends StatefulWidget {
 }
 
 class VigenereBreakerState extends State<VigenereBreaker> {
+
   String _currentInput = '';
   VigenereBreakerAlphabet _currentAlphabet = VigenereBreakerAlphabet.GERMAN;
   VigenereBreakerResult _currentOutput = null;
@@ -35,8 +36,8 @@ class VigenereBreakerState extends State<VigenereBreaker> {
   void initState() {
     super.initState();
 
-    _minKeyLengthController = TextEditingController(text: _minKeyLength.toString());
-    _maxKeyLengthController = TextEditingController(text: _maxKeyLength.toString());
+    _minKeyLengthController =  TextEditingController(text: _minKeyLength.toString());
+    _maxKeyLengthController =  TextEditingController(text: _maxKeyLength.toString());
   }
 
   @override
@@ -50,10 +51,10 @@ class VigenereBreakerState extends State<VigenereBreaker> {
   @override
   Widget build(BuildContext context) {
     var BreakerAlphabetItems = {
-      VigenereBreakerAlphabet.ENGLISH: i18n(context, 'common_language_english'),
-      VigenereBreakerAlphabet.GERMAN: i18n(context, 'common_language_german'),
-      VigenereBreakerAlphabet.SPANISH: i18n(context, 'common_language_spanish'),
-      VigenereBreakerAlphabet.FRENCH: i18n(context, 'common_language_french'),
+      VigenereBreakerAlphabet.ENGLISH : i18n(context, 'common_language_english'),
+      VigenereBreakerAlphabet.GERMAN : i18n(context, 'common_language_german'),
+      VigenereBreakerAlphabet.SPANISH : i18n(context, 'common_language_spanish'),
+      VigenereBreakerAlphabet.FRENCH : i18n(context, 'common_language_french'),
     };
 
     return Column(
@@ -73,7 +74,9 @@ class VigenereBreakerState extends State<VigenereBreaker> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'common_alphabet')),
+        GCWTextDivider(
+          text: i18n(context, 'common_alphabet')
+        ),
         GCWDropDownButton(
           value: _currentAlphabet,
           onChanged: (value) {
@@ -88,7 +91,9 @@ class VigenereBreakerState extends State<VigenereBreaker> {
             );
           }).toList(),
         ),
-        GCWTextDivider(text: i18n(context, 'vigenerebreaker_key_length')),
+        GCWTextDivider(
+            text: i18n(context, 'vigenerebreaker_key_length')
+        ),
         GCWIntegerSpinner(
           title: i18n(context, 'vigenerebreaker_key_length_min'),
           controller: _minKeyLengthController,
@@ -117,6 +122,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
             });
           },
         ),
+
         _buildSubmitButton(),
         _buildOutput(context),
       ],
@@ -124,35 +130,39 @@ class VigenereBreakerState extends State<VigenereBreaker> {
   }
 
   Widget _buildSubmitButton() {
-    return GCWSubmitButton(onPressed: () async {
-      await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Center(
-            child: Container(
-              child: GCWAsyncExecuter(
-                isolatedFunction: break_cipherAsync,
-                parameter: _buildJobData(),
-                onReady: (data) => _showOutput(data),
-                isOverlay: true,
+    return GCWSubmitButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: break_cipherAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
               ),
-              height: 220,
-              width: 150,
-            ),
-          );
-        },
-      );
-    });
+            );
+          },
+        );
+      }
+    );
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput();
+    if (_currentInput == null || _currentInput.length == 0)
+      return GCWDefaultOutput();
 
-    if (_currentOutput == null) return GCWDefaultOutput();
+    if (_currentOutput == null)
+      return GCWDefaultOutput();
 
-    if (_currentOutput.errorCode != VigenereBreakerErrorCode.OK) {
-      showToast(i18n(context, 'vigenerebreaker_error', parameters: [_currentOutput.errorCode]));
+    if (_currentOutput.errorCode != VigenereBreakerErrorCode.OK){
+      showToast( i18n(context, 'vigenerebreaker_error', parameters: [_currentOutput.errorCode]));
       return GCWDefaultOutput();
     }
 
@@ -163,7 +173,9 @@ class VigenereBreakerState extends State<VigenereBreaker> {
           children: [
             GCWOutput(
               title: i18n(context, 'common_key'),
-              child: GCWOutputText(text: _currentOutput.key),
+              child: GCWOutputText(
+                text: _currentOutput.key
+              ),
             ),
           ],
         )
@@ -177,14 +189,18 @@ class VigenereBreakerState extends State<VigenereBreaker> {
       setState(() {});
     });
 
-    if (_currentInput == null || _currentInput.length == 0) return null;
+    if (_currentInput == null || _currentInput.length == 0)
+      return null;
 
-    return GCWAsyncExecuterParameters(VigenereBreakerJobData(
+    return GCWAsyncExecuterParameters (
+      VigenereBreakerJobData(
         input: _currentInput,
         vigenereBreakerType: _currentAutokey ? VigenereBreakerType.AUTOKEYVIGENERE : VigenereBreakerType.VIGENERE,
         alphabet: _currentAlphabet,
         keyLengthMin: _minKeyLength,
-        keyLengthMax: _maxKeyLength));
+        keyLengthMax: _maxKeyLength
+      )
+    );
   }
 
   _showOutput(VigenereBreakerResult output) {

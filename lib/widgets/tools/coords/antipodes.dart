@@ -68,14 +68,16 @@ class AntipodesState extends State<Antipodes> {
 
     _currentMapPoints = [
       GCWMapPoint(
-          point: _currentCoords,
-          markerText: i18n(context, 'coords_antipodes_coorda'),
-          coordinateFormat: _currentCoordsFormat),
+        point: _currentCoords,
+        markerText: i18n(context, 'coords_antipodes_coorda'),
+        coordinateFormat: _currentCoordsFormat
+      ),
       GCWMapPoint(
-          point: _currentValues[0],
-          color: COLOR_MAP_CALCULATEDPOINT,
-          markerText: i18n(context, 'coords_antipodes_coordb'),
-          coordinateFormat: _currentCoordsFormat),
+        point: _currentValues[0],
+        color: COLOR_MAP_CALCULATEDPOINT,
+        markerText: i18n(context, 'coords_antipodes_coordb'),
+        coordinateFormat: _currentCoordsFormat
+      ),
     ];
 
     _currentOutput = _currentValues.map((projection) {

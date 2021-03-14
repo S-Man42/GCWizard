@@ -56,17 +56,20 @@ class IrrationalNumbersDecimalRangeState extends State<IrrationalNumbersDecimalR
             });
           },
         ),
-        GCWDefaultOutput(child: _calculateOutput())
+        GCWDefaultOutput(
+          child: _calculateOutput()
+        )
       ],
     );
   }
 
   _calculateOutput() {
-    if (_currentStart < 1) return '';
+    if (_currentStart < 1)
+      return '';
 
     try {
       return _calculator.decimalRange(_currentStart, _currentLength);
-    } on FormatException catch (e) {
+    } on FormatException catch(e) {
       return printErrorMessage(context, e.message);
     }
   }

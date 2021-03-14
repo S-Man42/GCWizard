@@ -1,18 +1,22 @@
 import 'dart:collection';
 
 String substitution(String input, Map<String, String> substitutions, {bool caseSensitive: true}) {
-  if (input == null || input.length == 0) return '';
+  if (input == null || input.length == 0)
+    return '';
 
-  if (substitutions == null) return input;
+  if (substitutions == null)
+    return input;
 
-  if (substitutions.keys.where((key) => key.length != 0).isEmpty) return input;
+  if (substitutions.keys.where((key) => key.length != 0).isEmpty)
+    return input;
 
   List<String> keys = [];
 
   //Copy map to keep the original one
   var substCopy = {};
   substitutions.entries.forEach((entry) {
-    if (entry.key.length == 0) return;
+    if (entry.key.length == 0)
+      return;
 
     if (caseSensitive) {
       substCopy.putIfAbsent(entry.key, () => entry.value);
@@ -23,7 +27,8 @@ String substitution(String input, Map<String, String> substitutions, {bool caseS
 
   substCopy.entries.forEach((entry) {
     var key = entry.key;
-    if (!caseSensitive) key = key.toUpperCase();
+    if (!caseSensitive)
+      key = key.toUpperCase();
 
     keys.add(key);
   });
@@ -62,7 +67,8 @@ String substitution(String input, Map<String, String> substitutions, {bool caseS
 
   var output = '';
   replacements.entries.forEach((entry) {
-    if (substCopy.containsKey(entry.value)) output += substCopy[entry.value];
+    if (substCopy.containsKey(entry.value))
+      output += substCopy[entry.value];
   });
 
   return output;

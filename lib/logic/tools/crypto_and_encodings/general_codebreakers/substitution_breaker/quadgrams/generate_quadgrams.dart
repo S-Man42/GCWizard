@@ -18,6 +18,7 @@ bool generate_quadgram() {
   var result = true;
 
   List<Map<String, dynamic>> _inputsToExpected = [
+
     // Attention: a file is done during execution
 
     /// generate test-quadgram- file ( Source file from https://gitlab.com/guballa/SubstitutionBreaker/-/blob/development/tests/fixturefiles/quadgram_corpus.txt)
@@ -43,8 +44,7 @@ bool generate_quadgram() {
     filePath = path.current + "/assets/quadgrams/";
     var fileAsset = File(path.normalize(filePath + elem['assetName']));
 
-    var _actual =
-        await generateQuadgrams(fileIn, fileOut, fileAsset, elem['className'], elem['assetName'], elem['alphabet']);
+    var _actual = await generateQuadgrams(fileIn, fileOut, fileAsset, elem['className'], elem['assetName'], elem['alphabet']);
 
     result = result && (_actual.errorCode == ErrorCode.OK);
   });
@@ -52,8 +52,7 @@ bool generate_quadgram() {
   return result;
 }
 
-BreakerResult generateFiles(File quadgram_fh, File asset_fh, String className, String assetName, String alphabet,
-    double quadgram_sum, String max_chars, double max_val, List<double> quadgrams) {
+BreakerResult generateFiles(File quadgram_fh, File asset_fh, String className, String assetName, String alphabet, double quadgram_sum, String max_chars, double max_val, List<double> quadgrams){
   var sb = new StringBuffer();
   var quadgrams_sum = 0;
   var quadgramsInt = List<int>(quadgrams.length);
@@ -61,18 +60,17 @@ BreakerResult generateFiles(File quadgram_fh, File asset_fh, String className, S
     quadgramsInt[i] = quadgrams[i].round();
     quadgrams_sum += quadgramsInt[i];
   }
-  sb.write(
-      "import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';\n");
+  sb.write("import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution_breaker/quadgrams/quadgrams.dart';\n");
   sb.write("\n");
   sb.write("class " + className + " extends Quadgrams {\n");
   sb.write("\n");
   sb.write("  " + className + "() {\n");
   sb.write("\n");
   sb.write("    alphabet = '" + alphabet + "';\n");
-  sb.write("    nbr_quadgrams = " + quadgram_sum.round().toString() + ";\n");
+  sb.write("    nbr_quadgrams = " + quadgram_sum.round().toString() +";\n");
   sb.write("    most_frequent_quadgram = '" + max_chars + "';\n");
   sb.write("    max_fitness = " + max_val.round().toString() + ";\n");
-  sb.write("    average_fitness = " + (quadgrams_sum.toDouble() / pow(alphabet.length, 4)).toString() + ";\n");
+  sb.write("    average_fitness = " + (quadgrams_sum.toDouble() / pow(alphabet.length, 4 )).toString() + ";\n");
   sb.write("    assetLocation = " + '"assets/quadgrams/' + assetName + '";\n');
   sb.write("  }\n");
   sb.write("}\n");

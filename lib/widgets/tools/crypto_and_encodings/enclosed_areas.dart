@@ -18,11 +18,13 @@ class EnclosedAreasState extends State<EnclosedAreas> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(onChanged: (text) {
-          setState(() {
-            _currentInput = text;
-          });
-        }),
+        GCWTextField(
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
+            });
+          }
+        ),
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'enclosedareas_with4'),
           rightValue: i18n(context, 'enclosedareas_without4'),
@@ -32,7 +34,9 @@ class EnclosedAreasState extends State<EnclosedAreas> {
             });
           },
         ),
-        GCWDefaultOutput(child: decodeEnclosedAreas(_currentInput, _currentMode == GCWSwitchPosition.left))
+        GCWDefaultOutput(
+          child: decodeEnclosedAreas(_currentInput, _currentMode == GCWSwitchPosition.left)
+        )
       ],
     );
   }

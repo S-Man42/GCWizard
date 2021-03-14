@@ -17,11 +17,13 @@ class ChickenLanguageState extends State<ChickenLanguage> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(onChanged: (text) {
-          setState(() {
-            _currentInput = text;
-          });
-        }),
+        GCWTextField(
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
+            });
+          }
+        ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -30,17 +32,20 @@ class ChickenLanguageState extends State<ChickenLanguage> {
             });
           },
         ),
-        GCWDefaultOutput(child: _buildOutput())
+        GCWDefaultOutput(
+          child: _buildOutput()
+        )
       ],
     );
   }
 
   _buildOutput() {
-    if (_currentInput == null) return '';
+    if (_currentInput == null)
+      return '';
 
     var out = _currentMode == GCWSwitchPosition.left
-        ? encryptChickenLanguage(_currentInput)
-        : decryptChickenLanguage(_currentInput);
+      ? encryptChickenLanguage(_currentInput)
+      : decryptChickenLanguage(_currentInput);
 
     return out;
   }

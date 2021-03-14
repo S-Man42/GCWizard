@@ -15,16 +15,22 @@ class GCWButton extends StatefulWidget {
 }
 
 class _GCWButtonState extends State<GCWButton> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-      child: RaisedButton(
+      margin: const EdgeInsets.only(
+        top: 10.0,
+        bottom: 10.0
+      ),
+      child:RaisedButton(
         onPressed: widget.onPressed,
         child: Text(
           widget.text,
           textAlign: TextAlign.center,
-          style: widget.textStyle ?? gcwTextStyle().copyWith(color: themeColors().dialogText()),
+          style: widget.textStyle ?? gcwTextStyle().copyWith(
+            color: themeColors().dialogText()
+          ),
         ),
       ),
     );

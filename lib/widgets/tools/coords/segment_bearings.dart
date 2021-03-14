@@ -78,24 +78,24 @@ class SegmentBearingsState extends State<SegmentBearings> {
           },
         ),
         _currentInput1Mode == GCWSwitchPosition.left
-            ? GCWDoubleSpinner(
-                value: _currentBearing1,
-                onChanged: (value) {
-                  setState(() {
-                    _currentBearing1 = value;
-                  });
-                },
-              )
-            : GCWCoords(
-                notitle: true,
-                coordsFormat: _currentCoordsFormat1,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentCoordsFormat1 = ret['coordsFormat'];
-                    _currentCoords1 = ret['value'];
-                  });
-                },
-              ),
+          ? GCWDoubleSpinner(
+              value: _currentBearing1,
+              onChanged: (value) {
+                setState(() {
+                  _currentBearing1 = value;
+                });
+              },
+            )
+          : GCWCoords(
+              notitle: true,
+              coordsFormat: _currentCoordsFormat1,
+              onChanged: (ret) {
+                setState(() {
+                  _currentCoordsFormat1 = ret['coordsFormat'];
+                  _currentCoords1 = ret['value'];
+                });
+              },
+            ),
         GCWTextDivider(
           text: i18n(context, 'coords_segmentbearings_bearing2'),
         ),
@@ -110,25 +110,27 @@ class SegmentBearingsState extends State<SegmentBearings> {
           },
         ),
         _currentInput2Mode == GCWSwitchPosition.left
-            ? GCWDoubleSpinner(
-                value: _currentBearing2,
-                onChanged: (value) {
-                  setState(() {
-                    _currentBearing2 = value;
-                  });
-                },
-              )
-            : GCWCoords(
-                notitle: true,
-                coordsFormat: _currentCoordsFormat2,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentCoordsFormat2 = ret['coordsFormat'];
-                    _currentCoords2 = ret['value'];
-                  });
-                },
-              ),
-        GCWTextDivider(text: i18n(context, 'coords_segmentbearings_numbersegments')),
+          ? GCWDoubleSpinner(
+              value: _currentBearing2,
+              onChanged: (value) {
+                setState(() {
+                  _currentBearing2 = value;
+                });
+              },
+            )
+          : GCWCoords(
+              notitle: true,
+              coordsFormat: _currentCoordsFormat2,
+              onChanged: (ret) {
+                setState(() {
+                  _currentCoordsFormat2 = ret['coordsFormat'];
+                  _currentCoords2 = ret['value'];
+                });
+              },
+            ),
+        GCWTextDivider(
+          text: i18n(context, 'coords_segmentbearings_numbersegments')
+        ),
         GCWIntegerSpinner(
           value: _currentSegmentCount,
           min: 2,
@@ -139,7 +141,9 @@ class SegmentBearingsState extends State<SegmentBearings> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'coords_segmentbearings_distance')),
+        GCWTextDivider(
+          text: i18n(context, 'coords_segmentbearings_distance')
+        ),
         GCWDistance(
           value: _currentDistance,
           onChanged: (value) {
@@ -177,9 +181,10 @@ class SegmentBearingsState extends State<SegmentBearings> {
     var ells = defaultEllipsoid();
 
     var startMapPoint = GCWMapPoint(
-        point: _currentCoordsStart,
-        markerText: i18n(context, 'coords_segmentbearings_start'),
-        coordinateFormat: _currentCoordsFormatStart);
+      point: _currentCoordsStart,
+      markerText: i18n(context, 'coords_segmentbearings_start'),
+      coordinateFormat: _currentCoordsFormatStart
+    );
 
     var endPoint1;
     var bearing1;
@@ -195,7 +200,10 @@ class SegmentBearingsState extends State<SegmentBearings> {
     }
 
     var endMapPoint1 = GCWMapPoint(
-        point: endPoint1, markerText: i18n(context, 'coords_segmentbearings_end1'), coordinateFormat: format1);
+      point: endPoint1,
+      markerText: i18n(context, 'coords_segmentbearings_end1'),
+      coordinateFormat: format1
+    );
 
     var endPoint2;
     var bearing2;
@@ -211,18 +219,22 @@ class SegmentBearingsState extends State<SegmentBearings> {
     }
 
     var endMapPoint2 = GCWMapPoint(
-        point: endPoint2, markerText: i18n(context, 'coords_segmentbearings_end2'), coordinateFormat: format2);
+      point: endPoint2,
+      markerText: i18n(context, 'coords_segmentbearings_end2'),
+      coordinateFormat: format2
+    );
 
-    var segments =
-        segmentBearings(_currentCoordsStart, bearing1, bearing2, _currentDistance, _currentSegmentCount, ells);
+    var segments = segmentBearings(_currentCoordsStart, bearing1, bearing2, _currentDistance, _currentSegmentCount, ells);
 
     _currentMapPoints = [startMapPoint, endMapPoint1];
     _currentMapPolylines = [
       GCWMapPolyline(
-          points: [startMapPoint, endMapPoint1],
-          color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
-              .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
-              .toColor())
+        points: [startMapPoint, endMapPoint1],
+        color: HSLColor
+          .fromColor(COLOR_MAP_POLYLINE)
+          .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
+          .toColor()
+      )
     ];
 
     segments['points'].asMap().forEach((index, point) {
@@ -234,15 +246,23 @@ class SegmentBearingsState extends State<SegmentBearings> {
       );
       _currentMapPoints.add(mapPoint);
 
-      _currentMapPolylines.add(GCWMapPolyline(
+      _currentMapPolylines.add(
+        GCWMapPolyline(
           points: [startMapPoint, mapPoint],
-          color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
-              .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
-              .toColor()));
+          color: HSLColor
+            .fromColor(COLOR_MAP_POLYLINE)
+            .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+            .toColor()
+        )
+      );
     });
 
     _currentMapPoints.add(endMapPoint2);
-    _currentMapPolylines.add(GCWMapPolyline(points: [startMapPoint, endMapPoint2]));
+    _currentMapPolylines.add(
+      GCWMapPolyline(
+        points: [startMapPoint, endMapPoint2]
+      )
+    );
 
     _currentOutputs = List<String>.from(segments['points'].map((point) {
       return formatCoordOutput(point, _currentOutputFormat, defaultEllipsoid());

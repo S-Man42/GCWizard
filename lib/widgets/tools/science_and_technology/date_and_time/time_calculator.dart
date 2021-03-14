@@ -53,7 +53,9 @@ class TimeCalculatorState extends State<TimeCalculator> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextDivider(text: i18n(context, 'dates_timecalculator_starttime')),
+        GCWTextDivider(
+          text: i18n(context, 'dates_timecalculator_starttime')
+        ),
         Row(
           children: [
             _buildIntegerSpinner(_startDays, controller: _startDaysController),
@@ -73,7 +75,9 @@ class TimeCalculatorState extends State<TimeCalculator> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'dates_timecalculator_endtime')),
+        GCWTextDivider(
+            text: i18n(context, 'dates_timecalculator_endtime')
+        ),
         Row(
           children: [
             _buildIntegerSpinner(_endDays),
@@ -112,10 +116,18 @@ class TimeCalculatorState extends State<TimeCalculator> {
 
   _buildOutput() {
     var startTime = Duration(
-        days: _startDays.value, hours: _startHours.value, minutes: _startMinutes.value, seconds: _startSeconds.value);
+      days: _startDays.value,
+      hours: _startHours.value,
+      minutes: _startMinutes.value,
+      seconds: _startSeconds.value
+    );
 
-    var endTime =
-        Duration(days: _endDays.value, hours: _endHours.value, minutes: _endMinutes.value, seconds: _endSeconds.value);
+    var endTime = Duration(
+      days: _endDays.value,
+      hours: _endHours.value,
+      minutes: _endMinutes.value,
+      seconds: _endSeconds.value
+    );
 
     Duration finalTime;
     if (_currentMode == GCWSwitchPosition.left)
@@ -134,9 +146,9 @@ class TimeCalculatorState extends State<TimeCalculator> {
     var seconds = finalTime.inSeconds - finalTime.inMinutes * 60;
 
     output += '${format.format(days)}'
-        ':${format.format(hours)}'
-        ':${format.format(minutes)}'
-        ':${format.format(seconds)}';
+      ':${format.format(hours)}'
+      ':${format.format(minutes)}'
+      ':${format.format(seconds)}';
 
     return Column(
       children: [

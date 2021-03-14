@@ -13,18 +13,17 @@ class MultiDecoderTool {
   MultiDecoderTool(this.name, this.internalToolName, {this.options: const []});
 
   Map<String, dynamic> toMap() => {
-        'id': id,
-        'name': name,
-        'decoderFunctionName': internalToolName,
-        'options': options.map((formula) => formula.toMap()).toList()
-      };
+    'id': id,
+    'name': name,
+    'decoderFunctionName': internalToolName,
+    'options' : options.map((formula) => formula.toMap()).toList()
+  };
 
-  MultiDecoderTool.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
-        internalToolName = json['decoderFunctionName'],
-        options =
-            List<MultiDecoderToolOption>.from(json['options'].map((option) => MultiDecoderToolOption.fromJson(option)));
+  MultiDecoderTool.fromJson(Map<String, dynamic> json):
+    id = json['id'],
+    name = json['name'],
+    internalToolName = json['decoderFunctionName'],
+    options = List<MultiDecoderToolOption>.from(json['options'].map((option) => MultiDecoderToolOption.fromJson(option)));
 
   @override
   String toString() {
@@ -38,11 +37,14 @@ class MultiDecoderToolOption {
 
   MultiDecoderToolOption(this.name, this.value);
 
-  Map<String, dynamic> toMap() => {'name': name, 'value': value};
+  Map<String, dynamic> toMap() => {
+    'name': name,
+    'value': value
+  };
 
-  MultiDecoderToolOption.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
-        value = json['value'];
+  MultiDecoderToolOption.fromJson(Map<String, dynamic> json):
+    name = json['name'],
+    value = json['value'];
 
   @override
   String toString() {

@@ -5,14 +5,16 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreaker
 const MDT_INTERNALNAMES_ENCLOSEDAREAS = 'multidecoder_tool_enclosedareas_title';
 
 class MultiDecoderToolEnclosedAreas extends GCWMultiDecoderTool {
-  MultiDecoderToolEnclosedAreas({Key key, int id, String name, Map<String, dynamic> options})
-      : super(
-            key: key,
-            id: id,
-            name: name,
-            internalToolName: MDT_INTERNALNAMES_ENCLOSEDAREAS,
-            onDecode: (input) {
-              return decodeEnclosedAreas(input, true);
-            },
-            options: options);
+
+  MultiDecoderToolEnclosedAreas({Key key, int id, String name, Map<String, dynamic> options}) :
+    super(
+      key: key,
+      id: id,
+      name: name,
+      internalToolName: MDT_INTERNALNAMES_ENCLOSEDAREAS,
+      onDecode: (input) {
+        return decodeEnclosedAreas(input, true);
+      },
+      options: options
+    );
 }

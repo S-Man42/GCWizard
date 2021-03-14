@@ -10,15 +10,22 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class MayaNumbersSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = Registry.toolList.where((element) {
-      if (className(element.tool) == className(SymbolTable()) &&
-          (element.tool as SymbolTable).symbolKey == 'maya_numerals') return true;
 
-      return [
-        className(MayaNumbers()),
-      ].contains(className(element.tool));
-    }).toList();
+    final List<GCWTool> _toolList =
+      Registry.toolList.where((element) {
+        if (className(element.tool) == className(SymbolTable())
+          && (element.tool as SymbolTable).symbolKey == 'maya_numerals')
+          return true;
 
-    return Container(child: GCWToolList(toolList: _toolList));
+        return [
+          className(MayaNumbers()),
+        ].contains(className(element.tool));
+      }).toList();
+
+    return Container(
+      child: GCWToolList(
+        toolList: _toolList
+      )
+    );
   }
 }

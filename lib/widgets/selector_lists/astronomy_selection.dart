@@ -14,17 +14,23 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class AstronomySelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = Registry.toolList.where((element) {
-      return [
-        className(SunRiseSet()),
-        className(SunPosition()),
-        className(MoonRiseSet()),
-        className(MoonPosition()),
-        className(EasterSelection()),
-        className(Seasons()),
-      ].contains(className(element.tool));
-    }).toList();
 
-    return Container(child: GCWToolList(toolList: _toolList));
+    final List<GCWTool> _toolList =
+      Registry.toolList.where((element) {
+        return [
+          className(SunRiseSet()),
+          className(SunPosition()),
+          className(MoonRiseSet()),
+          className(MoonPosition()),
+          className(EasterSelection()),
+          className(Seasons()),
+        ].contains(className(element.tool));
+      }).toList();
+
+    return Container(
+      child: GCWToolList(
+        toolList: _toolList
+      )
+    );
   }
 }

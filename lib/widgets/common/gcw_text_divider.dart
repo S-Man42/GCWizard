@@ -21,14 +21,25 @@ class _GCWTextDividerState extends State<GCWTextDivider> {
     final minDividerWidth = 100.0;
 
     return Container(
-        margin: EdgeInsets.only(top: 25.0, bottom: widget.bottom ?? 10.0),
-        child: Row(children: <Widget>[
+      margin: EdgeInsets.only(
+        top: 25.0,
+        bottom: widget.bottom ?? 10.0
+      ),
+      child: Row(
+        children: <Widget>[
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth: screenWidth - minDividerWidth),
-            child: Text(widget.text != '' ? '${widget.text}:' : '', style: gcwTextStyle()),
+            child: Text(
+              widget.text != '' ? '${widget.text}:' : '',
+              style: gcwTextStyle()
+            ),
           ),
-          Expanded(child: GCWDivider()),
+          Expanded(
+            child: GCWDivider()
+          ),
           widget.trailing ?? Container()
-        ]));
+        ]
+      )
+    );
   }
 }

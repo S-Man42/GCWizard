@@ -5,7 +5,7 @@ import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 
-LatLng xyzToLatLon(XYZ xyz, Ellipsoid ells) {
+LatLng xyzToLatLon (XYZ xyz, Ellipsoid ells) {
   var x = xyz.x;
   var y = xyz.y;
   var z = xyz.z;
@@ -15,7 +15,8 @@ LatLng xyzToLatLon(XYZ xyz, Ellipsoid ells) {
   var m = atan((z / p) * ((1 - ells.f) + (ells.e2 * ells.a) / r));
 
   var lon = atan(y / x);
-  if (lon < 0) lon = pi + lon;
+  if (lon < 0)
+    lon = pi + lon;
 
   var lat_top = z * (1 - ells.f) + ells.e2 * ells.a * sin(m) * sin(m) * sin(m);
   var lat_bottom = (1 - ells.f) * (p - ells.e2 * ells.a * cos(m) * cos(m) * cos(m));
@@ -26,14 +27,14 @@ LatLng xyzToLatLon(XYZ xyz, Ellipsoid ells) {
   return LatLng(radianToDeg(lat), radianToDeg(lon));
 }
 
-XYZ latLonToXYZ(LatLng coord, Ellipsoid ells, {double h: 0.0}) {
+XYZ latLonToXYZ (LatLng coord, Ellipsoid ells, {double h: 0.0}) {
   var lat = coord.latitudeInRad;
   var lon = coord.longitudeInRad;
   var v = ells.a / sqrt(1 - ells.e2 * sin(lat) * sin(lat));
 
   var x = (v + h) * cos(lat) * cos(lon);
   var y = (v + h) * cos(lat) * sin(lon);
-  var z = ((1 - ells.e2) * v + h) * sin(lat);
+  var z =((1 - ells.e2) * v + h) * sin(lat);
 
   return XYZ(x, y, z);
 }
@@ -60,8 +61,7 @@ LatLng parseXYZ(String input, Ellipsoid ells) {
     zString = match.group(5);
   }
   if (matches.length == 0) {
-    regExp =
-        RegExp(r'^\s*(X|x)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(Y|y)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(Z|z)\:?\s*([\-0-9\.]+)\s*$');
+    regExp = RegExp(r'^\s*(X|x)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(Y|y)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(Z|z)\:?\s*([\-0-9\.]+)\s*$');
     matches = regExp.allMatches(input);
     if (matches.length > 0) {
       var match = matches.elementAt(0);
@@ -71,13 +71,15 @@ LatLng parseXYZ(String input, Ellipsoid ells) {
     }
   }
 
-  if (matches.length == 0) return null;
+  if (matches.length == 0)
+    return null;
 
   var x = double.tryParse(xString);
   var y = double.tryParse(yString);
   var z = double.tryParse(zString);
 
-  if (x == null || y == null || z == null) return null;
+  if (x == null || y == null || z == null)
+    return null;
 
   return xyzToLatLon(XYZ(x, y, z), ells);
 }

@@ -50,9 +50,9 @@ class ADFGVXState extends State<ADFGVX> {
   @override
   Widget build(BuildContext context) {
     var polybiosModeItems = {
-      PolybiosMode.AZ09: i18n(context, 'polybios_mode_az09'),
-      PolybiosMode.ZA90: i18n(context, 'polybios_mode_za90'),
-      PolybiosMode.CUSTOM: i18n(context, 'common_custom'),
+      PolybiosMode.AZ09 : i18n(context, 'polybios_mode_az09'),
+      PolybiosMode.ZA90 : i18n(context, 'polybios_mode_za90'),
+      PolybiosMode.CUSTOM : i18n(context, 'common_custom'),
     };
 
     return Column(
@@ -75,14 +75,16 @@ class ADFGVXState extends State<ADFGVX> {
           },
         ),
         GCWTwoOptionsSwitch(
-          value: _currentMode,
+          value:  _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'common_key')),
+        GCWTextDivider(
+            text: i18n(context, 'common_key')
+        ),
         GCWTextField(
           hintText: i18n(context, 'adfgvx_key_substitution'),
           controller: _substitutionKeyController,
@@ -101,7 +103,9 @@ class ADFGVXState extends State<ADFGVX> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'common_alphabet')),
+        GCWTextDivider(
+          text: i18n(context, 'common_alphabet')
+        ),
         GCWAlphabetDropDown(
           value: _currentPolybiosMode,
           items: polybiosModeItems,
@@ -118,8 +122,9 @@ class ADFGVXState extends State<ADFGVX> {
             });
           },
         ),
-        GCWDefaultOutput(child: _calculateOutput() //_currentOutput == null ? '' : _currentOutput
-            )
+        GCWDefaultOutput(
+          child: _calculateOutput()//_currentOutput == null ? '' : _currentOutput
+        )
       ],
     );
   }
@@ -129,19 +134,39 @@ class ADFGVXState extends State<ADFGVX> {
 
     if (_currentMode == GCWSwitchPosition.left) {
       if (_currentADFGVXMode == GCWSwitchPosition.left) {
-        output = encryptADFGX(_currentInput, _currentSubstitutionKey, _currentTranspositionKey,
-            polybiosMode: _currentPolybiosMode, alphabet: _currentAlphabet);
+        output = encryptADFGX(
+          _currentInput,
+          _currentSubstitutionKey,
+          _currentTranspositionKey,
+          polybiosMode: _currentPolybiosMode,
+          alphabet: _currentAlphabet
+        );
       } else {
-        output = encryptADFGVX(_currentInput, _currentSubstitutionKey, _currentTranspositionKey,
-            polybiosMode: _currentPolybiosMode, alphabet: _currentAlphabet);
+        output = encryptADFGVX(
+          _currentInput,
+          _currentSubstitutionKey,
+          _currentTranspositionKey,
+          polybiosMode: _currentPolybiosMode,
+          alphabet: _currentAlphabet
+        );
       }
     } else {
       if (_currentADFGVXMode == GCWSwitchPosition.left) {
-        output = decryptADFGX(_currentInput, _currentSubstitutionKey, _currentTranspositionKey,
-            polybiosMode: _currentPolybiosMode, alphabet: _currentAlphabet);
+        output = decryptADFGX(
+          _currentInput,
+          _currentSubstitutionKey,
+          _currentTranspositionKey,
+          polybiosMode: _currentPolybiosMode,
+          alphabet: _currentAlphabet
+        );
       } else {
-        output = decryptADFGVX(_currentInput, _currentSubstitutionKey, _currentTranspositionKey,
-            polybiosMode: _currentPolybiosMode, alphabet: _currentAlphabet);
+        output = decryptADFGVX(
+          _currentInput,
+          _currentSubstitutionKey,
+          _currentTranspositionKey,
+          polybiosMode: _currentPolybiosMode,
+          alphabet: _currentAlphabet
+        );
       }
     }
 

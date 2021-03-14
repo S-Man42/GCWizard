@@ -22,7 +22,7 @@ class WaypointProjection extends StatefulWidget {
 class WaypointProjectionState extends State<WaypointProjection> {
   var _currentCoords = defaultCoordinate;
   var _currentDistance = 0.0;
-  var _currentBearing = {'text': '', 'value': 0.0};
+  var _currentBearing = {'text': '','value': 0.0};
   var _currentReverse = false;
 
   var _currentValues = [defaultCoordinate];
@@ -96,8 +96,7 @@ class WaypointProjectionState extends State<WaypointProjection> {
 
   _calculateOutput() {
     if (_currentReverse) {
-      _currentValues =
-          reverseProjection(_currentCoords, _currentBearing['value'], _currentDistance, defaultEllipsoid());
+      _currentValues = reverseProjection(_currentCoords, _currentBearing['value'], _currentDistance, defaultEllipsoid());
       if (_currentValues == null || _currentValues.length == 0) {
         _currentOutput = [i18n(context, 'coords_waypointprojection_reverse_nocoordinatefound')];
         return;
@@ -105,41 +104,51 @@ class WaypointProjectionState extends State<WaypointProjection> {
 
       _currentMapPoints = [
         GCWMapPoint(
-            point: _currentCoords,
-            markerText: i18n(context, 'coords_waypointprojection_start'),
-            coordinateFormat: _currentCoordsFormat)
+          point: _currentCoords,
+          markerText: i18n(context, 'coords_waypointprojection_start'),
+          coordinateFormat: _currentCoordsFormat
+        )
       ];
 
       _currentMapPolylines = <GCWMapPolyline>[];
 
       _currentValues.forEach((projection) {
         var projectionMapPoint = GCWMapPoint(
-            point: projection,
-            color: COLOR_MAP_CALCULATEDPOINT,
-            markerText: i18n(context, 'coords_waypointprojection_end'),
-            coordinateFormat: _currentOutputFormat);
+          point: projection,
+          color: COLOR_MAP_CALCULATEDPOINT,
+          markerText: i18n(context, 'coords_waypointprojection_end'),
+          coordinateFormat: _currentOutputFormat
+        );
 
         _currentMapPoints.add(projectionMapPoint);
 
-        _currentMapPolylines.add(GCWMapPolyline(points: [projectionMapPoint, _currentMapPoints[0]]));
+        _currentMapPolylines.add(
+          GCWMapPolyline(
+            points: [projectionMapPoint, _currentMapPoints[0]]
+          )
+        );
       });
     } else {
       _currentValues = [projection(_currentCoords, _currentBearing['value'], _currentDistance, defaultEllipsoid())];
 
       _currentMapPoints = [
         GCWMapPoint(
-            point: _currentCoords,
-            markerText: i18n(context, 'coords_waypointprojection_start'),
-            coordinateFormat: _currentCoordsFormat),
+          point: _currentCoords,
+          markerText: i18n(context, 'coords_waypointprojection_start'),
+          coordinateFormat: _currentCoordsFormat
+        ),
         GCWMapPoint(
-            point: _currentValues[0],
-            color: COLOR_MAP_CALCULATEDPOINT,
-            markerText: i18n(context, 'coords_waypointprojection_end'),
-            coordinateFormat: _currentOutputFormat)
+          point: _currentValues[0],
+          color: COLOR_MAP_CALCULATEDPOINT,
+          markerText: i18n(context, 'coords_waypointprojection_end'),
+          coordinateFormat: _currentOutputFormat
+        )
       ];
 
       _currentMapPolylines = [
-        GCWMapPolyline(points: [_currentMapPoints[0], _currentMapPoints[1]])
+        GCWMapPolyline(
+          points: [_currentMapPoints[0], _currentMapPoints[1]]
+        )
       ];
     }
 

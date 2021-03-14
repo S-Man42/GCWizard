@@ -23,7 +23,7 @@ class ScrabbleState extends State<Scrabble> {
   var _currentScrabbleVersion = scrabbleID_EN;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.left;
   bool _currentCrosstotalMode = true;
-
+  
   String _output = '';
 
   @override
@@ -85,8 +85,13 @@ class ScrabbleState extends State<Scrabble> {
             });
           },
         ),
-        GCWDefaultOutput(child: _output),
-        _currentCrosstotalMode ? GCWCrosstotalOutput(text: _currentInput, values: _currentValues) : Container()
+        GCWDefaultOutput(
+          child: _output
+        ),
+        _currentCrosstotalMode ? GCWCrosstotalOutput(
+          text: _currentInput,
+          values: _currentValues
+        ) : Container()
       ],
     );
   }

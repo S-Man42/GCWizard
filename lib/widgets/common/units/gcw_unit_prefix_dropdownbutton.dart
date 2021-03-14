@@ -20,32 +20,35 @@ class GCWUnitPrefixDropDownButtonState extends State<GCWUnitPrefixDropDownButton
 
   @override
   Widget build(BuildContext context) {
-    if (widget.value != null) _currentPrefix = widget.value;
+    if (widget.value != null)
+      _currentPrefix = widget.value;
 
     return GCWDropDownButton(
-        value: _currentPrefix,
-        items: unitPrefixes.map((prefix) {
-          return GCWDropDownMenuItem(
-            value: prefix,
-            child: prefix.key == null ? '' : i18n(context, prefix.key) + ' (${prefix.symbol})',
-          );
-        }).toList(),
-        onChanged: (value) {
-          setState(() {
-            _currentPrefix = value;
-            widget.onChanged(_currentPrefix);
-          });
-        },
-        selectedItemBuilder: (context) {
-          return unitPrefixes.map((prefix) {
-            return Align(
-              child: GCWText(
-                  text: widget.onlyShowSymbols
-                      ? prefix.symbol ?? ''
-                      : ((i18n(context, prefix.key) ?? '') + (prefix.symbol == null ? '' : ' (${prefix.symbol})'))),
-              alignment: Alignment.centerLeft,
-            );
-          }).toList();
+      value: _currentPrefix,
+      items: unitPrefixes.map((prefix) {
+        return GCWDropDownMenuItem(
+          value: prefix,
+          child: prefix.key == null ? '' : i18n(context, prefix.key) + ' (${prefix.symbol})',
+        );
+      }).toList(),
+      onChanged: (value) {
+        setState(() {
+          _currentPrefix = value;
+          widget.onChanged(_currentPrefix);
         });
+      },
+      selectedItemBuilder: (context) {
+        return unitPrefixes.map((prefix) {
+          return Align(
+            child: GCWText(
+              text: widget.onlyShowSymbols
+                ? prefix.symbol ?? ''
+                : ((i18n(context, prefix.key) ?? '') + (prefix.symbol == null ? '' : ' (${prefix.symbol})'))
+            ),
+            alignment: Alignment.centerLeft,
+          );
+        }).toList();
+      }
+    );
   }
 }

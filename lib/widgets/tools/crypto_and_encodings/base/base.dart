@@ -66,6 +66,8 @@ class BaseState extends State<Base> {
       output = decode(_currentInput, widget.decode);
     }
 
-    return GCWDefaultOutput(child: output);
+    return GCWDefaultOutput(
+      child: output
+    );
   }
 }

@@ -55,18 +55,19 @@ class RSADCalculatorState extends State<RSADCalculator> {
             setState(() {});
           },
         ),
-        GCWDefaultOutput(child: _calculateOutput())
+        GCWDefaultOutput(
+          child: _calculateOutput()
+        )
       ],
     );
   }
 
   _calculateOutput() {
-    if (_currentE == null ||
-        _currentE.length == 0 ||
-        _currentP == null ||
-        _currentP.length == 0 ||
-        _currentQ == null ||
-        _currentQ.length == 0) {
+    if (
+         _currentE == null || _currentE.length == 0
+      || _currentP == null || _currentP.length == 0
+      || _currentQ == null || _currentQ.length == 0
+    ) {
       return '';
     }
 
@@ -76,7 +77,8 @@ class RSADCalculatorState extends State<RSADCalculator> {
       var q = BigInt.tryParse(_currentQ);
 
       return calculateD(e, p, q).toString();
-    } catch (exception) {
+
+    } catch(exception) {
       showToast(i18n(context, exception.message));
       return '';
     }

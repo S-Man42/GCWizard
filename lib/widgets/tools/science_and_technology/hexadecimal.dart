@@ -38,24 +38,24 @@ class HexadecimalState extends State<Hexadecimal> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
-            ? GCWTextField(
-                inputFormatters: [TextOnlyDigitsAndSpaceInputFormatter()],
-                controller: _decimalController,
-                onChanged: (value) {
-                  setState(() {
-                    _currentDecimalValue = value;
-                  });
-                },
-              )
-            : GCWTextField(
-                inputFormatters: [TextOnlyHexDigitsAndSpaceInputFormatter()],
-                controller: _hexController,
-                onChanged: (value) {
-                  setState(() {
-                    _currentHexValue = value;
-                  });
-                },
-              ),
+          ? GCWTextField(
+              inputFormatters: [TextOnlyDigitsAndSpaceInputFormatter()],
+              controller: _decimalController,
+              onChanged: (value) {
+                setState(() {
+                  _currentDecimalValue = value;
+                });
+              },
+            )
+          : GCWTextField(
+              inputFormatters: [TextOnlyHexDigitsAndSpaceInputFormatter()],
+              controller: _hexController,
+              onChanged: (value) {
+                setState(() {
+                  _currentHexValue = value;
+                });
+              },
+            ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -64,7 +64,9 @@ class HexadecimalState extends State<Hexadecimal> {
             });
           },
         ),
-        GCWDefaultOutput(child: _buildOutput())
+        GCWDefaultOutput(
+          child: _buildOutput()
+        )
       ],
     );
   }

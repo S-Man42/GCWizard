@@ -13,6 +13,7 @@ class GCWToolBar extends StatefulWidget {
 }
 
 class _GCWToolBarState extends State<GCWToolBar> {
+
   @override
   Widget build(BuildContext context) {
     var children = widget.children.map((child) {
@@ -26,6 +27,8 @@ class _GCWToolBarState extends State<GCWToolBar> {
       );
     }).toList();
 
-    return Row(children: children);
+    return Row(
+      children: children
+    );
   }
 }

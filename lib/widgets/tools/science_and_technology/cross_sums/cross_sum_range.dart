@@ -48,7 +48,9 @@ class CrossSumRangeState extends State<CrossSumRange> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextDivider(text: i18n(context, 'crosssum_range_expected')),
+        GCWTextDivider(
+          text: i18n(context, 'crosssum_range_expected')
+        ),
         GCWIntegerSpinner(
           value: _currentCrossSum,
           min: widget.type == CrossSumType.ITERATED ? -9 : null,
@@ -59,7 +61,9 @@ class CrossSumRangeState extends State<CrossSumRange> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'crosssum_range_range')),
+        GCWTextDivider(
+          text: i18n(context, 'crosssum_range_range')
+        ),
         GCWIntegerSpinner(
           value: _currentRangeStart,
           onChanged: (value) {
@@ -112,8 +116,8 @@ class CrossSumRangeState extends State<CrossSumRange> {
           copyText: output.length.toString(),
         ),
         Column(
-            children:
-                columnedMultiLineOutput(context, List<List<dynamic>>.from(output.map((element) => [element]).toList())))
+          children: columnedMultiLineOutput(context, List<List<dynamic>>.from(output.map((element) => [element]).toList()))
+        )
       ];
     }
 

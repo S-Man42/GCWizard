@@ -18,7 +18,10 @@ class _GCWColorHexCodeState extends State<GCWColorHexCode> {
 
   var _controller;
 
-  var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#......', filter: {".": RegExp(r'[A-Fa-f0-9]')});
+  var _maskInputFormatter = WrapperForMaskTextInputFormatter(
+    mask: '#......',
+    filter: {".": RegExp(r'[A-Fa-f0-9]')}
+  );
 
   @override
   void initState() {

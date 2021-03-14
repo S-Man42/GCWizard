@@ -47,7 +47,7 @@ class EllipsoidTransformState extends State<EllipsoidTransform> {
           },
         ),
         GCWTextDivider(
-          text: i18n(context, 'coords_ellipsoidtransform_fromellipsoiddate'),
+            text: i18n(context, 'coords_ellipsoidtransform_fromellipsoiddate'),
         ),
         GCWDropDownButton(
           value: _currentFromDate,
@@ -117,7 +117,7 @@ class EllipsoidTransformState extends State<EllipsoidTransform> {
     if (_currentToDate['transformationIndex'] != null) {
       newCoords = ellipsoidTransformLatLng(newCoords, _currentToDate['transformationIndex'], true, false);
     }
-
+    
     _currentOutput = [formatCoordOutput(newCoords, _currentOutputFormat, _currentToDate['ellipsoid'])];
   }
 }

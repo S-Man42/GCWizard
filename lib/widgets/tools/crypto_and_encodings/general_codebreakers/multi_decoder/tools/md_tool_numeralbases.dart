@@ -8,26 +8,30 @@ const MDT_INTERNALNAMES_NUMERALBASES = 'multidecoder_tool_numeralbases_title';
 const MDT_NUMERALBASES_OPTION_FROM = 'multidecoder_tool_numeralbases_option_from';
 
 class MultiDecoderToolNumeralBases extends GCWMultiDecoderTool {
-  MultiDecoderToolNumeralBases({Key key, int id, String name, Map<String, dynamic> options})
-      : super(
-            key: key,
-            id: id,
-            name: name,
-            internalToolName: MDT_INTERNALNAMES_NUMERALBASES,
-            onDecode: (String input) {
-              return input
-                  .split(RegExp(r'\s+'))
-                  .where((element) => element.length > 0)
-                  .map((element) => convertBase(element, options[MDT_NUMERALBASES_OPTION_FROM], 10))
-                  .join(' ');
+
+  MultiDecoderToolNumeralBases({Key key, int id, String name, Map<String, dynamic> options}) :
+    super(
+      key: key,
+      id: id,
+      name: name,
+      internalToolName: MDT_INTERNALNAMES_NUMERALBASES,
+      onDecode: (String input) {
+        return input
+          .split(RegExp(r'\s+'))
+          .where((element) => element.length > 0)
+          .map((element) => convertBase(element, options[MDT_NUMERALBASES_OPTION_FROM], 10))
+          .join(' ');
+      },
+      options: options,
+      configurationWidget: GCWMultiDecoderToolConfiguration(
+        widgets: {
+          MDT_NUMERALBASES_OPTION_FROM: GCWNumeralBaseSpinner(
+            value: options[MDT_NUMERALBASES_OPTION_FROM],
+            onChanged: (value) {
+              options[MDT_NUMERALBASES_OPTION_FROM] = value;
             },
-            options: options,
-            configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
-              MDT_NUMERALBASES_OPTION_FROM: GCWNumeralBaseSpinner(
-                value: options[MDT_NUMERALBASES_OPTION_FROM],
-                onChanged: (value) {
-                  options[MDT_NUMERALBASES_OPTION_FROM] = value;
-                },
-              )
-            }));
+          )
+        }
+      )
+    );
 }

@@ -5,29 +5,17 @@ import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/ellipsoid_transform.dart';
 import 'package:latlong/latlong.dart';
 
-GaussKrueger latLonToGaussKrueger(LatLng coord, int gkno, Ellipsoid ells) {
+GaussKrueger latLonToGaussKrueger (LatLng coord, int gkno, Ellipsoid ells) {
   int x = -1;
   switch (ells.name) {
-    case ELLIPSOID_NAME_AIRY1830:
-      x = 6;
-      break;
-    case ELLIPSOID_NAME_AIRYMODIFIED:
-      x = 7;
-      break;
-    case ELLIPSOID_NAME_BESSEL1841:
-      x = 0;
-      break;
-    case ELLIPSOID_NAME_CLARKE1866:
-      x = 9;
-      break;
-    case ELLIPSOID_NAME_HAYFORD1924:
-      x = 8;
-      break;
-    case ELLIPSOID_NAME_KRASOVSKY1940:
-      x = 2;
-      break;
+    case ELLIPSOID_NAME_AIRY1830: x = 6; break;
+    case ELLIPSOID_NAME_AIRYMODIFIED: x = 7; break;
+    case ELLIPSOID_NAME_BESSEL1841: x = 0; break;
+    case ELLIPSOID_NAME_CLARKE1866: x = 9; break;
+    case ELLIPSOID_NAME_HAYFORD1924: x = 8; break;
+    case ELLIPSOID_NAME_KRASOVSKY1940: x = 2; break;
   }
-
+  
   LatLng newCoord;
   if (x >= 0) {
     newCoord = ellipsoidTransformLatLng(coord, x, false, false);
@@ -61,7 +49,7 @@ GaussKrueger latLonToGaussKrueger(LatLng coord, int gkno, Ellipsoid ells) {
   double _d = -35.0 / 48.0 * n * n * n + 105.0 / 256.0 * pow(n, 5);
   double _e = 315.0 / 512.0 * pow(n, 4);
 
-  double BL = _a * (B + _b * sin(2 * B) + _c * sin(4 * B) + _d * sin(6 * B) + _e * sin(8 * B));
+  double BL = _a * (B  + _b * sin(2 * B) + _c * sin(4 * B) + _d * sin(6 * B) + _e * sin(8 * B));
   double p1 = t / 2.0 * N * cos(B) * cos(B) * l * l;
   double q1 = t / 24.0 * N * pow(cos(B), 4) * (5 - t * t + 9 * _n * _n + 4 * pow(_n, 4)) * pow(l, 4);
 
@@ -75,7 +63,7 @@ GaussKrueger latLonToGaussKrueger(LatLng coord, int gkno, Ellipsoid ells) {
   return GaussKrueger(gkno, R, H);
 }
 
-LatLng gaussKruegerToLatLon(GaussKrueger gaussKrueger, Ellipsoid ells) {
+LatLng gaussKruegerToLatLon (GaussKrueger gaussKrueger, Ellipsoid ells) {
   Ellipsoid ellsBessel = getEllipsoidByName(ELLIPSOID_NAME_BESSEL1841);
 
   var R = gaussKrueger.easting;
@@ -99,16 +87,12 @@ LatLng gaussKruegerToLatLon(GaussKrueger gaussKrueger, Ellipsoid ells) {
   double B0 = H / _a;
   double BF = B0 + _b * sin(2 * B0) + _c * sin(4 * B0) + _d * sin(6 * B0) + _e * (8 * B0);
 
-  double NF = a / sqrt(1 - e2 * sin(BF) * sin(BF));
+  double NF = a/sqrt(1 - e2 * sin(BF) * sin(BF));
   double _nF = sqrt(a * a / (b * b) * e2 * cos(BF) * cos(BF));
   double tF = tan(BF);
 
   double B1 = tF / 2.0 / (NF * NF) * (-1 - (_nF * _nF)) * Y * Y;
-  double B2 = tF /
-      24.0 /
-      pow(NF, 4) *
-      (5 + 3 * tF * tF + 6 * _nF * _nF - 6 * tF * tF * _nF * _nF - 4 * pow(_nF, 4) - 9 * tF * tF * pow(_nF, 4)) *
-      pow(Y, 4);
+  double B2 = tF / 24.0 / pow(NF, 4) * (5 + 3 * tF * tF + 6 * _nF * _nF - 6 * tF * tF * _nF * _nF - 4 * pow(_nF, 4) - 9 * tF * tF * pow(_nF, 4)) * pow(Y, 4);
   double B = radianToDeg(BF + B1 + B2);
 
   double L1 = 1.0 / NF / cos(BF) * Y;
@@ -120,28 +104,17 @@ LatLng gaussKruegerToLatLon(GaussKrueger gaussKrueger, Ellipsoid ells) {
   int x = -1;
 
   switch (ells.name) {
-    case ELLIPSOID_NAME_AIRY1830:
-      x = 6;
-      break;
-    case ELLIPSOID_NAME_AIRYMODIFIED:
-      x = 7;
-      break;
-    case ELLIPSOID_NAME_BESSEL1841:
-      x = 0;
-      break;
-    case ELLIPSOID_NAME_CLARKE1866:
-      x = 9;
-      break;
-    case ELLIPSOID_NAME_HAYFORD1924:
-      x = 8;
-      break;
-    case ELLIPSOID_NAME_KRASOVSKY1940:
-      x = 2;
-      break;
+    case ELLIPSOID_NAME_AIRY1830: x = 6; break;
+    case ELLIPSOID_NAME_AIRYMODIFIED: x = 7; break;
+    case ELLIPSOID_NAME_BESSEL1841: x = 0; break;
+    case ELLIPSOID_NAME_CLARKE1866: x = 9; break;
+    case ELLIPSOID_NAME_HAYFORD1924: x = 8; break;
+    case ELLIPSOID_NAME_KRASOVSKY1940: x = 2; break;
   }
 
   coord = ellipsoidTransformLatLng(coord, gkno - 1, false, true);
-  if (x >= 0) coord = ellipsoidTransformLatLng(coord, x, true, false);
+  if (x >= 0)
+    coord = ellipsoidTransformLatLng(coord, x, true, false);
 
   return coord;
 }
@@ -173,13 +146,16 @@ LatLng parseGaussKrueger(String input, Ellipsoid ells, {gaussKruegerCode: 1}) {
     }
   }
 
-  if (matches.length == 0) return null;
+  if (matches.length == 0)
+    return null;
 
   var _easting = double.tryParse(_eastingString);
-  if (_easting == null) return null;
+  if (_easting == null)
+    return null;
 
   var _northing = double.tryParse(_northingString);
-  if (_northing == null) return null;
+  if (_northing == null)
+    return null;
 
   return gaussKruegerToLatLon(GaussKrueger(gaussKruegerCode, _easting, _northing), ells);
 }

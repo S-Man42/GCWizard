@@ -37,6 +37,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
     super.initState();
     _editingToolNameController = TextEditingController(text: _editingToolName);
 
+
     refreshMultiDecoderTools();
   }
 
@@ -68,7 +69,8 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
     var name = _createName(chosenInternalName);
 
     var nameOccurrences = mdtTools.where((tool) => tool.name == name).length;
-    if (nameOccurrences > 0) name = '$name ${nameOccurrences + 1}';
+    if (nameOccurrences > 0)
+      name = '$name ${nameOccurrences + 1}';
 
     MultiDecoderTool tool = MultiDecoderTool(
       name,
@@ -142,9 +144,10 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
         GCWTextDivider(
           text: i18n(context, 'multidecoder_configuration_addtool'),
         ),
-        Row(children: [
-          Expanded(
-            child: Container(
+        Row(
+          children: [
+            Expanded(
+              child: Container(
                 child: GCWDropDownButton(
                   value: _currentChosenTool,
                   onChanged: (value) {
@@ -152,30 +155,33 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
                       _currentChosenTool = value;
                     });
                   },
-                  items: _sortedToolRegistry
-                      .asMap()
-                      .map((index, toolName) {
-                        return MapEntry(
-                            index,
-                            GCWDropDownMenuItem(
-                                value: index,
-                                child: i18n(context, toolName),
-                                subtitle: i18n(context, 'multidecoder_configuration_counttoolused',
-                                    parameters: [mdtTools.where((tool) => tool.internalToolName == toolName).length])));
-                      })
-                      .values
-                      .toList(),
+                  items: _sortedToolRegistry.asMap().map((index, toolName) {
+                    return MapEntry(
+                      index,
+                      GCWDropDownMenuItem(
+                        value: index,
+                        child: i18n(context, toolName),
+                        subtitle:
+                          i18n(context, 'multidecoder_configuration_counttoolused',
+                            parameters: [mdtTools.where((tool) => tool.internalToolName == toolName).length]
+                          )
+                      )
+                    );
+                  }).values.toList(),
                 ),
-                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)),
-          ),
-          GCWIconButton(
-            iconData: Icons.add,
-            onPressed: () {
-              _addNewTool();
-              setState(() {});
-            },
-          ),
-        ]),
+                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
+              ),
+            ),
+            GCWIconButton(
+              iconData: Icons.add,
+              onPressed: () {
+                _addNewTool();
+                setState(() {
+                });
+              },
+            ),
+          ]
+        ),
         GCWTextDivider(
           text: i18n(context, 'multidecoder_configuration_configurecreated'),
         ),
@@ -190,73 +196,83 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
       var row = Row(
         children: [
           Expanded(
-              child: _currentEditId == tool.id
-                  ? Container(
-                      child: Column(children: [
-                        Row(
-                          children: [
-                            Expanded(child: GCWText(text: i18n(context, 'multidecoder_configuration_name')), flex: 1),
-                            Expanded(
-                                child: GCWTextField(
-                                  controller: _editingToolNameController,
-                                  onChanged: (value) {
-                                    _editingToolName = value;
-                                  },
-                                ),
-                                flex: 3)
-                          ],
-                        ),
-                        tool.configurationWidget ?? Container()
-                      ]),
-                      padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN))
-                  : Column(
-                      children: [
-                        GCWText(text: tool.name),
-                        Container(
-                          child: GCWText(
-                            text: tool.options.entries.map((entry) {
-                              var value = entry.value;
-
-                              if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
-                                value = getCoordinateFormatByKey(entry.value).name;
-                              }
-
-                              return '${i18n(context, entry.key)}: ${i18n(context, value.toString()) ?? value}';
-                            }).join('\n'),
-                            style: gcwDescriptionTextStyle(),
+            child: _currentEditId == tool.id
+              ? Container(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: GCWText(text: i18n(context, 'multidecoder_configuration_name')),
+                            flex: 1
                           ),
-                          padding: EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
-                        )
-                      ],
-                    )),
+                          Expanded(
+                            child: GCWTextField(
+                              controller: _editingToolNameController,
+                              onChanged: (value) {
+                                _editingToolName = value;
+                              },
+                            ),
+                            flex: 3
+                          )
+                        ],
+                      ),
+                      tool.configurationWidget ?? Container()
+                    ]
+                  ),
+                  padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
+                )
+              : Column(
+                  children: [
+                    GCWText(
+                      text: tool.name
+                    ),
+                    Container(
+                      child: GCWText(
+                        text: tool.options.entries.map((entry) {
+                          var value = entry.value;
+
+                          if (tool.internalToolName == MDT_INTERNALNAMES_COORDINATEFORMATS) {
+                            value = getCoordinateFormatByKey(entry.value).name;
+                          }
+
+                          return '${i18n(context, entry.key)}: ${i18n(context, value.toString()) ?? value}';
+                        }).join('\n'),
+                        style: gcwDescriptionTextStyle(),
+                      ),
+                      padding: EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
+                    )
+                  ],
+                )
+          ),
           Column(
             children: [
               _currentEditId == tool.id
-                  ? GCWIconButton(
-                      iconData: Icons.check,
-                      onPressed: () {
-                        if (_editingToolName.length > 0) {
-                          tool.name = _editingToolName;
-                        }
-                        _updateTool(tool);
+                ? GCWIconButton(
+                    iconData: Icons.check,
+                    onPressed: () {
+                      if (_editingToolName.length > 0) {
+                        tool.name = _editingToolName;
+                      }
+                      _updateTool(tool);
 
-                        setState(() {
-                          _currentEditId = null;
-                          _editingToolNameController.text = '';
-                          _editingToolName = '';
-                        });
-                      },
-                    )
-                  : GCWIconButton(
-                      iconData: Icons.edit,
-                      onPressed: () {
-                        setState(() {
-                          _currentEditId = tool.id;
-                          _editingToolNameController.text = tool.name;
-                          _editingToolName = tool.name;
-                        });
-                      },
-                    ),
+                      setState(() {
+                        _currentEditId = null;
+                        _editingToolNameController.text = '';
+                        _editingToolName = '';
+                      });
+                    },
+                  )
+                : GCWIconButton(
+                    iconData: Icons.edit,
+                    onPressed: () {
+                      setState(() {
+                        _currentEditId = tool.id;
+                        _editingToolNameController.text = tool.name;
+                        _editingToolName = tool.name;
+                      });
+                    },
+                  ),
               GCWIconButton(
                 iconData: Icons.remove,
                 onPressed: () {
@@ -295,9 +311,14 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
 
       Widget output;
       if (odd) {
-        output = Container(color: themeColors().outputListOddRows(), child: row);
+        output = Container(
+          color: themeColors().outputListOddRows(),
+          child: row
+        );
       } else {
-        output = Container(child: row);
+        output = Container(
+          child: row
+        );
       }
       odd = !odd;
 

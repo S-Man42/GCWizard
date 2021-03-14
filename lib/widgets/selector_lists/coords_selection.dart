@@ -27,9 +27,12 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class CoordsSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList =
-        Registry.toolList.where((element) => element.category == ToolCategory.COORDINATES).toList();
+    final List<GCWTool> _toolList = Registry.toolList.where((element) => element.category == ToolCategory.COORDINATES).toList();
 
-    return Container(child: GCWToolList(toolList: _toolList));
+    return Container(
+      child: GCWToolList(
+        toolList: _toolList
+      )
+    );
   }
 }

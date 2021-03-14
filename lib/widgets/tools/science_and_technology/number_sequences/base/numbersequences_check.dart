@@ -15,6 +15,7 @@ class NumberSequenceCheckNumber extends StatefulWidget {
 }
 
 class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
+
   String _currentInputN = '0';
   TextEditingController currentInputController;
 
@@ -32,13 +33,12 @@ class NumberSequenceCheckNumberState extends State<NumberSequenceCheckNumber> {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: <Widget>[
         GCWTextField(
           controller: currentInputController,
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-          ],
+          inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]')),],
           onChanged: (text) {
             setState(() {
               if (text == null || text == '')

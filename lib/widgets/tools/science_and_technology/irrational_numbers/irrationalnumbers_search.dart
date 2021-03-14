@@ -47,18 +47,19 @@ class IrrationalNumbersSearchState extends State<IrrationalNumbersSearch> {
             });
           },
         ),
-        GCWDefaultOutput(child: _calculateOutput())
+        GCWDefaultOutput(
+          child: _calculateOutput()
+        )
       ],
     );
   }
 
   _calculateOutput() {
-    if (_currentInput['text'].length == 0) return '';
+    if (_currentInput['text'].length == 0)
+      return '';
 
     var value = _calculator.decimalOccurence(_currentInput['value'].toString());
 
-    return value == null
-        ? i18n(context, 'irrationalnumbers_nooccurrence', parameters: [widget.irrationalNumber.decimalPart.length])
-        : value.toString();
+    return value == null ? i18n(context, 'irrationalnumbers_nooccurrence', parameters: [widget.irrationalNumber.decimalPart.length]) : value.toString();
   }
 }

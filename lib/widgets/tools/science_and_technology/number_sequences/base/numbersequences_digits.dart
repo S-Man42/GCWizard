@@ -15,6 +15,7 @@ class NumberSequenceDigits extends StatefulWidget {
 }
 
 class NumberSequenceDigitsState extends State<NumberSequenceDigits> {
+
   int _currentInputN = 1;
 
   @override
@@ -29,6 +30,7 @@ class NumberSequenceDigitsState extends State<NumberSequenceDigits> {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
@@ -53,6 +55,10 @@ class NumberSequenceDigitsState extends State<NumberSequenceDigits> {
       columnData.add([element.toString()]);
     });
 
-    return GCWDefaultOutput(child: Column(children: columnedMultiLineOutput(context, columnData)));
+    return GCWDefaultOutput(
+      child: Column(
+        children: columnedMultiLineOutput(context, columnData)
+      )
+    );
   }
 }

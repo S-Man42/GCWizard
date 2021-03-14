@@ -31,7 +31,9 @@ class RotNState extends State<RotN> {
             });
           },
         ),
-        GCWDefaultOutput(child: _output)
+        GCWDefaultOutput(
+          child: _output
+        )
       ],
     );
   }

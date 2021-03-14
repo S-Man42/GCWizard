@@ -12,14 +12,14 @@ class GCWCoordsPasteButton extends StatefulWidget {
   final Widget customIcon;
   final Color backgroundColor;
 
-  const GCWCoordsPasteButton({Key key, this.onPasted, this.size, this.backgroundColor, this.customIcon})
-      : super(key: key);
+  const GCWCoordsPasteButton({Key key, this.onPasted, this.size, this.backgroundColor, this.customIcon}) : super(key: key);
 
   @override
   _GCWCoordsPasteButtonState createState() => _GCWCoordsPasteButtonState();
 }
 
 class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
+
   @override
   void initState() {
     super.initState();
@@ -37,12 +37,12 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
 
   _parseClipboardAndSetCoords(text) {
     var parsed = parseLatLon(text);
-    if (parsed == null || parsed.length == 0) {
+    if (parsed == null  || parsed.length == 0) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
       widget.onPasted(null);
       return;
     } else if (parsed.length > 1) {
-      var recognizedformates = parsed.keys.map((key) {
+      var recognizedformates = parsed.keys.map((key)  {
         var text = '\r\n';
         var coordFormat = allCoordFormats.firstWhere((format) => format.key == key);
         if (coordFormat.subtypes == null)

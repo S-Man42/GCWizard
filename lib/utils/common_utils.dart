@@ -20,7 +20,8 @@ List<int> textToIntList(String text, {bool allowNegativeValues: false}) {
 }
 
 List<String> textToBinaryList(String text) {
-  if (text == null || text.length == 0) return [];
+  if (text == null || text.length == 0)
+    return [];
 
   final regex = RegExp(r'[01]+');
 
@@ -29,7 +30,8 @@ List<String> textToBinaryList(String text) {
 
 int extractIntegerFromText(String text) {
   var digits = text.replaceAll(RegExp(r'[^0-9]'), '');
-  if (digits.length == 0) return null;
+  if (digits.length == 0)
+    return null;
 
   return int.tryParse(digits);
 }
@@ -39,21 +41,25 @@ String intListToString(List<int> list, {String delimiter: ''}) {
 }
 
 String digitsToAlpha(String input, {int aValue: 0, bool removeNonDigits: true}) {
-  if (input == null) return input;
+  if (input == null)
+    return input;
+  
+  if (aValue == null)
+    aValue = 0;
 
-  if (aValue == null) aValue = 0;
-
-  if (removeNonDigits == null) removeNonDigits = false;
-
+  if (removeNonDigits == null)
+    removeNonDigits = false;
+  
   final letters = Rotator().rotate(Rotator.defaultAlphabetAlpha, aValue);
-
+  
   return input.split('').map((character) {
     var value = alphabet_09[character];
-
-    if (value == null) if (removeNonDigits)
-      return '';
-    else
-      return character;
+    
+    if (value == null)
+      if (removeNonDigits)
+        return '';
+      else
+        return character;
 
     return letters[value];
   }).join();
@@ -72,14 +78,11 @@ String normalizeUmlauts(String input) {
     switch (letter.toLowerCase().codeUnitAt(0)) {
       case 228: //ä
       case 230: //æ
-        out = 'ae';
-        break;
+        out = 'ae'; break;
       case 246: //ö
-        out = 'oe';
-        break;
+        out = 'oe'; break;
       case 252: //ü
-        out = 'ue';
-        break;
+        out = 'ue'; break;
       default:
         out = letter;
     }
@@ -98,17 +101,21 @@ String removeNonLetters(String text) {
 }
 
 String insertCharacter(String text, int index, String character) {
-  if (text == null || character == null) return text;
+  if (text == null || character == null)
+    return text;
 
-  if (index < 0) index = 0;
+  if (index < 0)
+    index = 0;
 
-  if (index > text.length) index = text.length;
+  if (index > text.length)
+    index = text.length;
 
   return text.substring(0, index) + character + text.substring(index);
 }
 
 String insertSpaceEveryNthCharacter(String input, int n) {
-  if (n == null || n <= 0) return input; //TODO Exception
+  if (n == null || n <= 0)
+    return input; //TODO Exception
 
   String out = '';
   int i = 0;
@@ -123,12 +130,18 @@ String insertSpaceEveryNthCharacter(String input, int n) {
 String formatDaysToNearestUnit(double days) {
   var format = NumberFormat('0.00');
 
-  if (days >= 365 * 1000000) return format.format(days / (365 * 1000000)) + ' Mio. a';
-  if (days >= 365) return format.format(days / 365) + ' a';
-  if (days >= 1) return format.format(days) + ' d';
-  if (days >= 1 / 24) return format.format(days / (1 / 24)) + ' h';
-  if (days >= 1 / 24 / 60) return format.format(days / (1 / 24 / 60)) + ' min';
-  if (days >= 1 / 24 / 60 / 60) return format.format(days / (1 / 24 / 60 / 60)) + ' s';
+  if (days >= 365 * 1000000)
+    return format.format(days / (365 * 1000000)) + ' Mio. a';
+  if (days >= 365)
+    return format.format(days / 365) + ' a';
+  if (days >= 1)
+    return format.format(days) + ' d';
+  if (days >= 1 / 24)
+    return format.format(days / (1 / 24)) + ' h';
+  if (days >= 1 / 24 / 60)
+    return format.format(days / (1 / 24 / 60)) + ' min';
+  if (days >= 1 / 24 / 60 / 60)
+    return format.format(days / (1 / 24 / 60 / 60)) + ' s';
 
   return format.format(days / (1 / 24 / 60 / 60 / 1000)) + ' ms';
 }
@@ -170,11 +183,13 @@ String formatHoursToHHmmss(double hours) {
   return '$hourStr:$minutesStr:$secondsStr';
 }
 
-Map<U, T> switchMapKeyValue<T, U>(Map<T, U> map, {keepFirstOccurence: false}) {
-  if (map == null) return null;
+Map<U, T> switchMapKeyValue<T,U>(Map<T, U> map, {keepFirstOccurence: false}) {
+  if (map == null)
+    return null;
 
   var newMap = map;
-  if (keepFirstOccurence) newMap = LinkedHashMap.fromEntries(map.entries.toList().reversed);
+  if (keepFirstOccurence)
+    newMap = LinkedHashMap.fromEntries(map.entries.toList().reversed);
 
   return newMap.map((k, v) => MapEntry(v, k));
 }
@@ -195,17 +210,21 @@ double radianToDegrees(double radian) {
 }
 
 num modulo(num value, num modulator) {
-  if (modulator <= 0.0) throw Exception("modulator must be positive");
+  if (modulator <= 0.0)
+    throw Exception("modulator must be positive");
 
-  while (value < 0.0) value += modulator;
+  while (value < 0.0)
+    value += modulator;
 
   return value % modulator;
 }
 
 bool doubleEquals(double a, double b, {double tolerance: 1e-10}) {
-  if (a == null && b == null) return true;
+  if (a == null && b == null)
+    return true;
 
-  if (a == null || b == null) return false;
+  if (a == null || b == null)
+    return false;
 
   return (a - b).abs() < tolerance;
 }
@@ -242,31 +261,26 @@ int binarySearch<T extends Comparable<Object>>(List<T> sortedList, T value) {
 
 String applyAlphabetModification(String input, AlphabetModificationMode mode) {
   switch (mode) {
-    case AlphabetModificationMode.J_TO_I:
-      input = input.replaceAll('J', 'I');
-      break;
-    case AlphabetModificationMode.C_TO_K:
-      input = input.replaceAll('C', 'K');
-      break;
-    case AlphabetModificationMode.W_TO_VV:
-      input = input.replaceAll('W', 'VV');
-      break;
-    case AlphabetModificationMode.REMOVE_Q:
-      input = input.replaceAll('Q', '');
-      break;
+    case AlphabetModificationMode.J_TO_I: input = input.replaceAll('J', 'I'); break;
+    case AlphabetModificationMode.C_TO_K: input = input.replaceAll('C', 'K'); break;
+    case AlphabetModificationMode.W_TO_VV: input = input.replaceAll('W', 'VV'); break;
+    case AlphabetModificationMode.REMOVE_Q: input = input.replaceAll('Q', ''); break;
   }
 
   return input;
 }
 
 bool isUpperCase(String letter) {
-  if (letter == null || letter.length == 0) return false;
+  if (letter == null || letter.length == 0)
+    return false;
 
   return (letter.toUpperCase() == letter);
 }
 
 String colorToHexString(Color color) {
-  return HexCode.fromRGB(RGB(color.red.toDouble(), color.green.toDouble(), color.blue.toDouble())).toString();
+  return HexCode.fromRGB(
+    RGB(color.red.toDouble(), color.green.toDouble(), color.blue.toDouble())
+  ).toString();
 }
 
 Color hexStringToColor(String hex) {

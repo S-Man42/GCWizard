@@ -58,14 +58,15 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
     return Column(
       children: <Widget>[
         GCWTextDivider(
-            text: i18n(context, 'formulasolver_groups_newgroup'),
-            trailing: GCWIconButton(
-              size: IconButtonSize.SMALL,
-              iconData: Icons.content_paste,
-              onPressed: () {
-                _importFromClipboard();
-              },
-            )),
+          text: i18n(context, 'formulasolver_groups_newgroup'),
+          trailing: GCWIconButton(
+            size: IconButtonSize.SMALL,
+            iconData: Icons.content_paste,
+            onPressed: () {
+              _importFromClipboard();
+            },
+          )
+        ),
         Row(
           children: <Widget>[
             Expanded(
@@ -88,7 +89,8 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
               iconData: Icons.add,
               onPressed: () {
                 _addNewGroup();
-                setState(() {});
+                setState(() {
+                });
               },
             )
           ],
@@ -105,7 +107,8 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
 
     int i = 1;
     var name = baseName;
-    while (existingNames.contains(name)) name = baseName + ' (${i++})';
+    while (existingNames.contains(name))
+      name = baseName + ' (${i++})';
 
     return name;
   }
@@ -120,7 +123,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
           insertGroup(group);
         });
         showToast(i18n(context, 'formulasolver_groups_imported'));
-      } catch (e) {
+      } catch(e) {
         showToast(i18n(context, 'formulasolver_groups_importerror'));
       }
     });
@@ -148,27 +151,25 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
     var mode = TextExportMode.QR;
     String text = jsonEncode(group.toMap()).toString();
     var contentWidget = GCWTextExport(
-      text: text,
-      onModeChanged: (value) {
-        mode = value;
-      },
+        text: text,
+        onModeChanged: (value) {
+          mode = value;
+        },
     );
-    showGCWDialog(
-        context,
-        i18n(context, 'formulasolver_groups_exportgroup'),
+    showGCWDialog(context, i18n(context, 'formulasolver_groups_exportgroup'),
         contentWidget,
-        [
-          GCWDialogButton(
-            text: i18n(context, 'common_exportfile_saveoutput'),
-            onPressed: () {
-              exportFile(text, group.name, mode, context);
-            },
-          ),
-          GCWDialogButton(
-            text: 'OK',
-          )
-        ],
-        cancelButton: false);
+      [
+        GCWDialogButton(
+          text: i18n(context, 'common_exportfile_saveoutput'),
+          onPressed: () {
+            exportFile(text, group.name, mode, context);
+          },
+        ),
+        GCWDialogButton(
+          text: 'OK',
+      )],
+      cancelButton: false
+    );
   }
 
   _buildGroupList(BuildContext context) {
@@ -181,7 +182,9 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
       );
 
       Future _navigateToSubPage(context) async {
-        Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {
+        Navigator.push(context, NoAnimationMaterialPageRoute(
+          builder: (context) => formulaTool)
+        ).whenComplete(() {
           setState(() {});
         });
       }
@@ -189,85 +192,108 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
       Widget output;
 
       var row = InkWell(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: _currentEditId == group.id
-                    ? Padding(
-                        child: GCWTextField(
-                          controller: _editGroupController,
-                          autofocus: true,
-                          onChanged: (text) {
-                            setState(() {
-                              _currentEditedName = text;
-                            });
-                          },
-                        ),
-                        padding: EdgeInsets.only(
-                          right: 2,
-                        ),
-                      )
-                    : IgnorePointer(
-                        child: Column(
-                        children: <Widget>[
-                          GCWText(text: '${group.name}'),
-                          Container(
-                            child: GCWText(
-                              text: '${group.formulas.length} ' +
-                                  i18n(context,
-                                      group.formulas.length == 1 ? 'formulasolver_formula' : 'formulasolver_formulas'),
-                              style: gcwDescriptionTextStyle(),
-                            ),
-                            padding: EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
-                          )
-                        ],
-                      )),
-                flex: 1,
-              ),
-              _currentEditId == group.id
-                  ? GCWIconButton(
-                      iconData: Icons.check,
-                      onPressed: () {
-                        group.name = _currentEditedName;
-                        _updateGroup();
-
+        child: Row (
+          children: <Widget>[
+            Expanded(
+              child: _currentEditId == group.id
+                ? Padding (
+                    child: GCWTextField(
+                      controller: _editGroupController,
+                      autofocus: true,
+                      onChanged: (text) {
                         setState(() {
-                          _currentEditId = null;
-                          _editGroupController.clear();
+                          _currentEditedName = text;
                         });
                       },
+                    ),
+                    padding: EdgeInsets.only(
+                      right: 2,
+                    ),
+                  )
+                : IgnorePointer(
+                    child: Column(
+                      children: <Widget>[
+                        GCWText (
+                          text: '${group.name}'
+                        ),
+                        Container(
+                          child: GCWText(
+                            text: '${group.formulas.length} ' + i18n(context, group.formulas.length == 1 ? 'formulasolver_formula' : 'formulasolver_formulas'),
+                            style: gcwDescriptionTextStyle(),
+                          ),
+                          padding: EdgeInsets.only(left: DEFAULT_DESCRIPTION_MARGIN),
+                        )
+                      ],
                     )
-                  : Container(),
-              GCWPopupMenu(
-                  iconData: Icons.settings,
-                  menuItemBuilder: (context) => [
-                        GCWPopupMenuItem(
-                            child: iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_groups_editgroup'),
-                            action: (index) => setState(() {
-                                  _currentEditId = group.id;
-                                  _currentEditedName = group.name;
-                                  _editGroupController.text = group.name;
-                                })),
-                        GCWPopupMenuItem(
-                            child: iconedGCWPopupMenuItem(context, Icons.delete, 'formulasolver_groups_removegroup'),
-                            action: (index) => showDeleteAlertDialog(context, group.name, () {
-                                  _removeGroup(group);
-                                  setState(() {});
-                                })),
-                        GCWPopupMenuItem(
-                            child: iconedGCWPopupMenuItem(context, Icons.forward, 'formulasolver_groups_exportgroup'),
-                            action: (index) => _exportGroup(group)),
-                      ])
-            ],
-          ),
-          onTap: () {
-            _navigateToSubPage(context);
-          });
+                  ),
+              flex: 1,
+            ),
+            _currentEditId == group.id
+              ? GCWIconButton(
+                  iconData: Icons.check,
+                  onPressed: () {
+                    group.name = _currentEditedName;
+                    _updateGroup();
+
+                    setState(() {
+                      _currentEditId = null;
+                      _editGroupController.clear();
+                    });
+                  },
+                )
+                : Container(),
+            GCWPopupMenu(
+              iconData: Icons.settings,
+              menuItemBuilder: (context) => [
+                GCWPopupMenuItem(
+                  child: iconedGCWPopupMenuItem(
+                    context,
+                    Icons.edit,
+                    'formulasolver_groups_editgroup'
+                  ),
+                  action: (index) => setState(() {
+                    _currentEditId = group.id;
+                    _currentEditedName = group.name;
+                    _editGroupController.text = group.name;
+                  })
+                ),
+                GCWPopupMenuItem(
+                  child: iconedGCWPopupMenuItem(
+                    context,
+                    Icons.delete,
+                    'formulasolver_groups_removegroup'
+                  ),
+                  action: (index) => showDeleteAlertDialog(context, group.name, () {
+                    _removeGroup(group);
+                    setState(() {});
+                  })
+                ),
+                GCWPopupMenuItem(
+                  child: iconedGCWPopupMenuItem(
+                    context,
+                    Icons.forward,
+                    'formulasolver_groups_exportgroup'
+                  ),
+                  action: (index) => _exportGroup(group)
+                ),
+              ]
+            )
+          ],
+        ),
+        onTap: () {
+          _navigateToSubPage(context);
+        }
+      );
 
       if (odd) {
-        output = Container(color: _themeColors.outputListOddRows(), child: row);
+        output = Container(
+          color: _themeColors.outputListOddRows(),
+          child: row
+        );
       } else {
-        output = Container(child: row);
+        output = Container(
+          child: row
+        );
       }
       odd = !odd;
 
@@ -275,9 +301,15 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
     }).toList();
 
     if (rows.length > 0) {
-      rows.insert(0, GCWTextDivider(text: i18n(context, 'formulasolver_groups_currentgroups')));
+      rows.insert(0,
+        GCWTextDivider(
+          text: i18n(context, 'formulasolver_groups_currentgroups')
+        )
+      );
     }
 
-    return Column(children: rows);
+    return Column(
+      children: rows
+    );
   }
 }

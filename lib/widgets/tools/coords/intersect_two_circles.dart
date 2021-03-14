@@ -37,7 +37,10 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
   @override
   void initState() {
     super.initState();
-    _currentMapPoints = [GCWMapPoint(point: _currentCoords1), GCWMapPoint(point: _currentCoords2)];
+    _currentMapPoints = [
+      GCWMapPoint(point: _currentCoords1),
+      GCWMapPoint(point: _currentCoords2)
+    ];
   }
 
   @override
@@ -89,41 +92,50 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
           },
         ),
         _buildSubmitButton(),
-        GCWCoordsOutput(outputs: _currentOutput, points: _currentMapPoints),
+        GCWCoordsOutput(
+          outputs: _currentOutput,
+          points: _currentMapPoints
+        ),
       ],
     );
   }
 
   Widget _buildSubmitButton() {
-    return GCWSubmitButton(onPressed: () async {
-      await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Center(
-            child: Container(
-              child: GCWAsyncExecuter(
-                isolatedFunction: intersectTwoCirclesAsync,
-                parameter: _buildJobData(),
-                onReady: (data) => _showOutput(data),
-                isOverlay: true,
+    return GCWSubmitButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: intersectTwoCirclesAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
               ),
-              height: 220,
-              width: 150,
-            ),
-          );
-        },
-      );
-    });
+            );
+          },
+        );
+      }
+    );
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
-    return GCWAsyncExecuterParameters(IntersectTwoCirclesJobData(
-        coord1: _currentCoords1,
-        radius1: _currentRadius1,
-        coord2: _currentCoords2,
-        radius2: _currentRadius2,
-        ells: defaultEllipsoid()));
+
+    return GCWAsyncExecuterParameters(
+        IntersectTwoCirclesJobData(
+            coord1: _currentCoords1,
+            radius1: _currentRadius1,
+            coord2: _currentCoords2,
+            radius2: _currentRadius2,
+            ells: defaultEllipsoid()
+        )
+    );
   }
 
   _showOutput(List<LatLng> output) {
@@ -145,20 +157,24 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
         coordinateFormat: _currentCoordsFormat1,
         circleColorSameAsPointColor: false,
         circle: GCWMapCircle(
-            radius: _currentRadius1,
-            color: HSLColor.fromColor(COLOR_MAP_CIRCLE)
-                .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness - 0.3)
-                .toColor()),
+          radius: _currentRadius1,
+          color: HSLColor
+            .fromColor(COLOR_MAP_CIRCLE)
+            .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness - 0.3)
+            .toColor()
+        ),
       ),
       GCWMapPoint(
         point: _currentCoords2,
         markerText: i18n(context, 'coords_intersectcircles_centerpoint2'),
         coordinateFormat: _currentCoordsFormat1,
         circle: GCWMapCircle(
-            radius: _currentRadius2,
-            color: HSLColor.fromColor(COLOR_MAP_CIRCLE)
-                .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness - 0.3)
-                .toColor()),
+          radius: _currentRadius2,
+          color: HSLColor
+            .fromColor(COLOR_MAP_CIRCLE)
+            .withLightness(HSLColor.fromColor(COLOR_MAP_CIRCLE).lightness - 0.3)
+            .toColor()
+        ),
       )
     ];
 
@@ -170,17 +186,20 @@ class IntersectTwoCirclesState extends State<IntersectTwoCircles> {
       return;
     }
 
-    _currentMapPoints.addAll(_currentIntersections
+    _currentMapPoints.addAll(
+      _currentIntersections
         .map((intersection) => GCWMapPoint(
-            point: intersection,
-            color: COLOR_MAP_CALCULATEDPOINT,
-            markerText: i18n(context, 'coords_common_intersection'),
-            coordinateFormat: _currentOutputFormat))
-        .toList());
+          point: intersection,
+          color: COLOR_MAP_CALCULATEDPOINT,
+          markerText: i18n(context, 'coords_common_intersection'),
+          coordinateFormat: _currentOutputFormat
+        ))
+        .toList()
+    );
 
     _currentOutput = _currentIntersections
-        .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
-        .toList();
+      .map((intersection) => formatCoordOutput(intersection, _currentOutputFormat, defaultEllipsoid()))
+      .toList();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

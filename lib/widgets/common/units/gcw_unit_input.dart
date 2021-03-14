@@ -15,16 +15,16 @@ class GCWUnitInput extends StatefulWidget {
 
   final Function onChanged;
 
-  GCWUnitInput(
-      {Key key,
-      this.title,
-      this.min,
-      this.numberDecimalDigits: 5,
-      this.value: 0.0,
-      this.unitCategory,
-      this.unitList,
-      this.onChanged})
-      : super(key: key);
+  GCWUnitInput({
+    Key key,
+    this.title,
+    this.min,
+    this.numberDecimalDigits: 5,
+    this.value: 0.0,
+    this.unitCategory,
+    this.unitList,
+    this.onChanged
+  }) : super(key: key);
 
   @override
   _GCWUnitInputState createState() => _GCWUnitInputState();
@@ -44,37 +44,42 @@ class _GCWUnitInputState extends State<GCWUnitInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      Expanded(
-          child: Container(
-            child: GCWDoubleSpinner(
-              title: widget.title,
-              min: widget.min,
-              numberDecimalDigits: widget.numberDecimalDigits,
-              value: _currentValue,
+    return
+      Row(
+        children: [
+          Expanded(
+            child: Container(
+              child: GCWDoubleSpinner(
+                title: widget.title,
+                min: widget.min,
+                numberDecimalDigits: widget.numberDecimalDigits,
+                value: _currentValue,
+                onChanged: (value) {
+                  setState(() {
+                    _currentValue = value;
+                    _convertToReferenceAndEmitOnChange();
+                  });
+                },
+              ),
+              padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+            ),
+            flex: 3
+          ),
+          Expanded(
+            child: GCWUnitDropDownButton(
+              value: _currentUnit,
+              unitList: widget.unitList ?? widget.unitCategory.units,
               onChanged: (value) {
                 setState(() {
-                  _currentValue = value;
+                  _currentUnit = value;
                   _convertToReferenceAndEmitOnChange();
                 });
               },
             ),
-            padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
-          ),
-          flex: 3),
-      Expanded(
-          child: GCWUnitDropDownButton(
-            value: _currentUnit,
-            unitList: widget.unitList ?? widget.unitCategory.units,
-            onChanged: (value) {
-              setState(() {
-                _currentUnit = value;
-                _convertToReferenceAndEmitOnChange();
-              });
-            },
-          ),
-          flex: 1)
-    ]);
+            flex: 1
+          )
+      ]
+    );
   }
 
   _convertToReferenceAndEmitOnChange() {

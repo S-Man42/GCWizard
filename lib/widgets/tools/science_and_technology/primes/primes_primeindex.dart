@@ -31,7 +31,9 @@ class PrimeIndexState extends State<PrimeIndex> {
             });
           },
         ),
-        GCWDefaultOutput(child: _buildOutput())
+        GCWDefaultOutput(
+          child: _buildOutput()
+        )
       ],
     );
   }

@@ -12,8 +12,12 @@ class GCWSubmitButton extends StatefulWidget {
 }
 
 class _GCWSubmitButtonState extends State<GCWSubmitButton> {
+
   @override
   Widget build(BuildContext context) {
-    return GCWButton(onPressed: widget.onPressed, text: i18n(context, 'common_submit_button_text'));
+    return GCWButton(
+      onPressed: widget.onPressed,
+      text: i18n(context, 'common_submit_button_text')
+    );
   }
 }

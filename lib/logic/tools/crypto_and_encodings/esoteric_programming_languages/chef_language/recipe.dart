@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/chef_international.dart';
 
 class Recipe {
+
   String title;
   Map<String, Ingredient> ingredients;
   String comment;
@@ -26,7 +27,7 @@ class Recipe {
   void setIngredients(String Input, language) {
     var f = new NumberFormat('###');
     this.ingredients = Map<String, Ingredient>();
-    var i = 0;
+    var i=0;
     List<String> ingredientsInput = Input.split('\n');
     ingredientsInput.forEach((ingredientLine) {
       //Clearing the 'Ingredients.' header
@@ -57,9 +58,8 @@ class Recipe {
     var f = new NumberFormat('###');
     this.methods = List<Method>();
     //List<String> scanner = method.replaceAll("\n", "").replaceAll(". ",".").split('.');
-    List<String> methodList =
-        method.replaceAll("zubereitung:", "zubereitung.").replaceAll("\n", " ").replaceAll(". ", ".").split('.');
-    for (int i = 1; i < methodList.length - 1; i++) {
+    List<String> methodList = method.replaceAll("zubereitung:", "zubereitung.").replaceAll("\n", " ").replaceAll(". ",".").split('.');
+    for(int i = 1; i < methodList.length - 1; i++){
       var m = new Method(methodList[i], i, language);
       if (m.type == Type.Invalid || m.type == Type.Unbekannt) {
         this.error = true;
@@ -70,8 +70,7 @@ class Recipe {
       } else {
         this.methods.add(m);
       }
-    }
-    ;
+    };
   }
 
   void setCookingTime(String cookingtime, language) {
@@ -88,11 +87,10 @@ class Recipe {
   }
 
   void setOvenTemp(String oventemp, language) {
-    RegExp expr = new RegExp(
-        r'^(pre(-| )heat oven to |ofen auf )(\d*) (degrees|grad) cel(c|s)ius( \(gas (mark |skala )(\d*)\))?( vorheizen)?.$');
+    RegExp expr = new RegExp(r'^(pre(-| )heat oven to |ofen auf )(\d*) (degrees|grad) cel(c|s)ius( \(gas (mark |skala )(\d*)\))?( vorheizen)?.$');
     if (expr.hasMatch(oventemp)) {
       this.oventemp = int.parse(expr.firstMatch(oventemp).group(3));
-      if (expr.firstMatch(oventemp).group(8) != null) {
+      if (expr.firstMatch(oventemp).group(8)!= null) {
         this.gasmark = int.parse(expr.firstMatch(oventemp).group(8));
       }
     } else {
@@ -141,7 +139,7 @@ class Recipe {
     return methods;
   }
 
-  Map<String, Ingredient> getIngredients() {
+  Map<String,Ingredient> getIngredients() {
     return ingredients;
   }
 }

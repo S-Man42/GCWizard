@@ -64,9 +64,12 @@ class Zone {
 }
 
 Zone getZoneByLocation(double lat, double lon, int level) {
-  if (lat < -90 || lat > 90) throw Exception("latitude must be between -90 and 90");
-  if (lon < -180 || lon > 180) throw Exception("intitude must be between -180 and 180");
-  if (level < 0 || level > 35) throw Exception("level must be between 0 and 35");
+  if (lat < -90 || lat > 90)
+    throw Exception("latitude must be between -90 and 90");
+  if (lon < -180 || lon > 180)
+    throw Exception("intitude must be between -180 and 180");
+  if (level < 0 || level > 35)
+    throw Exception("level must be between 0 and 35");
 
   _XY xy = getXYByLocation(lat, lon, level);
   return _getZoneByXY(xy.x, xy.y, level);
@@ -115,7 +118,7 @@ _XY getXYByCode(String code) {
   int level = code.length - 2;
   int h_x = 0;
   int h_y = 0;
-
+  
   String h_dec9 = (_h_key.indexOf(code[0]) * 30 + _h_key.indexOf(code[1])).toString() + code.substring(2);
   if (_regMatch(h_dec9[0], _INC15) && _regMatch(h_dec9[1], _EXC125) && _regMatch(h_dec9[2], _EXC125)) {
     if (h_dec9[0] == '5') {
@@ -180,7 +183,7 @@ Zone _getZoneByXY(double x, double y, int level) {
   double z_loc_y = z_loc.lat;
   int max_hsteps = pow(3, level + 2);
   int hsteps = (h_x - h_y).abs();
-
+  
   if (hsteps == max_hsteps) {
     if (h_x > h_y) {
       int tmp = h_x;
@@ -197,7 +200,7 @@ Zone _getZoneByXY(double x, double y, int level) {
   String code9 = '';
   int mod_x = h_x;
   int mod_y = h_y;
-
+  
   for (int i = 0; i <= level + 2; i++) {
     int h_pow = (pow(3, level + 2 - i)).round();
     int h_pow_half = (h_pow / 2.0).ceil();
@@ -210,7 +213,7 @@ Zone _getZoneByXY(double x, double y, int level) {
     } else {
       code3_x.add(1);
     }
-
+    
     if (mod_y >= h_pow_half) {
       code3_y.add(2);
       mod_y -= h_pow;
@@ -220,7 +223,7 @@ Zone _getZoneByXY(double x, double y, int level) {
     } else {
       code3_y.add(1);
     }
-
+    
     if (i == 2 && (z_loc_x == -180 || z_loc_x >= 0)) {
       if (code3_x[0] == 2 && code3_y[0] == 1 && code3_x[1] == code3_y[1] && code3_x[2] == code3_y[2]) {
         code3_x[0] = 1;
@@ -239,7 +242,7 @@ Zone _getZoneByXY(double x, double y, int level) {
     code3 = '';
     code9 = '';
   }
-
+  
   String h_2 = h_code.substring(3);
   int h_1 = int.tryParse(h_code.substring(0, 3));
   int h_a1 = (h_1 / 30).floor();
@@ -251,7 +254,7 @@ Zone _getZoneByXY(double x, double y, int level) {
 _XY _adjustXY(int x, int y, int level) {
   int max_hsteps = pow(3, level + 2);
   int hsteps = (x - y).abs();
-
+  
   if (hsteps == max_hsteps && x > y) {
     int tmp = x;
     x = y;
@@ -262,7 +265,7 @@ _XY _adjustXY(int x, int y, int level) {
     int diff_y = diff - diff_x;
     int edge_x;
     int edge_y;
-
+  
     if (x > y) {
       edge_x = x - diff_x;
       edge_y = y + diff_y;
@@ -287,7 +290,7 @@ _XY _adjustXY(int x, int y, int level) {
 
 class _XY {
   final double x, y;
-
+  
   const _XY(this.x, this.y);
 }
 

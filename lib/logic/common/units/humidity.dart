@@ -4,8 +4,12 @@ class Humidity extends Unit {
   Function toDegree;
   Function fromDegree;
 
-  Humidity({String name, String symbol, bool isReference: false, double inDegree})
-      : super(name, symbol, isReference, (e) => e * inDegree, (e) => e / inDegree) {
+  Humidity({
+    String name,
+    String symbol,
+    bool isReference: false,
+    double inDegree
+  }): super(name, symbol, isReference, (e) => e * inDegree, (e) => e / inDegree) {
     toDegree = this.toReference;
     fromDegree = this.fromReference;
   }
@@ -17,4 +21,6 @@ final HUMIDITY = Humidity(
   isReference: true,
 );
 
-final List<Unit> humidity = [HUMIDITY];
+final List<Unit> humidity = [
+  HUMIDITY
+];

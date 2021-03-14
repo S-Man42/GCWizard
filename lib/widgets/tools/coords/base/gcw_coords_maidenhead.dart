@@ -39,23 +39,27 @@ class GCWCoordsMaidenheadState extends State<GCWCoordsMaidenhead> {
       _controller.text = _currentCoord;
     }
 
-    return Column(children: <Widget>[
-      GCWTextField(
-          hintText: i18n(context, 'coords_formatconverter_maidenhead_locator'),
-          controller: _controller,
-          inputFormatters: [CoordsTextMaidenheadTextInputFormatter()],
-          onChanged: (ret) {
-            setState(() {
-              _currentCoord = ret;
-              _setCurrentValueAndEmitOnChange();
-            });
-          }),
-    ]);
+    return Column (
+        children: <Widget>[
+          GCWTextField(
+            hintText: i18n(context, 'coords_formatconverter_maidenhead_locator'),
+            controller: _controller,
+            inputFormatters: [CoordsTextMaidenheadTextInputFormatter()],
+            onChanged: (ret) {
+              setState(() {
+                _currentCoord = ret;
+                _setCurrentValueAndEmitOnChange();
+              });
+            }
+          ),
+        ]
+    );
   }
 
   _setCurrentValueAndEmitOnChange() {
     var maidenhead = _currentCoord;
-    if (maidenhead.length % 2 == 1) maidenhead = maidenhead.substring(0, maidenhead.length - 1);
+    if (maidenhead.length % 2 == 1)
+      maidenhead = maidenhead.substring(0, maidenhead.length - 1);
 
     LatLng coords = maidenheadToLatLon(maidenhead);
     widget.onChanged(coords);

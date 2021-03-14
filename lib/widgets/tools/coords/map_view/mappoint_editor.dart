@@ -15,8 +15,13 @@ class MapPointEditor extends StatefulWidget {
   final GCWMapPoint mapPoint;
   Length lengthUnit;
 
-  MapPointEditor({Key key, this.mapPoint, this.lengthUnit}) : super(key: key) {
-    if (lengthUnit == null) lengthUnit = LENGTH_METER;
+  MapPointEditor({
+    Key key,
+    this.mapPoint,
+    this.lengthUnit
+  }) : super(key: key) {
+    if (lengthUnit == null)
+      lengthUnit = LENGTH_METER;
   }
 
   @override
@@ -55,59 +60,68 @@ class MapPointEditorState extends State<MapPointEditor> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      GCWTextDivider(text: i18n(context, 'coords_openmap_pointeditor_point')),
-      GCWTextField(
-        hintText: i18n(context, 'coords_openmap_pointeditor_point_text'),
-        controller: _nameController,
-        onChanged: (text) {
-          widget.mapPoint.markerText = text;
-          widget.mapPoint.update();
-        },
-      ),
-      GCWCoords(
-        title: i18n(context, 'coords_openmap_pointeditor_point_coordinate'),
-        coordinates: widget.mapPoint.point,
-        coordsFormat: widget.mapPoint.coordinateFormat,
-        onChanged: (ret) {
-          setState(() {
-            widget.mapPoint.coordinateFormat = ret['coordsFormat'];
-            widget.mapPoint.point = ret['value'];
-          });
-        },
-      ),
-      GCWTextDivider(text: i18n(context, 'coords_openmap_pointeditor_point_color')),
-      Container(
-        child: HSVPicker(
-          color: _currentMarkerColorPickerColor,
-          onChanged: (color) {
+    return Column(
+      children: [
+        GCWTextDivider(
+          text: i18n(context, 'coords_openmap_pointeditor_point')
+        ),
+        GCWTextField(
+          hintText: i18n(context, 'coords_openmap_pointeditor_point_text'),
+          controller: _nameController,
+          onChanged: (text) {
+            widget.mapPoint.markerText = text;
+            widget.mapPoint.update();
+          },
+        ),
+        GCWCoords(
+          title: i18n(context, 'coords_openmap_pointeditor_point_coordinate'),
+          coordinates: widget.mapPoint.point,
+          coordsFormat: widget.mapPoint.coordinateFormat,
+          onChanged: (ret) {
             setState(() {
-              _currentMarkerColorPickerColor = color;
-              widget.mapPoint.color = _currentMarkerColorPickerColor.toColor();
+              widget.mapPoint.coordinateFormat = ret['coordsFormat'];
+              widget.mapPoint.point = ret['value'];
             });
           },
         ),
-        padding: EdgeInsets.only(bottom: 20.0),
-      ),
-      GCWTextDivider(text: i18n(context, 'coords_openmap_pointeditor_circle')),
-      GCWOnOffSwitch(
-        title: i18n(context, 'coords_openmap_pointeditor_circle_hascircle'),
-        value: widget.mapPoint.hasCircle(),
-        onChanged: (value) {
-          setState(() {
-            if (value) {
-              widget.mapPoint.circle = GCWMapCircle(
-                radius: _currentRadius,
-              );
-            } else {
-              widget.mapPoint.circle = null;
-            }
+        GCWTextDivider(
+          text: i18n(context, 'coords_openmap_pointeditor_point_color')
+        ),
+        Container(
+          child: HSVPicker(
+            color: _currentMarkerColorPickerColor,
+            onChanged: (color) {
+              setState(() {
+                _currentMarkerColorPickerColor = color;
+                widget.mapPoint.color = _currentMarkerColorPickerColor.toColor();
+              });
+            },
+          ),
+          padding: EdgeInsets.only(
+            bottom: 20.0
+          ),
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'coords_openmap_pointeditor_circle')
+        ),
+        GCWOnOffSwitch(
+          title: i18n(context, 'coords_openmap_pointeditor_circle_hascircle'),
+          value: widget.mapPoint.hasCircle(),
+          onChanged: (value) {
+            setState(() {
+              if (value) {
+                widget.mapPoint.circle = GCWMapCircle(
+                  radius: _currentRadius,
+                );
+              } else {
+                widget.mapPoint.circle = null;
+              }
 
-            widget.mapPoint.update();
-          });
-        },
-      ),
-      widget.mapPoint.hasCircle()
+              widget.mapPoint.update();
+            });
+          },
+        ),
+        widget.mapPoint.hasCircle()
           ? Column(
               children: [
                 GCWDistance(
@@ -129,23 +143,25 @@ class MapPointEditorState extends State<MapPointEditor> {
                     });
                   },
                 ),
-                widget.mapPoint.circleColorSameAsPointColor
-                    ? Container()
-                    : Container(
-                        child: HSVPicker(
-                          color: _currentCircleColorPickerColor,
-                          onChanged: (color) {
-                            setState(() {
-                              _currentCircleColorPickerColor = color;
-                              widget.mapPoint.circle.color = _currentCircleColorPickerColor.toColor();
-                            });
-                          },
-                        ),
-                        padding: EdgeInsets.only(bottom: 20.0),
+                widget.mapPoint.circleColorSameAsPointColor ? Container()
+                  : Container(
+                      child: HSVPicker(
+                        color: _currentCircleColorPickerColor,
+                        onChanged: (color) {
+                          setState(() {
+                            _currentCircleColorPickerColor = color;
+                            widget.mapPoint.circle.color = _currentCircleColorPickerColor.toColor();
+                          });
+                        },
                       ),
+                      padding: EdgeInsets.only(
+                        bottom: 20.0
+                      ),
+                    ),
               ],
             )
-          : Container(),
-    ]);
+            : Container(),
+      ]
+    );
   }
 }

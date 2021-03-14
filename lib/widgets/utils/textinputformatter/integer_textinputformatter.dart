@@ -12,7 +12,7 @@ class IntegerTextInputFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    if (!_exp.hasMatch(newValue.text)) {
+    if(!_exp.hasMatch(newValue.text)){
       return oldValue;
     }
 
@@ -51,21 +51,28 @@ class IntegerTextInputFormatter extends TextInputFormatter {
 
   bool _checkBounds(String value) {
     if (value.startsWith('-')) {
-      if (min == null) return true;
+      if (min == null)
+        return true;
 
-      if (min.abs().toString().length > value.substring(1).length) return true;
+      if (min.abs().toString().length > value.substring(1).length)
+        return true;
     } else {
-      if (max == null) return true;
+      if (max == null)
+        return true;
 
-      if (max.toString().length > value.length) return true;
+      if (max.toString().length > value.length)
+        return true;
     }
 
     var _newInt = int.tryParse(value);
-    if (_newInt == null) return false;
+    if (_newInt == null)
+      return false;
 
-    if (min != null && _newInt < min) return false;
+    if (min != null && _newInt < min)
+      return false;
 
-    if (max != null && _newInt > max) return false;
+    if (max != null && _newInt > max)
+      return false;
 
     return true;
   }

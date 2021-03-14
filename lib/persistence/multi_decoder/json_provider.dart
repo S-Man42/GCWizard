@@ -6,22 +6,32 @@ import 'package:prefs/prefs.dart';
 
 void refreshMultiDecoderTools() {
   var tools = Prefs.getStringList('multidecoder_tools');
-  if (tools == null || tools.length == 0) return;
+  if (tools == null || tools.length == 0)
+    return;
 
-  multiDecoderTools = tools.where((tool) => tool.length > 0).map((tool) {
-    return MultiDecoderTool.fromJson(jsonDecode(tool));
-  }).toList();
+  multiDecoderTools = tools
+    .where((tool) => tool.length > 0)
+    .map((tool) {
+      return MultiDecoderTool.fromJson(jsonDecode(tool));
+    })
+    .toList();
 }
 
 _saveData() {
-  var jsonData = multiDecoderTools.map((tool) => jsonEncode(tool.toMap())).toList();
+  var jsonData = multiDecoderTools
+    .map((tool) => jsonEncode(tool.toMap()))
+    .toList();
 
   Prefs.setStringList('multidecoder_tools', jsonData);
 }
 
 int insertMultiDecoderTool(MultiDecoderTool tool) {
   tool.name = tool.name ?? '';
-  var id = newID(multiDecoderTools.map((group) => group.id).toList());
+  var id = newID(
+    multiDecoderTools
+    .map((group) => group.id)
+    .toList()
+  );
   tool.id = id;
   multiDecoderTools.insert(0, tool);
 
@@ -38,7 +48,8 @@ void deleteMultiDecoderTool(int toolId) {
 
 int moveMultiDecoderToolUp(int toolId) {
   var index = multiDecoderTools.indexWhere((tool) => tool.id == toolId);
-  if (index == 0) return index;
+  if (index == 0)
+    return index;
 
   var tool = multiDecoderTools.removeAt(index);
   multiDecoderTools.insert(index - 1, tool);
@@ -50,7 +61,8 @@ int moveMultiDecoderToolUp(int toolId) {
 
 int moveMultiDecoderToolDown(int toolId) {
   var index = multiDecoderTools.indexWhere((tool) => tool.id == toolId);
-  if (index == multiDecoderTools.length - 1) return index;
+  if (index == multiDecoderTools.length - 1)
+    return index;
 
   var tool = multiDecoderTools.removeAt(index);
   multiDecoderTools.insert(index + 1, tool);
@@ -66,7 +78,8 @@ void updateMultiDecoderTools() {
 
 void updateMultiDecoderTool(MultiDecoderTool tool) {
   multiDecoderTools = multiDecoderTools.map((currentTool) {
-    if (currentTool.id == tool.id) return tool;
+    if (currentTool.id == tool.id)
+      return tool;
 
     return currentTool;
   }).toList();

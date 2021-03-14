@@ -45,24 +45,30 @@ class CenterThreePointsState extends State<CenterThreePoints> {
   @override
   Widget build(BuildContext context) {
     var mapPointCurrentCoords1 = GCWMapPoint(
-        point: _currentCoords1,
-        markerText: i18n(context, 'coords_centerthreepoints_coorda'),
-        coordinateFormat: _currentCoordsFormat1);
+      point: _currentCoords1,
+      markerText: i18n(context, 'coords_centerthreepoints_coorda'),
+      coordinateFormat: _currentCoordsFormat1
+    );
     var mapPointCurrentCoords2 = GCWMapPoint(
         point: _currentCoords2,
         markerText: i18n(context, 'coords_centerthreepoints_coordb'),
-        coordinateFormat: _currentCoordsFormat2);
+        coordinateFormat: _currentCoordsFormat2
+    );
     var mapPointCurrentCoords3 = GCWMapPoint(
-        point: _currentCoords3,
-        markerText: i18n(context, 'coords_centerthreepoints_coordc'),
-        coordinateFormat: _currentCoordsFormat3);
+      point: _currentCoords3,
+      markerText: i18n(context, 'coords_centerthreepoints_coordc'),
+      coordinateFormat: _currentCoordsFormat3
+    );
     var mapPointCenter = GCWMapPoint(
-        point: _currentCenter,
-        color: COLOR_MAP_CALCULATEDPOINT,
-        markerText: i18n(context, 'coords_common_centerpoint'),
-        coordinateFormat: _currentOutputFormat,
-        circleColorSameAsPointColor: false,
-        circle: GCWMapCircle(radius: _currentDistance));
+      point: _currentCenter,
+      color: COLOR_MAP_CALCULATEDPOINT,
+      markerText: i18n(context, 'coords_common_centerpoint'),
+      coordinateFormat: _currentOutputFormat,
+      circleColorSameAsPointColor: false,
+      circle: GCWMapCircle(
+        radius: _currentDistance
+      )
+    );
 
     return Column(
       children: <Widget>[
@@ -106,54 +112,73 @@ class CenterThreePointsState extends State<CenterThreePoints> {
           },
         ),
         _buildSubmitButton(),
-        GCWCoordsOutput(outputs: _currentOutput, points: [
-          mapPointCurrentCoords1,
-          mapPointCurrentCoords2,
-          mapPointCurrentCoords3,
-          mapPointCenter
-        ], polylines: [
-          GCWMapPolyline(points: [mapPointCurrentCoords1, mapPointCenter]),
-          GCWMapPolyline(
+
+        GCWCoordsOutput(
+          outputs: _currentOutput,
+          points: [
+            mapPointCurrentCoords1,
+            mapPointCurrentCoords2,
+            mapPointCurrentCoords3,
+            mapPointCenter
+          ],
+          polylines: [
+            GCWMapPolyline(
+              points: [mapPointCurrentCoords1, mapPointCenter]
+            ),
+            GCWMapPolyline(
               points: [mapPointCurrentCoords2, mapPointCenter],
-              color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
-                  .toColor()),
-          GCWMapPolyline(
+              color: HSLColor
+                .fromColor(COLOR_MAP_POLYLINE)
+                .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness - 0.3)
+                .toColor()
+            ),
+            GCWMapPolyline(
               points: [mapPointCurrentCoords3, mapPointCenter],
-              color: HSLColor.fromColor(COLOR_MAP_POLYLINE)
-                  .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
-                  .toColor())
-        ]),
+              color: HSLColor
+                .fromColor(COLOR_MAP_POLYLINE)
+                .withLightness(HSLColor.fromColor(COLOR_MAP_POLYLINE).lightness + 0.2)
+                .toColor()
+            )
+          ]
+        ),
       ],
     );
   }
 
   Widget _buildSubmitButton() {
-    return GCWSubmitButton(onPressed: () async {
-      await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Center(
-            child: Container(
-              child: GCWAsyncExecuter(
-                isolatedFunction: centerPointThreePointsAsync,
-                parameter: _buildJobData(),
-                onReady: (data) => _showOutput(data),
-                isOverlay: true,
+    return GCWSubmitButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: centerPointThreePointsAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
               ),
-              height: 220,
-              width: 150,
-            ),
-          );
-        },
-      );
-    });
+            );
+          },
+        );
+      }
+    );
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
-    return GCWAsyncExecuterParameters(CenterPointJobData(
-        coord1: _currentCoords1, coord2: _currentCoords2, coord3: _currentCoords3, ells: defaultEllipsoid()));
+    return GCWAsyncExecuterParameters(
+      CenterPointJobData(
+          coord1: _currentCoords1,
+          coord2: _currentCoords2,
+          coord3: _currentCoords3,
+          ells: defaultEllipsoid()
+      )
+    );
   }
 
   _showOutput(List<Map<String, dynamic>> output) {
@@ -172,8 +197,7 @@ class CenterThreePointsState extends State<CenterThreePoints> {
     _currentOutput = output.map((coord) {
       return '${formatCoordOutput(coord['centerPoint'], _currentOutputFormat, defaultEllipsoid())}';
     }).toList();
-    _currentOutput.add(
-        '${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentDistance))} ${_currentOutputUnit.symbol}');
+    _currentOutput.add('${i18n(context, 'coords_center_distance')}: ${doubleFormat.format(_currentOutputUnit.fromMeter(_currentDistance))} ${_currentOutputUnit.symbol}');
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

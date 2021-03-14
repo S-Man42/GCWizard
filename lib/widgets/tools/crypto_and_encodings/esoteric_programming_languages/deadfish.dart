@@ -19,11 +19,13 @@ class DeadfishState extends State<Deadfish> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(onChanged: (text) {
-          setState(() {
-            _currentInput = text;
-          });
-        }),
+        GCWTextField(
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
+            });
+          }
+        ),
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'deadfish_mode_left'),
           rightValue: i18n(context, 'deadfish_mode_right'),
@@ -43,13 +45,16 @@ class DeadfishState extends State<Deadfish> {
             });
           },
         ),
-        GCWDefaultOutput(child: _buildOutput())
+        GCWDefaultOutput(
+          child: _buildOutput()
+        )
       ],
     );
   }
 
   _buildOutput() {
-    if (_currentInput == null) return '';
+    if (_currentInput == null)
+      return '';
 
     if (_currentMode == GCWSwitchPosition.right) {
       var encoded = encodeDeadfish(_currentInput);
@@ -60,12 +65,7 @@ class DeadfishState extends State<Deadfish> {
     } else {
       var decodeable = _currentInput;
       if (_currentDeadfishMode == GCWSwitchPosition.right) //XKCD
-        decodeable = decodeable
-            .toLowerCase()
-            .replaceAll(RegExp(r'[iso]'), '')
-            .replaceAll('x', 'i')
-            .replaceAll('k', 's')
-            .replaceAll('c', 'o');
+        decodeable = decodeable.toLowerCase().replaceAll(RegExp(r'[iso]'), '').replaceAll('x', 'i').replaceAll('k', 's').replaceAll('c', 'o');
 
       return decodeDeadfish(decodeable);
     }

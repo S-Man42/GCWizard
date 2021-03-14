@@ -80,25 +80,27 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
       _LonMilliDegreesController.text = _currentLonMilliDegrees;
     }
 
-    return Column(children: <Widget>[
-      Row(
+    return Column (
         children: <Widget>[
-          Expanded(
-            flex: 6,
-            child: GCWCoordsSignDropDownButton(
-                itemList: ['+', '-'],
-                value: _currentLatSign,
-                onChanged: (value) {
-                  setState(() {
-                    _currentLatSign = value;
-                    _setCurrentValueAndEmitOnChange();
-                  });
-                }),
-          ),
-          Expanded(
-              flex: 6,
-              child: Container(
-                child: GCWIntegerTextField(
+          Row(
+            children: <Widget>[
+              Expanded(
+                flex: 6,
+                child: GCWCoordsSignDropDownButton(
+                  itemList: ['+','-'],
+                  value: _currentLatSign,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentLatSign = value;
+                      _setCurrentValueAndEmitOnChange();
+                    });
+                  }
+                ),
+              ),
+              Expanded(
+                flex: 6,
+                child: Container(
+                  child: GCWIntegerTextField(
                     hintText: 'DD',
                     textInputFormatter: CoordsIntegerDegreesLatTextInputFormatter(allowNegativeValues: false),
                     controller: _LatDegreesController,
@@ -110,51 +112,61 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
                         if (_currentLatDegrees.length == 2)
                           FocusScope.of(context).requestFocus(_latMilliDegreesFocusNode);
                       });
-                    }),
-                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
-              )),
-          Expanded(
-            flex: 1,
-            child: GCWText(align: Alignment.center, text: '.'),
-          ),
-          Expanded(
-            flex: 20,
-            child: GCWIntegerTextField(
-                hintText: 'DDD',
-                min: 0,
-                controller: _LatMilliDegreesController,
-                focusNode: _latMilliDegreesFocusNode,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentLatMilliDegrees = ret['text'];
-                    _setCurrentValueAndEmitOnChange();
-                  });
-                }),
-          ),
-          Expanded(
-            flex: 1,
-            child: GCWText(align: Alignment.center, text: '°'),
-          ),
-        ],
-      ),
-      Row(
-        children: <Widget>[
-          Expanded(
-            flex: 6,
-            child: GCWCoordsSignDropDownButton(
-                itemList: ['+', '-'],
-                value: _currentLonSign,
-                onChanged: (value) {
-                  setState(() {
-                    _currentLonSign = value;
-                    _setCurrentValueAndEmitOnChange();
-                  });
-                }),
-          ),
-          Expanded(
-              flex: 6,
-              child: Container(
+                    }
+                  ),
+                  padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+                )
+              ),
+              Expanded(
+                flex: 1,
+                child: GCWText(
+                  align: Alignment.center,
+                  text: '.'
+                ),
+              ),
+              Expanded (
+                flex: 20,
                 child: GCWIntegerTextField(
+                  hintText: 'DDD',
+                  min: 0,
+                  controller: _LatMilliDegreesController,
+                  focusNode: _latMilliDegreesFocusNode,
+                  onChanged: (ret) {
+                    setState(() {
+                      _currentLatMilliDegrees = ret['text'];
+                      _setCurrentValueAndEmitOnChange();
+                    });
+                  }
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: GCWText(
+                    align: Alignment.center,
+                    text: '°'
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                flex: 6,
+                child: GCWCoordsSignDropDownButton(
+                  itemList: ['+','-'],
+                  value: _currentLonSign,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentLonSign = value;
+                      _setCurrentValueAndEmitOnChange();
+                    });
+                  }
+                ),
+              ),
+              Expanded(
+                flex: 6,
+                child: Container(
+                  child: GCWIntegerTextField(
                     hintText: 'DD',
                     textInputFormatter: CoordsIntegerDegreesLonTextInputFormatter(allowNegativeValues: false),
                     controller: _LonDegreesController,
@@ -166,34 +178,44 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
                         if (_currentLonDegrees.length == 3)
                           FocusScope.of(context).requestFocus(_lonMilliDegreesFocusNode);
                       });
-                    }),
-                padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
-              )),
-          Expanded(
-            flex: 1,
-            child: GCWText(align: Alignment.center, text: '.'),
-          ),
-          Expanded(
-            flex: 20,
-            child: GCWIntegerTextField(
-                hintText: 'DDD',
-                min: 0,
-                controller: _LonMilliDegreesController,
-                focusNode: _lonMilliDegreesFocusNode,
-                onChanged: (ret) {
-                  setState(() {
-                    _currentLonMilliDegrees = ret['text'];
-                    _setCurrentValueAndEmitOnChange();
-                  });
-                }),
-          ),
-          Expanded(
-            flex: 1,
-            child: GCWText(align: Alignment.center, text: '°'),
-          ),
-        ],
-      )
-    ]);
+                    }
+                  ),
+                  padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+                )
+              ),
+              Expanded(
+                flex: 1,
+                child: GCWText(
+                    align: Alignment.center,
+                    text: '.'
+                ),
+              ),
+              Expanded (
+                flex: 20,
+                child: GCWIntegerTextField(
+                  hintText: 'DDD',
+                  min: 0,
+                  controller: _LonMilliDegreesController,
+                  focusNode: _lonMilliDegreesFocusNode,
+                  onChanged: (ret) {
+                    setState(() {
+                      _currentLonMilliDegrees = ret['text'];
+                      _setCurrentValueAndEmitOnChange();
+                    });
+                  }
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: GCWText(
+                  align: Alignment.center,
+                  text: '°'
+                ),
+              ),
+            ],
+          )
+        ]
+    );
   }
 
   _setCurrentValueAndEmitOnChange() {

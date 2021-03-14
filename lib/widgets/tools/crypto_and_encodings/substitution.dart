@@ -67,7 +67,7 @@ class SubstitutionState extends State<Substitution> {
   }
 
   _updateEntry(dynamic id, String key, String value) {
-    _currentSubstitutions[id] = {key: value};
+    _currentSubstitutions[id] ={key: value};
     _calculateOutput();
   }
 
@@ -88,29 +88,34 @@ class SubstitutionState extends State<Substitution> {
           },
         ),
         _buildVariablesEditor(),
-        GCWDefaultOutput(child: _output)
+        GCWDefaultOutput(
+          child: _output
+        )
       ],
     );
   }
 
   Widget _buildVariablesEditor() {
     return GCWKeyValueEditor(
-        keyHintText: i18n(context, 'substitution_from'),
-        valueHintText: i18n(context, 'substitution_to'),
-        onNewEntryChanged: _updateNewEntry,
-        onAddEntry: _addEntry,
-        middleWidget: GCWOnOffSwitch(
-          title: i18n(context, 'substitution_case_sensitive'),
-          value: false,
-          onChanged: (value) {
-            _currentCaseSensitive = value;
-            _calculateOutput();
-          },
-        ),
-        keyKeyValueMap: _currentSubstitutions,
-        dividerText: i18n(context, 'substitution_current_substitutions'),
-        onUpdateEntry: _updateEntry,
-        onRemoveEntry: _removeEntry);
+      keyHintText: i18n(context, 'substitution_from'),
+      valueHintText: i18n(context, 'substitution_to'),
+      onNewEntryChanged: _updateNewEntry,
+      onAddEntry: _addEntry,
+
+      middleWidget:  GCWOnOffSwitch(
+        title: i18n(context, 'substitution_case_sensitive'),
+        value: false,
+        onChanged: (value) {
+          _currentCaseSensitive = value;
+          _calculateOutput();
+        },
+      ),
+
+      keyKeyValueMap: _currentSubstitutions,
+      dividerText: i18n(context, 'substitution_current_substitutions'),
+      onUpdateEntry: _updateEntry,
+      onRemoveEntry: _removeEntry
+    );
   }
 
   _calculateOutput() {

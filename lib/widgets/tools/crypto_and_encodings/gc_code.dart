@@ -19,7 +19,10 @@ class GCCodeState extends State<GCCode> {
   int _currentID = 1;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  var _maskFormatter = WrapperForMaskTextInputFormatter(mask: 'GC############', filter: {"#": RegExp(r'[0-9A-Za-z]')});
+  var _maskFormatter = WrapperForMaskTextInputFormatter(
+    mask: 'GC############',
+    filter: {"#": RegExp(r'[0-9A-Za-z]')}
+  );
 
   @override
   void initState() {
@@ -38,24 +41,24 @@ class GCCodeState extends State<GCCode> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.right
-            ? GCWTextField(
-                controller: _gcCodeInputController,
-                inputFormatters: [_maskFormatter],
-                onChanged: (text) {
-                  setState(() {
-                    _currentGCCodeInput = text;
-                  });
-                },
-              )
-            : GCWIntegerSpinner(
-                value: _currentID,
-                min: 0,
-                onChanged: (value) {
-                  setState(() {
-                    _currentID = value;
-                  });
-                },
-              ),
+          ? GCWTextField(
+              controller: _gcCodeInputController,
+              inputFormatters: [_maskFormatter],
+              onChanged: (text) {
+                setState(() {
+                  _currentGCCodeInput = text;
+                });
+              },
+            )
+          : GCWIntegerSpinner(
+              value: _currentID,
+              min: 0,
+              onChanged: (value) {
+                setState(() {
+                  _currentID = value;
+                });
+              },
+            ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -64,7 +67,9 @@ class GCCodeState extends State<GCCode> {
             });
           },
         ),
-        GCWDefaultOutput(child: _buildOutput(context))
+        GCWDefaultOutput(
+          child: _buildOutput(context)
+        )
       ],
     );
   }
@@ -76,7 +81,7 @@ class GCCodeState extends State<GCCode> {
       try {
         var id = gcCodeToID(_currentGCCodeInput);
         output = id == null ? '' : '$id';
-      } on FormatException catch (e) {
+      } on FormatException catch(e) {
         output = i18n(context, e.message);
       }
     } else {

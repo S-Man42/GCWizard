@@ -17,72 +17,117 @@ class CallForContribution extends StatefulWidget {
 class CallForContributionState extends State<CallForContribution> {
   @override
   Widget build(BuildContext context) {
+
     var boldTextStyle = gcwTextStyle().copyWith(fontWeight: FontWeight.bold);
 
     var content = RichText(
-      text: TextSpan(children: [
-        TextSpan(text: i18n(context, 'callforcontribution_1'), style: boldTextStyle),
-        TextSpan(text: i18n(context, 'callforcontribution_2')),
-        TextSpan(text: i18n(context, 'callforcontribution_3'), style: boldTextStyle),
-        TextSpan(text: i18n(context, 'callforcontribution_4')),
-        TextSpan(text: i18n(context, 'callforcontribution_5'), style: boldTextStyle),
-        TextSpan(
-          text: i18n(context, 'callforcontribution_6'),
-        ),
-        TextSpan(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: i18n(context, 'callforcontribution_1'),
+            style: boldTextStyle
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_2')
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_3'),
+            style: boldTextStyle
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_4')
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_5'),
+            style: boldTextStyle
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_6'),
+          ),
+          TextSpan(
             text: i18n(context, 'callforcontribution_7'),
             recognizer: new TapGestureRecognizer()
               ..onTap = () {
                 launch('https://github.com/S-Man42/GCWizard');
               },
-            style: gcwHyperlinkTextStyle()),
-        TextSpan(
-          text: i18n(context, 'callforcontribution_8'),
-        ),
-        TextSpan(text: i18n(context, 'callforcontribution_9'), style: boldTextStyle),
-        TextSpan(
-          text: i18n(context, 'callforcontribution_10'),
-        ),
-        TextSpan(text: i18n(context, 'callforcontribution_11'), style: boldTextStyle),
-        TextSpan(
-          text: i18n(context, 'callforcontribution_12'),
-        ),
-        TextSpan(
-          text: i18n(context, 'callforcontribution_13'),
-        ),
-        TextSpan(text: i18n(context, 'callforcontribution_14'), style: boldTextStyle),
-        TextSpan(
-          text: i18n(context, 'callforcontribution_15'),
-        ),
-        TextSpan(text: i18n(context, 'callforcontribution_16'), style: boldTextStyle),
-        TextSpan(
-          text: i18n(context, 'callforcontribution_17'),
-        ),
-        TextSpan(text: i18n(context, 'callforcontribution_18'), style: boldTextStyle),
-        TextSpan(
-          text: i18n(context, 'callforcontribution_19'),
-        ),
-        TextSpan(text: i18n(context, 'callforcontribution_20'), style: boldTextStyle),
-        TextSpan(
-          text: i18n(context, 'callforcontribution_21'),
-        ),
-        TextSpan(text: i18n(context, 'callforcontribution_22'), style: boldTextStyle),
-        TextSpan(
-          text: i18n(context, 'callforcontribution_23'),
-        ),
-        TextSpan(
+            style: gcwHyperlinkTextStyle()
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_8'),
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_9'),
+            style: boldTextStyle
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_10'),
+          ),
+          TextSpan(
+              text: i18n(context, 'callforcontribution_11'),
+              style: boldTextStyle
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_12'),
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_13'),
+          ),
+          TextSpan(
+              text: i18n(context, 'callforcontribution_14'),
+              style: boldTextStyle
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_15'),
+          ),
+          TextSpan(
+              text: i18n(context, 'callforcontribution_16'),
+              style: boldTextStyle
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_17'),
+          ),
+          TextSpan(
+              text: i18n(context, 'callforcontribution_18'),
+              style: boldTextStyle
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_19'),
+          ),
+          TextSpan(
+              text: i18n(context, 'callforcontribution_20'),
+              style: boldTextStyle
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_21'),
+          ),
+          TextSpan(
+              text: i18n(context, 'callforcontribution_22'),
+              style: boldTextStyle
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_23'),
+          ),
+          TextSpan(
             text: i18n(context, 'callforcontribution_24'),
             recognizer: new TapGestureRecognizer()
               ..onTap = () {
                 Navigator.of(context).push(NoAnimationMaterialPageRoute(
-                    builder: (context) =>
-                        Registry.toolList.firstWhere((tool) => className(tool.tool) == className(About()))));
+                  builder: (context) => Registry.toolList.firstWhere((tool) => className(tool.tool) == className(About())))
+                );
               },
-            style: gcwHyperlinkTextStyle()),
-        TextSpan(text: i18n(context, 'callforcontribution_25'), style: boldTextStyle),
-      ], style: gcwTextStyle()),
+            style: gcwHyperlinkTextStyle()
+          ),
+          TextSpan(
+            text: i18n(context, 'callforcontribution_25'),
+            style: boldTextStyle
+          ),
+        ],
+        style: gcwTextStyle()
+      ),
     );
 
-    return GCWMainMenuEntryStub(content: content);
+    return GCWMainMenuEntryStub(
+      content: content
+    );
   }
 }

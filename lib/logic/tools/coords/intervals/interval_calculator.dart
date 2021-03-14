@@ -5,6 +5,7 @@ import 'package:gc_wizard/logic/tools/coords/intervals/coordinate_cell.dart';
 import 'package:latlong/latlong.dart';
 
 abstract class IntervalCalculator {
+
   final _MAX_CELLCOUNT = 10000;
   final _deltaResults = 1e-7;
 
@@ -24,8 +25,7 @@ abstract class IntervalCalculator {
       double lat = result.latitudeInRad;
       double lon = result.longitudeInRad;
 
-      if (((lat - point.latitudeInRad).abs() <= _deltaResults) &&
-          (min((lon - point.longitudeInRad).abs(), 360 - (lon - point.longitudeInRad).abs()) <= _deltaResults))
+      if (((lat - point.latitudeInRad).abs() <= _deltaResults) && (min((lon - point.longitudeInRad).abs(), 360 - (lon - point.longitudeInRad).abs()) <= _deltaResults))
         return true;
     }
 
@@ -49,18 +49,16 @@ abstract class IntervalCalculator {
           double mLat = (lat.a + lat.b) / 2;
           double overlapValue = _overlap ? (lat.b - lat.a) / 10 : 0;
 
-          cells.add(CoordinateCell(
-              latInterval: Interval(a: mLat - overlapValue, b: lat.b), lonInterval: lon, ellipsoid: ells));
-          cells.add(CoordinateCell(
-              latInterval: Interval(a: lat.a, b: mLat + overlapValue), lonInterval: lon, ellipsoid: ells));
+          cells.add(CoordinateCell(latInterval: Interval(a: mLat - overlapValue, b: lat.b), lonInterval: lon, ellipsoid: ells));
+          cells.add(CoordinateCell(latInterval: Interval(a: lat.a, b: mLat + overlapValue), lonInterval: lon, ellipsoid: ells));
+
+
         } else {
           double mLon = (lon.a + lon.b) / 2;
           double overlapValue = _overlap ? (lat.b - lat.a) / 20 : 0;
 
-          cells.add(CoordinateCell(
-              latInterval: lat, lonInterval: Interval(a: mLon - overlapValue, b: lon.b), ellipsoid: ells));
-          cells.add(CoordinateCell(
-              latInterval: lat, lonInterval: Interval(a: lon.a, b: mLon + overlapValue), ellipsoid: ells));
+          cells.add(CoordinateCell(latInterval: lat, lonInterval: Interval(a: mLon - overlapValue, b: lon.b), ellipsoid: ells));
+          cells.add(CoordinateCell(latInterval: lat, lonInterval: Interval(a: lon.a, b: mLon + overlapValue), ellipsoid: ells));
         }
       }
     }
@@ -81,32 +79,56 @@ abstract class IntervalCalculator {
     double mLon = (lon.a + lon.b) / 2.0;
 
     _initializeCells(
-        CoordinateCell(
-            latInterval: Interval(a: lat.a, b: mLat), lonInterval: Interval(a: lon.a, b: mLon), ellipsoid: ells),
-        depth + 1);
+      CoordinateCell(
+        latInterval: Interval(a: lat.a, b: mLat),
+        lonInterval: Interval(a: lon.a, b: mLon),
+        ellipsoid: ells
+      ),
+      depth + 1
+    );
 
     _initializeCells(
-        CoordinateCell(
-            latInterval: Interval(a: mLat, b: lat.b), lonInterval: Interval(a: lon.a, b: mLon), ellipsoid: ells),
-        depth + 1);
+      CoordinateCell(
+        latInterval: Interval(a: mLat, b: lat.b),
+        lonInterval: Interval(a: lon.a, b: mLon),
+        ellipsoid: ells
+      ),
+      depth + 1
+    );
 
     _initializeCells(
-        CoordinateCell(
-            latInterval: Interval(a: lat.a, b: mLat), lonInterval: Interval(a: mLon, b: lon.b), ellipsoid: ells),
-        depth + 1);
+      CoordinateCell(
+        latInterval: Interval(a: lat.a, b: mLat),
+        lonInterval: Interval(a: mLon, b: lon.b),
+        ellipsoid: ells
+      ),
+      depth + 1
+    );
 
     _initializeCells(
-        CoordinateCell(
-            latInterval: Interval(a: mLat, b: lat.b), lonInterval: Interval(a: mLon, b: lon.b), ellipsoid: ells),
-        depth + 1);
+      CoordinateCell(
+        latInterval: Interval(a: mLat, b: lat.b),
+        lonInterval: Interval(a: mLon, b: lon.b),
+        ellipsoid: ells
+      ),
+      depth + 1
+    );
+
   }
 
   List<LatLng> check() {
+
     var easternCells = CoordinateCell(
-        latInterval: Interval(a: -PI / 2.0, b: PI / 2.0), lonInterval: Interval(a: 0.0, b: PI), ellipsoid: ells);
+      latInterval: Interval(a: -PI / 2.0, b: PI / 2.0),
+      lonInterval: Interval(a: 0.0, b: PI),
+      ellipsoid: ells
+    );
 
     var westernCells = CoordinateCell(
-        latInterval: Interval(a: -PI / 2.0, b: PI / 2.0), lonInterval: Interval(a: -PI, b: 0.0), ellipsoid: ells);
+      latInterval: Interval(a: -PI / 2.0, b: PI / 2.0),
+      lonInterval: Interval(a: -PI, b: 0.0),
+      ellipsoid: ells
+    );
 
     _initializeCells(easternCells);
     _initializeCells(westernCells);

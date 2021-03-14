@@ -18,7 +18,10 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
   var _controller;
   var _currentCoord = '';
 
-  var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 100, filter: {"#": RegExp(r'[0123]')});
+  var _maskInputFormatter = WrapperForMaskTextInputFormatter(
+    mask: '#' * 100,
+    filter: {"#": RegExp(r'[0123]')}
+  );
 
   @override
   void initState() {
@@ -40,8 +43,9 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
       _controller.text = _currentCoord;
     }
 
-    return Column(children: <Widget>[
-      GCWTextField(
+    return Column (
+      children: <Widget>[
+        GCWTextField(
           controller: _controller,
           inputFormatters: [_maskInputFormatter],
           onChanged: (ret) {
@@ -49,14 +53,16 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
               _currentCoord = ret;
               _setCurrentValueAndEmitOnChange();
             });
-          }),
-    ]);
+          }
+        ),
+      ]
+    );
   }
 
   _setCurrentValueAndEmitOnChange() {
     try {
       LatLng coords = quadtreeToLatLon(_currentCoord.split('').map((character) => int.tryParse(character)).toList());
       widget.onChanged(coords);
-    } catch (e) {}
+    } catch(e) {}
   }
 }

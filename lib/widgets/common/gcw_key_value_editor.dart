@@ -45,8 +45,10 @@ class GCWKeyValueEditor extends StatefulWidget {
     this.onDispose,
     this.alphabetInstertButtonLabel,
     this.alphabetAddAndAdjustLetterButtonLabel,
+
     this.middleWidget,
     this.listHeaderWidget,
+
     this.keyKeyValueMap,
     this.keyValueMap,
     this.formulaValueList,
@@ -95,10 +97,12 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
   @override
   void dispose() {
-    if (widget.onDispose != null) widget.onDispose(_currentKeyInput, _currentValueInput, context);
+    if (widget.onDispose != null)
+      widget.onDispose(_currentKeyInput, _currentValueInput, context);
 
     _inputController.dispose();
-    if (widget.keyController == null) _keyController.dispose();
+    if (widget.keyController == null)
+      _keyController.dispose();
     _valueController.dispose();
 
     _editKeyController.dispose();
@@ -109,7 +113,13 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[_buildInput(), _buildMiddleWidget(), _buildList()]);
+    return Column(
+      children: <Widget>[
+        _buildInput(),
+        _buildMiddleWidget(),
+        _buildList()
+      ]
+    );
   }
 
   Widget _buildInput() {
@@ -118,17 +128,18 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
         Row(
           children: <Widget>[
             Expanded(
-                child: GCWTextField(
-                  hintText: widget.keyHintText,
-                  controller: _keyController,
-                  onChanged: (text) {
-                    setState(() {
-                      _currentKeyInput = text;
-                      _onNewEntryChanged(false);
-                    });
-                  },
-                ),
-                flex: 1),
+              child: GCWTextField(
+                hintText: widget.keyHintText,
+                controller: _keyController,
+                onChanged:  (text) {
+                  setState(() {
+                    _currentKeyInput = text;
+                    _onNewEntryChanged(false);
+                  });
+                },
+              ),
+              flex: 1
+            ),
             Icon(
               Icons.arrow_forward,
               color: themeColors().mainFont(),
@@ -136,9 +147,9 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
             Expanded(
               child: GCWTextField(
                 hintText: widget.valueHintText,
-                controller: _valueController,
+                controller:  _valueController,
                 inputFormatters: widget.valueInputFormatters,
-                onChanged: (text) {
+                onChanged:  (text) {
                   setState(() {
                     _currentValueInput = text;
                     _onNewEntryChanged(false);
@@ -148,16 +159,18 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
               flex: widget.valueFlex ?? 1,
             ),
             widget.alphabetInstertButtonLabel != null
-                ? _alphabetAddLetterButton()
-                : GCWIconButton(
-                    iconData: Icons.add,
-                    onPressed: () {
-                      setState(() {
-                        if (widget.onAddEntry != null) widget.onAddEntry(_currentKeyInput, _currentValueInput, context);
+              ? _alphabetAddLetterButton()
+              : GCWIconButton(
+                  iconData: Icons.add,
+                  onPressed: () {
+                    setState(() {
+                      if (widget.onAddEntry != null)
+                        widget.onAddEntry(_currentKeyInput, _currentValueInput, context);
 
-                        _onNewEntryChanged(true);
-                      });
-                    }),
+                      _onNewEntryChanged(true);
+                    });
+                  }
+                ),
             widget.alphabetAddAndAdjustLetterButtonLabel != null ? _alphabetAddAndAdjustLetterButton() : Container()
           ],
         ),
@@ -171,30 +184,32 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
           text: widget.alphabetInstertButtonLabel,
           onPressed: () {
             setState(() {
-              if (widget.onAddEntry != null) widget.onAddEntry(_currentKeyInput, _currentValueInput, context);
+              if (widget.onAddEntry != null)
+                widget.onAddEntry(_currentKeyInput, _currentValueInput, context);
 
               _onNewEntryChanged(true);
             });
           },
         ),
-        padding: EdgeInsets.only(left: 4, right: 2));
+        padding: EdgeInsets.only(left: 4, right: 2)
+    );
   }
 
   Widget _alphabetAddAndAdjustLetterButton() {
     return Container(
         child: GCWButton(
           text: widget.alphabetAddAndAdjustLetterButtonLabel,
-          onPressed: _isAddAndAdjustEnabled()
-              ? () {
-                  setState(() {
-                    if (widget.onAddEntry2 != null) widget.onAddEntry2(_currentKeyInput, _currentValueInput, context);
+          onPressed: _isAddAndAdjustEnabled() ? () {
+            setState(() {
+              if (widget.onAddEntry2 != null)
+                widget.onAddEntry2(_currentKeyInput, _currentValueInput, context);
 
-                    _onNewEntryChanged(true);
-                  });
-                }
-              : null,
+              _onNewEntryChanged(true);
+            });
+          } : null,
         ),
-        padding: EdgeInsets.only(left: 4, right: 2));
+        padding: EdgeInsets.only(left: 4, right: 2)
+    );
   }
 
   _onNewEntryChanged(bool resetInput) {
@@ -209,13 +224,16 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
 
       _currentValueInput = '';
     }
-    if (widget.onNewEntryChanged != null) widget.onNewEntryChanged(_currentKeyInput, _currentValueInput, context);
+    if (widget.onNewEntryChanged != null)
+      widget.onNewEntryChanged(_currentKeyInput, _currentValueInput, context);
   }
 
   _isAddAndAdjustEnabled() {
-    if (widget.keyValueMap.containsKey(_currentKeyInput.toUpperCase())) return false;
+    if (widget.keyValueMap.containsKey(_currentKeyInput.toUpperCase()))
+      return false;
 
-    if (_currentValueInput.contains(',')) return false;
+    if (_currentValueInput.contains(','))
+      return false;
 
     return true;
   }
@@ -246,63 +264,72 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
       rows.insert(0, widget.listHeaderWidget);
     }
 
-    return Column(children: rows);
+    return Column(
+        children: rows
+    );
   }
 
   Widget _buidRow(dynamic entry, bool odd) {
     Widget output;
 
     var row = Container(
-        child: Row(
-      children: <Widget>[
-        Expanded(
-          child: Container(
-            child: _currentEditId == getEntryId(entry)
+      child: Row (
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              child: _currentEditId == getEntryId(entry)
+              ? GCWTextField (
+                  controller: _editKeyController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentEditedKey = text;
+                    });
+                  },
+                )
+              : GCWText (
+                  text: getEntryKey(entry)
+                ),
+              margin: EdgeInsets.only(left: 10),
+            ),
+            flex: 1,
+          ),
+          Icon(
+            Icons.arrow_forward,
+            color: themeColors().mainFont(),
+          ),
+          Expanded(
+            child: Container(
+              child: _currentEditId == getEntryId(entry)
                 ? GCWTextField(
-                    controller: _editKeyController,
+                    controller: _editValueController,
+                    inputFormatters: widget.valueInputFormatters,
+                    autofocus: true,
                     onChanged: (text) {
                       setState(() {
-                        _currentEditedKey = text;
+                        _currentEditedValue = text;
                       });
                     },
                   )
-                : GCWText(text: getEntryKey(entry)),
-            margin: EdgeInsets.only(left: 10),
-          ),
-          flex: 1,
-        ),
-        Icon(
-          Icons.arrow_forward,
-          color: themeColors().mainFont(),
-        ),
-        Expanded(
-            child: Container(
-              child: _currentEditId == getEntryId(entry)
-                  ? GCWTextField(
-                      controller: _editValueController,
-                      inputFormatters: widget.valueInputFormatters,
-                      autofocus: true,
-                      onChanged: (text) {
-                        setState(() {
-                          _currentEditedValue = text;
-                        });
-                      },
-                    )
-                  : GCWText(text: getEntryValue(entry)),
+                : GCWText (
+                    text: getEntryValue(entry)
+                  ),
               margin: EdgeInsets.only(left: 10),
             ),
-            flex: 3),
-        _editButton(entry),
-        GCWIconButton(
-          iconData: Icons.remove,
-          onPressed: () {
-            setState(() {
-              if (widget.onRemoveEntry != null) widget.onRemoveEntry(getEntryId(entry), context);
-            });
-          },
-        )
-      ],
-    ));
+            flex: 3
+          ),
+          _editButton(entry),
+          GCWIconButton(
+            iconData: Icons.remove,
+            onPressed: () {
+              setState(() {
+                if (widget.onRemoveEntry != null)
+                  widget.onRemoveEntry(getEntryId(entry), context);
+              });
+            },
+          )
+        ],
+      )
+    );
 
     if (odd) {
       output = Container(color: themeColors().outputListOddRows(), child: row);
@@ -314,34 +341,35 @@ class _GCWKeyValueEditor extends State<GCWKeyValueEditor> {
   }
 
   Widget _editButton(dynamic entry) {
-    if (!widget.editAllowed) return Container();
+    if (!widget.editAllowed)
+      return Container();
 
     return _currentEditId == getEntryId(entry)
-        ? GCWIconButton(
-            iconData: Icons.check,
-            onPressed: () {
-              if (widget.onUpdateEntry != null)
-                widget.onUpdateEntry(_currentEditId, _currentEditedKey, _currentEditedValue);
+      ? GCWIconButton(
+          iconData: Icons.check,
+          onPressed: () {
+            if (widget.onUpdateEntry != null)
+              widget.onUpdateEntry(_currentEditId, _currentEditedKey, _currentEditedValue);
 
-              setState(() {
-                _currentEditId = null;
-                _editKeyController.clear();
-                _editValueController.clear();
-              });
-            },
-          )
-        : GCWIconButton(
-            iconData: Icons.edit,
-            onPressed: () {
-              setState(() {
-                _currentEditId = getEntryId(entry);
-                _editKeyController.text = getEntryKey(entry);
-                _editValueController.text = getEntryValue(entry);
-                _currentEditedKey = getEntryKey(entry);
-                _currentEditedValue = getEntryValue(entry);
-              });
-            },
-          );
+            setState(() {
+              _currentEditId = null;
+              _editKeyController.clear();
+              _editValueController.clear();
+            });
+          },
+        )
+      : GCWIconButton(
+          iconData: Icons.edit,
+          onPressed: () {
+            setState(() {
+              _currentEditId = getEntryId(entry);
+              _editKeyController.text = getEntryKey(entry);
+              _editValueController.text = getEntryValue(entry);
+              _currentEditedKey = getEntryKey(entry);
+              _currentEditedValue = getEntryValue(entry);
+            });
+          },
+        );
   }
 
   getEntryId(dynamic entry) {

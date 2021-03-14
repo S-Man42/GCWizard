@@ -13,16 +13,18 @@ class WhitespaceResult {
   final bool error;
   final String errorText;
   final bool finished;
-  final WhitespaceState state;
+  final WhitespaceState state ;
 
-  WhitespaceResult(
-      {this.output = '',
-      this.code = '',
-      this.input_expected = false,
-      this.error = false,
-      this.errorText = '',
-      this.finished = true,
-      this.state = null});
+  WhitespaceResult({
+    this.output = '',
+    this.code = '',
+    this.input_expected = false,
+    this.error = false,
+    this.errorText = '',
+
+    this.finished = true,
+    this.state = null
+  });
 }
 
 class WhitespaceState {
@@ -78,8 +80,7 @@ class WhitespaceState {
   }
 }
 
-Future<WhitespaceResult> interpreterWhitespace(String code, String inp,
-    {int timeOut = 30000, WhitespaceState continueState}) async {
+Future<WhitespaceResult> interpreterWhitespace(String code, String inp, {int timeOut = 30000, WhitespaceState continueState}) async {
   try {
     if (code == null || code.length == 0) return WhitespaceResult();
 
@@ -102,8 +103,13 @@ Future<WhitespaceResult> interpreterWhitespace(String code, String inp,
       var state = WhitespaceState();
       state.storeState(-4); //2 commands back ('\t\n': 'IO' and '\t ': 'input_char' or '\t\t': 'input_num')
       return WhitespaceResult(
-          output: _output, code: _clean(_code), input_expected: _input_required, finished: false, state: state);
-    } else
+          output: _output,
+          code: _clean(_code),
+          input_expected: _input_required,
+          finished: false,
+          state: state);
+    }
+    else
       return WhitespaceResult(
           output: _output,
           code: _clean(_code),
@@ -113,7 +119,9 @@ Future<WhitespaceResult> interpreterWhitespace(String code, String inp,
   }
 }
 
+
 Future<WhitespaceResult> generateWhitespace(String input) async {
+
   var code = _WhitespaceOutputString(input);
 
   return WhitespaceResult(output: code, code: _clean(code));
@@ -207,9 +215,12 @@ class _Interpreter {
     '\n': 'FlowControl'
   };
 
+
   _Interpreter(String code, String inp) {
-    if (code == null) return;
-    if (inp == null) inp = '';
+    if (code == null)
+      return;
+    if (inp == null)
+      inp ='';
 
     _code = code;
     _code_length = code.length;
@@ -249,7 +260,8 @@ class _Interpreter {
       if (_IMP.containsKey(token)) {
         _instruction = _IMP[token];
       } else {
-        if (!_loading) throw new Exception('Unknown instruction ' + _instruction);
+        if (!_loading)
+          throw new Exception('Unknown instruction ' + _instruction);
       }
 
       _pos += token.length;
@@ -278,9 +290,11 @@ class _Interpreter {
       _loading = false;
       run();
     } else if ((_return_positions.length > 0) && (_pos != 9999999)) {
-      if (!_loading) throw new Exception('SyntaxError: Subroutine does not properly exit or return');
+      if (!_loading)
+        throw new Exception('SyntaxError: Subroutine does not properly exit or return');
     } else if (_pos == _code_length) {
-      if (!_loading) throw new Exception('RuntimeError: Unclean termination');
+      if (!_loading)
+        throw new Exception('RuntimeError: Unclean termination');
     }
   }
 }
@@ -359,9 +373,11 @@ class _Stack {
 
   void _duplicate_nth(int n) {
     if (n > _stack.length - 1) {
-      if (!_loading) Exception('ValueError: Cannot duplicate - Value exceeds stack size limit');
+      if (!_loading)
+        Exception('ValueError: Cannot duplicate - Value exceeds stack size limit');
     } else if (n < 0) {
-      if (!_loading) throw new Exception('IndexError: Cannot duplicate negative stack index');
+      if (!_loading)
+        throw new Exception('IndexError: Cannot duplicate negative stack index');
     }
     var item = _stack[n]; //-n - 1
     _stack_append(item);
@@ -438,32 +454,36 @@ class _IO {
   void _input_char() {
     _input_required = true;
     _input_required_number = false;
-    if (_input.length == 0) throw new Exception(_inputRequired);
+    if (_input.length == 0)
+      throw new Exception(_inputRequired);
     var a = _input_pop(1);
     var b = _stack_pop();
 
-    _heap.addAll({b: a.codeUnits[0]});
+    _heap.addAll({b : a.codeUnits[0]});
     _debugOutput('input_char', a);
   }
 
   void _input_num() {
     _input_required = true;
     _input_required_number = true;
-    if (_input.length == 0) throw new Exception(_inputRequired);
+    if (_input.length == 0)
+      throw new Exception(_inputRequired);
 
     var b = _stack_pop();
     var index = _input.indexOf('\n');
-    var index1 = _input.indexOf(' ');
-    if ((index1 >= 0) & (index1 < index)) index = index1;
+    var index1 =  _input.indexOf(' ');
+    if ((index1 >= 0) & (index1 < index))
+      index = index1;
     if (index < 0) index = _input.length;
     if (index >= 0) {
       var a = int.parse(_input_pop(index + 1));
-      _heap.addAll({b: a});
+      _heap.addAll({b : a});
     }
   }
 
   String _input_pop(int length) {
-    if (_input.length == 0) return '';
+    if (_input.length == 0)
+      return '';
     var item = _input.sublist(0, min(length, _input.length)).join();
     _input = _input.sublist(min(length, _input.length));
     //var item = _input[0];
@@ -577,7 +597,8 @@ class _FlowControl {
 
   void _mark_label(String label) {
     if (_labels.containsKey(label)) {
-      if (!_loading) throw new Exception('ValueError: Label already exists');
+      if (!_loading)
+        throw new Exception('ValueError: Label already exists');
     }
     _labels[label] = _pos + label.length;
   }
@@ -590,7 +611,8 @@ class _FlowControl {
     if (_return_positions.length > 0) {
       _pos = _return_positions_pop();
     } else {
-      if (!_loading) throw new Exception('SyntaxError: Return outside of subroutine');
+      if (!_loading)
+        throw new Exception('SyntaxError: Return outside of subroutine');
     }
   }
 
@@ -676,10 +698,11 @@ class _Arithmetic {
   void _floordiv() {
     var a = _stack_pop();
     var b = _stack_pop();
-    if (a == 0) if (!_loading)
-      throw new Exception('ZeroDivisionError: Cannot divide by zero');
-    else
-      a = 999999999999;
+    if (a == 0)
+      if (!_loading)
+        throw new Exception('ZeroDivisionError: Cannot divide by zero');
+      else
+        a = 999999999999;
     var c = (b / a).floor();
     _stack_append(c);
   }
@@ -687,10 +710,11 @@ class _Arithmetic {
   void _mod() {
     var a = _stack_pop();
     var b = _stack_pop();
-    if (a == 0) if (!_loading)
-      throw new Exception('ZeroDivisionError: Cannot divide by zero');
-    else
-      a = 999999999999;
+    if (a == 0)
+      if (!_loading)
+        throw new Exception('ZeroDivisionError: Cannot divide by zero');
+      else
+        a = 999999999999;
     var c = b % a;
     _stack_append(c);
   }
@@ -731,6 +755,8 @@ class _Heap {
   }
 }
 
+
+
 /// Removes extranneous characters from the code input.
 String _uncomment(String s) {
   return s.replaceAll(RegExp(r'[^ \t\n]'), '');
@@ -738,7 +764,7 @@ String _uncomment(String s) {
 
 void _stack_append(int item) {
   _debugOutput('stack append', item.toString());
-  _stack.insert(0, item);
+  _stack.insert(0,item);
 }
 
 int _stack_pop() {
@@ -763,7 +789,8 @@ void _get_command(Map<String, String> imp) {
     _command = imp[token];
     _pos += token.length;
   } else {
-    if (!_loading) throw new Exception('KeyError: No IMP found for token: ' + token);
+    if (!_loading)
+      throw new Exception('KeyError: No IMP found for token: ' + token);
   }
 }
 
@@ -778,7 +805,8 @@ Tuple2<int, int> _num_parameter() {
   var index = _code.indexOf('\n', _pos);
   // Only including a terminal causes an error
   if (index == _pos) {
-    if (!_loading) Exception('SyntaxError: Number must include more than just the terminal.');
+    if (!_loading)
+      Exception('SyntaxError: Number must include more than just the terminal.');
   }
 
   var item = _whitespaceToInt(_code.substring(_pos, index));
@@ -795,20 +823,23 @@ int _whitespaceToInt(String code) {
   final List<String> keys = [' ', '\t'];
   var sign = 2 * (1 - keys.indexOf(code[0])) - 1;
   var binary = '';
-  for (var x = 1; x < code.length; x++) binary += keys.indexOf(code[x]).toString();
+  for (var x = 1; x < code.length; x++)
+    binary += keys.indexOf(code[x]).toString();
   num = int.parse(binary, radix: 2) * sign;
   return num;
 }
 
 /// Converts an integer to Whitespace representation.
 String _IntToWhitespace(int value) {
-  if (value == 0) return ' \n';
+  if (value == 0)
+    return ' \n';
   var code = convertBase(value.abs().toString(), 10, 2);
-  final Map<String, String> keys = {'0': ' ', '1': '\t'};
+  final Map<String, String> keys = {'0':' ', '1':'\t'};
   code = (value < 0 ? '1' : '0') + code;
   code = substitution(code, keys) + '\n';
   return code;
 }
+
 
 /// Sets a label in the sequence if possible.
 Tuple2<int, String> _label_parameter() {
@@ -824,23 +855,28 @@ Tuple2<int, String> _label_parameter() {
   return Tuple2<int, String>(index, name);
 }
 
+
 void _debugOutput(String command, String label) {
   if (_debug) {
     label = label != null ? ' (' + label + ')' : '';
-    print('[' + _debugCounter.toString() + '] ' + 'Command: ' + command + label);
+    print('[' + _debugCounter.toString() + '] ' +
+        'Command: ' +
+        command +
+        label);
     _debugCounter += 1;
   }
 }
 
 String _WhitespaceOutputString(String input) {
-  if ((input == null) || (input == '')) return '';
+  if ((input == null) || (input == ''))
+    return '';
   var sb = new StringBuffer();
-  var i = 0;
+  var i =0;
   const push_num = "  ";
   const store = "\t\t ";
   const output_loop = "    \n\n    \t\n \n \t\t\t \n \n\t  \t \n\t\n     \t\n\t   \n \n  \t\n\n   \t \n\n\n\n";
 
-  for (i = 0; i < input.length; i++) {
+  for (i=0; i<input.length;i++) {
     sb.write(push_num);
     sb.write(_IntToWhitespace(i));
     sb.write(push_num);

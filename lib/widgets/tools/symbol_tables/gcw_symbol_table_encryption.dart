@@ -26,9 +26,14 @@ class GCWSymbolTableEncryption extends StatefulWidget {
   final String symbolKey;
   final Function onChanged;
 
-  const GCWSymbolTableEncryption(
-      {Key key, this.data, this.countColumns, this.mediaQueryData, this.symbolKey, this.onChanged})
-      : super(key: key);
+  const GCWSymbolTableEncryption({
+    Key key,
+    this.data,
+    this.countColumns,
+    this.mediaQueryData,
+    this.symbolKey,
+    this.onChanged
+  }) : super(key: key);
 
   @override
   GCWSymbolTableEncryptionState createState() => GCWSymbolTableEncryptionState();
@@ -94,31 +99,34 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
               countColumns: widget.countColumns,
               mediaQueryData: widget.mediaQueryData,
               onChanged: widget.onChanged,
-            )),
+            )
+        ),
         _buildEncryptionOutput(widget.countColumns),
-        _encryptionHasImages
-            ? GCWButton(
-                text: i18n(context, 'common_exportfile_saveoutput'),
-                onPressed: () {
-                  _exportEncryption(widget.countColumns, _data.isCaseSensitive()).then((value) {
-                    if (value == null) {
-                      showToast(i18n(context, 'common_exportfile_nowritepermission'));
-                      return;
-                    }
+         _encryptionHasImages
+          ? GCWButton(
+              text: i18n(context, 'common_exportfile_saveoutput'),
+              onPressed: () {
+                _exportEncryption(widget.countColumns, _data.isCaseSensitive()).then((value) {
+                  if (value == null) {
+                    showToast(i18n(context, 'common_exportfile_nowritepermission'));
+                    return;
+                  }
 
-                    showExportedFileDialog(
-                      context,
-                      value['path'],
-                      contentWidget: Container(
-                        child: value['file'] == null ? null : Image.file(value['file']),
-                        margin: EdgeInsets.only(top: 25),
-                        decoration: BoxDecoration(border: Border.all(color: themeColors().dialogText())),
+                  showExportedFileDialog(
+                    context,
+                    value['path'],
+                    contentWidget: Container(
+                      child: value['file'] == null ? null : Image.file(value['file']),
+                      margin: EdgeInsets.only(top: 25),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: themeColors().dialogText())
+                        ),
                       ),
                     );
                   });
                 },
               )
-            : Container()
+          : Container()
       ],
     );
   }
@@ -147,7 +155,8 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
         }
       }
 
-      if ((_currentIgnoreUnknown && imageIndex != null) || !_currentIgnoreUnknown) imageIndexes.add(imageIndex);
+      if ((_currentIgnoreUnknown && imageIndex != null ) || !_currentIgnoreUnknown)
+        imageIndexes.add(imageIndex);
 
       if (imageIndex == null)
         _text = _text.substring(1, _text.length);
@@ -159,7 +168,8 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
   }
 
   _buildEncryptionOutput(countColumns) {
-    if (_data == null) return Container;
+    if (_data == null)
+      return Container;
 
     var isCaseSensitive = _data.isCaseSensitive();
 
@@ -167,7 +177,8 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
 
     var images = _getImages(isCaseSensitive);
     _encryptionHasImages = images.length > 0;
-    if (!_encryptionHasImages) return Container();
+    if (!_encryptionHasImages)
+      return Container();
 
     var countRows = (images.length / countColumns).floor();
 
@@ -189,15 +200,17 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
           widget = GCWSymbolContainer(
             symbol: image,
           );
+
         } else {
           widget = Container();
         }
 
         columns.add(Expanded(
-            child: Container(
-          child: widget,
-          padding: EdgeInsets.all(3),
-        )));
+          child: Container(
+            child: widget,
+            padding: EdgeInsets.all(3),
+          )
+        ));
       }
 
       rows.add(Row(
@@ -223,17 +236,22 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
     return fi.image;
   }
 
+
   Future<Map<String, dynamic>> _exportEncryption(int countColumns, isCaseSensitive) async {
     var images = _getImages(isCaseSensitive);
 
     var countRows = (images.length / countColumns).floor();
-    if (countRows * countColumns < images.length) countRows++;
+    if (countRows * countColumns < images.length)
+      countRows++;
 
-    var width = countColumns * _EXPORT_SYMBOL_SIZE;
+    var width =  countColumns * _EXPORT_SYMBOL_SIZE;
     var height = countRows * _EXPORT_SYMBOL_SIZE;
 
     final canvasRecorder = ui.PictureRecorder();
-    final canvas = Canvas(canvasRecorder, Rect.fromLTWH(0, 0, width, height));
+    final canvas = Canvas(
+        canvasRecorder,
+        Rect.fromLTWH(0, 0, width, height)
+    );
 
     final paint = Paint()
       ..color = Colors.white
@@ -262,7 +280,6 @@ class GCWSymbolTableEncryptionState extends State<GCWSymbolTableEncryption> {
     final img = await canvasRecorder.endRecording().toImage(width.floor(), height.floor());
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
 
-    return await saveByteDataToFile(
-        data, widget.symbolKey + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+    return await saveByteDataToFile(data, widget.symbolKey + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
   }
 }

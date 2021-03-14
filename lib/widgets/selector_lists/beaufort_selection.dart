@@ -10,18 +10,26 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class BeaufortSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = Registry.toolList.where((element) {
-      if (className(element.tool) == className(SymbolTable()) &&
-          (element.tool as SymbolTable).symbolKey == 'windforce_beaufort') return true;
 
-      if (className(element.tool) == className(SymbolTable()) &&
-          (element.tool as SymbolTable).symbolKey == 'windforce_knots') return true;
+    final List<GCWTool> _toolList =
+      Registry.toolList.where((element) {
+        if (className(element.tool) == className(SymbolTable())
+          && (element.tool as SymbolTable).symbolKey == 'windforce_beaufort')
+          return true;
 
-      return [
-        className(Beaufort()),
-      ].contains(className(element.tool));
-    }).toList();
+        if (className(element.tool) == className(SymbolTable())
+            && (element.tool as SymbolTable).symbolKey == 'windforce_knots')
+          return true;
 
-    return Container(child: GCWToolList(toolList: _toolList));
+        return [
+          className(Beaufort()),
+        ].contains(className(element.tool));
+      }).toList();
+
+    return Container(
+      child: GCWToolList(
+        toolList: _toolList
+      )
+    );
   }
 }

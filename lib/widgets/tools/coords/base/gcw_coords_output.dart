@@ -16,9 +16,17 @@ class GCWCoordsOutput extends StatefulWidget {
   List<GCWMapPolyline> polylines;
   final bool mapButtonTop;
 
-  GCWCoordsOutput({Key key, this.outputs, this.points, this.polylines, this.mapButtonTop: false}) : super(key: key) {
-    if (points == null) this.points = [];
-    if (polylines == null) this.polylines = [];
+  GCWCoordsOutput({
+    Key key,
+    this.outputs,
+    this.points,
+    this.polylines,
+    this.mapButtonTop: false
+  }) : super(key: key) {
+    if (points == null)
+      this.points = [];
+    if (polylines == null)
+      this.polylines = [];
   }
 
   @override
@@ -26,6 +34,7 @@ class GCWCoordsOutput extends StatefulWidget {
 }
 
 class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
+
   @override
   Widget build(BuildContext context) {
     var children = widget.outputs.map((output) {
@@ -40,12 +49,12 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
       children: children,
     );
 
-    var _isNoOutput = widget.outputs == null || widget.outputs.length == 0 || widget.points.length == 0;
-    var _button = Visibility(
+    var _isNoOutput = widget.outputs == null || widget.outputs.length == 0 || widget.points.length == 0 ;
+    var _button = Visibility (
         visible: !_isNoOutput,
         child: GCWToolBar(
           children: [
-            GCWButton(
+            GCWButton (
               text: i18n(context, 'coords_show_on_map'),
               onPressed: () {
                 _openInMap();
@@ -58,7 +67,8 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
               },
             )
           ],
-        ));
+        )
+    );
 
     var _children = widget.mapButtonTop ? [_button, _outputText] : [_outputText, _button];
     return GCWMultipleOutput(
@@ -70,7 +80,8 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
           onPressed: () {
             _isNoOutput ? null : _exportCoordinates(context, widget.points, widget.polylines);
           },
-        ));
+        )
+    );
   }
 
   _openInMap({freeMap: false}) {
@@ -80,22 +91,18 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
       });
     }
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => GCWTool(
-                  tool: GCWMapView(
-                    points: List<GCWMapPoint>.from(widget.points),
-                    polylines: List<GCWMapPolyline>.from(widget.polylines),
-                    isEditable: freeMap,
-                  ),
-                  toolName: freeMap ? i18n(context, 'coords_openmap_title') : i18n(context, 'coords_map_view_title'),
-                  autoScroll: false,
-                )));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => GCWTool (
+      tool: GCWMapView(
+        points: List<GCWMapPoint>.from(widget.points),
+        polylines: List<GCWMapPolyline>.from(widget.polylines),
+        isEditable: freeMap,
+      ),
+      toolName: freeMap ? i18n(context, 'coords_openmap_title') : i18n(context, 'coords_map_view_title'),
+      autoScroll: false,
+    )));
   }
 
-  Future<bool> _exportCoordinates(
-      BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) async {
+  Future<bool> _exportCoordinates(BuildContext context, List<GCWMapPoint> points, List<GCWMapPolyline> polylines) async {
     showCoordinatesExportDialog(context, points, polylines);
   }
 }

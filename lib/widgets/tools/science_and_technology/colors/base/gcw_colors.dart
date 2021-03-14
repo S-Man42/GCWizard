@@ -26,6 +26,7 @@ class GCWColors extends StatefulWidget {
 }
 
 class GCWColorsState extends State<GCWColors> {
+
   String _currentColorSpace;
   dynamic _currentColor = defaultColor;
 
@@ -193,7 +194,8 @@ class GCWColorsState extends State<GCWColors> {
       ],
     );
 
-    var _currentWidget = _colorWidgets.firstWhere((entry) => entry['colorSpace'].key == _currentColorSpace)['widget'];
+    var _currentWidget = _colorWidgets
+      .firstWhere((entry) => entry['colorSpace'].key == _currentColorSpace)['widget'];
 
     _widget.children.add(_currentWidget);
 
@@ -201,6 +203,9 @@ class GCWColorsState extends State<GCWColors> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    widget.onChanged({'colorSpace': _currentColorSpace, 'color': _currentColor});
+    widget.onChanged({
+      'colorSpace': _currentColorSpace,
+      'color': _currentColor
+    });
   }
 }

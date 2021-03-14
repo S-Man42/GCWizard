@@ -1,8 +1,9 @@
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:latlong/latlong.dart';
 
-LatLng maidenheadToLatLon(String maidenhead) {
-  if (maidenhead == null || maidenhead == '') return null;
+LatLng maidenheadToLatLon (String maidenhead) {
+  if (maidenhead == null || maidenhead == '')
+    return null;
   maidenhead = maidenhead.toUpperCase();
 
   int res = 1;
@@ -14,27 +15,30 @@ LatLng maidenheadToLatLon(String maidenhead) {
   try {
     for (int i = 0; i < maidenhead.length; i += 2) {
       if (res == 1) {
-        if (!RegExp(r'[A-Z]{2}').hasMatch(maidenhead.substring(0, 2))) return null;
+        if (!RegExp(r'[A-Z]{2}').hasMatch(maidenhead.substring(0, 2)))
+          return null;
         lon = ((alphabet_AZ[maidenhead[0]] - 1) * 20).toDouble();
         lat = ((alphabet_AZ[maidenhead[1]] - 1) * 10).toDouble();
         res = 2;
-      } else if (res % 2 == 1) {
+      } else if (res % 2 == 1)  {
         reslon /= 24;
         reslat /= 24;
-        if (!RegExp(r'[A-Z]{2}').hasMatch(maidenhead.substring(i, i + 2))) return null;
+        if (!RegExp(r'[A-Z]{2}').hasMatch(maidenhead.substring(i, i+2)))
+          return null;
         lon += (alphabet_AZ[maidenhead[i]] - 1).toDouble() * reslon;
         lat += (alphabet_AZ[maidenhead[i + 1]] - 1).toDouble() * reslat;
         ++res;
       } else {
         reslon /= 10;
         reslat /= 10;
-        if (!RegExp(r'[0-9]{2}').hasMatch(maidenhead.substring(i, i + 2))) return null;
+        if (!RegExp(r'[0-9]{2}').hasMatch(maidenhead.substring(i, i+2)))
+          return null;
         lon += int.tryParse(maidenhead[i]) * reslon;
         lat += int.tryParse(maidenhead[i + 1]) * reslat;
         ++res;
       }
     }
-  } catch (e) {
+  } catch(e) {
     return null;
   }
 
@@ -44,7 +48,7 @@ LatLng maidenheadToLatLon(String maidenhead) {
   return LatLng(lat, lon);
 }
 
-String latLonToMaidenhead(LatLng coord) {
+String latLonToMaidenhead (LatLng coord) {
   var lon = coord.longitude + 180.0;
   var lat = coord.latitude + 90.0;
 
@@ -79,7 +83,7 @@ String latLonToMaidenhead(LatLng coord) {
   double reslat = 1.0;
 
   while (i <= resolution) {
-    if (i % 2 == 1) {
+    if (i % 2 == 1)  {
       reslon /= 24.0;
       reslat /= 24.0;
       intlon = (lon / reslon).floor();

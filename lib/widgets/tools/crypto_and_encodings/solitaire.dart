@@ -22,6 +22,7 @@ class SolitaireState extends State<Solitaire> {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: <Widget>[
         GCWTextField(
@@ -31,7 +32,10 @@ class SolitaireState extends State<Solitaire> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'common_key')),
+
+        GCWTextDivider(
+          text: i18n(context, 'common_key')
+        ),
         GCWTextField(
           hintText: i18n(context, 'common_key'),
           onChanged: (text) {
@@ -54,7 +58,8 @@ class SolitaireState extends State<Solitaire> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput();
+    if (_currentInput == null || _currentInput.length == 0)
+      return GCWDefaultOutput();
 
     var _currentOutput;
     if (_currentMode == GCWSwitchPosition.left) {
@@ -63,7 +68,8 @@ class SolitaireState extends State<Solitaire> {
       _currentOutput = decryptSolitaire(_currentInput, _currentKey);
     }
 
-    if (_currentOutput == null || _currentOutput.output.length == 0) return GCWDefaultOutput();
+    if (_currentOutput == null || _currentOutput.output.length == 0)
+      return GCWDefaultOutput();
 
     return GCWMultipleOutput(
       children: [

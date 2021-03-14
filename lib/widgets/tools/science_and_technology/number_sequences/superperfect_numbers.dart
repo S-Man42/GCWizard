@@ -22,6 +22,5 @@ class NumberSequenceSuperPerfectNumbersNthNumber extends NumberSequenceNthNumber
 }
 
 class NumberSequenceSuperPerfectNumbersContainsDigits extends NumberSequenceContainsDigits {
-  NumberSequenceSuperPerfectNumbersContainsDigits()
-      : super(mode: NumberSequencesMode.SUPERPERFECT_NUMBERS, maxIndex: 8);
+  NumberSequenceSuperPerfectNumbersContainsDigits() : super(mode: NumberSequencesMode.SUPERPERFECT_NUMBERS, maxIndex: 8);
 }

@@ -39,18 +39,21 @@ class GCWCoordsGeohashState extends State<GCWCoordsGeohash> {
       _controller.text = _currentCoord;
     }
 
-    return Column(children: <Widget>[
-      GCWTextField(
-          hintText: i18n(context, 'coords_formatconverter_geohash_locator'),
-          controller: _controller,
-          inputFormatters: [CoordsTextGeohashTextInputFormatter()],
-          onChanged: (ret) {
-            setState(() {
-              _currentCoord = ret;
-              _setCurrentValueAndEmitOnChange();
-            });
-          }),
-    ]);
+    return Column (
+        children: <Widget>[
+          GCWTextField(
+            hintText: i18n(context, 'coords_formatconverter_geohash_locator'),
+            controller: _controller,
+            inputFormatters: [CoordsTextGeohashTextInputFormatter()],
+            onChanged: (ret) {
+              setState(() {
+                _currentCoord = ret;
+                _setCurrentValueAndEmitOnChange();
+              });
+            }
+          ),
+        ]
+    );
   }
 
   _setCurrentValueAndEmitOnChange() {

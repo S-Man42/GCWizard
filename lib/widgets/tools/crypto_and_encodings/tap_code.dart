@@ -21,7 +21,10 @@ class TapCodeState extends State<TapCode> {
   AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  var _maskFormatter = WrapperForMaskTextInputFormatter(mask: '## ' * 100000 + '##', filter: {"#": RegExp(r'[1-5]')});
+  var _maskFormatter = WrapperForMaskTextInputFormatter(
+    mask: '## ' * 100000 + '##',
+    filter: {"#": RegExp(r'[1-5]')}
+  );
 
   @override
   void initState() {
@@ -44,23 +47,23 @@ class TapCodeState extends State<TapCode> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
-            ? GCWTextField(
-                controller: _encryptionController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentEncryptionInput = text;
-                  });
-                },
-              )
-            : GCWTextField(
-                inputFormatters: [_maskFormatter],
-                controller: _decryptionController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentDecryptionInput = text;
-                  });
-                },
-              ),
+          ? GCWTextField(
+              controller: _encryptionController,
+              onChanged: (text) {
+                setState(() {
+                  _currentEncryptionInput = text;
+                });
+              },
+            )
+          : GCWTextField(
+              inputFormatters: [_maskFormatter],
+              controller: _decryptionController,
+              onChanged: (text) {
+                setState(() {
+                  _currentDecryptionInput = text;
+                });
+              },
+            ),
         GCWAlphabetModificationDropDownButton(
           value: _currentModificationMode,
           onChanged: (value) {
@@ -77,7 +80,9 @@ class TapCodeState extends State<TapCode> {
             });
           },
         ),
-        GCWDefaultOutput(child: _calculateOutput())
+        GCWDefaultOutput(
+          child: _calculateOutput()
+        )
       ],
     );
   }

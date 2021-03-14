@@ -63,112 +63,126 @@ class TomTomState extends State<TomTom> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'common_key')),
+        GCWTextDivider(
+          text: i18n(context, 'common_key')
+        ),
         Row(
           children: <Widget>[
             Expanded(
               child: Container(
-                  child: GCWTextField(
-                    controller: _aController,
-                    onChanged: (text) {
-                      setState(() {
-                        _currentA = text;
-                      });
-                    },
-                  ),
-                  padding: EdgeInsets.only(right: DEFAULT_MARGIN)),
+                child: GCWTextField(
+                  controller: _aController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentA = text;
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(
+                  right: DEFAULT_MARGIN
+                )
+              ),
             ),
             Expanded(
               child: Container(
-                  child: GCWTextField(
-                    controller: _bController,
-                    onChanged: (text) {
-                      setState(() {
-                        _currentB = text;
-                      });
-                    },
-                  ),
-                  padding: EdgeInsets.only(
-                    left: DEFAULT_MARGIN,
-                  )),
+                child: GCWTextField(
+                  controller: _bController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentB = text;
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(
+                  left: DEFAULT_MARGIN,
+                )
+              ),
             ),
           ],
         ),
-        GCWTextDivider(text: i18n(context, 'common_input')),
-        _currentMode == GCWSwitchPosition.right ? _buildButtonBar() : Container(),
+        GCWTextDivider(
+          text: i18n(context, 'common_input')
+        ),
+        _currentMode == GCWSwitchPosition.right
+          ? _buildButtonBar()
+          : Container(),
         _currentMode == GCWSwitchPosition.left
-            ? GCWTextField(
-                controller: _inputEncryptController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentInputEncrypt = text;
-                  });
-                },
-              )
-            : GCWTextField(
-                controller: _inputDecryptController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentInputDecrypt = text;
-                  });
-                },
-              ),
-        GCWDefaultOutput(child: _buildOutput())
+          ? GCWTextField(
+              controller: _inputEncryptController,
+              onChanged: (text) {
+                setState(() {
+                  _currentInputEncrypt = text;
+                });
+              },
+            )
+          : GCWTextField(
+              controller: _inputDecryptController,
+              onChanged: (text) {
+                setState(() {
+                  _currentInputDecrypt = text;
+                });
+              },
+            ),
+        GCWDefaultOutput(
+          child: _buildOutput()
+        )
       ],
     );
   }
 
   _buildButtonBar() {
-    return GCWToolBar(children: [
-      GCWButton(
-        text: _currentA,
-        onPressed: () {
-          setState(() {
-            _addCharacter(_currentA);
-          });
-        },
-      ),
-      GCWButton(
-        text: _currentB,
-        onPressed: () {
-          setState(() {
-            _addCharacter(_currentB);
-          });
-        },
-      ),
-      GCWButton(
-        text: _currentA + _currentB,
-        onPressed: () {
-          setState(() {
-            _addCharacter(_currentA + _currentB);
-          });
-        },
-      ),
-      GCWButton(
-        text: _currentB + _currentA,
-        onPressed: () {
-          setState(() {
-            _addCharacter(_currentB + _currentA);
-          });
-        },
-      ),
-      GCWIconButton(
-        iconData: Icons.space_bar,
-        onPressed: () {
-          setState(() {
-            _addCharacter(' ');
-          });
-        },
-      ),
-      GCWIconButton(
-        iconData: Icons.backspace,
-        onPressed: () {
-          setState(() {
-            _currentInputDecrypt = textControllerDoBackSpace(_currentInputDecrypt, _inputDecryptController);
-          });
-        },
-      ),
-    ]);
+    return GCWToolBar(
+      children: [
+        GCWButton(
+          text: _currentA,
+          onPressed: () {
+            setState(() {
+              _addCharacter(_currentA);
+            });
+          },
+        ),
+        GCWButton(
+          text: _currentB,
+          onPressed: () {
+            setState(() {
+              _addCharacter(_currentB);
+            });
+          },
+        ),
+        GCWButton(
+          text: _currentA + _currentB,
+          onPressed: () {
+            setState(() {
+              _addCharacter(_currentA + _currentB);
+            });
+          },
+        ),
+        GCWButton(
+          text: _currentB + _currentA,
+          onPressed: () {
+            setState(() {
+              _addCharacter(_currentB + _currentA);
+            });
+          },
+        ),
+        GCWIconButton(
+          iconData: Icons.space_bar,
+          onPressed: () {
+            setState(() {
+              _addCharacter(' ');
+            });
+          },
+        ),
+        GCWIconButton(
+          iconData: Icons.backspace,
+          onPressed: () {
+            setState(() {
+              _currentInputDecrypt = textControllerDoBackSpace(_currentInputDecrypt, _inputDecryptController);
+            });
+          },
+        ),
+      ]
+    );
   }
 
   _addCharacter(String input) {
@@ -176,12 +190,11 @@ class TomTomState extends State<TomTom> {
   }
 
   _buildOutput() {
-    if (_currentA.length == 0 || _currentB.length == 0) return '';
+    if (_currentA.length == 0 || _currentB.length == 0)
+      return '';
 
     var key = {'/': _currentA, '\\': _currentB};
 
-    return _currentMode == GCWSwitchPosition.left
-        ? encryptTomTom(_currentInputEncrypt, key)
-        : decryptTomTom(_currentInputDecrypt, key);
+    return _currentMode == GCWSwitchPosition.left ? encryptTomTom(_currentInputEncrypt, key) : decryptTomTom(_currentInputDecrypt, key);
   }
 }

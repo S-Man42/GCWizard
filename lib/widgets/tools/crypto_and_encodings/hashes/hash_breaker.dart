@@ -11,6 +11,7 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
 
+
 class HashBreaker extends StatefulWidget {
   final Function hashFunction;
 
@@ -57,7 +58,7 @@ class _HashBreakerState extends State<HashBreaker> {
   }
 
   _updateEntry(dynamic id, String key, String value) {
-    _currentSubstitutions[id] = {key: value};
+    _currentSubstitutions[id] ={key: value};
   }
 
   _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
@@ -109,50 +110,57 @@ class _HashBreakerState extends State<HashBreaker> {
         ),
         _buildVariablesEditor(),
         _buildSubmitButton(),
-        GCWDefaultOutput(child: _currentOutput)
+        GCWDefaultOutput(
+          child: _currentOutput
+        )
       ],
     );
   }
 
   Widget _buildVariablesEditor() {
     return GCWKeyValueEditor(
-        keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
-        valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
-        valueInputFormatters: [CoordsTextVariableCoordinateTextInputFormatter()],
-        valueFlex: 2,
-        onNewEntryChanged: _updateNewEntry,
-        onAddEntry: _addEntry,
-        middleWidget: SizedBox(height: 10),
-        keyKeyValueMap: _currentSubstitutions,
-        onUpdateEntry: _updateEntry,
-        onRemoveEntry: _removeEntry);
+      keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
+      valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
+      valueInputFormatters: [CoordsTextVariableCoordinateTextInputFormatter()],
+      valueFlex: 2,
+      onNewEntryChanged: _updateNewEntry,
+      onAddEntry: _addEntry,
+
+      middleWidget: SizedBox(height: 10),
+
+      keyKeyValueMap: _currentSubstitutions,
+      onUpdateEntry: _updateEntry,
+      onRemoveEntry: _removeEntry
+    );
   }
 
   Widget _buildSubmitButton() {
-    return GCWSubmitButton(onPressed: () async {
-      await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Center(
-            child: Container(
-              child: GCWAsyncExecuter(
-                isolatedFunction: breakHashAsync,
-                parameter: _buildJobData(),
-                onReady: (data) => _showOutput(data),
-                isOverlay: true,
+    return GCWSubmitButton(
+      onPressed: () async {
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) {
+            return Center (
+              child: Container(
+                child: GCWAsyncExecuter(
+                  isolatedFunction: breakHashAsync,
+                  parameter: _buildJobData(),
+                  onReady: (data) => _showOutput(data),
+                  isOverlay: true,
+                ),
+                height: 220,
+                width: 150,
               ),
-              height: 220,
-              width: 150,
-            ),
-          );
-        },
-      );
-    });
+            );
+          },
+        );
+      }
+    );
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
-    _currentOutput = '';
+    _currentOutput ='';
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
     });
@@ -162,18 +170,20 @@ class _HashBreakerState extends State<HashBreaker> {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
     });
 
-    if (_currentFromInput != null &&
-        _currentFromInput.length > 0 &&
-        _currentToInput != null &&
-        _currentToInput.length > 0) {
+    if (_currentFromInput != null && _currentFromInput.length > 0
+      && _currentToInput != null && _currentToInput.length > 0
+    ) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
 
-    return GCWAsyncExecuterParameters(HashBreakerJobData(
+    return GCWAsyncExecuterParameters(
+      HashBreakerJobData(
         input: _currentInput,
         searchMask: _currentMask,
         substitutions: _substitutions,
-        hashFunction: _currentHashFunction));
+        hashFunction: _currentHashFunction
+      )
+    );
   }
 
   _showOutput(Map<String, dynamic> output) {
@@ -186,4 +196,7 @@ class _HashBreakerState extends State<HashBreaker> {
       setState(() {});
     });
   }
+
+
+
 }

@@ -39,8 +39,9 @@ class GCWCoordsGeoHexState extends State<GCWCoordsGeoHex> {
       _controller.text = _currentCoord;
     }
 
-    return Column(children: <Widget>[
-      GCWTextField(
+    return Column (
+      children: <Widget>[
+        GCWTextField(
           hintText: i18n(context, 'coords_formatconverter_geohex_locator'),
           controller: _controller,
           inputFormatters: [CoordsTextGeoHexTextInputFormatter()],
@@ -49,14 +50,16 @@ class GCWCoordsGeoHexState extends State<GCWCoordsGeoHex> {
               _currentCoord = ret;
               _setCurrentValueAndEmitOnChange();
             });
-          }),
-    ]);
+          }
+        ),
+      ]
+    );
   }
 
   _setCurrentValueAndEmitOnChange() {
     try {
       LatLng coords = geoHexToLatLon(_currentCoord);
       widget.onChanged(coords);
-    } catch (e) {}
+    } catch(e) {}
   }
 }

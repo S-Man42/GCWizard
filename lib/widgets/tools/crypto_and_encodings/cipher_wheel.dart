@@ -1,9 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/cipher_wheel.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_letter_value_relation.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+
 
 class CipherWheel extends StatefulWidget {
   const CipherWheel();
@@ -24,7 +26,9 @@ class CipherWheelState extends State<CipherWheel> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: _currentInput);
+    _controller = TextEditingController(
+        text: _currentInput
+    );
   }
 
   @override
@@ -63,7 +67,9 @@ class CipherWheelState extends State<CipherWheel> {
             });
           },
         ),
-        GCWDefaultOutput(child: _output)
+        GCWDefaultOutput(
+          child: _output
+        )
       ],
     );
   }
@@ -71,10 +77,10 @@ class CipherWheelState extends State<CipherWheel> {
   _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.right) {
       var input = _currentInput
-          .split(RegExp('[^0-9]+'))
-          .where((number) => number != null && number.length > 0)
-          .map((number) => int.tryParse(number))
-          .toList();
+        .split(RegExp('[^0-9]+'))
+        .where((number) => number != null && number.length > 0)
+        .map((number) => int.tryParse(number))
+        .toList();
       _output = decryptCipherWheel(input, _currentKey);
     } else {
       _output = encryptCipherWheel(_currentInput, _currentKey).join(' ');

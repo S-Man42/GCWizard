@@ -55,66 +55,34 @@ class SunRiseSetState extends State<SunRiseSet> {
 
   _buildOutput() {
     var sunRise = logic.SunRiseSet(
-        _currentCoords,
-        JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']),
-        _currentDateTime['timezone'],
-        getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name')));
+      _currentCoords,
+      JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']),
+      _currentDateTime['timezone'],
+      getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name'))
+    );
 
     var outputs = [
-      [
-        i18n(context, 'astronomy_riseset_astronomicalmorning'),
-        sunRise.astronomicalMorning.isNaN
-            ? i18n(context, 'astronomy_riseset_notavailable')
-            : formatHoursToHHmmss(sunRise.astronomicalMorning)
-      ],
-      [
-        i18n(context, 'astronomy_riseset_nauticalmorning'),
-        sunRise.nauticalMorning.isNaN
-            ? i18n(context, 'astronomy_riseset_notavailable')
-            : formatHoursToHHmmss(sunRise.nauticalMorning)
-      ],
-      [
-        i18n(context, 'astronomy_riseset_civilmorning'),
-        sunRise.civilMorning.isNaN
-            ? i18n(context, 'astronomy_riseset_notavailable')
-            : formatHoursToHHmmss(sunRise.civilMorning)
-      ],
-      [
-        i18n(context, 'astronomy_riseset_rise'),
-        sunRise.rise.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.rise)
-      ],
-      [
-        i18n(context, 'astronomy_riseset_transit'),
-        sunRise.transit.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.transit)
-      ],
-      [
-        i18n(context, 'astronomy_riseset_set'),
-        sunRise.set.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.set)
-      ],
-      [
-        i18n(context, 'astronomy_riseset_civilevening'),
-        sunRise.civilEvening.isNaN
-            ? i18n(context, 'astronomy_riseset_notavailable')
-            : formatHoursToHHmmss(sunRise.civilEvening)
-      ],
-      [
-        i18n(context, 'astronomy_riseset_nauticalevening'),
-        sunRise.nauticalEvening.isNaN
-            ? i18n(context, 'astronomy_riseset_notavailable')
-            : formatHoursToHHmmss(sunRise.nauticalEvening)
-      ],
-      [
-        i18n(context, 'astronomy_riseset_astronomicalevening'),
-        sunRise.astronomicalEvening.isNaN
-            ? i18n(context, 'astronomy_riseset_notavailable')
-            : formatHoursToHHmmss(sunRise.astronomicalEvening)
-      ],
+      [i18n(context, 'astronomy_riseset_astronomicalmorning'), sunRise.astronomicalMorning.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.astronomicalMorning)],
+      [i18n(context, 'astronomy_riseset_nauticalmorning'), sunRise.nauticalMorning.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.nauticalMorning)],
+      [i18n(context, 'astronomy_riseset_civilmorning'), sunRise.civilMorning.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.civilMorning)],
+      [i18n(context, 'astronomy_riseset_rise'), sunRise.rise.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.rise)],
+      [i18n(context, 'astronomy_riseset_transit'), sunRise.transit.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.transit)],
+      [i18n(context, 'astronomy_riseset_set'), sunRise.set.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.set)],
+      [i18n(context, 'astronomy_riseset_civilevening'), sunRise.civilEvening.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.civilEvening)],
+      [i18n(context, 'astronomy_riseset_nauticalevening'), sunRise.nauticalEvening.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.nauticalEvening)],
+      [i18n(context, 'astronomy_riseset_astronomicalevening'), sunRise.astronomicalEvening.isNaN ? i18n(context, 'astronomy_riseset_notavailable') : formatHoursToHHmmss(sunRise.astronomicalEvening)],
     ];
 
     var rows = columnedMultiLineOutput(context, outputs);
 
-    rows.insert(0, GCWTextDivider(text: i18n(context, 'common_output')));
+    rows.insert(0,
+      GCWTextDivider(
+        text: i18n(context, 'common_output')
+      )
+    );
 
-    return Column(children: rows);
+    return Column(
+      children: rows
+    );
   }
 }

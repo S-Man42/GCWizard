@@ -5,38 +5,7 @@ import 'package:latlong/latlong.dart';
 
 const int _DEFAULT_PRECISION = 8;
 
-const _BASE30 = [
-  '0',
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  'B',
-  'C',
-  'D',
-  'F',
-  'G',
-  'H',
-  'J',
-  'K',
-  'L',
-  'M',
-  'N',
-  'P',
-  'Q',
-  'R',
-  'S',
-  'T',
-  'V',
-  'W',
-  'X',
-  'Z'
-];
+const _BASE30 = ['0','1','2','3','4','5','6','7','8','9','B','C','D','F','G','H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Z'];
 
 // source: http://www.nacgeo.com/nacsite/documents/nac.asp
 
@@ -61,7 +30,9 @@ NaturalAreaCode latLonToNaturalAreaCode(LatLng coords, {int precision: _DEFAULT_
   var lat = (coords.latitude + 90.0) / 180.0;
 
   return NaturalAreaCode(
-      _latlonComponentToNACComponent(lon, precision), _latlonComponentToNACComponent(lat, precision));
+    _latlonComponentToNACComponent(lon, precision),
+    _latlonComponentToNACComponent(lat, precision)
+  );
 }
 
 double _nacComponentToLatLonComponent(String component) {
@@ -70,7 +41,8 @@ double _nacComponentToLatLonComponent(String component) {
   var a = 0.0;
   for (int i = 0; i < component.length; i++) {
     var value = _BASE30.indexOf(component[i]);
-    if (value == -1) continue;
+    if (value == -1)
+      continue;
 
     a += value / pow(30, i + 1);
   }
@@ -107,7 +79,8 @@ LatLng parseNaturalAreaCode(String input) {
     }
   }
 
-  if (matches.length == 0) return null;
+  if (matches.length == 0)
+    return null;
 
   return naturalAreaCodeToLatLon(NaturalAreaCode(xString, yString));
 }

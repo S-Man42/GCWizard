@@ -19,7 +19,9 @@ class CaesarState extends State<Caesar> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: _currentInput);
+    _controller = TextEditingController(
+        text: _currentInput
+    );
   }
 
   @override
@@ -49,7 +51,9 @@ class CaesarState extends State<Caesar> {
             });
           },
         ),
-        GCWDefaultOutput(child: _output)
+        GCWDefaultOutput(
+          child: _output
+        )
       ],
     );
   }

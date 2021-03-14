@@ -7,29 +7,27 @@ import 'package:gc_wizard/utils/common_utils.dart';
 class BrainfkDerivat {
   Map<String, String> substitutions;
 
-  BrainfkDerivat(
-      {pointerShiftLeftInstruction,
-      pointerShiftRightInstruction,
-      decreaseValueInstruction,
-      increaseValueInstruction,
-      startLoopInstruction,
-      endLoopInstruction,
-      inputInstruction,
-      outputInstruction}) {
+  BrainfkDerivat({
+    pointerShiftLeftInstruction, pointerShiftRightInstruction,
+    decreaseValueInstruction, increaseValueInstruction,
+    startLoopInstruction, endLoopInstruction,
+    inputInstruction, outputInstruction
+  }) {
     substitutions = {
-      pointerShiftLeftInstruction: '<',
-      pointerShiftRightInstruction: '>',
-      decreaseValueInstruction: '-',
-      increaseValueInstruction: '+',
-      startLoopInstruction: '[',
-      endLoopInstruction: ']',
-      inputInstruction: ',',
-      outputInstruction: '.'
+      pointerShiftLeftInstruction : '<',
+      pointerShiftRightInstruction : '>',
+      decreaseValueInstruction : '-',
+      increaseValueInstruction : '+',
+      startLoopInstruction : '[',
+      endLoopInstruction : ']',
+      inputInstruction : ',',
+      outputInstruction : '.'
     };
   }
 
   String interpretBrainfkDerivat(String code, {String input}) {
-    if (code == null || code.length == 0) return '';
+    if (code == null || code.length == 0)
+      return '';
 
     var brainfk = '';
     while (code.length > 0) {
@@ -51,7 +49,8 @@ class BrainfkDerivat {
   }
 
   String generateBrainfkDerivat(String text) {
-    if (text == null || text.length == 0) return '';
+    if (text == null || text.length == 0)
+      return '';
 
     var brainfk = generateBrainfk(text);
     return substitution(brainfk, switchMapKeyValue(substitutions));

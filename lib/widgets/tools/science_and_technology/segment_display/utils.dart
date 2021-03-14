@@ -18,15 +18,17 @@ buildSegmentDisplayOutput(countColumns, displays) {
           child: display,
           padding: EdgeInsets.all(2),
         );
+
       } else {
         widget = Container();
       }
 
       columns.add(Expanded(
-          child: Container(
-        child: widget,
-        padding: EdgeInsets.all(3),
-      )));
+        child: Container(
+          child: widget,
+          padding: EdgeInsets.all(3),
+        )
+      ));
     }
 
     rows.add(Row(

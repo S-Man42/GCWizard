@@ -15,49 +15,51 @@ class GCWOutputText extends StatefulWidget {
   final bool suppressCopyButton;
   final dynamic copyText;
 
-  const GCWOutputText(
-      {Key key,
-      this.text,
-      this.align: Alignment.centerLeft,
-      this.isMonotype: false,
-      this.style,
-      this.suppressCopyButton: false,
-      this.copyText})
-      : super(key: key);
+  const GCWOutputText({
+    Key key,
+    this.text,
+    this.align: Alignment.centerLeft,
+    this.isMonotype: false,
+    this.style,
+    this.suppressCopyButton: false,
+    this.copyText
+  }) : super(key: key);
 
   @override
   _GCWOutputTextState createState() => _GCWOutputTextState();
 }
 
 class _GCWOutputTextState extends State<GCWOutputText> {
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
           child: Align(
-              alignment: Alignment.centerLeft,
-              child: SelectableText(
-                widget.text,
-                textAlign: TextAlign.left,
-                style: widget.style ?? (widget.isMonotype ? gcwMonotypeTextStyle() : gcwTextStyle()),
-              )),
+            alignment: Alignment.centerLeft,
+            child: SelectableText(
+              widget.text,
+              textAlign: TextAlign.left,
+              style: widget.style ?? (widget.isMonotype ? gcwMonotypeTextStyle() : gcwTextStyle()),
+            )
+          ),
         ),
         widget.text != null && widget.text.length > 0 && !widget.suppressCopyButton
-            ? GCWIconButton(
-                iconColor: widget.style != null ? widget.style.color : themeColors().mainFont(),
-                size: IconButtonSize.SMALL,
-                iconData: Icons.content_copy,
-                onPressed: () {
-                  var copyText = widget.copyText != null ? widget.copyText.toString() : widget.text;
+          ? GCWIconButton(
+              iconColor: widget.style != null ? widget.style.color : themeColors().mainFont(),
+              size: IconButtonSize.SMALL,
+              iconData: Icons.content_copy,
+              onPressed: () {
+                var copyText = widget.copyText != null ? widget.copyText.toString() : widget.text;
 
-                  Clipboard.setData(ClipboardData(text: copyText));
-                  insertIntoGCWClipboard(copyText);
+                Clipboard.setData(ClipboardData(text: copyText));
+                insertIntoGCWClipboard(copyText);
 
-                  showToast(i18n(context, 'common_clipboard_copied') + ':\n' + copyText);
-                },
-              )
-            : Container()
+                showToast(i18n(context, 'common_clipboard_copied') + ':\n' + copyText);
+              },
+            )
+          : Container()
       ],
     );
   }

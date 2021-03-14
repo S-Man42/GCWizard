@@ -10,7 +10,7 @@ const ELLIPSOID_NAME_CLARKE1866 = 'Clarke 1866';
 const ELLIPSOID_NAME_HAYFORD1924 = 'Hayford 1924';
 const ELLIPSOID_NAME_KRASOVSKY1940 = 'Krasovsky 1940';
 
-enum EllipsoidType { STANDARD, USER_DEFINED }
+enum EllipsoidType {STANDARD, USER_DEFINED}
 
 class Ellipsoid {
   String name;

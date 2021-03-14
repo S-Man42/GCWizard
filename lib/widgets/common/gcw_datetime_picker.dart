@@ -6,7 +6,7 @@ import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-enum DateTimePickerType { DATETIME, DATE_ONLY, TIME_ONLY }
+enum DateTimePickerType {DATETIME, DATE_ONLY, TIME_ONLY}
 
 class TimeZone {
   final int offset;
@@ -15,7 +15,7 @@ class TimeZone {
   TimeZone(this.offset, this.name);
 }
 
-final TIMEZONES = [
+final TIMEZONES =  [
   TimeZone(720, 'IDLW'),
   TimeZone(-660, ''),
   TimeZone(-600, 'HAST'),
@@ -64,14 +64,14 @@ class GCWDateTimePicker extends StatefulWidget {
   final bool withTimezones;
   final Duration timezoneOffset;
 
-  const GCWDateTimePicker(
-      {Key key,
-      this.onChanged,
-      this.datetime,
-      this.type: DateTimePickerType.DATETIME,
-      this.withTimezones: false,
-      this.timezoneOffset: const Duration(hours: 0)})
-      : super(key: key);
+  const GCWDateTimePicker({
+    Key key,
+    this.onChanged,
+    this.datetime,
+    this.type: DateTimePickerType.DATETIME,
+    this.withTimezones: false,
+    this.timezoneOffset: const Duration(hours: 0)
+  }) : super(key: key);
 
   @override
   GCWDateTimePickerState createState() => GCWDateTimePickerState();
@@ -140,64 +140,77 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     if (widget.type != DateTimePickerType.TIME_ONLY) {
       datePart = <Widget>[
         Expanded(
-            child: Padding(
-                child: GCWIntegerSpinner(
-                  layout: SpinnerLayout.VERTICAL,
-                  value: _currentYear,
-                  min: -5000,
-                  max: 5000,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentYear = value;
-                      _setCurrentValueAndEmitOnChange();
+          child: Padding(
+            child: GCWIntegerSpinner(
+              layout: SpinnerLayout.VERTICAL,
+              value: _currentYear,
+              min: -5000,
+              max: 5000,
+              onChanged: (value) {
+                setState(() {
+                  _currentYear = value;
+                  _setCurrentValueAndEmitOnChange();
 
-                      if (_currentYear.toString().length == 4) {
-                        FocusScope.of(context).requestFocus(_monthFocusNode);
-                      }
-                    });
-                  },
-                ),
-                padding: EdgeInsets.only(right: 2)),
-            flex: 5),
-        Expanded(
-            child: Padding(
-                child: GCWIntegerSpinner(
-                  focusNode: _monthFocusNode,
-                  layout: SpinnerLayout.VERTICAL,
-                  value: _currentMonth,
-                  min: 1,
-                  max: 12,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentMonth = value;
-                      _setCurrentValueAndEmitOnChange();
-
-                      if (_currentMonth.toString().length == 2) {
-                        FocusScope.of(context).requestFocus(_dayFocusNode);
-                      }
-                    });
-                  },
-                ),
-                padding: EdgeInsets.only(left: 2, right: 2)),
-            flex: 4),
-        Expanded(
-            child: Padding(
-              child: GCWIntegerSpinner(
-                focusNode: _dayFocusNode,
-                layout: SpinnerLayout.VERTICAL,
-                value: _currentDay,
-                min: 1,
-                max: 31,
-                onChanged: (value) {
-                  setState(() {
-                    _currentDay = value;
-                    _setCurrentValueAndEmitOnChange();
-                  });
-                },
-              ),
-              padding: EdgeInsets.only(left: 2, right: widget.type == DateTimePickerType.DATETIME ? 2 : 0),
+                  if (_currentYear.toString().length == 4) {
+                    FocusScope.of(context).requestFocus(_monthFocusNode);
+                  }
+                });
+              },
             ),
-            flex: 4)
+            padding: EdgeInsets.only (
+              right: 2
+            )
+          ),
+          flex: 5
+        ),
+        Expanded(
+          child: Padding(
+            child: GCWIntegerSpinner(
+              focusNode: _monthFocusNode,
+              layout: SpinnerLayout.VERTICAL,
+              value: _currentMonth,
+              min: 1,
+              max: 12,
+              onChanged: (value) {
+                setState(() {
+                  _currentMonth = value;
+                  _setCurrentValueAndEmitOnChange();
+
+                  if (_currentMonth.toString().length == 2) {
+                    FocusScope.of(context).requestFocus(_dayFocusNode);
+                  }
+                });
+              },
+            ),
+            padding: EdgeInsets.only(
+              left: 2,
+              right: 2
+            )
+          ),
+          flex: 4
+        ),
+        Expanded(
+          child: Padding(
+            child: GCWIntegerSpinner(
+              focusNode: _dayFocusNode,
+              layout: SpinnerLayout.VERTICAL,
+              value: _currentDay,
+              min: 1,
+              max: 31,
+              onChanged: (value) {
+                setState(() {
+                  _currentDay = value;
+                  _setCurrentValueAndEmitOnChange();
+                });
+              },
+            ),
+            padding: EdgeInsets.only(
+              left: 2,
+              right: widget.type == DateTimePickerType.DATETIME ? 2 : 0
+            ),
+          ),
+          flex: 4
+        )
       ];
     }
 
@@ -205,90 +218,109 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     if (widget.type != DateTimePickerType.DATE_ONLY) {
       timePart = <Widget>[
         Expanded(
-            child: Padding(
-                child: GCWIntegerSpinner(
-                  layout: SpinnerLayout.VERTICAL,
-                  value: _currentHour,
-                  min: 0,
-                  max: 23,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentHour = value;
-                      _setCurrentValueAndEmitOnChange();
+          child: Padding(
+            child: GCWIntegerSpinner(
+              layout: SpinnerLayout.VERTICAL,
+              value: _currentHour,
+              min: 0,
+              max: 23,
+              onChanged: (value) {
+                setState(() {
+                  _currentHour = value;
+                  _setCurrentValueAndEmitOnChange();
 
-                      if (_currentHour.toString().length == 2) {
-                        FocusScope.of(context).requestFocus(_minuteFocusNode);
-                      }
-                    });
-                  },
-                ),
-                padding: EdgeInsets.only(left: widget.type == DateTimePickerType.DATETIME ? 2 : 0, right: 2)),
-            flex: 4),
-        Expanded(
-            child: Padding(
-                child: GCWIntegerSpinner(
-                  focusNode: _minuteFocusNode,
-                  layout: SpinnerLayout.VERTICAL,
-                  value: _currentMinute,
-                  min: 0,
-                  max: 59,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentMinute = value;
-                      _setCurrentValueAndEmitOnChange();
-
-                      if (_currentMinute.toString().length == 2) {
-                        FocusScope.of(context).requestFocus(_secondFocusNode);
-                      }
-                    });
-                  },
-                ),
-                padding: EdgeInsets.only(left: 2, right: 2)),
-            flex: 4),
-        Expanded(
-            child: Padding(
-              child: GCWDoubleSpinner(
-                focusNode: _secondFocusNode,
-                layout: SpinnerLayout.VERTICAL,
-                value: _currentSecond,
-                numberDecimalDigits: 4,
-                min: 0.0,
-                max: 59.999,
-                onChanged: (value) {
-                  setState(() {
-                    _currentSecond = value;
-                    _setCurrentValueAndEmitOnChange();
-                  });
-                },
-              ),
-              padding: EdgeInsets.only(
-                left: 2,
-              ),
+                  if (_currentHour.toString().length == 2) {
+                    FocusScope.of(context).requestFocus(_minuteFocusNode);
+                  }
+                });
+              },
             ),
-            flex: 6)
+            padding: EdgeInsets.only (
+              left: widget.type == DateTimePickerType.DATETIME ? 2 : 0,
+              right: 2
+            )
+          ),
+          flex: 4
+        ),
+        Expanded(
+          child: Padding(
+            child: GCWIntegerSpinner(
+              focusNode: _minuteFocusNode,
+              layout: SpinnerLayout.VERTICAL,
+              value: _currentMinute,
+              min: 0,
+              max: 59,
+              onChanged: (value) {
+                setState(() {
+                  _currentMinute = value;
+                  _setCurrentValueAndEmitOnChange();
+
+                  if (_currentMinute.toString().length == 2) {
+                    FocusScope.of(context).requestFocus(_secondFocusNode);
+                  }
+                });
+              },
+            ),
+            padding: EdgeInsets.only(
+              left: 2,
+              right: 2
+            )
+          ),
+          flex: 4
+        ),
+        Expanded(
+          child: Padding(
+            child: GCWDoubleSpinner(
+              focusNode: _secondFocusNode,
+              layout: SpinnerLayout.VERTICAL,
+              value: _currentSecond,
+              numberDecimalDigits: 4,
+              min: 0.0,
+              max: 59.999,
+              onChanged: (value) {
+                setState(() {
+                  _currentSecond = value;
+                  _setCurrentValueAndEmitOnChange();
+                });
+              },
+            ),
+            padding: EdgeInsets.only(
+              left: 2,
+            ),
+          ),
+          flex: 6
+        )
       ];
     }
 
     var datetimeChildren = <Widget>[];
-    if (datePart != null) datetimeChildren.addAll(datePart);
+    if (datePart != null)
+      datetimeChildren.addAll(datePart);
 
     if (widget.type == DateTimePickerType.DATETIME) {
-      datetimeChildren.add(Expanded(
+      datetimeChildren.add(
+        Expanded(
           child: GCWText(
             text: '-',
             textAlign: TextAlign.center,
           ),
-          flex: 1));
+          flex: 1
+        )
+      );
     }
 
-    if (timePart != null) datetimeChildren.addAll(timePart);
+    if (timePart != null)
+      datetimeChildren.addAll(timePart);
+
 
     return Column(
       children: <Widget>[
         Row(
           children: datetimeChildren,
         ),
-        widget.withTimezones ? _buildTimeZonesDropdownButton() : Container()
+        widget.withTimezones
+          ? _buildTimeZonesDropdownButton()
+          : Container()
       ],
     );
   }
@@ -304,29 +336,33 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
   _buildTimeZonesDropdownButton() {
     return Row(
       children: [
-        Expanded(child: GCWText(text: 'Timezone'), flex: 1),
         Expanded(
-            child: GCWDropDownSpinner(
-              index: _currentTimezoneOffsetIndex,
-              items: TIMEZONES
-                  .asMap()
-                  .map((index, timeZone) {
-                    return MapEntry(
-                        index,
-                        GCWDropDownMenuItem(
-                            value: index, child: _buildTimeZoneItemText(timeZone), subtitle: timeZone.name ?? ''));
-                  })
-                  .values
-                  .toList(),
-              onChanged: (value) {
-                setState(() {
-                  _currentTimezoneOffsetIndex = value;
-                  _currentTimezoneOffset = _indexToTimezoneOffset(value);
-                  _setCurrentValueAndEmitOnChange();
-                });
-              },
-            ),
-            flex: 3),
+          child: GCWText(text: 'Timezone'),
+          flex: 1
+        ),
+        Expanded(
+          child: GCWDropDownSpinner(
+            index: _currentTimezoneOffsetIndex,
+            items: TIMEZONES.asMap().map((index, timeZone) {
+              return MapEntry(
+                index,
+                GCWDropDownMenuItem(
+                  value: index,
+                  child: _buildTimeZoneItemText(timeZone),
+                  subtitle: timeZone.name ?? ''
+                )
+              );
+            }).values.toList(),
+            onChanged: (value) {
+              setState(() {
+                _currentTimezoneOffsetIndex = value;
+                _currentTimezoneOffset = _indexToTimezoneOffset(value);
+                _setCurrentValueAndEmitOnChange();
+              });
+            },
+          ),
+          flex: 3
+        ),
       ],
     );
   }
@@ -350,8 +386,7 @@ class GCWDateTimePickerState extends State<GCWDateTimePicker> {
     var milliseconds = ((_currentSecond - seconds) * 1000).round();
 
     var output = {
-      'datetime':
-          DateTime(_currentYear, _currentMonth, _currentDay, _currentHour, _currentMinute, seconds, milliseconds),
+      'datetime': DateTime(_currentYear, _currentMonth, _currentDay, _currentHour, _currentMinute, seconds, milliseconds),
       'timezone': Duration(minutes: _currentTimezoneOffset)
     };
 

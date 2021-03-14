@@ -14,6 +14,7 @@ class SummerSimmerIndex extends StatefulWidget {
 }
 
 class SummerSimmerIndexState extends State<SummerSimmerIndex> {
+
   double _currentTemperature = 0.0;
   double _currentHumidity = 0.0;
 
@@ -30,31 +31,35 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
               flex: 1,
             ),
             Expanded(
-                child: Column(
-                  children: [
-                    GCWTwoOptionsSwitch(
-                      notitle: true,
-                      leftValue: i18n(context, 'summersimmerindex_unit_celsius'),
-                      rightValue: i18n(context, 'summersimmerindex_unit_fahrenheit'),
-                      value: _isMetric ? GCWSwitchPosition.left : GCWSwitchPosition.right,
-                      onChanged: (value) {
-                        setState(() {
-                          _isMetric = value == GCWSwitchPosition.left;
-                        });
-                      },
-                    ),
-                    GCWDoubleSpinner(
-                        value: _currentTemperature,
-                        onChanged: (value) {
-                          setState(() {
-                            _currentTemperature = value;
-                          });
-                        }),
-                  ],
-                ),
-                flex: 3)
+              child: Column(
+                children: [
+                  GCWTwoOptionsSwitch(
+                    notitle: true,
+                    leftValue: i18n(context, 'summersimmerindex_unit_celsius'),
+                    rightValue: i18n(context, 'summersimmerindex_unit_fahrenheit'),
+                    value: _isMetric ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+                    onChanged: (value) {
+                      setState(() {
+                        _isMetric = value == GCWSwitchPosition.left;
+                      });
+                    },
+                  ),
+
+                  GCWDoubleSpinner(
+                    value: _currentTemperature,
+                    onChanged: (value) {
+                      setState(() {
+                        _currentTemperature = value;
+                      });
+                    }
+                  ),
+                ],
+              ),
+              flex: 3
+            )
           ],
         ),
+
         GCWDoubleSpinner(
             title: i18n(context, 'summersimmerindex_humidity'),
             value: _currentHumidity,
@@ -64,7 +69,8 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
               setState(() {
                 _currentHumidity = value;
               });
-            }),
+            }
+        ),
         _buildOutput(context)
       ],
     );
@@ -83,29 +89,40 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
     }
 
     String hintT;
-    if ((_isMetric && _currentTemperature < 18) || (!_isMetric && _currentTemperature < 64)) {
+    if (
+    (_isMetric && _currentTemperature < 18)
+        || (!_isMetric && _currentTemperature < 64)
+    ) {
       hintT = i18n(context, 'heatindex_hint_temperature', parameters: ['${_isMetric ? 18 : 64} $unit']);
     }
 
     String hintH;
-    if (_currentHumidity < 40) hintH = i18n(context, 'heatindex_hint_humidity');
+    if (_currentHumidity < 40)
+      hintH = i18n(context, 'heatindex_hint_humidity');
 
     var hint = [hintT, hintH].where((element) => element != null && element.length > 0).join('\n');
 
     String hintM;
     if (output > 51.7)
       hintM = 'summersimmerindex_index_51.7';
-    else if (output > 44.4)
+    else
+    if (output > 44.4)
       hintM = 'summersimmerindex_index_44.4';
-    else if (output > 37.8)
+    else
+    if (output > 37.8)
       hintM = 'summersimmerindex_index_37.8';
-    else if (output > 32.8)
+    else
+    if (output > 32.8)
       hintM = 'summersimmerindex_index_32.8';
-    else if (output > 28.3)
+    else
+    if (output > 28.3)
       hintM = 'summersimmerindex_index_28.3';
-    else if (output > 25.0)
+    else
+    if (output > 25.0)
       hintM = 'summersimmerindex_index_25.0';
-    else if (output > 21.3) hintM = 'summersimmerindex_index_21.3';
+    else
+    if (output > 21.3)
+      hintM = 'summersimmerindex_index_21.3';
 
     var outputs = [
       GCWOutput(
@@ -114,10 +131,21 @@ class SummerSimmerIndexState extends State<SummerSimmerIndex> {
       )
     ];
 
-    if (hint != null && hint.length > 0) outputs.add(GCWOutput(title: i18n(context, 'heatindex_hint'), child: hint));
+    if (hint != null && hint.length > 0)
+      outputs.add(
+        GCWOutput(
+          title: i18n(context, 'heatindex_hint'),
+          child: hint
+        )
+      );
 
     if (hintM != null && hintM.length > 0)
-      outputs.add(GCWOutput(title: i18n(context, 'heatindex_meaning'), child: i18n(context, hintM)));
+      outputs.add(
+        GCWOutput(
+          title: i18n(context, 'heatindex_meaning'),
+          child: i18n(context, hintM)
+        )
+      );
 
     return GCWMultipleOutput(
       children: outputs,

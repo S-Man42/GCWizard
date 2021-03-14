@@ -16,6 +16,7 @@ class Keyboard extends StatefulWidget {
 class KeyboardState extends State<Keyboard> {
   var _inputController;
 
+
   String _currentInput = '';
 
   KeyboardLayout _currentKeyboardFrom = KeyboardLayout.QWERTZ_T1;
@@ -35,6 +36,7 @@ class KeyboardState extends State<Keyboard> {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: <Widget>[
         GCWTextField(
@@ -50,8 +52,10 @@ class KeyboardState extends State<Keyboard> {
             Expanded(
               child: Container(
                 child: Column(
-                  children: <Widget>[
-                    GCWTextDivider(text: i18n(context, 'keyboard_from')),
+                 children: <Widget>[
+                    GCWTextDivider(
+                      text: i18n(context, 'keyboard_from')
+                    ),
                     GCWDropDownButton(
                       value: _currentKeyboardFrom,
                       onChanged: (value) {
@@ -61,7 +65,10 @@ class KeyboardState extends State<Keyboard> {
                       },
                       items: allKeyboards.map((keyboard) {
                         return GCWDropDownMenuItem(
-                            value: keyboard.key, child: i18n(context, keyboard.name), subtitle: keyboard.example);
+                          value: keyboard.key,
+                          child: i18n(context, keyboard.name),
+                          subtitle: keyboard.example
+                        );
                       }).toList(),
                     ),
                   ],
@@ -73,7 +80,9 @@ class KeyboardState extends State<Keyboard> {
               child: Container(
                 child: Column(
                   children: <Widget>[
-                    GCWTextDivider(text: i18n(context, 'keyboard_to')),
+                    GCWTextDivider(
+                      text: i18n(context, 'keyboard_to')
+                    ),
                     GCWDropDownButton(
                       value: _currentKeyboardTo,
                       onChanged: (value) {
@@ -83,7 +92,10 @@ class KeyboardState extends State<Keyboard> {
                       },
                       items: allKeyboards.map((keyboard) {
                         return GCWDropDownMenuItem(
-                            value: keyboard.key, child: i18n(context, keyboard.name), subtitle: keyboard.example);
+                          value: keyboard.key,
+                          child: i18n(context, keyboard.name),
+                          subtitle: keyboard.example
+                        );
                       }).toList(),
                     ),
                   ],
@@ -100,8 +112,9 @@ class KeyboardState extends State<Keyboard> {
 
   _buildOutput() {
     return GCWDefaultOutput(
-        child: GCWOutputText(
-      text: encodeKeyboard(_currentInput, _currentKeyboardFrom, _currentKeyboardTo),
-    ));
+      child: GCWOutputText(
+          text: encodeKeyboard(_currentInput, _currentKeyboardFrom, _currentKeyboardTo),
+      )
+    );
   }
 }

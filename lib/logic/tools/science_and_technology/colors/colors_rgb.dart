@@ -41,7 +41,8 @@ class HexCode {
   }
 
   String get shortHexCode {
-    if (isShortHex) return '#' + hexCode[0] + hexCode[2] + hexCode[4];
+    if (isShortHex)
+      return '#' + hexCode[0] + hexCode[2] + hexCode[4];
 
     return null;
   }
@@ -49,13 +50,14 @@ class HexCode {
   HexCode(String hexCode) {
     hexCode = hexCode.toUpperCase().replaceAll(RegExp(r'[^0-9A-F]'), '');
 
-    if (hexCode.length == 3) {
-      //shorthex
+    if (hexCode.length == 3) { //shorthex
       hexCode = hexCode.split('').map((character) => character * 2).join();
     }
 
-    if (hexCode.length < 6) hexCode = hexCode.padRight(6, '0');
-    if (hexCode.length > 6) hexCode = hexCode.substring(0, 6);
+    if (hexCode.length < 6)
+      hexCode = hexCode.padRight(6, '0');
+    if (hexCode.length > 6)
+      hexCode = hexCode.substring(0, 6);
 
     this.hexCode = hexCode;
   }
@@ -69,9 +71,11 @@ class HexCode {
   }
 
   static HexCode fromRGB(RGB rgb) {
-    return HexCode(rgb.red.round().toRadixString(16).padLeft(2, '0') +
-        rgb.green.round().toRadixString(16).padLeft(2, '0') +
-        rgb.blue.round().toRadixString(16).padLeft(2, '0'));
+    return HexCode(
+        rgb.red.round().toRadixString(16).padLeft(2, '0') +
+            rgb.green.round().toRadixString(16).padLeft(2, '0') +
+            rgb.blue.round().toRadixString(16).padLeft(2, '0')
+    );
   }
 
   @override

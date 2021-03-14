@@ -36,13 +36,14 @@ class VanitySingleNumbersState extends State<VanitySingleNumbers> {
             });
           },
         ),
-        GCWDefaultOutput(child: _buildOutput())
+        GCWDefaultOutput(
+          child: _buildOutput()
+        )
       ],
     );
   }
 
   _buildOutput() {
-    return encryptVanitySingleNumbers(_currentInput,
-        numberForSpace: _currentNumberForSpaceMode == GCWSwitchPosition.right ? '1' : '0');
+    return encryptVanitySingleNumbers(_currentInput, numberForSpace: _currentNumberForSpaceMode == GCWSwitchPosition.right ? '1' : '0');
   }
 }

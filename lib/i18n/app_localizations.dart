@@ -18,13 +18,14 @@ class AppLocalizations {
   }
 
   // Static member to have a simple access to the delegate from the MaterialApp
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   Map<String, String> _localizedStrings;
 
   Future<bool> load() async {
-    Map<String, String> _defaultLocalizedStrings = await loadLang(defaultLanguage);
-    Map<String, String> _localStrings = await loadLang(locale.languageCode);
+    Map<String, String>  _defaultLocalizedStrings = await loadLang(defaultLanguage);
+    Map<String, String>  _localStrings = await loadLang(locale.languageCode);
 
     _localizedStrings = {
       ..._defaultLocalizedStrings,
@@ -36,10 +37,11 @@ class AppLocalizations {
 
   Future<Map<String, String>> loadLang(langCode) async {
     // Load the language JSON file from the "lang" folder
-    String jsonString = await rootBundle.loadString('assets/i18n/${langCode}.json');
+    String jsonString =
+        await rootBundle.loadString('assets/i18n/${langCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
-    Map<String, String> _strings = jsonMap.map((key, value) {
+    Map<String, String>  _strings = jsonMap.map((key, value) {
       return MapEntry(key, value.toString());
     });
     return _strings;
@@ -51,7 +53,8 @@ class AppLocalizations {
   }
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   // This delegate instance will never change (it doesn't even have fields!)
   // It can provide a constant constructor.
   const _AppLocalizationsDelegate();

@@ -24,20 +24,18 @@ class GCWIntegerSpinner extends StatefulWidget {
   final focusNode;
   final SpinnerOverflowType overflow;
 
-  const GCWIntegerSpinner(
-      {Key key,
-      this.onChanged,
-      this.title,
-      this.value,
-      this.min: -9007199254740991,
-      this.max: 9007199254740992,
-      this.controller,
-      this.layout: SpinnerLayout.HORIZONTAL,
-      this.focusNode,
-      this.overflow:
-          SpinnerOverflowType.ALLOW_OVERFLOW // TODO: Automatically true if this.min == null || this.max == null
-      })
-      : super(key: key);
+  const GCWIntegerSpinner({
+    Key key,
+    this.onChanged,
+    this.title,
+    this.value,
+    this.min: -9007199254740991,
+    this.max: 9007199254740992,
+    this.controller,
+    this.layout: SpinnerLayout.HORIZONTAL,
+    this.focusNode,
+    this.overflow: SpinnerOverflowType.ALLOW_OVERFLOW // TODO: Automatically true if this.min == null || this.max == null
+  }) : super(key: key);
 
   @override
   GCWIntegerSpinnerState createState() => GCWIntegerSpinnerState();
@@ -54,7 +52,8 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     if (widget.controller != null) {
       _controller = widget.controller;
     } else {
-      if (widget.value != null) _currentValue = widget.value;
+      if (widget.value != null)
+        _currentValue = widget.value;
 
       _controller = TextEditingController(text: _currentValue.toString());
     }
@@ -62,13 +61,15 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   @override
   void dispose() {
-    if (widget.controller == null) _controller.dispose();
+    if (widget.controller == null)
+      _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.value != null) _currentValue = widget.value;
+    if (widget.value != null)
+      _currentValue = widget.value;
 
     return _buildSpinner();
   }
@@ -77,9 +78,9 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     setState(() {
       if (widget.min == null || _currentValue > widget.min || widget.overflow == SpinnerOverflowType.OVERFLOW_MAX) {
         _currentValue--;
-      } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MIN].contains(widget.overflow) &&
-          _currentValue == widget.min &&
-          widget.max != null) {
+      } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MIN].contains(widget.overflow)
+          && _currentValue == widget.min && widget.max != null
+      ) {
         _currentValue = widget.max;
       }
 
@@ -91,9 +92,9 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
     setState(() {
       if (widget.max == null || _currentValue < widget.max || widget.overflow == SpinnerOverflowType.OVERFLOW_MIN) {
         _currentValue++;
-      } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MAX].contains(widget.overflow) &&
-          _currentValue == widget.max &&
-          widget.min != null) {
+      } else if ([SpinnerOverflowType.ALLOW_OVERFLOW, SpinnerOverflowType.OVERFLOW_MAX].contains(widget.overflow)
+          && _currentValue == widget.max && widget.min != null
+      ) {
         _currentValue = widget.min;
       }
 
@@ -102,21 +103,28 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
   }
 
   Widget _buildTitle() {
-    return widget.title == null ? Container() : Expanded(child: GCWText(text: widget.title + ':'), flex: 1);
+    return widget.title == null ?  Container() :
+      Expanded(
+        child: GCWText(
+          text: widget.title + ':'
+        ),
+        flex: 1
+      );
   }
 
   Widget _buildTextField() {
     return GCWIntegerTextField(
-        focusNode: widget.focusNode,
-        min: widget.overflow == SpinnerOverflowType.OVERFLOW_MAX ? null : widget.min,
-        max: widget.overflow == SpinnerOverflowType.OVERFLOW_MIN ? null : widget.max,
-        controller: _controller,
-        onChanged: (ret) {
-          setState(() {
-            _currentValue = ret['value'];
-            _setCurrentValueAndEmitOnChange();
-          });
+      focusNode: widget.focusNode,
+      min: widget.overflow == SpinnerOverflowType.OVERFLOW_MAX ? null : widget.min,
+      max: widget.overflow == SpinnerOverflowType.OVERFLOW_MIN ? null : widget.max,
+      controller: _controller,
+      onChanged: (ret) {
+        setState(() {
+          _currentValue = ret['value'];
+          _setCurrentValueAndEmitOnChange();
         });
+      }
+    );
   }
 
   Widget _buildSpinner() {
@@ -125,20 +133,33 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
         children: <Widget>[
           _buildTitle(),
           Expanded(
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    child: GCWIconButton(iconData: Icons.remove, onPressed: _decreaseValue),
-                    margin: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  child: GCWIconButton(
+                    iconData: Icons.remove,
+                    onPressed: _decreaseValue
                   ),
-                  Expanded(child: _buildTextField()),
-                  Container(
-                    child: GCWIconButton(iconData: Icons.add, onPressed: _increaseValue),
-                    margin: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
-                  )
-                ],
-              ),
-              flex: 3)
+                  margin: EdgeInsets.only(
+                    right: DOUBLE_DEFAULT_MARGIN
+                  ),
+                ),
+                Expanded(
+                  child: _buildTextField()
+                ),
+                Container(
+                  child: GCWIconButton(
+                    iconData: Icons.add,
+                    onPressed: _increaseValue
+                  ),
+                  margin: EdgeInsets.only(
+                    left: DOUBLE_DEFAULT_MARGIN
+                  ),
+                )
+              ],
+            ),
+            flex: 3
+          )
         ],
       );
     } else {
@@ -146,15 +167,22 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
         children: <Widget>[
           _buildTitle(),
           Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  GCWIconButton(iconData: Icons.arrow_drop_up, onPressed: _increaseValue),
-                  _buildTextField(),
-                  GCWIconButton(iconData: Icons.arrow_drop_down, onPressed: _decreaseValue),
-                ],
-              ),
-              flex: 3),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                GCWIconButton(
+                  iconData: Icons.arrow_drop_up,
+                  onPressed: _increaseValue
+                ),
+                _buildTextField(),
+                GCWIconButton(
+                  iconData: Icons.arrow_drop_down,
+                  onPressed: _decreaseValue
+                ),
+              ],
+            ),
+            flex: 3
+          ),
         ],
       );
     }

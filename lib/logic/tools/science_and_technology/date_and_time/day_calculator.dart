@@ -8,14 +8,21 @@ class DayCalculatorOutput {
 }
 
 DayCalculatorOutput calculateDayDifferences(DateTime start, DateTime end, {countStart: true, countEnd: true}) {
-  if (start == null || end == null) return null;
+  if (start == null || end == null)
+    return null;
 
   Duration difference;
   if (start.compareTo(end) == 0) {
-    if (!countStart && !countEnd) return DayCalculatorOutput(0, 0, 0, 0);
+    if (!countStart && !countEnd)
+      return DayCalculatorOutput(0, 0, 0, 0);
 
     difference = Duration(days: 1);
-    return DayCalculatorOutput(difference.inDays, difference.inHours, difference.inMinutes, difference.inSeconds);
+    return DayCalculatorOutput(
+      difference.inDays,
+      difference.inHours,
+      difference.inMinutes,
+      difference.inSeconds
+    );
   }
 
   if (start.isAfter(end)) {
@@ -32,7 +39,8 @@ DayCalculatorOutput calculateDayDifferences(DateTime start, DateTime end, {count
       difference = newDifference;
   }
 
-  if (countEnd != null && countEnd == true) difference += Duration(days: 1);
+  if (countEnd != null && countEnd == true)
+    difference += Duration(days: 1);
 
   var seconds = difference.inSeconds;
   var minutes = difference.inMinutes;

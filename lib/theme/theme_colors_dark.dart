@@ -10,7 +10,8 @@ class ThemeColorsDark extends ThemeColors {
 
   @override
   ThemeData base() {
-    if (_base == null) _base = ThemeData.dark();
+    if (_base == null)
+      _base = ThemeData.dark();
 
     return _base;
   }

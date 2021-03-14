@@ -58,44 +58,58 @@ class KennyState extends State<Kenny> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'common_key')),
+        GCWTextDivider(
+          text: i18n(context, 'common_key')
+        ),
         Row(
           children: <Widget>[
             Expanded(
               child: Container(
-                  child: GCWTextField(
-                    controller: _mController,
-                    onChanged: (text) {
-                      setState(() {
-                        _currentM = text;
-                      });
-                    },
-                  ),
-                  padding: EdgeInsets.only(left: 6, right: 6)),
+                child: GCWTextField(
+                  controller: _mController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentM = text;
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(
+                  left: 6,
+                  right: 6
+                )
+              ),
             ),
             Expanded(
               child: Container(
-                  child: GCWTextField(
-                    controller: _pController,
-                    onChanged: (text) {
-                      setState(() {
-                        _currentP = text;
-                      });
-                    },
-                  ),
-                  padding: EdgeInsets.only(left: 6, right: 6)),
+                child: GCWTextField(
+                  controller: _pController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentP = text;
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(
+                  left: 6,
+                  right: 6
+                )
+              ),
             ),
             Expanded(
               child: Container(
-                  child: GCWTextField(
-                    controller: _fController,
-                    onChanged: (text) {
-                      setState(() {
-                        _currentF = text;
-                      });
-                    },
-                  ),
-                  padding: EdgeInsets.only(left: 6, right: 6)),
+                child: GCWTextField(
+                  controller: _fController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentF = text;
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(
+                  left: 6,
+                  right: 6
+                )
+              ),
             ),
           ],
         ),
@@ -116,17 +130,21 @@ class KennyState extends State<Kenny> {
             });
           },
         ),
-        GCWDefaultOutput(child: _buildOutput())
+        GCWDefaultOutput(
+          child: _buildOutput()
+        )
       ],
     );
   }
 
   _buildOutput() {
-    if (_currentInput.length == 0 || _currentM.length == 0 || _currentP.length == 0 || _currentF.length == 0) return '';
+    if (_currentInput.length == 0
+      || _currentM.length == 0
+      || _currentP.length == 0
+      || _currentF.length == 0)
+      return '';
 
     var key = [_currentM, _currentP, _currentF];
-    return _currentMode == GCWSwitchPosition.left
-        ? encryptKenny(_currentInput, key, _currentCaseSensitive)
-        : decryptKenny(_currentInput, key, _currentCaseSensitive);
+    return _currentMode == GCWSwitchPosition.left ? encryptKenny(_currentInput, key, _currentCaseSensitive) : decryptKenny(_currentInput, key, _currentCaseSensitive);
   }
 }

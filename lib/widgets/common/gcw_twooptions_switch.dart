@@ -5,7 +5,7 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_switch.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
-enum GCWSwitchPosition { left, right }
+enum GCWSwitchPosition {left, right}
 
 class GCWTwoOptionsSwitch extends StatefulWidget {
   final Function onChanged;
@@ -16,75 +16,79 @@ class GCWTwoOptionsSwitch extends StatefulWidget {
   final bool alternativeColor;
   final bool notitle;
 
-  const GCWTwoOptionsSwitch(
-      {Key key,
-      this.onChanged,
-      this.title,
-      this.leftValue,
-      this.rightValue,
-      this.value,
-      this.alternativeColor: false,
-      this.notitle: false})
-      : super(key: key);
+  const GCWTwoOptionsSwitch({
+    Key key,
+    this.onChanged,
+    this.title,
+    this.leftValue,
+    this.rightValue,
+    this.value,
+    this.alternativeColor: false,
+    this.notitle: false
+  }) : super(key: key);
 
   @override
   GCWTwoOptionsSwitchState createState() => GCWTwoOptionsSwitchState();
 }
 
 class GCWTwoOptionsSwitchState extends State<GCWTwoOptionsSwitch> {
+
   @override
   Widget build(BuildContext context) {
     var _currentValue = widget.value ?? GCWSwitchPosition.left;
     ThemeColors colors = themeColors();
 
     var textStyle = gcwTextStyle();
-    if (widget.alternativeColor) textStyle = textStyle.copyWith(color: colors.dialogText());
+    if (widget.alternativeColor)
+      textStyle = textStyle.copyWith(color: colors.dialogText());
 
     return Row(
       children: <Widget>[
-        widget.notitle
-            ? Container()
-            : Expanded(
-                child: GCWText(
-                  text: (widget.title ?? i18n(context, 'common_switch_title')) + ':',
-                  style: textStyle,
-                ),
-                flex: 1),
+        widget.notitle ? Container() : Expanded(
+          child: GCWText(
+            text: (widget.title ?? i18n(context, 'common_switch_title')) + ':',
+            style: textStyle,
+          ),
+          flex: 1
+        ),
         Expanded(
-            child: Container(
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                      child: GCWText(
-                        text: widget.leftValue ?? i18n(context, 'common_encrypt'),
-                        align: Alignment.center,
-                        style: textStyle,
-                      ),
-                      flex: 1),
-                  GCWSwitch(
-                    value: _currentValue == GCWSwitchPosition.right,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentValue = value ? GCWSwitchPosition.right : GCWSwitchPosition.left;
-                        widget.onChanged(_currentValue);
-                      });
-                    },
-                    activeThumbColor: widget.alternativeColor ? colors.switchThumb1() : colors.switchThumb2(),
-                    activeTrackColor: widget.alternativeColor ? colors.switchTrack1() : colors.switchTrack2(),
-                    inactiveThumbColor: widget.alternativeColor ? colors.switchThumb1() : colors.switchThumb2(),
-                    inactiveTrackColor: widget.alternativeColor ? colors.switchTrack1() : colors.switchTrack2(),
+          child: Container(
+            child: Row(
+              children: <Widget>[
+                Expanded (
+                  child: GCWText(
+                    text: widget.leftValue ?? i18n(context, 'common_encrypt'),
+                    align: Alignment.center,
+                    style: textStyle,
                   ),
-                  Expanded(
-                      child: GCWText(
-                        text: widget.rightValue ?? i18n(context, 'common_decrypt'),
-                        align: Alignment.center,
-                        style: textStyle,
-                      ),
-                      flex: 1)
-                ],
-              ),
+                  flex: 1
+                ),
+                GCWSwitch(
+                  value: _currentValue == GCWSwitchPosition.right,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentValue = value ? GCWSwitchPosition.right : GCWSwitchPosition.left;
+                      widget.onChanged(_currentValue);
+                    });
+                  },
+                  activeThumbColor: widget.alternativeColor ? colors.switchThumb1() : colors.switchThumb2(),
+                  activeTrackColor: widget.alternativeColor ? colors.switchTrack1() : colors.switchTrack2(),
+                  inactiveThumbColor: widget.alternativeColor ? colors.switchThumb1() : colors.switchThumb2(),
+                  inactiveTrackColor: widget.alternativeColor ? colors.switchTrack1() : colors.switchTrack2(),
+                ),
+                Expanded (
+                  child: GCWText(
+                    text: widget.rightValue ?? i18n(context, 'common_decrypt'),
+                    align: Alignment.center,
+                    style: textStyle,
+                  ),
+                  flex: 1
+                )
+              ],
             ),
-            flex: 3)
+          ),
+          flex: 3
+        )
       ],
     );
   }

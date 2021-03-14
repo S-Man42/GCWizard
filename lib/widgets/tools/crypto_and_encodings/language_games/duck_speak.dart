@@ -17,11 +17,13 @@ class DuckSpeakState extends State<DuckSpeak> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(onChanged: (text) {
-          setState(() {
-            _currentInput = text;
-          });
-        }),
+        GCWTextField(
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
+            });
+          }
+        ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -30,15 +32,20 @@ class DuckSpeakState extends State<DuckSpeak> {
             });
           },
         ),
-        GCWDefaultOutput(child: _buildOutput())
+        GCWDefaultOutput(
+          child: _buildOutput()
+        )
       ],
     );
   }
 
   _buildOutput() {
-    if (_currentInput == null) return '';
+    if (_currentInput == null)
+      return '';
 
-    var out = _currentMode == GCWSwitchPosition.left ? encodeDuckSpeak(_currentInput) : decodeDuckSpeak(_currentInput);
+    var out = _currentMode == GCWSwitchPosition.left
+      ? encodeDuckSpeak(_currentInput)
+      : decodeDuckSpeak(_currentInput);
 
     return out;
   }

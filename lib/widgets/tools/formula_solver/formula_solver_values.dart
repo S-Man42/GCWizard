@@ -38,7 +38,8 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
   String _maxLetter() {
     int maxLetterIndex = 0;
     widget.group.values.forEach((value) {
-      if (value.key.length != 1) return;
+      if (value.key.length != 1)
+        return;
 
       maxLetterIndex = max(maxLetterIndex, alphabet_AZ[value.key.toUpperCase()]);
     });
@@ -59,8 +60,7 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
       var newValue = FormulaValue(currentFromInput, currentToInput);
       insertFormulaValue(newValue, widget.group);
 
-      _newKeyController.text = _maxLetter();
-      ;
+      _newKeyController.text = _maxLetter();;
     }
   }
 
@@ -77,16 +77,21 @@ class FormulaSolverFormulaValuesState extends State<FormulaSolverFormulaValues> 
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: <Widget>[
-        GCWTextDivider(text: i18n(context, 'formulasolver_values_newvalue')),
+        GCWTextDivider(
+          text: i18n(context, 'formulasolver_values_newvalue')
+        ),
         GCWKeyValueEditor(
           keyHintText: i18n(context, 'formulasolver_values_key'),
           keyController: _newKeyController,
           valueHintText: i18n(context, 'formulasolver_values_value'),
           valueFlex: 2,
           onAddEntry: _addEntry,
+
           listHeaderWidget: GCWTextDivider(text: i18n(context, 'formulasolver_values_currentvalues')),
+
           formulaValueList: widget.group.values,
           onUpdateEntry: _updateEntry,
           onRemoveEntry: _removeEntry,

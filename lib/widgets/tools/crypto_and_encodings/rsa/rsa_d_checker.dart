@@ -48,18 +48,19 @@ class RSADCheckerState extends State<RSADChecker> {
             setState(() {});
           },
         ),
-        GCWDefaultOutput(child: _calculateOutput())
+        GCWDefaultOutput(
+          child: _calculateOutput()
+        )
       ],
     );
   }
 
   _calculateOutput() {
-    if (_currentD == null ||
-        _currentD.length == 0 ||
-        _currentP == null ||
-        _currentP.length == 0 ||
-        _currentQ == null ||
-        _currentQ.length == 0) {
+    if (
+         _currentD == null || _currentD.length == 0
+      || _currentP == null || _currentP.length == 0
+      || _currentQ == null || _currentQ.length == 0
+    ) {
       return '';
     }
 
@@ -70,7 +71,8 @@ class RSADCheckerState extends State<RSADChecker> {
 
       var validD = validateD(e, p, q);
       return validD ? i18n(context, 'rsa_d.checker_valid') : i18n(context, 'rsa_d.checker_notvalid');
-    } catch (exception) {
+
+    } catch(exception) {
       return i18n(context, exception.message);
     }
   }

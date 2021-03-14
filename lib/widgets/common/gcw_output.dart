@@ -8,25 +8,38 @@ class GCWOutput extends StatefulWidget {
   final bool suppressCopyButton;
   final String copyText;
 
-  const GCWOutput({Key key, @required this.child, this.title, this.suppressCopyButton: false, this.copyText})
-      : super(key: key);
+  const GCWOutput({
+    Key key,
+    @required
+    this.child,
+    this.title,
+    this.suppressCopyButton: false,
+    this.copyText
+  }) : super(key: key);
 
   @override
   _GCWOutputState createState() => _GCWOutputState();
 }
 
 class _GCWOutputState extends State<GCWOutput> {
+
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      widget.title != null && widget.title.length > 0 ? GCWTextDivider(text: widget.title) : Container(),
-      widget.child is Widget
+    return Column (
+      children: <Widget>[
+        widget.title != null && widget.title.length > 0
+          ? GCWTextDivider(
+              text: widget.title
+            )
+          : Container(),
+        widget.child is Widget
           ? widget.child
           : GCWOutputText(
               text: widget.child.toString(),
               suppressCopyButton: widget.suppressCopyButton,
               copyText: widget.copyText,
             )
-    ]);
+      ]
+    );
   }
 }

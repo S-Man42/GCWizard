@@ -11,13 +11,17 @@ class Rotator {
   }
 
   String rotate(String input, int key, {bool removeUnknownCharacters = false, ignoreCase = true}) {
-    if (input == null) input = '';
+    if (input == null)
+      input = '';
 
-    if (key == null) key = 0;
+    if (key == null)
+      key = 0;
 
-    if (removeUnknownCharacters == null) removeUnknownCharacters = false;
+    if (removeUnknownCharacters == null)
+      removeUnknownCharacters = false;
 
-    if (ignoreCase == null) ignoreCase = false;
+    if (ignoreCase == null)
+      ignoreCase = false;
 
     if (ignoreCase) {
       return _rotateIgnoreCase(input, key, removeUnknownCharacters);
@@ -79,3 +83,5 @@ class Rotator {
     return rotate(input, 47, removeUnknownCharacters: false, ignoreCase: false);
   }
 }
+
+

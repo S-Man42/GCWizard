@@ -12,5 +12,8 @@ const String defaultLanguage = 'en';
  */
 bool isLocaleSupported(Locale locale) {
   // Include all of your supported language codes here
-  return supportedLocales.map((locale) => locale.languageCode).toList().contains(locale.languageCode);
+  return supportedLocales
+      .map((locale) => locale.languageCode)
+      .toList()
+      .contains(locale.languageCode);
 }

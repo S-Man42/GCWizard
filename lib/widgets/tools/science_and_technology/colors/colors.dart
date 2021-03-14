@@ -48,7 +48,9 @@ class ColorPickerState extends State<ColorPicker> {
               });
             },
           ),
-          padding: EdgeInsets.only(bottom: 20.0),
+          padding: EdgeInsets.only(
+            bottom: 20.0
+          ),
         ),
         GCWColors(
           color: _currentColor,
@@ -59,16 +61,20 @@ class ColorPickerState extends State<ColorPicker> {
               _currentColor = result['color'];
 
               HSV colorPickerColor = convertColorSpace(_currentColor, _currentColorSpace, keyColorSpaceHSV);
-              _currentColorPickerColor =
-                  HSVColor.fromAHSV(1.0, colorPickerColor.hue, colorPickerColor.saturation, colorPickerColor.value);
+              _currentColorPickerColor = HSVColor.fromAHSV(1.0, colorPickerColor.hue, colorPickerColor.saturation, colorPickerColor.value);
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'colors_outputcolorspace')),
+        GCWTextDivider(
+          text: i18n(context, 'colors_outputcolorspace')
+        ),
         GCWDropDownButton(
           value: _currentOutputColorSpace,
           items: allColorSpaces.map((colorSpace) {
-            return GCWDropDownMenuItem(value: colorSpace.key, child: i18n(context, colorSpace.name));
+            return GCWDropDownMenuItem(
+              value: colorSpace.key,
+              child: i18n(context, colorSpace.name)
+            );
           }).toList(),
           onChanged: (value) {
             setState(() {
@@ -84,11 +90,11 @@ class ColorPickerState extends State<ColorPicker> {
   _buildOutput() {
     var colorSpaceOutputs;
 
-    switch (_currentOutputColorSpace) {
+    switch(_currentOutputColorSpace) {
       case keyColorSpaceRGB:
         RGB rgb = convertColorSpace(_currentColor, _currentColorSpace, keyColorSpaceRGB);
-        colorSpaceOutputs = [
-          [i18n(context, 'colors_colorspace_rgb_red'), _numberFormat.format(rgb.red)],
+        colorSpaceOutputs =  [
+          [i18n(context, 'colors_colorspace_rgb_red'),  _numberFormat.format(rgb.red)],
           [i18n(context, 'colors_colorspace_rgb_green'), _numberFormat.format(rgb.green)],
           [i18n(context, 'colors_colorspace_rgb_blue'), _numberFormat.format(rgb.blue)]
         ];
@@ -177,9 +183,15 @@ class ColorPickerState extends State<ColorPicker> {
 
     var rows = columnedMultiLineOutput(context, colorSpaceOutputs);
 
-    rows.insert(0, GCWTextDivider(text: i18n(context, 'common_output')));
+    rows.insert(0,
+      GCWTextDivider(
+        text: i18n(context, 'common_output')
+      )
+    );
 
-    return Column(children: rows);
+    return Column(
+      children: rows
+    );
   }
 
   _setColorPickerColor(RGB rgbColor) {

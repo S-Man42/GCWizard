@@ -9,14 +9,20 @@ class GCWResistorBandDropDownButton extends StatefulWidget {
   final int numberBands;
   final ResistorBandColor color;
 
-  const GCWResistorBandDropDownButton({Key key, this.color, this.type, this.numberBands, this.onChanged})
-      : super(key: key);
+  const GCWResistorBandDropDownButton({
+    Key key,
+    this.color,
+    this.type,
+    this.numberBands,
+    this.onChanged
+  }) : super(key: key);
 
   @override
   GCWResistorBandDropDownButtonState createState() => GCWResistorBandDropDownButtonState();
 }
 
 class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownButton> {
+
   final _colorAttributes = {
     ResistorBandColor.PINK: _ResistorColorAttributes('common_color_pink', Color(0xffffb6c1), Colors.black),
     ResistorBandColor.SILVER: _ResistorColorAttributes('common_color_silver', Color(0xffd3d3d3), Colors.black),
@@ -42,7 +48,8 @@ class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownBu
   void initState() {
     super.initState();
 
-    if (widget.color != null) _currentValue = widget.color;
+    if (widget.color != null)
+      _currentValue = widget.color;
   }
 
   @override
@@ -52,27 +59,45 @@ class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownBu
 
     return GCWDropDownButton(
       value: _currentValue,
-      items: _colorValues.entries.map((colorValue) {
-        var textStyle = TextStyle(color: _colorAttributes[colorValue.key].textColor);
+      items: _colorValues.entries
+        .map((colorValue) {
+          var textStyle = TextStyle(
+            color: _colorAttributes[colorValue.key].textColor
+          );
 
-        return GCWDropDownMenuItem(
-          value: colorValue.key,
-          child: Row(children: <Widget>[
-            Expanded(
-                child: Container(
+          return GCWDropDownMenuItem(
+            value: colorValue.key,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
                     padding: EdgeInsets.all(5.0),
                     color: _colorAttributes[colorValue.key].backgroundColor,
                     child: Row(
                       children: [
                         Expanded(
-                            child: Text(i18n(context, _colorAttributes[colorValue.key].name) + ':', style: textStyle),
-                            flex: 1),
-                        Expanded(child: Text(_formatValue(colorValue.value), style: textStyle), flex: 2)
+                          child: Text(
+                            i18n(context, _colorAttributes[colorValue.key].name) + ':',
+                            style: textStyle
+                          ),
+                          flex: 1
+                        ),
+                        Expanded(
+                          child: Text(
+                            _formatValue(colorValue.value),
+                            style: textStyle
+                          ),
+                          flex: 2
+                        )
                       ],
-                    )))
-          ]),
-        );
-      }).toList(),
+                    )
+                  )
+                )
+              ]
+            ),
+          );
+        })
+        .toList(),
       onChanged: (value) {
         setState(() {
           _currentValue = value;
@@ -87,7 +112,7 @@ class GCWResistorBandDropDownButtonState extends State<GCWResistorBandDropDownBu
   }
 
   _formatValue(value) {
-    switch (widget.type) {
+    switch(widget.type) {
       case ResistorBandType.FIRST:
       case ResistorBandType.SECOND:
       case ResistorBandType.THIRD:

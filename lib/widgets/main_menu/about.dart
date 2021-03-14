@@ -19,6 +19,7 @@ class About extends StatefulWidget {
 }
 
 class AboutState extends State<About> {
+
   var packageInfo = PackageInfo();
 
   var boldTextStyle = gcwTextStyle().copyWith(fontWeight: FontWeight.bold);
@@ -38,41 +39,87 @@ class AboutState extends State<About> {
 
   _buildUrl(String key) {
     return Container(
-        child: Row(children: <Widget>[
-          Expanded(child: GCWText(text: i18n(context, 'about_${key}')), flex: 2),
+      child: Row(
+        children: <Widget>[
           Expanded(
-              child: InkWell(
-                child: Text(
-                  i18n(context, 'about_${key}_url_text'),
-                  style: gcwHyperlinkTextStyle(),
-                ),
-                onTap: () {
-                  launch(i18n(context, 'about_${key}_url'));
-                },
+            child: GCWText(
+              text: i18n(context, 'about_${key}')
+            ),
+            flex: 2
+          ),
+          Expanded(
+            child: InkWell(
+              child: Text(
+                i18n(context, 'about_${key}_url_text'),
+                style: gcwHyperlinkTextStyle(),
               ),
-              flex: 3)
-        ]),
-        padding: EdgeInsets.only(top: 15, bottom: 10));
+              onTap: () {
+                launch(i18n(context, 'about_${key}_url'));
+              },
+            ),
+            flex: 3
+          )
+        ]
+      ),
+      padding: EdgeInsets.only(
+        top: 15,
+        bottom: 10
+      )
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     var content = Column(
       children: <Widget>[
-        Text('GC Wizard - Geocache Wizard', style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold)),
+        Text(
+          'GC Wizard - Geocache Wizard',
+          style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold)
+        ),
         GCWDivider(),
         Container(
-            child: Row(children: <Widget>[
-              Expanded(child: GCWText(text: i18n(context, 'about_version')), flex: 2),
-              Expanded(child: GCWText(text: '${packageInfo.version} (Build: ${packageInfo.buildNumber})'), flex: 3)
-            ]),
-            padding: EdgeInsets.only(top: 15)),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: GCWText(
+                  text: i18n(context, 'about_version')
+                ),
+                flex: 2
+              ),
+              Expanded(
+                child: GCWText(
+                  text: '${packageInfo.version} (Build: ${packageInfo.buildNumber})'
+                ),
+                flex: 3
+              )
+            ]
+          ),
+          padding: EdgeInsets.only(
+            top: 15
+          )
+        ),
         Container(
-            child: Row(children: <Widget>[
-              Expanded(child: GCWText(text: i18n(context, 'about_maintainer')), flex: 2),
-              Expanded(child: GCWText(text: ABOUT_MAINTAINER), flex: 3)
-            ]),
-            padding: EdgeInsets.only(top: 15, bottom: 10)),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: GCWText(
+                  text: i18n(context, 'about_maintainer')
+                ),
+                flex: 2
+              ),
+              Expanded(
+                child: GCWText(
+                  text: ABOUT_MAINTAINER
+                ),
+                flex: 3
+              )
+            ]
+          ),
+          padding: EdgeInsets.only(
+            top: 15,
+            bottom: 10
+          )
+        ),
         GCWDivider(),
         _buildUrl('contact_email'),
         _buildUrl('manual'),
@@ -97,12 +144,15 @@ class AboutState extends State<About> {
               ),
               alignment: Alignment.center,
             ),
-            padding: EdgeInsets.only(top: 15, bottom: 10),
+            padding: EdgeInsets.only(
+              top: 15,
+              bottom: 10
+            ),
           ),
           onTap: () {
             Navigator.of(context).push(NoAnimationMaterialPageRoute(
-                builder: (context) =>
-                    Registry.toolList.firstWhere((tool) => className(tool.tool) == className(Licenses()))));
+              builder: (context) => Registry.toolList.firstWhere((tool) => className(tool.tool) == className(Licenses())))
+            );
           },
         ),
         GCWDivider(),
@@ -111,95 +161,137 @@ class AboutState extends State<About> {
             children: <Widget>[
               RichText(
                 textAlign: TextAlign.center,
-                text: TextSpan(children: [
-                  TextSpan(text: i18n(context, 'about_team') + '\n', style: boldTextStyle),
-                  TextSpan(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: i18n(context, 'about_team') + '\n',
+                      style: boldTextStyle
+                    ),
+                    TextSpan(
                       text: [
-                            'Andy \'Puma66\' (Special Support)',
-                            'Andreas \'TeamBirdy2404\' (Symbol Tables)',
-                            'Mike B. (Code & Symbol Tables)',
-                            'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
-                          ].join('\n') +
-                          '\n')
-                ], style: gcwTextStyle()),
+                        'Andy \'Puma66\' (Special Support)',
+                        'Andreas \'TeamBirdy2404\' (Symbol Tables)',
+                        'Mike B. (Code & Symbol Tables)',
+                        'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
+                      ].join('\n') + '\n'
+                    )
+                  ],
+                  style: gcwTextStyle()
+                ),
               ),
               RichText(
                 textAlign: TextAlign.center,
-                text: TextSpan(children: [
-                  TextSpan(text: i18n(context, 'about_specialthanks') + '\n', style: boldTextStyle),
-                  TextSpan(text: 'Daniel \'Eisbehr\' K. (Maintainer GCC)' + '\n')
-                ], style: gcwTextStyle()),
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: i18n(context, 'about_specialthanks') + '\n',
+                      style: boldTextStyle
+                    ),
+                    TextSpan(
+                        text: 'Daniel \'Eisbehr\' K. (Maintainer GCC)'
+                            + '\n'
+                    )
+                  ],
+                  style: gcwTextStyle()
+                ),
               ),
               RichText(
                 textAlign: TextAlign.center,
-                text: TextSpan(children: [
-                  TextSpan(text: i18n(context, 'about_contributors') + '\n', style: boldTextStyle),
-                  TextSpan(
-                      text: [
-                            '\'\xc4ggsb\xe4rde\' (Symbol Tables)',
-                            '\'capoaira\' (Code)',
-                            'Dennis \'dennistreysa\' (Code)',
-                            'Frank \'Wizardland\' (podKst.de) (Hardware)',
-                            '\'Geo-Link\' (Hardware & Symbol Tables)',
-                            'Karl B. (Coords Algorithms)',
-                            'Michael D. (Symbol Tables)',
-                            '\'moenk\' (GK Coords)',
-                            '\'Schnatt\' (Symbol Tables)',
-                            'Udo J. (Code)',
-                            '\'wollpirat\' (Food, Tea & more)'
-                          ].join('\n') +
-                          '\n')
-                ], style: gcwTextStyle()),
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: i18n(context, 'about_contributors') + '\n',
+                      style: boldTextStyle
+                    ),
+                    TextSpan(
+                      text:
+                        [
+                          '\'\xc4ggsb\xe4rde\' (Symbol Tables)',
+                          '\'capoaira\' (Code)',
+                          'Dennis \'dennistreysa\' (Code)',
+                          'Frank \'Wizardland\' (podKst.de) (Hardware)',
+                          '\'Geo-Link\' (Hardware & Symbol Tables)',
+                          'Karl B. (Coords Algorithms)',
+                          'Michael D. (Symbol Tables)',
+                          '\'moenk\' (GK Coords)',
+                          '\'Schnatt\' (Symbol Tables)',
+                          'Udo J. (Code)',
+                          '\'wollpirat\' (Food, Tea & more)'
+                        ].join('\n') + '\n'
+                    )
+                  ],
+                  style: gcwTextStyle()
+                ),
               ),
               RichText(
                 textAlign: TextAlign.center,
-                text: TextSpan(children: [
-                  TextSpan(text: i18n(context, 'about_testers') + '\n', style: boldTextStyle),
-                  TextSpan(
-                      text: [
-                    '\'4-Everus\'',
-                    'Andreas E.',
-                    '\'Don Rodolphos\'',
-                    '\'Headbanger-Berlin\'',
-                    'Felix Z.',
-                    '\'Filu - Aye, Käppn! - 43\' & \'Stormi - Aaarrh - 2061\'',
-                    'Franz K.',
-                    '\'Freakyfinder\'',
-                    'Johannes C.',
-                    'Jonas M.',
-                    '\'Klumpenkukuk\'',
-                    '\'LupiMus\'',
-                    '\'mahoplus\'',
-                    'Martin Sch.',
-                    '\'mgo\'',
-                    '\'MrDosinger\'',
-                    'Niki R.',
-                    'Palk \'geogedoens.de\'',
-                    '\'Pamakaru\'',
-                    'Paweł B.',
-                    '\'radioscout\'',
-                    '\'radlerandi\'',
-                    '\'Sechsfüssler\'',
-                    'Stefan J.',
-                    '\'tebarius\'',
-                    '\'tomcat06\'',
-                    '\'Vyrembi\''
-                  ].join(', '))
-                ], style: gcwTextStyle()),
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: i18n(context, 'about_testers') + '\n',
+                      style: boldTextStyle
+                    ),
+                    TextSpan(
+                      text:
+                        [
+                          '\'4-Everus\'',
+                          'Andreas E.',
+                          '\'Don Rodolphos\'',
+                          '\'Headbanger-Berlin\'',
+                          'Felix Z.',
+                          '\'Filu - Aye, Käppn! - 43\' & \'Stormi - Aaarrh - 2061\'',
+                          'Franz K.',
+                          '\'Freakyfinder\'',
+                          'Johannes C.',
+                          'Jonas M.',
+                          '\'Klumpenkukuk\'',
+                          '\'LupiMus\'',
+                          '\'mahoplus\'',
+                          'Martin Sch.',
+                          '\'mgo\'',
+                          '\'MrDosinger\'',
+                          'Niki R.',
+                          'Palk \'geogedoens.de\'',
+                          '\'Pamakaru\'',
+                          'Paweł B.',
+                          '\'radioscout\'',
+                          '\'radlerandi\'',
+                          '\'Sechsfüssler\'',
+                          'Stefan J.',
+                          '\'tebarius\'',
+                          '\'tomcat06\'',
+                          '\'Vyrembi\''
+                        ].join(', ')
+                    )
+                  ],
+                  style: gcwTextStyle()
+                ),
               ),
             ],
           ),
-          padding: EdgeInsets.only(top: 15, bottom: 10),
+          padding: EdgeInsets.only(
+            top: 15,
+            bottom: 10
+          ),
         ),
         GCWDivider(),
         Container(
-          child:
-              GCWText(align: Alignment.center, textAlign: TextAlign.center, text: i18n(context, 'about_notfornazis')),
-          padding: EdgeInsets.only(top: 15, bottom: 10),
+          child: GCWText(
+            align: Alignment.center,
+            textAlign: TextAlign.center,
+            text: i18n(context, 'about_notfornazis')
+          ),
+          padding: EdgeInsets.only(
+            top: 15,
+            bottom: 10
+          ),
         )
+
       ],
     );
 
-    return GCWMainMenuEntryStub(content: content);
+    return GCWMainMenuEntryStub(
+      content: content
+    );
   }
 }

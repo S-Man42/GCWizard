@@ -13,16 +13,16 @@ class GCWIntegerTextField extends StatefulWidget {
   final max;
   final FocusNode focusNode;
 
-  const GCWIntegerTextField(
-      {Key key,
-      this.onChanged,
-      this.controller,
-      this.textInputFormatter,
-      this.hintText,
-      this.min,
-      this.max,
-      this.focusNode})
-      : super(key: key);
+  const GCWIntegerTextField({
+    Key key,
+    this.onChanged,
+    this.controller,
+    this.textInputFormatter,
+    this.hintText,
+    this.min,
+    this.max,
+    this.focusNode
+  }) : super(key: key);
 
   @override
   _GCWIntegerTextFieldState createState() => _GCWIntegerTextFieldState();
@@ -35,7 +35,10 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
   void initState() {
     super.initState();
 
-    _integerInputFormatter = IntegerTextInputFormatter(min: widget.min, max: widget.max);
+    _integerInputFormatter = IntegerTextInputFormatter(
+      min: widget.min,
+      max: widget.max
+    );
   }
 
   @override
@@ -46,16 +49,21 @@ class _GCWIntegerTextFieldState extends State<GCWIntegerTextField> {
         setState(() {
           var _value = ['', '-'].contains(text) ? max<int>(widget.min ?? 0, 0) : int.tryParse(text);
 
-          if (widget.min != null && _value < widget.min) _value = widget.min;
+          if (widget.min != null && _value < widget.min)
+            _value = widget.min;
 
-          if (widget.max != null && _value > widget.max) _value = widget.max;
+          if (widget.max != null && _value > widget.max)
+            _value = widget.max;
 
           widget.onChanged({'text': text, 'value': _value});
         });
       },
       controller: widget.controller,
       inputFormatters: [widget.textInputFormatter ?? _integerInputFormatter],
-      keyboardType: TextInputType.numberWithOptions(signed: widget.min == null || widget.min < 0, decimal: false),
+      keyboardType: TextInputType.numberWithOptions(
+        signed: widget.min == null || widget.min < 0,
+        decimal: false
+      ),
       focusNode: widget.focusNode,
     );
   }

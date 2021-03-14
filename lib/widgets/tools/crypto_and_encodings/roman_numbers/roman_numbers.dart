@@ -45,25 +45,25 @@ class RomanNumbersState extends State<RomanNumbers> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
-            ? GCWIntegerTextField(
-                controller: _encodeController,
-                max: 100000,
-                onChanged: (text) {
-                  setState(() {
-                    _currentEncodeInput = text;
-                    _calculateOutput();
-                  });
-                },
-              )
-            : GCWTextField(
-                controller: _decodeController,
-                onChanged: (text) {
-                  setState(() {
-                    _currentDecodeInput = text;
-                    _calculateOutput();
-                  });
-                },
-              ),
+          ? GCWIntegerTextField(
+              controller: _encodeController,
+              max: 100000,
+              onChanged: (text) {
+                setState(() {
+                  _currentEncodeInput = text;
+                  _calculateOutput();
+                });
+              },
+            )
+          : GCWTextField(
+              controller: _decodeController,
+              onChanged: (text) {
+                setState(() {
+                  _currentDecodeInput = text;
+                  _calculateOutput();
+                });
+              },
+            ),
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'romannumbers_numberstoroman'),
           rightValue: i18n(context, 'romannumbers_romantonumbers'),
@@ -80,13 +80,14 @@ class RomanNumbersState extends State<RomanNumbers> {
           value: _currentRomanNumbersTypeMode == RomanNumberType.USE_SUBTRACTION_RULE,
           onChanged: (value) {
             setState(() {
-              _currentRomanNumbersTypeMode =
-                  value ? RomanNumberType.USE_SUBTRACTION_RULE : RomanNumberType.ONLY_ADDITION;
+              _currentRomanNumbersTypeMode = value ? RomanNumberType.USE_SUBTRACTION_RULE : RomanNumberType.ONLY_ADDITION;
               _calculateOutput();
             });
           },
         ),
-        GCWDefaultOutput(child: _output)
+        GCWDefaultOutput(
+          child: _output
+        )
       ],
     );
   }

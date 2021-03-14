@@ -15,7 +15,8 @@ class GCWCoordsOutputFormatDistance extends StatefulWidget {
   const GCWCoordsOutputFormatDistance({Key key, this.coordFormat, this.onChanged}) : super(key: key);
 
   @override
-  GCWCoordsOutputFormatDistanceState createState() => GCWCoordsOutputFormatDistanceState();
+  GCWCoordsOutputFormatDistanceState createState() =>
+      GCWCoordsOutputFormatDistanceState();
 }
 
 class GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDistance> {
@@ -24,26 +25,32 @@ class GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDist
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      GCWTextDivider(text: i18n(context, 'coords_output_format')),
-      Row(
-        children: <Widget>[
-          Expanded(
+
+    return Column(
+      children: <Widget>[
+        GCWTextDivider(
+          text: i18n(context, 'coords_output_format')
+        ),
+        Row(
+          children: <Widget>[
+            Expanded (
               flex: 3,
               child: Container(
-                  child: GCWCoordsFormatSelector(
-                    format: widget.coordFormat ?? _currentCoordFormat,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentCoordFormat = value;
-                        _setCurrentValueAndEmitOnChange();
-                      });
-                    },
-                  ),
-                  padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN))),
-          Expanded(
-            flex: 1,
-            child: GCWUnitDropDownButton(
+                child: GCWCoordsFormatSelector(
+                  format: widget.coordFormat ?? _currentCoordFormat,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentCoordFormat = value;
+                      _setCurrentValueAndEmitOnChange();
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
+              )
+            ),
+            Expanded(
+              flex: 1,
+              child: GCWUnitDropDownButton(
                 unitList: allLengths(),
                 value: _currentLengthUnit,
                 onChanged: (Length value) {
@@ -51,14 +58,16 @@ class GCWCoordsOutputFormatDistanceState extends State<GCWCoordsOutputFormatDist
                     _currentLengthUnit = value;
                     _setCurrentValueAndEmitOnChange();
                   });
-                }),
-          )
-        ],
-      )
-    ]);
+                }
+              ),
+            )
+          ],
+        )
+      ]
+    );
   }
 
   _setCurrentValueAndEmitOnChange() {
-    widget.onChanged({'coordFormat': _currentCoordFormat, 'unit': _currentLengthUnit});
+    widget.onChanged({'coordFormat' : _currentCoordFormat, 'unit' : _currentLengthUnit});
   }
 }

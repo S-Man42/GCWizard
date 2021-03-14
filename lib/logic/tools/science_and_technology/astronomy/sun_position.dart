@@ -25,8 +25,13 @@ class SunPosition {
     greenwichSiderealTime = GMST(julianDate.julianDate);
     localSiderealTime = GMST2LMST(greenwichSiderealTime, coords.longitudeInRad);
 
-    Coor sunPos = sunPosition(julianDate.terrestrialDynamicalTime, ellipsoid.a / 1000.0, coords.latitudeInRad,
-        degreesToRadian(localSiderealTime * 15.0), true);
+    Coor sunPos = sunPosition(
+      julianDate.terrestrialDynamicalTime,
+      ellipsoid.a / 1000.0,
+      coords.latitudeInRad,
+      degreesToRadian(localSiderealTime * 15.0),
+      true
+    );
 
     eclipticLongitude = radianToDegrees(sunPos.lon);
     rightAscension = radianToDegrees(sunPos.ra) / 15.0;
@@ -38,9 +43,7 @@ class SunPosition {
     distanceToEarthCenter = sunPos.distance;
 
     var sunCart = equPolar2Cart(sunPos.ra, sunPos.dec, sunPos.distance);
-    var observerCart =
-        observer2EquCart(coords.longitudeInRad, coords.latitudeInRad, 0, greenwichSiderealTime, ellipsoid);
-    distanceToObserver = sqrt(
-        pow(sunCart.x - observerCart.x, 2) + pow(sunCart.y - observerCart.y, 2) + pow(sunCart.z - observerCart.z, 2));
+    var observerCart = observer2EquCart(coords.longitudeInRad, coords.latitudeInRad, 0, greenwichSiderealTime, ellipsoid);
+    distanceToObserver = sqrt(pow(sunCart.x - observerCart.x, 2) + pow(sunCart.y - observerCart.y, 2) + pow(sunCart.z - observerCart.z, 2));
   }
 }

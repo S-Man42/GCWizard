@@ -73,7 +73,9 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
   }
 
   _formatLength(double value) {
-    return NumberFormat('0.00').format(_DEFAULT_LENGTH_UNIT.fromMeter(value)) + ' ' + _DEFAULT_LENGTH_UNIT.symbol;
+    return NumberFormat('0.00').format(
+      _DEFAULT_LENGTH_UNIT.fromMeter(value)
+    ) + ' ' + _DEFAULT_LENGTH_UNIT.symbol;
   }
 
   @override
@@ -96,25 +98,27 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
           },
         ),
         GCWDefaultOutput(
-            child: Column(
-          children: columnedMultiLineOutput(
+          child: Column(
+            children: columnedMultiLineOutput(
               context,
-              _averagedLocations
-                  .asMap()
-                  .map((index, location) {
-                    var coord = formatCoordOutput(location.coord, defaultCoordFormat(), defaultEllipsoid())
-                        .replaceAll('\n', ' ');
-                    var accuracy = _formatLength(location.accuracy);
+              _averagedLocations.asMap().map((index, location) {
+                var coord = formatCoordOutput(
+                  location.coord,
+                  defaultCoordFormat(),
+                  defaultEllipsoid()
+                ).replaceAll('\n', ' ');
+                var accuracy = _formatLength(location.accuracy);
 
-                    return MapEntry(index, [index + 1, coord, accuracy]);
-                  })
-                  .values
-                  .toList()
-                  .reversed
-                  .toList(),
+                return MapEntry(
+                  index,
+                  [index + 1, coord, accuracy]
+                );
+              }).values.toList().reversed.toList(),
               flexValues: [1, 6, 2],
-              copyColumn: 1),
-        )),
+              copyColumn: 1
+            ),
+          )
+        ),
       ],
     );
   }
@@ -126,13 +130,15 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
     }
 
     if (_locationSubscription == null) {
-      _locationSubscription = _currentLocation.onLocationChanged.handleError((error) {
-        _cancelLocationSubscription();
-      }).listen((LocationData currentLocation) {
-        setState(() {
-          _addAveragedLocation(currentLocation);
+      _locationSubscription = _currentLocation.onLocationChanged
+        .handleError((error) {
+          _cancelLocationSubscription();
+        })
+        .listen((LocationData currentLocation) {
+          setState(() {
+            _addAveragedLocation(currentLocation);
+          });
         });
-      });
 
       _locationSubscription.pause();
     }
@@ -173,11 +179,13 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
     invertedAccuracySum += invertedAccuracy;
 
     // calculating average coordinates (weighted by accuracy) and altitude
-    var averagedCoord = LatLng(weightedLatSum / invertedAccuracySum, weightedLonSum / invertedAccuracySum);
+    var averagedCoord = LatLng(
+      weightedLatSum / invertedAccuracySum,
+      weightedLonSum / invertedAccuracySum
+    );
 
     // calculating accuracy improved by averaging
-    double distance =
-        distanceBearing(LatLng(location.latitude, location.longitude), averagedCoord, defaultEllipsoid()).distance;
+    double distance = distanceBearing(LatLng(location.latitude, location.longitude), averagedCoord, defaultEllipsoid()).distance;
     if (distance == 0) {
       distance = (location.accuracy == 0 ? 2 : location.accuracy);
     }

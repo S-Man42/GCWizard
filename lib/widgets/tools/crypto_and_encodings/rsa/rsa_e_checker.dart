@@ -53,18 +53,19 @@ class RSAECheckerState extends State<RSAEChecker> {
             setState(() {});
           },
         ),
-        GCWDefaultOutput(child: _calculateOutput())
+        GCWDefaultOutput(
+          child: _calculateOutput()
+        )
       ],
     );
   }
 
   _calculateOutput() {
-    if (_currentE == null ||
-        _currentE.length == 0 ||
-        _currentP == null ||
-        _currentP.length == 0 ||
-        _currentQ == null ||
-        _currentQ.length == 0) {
+    if (
+         _currentE == null || _currentE.length == 0
+      || _currentP == null || _currentP.length == 0
+      || _currentQ == null || _currentQ.length == 0
+    ) {
       return '';
     }
 
@@ -75,7 +76,8 @@ class RSAECheckerState extends State<RSAEChecker> {
 
       var validE = validateE(e, p, q);
       return validE ? i18n(context, 'rsa_e.checker_valid') : i18n(context, 'rsa_e.checker_notvalid');
-    } catch (exception) {
+
+    } catch(exception) {
       return i18n(context, exception.message);
     }
   }

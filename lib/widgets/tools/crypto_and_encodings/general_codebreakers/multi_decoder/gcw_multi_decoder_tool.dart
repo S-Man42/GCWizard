@@ -9,6 +9,13 @@ abstract class GCWMultiDecoderTool {
   final GCWMultiDecoderToolConfiguration configurationWidget;
   Map<String, dynamic> options = {};
 
-  GCWMultiDecoderTool(
-      {Key key, this.id, this.name, this.internalToolName, this.onDecode, this.configurationWidget, this.options});
+  GCWMultiDecoderTool({
+    Key key,
+    this.id,
+    this.name,
+    this.internalToolName,
+    this.onDecode,
+    this.configurationWidget,
+    this.options
+  });
 }

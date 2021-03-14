@@ -79,7 +79,8 @@ final finalLatPrecision = pairPrecision * pow(gridRows, gridCodeLength).toInt();
 
 /// Multiply longitude by this much to make it a multiple of the finest
 /// precision.
-final finalLngPrecision = pairPrecision * pow(gridColumns, gridCodeLength).toInt();
+final finalLngPrecision =
+    pairPrecision * pow(gridColumns, gridCodeLength).toInt();
 
 /// Minimum length of a code that can be shortened.
 const minTrimmableCodeLen = 6;
@@ -100,7 +101,8 @@ const _decode = <int>[
   14, 15, 16, -2, -2, -2, 17, 18, 19, -2, -2, -2, -2, -2, -2, -2,
 ]; //
 
-bool _matchesPattern(String string, Pattern pattern) => string.indexOf(pattern) >= 0;
+bool _matchesPattern(String string, Pattern pattern) =>
+    string.indexOf(pattern) >= 0;
 
 bool isValid(String code) {
   if (code == null || code.length == 1) {
@@ -187,7 +189,8 @@ bool isShort(String code) {
     return false;
   }
   // If there are less characters than expected before the SEPARATOR.
-  if (_matchesPattern(code, separator) && code.indexOf(separator) < separatorPosition) {
+  if (_matchesPattern(code, separator) &&
+      code.indexOf(separator) < separatorPosition) {
     return true;
   }
   return false;
@@ -243,9 +246,11 @@ bool isFull(String code) {
 /// * [codeLength]: The number of significant digits in the output code, not
 /// including any separator characters.
 String latLonToOpenLocationCode(LatLng coords, {int codeLength = pairCodeLength}) {
-  if (codeLength == 0) return '';
+  if (codeLength == 0)
+    return '';
 
-  if (codeLength % 2 == 1) codeLength--;
+  if (codeLength % 2 == 1)
+    codeLength--;
 
   var code = '';
 
@@ -297,7 +302,7 @@ String latLonToOpenLocationCode(LatLng coords, {int codeLength = pairCodeLength}
 
 /// Decodes an Open Location Code into the location coordinates.
 LatLng openLocationCodeToLatLon(String code) {
-  try {
+  try{
     if (!isFull(code)) {
       return null;
     }
@@ -356,7 +361,7 @@ LatLng openLocationCodeToLatLon(String code) {
 
     // Return center of code area
     return LatLng((2 * lat + latPrecision) / 2, (2 * lng + lngPrecision) / 2);
-  } catch (e) {}
+  } catch(e) {}
 
   return null;
 }

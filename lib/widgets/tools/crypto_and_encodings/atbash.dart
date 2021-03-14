@@ -22,7 +22,9 @@ class AtbashState extends State<Atbash> {
             });
           },
         ),
-        GCWDefaultOutput(child: _output)
+        GCWDefaultOutput(
+          child: _output
+        )
       ],
     );
   }

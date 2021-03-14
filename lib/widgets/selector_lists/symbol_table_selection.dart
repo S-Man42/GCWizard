@@ -12,19 +12,26 @@ import 'package:url_launcher/url_launcher.dart';
 class SymbolTableSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    List<GCWTool> _toolList = Registry.toolList.where((element) {
-      return [
-        className(SymbolTable()),
-      ].contains(className(element.tool));
-    }).toList();
 
-    _toolList.sort((a, b) {
+    List<GCWTool> _toolList =
+      Registry.toolList.where((element) {
+        return [
+          className(SymbolTable()),
+        ].contains(className(element.tool));
+      }).toList();
+
+    _toolList.sort((a, b){
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });
 
-    return Container(child: GCWToolList(toolList: _toolList));
+    return Container(
+      child: GCWToolList(
+        toolList: _toolList
+      )
+    );
   }
 }
+
 
 Widget symboltablesDownloadButton(BuildContext context) {
   return IconButton(

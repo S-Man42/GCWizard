@@ -37,8 +37,8 @@ import 'dart:math';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/utils.dart';
 
-const double _DEG = pi / 180.0;
-const double _RAD = 180.0 / pi;
+const double _DEG = pi/180.0;
+const double _RAD = 180.0/pi;
 
 // return integer value, closer to 0
 int _Int(double x) {
@@ -66,7 +66,7 @@ double _mod(double a, double b) {
 
 double _mod2Pi(double x) {
   return _mod(x, 2.0 * pi);
-} // Modulo PI
+} 				// Modulo PI
 
 /**
  * @param lon geographical longitude in degree
@@ -74,7 +74,7 @@ double _mod2Pi(double x) {
  */
 AstrologicalSign sign(double lon) {
   var signs = AstrologicalSign.values;
-
+  
   return signs[(lon * _RAD / 30.0).floor()];
 }
 
@@ -86,11 +86,11 @@ AstrologicalSign sign(double lon) {
  */
 double calcJD(int day, int month, int year) {
   double jd = 2415020.5 - 64.0; // 1.1.1900 - correction of algorithm
-  if (month <= 2) {
-    year--;
-    month += 12;
+  if (month <= 2) { 
+    year--; 
+    month += 12; 
   }
-
+  
   jd += _Int((year - 1900) * 365.25);
   jd += _Int(30.6001 * (1 + month));
 
@@ -103,10 +103,10 @@ double calcJD(int day, int month, int year) {
  */
 double GMST(double JD) {
   double UT = _frac(JD - 0.5) * 24.0; // UT in hours
-  JD = (JD - 0.5).floor() + 0.5; // JD at 0 hours UT
+  JD = (JD-0.5).floor() + 0.5;   // JD at 0 hours UT
   double T = (JD - 2451545.0) / 36525.0;
   double T0 = 6.697374558 + T * (2400.051336 + T * 0.000025862);
-
+  
   return _mod(T0 + UT * 1.002737909, 24.0);
 }
 
@@ -116,11 +116,11 @@ double GMST(double JD) {
  * @return convert Greenweek mean sidereal time to UT
  */
 double _GMST2UT(double JD, double gmst) {
-  JD = (JD - 0.5).floor() + 0.5; // JD at 0 hours UT
+  JD = (JD - 0.5).floor() + 0.5;   // JD at 0 hours UT
   double T = (JD - 2451545.0) / 36525.0;
   double T0 = _mod(6.697374558 + T * (2400.051336 + T * 0.000025862), 24.0);
-  double UT = 0.9972695663 * ((gmst - T0));
-
+  double UT = 0.9972695663*((gmst-T0));
+  
   return UT;
 }
 
@@ -147,10 +147,10 @@ Coor _ecl2Equ(Coor coor, double TDT) {
   double sineps = sin(eps);
 
   double sinlon = sin(coor.lon);
-  coor.ra = _mod2Pi(atan2((sinlon * coseps - tan(coor.lat) * sineps), cos(coor.lon)));
-  coor.dec = asin(sin(coor.lat) * coseps + cos(coor.lat) * sineps * sinlon);
+  coor.ra  = _mod2Pi(atan2((sinlon * coseps - tan(coor.lat) * sineps), cos(coor.lon)));
+  coor.dec = asin(sin(coor.lat) * coseps + cos(coor.lat) * sineps*sinlon);
 
-  return (coor);
+  return(coor);
 }
 
 /**
@@ -177,7 +177,7 @@ Coor _equ2Altaz(Coor coor, double TDT, double geolat, double lmst) {
   coor.az = _mod2Pi(atan2(N, D));
   coor.alt = asin(sindec * sinlat + cosdec * coslha * coslat);
 
-  return (coor);
+  return(coor);
 }
 
 /**
@@ -195,7 +195,7 @@ Coor _geoEqu2TopoEqu(Coor coor, Coor observer, double lmst) {
   double sinlst = sin(lmst);
   double coslat = cos(observer.lat); // we should use geocentric latitude, not geodetic latitude
   double sinlat = sin(observer.lat);
-  double rho = observer.radius; // observer-geocenter in Kilometer
+  double rho    = observer.radius; // observer-geocenter in Kilometer
 
   double x = coor.distance * cosdec * cos(coor.ra) - rho * coslat * coslst;
   double y = coor.distance * cosdec * sin(coor.ra) - rho * coslat * sinlst;
@@ -205,7 +205,7 @@ Coor _geoEqu2TopoEqu(Coor coor, Coor observer, double lmst) {
   coor.decTopocentric = asin(z / coor.distanceTopocentric);
   coor.raTopocentric = _mod2Pi(atan2(y, x));
 
-  return (coor);
+  return(coor);
 }
 
 /**
@@ -243,24 +243,23 @@ Coor observer2EquCart(double lon, double lat, double height, double gmst, Ellips
 
   Coor cart = Coor();
   // Calculate geocentric latitude from geodetic latitude
-  double co = cos(lat);
-  double si = sin(lat);
+  double co = cos (lat);
+  double si = sin (lat);
   double fl = 1.0 - 1.0 / flat;
   fl = fl * fl;
   si = si * si;
-  double u = 1.0 / sqrt(co * co + fl * si);
+  double u = 1.0 / sqrt (co * co + fl * si);
   double a = aearth * u + height;
   double b = aearth * fl * u + height;
-  double radius = sqrt(a * a * co * co + b * b * si); // geocentric distance from earth center
-  cart.y = acos(a * co / radius); // geocentric latitude, rad
+  double radius = sqrt (a * a * co * co + b * b * si); // geocentric distance from earth center
+  cart.y = acos (a * co / radius); // geocentric latitude, rad
   cart.x = lon; // longitude stays the same
 
   if (lat < 0.0) {
     cart.y = -cart.y;
   } // adjust sign
 
-  cart = equPolar2Cart(
-      cart.x, cart.y, radius); // convert from geocentric polar to geocentric cartesian, with regard to Greenwich
+  cart = equPolar2Cart(cart.x, cart.y, radius); // convert from geocentric polar to geocentric cartesian, with regard to Greenwich
   // rotate around earth's polar axis to align coordinate system from Greenwich to vernal equinox
   double x = cart.x;
   double y = cart.y;
@@ -271,7 +270,7 @@ Coor observer2EquCart(double lon, double lat, double height, double gmst, Ellips
   cart.lon = lon;
   cart.lat = lat;
 
-  return (cart);
+  return(cart);
 }
 
 /**
@@ -300,8 +299,8 @@ Coor sunPosition(double TDT, double earthRadius, [double geolat = 0, double lmst
 
   sunCoor.distance = (1 - _sqr(e)) / (1 + e * cos(nu)); // distance in astronomical units
   sunCoor.diameter = diameter0 / sunCoor.distance; // angular diameter in radians
-  sunCoor.distance *= a; // distance in km
-  sunCoor.parallax = earthRadius / sunCoor.distance; // horizonal parallax
+  sunCoor.distance *= a;                         // distance in km
+  sunCoor.parallax = earthRadius / sunCoor.distance;  // horizonal parallax
 
   sunCoor = _ecl2Equ(sunCoor, TDT);
 
@@ -323,7 +322,8 @@ Coor sunPosition(double TDT, double earthRadius, [double geolat = 0, double lmst
  * @return data and coordinates for the Moon
  */
 Coor moonPosition(Coor sunCoor, double TDT, [Coor observer, double lmst = 0, bool useObs = false]) {
-  if (observer == null) observer = Coor();
+  if (observer == null)
+    observer = Coor();
 
   double D = TDT - 2447891.5;
 
@@ -333,28 +333,28 @@ Coor moonPosition(Coor sunCoor, double TDT, [Coor observer, double lmst = 0, boo
   double N0 = 318.510107 * _DEG;
   double i = 5.145396 * _DEG;
   double e = 0.054900;
-  int a = 384401; // km
-  double diameter0 = 0.5181 * _DEG; // angular diameter of Moon at a distance
-  double parallax0 = 0.9507 * _DEG; // parallax at distance a
+  int a = 384401;                // km
+  double diameter0 = 0.5181 * _DEG;     // angular diameter of Moon at a distance
+  double parallax0 = 0.9507 * _DEG;     // parallax at distance a
 
   double l = 13.1763966 * _DEG * D + l0;
   double MMoon = l - 0.1114041 * _DEG * D - P0; // Moon's mean anomaly M
-  double N = N0 - 0.0529539 * _DEG * D; // Moon's mean ascending node longitude
+  double N = N0 - 0.0529539 * _DEG * D;       // Moon's mean ascending node longitude
   double C = l - sunCoor.lon;
   double Ev = 1.2739 * _DEG * sin(2 * C - MMoon);
   double Ae = 0.1858 * _DEG * sin(sunCoor.anomalyMean);
   double A3 = 0.37 * _DEG * sin(sunCoor.anomalyMean);
-  double MMoon2 = MMoon + Ev - Ae - A3; // corrected Moon anomaly
-  double Ec = 6.2886 * _DEG * sin(MMoon2); // equation of centre
+  double MMoon2 = MMoon + Ev - Ae - A3;            // corrected Moon anomaly
+  double Ec = 6.2886 * _DEG * sin(MMoon2);   // equation of centre
   double A4 = 0.214 * _DEG * sin(2 * MMoon2);
-  double l2 = l + Ev + Ec - Ae + A4; // corrected Moon's longitude
+  double l2 = l + Ev + Ec - Ae + A4;                 // corrected Moon's longitude
   double V = 0.6583 * _DEG * sin(2 * (l2 - sunCoor.lon));
-  double l3 = l2 + V; // true orbital longitude;
+  double l3 = l2 + V;                          // true orbital longitude;
 
   double N2 = N - 0.16 * _DEG * sin(sunCoor.anomalyMean);
 
   Coor moonCoor = Coor();
-  moonCoor.lon = _mod2Pi(N2 + atan2(sin(l3 - N2) * cos(i), cos(l3 - N2)));
+  moonCoor.lon = _mod2Pi(N2 + atan2(sin(l3 - N2) * cos(i), cos(l3-N2)));
   moonCoor.lat = asin(sin(l3 - N2) * sin(i));
   moonCoor.orbitLon = l3;
 
@@ -383,7 +383,7 @@ Coor moonPosition(Coor sunCoor, double TDT, [Coor observer, double lmst = 0, boo
   double mainPhase = 1.0 / 29.53 * 360 * _DEG; // show 'Newmoon, 'Quarter' for +/-1 day arond the actual event
   double p = _mod(moonCoor.moonAge, 90.0 * _DEG);
 
-  if (p < mainPhase || p > 90 * _DEG - mainPhase)
+  if (p < mainPhase || p > 90 * _DEG-mainPhase)
     p = 2 * (moonCoor.moonAge / (90.0 * _DEG)).roundToDouble();
   else
     p = 2 * (moonCoor.moonAge / (90.0 * _DEG)).roundToDouble() + 1;
@@ -406,9 +406,11 @@ double refraction(double alt) {
   int temperature = 10;
   double altdeg = alt * _RAD;
 
-  if (altdeg < -2 || altdeg >= 90) return 0;
+  if (altdeg < -2 || altdeg >= 90)
+    return 0;
 
-  if (altdeg > 15) return 0.00452 * pressure / ((273 + temperature) * tan(alt));
+  if (altdeg > 15)
+    return 0.00452 * pressure / ((273 + temperature) * tan(alt));
 
   double y = alt;
   double D = 0.0;
@@ -472,10 +474,9 @@ double _interpolateGMST(double gmst0, double gmst1, double gmst2, double timefac
   return (timefactor * 24.07 * gmst1 - gmst0 * (gmst2 - gmst1)) / (timefactor * 24.07 + gmst1 - gmst2);
 }
 
-RiseSet _riseSet(double jd0UT, Coor coor1, Coor coor2, double lon, double lat, double timeinterval,
-    [double altitude = 0, bool useAlt = false]) {
+RiseSet _riseSet(double jd0UT, Coor coor1, Coor coor2, double lon, double lat, double timeinterval, [double altitude = 0, bool useAlt = false]) {
   // altitude of sun center: semi-diameter, horizontal parallax and (standard) refraction of 34'
-  double alt = 0.0; // calculate
+  double alt = 0.0; // calculate 
 
   // true height of sun center for sunrise and set calculation. Is kept 0 for twilight (ie. altitude given):
   if (!useAlt && altitude == 0.0) alt = 0.5 * coor1.diameter - coor1.parallax + 34.0 / 60 * _DEG;
@@ -486,30 +487,29 @@ RiseSet _riseSet(double jd0UT, Coor coor1, Coor coor2, double lon, double lat, d
   RiseSet rise = RiseSet();
 
   // unwrap GMST in case we move across 24h -> 0h
-  if (rise1.transit > rise2.transit && (rise1.transit - rise2.transit).abs() > 18) rise2.transit += 24;
+  if (rise1.transit > rise2.transit && (rise1.transit - rise2.transit).abs() > 18)
+    rise2.transit += 24;
 
-  if (rise1.rise > rise2.rise && (rise1.rise - rise2.rise).abs() > 18) rise2.rise += 24;
+  if (rise1.rise > rise2.rise && (rise1.rise - rise2.rise).abs() > 18)
+    rise2.rise += 24;
 
-  if (rise1.set > rise2.set && (rise1.set - rise2.set).abs() > 18) rise2.set += 24;
+  if (rise1.set > rise2.set && (rise1.set - rise2.set).abs() > 18)
+    rise2.set += 24;
 
   double T0 = GMST(jd0UT);
   //  var T02 = T0-zone*1.002738; // Greenwich sidereal time at 0h time zone (zone: hours)
 
   // Greenwich sidereal time for 0h at selected longitude
-  double T02 = T0 - lon * _RAD / 15 * 1.002738;
-  if (T02 < 0) T02 += 24;
+  double T02 = T0 - lon * _RAD / 15 * 1.002738; if (T02 < 0) T02 += 24;
 
   if (rise1.transit < T02) {
-    rise1.transit += 24;
-    rise2.transit += 24;
+    rise1.transit += 24; rise2.transit += 24;
   }
   if (rise1.rise < T02) {
-    rise1.rise += 24;
-    rise2.rise += 24;
+    rise1.rise += 24; rise2.rise += 24;
   }
   if (rise1.set < T02) {
-    rise1.set += 24;
-    rise2.set += 24;
+    rise1.set += 24; rise2.set += 24;
   }
 
   // Refraction and Parallax correction
@@ -541,38 +541,42 @@ RiseSet _riseSet(double jd0UT, Coor coor1, Coor coor2, double lon, double lat, d
  * @return (local) time of sunrise and sunset, and twilights
  */
 RiseSet sunRise(double JD, double deltaT, double lon, double lat, double zone, bool recursive, Ellipsoid ells) {
-  double jd0UT = (JD - 0.5).floor() + 0.5; // JD at 0 hours UT
+  double jd0UT = (JD - 0.5).floor() + 0.5;   // JD at 0 hours UT
   Coor coor1 = sunPosition(jd0UT + deltaT / 24.0 / 3600.0, ells.a / 1000.0);
-  Coor coor2 =
-      sunPosition(jd0UT + 1.0 + deltaT / 24.0 / 3600.0, ells.a / 1000.0); // calculations for next day's UTC midnight
+  Coor coor2 = sunPosition(jd0UT + 1.0 + deltaT / 24.0 / 3600.0, ells.a / 1000.0); // calculations for next day's UTC midnight
 
   RiseSet risetemp = RiseSet();
   RiseSet rise = RiseSet();
   // rise/set time in UTC.
   rise = _riseSet(jd0UT, coor1, coor2, lon, lat, 1);
-  if (!recursive) {
-    // check and adjust to have rise/set time on local calendar day
+  if (!recursive) { // check and adjust to have rise/set time on local calendar day
     if (zone > 0) {
       // rise time was yesterday local time -> calculate rise time for next UTC day
-      if (rise.rise >= 24 - zone || rise.transit >= 24 - zone || rise.set >= 24 - zone) {
+      if (rise.rise>=24-zone || rise.transit>=24-zone || rise.set>=24-zone) {
         risetemp = sunRise(JD + 1, deltaT, lon, lat, zone, true, ells);
 
-        if (rise.rise >= 24 - zone) rise.rise = risetemp.rise;
+        if (rise.rise>=24-zone)
+          rise.rise = risetemp.rise;
 
-        if (rise.transit >= 24 - zone) rise.transit = risetemp.transit;
+        if (rise.transit >=24-zone)
+          rise.transit = risetemp.transit;
 
-        if (rise.set >= 24 - zone) rise.set = risetemp.set;
+        if (rise.set >=24-zone)
+          rise.set  = risetemp.set;
       }
     } else if (zone < 0) {
       // rise time was yesterday local time -> calculate rise time for next UTC day
-      if (rise.rise < -zone || rise.transit < -zone || rise.set < -zone) {
-        risetemp = sunRise(JD - 1, deltaT, lon, lat, zone, true, ells);
+      if (rise.rise<-zone || rise.transit<-zone || rise.set<-zone) {
+        risetemp = sunRise(JD-1, deltaT, lon, lat, zone, true, ells);
 
-        if (rise.rise < -zone) rise.rise = risetemp.rise;
+        if (rise.rise<-zone)
+          rise.rise = risetemp.rise;
 
-        if (rise.transit < -zone) rise.transit = risetemp.transit;
+        if (rise.transit<-zone)
+          rise.transit = risetemp.transit;
 
-        if (rise.set < -zone) rise.set = risetemp.set;
+        if (rise.set <-zone)
+          rise.set  = risetemp.set;
       }
     }
 
@@ -581,20 +585,20 @@ RiseSet sunRise(double JD, double deltaT, double lon, double lat, double zone, b
     rise.set = _mod(rise.set + zone, 24.0);
 
     // Twilight calculation
-    // civil twilight time in UTC.
+    // civil twilight time in UTC. 
     risetemp = _riseSet(jd0UT, coor1, coor2, lon, lat, 1, -6.0 * _DEG, true);
     rise.civilTwilightMorning = _mod(risetemp.rise + zone, 24.0);
     rise.civilTwilightEvening = _mod(risetemp.set + zone, 24.0);
 
-    // nautical twilight time in UTC.
+    // nautical twilight time in UTC. 
     risetemp = _riseSet(jd0UT, coor1, coor2, lon, lat, 1, -12.0 * _DEG, true);
     rise.nauticalTwilightMorning = _mod(risetemp.rise + zone, 24.0);
-    rise.nauticalTwilightEvening = _mod(risetemp.set + zone, 24.0);
+    rise.nauticalTwilightEvening = _mod(risetemp.set  + zone, 24.0);
 
-    // astronomical twilight time in UTC.
+    // astronomical twilight time in UTC. 
     risetemp = _riseSet(jd0UT, coor1, coor2, lon, lat, 1, -18.0 * _DEG, true);
     rise.astronomicalTwilightMorning = _mod(risetemp.rise + zone, 24.0);
-    rise.astronomicalTwilightEvening = _mod(risetemp.set + zone, 24.0);
+    rise.astronomicalTwilightEvening = _mod(risetemp.set +zone, 24.0);
   }
 
   return rise;
@@ -619,7 +623,7 @@ RiseSet sunRise(double JD, double deltaT, double lon, double lat, double zone, b
 RiseSet moonRise(double JD, double deltaT, double lon, double lat, double zone, bool recursive, Ellipsoid ells) {
   double timeinterval = 0.5;
 
-  double jd0UT = (JD - 0.5).floor() + 0.5; // JD at 0 hours UT
+  double jd0UT = (JD - 0.5).floor() + 0.5;   // JD at 0 hours UT
   Coor suncoor1 = sunPosition(jd0UT + deltaT / 24.0 / 3600.0, ells.a / 1000.0);
   Coor coor1 = moonPosition(suncoor1, jd0UT + deltaT / 24.0 / 3600.0);
 
@@ -634,75 +638,72 @@ RiseSet moonRise(double JD, double deltaT, double lon, double lat, double zone, 
   // Taking into account refraction, semi-diameter and parallax
   rise = _riseSet(jd0UT, coor1, coor2, lon, lat, timeinterval);
 
-  if (!recursive) {
-    // check and adjust to have rise/set time on local calendar day
+  if (!recursive) { // check and adjust to have rise/set time on local calendar day
     if (zone > 0) {
       // recursive call to MoonRise returns events in UTC
-      RiseSet riseprev = moonRise(JD - 1.0, deltaT, lon, lat, zone, true, ells);
+      RiseSet riseprev = moonRise(JD-1.0, deltaT, lon, lat, zone, true, ells);
 
-      if (rise.transit >= 24.0 - zone || rise.transit < -zone) {
-        // transit time is tomorrow local time
-        if (riseprev.transit < 24.0 - zone)
+      if (rise.transit >= 24.0 - zone || rise.transit < -zone) { // transit time is tomorrow local time
+        if (riseprev.transit < 24.0 - zone) 
           rise.transit = 0.000000000; // there is no moontransit today
         else
           rise.transit = riseprev.transit;
       }
 
-      if (rise.rise >= 24.0 - zone || rise.rise < -zone) {
-        // transit time is tomorrow local time
-        if (riseprev.rise < 24.0 - zone)
+      if (rise.rise >= 24.0 - zone || rise.rise < -zone) { // transit time is tomorrow local time
+        if (riseprev.rise < 24.0 - zone) 
           rise.rise = 0.000000000; // there is no moontransit today
-        else
+        else 
           rise.rise = riseprev.rise;
       }
 
-      if (rise.set >= 24.0 - zone || rise.set < -zone) {
-        // transit time is tomorrow local time
-        if (riseprev.set < 24.0 - zone)
+      if (rise.set >= 24.0 - zone || rise.set < -zone) { // transit time is tomorrow local time
+        if (riseprev.set < 24.0 - zone) 
           rise.set = 0.000000000; // there is no moontransit today
-        else
+        else 
           rise.set = riseprev.set;
       }
+
     } else if (zone < 0) {
       // rise/set time was tomorrow local time -> calculate rise time for former UTC day
       if (rise.rise < -zone || rise.set < -zone || rise.transit < -zone) {
         risetemp = moonRise(JD + 1.0, deltaT, lon, lat, zone, true, ells);
 
         if (rise.rise < -zone) {
-          if (risetemp.rise > -zone)
+          if (risetemp.rise > -zone) 
             rise.rise = 0.0; // there is no moonrise today
-          else
+          else 
             rise.rise = risetemp.rise;
         }
 
         if (rise.transit < -zone) {
-          if (risetemp.transit > -zone)
+          if (risetemp.transit > -zone) 
             rise.transit = 0.0; // there is no moonset today
-          else
+          else 
             rise.transit = risetemp.transit;
         }
 
         if (rise.set < -zone) {
-          if (risetemp.set > -zone)
+          if (risetemp.set > -zone) 
             rise.set = 0.0; // there is no moonset today
-          else
+          else 
             rise.set = risetemp.set;
         }
       }
     }
 
     if (rise.rise != 0.0)
-      rise.rise = _mod(rise.rise + zone, 24.0); // correct for time zone, if time is valid
+      rise.rise = _mod(rise.rise + zone, 24.0);         // correct for time zone, if time is valid
     else
       rise.rise = double.nan;
 
     if (rise.transit != 0.0)
-      rise.transit = _mod(rise.transit + zone, 24.0); // correct for time zone, if time is valid
+      rise.transit = _mod(rise.transit + zone, 24.0);    // correct for time zone, if time is valid
     else
       rise.transit = double.nan;
 
     if (rise.set != 0.0)
-      rise.set = _mod(rise.set + zone, 24.0); // correct for time zone, if time is valid
+      rise.set = _mod(rise.set + zone, 24.0);             // correct for time zone, if time is valid
     else
       rise.set = double.nan;
   }
@@ -710,39 +711,40 @@ RiseSet moonRise(double JD, double deltaT, double lon, double lat, double zone, 
   return rise;
 }
 
+
 /**
  * set of variables for sun calculations
  */
 class Coor {
   double lon;
   double lat;
-
+  
   double ra;
   double dec;
   double raGeocentric;
   double decGeocentric;
-
+  
   double az;
   double alt;
-
+  
   double x;
   double y;
   double z;
-
+  
   double radius;
   double diameter;
   double distance;
   double distanceTopocentric;
   double decTopocentric;
   double raTopocentric;
-
+  
   double anomalyMean;
   double parallax;
   double orbitLon;
-
+  
   double moonAge;
   double phase;
-
+  
   MoonPhase moonPhase;
   AstrologicalSign sign;
 
@@ -756,13 +758,13 @@ class RiseSet {
   double transit;
   double rise;
   double set;
-
+  
   double civilTwilightMorning;
   double civilTwilightEvening;
-
+  
   double nauticalTwilightMorning;
   double nauticalTwilightEvening;
-
+  
   double astronomicalTwilightMorning;
   double astronomicalTwilightEvening;
 
@@ -782,33 +784,33 @@ class Time {
   String hhmmssString;
   String hhmmssStringdec;
 
-  Time(double hhi) {
+  Time(double hhi) {  
     double mD = _frac(hhi) * 60;
     int h = _Int(hhi);
     double s = _frac(mD) * 60.0;
     int m = _Int(mD);
-
+    
     if (s >= 59.5) {
       m++;
       s -= 60.0;
     }
-
+    
     if (m >= 60) {
       h++;
       m -= 60;
     }
-
+    
     s = s.roundToDouble();
-
+    
     //create String HH:MM and HH:MM:SS
     hhmmssString = h.toString().padLeft(2, '0');
     hhmmssString += ':';
     hhmmssString += m.toString().padLeft(2, '0');
     hhmmString = hhmmssString;
-
+    
     hhmmssString += ':';
     hhmmssString += s.toString().padLeft(2, '0');
-
+    
     //create String HH:MM = dec and HH:MM:SS = dec
     hhmmssStringdec = '$hhmmssString = $hhi';
     hhmmStringdec = '$hhmmString = $hhi';

@@ -4,6 +4,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 import 'package:touchable/touchable.dart';
 
 class NSegmentDisplay extends StatefulWidget {
+
   final Map<String, bool> initialSegments;
   final SegmentDisplayType type;
 
@@ -13,9 +14,7 @@ class NSegmentDisplay extends StatefulWidget {
 
   final Function customPaint;
 
-  NSegmentDisplay(
-      {Key key, this.initialSegments, this.type, this.segments, this.readOnly: false, this.onChanged, this.customPaint})
-      : super(key: key);
+  NSegmentDisplay({Key key, this.initialSegments, this.type, this.segments, this.readOnly: false, this.onChanged, this.customPaint}) : super(key: key);
 
   @override
   NSegmentDisplayState createState() => NSegmentDisplayState();
@@ -29,33 +28,41 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
     if (widget.segments != null) {
       _segments = Map.from(widget.segments);
       widget.initialSegments.keys.forEach((segmentID) {
-        if (_segments.containsKey(segmentID)) return;
+        if (_segments.containsKey(segmentID))
+          return;
 
-        _segments.putIfAbsent(segmentID, () => widget.initialSegments[segmentID]);
+        _segments.putIfAbsent(segmentID, () =>  widget.initialSegments[segmentID]);
       });
     } else {
-      _segments = Map.from(widget.initialSegments);
+      _segments = Map.from( widget.initialSegments);
     }
 
-    return Row(
+    return Row (
       children: <Widget>[
         Expanded(
-            child: AspectRatio(
-                aspectRatio: SEGMENTS_RELATIVE_DISPLAY_WIDTH / SEGMENTS_RELATIVE_DISPLAY_HEIGHT,
-                child: CanvasTouchDetector(
-                  builder: (context) {
-                    return CustomPaint(
-                        painter: SegmentDisplayPainter(context, widget.type, _segments, (key, value) {
-                      if (widget.readOnly) return;
+          child: AspectRatio(
+            aspectRatio: SEGMENTS_RELATIVE_DISPLAY_WIDTH / SEGMENTS_RELATIVE_DISPLAY_HEIGHT,
+            child: CanvasTouchDetector(
+              builder: (context) {
+                return CustomPaint(
+                  painter: SegmentDisplayPainter(context, widget.type, _segments, (key, value) {
+                    if (widget.readOnly)
+                      return;
 
-                      setState(() {
-                        _segments[key] = value;
-                        widget.onChanged(_segments);
-                      });
-                    }, customPaint: widget.customPaint));
+                    setState(() {
+                      _segments[key] = value;
+                      widget.onChanged(_segments);
+                    });
                   },
-                )))
+                  customPaint: widget.customPaint)
+                );
+              },
+            )
+          )
+        )
       ],
     );
   }
 }
+
+

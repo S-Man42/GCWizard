@@ -20,8 +20,7 @@ class SudokuSolverState extends State<SudokuSolver> {
   void initState() {
     super.initState();
 
-    _currentBoard = List<List<Map<String, dynamic>>>.generate(
-        9, (index) => List<Map<String, dynamic>>.generate(9, (index) => null));
+    _currentBoard = List<List<Map<String, dynamic>>>.generate(9, (index) => List<Map<String, dynamic>>.generate(9, (index) => null));
   }
 
   @override
@@ -29,7 +28,9 @@ class SudokuSolverState extends State<SudokuSolver> {
     return Column(
       children: <Widget>[
         Container(
-          constraints: BoxConstraints(maxWidth: min(500, MediaQuery.of(context).size.height * 0.8)),
+          constraints: BoxConstraints(
+            maxWidth: min(500, MediaQuery.of(context).size.height * 0.8)
+          ),
           child: SudokuBoard(
             board: _currentBoard,
             onChanged: (newBoard) {
@@ -48,10 +49,7 @@ class SudokuSolverState extends State<SudokuSolver> {
                   onPressed: () {
                     setState(() {
                       List<List<int>> solveableBoard = _currentBoard.map((column) {
-                        return column
-                            .map((row) =>
-                                row != null && row['type'] == SudokuFillType.USER_FILLED ? row['value'] as int : 0)
-                            .toList();
+                        return column.map((row) => row != null && row['type'] == SudokuFillType.USER_FILLED ? row['value'] as int : 0).toList();
                       }).toList();
 
                       var solved = solveSudoku(solveableBoard);
@@ -60,8 +58,8 @@ class SudokuSolverState extends State<SudokuSolver> {
                       } else {
                         for (int i = 0; i < 9; i++) {
                           for (int j = 0; j < 9; j++) {
-                            if (_currentBoard[i][j] != null &&
-                                _currentBoard[i][j]['type'] == SudokuFillType.USER_FILLED) continue;
+                            if (_currentBoard[i][j] != null && _currentBoard[i][j]['type'] == SudokuFillType.USER_FILLED)
+                              continue;
 
                             _currentBoard[i][j] = {'value': solved[i][j], 'type': SudokuFillType.CALCULATED};
                           }
@@ -74,35 +72,36 @@ class SudokuSolverState extends State<SudokuSolver> {
               ),
             ),
             Expanded(
-                child: Container(
-              child: GCWButton(
-                text: i18n(context, 'sudokusolver_clearcalculated'),
-                onPressed: () {
-                  setState(() {
-                    for (int i = 0; i < 9; i++) {
-                      for (int j = 0; j < 9; j++) {
-                        if (_currentBoard[i][j] != null && _currentBoard[i][j]['type'] == SudokuFillType.CALCULATED)
-                          _currentBoard[i][j] = null;
+              child: Container(
+                child: GCWButton(
+                  text: i18n(context, 'sudokusolver_clearcalculated'),
+                  onPressed: () {
+                    setState(() {
+                      for (int i = 0; i < 9; i++) {
+                        for (int j = 0; j < 9; j++) {
+                          if (_currentBoard[i][j] != null && _currentBoard[i][j]['type'] == SudokuFillType.CALCULATED)
+                            _currentBoard[i][j] = null;
+                        }
                       }
-                    }
-                  });
-                },
-              ),
-              padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
-            )),
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(left: DEFAULT_MARGIN, right: DEFAULT_MARGIN),
+              )
+            ),
             Expanded(
-                child: Container(
-              child: GCWButton(
-                text: i18n(context, 'sudokusolver_clearall'),
-                onPressed: () {
-                  setState(() {
-                    _currentBoard = List<List<Map<String, dynamic>>>.generate(
-                        9, (index) => List<Map<String, dynamic>>.generate(9, (index) => null));
-                  });
-                },
-              ),
-              padding: EdgeInsets.only(left: DEFAULT_MARGIN),
-            ))
+              child: Container(
+                child: GCWButton(
+                  text: i18n(context, 'sudokusolver_clearall'),
+                  onPressed: () {
+                    setState(() {
+                      _currentBoard = List<List<Map<String, dynamic>>>.generate(9, (index) => List<Map<String, dynamic>>.generate(9, (index) => null));
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(left: DEFAULT_MARGIN),
+              )
+            )
           ],
         )
       ],

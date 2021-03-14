@@ -10,8 +10,15 @@ class MoonRiseSet {
   double set;
 
   MoonRiseSet(LatLng coords, JulianDate julianDate, Duration timezone, Ellipsoid ellipsoid) {
-    RiseSet riseSet = moonRise(julianDate.julianDateUTCNoon, julianDate.deltaT, coords.longitudeInRad,
-        coords.latitudeInRad, timezone.inMinutes / 60.0, false, ellipsoid);
+    RiseSet riseSet = moonRise(
+      julianDate.julianDateUTCNoon,
+      julianDate.deltaT,
+      coords.longitudeInRad,
+      coords.latitudeInRad,
+      timezone.inMinutes / 60.0,
+      false,
+      ellipsoid
+    );
 
     rise = riseSet.rise;
     transit = riseSet.transit;

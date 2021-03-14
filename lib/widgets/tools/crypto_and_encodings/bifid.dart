@@ -31,9 +31,7 @@ class BifidState extends State<Bifid> {
   PolybiosMode _currentBifidMode = PolybiosMode.AZ09;
   AlphabetModificationMode _currentModificationMode = AlphabetModificationMode.J_TO_I;
 
-  GCWSwitchPosition _currentMatrixMode = GCWSwitchPosition.left;
-
-  /// switches between 5x5 or 6x6 square
+  GCWSwitchPosition _currentMatrixMode = GCWSwitchPosition.left;         /// switches between 5x5 or 6x6 square
 
   @override
   void initState() {
@@ -53,9 +51,9 @@ class BifidState extends State<Bifid> {
   @override
   Widget build(BuildContext context) {
     var BifidModeItems = {
-      PolybiosMode.AZ09: i18n(context, 'bifid_mode_az09'),
-      PolybiosMode.ZA90: i18n(context, 'bifid_mode_za90'),
-      PolybiosMode.CUSTOM: i18n(context, 'bifid_mode_custom'),
+      PolybiosMode.AZ09 : i18n(context, 'bifid_mode_az09'),
+      PolybiosMode.ZA90 : i18n(context, 'bifid_mode_za90'),
+      PolybiosMode.CUSTOM : i18n(context, 'bifid_mode_custom'),
     };
 
     return Column(
@@ -78,7 +76,9 @@ class BifidState extends State<Bifid> {
           },
         ),
 
-        GCWTextDivider(text: i18n(context, 'common_alphabet')),
+        GCWTextDivider(
+          text: i18n(context, 'common_alphabet')
+        ),
 
         GCWAlphabetDropDown(
           value: _currentBifidMode,
@@ -109,15 +109,15 @@ class BifidState extends State<Bifid> {
         ),
 
         _currentMatrixMode == GCWSwitchPosition.left
-            ? GCWAlphabetModificationDropDownButton(
-                value: _currentModificationMode,
-                onChanged: (value) {
-                  setState(() {
-                    _currentModificationMode = value;
-                  });
-                },
-              )
-            : Container(), //empty widget
+          ? GCWAlphabetModificationDropDownButton(
+              value: _currentModificationMode,
+              onChanged: (value) {
+                setState(() {
+                  _currentModificationMode = value;
+                });
+              },
+            )
+          : Container(), //empty widget
 
         _buildOutput()
       ],
@@ -132,15 +132,26 @@ class BifidState extends State<Bifid> {
       key = "123456";
     }
 
-    if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput(child: '');
+    if (_currentInput == null || _currentInput.length == 0)
+      return GCWDefaultOutput(child: '');
 
     var _currentOutput = BifidOutput('', '', '');
     if (_currentMode == GCWSwitchPosition.left) {
-      _currentOutput = encryptBifid(_currentInput, key,
-          mode: _currentBifidMode, alphabet: _currentAlphabet, alphabetMode: _currentModificationMode);
+      _currentOutput = encryptBifid(
+        _currentInput,
+        key,
+        mode: _currentBifidMode,
+        alphabet: _currentAlphabet,
+        alphabetMode: _currentModificationMode
+      );
     } else {
-      _currentOutput = decryptBifid(_currentInput, key,
-          mode: _currentBifidMode, alphabet: _currentAlphabet, alphabetMode: _currentModificationMode);
+      _currentOutput = decryptBifid(
+        _currentInput,
+        key,
+        mode: _currentBifidMode,
+        alphabet: _currentAlphabet,
+        alphabetMode: _currentModificationMode
+      );
     }
 
     if (_currentOutput.state == 'ERROR') {
@@ -152,11 +163,12 @@ class BifidState extends State<Bifid> {
       children: [
         _currentOutput.output,
         GCWOutput(
-            title: i18n(context, 'bifid_usedgrid'),
-            child: GCWOutputText(
-              text: _currentOutput.grid,
-              isMonotype: true,
-            ))
+          title: i18n(context, 'bifid_usedgrid'),
+          child: GCWOutputText(
+            text: _currentOutput.grid,
+            isMonotype: true,
+          )
+        )
       ],
     );
   }

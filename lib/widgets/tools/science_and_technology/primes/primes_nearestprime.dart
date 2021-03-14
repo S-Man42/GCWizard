@@ -36,6 +36,8 @@ class NearestPrimeState extends State<NearestPrime> {
   }
 
   Widget _buildOutput() {
-    return GCWMultipleOutput(children: getNearestPrime(_currentNumber) ?? []);
+    return GCWMultipleOutput(
+      children: getNearestPrime(_currentNumber) ?? []
+    );
   }
 }

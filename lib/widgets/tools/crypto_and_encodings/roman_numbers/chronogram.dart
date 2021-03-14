@@ -20,11 +20,13 @@ class ChronogramState extends State<Chronogram> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(onChanged: (text) {
-          setState(() {
-            _currentInput = text;
-          });
-        }),
+        GCWTextField(
+          onChanged: (text) {
+            setState(() {
+              _currentInput = text;
+            });
+          }
+        ),
         GCWOnOffSwitch(
           title: i18n(context, 'chronogram_ju.to.iv'),
           value: _currentJUToIV,
@@ -53,9 +55,8 @@ class ChronogramState extends State<Chronogram> {
           },
         ),
         GCWDefaultOutput(
-            child:
-                decodeChronogram(_currentInput, JUToIV: _currentJUToIV, YToII: _currentYToII, WToVV: _currentWToVV) ??
-                    '')
+          child: decodeChronogram(_currentInput, JUToIV: _currentJUToIV, YToII: _currentYToII, WToVV: _currentWToVV) ?? ''
+        )
       ],
     );
   }

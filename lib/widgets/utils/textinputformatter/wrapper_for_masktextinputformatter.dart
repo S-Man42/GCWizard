@@ -9,7 +9,10 @@ class WrapperForMaskTextInputFormatter extends TextInputFormatter {
 
   MaskTextInputFormatter _formatter;
   WrapperForMaskTextInputFormatter({this.mask, this.filter}) {
-    _formatter = MaskTextInputFormatter(mask: mask, filter: filter);
+    _formatter = MaskTextInputFormatter(
+      mask: mask,
+      filter: filter
+    );
   }
 
   String getMaskedText() {

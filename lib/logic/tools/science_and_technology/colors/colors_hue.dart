@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:gc_wizard/logic/tools/science_and_technology/colors/colors_rgb.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum _HueType { HSV, HSL, HSI }
+enum _HueType {HSV, HSL, HSI}
 
 //source: https://www.vocal.com/video/rgb-and-hsvhsihsl-color-space-conversion/
 
@@ -55,6 +55,7 @@ _fromRGB(RGB rgb, _HueType type) {
 
 // for HSV and HSL
 _toRGB(double hue, double saturation, double thirdComponent, _HueType type) {
+
   double c = 0.0;
 
   switch (type) {
@@ -75,29 +76,17 @@ _toRGB(double hue, double saturation, double thirdComponent, _HueType type) {
   double blue;
 
   if (hue < 60.0) {
-    red = c;
-    green = x;
-    blue = 0.0;
+    red = c; green = x; blue = 0.0;
   } else if (hue < 120.0) {
-    red = x;
-    green = c;
-    blue = 0.0;
+    red = x; green = c; blue = 0.0;
   } else if (hue < 180.0) {
-    red = 0.0;
-    green = c;
-    blue = x;
+    red = 0.0; green = c; blue = x;
   } else if (hue < 240.0) {
-    red = 0.0;
-    green = x;
-    blue = c;
+    red = 0.0; green = x; blue = c;
   } else if (hue < 300.0) {
-    red = x;
-    green = 0.0;
-    blue = c;
+    red = x; green = 0.0; blue = c;
   } else if (hue <= 360.0) {
-    red = c;
-    green = 0.0;
-    blue = x;
+    red = c; green = 0.0; blue = x;
   }
 
   double m = 0.0;

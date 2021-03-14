@@ -1,7 +1,7 @@
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum EnigmaRotorType { STANDARD, ENTRY_ROTOR, REFLECTOR }
+enum EnigmaRotorType {STANDARD, ENTRY_ROTOR, REFLECTOR}
 
 class EnigmaRotor {
   String name;
@@ -111,6 +111,7 @@ class EnigmaRotorConfiguration {
   int setting;
 
   EnigmaRotorConfiguration(this.rotor, {var offset: 1, var setting: 1}) {
+
     if (offset is int) {
       this.offset = offset - 1;
     } else if (offset is String) {
@@ -129,9 +130,11 @@ class EnigmaRotorConfiguration {
   }
 
   EnigmaRotorConfiguration clone() {
-    return EnigmaRotorConfiguration(this.rotor,
-        offset: this.offset + 1, // +1 because the constructor subtracts one
-        setting: this.setting + 1);
+    return EnigmaRotorConfiguration(
+      this.rotor,
+      offset: this.offset + 1, // +1 because the constructor subtracts one
+      setting: this.setting + 1
+    );
   }
 
   @override
@@ -149,7 +152,7 @@ class EnigmaKey {
 
     // When A->B in plugboard, B->A has to be in there as well
     // Well if there's a record B which doesn't map to A, this is kept, although historical nonsense (cables connecting A and B work in both directions)
-    var inversePlugboard = Map<String, String>.from(switchMapKeyValue(plugboard));
+    var inversePlugboard = Map<String,String>.from(switchMapKeyValue(plugboard));
     inversePlugboard.forEach((k, v) => this.plugboard.putIfAbsent(k.toUpperCase(), () => v.toUpperCase()));
   }
 
@@ -183,7 +186,8 @@ _stepping(List<EnigmaRotorConfiguration> configurations) {
 
     selfTurnover = _rotorConfigCausesTurnover(currentConfig);
 
-    if (i == 0 || selfTurnover || turnoverThroughPrevious) currentConfig.setting = (currentConfig.setting + 1) % 26;
+    if (i == 0 || selfTurnover || turnoverThroughPrevious)
+      currentConfig.setting = (currentConfig.setting + 1) % 26;
 
     turnoverThroughPrevious = selfTurnover;
 
@@ -204,7 +208,8 @@ Map<String, dynamic> calculateEnigma(String input, EnigmaKey key) {
     return {'text': '', 'rotorSettingAfter': _rotorConfigurations(key)};
 
   input = _normalizeInput(input);
-  if (input.length == 0) return {'text': '', 'rotorSettingAfter': _rotorConfigurations(key)};
+  if (input.length == 0)
+    return {'text': '', 'rotorSettingAfter': _rotorConfigurations(key)};
 
   var output = '';
 
@@ -241,7 +246,7 @@ Map<String, dynamic> calculateEnigma(String input, EnigmaKey key) {
         letter = alphabet_AZIndexes[letterIndex + 1];
 
         letterIndex = rotor.rotor.alphabet.indexOf(letter);
-        letter = alphabet_AZIndexes[(letterIndex - rotor.settingWithOffset + 26) % 26 + 1];
+        letter =  alphabet_AZIndexes[(letterIndex - rotor.settingWithOffset + 26) % 26 + 1];
 
         rotorNumber--;
       }
@@ -262,7 +267,8 @@ List<Map<String, dynamic>> calculateEnigmaWithMessageKey(String input, EnigmaKey
   var firstResult = calculateEnigma(input, key);
   var firstCalculation = firstResult['text'];
 
-  if (firstCalculation.length == 0) return [firstResult];
+  if (firstCalculation.length == 0)
+    return [firstResult];
 
   List<Map<String, dynamic>> output = [firstResult];
 
@@ -270,13 +276,14 @@ List<Map<String, dynamic>> calculateEnigmaWithMessageKey(String input, EnigmaKey
   var numberRotors = standardRotorConfigurations.length;
 
   // Set the new RotorSetting
-  if (firstCalculation.length > numberRotors * 2 &&
-      firstCalculation.substring(0, numberRotors) == firstCalculation.substring(numberRotors, numberRotors * 2)) {
+  if (firstCalculation.length > numberRotors * 2
+    && firstCalculation.substring(0, numberRotors) == firstCalculation.substring(numberRotors, numberRotors * 2)) {
+
     var pattern = firstCalculation
         .substring(0, numberRotors)
         .split('')
         .map((letter) => alphabet_AZ[letter] - 1)
-        .toList() // map to alphabet index
+        .toList()// map to alphabet index
         .reversed
         .toList(); // backwards because of the typically inverse order of the rotors
 

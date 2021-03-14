@@ -24,25 +24,37 @@ class GCWOnOffSwitchState extends State<GCWOnOffSwitch> {
     return Row(
       children: <Widget>[
         if (!widget.notitle)
-          Expanded(child: GCWText(text: (widget.title ?? i18n(context, 'common_switch_title')) + ':'), flex: 1),
-        Expanded(
-            child: Container(
-              child: Row(
-                children: <Widget>[
-                  Expanded(child: Container(), flex: 1),
-                  GCWSwitch(
-                    value: widget.value ?? _currentValue,
-                    onChanged: widget.onChanged,
-                    activeThumbColor: themeColors().switchThumb2(),
-                    activeTrackColor: themeColors().switchTrack2(),
-                    inactiveThumbColor: themeColors().switchThumb1(),
-                    inactiveTrackColor: themeColors().switchTrack1(),
-                  ),
-                  Expanded(child: Container(), flex: 1),
-                ],
-              ),
+          Expanded(
+            child: GCWText(
+              text: (widget.title ?? i18n(context, 'common_switch_title')) + ':'
             ),
-            flex: 3)
+            flex: 1
+          ),
+        Expanded(
+          child: Container(
+            child: Row(
+              children: <Widget>[
+                Expanded (
+                  child: Container(),
+                  flex: 1
+                ),
+                GCWSwitch(
+                  value: widget.value ?? _currentValue,
+                  onChanged: widget.onChanged,
+                  activeThumbColor: themeColors().switchThumb2(),
+                  activeTrackColor: themeColors().switchTrack2(),
+                  inactiveThumbColor: themeColors().switchThumb1(),
+                  inactiveTrackColor: themeColors().switchTrack1(),
+                ),
+                Expanded (
+                  child: Container(),
+                  flex: 1
+                ),
+              ],
+            ),
+          ),
+          flex: 3
+        )
       ],
     );
   }

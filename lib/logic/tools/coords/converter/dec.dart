@@ -3,12 +3,12 @@ import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:latlong/latlong.dart';
 import 'package:intl/intl.dart';
 
-LatLng decToLatLon(DEC dec) {
+LatLng decToLatLon (DEC dec) {
   var normalized = normalize(dec);
   return LatLng(normalized.latitude, normalized.longitude);
 }
 
-DEC latLonToDEC(LatLng coord) {
+DEC latLonToDEC (LatLng coord) {
   return DEC(coord.latitude, coord.longitude);
 }
 
@@ -21,7 +21,8 @@ DEC normalize(DEC coord) {
 }
 
 int sign(String match) {
-  if (match == null) return 1;
+  if (match == null)
+    return 1;
 
   if (match[0].contains(RegExp(r'[SW-]', caseSensitive: false))) {
     return -1;
@@ -31,28 +32,34 @@ int sign(String match) {
 }
 
 String prepareInput(String text, {wholeString = false}) {
-  if (text == null) return null;
+  if (text == null)
+    return null;
 
   if (wholeString) {
     text = text.trim();
     regexEnd = wholeString ? '\$' : '';
   }
 
-  if (text.length == 0) return null;
+  if (text.length == 0)
+    return null;
 
   return text;
 }
 
 double _normalizeLat(double lat) {
-  if (lat > 90.0) return _normalizeLat(180.0 - lat);
-  if (lat < -90.0) return _normalizeLat(-180.0 + -lat);
+  if (lat > 90.0)
+    return _normalizeLat(180.0 - lat);
+  if (lat < -90.0)
+    return _normalizeLat(-180.0 + -lat);
 
   return lat;
 }
 
 double _normalizeLon(double lon) {
-  if (lon > 180.0) return _normalizeLon(lon - 360.0);
-  if (lon < -180.0) return _normalizeLon(360.0 + lon);
+  if (lon > 180.0)
+    return _normalizeLon(lon - 360.0);
+  if (lon < -180.0)
+    return _normalizeLon(360.0 + lon);
 
   return lon;
 }
@@ -77,11 +84,14 @@ DEC normalizeDEC(DEC coord) {
 }
 
 LatLng parseDEC(String text, {wholeString = false}) {
+
   text = prepareInput(text, wholeString: wholeString);
-  if (text == null) return null;
+  if (text == null)
+    return null;
 
   var parsedTrailingSigns = _parseDECTrailingSigns(text);
-  if (parsedTrailingSigns != null) return parsedTrailingSigns;
+  if (parsedTrailingSigns != null)
+    return parsedTrailingSigns;
 
   RegExp regex = RegExp(PATTERN_DEC + regexEnd, caseSensitive: false);
 
@@ -111,6 +121,7 @@ LatLng parseDEC(String text, {wholeString = false}) {
 }
 
 LatLng _parseDECTrailingSigns(String text) {
+
   RegExp regex = RegExp(PATTERN_DEC_TRAILINGSIGN + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
@@ -137,30 +148,33 @@ LatLng _parseDECTrailingSigns(String text) {
   return null;
 }
 
-final PATTERN_DEC_TRAILINGSIGN = '^\\s*?'
-    '(\\d{1,3})\\s*?' //lat degrees
-    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lat millidegrees
-    '[\\s°]?\\s*?' //lat degrees symbol
-    '([NS]$LETTER*?|[\\+\\-])\\s*?' //lat sign
+final PATTERN_DEC_TRAILINGSIGN =
+    '^\\s*?'
+    '(\\d{1,3})\\s*?'                      //lat degrees
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat millidegrees
+    '[\\s°]?\\s*?'                         //lat degrees symbol
+    '([NS]$LETTER*?|[\\+\\-])\\s*?'       //lat sign
 
-    '[,\\s]\\s*?' //delimiter lat lon
+    '[,\\s]\\s*?'                          //delimiter lat lon
 
-    '(\\d{1,3})\\s*?' //lon degrees
-    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lon millidegrees
-    '[\\s°]?\\s*?' //lon degree symbol
-    '([EWO]$LETTER*?|[\\+\\-])' //lon sign;
+    '(\\d{1,3})\\s*?'                      //lon degrees
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon millidegrees
+    '[\\s°]?\\s*?'                         //lon degree symbol
+    '([EWO]$LETTER*?|[\\+\\-])'           //lon sign;
     '\\s*?';
 
-final PATTERN_DEC = '^\\s*?'
-    '([NS]$LETTER*?|[\\+\\-])?\\s*?' //lat sign
-    '(\\d{1,3})\\s*?' //lat degrees
-    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lat millidegrees
-    '[\\s°]?\\s*?' //lat degree symbol
+final PATTERN_DEC =
+    '^\\s*?'
+    '([NS]$LETTER*?|[\\+\\-])?\\s*?'      //lat sign
+    '(\\d{1,3})\\s*?'                      //lat degrees
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lat millidegrees
+    '[\\s°]?\\s*?'                         //lat degree symbol
 
-    '\\s*?[,\\s]\\s*?' //delimiter lat lon
+    '\\s*?[,\\s]\\s*?'                     //delimiter lat lon
 
-    '([EWO]$LETTER*?|[\\+\\-])?\\s*?' //lon sign
-    '(\\d{1,3})\\s*?' //lon degrees
-    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?' //lon millidegrees
-    '[\\s°]?' //lon degree symbol
+    '([EWO]$LETTER*?|[\\+\\-])?\\s*?'     //lon sign
+    '(\\d{1,3})\\s*?'                      //lon degrees
+    '(?:\\s*?[.,]\\s*?(\\d+))?\\s*?'       //lon millidegrees
+    '[\\s°]?'                              //lon degree symbol
     '\\s*?';
+

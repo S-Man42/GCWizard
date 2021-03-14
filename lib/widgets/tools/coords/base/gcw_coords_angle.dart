@@ -16,7 +16,7 @@ class GCWAngle extends StatefulWidget {
 
 class _GCWAngleState extends State<GCWAngle> {
   var _angleController;
-  var _currentAngle = {'text': '', 'value': 0.0};
+  var _currentAngle = {'text': '','value': 0.0};
 
   @override
   void initState() {
@@ -32,26 +32,30 @@ class _GCWAngleState extends State<GCWAngle> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: <Widget>[
-      Expanded(
-        flex: 33,
-        child: GCWDoubleTextField(
-          hintText: widget.hintText ?? i18n(context, 'common_bearing_hint'),
-          controller: _angleController,
-          textInputFormatter: DoubleBearingTextInputFormatter(),
-          onChanged: (ret) {
-            setState(() {
-              _currentAngle['value'] = ret['value'];
-              _currentAngle['text'] = ret['text'];
-              widget.onChanged(_currentAngle);
-            });
-          },
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 33,
+          child: GCWDoubleTextField(
+            hintText: widget.hintText ?? i18n(context, 'common_bearing_hint'),
+            controller: _angleController,
+            textInputFormatter: DoubleBearingTextInputFormatter(),
+            onChanged: (ret) {
+              setState(() {
+                _currentAngle['value'] = ret['value'];
+                _currentAngle['text'] = ret['text'];
+                widget.onChanged(_currentAngle);
+              });
+            },
+          ),
         ),
-      ),
-      Expanded(
-        flex: 1,
-        child: GCWText(text: '°'),
-      ),
-    ]);
+        Expanded(
+          flex: 1,
+          child: GCWText(
+            text: '°'
+          ),
+        ),
+      ]
+    );
   }
 }

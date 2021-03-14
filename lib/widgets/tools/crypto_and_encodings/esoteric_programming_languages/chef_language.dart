@@ -12,6 +12,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Chef extends StatefulWidget {
+
   @override
   ChefState createState() => ChefState();
 }
@@ -33,16 +34,22 @@ class ChefState extends State<Chef> {
   var _currentTemperature = '';
   var _currentOutput = '';
 
-  var TimeInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 3, // allow 3 characters input
-      filter: {"#": RegExp(r'[0-9]')});
-  var TemperatureInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 3, // allow 3 characters input
-      filter: {"#": RegExp(r'[0-9]')});
-  var DigitSpacesInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 1000, // allow 1000 characters input
-      filter: {"#": RegExp(r'[0-9] ')});
+  var TimeInputFormatter = WrapperForMaskTextInputFormatter(
+      mask: '#' * 3, // allow 3 characters input
+      filter: {"#": RegExp(r'[0-9]')}
+  );
+  var TemperatureInputFormatter = WrapperForMaskTextInputFormatter(
+      mask: '#' * 3, // allow 3 characters input
+      filter: {"#": RegExp(r'[0-9]')}
+  );
+  var DigitSpacesInputFormatter  = WrapperForMaskTextInputFormatter(
+      mask: '#' * 1000, // allow 1000 characters input
+      filter: {"#": RegExp(r'[0-9] ')}
+  );
 
-  GCWSwitchPosition _currentMode = GCWSwitchPosition.left; // interpret
+  GCWSwitchPosition _currentMode = GCWSwitchPosition.left;    // interpret
   GCWSwitchPosition _currentLanguage = GCWSwitchPosition.right; // english
-  bool _auxilaryRecipes = false;
+  bool _auxilaryRecipes= false;
 
   @override
   void initState() {
@@ -93,96 +100,102 @@ class ChefState extends State<Chef> {
           },
         ),
         _currentMode == GCWSwitchPosition.right // generate Chef-programm
-            ? Column(
-                children: <Widget>[
-                  GCWTextField(
-                    controller: _outputController,
-                    hintText: i18n(context, 'chef_output'),
-                    onChanged: (text) {
-                      setState(() {
-                        _currentOutput = text;
-                      });
-                    },
-                  ),
-                  GCWTextField(
-                    controller: _titleController,
-                    hintText: i18n(context, 'chef_recipetitle'),
-                    onChanged: (text) {
-                      setState(() {
-                        _currentTitle = text;
-                      });
-                    },
-                  ),
-                  GCWTextDivider(text: i18n(context, 'chef_options')),
-                  GCWTextField(
-                    controller: _remarkController,
-                    hintText: i18n(context, 'chef_remark'),
-                    onChanged: (text) {
-                      setState(() {
-                        _currentRemark = text;
-                      });
-                    },
-                  ),
-                  GCWTextField(
-                    controller: _timeController,
-                    inputFormatters: [TimeInputFormatter],
-                    hintText: i18n(context, 'chef_time'),
-                    onChanged: (text) {
-                      setState(() {
-                        _currentTime = text;
-                      });
-                    },
-                  ),
-                  GCWTextField(
-                    controller: _temperatureController,
-                    inputFormatters: [TemperatureInputFormatter],
-                    hintText: i18n(context, 'chef_temperature'),
-                    onChanged: (text) {
-                      setState(() {
-                        _currentTemperature = text;
-                      });
-                    },
-                  ),
-                  GCWOnOffSwitch(
-                    notitle: false,
-                    title: i18n(context, 'chef_generate_auxiliary_recipe'),
-                    value: _auxilaryRecipes,
-                    onChanged: (value) {
-                      setState(() {
-                        _auxilaryRecipes = value;
-                      });
-                    },
-                  ),
-                  GCWTextDivider(text: i18n(context, 'chef_sourcecode')),
-                ],
-              )
-            : Column(
-                children: <Widget>[
-                  GCWTextField(
-                    controller: _recipeController,
-                    hintText: i18n(context, 'chef_code'),
-                    onChanged: (text) {
-                      setState(() {
-                        _currentRecipe = text;
-                      });
-                    },
-                  ),
-                  GCWTextDivider(text: i18n(context, 'chef_refrigerator')),
-                  GCWTextField(
-                    controller: _inputController,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp('[0-9 ]')),
-                    ],
-                    hintText: i18n(context, 'chef_input'),
-                    onChanged: (text) {
-                      setState(() {
-                        _currentInput = text;
-                      });
-                    },
-                  ),
-                  GCWTextDivider(text: i18n(context, 'chef_output')),
-                ],
+        ? Column(
+            children: <Widget>[
+              GCWTextField(
+                controller: _outputController,
+                hintText: i18n(context, 'chef_output'),
+                onChanged: (text) {
+                  setState(() {
+                    _currentOutput = text;
+                  });
+                },
               ),
+              GCWTextField(
+                controller: _titleController,
+                hintText: i18n(context, 'chef_recipetitle'),
+                onChanged: (text) {
+                  setState(() {
+                    _currentTitle = text;
+                  });
+                },
+              ),
+              GCWTextDivider(
+                  text: i18n(context, 'chef_options')
+              ),
+              GCWTextField(
+                controller: _remarkController,
+                hintText: i18n(context, 'chef_remark'),
+                onChanged: (text) {
+                  setState(() {
+                    _currentRemark = text;
+                  });
+                },
+              ),
+              GCWTextField(
+                controller: _timeController,
+                inputFormatters: [TimeInputFormatter],
+                hintText: i18n(context, 'chef_time'),
+                onChanged: (text) {
+                  setState(() {
+                    _currentTime = text;
+                  });
+                },
+              ),
+              GCWTextField(
+                controller: _temperatureController,
+                inputFormatters: [TemperatureInputFormatter],
+                hintText: i18n(context, 'chef_temperature'),
+                onChanged: (text) {
+                  setState(() {
+                    _currentTemperature = text;
+                  });
+                },
+              ),
+              GCWOnOffSwitch(
+                notitle: false,
+                title: i18n(context, 'chef_generate_auxiliary_recipe'),
+                value: _auxilaryRecipes,
+                onChanged: (value) {
+                  setState(() {
+                    _auxilaryRecipes = value;
+                  });
+                },
+              ),
+              GCWTextDivider(
+                  text: i18n(context, 'chef_sourcecode')
+              ),
+            ],
+          )
+        : Column(
+            children: <Widget>[
+              GCWTextField(
+                controller: _recipeController,
+                hintText: i18n(context, 'chef_code'),
+                onChanged: (text) {
+                  setState(() {
+                    _currentRecipe = text;
+                  });
+                },
+              ),
+              GCWTextDivider(
+                  text: i18n(context, 'chef_refrigerator')
+              ),
+              GCWTextField(
+                controller: _inputController,
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9 ]')),],
+                hintText: i18n(context, 'chef_input'),
+                onChanged: (text) {
+                  setState(() {
+                    _currentInput = text;
+                  });
+                },
+              ),
+              GCWTextDivider(
+                  text: i18n(context, 'chef_output')
+              ),
+              ],
+          ),
         _buildOutput(context)
       ],
     );
@@ -192,42 +205,49 @@ class ChefState extends State<Chef> {
     String output = '';
 
     String language = 'ENG';
-    if (_currentLanguage == GCWSwitchPosition.left) language = 'DEU';
-    if (_currentMode == GCWSwitchPosition.right) {
-      // generate chef
+    if (_currentLanguage == GCWSwitchPosition.left)
+      language = 'DEU';
+    if (_currentMode == GCWSwitchPosition.right) { // generate chef
       if (_currentTitle == '') {
-        output = buildOutputText(['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_title']);
+        output = buildOutputText(
+          ['chef_error_structure_recipe',
+          'chef_error_structure_recipe_missing_title']);
       } else if (_currentOutput == '')
-        output = buildOutputText(['chef_error_structure_recipe', 'chef_error_structure_recipe_missing_output']);
+        output = buildOutputText(
+          ['chef_error_structure_recipe',
+          'chef_error_structure_recipe_missing_output']);
       else
-        output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature,
-            _currentOutput, _auxilaryRecipes);
-    } else {
-      // interpret chef
+        output = generateChef(language, _currentTitle, _currentRemark, _currentTime, _currentTemperature, _currentOutput, _auxilaryRecipes);
+    } else { // interpret chef
       if (isValid(_currentInput)) {
         try {
-          output = buildOutputText(
-              interpretChef(language, _currentRecipe.toLowerCase().replaceAll('  ', ' '), _currentInput));
+          output = buildOutputText(interpretChef(language, _currentRecipe.toLowerCase().replaceAll('  ', ' '), _currentInput));
         } catch (e) {
-          output = buildOutputText(
-              ['chef_error_runtime', 'chef_error_runtime_exception', 'chef_error_structure_recipe_missing_title']);
+          output = buildOutputText([
+            'chef_error_runtime',
+            'chef_error_runtime_exception',
+            'chef_error_structure_recipe_missing_title']);
         }
       } else
-        output = buildOutputText(['chef_error_runtime', 'chef_error_runtime_invalid_input']);
+        output = buildOutputText([
+          'chef_error_runtime',
+          'chef_error_runtime_invalid_input']);
     }
     return GCWOutputText(
-      text: output.trim(),
-      isMonotype: true,
+        text: output.trim(),
+        isMonotype: true,
     );
   }
 
-  String buildOutputText(List<String> outputList) {
+  String buildOutputText(List<String> outputList){
     String output = '';
     outputList.forEach((element) {
-      if (element != null) if (element.startsWith('chef_')) {
-        output = output + i18n(context, element) + '\n';
-      } else
-        output = output + element + '\n';
+      if (element != null)
+        if (element.startsWith('chef_')) {
+          output = output
+            + i18n(context, element) + '\n';
+        } else
+          output = output + element + '\n';
     });
     return output;
   }

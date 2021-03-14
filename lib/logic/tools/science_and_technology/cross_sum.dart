@@ -1,9 +1,10 @@
 import 'package:gc_wizard/utils/crosstotals.dart';
 
-enum CrossSumType { NORMAL, ITERATED }
+enum CrossSumType {NORMAL, ITERATED}
 
 List<int> crossSumRange(int rangeStart, int rangeEnd, int crossSumToFind, {CrossSumType type: CrossSumType.NORMAL}) {
-  if (rangeStart == null || rangeEnd == null || crossSumToFind == null) return [];
+  if (rangeStart == null || rangeEnd == null || crossSumToFind == null)
+    return [];
 
   if (rangeStart > rangeEnd) {
     var help = rangeEnd;
@@ -15,22 +16,20 @@ List<int> crossSumRange(int rangeStart, int rangeEnd, int crossSumToFind, {Cross
   for (int i = rangeStart; i <= rangeEnd; i++) {
     var crossSumResult;
     switch (type) {
-      case CrossSumType.NORMAL:
-        crossSumResult = crossSum([i]);
-        break;
-      case CrossSumType.ITERATED:
-        crossSumResult = crossSumIterated([i]);
-        break;
+      case CrossSumType.NORMAL: crossSumResult = crossSum([i]); break;
+      case CrossSumType.ITERATED: crossSumResult = crossSumIterated([i]); break;
     }
 
-    if (crossSumResult.toInt() == crossSumToFind) out.add(i);
+    if (crossSumResult.toInt() == crossSumToFind)
+      out.add(i);
   }
 
   return out;
 }
 
 Map<int, int> crossSumRangeFrequencies(int rangeStart, int rangeEnd, {CrossSumType type: CrossSumType.NORMAL}) {
-  if (rangeStart == null || rangeEnd == null) return {};
+  if (rangeStart == null || rangeEnd == null)
+    return {};
 
   if (rangeStart > rangeEnd) {
     var help = rangeEnd;
@@ -43,12 +42,8 @@ Map<int, int> crossSumRangeFrequencies(int rangeStart, int rangeEnd, {CrossSumTy
   for (int i = rangeStart; i <= rangeEnd; i++) {
     var crossSumResult = 0;
     switch (type) {
-      case CrossSumType.NORMAL:
-        crossSumResult = crossSum([i]).toInt();
-        break;
-      case CrossSumType.ITERATED:
-        crossSumResult = crossSumIterated([i]).toInt();
-        break;
+      case CrossSumType.NORMAL: crossSumResult = crossSum([i]).toInt(); break;
+      case CrossSumType.ITERATED: crossSumResult = crossSumIterated([i]).toInt(); break;
     }
 
     var currentValue = frequencies[crossSumResult] ?? 0;

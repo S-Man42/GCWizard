@@ -40,38 +40,42 @@ class BeaufortState extends State<Beaufort> {
           },
         ),
         _currentMode == GCWSwitchPosition.left
-            ? GCWUnitInput(
-                unitCategory: UNITCATEGORY_VELOCITY,
-                onChanged: (value) {
-                  setState(() {
-                    _currentVelocity = value;
-                  });
-                },
-              )
-            : Column(
-                children: [
-                  GCWIntegerSpinner(
-                    min: 0,
-                    max: 17,
-                    value: _currentBeaufortInput,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentBeaufortInput = value;
-                      });
-                    },
-                  ),
-                  GCWTextDivider(text: i18n(context, 'common_outputunit')),
-                  GCWUnitDropDownButton(
-                    unitCategory: UNITCATEGORY_VELOCITY,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentOutputUnit = value;
-                      });
-                    },
-                  )
-                ],
-              ),
-        GCWDefaultOutput(child: _buildOutput())
+          ? GCWUnitInput(
+              unitCategory: UNITCATEGORY_VELOCITY,
+              onChanged: (value) {
+                setState(() {
+                  _currentVelocity = value; 
+                });
+              },
+            )
+          : Column(
+              children: [
+                GCWIntegerSpinner(
+                  min: 0,
+                  max: 17,
+                  value: _currentBeaufortInput,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentBeaufortInput = value;
+                    });
+                  },
+                ),
+                GCWTextDivider(
+                  text: i18n(context, 'common_outputunit')
+                ),
+                GCWUnitDropDownButton(
+                  unitCategory: UNITCATEGORY_VELOCITY,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentOutputUnit = value;
+                    });
+                  },
+                )
+              ],
+            ),
+        GCWDefaultOutput(
+          child: _buildOutput()
+        )
       ],
     );
   }
@@ -81,7 +85,8 @@ class BeaufortState extends State<Beaufort> {
       return meterPerSecondToBeaufort(_currentVelocity).toString();
     } else {
       var format = NumberFormat('0');
-      if (_currentOutputUnit == logic.VELOCITY_MS) format = NumberFormat('0.0');
+      if (_currentOutputUnit == logic.VELOCITY_MS)
+        format = NumberFormat('0.0');
 
       var range = beaufortToMeterPerSecond(_currentBeaufortInput);
       var lower = _currentOutputUnit.fromMS(range[0]);

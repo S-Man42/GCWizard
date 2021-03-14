@@ -30,21 +30,19 @@ class GCWLetterValueRelationState extends State<GCWLetterValueRelation> {
     return Row(
       children: [
         Expanded(
-            child: GCWABCSpinner(
-          value: _currentLetterValue,
-          suppressLetterValues: true,
-          onChanged: (value) {
-            setState(() {
-              _currentLetterValue = value;
-              _calculateAndEmitValue();
-            });
-          },
-        )),
+          child: GCWABCSpinner(
+            value: _currentLetterValue,
+            suppressLetterValues: true,
+            onChanged: (value) {
+              setState(() {
+                _currentLetterValue = value;
+                _calculateAndEmitValue();
+              });
+            },
+          )
+        ),
         Container(
-          child: GCWText(
-            text: '=',
-            textAlign: TextAlign.center,
-          ),
+          child: GCWText(text: '=', textAlign: TextAlign.center,),
           padding: EdgeInsets.only(left: 2 * DEFAULT_MARGIN, right: 2 * DEFAULT_MARGIN),
         ),
         Expanded(
@@ -67,7 +65,8 @@ class GCWLetterValueRelationState extends State<GCWLetterValueRelation> {
   _calculateAndEmitValue() {
     var key = _currentKey - _currentLetterValue + 1;
 
-    if (key < widget.minValue) key += 26;
+    if (key < widget.minValue)
+      key += 26;
 
     widget.onChanged(key);
   }

@@ -40,6 +40,7 @@ class ProjectilesState extends State<Projectiles> {
 
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: <Widget>[
         GCWDropDownButton(
@@ -60,45 +61,48 @@ class ProjectilesState extends State<Projectiles> {
             });
           },
           items: _calculateProjectilesModeItems.entries.map((mode) {
-            return GCWDropDownMenuItem(value: mode.key, child: i18n(context, mode.value));
+            return GCWDropDownMenuItem(
+              value: mode.key,
+              child: i18n(context, mode.value)
+            );
           }).toList(),
         ),
         _currentMode != UNITCATEGORY_MASS
-            ? GCWUnitInput(
-                value: _currentInputMass,
-                title: i18n(context, 'projectiles_mass'),
-                unitList: allMasses(),
-                onChanged: (value) {
-                  setState(() {
-                    _currentInputMass = value;
-                  });
-                },
-              )
-            : Container(),
+          ? GCWUnitInput(
+              value: _currentInputMass,
+              title: i18n(context, 'projectiles_mass'),
+              unitList: allMasses(),
+              onChanged: (value) {
+                setState(() {
+                  _currentInputMass = value;
+                });
+              },
+            )
+          : Container(),
         _currentMode != UNITCATEGORY_ENERGY
-            ? GCWUnitInput(
-                value: _currentInputEnergy,
-                title: i18n(context, 'projectiles_energy'),
-                unitCategory: UNITCATEGORY_ENERGY,
-                onChanged: (value) {
-                  setState(() {
-                    _currentInputEnergy = value;
-                  });
-                },
-              )
-            : Container(),
+          ? GCWUnitInput(
+              value: _currentInputEnergy,
+              title: i18n(context, 'projectiles_energy'),
+              unitCategory: UNITCATEGORY_ENERGY,
+              onChanged: (value) {
+                setState(() {
+                  _currentInputEnergy = value;
+                });
+              },
+            )
+          : Container(),
         _currentMode != UNITCATEGORY_VELOCITY
-            ? GCWUnitInput(
-                value: _currentInputVelocity,
-                title: i18n(context, 'projectiles_velocity'),
-                unitCategory: UNITCATEGORY_VELOCITY,
-                onChanged: (value) {
-                  setState(() {
-                    _currentInputVelocity = value;
-                  });
-                },
-              )
-            : Container(),
+          ? GCWUnitInput(
+              value: _currentInputVelocity,
+              title: i18n(context, 'projectiles_velocity'),
+              unitCategory: UNITCATEGORY_VELOCITY,
+              onChanged: (value) {
+                setState(() {
+                  _currentInputVelocity = value;
+                });
+              },
+            )
+          : Container(),
         GCWTextDivider(text: i18n(context, 'common_outputunit')),
         GCWUnits(
           value: _currentOutputUnit,
@@ -110,7 +114,9 @@ class ProjectilesState extends State<Projectiles> {
             });
           },
         ),
-        GCWDefaultOutput(child: _calculateOutput())
+        GCWDefaultOutput(
+          child: _calculateOutput()
+        )
       ],
     );
   }
@@ -126,12 +132,10 @@ class ProjectilesState extends State<Projectiles> {
       outputValue = calculateVelocity(_currentInputEnergy, _currentInputMass);
     }
 
-    if (outputValue == null) return '';
+    if (outputValue == null)
+      return '';
 
     outputValue = _currentOutputUnit['unit'].fromReference(outputValue) / _currentOutputUnit['prefix'].value;
-    return NumberFormat('0.0' + '#' * 6).format(outputValue) +
-        ' ' +
-        (_currentOutputUnit['prefix'].symbol ?? '') +
-        _currentOutputUnit['unit'].symbol;
+    return NumberFormat('0.0' + '#' * 6).format(outputValue) + ' ' + (_currentOutputUnit['prefix'].symbol ?? '') + _currentOutputUnit['unit'].symbol;
   }
 }

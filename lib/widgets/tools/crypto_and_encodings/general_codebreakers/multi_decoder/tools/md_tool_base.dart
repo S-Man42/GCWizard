@@ -10,28 +10,32 @@ const MDT_INTERNALNAMES_BASE = 'multidecoder_tool_base_title';
 const MDT_BASE_OPTION_BASEFUNCTION = 'multidecoder_tool_base_option_basefunction';
 
 class MultiDecoderToolBase extends GCWMultiDecoderTool {
-  MultiDecoderToolBase({Key key, int id, String name, Map<String, dynamic> options, BuildContext context})
-      : super(
-            key: key,
-            id: id,
-            name: name,
-            internalToolName: MDT_INTERNALNAMES_BASE,
-            onDecode: (input) {
-              return BASE_FUNCTIONS[options[MDT_BASE_OPTION_BASEFUNCTION]](input);
+
+  MultiDecoderToolBase({Key key, int id, String name, Map<String, dynamic> options, BuildContext context}) :
+    super(
+      key: key,
+      id: id,
+      name: name,
+      internalToolName: MDT_INTERNALNAMES_BASE,
+      onDecode: (input) {
+        return BASE_FUNCTIONS[options[MDT_BASE_OPTION_BASEFUNCTION]](input);
+      },
+      options: options,
+      configurationWidget: GCWMultiDecoderToolConfiguration(
+        widgets: {
+          MDT_BASE_OPTION_BASEFUNCTION: GCWStatefulDropDownButton(
+            value: options[MDT_BASE_OPTION_BASEFUNCTION],
+            onChanged: (newValue) {
+              options[MDT_BASE_OPTION_BASEFUNCTION] = newValue;
             },
-            options: options,
-            configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
-              MDT_BASE_OPTION_BASEFUNCTION: GCWStatefulDropDownButton(
-                value: options[MDT_BASE_OPTION_BASEFUNCTION],
-                onChanged: (newValue) {
-                  options[MDT_BASE_OPTION_BASEFUNCTION] = newValue;
-                },
-                items: BASE_FUNCTIONS.entries.map((baseFunction) {
-                  return GCWDropDownMenuItem(
-                    value: baseFunction.key + '_title',
-                    child: i18n(context, baseFunction.key + '_title'),
-                  );
-                }).toList(),
-              ),
-            }));
+            items: BASE_FUNCTIONS.entries.map((baseFunction) {
+              return GCWDropDownMenuItem(
+                value: baseFunction.key + '_title',
+                child: i18n(context, baseFunction.key + '_title'),
+              );
+            }).toList(),
+          ),
+        }
+      )
+    );
 }

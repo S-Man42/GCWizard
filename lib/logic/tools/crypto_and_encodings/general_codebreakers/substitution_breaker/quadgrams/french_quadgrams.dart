@@ -1,6 +1,7 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
 
 class FrenchQuadgrams extends Quadgrams {
+
   FrenchQuadgrams() {
     alphabet = 'abcdefghijklmnopqrstuvwxyz';
     nbr_quadgrams = 91273991;

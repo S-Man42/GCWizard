@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
 
-enum IconButtonSize { NORMAL, SMALL, TINY }
+enum IconButtonSize {NORMAL, SMALL, TINY}
 
 class GCWIconButton extends StatelessWidget {
   final Function onPressed;
@@ -12,9 +12,15 @@ class GCWIconButton extends StatelessWidget {
   final Color iconColor;
   final Color backgroundColor;
 
-  GCWIconButton(
-      {Key key, this.onPressed, this.iconData, this.customIcon, this.size, this.iconColor, this.backgroundColor})
-      : super(key: key);
+  GCWIconButton({
+    Key key,
+    this.onPressed,
+    this.iconData,
+    this.customIcon,
+    this.size,
+    this.iconColor,
+    this.backgroundColor
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +30,8 @@ class GCWIconButton extends StatelessWidget {
 
     // moved to here instead of default value in constructur because
     // some tools explicitly hand over a NULL value
-    if (this.size == null) this.size = IconButtonSize.NORMAL;
+    if (this.size == null)
+      this.size = IconButtonSize.NORMAL;
 
     switch (this.size) {
       case IconButtonSize.NORMAL:
@@ -51,15 +58,26 @@ class GCWIconButton extends StatelessWidget {
         child: FlatButton(
           color: backgroundColor,
           padding: EdgeInsets.zero,
-          child:
-              this.customIcon ?? Icon(this.iconData, size: iconSize, color: this.iconColor ?? themeColors().mainFont()),
+          child: this.customIcon ?? Icon(
+            this.iconData,
+            size: iconSize,
+            color: this.iconColor ?? themeColors().mainFont()
+          ),
           onPressed: this.onPressed,
           shape: RoundedRectangleBorder(
-              side: BorderSide(color: themeColors().accent(), width: 1, style: BorderStyle.solid),
-              borderRadius: BorderRadius.circular(roundedBorderRadius)),
+            side: BorderSide(
+              color: themeColors().accent(),
+              width: 1,
+              style: BorderStyle.solid
+            ),
+            borderRadius: BorderRadius.circular(roundedBorderRadius)
+          ),
         ),
       ),
-      padding: EdgeInsets.only(left: 2, right: 2),
+      padding: EdgeInsets.only(
+        left: 2,
+        right: 2
+      ),
     );
   }
 }

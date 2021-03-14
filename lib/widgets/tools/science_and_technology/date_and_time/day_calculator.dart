@@ -13,6 +13,7 @@ class DayCalculator extends StatefulWidget {
 }
 
 class DayCalculatorState extends State<DayCalculator> {
+
   DateTime _currentStartDate;
   DateTime _currentEndDate;
 
@@ -31,7 +32,9 @@ class DayCalculatorState extends State<DayCalculator> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextDivider(text: i18n(context, 'dates_daycalculator_startdate')),
+        GCWTextDivider(
+          text: i18n(context, 'dates_daycalculator_startdate')
+        ),
         GCWDateTimePicker(
           type: DateTimePickerType.DATE_ONLY,
           datetime: _currentStartDate,
@@ -41,7 +44,9 @@ class DayCalculatorState extends State<DayCalculator> {
             });
           },
         ),
-        GCWTextDivider(text: i18n(context, 'dates_daycalculator_enddate')),
+        GCWTextDivider(
+            text: i18n(context, 'dates_daycalculator_enddate')
+        ),
         GCWDateTimePicker(
           type: DateTimePickerType.DATE_ONLY,
           datetime: _currentEndDate,
@@ -75,8 +80,7 @@ class DayCalculatorState extends State<DayCalculator> {
   }
 
   Widget _buildOutput() {
-    var outputData = calculateDayDifferences(_currentStartDate, _currentEndDate,
-        countStart: _currentCountStart, countEnd: _currentCountEnd);
+    var outputData = calculateDayDifferences(_currentStartDate, _currentEndDate, countStart: _currentCountStart, countEnd: _currentCountEnd);
     if (outputData == null) {
       return GCWDefaultOutput();
     }
@@ -88,8 +92,14 @@ class DayCalculatorState extends State<DayCalculator> {
       [i18n(context, 'dates_daycalculator_seconds'), outputData.seconds]
     ]);
 
-    rows.insert(0, GCWTextDivider(text: i18n(context, 'common_output')));
+    rows.insert(0,
+      GCWTextDivider(
+        text: i18n(context, 'common_output')
+      )
+    );
 
-    return Column(children: rows);
+    return Column(
+      children: rows
+    );
   }
 }

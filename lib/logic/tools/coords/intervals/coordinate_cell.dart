@@ -24,7 +24,7 @@ class CoordinateCell {
   Interval latInterval, lonInterval;
   Ellipsoid ellipsoid;
 
-  CoordinateCell({this.latInterval, this.lonInterval, this.ellipsoid});
+  CoordinateCell ({this.latInterval, this.lonInterval, this.ellipsoid});
 
   @override
   String toString() {
@@ -36,44 +36,27 @@ class CoordinateCell {
   }
 
   double get maxHeight {
-    return distanceBearing(LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.a)),
-            LatLng(radianToDeg(latInterval.b), radianToDeg(lonInterval.a)), ellipsoid)
-        .distance;
+    return distanceBearing(LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.a)), LatLng(radianToDeg(latInterval.b), radianToDeg(lonInterval.a)), ellipsoid).distance;
   }
 
   double get maxWidth {
-    var widthTop = distanceBearing(LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.a)),
-            LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.b)), ellipsoid)
-        .distance;
-    var widthBottom = distanceBearing(LatLng(radianToDeg(latInterval.b), radianToDeg(lonInterval.a)),
-            LatLng(radianToDeg(latInterval.b), radianToDeg(lonInterval.b)), ellipsoid)
-        .distance;
+    var widthTop = distanceBearing(LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.a)), LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.b)), ellipsoid).distance;
+    var widthBottom = distanceBearing(LatLng(radianToDeg(latInterval.b), radianToDeg(lonInterval.a)), LatLng(radianToDeg(latInterval.b), radianToDeg(lonInterval.b)), ellipsoid).distance;
     return max(widthTop, widthBottom);
   }
 
   //upper approximated bound for max radius (maximum distance from cell center(half width, half height) to corners or center of edges)
   double get approxMaxRadius {
+
     var distances = [];
-    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.a)), ellipsoid)
-        .distance);
-    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.b)), ellipsoid)
-        .distance);
-    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.b), radianToDeg(lonInterval.a)), ellipsoid)
-        .distance);
-    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.b)), ellipsoid)
-        .distance);
-    distances.add(distanceBearing(
-            cellCenter, LatLng(radianToDeg((latInterval.a + latInterval.b) / 2), radianToDeg(lonInterval.a)), ellipsoid)
-        .distance);
-    distances.add(distanceBearing(
-            cellCenter, LatLng(radianToDeg((latInterval.a + latInterval.b) / 2), radianToDeg(lonInterval.b)), ellipsoid)
-        .distance);
-    distances.add(distanceBearing(
-            cellCenter, LatLng(radianToDeg(latInterval.a), radianToDeg((lonInterval.a + lonInterval.b) / 2)), ellipsoid)
-        .distance);
-    distances.add(distanceBearing(
-            cellCenter, LatLng(radianToDeg(latInterval.b), radianToDeg((lonInterval.a + lonInterval.b) / 2)), ellipsoid)
-        .distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.a)), ellipsoid).distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.b)), ellipsoid).distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.b), radianToDeg(lonInterval.a)), ellipsoid).distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.b)), ellipsoid).distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg((latInterval.a + latInterval.b) / 2), radianToDeg(lonInterval.a)), ellipsoid).distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg((latInterval.a + latInterval.b) / 2), radianToDeg(lonInterval.b)), ellipsoid).distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.a), radianToDeg((lonInterval.a + lonInterval.b) / 2)), ellipsoid).distance);
+    distances.add(distanceBearing(cellCenter, LatLng(radianToDeg(latInterval.b), radianToDeg((lonInterval.a + lonInterval.b) / 2)), ellipsoid).distance);
     distances.sort();
 
     return distances[distances.length - 1];
@@ -98,10 +81,9 @@ class CoordinateCell {
   // If P is in the cell, than the resulting range is [0, 360]
   Interval bearingTo(LatLng point) {
     //if point is in cell
-    if (point.latitudeInRad > latInterval.a &&
-        point.latitudeInRad < latInterval.b &&
-        point.longitudeInRad > lonInterval.a &&
-        point.longitudeInRad < lonInterval.b) return Interval(a: 0.0, b: 360.0);
+    if (point.latitudeInRad > latInterval.a && point.latitudeInRad < latInterval.b
+        && point.longitudeInRad > lonInterval.a && point.longitudeInRad < lonInterval.b)
+      return Interval(a: 0.0, b: 360.0);
 
     var cornerAA = LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.a));
     var cornerAB = LatLng(radianToDeg(latInterval.a), radianToDeg(lonInterval.b));
@@ -110,10 +92,14 @@ class CoordinateCell {
 
     var bearings = [];
 
-    if (point != cornerAA) bearings.add(distanceBearing(point, cornerAA, ellipsoid).bearingBToA);
-    if (point != cornerAB) bearings.add(distanceBearing(point, cornerAB, ellipsoid).bearingBToA);
-    if (point != cornerBA) bearings.add(distanceBearing(point, cornerBA, ellipsoid).bearingBToA);
-    if (point != cornerBB) bearings.add(distanceBearing(point, cornerBB, ellipsoid).bearingBToA);
+    if (point != cornerAA)
+      bearings.add(distanceBearing(point, cornerAA, ellipsoid).bearingBToA);
+    if (point != cornerAB)
+      bearings.add(distanceBearing(point, cornerAB, ellipsoid).bearingBToA);
+    if (point != cornerBA)
+      bearings.add(distanceBearing(point, cornerBA, ellipsoid).bearingBToA);
+    if (point != cornerBB)
+      bearings.add(distanceBearing(point, cornerBB, ellipsoid).bearingBToA);
 
     var maxAngle = 0.0;
     var lower;
@@ -126,7 +112,8 @@ class CoordinateCell {
     // because of the ellipsoid shape, in some special cases this could be, nevertheless...)
     for (double bearingA in bearings) {
       for (double bearingB in bearings) {
-        if (bearingA == bearingB) continue;
+        if (bearingA == bearingB)
+          continue;
 
         var angle = bearingA - bearingB;
         var normalizedAngle = normalizeBearing(angle);
@@ -141,7 +128,8 @@ class CoordinateCell {
 
     // Create the unnormalized bearings: [350, 10] -> [350, 370]
     for (double bearing in bearings) {
-      if (bearing < lower || bearing > upper) return Interval(a: upper, b: lower + 360.0);
+      if (bearing < lower || bearing > upper)
+        return Interval(a: upper, b: lower + 360.0);
     }
 
     return Interval(a: lower, b: upper);

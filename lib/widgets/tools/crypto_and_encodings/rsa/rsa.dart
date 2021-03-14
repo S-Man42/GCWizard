@@ -9,7 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/integer_textinputformatter.dart';
 
-enum _RSAEncryptState { NONE, ENCRYPT, DECRYPT }
+enum _RSAEncryptState{NONE, ENCRYPT, DECRYPT}
 
 class RSA extends StatefulWidget {
   @override
@@ -35,7 +35,9 @@ class RSAState extends State<RSA> {
             _currentInput = text;
           },
         ),
-        GCWTextDivider(text: i18n(context, 'rsa_rsa_key')),
+        GCWTextDivider(
+          text: i18n(context, 'rsa_rsa_key')
+        ),
         GCWTextField(
           inputFormatters: [_integerInputFormatter],
           hintText: i18n(context, 'rsa_rsa_eq'),
@@ -75,15 +77,13 @@ class RSAState extends State<RSA> {
   }
 
   _calculateOutput() {
-    if (_state == _RSAEncryptState.NONE ||
-        _currentInput == null ||
-        _currentInput.length == 0 ||
-        _currentED == null ||
-        _currentED.length == 0 ||
-        _currentP == null ||
-        _currentP.length == 0 ||
-        _currentQ == null ||
-        _currentQ.length == 0) {
+    if (
+         _state == _RSAEncryptState.NONE
+      || _currentInput == null || _currentInput.length == 0
+      || _currentED == null || _currentED.length == 0
+      || _currentP == null || _currentP.length == 0
+      || _currentQ == null || _currentQ.length == 0
+    ) {
       return GCWDefaultOutput(child: '');
     }
 
@@ -99,7 +99,7 @@ class RSAState extends State<RSA> {
         outputText = encryptRSA(_currentInput, ed, p, q);
         try {
           d = calculateD(ed, p, q).toString();
-        } catch (e) {
+        } catch(e) {
           d = i18n(context, 'rsa_rsa_d.notcomputeable');
         }
       } else {
@@ -112,20 +112,21 @@ class RSAState extends State<RSA> {
         GCWDefaultOutput(
           child: outputText,
         ),
-        GCWTextDivider(text: i18n(context, 'rsa_rsa_calculatedparameters'))
+        GCWTextDivider(
+          text: i18n(context, 'rsa_rsa_calculatedparameters')
+        )
       ];
 
       outputChildren.addAll(columnedMultiLineOutput(context, [
         [i18n(context, 'rsa_n'), N(p, q)],
         [i18n(context, 'rsa_phi'), phi(p, q)],
         d != null ? [i18n(context, 'rsa_d'), d] : null
-      ], flexValues: [
-        1,
-        2
-      ]));
+      ], flexValues: [1, 2]));
 
-      return Column(children: outputChildren);
-    } catch (exception) {
+      return Column(
+        children: outputChildren
+      );
+    } catch(exception) {
       showToast(i18n(context, exception.message));
 
       _state = _RSAEncryptState.NONE;

@@ -61,32 +61,42 @@ class DecabitState extends State<Decabit> {
           },
         ),
         _buildInputButtons(context),
-        GCWTextDivider(text: i18n(context, 'common_key')),
+        GCWTextDivider(
+          text: i18n(context, 'common_key')
+        ),
         Row(
           children: <Widget>[
             Expanded(
               child: Container(
-                  child: GCWTextField(
-                    controller: _aController,
-                    onChanged: (text) {
-                      setState(() {
-                        _currentA = text;
-                      });
-                    },
-                  ),
-                  padding: EdgeInsets.only(left: 6, right: 6)),
+                child: GCWTextField(
+                  controller: _aController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentA = text;
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(
+                  left: 6,
+                  right: 6
+                )
+              ),
             ),
             Expanded(
               child: Container(
-                  child: GCWTextField(
-                    controller: _bController,
-                    onChanged: (text) {
-                      setState(() {
-                        _currentB = text;
-                      });
-                    },
-                  ),
-                  padding: EdgeInsets.only(left: 6, right: 6)),
+                child: GCWTextField(
+                  controller: _bController,
+                  onChanged: (text) {
+                    setState(() {
+                      _currentB = text;
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(
+                  left: 6,
+                  right: 6
+                )
+              ),
             ),
           ],
         ),
@@ -107,40 +117,46 @@ class DecabitState extends State<Decabit> {
             });
           },
         ),
-        GCWDefaultOutput(child: _buildOutput())
+        GCWDefaultOutput(
+          child: _buildOutput()
+        )
       ],
     );
   }
 
   Widget _buildInputButtons(BuildContext context) {
-    if (_currentMode == GCWSwitchPosition.left) return Container();
+    if (_currentMode == GCWSwitchPosition.left)
+      return Container();
 
-    return GCWToolBar(children: [
-      GCWButton(
-        text: _currentA,
-        onPressed: () {
-          setState(() {
-            _addCharacter(_currentA);
-          });
-        },
-      ),
-      GCWButton(
-        text: _currentB,
-        onPressed: () {
-          setState(() {
-            _addCharacter(_currentB);
-          });
-        },
-      ),
-      GCWIconButton(
-        iconData: Icons.backspace,
-        onPressed: () {
-          setState(() {
-            _currentInput = textControllerDoBackSpace(_currentInput, _inputController);
-          });
-        },
-      ),
-    ]);
+    return GCWToolBar(
+        children: [
+          GCWButton(
+            text: _currentA,
+            onPressed: () {
+              setState(() {
+                _addCharacter(_currentA);
+              });
+            },
+          ),
+          GCWButton(
+            text: _currentB,
+            onPressed: () {
+              setState(() {
+                _addCharacter(_currentB);
+              });
+            },
+          ),
+
+          GCWIconButton(
+            iconData: Icons.backspace,
+            onPressed: () {
+              setState(() {
+                _currentInput = textControllerDoBackSpace(_currentInput, _inputController);
+              });
+            },
+          ),
+        ]
+    );
   }
 
   _addCharacter(String input) {
@@ -148,11 +164,12 @@ class DecabitState extends State<Decabit> {
   }
 
   _buildOutput() {
-    if (_currentInput.length == 0 || _currentA.length == 0 || _currentB.length == 0) return '';
+    if (_currentInput.length == 0
+      || _currentA.length == 0
+      || _currentB.length == 0)
+      return '';
 
     var key = {'+': _currentA, '-': _currentB};
-    return _currentMode == GCWSwitchPosition.left
-        ? encryptDecabit(_currentInput, key, _numericMode)
-        : decryptDecabit(_currentInput, key, _numericMode);
+    return _currentMode == GCWSwitchPosition.left ? encryptDecabit(_currentInput, key, _numericMode) : decryptDecabit(_currentInput, key, _numericMode);
   }
 }

@@ -12,6 +12,7 @@ class GCWMultiDecoderToolConfiguration extends StatefulWidget {
 }
 
 class GCWMultiDecoderToolConfigurationState extends State<GCWMultiDecoderToolConfiguration> {
+
   @override
   void initState() {
     super.initState();
@@ -24,14 +25,21 @@ class GCWMultiDecoderToolConfigurationState extends State<GCWMultiDecoderToolCon
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: widget.widgets.entries.map((entry) {
-      return Row(
-        children: [
-          Expanded(child: GCWText(text: i18n(context, entry.key)), flex: 1),
-          Expanded(child: entry.value, flex: 3),
-        ],
-      );
-    }).toList());
+    return Column (
+      children: widget.widgets.entries.map((entry) {
+        return Row(
+          children: [
+            Expanded(
+              child: GCWText(text: i18n(context, entry.key)),
+              flex: 1
+            ),
+            Expanded(
+              child: entry.value,
+              flex: 3
+            ),
+          ],
+        );
+      }).toList()
+    );
   }
 }

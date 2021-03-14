@@ -21,36 +21,43 @@ class RC4State extends State<RC4> {
   var _currentKeyFormat = InputFormat.AUTO;
   var _currentOutputFormat = OutputFormat.TEXT;
 
+
   @override
   Widget build(BuildContext context) {
     var rc4InputFormatItems = {
-      InputFormat.AUTO: i18n(context, 'rc4_format_auto'),
-      InputFormat.TEXT: i18n(context, 'rc4_format_text'),
-      InputFormat.HEX: i18n(context, 'common_numeralbase_hexadecimal'),
-      InputFormat.BINARY: i18n(context, 'common_numeralbase_binary'),
-      InputFormat.ASCIIVALUES: i18n(context, 'rc4_format_asciivalues'),
+      InputFormat.AUTO : i18n(context, 'rc4_format_auto'),
+      InputFormat.TEXT : i18n(context, 'rc4_format_text'),
+      InputFormat.HEX : i18n(context, 'common_numeralbase_hexadecimal'),
+      InputFormat.BINARY : i18n(context, 'common_numeralbase_binary'),
+      InputFormat.ASCIIVALUES : i18n(context, 'rc4_format_asciivalues'),
     };
 
     var rc4OutputFormatItems = {
-      OutputFormat.TEXT: i18n(context, 'rc4_format_text'),
-      OutputFormat.HEX: i18n(context, 'common_numeralbase_hexadecimal'),
-      OutputFormat.BINARY: i18n(context, 'common_numeralbase_binary'),
-      OutputFormat.ASCIIVALUES: i18n(context, 'rc4_format_asciivalues'),
+      OutputFormat.TEXT : i18n(context, 'rc4_format_text'),
+      OutputFormat.HEX : i18n(context, 'common_numeralbase_hexadecimal'),
+      OutputFormat.BINARY : i18n(context, 'common_numeralbase_binary'),
+      OutputFormat.ASCIIVALUES : i18n(context, 'rc4_format_asciivalues'),
     };
 
     return Column(
       children: <Widget>[
         GCWTextField(
-          onChanged: (text) {
+           onChanged: (text) {
             setState(() {
               _currentInput = text;
             });
           },
         ),
-        Row(children: <Widget>[
-          Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
-          Expanded(
-              child: GCWDropDownButton(
+        Row(
+            children: <Widget>[
+            Expanded(
+              child: GCWText(
+                  text: i18n(context, 'rc4_format') + ':'
+              ),
+              flex: 1
+            ),
+            Expanded(
+              child : GCWDropDownButton(
                 value: _currentInputFormat,
                 onChanged: (value) {
                   setState(() {
@@ -64,9 +71,13 @@ class RC4State extends State<RC4> {
                   );
                 }).toList(),
               ),
-              flex: 2),
-        ]),
-        GCWTextDivider(text: i18n(context, 'common_key')),
+              flex: 2
+            ),
+          ]
+        ),
+        GCWTextDivider(
+          text: i18n(context, 'common_key')
+        ),
         GCWTextField(
           hintText: i18n(context, 'common_key'),
           onChanged: (text) {
@@ -75,10 +86,16 @@ class RC4State extends State<RC4> {
             });
           },
         ),
-        Row(children: <Widget>[
-          Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
-          Expanded(
-              child: GCWDropDownButton(
+        Row(
+            children: <Widget>[
+            Expanded(
+              child: GCWText(
+              text: i18n(context, 'rc4_format') + ':'
+              ),
+              flex: 1
+            ),
+            Expanded(
+              child : GCWDropDownButton(
                 value: _currentKeyFormat,
                 onChanged: (value) {
                   setState(() {
@@ -92,13 +109,23 @@ class RC4State extends State<RC4> {
                   );
                 }).toList(),
               ),
-              flex: 2),
-        ]),
-        GCWTextDivider(text: i18n(context, 'common_output') + ' ' + i18n(context, 'rc4_format')),
-        Row(children: <Widget>[
-          Expanded(child: GCWText(text: i18n(context, 'rc4_format') + ':'), flex: 1),
-          Expanded(
-              child: GCWDropDownButton(
+              flex: 2
+            ),
+            ]
+        ),
+        GCWTextDivider(
+            text: i18n(context, 'common_output') + ' ' + i18n(context, 'rc4_format')
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: GCWText(
+                  text: i18n(context, 'rc4_format') + ':'
+              ),
+              flex: 1
+            ),
+            Expanded(
+              child : GCWDropDownButton(
                 value: _currentOutputFormat,
                 onChanged: (value) {
                   setState(() {
@@ -112,8 +139,10 @@ class RC4State extends State<RC4> {
                   );
                 }).toList(),
               ),
-              flex: 2),
-        ]),
+              flex: 2
+            ),
+          ]
+        ),
         _buildOutput(context)
       ],
     );
@@ -124,12 +153,11 @@ class RC4State extends State<RC4> {
       return GCWDefaultOutput();
     }
 
-    var _currentOutput =
-        cryptRC4(_currentInput, _currentInputFormat, _currentKey, _currentKeyFormat, _currentOutputFormat);
+    var _currentOutput = cryptRC4(_currentInput, _currentInputFormat, _currentKey, _currentKeyFormat, _currentOutputFormat);
 
-    if (_currentOutput == null) {
+    if (_currentOutput == null)  {
       return GCWDefaultOutput();
-    } else if (_currentOutput.errorCode != ErrorCode.OK) {
+    } else if ( _currentOutput.errorCode != ErrorCode.OK) {
       switch (_currentOutput.errorCode) {
         case ErrorCode.MISSING_KEY:
           showToast(i18n(context, 'rc4_error_missing_key'));
@@ -142,11 +170,11 @@ class RC4State extends State<RC4> {
           break;
       }
       return GCWDefaultOutput();
-    }
-    ;
+    };
 
     return GCWDefaultOutput(
       child: _currentOutput.output,
     );
+
   }
 }

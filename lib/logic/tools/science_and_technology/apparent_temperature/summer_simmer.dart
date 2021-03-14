@@ -2,7 +2,8 @@
 
 import 'package:gc_wizard/logic/common/units/temperature.dart';
 
-double calculateSummerSimmerIndex(double temperature, double humidity, Temperature temperatureUnit) {
+
+double calculateSummerSimmerIndex (double temperature, double humidity, Temperature temperatureUnit) {
   double summerSimmerIndex = 0;
 
   if (temperatureUnit == TEMPERATURE_CELSIUS) {

@@ -17,8 +17,8 @@ class CoordinatesSettings extends StatefulWidget {
 
 class CoordinatesSettingsState extends State<CoordinatesSettings> {
   var _currentDefaultFormat = {
-    'format': Prefs.getString('coord_default_format'),
-    'subtype': Prefs.getString('coord_default_format_subtype')
+    'format' : Prefs.getString('coord_default_format'),
+    'subtype' : Prefs.getString('coord_default_format_subtype')
   };
   var _currentDefaultHemisphereLatitude = Prefs.getString('coord_default_hemisphere_latitude');
   var _currentDefaultHemisphereLongitude = Prefs.getString('coord_default_hemisphere_longitude');
@@ -33,7 +33,7 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
         ),
         GCWCoordsFormatSelector(
           format: _currentDefaultFormat,
-          onChanged: (newValue) {
+          onChanged: (newValue){
             setState(() {
               _currentDefaultFormat = newValue;
               Prefs.setString('coord_default_format', _currentDefaultFormat['format']);
@@ -44,44 +44,52 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
         GCWTextDivider(
           text: i18n(context, 'settings_coordinates_defaulthemispheres'),
         ),
-        Row(children: <Widget>[
-          Expanded(
+        Row(
+          children: <Widget>[
+            Expanded(
               child: GCWText(
                 text: i18n(context, 'coords_common_latitude'),
               ),
-              flex: 1),
-          Expanded(
+              flex: 1
+            ),
+            Expanded(
               child: GCWCoordsSignDropDownButton(
-                  itemList: [i18n(context, 'coords_common_north'), i18n(context, 'coords_common_south')],
-                  value: _currentDefaultHemisphereLatitude == HemisphereLatitude.North.toString() ? 1 : -1,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentDefaultHemisphereLatitude =
-                          value > 0 ? HemisphereLatitude.North.toString() : HemisphereLatitude.South.toString();
-                      Prefs.setString('coord_default_hemisphere_latitude', _currentDefaultHemisphereLatitude);
-                    });
-                  }),
-              flex: 4)
-        ]),
-        Row(children: <Widget>[
-          Expanded(
+                itemList: [i18n(context, 'coords_common_north'), i18n(context, 'coords_common_south')],
+                value: _currentDefaultHemisphereLatitude == HemisphereLatitude.North.toString() ? 1 : -1,
+                onChanged: (value) {
+                  setState(() {
+                    _currentDefaultHemisphereLatitude = value > 0 ? HemisphereLatitude.North.toString() : HemisphereLatitude.South.toString();
+                    Prefs.setString('coord_default_hemisphere_latitude', _currentDefaultHemisphereLatitude);
+                  });
+                }
+              ),
+              flex: 4
+            )
+          ]
+        ),
+        Row(
+          children: <Widget>[
+            Expanded(
               child: GCWText(
                 text: i18n(context, 'coords_common_longitude'),
               ),
-              flex: 1),
-          Expanded(
+              flex: 1
+            ),
+            Expanded(
               child: GCWCoordsSignDropDownButton(
-                  itemList: [i18n(context, 'coords_common_east'), i18n(context, 'coords_common_west')],
-                  value: _currentDefaultHemisphereLongitude == HemisphereLongitude.East.toString() ? 1 : -1,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentDefaultHemisphereLongitude =
-                          value > 0 ? HemisphereLongitude.East.toString() : HemisphereLongitude.West.toString();
-                      Prefs.setString('coord_default_hemisphere_longitude', _currentDefaultHemisphereLongitude);
-                    });
-                  }),
-              flex: 4)
-        ]),
+                itemList: [i18n(context, 'coords_common_east'), i18n(context, 'coords_common_west')],
+                value: _currentDefaultHemisphereLongitude == HemisphereLongitude.East.toString() ? 1 : -1,
+                onChanged: (value) {
+                  setState(() {
+                    _currentDefaultHemisphereLongitude = value > 0 ? HemisphereLongitude.East.toString() : HemisphereLongitude.West.toString();
+                    Prefs.setString('coord_default_hemisphere_longitude', _currentDefaultHemisphereLongitude);
+                  });
+                }
+              ),
+              flex: 4
+            )
+          ]
+        ),
         GCWTextDivider(
           text: i18n(context, 'settings_coordinates_defaultrotationellipsoid'),
         ),
@@ -89,7 +97,7 @@ class CoordinatesSettingsState extends State<CoordinatesSettings> {
           onChanged: (ells) {
             _currentDefaultEllipsoid = ells;
 
-            switch (_currentDefaultEllipsoid.type) {
+            switch(_currentDefaultEllipsoid.type) {
               case EllipsoidType.STANDARD:
                 Prefs.setString('coord_default_ellipsoid_type', EllipsoidType.STANDARD.toString());
                 Prefs.setString('coord_default_ellipsoid_name', ells.name);

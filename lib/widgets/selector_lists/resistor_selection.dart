@@ -11,16 +11,23 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class ResistorSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-    final List<GCWTool> _toolList = Registry.toolList.where((element) {
-      if (className(element.tool) == className(SymbolTable()) && (element.tool as SymbolTable).symbolKey == 'resistor')
-        return true;
 
-      return [
-        className(ResistorColorCodeCalculator()),
-        className(ResistorEIA96()),
-      ].contains(className(element.tool));
-    }).toList();
+    final List<GCWTool> _toolList =
+      Registry.toolList.where((element) {
+        if (className(element.tool) == className(SymbolTable())
+          && (element.tool as SymbolTable).symbolKey == 'resistor')
+          return true;
 
-    return Container(child: GCWToolList(toolList: _toolList));
+        return [
+          className(ResistorColorCodeCalculator()),
+          className(ResistorEIA96()),
+        ].contains(className(element.tool));
+      }).toList();
+
+    return Container(
+      child: GCWToolList(
+        toolList: _toolList
+      )
+    );
   }
 }

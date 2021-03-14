@@ -14,7 +14,7 @@ DateTime gregorianEasterDate(int year) {
   var l = (32 + 2 * e + 2 * i - h - k) % 7;
   var m = ((a + 11 * h + 22 * l) / 451).floor();
   var n = ((h + l - 7 * m + 114) / 31).floor();
-  var p = (h + l - 7 * m + 114) % 31;
+  var p = (h + l - 7 *  m + 114) % 31;
   p = p + 1;
 
   return DateTime(year, n, p.floor());
@@ -27,7 +27,8 @@ List<int> gregorianEasterYears(int theMonth, int theDay) {
   var years = <int>[];
   for (int y = year1; y <= year2; y++) {
     var easterDate = gregorianEasterDate(y);
-    if (easterDate.month == theMonth && easterDate.day == theDay) years.add(easterDate.year);
+    if (easterDate.month == theMonth && easterDate.day == theDay)
+      years.add(easterDate.year);
   }
 
   return years;

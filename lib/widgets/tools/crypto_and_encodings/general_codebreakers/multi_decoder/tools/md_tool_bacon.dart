@@ -8,25 +8,29 @@ const MDT_INTERNALNAMES_BACON = 'multidecoder_tool_bacon_title';
 const MDT_BACON_OPTION_MODE = 'multidecoder_tool_bacon_option_mode';
 
 class MultiDecoderToolBacon extends GCWMultiDecoderTool {
-  MultiDecoderToolBacon({Key key, int id, String name, Map<String, dynamic> options})
-      : super(
-            key: key,
-            id: id,
-            name: name,
-            internalToolName: MDT_INTERNALNAMES_BACON,
-            onDecode: (input) {
-              return decodeBacon(input, false, options[MDT_BACON_OPTION_MODE] == '01');
+
+  MultiDecoderToolBacon({Key key, int id, String name, Map<String, dynamic> options}) :
+    super(
+      key: key,
+      id: id,
+      name: name,
+      internalToolName: MDT_INTERNALNAMES_BACON,
+      onDecode: (input) {
+        return decodeBacon(input, false, options[MDT_BACON_OPTION_MODE] == '01');
+      },
+      options: options,
+      configurationWidget: GCWMultiDecoderToolConfiguration(
+        widgets: {
+          MDT_BACON_OPTION_MODE: GCWTwoOptionsSwitch(
+            value: options[MDT_BACON_OPTION_MODE] == '01' ? GCWSwitchPosition.right : GCWSwitchPosition.left,
+            notitle: true,
+            leftValue: 'AB',
+            rightValue: '01',
+            onChanged: (value) {
+              options[MDT_BACON_OPTION_MODE] = value == GCWSwitchPosition.left ? 'AB' : '01';
             },
-            options: options,
-            configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {
-              MDT_BACON_OPTION_MODE: GCWTwoOptionsSwitch(
-                value: options[MDT_BACON_OPTION_MODE] == '01' ? GCWSwitchPosition.right : GCWSwitchPosition.left,
-                notitle: true,
-                leftValue: 'AB',
-                rightValue: '01',
-                onChanged: (value) {
-                  options[MDT_BACON_OPTION_MODE] = value == GCWSwitchPosition.left ? 'AB' : '01';
-                },
-              )
-            }));
+          )
+        }
+      )
+    );
 }

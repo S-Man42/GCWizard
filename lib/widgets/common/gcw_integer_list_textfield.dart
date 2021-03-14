@@ -23,15 +23,15 @@ class _GCWIntegerListTextFieldState extends State<GCWIntegerListTextField> {
   @override
   Widget build(BuildContext context) {
     return GCWTextField(
-      hintText: widget.hintText,
-      onChanged: (text) {
-        setState(() {
-          var list = textToIntList(text);
-          widget.onChanged({'text': text, 'values': list});
-        });
-      },
-      controller: widget.controller,
-      inputFormatters: [WhitelistingTextInputFormatter(RegExp(r'[0-9\s]'))],
-    );
+        hintText: widget.hintText,
+        onChanged: (text) {
+          setState(() {
+            var list = textToIntList(text);
+            widget.onChanged({'text': text, 'values': list});
+          });
+        },
+        controller: widget.controller,
+        inputFormatters: [WhitelistingTextInputFormatter(RegExp(r'[0-9\s]'))],
+      );
   }
 }

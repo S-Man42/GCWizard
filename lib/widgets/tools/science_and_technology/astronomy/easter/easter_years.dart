@@ -37,37 +37,40 @@ class EasterYearsState extends State<EasterYears> {
         Row(
           children: [
             Expanded(
-                child: Container(
-              child: GCWDropDownButton(
-                value: _currentMonth,
-                items: [
-                  GCWDropDownMenuItem(
-                    value: 3,
-                    child: i18n(context, 'common_month_march'),
-                  ),
-                  GCWDropDownMenuItem(
-                    value: 4,
-                    child: i18n(context, 'common_month_april'),
-                  )
-                ],
-                onChanged: (value) {
-                  if (_currentMonth != value) {
-                    setState(() {
-                      _currentMonth = value;
+              child: Container(
+                child: GCWDropDownButton(
+                  value: _currentMonth,
+                  items: [
+                    GCWDropDownMenuItem(
+                      value: 3,
+                      child: i18n(context, 'common_month_march'),
+                    ),
+                    GCWDropDownMenuItem(
+                      value: 4,
+                      child: i18n(context, 'common_month_april'),
+                    )
+                  ],
+                  onChanged: (value) {
+                    if (_currentMonth != value) {
+                      setState(() {
+                        _currentMonth = value;
 
-                      if (_currentMonth == 3) {
-                        _currentDayList = _listDaysForMarch;
-                        if (_currentDay < 22) _currentDay = 22;
-                      } else {
-                        _currentDayList = _listDaysForApril;
-                        if (_currentDay > 25) _currentDay = 25;
-                      }
-                    });
-                  }
-                },
-              ),
-              padding: EdgeInsets.only(right: DEFAULT_MARGIN),
-            )),
+                        if (_currentMonth == 3) {
+                          _currentDayList = _listDaysForMarch;
+                          if (_currentDay < 22)
+                            _currentDay = 22;
+                        } else {
+                          _currentDayList = _listDaysForApril;
+                          if (_currentDay > 25)
+                            _currentDay = 25;
+                        }
+                      });
+                    }
+                  },
+                ),
+                padding: EdgeInsets.only(right: DEFAULT_MARGIN),
+              )
+            ),
             Expanded(
               child: Container(
                 child: GCWDropDownButton(
@@ -97,6 +100,8 @@ class EasterYearsState extends State<EasterYears> {
   Widget _buildOutput(BuildContext context) {
     var years = gregorianEasterYears(_currentMonth, _currentDay);
 
-    return GCWDefaultOutput(child: years.join('\n'));
+    return GCWDefaultOutput(
+      child: years.join('\n')
+    );
   }
 }

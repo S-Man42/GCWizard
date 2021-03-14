@@ -20,22 +20,22 @@ class GCWTextField extends StatefulWidget {
   final maxLines;
   final fontSize;
 
-  const GCWTextField(
-      {Key key,
-      this.onChanged,
-      this.controller,
-      this.validate,
-      this.inputFormatters,
-      this.keyboardType,
-      this.hintText,
-      this.focusNode,
-      this.autofocus,
-      this.icon,
-      this.filled: false,
-      this.maxLength,
-      this.maxLines,
-      this.fontSize})
-      : super(key: key);
+  const GCWTextField({
+    Key key,
+    this.onChanged,
+    this.controller,
+    this.validate,
+    this.inputFormatters,
+    this.keyboardType,
+    this.hintText,
+    this.focusNode,
+    this.autofocus,
+    this.icon,
+    this.filled: false,
+    this.maxLength,
+    this.maxLines,
+    this.fontSize
+  }) : super(key: key);
 
   @override
   _GCWTextFieldState createState() => _GCWTextFieldState();
@@ -64,46 +64,54 @@ class _GCWTextFieldState extends State<GCWTextField> {
     ThemeColors colors = themeColors();
 
     return Container(
-        margin: EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
-        child: LayoutBuilder(builder: (context, constraints) {
+      margin: EdgeInsets.symmetric(vertical: DEFAULT_MARGIN),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
           return TextFormField(
             autocorrect: false,
             decoration: InputDecoration(
-                hintText: widget.hintText,
-                fillColor: widget.filled ? colors.textFieldFill() : null,
-                filled: widget.filled,
-                prefixIcon: widget.icon,
-                isDense: true,
-                suffixIconConstraints: BoxConstraints(
-                  minWidth: 2,
-                  minHeight: 2,
-                ),
-                suffixIcon: constraints.maxWidth > 100
-                    ? InkWell(
-                        child: Container(
-                          child: Icon(
-                            Icons.clear,
-                            color: colors.mainFont(),
-                          ),
-                          padding: EdgeInsets.only(right: 5, top: 5, bottom: 5),
-                        ),
-                        onTap: () {
-                          if (widget.controller != null) widget.controller.clear();
+              hintText: widget.hintText,
+              fillColor: widget.filled ? colors.textFieldFill() : null,
+              filled: widget.filled,
+              prefixIcon: widget.icon,
+              isDense: true,
+              suffixIconConstraints: BoxConstraints(
+                minWidth: 2,
+                minHeight: 2,
+              ),
+              suffixIcon: constraints.maxWidth > 100
+                ? InkWell(
+                    child: Container(
+                      child: Icon(
+                        Icons.clear,
+                        color: colors.mainFont(),
+                      ),
+                      padding: EdgeInsets.only(
+                        right: 5,
+                        top: 5,
+                        bottom: 5
+                      ),
+                    ),
+                    onTap: () {
+                      if (widget.controller != null)
+                        widget.controller.clear();
 
-                          _controller.clear();
+                      _controller.clear();
 
-                          if (widget.onChanged != null) widget.onChanged('');
+                      if (widget.onChanged != null)
+                        widget.onChanged('');
 
-                          if (widget.inputFormatters != null) {
-                            widget.inputFormatters.forEach((formatter) {
-                              if (formatter is WrapperForMaskTextInputFormatter) {
-                                formatter.clear();
-                              }
-                            });
+                      if (widget.inputFormatters != null) {
+                        widget.inputFormatters.forEach((formatter) {
+                          if (formatter is WrapperForMaskTextInputFormatter) {
+                            formatter.clear();
                           }
-                        },
-                      )
-                    : null),
+                        });
+                      }
+                    },
+                  )
+                  : null
+              ),
             onChanged: widget.onChanged,
             controller: widget.controller ?? _controller,
             autovalidate: true,
@@ -114,11 +122,14 @@ class _GCWTextFieldState extends State<GCWTextField> {
             focusNode: widget.focusNode,
             autofocus: widget.autofocus ?? false,
             style: TextStyle(
-                fontSize: widget.fontSize ?? defaultFontSize(),
-                color: widget.filled ? colors.textFieldFillText() : colors.mainFont()),
+              fontSize: widget.fontSize ?? defaultFontSize(),
+              color: widget.filled ? colors.textFieldFillText() : colors.mainFont()
+            ),
             maxLengthEnforced: true,
             maxLength: widget.maxLength,
           );
-        }));
+        }
+      )
+    );
   }
 }

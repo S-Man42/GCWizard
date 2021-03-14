@@ -12,9 +12,15 @@ class GCWDropDownSpinner extends StatefulWidget {
   final SpinnerLayout layout;
   final String title;
 
-  const GCWDropDownSpinner(
-      {Key key, this.onChanged, this.title, this.index, this.items, this.layout: SpinnerLayout.HORIZONTAL})
-      : super(key: key);
+  const GCWDropDownSpinner({
+    Key key,
+    this.onChanged,
+    this.title,
+    this.index,
+    this.items,
+    this.layout:
+    SpinnerLayout.HORIZONTAL
+  }) : super(key: key);
 
   @override
   GCWDropDownSpinnerState createState() => GCWDropDownSpinnerState();
@@ -44,20 +50,33 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
         children: <Widget>[
           _buildTitle(),
           Expanded(
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    child: GCWIconButton(iconData: Icons.remove, onPressed: _decreaseValue),
-                    margin: EdgeInsets.only(right: DEFAULT_MARGIN),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  child: GCWIconButton(
+                    iconData: Icons.remove,
+                    onPressed: _decreaseValue
                   ),
-                  Expanded(child: _buildDropDownButton()),
-                  Container(
-                    child: GCWIconButton(iconData: Icons.add, onPressed: _increaseValue),
-                    margin: EdgeInsets.only(left: DEFAULT_MARGIN),
-                  )
-                ],
-              ),
-              flex: 3)
+                  margin: EdgeInsets.only(
+                    right: DEFAULT_MARGIN
+                  ),
+                ),
+                Expanded(
+                  child: _buildDropDownButton()
+                ),
+                Container(
+                  child: GCWIconButton(
+                    iconData: Icons.add,
+                    onPressed: _increaseValue
+                  ),
+                  margin: EdgeInsets.only(
+                    left: DEFAULT_MARGIN
+                  ),
+                )
+              ],
+            ),
+            flex: 3
+          )
         ],
       );
     } else {
@@ -68,9 +87,15 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                GCWIconButton(iconData: Icons.arrow_drop_up, onPressed: _increaseValue),
+                GCWIconButton(
+                  iconData: Icons.arrow_drop_up,
+                  onPressed: _increaseValue
+                ),
                 _buildDropDownButton(),
-                GCWIconButton(iconData: Icons.arrow_drop_down, onPressed: _decreaseValue),
+                GCWIconButton(
+                  iconData: Icons.arrow_drop_down,
+                  onPressed: _decreaseValue
+                ),
               ],
             ),
           )
@@ -80,7 +105,13 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
   }
 
   Widget _buildTitle() {
-    return widget.title == null ? Container() : Expanded(child: GCWText(text: widget.title + ':'), flex: 1);
+    return widget.title == null ?  Container() :
+    Expanded(
+      child: GCWText(
+        text: widget.title + ':'
+      ),
+      flex: 1
+    );
   }
 
   _buildDropDownButton() {
@@ -93,14 +124,16 @@ class GCWDropDownSpinnerState extends State<GCWDropDownSpinner> {
           });
         },
         items: (widget.items is List<GCWDropDownMenuItem>)
-            ? widget.items
-            : widget.items
-                .asMap()
-                .map((index, item) {
-                  return MapEntry(index, GCWDropDownMenuItem(value: index, child: item));
-                })
-                .values
-                .toList(),
+          ? widget.items
+          : widget.items.asMap().map((index, item) {
+              return MapEntry(
+                index,
+                GCWDropDownMenuItem(
+                  value: index,
+                  child: item
+                )
+              );
+            }).values.toList(),
       ),
       padding: EdgeInsets.symmetric(horizontal: DEFAULT_MARGIN),
     );
