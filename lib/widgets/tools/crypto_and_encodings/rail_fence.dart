@@ -21,10 +21,7 @@ class RailFenceState extends State<RailFence> {
 
   var _currentMode = GCWSwitchPosition.right;
 
-  var _maskInputFormatter = WrapperForMaskTextInputFormatter(
-    mask: '#' * 10000,
-    filter: {"#": RegExp(r'[A-Za-z]')}
-  );
+  var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 10000, filter: {"#": RegExp(r'[A-Za-z]')});
 
   @override
   Widget build(BuildContext context) {
@@ -50,22 +47,18 @@ class RailFenceState extends State<RailFence> {
         ),
         Row(
           children: [
+            Expanded(child: GCWText(text: i18n(context, 'railfence_optionalpassword')), flex: 1),
             Expanded(
-              child: GCWText(text: i18n(context, 'railfence_optionalpassword')),
-              flex: 1
-            ),
-            Expanded(
-              child: GCWTextField(
-                maxLength: _currentKey,
-                inputFormatters: [_maskInputFormatter],
-                onChanged: (text) {
-                  setState(() {
-                    _currentPassword = text;
-                  });
-                },
-              ),
-              flex: 3
-            )
+                child: GCWTextField(
+                  maxLength: _currentKey,
+                  inputFormatters: [_maskInputFormatter],
+                  onChanged: (text) {
+                    setState(() {
+                      _currentPassword = text;
+                    });
+                  },
+                ),
+                flex: 3)
           ],
         ),
         GCWIntegerSpinner(
@@ -80,23 +73,20 @@ class RailFenceState extends State<RailFence> {
           },
         ),
         GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          }
-        ),
-        GCWDefaultOutput(
-          child: _calculateOutput()
-        )
+            value: _currentMode,
+            onChanged: (value) {
+              setState(() {
+                _currentMode = value;
+              });
+            }),
+        GCWDefaultOutput(child: _calculateOutput())
       ],
     );
   }
 
   _calculateOutput() {
     return _currentMode == GCWSwitchPosition.left
-      ? encryptRailFence(_currentInput, _currentKey, offset: _currentOffset, password: _currentPassword)
-      : decryptRailFence(_currentInput, _currentKey, offset: _currentOffset, password: _currentPassword);
+        ? encryptRailFence(_currentInput, _currentKey, offset: _currentOffset, password: _currentPassword)
+        : decryptRailFence(_currentInput, _currentKey, offset: _currentOffset, password: _currentPassword);
   }
 }

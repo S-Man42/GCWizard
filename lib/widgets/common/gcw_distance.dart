@@ -12,8 +12,12 @@ class GCWDistance extends StatefulWidget {
   final String hintText;
   final double value;
   final Length unit;
+  final allowNegativeValues;
+  final controller;
 
-  const GCWDistance({Key key, this.onChanged, this.hintText, this.value, this.unit}) : super(key: key);
+  const GCWDistance(
+      {Key key, this.onChanged, this.hintText, this.value, this.unit, this.allowNegativeValues: false, this.controller})
+      : super(key: key);
 
   @override
   _GCWDistanceState createState() => _GCWDistanceState();
@@ -22,19 +26,20 @@ class GCWDistance extends StatefulWidget {
 class _GCWDistanceState extends State<GCWDistance> {
   var _controller;
 
-  var _currentInput = {'text': '','value': 0.0};
+  var _currentInput = {'text': '', 'value': 0.0};
   Length _currentLengthUnit;
 
   @override
   void initState() {
     super.initState();
 
-    if (widget.value != null)
-      _currentInput = {'text' : widget.value.toString(), 'value': widget.value};
+    if (widget.value != null) _currentInput = {'text': widget.value.toString(), 'value': widget.value};
 
-    _controller = TextEditingController (
-      text: _currentInput['text']
-    );
+    if (widget.controller != null) {
+      _controller = widget.controller;
+    } else {
+      _controller = TextEditingController(text: _currentInput['text']);
+    }
 
     _currentLengthUnit = widget.unit ?? getUnitBySymbol(allLengths(), Prefs.get('default_length_unit'));
   }
@@ -50,42 +55,38 @@ class _GCWDistanceState extends State<GCWDistance> {
     return Row(
       children: <Widget>[
         Expanded(
-          flex: 3,
-          child: Container(
-            child: GCWDoubleTextField(
-              hintText: widget.hintText ?? i18n(context, 'common_distance_hint'),
-              min: 0.0,
-              controller: _controller,
-              onChanged: (ret) {
-                setState(() {
-                  _currentInput = ret;
-                  _setCurrentValueAndEmitOnChange();
-                });
-              },
-            ),
-            padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
-          )
-        ),
+            flex: 3,
+            child: Container(
+                child: GCWDoubleTextField(
+                  hintText: widget.hintText ?? i18n(context, 'common_distance_hint'),
+                  min: widget.allowNegativeValues ? null : 0.0,
+                  controller: _controller,
+                  onChanged: (ret) {
+                    setState(() {
+                      _currentInput = ret;
+                      _setCurrentValueAndEmitOnChange();
+                    });
+                  },
+                ),
+                padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN))),
         Expanded(
           flex: 1,
           child: GCWUnitDropDownButton(
-            unitList: allLengths(),
-            value: _currentLengthUnit,
-            onChanged: (Length value) {
-              setState(() {
-                _currentLengthUnit = value;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
+              unitList: allLengths(),
+              value: _currentLengthUnit,
+              onChanged: (Length value) {
+                setState(() {
+                  _currentLengthUnit = value;
+                  _setCurrentValueAndEmitOnChange();
+                });
+              }),
         )
       ],
     );
   }
 
   _setCurrentValueAndEmitOnChange([setTextFieldText = false]) {
-    if (setTextFieldText)
-      _controller.text = _currentInput.toString();
+    if (setTextFieldText) _controller.text = _currentInput['value'].toString();
 
     double _currentValue = _currentInput['value'];
     var _meters = _currentLengthUnit.toMeter(_currentValue);

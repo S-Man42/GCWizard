@@ -15,16 +15,15 @@ class IntersectThreeCirclesJobData {
   final double accuracy;
   final Ellipsoid ells;
 
-  IntersectThreeCirclesJobData({
-      this.coord1 = null,
+  IntersectThreeCirclesJobData(
+      {this.coord1 = null,
       this.dist14 = 0.0,
       this.coord2 = null,
       this.dist24 = 0.0,
       this.coord3 = null,
       this.dist34 = 0.0,
       this.accuracy = 0.0,
-      this.ells = null
-  });
+      this.ells = null});
 }
 
 class Intersect {
@@ -34,11 +33,8 @@ class Intersect {
   Intersect({this.coords, this.accuracy});
 }
 
-List<Intersect> _distIntersection(LatLng coord1, double dist14,
-    LatLng coord2, double dist24,
-    LatLng coord3, double dist34,
-    Ellipsoid ells) {
-
+List<Intersect> _distIntersection(
+    LatLng coord1, double dist14, LatLng coord2, double dist24, LatLng coord3, double dist34, Ellipsoid ells) {
   List<LatLng> intersects = intersectTwoCircles(coord1, dist14, coord2, dist24, ells);
 
   if (intersects.isEmpty) {
@@ -47,27 +43,21 @@ List<Intersect> _distIntersection(LatLng coord1, double dist14,
 
   var distBear = distanceBearing(intersects[0], coord3, ells);
 
-  var _output = [Intersect(
-    coords: intersects[0],
-    accuracy: (dist34 - distBear.distance).abs()
-  )];
+  var _output = [Intersect(coords: intersects[0], accuracy: (dist34 - distBear.distance).abs())];
 
   if (intersects.length == 2) {
     distBear = distanceBearing(intersects[1], coord3, ells);
 
-    _output.add(Intersect(
-      coords: intersects[1],
-      accuracy: (dist34 - distBear.distance).abs()
-    ));
+    _output.add(Intersect(coords: intersects[1], accuracy: (dist34 - distBear.distance).abs()));
   }
 
   return _output;
 }
 
-void intersectThreeCirclesAsync(dynamic jobData) async {
+Future<List<Intersect>> intersectThreeCirclesAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
-    return;
+    return null;
   }
 
   var output = intersectThreeCircles(
@@ -78,20 +68,18 @@ void intersectThreeCirclesAsync(dynamic jobData) async {
       jobData.parameters.coord3,
       jobData.parameters.dist34,
       jobData.parameters.accuracy,
-      jobData.parameters.ells
-  );
+      jobData.parameters.ells);
 
-  jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+
+  return output;
 }
 
-List<Intersect> intersectThreeCircles(LatLng coord1, double dist14,
-    LatLng coord2, double dist24,
-    LatLng coord3, double dist34,
-    double accuracy, Ellipsoid ells) {
-
-  List<Intersect> intersections = _distIntersection(coord1, dist14, coord2,dist24, coord3, dist34, ells);
-  intersections.addAll(_distIntersection(coord1, dist14, coord3,dist34, coord2, dist24, ells));
-  intersections.addAll(_distIntersection(coord2, dist24, coord3,dist34, coord1, dist14, ells));
+List<Intersect> intersectThreeCircles(LatLng coord1, double dist14, LatLng coord2, double dist24, LatLng coord3,
+    double dist34, double accuracy, Ellipsoid ells) {
+  List<Intersect> intersections = _distIntersection(coord1, dist14, coord2, dist24, coord3, dist34, ells);
+  intersections.addAll(_distIntersection(coord1, dist14, coord3, dist34, coord2, dist24, ells));
+  intersections.addAll(_distIntersection(coord2, dist24, coord3, dist34, coord1, dist14, ells));
 
   intersections.sort((a, b) {
     return a.accuracy.compareTo(b.accuracy);

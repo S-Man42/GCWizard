@@ -8,18 +8,18 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/
 class Bigrams {
   static const int maxAlphabetLength = 32;
 
-  String  alphabet = null;
+  String alphabet = null;
   Map<String, String> replacementList = null;
   // The bigram with the lowest probability receives the value 0, the one with the greatest probability receives the value 1000000
   List<List<int>> bigrams = null;
 }
 
-Bigrams getBigrams(VigenereBreakerAlphabet alphabet){
+Bigrams getBigrams(VigenereBreakerAlphabet alphabet) {
   switch (alphabet) {
     case VigenereBreakerAlphabet.ENGLISH:
       return EnglishBigrams();
     case VigenereBreakerAlphabet.GERMAN:
-      return  GermanBigrams();
+      return GermanBigrams();
     case VigenereBreakerAlphabet.SPANISH:
       return SpanishBigrams();
     case VigenereBreakerAlphabet.FRENCH:
@@ -30,28 +30,27 @@ Bigrams getBigrams(VigenereBreakerAlphabet alphabet){
 }
 
 double calc_fitnessBigrams(String txt, Bigrams bigrams) {
-  if (txt == null || txt == '')
-    return null;
+  if (txt == null || txt == '') return null;
 
-  if ((bigrams == null) || (bigrams.alphabet == null) || (bigrams.bigrams == null))
-    return null;
+  if ((bigrams == null) || (bigrams.alphabet == null) || (bigrams.bigrams == null)) return null;
 
   var fitness = 0;
   var plain_bin = List<int>();
 
-  iterateText(txt, bigrams.alphabet).forEach((char) {plain_bin.add(char);});
+  iterateText(txt, bigrams.alphabet).forEach((char) {
+    plain_bin.add(char);
+  });
 
   if (plain_bin.length < 2)
     // More than two characters from the given alphabet are required
     return null;
 
   for (var idx = 0; idx < (plain_bin.length - 1); idx++) {
-    var ch1 = plain_bin[idx  ];
-    var ch2 = plain_bin[idx+1];
+    var ch1 = plain_bin[idx];
+    var ch2 = plain_bin[idx + 1];
     fitness += bigrams.bigrams[ch1][ch2];
-  };
+  }
+  ;
 
   return fitness / 10000 / (plain_bin.length - 1);
 }
-
-

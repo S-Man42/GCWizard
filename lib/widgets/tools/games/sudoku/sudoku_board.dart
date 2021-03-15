@@ -6,7 +6,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:touchable/touchable.dart';
 
-enum SudokuFillType {USER_FILLED, CALCULATED}
+enum SudokuFillType { USER_FILLED, CALCULATED }
 
 class SudokuBoard extends StatefulWidget {
   final SudokuFillType type;
@@ -22,30 +22,27 @@ class SudokuBoard extends StatefulWidget {
 class SudokuBoardState extends State<SudokuBoard> {
   @override
   Widget build(BuildContext context) {
-    return Row (
+    return Row(
       children: <Widget>[
         Expanded(
-          child: AspectRatio(
-            aspectRatio: 1 / 1,
-            child: CanvasTouchDetector(
-              builder: (context) {
-                return CustomPaint(
-                  painter: SudokuBoardPainter(context, widget.type, widget.board, (x, y, value) {
-                    setState(() {
-                      if (value == null) {
-                        widget.board[x][y] = null;
-                        return;
-                      }
+            child: AspectRatio(
+                aspectRatio: 1 / 1,
+                child: CanvasTouchDetector(
+                  builder: (context) {
+                    return CustomPaint(
+                        painter: SudokuBoardPainter(context, widget.type, widget.board, (x, y, value) {
+                      setState(() {
+                        if (value == null) {
+                          widget.board[x][y] = null;
+                          return;
+                        }
 
-                      widget.board[x][y] = {'value' : value, 'type': SudokuFillType.USER_FILLED};
-                      widget.onChanged(widget.board);
-                    });
-                  })
-                );
-              },
-            )
-          )
-        )
+                        widget.board[x][y] = {'value': value, 'type': SudokuFillType.USER_FILLED};
+                        widget.onChanged(widget.board);
+                      });
+                    }));
+                  },
+                )))
       ],
     );
   }
@@ -94,14 +91,11 @@ class SudokuBoardPainter extends CustomPainter {
             var boardY = i * 3 + k;
             var boardX = j * 3 + l;
 
-            _touchCanvas.drawRect(
-              Rect.fromLTWH(xInner, yInner, widthInner, heightInner),
-              paint,
-              onTapDown: (tapDetail) {
-                _removeCalculated(board);
-                _showInputDialog(boardX, boardY);
-              }
-            );
+            _touchCanvas.drawRect(Rect.fromLTWH(xInner, yInner, widthInner, heightInner), paint,
+                onTapDown: (tapDetail) {
+              _removeCalculated(board);
+              _showInputDialog(boardX, boardY);
+            });
 
             paint.color = colors.accent();
 
@@ -109,25 +103,19 @@ class SudokuBoardPainter extends CustomPainter {
             _touchCanvas.drawLine(Offset(0.0, yInner), Offset(size.height, yInner), paint);
 
             if (board[boardX][boardY] != null) {
-              var textColor = board[boardX][boardY]['type'] == SudokuFillType.USER_FILLED ? colors.accent() : colors.mainFont();
+              var textColor =
+                  board[boardX][boardY]['type'] == SudokuFillType.USER_FILLED ? colors.accent() : colors.mainFont();
 
               TextSpan span = TextSpan(
-                style: gcwTextStyle().copyWith(color: textColor, fontSize: heightInner * 0.8),
-                text: board[boardX][boardY]['value'].toString()
-              );
-              TextPainter textPainter = TextPainter(
-                text: span,
-                textDirection: TextDirection.ltr
-              );
+                  style: gcwTextStyle().copyWith(color: textColor, fontSize: heightInner * 0.8),
+                  text: board[boardX][boardY]['value'].toString());
+              TextPainter textPainter = TextPainter(text: span, textDirection: TextDirection.ltr);
               textPainter.layout();
 
               textPainter.paint(
-                canvas,
-                Offset(
-                  xInner + (widthInner - textPainter.width) * 0.5,
-                  yInner + (heightInner - textPainter.height) * 0.5
-                )
-              );
+                  canvas,
+                  Offset(xInner + (widthInner - textPainter.width) * 0.5,
+                      yInner + (heightInner - textPainter.height) * 0.5));
             }
           }
         }
@@ -146,8 +134,7 @@ class SudokuBoardPainter extends CustomPainter {
   _removeCalculated(List<List<Map<String, dynamic>>> board) {
     for (int i = 0; i < 9; i++) {
       for (int j = 0; j < 9; j++) {
-        if (board[i][j] != null && board[i][j]['type'] == SudokuFillType.CALCULATED)
-          board[i][j] = null;
+        if (board[i][j] != null && board[i][j]['type'] == SudokuFillType.CALCULATED) board[i][j] = null;
       }
     }
   }
@@ -160,44 +147,37 @@ class SudokuBoardPainter extends CustomPainter {
       for (int j = 0; j < 3; j++) {
         var value = i * 3 + j + 1;
 
-        rows.add(
-          GCWButton(
-            text: value.toString(),
-            textStyle: gcwTextStyle().copyWith(fontSize: 32, color: themeColors().dialogText()),
-            onPressed: () {
-              Navigator.of(context).pop();
-              setBoxValue(x, y, value);
-            },
-          )
-        );
+        rows.add(GCWButton(
+          text: value.toString(),
+          textStyle: gcwTextStyle().copyWith(fontSize: 32, color: themeColors().dialogText()),
+          onPressed: () {
+            Navigator.of(context).pop();
+            setBoxValue(x, y, value);
+          },
+        ));
       }
 
-      columns.add(
-        Row(
-          children: rows,
-        )
-      );
+      columns.add(Row(
+        children: rows,
+      ));
     }
 
-    columns.add(
-      GCWButton(
-        text: i18n(context, 'sudokusolver_removevalue'),
-        onPressed: () {
-          Navigator.of(context).pop();
-          setBoxValue(x, y, null);
-        },
-      )
-    );
+    columns.add(GCWButton(
+      text: i18n(context, 'sudokusolver_removevalue'),
+      onPressed: () {
+        Navigator.of(context).pop();
+        setBoxValue(x, y, null);
+      },
+    ));
 
-    showGCWDialog(context, i18n(context, 'sudokusolver_entervalue'),
-      Container(
-        height: 300,
-        child: Column(
-          children: columns
+    showGCWDialog(
+        context,
+        i18n(context, 'sudokusolver_entervalue'),
+        Container(
+          height: 300,
+          child: Column(children: columns),
         ),
-      ),
-      []
-    );
+        []);
   }
 
   @override
@@ -205,5 +185,3 @@ class SudokuBoardPainter extends CustomPainter {
     return true;
   }
 }
-
-

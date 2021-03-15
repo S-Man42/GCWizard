@@ -5,7 +5,38 @@ import 'package:latlong/latlong.dart';
 
 const int _DEFAULT_PRECISION = 8;
 
-const _BASE30 = ['0','1','2','3','4','5','6','7','8','9','B','C','D','F','G','H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Z'];
+const _BASE30 = [
+  '0',
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  'B',
+  'C',
+  'D',
+  'F',
+  'G',
+  'H',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'V',
+  'W',
+  'X',
+  'Z'
+];
 
 // source: http://www.nacgeo.com/nacsite/documents/nac.asp
 
@@ -30,9 +61,7 @@ NaturalAreaCode latLonToNaturalAreaCode(LatLng coords, {int precision: _DEFAULT_
   var lat = (coords.latitude + 90.0) / 180.0;
 
   return NaturalAreaCode(
-    _latlonComponentToNACComponent(lon, precision),
-    _latlonComponentToNACComponent(lat, precision)
-  );
+      _latlonComponentToNACComponent(lon, precision), _latlonComponentToNACComponent(lat, precision));
 }
 
 double _nacComponentToLatLonComponent(String component) {
@@ -41,8 +70,7 @@ double _nacComponentToLatLonComponent(String component) {
   var a = 0.0;
   for (int i = 0; i < component.length; i++) {
     var value = _BASE30.indexOf(component[i]);
-    if (value == -1)
-      continue;
+    if (value == -1) continue;
 
     a += value / pow(30, i + 1);
   }
@@ -60,13 +88,26 @@ LatLng naturalAreaCodeToLatLon(NaturalAreaCode nac) {
 LatLng parseNaturalAreaCode(String input) {
   RegExp regExp = RegExp(r'^\s*([0-9A-Z]+)(\s*,\s*|\s+)([0-9A-Z]+)\s*$');
   var matches = regExp.allMatches(input);
-  if (matches.length == 0)
-    return null;
 
-  var match = matches.elementAt(0);
+  var xString = '';
+  var yString = '';
 
-  var x = match.group(1);
-  var y = match.group(3);
+  if (matches.length > 0) {
+    var match = matches.elementAt(0);
+    xString = match.group(1);
+    yString = match.group(3);
+  }
+  if (matches.length == 0) {
+    regExp = RegExp(r'^\s*(X|x)\:?\s*([0-9A-Z]+)(\s*,\s*|\s+)(Y|y)\:?\s*([0-9A-Z]+)\s*$');
+    matches = regExp.allMatches(input);
+    if (matches.length > 0) {
+      var match = matches.elementAt(0);
+      xString = match.group(2);
+      yString = match.group(5);
+    }
+  }
 
-  return naturalAreaCodeToLatLon(NaturalAreaCode(x, y));
+  if (matches.length == 0) return null;
+
+  return naturalAreaCodeToLatLon(NaturalAreaCode(xString, yString));
 }

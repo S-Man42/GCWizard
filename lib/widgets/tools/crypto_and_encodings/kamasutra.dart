@@ -39,17 +39,13 @@ class KamasutraState extends State<Kamasutra> {
           },
         ),
         _currentAlphabetMode == GCWSwitchPosition.right
-          ? GCWTextField(
-              onChanged: (text) {
+            ? GCWTextField(onChanged: (text) {
                 setState(() {
                   _currentAlphabet = text;
                 });
-              }
-            )
-          : Container(),
-        GCWDefaultOutput(
-          child: _calculateOutput()
-        )
+              })
+            : Container(),
+        GCWDefaultOutput(child: _calculateOutput())
       ],
     );
   }

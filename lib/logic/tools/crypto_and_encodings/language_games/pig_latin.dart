@@ -12,35 +12,25 @@ _decodeQQ(input) {
 }
 
 encryptPigLatin(String input) {
-  if (input == null || input.length == 0)
-    return '';
+  if (input == null || input.length == 0) return '';
 
   input = _encodeQU(removeAccents(input));
 
-  return _decodeQQ(input.replaceAllMapped(
-    RegExp(r'\b(\w*?)([aeiou]\w*)', caseSensitive: false),
-    (match) {
-      var output = '${match[2]}-${match[1]}ay'.toLowerCase();
-      if (isUpperCase(match[0][0]))
-        output = output[0].toUpperCase() + output.substring(1);
+  return _decodeQQ(input.replaceAllMapped(RegExp(r'\b(\w*?)([aeiou]\w*)', caseSensitive: false), (match) {
+    var output = '${match[2]}-${match[1]}ay'.toLowerCase();
+    if (isUpperCase(match[0][0])) output = output[0].toUpperCase() + output.substring(1);
 
-      return output;
-    }
-  ));
+    return output;
+  }));
 }
 
 decryptPigLatin(String input) {
-  if (input == null || input.length == 0)
-    return '';
+  if (input == null || input.length == 0) return '';
 
-  return input.replaceAllMapped(
-    RegExp(r'\b(\w+)-(\w*)ay', caseSensitive: false),
-    (match) {
-      var output = match[2] + match[1];
-      if (isUpperCase(match[1][0]))
-        output = output[0].toUpperCase() + output.substring(1).toLowerCase();
+  return input.replaceAllMapped(RegExp(r'\b(\w+)-(\w*)ay', caseSensitive: false), (match) {
+    var output = match[2] + match[1];
+    if (isUpperCase(match[1][0])) output = output[0].toUpperCase() + output.substring(1).toLowerCase();
 
-      return output;
-    }
-  );
+    return output;
+  });
 }

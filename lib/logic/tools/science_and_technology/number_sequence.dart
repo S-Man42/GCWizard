@@ -39,7 +39,29 @@ class PositionOfSequenceOutput {
   PositionOfSequenceOutput(this.number, this.positionSequence, this.positionDigits);
 }
 
-enum NumberSequencesMode {LUCAS, FIBONACCI, MERSENNE, MERSENNE_FERMAT, FERMAT, JACOBSTAHL, JACOBSTHAL_LUCAS, JACOBSTHAL_OBLONG, PELL, PELL_LUCAS, CATALAN, RECAMAN, BELL, FACTORIAL, MERSENNE_PRIMES, MERSENNE_EXPONENTS, PERFECT_NUMBERS, SUPERPERFECT_NUMBERS, PRIMARY_PSEUDOPERFECT_NUMBERS, WEIRD_NUMBERS, SUBLIME_NUMBERS}
+enum NumberSequencesMode {
+  LUCAS,
+  FIBONACCI,
+  MERSENNE,
+  MERSENNE_FERMAT,
+  FERMAT,
+  JACOBSTAHL,
+  JACOBSTHAL_LUCAS,
+  JACOBSTHAL_OBLONG,
+  PELL,
+  PELL_LUCAS,
+  CATALAN,
+  RECAMAN,
+  BELL,
+  FACTORIAL,
+  MERSENNE_PRIMES,
+  MERSENNE_EXPONENTS,
+  PERFECT_NUMBERS,
+  SUPERPERFECT_NUMBERS,
+  PRIMARY_PSEUDOPERFECT_NUMBERS,
+  WEIRD_NUMBERS,
+  SUBLIME_NUMBERS
+}
 
 List<String> mersenne_primes = [
   '3',
@@ -62,14 +84,131 @@ List<String> mersenne_primes = [
   '259117086013202627776246767922441530941818887553125427303974923161874019266586362086201209516800483406550695241733194177441689509238807017410377709597512042313066624082916353517952311186154862265604547691127595848775610568757931191017711408826252153849035830401185072116424747461823031471398340229288074545677907941037288235820705892351068433882986888616658650280927692080339605869308790500409503709875902119018371991620994002568935113136548829739112656797303241986517250116412703509705427773477972349821676443446668383119322540099648994051790241624056519054483690809616061625743042361721863339415852426431208737266591962061753535748892894599629195183082621860853400937932839420261866586142503251450773096274235376822938649407127700846077124211823080804139298087057504713825264571448379371125032081826126566649084251699453951887789613650248405739378594599444335231188280123660406262468609212150349937584782292237144339628858485938215738821232393687046160677362909315071',
   '190797007524439073807468042969529173669356994749940177394741882673528979787005053706368049835514900244303495954950709725762186311224148828811920216904542206960744666169364221195289538436845390250168663932838805192055137154390912666527533007309292687539092257043362517857366624699975402375462954490293259233303137330643531556539739921926201438606439020075174723029056838272505051571967594608350063404495977660656269020823960825567012344189908927956646011998057988548630107637380993519826582389781888135705408653045219655801758081251164080554609057468028203308718724654081055323215860189611391296030471108443146745671967766308925858547271507311563765171008318248647110097614890313562856541784154881743146033909602737947385055355960331855614540900081456378659068370317267696980001187750995491090350108417050917991562167972281070161305972518044872048331306383715094854938415738549894606070722584737978176686422134354526989443028353644037187375385397838259511833166416134323695660367676897722287918773420968982326089026150031515424165462111337527431154890666327374921446276833564519776797633875503548665093914556482031482248883127023777039667707976559857333357013727342079099064400455741830654320379350833236245819348824064783585692924881021978332974949906122664421376034687815350484991'
 ];
-List<String> mersenne_exponents = ['2', '3', '5', '7', '13', '17', '19', '31', '61', '89', '107', '127', '521', '607', '1279', '2203', '2281', '3217', '4253', '4423', '9689', '9941', '11213', '19937', '21701', '23209', '44497', '86243', '110503', '132049', '216091', '756839', '859433', '1257787', '1398269', '2976221', '3021377', '6972593', '13466917', '20996011', '24036583', '25964951', '30402457', '32582657', '37156667', '42643801', '43112609', '57885161', '74207281', '77232917', '82589933'];
-List<String> perfect_numbers = ['6', '28', '496', '8128', '33550336', '8589869056', '137438691328', '2305843008139952128', '2658455991569831744654692615953842176',
+List<String> mersenne_exponents = [
+  '2',
+  '3',
+  '5',
+  '7',
+  '13',
+  '17',
+  '19',
+  '31',
+  '61',
+  '89',
+  '107',
+  '127',
+  '521',
+  '607',
+  '1279',
+  '2203',
+  '2281',
+  '3217',
+  '4253',
+  '4423',
+  '9689',
+  '9941',
+  '11213',
+  '19937',
+  '21701',
+  '23209',
+  '44497',
+  '86243',
+  '110503',
+  '132049',
+  '216091',
+  '756839',
+  '859433',
+  '1257787',
+  '1398269',
+  '2976221',
+  '3021377',
+  '6972593',
+  '13466917',
+  '20996011',
+  '24036583',
+  '25964951',
+  '30402457',
+  '32582657',
+  '37156667',
+  '42643801',
+  '43112609',
+  '57885161',
+  '74207281',
+  '77232917',
+  '82589933'
+];
+List<String> perfect_numbers = [
+  '6',
+  '28',
+  '496',
+  '8128',
+  '33550336',
+  '8589869056',
+  '137438691328',
+  '2305843008139952128',
+  '2658455991569831744654692615953842176',
   '191561942608236107294793378084303638130997321548169216 ',
   '13164036458569648337239753460458722910223472318386943117783728128',
-  '14474011154664524427946373126085988481573677491474835889066354349131199152128'];
-List<String> superperfect_numbers = ['2', '4', '16', '64', '4096', '65536', '262144', '1073741824', '1152921504606846976'];
-List<String> primary_pseudo_perfect_numbers = ['2', '6', '42', '1806', '47058', '2214502422', '52495396602', '8490421583559688410706771261086 '];
-List<String> weird_numbers = ['70', '836', '4030', '5830', '7192', '7912', '9272', '10430', '10570', '10792', '10990', '11410', '11690', '12110', '12530', '12670', '13370', '13510', '13790', '13930', '14770', '15610', '15890', '16030', '16310', '16730', '16870', '17272', '17570', '17990', '18410', '18830', '18970', '19390', '19670'];
+  '14474011154664524427946373126085988481573677491474835889066354349131199152128'
+];
+List<String> superperfect_numbers = [
+  '2',
+  '4',
+  '16',
+  '64',
+  '4096',
+  '65536',
+  '262144',
+  '1073741824',
+  '1152921504606846976'
+];
+List<String> primary_pseudo_perfect_numbers = [
+  '2',
+  '6',
+  '42',
+  '1806',
+  '47058',
+  '2214502422',
+  '52495396602',
+  '8490421583559688410706771261086 '
+];
+List<String> weird_numbers = [
+  '70',
+  '836',
+  '4030',
+  '5830',
+  '7192',
+  '7912',
+  '9272',
+  '10430',
+  '10570',
+  '10792',
+  '10990',
+  '11410',
+  '11690',
+  '12110',
+  '12530',
+  '12670',
+  '13370',
+  '13510',
+  '13790',
+  '13930',
+  '14770',
+  '15610',
+  '15890',
+  '16030',
+  '16310',
+  '16730',
+  '16870',
+  '17272',
+  '17570',
+  '17990',
+  '18410',
+  '18830',
+  '18970',
+  '19390',
+  '19670'
+];
 List<String> sublime_number = ['12', '6086555670238378989670371734243169622657830773351885970528324860512791691264'];
 
 final Zero = BigInt.zero;
@@ -79,22 +218,20 @@ final Three = BigInt.from(3);
 final sqrt5 = sqrt(5);
 final sqrt2 = sqrt(2);
 
-
-BigInt _getMersenneFermat(int n){
+BigInt _getMersenneFermat(int n) {
   return Two.pow(n) + One;
 }
 
-BigInt _getFermat(int n){
+BigInt _getFermat(int n) {
   return Two.pow(pow(2, n)) + One;
 }
 
-BigInt _getMersenne(int n){
+BigInt _getMersenne(int n) {
   return Two.pow(n) - One;
 }
 
-BigInt _getCatalan(int n){
-  if (n == 0)
-    return BigInt.one;
+BigInt _getCatalan(int n) {
+  if (n == 0) return BigInt.one;
 
   try {
     return _getBinomialCoefficient(2 * n, n) ~/ (BigInt.from(n) + One);
@@ -103,48 +240,54 @@ BigInt _getCatalan(int n){
   }
 }
 
-BigInt _getJacobsthal(int n){
+BigInt _getJacobsthal(int n) {
   return (Two.pow(n) - BigInt.from(-1).pow(n)) ~/ Three;
 }
 
-BigInt _getJacobsthalLucas(int n){
+BigInt _getJacobsthalLucas(int n) {
   return Two.pow(n) + BigInt.from(-1).pow(n);
 }
 
-BigInt _getJacobsthalOblong(int n){
+BigInt _getJacobsthalOblong(int n) {
   return _getJacobsthal(n) * _getJacobsthal(n + 1);
 }
 
-BigInt _getfactorial(int n){
+BigInt _getfactorial(int n) {
   if (n > 0)
     return n <= 1 ? One : BigInt.from(n) * _getfactorial(n - 1);
   else
     return One;
 }
 
-BigInt _getBinomialCoefficient(int n, k){
+BigInt _getBinomialCoefficient(int n, k) {
   if (n == k)
     return Zero;
   else
     return _getfactorial(n) ~/ _getfactorial(k) ~/ _getfactorial(n - k);
 }
 
-
 Function _getNumberSequenceFunction(NumberSequencesMode mode) {
   switch (mode) {
-    case NumberSequencesMode.FERMAT:            return _getFermat;
-    case NumberSequencesMode.MERSENNE:          return _getMersenne;
-    case NumberSequencesMode.MERSENNE_FERMAT:   return _getMersenneFermat;
-    case NumberSequencesMode.CATALAN:           return _getCatalan;
-    case NumberSequencesMode.JACOBSTAHL:        return _getJacobsthal;
-    case NumberSequencesMode.JACOBSTHAL_LUCAS:  return _getJacobsthalLucas;
-    case NumberSequencesMode.JACOBSTHAL_OBLONG: return _getJacobsthalOblong;
-    default: return null;
+    case NumberSequencesMode.FERMAT:
+      return _getFermat;
+    case NumberSequencesMode.MERSENNE:
+      return _getMersenne;
+    case NumberSequencesMode.MERSENNE_FERMAT:
+      return _getMersenneFermat;
+    case NumberSequencesMode.CATALAN:
+      return _getCatalan;
+    case NumberSequencesMode.JACOBSTAHL:
+      return _getJacobsthal;
+    case NumberSequencesMode.JACOBSTHAL_LUCAS:
+      return _getJacobsthalLucas;
+    case NumberSequencesMode.JACOBSTHAL_OBLONG:
+      return _getJacobsthalOblong;
+    default:
+      return null;
   }
 }
 
-
-BigInt getNumberAt(NumberSequencesMode sequence, int n){
+BigInt getNumberAt(NumberSequencesMode sequence, int n) {
   if (n == null)
     return Zero;
   else
@@ -152,8 +295,7 @@ BigInt getNumberAt(NumberSequencesMode sequence, int n){
 }
 
 List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
-  if (start == null || stop == null || start == '' || stop == '')
-    return [-1];
+  if (start == null || stop == null || start == '' || stop == '') return [-1];
 
   List numberList = new List();
   List<String> sequenceList = new List<String>();
@@ -163,8 +305,7 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
     for (int i = start; i <= stop; i++) {
       numberList.add(numberSequenceFunction(i));
     }
-  }
-  else if (sequence == NumberSequencesMode.FIBONACCI) {
+  } else if (sequence == NumberSequencesMode.FIBONACCI) {
     BigInt number;
     BigInt pn0 = Zero;
     BigInt pn1 = One;
@@ -179,32 +320,28 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
         pn0 = pn1;
         pn1 = number;
       }
-      if (index >= start)
-        numberList.add(number);
+      if (index >= start) numberList.add(number);
       index = index + 1;
     }
-  }
-  else if (sequence == NumberSequencesMode.PELL) {
+  } else if (sequence == NumberSequencesMode.PELL) {
     BigInt number;
     BigInt pn0 = Zero;
     BigInt pn1 = One;
     int index = 0;
-    while (index <= stop){
+    while (index <= stop) {
       if (index == 0)
         number = pn0;
-      else  if (index == 1)
+      else if (index == 1)
         number = pn1;
       else {
         number = Two * pn1 + pn0;
         pn0 = pn1;
         pn1 = number;
       }
-      if (index >= start)
-        numberList.add(number);
+      if (index >= start) numberList.add(number);
       index = index + 1;
     }
-  }
-  else if (sequence == NumberSequencesMode.PELL_LUCAS) {
+  } else if (sequence == NumberSequencesMode.PELL_LUCAS) {
     BigInt number;
     BigInt pn0 = Two;
     BigInt pn1 = Two;
@@ -212,39 +349,35 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
     while (index < stop + 1) {
       if (index == 0)
         number = pn0;
-      else  if (index == 1)
+      else if (index == 1)
         number = pn1;
       else {
         number = Two * pn1 + pn0;
         pn0 = pn1;
         pn1 = number;
       }
-      if (index >= start)
-        numberList.add(number);
+      if (index >= start) numberList.add(number);
       index = index + 1;
     }
-  }
-  else if (sequence == NumberSequencesMode.LUCAS) {
+  } else if (sequence == NumberSequencesMode.LUCAS) {
     BigInt number;
     BigInt pn0 = Two;
     BigInt pn1 = One;
     int index = 0;
-    while (index <= stop){
+    while (index <= stop) {
       if (index == 0)
         number = pn0;
-      else  if (index == 1)
+      else if (index == 1)
         number = pn1;
       else {
         number = pn0 + pn1;
         pn0 = pn1;
         pn1 = number;
       }
-      if (index >= start)
-        numberList.add(number);
+      if (index >= start) numberList.add(number);
       index = index + 1;
     }
-  }
-  else if (sequence == NumberSequencesMode.RECAMAN) {
+  } else if (sequence == NumberSequencesMode.RECAMAN) {
     List<BigInt> recamanSequence = new List<BigInt>();
     BigInt number;
     BigInt pn0 = Zero;
@@ -254,19 +387,16 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
     while (index < BigInt.from(stop) + One) {
       if (index == Zero)
         number = pn0;
-      else
-      if ((pn0 - index) > Zero && !recamanSequence.contains(pn0 - index))
+      else if ((pn0 - index) > Zero && !recamanSequence.contains(pn0 - index))
         number = pn0 - index;
       else
         number = pn0 + index;
       recamanSequence.add(number);
       pn0 = number;
-      if (index >= BigInt.from(start))
-        numberList.add(number);
+      if (index >= BigInt.from(start)) numberList.add(number);
       index = index + One;
     }
-  }
-  else if (sequence == NumberSequencesMode.FACTORIAL) {
+  } else if (sequence == NumberSequencesMode.FACTORIAL) {
     BigInt number;
     int index = 0;
     while (index < stop + 1) {
@@ -277,12 +407,10 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
       else {
         number = number * BigInt.from(index);
       }
-      if (index >= start)
-        numberList.add(number);
+      if (index >= start) numberList.add(number);
       index = index + 1;
     }
-  }
-  else if (sequence == NumberSequencesMode.BELL) {
+  } else if (sequence == NumberSequencesMode.BELL) {
     List<BigInt> bellList = new List<BigInt>();
     BigInt number;
     int index = 0;
@@ -290,49 +418,55 @@ List getNumbersInRange(NumberSequencesMode sequence, int start, stop) {
       if (index == 0)
         number = One;
       else
-        for (int k = 0; k <= index - 1; k++){
-          number = number +  _getBinomialCoefficient(index - 1, k) * bellList[k];
+        for (int k = 0; k <= index - 1; k++) {
+          number = number + _getBinomialCoefficient(index - 1, k) * bellList[k];
         }
       bellList.add(number);
-      if (index >= start)
-        numberList.add(number);
+      if (index >= start) numberList.add(number);
       index = index + 1;
     }
-  }
-  else {
-    switch (sequence){
-      case NumberSequencesMode.MERSENNE_PRIMES: sequenceList.addAll(mersenne_primes); break;
-      case NumberSequencesMode.MERSENNE_EXPONENTS: sequenceList.addAll(mersenne_exponents); break;
-      case NumberSequencesMode.PERFECT_NUMBERS: sequenceList.addAll(perfect_numbers); break;
-      case NumberSequencesMode.PRIMARY_PSEUDOPERFECT_NUMBERS: sequenceList.addAll(primary_pseudo_perfect_numbers); break;
-      case NumberSequencesMode.SUPERPERFECT_NUMBERS: sequenceList.addAll(superperfect_numbers); break;
-      case NumberSequencesMode.SUBLIME_NUMBERS: sequenceList.addAll(sublime_number); break;
-      case NumberSequencesMode.WEIRD_NUMBERS: sequenceList.addAll(weird_numbers); break;
+  } else {
+    switch (sequence) {
+      case NumberSequencesMode.MERSENNE_PRIMES:
+        sequenceList.addAll(mersenne_primes);
+        break;
+      case NumberSequencesMode.MERSENNE_EXPONENTS:
+        sequenceList.addAll(mersenne_exponents);
+        break;
+      case NumberSequencesMode.PERFECT_NUMBERS:
+        sequenceList.addAll(perfect_numbers);
+        break;
+      case NumberSequencesMode.PRIMARY_PSEUDOPERFECT_NUMBERS:
+        sequenceList.addAll(primary_pseudo_perfect_numbers);
+        break;
+      case NumberSequencesMode.SUPERPERFECT_NUMBERS:
+        sequenceList.addAll(superperfect_numbers);
+        break;
+      case NumberSequencesMode.SUBLIME_NUMBERS:
+        sequenceList.addAll(sublime_number);
+        break;
+      case NumberSequencesMode.WEIRD_NUMBERS:
+        sequenceList.addAll(weird_numbers);
+        break;
     }
-    for (int i = start; i <= stop; i++)
-      numberList.add(BigInt.parse(sequenceList[i]));
+    for (int i = start; i <= stop; i++) numberList.add(BigInt.parse(sequenceList[i]));
   }
 
   return numberList;
 }
 
-
-int checkNumber(NumberSequencesMode sequence, BigInt checkNumber, int maxIndex){
-
+int checkNumber(NumberSequencesMode sequence, BigInt checkNumber, int maxIndex) {
   if (checkNumber == null || checkNumber == '')
     return -1;
+  else if (getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionSequence == -1)
+    return -1;
+  else if (getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionDigits == 1)
+    return getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionSequence;
   else
-    if (getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionSequence == -1)
-      return -1;
-    else
-      if (getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionDigits == 1)
-        return getFirstPositionOfSequence(sequence, checkNumber.toString(), maxIndex).positionSequence;
-      else
-        return -1;
+    return -1;
 }
 
-PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence, String check, int maxIndex){
-
+PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence, String check, int maxIndex) {
   if (check == null || check == '') {
     return PositionOfSequenceOutput('-1', 0, 0);
   }
@@ -345,30 +479,27 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
   String numberString = '';
   List<String> sequenceList = new List<String>();
 
-  RegExp expr = new RegExp(r'(' + check +')');
+  RegExp expr = new RegExp(r'(' + check + ')');
 
   var numberSequenceFunction = _getNumberSequenceFunction(sequence);
   if (numberSequenceFunction != null) {
-
     while (index <= maxIndex) {
       number = numberSequenceFunction(index);
       numberString = number.toString();
       if (numberString.contains(check)) {
         int j = 0;
-        while (!numberString.substring(j).startsWith(check))
-          j++;
+        while (!numberString.substring(j).startsWith(check)) j++;
         return PositionOfSequenceOutput(numberString, index, (j + 1));
       }
       index = index + 1;
     }
-  }
-  else if (sequence == NumberSequencesMode.FIBONACCI) {
+  } else if (sequence == NumberSequencesMode.FIBONACCI) {
     pn0 = Zero;
     pn1 = One;
     number = pn1;
-    if (check == Zero.toString()){
+    if (check == Zero.toString()) {
       return PositionOfSequenceOutput('0', 0, 1);
-    } else if (check == One.toString()){
+    } else if (check == One.toString()) {
       return PositionOfSequenceOutput('1', 1, 1);
     } else {
       index = 2;
@@ -379,22 +510,19 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
         numberString = number.toString();
         if (expr.hasMatch(numberString)) {
           int j = 0;
-          while (!numberString.substring(j).startsWith(check))
-            j++;
-          return PositionOfSequenceOutput(
-              numberString, index, j + 1);
+          while (!numberString.substring(j).startsWith(check)) j++;
+          return PositionOfSequenceOutput(numberString, index, j + 1);
         }
         index = index + 1;
       }
     }
-  }
-  else if (sequence == NumberSequencesMode.PELL) {
+  } else if (sequence == NumberSequencesMode.PELL) {
     pn0 = Zero;
     pn1 = One;
     number = pn1;
-    if (check == Zero.toString()){
+    if (check == Zero.toString()) {
       return PositionOfSequenceOutput('0', 0, 1);
-    } else if (check == One.toString()){
+    } else if (check == One.toString()) {
       return PositionOfSequenceOutput('1', 1, 1);
     } else {
       index = 2;
@@ -405,17 +533,14 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
         numberString = number.toString();
         if (expr.hasMatch(numberString)) {
           int j = 0;
-          while (!numberString.substring(j).startsWith(check))
-            j++;
-          return PositionOfSequenceOutput(
-              numberString, index, j + 1);
+          while (!numberString.substring(j).startsWith(check)) j++;
+          return PositionOfSequenceOutput(numberString, index, j + 1);
         }
         index = index + 1;
       }
     }
-  }
-  else if (sequence == NumberSequencesMode.PELL_LUCAS) {
-    if (check == Two.toString()){
+  } else if (sequence == NumberSequencesMode.PELL_LUCAS) {
+    if (check == Two.toString()) {
       return PositionOfSequenceOutput('2', 0, 1);
     }
     pn0 = Two;
@@ -429,29 +554,26 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
       numberString = number.toString();
       if (expr.hasMatch(numberString)) {
         int j = 0;
-        while (!numberString.substring(j).startsWith(check))
-          j++;
+        while (!numberString.substring(j).startsWith(check)) j++;
         return PositionOfSequenceOutput(numberString, index, j + 1);
       }
       index = index + 1;
     }
-  }
-  else if (sequence == NumberSequencesMode.LUCAS) {
+  } else if (sequence == NumberSequencesMode.LUCAS) {
     pn0 = Two;
     pn1 = One;
-    if (check == Two.toString()){
+    if (check == Two.toString()) {
       return PositionOfSequenceOutput('2', 0, 1);
-    } else if ((check == One.toString())){
+    } else if ((check == One.toString())) {
       return PositionOfSequenceOutput('1', 1, 1);
     } else {
       index = 1;
-      number  = Three;
+      number = Three;
       while (index <= maxIndex) {
         numberString = number.toString();
         if (expr.hasMatch(numberString)) {
           int j = 0;
-          while (!numberString.substring(j).startsWith(check))
-            j++;
+          while (!numberString.substring(j).startsWith(check)) j++;
           return PositionOfSequenceOutput(numberString, index, j + 1);
         }
         index = index + 1;
@@ -460,8 +582,7 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
         pn1 = number;
       }
     }
-  }
-  else if (sequence == NumberSequencesMode.RECAMAN) {
+  } else if (sequence == NumberSequencesMode.RECAMAN) {
     List<int> recamanSequence = new List<int>();
     int index = 0;
     int maxIndex = 111111;
@@ -471,8 +592,7 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
     while (index <= maxIndex) {
       if (index == Zero)
         number = 0;
-      else
-      if ((pn0 - index) > 0 && !recamanSequence.contains(pn0 - index))
+      else if ((pn0 - index) > 0 && !recamanSequence.contains(pn0 - index))
         number = pn0 - index;
       else
         number = pn0 + index;
@@ -481,18 +601,16 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
       numberString = number.toString();
       if (expr.hasMatch(numberString)) {
         int j = 0;
-        while (!numberString.substring(j).startsWith(check))
-          j++;
+        while (!numberString.substring(j).startsWith(check)) j++;
         return PositionOfSequenceOutput(numberString, index, j + 1);
       }
       index = index + 1;
     }
-  }
-  else if (sequence == NumberSequencesMode.FACTORIAL) {
+  } else if (sequence == NumberSequencesMode.FACTORIAL) {
     number = One;
-    if (check == Zero.toString()){
+    if (check == Zero.toString()) {
       return PositionOfSequenceOutput('0', 0, 1);
-    } else if (check == One.toString()){
+    } else if (check == One.toString()) {
       return PositionOfSequenceOutput('1', 1, 1);
     } else {
       index = 2;
@@ -501,64 +619,68 @@ PositionOfSequenceOutput getFirstPositionOfSequence(NumberSequencesMode sequence
         numberString = number.toString();
         if (expr.hasMatch(numberString)) {
           int j = 0;
-          while (!numberString.substring(j).startsWith(check))
-            j++;
-          return PositionOfSequenceOutput(
-              numberString, index, j + 1);
+          while (!numberString.substring(j).startsWith(check)) j++;
+          return PositionOfSequenceOutput(numberString, index, j + 1);
         }
         index = index + 1;
       }
     }
-  }
-  else if (sequence == NumberSequencesMode.BELL) {
+  } else if (sequence == NumberSequencesMode.BELL) {
     List<BigInt> bellList = new List<BigInt>();
-  while (index <= maxIndex) {
-    if (index == 0)
-      number = One;
-    else
-      for (int k = 0; k <= index - 1; k++){
-        number = number +  _getBinomialCoefficient(index - 1, k) * bellList[k];
+    while (index <= maxIndex) {
+      if (index == 0)
+        number = One;
+      else
+        for (int k = 0; k <= index - 1; k++) {
+          number = number + _getBinomialCoefficient(index - 1, k) * bellList[k];
+        }
+      bellList.add(number);
+      numberString = number.toString();
+      if (expr.hasMatch(numberString)) {
+        int j = 0;
+        while (!numberString.substring(j).startsWith(check)) j++;
+        return PositionOfSequenceOutput(numberString, index, j + 1);
       }
-    bellList.add(number);
-    numberString = number.toString();
-    if (expr.hasMatch(numberString)) {
-      int j = 0;
-      while (!numberString.substring(j).startsWith(check))
-        j++;
-      return PositionOfSequenceOutput(numberString, index, j + 1);
+      index = index + 1;
     }
-    index = index + 1;
-  }
-}
-  else {
-    switch (sequence){
-      case NumberSequencesMode.MERSENNE_PRIMES: sequenceList.addAll(mersenne_primes); break;
-      case NumberSequencesMode.MERSENNE_EXPONENTS: sequenceList.addAll(mersenne_exponents); break;
-      case NumberSequencesMode.PERFECT_NUMBERS: sequenceList.addAll(perfect_numbers); break;
-      case NumberSequencesMode.PRIMARY_PSEUDOPERFECT_NUMBERS: sequenceList.addAll(primary_pseudo_perfect_numbers); break;
-      case NumberSequencesMode.SUPERPERFECT_NUMBERS: sequenceList.addAll(superperfect_numbers); break;
-      case NumberSequencesMode.SUBLIME_NUMBERS: sequenceList.addAll(sublime_number); break;
-      case NumberSequencesMode.WEIRD_NUMBERS: sequenceList.addAll(weird_numbers); break;
+  } else {
+    switch (sequence) {
+      case NumberSequencesMode.MERSENNE_PRIMES:
+        sequenceList.addAll(mersenne_primes);
+        break;
+      case NumberSequencesMode.MERSENNE_EXPONENTS:
+        sequenceList.addAll(mersenne_exponents);
+        break;
+      case NumberSequencesMode.PERFECT_NUMBERS:
+        sequenceList.addAll(perfect_numbers);
+        break;
+      case NumberSequencesMode.PRIMARY_PSEUDOPERFECT_NUMBERS:
+        sequenceList.addAll(primary_pseudo_perfect_numbers);
+        break;
+      case NumberSequencesMode.SUPERPERFECT_NUMBERS:
+        sequenceList.addAll(superperfect_numbers);
+        break;
+      case NumberSequencesMode.SUBLIME_NUMBERS:
+        sequenceList.addAll(sublime_number);
+        break;
+      case NumberSequencesMode.WEIRD_NUMBERS:
+        sequenceList.addAll(weird_numbers);
+        break;
     }
-    for (int i = 0; i < sequenceList.length; i++){
+    for (int i = 0; i < sequenceList.length; i++) {
       if (expr.hasMatch(sequenceList[i])) {
         int j = 0;
-        while (!sequenceList[i].substring(j).startsWith(check))
-          j++;
-        return PositionOfSequenceOutput(
-            sequenceList[i], i, j + 1);
+        while (!sequenceList[i].substring(j).startsWith(check)) j++;
+        return PositionOfSequenceOutput(sequenceList[i], i, j + 1);
       }
     }
-
   }
 
   return PositionOfSequenceOutput('-1', 0, 0);
 }
 
-
-List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
-  if (digits == null)
-    return [];
+List getNumbersWithNDigits(NumberSequencesMode sequence, int digits) {
+  if (digits == null) return [];
 
   BigInt number;
 
@@ -571,12 +693,10 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
     number = Two;
     while (number.toString().length < digits + 1) {
       number = numberSequenceFunction(index);
-      if (number.toString().length == digits)
-        numberList.add(number);
+      if (number.toString().length == digits) numberList.add(number);
       index = index + 1;
     }
-  }
-  else if (sequence == NumberSequencesMode.FIBONACCI) {
+  } else if (sequence == NumberSequencesMode.FIBONACCI) {
     BigInt pn0 = Zero;
     BigInt pn1 = One;
     if (digits == 1) {
@@ -588,11 +708,9 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
       number = pn1 + pn0;
       pn0 = pn1;
       pn1 = number;
-      if (number.toString().length == digits)
-        numberList.add(number);
+      if (number.toString().length == digits) numberList.add(number);
     }
-  }
-  else if (sequence == NumberSequencesMode.PELL) {
+  } else if (sequence == NumberSequencesMode.PELL) {
     BigInt pn0 = Zero;
     BigInt pn1 = One;
     if (digits == 1) {
@@ -604,11 +722,9 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
       number = Two * pn1 + pn0;
       pn0 = pn1;
       pn1 = number;
-      if (number.toString().length == digits)
-        numberList.add(number);
+      if (number.toString().length == digits) numberList.add(number);
     }
-  }
-  else if (sequence == NumberSequencesMode.PELL_LUCAS) {
+  } else if (sequence == NumberSequencesMode.PELL_LUCAS) {
     BigInt pn0 = Two;
     BigInt pn1 = Two;
     if (digits == 1) {
@@ -620,11 +736,9 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
       number = Two * pn1 + pn0;
       pn0 = pn1;
       pn1 = number;
-      if (number.toString().length == digits)
-        numberList.add(number);
+      if (number.toString().length == digits) numberList.add(number);
     }
-  }
-  else if (sequence == NumberSequencesMode.LUCAS) {
+  } else if (sequence == NumberSequencesMode.LUCAS) {
     BigInt pn0 = Two;
     BigInt pn1 = One;
     if (digits == 1) {
@@ -636,28 +750,23 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
       number = pn1 + pn0;
       pn0 = pn1;
       pn1 = number;
-      if (number.toString().length == digits)
-        numberList.add(number);
+      if (number.toString().length == digits) numberList.add(number);
     }
-  }
-  else if (sequence == NumberSequencesMode.RECAMAN) {
+  } else if (sequence == NumberSequencesMode.RECAMAN) {
     BigInt pn0 = Zero;
     List<BigInt> recamanSequence = new List<BigInt>();
-    for (int index = 0; index < 100000; index++){
+    for (int index = 0; index < 100000; index++) {
       if (index == 0)
         number = Zero;
-      else
-      if ((pn0 - BigInt.from(index)) > Zero && !recamanSequence.contains(pn0 - BigInt.from(index)))
+      else if ((pn0 - BigInt.from(index)) > Zero && !recamanSequence.contains(pn0 - BigInt.from(index)))
         number = pn0 - BigInt.from(index);
       else
         number = pn0 + BigInt.from(index);
       recamanSequence.add(number);
       pn0 = number;
-      if (number.toString().length == digits)
-        numberList.add(number);
+      if (number.toString().length == digits) numberList.add(number);
     }
-  }
-  else if (sequence == NumberSequencesMode.FACTORIAL) {
+  } else if (sequence == NumberSequencesMode.FACTORIAL) {
     BigInt index = BigInt.from(4);
     if (digits == 1) {
       numberList.add(One);
@@ -667,12 +776,10 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
     number = BigInt.from(6);
     while (number.toString().length < digits + 1) {
       number = number * index;
-      if (number.toString().length == digits)
-        numberList.add(number);
+      if (number.toString().length == digits) numberList.add(number);
       index = index + One;
     }
-  }
-  else if (sequence == NumberSequencesMode.BELL) {
+  } else if (sequence == NumberSequencesMode.BELL) {
     List<BigInt> bellList = new List<BigInt>();
     BigInt number = One;
     int index = 0;
@@ -680,30 +787,39 @@ List getNumbersWithNDigits(NumberSequencesMode sequence, int digits){
       if (index == 0)
         number = One;
       else
-        for (int k = 0; k <= index - 1; k++){
-          number = number +  _getBinomialCoefficient(index - 1, k) * bellList[k];
+        for (int k = 0; k <= index - 1; k++) {
+          number = number + _getBinomialCoefficient(index - 1, k) * bellList[k];
         }
       bellList.add(number);
-      if (number.toString().length == digits)
-        numberList.add(number);
+      if (number.toString().length == digits) numberList.add(number);
       index = index + 1;
     }
-  }
-  else {
-    switch (sequence){
-      case NumberSequencesMode.MERSENNE_PRIMES: sequenceList.addAll(mersenne_primes); break;
-      case NumberSequencesMode.MERSENNE_EXPONENTS: sequenceList.addAll(mersenne_exponents); break;
-      case NumberSequencesMode.PERFECT_NUMBERS: sequenceList.addAll(perfect_numbers); break;
-      case NumberSequencesMode.PRIMARY_PSEUDOPERFECT_NUMBERS: sequenceList.addAll(primary_pseudo_perfect_numbers); break;
-      case NumberSequencesMode.SUPERPERFECT_NUMBERS: sequenceList.addAll(superperfect_numbers); break;
-      case NumberSequencesMode.SUBLIME_NUMBERS: sequenceList.addAll(sublime_number); break;
-      case NumberSequencesMode.WEIRD_NUMBERS: sequenceList.addAll(weird_numbers); break;
+  } else {
+    switch (sequence) {
+      case NumberSequencesMode.MERSENNE_PRIMES:
+        sequenceList.addAll(mersenne_primes);
+        break;
+      case NumberSequencesMode.MERSENNE_EXPONENTS:
+        sequenceList.addAll(mersenne_exponents);
+        break;
+      case NumberSequencesMode.PERFECT_NUMBERS:
+        sequenceList.addAll(perfect_numbers);
+        break;
+      case NumberSequencesMode.PRIMARY_PSEUDOPERFECT_NUMBERS:
+        sequenceList.addAll(primary_pseudo_perfect_numbers);
+        break;
+      case NumberSequencesMode.SUPERPERFECT_NUMBERS:
+        sequenceList.addAll(superperfect_numbers);
+        break;
+      case NumberSequencesMode.SUBLIME_NUMBERS:
+        sequenceList.addAll(sublime_number);
+        break;
+      case NumberSequencesMode.WEIRD_NUMBERS:
+        sequenceList.addAll(weird_numbers);
+        break;
     }
-    for (int i = 0; i < sequenceList.length; i++)
-      if (sequenceList[i].length == digits)
-        numberList.add(sequenceList[i]);
+    for (int i = 0; i < sequenceList.length; i++) if (sequenceList[i].length == digits) numberList.add(sequenceList[i]);
   }
 
   return numberList;
 }
-

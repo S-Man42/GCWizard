@@ -38,24 +38,24 @@ class BinaryState extends State<Binary> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left
-          ? GCWTextField(
-              inputFormatters: [TextOnlyDigitsAndSpaceInputFormatter()],
-              controller: _decimalController,
-              onChanged: (value) {
-                setState(() {
-                  _currentDecimalValue = value;
-                });
-              },
-            )
-          : GCWTextField(
-              inputFormatters: [TextOnly01AndSpaceInputFormatter()],
-              controller: _binaryController,
-              onChanged: (value) {
-                setState(() {
-                  _currentBinaryValue = value;
-                });
-              },
-            ),
+            ? GCWTextField(
+                inputFormatters: [TextOnlyDigitsAndSpaceInputFormatter()],
+                controller: _decimalController,
+                onChanged: (value) {
+                  setState(() {
+                    _currentDecimalValue = value;
+                  });
+                },
+              )
+            : GCWTextField(
+                inputFormatters: [TextOnly01AndSpaceInputFormatter()],
+                controller: _binaryController,
+                onChanged: (value) {
+                  setState(() {
+                    _currentBinaryValue = value;
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -64,9 +64,7 @@ class BinaryState extends State<Binary> {
             });
           },
         ),
-        GCWDefaultOutput(
-          child: _buildOutput()
-        )
+        GCWDefaultOutput(child: _buildOutput())
       ],
     );
   }

@@ -39,8 +39,6 @@ class EasterDateState extends State<EasterDate> {
   Widget _buildOutput(BuildContext context) {
     var date = gregorianEasterDate(_currentYear);
 
-    return GCWDefaultOutput(
-      child: DateFormat('yMd', Localizations.localeOf(context).toString()).format(date)
-    );
+    return GCWDefaultOutput(child: DateFormat('yMd', Localizations.localeOf(context).toString()).format(date));
   }
 }

@@ -10,7 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using PdfSharp.Pdf;
 using PdfSharp.Drawing;
-using System.Collections;
+using System.IO.Compression;
 
 namespace GC_Wizard_SymbolTables_Pdf
 {
@@ -18,12 +18,24 @@ namespace GC_Wizard_SymbolTables_Pdf
     // dll from http://www.pdfsharp.net/
     public class SymbolTablesPdf
     {
-        const string CONFIG_FILENAME = "config.json";
+        const string CONFIG_FILENAME = "config.file";
         const string CONFIG_SPECIALMAPPINGS = "special_mappings";
         const string CONFIG_TRANSLATE = "translate";
         const string CONFIG_CASESENSITIVE = "case_sensitive";
         const string CONFIG_SPECIALSORT = "special_sort";
         const string CONFIG_IGNORE = "ignore";
+
+        struct SymbolInfo
+        {
+            public Stream Stream;
+            public string Overlay;
+
+            public SymbolInfo(Stream stream, string overlay)
+            {
+                Stream = stream;
+                Overlay = overlay;
+            }
+        }
 
         public EventHandler SymbolTablesCount_Changed;
 
@@ -87,8 +99,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 if (_SymbolTablesCount != value)
                 {
                     _SymbolTablesCount = value;
-                    if (SymbolTablesCount_Changed != null)
-                        SymbolTablesCount_Changed(this, EventArgs.Empty);
+                    SymbolTablesCount_Changed?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -105,8 +116,7 @@ namespace GC_Wizard_SymbolTables_Pdf
                 if (_SymbolImagesCount != value)
                 {
                     _SymbolImagesCount = value;
-                    if (SymbolTablesCount_Changed != null)
-                        SymbolImagesCount_Changed(this, EventArgs.Empty);
+                    SymbolImagesCount_Changed?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -239,16 +249,16 @@ namespace GC_Wizard_SymbolTables_Pdf
 
             foreach (var symbol in symbolList)
             {
-                offset = drawImage(symbol.Key, document, ref page, ref gfx, offset, symbol.Value);
+                offset = drawImage(symbol.Value.Stream, document, ref page, ref gfx, offset, symbol.Value.Overlay);
                 SymbolImagesCount += 1;
             }
 
             return offset;
         }
 
-        private IEnumerable<KeyValuePair<String, String>> createSymbolList(String path, String _symbolKey, String languagefile)
+        private IEnumerable<KeyValuePair<String, SymbolInfo>> createSymbolList(String path, String _symbolKey, String languagefile)
         {
-            var list = new Dictionary<String, String>();
+            var list = new Dictionary<String, SymbolInfo>();
             var overlay = String.Empty;
             var _path = symbolTablesDirectory(path);
             _path = Path.Combine(_path, _symbolKey);
@@ -275,16 +285,26 @@ namespace GC_Wizard_SymbolTables_Pdf
             else
                 mappingList = parseMappingConfig(null);
 
-
-            foreach (var symbol in Directory.GetFiles(_path, "*.png"))
+            foreach (string zipFile in Directory.GetFiles(_path, "*.zip"))
             {
-                if (ignoreList == null || ignoreList.Count == 0 || !ignoreList.Contains(Path.GetFileNameWithoutExtension(symbol)))
+                var files = ZipFile.OpenRead(zipFile);
+                foreach (ZipArchiveEntry entry in files.Entries)
                 {
-                    overlay = symbolOverlay(symbol, _symbolKey, languagefile, translateList, mappingList, caseSensitive, ref translateables);
+                    if (entry.FullName.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var symbol = entry.FullName;
+                        if (ignoreList == null || ignoreList.Count == 0 || !ignoreList.Contains(Path.GetFileNameWithoutExtension(symbol)))
+                        {
+                            overlay = symbolOverlay(symbol, _symbolKey, languagefile, translateList, mappingList, caseSensitive, ref translateables);
+                            var stream = new MemoryStream();
+                            entry.Open().CopyTo(stream);
 
-                    list.Add(symbol, overlay);
+                            list.Add(symbol, new SymbolInfo(stream, overlay));
+                        }
+                    }
                 }
             }
+
 
             Comparer<object> _sort;
             if (specialSort == false)
@@ -307,9 +327,9 @@ namespace GC_Wizard_SymbolTables_Pdf
 
             var listSorted = list.ToList();
             if (_sort is specialSortNoteNames || _sort is specialSortNoteValues)
-                listSorted.Sort(delegate (KeyValuePair<String, String> x, KeyValuePair<String, String> y) { return _sort.Compare(x.Key, y.Key); });
+                listSorted.Sort(delegate (KeyValuePair<String, SymbolInfo> x, KeyValuePair<String, SymbolInfo> y) { return _sort.Compare(x.Key, y.Key); });
             else
-                listSorted.Sort(delegate (KeyValuePair<String, String> x, KeyValuePair<String, String> y) { return _sort.Compare(x.Value, y.Value); });
+                listSorted.Sort(delegate (KeyValuePair<String, SymbolInfo> x, KeyValuePair<String, SymbolInfo> y) { return _sort.Compare(x.Value, y.Value); });
 
             return listSorted;
         }
@@ -557,12 +577,8 @@ namespace GC_Wizard_SymbolTables_Pdf
             XFont font = new XFont("Verdana", FontSizeOverlay, XFontStyle.Regular);
             if (name == " ")
             {
-                //    name = '\u2423'.ToString();
-                //    font = new XFont("Consolas", FontSizeOverlay, XFontStyle.Regular);
-                if (Language == LanguageEnum.de)
-                    name = "Leerzeichen";
-                else
-                    name = "Space";
+                drawSpaceSymbol(offset, XColors.Blue, font, gfx);
+                return offset;
             }
 
             // Draw the name
@@ -574,10 +590,24 @@ namespace GC_Wizard_SymbolTables_Pdf
                 var text = name.Split('\n');
 
                 for (int i = 0; i < text.Length; i++)
+                {
+                    text[i] = text[i].Replace("\r", "");
                     gfx.DrawString(text[i], font, XBrushes.Blue, new XRect(offset.X, offset.Y + i * FontSizeOverlay, ImageSize, RowDistance), XStringFormats.TopLeft);
+                }
             }
 
             return offset;
+        }
+
+        private void drawSpaceSymbol(PointF position, XColor color, XFont font, XGraphics gfx)
+        {
+            var size = gfx.MeasureString("M", font);
+            var pen = new XPen(color, 1);
+
+            gfx.DrawLine(pen, new XPoint(position.X, position.Y + size.Height), new XPoint(position.X + size.Width, position.Y + size.Height));
+            gfx.DrawLine(pen, new XPoint(position.X, position.Y + size.Height), new XPoint(position.X, position.Y + size.Height * 0.8));
+            gfx.DrawLine(pen, new XPoint(position.X + size.Width, position.Y + size.Height), new XPoint(position.X + size.Width, position.Y + size.Height * 0.8));
+
         }
 
         private string checkTextLength(string text, int maxLength, XFont font, XGraphics gfx)
@@ -664,9 +694,9 @@ namespace GC_Wizard_SymbolTables_Pdf
             return text;
         }
 
-        private PointF drawImage(String symbolPath, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String overlay)
+        private PointF drawImage(Stream symbolStream, PdfDocument document, ref PdfPage page, ref XGraphics gfx, PointF offset, String overlay)
         {
-            XImage image = XImage.FromFile(symbolPath);
+            XImage image = XImage.FromStream(symbolStream);
             XSize size = image.Size;
             var ImageScale = ImageSize / size.Height;
             size.Width *= ImageScale;
@@ -890,8 +920,8 @@ namespace GC_Wizard_SymbolTables_Pdf
             {
                 int intA;
                 int intB;
-                String keyA = _a.ToString();
-                String keyB = _b.ToString();
+                String keyA = ((SymbolInfo)_a).Overlay.ToString();
+                String keyB = ((SymbolInfo)_b).Overlay.ToString();
 
 
                 if (!int.TryParse(keyA, out intA))
@@ -964,7 +994,6 @@ namespace GC_Wizard_SymbolTables_Pdf
                 var keyA = Path.GetFileNameWithoutExtension(_a.ToString()); // get filename from path without suffix
                 var keyB = Path.GetFileNameWithoutExtension(_b.ToString());
 
-
                 var aSplit = keyA.Split('_');
                 var aMain = 0;
                 int.TryParse(aSplit[0], out aMain);
@@ -1035,8 +1064,8 @@ namespace GC_Wizard_SymbolTables_Pdf
 
             override public int Compare(Object _a, Object _b)
             {
-                var keyA = _a.ToString();
-                var keyB = _b.ToString();
+                var keyA = ((SymbolInfo)_a).Overlay.ToString();
+                var keyB = ((SymbolInfo)_b).Overlay.ToString();
 
                 var aSplitDash = keyA.Split('-');
                 var bSplitDash = keyB.Split('-');

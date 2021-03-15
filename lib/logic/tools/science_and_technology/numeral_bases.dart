@@ -7,11 +7,9 @@ const _alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy
 String _sanitizeInput(String input, int startBase, String alphabet) {
   input = input.replaceAll(',', '.');
 
-  if (input.startsWith('.'))
-    input = '0' + input;
+  if (input.startsWith('.')) input = '0' + input;
 
-  if (input.endsWith('.'))
-    input += '0';
+  if (input.endsWith('.')) input += '0';
 
   if (startBase.abs() < alphabet.indexOf('a')) {
     input = input.toUpperCase();
@@ -21,8 +19,7 @@ String _sanitizeInput(String input, int startBase, String alphabet) {
 }
 
 String convertBase(String input, int startBase, int destinationBase, {String alphabet}) {
-  if (input == null || input == '')
-    return '';
+  if (input == null || input == '') return '';
 
   var usedAlphabet = alphabet ?? _alphabet;
 
@@ -30,30 +27,23 @@ String convertBase(String input, int startBase, int destinationBase, {String alp
     return ''; //TODO: Exception
   }
 
-  if (startBase.abs() <= 36)
-    input = input.toUpperCase();
+  if (startBase.abs() <= 36) input = input.toUpperCase();
 
-  var illegalCharacter = input
-    .split('')
-    .firstWhere(
+  var illegalCharacter = input.split('').firstWhere(
       (character) => character != '.' && usedAlphabet.indexOf(character) >= startBase.abs(),
-      orElse: () => null
-    );
+      orElse: () => null);
 
-  if (illegalCharacter != null)
-    return ''; //TODO: Exception
+  if (illegalCharacter != null) return ''; //TODO: Exception
 
-  if (startBase == destinationBase)
-    return input;
+  if (startBase == destinationBase) return input;
 
-  if (!RegExp('-?[$usedAlphabet]+([.,][$usedAlphabet]*)?').hasMatch(input))
-    return ''; //TODO: Exception
+  if (!RegExp('-?[$usedAlphabet]+([.,][$usedAlphabet]*)?').hasMatch(input)) return ''; //TODO: Exception
 
   if (startBase.abs() < 2 || startBase.abs() > 62 || destinationBase.abs() < 2 || destinationBase.abs() > 62) {
     return ''; //TODO: Exception
   }
 
-  if (startBase < 0 && input.startsWith('-'))  {
+  if (startBase < 0 && input.startsWith('-')) {
     throw FormatException('Negative Values on negative bases are not defined');
   }
 
@@ -75,7 +65,8 @@ String convertBase(String input, int startBase, int destinationBase, {String alp
         intPart = '-' + intPart;
       }
 
-      realPart = '.' + _doubleDecToBase(_doubleBaseToDec(number[1], startBase, usedAlphabet), destinationBase, usedAlphabet);
+      realPart =
+          '.' + _doubleDecToBase(_doubleBaseToDec(number[1], startBase, usedAlphabet), destinationBase, usedAlphabet);
     }
 
     return intPart + realPart;
@@ -98,7 +89,7 @@ double _negaDoubleToDec(String intPart, String floatPart, int base, String alpha
   String num = intPart + floatPart;
 
   for (int i = intPart.length - 1; i >= floatPart.length * -1; i--) {
-    output += alphabet.indexOf(num[0]) *  pow(base, i);
+    output += alphabet.indexOf(num[0]) * pow(base, i);
 
     if (num.length > 1) {
       num = num.substring(1);
@@ -143,7 +134,7 @@ String _decToNegaDouble(double num, int base, String alphabet) {
   if (r.compareTo(low) < 0) {
     r = r + q;
     a = a - BigInt.one;
-  }  else if (r.compareTo(high) > 0) {
+  } else if (r.compareTo(high) > 0) {
     r = r - q;
     a = a + BigInt.one;
   }
@@ -197,7 +188,7 @@ BigInt _intBaseToDec(String num, int base, String alphabet) {
   return i * BigInt.from(sign);
 }
 
-BigInt _bigIntMod (BigInt x, BigInt y) {
+BigInt _bigIntMod(BigInt x, BigInt y) {
   if (y.sign == -1) {
     y = -y;
   }
@@ -205,7 +196,7 @@ BigInt _bigIntMod (BigInt x, BigInt y) {
   if (x.sign == -1) {
     x = -x;
     return -(x % y);
-  } else  {
+  } else {
     return x % y;
   }
 }
@@ -253,7 +244,7 @@ double _doubleBaseToDec(String num, int base, String alphabet) {
   int j = -1;
 
   while (num.length > 0) {
-    i += alphabet.indexOf(num[0]) *  pow(base, j);
+    i += alphabet.indexOf(num[0]) * pow(base, j);
     j--;
 
     if (num.length > 1) {

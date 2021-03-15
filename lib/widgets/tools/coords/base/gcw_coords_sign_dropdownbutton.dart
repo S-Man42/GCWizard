@@ -14,30 +14,29 @@ class GCWCoordsSignDropDownButton extends StatefulWidget {
 }
 
 class _GCWCoordsSignDropDownButtonState extends State<GCWCoordsSignDropDownButton> {
-
   var _dropdownValue = 1;
 
   @override
   Widget build(BuildContext context) {
     return GCWDropDownButton(
-        value: widget.value ?? _dropdownValue,
-        onChanged: (newValue) {
-          setState(() {
-            _dropdownValue = newValue;
-            widget.onChanged(newValue);
-          });
-        },
-        items: widget.itemList.map((char) {
-          var _value = 1;
-          if (['S', 'W', '-', i18n(context, 'coords_common_south'), i18n(context, 'coords_common_west')].contains(char)) {
-            _value = -1;
-          }
+      value: widget.value ?? _dropdownValue,
+      onChanged: (newValue) {
+        setState(() {
+          _dropdownValue = newValue;
+          widget.onChanged(newValue);
+        });
+      },
+      items: widget.itemList.map((char) {
+        var _value = 1;
+        if (['S', 'W', '-', i18n(context, 'coords_common_south'), i18n(context, 'coords_common_west')].contains(char)) {
+          _value = -1;
+        }
 
-          return GCWDropDownMenuItem(
-            value: _value,
-            child: char,
-          );
-        }).toList(),
-      );
+        return GCWDropDownMenuItem(
+          value: _value,
+          child: char,
+        );
+      }).toList(),
+    );
   }
 }

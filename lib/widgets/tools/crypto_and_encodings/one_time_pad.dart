@@ -25,7 +25,7 @@ class OneTimePadState extends State<OneTimePad> {
 
   // two same maskTextInputFormatters are necessary because using the same formatter creates conflicts
   // (entered value in one input will be used for the other one)
-  var  _mask = '#' * 10000;
+  var _mask = '#' * 10000;
   var _filter = {"#": RegExp(r'[A-Za-z]')};
   var _inputMaskInputFormatter;
   var _keyMaskInputFormatter;
@@ -34,14 +34,8 @@ class OneTimePadState extends State<OneTimePad> {
   void initState() {
     super.initState();
 
-    _inputMaskInputFormatter = WrapperForMaskTextInputFormatter(
-      mask: _mask,
-      filter: _filter
-    );
-    _keyMaskInputFormatter = WrapperForMaskTextInputFormatter(
-      mask: _mask,
-      filter: _filter
-    );
+    _inputMaskInputFormatter = WrapperForMaskTextInputFormatter(mask: _mask, filter: _filter);
+    _keyMaskInputFormatter = WrapperForMaskTextInputFormatter(mask: _mask, filter: _filter);
 
     _inputController = TextEditingController(text: _currentInput);
     _keyController = TextEditingController(text: _currentKey);
@@ -89,23 +83,20 @@ class OneTimePadState extends State<OneTimePad> {
           },
         ),
         GCWTwoOptionsSwitch(
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          }
-        ),
-        GCWDefaultOutput(
-          child: _calculateOutput()
-        )
+            value: _currentMode,
+            onChanged: (value) {
+              setState(() {
+                _currentMode = value;
+              });
+            }),
+        GCWDefaultOutput(child: _calculateOutput())
       ],
     );
   }
 
   _calculateOutput() {
     return _currentMode == GCWSwitchPosition.left
-      ? encryptOneTimePad(_currentInput, _currentKey, keyOffset: _currentOffset)
-      : decryptOneTimePad(_currentInput, _currentKey, keyOffset: _currentOffset);
+        ? encryptOneTimePad(_currentInput, _currentKey, keyOffset: _currentOffset)
+        : decryptOneTimePad(_currentInput, _currentKey, keyOffset: _currentOffset);
   }
 }

@@ -10,8 +10,10 @@ class BifidOutput {
   BifidOutput(this.state, this.output, this.grid);
 }
 
-
-BifidOutput encryptBifid (String input, String key, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet, AlphabetModificationMode alphabetMode: AlphabetModificationMode.J_TO_I}) {
+BifidOutput encryptBifid(String input, String key,
+    {PolybiosMode mode: PolybiosMode.AZ09,
+    String alphabet,
+    AlphabetModificationMode alphabetMode: AlphabetModificationMode.J_TO_I}) {
   if (input == null || key == null)
     //return null; //TODO Exception
     return BifidOutput('ERROR', 'bifid_error_no_encrypt_input', null);
@@ -21,7 +23,8 @@ BifidOutput encryptBifid (String input, String key, {PolybiosMode mode: Polybios
     //return null; //TODO Exception
     return BifidOutput('ERROR', 'bifid_error_wrong_griddimension', null);
 
-  PolybiosOutput polybiosOutput = encryptPolybios(input, key, mode: mode, fillAlphabet: alphabet, modificationMode: alphabetMode);
+  PolybiosOutput polybiosOutput =
+      encryptPolybios(input, key, mode: mode, fillAlphabet: alphabet, modificationMode: alphabetMode);
 
   if (polybiosOutput == null)
     //return null;
@@ -46,8 +49,10 @@ BifidOutput encryptBifid (String input, String key, {PolybiosMode mode: Polybios
   return BifidOutput('OK', polybiosOutput.output, polybiosOutput.grid);
 }
 
-
-BifidOutput decryptBifid (String input, String key, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet, AlphabetModificationMode alphabetMode: AlphabetModificationMode.J_TO_I}) {
+BifidOutput decryptBifid(String input, String key,
+    {PolybiosMode mode: PolybiosMode.AZ09,
+    String alphabet,
+    AlphabetModificationMode alphabetMode: AlphabetModificationMode.J_TO_I}) {
   if (input == null || key == null)
     //return null; //TODO Exception
     return BifidOutput('ERROR', 'bifid_error_no_decrypt_input', null);
@@ -57,7 +62,8 @@ BifidOutput decryptBifid (String input, String key, {PolybiosMode mode: Polybios
     //return null; //TODO Exception
     return BifidOutput('ERROR', 'bifid_error_wrong_griddimension', null);
 
-  PolybiosOutput polybiosOutput = encryptPolybios(input, key, mode: mode, fillAlphabet: alphabet, modificationMode: alphabetMode);
+  PolybiosOutput polybiosOutput =
+      encryptPolybios(input, key, mode: mode, fillAlphabet: alphabet, modificationMode: alphabetMode);
 
   if (polybiosOutput == null)
     //return null;
@@ -82,4 +88,3 @@ BifidOutput decryptBifid (String input, String key, {PolybiosMode mode: Polybios
 
   return BifidOutput('OK', polybiosOutput.output, polybiosOutput.grid);
 }
-

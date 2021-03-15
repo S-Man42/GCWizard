@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:gc_wizard/utils/common_utils.dart';
 
-
 class AmscoOutput {
   final String output;
   final String grid;
@@ -10,35 +9,27 @@ class AmscoOutput {
   AmscoOutput(this.output, this.grid, this.errorCode);
 }
 
-enum ErrorCode{
- OK,
- Key
-}
+enum ErrorCode { OK, Key }
 
 bool _validKey(String key) {
-  if (key == null || key == '')
-    return false;
+  if (key == null || key == '') return false;
 
-  if (int.tryParse(key) == null)
-    return false;
+  if (int.tryParse(key) == null) return false;
 
-  if (key.contains('0'))
-    return false;
+  if (key.contains('0')) return false;
 
   //doubles numbers ?
-  if (key.length != key.split('').toSet().join().length)
-    return false;
+  if (key.length != key.split('').toSet().join().length) return false;
 
   // all numbers consecutively?
   for (int i = 1; i <= key.length; i++) {
-    if (!key.contains(i.toString()))
-      return false;
+    if (!key.contains(i.toString())) return false;
   }
 
   return true;
 }
 
-String _cleanKey(String key){
+String _cleanKey(String key) {
   return key.replaceAll(' ', '');
 }
 
@@ -59,11 +50,10 @@ Map<String, List<String>> _createAmscoGrid(String input, String key, bool oneCha
       if (i < input.length) {
         twoChar = (key.indexOf(_key) % 2) == (oneCharStart ? 1 : 0);
         if (key.length % 2 == 1) {
-          if (grid[_key].length % 2 == 1)
-            twoChar = !twoChar;
+          if (grid[_key].length % 2 == 1) twoChar = !twoChar;
         }
 
-        grid[_key].add(input.substring(i, twoChar ? min(i+2, input.length) : i+1));
+        grid[_key].add(input.substring(i, twoChar ? min(i + 2, input.length) : i + 1));
         i += twoChar ? 2 : 1;
         twoChar = !twoChar;
       }
@@ -84,13 +74,11 @@ Map<String, List<String>> _createAmscoGrid(String input, String key, bool oneCha
   return grid;
 }
 
-AmscoOutput encryptAmsco (String input, String key, bool oneCharStart) {
-  if (input == null || key == null || input == '' || key == '')
-    return AmscoOutput('', '', ErrorCode.OK);
+AmscoOutput encryptAmsco(String input, String key, bool oneCharStart) {
+  if (input == null || key == null || input == '' || key == '') return AmscoOutput('', '', ErrorCode.OK);
 
   key = _cleanKey(key);
-  if (!_validKey(key))
-    return AmscoOutput('', '', ErrorCode.Key);
+  if (!_validKey(key)) return AmscoOutput('', '', ErrorCode.Key);
 
   var grid = _createAmscoGrid(input, key, oneCharStart, false);
   var sortedKeys = grid.keys.toList();
@@ -106,14 +94,11 @@ AmscoOutput encryptAmsco (String input, String key, bool oneCharStart) {
   return AmscoOutput(output, _amscoGridToString(grid), ErrorCode.OK);
 }
 
-
-AmscoOutput decryptAmsco (String input, String key, bool oneCharStart) {
-  if (input == null || key == null || input == '' || key == '')
-    return AmscoOutput('', '', ErrorCode.OK);
+AmscoOutput decryptAmsco(String input, String key, bool oneCharStart) {
+  if (input == null || key == null || input == '' || key == '') return AmscoOutput('', '', ErrorCode.OK);
 
   key = _cleanKey(key);
-  if (!_validKey(key))
-    return AmscoOutput('', '', ErrorCode.Key);
+  if (!_validKey(key)) return AmscoOutput('', '', ErrorCode.Key);
 
   var grid = _createAmscoGrid(input, key, oneCharStart, true);
   var row = 0;
@@ -122,13 +107,12 @@ AmscoOutput decryptAmsco (String input, String key, bool oneCharStart) {
 
   while (!finish) {
     key.split('').forEach((_key) {
-      if (row >= grid[_key].length)
-        finish = true;
-      if (!finish)
-        output += grid[_key][row];
+      if (row >= grid[_key].length) finish = true;
+      if (!finish) output += grid[_key][row];
     });
     row += 1;
-  };
+  }
+  ;
 
   return AmscoOutput(output, _amscoGridToString(grid), ErrorCode.OK);
 }
@@ -145,14 +129,13 @@ String _amscoGridToString(Map<String, List<String>> grid) {
 
   while (!finish) {
     grid.keys.forEach((_key) {
-      if (row >= grid[_key].length)
-        finish = true;
-      if (!finish)
-        output += grid[_key][row].padRight(2) + " ";
+      if (row >= grid[_key].length) finish = true;
+      if (!finish) output += grid[_key][row].padRight(2) + " ";
     });
     output += '\n';
     row += 1;
-  };
+  }
+  ;
 
   return output;
 }

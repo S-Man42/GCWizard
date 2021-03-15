@@ -39,57 +39,48 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
   _buildMenuItems(BuildContext context) {
     var menuItems = [
       GCWPopupMenuItem(
-        child: Text(
-          i18n(context, 'common_clipboard_fromdeviceclipboard'),
-          style: gcwDialogTextStyle()
-        ),
-        action: (index) {
-          Clipboard.getData('text/plain').then((data) {
-            if (data.text.length == 0) {
-              showToast(i18n(context, 'common_clipboard_notextdatafound'));
-              return;
-            }
+          child: Text(i18n(context, 'common_clipboard_fromdeviceclipboard'), style: gcwDialogTextStyle()),
+          action: (index) {
+            Clipboard.getData('text/plain').then((data) {
+              if (data.text.length == 0) {
+                showToast(i18n(context, 'common_clipboard_notextdatafound'));
+                return;
+              }
 
-            setState(() {
-              widget.onSelected(data.text);
-              insertIntoGCWClipboard(data.text);
+              setState(() {
+                widget.onSelected(data.text);
+                insertIntoGCWClipboard(data.text);
+              });
             });
-          });
-        }
-      ),
+          }),
       GCWPopupMenuItem(isDivider: true)
     ];
 
-    var gcwClipboard = Prefs.getStringList('clipboard_items')
-      .map((clipboardItem) {
-        var item = jsonDecode(clipboardItem);
+    var gcwClipboard = Prefs.getStringList('clipboard_items').map((clipboardItem) {
+      var item = jsonDecode(clipboardItem);
 
-        var datetime = DateTime.fromMillisecondsSinceEpoch(int.tryParse(item['created']));
-        var dateFormat = DateFormat('yMd', Localizations.localeOf(context).toString());
-        var timeFormat = DateFormat('Hms', Localizations.localeOf(context).toString());
+      var datetime = DateTime.fromMillisecondsSinceEpoch(int.tryParse(item['created']));
+      var dateFormat = DateFormat('yMd', Localizations.localeOf(context).toString());
+      var timeFormat = DateFormat('Hms', Localizations.localeOf(context).toString());
 
-        return GCWPopupMenuItem(
+      return GCWPopupMenuItem(
           child: Container(
             child: Column(
               children: [
                 Align(
-                  child: Text(
-                    dateFormat.format(datetime) + ' ' + timeFormat.format(datetime),
-                    style: gcwDialogTextStyle().copyWith(
-                      fontSize: max(defaultFontSize() - 4, 10)
+                    child: Text(
+                      dateFormat.format(datetime) + ' ' + timeFormat.format(datetime),
+                      style: gcwDialogTextStyle().copyWith(fontSize: max(defaultFontSize() - 4, 10)),
                     ),
-                  ),
-                  alignment: Alignment.centerLeft
-                ),
+                    alignment: Alignment.centerLeft),
                 Align(
-                  child: Text(
-                    item['text'],
-                    style: gcwDialogTextStyle(),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  alignment: Alignment.centerLeft
-                ),
+                    child: Text(
+                      item['text'],
+                      style: gcwDialogTextStyle(),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    alignment: Alignment.centerLeft),
               ],
             ),
             padding: EdgeInsets.only(bottom: 15),
@@ -100,10 +91,8 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
               widget.onSelected(pasteData);
             });
             insertIntoGCWClipboard(pasteData);
-          }
-        );
-      })
-      .toList();
+          });
+    }).toList();
 
     menuItems.addAll(gcwClipboard);
     return menuItems;

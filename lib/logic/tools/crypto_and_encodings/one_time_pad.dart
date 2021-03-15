@@ -2,23 +2,18 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/rotator.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 
 String encryptOneTimePad(String input, String key, {int keyOffset}) {
-  if (input == null)
-    return '';
+  if (input == null) return '';
 
-  if (key == null)
-    return input;
+  if (key == null) return input;
 
   input = input.toUpperCase().replaceAll(RegExp('[^A-Z]'), '');
   key = key.toUpperCase().replaceAll(RegExp('[^A-Z]'), '');
 
-  if (input.length == 0)
-    return '';
+  if (input.length == 0) return '';
 
-  if (key.length == 0)
-    return input;
+  if (key.length == 0) return input;
 
-  if (keyOffset == null)
-    keyOffset = 0;
+  if (keyOffset == null) keyOffset = 0;
 
   var output = '';
   for (int i = 0; i < input.length; ++i) {
@@ -37,23 +32,18 @@ String encryptOneTimePad(String input, String key, {int keyOffset}) {
 }
 
 String decryptOneTimePad(String input, String key, {int keyOffset}) {
-  if (input == null)
-    return '';
+  if (input == null) return '';
 
-  if (key == null)
-    return input;
+  if (key == null) return input;
 
   input = input.toUpperCase().replaceAll(RegExp('[^A-Z]'), '');
   key = key.toUpperCase().replaceAll(RegExp('[^A-Z]'), '');
 
-  if (input.length == 0)
-    return '';
+  if (input.length == 0) return '';
 
-  if (key.length == 0)
-    return input;
+  if (key.length == 0) return input;
 
-  if (keyOffset == null)
-    keyOffset = 0;
+  if (keyOffset == null) keyOffset = 0;
 
   var output = '';
   for (int i = 0; i < input.length; ++i) {

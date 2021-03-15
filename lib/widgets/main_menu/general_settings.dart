@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_language.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
@@ -7,11 +9,13 @@ import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/units/gcw_unit_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/utils/AppBuilder.dart';
 import 'package:prefs/prefs.dart';
+import 'package:provider/provider.dart';
 
 class GeneralSettings extends StatefulWidget {
   @override
@@ -19,17 +23,63 @@ class GeneralSettings extends StatefulWidget {
 }
 
 class GeneralSettingsState extends State<GeneralSettings> {
-
   @override
   Widget build(BuildContext context) {
+    var appLanguage = Provider.of<AppLanguage>(context);
+
     return Column(
       children: <Widget>[
-        GCWTextDivider(
-          text: i18n(context, 'settings_general_theme')
+        GCWTextDivider(text: i18n(context, 'settings_general_i18n_title')),
+        Row(
+          children: [
+            Expanded(child: GCWText(text: i18n(context, 'settings_general_i18n_language'))),
+            Expanded(
+                child: FutureBuilder<Locale>(
+                    future: appLanguage.fetchLocale(),
+                    builder: (BuildContext context, AsyncSnapshot<Locale> snapshot) {
+                      if (!snapshot.hasData) {
+                        // while data is loading:
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        // data loaded:
+                        final currentLocale = snapshot.data;
+
+                        return GCWStatefulDropDownButton(
+                            items: supportedLocales.map((locale) {
+                              return GCWDropDownMenuItem(
+                                value: locale.languageCode ?? "en",
+                                child: i18n(context, locale.languageCode) ?? locale.languageCode,
+                              );
+                            }).toList(),
+                            value: currentLocale.languageCode ?? "en",
+                            onChanged: (newValue) {
+                              appLanguage.changeLanguage(newValue);
+                            });
+                      }
+                    })),
+          ],
         ),
+        Row(children: [
+          Expanded(child: GCWText(text: i18n(context, 'settings_general_i18n_defaultlengthunit'))),
+          Expanded(
+            child: GCWUnitDropDownButton(
+                unitList: allLengths(),
+                value: getUnitBySymbol(allLengths(), Prefs.get('default_length_unit')),
+                onChanged: (Length value) {
+                  setState(() {
+                    Prefs.setString('default_length_unit', value.symbol);
+                  });
+                }),
+          ),
+        ]),
+        GCWTextDivider(text: i18n(context, 'settings_general_theme')),
         GCWTwoOptionsSwitch(
           title: i18n(context, 'settings_general_theme_color'),
-          value: Prefs.getString('theme_color') == ThemeType.DARK.toString() ? GCWSwitchPosition.left : GCWSwitchPosition.right,
+          value: Prefs.getString('theme_color') == ThemeType.DARK.toString()
+              ? GCWSwitchPosition.left
+              : GCWSwitchPosition.right,
           leftValue: i18n(context, 'settings_general_theme_color_dark'),
           rightValue: i18n(context, 'settings_general_theme_color_light'),
           onChanged: (value) {
@@ -60,10 +110,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
             });
           },
         ),
-
-        GCWTextDivider(
-          text: i18n(context, 'settings_general_toollist')
-        ),
+        GCWTextDivider(text: i18n(context, 'settings_general_toollist')),
         GCWOnOffSwitch(
           value: Prefs.getBool('toollist_show_descriptions'),
           title: i18n(context, 'settings_general_toollist_showdescriptions'),
@@ -80,10 +127,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
             AppBuilder.of(context).rebuild();
           },
         ),
-
-        GCWTextDivider(
-          text: i18n(context, 'settings_general_defaulttab')
-        ),
+        GCWTextDivider(text: i18n(context, 'settings_general_defaulttab')),
         GCWTwoOptionsSwitch(
           title: i18n(context, 'settings_general_defaulttab_atstart'),
           value: Prefs.getBool('tabs_use_default_tab') ? GCWSwitchPosition.right : GCWSwitchPosition.left,
@@ -96,9 +140,9 @@ class GeneralSettingsState extends State<GeneralSettings> {
           },
         ),
         Prefs.getBool('tabs_use_default_tab')
-          ? GCWDropDownButton(
-              value: Prefs.get('tabs_default_tab'),
-              items: [
+            ? GCWDropDownButton(
+                value: Prefs.get('tabs_default_tab'),
+                items: [
                   {'index': 0, 'text': i18n(context, 'common_tabs_categories')},
                   {'index': 1, 'text': i18n(context, 'common_tabs_all')},
                   {'index': 2, 'text': i18n(context, 'common_tabs_favorites')}
@@ -108,16 +152,14 @@ class GeneralSettingsState extends State<GeneralSettings> {
                     child: item['text'],
                   );
                 }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  Prefs.setInt('tabs_default_tab', value);
-                });
-              },
-            )
-          : Container(),
-        GCWTextDivider(
-          text: i18n(context, 'settings_general_clipboard')
-        ),
+                onChanged: (value) {
+                  setState(() {
+                    Prefs.setInt('tabs_default_tab', value);
+                  });
+                },
+              )
+            : Container(),
+        GCWTextDivider(text: i18n(context, 'settings_general_clipboard')),
         GCWIntegerSpinner(
           title: i18n(context, 'settings_general_clipboard_maxitems'),
           value: Prefs.getInt('clipboard_max_items'),
@@ -140,29 +182,6 @@ class GeneralSettingsState extends State<GeneralSettings> {
             });
           },
         ),
-        GCWTextDivider(
-          text: i18n(context, 'settings_general_i18n_title')
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: GCWText (
-                text: i18n(context, 'settings_general_i18n_defaultlengthunit')
-              )
-            ),
-            Expanded(
-              child: GCWUnitDropDownButton(
-                unitList: allLengths(),
-                value: getUnitBySymbol(allLengths(), Prefs.get('default_length_unit')),
-                onChanged: (Length value) {
-                  setState(() {
-                    Prefs.setString('default_length_unit', value.symbol);
-                  });
-                }
-              ),
-            )
-          ],
-        )
       ],
     );
   }

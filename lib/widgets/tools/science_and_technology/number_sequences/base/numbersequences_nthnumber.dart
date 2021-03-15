@@ -14,7 +14,6 @@ class NumberSequenceNthNumber extends StatefulWidget {
 }
 
 class NumberSequenceNthNumberState extends State<NumberSequenceNthNumber> {
-
   int _currentInputN = 0;
 
   @override
@@ -29,7 +28,6 @@ class NumberSequenceNthNumberState extends State<NumberSequenceNthNumber> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWIntegerSpinner(
@@ -49,8 +47,6 @@ class NumberSequenceNthNumberState extends State<NumberSequenceNthNumber> {
   }
 
   _buildOutput() {
-    return GCWDefaultOutput(
-      child: getNumberAt(widget.mode, _currentInputN).toString()
-    );
+    return GCWDefaultOutput(child: getNumberAt(widget.mode, _currentInputN).toString());
   }
 }

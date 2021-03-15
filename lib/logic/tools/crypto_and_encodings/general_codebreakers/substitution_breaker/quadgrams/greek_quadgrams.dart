@@ -1,6 +1,6 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
-class GreekQuadgrams extends Quadgrams {
 
+class GreekQuadgrams extends Quadgrams {
   GreekQuadgrams() {
     alphabet = 'αβγδεζηθικλμνξοπρστυφχψω';
     nbr_quadgrams = 87436142;

@@ -31,28 +31,24 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<AppLanguage>(
-      create: (_) => appLanguage,
-      child: Consumer<AppLanguage>(
-        builder: (context, model, child) {
-          return AppBuilder(
-            builder: (context) {
-              return MaterialApp(
-                title: 'GC Wizard',
-                supportedLocales: supportedLocales,
-                localizationsDelegates: [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                ],
-                theme: buildTheme(),
-                debugShowCheckedModeBanner: false,
-                home: MainView(),
-              );
-            }
-          );
-        }
-      )
-    );
+        create: (_) => appLanguage,
+        child: Consumer<AppLanguage>(builder: (context, model, child) {
+          return AppBuilder(builder: (context) {
+            return MaterialApp(
+              title: 'GC Wizard',
+              supportedLocales: supportedLocales,
+              locale: model.appLocal,
+              localizationsDelegates: [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              theme: buildTheme(),
+              debugShowCheckedModeBanner: false,
+              home: MainView(),
+            );
+          });
+        }));
   }
 }

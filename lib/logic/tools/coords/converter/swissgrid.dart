@@ -6,7 +6,7 @@ import 'package:gc_wizard/logic/tools/coords/ellipsoid_transform.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong/latlong.dart';
 
-SwissGrid latLonToSwissGridPlus (LatLng coord, Ellipsoid ells) {
+SwissGrid latLonToSwissGridPlus(LatLng coord, Ellipsoid ells) {
   SwissGrid sg = latLonToSwissGrid(coord, ells);
   sg.easting += 2000000;
   sg.northing += 1000000;
@@ -14,16 +14,28 @@ SwissGrid latLonToSwissGridPlus (LatLng coord, Ellipsoid ells) {
   return sg;
 }
 
-SwissGrid latLonToSwissGrid (LatLng coord, Ellipsoid ells) {
+SwissGrid latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
   int x = -1;
 
   switch (ells.name) {
-    case ELLIPSOID_NAME_AIRY1830: x = 6; break;
-    case ELLIPSOID_NAME_AIRYMODIFIED: x = 7; break;
-    case ELLIPSOID_NAME_BESSEL1841: x = 0; break;
-    case ELLIPSOID_NAME_CLARKE1866: x = 9; break;
-    case ELLIPSOID_NAME_HAYFORD1924: x = 8; break;
-    case ELLIPSOID_NAME_KRASOVSKY1940: x = 2; break;
+    case ELLIPSOID_NAME_AIRY1830:
+      x = 6;
+      break;
+    case ELLIPSOID_NAME_AIRYMODIFIED:
+      x = 7;
+      break;
+    case ELLIPSOID_NAME_BESSEL1841:
+      x = 0;
+      break;
+    case ELLIPSOID_NAME_CLARKE1866:
+      x = 9;
+      break;
+    case ELLIPSOID_NAME_HAYFORD1924:
+      x = 8;
+      break;
+    case ELLIPSOID_NAME_KRASOVSKY1940:
+      x = 2;
+      break;
   }
 
   LatLng newCoord;
@@ -32,7 +44,7 @@ SwissGrid latLonToSwissGrid (LatLng coord, Ellipsoid ells) {
   }
   newCoord = ellipsoidTransformLatLng(coord, 5, true, false);
 
-  double lat0 = degToRadian(46.952405555555556);  //Bern
+  double lat0 = degToRadian(46.952405555555556); //Bern
   double lon0 = degToRadian(7.439583333333333);
 
   var ellsBessel = getEllipsoidByName(ELLIPSOID_NAME_BESSEL1841);
@@ -41,13 +53,16 @@ SwissGrid latLonToSwissGrid (LatLng coord, Ellipsoid ells) {
   double E2 = ellsBessel.e2;
   double alpha = sqrt(1 + (E2 / (1 - E2)) * pow(cos(lat0), 4));
   double b0 = asin(sin(lat0) / alpha);
-  double K = log(tan(PI / 4.0 + b0 / 2.0)) - alpha * log(tan(PI / 4.0 + lat0 / 2.0)) + (alpha * E) / 2.0 * log((1 + E * sin(lat0)) / (1 - E * sin(lat0)));
+  double K = log(tan(PI / 4.0 + b0 / 2.0)) -
+      alpha * log(tan(PI / 4.0 + lat0 / 2.0)) +
+      (alpha * E) / 2.0 * log((1 + E * sin(lat0)) / (1 - E * sin(lat0)));
   double R = (a * sqrt(1 - E2)) / (1 - E2 * pow(sin(lat0), 2));
 
   var lat = newCoord.latitudeInRad;
   var lon = newCoord.longitudeInRad;
 
-  double S = alpha * log(tan(PI / 4.0 + lat / 2.0)) - (alpha * E) / 2.0 * log((1 + E * sin(lat)) / (1 - E * sin(lat))) + K;
+  double S =
+      alpha * log(tan(PI / 4.0 + lat / 2.0)) - (alpha * E) / 2.0 * log((1 + E * sin(lat)) / (1 - E * sin(lat))) + K;
   double b = 2 * (atan(exp(S)) - PI / 4.0);
   double l = alpha * (lon - lon0);
 
@@ -63,18 +78,18 @@ SwissGrid latLonToSwissGrid (LatLng coord, Ellipsoid ells) {
   return SwissGrid(Y, X);
 }
 
-LatLng swissGridPlusToLatLon (SwissGrid coord, Ellipsoid ells) {
+LatLng swissGridPlusToLatLon(SwissGrid coord, Ellipsoid ells) {
   coord.easting -= 2000000;
   coord.northing -= 1000000;
 
   return swissGridToLatLon(coord, ells);
 }
 
-LatLng swissGridToLatLon (SwissGrid coord, Ellipsoid ells) {
-  var y = coord.easting - 600000 ;
+LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
+  var y = coord.easting - 600000;
   var x = coord.northing - 200000;
 
-  double lat0 = degToRadian(46.952405555555556);  //Bern
+  double lat0 = degToRadian(46.952405555555556); //Bern
   double lon0 = degToRadian(7.439583333333333);
 
   var ellsBessel = getEllipsoidByName(ELLIPSOID_NAME_BESSEL1841);
@@ -83,14 +98,16 @@ LatLng swissGridToLatLon (SwissGrid coord, Ellipsoid ells) {
   double E2 = ellsBessel.e2;
   double alpha = sqrt(1 + (E2 / (1 - E2)) * pow(cos(lat0), 4));
   double b0 = asin(sin(lat0) / alpha);
-  double K = log(tan(PI / 4.0 + b0 / 2.0)) - alpha * log(tan(PI / 4.0 + lat0 / 2.0)) + (alpha * E) / 2.0 * log((1 + E * sin(lat0)) / (1 - E * sin(lat0)));
+  double K = log(tan(PI / 4.0 + b0 / 2.0)) -
+      alpha * log(tan(PI / 4.0 + lat0 / 2.0)) +
+      (alpha * E) / 2.0 * log((1 + E * sin(lat0)) / (1 - E * sin(lat0)));
   double R = (a * sqrt(1 - E2)) / (1 - E2 * pow(sin(lat0), 2));
 
   double l_ = y / R;
   double b_ = 2 * (atan(exp(x / R)) - PI / 4.0);
 
   double b = asin(cos(b0) * sin(b_) + sin(b0) * cos(b_) * cos(l_));
-  double l = atan(sin(l_)/(cos(b0) * cos(l_) - sin(b0) * tan(b_)));
+  double l = atan(sin(l_) / (cos(b0) * cos(l_) - sin(b0) * tan(b_)));
 
   double lon = lon0 + l / alpha;
 
@@ -105,17 +122,28 @@ LatLng swissGridToLatLon (SwissGrid coord, Ellipsoid ells) {
 
   int X = -1;
   switch (ells.name) {
-    case ELLIPSOID_NAME_AIRY1830: X = 6; break;
-    case ELLIPSOID_NAME_AIRYMODIFIED: X = 7; break;
-    case ELLIPSOID_NAME_BESSEL1841: X = 0; break;
-    case ELLIPSOID_NAME_CLARKE1866: X = 9; break;
-    case ELLIPSOID_NAME_HAYFORD1924: X = 8; break;
-    case ELLIPSOID_NAME_KRASOVSKY1940: X = 2; break;
+    case ELLIPSOID_NAME_AIRY1830:
+      X = 6;
+      break;
+    case ELLIPSOID_NAME_AIRYMODIFIED:
+      X = 7;
+      break;
+    case ELLIPSOID_NAME_BESSEL1841:
+      X = 0;
+      break;
+    case ELLIPSOID_NAME_CLARKE1866:
+      X = 9;
+      break;
+    case ELLIPSOID_NAME_HAYFORD1924:
+      X = 8;
+      break;
+    case ELLIPSOID_NAME_KRASOVSKY1940:
+      X = 2;
+      break;
   }
 
   LatLng newCoord = ellipsoidTransformLatLng(LatLng(radianToDeg(lat), radianToDeg(lon)), 5, false, false);
-  if (X >= 0)
-    newCoord = ellipsoidTransformLatLng(newCoord, X, true, false);
+  if (X >= 0) newCoord = ellipsoidTransformLatLng(newCoord, X, true, false);
 
   return newCoord;
 }
@@ -133,23 +161,35 @@ String decToSwissGridString(LatLng coord, Ellipsoid ells) {
 }
 
 LatLng parseSwissGrid(String input, Ellipsoid ells, {isSwissGridPlus: false}) {
-  RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)\s*$');
+  RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*\,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
-  if (matches.length == 0)
-    return null;
+  var _eastingString = '';
+  var _northingString = '';
 
-  var match = matches.elementAt(0);
+  if (matches.length > 0) {
+    var match = matches.elementAt(0);
+    _eastingString = match.group(1);
+    _northingString = match.group(3);
+  }
+  if (matches.length == 0) {
+    regExp = RegExp(r'^\s*(Y|y)\:?\s*([\-0-9\.]+)(\s*\,?\s*)(X|x)\:?\s*([\-0-9\.]+)\s*$');
+    matches = regExp.allMatches(input);
+    if (matches.length > 0) {
+      var match = matches.elementAt(0);
+      _eastingString = match.group(2);
+      _northingString = match.group(5);
+    }
+  }
 
-  var _easting = double.tryParse(match.group(1));
-  if (_easting == null)
-    return null;
+  if (matches.length == 0) return null;
 
-  var _northing = double.tryParse(match.group(3));
-  if (_northing == null)
-    return null;
+  var _easting = double.tryParse(_eastingString);
+  if (_easting == null) return null;
 
-  if (isSwissGridPlus)
-    return swissGridPlusToLatLon(SwissGrid(_easting, _northing), ells);
+  var _northing = double.tryParse(_northingString);
+  if (_northing == null) return null;
+
+  if (isSwissGridPlus) return swissGridPlusToLatLon(SwissGrid(_easting, _northing), ells);
 
   return swissGridToLatLon(SwissGrid(_easting, _northing), ells);
 }

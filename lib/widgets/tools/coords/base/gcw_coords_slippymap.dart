@@ -6,9 +6,10 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsSlippyMap extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
   final String zoom;
 
-  const GCWCoordsSlippyMap({Key key, this.zoom: '10.0', this.onChanged}) : super(key: key);
+  const GCWCoordsSlippyMap({Key key, this.onChanged, this.coordinates, this.zoom: '10.0'}) : super(key: key);
 
   @override
   GCWCoordsSlippyMapState createState() => GCWCoordsSlippyMapState();
@@ -43,6 +44,14 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.coordinates != null) {
+      var slippyMap = latLonToSlippyMap(widget.coordinates, double.tryParse(widget.zoom));
+      _currentX['value'] = slippyMap.x;
+      _currentY['value'] = slippyMap.y;
+
+      _xController.text = _currentX['value'].toString();
+      _yController.text = _currentY['value'].toString();
+    }
     if (_currentZoom != widget.zoom) {
       _xController.clear();
       _yController.clear();
@@ -50,9 +59,8 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
       _currentZoom = widget.zoom;
     }
 
-    return Column (
-      children: <Widget>[
-        GCWDoubleTextField(
+    return Column(children: <Widget>[
+      GCWDoubleTextField(
           hintText: 'X',
           min: 0.0,
           controller: _xController,
@@ -61,9 +69,8 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
               _currentX = ret;
               _setCurrentValueAndEmitOnChange();
             });
-          }
-        ),
-        GCWDoubleTextField(
+          }),
+      GCWDoubleTextField(
           hintText: 'Y',
           min: 0.0,
           controller: _yController,
@@ -72,10 +79,8 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
               _currentY = ret;
               _setCurrentValueAndEmitOnChange();
             });
-          }
-        ),
-      ]
-    );
+          }),
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {

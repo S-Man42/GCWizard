@@ -1,15 +1,19 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/symbol_table_data_specialsorts.dart';
+import 'package:archive/archive.dart';
+import 'package:archive/archive_io.dart';
 
 final SYMBOLTABLES_ASSETPATH = 'assets/symbol_tables/';
 
 class _SymbolTableConstants {
   final IMAGE_SUFFIXES = RegExp(r'\.(png|jpg|bmp|gif)', caseSensitive: false);
+  final ARCHIVE_SUFFIX = RegExp(r'\.(zip)', caseSensitive: false);
 
-  final CONFIG_FILENAME = 'config.json';
+  final CONFIG_FILENAME = 'config.file';
   final CONFIG_SPECIALMAPPINGS = 'special_mappings';
   final CONFIG_TRANSLATE = 'translate';
   final CONFIG_CASESENSITIVE = 'case_sensitive';
@@ -17,87 +21,92 @@ class _SymbolTableConstants {
   final CONFIG_IGNORE = 'ignore';
 
   final Map<String, String> CONFIG_SPECIAL_CHARS = {
-    "space" : " ",
-    "asterisk" : "*",
-    "dash" : "-",
-    "colon" : ":",
-    "semicolon" : ";",
-    "dot" : ".",
-    "slash" : "/",
-    "apostrophe" : "'",
-    "apostrophe_in" : "'",
-    "apostrophe_out" : "'",
-    "parentheses_open" : "(",
-    "parentheses_close" : ")",
-    "quotation" : "\"",
-    "quotation_in" : "\"",
-    "quotation_out" : "\"",
-    "dollar" : "\$",
-    "percent" : "%",
-    "plus" : "+",
-    "question" : "?",
-    "exclamation" : "!",
-    "backslash" : "\\",
-    "copyright" : "©",
-    "comma" : ",",
-    "pound" : "£",
-    "equals" : "=",
-    "brace_open" : "{",
-    "brace_close" : "}",
-    "bracket_open" : "[",
-    "bracket_close" : "]",
-    "ampersand" : "&",
-    "hashtag" : "#",
-    "web_at" : "@",
-    "paragraph" : "§",
-    "caret" : "^",
-    "underscore" : "_",
-    "backtick" : "`",
-    "pipe" : "|",
-    "tilde" : "~",
-    "lessthan" : "<",
-    "greaterthan" : ">",
-    "euro" : "€",
-    "times" : "×",
-    "division" : "÷",
-    "inverted_question" : "¿",
-    "degree" : "°",
-
-    "AE_umlaut" : "Ä",
-    "OE_umlaut" : "Ö",
-    "UE_umlaut" : "Ü",
-    "SZ_umlaut" : "ß",
-    "A_acute" : "Á",
-    "A_grave" : "À",
-    "A_circumflex" : "Â",
-    "AE_together" : "Æ",
-    "C_cedille" : "Ç",
-    "C_acute" : "Ć",
-    "E_acute" : "É",
-    "E_grave" : "È",
-    "E_circumflex" : "Ê",
-    "E_trema" : "Ë",
-    "I_acute" : "Í",
-    "I_grave" : "Ì",
-    "I_circumflex" : "Î",
-    "I_trema" : "Ï",
-    "N_acute" : "Ń",
-    "N_tilde" : "Ñ",
-    "O_acute" : "Ó",
-    "O_grave" : "Ò",
-    "O_circumflex" : "Ô",
-    "R_acute" : "Ŕ",
-    "S_acute" : "Ś",
-    "U_acute" : "Ú",
-    "U_grave" : "Ù",
-    "U_circumflex" : "Û",
-    "Z_acute" : "Ź",
-
-    "ae_umlaut" : "ä",
-    "oe_umlaut" : "ö",
-    "ue_umlaut" : "ü",
-    "n_tilde" : "ñ",
+    "space": " ",
+    "asterisk": "*",
+    "dash": "-",
+    "colon": ":",
+    "semicolon": ";",
+    "dot": ".",
+    "slash": "/",
+    "apostrophe": "'",
+    "apostrophe_in": "'",
+    "apostrophe_out": "'",
+    "parentheses_open": "(",
+    "parentheses_close": ")",
+    "quotation": "\"",
+    "quotation_in": "\"",
+    "quotation_out": "\"",
+    "dollar": "\$",
+    "percent": "%",
+    "plus": "+",
+    "question": "?",
+    "exclamation": "!",
+    "backslash": "\\",
+    "copyright": "©",
+    "comma": ",",
+    "pound": "£",
+    "equals": "=",
+    "brace_open": "{",
+    "brace_close": "}",
+    "bracket_open": "[",
+    "bracket_close": "]",
+    "ampersand": "&",
+    "hashtag": "#",
+    "web_at": "@",
+    "paragraph": "§",
+    "caret": "^",
+    "underscore": "_",
+    "backtick": "`",
+    "pipe": "|",
+    "tilde": "~",
+    "lessthan": "<",
+    "greaterthan": ">",
+    "euro": "€",
+    "times": "×",
+    "division": "÷",
+    "inverted_question": "¿",
+    "degree": "°",
+    "AE_umlaut": "Ä",
+    "OE_umlaut": "Ö",
+    "UE_umlaut": "Ü",
+    "SZ_umlaut": "ß",
+    "A_acute": "Á",
+    "A_grave": "À",
+    "A_circumflex": "Â",
+    "AE_together": "Æ",
+    "C_cedille": "Ç",
+    "C_acute": "Ć",
+    "E_acute": "É",
+    "E_grave": "È",
+    "E_circumflex": "Ê",
+    "E_trema": "Ë",
+    "I_acute": "Í",
+    "I_grave": "Ì",
+    "I_circumflex": "Î",
+    "I_trema": "Ï",
+    "N_acute": "Ń",
+    "N_tilde": "Ñ",
+    "O_acute": "Ó",
+    "O_grave": "Ò",
+    "O_circumflex": "Ô",
+    "R_acute": "Ŕ",
+    "S_acute": "Ś",
+    "U_acute": "Ú",
+    "U_grave": "Ù",
+    "U_circumflex": "Û",
+    "Z_acute": "Ź",
+    "ae_umlaut": "ä",
+    "oe_umlaut": "ö",
+    "ue_umlaut": "ü",
+    "n_tilde": "ñ",
   };
+}
+
+class SymbolData {
+  final String path;
+  final List<int> bytes;
+
+  SymbolData({this.path = null, this.bytes = null});
 }
 
 class SymbolTableData {
@@ -108,7 +117,7 @@ class SymbolTableData {
   SymbolTableData(this._context, this._symbolKey);
 
   Map<String, dynamic> config;
-  List<Map<String, String>> images;
+  List<Map<String, SymbolData>> images;
   int maxSymbolTextLength = 0;
 
   var _translateables = [];
@@ -133,13 +142,11 @@ class SymbolTableData {
       file = await DefaultAssetBundle.of(_context).loadString(_pathKey() + _constants.CONFIG_FILENAME);
     } catch (e) {}
 
-    if (file == null)
-      file = '{}';
+    if (file == null) file = '{}';
 
     config = json.decode(file);
 
-    if (config[_constants.CONFIG_IGNORE] == null)
-      config.putIfAbsent(_constants.CONFIG_IGNORE, () => <String>[]);
+    if (config[_constants.CONFIG_IGNORE] == null) config.putIfAbsent(_constants.CONFIG_IGNORE, () => <String>[]);
 
     if (config[_constants.CONFIG_SPECIALMAPPINGS] == null)
       config.putIfAbsent(_constants.CONFIG_SPECIALMAPPINGS, () => Map<String, String>());
@@ -152,19 +159,33 @@ class SymbolTableData {
       _sort = _defaultSort;
     } else {
       switch (_symbolKey) {
-        case "notes_names_altoclef" : _sort = specialSortNoteNames; break;
-        case "notes_names_bassclef" : _sort = specialSortNoteNames; break;
-        case "notes_names_trebleclef" : _sort = specialSortNoteNames; break;
-        case "notes_notevalues" : _sort = specialSortNoteValues; break;
-        case "notes_restvalues" : _sort = specialSortNoteValues; break;
-        case "trafficsigns_germany" : _sort = specialSortTrafficSignsGermany; break;
-        default: _sort = _defaultSort; break;
+        case "notes_names_altoclef":
+          _sort = specialSortNoteNames;
+          break;
+        case "notes_names_bassclef":
+          _sort = specialSortNoteNames;
+          break;
+        case "notes_names_trebleclef":
+          _sort = specialSortNoteNames;
+          break;
+        case "notes_notevalues":
+          _sort = specialSortNoteValues;
+          break;
+        case "notes_restvalues":
+          _sort = specialSortNoteValues;
+          break;
+        case "trafficsigns_germany":
+          _sort = specialSortTrafficSignsGermany;
+          break;
+        default:
+          _sort = _defaultSort;
+          break;
       }
     }
   }
 
-  String _createKey(String filePath) {
-    var imageKey = filePath.split(_pathKey())[1].split(_constants.IMAGE_SUFFIXES)[0];
+  String _createKey(String filename) {
+    var imageKey = filenameWithoutSuffix(filename);
     imageKey = imageKey.replaceAll(RegExp(r'(^_*|_*$)'), '');
 
     var setTranslateable = false;
@@ -180,14 +201,11 @@ class SymbolTableData {
       key = imageKey;
     }
 
-    if (!isCaseSensitive())
-      key = key.toUpperCase();
+    if (!isCaseSensitive()) key = key.toUpperCase();
 
-    if (setTranslateable)
-      _translateables.add(key);
+    if (setTranslateable) _translateables.add(key);
 
-    if (key.length > maxSymbolTextLength)
-      maxSymbolTextLength = key.length;
+    if (key.length > maxSymbolTextLength) maxSymbolTextLength = key.length;
 
     return key;
   }
@@ -198,26 +216,35 @@ class SymbolTableData {
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
 
     final imagePaths = manifestMap.keys
-      .where((String key) => key.contains(_pathKey()))
-      .where((String key) => _constants.IMAGE_SUFFIXES.hasMatch(key))
-      .toList();
+        .where((String key) => key.contains(_pathKey()))
+        .where((String key) => _constants.ARCHIVE_SUFFIX.hasMatch(key))
+        .toList();
 
-    images = imagePaths
-      .map((filePath) {
-        var key = _createKey(filePath);
-        var imagePath = _constants.IMAGE_SUFFIXES.hasMatch(filePath) ? filePath : null;
-        var value = imagePath;
+    if (imagePaths.isEmpty) return;
 
-        return {key : value};
-      })
-      .where((element) => !config[_constants.CONFIG_IGNORE].contains(element.keys.first.toLowerCase()))
-      .where((element) => element.values.first != null)
-      .toList();
+    // Read the Zip file from disk.
+    final bytes = await DefaultAssetBundle.of(_context).load(imagePaths.first);
+    InputStream input = new InputStream(bytes.buffer.asByteData());
+    // Decode the Zip file
+    final archive = ZipDecoder().decodeBuffer(input);
+
+    images = archive
+        .map((file) {
+          var key = _createKey(file.name);
+          var imagePath = (file.isFile && _constants.IMAGE_SUFFIXES.hasMatch(file.name)) ? file.name : null;
+          var value = imagePath;
+          var data = file.content;
+
+          return {key: new SymbolData(path: value, bytes: data)};
+        })
+        .where((element) => !config[_constants.CONFIG_IGNORE].contains(element.keys.first.toLowerCase()))
+        .where((element) => element.values.first.path != null)
+        .toList();
 
     images.sort(_sort);
   }
 
-  int _defaultSort(Map<String, String> a, Map<String, String> b) {
+  int _defaultSort(Map<String, SymbolData> a, Map<String, SymbolData> b) {
     var keyA = a.keys.first;
     var keyB = b.keys.first;
 
@@ -250,4 +277,8 @@ class SymbolTableData {
       }
     }
   }
+}
+
+String filenameWithoutSuffix(String filename) {
+  return filename.split('.').first;
 }

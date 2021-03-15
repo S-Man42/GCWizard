@@ -160,7 +160,6 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class MainView extends StatefulWidget {
   @override
   _MainViewState createState() => _MainViewState();
@@ -363,12 +362,11 @@ class _MainViewState extends State<MainView> {
         ].contains(className(element.tool));
       }).toList();
 
-    _toolList.sort((a, b){
+    _toolList.sort((a, b) {
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });
 
-    final List<GCWTool> _categoryList =
-    Registry.toolList.where((element) {
+    final List<GCWTool> _categoryList = Registry.toolList.where((element) {
       return [
         className(CoordsSelection()),
         className(CryptographySelection()),
@@ -380,61 +378,42 @@ class _MainViewState extends State<MainView> {
       ].contains(className(element.tool));
     }).toList();
 
-    _categoryList.sort((a, b){
+    _categoryList.sort((a, b) {
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });
 
     return DefaultTabController(
       length: 3,
-      initialIndex: Prefs.getBool('tabs_use_default_tab') ? Prefs.get('tabs_default_tab') : Prefs.get('tabs_last_viewed_tab'),
+      initialIndex:
+          Prefs.getBool('tabs_use_default_tab') ? Prefs.get('tabs_default_tab') : Prefs.get('tabs_last_viewed_tab'),
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          bottom: TabBar(
-            onTap: (value) {
-              Prefs.setInt('tabs_last_viewed_tab', value);
-            },
-            tabs: [
-              Tab(
-                icon: Icon(Icons.category)
-              ),
-              Tab(
-                icon: Icon(Icons.list)
-              ),
-              Tab(
-                icon: Icon(Icons.star)
-              ),
-            ],
-          ),
-          leading: _buildIcon(),
-          title: _buildTitleAndSearchTextField(),
-          actions: <Widget>[
-            _buildSearchActionButton()
-          ]
-        ),
+            bottom: TabBar(
+              onTap: (value) {
+                Prefs.setInt('tabs_last_viewed_tab', value);
+              },
+              tabs: [
+                Tab(icon: Icon(Icons.category)),
+                Tab(icon: Icon(Icons.list)),
+                Tab(icon: Icon(Icons.star)),
+              ],
+            ),
+            leading: _buildIcon(),
+            title: _buildTitleAndSearchTextField(),
+            actions: <Widget>[_buildSearchActionButton()]),
         drawer: buildMainMenu(context),
         body: TabBarView(
           children: [
-            GCWToolList(
-              toolList: _isSearching && _searchText.length > 0
-                ? _getSearchedList()
-                : _categoryList
-            ),
-            GCWToolList(
-              toolList: _isSearching && _searchText.length > 0
-                ? _getSearchedList()
-                : _toolList
-            ),
-            GCWToolList(
-              toolList: _isSearching && _searchText.length > 0
-                ? _getSearchedList()
-                : Favorites.toolList
-            ),
+            GCWToolList(toolList: _isSearching && _searchText.length > 0 ? _getSearchedList() : _categoryList),
+            GCWToolList(toolList: _isSearching && _searchText.length > 0 ? _getSearchedList() : _toolList),
+            GCWToolList(toolList: _isSearching && _searchText.length > 0 ? _getSearchedList() : Favorites.toolList),
           ],
         ),
       ),
     );
   }
+
   _buildSearchActionButton() {
     return IconButton(
       icon: Icon(_isSearching ? Icons.close : Icons.search),
@@ -453,42 +432,39 @@ class _MainViewState extends State<MainView> {
 
   _buildTitleAndSearchTextField() {
     return _isSearching
-      ? GCWTextField(
-          autofocus: true,
-          controller: _searchController,
-          icon: Icon(
-            Icons.search,
-            color: themeColors().mainFont()
-          ),
-          hintText: i18n(context, 'common_search_hint')
-        )
-      : Text(i18n(context, 'common_app_title'));
+        ? GCWTextField(
+            autofocus: true,
+            controller: _searchController,
+            icon: Icon(Icons.search, color: themeColors().mainFont()),
+            hintText: i18n(context, 'common_search_hint'))
+        : Text(i18n(context, 'common_app_title'));
   }
 
   _buildIcon() {
     return IconButton(
-      icon: Image.asset(
-        'assets/logo/circle_border_128.png',
-        width: 35.0,
-        height: 35.0,
-      ),
-      onPressed: () => _scaffoldKey.currentState.openDrawer()
-    );
+        icon: Image.asset(
+          'assets/logo/circle_border_128.png',
+          width: 35.0,
+          height: 35.0,
+        ),
+        onPressed: () => _scaffoldKey.currentState.openDrawer());
   }
 
   List<GCWTool> _getSearchedList() {
     var list = Registry.toolList;
+    String searchstring = '';
 
     list = list.where((tool) {
-      if (tool.searchStrings == null || tool.searchStrings.length == 0)
-        return false;
+      searchstring = tool.searchStrings.join(' ').toLowerCase();
+      if (searchstring == null || searchstring.length == 0) return false;
 
       var found = true;
 
       //Search result as AND result of separated words
       _searchText.toLowerCase().split(RegExp(r'[\s,]')).forEach((word) {
-        var searchStrings = tool.searchStrings.toLowerCase();
-        if (!searchStrings.contains(word) && !searchStrings.contains(removeAccents(word))) //search with and without accents
+        var searchStrings = searchstring;
+        if (!searchStrings.contains(word) &&
+            !searchStrings.contains(removeAccents(word))) //search with and without accents
           found = false;
       });
 

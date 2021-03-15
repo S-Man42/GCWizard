@@ -9,9 +9,7 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class NumberSequenceMersenneSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
-
-    final List<GCWTool> _toolList =
-    Registry.toolList.where((element) {
+    final List<GCWTool> _toolList = Registry.toolList.where((element) {
       return [
         className(NumberSequenceMersenneNthNumber()),
         className(NumberSequenceMersenneRange()),
@@ -21,10 +19,6 @@ class NumberSequenceMersenneSelection extends GCWSelection {
       ].contains(className(element.tool));
     }).toList();
 
-    return Container(
-        child: GCWToolList(
-            toolList: _toolList
-        )
-    );
+    return Container(child: GCWToolList(toolList: _toolList));
   }
 }

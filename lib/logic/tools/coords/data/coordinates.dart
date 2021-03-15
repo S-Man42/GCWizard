@@ -1,4 +1,3 @@
-import 'package:gc_wizard/logic/tools/coords/converter/latlon.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 
@@ -40,17 +39,23 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsDMM, 'DMM: DD° MM.MMM\'', 'N 45° 17.460\' W 122° 24.800\''),
   CoordinateFormat(keyCoordsDMS, 'DMS: DD° MM\' SS.SSS"', 'N 45° 17\' 27.60" W 122° 24\' 48.00"'),
   CoordinateFormat(keyCoordsUTM, 'UTM', '10 N 546003.6 5015445.0'),
-  CoordinateFormat(keyCoordsMGRS, 'MGRS', '10 T ER 46003.6 15445.0'),
+  CoordinateFormat(keyCoordsMGRS, 'MGRS', '10T ER 46003.6 15445.0'),
   CoordinateFormat(keyCoordsXYZ, 'XYZ (ECEF)', 'X: -2409244, Y: -3794410, Z: 4510158'),
   CoordinateFormat(keyCoordsSwissGrid, 'SwissGrid (CH1903)', 'Y: 4295317.7, X: 1202252.3'),
   CoordinateFormat(keyCoordsSwissGridPlus, 'SwissGrid (CH1903+)', 'Y: 6295317.7, X: 2202252.3'),
-  CoordinateFormat(keyCoordsGaussKrueger, 'coords_formatconverter_gausskrueger', 'R: 8837763.4, H: 5978799.1', subtypes: [
-    CoordinateFormat(keyCoordsGaussKruegerGK1, 'coords_formatconverter_gausskrueger_gk1', 'R: 8837763.4, H: 5978799.1'),
-    CoordinateFormat(keyCoordsGaussKruegerGK2, 'coords_formatconverter_gausskrueger_gk2', 'R: 8837739.4, H: 5978774.5'),
-    CoordinateFormat(keyCoordsGaussKruegerGK3, 'coords_formatconverter_gausskrueger_gk3', 'R: 8837734.7, H: 5978798.2'),
-    CoordinateFormat(keyCoordsGaussKruegerGK4, 'coords_formatconverter_gausskrueger_gk4', 'R: 8837790.8, H: 5978787.4'),
-    CoordinateFormat(keyCoordsGaussKruegerGK5, 'coords_formatconverter_gausskrueger_gk5', 'R: 8837696.4, H: 5978779.5'),
-  ]),
+  CoordinateFormat(keyCoordsGaussKrueger, 'coords_formatconverter_gausskrueger', 'R: 8837763.4, H: 5978799.1',
+      subtypes: [
+        CoordinateFormat(
+            keyCoordsGaussKruegerGK1, 'coords_formatconverter_gausskrueger_gk1', 'R: 8837763.4, H: 5978799.1'),
+        CoordinateFormat(
+            keyCoordsGaussKruegerGK2, 'coords_formatconverter_gausskrueger_gk2', 'R: 8837739.4, H: 5978774.5'),
+        CoordinateFormat(
+            keyCoordsGaussKruegerGK3, 'coords_formatconverter_gausskrueger_gk3', 'R: 8837734.7, H: 5978798.2'),
+        CoordinateFormat(
+            keyCoordsGaussKruegerGK4, 'coords_formatconverter_gausskrueger_gk4', 'R: 8837790.8, H: 5978787.4'),
+        CoordinateFormat(
+            keyCoordsGaussKruegerGK5, 'coords_formatconverter_gausskrueger_gk5', 'R: 8837696.4, H: 5978779.5'),
+      ]),
   CoordinateFormat(keyCoordsMaidenhead, 'Maidenhead Locator (QTH)', 'CN85TG09JU'),
   CoordinateFormat(keyCoordsMercator, 'Mercator', 'Y: 5667450.4, X: -13626989.9'),
   CoordinateFormat(keyCoordsNaturalAreaCode, 'Natural Area Code (NAC)', 'X: 4RZ000, Y: QJFMGZ'),
@@ -70,15 +75,11 @@ final defaultCoordinate = LatLng(0.0, 0.0);
 
 String _dmmAndDMSNumberFormat([int precision = 6]) {
   var formatString = '00.';
-  if (precision == null)
-    precision = 6;
-  if (precision < 0)
-    precision = 0;
+  if (precision == null) precision = 6;
+  if (precision < 0) precision = 0;
 
-  if (precision <= 3)
-    formatString += '0' * precision;
-  if (precision > 3)
-    formatString += '000' + '#' * (precision - 3);
+  if (precision <= 3) formatString += '0' * precision;
+  if (precision > 3) formatString += '000' + '#' * (precision - 3);
 
   return formatString;
 }
@@ -98,28 +99,8 @@ String _getSignString(int sign, bool isLatitude) {
 class DEC {
   double latitude;
   double longitude;
-  
+
   DEC(this.latitude, this.longitude);
-
-  static DEC from(LatLng coord) {
-    return DEC(coord.latitude, coord.longitude);
-  }
-
-  LatLng toLatLng() {
-    var normalized = this.normalize();
-    return LatLng(normalized.latitude, normalized.longitude);
-  }
-
-  Map<String, String> format([int precision]) {
-    return {
-      'latitude': NumberFormat('00.000#######').format(latitude),
-      'longitude': NumberFormat('000.000#######').format(longitude)
-    };
-  }
-
-  DEC normalize() {
-    return normalizeDEC(this);
-  }
 
   @override
   String toString() {
@@ -146,18 +127,24 @@ class DMMPart {
       _degrees += 1;
     }
 
-    var _degreesStr = _degrees.toString().padLeft(isLatitude ? 2 : 3,'0');
+    var _degreesStr = _degrees.toString().padLeft(isLatitude ? 2 : 3, '0');
 
-    return {'sign': {'value': sign, 'formatted': _sign}, 'degrees': _degreesStr, 'minutes': _minutesStr};
+    return {
+      'sign': {'value': sign, 'formatted': _sign},
+      'degrees': _degreesStr,
+      'minutes': _minutesStr
+    };
   }
 
   String _format(bool isLatitude, [int precision]) {
     var formattedParts = _formatParts(isLatitude, precision);
 
-    return
-      formattedParts['sign']['formatted']
-        + ' ' + formattedParts['degrees'] + '° '
-        + formattedParts['minutes'] + '\'';
+    return formattedParts['sign']['formatted'] +
+        ' ' +
+        formattedParts['degrees'] +
+        '° ' +
+        formattedParts['minutes'] +
+        '\'';
   }
 
   @override
@@ -204,22 +191,6 @@ class DMM {
 
   DMM(this.latitude, this.longitude);
 
-  static DMM from(LatLng coord) {
-    return DECToDMM(DEC.from(coord));
-  }
-
-  LatLng toLatLng() {
-    return DMMToDEC(this).toLatLng();
-  }
-
-  Map<String, String> format([int precision]) {
-    return {'latitude': latitude.format(precision), 'longitude': longitude.format(precision)};
-  }
-
-  DMM normalize() {
-    return DECToDMM(DMMToDEC(this));
-  }
-
   @override
   String toString() {
     return 'latitude: $latitude, longitude: $longitude';
@@ -254,19 +225,27 @@ class DMSPart {
       _degrees += 1;
     }
 
-    var _degreesStr = _degrees.toString().padLeft(isLatitude ? 2 : 3,'0');
+    var _degreesStr = _degrees.toString().padLeft(isLatitude ? 2 : 3, '0');
 
-    return {'sign': {'value': sign, 'formatted': _sign}, 'degrees': _degreesStr, 'minutes': _minutesStr, 'seconds': _secondsStr};
+    return {
+      'sign': {'value': sign, 'formatted': _sign},
+      'degrees': _degreesStr,
+      'minutes': _minutesStr,
+      'seconds': _secondsStr
+    };
   }
 
   String _format(bool isLatitude, [int precision]) {
     var formattedParts = _formatParts(isLatitude, precision);
 
-    return
-      formattedParts['sign']['formatted']
-        + ' ' + formattedParts['degrees'] + '° '
-        + formattedParts['minutes'] + '\' '
-        + formattedParts['seconds'] + '"';
+    return formattedParts['sign']['formatted'] +
+        ' ' +
+        formattedParts['degrees'] +
+        '° ' +
+        formattedParts['minutes'] +
+        '\' ' +
+        formattedParts['seconds'] +
+        '"';
   }
 
   @override
@@ -313,30 +292,14 @@ class DMS {
 
   DMS(this.latitude, this.longitude);
 
-  static DMS from(LatLng coord) {
-    return DECToDMS(DEC.from(coord));
-  }
-
-  LatLng toLatLng() {
-    return DMSToDEC(this).toLatLng();
-  }
-
-  Map<String, String> format([int precision]) {
-    return {'latitude': latitude.format(precision), 'longitude': longitude.format(precision)};
-  }
-
-  DMS normalize() {
-    return DECToDMS(DMSToDEC(this));
-  }
-
   @override
   String toString() {
     return 'latitude: $latitude, longitude: $longitude';
   }
 }
 
-enum HemisphereLatitude {North, South}
-enum HemisphereLongitude {East, West}
+enum HemisphereLatitude { North, South }
+enum HemisphereLongitude { East, West }
 
 // UTM with latitude Zones; Normal UTM is only separated into Hemispheres N and S
 class UTMREF {

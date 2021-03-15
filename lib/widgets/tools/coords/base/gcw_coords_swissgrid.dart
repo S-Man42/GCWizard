@@ -8,8 +8,9 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsSwissGrid extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsSwissGrid({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsSwissGrid({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsSwissGridState createState() => GCWCoordsSwissGridState();
@@ -38,32 +39,37 @@ class GCWCoordsSwissGridState extends State<GCWCoordsSwissGrid> {
 
   @override
   Widget build(BuildContext context) {
-    return Column (
-        children: <Widget>[
-          GCWDoubleTextField(
-            hintText: i18n(context, 'coords_formatconverter_swissgrid_easting'),
-            min: 0.0,
-            controller: _EastingController,
-            onChanged: (ret) {
-              setState(() {
-                _currentEasting = ret;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
-          GCWDoubleTextField(
-              hintText: i18n(context, 'coords_formatconverter_swissgrid_northing'),
-              min: 0.0,
-              controller: _NorthingController,
-              onChanged: (ret) {
-                setState(() {
-                  _currentNorthing = ret;
-                  _setCurrentValueAndEmitOnChange();
-                });
-              }
-          ),
-        ]
-    );
+    if (widget.coordinates != null) {
+      var swissGrid = latLonToSwissGrid(widget.coordinates, defaultEllipsoid());
+      _currentEasting['value'] = swissGrid.easting;
+      _currentNorthing['value'] = swissGrid.northing;
+
+      _EastingController.text = _currentEasting['value'].toString();
+      _NorthingController.text = _currentNorthing['value'].toString();
+    }
+
+    return Column(children: <Widget>[
+      GCWDoubleTextField(
+          hintText: i18n(context, 'coords_formatconverter_swissgrid_easting'),
+          min: 0.0,
+          controller: _EastingController,
+          onChanged: (ret) {
+            setState(() {
+              _currentEasting = ret;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+      GCWDoubleTextField(
+          hintText: i18n(context, 'coords_formatconverter_swissgrid_northing'),
+          min: 0.0,
+          controller: _NorthingController,
+          onChanged: (ret) {
+            setState(() {
+              _currentNorthing = ret;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {

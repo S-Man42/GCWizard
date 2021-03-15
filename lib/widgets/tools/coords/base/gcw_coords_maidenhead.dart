@@ -7,8 +7,9 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsMaidenhead extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsMaidenhead({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsMaidenhead({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsMaidenheadState createState() => GCWCoordsMaidenheadState();
@@ -32,27 +33,29 @@ class GCWCoordsMaidenheadState extends State<GCWCoordsMaidenhead> {
 
   @override
   Widget build(BuildContext context) {
-    return Column (
-        children: <Widget>[
-          GCWTextField(
-            hintText: i18n(context, 'coords_formatconverter_maidenhead_locator'),
-            controller: _controller,
-            inputFormatters: [CoordsTextMaidenheadTextInputFormatter()],
-            onChanged: (ret) {
-              setState(() {
-                _currentCoord = ret;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
-        ]
-    );
+    if (widget.coordinates != null) {
+      _currentCoord = latLonToMaidenhead(widget.coordinates);
+
+      _controller.text = _currentCoord;
+    }
+
+    return Column(children: <Widget>[
+      GCWTextField(
+          hintText: i18n(context, 'coords_formatconverter_maidenhead_locator'),
+          controller: _controller,
+          inputFormatters: [CoordsTextMaidenheadTextInputFormatter()],
+          onChanged: (ret) {
+            setState(() {
+              _currentCoord = ret;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {
     var maidenhead = _currentCoord;
-    if (maidenhead.length % 2 == 1)
-      maidenhead = maidenhead.substring(0, maidenhead.length - 1);
+    if (maidenhead.length % 2 == 1) maidenhead = maidenhead.substring(0, maidenhead.length - 1);
 
     LatLng coords = maidenheadToLatLon(maidenhead);
     widget.onChanged(coords);
