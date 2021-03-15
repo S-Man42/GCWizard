@@ -12,14 +12,26 @@
 // https://frank-buss.de/cow.html
 //---------------------------------------------------------
 
-
 final ERROR_COW_INVALIDCODE = 'cow_error_invalidcode';
 final ERROR_COW_LOOPNOTOPEND = 'cow_error_nomatchingMOO';
 final ERROR_COW_LOOPNOTCLOSED = 'cow_error_nomatchingmoo';
 final ERROR_COW_MEMORYOUTOFBOUNDS = 'cow_error_memoryoutofbounds';
 final ERROR_COW_INFINITELOOP = 'cow_error_infiniteloop';
 
-final commands = {'moo' : 0, 'mOo' : 1, 'moO' : 2, 'mOO' : 3, 'Moo' : 4, 'MOo' : 5, 'MoO' : 6, 'MOO' : 7, 'OOO' : 8, 'MMM' : 9, 'OOM' : 10, 'oom' : 11};
+final commands = {
+  'moo': 0,
+  'mOo': 1,
+  'moO': 2,
+  'mOO': 3,
+  'Moo': 4,
+  'MOo': 5,
+  'MoO': 6,
+  'MOO': 7,
+  'OOO': 8,
+  'MMM': 9,
+  'OOM': 10,
+  'oom': 11
+};
 
 final MAX_MEMORY = 1024;
 final MAX_ITERATIONS = 32768;
@@ -47,18 +59,15 @@ CowOutput interpretCow(String code, {String STDIN}) {
   inputPointer = 0;
   register = 0;
   has_register_val = false;
-  memory.forEach((element) {element = 0;});
+  memory.forEach((element) {
+    element = 0;
+  });
 
-  if (code == null || code.length == 0)
-    return CowOutput('', '');
+  if (code == null || code.length == 0) return CowOutput('', '');
 
   code = code.replaceAll(new RegExp(r'\s'), '');
   List<int> instructions = new List<int>();
-  print(code);
-  print(commands);
-  for (int i = 0; i < code.length ~/3; i++) {
-    print(i.toString()+' '+code.substring(i * 3, i * 3 + 3));
-    print(instructions.toString());
+  for (int i = 0; i < code.length ~/ 3; i++) {
     if (commands[code.substring(i * 3, i * 3 + 3)] == null)
       return CowOutput('', ERROR_COW_INVALIDCODE);
     else
@@ -74,28 +83,29 @@ CowOutput interpretCow(String code, {String STDIN}) {
     if (iterations > MAX_ITERATIONS) {
       halt = true;
     }
-  };
+  }
+  ;
 
   return CowOutput(STDOUT, error);
 }
 
-
-int _execCommand(int commandCode, List<int> instructionsArray, int instructionIndex, int numberOfInstructions, String STDIN){
+int _execCommand(
+    int commandCode, List<int> instructionsArray, int instructionIndex, int numberOfInstructions, String STDIN) {
   int MOO_count = 0;
   int moo_count = 0;
 
-  switch (commandCode){
+  switch (commandCode) {
     case 0: // moo
-      instructionIndex -= 2;  // Skip previous instruction
+      instructionIndex -= 2; // Skip previous instruction
       moo_count = 0;
 
-      while (instructionIndex >= 0){
-        switch (instructionsArray[instructionIndex]){
+      while (instructionIndex >= 0) {
+        switch (instructionsArray[instructionIndex]) {
           case 0: //moo
             moo_count++;
             break;
           case 7: //MOO
-            if(moo_count == 0)
+            if (moo_count == 0)
               return instructionIndex;
             else
               moo_count--;
@@ -129,9 +139,8 @@ int _execCommand(int commandCode, List<int> instructionsArray, int instructionIn
       if (memory[mem_pos] == commandCode) {
         halt = true;
         error = ERROR_COW_INFINITELOOP;
-      }
-      else {
-        if(memory[mem_pos] >= 0 && memory[mem_pos] <= 11) {
+      } else {
+        if (memory[mem_pos] >= 0 && memory[mem_pos] <= 11) {
           _execCommand(memory[mem_pos], instructionsArray, instructionIndex, instructionIndex, STDIN);
         } else {
           halt = true;
@@ -141,7 +150,7 @@ int _execCommand(int commandCode, List<int> instructionsArray, int instructionIn
       break;
 
     case 4: // Moo
-      if(memory[mem_pos] == 0) {
+      if (memory[mem_pos] == 0) {
         memory[mem_pos] = STDIN.codeUnitAt(inputPointer);
         inputPointer++;
       } else {
@@ -158,9 +167,9 @@ int _execCommand(int commandCode, List<int> instructionsArray, int instructionIn
       break;
 
     case 7: // MOO
-      if(memory[mem_pos] == 0) {
+      if (memory[mem_pos] == 0) {
         MOO_count = 0;
-        instructionIndex += 2;  // Skip next instruction
+        instructionIndex += 2; // Skip next instruction
 
         while (instructionIndex < numberOfInstructions) {
           switch (instructionsArray[instructionIndex]) {
@@ -172,7 +181,7 @@ int _execCommand(int commandCode, List<int> instructionsArray, int instructionIn
               break;
             case 7:
               MOO_count++;
-            break;
+              break;
           }
           instructionIndex++;
         }
@@ -183,10 +192,10 @@ int _execCommand(int commandCode, List<int> instructionsArray, int instructionIn
 
     case 8: // OOO
       memory[mem_pos] = 0;
-    break;
+      break;
 
     case 9: // MMM
-      if(!has_register_val)
+      if (!has_register_val)
         register = memory[mem_pos];
       else
         memory[mem_pos] = register;
@@ -213,9 +222,10 @@ int _execCommand(int commandCode, List<int> instructionsArray, int instructionIn
   return instructionIndex + 1;
 }
 
-String generateCow(String cowOut){
+String generateCow(String cowOut) {
   // initial program: store 8, 16, 32 and 64 in memory positions 1, 2, 3 and 4, current memory position is 5
-  var program = 'OOO MoO MoO MoO MoO MoO MoO MoO MoO MMM moO MMM MMM moO MMM MOO MOo mOo MoO moO moo mOo MMM moO MMM MMM moO MMM MOO MOo mOo MoO moO moo mOo MMM moO MMM MMM moO MMM MOO MOo mOo MoO moO moo';
+  var program =
+      'OOO MoO MoO MoO MoO MoO MoO MoO MoO MMM moO MMM MMM moO MMM MOO MOo mOo MoO moO moo mOo MMM moO MMM MMM moO MMM MOO MOo mOo MoO moO moo mOo MMM moO MMM MMM moO MMM MOO MOo mOo MoO moO moo';
 
   for (var i = 0; i < cowOut.length; i++) {
     // next character, ignore non-ASCII
@@ -231,15 +241,15 @@ String generateCow(String cowOut){
       if (c > mask) {
         switch (j) {
           case 6:
-          // position 5 = 64
+            // position 5 = 64
             program += ' mOo MMM moO MMM';
             break;
           case 5:
-          // position 5 = 32
+            // position 5 = 32
             program += ' mOo mOo MMM moO moO MMM';
             break;
           case 4:
-          // position 5 = 16
+            // position 5 = 16
             program += ' mOo mOo mOo MMM moO moO moO MMM';
             break;
         }
@@ -259,6 +269,3 @@ String generateCow(String cowOut){
 
   return program;
 }
-
-
-

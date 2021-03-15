@@ -2499,37 +2499,6 @@ class Registry {
 
       //Esoteric Programming Language Selection ****************************************************************
       GCWTool(
-          tool: Chef(),
-          buttonList: [
-            GCWToolActionButtonsEntry(true, 'chef_download_documentation_url', 'chef_download_documentation_title',
-                'chef_download_documentation_text', Icons.file_download),
-            GCWToolActionButtonsEntry(false, 'chef_online_help_url', '', '', Icons.help)
-          ],
-          i18nPrefix: 'chef',
-          searchStrings: [
-            SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_COMMON_ESOTERIC_CHEF,
-            SEARCHSTRING_DE_ESOTERIC_CHEF,
-            SEARCHSTRING_EN_ESOTERIC_CHEF,
-            SEARCHSTRING_FR_ESOTERIC_CHEF
-          ]),
-      GCWTool(
-          tool: Cow(),
-          i18nPrefix: 'cow',
-          searchStrings: [
-            SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_COMMON_ESOTERIC_COW,
-            SEARCHSTRING_DE_ESOTERIC_COW,
-            SEARCHSTRING_EN_ESOTERIC_COW,
-            SEARCHSTRING_FR_ESOTERIC_COW
-          ]),
-      GCWTool(
           tool: Beatnik(),
           buttonList: [
             GCWToolActionButtonsEntry(true, 'beatnik_download_documentation_url',
@@ -2561,6 +2530,34 @@ class Registry {
             SEARCHSTRING_EN_ESOTERIC_BRAINFK,
             SEARCHSTRING_FR_ESOTERIC_BRAINFK
           ]),
+      GCWTool(
+          tool: Chef(),
+          buttonList: [
+            GCWToolActionButtonsEntry(true, 'chef_download_documentation_url', 'chef_download_documentation_title',
+                'chef_download_documentation_text', Icons.file_download),
+            GCWToolActionButtonsEntry(false, 'chef_online_help_url', '', '', Icons.help)
+          ],
+          i18nPrefix: 'chef',
+          searchStrings: [
+            SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_COMMON_ESOTERIC_CHEF,
+            SEARCHSTRING_DE_ESOTERIC_CHEF,
+            SEARCHSTRING_EN_ESOTERIC_CHEF,
+            SEARCHSTRING_FR_ESOTERIC_CHEF
+          ]),
+      GCWTool(tool: Cow(), i18nPrefix: 'cow', searchStrings: [
+        SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_COMMON_ESOTERIC_COW,
+        SEARCHSTRING_DE_ESOTERIC_COW,
+        SEARCHSTRING_EN_ESOTERIC_COW,
+        SEARCHSTRING_FR_ESOTERIC_COW
+      ]),
       GCWTool(
           tool: Deadfish(),
           buttonList: [GCWToolActionButtonsEntry(false, 'deadfish_online_help_url', '', '', Icons.help)],

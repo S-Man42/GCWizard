@@ -16,25 +16,19 @@ import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 class EsotericProgrammingLanguageSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
+    final List<GCWTool> _toolList = Registry.toolList.where((element) {
+      return [
+        className(Beatnik()),
+        className(Brainfk()),
+        className(Chef()),
+        className(Cow()),
+        className(Deadfish()),
+        className(Malbolge()),
+        className(Ook()),
+        className(WhitespaceLanguage()),
+      ].contains(className(element.tool));
+    }).toList();
 
-    final List<GCWTool> _toolList =
-      Registry.toolList.where((element) {
-        return [
-          className(Beatnik()),
-          className(Brainfk()),
-          className(Chef()),
-          className(Cow()),
-          className(Deadfish()),
-          className(Malbolge()),
-          className(Ook()),
-          className(WhitespaceLanguage()),
-        ].contains(className(element.tool));
-      }).toList();
-
-    return Container(
-      child: GCWToolList(
-        toolList: _toolList
-      )
-    );
+    return Container(child: GCWToolList(toolList: _toolList));
   }
 }

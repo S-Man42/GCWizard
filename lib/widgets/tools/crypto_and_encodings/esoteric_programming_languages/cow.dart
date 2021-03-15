@@ -9,7 +9,6 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class Cow extends StatefulWidget {
-
   @override
   CowState createState() => CowState();
 }
@@ -61,18 +60,16 @@ class CowState extends State<Cow> {
         ),
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
-          controller: _inputController,
-          hintText: i18n(context, 'cow_input'),
-          onChanged: (text) {
-            setState(() {
-              _currentInput = text;
-            });
-          },
-        )
+                controller: _inputController,
+                hintText: i18n(context, 'cow_input'),
+                onChanged: (text) {
+                  setState(() {
+                    _currentInput = text;
+                  });
+                },
+              )
             : Container(),
-        GCWDefaultOutput(
-            child: _calculateOutput()
-        )
+        GCWDefaultOutput(child: _calculateOutput())
       ],
     );
   }
@@ -85,7 +82,7 @@ class CowState extends State<Cow> {
           return output.output;
         else
           return output.output + '\n' + i18n(context, output.error);
-      } on FormatException catch(e) {
+      } on FormatException catch (e) {
         return printErrorMessage(context, e.message);
       }
     } else {
