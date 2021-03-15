@@ -244,8 +244,8 @@ class MapViewPersistenceAdapter {
       json = json.replaceAll(uuid.group(2), id.toString());
       id++;
     });
+    json = _removeEmptyElements(json);
     return _replaceJsonMarker(json, false);
-    ;
   }
 
   bool setJsonMapViewData(String json) {
@@ -276,7 +276,17 @@ class MapViewPersistenceAdapter {
     if (restore) replaceMap = switchMapKeyValue(replaceMap);
 
     return substitution(json, replaceMap);
-    ;
+  }
+
+  String _removeEmptyElements(String json) {
+    var regExp = RegExp("(\")([\^\"]+)(\":null,)");
+    var regExp1 = RegExp("(,\")([\^\"]+)(\":null})");
+    var regExp2 = RegExp("(\"name\":\"\",)");
+
+    json = json.replaceAll(regExp, "");
+    json = json.replaceAll(regExp1, "}");
+    json = json.replaceAll(regExp2, "");
+    return json;
   }
 
   String _restoreUUIDs(String json) {
