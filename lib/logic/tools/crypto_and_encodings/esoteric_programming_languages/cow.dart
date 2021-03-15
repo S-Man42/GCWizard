@@ -1,7 +1,7 @@
 //---------------------------------------------------------
 // COW Programming language
 // by BigZaphod sean@fifthace.com
-// http://www.bigzaphod.org/cow
+// https://github.com/BigZaphod/COW
 //
 // Licencse: Public Domain
 //
@@ -154,7 +154,7 @@ int _execCommand(
         memory[mem_pos] = STDIN.codeUnitAt(inputPointer);
         inputPointer++;
       } else {
-        STDOUT = STDOUT + String.fromCharCode(memory[mem_pos]);
+        STDOUT = STDOUT + String.fromCharCode(memory[mem_pos]  % 256);
       }
       break;
 
