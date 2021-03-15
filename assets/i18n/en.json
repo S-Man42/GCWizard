@@ -1575,7 +1575,7 @@
   "icecodes_symbol" : "Ice codes",
   "icecodes_selection_title" : "Ice codes",
   "icecodes_selection_description" : "Description of ice situation on waters",
-  "icecodes_selection_online_help_url" : "",
+  "icecodes_selection_online_help_url" : "https://blog.gcwizard.net/manual/en/ice-codes/06-what-shows-the-gc-wizard/",
   "icecodes_system_eu" : "EU Regulation Nr. 416/2007 as of 22.03.2007",
   "icecodes_system_eu_condition" : "Ice condition code",
   "icecodes_system_eu_accessibility" : "Ice accessibility code",

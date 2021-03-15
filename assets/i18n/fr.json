@@ -1447,7 +1447,7 @@
   "icecodes_title" : "Codes de la glace",
   "icecodes_description" : "Description de la situation de la glace sur les eaux",
   "icecodes_example" : "1 → Nilas léger ou croûte de glace ( 5-10 cm d'épaisseur)",
-  "icecodes_online_help_url" : "",
+  "icecodes_online_help_url" : "https://blog.gcwizard.net/manual/fr/code-de-glace/06-quest-ce-que-gc-wizard-affiche/",
   "icecodes_symbol" : "Codes de condition de glace",
   "icecodes_selection_title" : "Codes de condition de glace",
   "icecodes_selection_description" : "Description de la situation de la glace sur les eaux",

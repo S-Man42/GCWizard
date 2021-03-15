@@ -1575,7 +1575,7 @@
   "icecodes_symbol" : "Eiszustandscodes",
   "icecodes_selection_title" : "Eiszustandscodes",
   "icecodes_selection_description" : "Eiszustandscodes auf Gewässern",
-  "icecodes_selection_online_help_url" : "",
+  "icecodes_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/eis-codes/06-was-zeigt-der-gc-wizard-an/",
   "icecodes_system_eu" : "EG Verordnung Nr. 416/2007 vom 22.03.2007",
   "icecodes_system_eu_condition" : "Eiszustandscode",
   "icecodes_system_eu_accessibility" : "Eiszugangscode",
