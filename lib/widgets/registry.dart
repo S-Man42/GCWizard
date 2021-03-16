@@ -2548,21 +2548,20 @@ class Registry {
             SEARCHSTRING_EN_ESOTERIC_CHEF,
             SEARCHSTRING_FR_ESOTERIC_CHEF
           ]),
-      GCWTool(tool: Cow(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false, 'cow_online_help_url', '', '', Icons.help)
-          ],
+      GCWTool(
+          tool: Cow(),
+          buttonList: [GCWToolActionButtonsEntry(false, 'cow_online_help_url', '', '', Icons.help)],
           i18nPrefix: 'cow',
           searchStrings: [
-        SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-        SEARCHSTRING_COMMON_ESOTERIC_COW,
-        SEARCHSTRING_DE_ESOTERIC_COW,
-        SEARCHSTRING_EN_ESOTERIC_COW,
-        SEARCHSTRING_FR_ESOTERIC_COW
-      ]),
+            SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_COMMON_ESOTERIC_COW,
+            SEARCHSTRING_DE_ESOTERIC_COW,
+            SEARCHSTRING_EN_ESOTERIC_COW,
+            SEARCHSTRING_FR_ESOTERIC_COW
+          ]),
       GCWTool(
           tool: Deadfish(),
           buttonList: [GCWToolActionButtonsEntry(false, 'deadfish_online_help_url', '', '', Icons.help)],

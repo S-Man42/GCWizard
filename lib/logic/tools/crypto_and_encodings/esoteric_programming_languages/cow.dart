@@ -154,7 +154,7 @@ int _execCommand(
         memory[mem_pos] = STDIN.codeUnitAt(inputPointer);
         inputPointer++;
       } else {
-        STDOUT = STDOUT + String.fromCharCode(memory[mem_pos]  % 256);
+        STDOUT = STDOUT + String.fromCharCode(memory[mem_pos] % 256);
       }
       break;
 
