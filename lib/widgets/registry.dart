@@ -2548,7 +2548,12 @@ class Registry {
             SEARCHSTRING_EN_ESOTERIC_CHEF,
             SEARCHSTRING_FR_ESOTERIC_CHEF
           ]),
-      GCWTool(tool: Cow(), i18nPrefix: 'cow', searchStrings: [
+      GCWTool(tool: Cow(),
+          buttonList: [
+            GCWToolActionButtonsEntry(false, 'cow_online_help_url', '', '', Icons.help)
+          ],
+          i18nPrefix: 'cow',
+          searchStrings: [
         SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
         SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
         SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,

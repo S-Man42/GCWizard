@@ -1244,7 +1244,7 @@
   "coords_averaging_start" : "Start Measurement",
   "coords_averaging_stop" : "Stop Measurement",
   "cow_title" : "Cow",
-  "cow_description" : "Esoteric programming language with 11 characters",
+  "cow_description" : "Esoteric programming language like Brainf**k, but with 12 commands",
   "cow_example" : "MoO moO MoO mOo MOO OOM MMM",
   "cow_online_help_url" : "https://blog.gcwizard.net/manual/en/cow-esoteric-programming-languages/02-how-does-the-gc-wizard-interpret-a-cow-program/",
   "cow_interpret" : "Interpreter",
