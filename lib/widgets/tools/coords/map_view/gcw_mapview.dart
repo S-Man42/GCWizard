@@ -504,9 +504,9 @@ class GCWMapViewState extends State<GCWMapView> {
               if (pastedCoordinate == null) return;
 
               setState(() {
-                _persistanceAdapter.addMapPoint(pastedCoordinate['coordinate'],
-                    coordinateFormat: {'format': pastedCoordinate['format']});
-                _mapController.move(pastedCoordinate['coordinate'], _mapController.zoom);
+                _persistanceAdapter.addMapPoint(pastedCoordinate.values.first,
+                    coordinateFormat: {'format': pastedCoordinate.keys.first});
+                _mapController.move(pastedCoordinate.values.first, _mapController.zoom);
               });
             }
             ;
