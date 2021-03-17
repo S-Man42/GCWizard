@@ -43,5 +43,6 @@ echo "copy files..."
 cp -r $TMP/de/en.json ../assets/i18n/de.json
 cp -r $TMP/fr/en.json ../assets/i18n/fr.json
 
+rm -rf $ZIP
 rm -rf $TMP
 echo "done !"
