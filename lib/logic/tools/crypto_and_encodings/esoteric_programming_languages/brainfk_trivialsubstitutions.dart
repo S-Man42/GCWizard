@@ -2,7 +2,7 @@
 
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum BrainfkTrivial {ALPHUCK, BINARYFUCK, BLUB, BTJZXGQUARTFRQIFJLV, COLONOSCOPY, COW, DETAILEDFUCK, FLUFFLEPUFF, FUCKBEES, GERMAN, KENNYSPEAK, KONFUCK, MORSEFUCK, NAK, OMAM, OOK, PENISSCRIP, PIKALANG, REVERSEFUCK, REVOLUTION9, ROADRUNNER, SCREAMCODE, TERNARY, TRIPLET, UWU, ZZZ, CUSTOM}
+enum BrainfkTrivial {ALPHK, BINARYFK, BLUB, BTJZXGQUARTFRQIFJLV, COLONOSCOPY, COW, DETAILEDFK, FLUFFLEPUFF, FUCKBEES, GERMAN, KENNYSPEAK, KONFK, MORSEFK, NAK, OMAM, OOK, PENISSCRIP, PIKALANG, REVERSEFK, REVOLUTION9, ROADRUNNER, SCREAMCODE, TERNARY, TRIPLET, UWU, ZZZ, CUSTOM}
 
 Map brainfkTrivialSubstitutions = {
 //  '' : {'>' : '', '<' : '', '+' : '', '-' : '', '.' : '', ',' : '', '[' : '', ']' : ''},
@@ -24,7 +24,7 @@ Map brainfkTrivialSubstitutions = {
     ',' : 'Paul is dead',
     '[' : 'Revolution 1',
     ']' : 'Revolution 9'},
-  'DetailedFuck' : {
+  'DetailedF**k' : {
     '>' : 'MOVE THE MEMORY POINTER ONE CELL TO THE RIGHT',
     '<' : 'MOVE THE MEMORY POINTER ONE CELL TO THE LEFT',
     '+' : 'INCREMENT THE CELL UNDER THE MEMORY POINTER BY ONE',
@@ -43,16 +43,16 @@ Map brainfkTrivialSubstitutions = {
     '[' : 'Schleifenanfang',
     ']' : 'Schleifenende'},
   'Colonoscopy'  : {'>' : ';};', '<' : ';{;', '+' : ';;};', '-' : ';;{;', '.' : ';;;};', ',' : ';;;{;', '[' : '{{;', ']' : '}};'},
-  'K-on Fuck'    : {'>' : 'うんうんうん', '<' : 'うんうんたん', '+' : 'うんたんうん', '-' : 'うんたんたん', '.' : 'たんうんうん', ',' : 'たんうんたん', '[' : 'たんたんうん', ']' : 'たんたんたん'},
+  'K-on F**k'    : {'>' : 'うんうんうん', '<' : 'うんうんたん', '+' : 'うんたんうん', '-' : 'うんたんたん', '.' : 'たんうんうん', ',' : 'たんうんたん', '[' : 'たんたんうん', ']' : 'たんたんたん'},
   'fuckbeEs'     : {'>' : 'f', '<' : 'u', '+' : 'c', '-' : 'k', '.' : 'b', ',' : 'e', '[' : 'E', ']' : 's'},
   'PenisScript'  : {'>' : '8=D', '<' : '8==D', '+' : '8===D', '-' : '8====D', '.' : '8=====D', ',' : '8======D', '[' : '8=======D', ']' : '8========D'},
-  'Alphuck'      : {'>': 'a', '<': 'c', '+': 'e', '-': 'i', '.': 'j', ',': 'o', '[': 'p', ']': 's'},
-  'ReverseFuck'  : {'>' : '<', '<' : '>', '+' : '-', '-' : '+', '.' : ',', ',' : '.', '[' : ']', ']' : '['},
+  'Alph**k'      : {'>': 'a', '<': 'c', '+': 'e', '-': 'i', '.': 'j', ',': 'o', '[': 'p', ']': 's'},
+  'ReverseF**k'  : {'>' : '<', '<' : '>', '+' : '-', '-' : '+', '.' : ',', ',' : '.', '[' : ']', ']' : '['},
   'Btjzxgquartfrqifjlv' : {'>' : 'f', '<' : 'rqi', '+' : 'qua', '-' : 'rtf', '.' : 'lv', ',' : 'j', '[' : 'btj', ']' : 'zxg'},
-  'BinaryFuck'   : {'>' : '010', '<' : '011', '+' : '000', '-' : '001', '.' : '100', ',' : '101', '[' : '110', ']' : '111'},
+  'BinaryF**k'   : {'>' : '010', '<' : '011', '+' : '000', '-' : '001', '.' : '100', ',' : '101', '[' : '110', ']' : '111'},
   'Ternary'      : {'>' : '01', '<' : '00', '+' : '11', '-' : '10', '.' : '20', ',' : '21', '[' : '02', ']' : '12'},
   'Kenny Speak'  : {'>' : 'mmp', '<' : 'mmm', '+' : 'mpp', '-' : 'pmm', '.' : 'fmm', ',' : 'fpm', '[' : 'mmf', ']' : 'mpf'},
-  'MorseFuck'    : {'>' : '.--', '<' : '--.', '+' : '..-', '-' : '-..', '.' : '-.-', ',' : '.-.', '[' : '---', ']' : '...'},
+  'MorseF**k'    : {'>' : '.--', '<' : '--.', '+' : '..-', '-' : '-..', '.' : '-.-', ',' : '.-.', '[' : '---', ']' : '...'},
   'Blub'         : {'>' : 'Blub. Blub?', '<' : 'Blub? Blub.', '+' : 'Blub. Blub.', '-' : 'Blub! Blub!', '.' : 'Blub! Blub.', ',' : 'Blub. Blub!', '[' : 'Blub! Blub?', ']' : 'Blub? Blub!'},
   'Ook'          : {'>' : 'Ook. Ook?', '<' : 'Ook? Ook.', '+' : 'Ook. Ook.', '-' : 'Ook! Ook!', '.' : 'Ook! Ook.', ',' : 'Ook. Ook!', '[' : 'Ook! Ook?', ']' : 'Ook? Ook!'},
   'Nak'          : {'>' : 'Nak. Nak?', '<' : 'Nak? Nak.', '+' : 'Nak. Nak.', '-' : 'Nak! Nak!', '.' : 'Nak! Nak.', ',' : 'Nak. Nak!', '[' : 'Nak! Nak?', ']' : 'Nak? Nak!'},
@@ -67,24 +67,24 @@ Map brainfkTrivialSubstitutions = {
 };
 
 Map<BrainfkTrivial, String> BRAINFK_TRIVIAL_LIST = {
-  BrainfkTrivial.ALPHUCK : 'Alphuck',
-  BrainfkTrivial.BINARYFUCK : 'BinaryFuck',
+  BrainfkTrivial.ALPHK : 'Alph**k',
+  BrainfkTrivial.BINARYFK : 'BinaryFuck',
   BrainfkTrivial.BLUB : 'Blub',
   BrainfkTrivial.BTJZXGQUARTFRQIFJLV : 'Btjzxgquartfrqifjlv',
   BrainfkTrivial.COLONOSCOPY : 'Colonoscopy',
-  BrainfkTrivial.DETAILEDFUCK : 'DetailedFuck',
+  BrainfkTrivial.DETAILEDFK : 'DetailedF**k',
   BrainfkTrivial.FLUFFLEPUFF : 'Fluffle Puff',
   BrainfkTrivial.FUCKBEES : 'FuckbeEs',
   BrainfkTrivial.GERMAN : 'German',
   BrainfkTrivial.KENNYSPEAK : 'Kenny Speak',
-  BrainfkTrivial.KONFUCK : 'K-on Fuck',
-  BrainfkTrivial.MORSEFUCK : 'MorseFuck',
+  BrainfkTrivial.KONFK : 'K-on F**k',
+  BrainfkTrivial.MORSEFK : 'MorseF**k',
   BrainfkTrivial.NAK : 'Nak',
   BrainfkTrivial.OMAM : 'Omam',
   BrainfkTrivial.OOK : 'Ook',
   BrainfkTrivial.PENISSCRIP : 'PenisScript',
   BrainfkTrivial.PIKALANG : 'PikaLang',
-  BrainfkTrivial.REVERSEFUCK : 'ReverseFuck',
+  BrainfkTrivial.REVERSEFK : 'ReverseF**k',
   BrainfkTrivial.REVOLUTION9 : 'Revolution 9',
   BrainfkTrivial.ROADRUNNER : 'Roadrunner',
   BrainfkTrivial.SCREAMCODE : 'ScreamCode',

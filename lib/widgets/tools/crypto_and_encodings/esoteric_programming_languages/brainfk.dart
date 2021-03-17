@@ -258,7 +258,7 @@ class BrainfkState extends State<Brainfk> {
           }
         else
           switch (_currentSubstitition) {
-            case BrainfkTrivial.DETAILEDFUCK:
+            case BrainfkTrivial.DETAILEDFK:
             case BrainfkTrivial.OMAM:
             case BrainfkTrivial.REVOLUTION9:
               return substitution(generateBrainfk(_currentText).split('').join('\n'), brainfkTrivialSubstitutions[BRAINFK_TRIVIAL_LIST[_currentSubstitition]]);
