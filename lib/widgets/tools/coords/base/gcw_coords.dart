@@ -36,8 +36,9 @@ class GCWCoords extends StatefulWidget {
   final LatLng coordinates;
   final String title;
   final bool notitle;
+  final bool restoreCoordinates;
 
-  const GCWCoords({Key key, this.title, this.coordinates, this.onChanged, this.coordsFormat, this.notitle: false})
+  const GCWCoords({Key key, this.title, this.coordinates, this.onChanged, this.coordsFormat, this.notitle: false, this.restoreCoordinates: false})
       : super(key: key);
 
   @override
@@ -310,7 +311,10 @@ class GCWCoordsState extends State<GCWCoords> {
         setState(() {
           if (_currentCoordsFormat != newValue) {
             _currentCoordsFormat = newValue;
-            _currentValue = defaultCoordinate;
+            if (widget.restoreCoordinates)
+              _pastedCoords = _currentValue;
+            else
+              _currentValue = defaultCoordinate;
 
             _setCurrentValueAndEmitOnChange();
           }
