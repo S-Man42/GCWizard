@@ -644,4 +644,45 @@ void main(){
       });
     });
   });
+
+  group("NumeralWords.decodeNumeralwordsEntireWordsLAT:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : '', 'language' : NumeralWordsLanguage.LAT, 'decodeMode' : true,
+        'expectedOutput' : [NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty')]},
+      {'input' : 'fünfundzwanzig', 'language' : NumeralWordsLanguage.LAT, 'decodeMode' : true,
+        'expectedOutput' : []},
+
+      {'input' : 'quinque duo gradus quattuor quattuor punctum octo octo octo zerum unus tria gradus zerum unus punctum tria hexas quinque', 'language' : NumeralWordsLanguage.LAT, 'decodeMode' : true,
+        'expectedOutput' : [
+          NumeralWordsDecodeOutput('5', 'quinque', 'common_language_latin'),
+          NumeralWordsDecodeOutput('2', 'duo', 'common_language_latin'),
+          NumeralWordsDecodeOutput('°', 'gradus', 'common_language_latin'),
+          NumeralWordsDecodeOutput('4', 'quattuor', 'common_language_latin'),
+          NumeralWordsDecodeOutput('4', 'quattuor', 'common_language_latin'),
+          NumeralWordsDecodeOutput('.', 'punctum', 'common_language_latin'),
+          NumeralWordsDecodeOutput('8', 'octo', 'common_language_latin'),
+          NumeralWordsDecodeOutput('8', 'octo', 'common_language_latin'),
+          NumeralWordsDecodeOutput('8', 'octo', 'common_language_latin'),
+          NumeralWordsDecodeOutput('0', 'zerum', 'common_language_latin'),
+          NumeralWordsDecodeOutput('1', 'unus', 'common_language_latin'),
+          NumeralWordsDecodeOutput('3', 'tria', 'common_language_latin'),
+          NumeralWordsDecodeOutput('.', 'punctum', 'common_language_latin'),
+          NumeralWordsDecodeOutput('3', 'tria', 'common_language_latin'),
+          NumeralWordsDecodeOutput('6', 'hexas', 'common_language_latin'),
+          NumeralWordsDecodeOutput('5', 'quinque', 'common_language_latin'),
+        ]},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
+        var _actual = decodeNumeralwords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'], elem['decodeMode']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i].number, elem['expectedOutput'][i].number);
+          expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
+          expect(_actual[i].language, elem['expectedOutput'][i].language);
+        }
+      });
+    });
+  });
 }

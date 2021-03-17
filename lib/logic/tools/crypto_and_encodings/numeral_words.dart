@@ -30,7 +30,7 @@ class NumeralWordsOutput {
   NumeralWordsOutput(this.state, this.output, this.language);
 }
 
-enum NumeralWordsLanguage { DEU, DNK, ENG, ESP, FRA, ITA, KYR, NLD, NOR, POL, POR, RUS, SOL, SWE, VOL, EPO, ALL, NUM }
+enum NumeralWordsLanguage { DEU, DNK, ENG, EPO, ESP, FRA, ITA, KYR, LAT, NLD, NOR, POL, POR, RUS, SOL, SWE, VOL, ALL, NUM }
 
 final Map<String, String> DEUWordToNum = {
   'null': '0',
@@ -62,7 +62,14 @@ final Map<String, String> DEUWordToNum = {
   'achtzig': '80',
   'neunzig': '90',
   'hundert': '100',
-  'tausend': '1000'
+  'tausend': '1000',
+  'grad': '°',
+  'punkt': '.',
+  'komma': ',',
+  'nord': 'numeralwords_n',
+  'ost': 'numeralwords_o',
+  'west': 'numeralwords_w',
+  'sued': 'numeralwords_s',
 };
 
 final Map<String, String> ENGWordToNum = {
@@ -95,7 +102,14 @@ final Map<String, String> ENGWordToNum = {
   'eighty': '80',
   'ninety': '90',
   'hundred': '100',
-  'thousand': '1000'
+  'thousand': '1000',
+  'degree': '°',
+  'point': '.',
+  'komma': ',',
+  'north': 'numeralwords_n',
+  'east': 'numeralwords_o',
+  'west': 'numeralwords_w',
+  'south': 'numeralwords_sw'
 };
 
 final Map<String, String> DNKWordToNum = {
@@ -128,7 +142,14 @@ final Map<String, String> DNKWordToNum = {
   'firs': '80',
   'halvfems': '90',
   'hundrede': '100',
-  'tusind': '1000'
+  'tusind': '1000',
+  'grad': '°',
+  'punkt': '.',
+  'komma': ',',
+  'nord': 'numeralwords_n',
+  'øst': 'numeralwords_o',
+  'vest': 'numeralwords_w',
+  'syd': 'numeralwords_s'
 };
 
 final Map<String, String> NLDWordToNum = {
@@ -161,7 +182,14 @@ final Map<String, String> NLDWordToNum = {
   'tachtig': '80',
   'negentig': '90',
   'honderd': '100',
-  'duizend': '1000'
+  'duizend': '1000',
+  'graad': '°',
+  'punt': '.',
+  'komma': ',',
+  'noord': 'numeralwords_n',
+  'oost': 'numeralwords_ow',
+  'west': 'numeralwords_w',
+  'zuid': 'numeralwords_s'
 };
 
 final Map<String, String> SWEWordToNum = {
@@ -195,7 +223,14 @@ final Map<String, String> SWEWordToNum = {
   'åttio': '80',
   'nittio': '90',
   'hundra': '100',
-  'tusen': '1000'
+  'tusen': '1000',
+  'grad': '°',
+  'punkt': '.',
+  'komma': ',',
+  'norr': 'numeralwords_n',
+  'ost': 'numeralwords_o',
+  'väst': 'numeralwords_w',
+  'syd': 'numeralwords_s'
 };
 
 final Map<String, String> NORWordToNum = {
@@ -230,7 +265,14 @@ final Map<String, String> NORWordToNum = {
   'åtti': '80',
   'nitti': '90',
   'hundre': '100',
-  'tusen': '1000'
+  'tusen': '1000',
+  'grad': '°',
+  'punkt': '.',
+  'komma': ',',
+  'nord': 'numeralwords_n',
+  'øst': 'numeralwords_o',
+  'vest': 'numeralwords_w',
+  'sør': 'numeralwords_s'
 };
 
 final Map<String, String> ITAWordToNum = {
@@ -263,7 +305,14 @@ final Map<String, String> ITAWordToNum = {
   'ottanta': '80',
   'novanta': '90',
   'cento': '100',
-  'mille': '1000'
+  'mille': '1000',
+  'grado': '°',
+  'punto': '.',
+  'virgola': ',',
+  'nord': 'numeralwords_n',
+  'est': 'numeralwords_o',
+  'west': 'numeralwords_w',
+  'sud': 'numeralwords_s'
 };
 
 final Map<String, String> FRAWordToNum = {
@@ -297,7 +346,14 @@ final Map<String, String> FRAWordToNum = {
   'quatre-vingt': '80',
   'quatre-vingt-dix': '90',
   'cent': '100',
-  'mille': '1000'
+  'mille': '1000',
+  'degré': '°',
+  'point': '.',
+  'komma': ',',
+  'nord': 'numeralwords_n',
+  'est': 'numeralwords_o',
+  'oest': 'numeralwords_w',
+  'sud': 'numeralwords_s'
 };
 
 final Map<String, String> ESPWordToNum = {
@@ -331,7 +387,14 @@ final Map<String, String> ESPWordToNum = {
   'ochenta': '80',
   'noventa': '90',
   'cien': '100',
-  'mil': '1000'
+  'mil': '1000',
+  'grado': '°',
+  'punto': '.',
+  'coma': ',',
+  'norte': 'numeralwords_n',
+  'este': 'numeralwords_o',
+  'oeste': 'numeralwords_w',
+  'sur': 'numeralwords_s'
 };
 
 final Map<String, String> PORWordToNum = {
@@ -366,7 +429,14 @@ final Map<String, String> PORWordToNum = {
   'noventa': '90',
   'cem': '100',
   'cento': '100',
-  'mil': '1000'
+  'mil': '1000',
+  'grau': '°',
+  'ponto': '.',
+  'virgula': ',',
+  'norte': 'numeralwords_n',
+  'leste': 'numeralwords_o',
+  'oeste': 'numeralwords_w',
+  'sul': 'numeralwords_s'
 };
 
 final Map<String, String> POLWordToNum = {
@@ -402,7 +472,14 @@ final Map<String, String> POLWordToNum = {
   'osiemdziesiąt': '80',
   'dziewięćdziesiąt': '90',
   'sto': '100',
-  'tysiąc': '1000'
+  'tysiąc': '1000',
+  'stopień': '°',
+  'kropka': '.',
+  'przecinek': ',',
+  'północ': 'numeralwords_n',
+  'wschód': 'numeralwords_o',
+  'zachód': 'numeralwords_w',
+  'południe': 'numeralwords_s'
 };
 
 final Map<String, String> RUSWordToNum = {
@@ -439,7 +516,13 @@ final Map<String, String> RUSWordToNum = {
   'vosemdesjat': '80',
   'devianosto': '90',
   'sto': '100',
-  'týsjača': '1000'
+  'týsjača': '1000',
+  'grad': '°',
+  'tochki': '.',
+  'sever': 'numeralwords_w',
+  'vostok': 'numeralwords_o',
+  'zapad': 'numeralwords_w',
+  'yug': 'numeralwords_s'
 };
 
 final Map<String, String> KYRWordToNum = {
@@ -476,7 +559,14 @@ final Map<String, String> KYRWordToNum = {
   'восемьдесят': '80',
   'девяносто': '90',
   'сто': '100',
-  'тысяча': '1000'
+  'тысяча': '1000',
+  'градус': '°',
+  'точка': '.',
+  'Запятой': ',',
+  'север': 'numeralwords_n',
+  'Восток': 'numeralwords_nnumeralwords_o',
+  'Запад': 'numeralwords_w',
+  'юг': 'numeralwords_s'
 };
 
 final Map<String, String> VOLWordToNum = {
@@ -509,7 +599,13 @@ final Map<String, String> VOLWordToNum = {
   'joeldeg': '80',
   'zueldeg': '90',
   'tum': '100',
-  'mil': '1000'
+  'mil': '1000',
+  'grad': 'grad',
+  'puen': 'punkt',
+  'nolued': 'numeralwords_n',
+  'sulued': 'numeralwords_s',
+  'lofued': 'numeralwords_o',
+  'vesued': 'numeralwords_w',
 };
 
 final Map<String, String> EPOWordToNum = {
@@ -542,7 +638,16 @@ final Map<String, String> EPOWordToNum = {
   'okdek': '80',
   'naŭdek': '90',
   'cent': '100',
-  'mil': '1000'
+  'mil': '1000',
+  'grado': '°',
+  'punkto': '.',
+  'komo': ',',
+  'nordo': 'numeralwords_n',
+  'sudo': 'numeralwords_s',
+  'oriento': 'numeralwords_o',
+  'okcidento': 'numeralwords_w',
+  'grado': 'grad',
+  'punkto': 'punkt',
 };
 
 final Map<String, String> SOLWordToNum = {
@@ -575,7 +680,54 @@ final Map<String, String> SOLWordToNum = {
   'fadodo': '80',
   'fadodo mimisol': '90',
   'farere': '100',
-  'famimi': '1000'
+  'famimi': '1000',
+  'dolasifa': 'numeralwords_n',
+  'fasilado': 'numeralwords_s',
+  'fasilare': 'numeralwords_o',
+  'relasifa': 'numeralwords_w',
+  'famidosi': 'grad',
+  'relaresol': 'punkt',
+};
+
+final Map<String, String> LATWordToNum = {
+  'zerum': '0',
+  'unus': '1',
+  'duo': '2',
+  'tria': '3',
+  'tres': '3',
+  'quattuor': '4',
+  'quinque': '5',
+  'hexas': '6',
+  'sex': '6',
+  'septem': '7',
+  'octo': '8',
+  'npvem': '9',
+  'decem': '10',
+  'undecim': '11',
+  'duodecim': '12',
+  'trēdecim': '13',
+  'quattuordecim': '14',
+  'quīndecim': '15',
+  'sēdecim': '16',
+  'septendecim': '17',
+  'duodēvīgintī': '18',
+  'undēvīgintī': '19',
+  'vīgintī': '20',
+  'trīgintā': '30',
+  'quadrāgintā': '40',
+  'quīnquāgintā': '50',
+  'sexāgintā': '60',
+  'septuāgintā': '70',
+  'octōgintā': '80',
+  'nōnāgintā': '90',
+  'centum': '100',
+  'mīlle': '1000',
+  'gradus': '°',
+  'punctum': '.',
+  'septentriones': 'numeralwords_n',
+  'oriens': 'numeralwords_e',
+  'west': 'numeralwords_w',
+  'meridies': 'numeralwords_s',
 };
 
 Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
@@ -594,7 +746,8 @@ Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.KYR: 'numeralwords_language_kyr',
   NumeralWordsLanguage.VOL: 'common_language_volapuek',
   NumeralWordsLanguage.EPO: 'common_language_esperanto',
-  NumeralWordsLanguage.SOL: 'common_language_solresol'
+  NumeralWordsLanguage.SOL: 'common_language_solresol',
+  NumeralWordsLanguage.LAT: 'common_language_latin'
 };
 
 Map<NumeralWordsLanguage, String> _languageList;
@@ -615,7 +768,8 @@ Map NumWords = {
   NumeralWordsLanguage.KYR: KYRWordToNum,
   NumeralWordsLanguage.VOL: VOLWordToNum,
   NumeralWordsLanguage.EPO: EPOWordToNum,
-  NumeralWordsLanguage.SOL: SOLWordToNum
+  NumeralWordsLanguage.SOL: SOLWordToNum,
+  NumeralWordsLanguage.LAT: LATWordToNum
 };
 
 bool _isNumeral(String input) {

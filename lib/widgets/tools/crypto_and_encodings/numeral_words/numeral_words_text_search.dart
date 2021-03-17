@@ -92,7 +92,11 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
       detailedOutput = decodeNumeralwords(removeAccents(_currentDecodeInput.toLowerCase()), _currentLanguage,
           (_currentDecodeMode == GCWSwitchPosition.left));
       for (int i = 0; i < detailedOutput.length; i++) {
-        if (detailedOutput[i].number != '') output = output + ' ' + detailedOutput[i].number;
+        if (detailedOutput[i].number != '')
+          if (detailedOutput[i].number.startsWith('numeralwords_'))
+            output = output + i18n(context, detailedOutput[i].number);
+          else
+            output = output + ' ' + detailedOutput[i].number;
       }
     } else {
       output = i18n(context, 'numeralwords_language_not_implemented');
@@ -107,7 +111,10 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     if (_currentLanguage == NumeralWordsLanguage.ALL) {
       for (int i = 0; i < detailedOutput.length; i++) {
         columnDataRowNumber = detailedOutput[i].number;
-        columnDataRowNumWord = detailedOutput[i].numWord;
+        if (detailedOutput[i].numWord.startsWith('numeralwords_'))
+          columnDataRowNumWord = i18n(context, detailedOutput[i].numWord);
+        else
+          columnDataRowNumWord = detailedOutput[i].numWord;
         columnDataRowLanguage = i18n(context, detailedOutput[i].language);
         int j = i + 1;
         while (j < detailedOutput.length && detailedOutput[j].number == '') {
@@ -121,7 +128,18 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
       }
       flexData = [1, 3, 1];
     } else {
-      columnData = detailedOutput.map((entry) => [entry.number, entry.numWord]).toList();
+      for (int i = 0; i < detailedOutput.length; i++) {
+        if (detailedOutput[i].number.startsWith('numeralwords_'))
+          columnDataRowNumber = i18n(context, detailedOutput[i].number);
+        else
+          columnDataRowNumber = detailedOutput[i].number;
+        if (detailedOutput[i].numWord.startsWith('numeralwords_'))
+          columnDataRowNumWord = i18n(context, detailedOutput[i].numWord);
+        else
+          columnDataRowNumWord = detailedOutput[i].numWord;
+        columnData.add([columnDataRowNumber, columnDataRowNumWord]);
+      }
+//      columnData = detailedOutput.map((entry) => [entry.number, entry.numWord]).toList();
       flexData = [1, 2];
     }
 
