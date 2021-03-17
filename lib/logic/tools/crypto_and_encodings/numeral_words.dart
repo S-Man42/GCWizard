@@ -30,7 +30,27 @@ class NumeralWordsOutput {
   NumeralWordsOutput(this.state, this.output, this.language);
 }
 
-enum NumeralWordsLanguage { DEU, DNK, ENG, EPO, ESP, FRA, ITA, KYR, LAT, NLD, NOR, POL, POR, RUS, SOL, SWE, VOL, ALL, NUM }
+enum NumeralWordsLanguage {
+  DEU,
+  DNK,
+  ENG,
+  EPO,
+  ESP,
+  FRA,
+  ITA,
+  KYR,
+  LAT,
+  NLD,
+  NOR,
+  POL,
+  POR,
+  RUS,
+  SOL,
+  SWE,
+  VOL,
+  ALL,
+  NUM
+}
 
 final Map<String, String> DEUWordToNum = {
   'null': '0',

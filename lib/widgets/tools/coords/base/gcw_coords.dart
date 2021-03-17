@@ -38,7 +38,14 @@ class GCWCoords extends StatefulWidget {
   final bool notitle;
   final bool restoreCoordinates;
 
-  const GCWCoords({Key key, this.title, this.coordinates, this.onChanged, this.coordsFormat, this.notitle: false, this.restoreCoordinates: false})
+  const GCWCoords(
+      {Key key,
+      this.title,
+      this.coordinates,
+      this.onChanged,
+      this.coordsFormat,
+      this.notitle: false,
+      this.restoreCoordinates: false})
       : super(key: key);
 
   @override

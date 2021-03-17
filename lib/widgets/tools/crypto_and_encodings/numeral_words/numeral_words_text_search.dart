@@ -92,11 +92,10 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
       detailedOutput = decodeNumeralwords(removeAccents(_currentDecodeInput.toLowerCase()), _currentLanguage,
           (_currentDecodeMode == GCWSwitchPosition.left));
       for (int i = 0; i < detailedOutput.length; i++) {
-        if (detailedOutput[i].number != '')
-          if (detailedOutput[i].number.startsWith('numeralwords_'))
-            output = output + i18n(context, detailedOutput[i].number);
-          else
-            output = output + ' ' + detailedOutput[i].number;
+        if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
+          output = output + i18n(context, detailedOutput[i].number);
+        else
+          output = output + ' ' + detailedOutput[i].number;
       }
     } else {
       output = i18n(context, 'numeralwords_language_not_implemented');
@@ -139,7 +138,6 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
           columnDataRowNumWord = detailedOutput[i].numWord;
         columnData.add([columnDataRowNumber, columnDataRowNumWord]);
       }
-//      columnData = detailedOutput.map((entry) => [entry.number, entry.numWord]).toList();
       flexData = [1, 2];
     }
 

@@ -60,8 +60,7 @@ class NumeralWordsListsState extends State<NumeralWordsLists> {
       children: columnedMultiLineOutput(
           context,
           numeralWordsOverview.entries.map((entry) {
-            if (int.tryParse(entry.value) != null)
-              return [entry.value, entry.key];
+            if (int.tryParse(entry.value) != null) return [entry.value, entry.key];
           }).toList(),
           flexValues: [1, 3]),
     ));
