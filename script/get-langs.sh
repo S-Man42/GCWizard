@@ -1,5 +1,5 @@
 # set -x
-TOKEN=dfda442f9e638950fff0b7dadfa57b076b559a408bc29ceca7d014476d24d4cfefa69b88a734dbd5
+source ./crowdin_token.sh
 URL=https://api.crowdin.com/api/v2
 # https://crowdin.com/project/gc-wizard/settings#api
 PROJECT_ID=445424
