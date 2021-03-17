@@ -2,6 +2,10 @@ import 'dart:math';
 
 const _alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
+List<int> mayaSystem = [1, 20, 360, 7200, 144000, 2880000, 57600000, 1152000000, 23040000000, 460800000000, 9216000000000, 184320000000000,3686400000000000];
+Map <String, int> mayaSystemPosition = {'0' : 0, '1' : 1, '2' : 2, '3' : 3, '4' : 4, '5' : 5, '6' : 6, '7' : 7, '9' : 9,
+  'A' : 10, 'B' : 11, 'C' : 12, 'D' : 13, 'E' : 14, 'F' : 15, 'G' : 16, 'H' : 17, 'I' : 18, 'J' : 19};
+
 //TODO: Refactoring - Still bad style because of bad original Java Code
 
 String _sanitizeInput(String input, int startBase, String alphabet) {
@@ -273,4 +277,27 @@ String _doubleDecToBase(double num, int base, String alphabet) {
   }
 
   return out;
+}
+
+String convertDecToMayaCalendar(String input) {
+  if (input == null || input == '')
+    return '';
+
+  BigInt numberDec = BigInt.parse(input);
+  if (numberDec == BigInt.from(0))
+    return '0';
+
+  String result = '';
+  int start = 0;
+  while (numberDec < BigInt.from(mayaSystem[mayaSystem.length - 1 - start]))
+    start++;
+  for (int position = mayaSystem.length - start; position > 0; position--) {
+    int value = 0;
+    while (numberDec >= BigInt.from(mayaSystem[position - 1])) {
+      value++;
+      numberDec = numberDec - BigInt.from(mayaSystem[position - 1]);
+    }
+    result = result + _alphabet[value];
+  }
+  return result;
 }

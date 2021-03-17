@@ -25,6 +25,7 @@ class MayaNumbersState extends State<MayaNumbers> {
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
+  var _currentCalculationMode = GCWSwitchPosition.right;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,16 @@ class MayaNumbersState extends State<MayaNumbers> {
         : Prefs.get('symboltables_countcolumns_landscape');
 
     return Column(children: <Widget>[
+      GCWTwoOptionsSwitch(
+        value: _currentCalculationMode,
+        leftValue: i18n(context, 'mayanumbers_mode_calendar'),
+        rightValue: i18n(context, 'mayanumbers_mode_calculate'),
+        onChanged: (value) {
+          setState(() {
+            _currentCalculationMode = value;
+          });
+        },
+      ),
       GCWTwoOptionsSwitch(
         value: _currentMode,
         onChanged: (value) {
@@ -175,7 +186,7 @@ class MayaNumbersState extends State<MayaNumbers> {
     var segments;
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      segments = encodeMayaNumbers(_currentEncodeInput);
+      segments = encodeMayaNumbers(_currentEncodeInput, (_currentCalculationMode == GCWSwitchPosition.right));
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments),
@@ -186,7 +197,7 @@ class MayaNumbersState extends State<MayaNumbers> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      segments = decodeMayaNumbers(output);
+      segments = decodeMayaNumbers(output, (_currentCalculationMode == GCWSwitchPosition.right));
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),

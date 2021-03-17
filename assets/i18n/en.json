@@ -1657,6 +1657,8 @@
   "mayanumbers_online_help_url" : "https://blog.gcwizard.net/manual/en/maya-symboltables/02-how-are-maya-numbers-decoded-or-encoded/",
   "mayanumbers_single_numbers" : "Separate Numbers",
   "mayanumbers_vigesimal" : "Number in Vigesimal System (Numeral Base 20)",
+  "mayanumbers_mode_calendar" : "Calendar",
+  "mayanumbers_mode_calculate" : "Other",
   "mexicanarmycipherwheel_title": "Mexican Army Cipher Disk",
   "mexicanarmycipherwheel_description": "Used by the Mexican Army in a war with the USA before World War I.",
   "mexicanarmycipherwheel_example": "TEST → 09580897",
