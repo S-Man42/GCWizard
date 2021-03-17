@@ -14,6 +14,7 @@ import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
+import 'package:gc_wizard/logic/tools/coords/import/import.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
@@ -495,18 +496,17 @@ class GCWMapViewState extends State<GCWMapView> {
           backgroundColor: COLOR_MAP_ICONBUTTONS,
           customIcon: _createIconButtonIcons(Icons.content_paste),
           onSelected: (text) {
-            if (_persistanceAdapter.setJsonMapViewData(text)) {
+            if (_importGpxKml(text) || _persistanceAdapter.setJsonMapViewData(text)) {
               setState(() {
                 _mapController.fitBounds(_getBounds());
               });
             } else {
               var pastedCoordinate = _parseCoords(text);
               if (pastedCoordinate == null) return;
-
               setState(() {
-                _persistanceAdapter.addMapPoint(pastedCoordinate['coordinate'],
-                    coordinateFormat: {'format': pastedCoordinate['format']});
-                _mapController.move(pastedCoordinate['coordinate'], _mapController.zoom);
+                _persistanceAdapter.addMapPoint(pastedCoordinate.values.first,
+                    coordinateFormat: {'format': pastedCoordinate.keys.first});
+                _mapController.move(pastedCoordinate.values.first, _mapController.zoom);
               });
             }
             ;
@@ -762,14 +762,25 @@ class GCWMapViewState extends State<GCWMapView> {
     return _polylines;
   }
 
-  Map<String, dynamic> _parseCoords(text) {
+  Map<String, LatLng> _parseCoords(text) {
     var parsed = parseLatLon(text);
-    if (parsed == null || parsed['coordinate'] == null) {
+    if (parsed == null || parsed.length == 0) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
       return null;
     }
 
     return parsed;
+  }
+
+  bool _importGpxKml(String xml) {
+    var viewData =  parseCoordinatesFile(xml);
+    if (viewData == null)
+      viewData =  parseCoordinatesFile(xml, kmlFormat: true);
+
+    if (viewData != null)
+      _persistanceAdapter.addViewData(viewData);
+
+    return (viewData != null);
   }
 }
 

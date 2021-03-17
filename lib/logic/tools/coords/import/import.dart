@@ -1,20 +1,21 @@
-import 'dart:io';
 import 'dart:ui';
 import 'package:xml/xml.dart';
 import 'package:latlong/latlong.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 import 'package:archive/archive_io.dart';
+import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/intersect_lines.dart';
-import 'package:gc_wizard/persistence/map_view/model.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adapter.dart';
+import 'package:gc_wizard/persistence/map_view/model.dart';
+
 
 Future<MapViewDAO> importCoordinatesFile(String fileName) async {
 
@@ -47,12 +48,16 @@ Future<MapViewDAO> importCoordinatesFile(String fileName) async {
 }
 
 MapViewDAO parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
-  var xmlDoc = XmlDocument.parse(xml);
+  try{
+    var xmlDoc = XmlDocument.parse(xml);
 
-  if (kmlFormat)
-    return _KmlReader()._parse(xmlDoc);
-  else
-    return _GpxReader()._parse(xmlDoc);
+    if (kmlFormat)
+      return _KmlReader()._parse(xmlDoc);
+    else
+      return _GpxReader()._parse(xmlDoc);
+  } on Exception {
+    return null;
+  }
 }
 
 /// Convert GPX-XML into points
@@ -88,9 +93,8 @@ class _GpxReader {
     var lat = xmlElement.getAttribute('lat');
     var lon = xmlElement.getAttribute('lon');
     if (lat != null && lon != null) {
-      // Todo: Format wieder raus
-      var wpt = GCWMapPoint(point : new LatLng(double.tryParse(lat), double.tryParse(lon)), isEditable: true, coordinateFormat: {'format' : keyCoordsDMS});
-      wpt.markerText = xmlElement.getElement('desc').innerText;
+      var wpt = GCWMapPoint(point : new LatLng(double.tryParse(lat), double.tryParse(lon)), isEditable: true);
+      wpt.markerText = xmlElement.getElement('desc')?.innerText;
       return wpt;
     }
     return null;
@@ -103,8 +107,7 @@ class _GpxReader {
       var lat = trkpt.getAttribute('lat');
       var lon = trkpt.getAttribute('lon');
       if (lat != null && lon != null) {
-        // Todo: Format wieder raus
-        line.points.add(GCWMapPoint(point : new LatLng(double.tryParse(lat), double.tryParse(lon)), isEditable: true, coordinateFormat: {'format' : keyCoordsDMS}));
+        line.points.add(GCWMapPoint(point : new LatLng(double.tryParse(lat), double.tryParse(lon)), isEditable: true));
       };
     });
     return line;
@@ -193,9 +196,9 @@ class _KmlReader {
 
     styleParent.findAllElements('Style').forEach((xmlElement) {
       if (xmlElement.getAttribute('id') == styleUrl) {
-        var color = xmlElement.findAllElements('color')?.first;
-        if (color != null)
-          point.color = _ColorCode(color.innerText);
+        var color = xmlElement.findAllElements('color');
+        if (color != null && color.length > 0)
+          point.color = _ColorCode(color.first.innerText);
       }
     });
 
@@ -209,7 +212,6 @@ class _KmlReader {
         lines.removeAt(i);
       } else {
         lines[i].color = lines[i].points[0].color;
-        lines[i].points[0].color = null;
       }
     }
   }
@@ -245,8 +247,7 @@ bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
   var pt2 = line.points[(line.points.length/2).toInt()].point;
   var pt3 = line.points[(line.points.length/4).toInt()].point;
   var pt4 = line.points[(line.points.length * 3/4).toInt()].point;
-  // Todo: Format defaultEllipsoid
-  var ells = getEllipsoidByName('coords_ellipsoid_earthsphere'); //defaultEllipsoid();
+  var ells = defaultEllipsoid();
 
   DistanceBearingData length1 = distanceBearing(pt1, pt2, ells);
   DistanceBearingData length2 = distanceBearing(pt3, pt4, ells);
@@ -276,24 +277,22 @@ bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
     if ((dist - radius).abs() > distToller)
       return false;
   });
-//ToDo: Color entfernen
-  center.circle = new GCWMapCircle(centerPoint: center.point, radius: radius, color: line.color ?? Colors.cyan);
+  center.circle = new GCWMapCircle(centerPoint: center.point, radius: radius);
   center.circleColorSameAsPointColor = (center.color == line.color);
   return true;
 }
 
 MapViewDAO _convertToMapViewDAO(List<GCWMapPoint> points , List<GCWMapPolyline> lines) {
-  var t = MapViewPersistenceAdapter(null);
   var daoPoints = <MapPointDAO>[];
   var daoLines = <MapPolylineDAO>[];
   if (points != null) {
     points.forEach((point) {
-      daoPoints.add(t.gcwMapPointToMapPointDAO(point));
+      daoPoints.add(MapViewPersistenceAdapter.gcwMapPointToMapPointDAO(point));
     });
   }
   if (lines != null) {
     lines.forEach((line) {
-      daoLines.add(t.gcwMapPolylineToMapPolylineDAO(line));
+      daoLines.add(MapViewPersistenceAdapter.gcwMapPolylineToMapPolylineDAO(line));
     });
   }
 

@@ -20,7 +20,7 @@ class MapViewPersistenceAdapter {
     _initializeMapView();
   }
 
-  MapPointDAO _gcwMapPointToMapPointDAO(GCWMapPoint gcwMapPoint) {
+  static MapPointDAO gcwMapPointToMapPointDAO(GCWMapPoint gcwMapPoint) {
     return MapPointDAO(
       gcwMapPoint.uuid,
       gcwMapPoint.markerText,
@@ -48,7 +48,7 @@ class MapViewPersistenceAdapter {
         isEditable: true);
   }
 
-  MapPolylineDAO _gcwMapPolylineToMapPolylineDAO(GCWMapPolyline gcwMapPolyline) {
+  static MapPolylineDAO gcwMapPolylineToMapPolylineDAO(GCWMapPolyline gcwMapPolyline) {
     return MapPolylineDAO(gcwMapPolyline.uuid, gcwMapPolyline.points.map((point) => point.uuid).toList(),
         colorToHexString(gcwMapPolyline.color));
   }
@@ -79,7 +79,7 @@ class MapViewPersistenceAdapter {
     if (mapWidget.points.length > 0) {
       _mapViewDAO.points.addAll(mapWidget.points
           .where((point) => !_mapViewDAO.points.map((pointDAO) => pointDAO.uuid).toList().contains(point.uuid))
-          .map((point) => _gcwMapPointToMapPointDAO(point))
+          .map((point) => gcwMapPointToMapPointDAO(point))
           .toList());
     }
 
@@ -97,7 +97,7 @@ class MapViewPersistenceAdapter {
       _mapViewDAO.polylines.addAll(mapWidget.polylines
           .where((polyline) =>
               !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
-          .map((polyline) => _gcwMapPolylineToMapPolylineDAO(polyline))
+          .map((polyline) => gcwMapPolylineToMapPolylineDAO(polyline))
           .toList());
     }
 
@@ -121,7 +121,7 @@ class MapViewPersistenceAdapter {
         color: HSVColor.fromAHSV(1.0, random.nextDouble() * 360.0, 1.0, random.nextDouble() / 2 + 0.5).toColor(),
         circleColorSameAsPointColor: true);
 
-    insertMapPointDAO(_gcwMapPointToMapPointDAO(mapPoint), _mapViewDAO);
+    insertMapPointDAO(gcwMapPointToMapPointDAO(mapPoint), _mapViewDAO);
 
     mapWidget.points.add(mapPoint);
     return mapPoint;
@@ -222,7 +222,7 @@ class MapViewPersistenceAdapter {
   GCWMapPolyline createMapPolyline() {
     var polyline = GCWMapPolyline(points: []);
     mapWidget.polylines.add(polyline);
-    insertMapPolylineDAO(_gcwMapPolylineToMapPolylineDAO(polyline), _mapViewDAO);
+    insertMapPolylineDAO(gcwMapPolylineToMapPolylineDAO(polyline), _mapViewDAO);
 
     return polyline;
   }
@@ -254,13 +254,19 @@ class MapViewPersistenceAdapter {
       json = _restoreUUIDs(json);
       var viewData = restoreJsonMapViewData(json);
       if (viewData != null) {
-        _addMapViewDAO(viewData);
-        _restoreMapViewDAO();
-        updateMapViews();
+        addViewData(viewData);
         return true;
       }
     } on Exception {}
     return false;
+  }
+
+  addViewData(MapViewDAO viewData) {
+    if (viewData != null) {
+      _addMapViewDAO(viewData);
+      _restoreMapViewDAO();
+      updateMapViews();
+    }
   }
 
   String _replaceJsonMarker(String json, bool restore) {
@@ -310,8 +316,7 @@ class MapViewPersistenceAdapter {
 
     if (viewData.polylines.length > 0) {
       _mapViewDAO.polylines.addAll(viewData.polylines
-          .where((polyline) =>
-              !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
+          .where((polyline) => !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
           .toList());
     }
   }
