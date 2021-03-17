@@ -4,6 +4,7 @@ URL=https://api.crowdin.com/api/v2
 # https://crowdin.com/project/gc-wizard/settings#api
 PROJECT_ID=445424
 BRANCH_ID=4 # master
+BRANCH_NAME=master
 ZIP=./tmp-i18n.zip
 TMP=tmp-i18n-dir
 
@@ -58,9 +59,9 @@ mkdir -p $TMP
 unzip -o -q $ZIP -d $TMP
 
 echo "copy target files..."
-cp -r $TMP/de/en.json ../assets/i18n/de.json
-cp -r $TMP/fr/en.json ../assets/i18n/fr.json
+cp -r $TMP/de/$BRANCH_NAME/en.json ../assets/i18n/de.json
+cp -r $TMP/fr/$BRANCH_NAME/en.json ../assets/i18n/fr.json
 
-rm -rf $ZIP
-rm -rf $TMP
+#rm -rf $ZIP
+#rm -rf $TMP
 echo "done !"
