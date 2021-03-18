@@ -59,9 +59,11 @@ mkdir -p $TMP
 unzip -o -q $ZIP -d $TMP
 
 echo "copy target files..."
-cp -r $TMP/de/$BRANCH_NAME/en.json ../assets/i18n/de.json
-cp -r $TMP/fr/$BRANCH_NAME/en.json ../assets/i18n/fr.json
+# can be in $BRANCH_NAME/ if manual build from UI...
+# cp -r $TMP/de/$BRANCH_NAME/en.json ../assets/i18n/de.json
+cp -r $TMP/de/en.json ../assets/i18n/de.json
+cp -r $TMP/fr/en.json ../assets/i18n/fr.json
 
-#rm -rf $ZIP
-#rm -rf $TMP
+rm -rf $ZIP
+rm -rf $TMP
 echo "done !"
