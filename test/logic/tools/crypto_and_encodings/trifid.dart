@@ -7,7 +7,7 @@ void main() {
 
 
 
-  group("Bifid.encryptTrifid:", () {
+  group("Trifid.encryptTrifid:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       // empty Input
       {'input' : null, 'blockSize' : 2, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},
@@ -16,8 +16,8 @@ void main() {
       //empty alphabet
       {'input' : 'Hallo', 'blockSize' : 2, 'mode': PolybiosMode.CUSTOM, 'alphabet': '', 'expectedOutput' : 'trifid_error_alphabet'},
 
-      {'input' : 'Hallo', 'blockSize' : 4, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : 'BPBIO'},
-      {'input' : 'Hello', 'blockSize' : 4, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : 'BQBRO'},
+      {'input' : 'Hallo', 'blockSize' : 4, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : 'BPBIO'},
+      {'input' : 'Hello', 'blockSize' : 4, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : 'BQBRO'},
 
       // https://kryptografie.de/kryptografie/chiffre/trifid.htm#:~:text=Trifid%20Chiffre%20%20%20Kategorisierung%3A%20%20%20Klassisch,Trifid%20Chiffre%20wurden%20von%20Felix%20Dela%20...%20
       {'input' : 'Beispielklartext', 'blockSize' : 4, 'mode': PolybiosMode.CUSTOM, 'alphabet': 'APFELSTRUDBCGHIJKMNOQVWXYZ+', 'expectedOutput' : 'BPHUEPHODRRBFRJT'},
@@ -35,7 +35,7 @@ void main() {
     });
   });
 
-  group("Bifid.decryptTrifid:", () {
+  group("Trifid.decryptTrifid:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
       // empty Input
       {'input' : null, 'blockSize' : 2, 'mode': PolybiosMode.AZ09, 'alphabet': 'ABCDEFGHIKLMNOPQRSTUVWXYZ', 'expectedOutput' : ''},

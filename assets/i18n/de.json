@@ -2995,6 +2995,7 @@
   "trifid_mode_custom" : "Eigenes Alphabet",
   "trifid_usedgrid" : "Verwendete Quadrate",
   "trifid_error_alphabet" : "Benutzerdefiniertes Alphabet hat falsche Länge",
+  "trifid_invalid_alphabet" : "Benutzerdefiniertes Alphabet ist unvollständig",
   "tomtom_selection_title" : "TomTom Code",
   "tomtom_selection_example" : "A → /, D → ////, E → /\\",
   "tomtom_selection_online_help_url" : "https://blog.gcwizard.net/manual/de/tomtom-code/01-was-ist-der-tomtom-code/",

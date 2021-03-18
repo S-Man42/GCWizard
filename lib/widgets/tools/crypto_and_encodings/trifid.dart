@@ -67,7 +67,7 @@ class TrifidState extends State<Trifid> {
         GCWTextField(
           controller: _inputController,
           inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp('[A-Za-z]')),
+            FilteringTextInputFormatter.allow(RegExp('[A-Za-z+]')),
           ],
           onChanged: (text) {
             setState(() {

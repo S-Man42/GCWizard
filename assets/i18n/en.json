@@ -2995,6 +2995,7 @@
   "trifid_mode_custom" : "Custom Alphabet",
   "trifid_usedgrid" : "Used Grid",
   "trifid_error_alphabet" : "Custom Alphabet has incorrect size",
+  "trifid_invalid_alphabet" : "Custom Alphabet is incomplete",
   "tomtom_selection_title" : "TomTom Code",
   "tomtom_selection_example" : "A → /, D → ////, E → /\\",
   "tomtom_selection_online_help_url" : "https://blog.gcwizard.net/manual/en/tomtom-code-cipher/01-what-is-the-tomtom-code/",

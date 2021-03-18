@@ -28,18 +28,17 @@ TrifidOutput encryptTrifid(String input, int blockSize, {PolybiosMode mode: Poly
       alphabet = alphabet_AZ.keys.toList().reversed.join() + '+';
       break;
     case PolybiosMode.CUSTOM:
-      if (alphabet.length != 27) return TrifidOutput('trifid_error_alphabet', '');
+      if (alphabet.length != 27)
+        return TrifidOutput('trifid_error_alphabet', '');
+      else if (incompleteCustomAlphabet(alphabet)) return TrifidOutput('trifid_invalid_alphabet', '');
   }
-
   EncodeMatrix = _buildEncodeMatrix(alphabet);
   DecodeMatrix = switchMapKeyValue(EncodeMatrix);
-
   for (int i = 0; i < input.length; i++) {
     line1.add(EncodeMatrix[input[i]][0]);
     line2.add(EncodeMatrix[input[i]][1]);
     line3.add(EncodeMatrix[input[i]][2]);
   }
-
   input = '';
   for (int i = 0; i < line1.length ~/ blockSize; i++) {
     input = input +
@@ -79,11 +78,12 @@ TrifidOutput decryptTrifid(String input, int blockSize, {PolybiosMode mode: Poly
       alphabet = alphabet_AZ.keys.toList().reversed.join() + '+';
       break;
     case PolybiosMode.CUSTOM:
-      if (alphabet.length != 27) return TrifidOutput('trifid_error_alphabet', '');
+      if (alphabet.length != 27)
+        return TrifidOutput('trifid_error_alphabet', '');
+      else if (incompleteCustomAlphabet(alphabet)) return TrifidOutput('trifid_invalid_alphabet', '');
   }
   EncodeMatrix = _buildEncodeMatrix(alphabet);
   DecodeMatrix = switchMapKeyValue(EncodeMatrix);
-
   for (int i = 0; i < input.length; i++) {
     tupel = tupel + EncodeMatrix[input[i]];
   }
@@ -187,4 +187,31 @@ Map<String, String> _buildEncodeMatrix(String alphabet) {
     result[alphabet[i]] = z.toString() + y.toString() + x.toString();
   }
   return result;
+}
+
+bool incompleteCustomAlphabet(String alphabet) {
+  String result = '';
+  for (int j = 0; j < 26; j++) {
+    if (alphabet[j] != '+')
+      result = result + alphabet[j];
+    else {
+      for (int i = j + 1; i < 26; i++) result = result + alphabet[i];
+      j = 26;
+    }
+  }
+  alphabet = result;
+  result = '';
+  for (int i = 65; i < 92; i++) {
+    for (int j = 0; j < alphabet.length; j++) {
+      if (alphabet[j] != String.fromCharCode(i))
+        result = result + alphabet[j];
+      else {
+        for (int k = j + 1; k < alphabet.length; k++) result = result + alphabet[k];
+        j = alphabet.length;
+      }
+    }
+    alphabet = result;
+    result = '';
+  }
+  return (alphabet.length != 0);
 }
