@@ -456,6 +456,7 @@ final SEARCHSTRING_COMMON_SYMBOL_ZODIAC_Z340 = 'zodiackiller z340 zodiak';
 final SEARCHSTRING_COMMON_SYMBOL_ZODIAC_Z408 = 'zodiackiller z408 zodiak';
 final SEARCHSTRING_COMMON_TAPCODE = '';
 final SEARCHSTRING_COMMON_TAPIR = 'tapir ddr nva mfs ';
+final SEARCHSTRING_COMMON_TRIFID = 'trifid felix delastelle polybios polybius transposition';
 final SEARCHSTRING_COMMON_TOMTOM = 'a-tom-tom atomtom';
 final SEARCHSTRING_COMMON_TRITHEMIUS = 'trithemius tabularecta';
 final SEARCHSTRING_COMMON_UNITCONVERTER =

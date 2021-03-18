@@ -112,6 +112,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
@@ -345,6 +346,7 @@ class _MainViewState extends State<MainView> {
         className(Tapir()),
         className(TimeCalculator()),
         className(TomTomSelection()),
+        className(Trifid()),
         className(Trithemius()),
         className(UnitConverter()),
         className(VanitySelection()),

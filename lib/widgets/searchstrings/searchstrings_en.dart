@@ -458,6 +458,7 @@ final SEARCHSTRING_EN_SYMBOL_ZODIAC_Z408 = 'letters';
 final SEARCHSTRING_EN_TAPCODE = 'tap tapcode';
 final SEARCHSTRING_EN_TAPIR = 'security army';
 final SEARCHSTRING_EN_TOMTOM = '';
+final SEARCHSTRING_EN_TRIFID = '';
 final SEARCHSTRING_EN_TRITHEMIUS = '';
 final SEARCHSTRING_EN_UNITCONVERTER =
     'units converter lengths speeds velocity velocities energies energy force power times areas volumes denisities density masses bathtubs pressures angles temperatures degrees soccerfields';

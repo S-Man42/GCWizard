@@ -465,6 +465,7 @@ final SEARCHSTRING_DE_SYMBOL_ZODIAC_Z408 = 'briefe';
 final SEARCHSTRING_DE_TAPCODE = 'klopfcode klopfen';
 final SEARCHSTRING_DE_TAPIR = 'stasi nationale volksarmee';
 final SEARCHSTRING_DE_TOMTOM = '';
+final SEARCHSTRING_DE_TRIFID = '';
 final SEARCHSTRING_DE_TRITHEMIUS = '';
 final SEARCHSTRING_DE_UNITCONVERTER =
     'einheiten groessen konvertieren umwandeln umrechnen konvertierer laengen geschwindigkeiten kraft leistung uhrzeiten flaechen volumen dichten gewichte massen badewannen druecke druck winkel temperaturen grad fussballfelder';

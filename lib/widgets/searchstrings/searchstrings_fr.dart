@@ -446,6 +446,7 @@ final SEARCHSTRING_FR_SYMBOL_ZODIAC_Z408 = 'lettres';
 final SEARCHSTRING_FR_TAPCODE = 'taper';
 final SEARCHSTRING_FR_TAPIR = 'securite gouvernement armee populaire';
 final SEARCHSTRING_FR_TOMTOM = '';
+final SEARCHSTRING_FR_TRIFID = '';
 final SEARCHSTRING_FR_TRITHEMIUS = '';
 final SEARCHSTRING_FR_UNITCONVERTER =
     'unites convertir tailles convertir convertisseurs longueurs vitesses puissance performances temps surfaces densites poids baignoires pressions  degres terrains football';
