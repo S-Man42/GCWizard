@@ -270,6 +270,7 @@ final SEARCHSTRING_FR_SEGMENTS_SIXTEEN = 'seize';
 final SEARCHSTRING_FR_SETTINGS = 'parametres ';
 final SEARCHSTRING_FR_SKYTALE = 'barre';
 final SEARCHSTRING_FR_SOLITAIRE = 'jeu cartes puissance';
+final SEARCHSTRING_FR_STRADDLINGCHECKERBOARD = '';
 final SEARCHSTRING_FR_SUBSTITUTION = 'remplacer echange';
 final SEARCHSTRING_FR_SUBSTITUTIONBREAKER = 'monoalphabetique remplacer';
 final SEARCHSTRING_FR_SYMBOL = 'symboles caracteres tableaux codes images polices';

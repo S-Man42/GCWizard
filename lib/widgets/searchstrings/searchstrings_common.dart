@@ -275,6 +275,7 @@ final SEARCHSTRING_COMMON_SEGMENTS_SIXTEEN = '16';
 final SEARCHSTRING_COMMON_SETTINGS = '';
 final SEARCHSTRING_COMMON_SKYTALE = 'transposition';
 final SEARCHSTRING_COMMON_SOLITAIRE = 'solitaire joker cryptonomicon pontifex bruceschneier nealstephenson';
+final SEARCHSTRING_COMMON_STRADDLINGCHECKERBOARD = 'argenti';
 final SEARCHSTRING_COMMON_SUBSTITUTION = 'substitution';
 final SEARCHSTRING_COMMON_SUBSTITUTIONBREAKER = 'substitution';
 final SEARCHSTRING_COMMON_SYMBOL = ' ';

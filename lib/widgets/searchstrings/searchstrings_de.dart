@@ -282,6 +282,7 @@ final SEARCHSTRING_DE_SEGMENTS_SIXTEEN = 'sechzehn';
 final SEARCHSTRING_DE_SETTINGS = 'einstellungen optionen';
 final SEARCHSTRING_DE_SKYTALE = 'skytale stock stab';
 final SEARCHSTRING_DE_SOLITAIRE = 'kartenspiel kartendeck stromchiffrierung solitaer';
+final SEARCHSTRING_DE_STRADDLINGCHECKERBOARD = 'schachbrett spreizung gespreiztes spionage';
 final SEARCHSTRING_DE_SUBSTITUTION = 'ersetzen austauschen';
 final SEARCHSTRING_DE_SUBSTITUTIONBREAKER = 'monoalphabetische ersetzen austauschen alphabet';
 final SEARCHSTRING_DE_SYMBOL = 'symbole zeichen tabellen codes bilder schriften';

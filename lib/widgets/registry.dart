@@ -176,6 +176,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculato
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerboard.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
@@ -1135,6 +1136,17 @@ class Registry {
             SEARCHSTRING_DE_SOLITAIRE,
             SEARCHSTRING_EN_SOLITAIRE,
             SEARCHSTRING_FR_SOLITAIRE
+          ]),
+      GCWTool(
+          tool: StraddlingCheckerboard(),
+          buttonList: [GCWToolActionButtonsEntry(false, 'straddlingcheckerboard_online_help_url', '', '', Icons.help)],
+          i18nPrefix: 'straddlingcheckerboard',
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: [
+            SEARCHSTRING_COMMON_STRADDLINGCHECKERBOARD,
+            SEARCHSTRING_DE_STRADDLINGCHECKERBOARD,
+            SEARCHSTRING_EN_STRADDLINGCHECKERBOARD,
+            SEARCHSTRING_FR_STRADDLINGCHECKERBOARD
           ]),
       GCWTool(
           tool: Substitution(),

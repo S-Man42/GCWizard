@@ -109,6 +109,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot5.dart'
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_general.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerboard.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
@@ -334,6 +335,7 @@ class _MainViewState extends State<MainView> {
         className(Skytale()),
         className(Solitaire()),
         className(SpoonLanguage()),
+        className(StraddlingCheckerboard()),
         className(Substitution()),
         className(SubstitutionBreaker()),
         className(SudokuSolver()),

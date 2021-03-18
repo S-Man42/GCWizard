@@ -277,6 +277,7 @@ final SEARCHSTRING_EN_SEGMENTS_SIXTEEN = 'sixteen';
 final SEARCHSTRING_EN_SETTINGS = 'settings  preferences options';
 final SEARCHSTRING_EN_SKYTALE = 'scytale stick';
 final SEARCHSTRING_EN_SOLITAIRE = 'carddeck cardgame streamcipher';
+final SEARCHSTRING_EN_STRADDLINGCHECKERBOARD = 'straddling checkerboard spy';
 final SEARCHSTRING_EN_SUBSTITUTION = 'replacements exchange';
 final SEARCHSTRING_EN_SUBSTITUTIONBREAKER = 'monoalphabetic replacements';
 final SEARCHSTRING_EN_SYMBOL = 'images pictures fonts symbols signs tables';
