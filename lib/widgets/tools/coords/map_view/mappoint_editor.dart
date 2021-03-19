@@ -69,6 +69,7 @@ class MapPointEditorState extends State<MapPointEditor> {
         title: i18n(context, 'coords_openmap_pointeditor_point_coordinate'),
         coordinates: widget.mapPoint.point,
         coordsFormat: widget.mapPoint.coordinateFormat,
+        restoreCoordinates: true,
         onChanged: (ret) {
           setState(() {
             widget.mapPoint.coordinateFormat = ret['coordsFormat'];
