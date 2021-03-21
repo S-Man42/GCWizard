@@ -14,7 +14,7 @@ import 'package:gc_wizard/logic/common/units/unit.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
-import 'package:gc_wizard/logic/tools/coords/import/import.dart';
+import 'package:gc_wizard/logic/tools/coords/import/gpx_kml_import.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';

@@ -6,7 +6,6 @@ import 'package:path/path.dart' as path;
 import 'package:archive/archive_io.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/intersect_lines.dart';
