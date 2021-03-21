@@ -2755,7 +2755,7 @@
   "tapir_description": "Code de l'ancienne armée de l'Allemagne de l'Est (NVA) et des services de renseignement (StaSi)",
   "tapir_example": "ABCDEFG → 05052 55565 78383",
   "tapir_onetimepad": "Clé OTP",
-  "trifid_title" : "Chiffrement Trifid",
+  "trifid_title" : "Trifid",
   "trifid_description" : "Cryptage basé sur trois carrés 3x3",
   "trifid_example" : "HALLO → BPBIO",
   "trifid_block_size" : "Taille des blocs",
