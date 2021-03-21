@@ -25,7 +25,7 @@ class MayaNumbersState extends State<MayaNumbers> {
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
-  var _currentCalculationMode = GCWSwitchPosition.right;
+  var _currentCalculationMode = GCWSwitchPosition.left;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +37,8 @@ class MayaNumbersState extends State<MayaNumbers> {
     return Column(children: <Widget>[
       GCWTwoOptionsSwitch(
         value: _currentCalculationMode,
-        leftValue: i18n(context, 'mayanumbers_mode_calendar'),
-        rightValue: i18n(context, 'mayanumbers_mode_calculate'),
+        leftValue: i18n(context, 'mayanumbers_mode_calculate'),
+        rightValue: i18n(context, 'mayanumbers_mode_calendar'),
         onChanged: (value) {
           setState(() {
             _currentCalculationMode = value;

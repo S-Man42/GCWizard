@@ -1,5 +1,4 @@
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 
 final Map<int, List<String>> _numbersToSegments = {
   0: [],
@@ -23,6 +22,14 @@ final Map<int, List<String>> _numbersToSegments = {
   18: ['a', 'b', 'c', 'd', 'e', 'f'],
   19: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
 };
+
+const _alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+List<int> mayaCalendarSystem = [1, 20, 360, 7200, 144000, 2880000, 57600000, 1152000000, 23040000000, 460800000000, 9216000000000, 184320000000000,3686400000000000];
+
+Map <String, int> mayaSystemPosition = {'0' : 0, '1' : 1, '2' : 2, '3' : 3, '4' : 4, '5' : 5, '6' : 6, '7' : 7, '9' : 9,
+  'A' : 10, 'B' : 11, 'C' : 12, 'D' : 13, 'E' : 14, 'F' : 15, 'G' : 16, 'H' : 17, 'I' : 18, 'J' : 19};
+
 
 List<List<String>> encodeMayaNumbers(int input, bool calcModus) {
   if (input == null) return [];
@@ -79,10 +86,10 @@ Map<String, dynamic> decodeMayaNumbers(List<String> inputs, bool calcModus) {
     total = '0';
     bool invalid = false;
     for (int i = 0; i < numbers.length; i++) {
-      if ((i == numbers.length - 2) && (mayaSystem[numbers.length - i - 1] == 20) && (numbers[i] > 17))
+      if ((i == numbers.length - 2) && (mayaCalendarSystem[numbers.length - i - 1] == 20) && (numbers[i] > 17))
         invalid = true;
       else
-        total = (int.parse(total) + numbers[i] * mayaSystem[numbers.length - i - 1])
+        total = (int.parse(total) + numbers[i] * mayaCalendarSystem[numbers.length - i - 1])
             .toString();
     }
     if (invalid)
@@ -90,4 +97,27 @@ Map<String, dynamic> decodeMayaNumbers(List<String> inputs, bool calcModus) {
   }
 
   return {'displays': displays, 'numbers': numbers, 'vigesimal': BigInt.tryParse(total)};
+}
+
+String convertDecToMayaCalendar(String input) {
+  if (input == null || input == '')
+    return '';
+
+  BigInt numberDec = BigInt.parse(input);
+  if (numberDec == BigInt.from(0))
+    return '0';
+
+  String result = '';
+  int start = 0;
+  while (numberDec < BigInt.from(mayaCalendarSystem[mayaCalendarSystem.length - 1 - start]))
+    start++;
+  for (int position = mayaCalendarSystem.length - start; position > 0; position--) {
+    int value = 0;
+    while (numberDec >= BigInt.from(mayaCalendarSystem[position - 1])) {
+      value++;
+      numberDec = numberDec - BigInt.from(mayaCalendarSystem[position - 1]);
+    }
+    result = result + _alphabet[value];
+  }
+  return result;
 }
