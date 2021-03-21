@@ -40,6 +40,7 @@ ThemeData buildTheme() {
   final ThemeColors colors = themeColors();
   final ThemeData base = colors.base();
   return ThemeData(
+      brightness: base.brightness,
       scaffoldBackgroundColor: colors.primaryBackground(),
       primaryColor: colors.primaryBackground(),
       accentColor: colors.accent(),
