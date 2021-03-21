@@ -317,7 +317,7 @@
   "book_cipher_input_format": "Format des positions",
   "book_cipher_random_output_hint": "Les lettres sont choisies au hasard",
   "brainfk_title": "Brainf**k",
-  "brainfk_description": "Langage de programmation ésotérique avec 8 caractères",
+  "brainfk_description": "Langage de programmation ésotérique à 8 caractères, avec des dérivés comme Ook, PikaLang et bien d'autres encore",
   "brainfk_example": ">++++++++[<++++++++>-]<++.",
   "brainfk_interpret": "Interpréteur",
   "brainfk_generate": "Générateur",

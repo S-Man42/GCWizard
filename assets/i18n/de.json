@@ -362,7 +362,7 @@
   "book_cipher_input_format": "Positionsformat",
   "book_cipher_random_output_hint" : "Buchstaben werden zufällig ausgewählt",
   "brainfk_title" : "Brainf**k",
-  "brainfk_description" : "Esoterische Programmiersprache aus 8 Zeichen",
+  "brainfk_description" : "Esoterische Programmiersprache aus 8 Zeichen inkl. Derivate wie Ook, PikaLang u.v.m",
   "brainfk_example" : ">++++++++[<++++++++>-]<++.",
   "brainfk_online_help_url" : "https://blog.gcwizard.net/manual/de/brainfk-und-ook/01-was-ist-die-programmiersprache-brainfk/",
   "brainfk_interpret" : "Interpreter",
