@@ -2,7 +2,7 @@
 
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum BrainfkTrivial {ALPHK, BINARYFK, BLUB, BTJZXGQUARTFRQIFJLV, COLONOSCOPY, COW, DETAILEDFK, FLUFFLEPUFF, FUCKBEES, GERMAN, KENNYSPEAK, KONFK, MORSEFK, NAK, OMAM, OOK, PENISSCRIP, PIKALANG, REVERSEFK, REVOLUTION9, ROADRUNNER, SCREAMCODE, TERNARY, TRIPLET, UWU, ZZZ, CUSTOM}
+enum BrainfkTrivial {ALPHK, BINARYFK, BLUB, BTJZXGQUARTFRQIFJLV, COLONOSCOPY, COW, DETAILEDFK, FLUFFLEPUFF, FUCKBEES, GERMAN, KENNYSPEAK, KONFK, MORSEFK, NAK, OMAM, OOK, PSSCRIPT, PIKALANG, REVERSEFK, REVOLUTION9, ROADRUNNER, SCREAMCODE, TERNARY, TRIPLET, UWU, ZZZ, CUSTOM}
 
 Map brainfkTrivialSubstitutions = {
 //  '' : {'>' : '', '<' : '', '+' : '', '-' : '', '.' : '', ',' : '', '[' : '', ']' : ''},
@@ -82,7 +82,7 @@ Map<BrainfkTrivial, String> BRAINFK_TRIVIAL_LIST = {
   BrainfkTrivial.NAK : 'Nak',
   BrainfkTrivial.OMAM : 'Omam',
   BrainfkTrivial.OOK : 'Ook',
-  BrainfkTrivial.PENISSCRIP : 'PenisScript',
+  BrainfkTrivial.PSSCRIPT : 'P***sScript',
   BrainfkTrivial.PIKALANG : 'PikaLang',
   BrainfkTrivial.REVERSEFK : 'ReverseF**k',
   BrainfkTrivial.REVOLUTION9 : 'Revolution 9',
