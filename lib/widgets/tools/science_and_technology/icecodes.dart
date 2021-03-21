@@ -14,7 +14,6 @@ class IceCodes extends StatefulWidget {
 }
 
 class IceCodesState extends State<IceCodes> {
-  IceCodeLanguage _currentIceCodeLanguage = IceCodeLanguage.EN;
   IceCodeSystem _currentIceCodeSystem = IceCodeSystem.BALTIC;
   IceCodeSubSystem _currentIceCodeSubSystemBaltic = IceCodeSubSystem.A;
   IceCodeSubSystem _currentIceCodeSubSystemEU = IceCodeSubSystem.CONDITION;
@@ -112,33 +111,19 @@ class IceCodesState extends State<IceCodes> {
               );
             }).toList(),
           ),
-        GCWDropDownButton(
-          value: _currentIceCodeLanguage,
-          onChanged: (value) {
-            setState(() {
-              _currentIceCodeLanguage = value;
-            });
-          },
-          items: ICECODE_LANGUAGES.entries.map((language) {
-            return GCWDropDownMenuItem(
-              value: language.key,
-              child: i18n(context, language.value),
-            );
-          }).toList(),
-        ),
         _buildOutput()
       ],
     );
   }
 
   _buildOutput() {
-    var iceCode = ICECODES[_currentIceCodeLanguage][_currentIceCodeSystem];
+    var iceCode = ICECODES[_currentIceCodeSystem];
     return GCWDefaultOutput(
         child: Column(
       children: columnedMultiLineOutput(
           context,
           iceCode[_currentIceCodeSubSystem].entries.map((entry) {
-            return [entry.key, entry.value];
+            return [entry.key, i18n(context, entry.value)];
           }).toList(),
           flexValues: [1, 5]),
     ));
