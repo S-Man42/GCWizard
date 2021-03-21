@@ -1,5 +1,4 @@
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 
 final Map<int, List<String>> _numbersToSegments = {
   0 : [],
@@ -68,9 +67,9 @@ List<List<String>> encodeBabylonNumbers(int input) {
   if (input == null)
     return [];
 
-  var vigesimal = convertBase(input.toString(), 10, 20);
-  return vigesimal.split('').map((digit) {
-    return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10))];
+  var sexagesimal = convertBase(input.toString(), 10, 60);
+  return sexagesimal.split('').map((digit) {
+    return _numbersToSegments[int.tryParse(convertBase(digit, 60, 10))];
   }).toList();
 }
 

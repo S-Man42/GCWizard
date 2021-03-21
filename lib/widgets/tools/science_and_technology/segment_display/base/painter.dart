@@ -10,8 +10,17 @@ defaultSegmentPaint() {
   return paint;
 }
 
+sketchSegmentPaint() {
+  var paint = Paint();
+  paint.strokeWidth = 5;
+  paint.style = PaintingStyle.stroke;
+  return paint;
+}
+
 const SEGMENTS_RELATIVE_DISPLAY_WIDTH = 76.5;
 const SEGMENTS_RELATIVE_DISPLAY_HEIGHT = 99;
+const BABYLON_RELATIVE_DISPLAY_WIDTH = 200;
+const BABYLON_RELATIVE_DISPLAY_HEIGHT = 100;
 
 const SEGMENTS_COLOR_ON = Colors.red;
 const SEGMENTS_COLOR_OFF = Color.fromARGB(255, 80, 80, 80);
@@ -41,6 +50,9 @@ class SegmentDisplayPainter extends CustomPainter {
       case SegmentDisplayType.SIXTEEN:
         _paintSixteenSegmentDisplay(size);
         break;
+      case SegmentDisplayType.BABYLON:
+      case SegmentDisplayType.MAYA:
+      case SegmentDisplayType.CISTERCIAN:
       case SegmentDisplayType.CUSTOM:
         customPaint(_touchCanvas, size, segments, setSegmentState);
         break;

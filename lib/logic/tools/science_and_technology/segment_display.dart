@@ -1,7 +1,7 @@
 import 'dart:core';
 import 'package:gc_wizard/utils/constants.dart';
 
-enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CUSTOM }
+enum SegmentDisplayType { SEVEN, FOURTEEN, SIXTEEN, CISTERCIAN, BABYLON, MAYA, CUSTOM }
 
 final _baseSegments7Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'dp'];
 final _baseSegments14Segment = ['a', 'b', 'c', 'd', 'e', 'f', 'g1', 'g2', 'h', 'i', 'j', 'k', 'l', 'm', 'dp'];
