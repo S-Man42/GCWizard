@@ -2291,7 +2291,7 @@
   "spoonlanguage_description" : "Spielsprache, Geheimsprache",
   "spoonlanguage_example" : "Löffel → lölewöffelewel",
   "spoonlanguage_online_help_url" : "https://blog.gcwizard.net/manual/de/loffelsprache/02-wie-wird-die-loffelsprache-ent-bzw-verschlusselt/",
-  "straddlingcheckerboard_title" : "Straddling Checkerboard",
+  "straddlingcheckerboard_title" : "Spreizung - Straddling Checkerboard",
   "straddlingcheckerboard_description" : "Verschlüsselung basierend auf einem 3x10 Quadrat mit zusätzlicher Transposition",
   "straddlingcheckerboard_example" : "HALLO → 137161619",
   "straddlingcheckerboard_online_help_url" : "https://blog.gcwizard.net/manual/de/straddling_checkerboard/02-wie-wird-mit-dem-straddling-checkerboard-ent-bzw-verschlusselt/",
