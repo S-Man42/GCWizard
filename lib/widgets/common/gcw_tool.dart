@@ -111,13 +111,13 @@ class _GCWToolState extends State<GCWTool> {
           Localizations.localeOf(context).toString() +
           '/search/' +
           widget.toolName;
-    else
+    else // fallback to en if unsupported locale
       url = 'https://blog.gcwizard.net/manual/' +
           'en' +
           '/search/' +
           widget.toolName;
     buttonList.add(IconButton(
-      icon: Icon(Icons.auto_fix_high), //Icons.help
+      icon: Icon(Icons.auto_fix_high),
       onPressed: () {
         launch(url);
       },
