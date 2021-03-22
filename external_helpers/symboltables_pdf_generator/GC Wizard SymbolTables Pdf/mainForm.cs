@@ -13,7 +13,7 @@ namespace GC_Wizard_SymbolTables_Pdf
 
         private int ImageSize { get; set; }
 
-        private SymbolTablesPdf.LanguageEnum Language { get; set; }
+        private String Language { get; set; }
 
         private double FontSizeName { get; set; }
 
@@ -25,7 +25,19 @@ namespace GC_Wizard_SymbolTables_Pdf
 
         private bool ViewPdf { get; set; }
 
-        public String CurrentProjectPath { get; set; }
+        private String _CurrentProjectPath;
+        public String CurrentProjectPath
+        {
+            get
+            {
+                return _CurrentProjectPath;
+            }
+            set
+            {
+                _CurrentProjectPath = value;
+                updateLanguageComboBox();
+            }
+        }
 
         private bool OnProcess { get; set; }
 
@@ -176,14 +188,13 @@ namespace GC_Wizard_SymbolTables_Pdf
 
         private void init()
         {
-            foreach (var item in Enum.GetValues(typeof(SymbolTablesPdf.LanguageEnum)))
-                languageComboBox.Items.Add(item);
+            updateLanguageComboBox();
 
             BorderWidth = Properties.Settings.Default.BorderWidth;
             ImageSize = Properties.Settings.Default.ImageSize;
 
-            if (Enum.IsDefined(typeof(SymbolTablesPdf.LanguageEnum), Properties.Settings.Default.Language))
-                Language = (SymbolTablesPdf.LanguageEnum)Enum.Parse(typeof(SymbolTablesPdf.LanguageEnum), Properties.Settings.Default.Language);
+            if (languageComboBox.Items.Contains(Properties.Settings.Default.Language))
+                Language = Properties.Settings.Default.Language;
 
             FontSizeName = Properties.Settings.Default.FontSizeName;
             FontSizeOverlay = Properties.Settings.Default.FontSizeOverlay;
@@ -194,7 +205,7 @@ namespace GC_Wizard_SymbolTables_Pdf
 
 
             //View
-            languageComboBox.Text = Language.ToString();
+            languageComboBox.Text = Language;
             imageSizeUpDown.Value = ImageSize;
             newPageCheckBox.Checked = NewPage;
             landscapeCheckBox.Checked = Landscape;
@@ -202,11 +213,35 @@ namespace GC_Wizard_SymbolTables_Pdf
             projectFolderTextBox.Text = CurrentProjectPath;
         }
 
+        void updateLanguageComboBox()
+        {
+            var _path = "";
+
+            if (!String.IsNullOrEmpty(CurrentProjectPath))
+                _path = SymbolTablesPdf.languageFileDirectory(CurrentProjectPath);
+
+            if (!String.IsNullOrEmpty(CurrentProjectPath) && System.IO.Directory.Exists(_path))
+                foreach (var file in System.IO.Directory.GetFiles(_path, "*.json"))
+                {
+                    var language = System.IO.Path.GetFileNameWithoutExtension(file);
+                    if (!languageComboBox.Items.Contains(language))
+                        languageComboBox.Items.Add(language);
+                }
+            else
+            {
+                foreach (var item in Enum.GetValues(typeof(SymbolTablesPdf.LanguageEnum)))
+                {
+                    if (!languageComboBox.Items.Contains(item.ToString()))
+                        languageComboBox.Items.Add(item.ToString());
+                }
+            }
+        }
+
         private void saveSettings()
         {
             Properties.Settings.Default.BorderWidth = BorderWidth;
             Properties.Settings.Default.ImageSize = ImageSize;
-            Properties.Settings.Default.Language = Language.ToString();
+            Properties.Settings.Default.Language = Language;
             Properties.Settings.Default.FontSizeName = FontSizeName;
             Properties.Settings.Default.FontSizeOverlay = FontSizeOverlay;
             Properties.Settings.Default.NewPage = NewPage;
@@ -219,7 +254,7 @@ namespace GC_Wizard_SymbolTables_Pdf
 
         private void languageComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Language = (SymbolTablesPdf.LanguageEnum)languageComboBox.SelectedItem;
+            Language = languageComboBox.SelectedItem == null ? null : languageComboBox.SelectedItem.ToString();
         }
 
         private void imageSizeUpDown_ValueChanged(object sender, EventArgs e)

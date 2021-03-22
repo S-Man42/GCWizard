@@ -57,7 +57,7 @@ namespace GC_Wizard_SymbolTables_Pdf
         public int RowDistance { get; set; }
         public int ColumnDistance { get; set; }
 
-        public LanguageEnum Language { get; set; }
+        public String Language { get; set; }
 
         public double FontSizeName { get; set; }
 
@@ -141,7 +141,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             BorderWidthRight = 20;
             BorderWidthBottom = 20;
             ImageSize = 50;
-            Language = LanguageEnum.de;
+            Language = "de";
             FontSizeName = 20;
             FontSizeOverlay = 8;
             Orientation = PdfSharp.PageOrientation.Portrait;
@@ -200,7 +200,21 @@ namespace GC_Wizard_SymbolTables_Pdf
 
             offset = createPage(document, ref page, ref gfx);
             // Create the root bookmark. You can set the style and the color.
-            Outline = document.Outlines.Add((Language == LanguageEnum.de) ? "Inhaltsverzeichnis" : "Table of Contents", page, true, PdfOutlineStyle.Bold, XColors.Black);
+            var contentTableName = "";
+            switch (Language)
+            {
+                case "de":
+                    contentTableName = "Inhaltsverzeichnis";
+                    break;
+                case "fr":
+                    contentTableName = "Table des matières";
+                    break;
+                default:
+                    contentTableName = "Table of Contents";
+                    break;
+            }
+
+            Outline = document.Outlines.Add(contentTableName, page, true, PdfOutlineStyle.Bold, XColors.Black);
 
             var directorys = createDirectoryList(path, languagefile);
             var progress_offset = directorys.Any() ? (100.0 / directorys.Count()) : 100;
@@ -238,7 +252,22 @@ namespace GC_Wizard_SymbolTables_Pdf
             var description = getEntryValue(languagefile, "symboltables_" + folder + "_description");
             var license = "";
             if (licenseEntries.ContainsKey(folder))
-                license = ((Language == LanguageEnum.de) ? "(Quelle: " : "(Source: ") + licenseEntries[folder] + ")";
+            {
+                var sourceLabel = "";
+                switch (Language)
+                {
+                    case "de":
+                        sourceLabel = "Quelle";
+                        break;
+                    case "fr":
+                        sourceLabel = "La source";
+                        break;
+                    default:
+                        sourceLabel = "Source";
+                        break;
+                }
+                license = "(" + sourceLabel + ": " + licenseEntries[folder] + ")";
+            }
 
             if (name == null)
                 name = folder;
@@ -881,7 +910,7 @@ namespace GC_Wizard_SymbolTables_Pdf
             return true;
         }
 
-        private static String languageFileDirectory(String path)
+        public static String languageFileDirectory(String path)
         {
             return Path.Combine(path, @"assets\i18n");
         }
