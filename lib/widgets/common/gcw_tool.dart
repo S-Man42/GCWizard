@@ -102,31 +102,31 @@ class _GCWToolState extends State<GCWTool> {
 
   List<Widget> _buildButtons() {
     List<Widget> buttonList = new List<Widget>();
+    String url = '';
 
     // add button with url for searching knowledge base
     final Locale appLocale = Localizations.localeOf(context);
-    String url_search = '';
     if (isLocaleSupported(appLocale))
-      url_search = 'https://blog.gcwizard.net/manual/' +
+       url = 'https://blog.gcwizard.net/manual/' +
           Localizations.localeOf(context).toString() +
           '/search/' +
           widget.toolName;
     else
-      url_search = 'https://blog.gcwizard.net/manual/' +
+      url = 'https://blog.gcwizard.net/manual/' +
           'en' +
           '/search/' +
           widget.toolName;
     buttonList.add(IconButton(
       icon: Icon(Icons.auto_fix_high), //Icons.help
       onPressed: () {
-        launch(url_search);
+        launch(url);
       },
     ));
 
     // add further buttons
-    String url = '';
     if (widget.buttonList != null) {
       widget.buttonList.forEach((button) {
+        String url = '';
         if (button.url == '') // 404-Page asking for help
           url = i18n(context,
               'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
