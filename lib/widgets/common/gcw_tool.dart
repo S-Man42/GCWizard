@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:prefs/prefs.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:prefs/prefs.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 enum ToolCategory {
   CRYPTOGRAPHY,
@@ -26,7 +27,8 @@ class GCWToolActionButtonsEntry {
   final String text; // - message-text to be shown in the dialog
   final IconData icon; // - icon tto be shown in the appbar
 
-  GCWToolActionButtonsEntry(this.showDialog, this.url, this.title, this.text, this.icon);
+  GCWToolActionButtonsEntry(
+      this.showDialog, this.url, this.title, this.text, this.icon);
 }
 
 class GCWTool extends StatefulWidget {
@@ -101,18 +103,33 @@ class _GCWToolState extends State<GCWTool> {
   List<Widget> _buildButtons() {
     List<Widget> buttonList = new List<Widget>();
 
-//    if (widget.titleTrailing.toString() != 'null')
-//      return [widget.titleTrailing];
+    // add button with url for searching knowledge base
+    final Locale appLocale = Localizations.localeOf(context);
+    String url_search = '';
+    if (isLocaleSupported(appLocale))
+      url_search = 'https://blog.gcwizard.net/manual/' +
+          Localizations.localeOf(context).toString() +
+          '/search/' +
+          widget.toolName;
+    else
+      url_search = 'https://blog.gcwizard.net/manual/' +
+          'en' +
+          '/search/' +
+          widget.toolName;
+    buttonList.add(IconButton(
+      icon: Icon(Icons.auto_fix_high), //Icons.help
+      onPressed: () {
+        launch(url_search);
+      },
+    ));
 
-//    if (widget.buttonList == null)
-//      return [_buildHelpButton()];
-
+    // add further buttons
     String url = '';
-
     if (widget.buttonList != null) {
       widget.buttonList.forEach((button) {
         if (button.url == '') // 404-Page asking for help
-          url = i18n(context, 'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
+          url = i18n(context,
+              'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
         else
           url = button.url;
         if (button.url != null && button.url.length != 0)
@@ -143,6 +160,7 @@ class _GCWToolState extends State<GCWTool> {
 
     if (widget.autoScroll == false) return widget.tool;
 
-    return SingleChildScrollView(child: Padding(child: widget.tool, padding: EdgeInsets.all(10)));
+    return SingleChildScrollView(
+        child: Padding(child: widget.tool, padding: EdgeInsets.all(10)));
   }
 }
