@@ -1691,6 +1691,7 @@
   "multidecoder_tool_base_option_basefunction" : "Typ",
   "multidecoder_tool_bcd_title" : "BCD",
   "multidecoder_tool_bcd_option_bcdfunction" : "Typ",
+  "multidecoder_tool_beghilos_title" : "Beghilos",
   "multidecoder_tool_coordinateformats_title" : "Koordinatenformate",
   "multidecoder_tool_coordinateformats_option_format" : "Format",
   "multidecoder_tool_enclosedareas_title" : "Eingeschlossene Flächen",

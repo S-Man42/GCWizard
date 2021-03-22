@@ -22,5 +22,6 @@ String _translateBeghilos(String input, Map<String, String> alphabetMap) {
       })
       .join();
 
-  return output = output.split('').reversed.join('');
+  output = output.trim();
+  return output.split('').reversed.join('');
 }
