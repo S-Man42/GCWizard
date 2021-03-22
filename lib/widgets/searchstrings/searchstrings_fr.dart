@@ -46,6 +46,7 @@ final SEARCHSTRING_FR_BCDPETHERICK = '';
 final SEARCHSTRING_FR_BCDSTIBITZ = '';
 final SEARCHSTRING_FR_BCDTOMPKINS = '';
 final SEARCHSTRING_FR_BEAUFORT = 'rafale vent tempete vitesse force';
+final SEARCHSTRING_FR_BEGHILOS = 'calculatrice en miroir retourné';
 final SEARCHSTRING_FR_BIFID = '';
 final SEARCHSTRING_FR_BINARY = 'decimale binaire numeros';
 final SEARCHSTRING_FR_BOOKCIPHER = 'lettre ligne paragraphe livre';

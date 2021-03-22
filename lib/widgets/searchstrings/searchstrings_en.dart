@@ -47,6 +47,7 @@ final SEARCHSTRING_EN_BCDPETHERICK = '';
 final SEARCHSTRING_EN_BCDSTIBITZ = '';
 final SEARCHSTRING_EN_BCDTOMPKINS = '';
 final SEARCHSTRING_EN_BEAUFORT = 'scala windforce beaufortscale windspeed knots windspeed storm hurricanes';
+final SEARCHSTRING_EN_BEGHILOS = 'calculator mirrored turned';
 final SEARCHSTRING_EN_BIFID = '';
 final SEARCHSTRING_EN_BINARY = 'binary numbers decimal';
 final SEARCHSTRING_EN_BOOKCIPHER = 'bookcipher word row line section letter';

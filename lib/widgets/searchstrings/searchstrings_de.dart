@@ -50,6 +50,7 @@ final SEARCHSTRING_DE_BCDPETHERICK = '';
 final SEARCHSTRING_DE_BCDSTIBITZ = '';
 final SEARCHSTRING_DE_BCDTOMPKINS = '';
 final SEARCHSTRING_DE_BEAUFORT = 'skala windstaerke knoten windgeschwindigkeit orkane windboeen brisen';
+final SEARCHSTRING_DE_BEGHILOS = 'taschenrechner spiegelverkehrt umgedreht';
 final SEARCHSTRING_DE_BIFID = '';
 final SEARCHSTRING_DE_BINARY = 'dezimal binaer dual zahlen';
 final SEARCHSTRING_DE_BOOKCIPHER = 'buchstabe buechercode buchchiffre buecherchiffre buchcode zeile absatz position';
