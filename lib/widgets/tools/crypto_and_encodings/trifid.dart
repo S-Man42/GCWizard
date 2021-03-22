@@ -11,7 +11,6 @@ import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 
 class Trifid extends StatefulWidget {
@@ -79,7 +78,6 @@ class TrifidState extends State<Trifid> {
           title: i18n(context, 'trifid_block_size'),
           value: _currentBlockSize,
           min: 2,
-          max: 7,
           onChanged: (value) {
             setState(() {
               _currentBlockSize = value;
