@@ -7,6 +7,10 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_fr.dart';
 import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
@@ -29,28 +33,28 @@ import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/language_games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_bell_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_catalan_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_factorial_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fermat_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fibonacci_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthal_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthaloblong_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthallucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthaloblong_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_lucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenne_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersennefermat_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pell_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_bell_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pelllucas_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_recaman_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenneprimes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenneexponents_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_sublimenumbers_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_weirdnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersennefermat_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenneprimes_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pell_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pelllucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_perfectnumbers_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_superperfectnumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_primarypseudoperfectnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_recaman_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_sublimenumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_superperfectnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_weirdnumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/periodic_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
@@ -78,13 +82,13 @@ import 'package:gc_wizard/widgets/tools/coords/format_converter.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_bearing_and_circle.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_bearings.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_four_points.dart';
-import 'package:gc_wizard/widgets/tools/coords/segment_line.dart';
-import 'package:gc_wizard/widgets/tools/coords/segment_bearings.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_two_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersection.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/map_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
+import 'package:gc_wizard/widgets/tools/coords/segment_bearings.dart';
+import 'package:gc_wizard/widgets/tools/coords/segment_line.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
@@ -122,8 +126,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
@@ -151,6 +155,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/pig_
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
@@ -170,7 +175,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_g
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_checker.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_e_checker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
@@ -221,28 +225,29 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_number
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/bell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/catalan.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/factorial.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fermat.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fibonacci.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_oblong.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_lucas.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_oblong.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lucas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_exponents.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_primes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersennefermat.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/bell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell_lucas.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/recaman.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_primes.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_exponents.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/perfect_numbers.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/superperfect_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/primarypseudoperfect_numbers.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/weird_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/recaman.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/sublime_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/superperfect_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/weird_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
@@ -260,10 +265,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.da
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multiplenumbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singlenumbers.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
-import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
-import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
-import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
-import 'package:gc_wizard/widgets/searchstrings/searchstrings_fr.dart';
 
 class Registry {
   static List<GCWTool> toolList;
@@ -5758,6 +5759,16 @@ class Registry {
             SEARCHSTRING_DE_PERIODICTABLEDATAVIEW,
             SEARCHSTRING_EN_PERIODICTABLEDATAVIEW,
             SEARCHSTRING_FR_PERIODICTABLEDATAVIEW
+          ]),
+      GCWTool(
+          tool: AtomicNumbersToText(),
+          buttonList: [GCWToolActionButtonsEntry(false, 'periodictable_atomicnumbers_online_help_url', '', '', Icons.help)],
+          i18nPrefix: 'periodictable_atomicnumbers',
+          searchStrings: [
+            SEARCHSTRING_COMMON_PERIODICTABLE_ATOMICNUMBERS,
+            SEARCHSTRING_DE_PERIODICTABLE_ATOMICNUMBERS,
+            SEARCHSTRING_EN_PERIODICTABLE_ATOMICNUMBERS,
+            SEARCHSTRING_FR_PERIODICTABLE_ATOMICNUMBERS
           ]),
 
       //PrimesSelection **********************************************************************************************

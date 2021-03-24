@@ -237,6 +237,7 @@ final SEARCHSTRING_DE_NUMERALWORDSTEXTSEARCH = 'textanalyse textsuche';
 final SEARCHSTRING_DE_ONETIMEPAD = 'einmalschluessel';
 final SEARCHSTRING_DE_OPTICAL_FIBER_SWISSCOM = '';
 final SEARCHSTRING_DE_PERIODICTABLE = 'chemie periodensystemderelemente elemente';
+final SEARCHSTRING_DE_PERIODICTABLE_ATOMICNUMBERS = 'ordnungszahlen';
 final SEARCHSTRING_DE_PERIODICTABLEDATAVIEW = 'tabelle';
 final SEARCHSTRING_DE_PHI = 'goldener schnitt golden';
 final SEARCHSTRING_DE_PHIDECIMALRANGE = 'bereiche';
