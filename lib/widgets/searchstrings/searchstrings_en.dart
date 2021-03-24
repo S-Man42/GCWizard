@@ -180,6 +180,7 @@ final SEARCHSTRING_EN_HASHES_SHA512_256 = '';
 final SEARCHSTRING_EN_HASHES_TIGER_192 = '';
 final SEARCHSTRING_EN_HASHES_WHIRLPOOL_512 = '';
 final SEARCHSTRING_EN_HEXADECIMAL = 'hexadecimal decimal';
+final SEARCHSTRING_EN_HEXSTRING2FILE = 'hexadecimal file';
 final SEARCHSTRING_EN_HOMOPHONE = 'monoalphabetical letterfrequency';
 final SEARCHSTRING_EN_IRRATIONALNUMBERS = 'irrational number  fraction decimal digit';
 final SEARCHSTRING_EN_ITERATEDCROSSSUMRANGE = 'range';

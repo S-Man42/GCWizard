@@ -1,9 +1,11 @@
+import 'dart:math';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:file/memory.dart';
 import 'package:intl/intl.dart';
+import 'package:collection/collection.dart';
 
-Map<List<int>, String> fileTypes = {
+Map<List<int>, String> _fileTypes = {
   [0x50, 0x4B, 0x03, 0x04] : ".zip",
   [0x52, 0x61, 0x72, 0x21] : ".rar",
   [0x1F, 0x8B, 0x08, 0x00] : ".tar",
@@ -24,16 +26,35 @@ Map<List<int>, String> fileTypes = {
   [0x4D, 0x5A, 0x90, 0x00] : ".exe",
 };
 
-File hexstring2file(String input) {
-  var blobBytes = _hexstring2bytes(input);
+enum MIMETYPE {IMAGE, ARCHIV, DATA, TEXT}
 
-  if (blobBytes != null) {
-    var extension = _getFilType(blobBytes);
-    var fileName = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '_' + 'hex2file' + extension;
+Uint8List hexstring2file(String input) {
+  return _hexstring2bytes(input);
+  // var blobBytes = _hexstring2bytes(input);
+  //
+  // if (blobBytes != null) {
+  //   var extension = _getFileType(blobBytes);
+  //   var fileName = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '_' + 'hex2file' + extension;
+  //
+  //   return MemoryFileSystem().file(fileName)..writeAsBytesSync(blobBytes);
+  // }
+  // return null;
+}
 
-    return MemoryFileSystem().file(fileName)..writeAsBytesSync(blobBytes);
-  }
-  return null;
+MIMETYPE getMimeType(String fileName) {
+  if (fileName.endsWith('.jpg') ||
+      fileName.endsWith('.gif') ||
+      fileName.endsWith('.png') ||
+      fileName.endsWith('.bmp'))
+    return MIMETYPE.IMAGE;
+  else if (fileName.endsWith('.zip') ||
+      fileName.endsWith('.rar') ||
+      fileName.endsWith('.tar'))
+    return MIMETYPE.ARCHIV;
+  else if (fileName.endsWith('.txt'))
+    return MIMETYPE.TEXT;
+  else
+    return MIMETYPE.DATA;
 }
 
 String file2hexstring(Uint8List input) {
@@ -48,11 +69,11 @@ String file2hexstring(Uint8List input) {
   return output;
 }
 
-String _getFilType(Uint8List blobBytes) {
-  fileTypes.forEach((key, type) {
-    if (blobBytes.sublist(0, key.length) == key)
-      return type;
-  });
+String getFileType(Uint8List blobBytes) {
+  for (var key in _fileTypes.keys) {
+    if (ListEquality().equals(blobBytes.sublist(0, key.length), key))
+      return _fileTypes[key];
+  }
   return ".txt";
 }
 
@@ -60,18 +81,18 @@ Uint8List _hexstring2bytes(String input) {
   if (input == null || input == "")
     return null;
 
-  Uint8List data = Uint8List(0);
+  var data = <int>[];
 
-  String hex = input.toUpperCase().replaceAll(RegExp("^[0-9A-F]"), "");
+  String hex = input.toUpperCase().replaceAll(RegExp("[^0-9A-F]"), "");
   if (hex == "")
     return null;
 
-  for (var i=0; i<hex.length; i+2) {
-    var valueString = hex.substring(i,i+2);
+  for (var i=0; i<hex.length; i=i+2) {
+    var valueString = hex.substring(i, min(i+2, hex.length-1));
     var value = int.parse(valueString, radix: 16);
 
     data.add(value);
   }
 
-  return data;
+  return Uint8List.fromList(data);
 }

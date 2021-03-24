@@ -217,6 +217,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
@@ -756,6 +757,16 @@ class Registry {
             SEARCHSTRING_COMMON_HEXADECIMAL,
             SEARCHSTRING_DE_HEXADECIMAL,
             SEARCHSTRING_EN_HEXADECIMAL,
+            SEARCHSTRING_FR_HEXADECIMAL
+          ]),
+      GCWTool(
+          tool: HexString2File(),
+          buttonList: [GCWToolActionButtonsEntry(false, 'hexstring2file_online_help_url', '', '', Icons.help)],
+          i18nPrefix: 'hexstring2file',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          searchStrings: [
+            SEARCHSTRING_DE_HEXSTRING2FILE,
+            SEARCHSTRING_EN_HEXSTRING2FILE,
             SEARCHSTRING_FR_HEXADECIMAL
           ]),
       GCWTool(
