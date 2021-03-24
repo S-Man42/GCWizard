@@ -106,6 +106,7 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
     mdtTools = multiDecoderTools.map((mdtTool) {
       return multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
+    mdtTools.remove(null);
   }
 
   _moveUp(int id) {

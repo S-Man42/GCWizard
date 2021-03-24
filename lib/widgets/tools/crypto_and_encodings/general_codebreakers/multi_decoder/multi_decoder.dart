@@ -48,6 +48,7 @@ class MultiDecoderState extends State<MultiDecoder> {
     mdtTools = multiDecoderTools.map((mdtTool) {
       return multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
+    mdtTools.remove(null);
   }
 
   @override
