@@ -19,6 +19,21 @@ enum ToolCategory {
   SYMBOL_TABLES
 }
 
+final SearchBlackList = {
+  'der',
+  'die',
+  'das',
+  'von',
+  'drei',
+  'zwei'
+  'the',
+  'two',
+  'three',
+  'deux',
+  'trois',
+  'de'
+};
+
 class GCWToolActionButtonsEntry {
   // to be used in registry to define a buttonlist which will be displayed in the app bar
   final bool showDialog; // - true, if the button should provide a dialog
@@ -38,6 +53,7 @@ class GCWTool extends StatefulWidget {
   final autoScroll;
   final iconPath;
   final List<String> searchStrings;
+  final bool helpButton;
   final List<GCWToolActionButtonsEntry> buttonList;
 
   var icon;
@@ -57,6 +73,7 @@ class GCWTool extends StatefulWidget {
       this.autoScroll: true,
       this.iconPath,
       this.searchStrings,
+      this.helpButton: true,
       this.buttonList})
       : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
@@ -104,10 +121,10 @@ class _GCWToolState extends State<GCWTool> {
     List<Widget> buttonList = new List<Widget>();
     String url = '';
 
-    // add button with url for searching knowledge base
+    // add button with url for searching knowledge base with toolName
     final Locale appLocale = Localizations.localeOf(context);
     if (isLocaleSupported(appLocale))
-       url = 'https://blog.gcwizard.net/manual/' +
+      url = 'https://blog.gcwizard.net/manual/' +
           Localizations.localeOf(context).toString() +
           '/search/' +
           widget.toolName;
@@ -116,6 +133,9 @@ class _GCWToolState extends State<GCWTool> {
           'en' +
           '/search/' +
           widget.toolName;
+    SearchBlackList.forEach((element) {
+      url.replaceAll(element + ' ', '');
+    });
     buttonList.add(IconButton(
       icon: Icon(Icons.auto_fix_high),
       onPressed: () {
@@ -123,7 +143,17 @@ class _GCWToolState extends State<GCWTool> {
       },
     ));
 
-    // add further buttons
+    // add helpButton as hard-coded in json
+    if (widget.helpButton) {
+      buttonList.add(IconButton(
+        icon: Icon(Icons.help),
+        onPressed: () {
+          launch(i18n(context, widget.i18nPrefix + '_online_help_url'));
+        },
+      ));
+    }
+
+    // add further buttons as defined in registry
     if (widget.buttonList != null) {
       widget.buttonList.forEach((button) {
         String url = '';
