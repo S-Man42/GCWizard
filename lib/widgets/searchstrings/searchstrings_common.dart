@@ -46,7 +46,6 @@ final SEARCHSTRING_COMMON_BCDPETHERICK = 'petherick';
 final SEARCHSTRING_COMMON_BCDSTIBITZ = 'stibitz';
 final SEARCHSTRING_COMMON_BCDTOMPKINS = 'tompkins';
 final SEARCHSTRING_COMMON_BEAUFORT = 'beaufort';
-final SEARCHSTRING_COMMON_BEGHILOS = 'beghilos';
 final SEARCHSTRING_COMMON_BIFID = 'bifid felix delastelle polybios polybius transposition';
 final SEARCHSTRING_COMMON_BINARY = '';
 final SEARCHSTRING_COMMON_BOOKCIPHER = '';
