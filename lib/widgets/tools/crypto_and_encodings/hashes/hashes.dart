@@ -124,6 +124,10 @@ class SHA3_512 extends _DefaultHash {
   SHA3_512() : super(hashFunction: sha3_512Digest);
 }
 
+class Keccak_128 extends _DefaultHash {
+  Keccak_128() : super(hashFunction: keccak_128Digest);
+}
+
 class Keccak_224 extends _DefaultHash {
   Keccak_224() : super(hashFunction: keccak_224Digest);
 }

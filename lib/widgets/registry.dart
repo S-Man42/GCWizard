@@ -323,14 +323,6 @@ class Registry {
           ]),
       GCWTool(
           tool: ApparentTemperatureSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'apparenttemperature_selection_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'apparenttemperature_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
           searchStrings: [
@@ -657,14 +649,6 @@ class Registry {
           ]),
       GCWTool(
           tool: EsotericProgrammingLanguageSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'esotericprogramminglanguages_selection_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'esotericprogramminglanguages_selection',
           category: ToolCategory.CRYPTOGRAPHY,
           searchStrings: [
@@ -1050,14 +1034,6 @@ class Registry {
           ]),
       GCWTool(
           tool: ScienceAndTechnologySelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'scienceandtechnology_selection_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'scienceandtechnology_selection',
           searchStrings: [
             SEARCHSTRING_COMMON_SCIENCEANDTECHNOLOGYSELECTION,
@@ -1081,10 +1057,6 @@ class Registry {
           ]),
       GCWTool(
           tool: SegmentDisplaySelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'segmentdisplay_selection_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'segmentdisplay_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
           searchStrings: [
@@ -1154,8 +1126,6 @@ class Registry {
       GCWTool(
         tool: SymbolTableSelection(),
         buttonList: [
-          GCWToolActionButtonsEntry(false,
-              'symboltables_selection_online_help_url', '', '', Icons.help),
           GCWToolActionButtonsEntry(
               true,
               'symboltables_selection_download_link',
@@ -1706,10 +1676,6 @@ class Registry {
       //CombinatoricsSelection ***************************************************************************************
       GCWTool(
           tool: Combination(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'combinatorics_combination_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'combinatorics_combination',
           searchStrings: [
             SEARCHSTRING_COMMON_COMBINATORICS,
@@ -1723,10 +1689,6 @@ class Registry {
           ]),
       GCWTool(
           tool: Permutation(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'combinatorics_permutation_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'combinatorics_permutation',
           searchStrings: [
             SEARCHSTRING_COMMON_COMBINATORICS,
@@ -1740,14 +1702,6 @@ class Registry {
           ]),
       GCWTool(
           tool: CombinationPermutation(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'combinatorics_combinationpermutation_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'combinatorics_combinationpermutation',
           searchStrings: [
             SEARCHSTRING_COMMON_COMBINATORICS,
@@ -1767,10 +1721,6 @@ class Registry {
       //CoordsSelection **********************************************************************************************
       GCWTool(
           tool: WaypointProjection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'coords_waypointprojection_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'coords_waypointprojection',
           iconPath: 'assets/coordinates/icon_waypoint_projection.png',
           category: ToolCategory.COORDINATES,
@@ -1836,10 +1786,6 @@ class Registry {
           ]),
       GCWTool(
           tool: VariableCoordinateFormulas(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'coords_variablecoordinate_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'coords_variablecoordinate',
           iconPath: 'assets/coordinates/icon_variable_coordinate.png',
           category: ToolCategory.COORDINATES,
@@ -1889,10 +1835,6 @@ class Registry {
           ]),
       GCWTool(
           tool: CenterThreePoints(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'coords_centerthreepoints_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'coords_centerthreepoints',
           iconPath: 'assets/coordinates/icon_center_three_points.png',
           category: ToolCategory.COORDINATES,
@@ -1953,10 +1895,6 @@ class Registry {
           ]),
       GCWTool(
           tool: IntersectBearings(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'coords_intersectbearings_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'coords_intersectbearings',
           iconPath: 'assets/coordinates/icon_intersect_bearings.png',
           category: ToolCategory.COORDINATES,
@@ -1976,14 +1914,6 @@ class Registry {
           ]),
       GCWTool(
           tool: IntersectFourPoints(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'coords_intersectfourpoints_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'coords_intersectfourpoints',
           iconPath: 'assets/coordinates/icon_intersect_four_points.png',
           category: ToolCategory.COORDINATES,
@@ -1999,14 +1929,6 @@ class Registry {
           ]),
       GCWTool(
           tool: IntersectGeodeticAndCircle(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'coords_intersectbearingcircle_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'coords_intersectbearingcircle',
           iconPath: 'assets/coordinates/icon_intersect_bearing_and_circle.png',
           category: ToolCategory.COORDINATES,
@@ -2026,14 +1948,6 @@ class Registry {
           ]),
       GCWTool(
           tool: IntersectTwoCircles(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'coords_intersecttwocircles_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'coords_intersecttwocircles',
           iconPath: 'assets/coordinates/icon_intersect_two_circles.png',
           category: ToolCategory.COORDINATES,
@@ -2049,14 +1963,6 @@ class Registry {
           ]),
       GCWTool(
           tool: IntersectThreeCircles(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'coords_intersectthreecircles_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'coords_intersectthreecircles',
           iconPath: 'assets/coordinates/icon_intersect_three_circles.png',
           category: ToolCategory.COORDINATES,
@@ -2117,14 +2023,6 @@ class Registry {
           ]),
       GCWTool(
           tool: EquilateralTriangle(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'coords_equilateraltrinagle_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'coords_equilateraltriangle',
           iconPath: 'assets/coordinates/icon_equilateral_triangle.png',
           category: ToolCategory.COORDINATES,
@@ -2140,10 +2038,6 @@ class Registry {
           ]),
       GCWTool(
           tool: EllipsoidTransform(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'coords_ellipsoidtransform_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'coords_ellipsoidtransform',
           iconPath: 'assets/coordinates/icon_ellipsoid_transform.png',
           category: ToolCategory.COORDINATES,
@@ -2196,10 +2090,6 @@ class Registry {
           ]),
       GCWTool(
           tool: CrossSumRangeFrequency(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'crosssum_range_frequency_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'crosssum_range_frequency',
           searchStrings: [
             SEARCHSTRING_COMMON_CROSSSUMS,
@@ -2217,14 +2107,6 @@ class Registry {
           ]),
       GCWTool(
           tool: IteratedCrossSumRangeFrequency(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'crosssum_range_iterated_frequency_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'crosssum_range_iterated_frequency',
           searchStrings: [
             SEARCHSTRING_COMMON_CROSSSUMS,
@@ -2323,14 +2205,6 @@ class Registry {
       //E Selection *************************************************************************************************
       GCWTool(
           tool: ENthDecimal(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'irrationalnumbers_nthdecimal_e_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'irrationalnumbers_nthdecimal',
           searchStrings: [
             SEARCHSTRING_COMMON_E,
@@ -2344,14 +2218,6 @@ class Registry {
           ]),
       GCWTool(
           tool: EDecimalRange(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'irrationalnumbers_decimalrange_e_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'irrationalnumbers_decimalrange',
           searchStrings: [
             SEARCHSTRING_COMMON_E,
@@ -2365,14 +2231,6 @@ class Registry {
           ]),
       GCWTool(
           tool: ESearch(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'irrationalnumbers_search_e_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'irrationalnumbers_search',
           searchStrings: [
             SEARCHSTRING_COMMON_E,
@@ -2388,14 +2246,6 @@ class Registry {
       //Easter Selection ***************************************************************************************
       GCWTool(
           tool: EasterDate(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'astronomy_easter_easterdate_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'astronomy_easter_easterdate',
           searchStrings: [
             SEARCHSTRING_COMMON_EASTER_DATE,
@@ -2405,14 +2255,6 @@ class Registry {
           ]),
       GCWTool(
           tool: EasterYears(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'astronomy_easter_easteryears_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'astronomy_easter_easteryears',
           searchStrings: [
             SEARCHSTRING_COMMON_EASTER_DATE,
@@ -2711,6 +2553,112 @@ class Registry {
         SEARCHSTRING_EN_HASHES_SHA3_512,
         SEARCHSTRING_FR_HASHES_SHA3_512
       ]),
+      GCWTool(
+          tool: BLAKE2b_160(),
+          i18nPrefix: 'hashes_blake2b160',
+          searchStrings: [
+            SEARCHSTRING_COMMON_HASHES,
+            SEARCHSTRING_DE_HASHES,
+            SEARCHSTRING_EN_HASHES,
+            SEARCHSTRING_FR_HASHES,
+            SEARCHSTRING_COMMON_HASHES_BLAKE2B,
+            SEARCHSTRING_DE_HASHES_BLAKE2B,
+            SEARCHSTRING_EN_HASHES_BLAKE2B,
+            SEARCHSTRING_FR_HASHES_BLAKE2B,
+            SEARCHSTRING_COMMON_HASHES_BLAKE2B_160,
+            SEARCHSTRING_DE_HASHES_BLAKE2B_160,
+            SEARCHSTRING_EN_HASHES_BLAKE2B_160,
+            SEARCHSTRING_FR_HASHES_BLAKE2B_160,
+          ]),
+      GCWTool(
+          tool: BLAKE2b_224(),
+          i18nPrefix: 'hashes_blake2b224',
+          searchStrings: [
+            SEARCHSTRING_COMMON_HASHES,
+            SEARCHSTRING_DE_HASHES,
+            SEARCHSTRING_EN_HASHES,
+            SEARCHSTRING_FR_HASHES,
+            SEARCHSTRING_COMMON_HASHES_BLAKE2B,
+            SEARCHSTRING_DE_HASHES_BLAKE2B,
+            SEARCHSTRING_EN_HASHES_BLAKE2B,
+            SEARCHSTRING_FR_HASHES_BLAKE2B,
+            SEARCHSTRING_COMMON_HASHES_BLAKE2B_224,
+            SEARCHSTRING_DE_HASHES_BLAKE2B_224,
+            SEARCHSTRING_EN_HASHES_BLAKE2B_224,
+            SEARCHSTRING_FR_HASHES_BLAKE2B_224,
+          ]),
+      GCWTool(
+          tool: BLAKE2b_256(),
+          i18nPrefix: 'hashes_blake2b256',
+          searchStrings: [
+            SEARCHSTRING_COMMON_HASHES,
+            SEARCHSTRING_DE_HASHES,
+            SEARCHSTRING_EN_HASHES,
+            SEARCHSTRING_FR_HASHES,
+            SEARCHSTRING_COMMON_HASHES_BLAKE2B,
+            SEARCHSTRING_DE_HASHES_BLAKE2B,
+            SEARCHSTRING_EN_HASHES_BLAKE2B,
+            SEARCHSTRING_FR_HASHES_BLAKE2B,
+            SEARCHSTRING_COMMON_HASHES_BLAKE2B_256,
+            SEARCHSTRING_DE_HASHES_BLAKE2B_256,
+            SEARCHSTRING_EN_HASHES_BLAKE2B_256,
+            SEARCHSTRING_FR_HASHES_BLAKE2B_256,
+          ]),
+      GCWTool(
+          tool: BLAKE2b_384(),
+          i18nPrefix: 'hashes_blake2b384',
+          searchStrings: [
+            SEARCHSTRING_COMMON_HASHES,
+            SEARCHSTRING_DE_HASHES,
+            SEARCHSTRING_EN_HASHES,
+            SEARCHSTRING_FR_HASHES,
+            SEARCHSTRING_COMMON_HASHES_BLAKE2B,
+            SEARCHSTRING_DE_HASHES_BLAKE2B,
+            SEARCHSTRING_EN_HASHES_BLAKE2B,
+            SEARCHSTRING_FR_HASHES_BLAKE2B,
+            SEARCHSTRING_COMMON_HASHES_BLAKE2B_384,
+            SEARCHSTRING_DE_HASHES_BLAKE2B_384,
+            SEARCHSTRING_EN_HASHES_BLAKE2B_384,
+            SEARCHSTRING_FR_HASHES_BLAKE2B_384,
+          ]),
+      GCWTool(
+          tool: BLAKE2b_512(),
+          i18nPrefix: 'hashes_blake2b512',
+          searchStrings: [
+            SEARCHSTRING_COMMON_HASHES,
+            SEARCHSTRING_DE_HASHES,
+            SEARCHSTRING_EN_HASHES,
+            SEARCHSTRING_FR_HASHES,
+            SEARCHSTRING_COMMON_HASHES_BLAKE2B,
+            SEARCHSTRING_DE_HASHES_BLAKE2B,
+            SEARCHSTRING_EN_HASHES_BLAKE2B,
+            SEARCHSTRING_FR_HASHES_BLAKE2B,
+            SEARCHSTRING_COMMON_HASHES_BLAKE2B_512,
+            SEARCHSTRING_DE_HASHES_BLAKE2B_512,
+            SEARCHSTRING_EN_HASHES_BLAKE2B_512,
+            SEARCHSTRING_FR_HASHES_BLAKE2B_512,
+          ]),
+      GCWTool(
+          tool: Keccak_128(),
+          i18nPrefix: 'hashes_keccak128',
+          searchStrings: [
+            SEARCHSTRING_COMMON_HASHES,
+            SEARCHSTRING_DE_HASHES,
+            SEARCHSTRING_EN_HASHES,
+            SEARCHSTRING_FR_HASHES,
+            SEARCHSTRING_COMMON_HASHES_SHA3,
+            SEARCHSTRING_DE_HASHES_SHA3,
+            SEARCHSTRING_EN_HASHES_SHA3,
+            SEARCHSTRING_FR_HASHES_SHA3,
+            SEARCHSTRING_COMMON_HASHES_KECCAK,
+            SEARCHSTRING_DE_HASHES_KECCAK,
+            SEARCHSTRING_EN_HASHES_KECCAK,
+            SEARCHSTRING_FR_HASHES_KECCAK,
+            SEARCHSTRING_COMMON_HASHES_KECCAK_128,
+            SEARCHSTRING_DE_HASHES_KECCAK_128,
+            SEARCHSTRING_EN_HASHES_KECCAK_128,
+            SEARCHSTRING_FR_HASHES_KECCAK_128,
+          ]),
       GCWTool(
           tool: Keccak_224(),
           i18nPrefix: 'hashes_keccak224',
@@ -3125,14 +3073,6 @@ class Registry {
       //Phi Selection **********************************************************************************************
       GCWTool(
           tool: PhiNthDecimal(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'irrationalnumbers_nthdecimal_phi_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'irrationalnumbers_nthdecimal',
           searchStrings: [
             SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
@@ -3150,14 +3090,6 @@ class Registry {
           ]),
       GCWTool(
           tool: PhiDecimalRange(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'irrationalnumbers_decimalrange_phi_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'irrationalnumbers_decimalrange',
           searchStrings: [
             SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
@@ -3175,14 +3107,6 @@ class Registry {
           ]),
       GCWTool(
           tool: PhiSearch(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'irrationalnumbers_search_phi_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'irrationalnumbers_search',
           searchStrings: [
             SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
@@ -3202,14 +3126,6 @@ class Registry {
       //Pi Selection **********************************************************************************************
       GCWTool(
           tool: PiNthDecimal(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'irrationalnumbers_nthdecimal_pi_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'irrationalnumbers_nthdecimal',
           searchStrings: [
             SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
@@ -3227,14 +3143,6 @@ class Registry {
           ]),
       GCWTool(
           tool: PiDecimalRange(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'irrationalnumbers_decimalrange_pi_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'irrationalnumbers_decimalrange',
           searchStrings: [
             SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
@@ -3252,14 +3160,6 @@ class Registry {
           ]),
       GCWTool(
           tool: PiSearch(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'irrationalnumbers_search_pi_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'irrationalnumbers_search',
           searchStrings: [
             SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
@@ -3279,10 +3179,6 @@ class Registry {
       //NumberSequenceSelection ****************************************************************************************
       GCWTool(
           tool: NumberSequenceFactorialSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'numbersequence_factorial_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'numbersequence_factorial',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3296,10 +3192,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceFibonacciSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'numbersequence_fibonacci_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'numbersequence_fibonacci',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3326,14 +3218,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceMersennePrimesSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_mersenneprimes_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_mersenneprimes',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3347,14 +3231,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceMersenneExponentsSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_mersenneexponents_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_mersenneexponents',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3368,14 +3244,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceMersenneFermatSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_mersennefermat_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_mersennefermat',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3402,14 +3270,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequencePerfectNumbersSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_perfectnumbers_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_perfectnumbers',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3423,14 +3283,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceSuperPerfectNumbersSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_superperfectnumbers_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_superperfectnumbers',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3444,14 +3296,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequencePrimaryPseudoPerfectNumbersSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_primarypseudoperfectnumbers_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_primarypseudoperfectnumbers',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3465,14 +3309,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceWeirdNumbersSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_weirdnumbers_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_weirdnumbers',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3486,14 +3322,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceSublimeNumbersSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_sublimenumbers_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_sublimenumbers',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3546,10 +3374,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequencePellLucasSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'numbersequence_jacobsthal_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'numbersequence_pelllucas',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3563,14 +3387,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceJacobsthalSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'irrationalnumbers_search_online_pi_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_jacobsthal',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3584,14 +3400,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceJacobsthalLucasSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_jacobsthallucas_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_jacobsthallucas',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3605,14 +3413,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceJacobsthalOblongSelection(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_jacobsthaloblong_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_jacobsthaloblong',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3722,14 +3522,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceFactorialContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3817,14 +3609,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceMersenneFermatContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -3912,14 +3696,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceFermatContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -4007,14 +3783,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceLucasContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -4102,14 +3870,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceFibonacciContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -4197,14 +3957,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceMersenneContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -4292,14 +4044,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceBellContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -4387,14 +4131,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequencePellContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -4482,14 +4218,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequencePellLucasContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -4577,14 +4305,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceJacobsthalContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -4672,14 +4392,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceJacobsthalLucasContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -4771,14 +4483,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceJacobsthalOblongContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -4866,14 +4570,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceCatalanContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -4961,14 +4657,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceRecamanContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -5056,14 +4744,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceMersennePrimesContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -5151,14 +4831,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceMersenneExponentsContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -5246,14 +4918,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequencePerfectNumbersContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -5341,14 +5005,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceSuperPerfectNumbersContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -5436,14 +5092,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceWeirdNumbersContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -5531,14 +5179,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequenceSublimeNumbersContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -5626,14 +5266,6 @@ class Registry {
           ]),
       GCWTool(
           tool: NumberSequencePrimaryPseudoPerfectNumbersContainsDigits(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'numbersequence_containsdigits_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'numbersequence_containsdigits',
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
@@ -5751,14 +5383,6 @@ class Registry {
           ]),
       GCWTool(
           tool: IntegerFactorization(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'primes_integerfactorization_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'primes_integerfactorization',
           searchStrings: [
             SEARCHSTRING_COMMON_PRIMES,
@@ -5774,14 +5398,6 @@ class Registry {
       //ResistorSelection **********************************************************************************************
       GCWTool(
           tool: ResistorColorCodeCalculator(),
-          buttonList: [
-            GCWToolActionButtonsEntry(
-                false,
-                'resistor_colorcodecalculator_online_help_url',
-                '',
-                '',
-                Icons.help)
-          ],
           i18nPrefix: 'resistor_colorcodecalculator',
           searchStrings: [
             SEARCHSTRING_COMMON_RESISTOR,
@@ -5966,10 +5582,6 @@ class Registry {
       //Segments Display *******************************************************************************************
       GCWTool(
           tool: SevenSegments(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'segmentdisplay_7segments_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'segmentdisplay_7segments',
           searchStrings: [
             SEARCHSTRING_COMMON_SEGMENTS,
@@ -5983,10 +5595,6 @@ class Registry {
           ]),
       GCWTool(
           tool: FourteenSegments(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'segmentdisplay_14segments_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'segmentdisplay_14segments',
           searchStrings: [
             SEARCHSTRING_COMMON_SEGMENTS,
@@ -6000,10 +5608,6 @@ class Registry {
           ]),
       GCWTool(
           tool: SixteenSegments(),
-          buttonList: [
-            GCWToolActionButtonsEntry(false,
-                'segmentdisplay_16segments_online_help_url', '', '', Icons.help)
-          ],
           i18nPrefix: 'segmentdisplay_16segments',
           searchStrings: [
             SEARCHSTRING_COMMON_SEGMENTS,
