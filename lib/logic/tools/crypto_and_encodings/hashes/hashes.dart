@@ -3,6 +3,8 @@ import 'dart:typed_data';
 
 import 'package:pointycastle/api.dart';
 import 'package:pointycastle/digests/blake2b.dart';
+import 'package:pointycastle/digests/cshake.dart';
+import 'package:pointycastle/digests/keccak.dart';
 import 'package:pointycastle/digests/md2.dart';
 import 'package:pointycastle/digests/md4.dart';
 import 'package:pointycastle/digests/md5.dart';
@@ -13,9 +15,11 @@ import 'package:pointycastle/digests/ripemd320.dart';
 import 'package:pointycastle/digests/sha1.dart';
 import 'package:pointycastle/digests/sha224.dart';
 import 'package:pointycastle/digests/sha256.dart';
+import 'package:pointycastle/digests/sha3.dart';
 import 'package:pointycastle/digests/sha384.dart';
 import 'package:pointycastle/digests/sha512.dart';
 import 'package:pointycastle/digests/sha512t.dart';
+import 'package:pointycastle/digests/shake.dart';
 import 'package:pointycastle/export.dart';
 
 // Wrapper for PointyCastle library
@@ -39,24 +43,25 @@ final Map<String, Function> HASH_FUNCTIONS = {
   'hashes_sha3.256': sha3_256Digest,
   'hashes_sha3.384': sha3_384Digest,
   'hashes_sha3.512': sha3_512Digest,
-  'hashes_keccak224': keccak_224Digest,
-  'hashes_keccak256': keccak_256Digest,
-  'hashes_keccak288': keccak_288Digest,
-  'hashes_keccak384': keccak_384Digest,
-  'hashes_keccak512': keccak_512Digest,
-  'hashes_ripemd128': ripemd_128Digest,
-  'hashes_ripemd160': ripemd_160Digest,
-  'hashes_ripemd256': ripemd_256Digest,
-  'hashes_ripemd320': ripemd_320Digest,
-  'hashes_md2': md2Digest,
-  'hashes_md4': md4Digest,
-  'hashes_tiger192': tiger_192Digest,
-  'hashes_whirlpool512': whirlpool_512Digest,
   'hashes_blake2b160': blake2b_160Digest,
   'hashes_blake2b224': blake2b_224Digest,
   'hashes_blake2b256': blake2b_256Digest,
   'hashes_blake2b384': blake2b_384Digest,
   'hashes_blake2b512': blake2b_512Digest,
+  'hashes_keccak128': keccak_128Digest,
+  'hashes_keccak224': keccak_224Digest,
+  'hashes_keccak256': keccak_256Digest,
+  'hashes_keccak288': keccak_288Digest,
+  'hashes_keccak384': keccak_384Digest,
+  'hashes_keccak512': keccak_512Digest,
+  'hashes_md2': md2Digest,
+  'hashes_md4': md4Digest,
+  'hashes_ripemd128': ripemd_128Digest,
+  'hashes_ripemd160': ripemd_160Digest,
+  'hashes_ripemd256': ripemd_256Digest,
+  'hashes_ripemd320': ripemd_320Digest,
+  'hashes_tiger192': tiger_192Digest,
+  'hashes_whirlpool512': whirlpool_512Digest,
 };
 
 String blake2b_160Digest(String data) {
@@ -136,39 +141,43 @@ String sha512_256Digest(String data) {
 }
 
 String sha3_224Digest(String data) {
-  return _digest(SHA3Digest(224, false), data);
-}
-
-String sha3_256Digest(String data) {
-  return _digest(SHA3Digest(256, false), data);
-}
-
-String sha3_384Digest(String data) {
-  return _digest(SHA3Digest(384, false), data);
-}
-
-String sha3_512Digest(String data) {
-  return _digest(SHA3Digest(512, false), data);
-}
-
-String keccak_224Digest(String data) {
   return _digest(SHA3Digest(224), data);
 }
 
-String keccak_256Digest(String data) {
+String sha3_256Digest(String data) {
   return _digest(SHA3Digest(256), data);
 }
 
-String keccak_288Digest(String data) {
-  return _digest(SHA3Digest(288), data);
-}
-
-String keccak_384Digest(String data) {
+String sha3_384Digest(String data) {
   return _digest(SHA3Digest(384), data);
 }
 
-String keccak_512Digest(String data) {
+String sha3_512Digest(String data) {
   return _digest(SHA3Digest(512), data);
+}
+
+String keccak_128Digest(String data) {
+  return _digest(KeccakDigest(128), data);
+}
+
+String keccak_224Digest(String data) {
+  return _digest(KeccakDigest(224), data);
+}
+
+String keccak_256Digest(String data) {
+  return _digest(KeccakDigest(256), data);
+}
+
+String keccak_288Digest(String data) {
+  return _digest(KeccakDigest(288), data);
+}
+
+String keccak_384Digest(String data) {
+  return _digest(KeccakDigest(384), data);
+}
+
+String keccak_512Digest(String data) {
+  return _digest(KeccakDigest(512), data);
 }
 
 String tiger_192Digest(String data) {
