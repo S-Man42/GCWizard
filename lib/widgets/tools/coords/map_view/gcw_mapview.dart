@@ -12,6 +12,7 @@ import 'package:flutter_map_tappable_polyline/flutter_map_tappable_polyline.dart
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/import/gpx_kml_import.dart';
