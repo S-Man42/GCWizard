@@ -24,14 +24,21 @@ final SearchBlackList = {
   'die',
   'das',
   'von',
+  'und',
   'drei',
   'zwei'
   'the',
   'two',
   'three',
+  'of',
+  'from',
+  'and',
   'deux',
   'trois',
-  'de'
+  'de',
+  "l'",
+  'le',
+  'la'
 };
 
 class GCWToolActionButtonsEntry {
