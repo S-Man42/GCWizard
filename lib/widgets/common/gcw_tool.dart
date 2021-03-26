@@ -1,3 +1,4 @@
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -23,19 +24,25 @@ final SearchBlackList = {
   'der',
   'die',
   'das',
+  'ein',
+  'eine',
   'von',
   'und',
   'drei',
   'zwei'
   'the',
+  'one',
   'two',
   'three',
   'of',
   'from',
   'and',
+  'une',
+  'un',
   'deux',
   'trois',
   'de',
+  "d'",
   "l'",
   'le',
   'la'
@@ -126,23 +133,25 @@ class _GCWToolState extends State<GCWTool> {
 
   List<Widget> _buildButtons() {
     List<Widget> buttonList = new List<Widget>();
-    String url = '';
 
     // add button with url for searching knowledge base with toolName
     final Locale appLocale = Localizations.localeOf(context);
+    String searchString = widget.toolName.toString().toLowerCase();
+    String url = '';
+
+    // normalize searchString
+    searchString.split(' ').where((word) => !SearchBlackList.contains(word)).join(' ');
+
     if (isLocaleSupported(appLocale))
       url = 'https://blog.gcwizard.net/manual/' +
           Localizations.localeOf(context).toString() +
           '/search/' +
-          widget.toolName;
+          searchString;
     else // fallback to en if unsupported locale
       url = 'https://blog.gcwizard.net/manual/' +
           'en' +
           '/search/' +
-          widget.toolName;
-    SearchBlackList.forEach((element) {
-      url.replaceAll(element + ' ', '');
-    });
+          searchString;
     buttonList.add(IconButton(
       icon: Icon(Icons.auto_fix_high),
       onPressed: () {
