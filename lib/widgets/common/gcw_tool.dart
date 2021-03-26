@@ -1,4 +1,3 @@
-import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,6 +20,9 @@ enum ToolCategory {
 }
 
 final SearchBlackList = {
+  'code',
+  'chiffre'
+  'cipher',
   'der',
   'die',
   'das',
@@ -45,7 +47,8 @@ final SearchBlackList = {
   "d'",
   "l'",
   'le',
-  'la'
+  'la',
+  'chiffrement'
 };
 
 class GCWToolActionButtonsEntry {
@@ -69,6 +72,7 @@ class GCWTool extends StatefulWidget {
   final List<String> searchStrings;
   final bool helpButton;
   final List<GCWToolActionButtonsEntry> buttonList;
+  final List<String> missingHelpLocales;
 
   var icon;
   var _id = '';
@@ -88,7 +92,8 @@ class GCWTool extends StatefulWidget {
       this.iconPath,
       this.searchStrings,
       this.helpButton: true,
-      this.buttonList})
+      this.buttonList,
+      this.missingHelpLocales})
       : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
     this._isFavorite = Prefs.getStringList('favorites').contains('$_id');
@@ -142,14 +147,14 @@ class _GCWToolState extends State<GCWTool> {
     // normalize searchString
     searchString.split(' ').where((word) => !SearchBlackList.contains(word)).join(' ');
 
-    if (isLocaleSupported(appLocale))
+    if (!isLocaleSupported(appLocale) || widget.missingHelpLocales.contains(appLocale))
       url = 'https://blog.gcwizard.net/manual/' +
-          Localizations.localeOf(context).toString() +
+          'en' +
           '/search/' +
           searchString;
     else // fallback to en if unsupported locale
       url = 'https://blog.gcwizard.net/manual/' +
-          'en' +
+          Localizations.localeOf(context).toString() +
           '/search/' +
           searchString;
     buttonList.add(IconButton(
