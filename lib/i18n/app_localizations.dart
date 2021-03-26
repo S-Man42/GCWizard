@@ -26,6 +26,9 @@ class AppLocalizations {
     Map<String, String> _defaultLocalizedStrings = await loadLang(defaultLanguage);
     Map<String, String> _localStrings = await loadLang(locale.languageCode);
 
+    // Remove new added keays with empty values (urls for manual)
+    _localStrings..removeWhere((k, v) => v.isEmpty);
+
     _localizedStrings = {
       ..._defaultLocalizedStrings,
       ..._localStrings,
