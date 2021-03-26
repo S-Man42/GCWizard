@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 
-//from: https://medium.com/flutter-community/flutter-internationalization-the-easy-way-using-provider-and-json-c47caa4212b2
 class AppLocalizations {
   final Locale locale;
 
@@ -21,9 +20,10 @@ class AppLocalizations {
   static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   Map<String, String> _localizedStrings;
+  Map<String, String> _defaultLocalizedStrings;
 
   Future<bool> load() async {
-    Map<String, String> _defaultLocalizedStrings = await loadLang(defaultLanguage);
+    _defaultLocalizedStrings = await loadLang(defaultLanguage);
     Map<String, String> _localStrings = await loadLang(locale.languageCode);
 
     _localizedStrings = {
@@ -48,6 +48,10 @@ class AppLocalizations {
   // This method will be called from every widget which needs a localized text
   String translate(String key) {
     return _localizedStrings[key];
+  }
+
+  String translateDefault(String key) {
+    return _defaultLocalizedStrings[key];
   }
 }
 
@@ -79,12 +83,14 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
  * %s2 -> parameter 2 (list index 1),
  * ...
  */
-String i18n(BuildContext context, String key, {List<dynamic> parameters: const []}) {
+String i18n(BuildContext context, String key, {List<dynamic> parameters: const [], bool useDefaultLanguage: false}) {
   Map<String, String> map = {};
   for (int i = parameters.length; i >= 1; i--) {
     map.putIfAbsent('%s' + i.toString(), () => parameters[i - 1].toString());
   }
 
-  var text = AppLocalizations.of(context).translate(key);
+  var appLocalization = AppLocalizations.of(context);
+  var text = useDefaultLanguage ? appLocalization.translateDefault(key) : appLocalization.translate(key);
+
   return map.isEmpty ? text : substitution(text, map);
 }
