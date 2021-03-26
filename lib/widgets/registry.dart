@@ -373,7 +373,7 @@ class Registry {
             SEARCHSTRING_DE_BABYLONIAN_NUMERALS,
             SEARCHSTRING_EN_BABYLONIAN_NUMERALS,
             SEARCHSTRING_FR_BABYLONIAN_NUMERALS
-      ]),
+          ]),
       GCWTool(tool: Bacon(), i18nPrefix: 'bacon', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
         'fr'
       ], searchStrings: [
@@ -1893,20 +1893,17 @@ class Registry {
             SEARCHSTRING_EN_COORDINATES_VARIABLECOORDINATEFORMULAS,
             SEARCHSTRING_FR_COORDINATES_VARIABLECOORDINATEFORMULAS
           ]),
-      
+
       //Babylon Numbers Selection **************************************************************************************************
-      GCWTool(
-          tool: BabylonNumbers(),
-          i18nPrefix: 'babylonnumbers',
-          searchStrings: [
-            SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS,
-            SEARCHSTRING_DE_BABYLONIAN_NUMERALS,
-            SEARCHSTRING_EN_BABYLONIAN_NUMERALS,
-            SEARCHSTRING_FR_BABYLONIAN_NUMERALS
-          ]),
+      GCWTool(tool: BabylonNumbers(), i18nPrefix: 'babylonnumbers', searchStrings: [
+        SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS,
+        SEARCHSTRING_DE_BABYLONIAN_NUMERALS,
+        SEARCHSTRING_EN_BABYLONIAN_NUMERALS,
+        SEARCHSTRING_FR_BABYLONIAN_NUMERALS
+      ]),
 
       //BaseSelection **************************************************************************************************
-      
+
       GCWTool(
           tool: CoordinateAveraging(),
           i18nPrefix: 'coords_averaging',
