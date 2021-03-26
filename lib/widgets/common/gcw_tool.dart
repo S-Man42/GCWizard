@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:prefs/prefs.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:prefs/prefs.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 enum ToolCategory {
   CRYPTOGRAPHY,
@@ -17,6 +18,38 @@ enum ToolCategory {
   SCIENCE_AND_TECHNOLOGY,
   SYMBOL_TABLES
 }
+
+final SearchBlackList = {
+  'code',
+  'chiffre'
+      'cipher',
+  'der',
+  'die',
+  'das',
+  'ein',
+  'eine',
+  'von',
+  'und',
+  'drei',
+  'zwei'
+      'the',
+  'one',
+  'two',
+  'three',
+  'of',
+  'from',
+  'and',
+  'une',
+  'un',
+  'deux',
+  'trois',
+  'de',
+  "d'",
+  "l'",
+  'le',
+  'la',
+  'chiffrement'
+};
 
 class GCWToolActionButtonsEntry {
   // to be used in registry to define a buttonlist which will be displayed in the app bar
@@ -36,7 +69,9 @@ class GCWTool extends StatefulWidget {
   final autoScroll;
   final iconPath;
   final List<String> searchStrings;
+  final bool helpButton;
   final List<GCWToolActionButtonsEntry> buttonList;
+  final List<String> missingHelpLocales;
 
   var icon;
   var _id = '';
@@ -55,7 +90,9 @@ class GCWTool extends StatefulWidget {
       this.autoScroll: true,
       this.iconPath,
       this.searchStrings,
-      this.buttonList})
+      this.helpButton: true,
+      this.buttonList,
+      this.missingHelpLocales})
       : super(key: key) {
     this._id = className(tool) + '_' + (i18nPrefix ?? '');
     this._isFavorite = Prefs.getStringList('favorites').contains('$_id');
@@ -101,16 +138,41 @@ class _GCWToolState extends State<GCWTool> {
   List<Widget> _buildButtons() {
     List<Widget> buttonList = new List<Widget>();
 
-//    if (widget.titleTrailing.toString() != 'null')
-//      return [widget.titleTrailing];
-
-//    if (widget.buttonList == null)
-//      return [_buildHelpButton()];
-
+    // add button with url for searching knowledge base with toolName
+    final Locale appLocale = Localizations.localeOf(context);
+    String searchString = widget.toolName.toString().toLowerCase();
     String url = '';
 
+    // normalize searchString
+    searchString.split(' ').where((word) => !SearchBlackList.contains(word)).join(' ');
+
+    if (!isLocaleSupported(appLocale) ||
+        widget.missingHelpLocales.contains(appLocale)) // fallback to en if unsupported locale
+      url = 'https://blog.gcwizard.net/manual/' + 'en' + '/search/' + searchString;
+    else
+      url =
+          'https://blog.gcwizard.net/manual/' + Localizations.localeOf(context).toString() + '/search/' + searchString;
+    buttonList.add(IconButton(
+      icon: Icon(Icons.auto_fix_high),
+      onPressed: () {
+        launch(url);
+      },
+    ));
+
+    // add helpButton as hard-coded in json
+    if (widget.helpButton) {
+      buttonList.add(IconButton(
+        icon: Icon(Icons.help),
+        onPressed: () {
+          launch(i18n(context, widget.i18nPrefix + '_online_help_url'));
+        },
+      ));
+    }
+
+    // add further buttons as defined in registry
     if (widget.buttonList != null) {
       widget.buttonList.forEach((button) {
+        String url = '';
         if (button.url == '') // 404-Page asking for help
           url = i18n(context, 'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
         else
