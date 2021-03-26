@@ -59,8 +59,7 @@ class GCWCheckBoxState extends State<GCWCheckBox> {
                     hoverColor: widget.hoverColor ?? themeColors().checkBoxHoverColor(),
                     overlayColor:
                         widget.overlayColor ?? MaterialStateColor.resolveWith(themeColors().checkBoxOverlayColor),
-                  ),
-                  Expanded(child: Container(), flex: 1),
+                  )
                 ],
               ),
             ),

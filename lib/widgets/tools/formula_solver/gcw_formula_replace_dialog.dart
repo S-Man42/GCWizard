@@ -52,7 +52,10 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
           text: _buildNewFormula(widget.formula),
           style: textStyle,
         ),
-        GCWDivider(color: textStyle.color),
+        Container(
+          child: GCWDivider(color: textStyle.color),
+          padding: EdgeInsets.only(top: 6 * DEFAULT_MARGIN),
+        ),
         GCWCheckBox(
           value: _curentValueBracket,
           title: i18n(context, 'formulasolver_formulas_outerbrackets') + ' ( ) ➔ [ ]',
@@ -134,7 +137,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
         return e;
       }).join();
     }
-    if (_curentValueMultiply) output = output.replaceAll('x', '*');
+    if (_curentValueMultiply) output = output.replaceAll(RegExp(r'[xX×]'), '*');
     if (_curentValueDivide) output = output.replaceAll(':', '/');
 
     return output;

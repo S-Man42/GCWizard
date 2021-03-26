@@ -177,7 +177,7 @@ class FormulaSolverFormulaGroupsState extends State<FormulaSolverFormulaGroups> 
       var formulaTool = GCWTool(
         tool: FormulaSolverFormulas(group: group),
         toolName: '${group.name} - ${i18n(context, 'formulasolver_formulas')}',
-        i18nPrefix: 'formulasolver', // for calling the help of the formulasolver
+        missingHelpLocales: ['fr'],
       );
 
       Future _navigateToSubPage(context) async {

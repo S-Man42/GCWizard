@@ -94,3 +94,21 @@ Map<String, LatLng> parseLatLon(String text, {wholeString = false}) {
   } catch (e) {}
   return coords;
 }
+
+//wholeString == false: The first match at the text begin is taken - for copy
+//wholeString == true: The whole text must be a valid coord - for var coords
+Map<String, dynamic> parseStandardFormats(String text, {wholeString = false}) {
+  LatLng coord = parseDMS(text, wholeString: wholeString);
+  if (coord != null)
+    return {'format': keyCoordsDMS, 'coordinate': coord};
+
+  coord = parseDMM(text, wholeString: wholeString);
+  if (coord != null)
+    return {'format': keyCoordsDMM, 'coordinate': coord};
+
+  coord = parseDEC(text, wholeString: wholeString);
+  if (coord != null)
+    return {'format': keyCoordsDEC, 'coordinate': coord};
+
+  return null;
+}

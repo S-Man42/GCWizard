@@ -141,38 +141,47 @@ class _GCWToolState extends State<GCWTool> {
     text = text.split(' ').where((word) => !_SEARCH_BLACKLIST.contains(word)).join(' ');
     return text;
   }
-  
-  List<Widget> _buildButtons() {
-    List<Widget> buttonList = <Widget>[];
 
+  bool _needsDefaultHelp(Locale appLocale) {
+    return !isLocaleSupported(appLocale) ||
+        (widget.missingHelpLocales != null && widget.missingHelpLocales.contains(appLocale.languageCode));
+  }
+
+  Widget _buildHelpButton() {
     // add button with url for searching knowledge base with toolName
     final Locale appLocale = Localizations.localeOf(context);
-    
+
     String searchString = '';
-    
-    if (!isLocaleSupported(appLocale) ||
-        widget.missingHelpLocales.contains(appLocale.languageCode)) {      // fallback to en if unsupported locale
+
+    if (_needsDefaultHelp(appLocale)) {      // fallback to en if unsupported locale
       searchString = i18n(context, widget.i18nPrefix + '_title', useDefaultLanguage: true);
     } else {
       searchString = widget.toolName;
     }
-    
+
     searchString = _normalizeSearchString(searchString);
     String locale = 'en';
 
-    if (isLocaleSupported(appLocale) &&
-        !widget.missingHelpLocales.contains(appLocale.languageCode))
+    if (!_needsDefaultHelp(appLocale))
       locale = Localizations.localeOf(context).languageCode;
 
     var url = HELP_BASE_URL + locale + '/search/' + searchString;
     url = Uri.encodeFull(url);
 
-    buttonList.add(IconButton(
+    return IconButton(
       icon: Icon(Icons.help),
       onPressed: () {
         launch(url);
       },
-    ));
+    );
+  }
+  
+  List<Widget> _buildButtons() {
+    List<Widget> buttonList = <Widget>[];
+
+    Widget helpButton = _buildHelpButton();
+    if (helpButton != null)
+      buttonList.add(helpButton);
 
     // add further buttons as defined in registry
     if (widget.buttonList != null) {

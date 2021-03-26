@@ -73,7 +73,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     var formulaTool = GCWTool(
       tool: FormulaSolverFormulaValues(group: widget.group),
       toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
-      i18nPrefix: 'formulasolver', // for calling the help of the formulasolver
+      missingHelpLocales: ['fr']
     );
 
     Future _navigateToSubPage(context) async {
@@ -173,7 +173,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
         NoAnimationMaterialPageRoute(
             builder: (context) => GCWTool(
                 tool: VariableCoordinate(formula: formula),
-                toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}')));
+                toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
+                missingHelpLocales: ['fr'])));
   }
 
   _buildGroupList(BuildContext context) {
@@ -201,7 +202,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
           Widget output;
 
-          var _foundCoordinate = parseLatLon(calculated['result'], wholeString: true);
+          var _foundCoordinate = parseStandardFormats(calculated['result'], wholeString: true);
           if (_foundCoordinate != null && _foundCoordinate.length > 0)
             _foundCoordinates.putIfAbsent(index + 1, () => _foundCoordinate);
 
@@ -328,9 +329,9 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
                                   _showFormulaResultOnMap([
                                     GCWMapPoint(
-                                        point: _foundCoordinate[0],
+                                        point: _foundCoordinate['coordinate'],
                                         markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext'),
-                                        coordinateFormat: {'format': _foundCoordinate.keys.elementAt(0)})
+                                        coordinateFormat: {'format': _foundCoordinate['format']})
                                   ]);
                                 })
                         ])
@@ -385,6 +386,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                   ),
                   toolName: i18n(context, 'coords_map_view_title'),
                   autoScroll: false,
+                  missingHelpLocales: ['fr']
                 )));
   }
 }
