@@ -38,7 +38,7 @@ class FormulaParser {
     'e'
   ];
 
-  final formulaCleanUp = {'—' : '-', '–' : '-', '˗' : '-', '−' : '-', '‒' : '-'};
+  final formulaCleanUp = {'—': '-', '–': '-', '˗': '-', '−': '-', '‒': '-'};
 
   FormulaParser() {
     _context = ContextModel();

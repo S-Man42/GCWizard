@@ -15,19 +15,19 @@ class GCWCheckBox extends StatefulWidget {
   final Color hoverColor;
   final MaterialStateProperty<Color> overlayColor;
 
-  const GCWCheckBox({
-    Key key,
-    this.value,
-    this.onChanged,
-    this.align: Alignment.centerLeft,
-    this.tristate = false,
-    this.activeColor,
-    this.fillColor,
-    this.checkColor,
-    this.focusColor,
-    this.hoverColor,
-    this.overlayColor
-  }) : super(key: key);
+  const GCWCheckBox(
+      {Key key,
+      this.value,
+      this.onChanged,
+      this.align: Alignment.centerLeft,
+      this.tristate = false,
+      this.activeColor,
+      this.fillColor,
+      this.checkColor,
+      this.focusColor,
+      this.hoverColor,
+      this.overlayColor})
+      : super(key: key);
 
   @override
   _GCWCheckBoxState createState() => _GCWCheckBoxState();
@@ -41,7 +41,7 @@ class _GCWCheckBoxState extends State<GCWCheckBox> {
     return Align(
         alignment: widget.align,
         child: Checkbox(
-          value : widget.value,
+          value: widget.value,
           onChanged: widget.onChanged,
           tristate: widget.tristate,
           activeColor: widget.activeColor,
