@@ -40,10 +40,10 @@ class BabylonNumbersState extends State<BabylonNumbers> {
           });
         },
       ),
-      _currentMode ==
-              GCWSwitchPosition.left // encrypt: input number => output segment
+      _currentMode == GCWSwitchPosition.left // encrypt: input number => output segment
           ? GCWIntegerSpinner(
               min: 0,
+              overflow: SpinnerOverflowType.SUPPRESS_OVERFLOW,
               value: _currentEncodeInput,
               onChanged: (value) {
                 setState(() {
@@ -66,10 +66,8 @@ class BabylonNumbersState extends State<BabylonNumbers> {
                 setState(() {
                   int newCountColumn = max(countColumns - 1, 1);
                   mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt(
-                          'symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape',
-                          newCountColumn);
+                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
                 });
               },
             ),
@@ -81,10 +79,8 @@ class BabylonNumbersState extends State<BabylonNumbers> {
                   int newCountColumn = countColumns + 1;
 
                   mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt(
-                          'symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape',
-                          newCountColumn);
+                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
+                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
                 });
               },
             )
@@ -100,8 +96,7 @@ class BabylonNumbersState extends State<BabylonNumbers> {
 
     var displays = _currentDisplays;
     if (displays != null && displays.length > 0)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [],
-          key: (e) => e, value: (e) => true);
+      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
     else
       currentDisplay = {};
 
@@ -124,8 +119,7 @@ class BabylonNumbersState extends State<BabylonNumbers> {
     return Column(
       children: <Widget>[
         Container(
-          width: 100,
-          //height: 100,
+          width: 200,
           padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 10),
           child: Row(
             children: <Widget>[
@@ -170,24 +164,24 @@ class BabylonNumbersState extends State<BabylonNumbers> {
 
   _buildDigitalOutput(countColumns, segments) {
     var displays = segments.where((character) => character != null).map((character) {
-      var displayedSegments = Map<String, bool>.fromIterable(character,
-          key: (e) => e, value: (e) => true);
-      return BabylonNumbersSegmentDisplay(
-          segments: displayedSegments, readOnly: true);
+      var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
+      return BabylonNumbersSegmentDisplay(segments: displayedSegments, readOnly: true);
     }).toList();
     return buildSegmentDisplayOutput(countColumns, displays);
   }
 
   _buildOutput(countColumns) {
     var segments;
-    if (_currentMode == GCWSwitchPosition.left) {      //encode
+    if (_currentMode == GCWSwitchPosition.left) {
+      //encode
       segments = encodeBabylonNumbers(_currentEncodeInput);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments),
         ],
       );
-    } else {      //decode
+    } else {
+      //decode
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
@@ -195,12 +189,8 @@ class BabylonNumbersState extends State<BabylonNumbers> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
-          GCWOutput(
-              title: i18n(context, 'babylonnumbers_single_numbers'),
-              child: segments['numbers'].join(' ')),
-          GCWOutput(
-              title: i18n(context, 'babylonnumbers_sexagesimal'),
-              child: segments['sexagesimal'])
+          GCWOutput(title: i18n(context, 'babylonnumbers_single_numbers'), child: segments['numbers'].join(' ')),
+          GCWOutput(title: i18n(context, 'babylonnumbers_sexagesimal'), child: segments['sexagesimal'])
         ],
       );
     }

@@ -4,229 +4,125 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/b
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
 
 const _INITIAL_SEGMENTS = <String, bool>{
-  'a': false, 'b': false, 'c': false,  'd': false, 'e': false,
-  'f': false, 'g': false, 'h': false, 'i': false, 'j': false, 'k': false,'l': false, 'm': false, 'n': false,
+  'a': false,
+  'b': false,
+  'c': false,
+  'd': false,
+  'e': false,
+  'f': false,
+  'g': false,
+  'h': false,
+  'i': false,
+  'j': false,
+  'k': false,
+  'l': false,
+  'm': false,
+  'n': false,
 };
 
-class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
+const BABYLON_RELATIVE_DISPLAY_WIDTH = 200;
+const BABYLON_RELATIVE_DISPLAY_HEIGHT = 100;
 
+double _relativeX(Size size, double x) {
+  return size.width / BABYLON_RELATIVE_DISPLAY_WIDTH * x;
+}
+
+double _relativeY(Size size, double y) {
+  return size.height / BABYLON_RELATIVE_DISPLAY_HEIGHT * y;
+}
+
+final _TRANSPARENT_COLOR = Color.fromARGB(0, 0, 0, 0);
+
+class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
   final bool readOnly;
   final Function onChanged;
 
-  BabylonNumbersSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged}) :
-        super(
-          key: key,
-          initialSegments: _INITIAL_SEGMENTS,
-          segments: segments,
-          readOnly: readOnly,
-          onChanged: onChanged,
-          type: SegmentDisplayType.BABYLON,
-          customPaint: (canvas, size, currentSegments, setSegmentState) {
-            var paint = sketchSegmentPaint();
-            int x = 0;
-            int y = 0;
+  BabylonNumbersSegmentDisplay({Key key, this.segments, this.readOnly: false, this.onChanged})
+      : super(
+            key: key,
+            initialSegments: _INITIAL_SEGMENTS,
+            aspectRatio: BABYLON_RELATIVE_DISPLAY_WIDTH / BABYLON_RELATIVE_DISPLAY_HEIGHT,
+            segments: segments,
+            readOnly: readOnly,
+            onChanged: onChanged,
+            type: SegmentDisplayType.CUSTOM,
+            customPaint: (canvas, size, currentSegments, setSegmentState) {
+              var paint = sketchSegmentPaint();
+              paint.strokeWidth = 2.5;
+  
+              [
+                {'segment': 'a', 'startX': 30.0, 'startY': 40.0},
+                {'segment': 'b', 'startX': 60.0, 'startY': 20.0},
+                {'segment': 'c', 'startX': 60.0, 'startY': 60.0},
+                {'segment': 'd', 'startX': 90.0, 'startY': 0.0},
+                {'segment': 'e', 'startX': 90.0, 'startY': 40.0}
+              ].forEach((element) {
+                paint.color = currentSegments[element['segment']] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 10
+                var path = Path();
 
-            paint.color = currentSegments['a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 10
-            x = 0; y = 60;
-            var pathA = Path();
-            pathA.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y));
-            pathA.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 20), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathA.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 10));
-            pathA.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y + 10));
-            pathA.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 20), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y + 20));
-            pathA.close();
+                double startX = element['startX'];
+                double startY = element['startY'];
 
-            canvas.drawPath(pathA, paint, onTapDown: (tapDetail) {
-              setSegmentState('a', !currentSegments['a']);
+                path.moveTo(_relativeX(size, startX), _relativeY(size, startY));
+                path.relativeLineTo(_relativeX(size, -20), _relativeY(size, 20));
+                path.relativeLineTo(_relativeX(size, 20), _relativeY(size, 20));
+
+                path.moveTo(_relativeX(size, startX - 5), _relativeY(size, startY + 5));
+                path.relativeLineTo(_relativeX(size, 0), _relativeY(size, 30));
+                canvas.drawPath(path, paint);
+
+                paint.color = _TRANSPARENT_COLOR;
+                path.moveTo(_relativeX(size, startX), _relativeY(size, startY));
+                path.relativeLineTo(_relativeX(size, -20), _relativeY(size, 0));
+                path.relativeLineTo(_relativeX(size, 0), _relativeY(size, 40));
+                path.relativeLineTo(_relativeX(size, 20), _relativeY(size, 0));
+                path.close();
+
+                canvas.drawPath(path, paint, onTapDown: (tapDetail) {
+                  setSegmentState(element['segment'], !currentSegments[element['segment']]);
+                });
+              });
+
+              [
+                {'segment': 'f', 'startX': 110.0, 'startY': 10.0},
+                {'segment': 'g', 'startX': 140.0, 'startY': 10.0},
+                {'segment': 'h', 'startX': 170.0, 'startY': 10.0},
+                {'segment': 'i', 'startX': 110.0, 'startY': 40.0},
+                {'segment': 'j', 'startX': 140.0, 'startY': 40.0},
+                {'segment': 'k', 'startX': 170.0, 'startY': 40.0},
+                {'segment': 'l', 'startX': 110.0, 'startY': 70.0},
+                {'segment': 'm', 'startX': 140.0, 'startY': 70.0},
+                {'segment': 'n', 'startX': 170.0, 'startY': 70.0}
+              ].forEach((element) {
+                paint.color = currentSegments[element['segment']] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 10
+                var path = Path();
+
+                double startX = element['startX'];
+                double startY = element['startY'];
+
+                path.moveTo(_relativeX(size, startX), _relativeY(size, startY));
+                path.relativeLineTo(_relativeX(size, 10), _relativeY(size, 10));
+                path.moveTo(_relativeX(size, startX + 10), _relativeY(size, startY + 10));
+                path.relativeLineTo(_relativeX(size, 10), _relativeY(size, -10));
+                path.moveTo(_relativeX(size, startX), _relativeY(size, startY));
+                path.relativeLineTo(_relativeX(size, 20), _relativeY(size, 0));
+
+                path.moveTo(_relativeX(size, startX + 10), _relativeY(size, startY + 10));
+                path.relativeLineTo(_relativeX(size, 0), _relativeY(size, 10));
+                canvas.drawPath(path, paint);
+
+                paint.color = _TRANSPARENT_COLOR;
+                path.moveTo(_relativeX(size, startX - 5), _relativeY(size, startY - 5));
+                path.relativeLineTo(_relativeX(size, 30), _relativeY(size, 0));
+                path.relativeLineTo(_relativeX(size, 0), _relativeY(size, 30));
+                path.relativeLineTo(_relativeX(size, -30), _relativeY(size, 0));
+                path.close();
+
+                canvas.drawPath(path, paint, onTapDown: (tapDetail) {
+                  setSegmentState(element['segment'], !currentSegments[element['segment']]);
+                });
+              });
+
             });
-
-            paint.color = currentSegments['b'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 10
-            x = 30; y = 40;
-            var pathB = Path();
-            pathB.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y));
-            pathB.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y));
-            pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 20), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 10));
-            pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y + 10));
-            pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 20), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y + 20));
-            pathB.close();
-
-            canvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
-              setSegmentState('b', !currentSegments['b']);
-            });
-
-            paint.color = currentSegments['c'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 10
-            x = 60; y = 20;
-            var pathC = Path();
-            pathC.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y));
-            pathC.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y));
-            pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 20), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 10));
-            pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y + 10));
-            pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 20), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y + 20));
-            pathC.close();
-
-            canvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
-              setSegmentState('c', !currentSegments['c']);
-            });
-
-            paint.color = currentSegments['d'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 10
-            x = 30; y = 80;
-            var pathD = Path();
-            pathD.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y));
-            pathD.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y));
-            pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 20), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 10));
-            pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y + 10));
-            pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 20), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y + 20));
-            pathD.close();
-
-            canvas.drawPath(pathD, paint, onTapDown: (tapDetail) {
-              setSegmentState('d', !currentSegments['d']);
-            });
-
-            paint.color = currentSegments['e'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 10
-            x = 60; y = 100;
-            var pathE = Path();
-            pathE.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y));
-            pathE.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y));
-            pathE.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 20), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathE.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 10));
-            pathE.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y + 10));
-            pathE.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x + 20), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y + 20));
-            pathE.close();
-
-            canvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
-              setSegmentState('e', !currentSegments['e']);
-            });
-
-            paint.color = currentSegments['f'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 1
-            x = 100; y = 39;
-            var pathF = Path();
-            pathF.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * y);
-            pathF.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathF.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x - 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathF.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x + 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathF.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathF.close();
-
-            canvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
-              setSegmentState('f', !currentSegments['f']);
-            });
-
-            paint.color = currentSegments['g'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 1
-            x = 130; y = 39;
-            var pathG = Path();
-            pathG.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * y);
-            pathG.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathG.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x - 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathG.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x + 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathG.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathG.close();
-
-            canvas.drawPath(pathG, paint, onTapDown: (tapDetail) {
-              setSegmentState('g', !currentSegments['g']);
-            });
-
-            paint.color = currentSegments['h'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 1
-            x = 160; y = 39;
-            var pathH = Path();
-            pathH.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * y);
-            pathH.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathH.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x - 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathH.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x + 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathH.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathH.close();
-
-            canvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
-              setSegmentState('h', !currentSegments['h']);
-            });
-
-            paint.color = currentSegments['i'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 1
-            x = 100; y = 79;
-            var pathI = Path();
-            pathI.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * y);
-            pathI.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathI.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x - 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathI.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x + 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathI.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathI.close();
-
-            canvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
-              setSegmentState('i', !currentSegments['i']);
-            });
-
-            paint.color = currentSegments['j'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 1
-            x = 130; y = 79;
-            var pathJ = Path();
-            pathJ.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * y);
-            pathJ.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathJ.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x - 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathJ.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x + 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathJ.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathJ.close();
-
-            canvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
-              setSegmentState('j', !currentSegments['j']);
-            });
-
-            paint.color = currentSegments['k'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 1
-            x = 160; y = 79;
-            var pathK = Path();
-            pathK.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * y);
-            pathK.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathK.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x - 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathK.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x + 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathK.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathK.close();
-
-            canvas.drawPath(pathK, paint, onTapDown: (tapDetail) {
-              setSegmentState('k', !currentSegments['k']);
-            });
-
-            paint.color = currentSegments['l'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 1
-            x = 100; y = 119;
-            var pathL = Path();
-            pathL.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * y);
-            pathL.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathL.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x - 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathL.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x + 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathL.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathL.close();
-
-            canvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
-              setSegmentState('l', !currentSegments['l']);
-            });
-
-            paint.color = currentSegments['m'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 1
-            x = 130; y = 119;
-            var pathM = Path();
-            pathM.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * y);
-            pathM.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathM.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x - 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathM.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x + 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathM.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathM.close();
-
-            canvas.drawPath(pathM, paint, onTapDown: (tapDetail) {
-              setSegmentState('m', !currentSegments['m']);
-            });
-
-            paint.color = currentSegments['n'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF; // 1
-            x = 160; y = 119;
-            var pathN = Path();
-            pathN.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * y);
-            pathN.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathN.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * (x - 10), size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathN.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x + 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 30));
-            pathN.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * (y - 20));
-            pathN.close();
-
-            canvas.drawPath(pathN, paint, onTapDown: (tapDetail) {
-              setSegmentState('n', !currentSegments['n']);
-            });
-
-          }
-      );
 }
