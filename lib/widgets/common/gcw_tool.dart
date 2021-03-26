@@ -22,7 +22,7 @@ enum ToolCategory {
 final SearchBlackList = {
   'code',
   'chiffre'
-  'cipher',
+      'cipher',
   'der',
   'die',
   'das',
@@ -32,7 +32,7 @@ final SearchBlackList = {
   'und',
   'drei',
   'zwei'
-  'the',
+      'the',
   'one',
   'two',
   'three',
@@ -59,8 +59,7 @@ class GCWToolActionButtonsEntry {
   final String text; // - message-text to be shown in the dialog
   final IconData icon; // - icon tto be shown in the appbar
 
-  GCWToolActionButtonsEntry(
-      this.showDialog, this.url, this.title, this.text, this.icon);
+  GCWToolActionButtonsEntry(this.showDialog, this.url, this.title, this.text, this.icon);
 }
 
 class GCWTool extends StatefulWidget {
@@ -147,16 +146,12 @@ class _GCWToolState extends State<GCWTool> {
     // normalize searchString
     searchString.split(' ').where((word) => !SearchBlackList.contains(word)).join(' ');
 
-    if (!isLocaleSupported(appLocale) || widget.missingHelpLocales.contains(appLocale))
-      url = 'https://blog.gcwizard.net/manual/' +
-          'en' +
-          '/search/' +
-          searchString;
-    else // fallback to en if unsupported locale
-      url = 'https://blog.gcwizard.net/manual/' +
-          Localizations.localeOf(context).toString() +
-          '/search/' +
-          searchString;
+    if (!isLocaleSupported(appLocale) ||
+        widget.missingHelpLocales.contains(appLocale)) // fallback to en if unsupported locale
+      url = 'https://blog.gcwizard.net/manual/' + 'en' + '/search/' + searchString;
+    else
+      url =
+          'https://blog.gcwizard.net/manual/' + Localizations.localeOf(context).toString() + '/search/' + searchString;
     buttonList.add(IconButton(
       icon: Icon(Icons.auto_fix_high),
       onPressed: () {
@@ -179,8 +174,7 @@ class _GCWToolState extends State<GCWTool> {
       widget.buttonList.forEach((button) {
         String url = '';
         if (button.url == '') // 404-Page asking for help
-          url = i18n(context,
-              'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
+          url = i18n(context, 'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
         else
           url = button.url;
         if (button.url != null && button.url.length != 0)
@@ -211,7 +205,6 @@ class _GCWToolState extends State<GCWTool> {
 
     if (widget.autoScroll == false) return widget.tool;
 
-    return SingleChildScrollView(
-        child: Padding(child: widget.tool, padding: EdgeInsets.all(10)));
+    return SingleChildScrollView(child: Padding(child: widget.tool, padding: EdgeInsets.all(10)));
   }
 }
