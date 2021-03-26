@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/persistence/formula_solver/model.dart';
+import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_checkbox.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
-import 'package:gc_wizard/widgets/common/gcw_checkbox.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
-import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
 String output;
@@ -29,7 +29,6 @@ showFormulaReplaceDialog(BuildContext context, Formula formula,
 
 class GCWFormulaReplace extends StatefulWidget {
   final String formula;
-  //var String replaceFormula;
 
   const GCWFormulaReplace({Key key, this.formula}) : super(key: key);
 
@@ -48,11 +47,6 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GCWTextDivider(text: i18n(context, 'formulasolver_formulas_currentformula'), style: textStyle),
-        GCWText(
-          text: widget.formula,
-          style: textStyle,
-        ),
         GCWTextDivider(text: i18n(context, 'formulasolver_formulas_modifiedformula'), style: textStyle),
         GCWText(
           text: _buildNewFormula(widget.formula),

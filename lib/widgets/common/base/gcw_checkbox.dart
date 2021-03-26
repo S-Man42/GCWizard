@@ -1,13 +1,14 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 
 class GCWCheckBox extends StatefulWidget {
-  final bool value;
   final Function onChanged;
-  final Alignment align;
+  final String title;
+  final value;
+  final bool notitle;
   final bool tristate;
+  final TextStyle textStyle;
   final Color activeColor;
   final MaterialStateProperty<Color> fillColor;
   final Color checkColor;
@@ -19,8 +20,10 @@ class GCWCheckBox extends StatefulWidget {
       {Key key,
       this.value,
       this.onChanged,
-      this.align: Alignment.centerLeft,
+      this.title,
+      this.notitle: false,
       this.tristate = false,
+      this.textStyle,
       this.activeColor,
       this.fillColor,
       this.checkColor,
@@ -30,26 +33,39 @@ class GCWCheckBox extends StatefulWidget {
       : super(key: key);
 
   @override
-  _GCWCheckBoxState createState() => _GCWCheckBoxState();
+  GCWCheckBoxState createState() => GCWCheckBoxState();
 }
 
-class _GCWCheckBoxState extends State<GCWCheckBox> {
-  ThemeColors colors = themeColors();
+class GCWCheckBoxState extends State<GCWCheckBox> {
+  var _currentValue = false;
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-        alignment: widget.align,
-        child: Checkbox(
-          value: widget.value,
-          onChanged: widget.onChanged,
-          tristate: widget.tristate,
-          activeColor: widget.activeColor,
-          fillColor: widget.fillColor,
-          checkColor: widget.checkColor,
-          focusColor: widget.focusColor,
-          hoverColor: widget.hoverColor,
-          overlayColor: widget.overlayColor,
-        ));
+    return Row(
+      children: <Widget>[
+        if (!widget.notitle) Expanded(child: GCWText(text: (widget.title), style: widget.textStyle), flex: 3),
+        Expanded(
+            child: Container(
+              child: Row(
+                children: <Widget>[
+                  Expanded(child: Container(), flex: 1),
+                  Checkbox(
+                    value: widget.value ?? _currentValue,
+                    onChanged: widget.onChanged,
+                    activeColor: widget.activeColor ?? themeColors().checkBoxActiveColor(),
+                    fillColor: widget.fillColor ?? MaterialStateColor.resolveWith(themeColors().checkBoxFillColor),
+                    checkColor: widget.checkColor ?? themeColors().checkBoxCheckColor(),
+                    focusColor: widget.focusColor ?? themeColors().checkBoxFocusColor(),
+                    hoverColor: widget.hoverColor ?? themeColors().checkBoxHoverColor(),
+                    overlayColor:
+                        widget.overlayColor ?? MaterialStateColor.resolveWith(themeColors().checkBoxOverlayColor),
+                  ),
+                  Expanded(child: Container(), flex: 1),
+                ],
+              ),
+            ),
+            flex: 3),
+      ],
+    );
   }
 }

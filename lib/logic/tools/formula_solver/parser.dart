@@ -38,8 +38,6 @@ class FormulaParser {
     'e'
   ];
 
-  final formulaCleanUp = {'—': '-', '–': '-', '˗': '-', '−': '-', '‒': '-'};
-
   FormulaParser() {
     _context = ContextModel();
 
@@ -132,7 +130,7 @@ class FormulaParser {
 
     if (values == null) values = <String, String>{};
 
-    formula = substitution(formula, formulaCleanUp);
+    formula = formula.replaceAll(RegExp(r'[—–˗−‒]'), '-'); // different minus/hyphens/dashes
 
     RegExp regExp = new RegExp(r'\[.+?\]');
     var matches = regExp.allMatches(formula.trim());
