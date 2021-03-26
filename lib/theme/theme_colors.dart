@@ -28,6 +28,13 @@ abstract class ThemeColors {
   Color switchThumb2();
   Color switchTrack2();
 
+  Color checkBoxActiveColor();
+  Color checkBoxFillColor(Set<MaterialState> states);
+  Color checkBoxCheckColor();
+  Color checkBoxFocusColor();
+  Color checkBoxHoverColor();
+  Color checkBoxOverlayColor(Set<MaterialState> states);
+
   Color outputListOddRows();
 
   Color listSubtitle();
