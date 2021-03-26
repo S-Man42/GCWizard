@@ -368,6 +368,9 @@ class Registry {
           tool: BabylonNumbersSelection(),
           i18nPrefix: 'babylonnumbers_selection',
           category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [
+            'fr'
+          ],
           searchStrings: [
             SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS,
             SEARCHSTRING_DE_BABYLONIAN_NUMERALS,

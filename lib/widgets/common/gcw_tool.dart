@@ -19,10 +19,10 @@ enum ToolCategory {
   SYMBOL_TABLES
 }
 
-final SearchBlackList = {
+final _SEARCH_BLACKLIST = {
   'code',
-  'chiffre'
-      'cipher',
+  'chiffre',
+  'cipher',
   'der',
   'die',
   'das',
@@ -32,7 +32,7 @@ final SearchBlackList = {
   'und',
   'drei',
   'zwei'
-      'the',
+  'the',
   'one',
   'two',
   'three',
@@ -44,12 +44,14 @@ final SearchBlackList = {
   'deux',
   'trois',
   'de',
-  "d'",
-  "l'",
+  'd',
+  'l',
   'le',
   'la',
   'chiffrement'
 };
+
+const HELP_BASE_URL = 'https://blog.gcwizard.net/manual/';
 
 class GCWToolActionButtonsEntry {
   // to be used in registry to define a buttonlist which will be displayed in the app bar
@@ -69,7 +71,6 @@ class GCWTool extends StatefulWidget {
   final autoScroll;
   final iconPath;
   final List<String> searchStrings;
-  final bool helpButton;
   final List<GCWToolActionButtonsEntry> buttonList;
   final List<String> missingHelpLocales;
 
@@ -90,7 +91,6 @@ class GCWTool extends StatefulWidget {
       this.autoScroll: true,
       this.iconPath,
       this.searchStrings,
-      this.helpButton: true,
       this.buttonList,
       this.missingHelpLocales})
       : super(key: key) {
@@ -135,39 +135,44 @@ class _GCWToolState extends State<GCWTool> {
         body: _buildBody());
   }
 
+  String _normalizeSearchString(String text) {
+    text = text.trim().toLowerCase();
+    text = text.replaceAll(RegExp(r"[\s+'`´]"), ' ');
+    text = text.split(' ').where((word) => !_SEARCH_BLACKLIST.contains(word)).join(' ');
+    return text;
+  }
+  
   List<Widget> _buildButtons() {
-    List<Widget> buttonList = new List<Widget>();
+    List<Widget> buttonList = <Widget>[];
 
     // add button with url for searching knowledge base with toolName
     final Locale appLocale = Localizations.localeOf(context);
-    String searchString = widget.toolName.toString().toLowerCase();
-    String url = '';
-
-    // normalize searchString
-    searchString.split(' ').where((word) => !SearchBlackList.contains(word)).join(' ');
-
+    
+    String searchString = '';
+    
     if (!isLocaleSupported(appLocale) ||
-        widget.missingHelpLocales.contains(appLocale)) // fallback to en if unsupported locale
-      url = 'https://blog.gcwizard.net/manual/' + 'en' + '/search/' + searchString;
-    else
-      url =
-          'https://blog.gcwizard.net/manual/' + Localizations.localeOf(context).toString() + '/search/' + searchString;
+        widget.missingHelpLocales.contains(appLocale.languageCode)) {      // fallback to en if unsupported locale
+      searchString = i18n(context, widget.i18nPrefix + '_title', useDefaultLanguage: true);
+    } else {
+      searchString = widget.toolName;
+    }
+    
+    searchString = _normalizeSearchString(searchString);
+    String locale = 'en';
+
+    if (isLocaleSupported(appLocale) &&
+        !widget.missingHelpLocales.contains(appLocale.languageCode))
+      locale = Localizations.localeOf(context).languageCode;
+
+    var url = HELP_BASE_URL + locale + '/search/' + searchString;
+    url = Uri.encodeFull(url);
+
     buttonList.add(IconButton(
-      icon: Icon(Icons.auto_fix_high),
+      icon: Icon(Icons.help),
       onPressed: () {
         launch(url);
       },
     ));
-
-    // add helpButton as hard-coded in json
-    if (widget.helpButton) {
-      buttonList.add(IconButton(
-        icon: Icon(Icons.help),
-        onPressed: () {
-          launch(i18n(context, widget.i18nPrefix + '_online_help_url'));
-        },
-      ));
-    }
 
     // add further buttons as defined in registry
     if (widget.buttonList != null) {

@@ -50,7 +50,7 @@ class GeneralSettingsState extends State<GeneralSettings> {
                             items: supportedLocales.map((locale) {
                               return GCWDropDownMenuItem(
                                 value: locale.languageCode ?? defaultLanguage,
-                                child: i18n(context, "settings_lang_" + locale.languageCode) ?? locale.languageCode,
+                                child: {'de': 'Deutsch', 'en': 'English', 'fr': 'Français'}[locale.languageCode],
                               );
                             }).toList(),
                             value: currentLocale.languageCode ?? defaultLanguage,
