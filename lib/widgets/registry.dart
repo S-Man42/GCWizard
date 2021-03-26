@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
 import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
@@ -94,6 +95,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/alphabet_values.dar
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/amsco.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ascii_values.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/atbash.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/babylon_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bacon.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base16.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/base/base32.dart';
@@ -361,6 +363,16 @@ class Registry {
         SEARCHSTRING_DE_ATBASH,
         SEARCHSTRING_EN_ATBASH,
         SEARCHSTRING_FR_ATBASH
+      ]),
+      GCWTool(
+          tool: BabylonNumbersSelection(),
+          i18nPrefix: 'babylonnumbers_selection',
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: [
+            SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS,
+            SEARCHSTRING_DE_BABYLONIAN_NUMERALS,
+            SEARCHSTRING_EN_BABYLONIAN_NUMERALS,
+            SEARCHSTRING_FR_BABYLONIAN_NUMERALS
       ]),
       GCWTool(tool: Bacon(), i18nPrefix: 'bacon', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
         'fr'
@@ -1881,6 +1893,20 @@ class Registry {
             SEARCHSTRING_EN_COORDINATES_VARIABLECOORDINATEFORMULAS,
             SEARCHSTRING_FR_COORDINATES_VARIABLECOORDINATEFORMULAS
           ]),
+      
+      //Babylon Numbers Selection **************************************************************************************************
+      GCWTool(
+          tool: BabylonNumbers(),
+          i18nPrefix: 'babylonnumbers',
+          searchStrings: [
+            SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS,
+            SEARCHSTRING_DE_BABYLONIAN_NUMERALS,
+            SEARCHSTRING_EN_BABYLONIAN_NUMERALS,
+            SEARCHSTRING_FR_BABYLONIAN_NUMERALS
+          ]),
+
+      //BaseSelection **************************************************************************************************
+      
       GCWTool(
           tool: CoordinateAveraging(),
           i18nPrefix: 'coords_averaging',

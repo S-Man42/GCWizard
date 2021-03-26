@@ -5,6 +5,7 @@ import 'package:touchable/touchable.dart';
 
 class NSegmentDisplay extends StatefulWidget {
   final Map<String, bool> initialSegments;
+  final double aspectRatio;
   final SegmentDisplayType type;
 
   final Map<String, bool> segments;
@@ -14,7 +15,14 @@ class NSegmentDisplay extends StatefulWidget {
   final Function customPaint;
 
   NSegmentDisplay(
-      {Key key, this.initialSegments, this.type, this.segments, this.readOnly: false, this.onChanged, this.customPaint})
+      {Key key,
+      this.initialSegments,
+      this.type,
+      this.segments,
+      this.readOnly: false,
+      this.onChanged,
+      this.customPaint,
+      this.aspectRatio: SEGMENTS_RELATIVE_DISPLAY_WIDTH / SEGMENTS_RELATIVE_DISPLAY_HEIGHT})
       : super(key: key);
 
   @override
@@ -41,7 +49,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
       children: <Widget>[
         Expanded(
             child: AspectRatio(
-                aspectRatio: SEGMENTS_RELATIVE_DISPLAY_WIDTH / SEGMENTS_RELATIVE_DISPLAY_HEIGHT,
+                aspectRatio: widget.aspectRatio,
                 child: CanvasTouchDetector(
                   builder: (context) {
                     return CustomPaint(

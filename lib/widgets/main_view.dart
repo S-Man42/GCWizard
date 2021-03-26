@@ -9,6 +9,7 @@ import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/favorites.dart';
 import 'package:gc_wizard/widgets/main_menu.dart';
 import 'package:gc_wizard/widgets/registry.dart';
+import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
@@ -223,6 +224,7 @@ class _MainViewState extends State<MainView> {
         className(Antipodes()),
         className(ASCIIValues()),
         className(Atbash()),
+        className(BabylonNumbersSelection()),
         className(Bacon()),
         className(BaseSelection()),
         className(BCDSelection()),
