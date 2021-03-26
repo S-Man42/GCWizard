@@ -50,7 +50,7 @@ class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
             customPaint: (canvas, size, currentSegments, setSegmentState) {
               var paint = sketchSegmentPaint();
               paint.strokeWidth = 2.5;
-  
+
               [
                 {'segment': 'a', 'startX': 30.0, 'startY': 40.0},
                 {'segment': 'b', 'startX': 60.0, 'startY': 20.0},
@@ -123,6 +123,5 @@ class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
                   setSegmentState(element['segment'], !currentSegments[element['segment']]);
                 });
               });
-
             });
 }

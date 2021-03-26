@@ -15,8 +15,14 @@ class NSegmentDisplay extends StatefulWidget {
   final Function customPaint;
 
   NSegmentDisplay(
-      {Key key, this.initialSegments, this.type, this.segments, this.readOnly: false, this.onChanged, this.customPaint,
-        this.aspectRatio: SEGMENTS_RELATIVE_DISPLAY_WIDTH / SEGMENTS_RELATIVE_DISPLAY_HEIGHT})
+      {Key key,
+      this.initialSegments,
+      this.type,
+      this.segments,
+      this.readOnly: false,
+      this.onChanged,
+      this.customPaint,
+      this.aspectRatio: SEGMENTS_RELATIVE_DISPLAY_WIDTH / SEGMENTS_RELATIVE_DISPLAY_HEIGHT})
       : super(key: key);
 
   @override
@@ -56,9 +62,7 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
                       });
                     }, customPaint: widget.customPaint));
                   },
-                )
-          )
-        )
+                )))
       ],
     );
   }
