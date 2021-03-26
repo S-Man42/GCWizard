@@ -24,6 +24,8 @@ import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coor
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_values.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
+import 'gcw_formula_replace_dialog.dart';
+
 class FormulaSolverFormulas extends StatefulWidget {
   final FormulaGroup group;
 
@@ -277,8 +279,14 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                     _editFormulaController.text = formula.formula;
                                   })),
                           GCWPopupMenuItem(
-                              child:
-                                  iconedGCWPopupMenuItem(context, Icons.delete, 'formulasolver_formulas_removeformula'),
+                              child: iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformula'),
+                              action: (index) => setState(() {
+                                    showFormulaReplaceDialog(context, formula, onOkPressed: (value) {
+                                        formula.formula =value ; setState(() {});});
+                                    })
+                                  ),
+                          GCWPopupMenuItem(
+                              child: iconedGCWPopupMenuItem(context, Icons.delete, 'formulasolver_formulas_removeformula'),
                               action: (index) => showDeleteAlertDialog(
                                     context,
                                     formula.formula,
@@ -288,8 +296,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                     },
                                   )),
                           GCWPopupMenuItem(
-                              child: iconedGCWPopupMenuItem(
-                                  context, Icons.content_copy, 'formulasolver_formulas_copyformula'),
+                              child: iconedGCWPopupMenuItem(context, Icons.content_copy, 'formulasolver_formulas_copyformula'),
                               action: (index) => Clipboard.setData(ClipboardData(text: formula.formula))),
                           GCWPopupMenuItem(
                               child: iconedGCWPopupMenuItem(

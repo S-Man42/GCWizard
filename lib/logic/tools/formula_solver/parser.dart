@@ -38,6 +38,8 @@ class FormulaParser {
     'e'
   ];
 
+  final formulaCleanUp = {'—' : '-', '–' : '-', '˗' : '-', '−' : '-', '‒' : '-'};
+
   FormulaParser() {
     _context = ContextModel();
 
@@ -129,6 +131,8 @@ class FormulaParser {
     if (formula == '') return {'state': STATE_ERROR, 'result': formula};
 
     if (values == null) values = <String, String>{};
+
+    formula = substitution(formula, formulaCleanUp);
 
     RegExp regExp = new RegExp(r'\[.+?\]');
     var matches = regExp.allMatches(formula.trim());
