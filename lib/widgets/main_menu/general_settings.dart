@@ -49,11 +49,11 @@ class GeneralSettingsState extends State<GeneralSettings> {
                         return GCWStatefulDropDownButton(
                             items: supportedLocales.map((locale) {
                               return GCWDropDownMenuItem(
-                                value: locale.languageCode ?? "en",
-                                child: i18n(context, locale.languageCode) ?? locale.languageCode,
+                                value: locale.languageCode ?? defaultLanguage,
+                                child: i18n(context, "settings_lang_" + locale.languageCode) ?? locale.languageCode,
                               );
                             }).toList(),
-                            value: currentLocale.languageCode ?? "en",
+                            value: currentLocale.languageCode ?? defaultLanguage,
                             onChanged: (newValue) {
                               appLanguage.changeLanguage(newValue);
                             });
