@@ -32,7 +32,7 @@ double modLon(double x) {
   return x;
 }
 
-String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Ellipsoid ells) {
+String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Ellipsoid ells, [int precision]) {
   int _getGKCode() {
     switch (_outputFormat['subtype']) {
       case keyCoordsGaussKruegerGK1:
@@ -50,15 +50,13 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
     }
   }
 
-  var _formatted;
-
   switch (_outputFormat['format']) {
     case keyCoordsDEC:
-      return latLonToDECString(_coords);
+      return latLonToDECString(_coords, precision);
     case keyCoordsDMM:
-      return latLonToDMMString(_coords);
+      return latLonToDMMString(_coords, precision);
     case keyCoordsDMS:
-      return latLonToDMSString(_coords);
+      return latLonToDMSString(_coords, precision);
     case keyCoordsUTM:
       return latLonToUTMString(_coords, ells);
     case keyCoordsMGRS:

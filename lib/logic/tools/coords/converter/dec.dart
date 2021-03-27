@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:latlong/latlong.dart';
@@ -12,8 +14,15 @@ DEC latLonToDEC(LatLng coord) {
   return DEC(coord.latitude, coord.longitude);
 }
 
-String latLonToDECString(LatLng coord) {
-  return '${NumberFormat('00.000#######').format(coord.latitude)}\n${NumberFormat('000.000#######').format(coord.longitude)}';
+String latLonToDECString(LatLng coord, [int precision]) {
+  if (precision == null) precision = 10;
+
+  if (precision < 1) precision = 1;
+
+  String fixedDigits = '0' * min(precision, 3);
+  String variableDigits = precision > 3 ? '#' * (precision - 3) : '';
+
+  return '${NumberFormat('00.' + fixedDigits + variableDigits).format(coord.latitude)}\n${NumberFormat('000.' + fixedDigits + variableDigits).format(coord.longitude)}';
 }
 
 DEC normalize(DEC coord) {
