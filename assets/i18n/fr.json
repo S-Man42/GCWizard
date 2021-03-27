@@ -1332,7 +1332,6 @@
   "formulasolver_formulas_values": "Valeurs",
   "formulasolver_formulas_newformula": "Ajouter une formule",
   "formulasolver_formulas_newformula_hint": "Entrer une formule",
-  "formulasolver_formulas_currentformula": "Formule actuelle",
   "formulasolver_formulas_currentformulas": "Formules créées",
   "formulasolver_formulas_notcomputable": "Impossible à calculer!",
   "formulasolver_formulas_editformula": "Editer la formule",

@@ -1333,7 +1333,6 @@
   "formulasolver_formulas_values": "Werte",
   "formulasolver_formulas_newformula": "Formel hinzufügen",
   "formulasolver_formulas_newformula_hint": "Formel eingeben",
-  "formulasolver_formulas_currentformula": "Aktuelle Formel",
   "formulasolver_formulas_currentformulas": "Erstellte Formeln",
   "formulasolver_formulas_notcomputable": "Nicht berechenbar!",
   "formulasolver_formulas_editformula": "Formel bearbeiten",
