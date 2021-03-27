@@ -1164,6 +1164,8 @@
   "coords_averaging_title": "Koordinate einmessen",
   "coords_averaging_start": "Starte Messung",
   "coords_averaging_stop": "Beende Messung",
+  "coords_averaging_averagedcoordinate": "Gemittelte Koordinate\n(%s1 Messungen)",
+  "coords_averaging_calculatedaccuracy": "Berechnete Genauigkeit",
   "crosssum_selection_title": "Quersumme",
   "crosssum_selection_description": "Quersummen einer ganzen Zahl",
   "crosssum_crosssum_title": "Quersumme",

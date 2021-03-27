@@ -99,21 +99,28 @@ class CoordinateAveragingState extends State<CoordinateAveraging> {
             child: Column(
           children: columnedMultiLineOutput(
               context,
-              _averagedLocations
-                  .asMap()
-                  .map((index, location) {
-                    var coord = formatCoordOutput(location.coord, defaultCoordFormat(), defaultEllipsoid())
-                        .replaceAll('\n', ' ');
-                    var accuracy = _formatLength(location.accuracy);
+              [
+                    <dynamic>[
+                      null,
+                      i18n(context, 'coords_averaging_averagedcoordinate', parameters: [_averagedLocations.length]),
+                      i18n(context, 'coords_averaging_calculatedaccuracy')
+                    ]
+                  ] +
+                  _averagedLocations
+                      .asMap()
+                      .map((index, location) {
+                        var coord = formatCoordOutput(location.coord, defaultCoordFormat(), defaultEllipsoid());
+                        var accuracy = _formatLength(location.accuracy);
 
-                    return MapEntry(index, [index + 1, coord, accuracy]);
-                  })
-                  .values
-                  .toList()
-                  .reversed
-                  .toList(),
-              flexValues: [1, 6, 2],
-              copyColumn: 1),
+                        return MapEntry(index, [index + 1, coord, accuracy]);
+                      })
+                      .values
+                      .toList()
+                      .reversed
+                      .toList(),
+              flexValues: [1, 6, 4],
+              copyColumn: 1,
+              hasHeader: true),
         )),
       ],
     );
