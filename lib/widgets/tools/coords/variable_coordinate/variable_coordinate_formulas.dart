@@ -100,10 +100,9 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
     var odd = true;
     var rows = formulas.map((formula) {
       var formulaTool = GCWTool(
-        tool: VariableCoordinate(formula: formula),
-        toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
-        missingHelpLocales: ['fr']
-      );
+          tool: VariableCoordinate(formula: formula),
+          toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
+          missingHelpLocales: ['fr']);
 
       Future _navigateToSubPage(context) async {
         Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {

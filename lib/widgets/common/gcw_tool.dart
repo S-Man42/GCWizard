@@ -32,7 +32,7 @@ final _SEARCH_BLACKLIST = {
   'und',
   'drei',
   'zwei'
-  'the',
+      'the',
   'one',
   'two',
   'three',
@@ -153,7 +153,8 @@ class _GCWToolState extends State<GCWTool> {
 
     String searchString = '';
 
-    if (_needsDefaultHelp(appLocale)) {      // fallback to en if unsupported locale
+    if (_needsDefaultHelp(appLocale)) {
+      // fallback to en if unsupported locale
       searchString = i18n(context, widget.i18nPrefix + '_title', useDefaultLanguage: true);
     } else {
       searchString = widget.toolName;
@@ -162,8 +163,7 @@ class _GCWToolState extends State<GCWTool> {
     searchString = _normalizeSearchString(searchString);
     String locale = 'en';
 
-    if (!_needsDefaultHelp(appLocale))
-      locale = Localizations.localeOf(context).languageCode;
+    if (!_needsDefaultHelp(appLocale)) locale = Localizations.localeOf(context).languageCode;
 
     var url = HELP_BASE_URL + locale + '/search/' + searchString;
     url = Uri.encodeFull(url);
@@ -175,13 +175,12 @@ class _GCWToolState extends State<GCWTool> {
       },
     );
   }
-  
+
   List<Widget> _buildButtons() {
     List<Widget> buttonList = <Widget>[];
 
     Widget helpButton = _buildHelpButton();
-    if (helpButton != null)
-      buttonList.add(helpButton);
+    if (helpButton != null) buttonList.add(helpButton);
 
     // add further buttons as defined in registry
     if (widget.buttonList != null) {

@@ -310,7 +310,9 @@ class GCWMapViewState extends State<GCWMapView> {
                     NoAnimationMaterialPageRoute(
                         builder: (context) => GCWTool(
                             tool: MapPolylineEditor(polyline: child),
-                            toolName: i18n(context, 'coords_openmap_title') + ': ' + i18n(context, 'coords_openmap_lineeditor'),
+                            toolName: i18n(context, 'coords_openmap_title') +
+                                ': ' +
+                                i18n(context, 'coords_openmap_lineeditor'),
                             missingHelpLocales: ['fr']))).whenComplete(() {
                   setState(() {
                     if (child is GCWMapPolyline) {
@@ -325,7 +327,9 @@ class GCWMapViewState extends State<GCWMapView> {
                     NoAnimationMaterialPageRoute(
                         builder: (context) => GCWTool(
                             tool: MapPointEditor(mapPoint: mapPoint, lengthUnit: defaultLengthUnit),
-                            toolName: i18n(context, 'coords_openmap_title') + ': ' + i18n(context, 'coords_openmap_lineeditor'),
+                            toolName: i18n(context, 'coords_openmap_title') +
+                                ': ' +
+                                i18n(context, 'coords_openmap_lineeditor'),
                             missingHelpLocales: ['fr']))).whenComplete(() {
                   setState(() {
                     _persistanceAdapter.updateMapPoint(mapPoint);
@@ -720,7 +724,9 @@ class GCWMapViewState extends State<GCWMapView> {
                               NoAnimationMaterialPageRoute(
                                   builder: (context) => GCWTool(
                                       tool: MapPointEditor(mapPoint: gcwMarker.mapPoint, lengthUnit: defaultLengthUnit),
-                                      toolName: i18n(context, 'coords_openmap_title') + ': ' + i18n(context, 'coords_openmap_pointeditor'),
+                                      toolName: i18n(context, 'coords_openmap_title') +
+                                          ': ' +
+                                          i18n(context, 'coords_openmap_pointeditor'),
                                       missingHelpLocales: ['fr']))).whenComplete(() {
                             setState(() {
                               _persistanceAdapter.updateMapPoint(gcwMarker.mapPoint);

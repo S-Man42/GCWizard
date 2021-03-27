@@ -49,7 +49,8 @@ flutter:
   assets:
     - assets/i18n/
     - assets/logo/
-    - assets/coordinates/
+    - assets/icons/coords/
+    - assets/icons/science_and_technology/
     - assets/quadgrams/
     - assets/tokens/
     - assets/symbol_tables/

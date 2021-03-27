@@ -71,10 +71,9 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     _foundCoordinates = {};
 
     var formulaTool = GCWTool(
-      tool: FormulaSolverFormulaValues(group: widget.group),
-      toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
-      missingHelpLocales: ['fr']
-    );
+        tool: FormulaSolverFormulaValues(group: widget.group),
+        toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
+        missingHelpLocales: ['fr']);
 
     Future _navigateToSubPage(context) async {
       Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {
@@ -381,12 +380,11 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
         context,
         MaterialPageRoute(
             builder: (context) => GCWTool(
-                  tool: GCWMapView(
-                    points: coordinates,
-                  ),
-                  toolName: i18n(context, 'coords_map_view_title'),
-                  autoScroll: false,
-                  missingHelpLocales: ['fr']
-                )));
+                tool: GCWMapView(
+                  points: coordinates,
+                ),
+                toolName: i18n(context, 'coords_map_view_title'),
+                autoScroll: false,
+                missingHelpLocales: ['fr'])));
   }
 }

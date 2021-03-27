@@ -1800,7 +1800,7 @@ class Registry {
       GCWTool(
           tool: WaypointProjection(),
           i18nPrefix: 'coords_waypointprojection',
-          iconPath: 'assets/coordinates/icon_waypoint_projection.png',
+          iconPath: 'assets/icons/coords/icon_waypoint_projection.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -1822,7 +1822,7 @@ class Registry {
       GCWTool(
           tool: DistanceBearing(),
           i18nPrefix: 'coords_distancebearing',
-          iconPath: 'assets/coordinates/icon_distance_and_bearing.png',
+          iconPath: 'assets/icons/coords/icon_distance_and_bearing.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -1840,7 +1840,7 @@ class Registry {
       GCWTool(
           tool: FormatConverter(),
           i18nPrefix: 'coords_formatconverter',
-          iconPath: 'assets/coordinates/icon_format_converter.png',
+          iconPath: 'assets/icons/coords/icon_format_converter.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -1859,7 +1859,7 @@ class Registry {
           tool: MapView(),
           autoScroll: false,
           i18nPrefix: 'coords_openmap',
-          iconPath: 'assets/coordinates/icon_free_map.png',
+          iconPath: 'assets/icons/coords/icon_free_map.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -1877,7 +1877,7 @@ class Registry {
       GCWTool(
           tool: VariableCoordinateFormulas(),
           i18nPrefix: 'coords_variablecoordinate',
-          iconPath: 'assets/coordinates/icon_variable_coordinate.png',
+          iconPath: 'assets/icons/coords/icon_variable_coordinate.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -1910,7 +1910,7 @@ class Registry {
       GCWTool(
           tool: CoordinateAveraging(),
           i18nPrefix: 'coords_averaging',
-          iconPath: 'assets/coordinates/icon_coordinate_measurement.png',
+          iconPath: 'assets/icons/coords/icon_coordinate_measurement.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -1928,7 +1928,7 @@ class Registry {
       GCWTool(
           tool: CenterTwoPoints(),
           i18nPrefix: 'coords_centertwopoints',
-          iconPath: 'assets/coordinates/icon_center_two_points.png',
+          iconPath: 'assets/icons/coords/icon_center_two_points.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -1946,7 +1946,7 @@ class Registry {
       GCWTool(
           tool: CenterThreePoints(),
           i18nPrefix: 'coords_centerthreepoints',
-          iconPath: 'assets/coordinates/icon_center_three_points.png',
+          iconPath: 'assets/icons/coords/icon_center_three_points.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -1964,7 +1964,7 @@ class Registry {
       GCWTool(
           tool: SegmentLine(),
           i18nPrefix: 'coords_segmentline',
-          iconPath: 'assets/coordinates/icon_segment_line.png',
+          iconPath: 'assets/icons/coords/icon_segment_line.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -1982,7 +1982,7 @@ class Registry {
       GCWTool(
           tool: SegmentBearings(),
           i18nPrefix: 'coords_segmentbearings',
-          iconPath: 'assets/coordinates/icon_segment_bearings.png',
+          iconPath: 'assets/icons/coords/icon_segment_bearings.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -2000,7 +2000,7 @@ class Registry {
       GCWTool(
           tool: CrossBearing(),
           i18nPrefix: 'coords_crossbearing',
-          iconPath: 'assets/coordinates/icon_cross_bearing.png',
+          iconPath: 'assets/icons/coords/icon_cross_bearing.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -2018,7 +2018,7 @@ class Registry {
       GCWTool(
           tool: IntersectBearings(),
           i18nPrefix: 'coords_intersectbearings',
-          iconPath: 'assets/coordinates/icon_intersect_bearings.png',
+          iconPath: 'assets/icons/coords/icon_intersect_bearings.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -2040,7 +2040,7 @@ class Registry {
       GCWTool(
           tool: IntersectFourPoints(),
           i18nPrefix: 'coords_intersectfourpoints',
-          iconPath: 'assets/coordinates/icon_intersect_four_points.png',
+          iconPath: 'assets/icons/coords/icon_intersect_four_points.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -2058,7 +2058,7 @@ class Registry {
       GCWTool(
           tool: IntersectGeodeticAndCircle(),
           i18nPrefix: 'coords_intersectbearingcircle',
-          iconPath: 'assets/coordinates/icon_intersect_bearing_and_circle.png',
+          iconPath: 'assets/icons/coords/icon_intersect_bearing_and_circle.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -2080,7 +2080,7 @@ class Registry {
       GCWTool(
           tool: IntersectTwoCircles(),
           i18nPrefix: 'coords_intersecttwocircles',
-          iconPath: 'assets/coordinates/icon_intersect_two_circles.png',
+          iconPath: 'assets/icons/coords/icon_intersect_two_circles.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -2098,7 +2098,7 @@ class Registry {
       GCWTool(
           tool: IntersectThreeCircles(),
           i18nPrefix: 'coords_intersectthreecircles',
-          iconPath: 'assets/coordinates/icon_intersect_three_circles.png',
+          iconPath: 'assets/icons/coords/icon_intersect_three_circles.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -2116,7 +2116,7 @@ class Registry {
       GCWTool(
           tool: Antipodes(),
           i18nPrefix: 'coords_antipodes',
-          iconPath: 'assets/coordinates/icon_antipodes.png',
+          iconPath: 'assets/icons/coords/icon_antipodes.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -2134,7 +2134,7 @@ class Registry {
       GCWTool(
           tool: Intersection(),
           i18nPrefix: 'coords_intersection',
-          iconPath: 'assets/coordinates/icon_intersection.png',
+          iconPath: 'assets/icons/coords/icon_intersection.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -2152,7 +2152,7 @@ class Registry {
       GCWTool(
           tool: Resection(),
           i18nPrefix: 'coords_resection',
-          iconPath: 'assets/coordinates/icon_resection.png',
+          iconPath: 'assets/icons/coords/icon_resection.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -2170,7 +2170,7 @@ class Registry {
       GCWTool(
           tool: EquilateralTriangle(),
           i18nPrefix: 'coords_equilateraltriangle',
-          iconPath: 'assets/coordinates/icon_equilateral_triangle.png',
+          iconPath: 'assets/icons/coords/icon_equilateral_triangle.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -2188,7 +2188,7 @@ class Registry {
       GCWTool(
           tool: EllipsoidTransform(),
           i18nPrefix: 'coords_ellipsoidtransform',
-          iconPath: 'assets/coordinates/icon_ellipsoid_transform.png',
+          iconPath: 'assets/icons/coords/icon_ellipsoid_transform.png',
           category: ToolCategory.COORDINATES,
           missingHelpLocales: [
             'fr'
@@ -5774,42 +5774,57 @@ class Registry {
       ]),
 
       //Segments Display *******************************************************************************************
-      GCWTool(tool: SevenSegments(), i18nPrefix: 'segmentdisplay_7segments', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SEGMENTS,
-        SEARCHSTRING_DE_SEGMENTS,
-        SEARCHSTRING_EN_SEGMENTS,
-        SEARCHSTRING_FR_SEGMENTS,
-        SEARCHSTRING_COMMON_SEGMENTS_SEVEN,
-        SEARCHSTRING_DE_SEGMENTS_SEVEN,
-        SEARCHSTRING_EN_SEGMENTS_SEVEN,
-        SEARCHSTRING_FR_SEGMENTS_SEVEN
-      ]),
-      GCWTool(tool: FourteenSegments(), i18nPrefix: 'segmentdisplay_14segments', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SEGMENTS,
-        SEARCHSTRING_DE_SEGMENTS,
-        SEARCHSTRING_EN_SEGMENTS,
-        SEARCHSTRING_FR_SEGMENTS,
-        SEARCHSTRING_COMMON_SEGMENTS_FOURTEEN,
-        SEARCHSTRING_DE_SEGMENTS_FOURTEEN,
-        SEARCHSTRING_EN_SEGMENTS_FOURTEEN,
-        SEARCHSTRING_FR_SEGMENTS_FOURTEEN
-      ]),
-      GCWTool(tool: SixteenSegments(), i18nPrefix: 'segmentdisplay_16segments', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SEGMENTS,
-        SEARCHSTRING_DE_SEGMENTS,
-        SEARCHSTRING_EN_SEGMENTS,
-        SEARCHSTRING_FR_SEGMENTS,
-        SEARCHSTRING_COMMON_SEGMENTS_SIXTEEN,
-        SEARCHSTRING_DE_SEGMENTS_SIXTEEN,
-        SEARCHSTRING_EN_SEGMENTS_SIXTEEN,
-        SEARCHSTRING_FR_SEGMENTS_SIXTEEN
-      ]),
+      GCWTool(
+          tool: SevenSegments(),
+          i18nPrefix: 'segmentdisplay_7segments',
+          iconPath: 'assets/icons/science_and_technology/icon_7segment_display.png',
+          missingHelpLocales: [
+            'fr'
+          ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SEGMENTS,
+            SEARCHSTRING_DE_SEGMENTS,
+            SEARCHSTRING_EN_SEGMENTS,
+            SEARCHSTRING_FR_SEGMENTS,
+            SEARCHSTRING_COMMON_SEGMENTS_SEVEN,
+            SEARCHSTRING_DE_SEGMENTS_SEVEN,
+            SEARCHSTRING_EN_SEGMENTS_SEVEN,
+            SEARCHSTRING_FR_SEGMENTS_SEVEN
+          ]),
+      GCWTool(
+          tool: FourteenSegments(),
+          i18nPrefix: 'segmentdisplay_14segments',
+          iconPath: 'assets/icons/science_and_technology/icon_14segment_display.png',
+          missingHelpLocales: [
+            'fr'
+          ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SEGMENTS,
+            SEARCHSTRING_DE_SEGMENTS,
+            SEARCHSTRING_EN_SEGMENTS,
+            SEARCHSTRING_FR_SEGMENTS,
+            SEARCHSTRING_COMMON_SEGMENTS_FOURTEEN,
+            SEARCHSTRING_DE_SEGMENTS_FOURTEEN,
+            SEARCHSTRING_EN_SEGMENTS_FOURTEEN,
+            SEARCHSTRING_FR_SEGMENTS_FOURTEEN
+          ]),
+      GCWTool(
+          tool: SixteenSegments(),
+          i18nPrefix: 'segmentdisplay_16segments',
+          iconPath: 'assets/icons/science_and_technology/icon_16segment_display.png',
+          missingHelpLocales: [
+            'fr'
+          ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SEGMENTS,
+            SEARCHSTRING_DE_SEGMENTS,
+            SEARCHSTRING_EN_SEGMENTS,
+            SEARCHSTRING_FR_SEGMENTS,
+            SEARCHSTRING_COMMON_SEGMENTS_SIXTEEN,
+            SEARCHSTRING_DE_SEGMENTS_SIXTEEN,
+            SEARCHSTRING_EN_SEGMENTS_SIXTEEN,
+            SEARCHSTRING_FR_SEGMENTS_SIXTEEN
+          ]),
 
       //Symbol Tables **********************************************************************************************
       GCWSymbolTableTool(symbolKey: 'adlam', searchStrings: [
