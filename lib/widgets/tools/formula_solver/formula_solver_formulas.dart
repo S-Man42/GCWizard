@@ -73,6 +73,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     var formulaTool = GCWTool(
         tool: FormulaSolverFormulaValues(group: widget.group),
         toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
+        defaultLanguageToolName:
+            '${widget.group.name} - ${i18n(context, 'formulasolver_values', useDefaultLanguage: true)}',
         missingHelpLocales: ['fr']);
 
     Future _navigateToSubPage(context) async {
@@ -173,6 +175,8 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
             builder: (context) => GCWTool(
                 tool: VariableCoordinate(formula: formula),
                 toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
+                i18nPrefix:
+                    '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
                 missingHelpLocales: ['fr'])));
   }
 
@@ -383,7 +387,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                 tool: GCWMapView(
                   points: coordinates,
                 ),
-                toolName: i18n(context, 'coords_map_view_title'),
+                i18nPrefix: 'coords_map_view',
                 autoScroll: false,
                 missingHelpLocales: ['fr'])));
   }
