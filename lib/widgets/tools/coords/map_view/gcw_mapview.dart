@@ -769,7 +769,7 @@ class GCWMapViewState extends State<GCWMapView> {
 
   Map<String, LatLng> _parseCoords(text) {
     var parsed = parseLatLon(text);
-    if (parsed == null || parsed['coordinate'] == null) {
+    if (parsed == null || parsed.length == 0) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
       return null;
     }
