@@ -58,7 +58,7 @@ LatLng waldmeisterToLatLon(int a, int b, int c) {
             (c % 100000 - c % 10000) / 10000 * 1.0E-4 +
             (b % 100000 - b % 10000) / 10000 * 1.0E-5));
   }
-  
+
   return decToLatLon(DEC(_lat, _lon));
 }
 
