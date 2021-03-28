@@ -537,7 +537,7 @@ class PeriodicTableDataViewState extends State<PeriodicTableDataView> {
     Navigator.of(context).push(NoAnimationMaterialPageRoute(
         builder: (context) => GCWTool(
             tool: PeriodicTableDataView(atomicNumber: atomicNumber),
-            i18nPrefix: 'periodictabledataview',
+            i18nPrefix: 'periodictable_dataview',
             missingHelpLocales: ['fr'])));
   }
 }

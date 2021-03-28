@@ -247,6 +247,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nearestprime.dart';
@@ -478,8 +479,7 @@ class Registry {
           tool: CCITT1Selection(),
           i18nPrefix: 'ccitt1_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CCITT,
             SEARCHSTRING_DE_CCITT,
@@ -494,8 +494,7 @@ class Registry {
           tool: CCITT2Selection(),
           i18nPrefix: 'ccitt2_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CCITT,
             SEARCHSTRING_DE_CCITT,
@@ -1726,15 +1725,9 @@ class Registry {
 
       //CCITT*Selection **********************************************************************************************
       GCWTool(
-          tool: CCITT1(),
-          i18nPrefix: 'ccitt1',
-          missingHelpLocales: [],
-          searchStrings: [SEARCHSTRING_COMMON_CCITT1]),
+          tool: CCITT1(), i18nPrefix: 'ccitt1', missingHelpLocales: [], searchStrings: [SEARCHSTRING_COMMON_CCITT1]),
       GCWTool(
-          tool: CCITT2(),
-          i18nPrefix: 'ccitt2',
-          missingHelpLocales: [],
-          searchStrings: [SEARCHSTRING_COMMON_CCITT2]),
+          tool: CCITT2(), i18nPrefix: 'ccitt2', missingHelpLocales: [], searchStrings: [SEARCHSTRING_COMMON_CCITT2]),
 
       //Cistercian Selection *****************************************************************************************
       GCWTool(
@@ -5419,7 +5412,7 @@ class Registry {
         SEARCHSTRING_EN_PERIODICTABLE,
         SEARCHSTRING_FR_PERIODICTABLE,
       ]),
-      GCWTool(tool: PeriodicTableDataView(), i18nPrefix: 'periodictabledataview', missingHelpLocales: [
+      GCWTool(tool: PeriodicTableDataView(), i18nPrefix: 'periodictable_dataview', missingHelpLocales: [
         'fr'
       ], searchStrings: [
         SEARCHSTRING_COMMON_PERIODICTABLE,
@@ -5430,6 +5423,18 @@ class Registry {
         SEARCHSTRING_DE_PERIODICTABLEDATAVIEW,
         SEARCHSTRING_EN_PERIODICTABLEDATAVIEW,
         SEARCHSTRING_FR_PERIODICTABLEDATAVIEW
+      ]),
+      GCWTool(tool: AtomicNumbersToText(), i18nPrefix: 'atomicnumberstotext', missingHelpLocales: [
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_PERIODICTABLE,
+        SEARCHSTRING_DE_PERIODICTABLE,
+        SEARCHSTRING_EN_PERIODICTABLE,
+        SEARCHSTRING_FR_PERIODICTABLE,
+        SEARCHSTRING_COMMON_PERIODICTABLE_ATOMICNUMBERS,
+        SEARCHSTRING_DE_PERIODICTABLE_ATOMICNUMBERS,
+        SEARCHSTRING_EN_PERIODICTABLE_ATOMICNUMBERS,
+        SEARCHSTRING_FR_PERIODICTABLE_ATOMICNUMBERS
       ]),
 
       //PrimesSelection **********************************************************************************************

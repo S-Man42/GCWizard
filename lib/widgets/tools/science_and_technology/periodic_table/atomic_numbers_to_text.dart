@@ -18,15 +18,9 @@ class AtomicNumbersToTextState extends State<AtomicNumbersToText> {
     return Column(
       children: <Widget>[
         GCWIntegerListTextField(
-          hintText: i18n(context, 'periodictable_atomicnumbers_hint'),
-          onChanged: (String text) {
+          onChanged: (result) {
             setState(() {
-              _output = atomicNumbersToText(text
-                  .replaceAll(RegExp(r'[0-9 ]'), '')
-                  .replaceAll(RegExp(r'\s+'), ' ')
-                  .split(' ')
-                  .map((number) => int.tryParse(number))
-                  .toList());
+              _output = atomicNumbersToText(result['values']);
             });
           },
         ),
