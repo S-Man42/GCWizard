@@ -19,6 +19,7 @@ class GCWIntegerSpinner extends StatefulWidget {
   final value;
   final min;
   final max;
+  final leftPadZeros;
   final controller;
   final SpinnerLayout layout;
   final focusNode;
@@ -31,6 +32,7 @@ class GCWIntegerSpinner extends StatefulWidget {
       this.value,
       this.min: -9007199254740991,
       this.max: 9007199254740992,
+      this.leftPadZeros,
       this.controller,
       this.layout: SpinnerLayout.HORIZONTAL,
       this.focusNode,
@@ -162,7 +164,13 @@ class GCWIntegerSpinnerState extends State<GCWIntegerSpinner> {
 
   _setCurrentValueAndEmitOnChange({setTextFieldText: false}) {
     if (setTextFieldText) {
-      _controller.text = _currentValue.toString();
+      var text = _currentValue.toString();
+
+      if (widget.leftPadZeros != null && widget.leftPadZeros > 0) {
+        text = text.padLeft(widget.leftPadZeros, '0');
+      }
+
+      _controller.text = text;
     }
 
     widget.onChanged(_currentValue);
