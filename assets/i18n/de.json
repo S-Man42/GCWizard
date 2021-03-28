@@ -1355,7 +1355,7 @@
   "gade_description": "Berechnen der Buchstaben nach Gade",
   "games_selection_title": "Spiele",
   "games_selection_description": "Unterstützung für bekannte Spiele (z.B. Scrabble, Sudoku)",
-  "gccode_title": "GC-Code",
+  "gccode_title": "Geocache-Code",
   "gccode_description": "Konvertiert den GC-Code eines Geocaches zu seiner internen ID (Base31)",
   "gccode_example": "GCK25B → 156997",
   "gccode_novalidgcode": "Kein valider GC-Code",

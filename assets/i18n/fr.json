@@ -1352,7 +1352,7 @@
   "gade_description": "Calcul des lettres selon Gade",
   "games_selection_title": "Jeux",
   "games_selection_description": "Support pour les jeux célèbres (e.g. Scrabble, Sudoku)",
-  "gccode_title": "Code GC",
+  "gccode_title": "Code Geocache",
   "gccode_description": "Convertir un code GC Code d'une Geocache dans son ID interne (Base31)",
   "gccode_example": "GCK25B → 156997",
   "gccode_novalidgcode": "Aucun code GC valide",
