@@ -1079,6 +1079,7 @@
   "coords_formatconverter_mercator_northing": "Nord",
   "coords_formatconverter_geohash_locator": "Geohash",
   "coords_formatconverter_geohex_locator": "GeoHex",
+  "coords_formatconverter_geo3x3_locator": "Geo3x3",
   "coords_formatconverter_naturalareacode_x": "X (Est)",
   "coords_formatconverter_naturalareacode_y": "Y (Nord)",
   "coords_formatconverter_openlocationcode_novalidcode": "Aucune entrée valide OpenLocationCode",

@@ -2,6 +2,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/geo3x3.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
@@ -81,6 +82,8 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
       return latLonToGeohash(_coords, 14);
     case keyCoordsGeoHex:
       return latLonToGeoHex(_coords, 20);
+    case keyCoordsGeo3x3:
+      return latLonToGeo3x3(_coords, 20);
     case keyCoordsOpenLocationCode:
       return latLonToOpenLocationCode(_coords, codeLength: 14);
     case keyCoordsQuadtree:

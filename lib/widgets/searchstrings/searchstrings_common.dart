@@ -82,7 +82,7 @@ final SEARCHSTRING_COMMON_COORDINATES_ELLIPSOIDTRANSFORM =
     'bessel 1841 bessel krassowski krasowksi krasovsky krassovsky 1950 1830 potsdam dhdn2001 dhdn1995 pulkowo mgi lv95 ed50 clarke 1866 osgb36 wgs84';
 final SEARCHSTRING_COMMON_COORDINATES_EQUILATERALTRIANGLE = '';
 final SEARCHSTRING_COMMON_COORDINATES_FORMATCONVERTER =
-    'quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister xyz ecef reversewhereigo reversewig maidenhead geo-hash geohash geohex qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles';
+    'quadtree nac naturalareacode naturalareacoding openlocationcode pluscode olc waldmeister xyz ecef reversewhereigo reversewig maidenhead geo-hash geohash geohex geo3x3 qth swissgrid swiss grid mercator gausskruger gausskrueger mgrs utm dec deg dms 1903 ch1903+ slippymap tiles';
 final SEARCHSTRING_COMMON_COORDINATES_INTERSECTBEARING = '';
 final SEARCHSTRING_COMMON_COORDINATES_INTERSECTFOURPOINTS = '4';
 final SEARCHSTRING_COMMON_COORDINATES_INTERSECTGEODETICANDCIRCLE = '';
