@@ -106,10 +106,12 @@ _buildSettingsItem(BuildContext context) {
   final settingsItems = [
     {
       'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(GeneralSettings())),
+      'toolName': i18n(context, 'mainmenu_settings_general_title'),
       'icon': Icons.settings
     },
     {
       'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(CoordinatesSettings())),
+      'toolName': i18n(context, 'mainmenu_settings_coordinates_title'),
       'icon': Icons.language
     },
   ];
@@ -131,7 +133,7 @@ ListTile _buildMenuItem(BuildContext context, item) {
         item['icon'],
         color: themeColors().mainFont(),
       ),
-      title: Text((item['tool'] as GCWTool).toolName, style: _menuItemStyle()),
+      title: Text(item['toolName'] ?? (item['tool'] as GCWTool).toolName, style: _menuItemStyle()),
       onTap: () {
         Navigator.pop(context); //close Drawer
         Navigator.of(context).push(NoAnimationMaterialPageRoute(builder: (context) => item['tool']));

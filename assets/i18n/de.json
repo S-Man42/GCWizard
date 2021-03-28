@@ -1500,6 +1500,8 @@
   "licenses_symboltablesources": "Quellen für Symboltabellen",
   "mainmenu_about_title": "Über",
   "mainmenu_settings_title": "Einstellungen",
+  "mainmenu_settings_general_title": "Allgemein",
+  "mainmenu_settings_coordinates_title": "Koordinaten",
   "mainmenu_changelog_title": "Changelog",
   "mainmenu_callforcontribution_title": "Möchtest du uns helfen?",
   "malbolge_title": "Malbolge",
