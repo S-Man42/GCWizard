@@ -7886,6 +7886,7 @@ class Registry {
       ]),
     ].map((toolWidget) {
       toolWidget.toolName = i18n(context, toolWidget.i18nPrefix + '_title');
+      toolWidget.defaultLanguageToolName = i18n(context, toolWidget.i18nPrefix + '_title', useDefaultLanguage: true);
 
       try {
         toolWidget.description = i18n(context, toolWidget.i18nPrefix + '_description');

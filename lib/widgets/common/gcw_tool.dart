@@ -80,6 +80,7 @@ class GCWTool extends StatefulWidget {
   var _isFavorite = false;
 
   var toolName;
+  var defaultLanguageToolName;
   var description;
   var example;
 
@@ -87,6 +88,7 @@ class GCWTool extends StatefulWidget {
       {Key key,
       this.tool,
       this.toolName,
+      this.defaultLanguageToolName,
       this.i18nPrefix,
       this.category,
       this.autoScroll: true,
@@ -126,17 +128,29 @@ class GCWTool extends StatefulWidget {
 }
 
 class _GCWToolState extends State<GCWTool> {
+  var _toolName;
+  var _defaultLanguageToolName;
+
   @override
   Widget build(BuildContext context) {
+    // this is the case when Tool is not called by Registry but as subpage from another tool
+    if (_toolName == null) _toolName = widget.toolName ?? i18n(context, widget.i18nPrefix + '_title');
+
+    if (_defaultLanguageToolName == null)
+      _defaultLanguageToolName =
+          widget.defaultLanguageToolName ?? i18n(context, widget.i18nPrefix + '_title', useDefaultLanguage: true);
+
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.toolName),
+          title: Text(_toolName),
           actions: _buildButtons(),
         ),
         body: _buildBody());
   }
 
   String _normalizeSearchString(String text) {
+    if (text == null) return '';
+
     text = text.trim().toLowerCase();
     text = text
         .replaceAll(RegExp(r"[\s+'`´]"), ' ')
@@ -166,14 +180,13 @@ class _GCWToolState extends State<GCWTool> {
 
     if (_needsDefaultHelp(appLocale)) {
       // fallback to en if unsupported locale
-      searchString =
-          i18n(context, widget.i18nPrefix + '_title', useDefaultLanguage: true);
+      searchString = _defaultLanguageToolName;
     } else {
-      searchString = widget.toolName;
+      searchString = _toolName;
     }
 
     searchString = _normalizeSearchString(searchString);
-    String locale = 'en';
+    String locale = defaultLanguage;
 
     if (!_needsDefaultHelp(appLocale))
       locale = Localizations.localeOf(context).languageCode;

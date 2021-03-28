@@ -88,7 +88,7 @@ class MultiDecoderState extends State<MultiDecoder> {
                     NoAnimationMaterialPageRoute(
                         builder: (context) => GCWTool(
                               tool: MultiDecoderConfiguration(),
-                              toolName: i18n(context, 'multidecoder_configuration_title'),
+                              i18nPrefix: 'multidecoder_configuration',
                               missingHelpLocales: ['fr'],
                             ))).whenComplete(() {
                   setState(() {
