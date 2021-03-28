@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -61,6 +62,12 @@ final _SEARCH_BLACKLIST = {
   'ou',
 };
 
+final _SEARCH_WHITELIST = {
+  'd ni': "d'ni",
+  'd or': "d'or",
+  'mando a': "mando'a",
+};
+
 const HELP_BASE_URL = 'https://blog.gcwizard.net/manual/';
 
 class GCWToolActionButtonsEntry {
@@ -71,8 +78,7 @@ class GCWToolActionButtonsEntry {
   final String text; // - message-text to be shown in the dialog
   final IconData icon; // - icon tto be shown in the appbar
 
-  GCWToolActionButtonsEntry(
-      this.showDialog, this.url, this.title, this.text, this.icon);
+  GCWToolActionButtonsEntry(this.showDialog, this.url, this.title, this.text, this.icon);
 }
 
 class GCWTool extends StatefulWidget {
@@ -163,24 +169,19 @@ class _GCWToolState extends State<GCWTool> {
 
     text = text.trim().toLowerCase();
     text = text
-        .replaceAll(RegExp(r"[\s+'`´]"), ' ')
-        .replaceAll('d ni', "d'ni")
-        .replaceAll('d or', "d'or")
-        .replaceAll('mando a', "mando'a")
+        .replaceAll(RegExp(r"['`´]"), ' ')
+        .replaceAll(RegExp(r'\s+'), ' ')
         .replaceAll('**', '')
         .replaceAll('/', ' ')
         .replaceAll(RegExp(r"\([a-zA-Z0-9\s.]+\)"), ''); //remove e.g. (128 bits) in hashes-toolname
-    text = text
-        .split(' ')
-        .where((word) => !_SEARCH_BLACKLIST.contains(word))
-        .join(' ');
+    text = substitution(text, _SEARCH_WHITELIST);
+    text = text.split(' ').where((word) => !_SEARCH_BLACKLIST.contains(word)).join(' ');
     return text;
   }
 
   bool _needsDefaultHelp(Locale appLocale) {
     return !isLocaleSupported(appLocale) ||
-        (widget.missingHelpLocales != null &&
-            widget.missingHelpLocales.contains(appLocale.languageCode));
+        (widget.missingHelpLocales != null && widget.missingHelpLocales.contains(appLocale.languageCode));
   }
 
   Widget _buildHelpButton() {
@@ -199,8 +200,7 @@ class _GCWToolState extends State<GCWTool> {
     searchString = _normalizeSearchString(searchString);
     String locale = defaultLanguage;
 
-    if (!_needsDefaultHelp(appLocale))
-      locale = Localizations.localeOf(context).languageCode;
+    if (!_needsDefaultHelp(appLocale)) locale = Localizations.localeOf(context).languageCode;
 
     var url = HELP_BASE_URL + locale + '/search/' + searchString;
     url = Uri.encodeFull(url);
@@ -224,8 +224,7 @@ class _GCWToolState extends State<GCWTool> {
       widget.buttonList.forEach((button) {
         String url = '';
         if (button.url == '') // 404-Page asking for help
-          url = i18n(context,
-              'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
+          url = i18n(context, 'common_error_url'); // https://blog.gcwizard.net/manual/uncategorized/404/
         else
           url = button.url;
         if (button.url != null && button.url.length != 0)
@@ -256,7 +255,6 @@ class _GCWToolState extends State<GCWTool> {
 
     if (widget.autoScroll == false) return widget.tool;
 
-    return SingleChildScrollView(
-        child: Padding(child: widget.tool, padding: EdgeInsets.all(10)));
+    return SingleChildScrollView(child: Padding(child: widget.tool, padding: EdgeInsets.all(10)));
   }
 }
