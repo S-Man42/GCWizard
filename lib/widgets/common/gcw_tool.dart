@@ -23,33 +23,42 @@ final _SEARCH_BLACKLIST = {
   'code',
   'chiffre',
   'cipher',
+  'chiffrement',
   'der',
   'die',
   'das',
-  'ein',
-  'eine',
-  'in',
-  'von',
-  'und',
-  'drei',
-  'zwei',
   'the',
-  'one',
-  'two',
-  'three',
-  'of',
-  'from',
-  'and',
-  'une',
-  'un',
-  'deux',
-  'trois',
-  'de',
-  'd',
   'l',
   'le',
   'la',
-  'chiffrement'
+  'ein',
+  'eine',
+  'a',
+  'an',
+  'une',
+  'in',
+  'und',
+  'and',
+  'eins',
+  'zwei',
+  'drei',
+  'one',
+  'two',
+  'three',
+  'un',
+  'deux',
+  'trois',
+  'mit',
+  'with',
+  'avec',
+  'of',
+  'von',
+  'from',
+  'de',
+  'd',
+  'oder',
+  //'or', is also gold in french - necessary for Phi
+  'ou',
 };
 
 const HELP_BASE_URL = 'https://blog.gcwizard.net/manual/';
@@ -156,6 +165,7 @@ class _GCWToolState extends State<GCWTool> {
     text = text
         .replaceAll(RegExp(r"[\s+'`´]"), ' ')
         .replaceAll('d ni', "d'ni")
+        .replaceAll('d or', "d'or")
         .replaceAll('mando a', "mando'a")
         .replaceAll('**', '')
         .replaceAll('/', ' ')
