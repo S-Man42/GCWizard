@@ -49,7 +49,7 @@ class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
             type: SegmentDisplayType.CUSTOM,
             customPaint: (canvas, size, currentSegments, setSegmentState) {
               var paint = sketchSegmentPaint();
-              paint.strokeWidth = 2.5;
+              paint.strokeWidth = 3;
 
               [
                 {'segment': 'a', 'startX': 30.0, 'startY': 40.0},
