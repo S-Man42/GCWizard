@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -23,32 +24,48 @@ final _SEARCH_BLACKLIST = {
   'code',
   'chiffre',
   'cipher',
+  'chiffrement',
   'der',
   'die',
   'das',
-  'ein',
-  'eine',
-  'von',
-  'und',
-  'drei',
-  'zwei'
-      'the',
-  'one',
-  'two',
-  'three',
-  'of',
-  'from',
-  'and',
-  'une',
-  'un',
-  'deux',
-  'trois',
-  'de',
-  'd',
+  'the',
   'l',
   'le',
   'la',
-  'chiffrement'
+  'ein',
+  'eine',
+  'a',
+  'an',
+  'une',
+  'in',
+  'und',
+  'and',
+  'eins',
+  'zwei',
+  'drei',
+  'one',
+  'two',
+  'three',
+  'un',
+  'deux',
+  'trois',
+  'mit',
+  'with',
+  'avec',
+  'of',
+  'von',
+  'from',
+  'de',
+  'd',
+  'oder',
+  //'or', is also gold in french - necessary for Phi
+  'ou',
+};
+
+final _SEARCH_WHITELIST = {
+  'd ni': "d'ni",
+  'd or': "d'or",
+  'mando a': "mando'a",
 };
 
 const HELP_BASE_URL = 'https://blog.gcwizard.net/manual/';
@@ -151,7 +168,13 @@ class _GCWToolState extends State<GCWTool> {
     if (text == null) return '';
 
     text = text.trim().toLowerCase();
-    text = text.replaceAll(RegExp(r"[\s+'`´]"), ' ');
+    text = text
+        .replaceAll(RegExp(r"['`´]"), ' ')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .replaceAll('**', '')
+        .replaceAll('/', ' ')
+        .replaceAll(RegExp(r"\([a-zA-Z0-9\s.]+\)"), ''); //remove e.g. (128 bits) in hashes-toolname
+    text = substitution(text, _SEARCH_WHITELIST);
     text = text.split(' ').where((word) => !_SEARCH_BLACKLIST.contains(word)).join(' ');
     return text;
   }
