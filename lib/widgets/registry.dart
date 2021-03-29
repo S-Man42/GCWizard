@@ -7,6 +7,10 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
+import 'package:gc_wizard/widgets/searchStrings/searchStrings_common.dart';
+import 'package:gc_wizard/widgets/searchStrings/searchStrings_de.dart';
+import 'package:gc_wizard/widgets/searchStrings/searchStrings_en.dart';
+import 'package:gc_wizard/widgets/searchStrings/searchStrings_fr.dart';
 import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
@@ -28,30 +32,31 @@ import 'package:gc_wizard/widgets/selector_lists/esoteric_programminglanguages_s
 import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/icecodes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/language_games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_bell_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_catalan_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_factorial_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fermat_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_fibonacci_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthal_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthaloblong_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthallucas_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_jacobsthaloblong_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_lucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenne_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersennefermat_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pell_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_bell_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pelllucas_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_recaman_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenneprimes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenneexponents_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_sublimenumbers_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_weirdnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersennefermat_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_mersenneprimes_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pell_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_pelllucas_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_perfectnumbers_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_superperfectnumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_primarypseudoperfectnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_recaman_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_sublimenumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_superperfectnumbers_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_weirdnumbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/periodic_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/phi_selection.dart';
@@ -79,13 +84,13 @@ import 'package:gc_wizard/widgets/tools/coords/format_converter.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_bearing_and_circle.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_bearings.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_four_points.dart';
-import 'package:gc_wizard/widgets/tools/coords/segment_line.dart';
-import 'package:gc_wizard/widgets/tools/coords/segment_bearings.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_three_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersect_two_circles.dart';
 import 'package:gc_wizard/widgets/tools/coords/intersection.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/map_view.dart';
 import 'package:gc_wizard/widgets/tools/coords/resection.dart';
+import 'package:gc_wizard/widgets/tools/coords/segment_bearings.dart';
+import 'package:gc_wizard/widgets/tools/coords/segment_line.dart';
 import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coordinate_formulas.dart';
 import 'package:gc_wizard/widgets/tools/coords/waypoint_projection.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/abaddon.dart';
@@ -124,8 +129,8 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt2.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/chao.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cipher_wheel.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/cistercian_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enclosed_areas.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
@@ -153,6 +158,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/pig_
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
@@ -172,7 +178,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_g
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_checker.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_e_checker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
@@ -219,35 +224,36 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/bell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/catalan.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/factorial.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fermat.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/fibonacci.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_oblong.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_lucas.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/jacobsthal_oblong.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/lucas.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_exponents.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_primes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersennefermat.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/bell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/pell_lucas.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/recaman.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_primes.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/mersenne_exponents.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/perfect_numbers.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/superperfect_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/primarypseudoperfect_numbers.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/weird_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/recaman.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/sublime_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/superperfect_numbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/weird_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_integerfactorization.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_isprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nearestprime.dart';
@@ -263,10 +269,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.da
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multiplenumbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singlenumbers.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_common.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_de.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_en.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_fr.dart';
 
 class Registry {
   static List<GCWTool> toolList;
@@ -761,6 +763,18 @@ class Registry {
         SEARCHSTRING_EN_HOMOPHONE,
         SEARCHSTRING_FR_HOMOPHONE
       ]),
+      GCWTool(
+        tool: IceCodesSelection(),
+        i18nPrefix: 'icecodes_selection',
+        category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+        missingHelpLocales: ['fr'],
+        searchStrings: [
+          SEARCHSTRING_COMMON_ICECODES,
+          SEARCHSTRING_DE_ICECODES,
+          SEARCHSTRING_EN_ICECODES,
+          SEARCHSTRING_FR_ICECODES
+        ],
+      ),
       GCWTool(tool: Kamasutra(), i18nPrefix: 'kamasutra', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
         'fr'
       ], searchStrings: [
@@ -3020,6 +3034,18 @@ class Registry {
         SEARCHSTRING_EN_HASHES_BLAKE2B_512,
         SEARCHSTRING_FR_HASHES_BLAKE2B_512,
       ]),
+
+      // IceCodeSelection *********************************************************************************************
+      GCWTool(
+          tool: IceCodes(),
+          missingHelpLocales: ['fr'],
+          i18nPrefix: 'icecodes',
+          searchStrings: [
+            SEARCHSTRING_COMMON_ICECODES,
+            SEARCHSTRING_DE_ICECODES,
+            SEARCHSTRING_EN_ICECODES,
+            SEARCHSTRING_FR_ICECODES
+          ]),
 
       //Language Games Selection *******************************************************************************
       GCWTool(tool: ChickenLanguage(), i18nPrefix: 'chickenlanguage', missingHelpLocales: [
@@ -5739,141 +5765,85 @@ class Registry {
           ]),
 
       //Symbol Tables **********************************************************************************************
-      GCWSymbolTableTool(symbolKey: 'adlam', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ADLAM,
         SEARCHSTRING_DE_SYMBOL_ADLAM,
         SEARCHSTRING_EN_SYMBOL_ADLAM,
         SEARCHSTRING_FR_SYMBOL_ADLAM
       ]),
-      GCWSymbolTableTool(symbolKey: 'alchemy', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'alchemy', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ALCHEMY,
         SEARCHSTRING_DE_SYMBOL_ALCHEMY,
         SEARCHSTRING_EN_SYMBOL_ALCHEMY,
         SEARCHSTRING_FR_SYMBOL_ALCHEMY
       ]),
-      GCWSymbolTableTool(symbolKey: 'alchemy_alphabet', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'alchemy_alphabet', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ALCHEMY_ALPHABET,
         SEARCHSTRING_DE_SYMBOL_ALCHEMY_ALPHABET,
         SEARCHSTRING_EN_SYMBOL_ALCHEMY_ALPHABET,
         SEARCHSTRING_FR_SYMBOL_ALCHEMY_ALPHABET
       ]),
-      GCWSymbolTableTool(symbolKey: 'angerthas_cirth', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'angerthas_cirth', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ANGERTHAS_CIRTH,
         SEARCHSTRING_DE_SYMBOL_ANGERTHAS_CIRTH,
         SEARCHSTRING_EN_SYMBOL_ANGERTHAS_CIRTH,
         SEARCHSTRING_FR_SYMBOL_ANGERTHAS_CIRTH
       ]),
-      GCWSymbolTableTool(symbolKey: 'alphabetum_arabum', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'alphabetum_arabum', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ALPHABETUM_ARABUM,
         SEARCHSTRING_DE_SYMBOL_ALPHABETUM_ARABUM,
         SEARCHSTRING_EN_SYMBOL_ALPHABETUM_ARABUM,
         SEARCHSTRING_FR_SYMBOL_ALPHABETUM_ARABUM
       ]),
-      GCWSymbolTableTool(symbolKey: 'alphabetum_egiptiorum', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'alphabetum_egiptiorum', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ALPHABETUM_EGIPTIORUM,
         SEARCHSTRING_DE_SYMBOL_ALPHABETUM_EGIPTIORUM,
         SEARCHSTRING_EN_SYMBOL_ALPHABETUM_EGIPTIORUM,
         SEARCHSTRING_FR_SYMBOL_ALPHABETUM_EGIPTIORUM
       ]),
-      GCWSymbolTableTool(symbolKey: 'alphabetum_gothicum', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'alphabetum_gothicum', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ALPHABETUM_GOTHICUM,
         SEARCHSTRING_DE_SYMBOL_ALPHABETUM_GOTHICUM,
         SEARCHSTRING_EN_SYMBOL_ALPHABETUM_GOTHICUM,
         SEARCHSTRING_FR_SYMBOL_ALPHABETUM_GOTHICUM
       ]),
-      GCWSymbolTableTool(symbolKey: 'antiker', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'antiker', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ANTIKER,
         SEARCHSTRING_DE_SYMBOL_ANTIKER,
         SEARCHSTRING_EN_SYMBOL_ANTIKER,
         SEARCHSTRING_FR_SYMBOL_ANTIKER
       ]),
-      GCWSymbolTableTool(symbolKey: 'arabic_indian_numerals', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'arabic_indian_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ARABIC_INDIAN_NUMERALS,
         SEARCHSTRING_DE_SYMBOL_ARABIC_INDIAN_NUMERALS,
         SEARCHSTRING_EN_SYMBOL_ARABIC_INDIAN_NUMERALS,
         SEARCHSTRING_FR_SYMBOL_ARABIC_INDIAN_NUMERALS
       ]),
-      GCWSymbolTableTool(symbolKey: 'arcadian', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'arcadian', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ARCADIAN,
         SEARCHSTRING_DE_SYMBOL_ARCADIAN,
         SEARCHSTRING_EN_SYMBOL_ARCADIAN,
         SEARCHSTRING_FR_SYMBOL_ARCADIAN
       ]),
-      GCWSymbolTableTool(symbolKey: 'ath', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'ath', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ATH,
         SEARCHSTRING_DE_SYMBOL_ATH,
         SEARCHSTRING_EN_SYMBOL_ATH,
         SEARCHSTRING_FR_SYMBOL_ATH
       ]),
-      GCWSymbolTableTool(symbolKey: 'atlantean', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'atlantean', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ATLANTEAN,
         SEARCHSTRING_DE_SYMBOL_ATLANTEAN,
         SEARCHSTRING_EN_SYMBOL_ATLANTEAN,
         SEARCHSTRING_FR_SYMBOL_ATLANTEAN
       ]),
-      GCWSymbolTableTool(symbolKey: 'aurebesh', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'aurebesh', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_AUREBESH,
         SEARCHSTRING_DE_SYMBOL_AUREBESH,
         SEARCHSTRING_EN_SYMBOL_AUREBESH,
         SEARCHSTRING_FR_SYMBOL_AUREBESH
       ]),
-      GCWSymbolTableTool(symbolKey: 'australian_sign_language', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'australian_sign_language', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
         SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
         SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
@@ -5883,41 +5853,25 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_AUSTRALIAN_SIGN_LANGUAGE,
         SEARCHSTRING_FR_SYMBOL_AUSTRALIAN_SIGN_LANGUAGE
       ]),
-      GCWSymbolTableTool(symbolKey: 'babylonian_numerals', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'babylonian_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS,
         SEARCHSTRING_DE_BABYLONIAN_NUMERALS,
         SEARCHSTRING_EN_BABYLONIAN_NUMERALS,
         SEARCHSTRING_FR_BABYLONIAN_NUMERALS
       ]),
-      GCWSymbolTableTool(symbolKey: 'ballet', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'ballet', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BALLET,
         SEARCHSTRING_DE_SYMBOL_BALLET,
         SEARCHSTRING_EN_SYMBOL_BALLET,
         SEARCHSTRING_FR_SYMBOL_BALLET
       ]),
-      GCWSymbolTableTool(symbolKey: 'barbier', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'barbier', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BARBIER,
         SEARCHSTRING_DE_SYMBOL_BARBIER,
         SEARCHSTRING_EN_SYMBOL_BARBIER,
         SEARCHSTRING_FR_SYMBOL_BARBIER
       ]),
-      GCWSymbolTableTool(symbolKey: 'barcode39', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'barcode39', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BARCODES,
         SEARCHSTRING_DE_SYMBOL_BARCODES,
         SEARCHSTRING_EN_SYMBOL_BARCODES,
@@ -5927,11 +5881,7 @@ class Registry {
         SEARCHSTRING_EN_BARCODE39,
         SEARCHSTRING_FR_BARCODE39
       ]),
-      GCWSymbolTableTool(symbolKey: 'baudot', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'baudot', symbolSearchStrings: [
         SEARCHSTRING_COMMON_CCITT,
         SEARCHSTRING_DE_CCITT,
         SEARCHSTRING_EN_CCITT,
@@ -5945,51 +5895,31 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_BAUDOT,
         SEARCHSTRING_FR_SYMBOL_BAUDOT
       ]),
-      GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'birds_on_a_wire', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BIRDS_ON_A_WIRE,
         SEARCHSTRING_DE_SYMBOL_BIRDS_ON_A_WIRE,
         SEARCHSTRING_EN_SYMBOL_BIRDS_ON_A_WIRE,
         SEARCHSTRING_FR_SYMBOL_BIRDS_ON_A_WIRE
       ]),
-      GCWSymbolTableTool(symbolKey: 'blox', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'blox', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BLOX,
         SEARCHSTRING_DE_SYMBOL_BLOX,
         SEARCHSTRING_EN_SYMBOL_BLOX,
         SEARCHSTRING_FR_SYMBOL_BLOX
       ]),
-      GCWSymbolTableTool(symbolKey: 'brahmi_numerals', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'brahmi_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BRAHMI_NUMERALS,
         SEARCHSTRING_DE_SYMBOL_BRAHMI_NUMERALS,
         SEARCHSTRING_EN_SYMBOL_BRAHMI_NUMERALS,
         SEARCHSTRING_FR_SYMBOL_BRAHMI_NUMERALS
       ]),
-      GCWSymbolTableTool(symbolKey: 'braille', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'braille', symbolSearchStrings: [
         SEARCHSTRING_COMMON_BRAILLE,
         SEARCHSTRING_DE_BRAILLE,
         SEARCHSTRING_EN_BRAILLE,
         SEARCHSTRING_FR_BRAILLE
       ]),
-      GCWSymbolTableTool(symbolKey: 'british_sign_language', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'british_sign_language', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
         SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
         SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
@@ -5999,31 +5929,19 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_BRITISH_SIGN_LANGUAGE,
         SEARCHSTRING_FR_SYMBOL_BRITISH_SIGN_LANGUAGE
       ]),
-      GCWSymbolTableTool(symbolKey: 'chain_of_death_direction', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'chain_of_death_direction', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_CHAIN_OF_DEATH_DIRECTION,
         SEARCHSTRING_DE_SYMBOL_CHAIN_OF_DEATH_DIRECTION,
         SEARCHSTRING_EN_SYMBOL_CHAIN_OF_DEATH_DIRECTION,
         SEARCHSTRING_FR_SYMBOL_CHAIN_OF_DEATH_DIRECTION,
       ]),
-      GCWSymbolTableTool(symbolKey: 'chain_of_death_pairs', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'chain_of_death_pairs', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_CHAIN_OF_DEATH_PAIRS,
         SEARCHSTRING_DE_SYMBOL_CHAIN_OF_DEATH_PAIRS,
         SEARCHSTRING_EN_SYMBOL_CHAIN_OF_DEATH_PAIRS,
         SEARCHSTRING_FR_SYMBOL_CHAIN_OF_DEATH_PAIRS,
       ]),
-      GCWSymbolTableTool(symbolKey: 'chappe_v1', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'chappe_v1', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_CHAPPE,
         SEARCHSTRING_DE_SYMBOL_CHAPPE,
         SEARCHSTRING_EN_SYMBOL_CHAPPE,
@@ -6033,11 +5951,7 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_CHAPPE_V1,
         SEARCHSTRING_FR_SYMBOL_CHAPPE_V1
       ]),
-      GCWSymbolTableTool(symbolKey: 'chappe_v2', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'chappe_v2', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_CHAPPE,
         SEARCHSTRING_DE_SYMBOL_CHAPPE,
         SEARCHSTRING_EN_SYMBOL_CHAPPE,
@@ -6047,11 +5961,7 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_CHAPPE_V2,
         SEARCHSTRING_FR_SYMBOL_CHAPPE_V2
       ]),
-      GCWSymbolTableTool(symbolKey: 'chappe_v3', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'chappe_v3', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_CHAPPE,
         SEARCHSTRING_DE_SYMBOL_CHAPPE,
         SEARCHSTRING_EN_SYMBOL_CHAPPE,
@@ -6061,131 +5971,79 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_CHAPPE_V3,
         SEARCHSTRING_FR_SYMBOL_CHAPPE_V3
       ]),
-      GCWSymbolTableTool(symbolKey: 'cherokee', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'cherokee', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_CHEROKEE,
         SEARCHSTRING_DE_SYMBOL_CHEROKEE,
         SEARCHSTRING_EN_SYMBOL_CHEROKEE,
         SEARCHSTRING_FR_SYMBOL_CHEROKEE
       ]),
-      GCWSymbolTableTool(symbolKey: 'chinese_numerals', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'chinese_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_CHINESE_NUMERALS,
         SEARCHSTRING_DE_SYMBOL_CHINESE_NUMERALS,
         SEARCHSTRING_EN_SYMBOL_CHINESE_NUMERALS,
         SEARCHSTRING_FR_SYMBOL_CHINESE_NUMERALS
       ]),
-      GCWSymbolTableTool(symbolKey: 'cistercian', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'cistercian', symbolSearchStrings: [
         SEARCHSTRING_COMMON_CISTERCIAN,
         SEARCHSTRING_DE_CISTERCIAN,
         SEARCHSTRING_EN_CISTERCIAN,
         SEARCHSTRING_FR_CISTERCIAN
       ]),
-      GCWSymbolTableTool(symbolKey: 'color_code', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'color_code', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_COLOR_CODE,
         SEARCHSTRING_DE_SYMBOL_COLOR_CODE,
         SEARCHSTRING_EN_SYMBOL_COLOR_CODE,
         SEARCHSTRING_FR_SYMBOL_COLOR_CODE
       ]),
-      GCWSymbolTableTool(symbolKey: 'color_honey', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'color_honey', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_COLOR_HONEY,
         SEARCHSTRING_DE_SYMBOL_COLOR_HONEY,
         SEARCHSTRING_EN_SYMBOL_COLOR_HONEY,
         SEARCHSTRING_FR_SYMBOL_COLOR_HONEY
       ]),
-      GCWSymbolTableTool(symbolKey: 'color_tokki', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'color_tokki', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_COLOR_TOKKI,
         SEARCHSTRING_DE_SYMBOL_COLOR_TOKKI,
         SEARCHSTRING_EN_SYMBOL_COLOR_TOKKI,
         SEARCHSTRING_FR_SYMBOL_COLOR_TOKKI
       ]),
-      GCWSymbolTableTool(symbolKey: 'covenant', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'covenant', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_COVENANT,
         SEARCHSTRING_DE_SYMBOL_COVENANT,
         SEARCHSTRING_EN_SYMBOL_COVENANT,
         SEARCHSTRING_FR_SYMBOL_COVENANT,
       ]),
-      GCWSymbolTableTool(symbolKey: 'cyrillic', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'cyrillic', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_CYRILLIC,
         SEARCHSTRING_DE_SYMBOL_CYRILLIC,
         SEARCHSTRING_EN_SYMBOL_CYRILLIC,
         SEARCHSTRING_FR_SYMBOL_CYRILLIC
       ]),
-      GCWSymbolTableTool(symbolKey: 'cyrillic_numbers', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'cyrillic_numbers', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_CYRILLIC_NUMBERS,
         SEARCHSTRING_DE_SYMBOL_CYRILLIC_NUMBERS,
         SEARCHSTRING_EN_SYMBOL_CYRILLIC_NUMBERS,
         SEARCHSTRING_FR_SYMBOL_CYRILLIC_NUMBERS
       ]),
-      GCWSymbolTableTool(symbolKey: 'daedric', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'daedric', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_DAEDRIC,
         SEARCHSTRING_DE_SYMBOL_DAEDRIC,
         SEARCHSTRING_EN_SYMBOL_DAEDRIC,
         SEARCHSTRING_FR_SYMBOL_DAEDRIC
       ]),
-      GCWSymbolTableTool(symbolKey: 'dagger', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'dagger', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_DAGGER,
         SEARCHSTRING_DE_SYMBOL_DAGGER,
         SEARCHSTRING_EN_SYMBOL_DAGGER,
         SEARCHSTRING_FR_SYMBOL_DAGGER
       ]),
-      GCWSymbolTableTool(symbolKey: 'dancing_men', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'dancing_men', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_DANCING_MEN,
         SEARCHSTRING_DE_SYMBOL_DANCING_MEN,
         SEARCHSTRING_EN_SYMBOL_DANCING_MEN,
         SEARCHSTRING_FR_SYMBOL_DANCING_MEN
       ]),
-      GCWSymbolTableTool(symbolKey: 'deafblind', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'deafblind', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
         SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
         SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
@@ -6195,151 +6053,91 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_DEAFBLIND,
         SEARCHSTRING_FR_SYMBOL_DEAFBLIND
       ]),
-      GCWSymbolTableTool(symbolKey: 'devanagari_numerals', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'devanagari_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_DEVANAGARI_NUMERALS,
         SEARCHSTRING_DE_SYMBOL_DEVANAGARI_NUMERALS,
         SEARCHSTRING_EN_SYMBOL_DEVANAGARI_NUMERALS,
         SEARCHSTRING_FR_SYMBOL_DEVANAGARI_NUMERALS
       ]),
-      GCWSymbolTableTool(symbolKey: 'dni', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'dni', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_DNI,
         SEARCHSTRING_DE_SYMBOL_DNI,
         SEARCHSTRING_EN_SYMBOL_DNI,
         SEARCHSTRING_FR_SYMBOL_DNI
       ]),
-      GCWSymbolTableTool(symbolKey: 'dni_colors', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'dni_colors', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_DNI_COLORS,
         SEARCHSTRING_DE_SYMBOL_DNI_COLORS,
         SEARCHSTRING_EN_SYMBOL_DNI_COLORS,
         SEARCHSTRING_FR_SYMBOL_DNI_COLORS
       ]),
-      GCWSymbolTableTool(symbolKey: 'dni_numbers', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'dni_numbers', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_DNI_NUMBERS,
         SEARCHSTRING_DE_SYMBOL_DNI_NUMBERS,
         SEARCHSTRING_EN_SYMBOL_DNI_NUMBERS,
         SEARCHSTRING_FR_SYMBOL_DNI_NUMBERS
       ]),
-      GCWSymbolTableTool(symbolKey: 'doop_speak', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'doop_speak', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_DOOP,
         SEARCHSTRING_DE_SYMBOL_DOOP,
         SEARCHSTRING_EN_SYMBOL_DOOP,
         SEARCHSTRING_FR_SYMBOL_DOOP
       ]),
-      GCWSymbolTableTool(symbolKey: 'doremi', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'doremi', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_DOREMI,
         SEARCHSTRING_DE_SYMBOL_DOREMI,
         SEARCHSTRING_EN_SYMBOL_DOREMI,
         SEARCHSTRING_FR_SYMBOL_DOREMI
       ]),
-      GCWSymbolTableTool(symbolKey: 'dragon_language', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'dragon_language', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_DRAGON_LANGUAGE,
         SEARCHSTRING_DE_SYMBOL_DRAGON_LANGUAGE,
         SEARCHSTRING_EN_SYMBOL_DRAGON_LANGUAGE,
         SEARCHSTRING_FR_SYMBOL_DRAGON_LANGUAGE
       ]),
-      GCWSymbolTableTool(symbolKey: 'dragon_runes', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'dragon_runes', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_DRAGON_RUNES,
         SEARCHSTRING_DE_SYMBOL_DRAGON_RUNES,
         SEARCHSTRING_EN_SYMBOL_DRAGON_RUNES,
         SEARCHSTRING_FR_SYMBOL_DRAGON_RUNES
       ]),
-      GCWSymbolTableTool(symbolKey: 'eastern_arabic_indian_numerals', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'eastern_arabic_indian_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_EASTERN_ARABIC_INDIAN_NUMERALS,
         SEARCHSTRING_DE_SYMBOL_EASTERN_ARABIC_INDIAN_NUMERALS,
         SEARCHSTRING_EN_SYMBOL_EASTERN_ARABIC_INDIAN_NUMERALS,
         SEARCHSTRING_FR_SYMBOL_EASTERN_ARABIC_INDIAN_NUMERALS
       ]),
-      GCWSymbolTableTool(symbolKey: 'egyptian_numerals', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'egyptian_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_EGYPTIAN_NUMERALS,
         SEARCHSTRING_DE_SYMBOL_EGYPTIAN_NUMERALS,
         SEARCHSTRING_EN_SYMBOL_EGYPTIAN_NUMERALS,
         SEARCHSTRING_FR_SYMBOL_EGYPTIAN_NUMERALS
       ]),
-      GCWSymbolTableTool(symbolKey: 'elia', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'elia', symbolSearchStrings: [
         SEARCHSTRING_COMMON_ELIA,
         SEARCHSTRING_DE_ELIA,
         SEARCHSTRING_EN_ELIA,
         SEARCHSTRING_FR_ELIA
       ]),
-      GCWSymbolTableTool(symbolKey: 'enochian', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'enochian', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ENOCHIAN,
         SEARCHSTRING_DE_SYMBOL_ENOCHIAN,
         SEARCHSTRING_EN_SYMBOL_ENOCHIAN,
         SEARCHSTRING_FR_SYMBOL_ENOCHIAN
       ]),
-      GCWSymbolTableTool(symbolKey: 'eurythmy', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'eurythmy', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_EURYTHMY,
         SEARCHSTRING_DE_SYMBOL_EURYTHMY,
         SEARCHSTRING_EN_SYMBOL_EURYTHMY,
         SEARCHSTRING_FR_SYMBOL_EURYTHMY
       ]),
-      GCWSymbolTableTool(symbolKey: 'fakoo', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'fakoo', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_FAKOO,
         SEARCHSTRING_DE_SYMBOL_FAKOO,
         SEARCHSTRING_EN_SYMBOL_FAKOO,
         SEARCHSTRING_FR_SYMBOL_FAKOO
       ]),
-      GCWSymbolTableTool(symbolKey: 'finger', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'finger', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
         SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
         SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
@@ -6349,11 +6147,7 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_FINGER,
         SEARCHSTRING_FR_SYMBOL_FINGER
       ]),
-      GCWSymbolTableTool(symbolKey: 'finger_numbers', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'finger_numbers', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
         SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
         SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
@@ -6363,21 +6157,13 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_FINGER_NUMBERS,
         SEARCHSTRING_FR_SYMBOL_FINGER_NUMBERS
       ]),
-      GCWSymbolTableTool(symbolKey: 'flags', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'flags', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_FLAGS,
         SEARCHSTRING_DE_SYMBOL_FLAGS,
         SEARCHSTRING_EN_SYMBOL_FLAGS,
         SEARCHSTRING_FR_SYMBOL_FLAGS
       ]),
-      GCWSymbolTableTool(symbolKey: 'flags_german_kriegsmarine', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'flags_german_kriegsmarine', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_FLAGS,
         SEARCHSTRING_DE_SYMBOL_FLAGS,
         SEARCHSTRING_EN_SYMBOL_FLAGS,
@@ -6387,11 +6173,7 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_FLAGS_GERMAN_KRIEGSMARINE,
         SEARCHSTRING_FR_SYMBOL_FLAGS_GERMAN_KRIEGSMARINE
       ]),
-      GCWSymbolTableTool(symbolKey: 'flags_nato', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'flags_nato', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_FLAGS,
         SEARCHSTRING_DE_SYMBOL_FLAGS,
         SEARCHSTRING_EN_SYMBOL_FLAGS,
@@ -6401,207 +6183,123 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_FLAGS_NATO,
         SEARCHSTRING_FR_SYMBOL_FLAGS_NATO
       ]),
-      GCWSymbolTableTool(symbolKey: 'fonic', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'fonic', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_FONIC,
         SEARCHSTRING_DE_SYMBOL_FONIC,
         SEARCHSTRING_EN_SYMBOL_FONIC,
         SEARCHSTRING_FR_SYMBOL_FONIC
       ]),
-      GCWSymbolTableTool(symbolKey: 'four_triangles', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'four_triangles', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_FOUR_TRIANGLES,
         SEARCHSTRING_DE_SYMBOL_FOUR_TRIANGLES,
         SEARCHSTRING_EN_SYMBOL_FOUR_TRIANGLES,
         SEARCHSTRING_FR_SYMBOL_FOUR_TRIANGLES
       ]),
-      GCWSymbolTableTool(symbolKey: 'freemason', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'freemason', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_FREEMASON,
         SEARCHSTRING_DE_SYMBOL_FREEMASON,
         SEARCHSTRING_EN_SYMBOL_FREEMASON,
         SEARCHSTRING_FR_SYMBOL_FREEMASON
       ]),
-      GCWSymbolTableTool(symbolKey: 'freemason_v2', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'freemason_v2', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_FREEMASON_V2,
         SEARCHSTRING_DE_SYMBOL_FREEMASON_V2,
         SEARCHSTRING_EN_SYMBOL_FREEMASON_V2,
         SEARCHSTRING_FR_SYMBOL_FREEMASON_V2
       ]),
-      GCWSymbolTableTool(symbolKey: 'futurama', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'futurama', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_FUTURAMA,
         SEARCHSTRING_DE_SYMBOL_FUTURAMA,
         SEARCHSTRING_EN_SYMBOL_FUTURAMA,
         SEARCHSTRING_FR_SYMBOL_FUTURAMA
       ]),
-      GCWSymbolTableTool(symbolKey: 'futurama_2', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'futurama_2', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_FUTURAMA_2,
         SEARCHSTRING_DE_SYMBOL_FUTURAMA_2,
         SEARCHSTRING_EN_SYMBOL_FUTURAMA_2,
         SEARCHSTRING_FR_SYMBOL_FUTURAMA_2
       ]),
-      GCWSymbolTableTool(symbolKey: 'gallifreyan', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'gallifreyan', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_GALLIFREYAN,
         SEARCHSTRING_DE_SYMBOL_GALLIFREYAN,
         SEARCHSTRING_EN_SYMBOL_GALLIFREYAN,
         SEARCHSTRING_FR_SYMBOL_GALLIFREYAN
       ]),
-      GCWSymbolTableTool(symbolKey: 'gargish', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'gargish', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_GARGISH,
         SEARCHSTRING_DE_SYMBOL_GARGISH,
         SEARCHSTRING_EN_SYMBOL_GARGISH,
         SEARCHSTRING_FR_SYMBOL_GARGISH
       ]),
-      GCWSymbolTableTool(symbolKey: 'genreich', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'genreich', symbolSearchStrings: [
         SEARCHSTRING_COMMON_GLAGOLITIC,
         SEARCHSTRING_DE_GLAGOLITIC,
         SEARCHSTRING_EN_GLAGOLITIC,
         SEARCHSTRING_FR_GLAGOLITIC
       ]),
-      GCWSymbolTableTool(symbolKey: 'glagolitic', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'glagolitic', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_GNOMMISH,
         SEARCHSTRING_DE_SYMBOL_GNOMMISH,
         SEARCHSTRING_EN_SYMBOL_GNOMMISH,
         SEARCHSTRING_FR_SYMBOL_GNOMMISH
       ]),
-      GCWSymbolTableTool(symbolKey: 'gnommish', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
-      ]),
-      GCWSymbolTableTool(symbolKey: 'greek_numerals', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'gnommish', symbolSearchStrings: []),
+      GCWSymbolTableTool(symbolKey: 'greek_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_GREEK_NUMERALS,
         SEARCHSTRING_DE_SYMBOL_GREEK_NUMERALS,
         SEARCHSTRING_EN_SYMBOL_GREEK_NUMERALS,
         SEARCHSTRING_FR_SYMBOL_GREEK_NUMERALS
       ]),
-      GCWSymbolTableTool(symbolKey: 'hazard', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'hazard', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_HAZARD,
         SEARCHSTRING_DE_SYMBOL_HAZARD,
         SEARCHSTRING_EN_SYMBOL_HAZARD,
         SEARCHSTRING_FR_SYMBOL_HAZARD
       ]),
-      GCWSymbolTableTool(symbolKey: 'hebrew', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'hebrew', symbolSearchStrings: [
         SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
         SEARCHSTRING_COMMON_SYMBOL_HEBREW,
         SEARCHSTRING_DE_SYMBOL_HEBREW,
         SEARCHSTRING_EN_SYMBOL_HEBREW,
         SEARCHSTRING_FR_SYMBOL_HEBREW
       ]),
-      GCWSymbolTableTool(symbolKey: 'hebrew_v2', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'hebrew_v2', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_HEBREW_V2,
         SEARCHSTRING_DE_SYMBOL_HEBREW_V2,
         SEARCHSTRING_EN_SYMBOL_HEBREW_V2,
         SEARCHSTRING_FR_SYMBOL_HEBREW_V2
       ]),
-      GCWSymbolTableTool(symbolKey: 'hexahue', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'hexahue', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_HEXAHUE,
         SEARCHSTRING_DE_SYMBOL_HEXAHUE,
         SEARCHSTRING_EN_SYMBOL_HEXAHUE,
         SEARCHSTRING_FR_SYMBOL_HEXAHUE
       ]),
-      GCWSymbolTableTool(symbolKey: 'hieratic_numerals', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'hieratic_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_HIERATIC_NUMERALS,
         SEARCHSTRING_DE_SYMBOL_HIERATIC_NUMERALS,
         SEARCHSTRING_EN_SYMBOL_HIERATIC_NUMERALS,
         SEARCHSTRING_FR_SYMBOL_HIERATIC_NUMERALS
       ]),
-      GCWSymbolTableTool(symbolKey: 'hieroglyphs', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'hieroglyphs', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_HIEROGLYPHS,
         SEARCHSTRING_DE_SYMBOL_HIEROGLYPHS,
         SEARCHSTRING_EN_SYMBOL_HIEROGLYPHS,
         SEARCHSTRING_FR_SYMBOL_HIEROGLYPHS
       ]),
-      GCWSymbolTableTool(symbolKey: 'hobbit_runes', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'hobbit_runes', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_HOBBIT_RUNES,
         SEARCHSTRING_DE_SYMBOL_HOBBIT_RUNES,
         SEARCHSTRING_EN_SYMBOL_HOBBIT_RUNES,
         SEARCHSTRING_FR_SYMBOL_HOBBIT_RUNES
       ]),
-      GCWSymbolTableTool(symbolKey: 'hvd', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'hvd', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_HVD,
         SEARCHSTRING_DE_SYMBOL_HVD,
         SEARCHSTRING_EN_SYMBOL_HVD,
         SEARCHSTRING_FR_SYMBOL_HVD
       ]),
-      GCWSymbolTableTool(symbolKey: 'hylian_skyward_sword', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'hylian_skyward_sword', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_HYLIAN,
         SEARCHSTRING_DE_SYMBOL_HYLIAN,
         SEARCHSTRING_EN_SYMBOL_HYLIAN,
@@ -6611,11 +6309,7 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_HYLIAN_SKYWARDSWORD,
         SEARCHSTRING_FR_SYMBOL_HYLIAN_SKYWARDSWORD
       ]),
-      GCWSymbolTableTool(symbolKey: 'hylian_twilight_princess_gcn', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'hylian_twilight_princess_gcn', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_HYLIAN,
         SEARCHSTRING_DE_SYMBOL_HYLIAN,
         SEARCHSTRING_EN_SYMBOL_HYLIAN,
@@ -6625,11 +6319,7 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_HYLIAN_TWILIGHTPRINCESS_GCN,
         SEARCHSTRING_FR_SYMBOL_HYLIAN_TWILIGHTPRINCESS_GCN
       ]),
-      GCWSymbolTableTool(symbolKey: 'hylian_twilight_princess_wii', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'hylian_twilight_princess_wii', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_HYLIAN,
         SEARCHSTRING_DE_SYMBOL_HYLIAN,
         SEARCHSTRING_EN_SYMBOL_HYLIAN,
@@ -6639,11 +6329,7 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_HYLIAN_TWILIGHTPRINCESS_WII,
         SEARCHSTRING_FR_SYMBOL_HYLIAN_TWILIGHTPRINCESS_WII
       ]),
-      GCWSymbolTableTool(symbolKey: 'hylian_wind_waker', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'hylian_wind_waker', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_HYLIAN,
         SEARCHSTRING_DE_SYMBOL_HYLIAN,
         SEARCHSTRING_EN_SYMBOL_HYLIAN,
@@ -6653,31 +6339,25 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_HYLIAN_WINDWAKER,
         SEARCHSTRING_FR_SYMBOL_HYLIAN_WINDWAKER
       ]),
-      GCWSymbolTableTool(symbolKey: 'hymmnos', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'hymmnos', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_HYMMNOS,
         SEARCHSTRING_DE_SYMBOL_HYMMNOS,
         SEARCHSTRING_EN_SYMBOL_HYMMNOS,
         SEARCHSTRING_FR_SYMBOL_HYMMNOS
       ]),
-      GCWSymbolTableTool(symbolKey: 'iching', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'icecodes', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_ICECODES,
+        SEARCHSTRING_DE_ICECODES,
+        SEARCHSTRING_EN_ICECODES,
+        SEARCHSTRING_FR_ICECODES
+      ]),
+      GCWSymbolTableTool(symbolKey: 'iching', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ICHING,
         SEARCHSTRING_DE_SYMBOL_ICHING,
         SEARCHSTRING_EN_SYMBOL_ICHING,
         SEARCHSTRING_FR_SYMBOL_ICHING
       ]),
-      GCWSymbolTableTool(symbolKey: 'illuminati_v1', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'illuminati_v1', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ILLUMINATI,
         SEARCHSTRING_DE_SYMBOL_ILLUMINATI,
         SEARCHSTRING_EN_SYMBOL_ILLUMINATI,
@@ -6687,11 +6367,7 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_ILLUMINATI_V1,
         SEARCHSTRING_FR_SYMBOL_ILLUMINATI_V1,
       ]),
-      GCWSymbolTableTool(symbolKey: 'illuminati_v2', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'illuminati_v2', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ILLUMINATI,
         SEARCHSTRING_DE_SYMBOL_ILLUMINATI,
         SEARCHSTRING_EN_SYMBOL_ILLUMINATI,
@@ -6701,61 +6377,37 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_ILLUMINATI_V2,
         SEARCHSTRING_FR_SYMBOL_ILLUMINATI_V2,
       ]),
-      GCWSymbolTableTool(symbolKey: 'intergalactic', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'intergalactic', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_INTERGALACTIC,
         SEARCHSTRING_DE_SYMBOL_INTERGALACTIC,
         SEARCHSTRING_EN_SYMBOL_INTERGALACTIC,
         SEARCHSTRING_FR_SYMBOL_INTERGALACTIC
       ]),
-      GCWSymbolTableTool(symbolKey: 'iokharic', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'iokharic', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_IOKHARIC,
         SEARCHSTRING_DE_SYMBOL_IOKHARIC,
         SEARCHSTRING_EN_SYMBOL_IOKHARIC,
         SEARCHSTRING_FR_SYMBOL_IOKHARIC
       ]),
-      GCWSymbolTableTool(symbolKey: 'japanese_numerals', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'japanese_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_JAPANESE_NUMERALS,
         SEARCHSTRING_DE_JAPANESE_NUMERALS,
         SEARCHSTRING_EN_JAPANESE_NUMERALS,
         SEARCHSTRING_FR_JAPANESE_NUMERALS
       ]),
-      GCWSymbolTableTool(symbolKey: 'kabouter_abc', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'kabouter_abc', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_KABOUTER_ABC,
         SEARCHSTRING_DE_SYMBOL_KABOUTER_ABC,
         SEARCHSTRING_EN_SYMBOL_KABOUTER_ABC,
         SEARCHSTRING_FR_SYMBOL_KABOUTER_ABC
       ]),
-      GCWSymbolTableTool(symbolKey: 'kabouter_abc_1947', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'kabouter_abc_1947', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_KABOUTER_ABC_1947,
         SEARCHSTRING_DE_SYMBOL_KABOUTER_ABC_1947,
         SEARCHSTRING_EN_SYMBOL_KABOUTER_ABC_1947,
         SEARCHSTRING_FR_SYMBOL_KABOUTER_ABC_1947
       ]),
-      GCWSymbolTableTool(symbolKey: 'kartrak', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'kartrak', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BARCODES,
         SEARCHSTRING_DE_SYMBOL_BARCODES,
         SEARCHSTRING_EN_SYMBOL_BARCODES,
@@ -6765,61 +6417,37 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_KARTRAK,
         SEARCHSTRING_FR_SYMBOL_KARTRAK
       ]),
-      GCWSymbolTableTool(symbolKey: 'kharoshthi', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'kharoshthi', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_KHAROSHTHI,
         SEARCHSTRING_DE_SYMBOL_KHAROSHTHI,
         SEARCHSTRING_EN_SYMBOL_KHAROSHTHI,
         SEARCHSTRING_FR_SYMBOL_KHAROSHTHI
       ]),
-      GCWSymbolTableTool(symbolKey: 'klingon', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'klingon', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_KLINGON,
         SEARCHSTRING_DE_SYMBOL_KLINGON,
         SEARCHSTRING_EN_SYMBOL_KLINGON,
         SEARCHSTRING_FR_SYMBOL_KLINGON
       ]),
-      GCWSymbolTableTool(symbolKey: 'klingon_klinzhai', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'klingon_klinzhai', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_KLINGON_KLINZHAI,
         SEARCHSTRING_DE_SYMBOL_KLINGON_KLINZHAI,
         SEARCHSTRING_EN_SYMBOL_KLINGON_KLINZHAI,
         SEARCHSTRING_FR_SYMBOL_KLINGON_KLINZHAI
       ]),
-      GCWSymbolTableTool(symbolKey: 'krempel', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'krempel', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_KREMPEL,
         SEARCHSTRING_DE_SYMBOL_KREMPEL,
         SEARCHSTRING_EN_SYMBOL_KREMPEL,
         SEARCHSTRING_FR_SYMBOL_KREMPEL
       ]),
-      GCWSymbolTableTool(symbolKey: 'krypton', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'krypton', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_KRYPTON,
         SEARCHSTRING_DE_SYMBOL_KRYPTON,
         SEARCHSTRING_EN_SYMBOL_KRYPTON,
         SEARCHSTRING_FR_SYMBOL_KRYPTON
       ]),
-      GCWSymbolTableTool(symbolKey: 'lorm', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'lorm', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
         SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
         SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
@@ -6829,111 +6457,67 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_LORM,
         SEARCHSTRING_FR_SYMBOL_LORM
       ]),
-      GCWSymbolTableTool(symbolKey: 'magicode', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'magicode', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_MAGICODE,
         SEARCHSTRING_DE_SYMBOL_MAGICODE,
         SEARCHSTRING_EN_SYMBOL_MAGICODE,
         SEARCHSTRING_FR_SYMBOL_MAGICODE
       ]),
-      GCWSymbolTableTool(symbolKey: 'mandalorian', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'mandalorian', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_MANDALORIAN,
         SEARCHSTRING_DE_SYMBOL_MANDALORIAN,
         SEARCHSTRING_EN_SYMBOL_MANDALORIAN,
         SEARCHSTRING_FR_SYMBOL_MANDALORIAN
       ]),
-      GCWSymbolTableTool(symbolKey: 'marain', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'marain', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_MARAIN,
         SEARCHSTRING_DE_SYMBOL_MARAIN,
         SEARCHSTRING_EN_SYMBOL_MARAIN,
         SEARCHSTRING_FR_SYMBOL_MARAIN
       ]),
-      GCWSymbolTableTool(symbolKey: 'marain_v2', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'marain_v2', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_MARAIN_V2,
         SEARCHSTRING_DE_SYMBOL_MARAIN_V2,
         SEARCHSTRING_EN_SYMBOL_MARAIN_V2,
         SEARCHSTRING_FR_SYMBOL_MARAIN_V2
       ]),
-      GCWSymbolTableTool(symbolKey: 'matoran', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'matoran', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_MATORAN,
         SEARCHSTRING_DE_SYMBOL_MATORAN,
         SEARCHSTRING_EN_SYMBOL_MATORAN,
         SEARCHSTRING_FR_SYMBOL_MATORAN
       ]),
-      GCWSymbolTableTool(symbolKey: 'maya_numerals', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'maya_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_MAYANUMBERS,
         SEARCHSTRING_DE_MAYANUMBERS,
         SEARCHSTRING_EN_MAYANUMBERS,
         SEARCHSTRING_FR_MAYANUMBERS
       ]),
-      GCWSymbolTableTool(symbolKey: 'maze', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'maze', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_MAZE,
         SEARCHSTRING_DE_SYMBOL_MAZE,
         SEARCHSTRING_EN_SYMBOL_MAZE,
         SEARCHSTRING_FR_SYMBOL_MAZE
       ]),
-      GCWSymbolTableTool(symbolKey: 'minimoys', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'minimoys', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_MINIMOYS,
         SEARCHSTRING_DE_SYMBOL_MINIMOYS,
         SEARCHSTRING_EN_SYMBOL_MINIMOYS,
         SEARCHSTRING_FR_SYMBOL_MINIMOYS
       ]),
-      GCWSymbolTableTool(symbolKey: 'moon', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'moon', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_MOON,
         SEARCHSTRING_DE_SYMBOL_MOON,
         SEARCHSTRING_EN_SYMBOL_MOON,
         SEARCHSTRING_FR_SYMBOL_MOON
       ]),
-      GCWSymbolTableTool(symbolKey: 'murray', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'murray', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_MURRAY,
         SEARCHSTRING_DE_SYMBOL_MURRAY,
         SEARCHSTRING_EN_SYMBOL_MURRAY,
         SEARCHSTRING_FR_SYMBOL_MURRAY
       ]),
-      GCWSymbolTableTool(symbolKey: 'murraybaudot', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'murraybaudot', symbolSearchStrings: [
         SEARCHSTRING_COMMON_CCITT,
         SEARCHSTRING_DE_CCITT,
         SEARCHSTRING_COMMON_CCITT,
@@ -6947,31 +6531,19 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_MURRAYBAUDOT,
         SEARCHSTRING_FR_SYMBOL_MURRAYBAUDOT
       ]),
-      GCWSymbolTableTool(symbolKey: 'musica', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'musica', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_MUSICA,
         SEARCHSTRING_DE_SYMBOL_MUSICA,
         SEARCHSTRING_EN_SYMBOL_MUSICA,
         SEARCHSTRING_FR_SYMBOL_MUSICA
       ]),
-      GCWSymbolTableTool(symbolKey: 'nazcaan', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'nazcaan', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_NAZCAAN,
         SEARCHSTRING_DE_SYMBOL_NAZCAAN,
         SEARCHSTRING_EN_SYMBOL_NAZCAAN,
         SEARCHSTRING_FR_SYMBOL_NAZCAAN
       ]),
-      GCWSymbolTableTool(symbolKey: 'new_zealand_sign_language', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'new_zealand_sign_language', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SIGNLANGUAGE,
         SEARCHSTRING_DE_SYMBOL_SIGNLANGUAGE,
         SEARCHSTRING_EN_SYMBOL_SIGNLANGUAGE,
@@ -6981,91 +6553,55 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_NEW_ZEALAND_SIGN_LANGUAGE,
         SEARCHSTRING_FR_SYMBOL_NEW_ZEALAND_SIGN_LANGUAGE
       ]),
-      GCWSymbolTableTool(symbolKey: 'notes_doremi', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'notes_doremi', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_NOTES_DOREMI,
         SEARCHSTRING_DE_SYMBOL_NOTES_DOREMI,
         SEARCHSTRING_EN_SYMBOL_NOTES_DOREMI,
         SEARCHSTRING_FR_SYMBOL_NOTES_DOREMI
       ]),
-      GCWSymbolTableTool(symbolKey: 'notes_names_altoclef', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'notes_names_altoclef', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_NOTES_NAMES_ALTOCLEF,
         SEARCHSTRING_DE_SYMBOL_NOTES_NAMES_ALTOCLEF,
         SEARCHSTRING_EN_SYMBOL_NOTES_NAMES_ALTOCLEF,
         SEARCHSTRING_FR_SYMBOL_NOTES_NAMES_ALTOCLEF
       ]),
-      GCWSymbolTableTool(symbolKey: 'notes_names_bassclef', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'notes_names_bassclef', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_NOTES_NAMES_BASSCLEF,
         SEARCHSTRING_DE_SYMBOL_NOTES_NAMES_BASSCLEF,
         SEARCHSTRING_EN_SYMBOL_NOTES_NAMES_BASSCLEF,
         SEARCHSTRING_FR_SYMBOL_NOTES_NAMES_BASSCLEF
       ]),
-      GCWSymbolTableTool(symbolKey: 'notes_names_trebleclef', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'notes_names_trebleclef', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_NOTES_NAMES_TREBLECLEF,
         SEARCHSTRING_DE_SYMBOL_NOTES_NAMES_TREBLECLEF,
         SEARCHSTRING_EN_SYMBOL_NOTES_NAMES_TREBLECLEF,
         SEARCHSTRING_FR_SYMBOL_NOTES_NAMES_TREBLECLEF
       ]),
-      GCWSymbolTableTool(symbolKey: 'notes_notevalues', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'notes_notevalues', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_NOTES_NOTEVALUES,
         SEARCHSTRING_DE_SYMBOL_NOTES_NOTEVALUES,
         SEARCHSTRING_EN_SYMBOL_NOTES_NOTEVALUES,
         SEARCHSTRING_FR_SYMBOL_NOTES_NOTEVALUES
       ]),
-      GCWSymbolTableTool(symbolKey: 'notes_restvalues', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'notes_restvalues', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_NOTES_RESTVALUES,
         SEARCHSTRING_DE_SYMBOL_NOTES_RESTVALUES,
         SEARCHSTRING_EN_SYMBOL_NOTES_RESTVALUES,
         SEARCHSTRING_FR_SYMBOL_NOTES_RESTVALUES
       ]),
-      GCWSymbolTableTool(symbolKey: 'nyctography', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'nyctography', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_NYCTOGRAPHY,
         SEARCHSTRING_DE_SYMBOL_NYCTOGRAPHY,
         SEARCHSTRING_EN_SYMBOL_NYCTOGRAPHY,
         SEARCHSTRING_FR_SYMBOL_NYCTOGRAPHY
       ]),
-      GCWSymbolTableTool(symbolKey: 'ogham', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'ogham', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_OGHAM,
         SEARCHSTRING_DE_SYMBOL_OGHAM,
         SEARCHSTRING_EN_SYMBOL_OGHAM,
         SEARCHSTRING_FR_SYMBOL_OGHAM
       ]),
-      GCWSymbolTableTool(symbolKey: 'optical_fiber_fotag', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'optical_fiber_fotag', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_OPTICALFIBER,
         SEARCHSTRING_DE_SYMBOL_OPTICALFIBER,
         SEARCHSTRING_EN_SYMBOL_OPTICALFIBER,
@@ -7075,11 +6611,7 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_OPTICAL_FIBER_FOTAG,
         SEARCHSTRING_FR_SYMBOL_OPTICAL_FIBER_FOTAG
       ]),
-      GCWSymbolTableTool(symbolKey: 'optical_fiber_iec60304', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'optical_fiber_iec60304', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_OPTICALFIBER,
         SEARCHSTRING_DE_SYMBOL_OPTICALFIBER,
         SEARCHSTRING_EN_SYMBOL_OPTICALFIBER,
@@ -7089,11 +6621,7 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_OPTICAL_FIBER_IEC60304,
         SEARCHSTRING_FR_SYMBOL_OPTICAL_FIBER_IEC60304
       ]),
-      GCWSymbolTableTool(symbolKey: 'optical_fiber_swisscom', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'optical_fiber_swisscom', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_OPTICALFIBER,
         SEARCHSTRING_DE_SYMBOL_OPTICALFIBER,
         SEARCHSTRING_EN_SYMBOL_OPTICALFIBER,
@@ -7103,41 +6631,25 @@ class Registry {
         SEARCHSTRING_EN_OPTICAL_FIBER_SWISSCOM,
         SEARCHSTRING_FR_OPTICAL_FIBER_SWISSCOM
       ]),
-      GCWSymbolTableTool(symbolKey: 'phoenician', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'phoenician', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_PHOENICIAN,
         SEARCHSTRING_DE_SYMBOL_PHOENICIAN,
         SEARCHSTRING_EN_SYMBOL_PHOENICIAN,
         SEARCHSTRING_FR_SYMBOL_PHOENICIAN
       ]),
-      GCWSymbolTableTool(symbolKey: 'pipeline', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'pipeline', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_PIPELINE,
         SEARCHSTRING_DE_SYMBOL_PIPELINE,
         SEARCHSTRING_EN_SYMBOL_PIPELINE,
         SEARCHSTRING_FR_SYMBOL_PIPELINE
       ]),
-      GCWSymbolTableTool(symbolKey: 'pixel', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'pixel', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_PIXEL,
         SEARCHSTRING_DE_SYMBOL_PIXEL,
         SEARCHSTRING_EN_SYMBOL_PIXEL,
         SEARCHSTRING_FR_SYMBOL_PIXEL
       ]),
-      GCWSymbolTableTool(symbolKey: 'planet', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'planet', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BARCODES,
         SEARCHSTRING_DE_SYMBOL_BARCODES,
         SEARCHSTRING_EN_SYMBOL_BARCODES,
@@ -7147,21 +6659,13 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_PLANET,
         SEARCHSTRING_FR_SYMBOL_PLANET
       ]),
-      GCWSymbolTableTool(symbolKey: 'pokemon_unown', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'pokemon_unown', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_POKEMON_UNOWN,
         SEARCHSTRING_DE_SYMBOL_POKEMON_UNOWN,
         SEARCHSTRING_EN_SYMBOL_POKEMON_UNOWN,
         SEARCHSTRING_FR_SYMBOL_POKEMON_UNOWN
       ]),
-      GCWSymbolTableTool(symbolKey: 'postnet', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'postnet', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BARCODES,
         SEARCHSTRING_DE_SYMBOL_BARCODES,
         SEARCHSTRING_EN_SYMBOL_BARCODES,
@@ -7171,71 +6675,43 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_POSTNET,
         SEARCHSTRING_FR_SYMBOL_POSTNET
       ]),
-      GCWSymbolTableTool(symbolKey: 'puzzle', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'puzzle', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_PUZZLE,
         SEARCHSTRING_DE_SYMBOL_PUZZLE,
         SEARCHSTRING_EN_SYMBOL_PUZZLE,
         SEARCHSTRING_FR_SYMBOL_PUZZLE
       ]),
-      GCWSymbolTableTool(symbolKey: 'quadoo', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'quadoo', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_QUADOO,
         SEARCHSTRING_DE_SYMBOL_QUADOO,
         SEARCHSTRING_EN_SYMBOL_QUADOO,
         SEARCHSTRING_FR_SYMBOL_QUADOO
       ]),
-      GCWSymbolTableTool(symbolKey: 'reality', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'reality', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_REALITY,
         SEARCHSTRING_DE_SYMBOL_REALITY,
         SEARCHSTRING_EN_SYMBOL_REALITY,
         SEARCHSTRING_FR_SYMBOL_REALITY
       ]),
-      GCWSymbolTableTool(symbolKey: 'red_herring', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'red_herring', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_RED_HERRING,
         SEARCHSTRING_DE_SYMBOL_RED_HERRING,
         SEARCHSTRING_EN_SYMBOL_RED_HERRING,
         SEARCHSTRING_FR_SYMBOL_RED_HERRING
       ]),
-      GCWSymbolTableTool(symbolKey: 'resistor', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'resistor', symbolSearchStrings: [
         SEARCHSTRING_COMMON_RESISTOR_COLORCODE,
         SEARCHSTRING_DE_RESISTOR_COLORCODE,
         SEARCHSTRING_EN_RESISTOR_COLORCODE,
         SEARCHSTRING_FR_RESISTOR_COLORCODE
       ]),
-      GCWSymbolTableTool(symbolKey: 'rhesus_a', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'rhesus_a', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_RHESUS_A,
         SEARCHSTRING_DE_SYMBOL_RHESUS_A,
         SEARCHSTRING_EN_SYMBOL_RHESUS_A,
         SEARCHSTRING_FR_SYMBOL_RHESUS_A
       ]),
-      GCWSymbolTableTool(symbolKey: 'rm4scc', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'rm4scc', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BARCODES,
         SEARCHSTRING_DE_SYMBOL_BARCODES,
         SEARCHSTRING_EN_SYMBOL_BARCODES,
@@ -7245,337 +6721,200 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_RM4SCC,
         SEARCHSTRING_FR_SYMBOL_RM4SCC
       ]),
-      GCWSymbolTableTool(symbolKey: 'romulan', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'romulan', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ROMULAN,
         SEARCHSTRING_DE_SYMBOL_ROMULAN,
         SEARCHSTRING_EN_SYMBOL_ROMULAN,
         SEARCHSTRING_FR_SYMBOL_ROMULAN
       ]),
-      GCWSymbolTableTool(symbolKey: 'runes', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'runes', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_RUNES,
         SEARCHSTRING_DE_SYMBOL_RUNES,
         SEARCHSTRING_EN_SYMBOL_RUNES,
         SEARCHSTRING_FR_SYMBOL_RUNES
       ]),
-      GCWSymbolTableTool(symbolKey: 'sanluca', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'sanluca', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SANLUCA,
         SEARCHSTRING_DE_SYMBOL_SANLUCA,
         SEARCHSTRING_EN_SYMBOL_SANLUCA,
         SEARCHSTRING_FR_SYMBOL_SANLUCA
       ]),
-      GCWSymbolTableTool(symbolKey: 'sarati', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'sarati', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SARATI,
         SEARCHSTRING_DE_SYMBOL_SARATI,
         SEARCHSTRING_EN_SYMBOL_SARATI,
         SEARCHSTRING_FR_SYMBOL_SARATI
       ]),
-      GCWSymbolTableTool(symbolKey: 'semaphore', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'semaphore', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SEMAPHORE,
         SEARCHSTRING_DE_SYMBOL_SEMAPHORE,
         SEARCHSTRING_EN_SYMBOL_SEMAPHORE,
         SEARCHSTRING_FR_SYMBOL_SEMAPHORE
       ]),
-      GCWSymbolTableTool(symbolKey: 'sign', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
-      ]),
-      GCWSymbolTableTool(symbolKey: 'skullz', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: []),
+      GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SKULLZ,
         SEARCHSTRING_DE_SYMBOL_SKULLZ,
         SEARCHSTRING_EN_SYMBOL_SKULLZ,
         SEARCHSTRING_FR_SYMBOL_SKULLZ
       ]),
-      GCWSymbolTableTool(symbolKey: 'slash_and_pipe', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'slash_and_pipe', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SLASH_AND_PIPE,
         SEARCHSTRING_DE_SYMBOL_SLASH_AND_PIPE,
         SEARCHSTRING_EN_SYMBOL_SLASH_AND_PIPE,
         SEARCHSTRING_FR_SYMBOL_SLASH_AND_PIPE
       ]),
-      GCWSymbolTableTool(symbolKey: 'solmisation', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'solmisation', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SOLMISATION,
         SEARCHSTRING_DE_SYMBOL_SOLMISATION,
         SEARCHSTRING_EN_SYMBOL_SOLMISATION,
         SEARCHSTRING_FR_SYMBOL_SOLMISATION
       ]),
-      GCWSymbolTableTool(symbolKey: 'space_invaders', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'space_invaders', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SPACE_INVADERS,
         SEARCHSTRING_DE_SYMBOL_SPACE_INVADERS,
         SEARCHSTRING_EN_SYMBOL_SPACE_INVADERS,
         SEARCHSTRING_FR_SYMBOL_SPACE_INVADERS
       ]),
-      GCWSymbolTableTool(symbolKey: 'spintype', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'spintype', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SPINTYPE,
         SEARCHSTRING_DE_SYMBOL_SPINTYPE,
         SEARCHSTRING_EN_SYMBOL_SPINTYPE,
         SEARCHSTRING_FR_SYMBOL_SPINTYPE
       ]),
-      GCWSymbolTableTool(symbolKey: 'stippelcode', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'stippelcode', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_STIPPELCODE,
         SEARCHSTRING_DE_SYMBOL_STIPPELCODE,
         SEARCHSTRING_EN_SYMBOL_STIPPELCODE,
         SEARCHSTRING_FR_SYMBOL_STIPPELCODE
       ]),
-      GCWSymbolTableTool(symbolKey: 'suetterlin', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'suetterlin', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SUETTERLIN,
         SEARCHSTRING_DE_SYMBOL_SUETTERLIN,
         SEARCHSTRING_EN_SYMBOL_SUETTERLIN,
         SEARCHSTRING_FR_SYMBOL_SUETTERLIN
       ]),
-      GCWSymbolTableTool(symbolKey: 'sunuz', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'sunuz', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SUNUZ,
         SEARCHSTRING_DE_SYMBOL_SUNUZ,
         SEARCHSTRING_EN_SYMBOL_SUNUZ,
         SEARCHSTRING_FR_SYMBOL_SUNUZ
       ]),
-      GCWSymbolTableTool(symbolKey: 'tamil_numerals', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_TAMIL_NUMERALS,
         SEARCHSTRING_DE_SYMBOL_TAMIL_NUMERALS,
         SEARCHSTRING_EN_SYMBOL_TAMIL_NUMERALS,
         SEARCHSTRING_FR_SYMBOL_TAMIL_NUMERALS
       ]),
-      GCWSymbolTableTool(symbolKey: 'templers', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'templers', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_TEMPLERS,
         SEARCHSTRING_DE_SYMBOL_TEMPLERS,
         SEARCHSTRING_EN_SYMBOL_TEMPLERS,
         SEARCHSTRING_FR_SYMBOL_TEMPLERS
       ]),
-      GCWSymbolTableTool(symbolKey: 'tenctonese', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'tenctonese', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_TENCTONESE,
         SEARCHSTRING_DE_SYMBOL_TENCTONESE,
         SEARCHSTRING_EN_SYMBOL_TENCTONESE,
         SEARCHSTRING_FR_SYMBOL_TENCTONESE
       ]),
-      GCWSymbolTableTool(symbolKey: 'tengwar_beleriand', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'tengwar_beleriand', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_TENGWAR_BELERIAND,
         SEARCHSTRING_DE_SYMBOL_TENGWAR_BELERIAND,
         SEARCHSTRING_EN_SYMBOL_TENGWAR_BELERIAND,
         SEARCHSTRING_FR_SYMBOL_TENGWAR_BELERIAND
       ]),
-      GCWSymbolTableTool(symbolKey: 'tengwar_classic', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'tengwar_classic', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_TENGWAR_CLASSIC,
         SEARCHSTRING_DE_SYMBOL_TENGWAR_CLASSIC,
         SEARCHSTRING_EN_SYMBOL_TENGWAR_CLASSIC,
         SEARCHSTRING_FR_SYMBOL_TENGWAR_CLASSIC
       ]),
-      GCWSymbolTableTool(symbolKey: 'tengwar_general', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'tengwar_general', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_TENGWAR_GENERAL,
         SEARCHSTRING_DE_SYMBOL_TENGWAR_GENERAL,
         SEARCHSTRING_EN_SYMBOL_TENGWAR_GENERAL,
         SEARCHSTRING_FR_SYMBOL_TENGWAR_GENERAL
       ]),
-      GCWSymbolTableTool(symbolKey: 'terzi', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'terzi', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_TERZI,
         SEARCHSTRING_DE_SYMBOL_TERZI,
         SEARCHSTRING_EN_SYMBOL_TERZI,
         SEARCHSTRING_FR_SYMBOL_TERZI
       ]),
-      GCWSymbolTableTool(symbolKey: 'theban', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'theban', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_THEBAN,
         SEARCHSTRING_DE_SYMBOL_THEBAN,
         SEARCHSTRING_EN_SYMBOL_THEBAN,
         SEARCHSTRING_FR_SYMBOL_THEBAN
       ]),
-      GCWSymbolTableTool(symbolKey: 'three_squares', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'three_squares', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_THREE_SQUARES,
         SEARCHSTRING_DE_SYMBOL_THREE_SQUARES,
         SEARCHSTRING_EN_SYMBOL_THREE_SQUARES,
         SEARCHSTRING_FR_SYMBOL_THREE_SQUARES
       ]),
-      GCWSymbolTableTool(symbolKey: 'tines', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'tines', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_TINES,
         SEARCHSTRING_DE_SYMBOL_TINES,
         SEARCHSTRING_EN_SYMBOL_TINES,
         SEARCHSTRING_FR_SYMBOL_TINES
       ]),
-      GCWSymbolTableTool(symbolKey: 'tomtom', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'tomtom', symbolSearchStrings: [
         SEARCHSTRING_COMMON_TOMTOM,
         SEARCHSTRING_DE_TOMTOM,
         SEARCHSTRING_EN_TOMTOM,
         SEARCHSTRING_FR_TOMTOM
       ]),
-      GCWSymbolTableTool(symbolKey: 'trafficsigns_germany', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'trafficsigns_germany', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_TRAFFICSIGNS_GERMANY,
         SEARCHSTRING_DE_SYMBOL_TRAFFICSIGNS_GERMANY,
         SEARCHSTRING_EN_SYMBOL_TRAFFICSIGNS_GERMANY,
         SEARCHSTRING_FR_SYMBOL_TRAFFICSIGNS_GERMANY
       ]),
-      GCWSymbolTableTool(symbolKey: 'ulog', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'ulog', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ULOG,
         SEARCHSTRING_DE_SYMBOL_ULOG,
         SEARCHSTRING_EN_SYMBOL_ULOG,
         SEARCHSTRING_FR_SYMBOL_ULOG
       ]),
-      GCWSymbolTableTool(symbolKey: 'utopian', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'utopian', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_UTOPIAN,
         SEARCHSTRING_DE_SYMBOL_UTOPIAN,
         SEARCHSTRING_EN_SYMBOL_UTOPIAN,
         SEARCHSTRING_FR_SYMBOL_UTOPIAN
       ]),
-      GCWSymbolTableTool(symbolKey: 'visitor_1984', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'visitor_1984', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_VISITOR_1984,
         SEARCHSTRING_DE_SYMBOL_VISITOR_1984,
         SEARCHSTRING_EN_SYMBOL_VISITOR_1984,
         SEARCHSTRING_FR_SYMBOL_VISITOR_1984
       ]),
-      GCWSymbolTableTool(symbolKey: 'visitor_2009', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'visitor_2009', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_VISITOR_2009,
         SEARCHSTRING_DE_SYMBOL_VISITOR_2009,
         SEARCHSTRING_EN_SYMBOL_VISITOR_2009,
         SEARCHSTRING_FR_SYMBOL_VISITOR_2009
       ]),
-      GCWSymbolTableTool(symbolKey: 'vulcanian', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'vulcanian', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_VULCANIAN,
         SEARCHSTRING_DE_SYMBOL_VULCANIAN,
         SEARCHSTRING_EN_SYMBOL_VULCANIAN,
         SEARCHSTRING_FR_SYMBOL_VULCANIAN
       ]),
-      GCWSymbolTableTool(symbolKey: 'wakandan', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'wakandan', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_WAKANDAN,
         SEARCHSTRING_DE_SYMBOL_WAKANDAN,
         SEARCHSTRING_EN_SYMBOL_WAKANDAN,
         SEARCHSTRING_FR_SYMBOL_WAKANDAN
       ]),
-      GCWSymbolTableTool(symbolKey: 'webdings', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'webdings', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_WEBDINGS,
         SEARCHSTRING_DE_SYMBOL_WEBDINGS,
         SEARCHSTRING_EN_SYMBOL_WEBDINGS,
         SEARCHSTRING_FR_SYMBOL_WEBDINGS
       ]),
-      GCWSymbolTableTool(symbolKey: 'windforce_beaufort', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'windforce_beaufort', symbolSearchStrings: [
         SEARCHSTRING_COMMON_BEAUFORT,
         SEARCHSTRING_DE_BEAUFORT,
         SEARCHSTRING_EN_BEAUFORT,
@@ -7585,11 +6924,7 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_WINDFORCE_BEAUFORT,
         SEARCHSTRING_FR_SYMBOL_WINDFORCE_BEAUFORT
       ]),
-      GCWSymbolTableTool(symbolKey: 'windforce_knots', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'windforce_knots', symbolSearchStrings: [
         SEARCHSTRING_COMMON_BEAUFORT,
         SEARCHSTRING_DE_BEAUFORT,
         SEARCHSTRING_EN_BEAUFORT,
@@ -7599,91 +6934,55 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_WINDFORCE_KNOTS,
         SEARCHSTRING_FR_SYMBOL_WINDFORCE_KNOTS
       ]),
-      GCWSymbolTableTool(symbolKey: 'window', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'window', symbolSearchStrings: [
         SEARCHSTRING_COMMON_WINDOW,
         SEARCHSTRING_DE_WINDOW,
         SEARCHSTRING_EN_WINDOW,
         SEARCHSTRING_FR_WINDOW
       ]),
-      GCWSymbolTableTool(symbolKey: 'wingdings', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'wingdings', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_WINGDINGS,
         SEARCHSTRING_DE_SYMBOL_WINGDINGS,
         SEARCHSTRING_EN_SYMBOL_WINGDINGS,
         SEARCHSTRING_FR_SYMBOL_WINGDINGS
       ]),
-      GCWSymbolTableTool(symbolKey: 'wingdings2', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'wingdings2', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_WINGDINGS2,
         SEARCHSTRING_DE_SYMBOL_WINGDINGS2,
         SEARCHSTRING_EN_SYMBOL_WINGDINGS2,
         SEARCHSTRING_FR_SYMBOL_WINGDINGS2
       ]),
-      GCWSymbolTableTool(symbolKey: 'wingdings3', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'wingdings3', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_WINGDINGS3,
         SEARCHSTRING_DE_SYMBOL_WINGDINGS3,
         SEARCHSTRING_EN_SYMBOL_WINGDINGS3,
         SEARCHSTRING_FR_SYMBOL_WINGDINGS3
       ]),
-      GCWSymbolTableTool(symbolKey: 'yan_koryani', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'yan_koryani', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_YAN_KORYANI,
         SEARCHSTRING_DE_SYMBOL_YAN_KORYANI,
         SEARCHSTRING_EN_SYMBOL_YAN_KORYANI,
         SEARCHSTRING_FR_SYMBOL_YAN_KORYANI
       ]),
-      GCWSymbolTableTool(symbolKey: 'yinyang', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'yinyang', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_YINYANG,
         SEARCHSTRING_DE_SYMBOL_YINYANG,
         SEARCHSTRING_EN_SYMBOL_YINYANG,
         SEARCHSTRING_FR_SYMBOL_YINYANG
       ]),
-      GCWSymbolTableTool(symbolKey: 'zentradi', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'zentradi', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ZENTRADI,
         SEARCHSTRING_DE_SYMBOL_ZENTRADI,
         SEARCHSTRING_EN_SYMBOL_ZENTRADI,
         SEARCHSTRING_FR_SYMBOL_ZENTRADI
       ]),
-      GCWSymbolTableTool(symbolKey: 'zodiac_z340', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'zodiac_z340', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ZODIAC_Z340,
         SEARCHSTRING_DE_SYMBOL_ZODIAC_Z340,
         SEARCHSTRING_EN_SYMBOL_ZODIAC_Z340,
         SEARCHSTRING_FR_SYMBOL_ZODIAC_Z340
       ]),
-      GCWSymbolTableTool(symbolKey: 'zodiac_z408', searchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL,
-        SEARCHSTRING_DE_SYMBOL,
-        SEARCHSTRING_EN_SYMBOL,
-        SEARCHSTRING_FR_SYMBOL,
+      GCWSymbolTableTool(symbolKey: 'zodiac_z408', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ZODIAC_Z408,
         SEARCHSTRING_DE_SYMBOL_ZODIAC_Z408,
         SEARCHSTRING_EN_SYMBOL_ZODIAC_Z408,
