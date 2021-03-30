@@ -5771,6 +5771,12 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_ADLAM,
         SEARCHSTRING_FR_SYMBOL_ADLAM
       ]),
+      GCWSymbolTableTool(symbolKey: 'albhed', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_ALBHED,
+        SEARCHSTRING_DE_SYMBOL_ALBHED,
+        SEARCHSTRING_EN_SYMBOL_ALBHED,
+        SEARCHSTRING_FR_SYMBOL_ALBHED
+      ]),
       GCWSymbolTableTool(symbolKey: 'alchemy', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ALCHEMY,
         SEARCHSTRING_DE_SYMBOL_ALCHEMY,
@@ -6082,6 +6088,12 @@ class Registry {
         SEARCHSTRING_DE_SYMBOL_DOOP,
         SEARCHSTRING_EN_SYMBOL_DOOP,
         SEARCHSTRING_FR_SYMBOL_DOOP
+      ]),
+      GCWSymbolTableTool(symbolKey: 'dorabella', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_DORABELLA,
+        SEARCHSTRING_DE_SYMBOL_DORABELLA,
+        SEARCHSTRING_EN_SYMBOL_DORABELLA,
+        SEARCHSTRING_FR_SYMBOL_DORABELLA
       ]),
       GCWSymbolTableTool(symbolKey: 'doremi', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_DOREMI,
@@ -6659,6 +6671,12 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_PLANET,
         SEARCHSTRING_FR_SYMBOL_PLANET
       ]),
+      GCWSymbolTableTool(symbolKey: 'planets', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_PLANETS,
+        SEARCHSTRING_DE_SYMBOL_PLANETS,
+        SEARCHSTRING_EN_SYMBOL_PLANETS,
+        SEARCHSTRING_FR_SYMBOL_PLANETS
+      ]),
       GCWSymbolTableTool(symbolKey: 'pokemon_unown', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_POKEMON_UNOWN,
         SEARCHSTRING_DE_SYMBOL_POKEMON_UNOWN,
@@ -6800,6 +6818,12 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_SUNUZ,
         SEARCHSTRING_FR_SYMBOL_SUNUZ
       ]),
+      GCWSymbolTableTool(symbolKey: 'surf', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_SURF,
+        SEARCHSTRING_DE_SYMBOL_SURF,
+        SEARCHSTRING_EN_SYMBOL_SURF,
+        SEARCHSTRING_FR_SYMBOL_SURF
+      ]),
       GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_TAMIL_NUMERALS,
         SEARCHSTRING_DE_SYMBOL_TAMIL_NUMERALS,
@@ -6877,6 +6901,12 @@ class Registry {
         SEARCHSTRING_DE_SYMBOL_ULOG,
         SEARCHSTRING_EN_SYMBOL_ULOG,
         SEARCHSTRING_FR_SYMBOL_ULOG
+      ]),
+      GCWSymbolTableTool(symbolKey: 'unitology', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_UNITOLOGY,
+        SEARCHSTRING_DE_SYMBOL_UNITOLOGY,
+        SEARCHSTRING_EN_SYMBOL_UNITOLOGY,
+        SEARCHSTRING_FR_SYMBOL_UNITOLOGY
       ]),
       GCWSymbolTableTool(symbolKey: 'utopian', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_UTOPIAN,
@@ -6970,11 +7000,33 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_YINYANG,
         SEARCHSTRING_FR_SYMBOL_YINYANG
       ]),
+      GCWSymbolTableTool(symbolKey: 'zamonian', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_ZAMONIAN,
+        SEARCHSTRING_DE_SYMBOL_ZAMONIAN,
+        SEARCHSTRING_EN_SYMBOL_ZAMONIAN,
+        SEARCHSTRING_FR_SYMBOL_ZAMONIAN
+      ]),
       GCWSymbolTableTool(symbolKey: 'zentradi', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ZENTRADI,
         SEARCHSTRING_DE_SYMBOL_ZENTRADI,
         SEARCHSTRING_EN_SYMBOL_ZENTRADI,
         SEARCHSTRING_FR_SYMBOL_ZENTRADI
+      ]),
+      GCWSymbolTableTool(symbolKey: 'zodiac_signs', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_ZODIACSIGNS,
+        SEARCHSTRING_DE_SYMBOL_ZODIACSIGNS,
+        SEARCHSTRING_EN_SYMBOL_ZODIACSIGNS,
+        SEARCHSTRING_FR_SYMBOL_ZODIACSIGNS
+      ]),
+      GCWSymbolTableTool(symbolKey: 'zodiac_signs_latin', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_ZODIACSIGNS,
+        SEARCHSTRING_DE_SYMBOL_ZODIACSIGNS,
+        SEARCHSTRING_EN_SYMBOL_ZODIACSIGNS,
+        SEARCHSTRING_FR_SYMBOL_ZODIACSIGNS,
+        SEARCHSTRING_COMMON_SYMBOL_ZODIACSIGNS_LATIN,
+        SEARCHSTRING_DE_SYMBOL_ZODIACSIGNS_LATIN,
+        SEARCHSTRING_EN_SYMBOL_ZODIACSIGNS_LATIN,
+        SEARCHSTRING_FR_SYMBOL_ZODIACSIGNS_LATIN
       ]),
       GCWSymbolTableTool(symbolKey: 'zodiac_z340', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_ZODIAC_Z340,
