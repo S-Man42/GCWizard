@@ -35,6 +35,8 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adap
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
+import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
@@ -514,6 +516,22 @@ class GCWMapViewState extends State<GCWMapView> {
           }),
       GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
+        customIcon: _createIconButtonIcons(Icons.file_present),
+        onPressed: () {
+          setState(() {
+            openFileExplorer(allowedExtensions: ['gpx','kml','kmz'], useFileFilterOnAndroid : true).then((files) {
+              if (files != null && files.length > 0)
+                loadCoordinatesFile(files.first.path).whenComplete(() {
+                  setState(() {
+                    _mapController.fitBounds(_getBounds());
+                  });
+                });
+            });
+          });
+        },
+      ),
+      GCWIconButton(
+        backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.my_location, stacked: Icons.add),
         onPressed: () {
           setState(() {
@@ -782,6 +800,17 @@ class GCWMapViewState extends State<GCWMapView> {
       _persistanceAdapter.addViewData(viewData);
 
     return (viewData != null);
+  }
+  Future<bool> loadCoordinatesFile(String filelName) async {
+    try {
+      await importCoordinatesFile(filelName).then((viewData) {
+        if (viewData != null)
+          _persistanceAdapter.addViewData(viewData);
+
+        return (viewData != null);
+      });
+  } catch (exception) {}
+  return false;
   }
 }
 
