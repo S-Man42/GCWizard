@@ -485,6 +485,7 @@ const SEARCHSTRING_DE_SYMBOL_ZODIACSIGNS_LATIN = 'lateinisches';
 const SEARCHSTRING_DE_TAPCODE = 'klopfcode klopfen';
 const SEARCHSTRING_DE_TAPIR = 'stasi nationale volksarmee';
 const SEARCHSTRING_DE_TOMTOM = '';
+const SEARCHSTRING_DE_TRIFID = '';
 const SEARCHSTRING_DE_TRITHEMIUS = '';
 const SEARCHSTRING_DE_UNITCONVERTER =
     'einheiten groessen konvertieren umwandeln umrechnen konvertierer laengen geschwindigkeiten kraft leistung uhrzeiten flaechen volumen dichten gewichte massen badewannen druecke druck winkel temperaturen grad fussballfelder';

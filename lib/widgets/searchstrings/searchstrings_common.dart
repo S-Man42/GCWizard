@@ -473,6 +473,7 @@ const SEARCHSTRING_COMMON_SYMBOL_ZODIACSIGNS = '';
 const SEARCHSTRING_COMMON_SYMBOL_ZODIACSIGNS_LATIN = '';
 const SEARCHSTRING_COMMON_TAPCODE = '';
 const SEARCHSTRING_COMMON_TAPIR = 'tapir ddr nva mfs ';
+const SEARCHSTRING_COMMON_TRIFID = 'trifid felix delastelle polybios polybius transposition';
 const SEARCHSTRING_COMMON_TOMTOM = 'a-tom-tom atomtom';
 const SEARCHSTRING_COMMON_TRITHEMIUS = 'trithemius tabularecta';
 const SEARCHSTRING_COMMON_UNITCONVERTER =

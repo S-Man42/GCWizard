@@ -187,6 +187,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tap_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tapir.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/tomtom.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
@@ -1201,6 +1202,17 @@ class Registry {
         SEARCHSTRING_EN_TAPIR,
         SEARCHSTRING_FR_TAPIR
       ]),
+      GCWTool(
+          tool: Trifid(),
+          i18nPrefix: 'trifid',
+          missingHelpLocales: ['fr'],
+          category: ToolCategory.CRYPTOGRAPHY,
+          searchStrings: [
+            SEARCHSTRING_COMMON_TRIFID,
+            SEARCHSTRING_DE_TRIFID,
+            SEARCHSTRING_EN_TRIFID,
+            SEARCHSTRING_FR_TRIFID
+          ]),
       GCWTool(
           tool: TomTomSelection(),
           i18nPrefix: 'tomtom_selection',

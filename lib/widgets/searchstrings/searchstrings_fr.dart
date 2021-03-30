@@ -466,6 +466,7 @@ const SEARCHSTRING_FR_SYMBOL_ZODIACSIGNS_LATIN = 'latin';
 const SEARCHSTRING_FR_TAPCODE = 'taper';
 const SEARCHSTRING_FR_TAPIR = 'securite gouvernement armee populaire';
 const SEARCHSTRING_FR_TOMTOM = '';
+const SEARCHSTRING_FR_TRIFID = '';
 const SEARCHSTRING_FR_TRITHEMIUS = '';
 const SEARCHSTRING_FR_UNITCONVERTER =
     'unites convertir tailles convertir convertisseurs longueurs vitesses puissance performances temps surfaces densites poids baignoires pressions  degres terrains football';

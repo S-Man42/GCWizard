@@ -478,6 +478,7 @@ const SEARCHSTRING_EN_SYMBOL_ZODIACSIGNS_LATIN = 'latin';
 const SEARCHSTRING_EN_TAPCODE = 'tap tapcode';
 const SEARCHSTRING_EN_TAPIR = 'security army';
 const SEARCHSTRING_EN_TOMTOM = '';
+const SEARCHSTRING_EN_TRIFID = '';
 const SEARCHSTRING_EN_TRITHEMIUS = '';
 const SEARCHSTRING_EN_UNITCONVERTER =
     'units converter lengths speeds velocity velocities energies energy force power times areas volumes denisities density masses bathtubs pressures angles temperatures degrees soccerfields';
