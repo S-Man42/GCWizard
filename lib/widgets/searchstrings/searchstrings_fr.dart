@@ -273,6 +273,7 @@ const SEARCHSTRING_FR_SEGMENTS_SIXTEEN = 'seize';
 const SEARCHSTRING_FR_SETTINGS = 'parametres ';
 const SEARCHSTRING_FR_SKYTALE = 'barre';
 const SEARCHSTRING_FR_SOLITAIRE = 'jeu cartes puissance';
+final SEARCHSTRING_FR_STRADDLINGCHECKERBOARD = '';
 const SEARCHSTRING_FR_SUBSTITUTION = 'remplacer echange';
 const SEARCHSTRING_FR_SUBSTITUTIONBREAKER = 'monoalphabetique remplacer';
 const SEARCHSTRING_FR_SYMBOL = 'symboles caracteres tableaux codes images polices';

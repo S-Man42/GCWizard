@@ -285,6 +285,7 @@ const SEARCHSTRING_DE_SEGMENTS_SIXTEEN = 'sechzehn';
 const SEARCHSTRING_DE_SETTINGS = 'einstellungen optionen';
 const SEARCHSTRING_DE_SKYTALE = 'skytale stock stab';
 const SEARCHSTRING_DE_SOLITAIRE = 'kartenspiel kartendeck stromchiffrierung solitaer';
+final SEARCHSTRING_DE_STRADDLINGCHECKERBOARD = 'schachbrett spreizung gespreiztes spionage';
 const SEARCHSTRING_DE_SUBSTITUTION = 'ersetzen austauschen';
 const SEARCHSTRING_DE_SUBSTITUTIONBREAKER = 'monoalphabetische ersetzen austauschen alphabet';
 const SEARCHSTRING_DE_SYMBOL = 'symbole zeichen tabellen codes bilder schriften';
