@@ -121,7 +121,8 @@ const SEARCHSTRING_COMMON_ENTHDECIMAL = '';
 const SEARCHSTRING_COMMON_ESEARCH = '';
 const SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE = '';
 const SEARCHSTRING_COMMON_ESOTERIC_BEATNIK = 'beatnik cliff biffle';
-const SEARCHSTRING_COMMON_ESOTERIC_BRAINFK = 'brainf**k urban mueller';
+const SEARCHSTRING_COMMON_ESOTERIC_BRAINFK =
+    'brainf**k brainfk urban mueller revolution9 detailedf**k  detailedfk colonoscopy k-on f**bees fkbees p***sscript psscript reversef**k reversefk binaryf**k binaryfk ternary kkenny speak morsef**k morsefk blub ook nak pikalang pikachu pokemon roadrunner zzz screamcode flufflepuff triplet uwu btjzxgquartfrqifjlv omam';
 const SEARCHSTRING_COMMON_ESOTERIC_CHEF = '';
 const SEARCHSTRING_COMMON_ESOTERIC_DEADFISH = 'deadfish idso xkcd ';
 const SEARCHSTRING_COMMON_ESOTERIC_MALBOLGE = 'malbolge olmstead';
