@@ -280,6 +280,7 @@ const SEARCHSTRING_EN_SEGMENTS_SIXTEEN = 'sixteen';
 const SEARCHSTRING_EN_SETTINGS = 'settings  preferences options';
 const SEARCHSTRING_EN_SKYTALE = 'scytale stick';
 const SEARCHSTRING_EN_SOLITAIRE = 'carddeck cardgame streamcipher';
+final SEARCHSTRING_EN_STRADDLINGCHECKERBOARD = 'straddlingcheckerboard spy';
 const SEARCHSTRING_EN_SUBSTITUTION = 'replacements exchange';
 const SEARCHSTRING_EN_SUBSTITUTIONBREAKER = 'monoalphabetic replacements';
 const SEARCHSTRING_EN_SYMBOL = 'images pictures fonts symbols signs tables';
