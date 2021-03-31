@@ -37,9 +37,8 @@ class GCWFormulaReplace extends StatefulWidget {
 }
 
 class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
-  bool _curentValueBracket = true;
-  bool _curentValueMultiply = true;
-  bool _curentValueDivide = true;
+  bool _currentValueBracket = true;
+  bool _currentValueMultiply = true;
 
   var textStyle = gcwTextStyle().copyWith(color: themeColors().dialogText());
 
@@ -57,12 +56,12 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
           padding: EdgeInsets.only(top: 6 * DEFAULT_MARGIN),
         ),
         GCWCheckBox(
-          value: _curentValueBracket,
+          value: _currentValueBracket,
           title: i18n(context, 'formulasolver_formulas_outerbrackets') + ' ( ) ➔ [ ]',
           textStyle: textStyle,
           onChanged: (value) {
             setState(() {
-              _curentValueBracket = value;
+              _currentValueBracket = value;
               _buildNewFormula(widget.formula);
             });
           },
@@ -72,12 +71,12 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
           overlayColor: MaterialStateColor.resolveWith(getOverlayColor),
         ),
         GCWCheckBox(
-          value: _curentValueMultiply,
+          value: _currentValueMultiply,
           title: 'x ➔ *',
           textStyle: textStyle,
           onChanged: (value) {
             setState(() {
-              _curentValueMultiply = value;
+              _currentValueMultiply = value;
               _buildNewFormula(widget.formula);
             });
           },
@@ -85,22 +84,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
           checkColor: themeColors().dialog(),
           hoverColor: themeColors().dialog(),
           overlayColor: MaterialStateColor.resolveWith(getOverlayColor),
-        ),
-        GCWCheckBox(
-          value: _curentValueDivide,
-          title: ': ➔ /',
-          textStyle: textStyle,
-          onChanged: (value) {
-            setState(() {
-              _curentValueDivide = value;
-              _buildNewFormula(widget.formula);
-            });
-          },
-          fillColor: MaterialStateColor.resolveWith(getFillColor),
-          checkColor: themeColors().dialog(),
-          hoverColor: themeColors().dialog(),
-          overlayColor: MaterialStateColor.resolveWith(getOverlayColor),
-        ),
+        )
       ],
     );
   }
@@ -118,7 +102,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
 
     if (output == null || output == "") return output;
 
-    if (_curentValueBracket) {
+    if (_currentValueBracket) {
       int ignoreBracket = 0;
 
       output = output.split('').map((e) {
@@ -137,9 +121,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
         return e;
       }).join();
     }
-    if (_curentValueMultiply) output = output.replaceAll(RegExp(r'[xX×]'), '*');
-    if (_curentValueDivide) output = output.replaceAll(':', '/');
-
+    if (_currentValueMultiply) output = output.replaceAll(RegExp(r'[xX×]'), '*');
     return output;
   }
 }

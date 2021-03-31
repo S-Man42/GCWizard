@@ -71,6 +71,10 @@ class FormulaParser {
   }
 
   dynamic _evaluateFormula(String formula, Map<String, String> values) {
+    formula = formula.replaceAll(RegExp(r'[—–˗−‒]'), '-'); // different minus/hyphens/dashes
+    formula = formula.replaceAll(',', '.');
+    formula = formula.replaceAll(':', '/');
+
     Map<String, String> preparedValues = _prepareValues(values);
 
     //replace constants and formula names
@@ -129,8 +133,6 @@ class FormulaParser {
     if (formula == '') return {'state': STATE_ERROR, 'result': formula};
 
     if (values == null) values = <String, String>{};
-
-    formula = formula.replaceAll(RegExp(r'[—–˗−‒]'), '-'); // different minus/hyphens/dashes
 
     RegExp regExp = new RegExp(r'\[.+?\]');
     var matches = regExp.allMatches(formula.trim());
