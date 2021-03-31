@@ -12,6 +12,13 @@ StraddlingCheckerboardOutput encryptStraddlingCheckerboard(
     String input, key, alphabetWord, columnOrder, bool matrix4x10,
     {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
   if (input == null || input == '') return StraddlingCheckerboardOutput('', '');
+  if (key == null || key == '') return StraddlingCheckerboardOutput('', '');
+
+  input = input.toUpperCase().replaceAll(' ', '.');
+  key = _fillKey(key.toUpperCase(), matrix4x10);
+  alphabetWord = alphabetWord.toUpperCase();
+  alphabet = alphabet.toUpperCase();
+
   if (_invalidKey(key, matrix4x10)) return StraddlingCheckerboardOutput('straddlingcheckerboard_wrong_key_error', '');
   if (_invalidColumnOrder(columnOrder))
     return StraddlingCheckerboardOutput('straddlingcheckerboard_wrong_order_error', '');
@@ -51,6 +58,12 @@ StraddlingCheckerboardOutput decryptStraddlingCheckerboard(
     String input, key, alphabetWord, columnOrder, bool matrix4x10,
     {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
   if (input == null || input == '') return StraddlingCheckerboardOutput('', '');
+  if (key == null || key == '') return StraddlingCheckerboardOutput('', '');
+
+  key = _fillKey(key.toUpperCase(), matrix4x10);
+  alphabetWord = alphabetWord.toUpperCase();
+  alphabet = alphabet.toUpperCase();
+
   if (_invalidKey(key, matrix4x10)) return StraddlingCheckerboardOutput('straddlingcheckerboard_wrong_key_error', '');
   if (_invalidColumnOrder(columnOrder))
     return StraddlingCheckerboardOutput('straddlingcheckerboard_wrong_order_error', '');
@@ -93,17 +106,25 @@ StraddlingCheckerboardOutput decryptStraddlingCheckerboard(
   }
 }
 
+String _fillKey(String key, bool matrix4x10) {
+  if (key.length == 10) return key;
+
+  String result = key;
+  for (int i = key.length; i < 10; i++) result = result + ' ';
+  return result;
+}
+
 bool _invalidKey(String key, bool matrix4x10) {
-  int space = 0;
+  int spaces = 0;
 
   for (int i = 1; i < key.length; i++) if (key[i] != ' ') if (key.substring(0, i - 1).contains(key[i])) return true;
 
-  for (int i = 0; i < key.length; i++) if (key[i] == ' ') space++;
+  for (int i = 0; i < key.length; i++) if (key[i] == ' ') spaces++;
 
   if (matrix4x10) {
-    return !(space == 3 && key.length == 10);
+    return !(spaces == 3 && key.length == 10);
   } else {
-    return !(space == 2 && key.length == 10);
+    return !(spaces == 2 && key.length == 10);
   }
 }
 
@@ -147,17 +168,17 @@ Map<String, String> _buildDecodeMatrix(String key, String columnOrder, bool matr
       break;
     case PolybiosMode.ZA90:
       if (matrix4x10) if (wholeAlphabet.contains('.'))
-        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPOnMLKJIHGFEDCBA9876543210';
+        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210';
       else
-        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPOnMLKJIHGFEDCBA9876543210.';
+        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210.';
       else if (wholeAlphabet.contains('.')) if (wholeAlphabet.contains('/'))
-        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPOnMLKJIHGFEDCBA9876543210';
+        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210';
       else
-        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPOnMLKJIHGFEDCBA9876543210/';
+        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210/';
       else if (wholeAlphabet.contains('/'))
-        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPOnMLKJIHGFEDCBA9876543210';
+        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210';
       else
-        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPOnMLKJIHGFEDCBA9876543210./';
+        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210./';
       break;
     case PolybiosMode.CUSTOM:
       wholeAlphabet = wholeAlphabet + alphabet;
