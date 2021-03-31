@@ -278,7 +278,7 @@ const SEARCHSTRING_FR_SUBSTITUTION = 'remplacer echange';
 const SEARCHSTRING_FR_SUBSTITUTIONBREAKER = 'monoalphabetique remplacer';
 const SEARCHSTRING_FR_SYMBOL = 'symboles caracteres tableaux codes images polices';
 const SEARCHSTRING_FR_SYMBOL_ADLAM = 'ouest afrique guinee';
-const SEARCHSTRING_FR_SYMBOL_ALBHED = '';
+const SEARCHSTRING_FR_SYMBOL_ALBHED = 'jeu role';
 const SEARCHSTRING_FR_SYMBOL_ALCHEMY = 'alchimie éléments';
 const SEARCHSTRING_FR_SYMBOL_ALCHEMY_ALPHABET = 'alchimie';
 const SEARCHSTRING_FR_SYMBOL_ALPHABETUM_ARABUM = 'arabe';
@@ -444,7 +444,7 @@ const SEARCHSTRING_FR_SYMBOL_TINES =
     'dents canaille gallois rouge langues gens voyage dents crochets personnes voyageant clochard';
 const SEARCHSTRING_FR_SYMBOL_TRAFFICSIGNS_GERMANY = 'allemagne panneaux circulation rue';
 const SEARCHSTRING_FR_SYMBOL_ULOG = '';
-const SEARCHSTRING_FR_SYMBOL_UNITOLOGY = '';
+const SEARCHSTRING_FR_SYMBOL_UNITOLOGY = 'jeu role';
 const SEARCHSTRING_FR_SYMBOL_UTOPIAN = 'utopie';
 const SEARCHSTRING_FR_SYMBOL_VISITOR_1984 = 'visiteurs etrangers';
 const SEARCHSTRING_FR_SYMBOL_VISITOR_2009 = 'visiteurs etrangers';
