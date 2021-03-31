@@ -24,17 +24,29 @@ BUILD_ID=$(curl -s \
   | jq '.data.id')
 echo "Build $BUILD_ID in progress..."
 
+if [ -z "$BUILD_ID" ]
+then
+  echo "Something goes wrong"
+  exit
+fi
+
 echo "Wait end of build (5s)..."
 sleep 5
 
 echo "Query status again (should be finished):"
-curl -s \
+BUILD_STATUS=$(curl -s \
   -d '{"branchId": '$BRANCH_ID'}' \
   -H 'Accept: application/json' \
   -H 'Content-Type: application/json' \
   -H "Authorization: Bearer $TOKEN" \
   "$URL/projects/$PROJECT_ID/translations/builds"  \
-  | jq '.data.status'
+  | jq '.data.status')
+
+if [ "$BUILD_STATUS" != "finished" ]
+then
+  echo "Build is not finished. Retry later or increase pause"
+  exit
+fi
 
 # Get url of the zip file
 echo "get zip url..."
