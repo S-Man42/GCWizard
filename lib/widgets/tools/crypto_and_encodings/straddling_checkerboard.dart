@@ -73,8 +73,7 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
         _currentMode == GCWSwitchPosition.left
             ? GCWTextField(
                 controller: _plainTextController,
-                hintText:
-                    i18n(context, 'straddlingcheckerboard_hint_plaintext'),
+                hintText: i18n(context, 'straddlingcheckerboard_hint_plaintext'),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9 ./]')),
                 ],
@@ -86,8 +85,7 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
               )
             : GCWTextField(
                 controller: _chiffreTextController,
-                hintText:
-                    i18n(context, 'straddlingcheckerboard_hint_chiffretext'),
+                hintText: i18n(context, 'straddlingcheckerboard_hint_chiffretext'),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                 ],
@@ -142,8 +140,7 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
                 child: Column(children: [
                   GCWTextField(
                     controller: _AlphabetWordController,
-                    hintText: i18n(
-                        context, 'straddlingcheckerboard_hint_alphabetword'),
+                    hintText: i18n(context, 'straddlingcheckerboard_hint_alphabetword'),
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z./]')),
                     ],
@@ -180,8 +177,7 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
                           ? GCWTextField(
                               hintText: i18n(context, 'common_alphabet'),
                               inputFormatters: [
-                                FilteringTextInputFormatter.allow(
-                                    RegExp(r'[A-Za-z0-9./]')),
+                                FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9./]')),
                               ],
                               controller: _AlphabetController,
                               onChanged: (text) {
@@ -218,8 +214,7 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
                   children: [
                     GCWTextField(
                       controller: _ColumnOrderController,
-                      hintText:
-                          i18n(context, 'straddlingcheckerboard_hint_column'),
+                      hintText: i18n(context, 'straddlingcheckerboard_hint_column'),
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(10),
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
@@ -242,8 +237,7 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
   }
 
   _buildOutput() {
-    StraddlingCheckerboardOutput _currentOutput =
-        StraddlingCheckerboardOutput('', '');
+    StraddlingCheckerboardOutput _currentOutput = StraddlingCheckerboardOutput('', '');
 
     if (_currentMode == GCWSwitchPosition.left) {
       _currentOutput = encryptStraddlingCheckerboard(
@@ -269,9 +263,7 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
 
     if (_currentOutput.output.contains('error')) {
       if (_currentOutput.output.contains('runtime'))
-        _output = i18n(context, _currentOutput.output.split('#')[0]) +
-            '\n' +
-            _currentOutput.output.split('#')[1];
+        _output = i18n(context, _currentOutput.output.split('#')[0]) + '\n' + _currentOutput.output.split('#')[1];
       else
         _output = i18n(context, _currentOutput.output);
     } else

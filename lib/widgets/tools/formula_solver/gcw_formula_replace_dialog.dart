@@ -121,7 +121,7 @@ class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
         return e;
       }).join();
     }
-    if (_currentValueMultiply) output = output.replaceAll(RegExp(r'[xX×]'), '*');
+    if (_currentValueMultiply) output = output.replaceAll(RegExp(r'[xX]'), '*');
     return output;
   }
 }

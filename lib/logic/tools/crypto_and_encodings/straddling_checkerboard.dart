@@ -12,24 +12,18 @@ StraddlingCheckerboardOutput encryptStraddlingCheckerboard(
     String input, key, alphabetWord, columnOrder, bool matrix4x10,
     {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
   if (input == null || input == '') return StraddlingCheckerboardOutput('', '');
-  if (_invalidKey(key, matrix4x10))
-    return StraddlingCheckerboardOutput(
-        'straddlingcheckerboard_wrong_key_error', '');
+  if (_invalidKey(key, matrix4x10)) return StraddlingCheckerboardOutput('straddlingcheckerboard_wrong_key_error', '');
   if (_invalidColumnOrder(columnOrder))
-    return StraddlingCheckerboardOutput(
-        'straddlingcheckerboard_wrong_order_error', '');
+    return StraddlingCheckerboardOutput('straddlingcheckerboard_wrong_order_error', '');
 
   try {
     Map<String, String> EncodeMatrix = new Map<String, String>();
     Map<String, String> DecodeMatrix = new Map<String, String>();
     List<String> result = new List<String>();
 
-    DecodeMatrix = _buildDecodeMatrix(
-        key, columnOrder, matrix4x10, alphabetWord,
-        mode: mode, alphabet: alphabet);
+    DecodeMatrix = _buildDecodeMatrix(key, columnOrder, matrix4x10, alphabetWord, mode: mode, alphabet: alphabet);
     if (DecodeMatrix['ERROR'] != null)
-      return StraddlingCheckerboardOutput(
-          'straddlingcheckerboard__wrong_key_error', '');
+      return StraddlingCheckerboardOutput('straddlingcheckerboard__wrong_key_error', '');
 
     EncodeMatrix = switchMapKeyValue(DecodeMatrix);
 
@@ -47,11 +41,9 @@ StraddlingCheckerboardOutput encryptStraddlingCheckerboard(
         else
           result.add(EncodeMatrix[input[i]]);
       }
-    return StraddlingCheckerboardOutput(
-        result.join(''), _buildGrid(DecodeMatrix, columnOrder, matrix4x10));
+    return StraddlingCheckerboardOutput(result.join(''), _buildGrid(DecodeMatrix, columnOrder, matrix4x10));
   } catch (e) {
-    return StraddlingCheckerboardOutput(
-        'straddlingcheckerboard_runtime_error' + '#' + e.toString(), '');
+    return StraddlingCheckerboardOutput('straddlingcheckerboard_runtime_error' + '#' + e.toString(), '');
   }
 }
 
@@ -59,23 +51,17 @@ StraddlingCheckerboardOutput decryptStraddlingCheckerboard(
     String input, key, alphabetWord, columnOrder, bool matrix4x10,
     {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
   if (input == null || input == '') return StraddlingCheckerboardOutput('', '');
-  if (_invalidKey(key, matrix4x10))
-    return StraddlingCheckerboardOutput(
-        'straddlingcheckerboard_wrong_key_error', '');
+  if (_invalidKey(key, matrix4x10)) return StraddlingCheckerboardOutput('straddlingcheckerboard_wrong_key_error', '');
   if (_invalidColumnOrder(columnOrder))
-    return StraddlingCheckerboardOutput(
-        'straddlingcheckerboard_wrong_order_error', '');
+    return StraddlingCheckerboardOutput('straddlingcheckerboard_wrong_order_error', '');
 
   try {
     Map<String, String> DecodeMatrix = new Map<String, String>();
     List<String> result = new List<String>();
 
-    DecodeMatrix = _buildDecodeMatrix(
-        key, columnOrder, matrix4x10, alphabetWord,
-        mode: mode, alphabet: alphabet);
+    DecodeMatrix = _buildDecodeMatrix(key, columnOrder, matrix4x10, alphabetWord, mode: mode, alphabet: alphabet);
     if (DecodeMatrix['ERROR'] != null)
-      return StraddlingCheckerboardOutput(
-          'straddlingcheckerboard_wrong_key_error', '');
+      return StraddlingCheckerboardOutput('straddlingcheckerboard_wrong_key_error', '');
 
     for (int i = 0; i < input.length; i++) {
       if (matrix4x10) {
@@ -100,20 +86,17 @@ StraddlingCheckerboardOutput decryptStraddlingCheckerboard(
           result.add(DecodeMatrix[input[i]]);
       }
     }
-    return StraddlingCheckerboardOutput(result.join('').replaceAll('.', ' '),
-        _buildGrid(DecodeMatrix, columnOrder, matrix4x10));
-  } catch (e) {
     return StraddlingCheckerboardOutput(
-        'straddlingcheckerboard_runtime_error' + '#' + e.toString(), '');
+        result.join('').replaceAll('.', ' '), _buildGrid(DecodeMatrix, columnOrder, matrix4x10));
+  } catch (e) {
+    return StraddlingCheckerboardOutput('straddlingcheckerboard_runtime_error' + '#' + e.toString(), '');
   }
 }
 
 bool _invalidKey(String key, bool matrix4x10) {
   int space = 0;
 
-  for (int i = 1; i < key.length; i++)
-    if (key[i] != ' ') if (key.substring(0, i - 1).contains(key[i]))
-      return true;
+  for (int i = 1; i < key.length; i++) if (key[i] != ' ') if (key.substring(0, i - 1).contains(key[i])) return true;
 
   for (int i = 0; i < key.length; i++) if (key[i] == ' ') space++;
 
@@ -135,8 +118,7 @@ bool _invalidColumnOrder(String columnOrder) {
   return false;
 }
 
-Map<String, String> _buildDecodeMatrix(
-    String key, String columnOrder, bool matrix4x10, String alphabetWord,
+Map<String, String> _buildDecodeMatrix(String key, String columnOrder, bool matrix4x10, String alphabetWord,
     {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
   Map<String, String> result = new Map<String, String>();
   List<String> usedAlphabet = new List<String>();
@@ -175,8 +157,7 @@ Map<String, String> _buildDecodeMatrix(
       else if (wholeAlphabet.contains('/'))
         wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPOnMLKJIHGFEDCBA9876543210';
       else
-        wholeAlphabet =
-            wholeAlphabet + 'ZYXWVUTSRQPOnMLKJIHGFEDCBA9876543210./';
+        wholeAlphabet = wholeAlphabet + 'ZYXWVUTSRQPOnMLKJIHGFEDCBA9876543210./';
       break;
     case PolybiosMode.CUSTOM:
       wholeAlphabet = wholeAlphabet + alphabet;
@@ -223,8 +204,7 @@ Map<String, String> _buildDecodeMatrix(
   return result;
 }
 
-String _buildGrid(
-    Map<String, String> grid, String columnOrder, bool matrix4x10) {
+String _buildGrid(Map<String, String> grid, String columnOrder, bool matrix4x10) {
   String result = '';
   String line1 = '';
   String line2 = '';
