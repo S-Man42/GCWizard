@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
@@ -22,7 +22,7 @@ class AppLanguage extends ChangeNotifier {
   }
 
   Locale getPlatformLocale() {
-    final String lang = Platform.localeName.split("_")[0];
+    final String lang = ui.window.locale.languageCode.split("_")[0];
     return Locale(lang);
   }
 
