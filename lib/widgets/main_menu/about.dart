@@ -146,7 +146,8 @@ class AboutState extends State<About> {
                             '\'moenk\' (GK Coords)',
                             '\'Schnatt\' (Symbol Tables)',
                             'Udo J. (Code)',
-                            '\'wollpirat\' (Food, Tea & more)'
+                            '\'wollpirat\' (Food, Tea & more)',
+                            'Nina \'nike1972\' G. (Nina\'s Schmierblo(g)ck'
                           ].join('\n') +
                           '\n')
                 ], style: gcwTextStyle()),
