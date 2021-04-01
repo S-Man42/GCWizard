@@ -212,6 +212,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
@@ -561,6 +562,18 @@ class Registry {
             SEARCHSTRING_DE_COMBINATORICS,
             SEARCHSTRING_EN_COMBINATORICS,
             SEARCHSTRING_FR_COMBINATORICS
+          ]),
+      GCWTool(
+          tool: ComplexNumbers(),
+          i18nPrefix: 'complex_numbers',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: [
+          ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_COMPLEXNUMBERS,
+            SEARCHSTRING_DE_COMPLEXNUMBERS,
+            SEARCHSTRING_EN_COMPLEXNUMBERS,
+            SEARCHSTRING_FR_COMPLEXNUMBERS
           ]),
       GCWTool(tool: CoordsSelection(), i18nPrefix: 'coords_selection', missingHelpLocales: [
         'fr'

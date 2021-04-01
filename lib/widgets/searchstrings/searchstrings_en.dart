@@ -68,6 +68,7 @@ const SEARCHSTRING_EN_COLORPICKER =
 const SEARCHSTRING_EN_COMBINATORICS = 'mathematics combinatorics';
 const SEARCHSTRING_EN_COMBINATORICS_COMBINATION = 'combinations subgroups';
 const SEARCHSTRING_EN_COMBINATORICS_PERMUTATION = 'permutations arrangements orders';
+const SEARCHSTRING_EN_COMPLEXNUMBERS = 'complex numbers  polar cartesian imaginary coordinates';
 const SEARCHSTRING_EN_COORDINATES = 'coordinates';
 const SEARCHSTRING_EN_COORDINATES_ANTIPODES = 'oppositeside';
 const SEARCHSTRING_EN_COORDINATES_CENTERTHREEPOINTS =
