@@ -115,9 +115,9 @@ bool _invalidKey(String key, bool matrix4x10) {
   if (hasDuplicateCharacters(key)) return true;
 
   if (matrix4x10) {
-    return !(key.length == 10 && key.replaceAll(RegExp('[^\s]'), '').length == 3);
+    return !(key.length == 10 && countCharacters(key, ' ') == 3);
   } else {
-    return !(key.length == 10 && key.replaceAll(RegExp('[^\s]'), '').length == 2);
+    return !(key.length == 10 && countCharacters(key, ' ') == 2);
   }
 }
 
