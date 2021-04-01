@@ -26,6 +26,7 @@ import 'package:gc_wizard/widgets/selector_lists/crosssum_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dna_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/ds_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/easter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/esoteric_programminglanguages_selection.dart';
@@ -227,6 +228,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicac
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/ds.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
@@ -623,6 +625,21 @@ class Registry {
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
           missingHelpLocales: ['fr'],
           searchStrings: [SEARCHSTRING_COMMON_DNA, SEARCHSTRING_DE_DNA, SEARCHSTRING_EN_DNA, SEARCHSTRING_FR_DNA]),
+      GCWTool(
+          tool: DSSelection(),
+          i18nPrefix: 'silverratio_selection',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_DS,
+            SEARCHSTRING_DE_DS,
+            SEARCHSTRING_EN_DS,
+            SEARCHSTRING_FR_DS,
+            SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
+            SEARCHSTRING_DE_IRRATIONALNUMBERS,
+            SEARCHSTRING_EN_IRRATIONALNUMBERS,
+            SEARCHSTRING_FR_IRRATIONALNUMBERS
+          ]),
       GCWTool(
           tool: DTMF(),
           i18nPrefix: 'dtmf',
@@ -2370,6 +2387,53 @@ class Registry {
         SEARCHSTRING_DE_DNAAMONOACIDSTABLE,
         SEARCHSTRING_EN_DNAAMONOACIDSTABLE,
         SEARCHSTRING_FR_DNAAMONOACIDSTABLE
+      ]),
+
+      //DS Selection **********************************************************************************************
+      GCWTool(tool: DSNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
+        SEARCHSTRING_DE_IRRATIONALNUMBERS,
+        SEARCHSTRING_EN_IRRATIONALNUMBERS,
+        SEARCHSTRING_FR_IRRATIONALNUMBERS,
+        SEARCHSTRING_COMMON_DS,
+        SEARCHSTRING_DE_DS,
+        SEARCHSTRING_EN_DS,
+        SEARCHSTRING_FR_DS,
+        SEARCHSTRING_COMMON_DSDECIMALRANGE,
+        SEARCHSTRING_DE_DSDECIMALRANGE,
+        SEARCHSTRING_EN_DSDECIMALRANGE,
+        SEARCHSTRING_FR_DSDECIMALRANGE
+      ]),
+      GCWTool(tool: DSDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', missingHelpLocales: [
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
+        SEARCHSTRING_DE_IRRATIONALNUMBERS,
+        SEARCHSTRING_EN_IRRATIONALNUMBERS,
+        SEARCHSTRING_FR_IRRATIONALNUMBERS,
+        SEARCHSTRING_COMMON_DS,
+        SEARCHSTRING_DE_DS,
+        SEARCHSTRING_EN_DS,
+        SEARCHSTRING_FR_DS,
+        SEARCHSTRING_COMMON_DSDECIMALRANGE,
+        SEARCHSTRING_DE_DSDECIMALRANGE,
+        SEARCHSTRING_EN_DSDECIMALRANGE,
+        SEARCHSTRING_FR_DSDECIMALRANGE
+      ]),
+      GCWTool(tool: DSSearch(), i18nPrefix: 'irrationalnumbers_search', missingHelpLocales: [
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
+        SEARCHSTRING_DE_IRRATIONALNUMBERS,
+        SEARCHSTRING_EN_IRRATIONALNUMBERS,
+        SEARCHSTRING_FR_IRRATIONALNUMBERS,
+        SEARCHSTRING_COMMON_DS,
+        SEARCHSTRING_DE_DS,
+        SEARCHSTRING_EN_DS,
+        SEARCHSTRING_FR_DS,
+        SEARCHSTRING_COMMON_DSSEARCH,
+        SEARCHSTRING_DE_DSSEARCH,
+        SEARCHSTRING_EN_DSSEARCH,
+        SEARCHSTRING_FR_DSSEARCH
       ]),
 
       //E Selection *************************************************************************************************

@@ -2260,6 +2260,8 @@
   "settings_coordinates_defaultrotationellipsoid": "Ellipsoïde par défaut",
   "settings_coordinates_defaultrotationellipsoid_existing": "À partir de la liste",
   "settings_coordinates_defaultrotationellipsoid_user": "Spécifiez la vôtre",
+  "silverratio_selection_title": "Nombre d'argent (δ = 2,414213562373...)",
+  "silverratio_selection_description": "Constante mathématique: Nombre d'argent",
   "skytale_title": "Scytale",
   "skytale_description": "Écrire des mots sur une bande de cuir enveloppée autour d'un bâton (transposition)",
   "skytale_example": "ABCDEF → ADBECF",

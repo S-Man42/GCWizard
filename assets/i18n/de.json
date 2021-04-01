@@ -2264,6 +2264,8 @@
   "settings_coordinates_defaultrotationellipsoid": "Standardellipsoid",
   "settings_coordinates_defaultrotationellipsoid_existing": "Aus Liste",
   "settings_coordinates_defaultrotationellipsoid_user": "Eigener",
+  "silverratio_selection_title": "Silberner Schnitt (δ = 2,414213562373...)",
+  "silverratio_selection_description": "Mathematische Konstante: Silberner Schnitt",
   "skytale_title": "Skytale",
   "skytale_description": "Schreibe Buchstaben auf ein um einen Stock gewickeltes Lederband (Transposition)",
   "skytale_example": "ABCDEF → ADBECF",
