@@ -273,3 +273,17 @@ Color hexStringToColor(String hex) {
   RGB rgb = HexCode(hex).toRGB();
   return Color.fromARGB(255, rgb.red.floor(), rgb.green.floor(), rgb.blue.floor());
 }
+
+String removeDuplicateCharacters(String input) {
+  if (input == null)
+    return null;
+
+  return input.split('').toSet().join();
+}
+
+bool hasDuplicateCharacters(String input) {
+  if (input == null)
+    return false;
+
+  return input != removeDuplicateCharacters(input);
+}
