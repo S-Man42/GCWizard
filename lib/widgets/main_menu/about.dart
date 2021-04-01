@@ -117,6 +117,7 @@ class AboutState extends State<About> {
                       text: [
                             'Andy \'Puma66\' (Special Support)',
                             'Andreas \'TeamBirdy2404\' (Symbol Tables)',
+                            'Ludo \'ludoo\' (Code & Translation FR)',
                             'Mike B. (Code & Symbol Tables)',
                             'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
                           ].join('\n') +
@@ -143,6 +144,7 @@ class AboutState extends State<About> {
                             '\'Geo-Link\' (Hardware & Symbol Tables)',
                             'Karl B. (Coords Algorithms)',
                             'Michael D. (Symbol Tables)',
+                            'Nina \'nike1972\' G. (Nina\'s Schmierblo(g)ck) (Manual)',
                             '\'moenk\' (GK Coords)',
                             '\'Schnatt\' (Symbol Tables)',
                             'Udo J. (Code)',
@@ -177,10 +179,12 @@ class AboutState extends State<About> {
                     'Palk \'geogedoens.de\'',
                     '\'Pamakaru\'',
                     'Paweł B.',
+                    'Peter S.-H.',
                     '\'radioscout\'',
                     '\'radlerandi\'',
                     '\'Sechsfüssler\'',
                     'Stefan J.',
+                    'Team \'kesteri\'',
                     '\'tebarius\'',
                     '\'tomcat06\'',
                     '\'Vyrembi\''

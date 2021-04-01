@@ -269,4 +269,73 @@ void main() {
       });
     });
   });
+
+  group("CommonUtils.removeDuplicateCharacters:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : null},
+      {'input' : '', 'expectedOutput' : ''},
+
+      {'input' : 'AA', 'expectedOutput' : 'A'},
+      {'input' : 'A1A', 'expectedOutput' : 'A1'},
+      {'input' : 'A1A1', 'expectedOutput' : 'A1'},
+      {'input' : 'A11A', 'expectedOutput' : 'A1'},
+
+      {'input' : 'remove Duplicate Characters', 'expectedOutput' : 'remov DuplicatChs'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = removeDuplicateCharacters(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("CommonUtils.hasDuplicateCharacters:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : false},
+      {'input' : '', 'expectedOutput' : false},
+
+      {'input' : 'A1', 'expectedOutput' : false},
+      {'input' : 'A1a', 'expectedOutput' : false},
+
+      {'input' : 'AA', 'expectedOutput' : true},
+      {'input' : 'A1A', 'expectedOutput' : true},
+      {'input' : 'A1A1', 'expectedOutput' : true},
+      {'input' : 'A11A', 'expectedOutput' : true},
+
+      {'input' : 'remove Duplicate Characters', 'expectedOutput' : true},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = hasDuplicateCharacters(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("CommonUtils.countCharacters:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'characters': null, 'expectedOutput' : 0},
+      {'input' : '', 'characters': 'a', 'expectedOutput' : 0},
+
+      {'input' : 'ABC', 'characters': 'A', 'expectedOutput' : 1},
+      {'input' : 'ABC', 'characters': 'AB', 'expectedOutput' : 2},
+      {'input' : 'ABC', 'characters': 'ABC', 'expectedOutput' : 3},
+      {'input' : 'ABC', 'characters': 'ABCD', 'expectedOutput' : 3},
+
+      {'input' : 'ABCABC', 'characters': 'A', 'expectedOutput' : 2},
+      {'input' : 'ABCABC', 'characters': 'AB', 'expectedOutput' : 4},
+      {'input' : 'ABCABC', 'characters': 'ABC', 'expectedOutput' : 6},
+      {'input' : 'ABCABC', 'characters': 'ABCD', 'expectedOutput' : 6},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, characters: ${elem['characters']}', () {
+        var _actual = countCharacters(elem['input'], elem['characters']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
 }
