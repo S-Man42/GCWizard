@@ -117,7 +117,7 @@ class AboutState extends State<About> {
                       text: [
                             'Andy \'Puma66\' (Special Support)',
                             'Andreas \'TeamBirdy2404\' (Symbol Tables)',
-                            'Ludo \'ludoo\' (Code & Translation FR)',
+                            'Ludovic Valente \'LudoO\' (Code & Translation FR)',
                             'Mike B. (Code & Symbol Tables)',
                             'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
                           ].join('\n') +

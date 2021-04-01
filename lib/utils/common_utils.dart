@@ -275,22 +275,19 @@ Color hexStringToColor(String hex) {
 }
 
 String removeDuplicateCharacters(String input) {
-  if (input == null)
-    return null;
+  if (input == null) return null;
 
   return input.split('').toSet().join();
 }
 
 bool hasDuplicateCharacters(String input) {
-  if (input == null)
-    return false;
+  if (input == null) return false;
 
   return input != removeDuplicateCharacters(input);
 }
 
 int countCharacters(String input, String characters) {
-  if (input == null || characters == null)
-    return 0;
+  if (input == null || characters == null) return 0;
 
   return input.replaceAll(RegExp('[^$characters]'), '').length;
 }

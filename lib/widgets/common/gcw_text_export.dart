@@ -149,12 +149,12 @@ Future<Map<String, dynamic>> _exportEncryption(String text, TextExportMode mode,
 Future<ByteData> toQrImageData(String text) async {
   try {
     var image = await QrPainter(
-      data: text,
-      version: QrVersions.auto,
-      errorCorrectionLevel: QrErrorCorrectLevel.L,
-      emptyColor: COLOR_QR_BACKGROUND,
-      gapless: true
-    ).toImage(300);
+            data: text,
+            version: QrVersions.auto,
+            errorCorrectionLevel: QrErrorCorrectLevel.L,
+            emptyColor: COLOR_QR_BACKGROUND,
+            gapless: true)
+        .toImage(300);
 
     final canvasRecorder = ui.PictureRecorder();
     final rect = Rect.fromLTWH(0, 0, image.width + 20.0, image.height + 20.0);
