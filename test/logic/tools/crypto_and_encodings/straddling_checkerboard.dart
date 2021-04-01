@@ -25,6 +25,14 @@ void main() {
       // https://en.wikipedia.org/wiki/Straddling_checkerboard
       {'input' : 'ATTACK AT DAWN', 'key': 'ET AON RIS', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : false, 'mode': PolybiosMode.CUSTOM, 'alphabet': 'BCDFGHJKLMPQUVWXYZ./', 'expectedOutput' : '31132127683168223645'},
 
+      // check fillKey
+      {'input' : 'test', 'key': 'roast', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : 'straddlingcheckerboard_wrong_key_error'},
+      {'input' : 'test', 'key': 'toastier', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : 'straddlingcheckerboard_wrong_key_error'},
+      {'input' : 'test', 'key': 'roastbcd', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : '48034'},
+      {'input' : 'test', 'key': 'roast', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : true, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : 'straddlingcheckerboard_wrong_key_error'},
+      {'input' : 'test', 'key': 'toastie', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : true, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : 'straddlingcheckerboard_wrong_key_error'},
+      {'input' : 'test', 'key': 'roastbc', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : true, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : '47134'},
+
       //{'input' : '', 'key': '', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : ''},
     ];
 
@@ -51,6 +59,15 @@ void main() {
 
       // https://en.wikipedia.org/wiki/Straddling_checkerboard
       {'expectedOutput' : 'ATTACK AT DAWN', 'key': 'ET AON RIS', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : false, 'mode': PolybiosMode.CUSTOM, 'alphabet': 'BCDFGHJKLMPQ/UVWXYZ.', 'input' : '31132127693169223655'},
+
+      // check fillKey
+      {'input' : '48034', 'key': 'roast', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : 'straddlingcheckerboard_wrong_key_error'},
+      {'input' : '48034', 'key': 'toastier', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : 'straddlingcheckerboard_wrong_key_error'},
+      {'input' : '48034', 'key': 'roastbcd', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : false, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : 'TEST'},
+      {'input' : '47134', 'key': 'roast', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : true, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : 'straddlingcheckerboard_wrong_key_error'},
+      {'input' : '47134', 'key': 'toastie', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : true, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : 'straddlingcheckerboard_wrong_key_error'},
+      {'input' : '47134', 'key': 'roastbc', 'alphabetWord' : '', 'columnOrder' : '0123456789', 'matrix4x10' : true, 'mode': PolybiosMode.AZ09, 'alphabet': '', 'expectedOutput' : 'TEST'},
+
     ];
 
     _inputsToExpected.forEach((elem) {

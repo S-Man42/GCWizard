@@ -112,7 +112,7 @@ String _fillKey(String key, bool matrix4x10) {
 }
 
 bool _invalidKey(String key, bool matrix4x10) {
-  if (hasDuplicateCharacters(key)) return true;
+  if (hasDuplicateCharacters(key.replaceAll(' ', ''))) return true;
 
   if (matrix4x10) {
     return !(key.length == 10 && countCharacters(key, ' ') == 3);
