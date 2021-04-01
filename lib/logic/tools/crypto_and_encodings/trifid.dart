@@ -99,7 +99,8 @@ TrifidOutput decryptTrifid(String input, int blockSize, {PolybiosMode mode: Poly
     line2 = line2 + blockLine.substring(blockLine.length ~/ 3, 2 * blockLine.length ~/ 3);
     line3 = line3 + blockLine.substring(2 * blockLine.length ~/ 3);
   }
-  blockLine = tupel.substring(line1.length ~/ blockSize * blockSize);
+  //blockLine = tupel.substring(line1.length ~/ blockSize * blockSize);
+  blockLine = tupel.substring(line1.length * 3);
   line1 = line1 + blockLine.substring(0, blockLine.length ~/ 3);
   line2 = line2 + blockLine.substring(blockLine.length ~/ 3, 2 * blockLine.length ~/ 3);
   line3 = line3 + blockLine.substring(2 * blockLine.length ~/ 3);
