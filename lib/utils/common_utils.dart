@@ -287,3 +287,10 @@ bool hasDuplicateCharacters(String input) {
 
   return input != removeDuplicateCharacters(input);
 }
+
+int countCharacters(String input, String characters) {
+  if (input == null || characters == null)
+    return 0;
+
+  return input.replaceAll(RegExp('[^$characters]'), '').length;
+}

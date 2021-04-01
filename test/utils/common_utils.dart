@@ -314,4 +314,28 @@ void main() {
       });
     });
   });
+
+  group("CommonUtils.countCharacters:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'characters': null, 'expectedOutput' : 0},
+      {'input' : '', 'characters': 'a', 'expectedOutput' : 0},
+
+      {'input' : 'ABC', 'characters': 'A', 'expectedOutput' : 1},
+      {'input' : 'ABC', 'characters': 'AB', 'expectedOutput' : 2},
+      {'input' : 'ABC', 'characters': 'ABC', 'expectedOutput' : 3},
+      {'input' : 'ABC', 'characters': 'ABCD', 'expectedOutput' : 3},
+
+      {'input' : 'ABCABC', 'characters': 'A', 'expectedOutput' : 2},
+      {'input' : 'ABCABC', 'characters': 'AB', 'expectedOutput' : 4},
+      {'input' : 'ABCABC', 'characters': 'ABC', 'expectedOutput' : 6},
+      {'input' : 'ABCABC', 'characters': 'ABCD', 'expectedOutput' : 6},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, characters: ${elem['characters']}', () {
+        var _actual = countCharacters(elem['input'], elem['characters']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
 }
