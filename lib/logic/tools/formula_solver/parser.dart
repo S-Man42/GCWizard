@@ -81,7 +81,7 @@ class FormulaParser {
       group = substitution(group, switchMapKeyValue(superscriptCharacters));
       return '^$group';
     });
-    
+
     return formula;
   }
 
