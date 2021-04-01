@@ -108,23 +108,16 @@ StraddlingCheckerboardOutput decryptStraddlingCheckerboard(
 
 String _fillKey(String key, bool matrix4x10) {
   if (key.length == 10) return key;
-
-  String result = key;
-  for (int i = key.length; i < 10; i++) result = result + ' ';
-  return result;
+  return key.padRight(10);
 }
 
 bool _invalidKey(String key, bool matrix4x10) {
-  int spaces = 0;
-
-  for (int i = 1; i < key.length; i++) if (key[i] != ' ') if (key.substring(0, i - 1).contains(key[i])) return true;
-
-  for (int i = 0; i < key.length; i++) if (key[i] == ' ') spaces++;
+  if (hasDuplicateCharacters(key)) return true;
 
   if (matrix4x10) {
-    return !(spaces == 3 && key.length == 10);
+    return !(key.length == 10 && key.replaceAll(RegExp('[^\s]'), '').length == 3);
   } else {
-    return !(spaces == 2 && key.length == 10);
+    return !(key.length == 10 && key.replaceAll(RegExp('[^\s]'), '').length == 2);
   }
 }
 
