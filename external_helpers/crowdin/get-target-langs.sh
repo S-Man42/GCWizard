@@ -40,7 +40,7 @@ BUILD_STATUS=$(curl -s \
   -H 'Content-Type: application/json' \
   -H "Authorization: Bearer $TOKEN" \
   "$URL/projects/$PROJECT_ID/translations/builds"  \
-  | jq '.data.status')
+  | jq -r '.data.status')
 
 if [ "$BUILD_STATUS" != "finished" ]
 then
