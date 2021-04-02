@@ -9,9 +9,13 @@ Map<String, String> SolveEquation(String currentA, String currentB, String curre
   currentC = currentC.replaceAll(',', '.');
 
   Map<String, String> result = new Map<String, String>();
-  double a = double.parse(currentA);
-  double b = double.parse(currentB);
-  double c = double.parse(currentC);
+  double a = 0.0;
+  double b = 0.0;
+  double c = 0.0;
+
+  if (double.tryParse(currentA) != null) a = double.parse(currentA); else return {'': ''};
+  if (double.tryParse(currentB) != null) b = double.parse(currentB); else return {'': ''};
+  if (double.tryParse(currentC) != null) c = double.parse(currentC); else return {'': ''};
 
   if (a == 0) result['quadratic_equation_hint_caution'] = 'quadratic_equation_hint_a_null';
 
