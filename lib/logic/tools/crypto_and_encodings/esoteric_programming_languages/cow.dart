@@ -5,10 +5,10 @@
 //
 // Licencse: Public Domain
 //
-// Marco F. atomK
+// Interpreter Marco F. atomK
 // https://github.com/Atomk/C-COW-Interpreter/blob/master/cow-interpreter.c
 //
-// Frank Buss
+// Generator   Frank Buss
 // https://frank-buss.de/cow.html
 //---------------------------------------------------------
 
@@ -52,8 +52,9 @@ final mnemonicList = {
   11: 'input int [mem]'
 };
 
-final MAX_MEMORY = 1024;
-final MAX_ITERATIONS = 32768;
+final MEMORY_SIZE  = 256;
+final MAX_NUMBER_OF_INSTRUCTIONS = 512;
+final MAX_ITERATIONS = 500000;
 
 class CowOutput {
   String output = '';
@@ -63,45 +64,48 @@ class CowOutput {
   CowOutput(this.output, this.error, this.debug);
 }
 
+
+List<int> memoryBlocksArray = List<int>.generate(MEMORY_SIZE, (int index) => 0);
+List<String> debug = new List<String>();
+int currentBlockIndex = 0;
 String error = '';
 bool halt = false;
-int mem_pos = 0;
-List<int> memory = List<int>.generate(MAX_MEMORY, (index) => 0);
-String STDOUT = '';
+int reg = 0;
+bool isRegisterInitialized = false;
 int inputPointer = 0;
-int register = 0;
-bool has_register_val = false;
-List<String> debug = new List<String>();
+String STDOUT = '';
 
 CowOutput interpretCow(String code, {String STDIN}) {
-  STDOUT = '';
-  halt = false;
-  mem_pos = 0;
-  inputPointer = 0;
-  register = 0;
-  has_register_val = false;
-  memory.forEach((element) {
-    element = 0;
-  });
-
   if (code == null || code.length == 0) return CowOutput('', '', []);
 
   code = code.replaceAll(new RegExp(r'\s'), '');
-  List<int> instructions = new List<int>();
+  List<int> opcodesArray = new List<int>();
+  int numberOfInstructions = 0;
+
   for (int i = 0; i < code.length ~/ 3; i++) {
     if (commandsMooToInteger[code.substring(i * 3, i * 3 + 3)] == null)
       return CowOutput('', ERROR_COW_INVALIDCODE, []);
-    else
-      instructions.add(commandsMooToInteger[code.substring(i * 3, i * 3 + 3)]);
+    else {
+      opcodesArray.add(commandsMooToInteger[code.substring(i * 3, i * 3 + 3)]);
+      numberOfInstructions++;
+    }
   }
-  print(instructions);
+
+  for (int i = 0; i < MEMORY_SIZE; i++) memoryBlocksArray[i] = 0;
+  currentBlockIndex = 0;
+  halt = false;
+  reg = 0;
+  isRegisterInitialized = false;
+  inputPointer = 0;
+  STDOUT = '';
+  error = '';
+
   int iterations = 0;
   int prog_pos = 0;
 
-  while (prog_pos < instructions.length && !halt) {
-    print(mnemonicList[instructions[prog_pos]]);
-    debug.add(mnemonicList[instructions[prog_pos]]);
-    prog_pos = _execCommand(instructions[prog_pos], instructions, prog_pos, instructions.length, STDIN);
+  while (prog_pos < numberOfInstructions && !halt) {
+    debug.add(mnemonicList[opcodesArray[prog_pos]]);
+    prog_pos = _execCommand(opcodesArray[prog_pos], opcodesArray, prog_pos, numberOfInstructions, STDIN);
     iterations++;
     if (iterations > MAX_ITERATIONS) {
       error = ERROR_COW_MAXITERATIONS;
@@ -119,6 +123,10 @@ int _execCommand(
 
   switch (commandCode) {
     case 0: // moo
+    // This command is connected to the MOO command. When encountered during normal execution,
+    // it searches the program code in reverse looking for a matching MOO command
+    // and begins executing again starting from the found MOO command.
+    // When searching, it skips the instruction that is immediately before it (see MOO).
       instructionIndex -= 2; // Skip previous instruction
       moo_count = 0;
 
@@ -136,112 +144,136 @@ int _execCommand(
         }
         instructionIndex--;
       }
-      halt = true;
       error = ERROR_COW_LOOPNOTOPEND;
+      halt = true;
       break;
 
     case 1: // mOo
-      if (mem_pos > 0) {
-        mem_pos--;
+    // Moves current memory position back one block
+      if (currentBlockIndex > 0) {
+        currentBlockIndex--;
       } else {
-        halt = true;
         error = ERROR_COW_MEMORYOUTOFBOUNDS;
+        halt = true;
       }
       break;
 
     case 2: // moO
-      if (mem_pos < MAX_MEMORY - 1) {
-        mem_pos++;
+    // Moves current memory position forward one block
+      if (currentBlockIndex < MEMORY_SIZE - 1) {
+        currentBlockIndex++;
       } else {
-        halt = true;
         error = ERROR_COW_MEMORYOUTOFBOUNDS;
+        halt = true;
       }
       break;
 
     case 3: // mOO
-      if (memory[mem_pos] == commandCode) {
-        halt = true;
+    // Execute value in current memory block as if it were an instruction.
+    // The command executed is based on the instruction code value (see https://bigzaphod.github.io/COW/)
+    // (for example, if the current memory block contains a 2, then the moO command is executed).
+    // An invalid command exits the running program.
+    // Cannot call itself, as it would cause an infinite loop.
+      if (memoryBlocksArray[currentBlockIndex] == commandCode) {
         error = ERROR_COW_INFINITELOOP;
+        halt = true;
       } else {
-        if (memory[mem_pos] >= 0 && memory[mem_pos] <= 11) {
-          _execCommand(memory[mem_pos], instructionsArray, instructionIndex, instructionIndex, STDIN);
+        if (memoryBlocksArray[currentBlockIndex] >= 0 && memoryBlocksArray[currentBlockIndex] <= 11) {
+          _execCommand(memoryBlocksArray[currentBlockIndex], instructionsArray, instructionIndex, instructionIndex, STDIN);
         } else {
-          halt = true;
           error = ERROR_COW_INVALIDCODE;
+          halt = true;
         }
       }
       break;
 
     case 4: // Moo
-      if (memory[mem_pos] == 0) {
-        memory[mem_pos] = STDIN.codeUnitAt(inputPointer);
+    // If current memory block has a 0 in it, read a single ASCII character from STDIN and store it in the current memory block.
+    // If the current memory block is not 0, then print the ASCII character that corresponds to the value in the current memory block to STDOUT.
+      if (memoryBlocksArray[currentBlockIndex] == 0) {
+        memoryBlocksArray[currentBlockIndex] = STDIN.codeUnitAt(inputPointer);
         inputPointer++;
       } else {
-        STDOUT = STDOUT + String.fromCharCode(memory[mem_pos] % 256);
+        STDOUT = STDOUT + String.fromCharCode(memoryBlocksArray[currentBlockIndex] % 256);
       }
       break;
 
     case 5: // MOo
-      memory[mem_pos]--;
+    // Decrement current block value by 1
+      memoryBlocksArray[currentBlockIndex]--;
       break;
 
     case 6: // MoO
-      memory[mem_pos]++;
+    // Increment current block value by 1
+      memoryBlocksArray[currentBlockIndex]++;
       break;
 
     case 7: // MOO
-      if (memory[mem_pos] == 0) {
+    // If current memory block value is 0, skip next command and resume execution *after* the next matching moo command.
+    // If current memory block value is not 0, then continue with next command.
+    // Note that the fact that it skips the command immediately following it has interesting ramifications for where the matching moo command really is.
+    // For example, the following will match the second and not the first moo: OOO MOO moo moo
+      if (memoryBlocksArray[currentBlockIndex] == 0) {
         MOO_count = 0;
         instructionIndex += 2; // Skip next instruction
 
         while (instructionIndex < numberOfInstructions) {
           switch (instructionsArray[instructionIndex]) {
-            case 0:
+            case 0: // moo
               if (MOO_count == 0)
                 return instructionIndex + 1;
               else
                 MOO_count--;
               break;
-            case 7:
+            case 7: //MOO
               MOO_count++;
               break;
           }
           instructionIndex++;
         }
-        halt = true;
         error = ERROR_COW_LOOPNOTCLOSED;
+        halt = true;
       }
       break;
 
     case 8: // OOO
-      memory[mem_pos] = 0;
+    // Set current memory block value to zero
+      memoryBlocksArray[currentBlockIndex] = 0;
       break;
 
     case 9: // MMM
-      if (!has_register_val)
-        register = memory[mem_pos];
+    // If no current value in register, copy current memory block value.
+    // If there is a value in the register, then paste that value into the current memory block and clear the register.
+      if (!isRegisterInitialized)
+        reg = memoryBlocksArray[currentBlockIndex];
       else
-        memory[mem_pos] = register;
-      has_register_val = !has_register_val;
+        memoryBlocksArray[currentBlockIndex] = reg;
+      isRegisterInitialized = !isRegisterInitialized;
       break;
 
     case 10: // OOM - Print value of current memory block to STDOUT as an integer
-      STDOUT = STDOUT + memory[mem_pos].toString();
+    // Print value of current memory block to STDOUT as an integer
+
+    // Added the newline (\n) because the 99bottles and Fibonacci examples assume this,
+    // even though the language specification doesn't say anything about it
+      STDOUT = STDOUT + memoryBlocksArray[currentBlockIndex].toString() + '\n';
       break;
 
-    case 11: // oom - Read an integer from STDIN and put it into the current memory block
+    case 11: // oom
+    // Read an integer from STDIN and put it into the current memory block
       String digit = '';
       while (int.tryParse(STDIN[inputPointer]) != null) {
         digit = digit + STDIN[inputPointer];
         inputPointer++;
       }
-      memory[mem_pos] = int.parse(digit);
+      memoryBlocksArray[currentBlockIndex] = int.parse(digit);
       break;
 
     default:
-      halt = true;
       error = ERROR_COW_INVALIDCODE;
+      halt = true;
   }
+  // If MOO or moo did not return, go to the next instruction
   return instructionIndex + 1;
 }
 
