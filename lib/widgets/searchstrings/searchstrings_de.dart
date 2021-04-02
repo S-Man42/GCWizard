@@ -132,6 +132,7 @@ const SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE = 'esoterischeprogrammiersprac
 const SEARCHSTRING_DE_ESOTERIC_BEATNIK = '';
 const SEARCHSTRING_DE_ESOTERIC_BRAINFK = 'gehirn';
 const SEARCHSTRING_DE_ESOTERIC_CHEF = 'chef chefkoch kochrezepte rezepte kochen zutaten';
+final SEARCHSTRING_DE_ESOTERIC_COW = 'kuh muh';
 const SEARCHSTRING_DE_ESOTERIC_DEADFISH = 'toterfisch';
 const SEARCHSTRING_DE_ESOTERIC_MALBOLGE = 'hoelle';
 const SEARCHSTRING_DE_ESOTERIC_OOK = 'punkte fragezeichen ausrufezeichen affen orang-utans orangutans';

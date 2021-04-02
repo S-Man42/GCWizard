@@ -7,10 +7,10 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_common.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_de.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_en.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_fr.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_fr.dart';
 import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
@@ -136,6 +136,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/enigma/enigma.dart'
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/beatnik_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/brainfk.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/chef_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/cow.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/deadfish.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
@@ -2481,6 +2482,22 @@ class Registry {
         SEARCHSTRING_EN_ESOTERIC_BRAINFK,
         SEARCHSTRING_FR_ESOTERIC_BRAINFK
       ]),
+      GCWTool(
+          tool: Cow(),
+          i18nPrefix: 'cow',
+          missingHelpLocales: [
+            'fr'
+          ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_COMMON_ESOTERIC_COW,
+            SEARCHSTRING_DE_ESOTERIC_COW,
+            SEARCHSTRING_EN_ESOTERIC_COW,
+            SEARCHSTRING_FR_ESOTERIC_COW
+          ]),
       GCWTool(tool: Deadfish(), i18nPrefix: 'deadfish', missingHelpLocales: [
         'fr'
       ], searchStrings: [

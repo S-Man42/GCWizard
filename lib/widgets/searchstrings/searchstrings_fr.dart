@@ -121,6 +121,7 @@ const SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE = 'langage programmation exoti
 const SEARCHSTRING_FR_ESOTERIC_BEATNIK = '';
 const SEARCHSTRING_FR_ESOTERIC_BRAINFK = 'cerveau niquer';
 const SEARCHSTRING_FR_ESOTERIC_CHEF = 'cuisinier recettes cuisine';
+final SEARCHSTRING_FR_ESOTERIC_COW = 'vache';
 const SEARCHSTRING_FR_ESOTERIC_DEADFISH = 'poisson mort';
 const SEARCHSTRING_FR_ESOTERIC_MALBOLGE = 'enfer';
 const SEARCHSTRING_FR_ESOTERIC_OOK = 'exclamation interrogation singe orang-outans';
