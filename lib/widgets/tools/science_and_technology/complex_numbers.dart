@@ -5,6 +5,8 @@ import 'package:gc_wizard/logic/tools/science_and_technology/complex_numbers.dar
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/double_textinputformatter.dart';
 
 class ComplexNumbers extends StatefulWidget {
   @override
@@ -45,22 +47,12 @@ class ComplexNumbersState extends State<ComplexNumbers> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTwoOptionsSwitch(
-          leftValue: i18n(context, 'complex_numbers_cartesian'),
-          rightValue: i18n(context, 'complex_numbers_polar'),
-          value: _currentMode,
-          onChanged: (value) {
-            setState(() {
-              _currentMode = value;
-            });
-          },
-        ),
         _currentMode == GCWSwitchPosition.right
             ? Row(
           children: <Widget>[
             Expanded(child: GCWTextField(
             controller: _aController,
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9,.]'))],
+            inputFormatters: [DoubleTextInputFormatter()],
             hintText: i18n(context, 'complex_numbers_hint_a'),
             onChanged: (value) {
               setState(() {
@@ -71,7 +63,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
             Expanded(
               child: GCWTextField(
                 controller: _bController,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9,.]'))],
+                inputFormatters: [DoubleTextInputFormatter()],
                 hintText: i18n(context, 'complex_numbers_hint_b'),
                 onChanged: (value) {
                   setState(() {
@@ -86,7 +78,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
           children: <Widget>[
             Expanded(child: GCWTextField(
               controller: _radiusController,
-              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9,.]'))],
+              inputFormatters: [DoubleTextInputFormatter()],
               hintText: i18n(context, 'complex_numbers_hint_radius'),
               onChanged: (value) {
                 setState(() {
@@ -96,7 +88,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
             )),
             Expanded(child: GCWTextField(
               controller: _angleController,
-              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9,.]'))],
+              inputFormatters: [DoubleTextInputFormatter()],
               hintText: i18n(context, 'complex_numbers_hint_angle'),
               onChanged: (value) {
                 setState(() {
@@ -106,16 +98,40 @@ class ComplexNumbersState extends State<ComplexNumbers> {
             )),
           ],
         ),
-        GCWDefaultOutput(child: _buildOutput())
+        GCWTwoOptionsSwitch(
+          title: i18n(context, 'complex_numbers_convert'),
+          leftValue: i18n(context, 'complex_numbers_cartesian'),
+          rightValue: i18n(context, 'complex_numbers_polar'),
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
+        _buildOutput(context)
       ],
     );
   }
 
-  _buildOutput() {
+  Widget _buildOutput(BuildContext context) {
+    Map<String, String> coordinates = new Map<String, String>();
     if (_currentMode == GCWSwitchPosition.right) {
-      return CartesianToPolar(_currentA, _currentB);
+      coordinates= CartesianToPolar(_currentA, _currentB);
     } else {
-      return PolarToCartesian(_currentRadius, _currentAngle);
+      coordinates= PolarToCartesian(_currentRadius, _currentAngle);
     }
+
+    return GCWDefaultOutput(
+        child: Column(
+          children: columnedMultiLineOutput(
+              context,
+              coordinates.entries.map((entry) {
+                if (entry.key != '') return [i18n(context, entry.key), entry.value];
+              }).toList(),
+              flexValues: [1, 1]),
+        ));
   }
+
 }
+
