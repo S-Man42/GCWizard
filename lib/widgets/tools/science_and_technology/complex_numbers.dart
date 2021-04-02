@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -52,7 +54,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
           children: <Widget>[
             Expanded(child: GCWTextField(
             controller: _aController,
-            inputFormatters: [DoubleTextInputFormatter()],
+            inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
             hintText: i18n(context, 'complex_numbers_hint_a'),
             onChanged: (value) {
               setState(() {
@@ -63,7 +65,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
             Expanded(
               child: GCWTextField(
                 controller: _bController,
-                inputFormatters: [DoubleTextInputFormatter()],
+                inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
                 hintText: i18n(context, 'complex_numbers_hint_b'),
                 onChanged: (value) {
                   setState(() {
@@ -78,7 +80,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
           children: <Widget>[
             Expanded(child: GCWTextField(
               controller: _radiusController,
-              inputFormatters: [DoubleTextInputFormatter()],
+              inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
               hintText: i18n(context, 'complex_numbers_hint_radius'),
               onChanged: (value) {
                 setState(() {
@@ -88,7 +90,7 @@ class ComplexNumbersState extends State<ComplexNumbers> {
             )),
             Expanded(child: GCWTextField(
               controller: _angleController,
-              inputFormatters: [DoubleTextInputFormatter()],
+              inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
               hintText: i18n(context, 'complex_numbers_hint_angle'),
               onChanged: (value) {
                 setState(() {

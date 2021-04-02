@@ -10,9 +10,12 @@ Map<String, String> CartesianToPolar(String currentA, String currentB) {
   currentB = currentB.replaceAll(',', '.');
 
   Map<String, String> result = new Map<String, String>();
+  double a = 0.0;
+  double b = 0.0;
 
-  double a = double.parse(currentA);
-  double b = double.parse(currentB);
+  if (double.tryParse(currentA) != null) a = double.parse(currentA); else return {'': ''};
+  if (double.tryParse(currentB) != null) b = double.parse(currentB); else return {'': ''};
+
   double r = sqrt( a * a + b * b);
   double phi = 0.0;
   if (a == 0 && b == 0)
@@ -41,9 +44,11 @@ Map<String, String> PolarToCartesian(String currentRadius, currentAngle) {
   currentAngle = currentAngle.replaceAll(',', '.');
 
   Map<String, String> result = new Map<String, String>();
+  double a = 0.0;
+  double r = 0.0;
 
-  double r = double.parse(currentRadius);
-  double a = double.parse(currentAngle);
+  if (double.tryParse(currentAngle) != null) a = double.parse(currentAngle); else return {'': ''};
+  if (double.tryParse(currentRadius) != null) r = double.parse(currentRadius); else return {'': ''};
 
   result['complex_numbers_hint_a'] = NumberFormat('0.0' + '#' * 6).format(r * cos(a * pi / 180));
   result['complex_numbers_hint_b'] = NumberFormat('0.0' + '#' * 6).format(r * sin(a * pi / 180));
