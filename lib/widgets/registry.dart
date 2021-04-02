@@ -7,10 +7,10 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_common.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_de.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_en.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_fr.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_fr.dart';
 import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
@@ -262,6 +262,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nea
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nthprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
@@ -1005,6 +1006,17 @@ class Registry {
             SEARCHSTRING_DE_PROJECTILES,
             SEARCHSTRING_EN_PROJECTILES,
             SEARCHSTRING_FR_PROJECTILES
+          ]),
+      GCWTool(
+          tool: QuadraticEquation(),
+          i18nPrefix: 'quadratic_equation',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_QUADRATICEQUATION,
+            SEARCHSTRING_DE_QUADRATICEQUATION,
+            SEARCHSTRING_EN_QUADRATICEQUATION,
+            SEARCHSTRING_FR_QUADRATICEQUATION
           ]),
       GCWTool(tool: RailFence(), i18nPrefix: 'railfence', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
         'fr'
