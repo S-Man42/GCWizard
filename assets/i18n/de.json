@@ -1424,7 +1424,7 @@
   "hashes_hashbreaker_solutionnotfound": "Keine Lösung im angegebenen Bereich gefunden.",
   "heatindex_title": "Hitze-Index",
   "heatindex_description": "Gefühlte Temperatur aufgrund Temperatur und Luftfeuchtigkeit",
-  "heatindex_example": "39°C (86°F) / 60% → 33° (91°F)",
+  "heatindex_example": "30°C (86°F) / 60% → 33° (91°F)",
   "heatindex_temperature": "Temperatur",
   "heatindex_humidity": "Luftfeuchtigkeit (%)",
   "heatindex_output": "Die gefühlte Temperatur beträgt",
