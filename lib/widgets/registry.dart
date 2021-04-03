@@ -7,10 +7,10 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_common.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_de.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_en.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_fr.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_fr.dart';
 import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
@@ -270,6 +270,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/s
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multiplenumbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singlenumbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_list.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_search.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 
 class Registry {
@@ -7101,6 +7103,34 @@ class Registry {
             SEARCHSTRING_DE_VANITYMULTIPLENUMBERS,
             SEARCHSTRING_EN_VANITYMULTIPLENUMBERS,
             SEARCHSTRING_FR_VANITYMULTIPLENUMBERS
+          ]),
+      GCWTool(
+          tool: VanityWordsList(),
+          i18nPrefix: 'vanity_words_list',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_VANITY,
+            SEARCHSTRING_DE_VANITY,
+            SEARCHSTRING_EN_VANITY,
+            SEARCHSTRING_FR_VANITY,
+            SEARCHSTRING_COMMON_VANITYWORDSLIST,
+            SEARCHSTRING_DE_VANITYWORDSLIST,
+            SEARCHSTRING_EN_VANITYWORDSLIST,
+            SEARCHSTRING_FR_VANITYWORDSLISTS
+          ]),
+      GCWTool(
+          tool: VanityWordsTextSearch(),
+          i18nPrefix: 'vanity_words_search',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_VANITY,
+            SEARCHSTRING_DE_VANITY,
+            SEARCHSTRING_EN_VANITY,
+            SEARCHSTRING_FR_VANITY,
+            SEARCHSTRING_COMMON_VANITYTEXTSEARCH,
+            SEARCHSTRING_DE_VANITYTEXTSEARCH,
+            SEARCHSTRING_EN_VANITYTEXTSEARCH,
+            SEARCHSTRING_FR_VANITYTEXTSEARCH
           ]),
 
       //VigenereSelection *******************************************************************************************

@@ -56,6 +56,7 @@ final Map<String, String> DEUWordToNum = {
   'null': '0',
   'eins': '1',
   'zwei': '2',
+  'zwo' : '2',
   'drei': '3',
   'vier': '4',
   'fuenf': '5',
@@ -503,8 +504,8 @@ final Map<String, String> POLWordToNum = {
 };
 
 final Map<String, String> RUSWordToNum = {
-  'nol’': '0',
-  'nul’': '0',
+  'nol': '0',
+  'nul': '0',
   'adna': '1',
   'adno': '1',
   'adin': '1',
