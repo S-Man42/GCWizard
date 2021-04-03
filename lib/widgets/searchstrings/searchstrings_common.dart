@@ -440,6 +440,7 @@ const SEARCHSTRING_COMMON_SYMBOL_STIPPELCODE = 'stippelcode drabkikker punkte po
 const SEARCHSTRING_COMMON_SYMBOL_SUETTERLIN = 'suetterlin ';
 const SEARCHSTRING_COMMON_SYMBOL_SUNUZ = 'sunuz tekumel';
 const SEARCHSTRING_COMMON_SYMBOL_SURF = '';
+const SEARCHSTRING_COMMON_SYMBOL_TAE = 'tae';
 const SEARCHSTRING_COMMON_SYMBOL_TAMIL_NUMERALS = 'tamil dravidisch dravidian  ';
 const SEARCHSTRING_COMMON_SYMBOL_TEMPLERS = 'templers  ';
 const SEARCHSTRING_COMMON_SYMBOL_TENCTONESE = 'tenctonese aliennation';

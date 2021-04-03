@@ -450,6 +450,7 @@ const SEARCHSTRING_DE_SYMBOL_STIPPELCODE = '';
 const SEARCHSTRING_DE_SYMBOL_SUETTERLIN = 'schreibschrift ausgangsschrift kurrentschrift';
 const SEARCHSTRING_DE_SYMBOL_SUNUZ = '';
 const SEARCHSTRING_DE_SYMBOL_SURF = 'windsurfen wellenreiten wellenreiter surfbretter surfer';
+const SEARCHSTRING_DE_SYMBOL_TAE = 'telekommunikationsanschlusseinheit';
 const SEARCHSTRING_DE_SYMBOL_TAMIL_NUMERALS = 'zahlen ziffern indien indisch';
 const SEARCHSTRING_DE_SYMBOL_TEMPLERS = 'tempelritter';
 const SEARCHSTRING_DE_SYMBOL_TENCTONESE = '';
