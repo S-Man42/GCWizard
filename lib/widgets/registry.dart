@@ -7116,7 +7116,7 @@ class Registry {
             SEARCHSTRING_COMMON_VANITYWORDSLIST,
             SEARCHSTRING_DE_VANITYWORDSLIST,
             SEARCHSTRING_EN_VANITYWORDSLIST,
-            SEARCHSTRING_FR_VANITYWORDSLISTS
+            SEARCHSTRING_FR_VANITYWORDSLIST
           ]),
       GCWTool(
           tool: VanityWordsTextSearch(),
