@@ -13,6 +13,7 @@ import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart'
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
@@ -238,6 +239,7 @@ class _MainViewState extends State<MainView> {
         className(Bifid()),
         className(Binary()),
         className(BookCipher()),
+        className(BrailleSelection()),
         className(Brainfk()),
         className(BurrowsWheeler()),
         className(Caesar()),

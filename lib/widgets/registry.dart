@@ -7,16 +7,17 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_common.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_de.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_en.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_fr.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_fr.dart';
 import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/base_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/bcd_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/beaufort_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/braille_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt1_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
@@ -124,6 +125,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdstibitz.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bcd/bcdtompkins.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/bifid.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/book_cipher.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/braille.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/burrows_wheeler.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/caesar.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/ccitt1.dart';
@@ -454,6 +456,18 @@ class Registry {
         SEARCHSTRING_EN_BOOKCIPHER,
         SEARCHSTRING_FR_BOOKCIPHER
       ]),
+      GCWTool(
+          tool: BrailleSelection(),
+          i18nPrefix: 'braille_selection',
+          category: ToolCategory.CRYPTOGRAPHY,missingHelpLocales: [
+        'fr'
+      ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_BRAILLE,
+            SEARCHSTRING_DE_BRAILLE,
+            SEARCHSTRING_EN_BRAILLE,
+            SEARCHSTRING_FR_BRAILLE
+          ]),
       GCWTool(
           tool: BurrowsWheeler(),
           i18nPrefix: 'burrowswheeler',
@@ -1762,6 +1776,17 @@ class Registry {
           i18nPrefix: 'beaufort',
           missingHelpLocales: ['fr'],
           searchStrings: [SEARCHSTRING_COMMON_BEAUFORT]),
+
+      //Braille Selection ****************************************************************
+      GCWTool(
+          tool: Braille(),
+          i18nPrefix: 'braille',
+          searchStrings: [
+            SEARCHSTRING_COMMON_BRAILLE,
+            SEARCHSTRING_DE_BRAILLE,
+            SEARCHSTRING_EN_BRAILLE,
+            SEARCHSTRING_FR_BRAILLE
+          ]),
 
       //CCITT*Selection **********************************************************************************************
       GCWTool(
