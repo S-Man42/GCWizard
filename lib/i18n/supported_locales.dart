@@ -7,7 +7,6 @@ final supportedLocales = [
 ];
 const String defaultLanguage = 'en';
 
-
 ///
 ///  Control if locale is supported
 ///
