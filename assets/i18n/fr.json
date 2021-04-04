@@ -1418,7 +1418,7 @@
   "hashes_hashbreaker_solutionnotfound": "Aucune solution trouvée dans la plage donnée.",
   "heatindex_title": "Indice de chaleur",
   "heatindex_description": "Température apparente depuis la température et l'humidité",
-  "heatindex_example": "39°C (86°F) / 60% → 33° (91°F)",
+  "heatindex_example": "30°C (86°F) / 60% → 33° (91°F)",
   "heatindex_temperature": "Température",
   "heatindex_humidity": "Humidité (%)",
   "heatindex_output": "La température apparente est",
