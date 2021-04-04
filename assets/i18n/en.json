@@ -1424,7 +1424,7 @@
   "hashes_hashbreaker_solutionnotfound": "No solution found within the given range.",
   "heatindex_title": "Heat Index",
   "heatindex_description": "Apparent temperature from temperature and humidity",
-  "heatindex_example": "39°C (86°F) / 60% → 33° (91°F)",
+  "heatindex_example": "30°C (86°F) / 60% → 33° (91°F)",
   "heatindex_temperature": "Temperature",
   "heatindex_humidity": "Humidity (%)",
   "heatindex_output": "The apparent temperature is",
