@@ -75,60 +75,41 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    List<NumeralWordsDecodeOutput> detailedOutput;
-    String output = '';
-
+    List<VanityWordsDecodeOutput> detailedOutput = new List<VanityWordsDecodeOutput>();
     detailedOutput = decodeVanityWords(removeAccents(_currentDecodeInput.toLowerCase()), _currentLanguage);
-    print(detailedOutput.toString());
-      for (int i = 0; i < detailedOutput.length; i++) {
-        if ((detailedOutput[i].number == '?'))
-          output = output + ' .';
+
+    String output = '';
+    int ambigous = 0;
+    for (int i = 0; i < detailedOutput.length; i++) {
+        if (detailedOutput[i].number != '')
+          if (ambigous > 0 || detailedOutput[i].ambigous) {
+            if (ambigous == 0) {
+              output = output + ' (' + detailedOutput[i].digit;
+              ambigous++;
+            }
+            if (ambigous == 1){
+              output = output + '  | ' + detailedOutput[i].digit + ') - '+ i18n(context, 'vanity_words_search_ambigous');
+              ambigous++;
+            }
+          }
+          else if (detailedOutput[i].number == '?')
+            output = output + ' .';
         else
-        if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
-          output = output + i18n(context, detailedOutput[i].language);
-        else
-          output = output + ' ' + detailedOutput[i].language;
-      }
+          output = output + ' ' + detailedOutput[i].digit;
+    }
 
     List<List<String>> columnData = new List<List<String>>();
     var flexData;
-    String columnDataRowNumber;
-    String columnDataRowNumWord;
-    String columnDataRowLanguage;
-    if (_currentLanguage == NumeralWordsLanguage.ALL) {
-      for (int i = 0; i < detailedOutput.length; i++) {
-        columnDataRowNumber = detailedOutput[i].number;
-        if (detailedOutput[i].numWord.startsWith('numeralwords_'))
-          columnDataRowNumWord = i18n(context, detailedOutput[i].numWord);
-        else
-          columnDataRowNumWord = detailedOutput[i].numWord;
-        columnDataRowLanguage = i18n(context, detailedOutput[i].language);
-        int j = i + 1;
-        while (j < detailedOutput.length && detailedOutput[j].number == '') {
-          columnDataRowNumber = columnDataRowNumber + '\n' + '';
-          columnDataRowNumWord = columnDataRowNumWord + '\n' + detailedOutput[j].numWord;
-          columnDataRowLanguage = columnDataRowLanguage + '\n' + i18n(context, detailedOutput[j].language);
-          j++;
-        }
-        i = j - 1;
-        columnData.add([columnDataRowNumber, columnDataRowNumWord, columnDataRowLanguage]);
+
+    ambigous = 0;
+    for (int i = 0; i < detailedOutput.length; i++) {
+      if (ambigous < 2) {
+        if (detailedOutput[i].ambigous) ambigous++;
+        if (ambigous ==1) columnData.add([i18n(context, 'vanity_words_search_ambigous'), '', '']);
+        columnData.add([detailedOutput[i].number, detailedOutput[i].numWord, detailedOutput[i].digit]);
       }
-      flexData = [1, 3, 1];
-    } else {
-      for (int i = 0; i < detailedOutput.length; i++) {
-        if (detailedOutput[i].number.startsWith('numeralwords_'))
-          columnDataRowNumber = i18n(context, detailedOutput[i].number);
-        else
-          columnDataRowNumber = detailedOutput[i].number;
-        if (detailedOutput[i].numWord.startsWith('numeralwords_'))
-          columnDataRowNumWord = i18n(context, detailedOutput[i].numWord);
-        else
-          columnDataRowNumWord = detailedOutput[i].numWord;
-        columnDataRowLanguage = detailedOutput[i].language;
-        columnData.add([columnDataRowNumber, columnDataRowNumWord, columnDataRowLanguage]);
-      }
-      flexData = [2, 2, 1];
     }
+    flexData = [2, 2, 1];
 
     return Column(
       children: <Widget>[

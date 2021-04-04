@@ -1,4 +1,5 @@
 import 'package:diacritic/diacritic.dart';
+import 'package:flutter/material.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
@@ -43,6 +44,14 @@ final AZToVanity = {
 };
 
 final VanityToAZ = switchMapKeyValue(AZToVanity);
+
+class VanityWordsDecodeOutput {
+  final String number;
+  final String numWord;
+  final String digit;
+  final bool ambigous;
+  VanityWordsDecodeOutput(this.number, this.numWord, this.digit, this.ambigous);
+}
 
 final VanityToDEU = {
   '6855' : 'NULL',
@@ -293,43 +302,53 @@ Map<NumeralWordsLanguage, String> VANITYWORDS_LANGUAGES = {
 
 const DEFAULT_NUMBER_FOR_SPACE = '1';
 
-List<NumeralWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguage language){
-  List<NumeralWordsDecodeOutput> output = new List<NumeralWordsDecodeOutput>();
+List<VanityWordsDecodeOutput> decodeVanityWords(String text, NumeralWordsLanguage language){
+  List<VanityWordsDecodeOutput> output = new List<VanityWordsDecodeOutput>();
   if (text == null || text == '') {
-    output.add(NumeralWordsDecodeOutput('', '', 'numeralwords_language_empty'));
+    output.add(VanityWordsDecodeOutput('', '', '', false));
     return output;
   }
 
   // build map to identify numeral words
-  Map searchLanguages = new Map();
-    Map sValue = new Map();
-    VanWords[language].forEach((key, value) {
-      sValue[removeAccents(key)] = value;
-    });
-    searchLanguages[language] = sValue;
+  Map decodingTable = new Map();
+  VanWords[language].forEach((key, value) {
+      decodingTable[removeAccents(key)] = value;
+  });
 
   // start decoding text with searchlanguages
   bool found = false;
-  var decodingTable;
+  bool ambigous = false;
+  String hDigits = '';
+  String hWord = '';
   text = text.replaceAll(' ', '');
   while (text.length > 0) {
-    searchLanguages.forEach((key, value) {
-      decodingTable = value;
-      decodingTable.forEach((digits, word) {
-        if (!found)
-          if (text.startsWith(digits)) {
-            output.add(NumeralWordsDecodeOutput(digits, word, NumWords[key][word.toString().toLowerCase()]));
-            found = true;
-            text = text.substring(digits.length - 1);
-          }
-      });
-    });
-    if (!found) output.add(NumeralWordsDecodeOutput('?', '', ''));
     found = false;
+    ambigous = false;
+    hDigits = '';
+    hWord = '';
+    decodingTable.forEach((digits, word) {
+      if (text.startsWith(digits)) {
+        if (!found) {
+          hDigits = digits;
+          hWord = word;
+          found = true;
+        } else { // already found
+          ambigous = true;
+          output.add(VanityWordsDecodeOutput(hDigits, hWord, NumWords[language][hWord.toString().toLowerCase()], true));
+          output.add(VanityWordsDecodeOutput(digits, word, NumWords[language][word.toString().toLowerCase()], true));
+        }
+      };
+    }); // end decodingTable.forEach
 
+    if (found && !ambigous) {
+      output.add(VanityWordsDecodeOutput(hDigits, hWord, NumWords[language][hWord.toString().toLowerCase()], false));
+      if (hDigits.length > 0) text = text.substring(hDigits.length - 1);
+    }
+    if (!found) {
+      output.add(VanityWordsDecodeOutput('?', '', '', false));}
     if (text.length > 0) text = text.substring(1);
-    //
-  }
+    if (ambigous) text='';
+  } // end while text.lewngth > 0
   return output;
 }
 

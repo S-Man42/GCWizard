@@ -3114,6 +3114,7 @@
   "vanity_words_search_title" : "Vanity: Suche von Zahlen und Wörter",
   "vanity_words_search_description" : "Wandelt Vanity-Zahlen in Zahlwörter um",
   "vanity_words_search_example" : "3467 → EINS → 1",
+  "vanity_words_search_ambigous" : "ab hier zweideutig",
   "vigenere_selection_title": "Vigenère Chiffre",
   "vigenere_selection_description": "Verschiebt Buchstaben um den Buchstabenwert des Schlüssels, inkl. Gronsfeld und Trithemius",
   "vigenere_selection_example": "ABC mit Schlüssel DEF → DFH",
