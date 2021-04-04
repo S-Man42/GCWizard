@@ -112,6 +112,7 @@ const SEARCHSTRING_DE_DATES_DAYCALCULATOR = 'tagesrechner tagerechner';
 const SEARCHSTRING_DE_DATES_TIMECALCULATOR = 'uhrzeit uhrzeitrechner stunden minuten sekunden';
 const SEARCHSTRING_DE_DATES_WEEKDAY = 'wochentage';
 const SEARCHSTRING_DE_DECABIT = 'impulsraster rundsteuertechnik';
+const SEARCHSTRING_DE_DIVISOR = 'teiler';
 const SEARCHSTRING_DE_DNA =
     'code-sonne codesonne desoxyribonukleinsaeure sequenz nukleotid genetik genetisches dns rns mrns';
 const SEARCHSTRING_DE_DNAAMINOACIDS = 'aminosaeuren';
