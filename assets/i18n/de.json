@@ -195,7 +195,7 @@
   "astronomy_seasons_distance": "Entfernung",
   "atbash_title": "Atbasch",
   "atbash_example": "ABC → ZYX",
-  "atomicnumberstotext_title": " Ordnungszahlen zu Text",
+  "atomicnumberstotext_title": "Ordnungszahlen zu Text",
   "atomicnumberstotext_description": "Wandelt eine Liste von chem. Ordnungszahlen in die zugehörigen chem. Symbole um",
   "atomicnumberstotext_example": "32 8 20 6 2 → GeOCaCHe",
   "babylonnumbers_selection_title": "Babylonische Zahlen",
