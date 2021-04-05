@@ -5,14 +5,14 @@ import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
+import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 import 'package:prefs/prefs.dart';
 
 class MayaCalendar extends StatefulWidget {
@@ -21,10 +21,27 @@ class MayaCalendar extends StatefulWidget {
 }
 
 class MayaCalendarState extends State<MayaCalendar> {
-  var _currentEncodeInput = 0;
+  //var _currentEncodeInput = 0;
+  var _currentLongCount = '';
+  var _longCountController;
+
+  var _encodeMayaLongCountFormatter = WrapperForMaskTextInputFormatter(mask: '##.##.##.##.##',
+      filter: {"#": RegExp(r'[0-9]')});
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
+
+  @override
+  void initState() {
+    super.initState();
+    _longCountController = TextEditingController(text: _currentLongCount);
+  }
+
+  @override
+  void dispose() {
+    _longCountController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +60,13 @@ class MayaCalendarState extends State<MayaCalendar> {
         },
       ),
       _currentMode == GCWSwitchPosition.left // encrypt: input number => output segment
-          ? GCWIntegerSpinner(
-        min: 0,
-        value: _currentEncodeInput,
-        onChanged: (value) {
-          setState(() {
-            _currentEncodeInput = value;
-          });
+      ? GCWTextField(
+        controller: _longCountController,
+        inputFormatters: [_encodeMayaLongCountFormatter],
+        onChanged: (text) {
+           setState(() {
+             _currentLongCount = text;
+           });
         },
       )
           : Column(
@@ -175,7 +192,7 @@ class MayaCalendarState extends State<MayaCalendar> {
     var segments;
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      segments = encodeMayaCalendar(_currentEncodeInput);
+      segments = encodeMayaCalendar(_currentLongCount);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments),
@@ -190,8 +207,8 @@ class MayaCalendarState extends State<MayaCalendar> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
-          GCWOutput(title: i18n(context, 'mayanumbers_single_numbers'), child: segments['numbers'].join(' ')),
-          GCWOutput(title: i18n(context, 'mayanumbers_vigesimal'), child: segments['vigesimal'])
+          GCWOutput(title: i18n(context, 'mayacalendar_daycount'), child: segments['vigesimal']),
+          GCWOutput(title: i18n(context, 'mayacalendar_system_longcount'), child: longCount(segments['numbers']) + '   ' + dayCountToTzolkin(segments['numbers']) + '   ' + dayCountToHaab(segments['numbers'])),
         ],
       );
     }
