@@ -114,9 +114,9 @@ TrifidOutput decryptTrifid(String input, int blockSize, {PolybiosMode mode: Poly
 
 String _MatrixToString(String alphabet) {
   String result = '';
-  result = result + '  |   1       |   2       |   3  \n';
-  result = result + '  | 1 2 3     | 1 2 3     | 1 2 3\n';
-  result = result + '--+------   --+------   --+------\n';
+  result = result + '  |   1      |   2      |   3  \n';
+  result = result + '  | 1 2 3    | 1 2 3    | 1 2 3\n';
+  result = result + '--+------  --+------  --+------\n';
   result = result +
       '1 | ' +
       alphabet[0] +
@@ -124,13 +124,13 @@ String _MatrixToString(String alphabet) {
       alphabet[1] +
       ' ' +
       alphabet[2] +
-      '   1 | ' +
+      '  1 | ' +
       alphabet[9] +
       ' ' +
       alphabet[10] +
       ' ' +
       alphabet[11] +
-      '   1 | ' +
+      '  1 | ' +
       alphabet[18] +
       ' ' +
       alphabet[19] +
@@ -144,13 +144,13 @@ String _MatrixToString(String alphabet) {
       alphabet[4] +
       ' ' +
       alphabet[5] +
-      '   2 | ' +
+      '  2 | ' +
       alphabet[12] +
       ' ' +
       alphabet[13] +
       ' ' +
       alphabet[14] +
-      '   2 | ' +
+      '  2 | ' +
       alphabet[21] +
       ' ' +
       alphabet[22] +
@@ -164,13 +164,13 @@ String _MatrixToString(String alphabet) {
       alphabet[7] +
       ' ' +
       alphabet[8] +
-      '   3 | ' +
+      '  3 | ' +
       alphabet[15] +
       ' ' +
       alphabet[16] +
       ' ' +
       alphabet[17] +
-      '   3 | ' +
+      '  3 | ' +
       alphabet[24] +
       ' ' +
       alphabet[25] +
