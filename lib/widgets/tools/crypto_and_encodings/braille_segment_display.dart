@@ -3,7 +3,7 @@ import 'package:gc_wizard/logic/tools/science_and_technology/segment_display.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/n_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/base/painter.dart';
 
-const _INITIAL_SEGMENTS = <String, bool>{'a': false, 'b': false, 'c': false, 'd': false, 'e': false, 'f': false};
+const _INITIAL_SEGMENTS = <String, bool>{'1': false, '4': false, '2': false, '5': false, '3': false, '6': false};
 
 class BrailleSegmentDisplay extends NSegmentDisplay {
   final Map<String, bool> segments;
@@ -20,58 +20,58 @@ class BrailleSegmentDisplay extends NSegmentDisplay {
       type: SegmentDisplayType.CUSTOM,
       customPaint: (canvas, size, currentSegments, setSegmentState) {
         var paint = defaultSegmentPaint();
-        paint.color = currentSegments['a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        paint.color = currentSegments['1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         canvas.drawCircle(
             Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 10,
                 size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 20),
             size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10,
             paint, onTapDown: (tapDetail) {
-          setSegmentState('a', !currentSegments['a']);
+          setSegmentState('1', !currentSegments['1']);
         });
 
-        paint.color = currentSegments['b'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        paint.color = currentSegments['4'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         canvas.drawCircle(
             Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 40,
                 size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 20),
             size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10,
             paint, onTapDown: (tapDetail) {
-          setSegmentState('b', !currentSegments['b']);
+          setSegmentState('4', !currentSegments['4']);
         });
 
-        paint.color = currentSegments['c'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        paint.color = currentSegments['2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         canvas.drawCircle(
             Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 10,
                 size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 50),
             size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10,
             paint, onTapDown: (tapDetail) {
-          setSegmentState('c', !currentSegments['c']);
+          setSegmentState('2', !currentSegments['2']);
         });
 
-        paint.color = currentSegments['d'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        paint.color = currentSegments['5'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         canvas.drawCircle(
             Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 40,
                 size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 50),
             size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10,
             paint, onTapDown: (tapDetail) {
-          setSegmentState('d', !currentSegments['d']);
+          setSegmentState('5', !currentSegments['5']);
         });
 
-        paint.color = currentSegments['e'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        paint.color = currentSegments['3'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         canvas.drawCircle(
             Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 10,
                 size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 80),
             size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10,
             paint, onTapDown: (tapDetail) {
-          setSegmentState('e', !currentSegments['e']);
+          setSegmentState('3', !currentSegments['3']);
         });
 
-        paint.color = currentSegments['f'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
+        paint.color = currentSegments['6'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
         canvas.drawCircle(
             Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 40,
                 size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 80),
             size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10,
             paint, onTapDown: (tapDetail) {
-          setSegmentState('f', !currentSegments['f']);
+          setSegmentState('6', !currentSegments['6']);
         });
       });
 }
