@@ -969,7 +969,7 @@
   "common_unit_volume_smi_name": "US Smidgen",
   "common_unit_volume_pn_name": "US Pinch",
   "common_unit_volume_ds_name": "US Dash",
-  "coords_selection_title": "Coordinate calculation",
+  "coords_selection_title": "Coordinate Calculation",
   "coords_selection_description": "Coordinate calculation tools",
   "coords_common_latitude": "Latitude",
   "coords_common_longitude": "Longitude",
