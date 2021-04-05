@@ -163,11 +163,11 @@ flutter:
     - assets/symbol_tables/marain/
     - assets/symbol_tables/marain_v2/
     - assets/symbol_tables/matoran/
-    - assets/symbol_tables/maya_haab_codices/
-    - assets/symbol_tables/maya_haab_inscripts/
+    - assets/symbol_tables/maya_calendar_haab_codices/
+    - assets/symbol_tables/maya_calendar_haab_inscripts/
+    - assets/symbol_tables/maya_calendar_tzolkin_codices/
+    - assets/symbol_tables/maya_calendar_tzolkin_inscripts/
     - assets/symbol_tables/maya_numerals/
-    - assets/symbol_tables/maya_tzolkin_codices/
-    - assets/symbol_tables/maya_tzolkin_inscripts/
     - assets/symbol_tables/maze/
     - assets/symbol_tables/minimoys/
     - assets/symbol_tables/moon/

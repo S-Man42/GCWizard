@@ -12,7 +12,13 @@ class MayaCalendarSelection extends GCWSelection {
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = Registry.toolList.where((element) {
       if (className(element.tool) == className(SymbolTable()) &&
-          (element.tool as SymbolTable).symbolKey.startsWith('maya_calendar')) return true;
+          (element.tool as SymbolTable).symbolKey == 'maya_calendar_haab_codices') return true;
+      if (className(element.tool) == className(SymbolTable()) &&
+          (element.tool as SymbolTable).symbolKey == 'maya_calendar_haab_inscripts') return true;
+      if (className(element.tool) == className(SymbolTable()) &&
+          (element.tool as SymbolTable).symbolKey == 'maya_calendar_tzolkin_codices') return true;
+      if (className(element.tool) == className(SymbolTable()) &&
+          (element.tool as SymbolTable).symbolKey == 'maya_calendar_tzolkin_inscripts') return true;
 
       return [
         className(MayaCalendar()),

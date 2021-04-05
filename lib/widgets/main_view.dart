@@ -24,7 +24,7 @@ import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/icecodes_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/maya_calendar.dart';
+import 'package:gc_wizard/widgets/selector_lists/maya_calendar_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
