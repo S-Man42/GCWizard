@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
@@ -21,12 +23,12 @@ class MayaCalendar extends StatefulWidget {
 }
 
 class MayaCalendarState extends State<MayaCalendar> {
-  //var _currentEncodeInput = 0;
+  var _currentEncodeInput = 0;
   var _currentLongCount = '';
   var _longCountController;
 
-  var _encodeMayaLongCountFormatter = WrapperForMaskTextInputFormatter(mask: '##.##.##.##.##',
-      filter: {"#": RegExp(r'[0-9]')});
+  var _encodeMayaLongCountFormatter =
+      WrapperForMaskTextInputFormatter(mask: '##.##.##.##.##', filter: {"#": RegExp(r'[0-9]')});
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
@@ -60,19 +62,28 @@ class MayaCalendarState extends State<MayaCalendar> {
         },
       ),
       _currentMode == GCWSwitchPosition.left // encrypt: input number => output segment
-      ? GCWTextField(
-        controller: _longCountController,
-        inputFormatters: [_encodeMayaLongCountFormatter],
-        onChanged: (text) {
-           setState(() {
-             _currentLongCount = text;
-           });
-        },
-      )
+          ? GCWIntegerSpinner(
+              min: 0,
+              value: _currentEncodeInput,
+              onChanged: (value) {
+                setState(() {
+                  _currentEncodeInput = value;
+                });
+              },
+            )
+          //GCWTextField(
+          //  controller: _longCountController,
+          //  inputFormatters: [_encodeMayaLongCountFormatter],
+          //  onChanged: (text) {
+          //     setState(() {
+          //       _currentLongCount = text;
+          //     });
+          //  },
+          //)
           : Column(
-        // decrpyt: input segment => output number
-        children: <Widget>[_buildVisualDecryption()],
-      ),
+              // decrpyt: input segment => output number
+              children: <Widget>[_buildVisualDecryption()],
+            ),
       GCWTextDivider(
         text: i18n(context, 'segmentdisplay_displayoutput'),
         trailing: Row(
@@ -192,10 +203,18 @@ class MayaCalendarState extends State<MayaCalendar> {
     var segments;
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      segments = encodeMayaCalendar(_currentLongCount);
+      segments = encodeMayaCalendar(_currentEncodeInput);
+
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(countColumns, segments),
+          _buildDigitalOutput(countColumns, segments['displays']),
+          GCWOutput(
+              title: i18n(context, 'mayacalendar_system_longcount'),
+              child: longCount(segments['numbers']) +
+                  '   ' +
+                  dayCountToTzolkin(segments['numbers']) +
+                  '   ' +
+                  dayCountToHaab(segments['numbers'])),
         ],
       );
     } else {
@@ -208,7 +227,13 @@ class MayaCalendarState extends State<MayaCalendar> {
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
           GCWOutput(title: i18n(context, 'mayacalendar_daycount'), child: segments['vigesimal']),
-          GCWOutput(title: i18n(context, 'mayacalendar_system_longcount'), child: longCount(segments['numbers']) + '   ' + dayCountToTzolkin(segments['numbers']) + '   ' + dayCountToHaab(segments['numbers'])),
+          GCWOutput(
+              title: i18n(context, 'mayacalendar_system_longcount'),
+              child: longCount(segments['numbers']) +
+                  '   ' +
+                  dayCountToTzolkin(segments['numbers']) +
+                  '   ' +
+                  dayCountToHaab(segments['numbers'])),
         ],
       );
     }

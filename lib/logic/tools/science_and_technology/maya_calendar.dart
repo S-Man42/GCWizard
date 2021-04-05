@@ -7,60 +7,60 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
 final maya_longcount = {
-  1 : 'kin',
-  2 : 'uinal',
-  3 : 'tun',
-  4 : 'katun',
-  5 : 'baktun',
-  6 : 'pictun',
-  7 : 'kalabtun',
-  8 : 'kinchiltun',
-  9 : 'alatun'
+  1: 'kin',
+  2: 'uinal',
+  3: 'tun',
+  4: 'katun',
+  5: 'baktun',
+  6: 'pictun',
+  7: 'kalabtun',
+  8: 'kinchiltun',
+  9: 'alatun'
 };
 
 final maya_tzolkin = {
-  1 : 'Imix',
-  2 : 'Ik',
-  3 : 'Akbal',
-  4 : 'Kan',
-  5 : 'Chiccan',
-  6 : 'Cimi',
-  7 : 'Manik',
-  8 : 'Lamat',
-  9 : 'Muluc',
-  10 : 'Oc',
-  11 : 'Chuen',
-  12 : 'Eb',
-  13 : 'Ben',
-  14 : 'Ix',
-  15 : 'Men',
-  16 : 'Cib',
-  17 : 'Caban',
-  18 : 'Etznab',
-  19 : 'Cauac',
-  20 : 'Ahau',
+  1: 'Imix',
+  2: 'Ik',
+  3: 'Akbal',
+  4: 'Kan',
+  5: 'Chiccan',
+  6: 'Cimi',
+  7: 'Manik',
+  8: 'Lamat',
+  9: 'Muluc',
+  10: 'Oc',
+  11: 'Chuen',
+  12: 'Eb',
+  13: 'Ben',
+  14: 'Ix',
+  15: 'Men',
+  16: 'Cib',
+  17: 'Caban',
+  18: 'Etznab',
+  19: 'Cauac',
+  20: 'Ahau',
 };
 
 final maya_haab = {
-  1 : 'Pop',
-  2 : 'Uo',
-  3 : 'Zip',
-  4 : 'Zotz',
-  5 : 'Tzek',
-  6 : 'Xul',
-  7 : 'Yaxkin',
-  8 : 'Mol',
-  9 : 'Chen',
-  10 : 'Yax',
-  11 : 'Zac',
-  12 : 'Ceh',
-  13 : 'Mac',
-  14 : 'Kankin',
-  15 : 'Muan',
-  16 : 'Pax',
-  17 : 'Kayab',
-  18 : 'Cumhu',
-  19 : 'Uayeb'
+  1: 'Pop',
+  2: 'Uo',
+  3: 'Zip',
+  4: 'Zotz',
+  5: 'Tzek',
+  6: 'Xul',
+  7: 'Yaxkin',
+  8: 'Mol',
+  9: 'Chen',
+  10: 'Yax',
+  11: 'Zac',
+  12: 'Ceh',
+  13: 'Mac',
+  14: 'Kankin',
+  15: 'Muan',
+  16: 'Pax',
+  17: 'Kayab',
+  18: 'Cumhu',
+  19: 'Uayeb'
 };
 
 final Map<int, List<String>> _numbersToSegments = {
@@ -90,28 +90,41 @@ const _alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy
 
 List<int> mayaCalendarSystem = [1, 20, 360, 7200, 144000, 2880000, 57600000, 1152000000, 23040000000];
 
-Map <String, int> mayaSystemPosition = {'0' : 0, '1' : 1, '2' : 2, '3' : 3, '4' : 4, '5' : 5, '6' : 6, '7' : 7, '9' : 9,
-  'A' : 10, 'B' : 11, 'C' : 12, 'D' : 13, 'E' : 14, 'F' : 15, 'G' : 16, 'H' : 17, 'I' : 18, 'J' : 19};
-
-
-List<List<String>> encodeMayaCalendar(String input) {
-  if (input == null || input == '') return [];
-
-  input = input.split('.').reversed.toList().join('.');
-  List<int> longCount = new List<int>();
-  for (int i = 0; i < input.split('.').length; i++) {
-    print(input.split('.').toString());
-    longCount.insert(0, int.parse(input.split('.')[i]));
-  }
-  if (longCount.length > 1 && longCount[1] > 17) return [];
-
-  int dayCount = longCountToDayCount(longCount);
+Map<String, dynamic> encodeMayaCalendar(int input) {
+  if (input == null)
+    return {
+      'displays': [[]],
+      'numbers': [0],
+      'vigesimal': 0
+    };
 
   var vigesimal = '';
-  vigesimal = convertDecToMayaCalendar(dayCount.toString());
-  return vigesimal.split('').map((digit) {
-    return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10))];
-  }).toList();
+  vigesimal = convertDecToMayaCalendar(input.toString());
+  return {
+    'displays': vigesimal.split('').map((digit) {
+      return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10))];
+    }).toList(),
+    'numbers': longCountToList(input),
+    'vigesimal': vigesimal
+  };
+}
+
+List<int> longCountToList(int numberDec) {
+  if (numberDec == 0) return [0];
+
+  List<int> result = new List<int>();
+
+  int start = 0;
+  while (numberDec < mayaCalendarSystem[mayaCalendarSystem.length - 1 - start]) start++;
+  for (int position = mayaCalendarSystem.length - start; position > 0; position--) {
+    int value = 0;
+    while (numberDec >= mayaCalendarSystem[position - 1]) {
+      value++;
+      numberDec = numberDec - mayaCalendarSystem[position - 1];
+    }
+    result.add(value);
+  }
+  return result;
 }
 
 Map<String, dynamic> decodeMayaCalendar(List<String> inputs) {
@@ -156,27 +169,22 @@ Map<String, dynamic> decodeMayaCalendar(List<String> inputs) {
     if ((i == numbers.length - 2) && (mayaCalendarSystem[numbers.length - i - 1] == 20) && (numbers[i] > 17))
       invalid = true;
     else
-      total = (int.parse(total) + numbers[i] * mayaCalendarSystem[numbers.length - i - 1])
-          .toString();
+      total = (int.parse(total) + numbers[i] * mayaCalendarSystem[numbers.length - i - 1]).toString();
   }
-  if (invalid)
-    total = "-1";
+  if (invalid) total = "-1";
 
   return {'displays': displays, 'numbers': numbers, 'vigesimal': BigInt.tryParse(total)};
 }
 
 String convertDecToMayaCalendar(String input) {
-  if (input == null || input == '')
-    return '';
+  if (input == null || input == '') return '';
 
   BigInt numberDec = BigInt.parse(input);
-  if (numberDec == BigInt.from(0))
-    return '0';
+  if (numberDec == BigInt.from(0)) return '0';
 
   String result = '';
   int start = 0;
-  while (numberDec < BigInt.from(mayaCalendarSystem[mayaCalendarSystem.length - 1 - start]))
-    start++;
+  while (numberDec < BigInt.from(mayaCalendarSystem[mayaCalendarSystem.length - 1 - start])) start++;
   for (int position = mayaCalendarSystem.length - start; position > 0; position--) {
     int value = 0;
     while (numberDec >= BigInt.from(mayaCalendarSystem[position - 1])) {
@@ -208,7 +216,7 @@ String dayCountToHaab(List longCount) {
 }
 
 String longCount(List<int> longCount) {
-  if (longCountToDayCount(longCount) == 0) return [0,0,0,0,13,0,0,0,0].join('.');
+  if (longCountToDayCount(longCount) == 0) return [0, 0, 0, 0, 13, 0, 0, 0, 0].join('.');
 
   List<int> result = new List<int>();
   for (int i = longCount.length; i < 9; i++) result.add(0);
@@ -217,7 +225,7 @@ String longCount(List<int> longCount) {
   return result.join('.');
 }
 
-int longCountToDayCount(List<int> longCount){
+int longCountToDayCount(List<int> longCount) {
   int dayCount = 0;
   longCount = longCount.reversed.toList();
   for (int i = 0; i < longCount.length; i++) dayCount = dayCount + longCount[i] * mayaCalendarSystem[i];

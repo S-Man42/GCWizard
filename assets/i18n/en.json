@@ -1724,6 +1724,7 @@
   "mayacalendar_title" : "Maya Calendar",
   "mayacalendar_description" : "Caclulations for Maya dates - Long Count, Haab, Tzolkin",
   "mayacalendar_example" : "4 Ahau 8 Cumhu",
+  "mayacalendar_daycount" : "Number of days",
   "mayacalendar_system_longcount" : "Lange Zählung",
   "mayacalendar_system_haab" : "Haab",
   "mayacalendar_system_tzolkin" : "Tzolkin",

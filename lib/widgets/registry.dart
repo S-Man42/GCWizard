@@ -829,8 +829,7 @@ class Registry {
           tool: MayaCalendarSelection(),
           i18nPrefix: 'mayacalendar_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_MAYA_CALENDAR,
             SEARCHSTRING_DE_MAYA_CALENDAR,
@@ -3178,8 +3177,7 @@ class Registry {
       ]),
 
       //MayaCalendar Selection **************************************************************************************
-      GCWTool(tool: MayaCalendar(), i18nPrefix: 'mayacalendar', missingHelpLocales: [
-      ], searchStrings: [
+      GCWTool(tool: MayaCalendar(), i18nPrefix: 'mayacalendar', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_MAYA_CALENDAR,
         SEARCHSTRING_DE_MAYA_CALENDAR,
         SEARCHSTRING_EN_MAYA_CALENDAR,
