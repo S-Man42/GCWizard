@@ -1048,7 +1048,7 @@
   "coords_segmentline_numbersegments": "Anzahl der Abschnitte",
   "coords_segmentline_segmentdistance": "Abschnittslänge",
   "coords_segmentbearings_title": "Winkelabschnitte",
-  "coords_segmentbearing_description": "Teilt einen Winkel zwischen zwei Peilungen in gleichmäßige Abschnitte auf",
+  "coords_segmentbearings_description": "Teilt einen Winkel zwischen zwei Peilungen in gleichmäßige Abschnitte auf",
   "coords_segmentbearings_start": "Startpunkt",
   "coords_segmentbearings_end1": "Endpunkt 1",
   "coords_segmentbearings_end2": "Endpunkt 2",
