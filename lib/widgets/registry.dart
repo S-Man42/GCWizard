@@ -2458,42 +2458,18 @@ class Registry {
       ]),
 
       //Esoteric Programming Language Selection ****************************************************************
-      GCWTool(
-          tool: Chef(),
-          buttonList: [
-            GCWToolActionButtonsEntry(true, 'chef_download_documentation_url', 'chef_download_documentation_title',
-                'chef_download_documentation_text', Icons.file_download),
-          ],
-          i18nPrefix: 'chef',
-          missingHelpLocales: ['fr'],
-          searchStrings: [
-            SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_COMMON_ESOTERIC_CHEF,
-            SEARCHSTRING_DE_ESOTERIC_CHEF,
-            SEARCHSTRING_EN_ESOTERIC_CHEF,
-            SEARCHSTRING_FR_ESOTERIC_CHEF
-          ]),
-      GCWTool(
-          tool: Beatnik(),
-          buttonList: [
-            GCWToolActionButtonsEntry(true, 'beatnik_download_documentation_url',
-                'beatnik_download_documentation_title', 'beatnik_download_documentation_text', Icons.file_download),
-          ],
-          i18nPrefix: 'beatnik',
-          missingHelpLocales: ['fr'],
-          searchStrings: [
-            SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_COMMON_ESOTERIC_BEATNIK,
-            SEARCHSTRING_DE_ESOTERIC_BEATNIK,
-            SEARCHSTRING_EN_ESOTERIC_BEATNIK,
-            SEARCHSTRING_FR_ESOTERIC_BEATNIK
-          ]),
+      GCWTool(tool: Beatnik(), i18nPrefix: 'beatnik', missingHelpLocales: [
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_COMMON_ESOTERIC_BEATNIK,
+        SEARCHSTRING_DE_ESOTERIC_BEATNIK,
+        SEARCHSTRING_EN_ESOTERIC_BEATNIK,
+        SEARCHSTRING_FR_ESOTERIC_BEATNIK
+      ]),
       GCWTool(tool: Brainfk(), i18nPrefix: 'brainfk', missingHelpLocales: [
         'fr'
       ], searchStrings: [
@@ -2505,6 +2481,18 @@ class Registry {
         SEARCHSTRING_DE_ESOTERIC_BRAINFK,
         SEARCHSTRING_EN_ESOTERIC_BRAINFK,
         SEARCHSTRING_FR_ESOTERIC_BRAINFK
+      ]),
+      GCWTool(tool: Chef(), i18nPrefix: 'chef', missingHelpLocales: [
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_COMMON_ESOTERIC_CHEF,
+        SEARCHSTRING_DE_ESOTERIC_CHEF,
+        SEARCHSTRING_EN_ESOTERIC_CHEF,
+        SEARCHSTRING_FR_ESOTERIC_CHEF
       ]),
       GCWTool(tool: Deadfish(), i18nPrefix: 'deadfish', missingHelpLocales: [
         'fr'
