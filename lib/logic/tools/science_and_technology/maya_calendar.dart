@@ -5,7 +5,17 @@
 
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
-
+final maya_longcount = {
+  '1' : 'kin',
+  '2' : 'uinal',
+  '3' : 'tun',
+  '4' : 'katun',
+  '5' : 'baktun',
+  '6' : 'pictun',
+  '7' : 'kalabtun',
+  '8' : 'kinchiltun',
+  '9' : 'alatun'
+};
 
 final maya_tzolkin = {
   '0' : 'Imix',
@@ -77,7 +87,7 @@ final Map<int, List<String>> _numbersToSegments = {
 
 const _alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-List<int> mayaCalendarSystem = [1, 20, 360, 7200, 144000, 2880000, 57600000, 1152000000, 23040000000, 460800000000, 9216000000000, 184320000000000,3686400000000000];
+List<int> mayaCalendarSystem = [1, 20, 360, 7200, 144000, 2880000, 57600000, 1152000000, 23040000000];
 
 Map <String, int> mayaSystemPosition = {'0' : 0, '1' : 1, '2' : 2, '3' : 3, '4' : 4, '5' : 5, '6' : 6, '7' : 7, '9' : 9,
   'A' : 10, 'B' : 11, 'C' : 12, 'D' : 13, 'E' : 14, 'F' : 15, 'G' : 16, 'H' : 17, 'I' : 18, 'J' : 19};

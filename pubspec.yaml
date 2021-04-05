@@ -165,6 +165,7 @@ flutter:
     - assets/symbol_tables/matoran/
     - assets/symbol_tables/maya_calendar_haab_codices/
     - assets/symbol_tables/maya_calendar_haab_inscripts/
+    - assets/symbol_tables/maya_calendar_longcount/
     - assets/symbol_tables/maya_calendar_tzolkin_codices/
     - assets/symbol_tables/maya_calendar_tzolkin_inscripts/
     - assets/symbol_tables/maya_numerals/
