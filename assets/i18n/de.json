@@ -1471,7 +1471,7 @@
   "humidex_index_30": "Einiges Unbehagen.",
   "humidex_index_40": "Großes Unbehagen; vermeiden Sie Anstrengungen.",
   "humidex_index_45": "Gefährlich; Hitzschlag ist möglich.",
-  "icecodes_title": "Eis-Codes",
+  "icecodes_title": "Eiszustandscodes",
   "icecodes_description": "Beschreibt den Zustand von Eisflächen auf Gewässern",
   "icecodes_example": "1 → Heller Nilas oder Eishaut 5 bis 10 cm dick",
   "icecodes_symbol": "Eiszustandscodes",
