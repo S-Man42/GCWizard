@@ -362,6 +362,7 @@
   "caesar_title": "Caesar Cipher",
   "caesar_description": "Shifts letters on standard alphabet by 13 p(ROT-13)",
   "caesar_example": "ABC → NOP",
+  "callforcontribution_coffee" : "Buy us a coffee",
   "callforcontribution_1": "GC Wizard is a tool from Geocachers for Geocachers.\n\n",
   "callforcontribution_2": "The developers and contributers created it completely during their free time. But such a huge app needs many months of hard work. This is a very hard job for just a few workers.\n\n",
   "callforcontribution_3": "That's why we need YOU!\n\n",

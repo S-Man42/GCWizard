@@ -3001,13 +3001,13 @@ class Registry {
       GCWTool(tool: GeneralSettings(), i18nPrefix: 'settings_general', missingHelpLocales: [], searchStrings: []),
       GCWTool(
           tool: CoordinatesSettings(), i18nPrefix: 'settings_coordinates', missingHelpLocales: [], searchStrings: []),
-      GCWTool(tool: Changelog(), i18nPrefix: 'mainmenu_changelog', missingHelpLocales: [], searchStrings: [
+      GCWTool(tool: Changelog(), i18nPrefix: 'mainmenu_changelog', suppressHelpButton: true, searchStrings: [
         SEARCHSTRING_COMMON_CHANGELOG,
         SEARCHSTRING_DE_CHANGELOG,
         SEARCHSTRING_EN_CHANGELOG,
         SEARCHSTRING_FR_CHANGELOG
       ]),
-      GCWTool(tool: About(), i18nPrefix: 'mainmenu_about', missingHelpLocales: [], searchStrings: [
+      GCWTool(tool: About(), i18nPrefix: 'mainmenu_about', suppressHelpButton: true, searchStrings: [
         SEARCHSTRING_COMMON_ABOUT,
         SEARCHSTRING_DE_ABOUT,
         SEARCHSTRING_EN_ABOUT,
@@ -3016,14 +3016,14 @@ class Registry {
       GCWTool(
           tool: CallForContribution(),
           i18nPrefix: 'mainmenu_callforcontribution',
-          missingHelpLocales: [],
+          suppressHelpButton: true,
           searchStrings: [
             SEARCHSTRING_COMMON_CALLFORCONTRIBUTION,
             SEARCHSTRING_DE_CALLFORCONTRIBUTION,
             SEARCHSTRING_EN_CALLFORCONTRIBUTION,
             SEARCHSTRING_FR_CALLFORCONTRIBUTION
           ]),
-      GCWTool(tool: Licenses(), i18nPrefix: 'licenses', missingHelpLocales: [], searchStrings: [
+      GCWTool(tool: Licenses(), i18nPrefix: 'licenses', suppressHelpButton: true, searchStrings: [
         SEARCHSTRING_COMMON_LICENSES,
         SEARCHSTRING_DE_LICENSES,
         SEARCHSTRING_EN_LICENSES,

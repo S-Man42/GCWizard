@@ -362,6 +362,7 @@
   "caesar_title": "Caesar Chiffre",
   "caesar_description": "Verschiebt Buchstaben im Alphabet um 13 Stellen (ROT-13)",
   "caesar_example": "ABC → NOP",
+  "callforcontribution_coffee" : "Spende uns einen Kaffee",
   "callforcontribution_1": "GC Wizard ist ein Tool von Geocachern für Geocacher.\n\n",
   "callforcontribution_2": "Die Entwickler und alle Beitragenden haben ausschließlich in ihrer Freizeit daran entwickelt. Bei einer so umfangreichen App kommen schnell viele Wochen oder Monate Arbeit zusammen. Das ist eine für wenige Mitarbeiter nur sehr schwer zu bewältigende Aufgabe.\n\n",
   "callforcontribution_3": "Deshalb brauchen wir DICH!\n\n",
