@@ -70,7 +70,7 @@ buildMainMenu(BuildContext context) {
               child: Row(
                 children: <Widget>[
                   Container(
-                    child: Icon(Icons.group),
+                    child: Icon(Icons.group, color: themeColors().dialogText()),
                     padding: EdgeInsets.only(left: 15, right: 15),
                   ),
                   Text(

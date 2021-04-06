@@ -121,11 +121,11 @@ class TrifidState extends State<Trifid> {
 
     var _currentOutput = TrifidOutput('', '');
     if (_currentMode == GCWSwitchPosition.left) {
-      _currentOutput = encryptTrifid(_currentInput.toUpperCase(), _currentBlockSize,
-          mode: _currentTrifidMode, alphabet: _currentAlphabet.toUpperCase());
+      _currentOutput =
+          encryptTrifid(_currentInput, _currentBlockSize, mode: _currentTrifidMode, alphabet: _currentAlphabet);
     } else {
-      _currentOutput = decryptTrifid(_currentInput.toUpperCase(), _currentBlockSize,
-          mode: _currentTrifidMode, alphabet: _currentAlphabet.toUpperCase());
+      _currentOutput =
+          decryptTrifid(_currentInput, _currentBlockSize, mode: _currentTrifidMode, alphabet: _currentAlphabet);
     }
 
     if (_currentOutput.output.startsWith('trifid'))
