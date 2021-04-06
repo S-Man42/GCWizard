@@ -2,6 +2,8 @@
 // https://en.wikipedia.org/wiki/Maya_calendar
 // https://en.wikipedia.org/wiki/Haab%CA%BC
 // https://en.wikipedia.org/wiki/Tzolk%CA%BCin
+// https://www.hermetic.ch/cal_stud/maya/chap2g.htm
+// https://rolfrost.de/maya.html
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
