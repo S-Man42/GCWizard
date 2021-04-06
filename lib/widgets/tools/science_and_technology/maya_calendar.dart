@@ -204,6 +204,8 @@ class MayaCalendarState extends State<MayaCalendar> {
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
       segments = encodeMayaCalendar(_currentEncodeInput);
+      var gregorian = MayaDayCountToGregorianCalendar(longCountToMayaDayCount(segments['numbers']));
+      var julian = MayaDayCountToJulianCalendar(longCountToMayaDayCount(segments['numbers']));
 
       return Column(
         children: <Widget>[
@@ -215,6 +217,9 @@ class MayaCalendarState extends State<MayaCalendar> {
                   dayCountToTzolkin(segments['numbers']) +
                   '   ' +
                   dayCountToHaab(segments['numbers'])),
+          GCWOutput(title: i18n(context, 'mayacalendar_juliandate'), child: MayaDayCountToJulianDate(longCountToMayaDayCount(segments['numbers']))),
+          GCWOutput(title: i18n(context, 'mayacalendar_gregoriancalendar'), child: gregorian.day + ' ' + i18n(context, gregorian.month) + ' ' + gregorian.year),
+          GCWOutput(title: i18n(context, 'mayacalendar_juliancalendar'), child: julian.day + ' ' + i18n(context, julian.month) + ' ' + julian.year),
         ],
       );
     } else {
@@ -223,6 +228,8 @@ class MayaCalendarState extends State<MayaCalendar> {
         if (character != null) return character.join();
       }).toList();
       segments = decodeMayaCalendar(output);
+      var gregorian = MayaDayCountToGregorianCalendar(segments['vigesimal']);
+      var julian = MayaDayCountToJulianCalendar(segments['vigesimal']);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
@@ -234,6 +241,9 @@ class MayaCalendarState extends State<MayaCalendar> {
                   dayCountToTzolkin(segments['numbers']) +
                   '   ' +
                   dayCountToHaab(segments['numbers'])),
+          GCWOutput(title: i18n(context, 'mayacalendar_juliandate'), child: MayaDayCountToJulianDate(segments['vigesimal'])),
+          GCWOutput(title: i18n(context, 'mayacalendar_gregoriancalendar'), child: gregorian.day + ' ' + i18n(context, gregorian.month) + ' ' + gregorian.year),
+          GCWOutput(title: i18n(context, 'mayacalendar_juliancalendar'), child: julian.day + ' ' + i18n(context, julian.month) + ' ' + julian.year),
         ],
       );
     }

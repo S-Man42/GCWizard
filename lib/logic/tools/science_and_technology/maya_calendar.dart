@@ -6,6 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 
+final THOMPSON_KORRELATION = 584283;
+
 final maya_longcount = {
   1: 'kin',
   2: 'uinal',
@@ -63,6 +65,21 @@ final maya_haab = {
   19: 'Uayeb'
 };
 
+final Map<int, String>  MONTH = {
+  1 : 'common_month_january',
+  2 : 'common_month_february',
+  3 : 'common_month_march',
+  4 : 'common_month_april',
+  5 : 'common_month_may',
+  6 : 'common_month_june',
+  7 : 'common_month_july',
+  8 : 'common_month_august',
+  9 : 'common_month_september',
+ 10 : 'common_month_october',
+ 11: 'common_month_november',
+ 12: 'common_month_december',
+};
+
 final Map<int, List<String>> _numbersToSegments = {
   0: [],
   1: ['d'],
@@ -86,6 +103,12 @@ final Map<int, List<String>> _numbersToSegments = {
   19: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
 };
 
+class DateOutput {
+  final String day;
+  final String month;
+  final String year;
+  DateOutput(this.day, this.month, this.year);
+}
 const _alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 List<int> mayaCalendarSystem = [1, 20, 360, 7200, 144000, 2880000, 57600000, 1152000000, 23040000000];
@@ -197,7 +220,7 @@ String convertDecToMayaCalendar(String input) {
 }
 
 String dayCountToTzolkin(List longCount) {
-  int dayCount = longCountToDayCount(longCount);
+  int dayCount = longCountToMayaDayCount(longCount);
   if (dayCount == 0) return '4 Ahau';
 
   dayCount = dayCount + 159;
@@ -207,7 +230,7 @@ String dayCountToTzolkin(List longCount) {
 }
 
 String dayCountToHaab(List longCount) {
-  int dayCount = longCountToDayCount(longCount);
+  int dayCount = longCountToMayaDayCount(longCount);
   if (dayCount == 0) return '8 Cumhu';
 
   dayCount = dayCount + 347;
@@ -216,7 +239,7 @@ String dayCountToHaab(List longCount) {
 }
 
 String longCount(List<int> longCount) {
-  if (longCountToDayCount(longCount) == 0) return [0, 0, 0, 0, 13, 0, 0, 0, 0].join('.');
+  if (longCountToMayaDayCount(longCount) == 0) return [0, 0, 0, 0, 13, 0, 0, 0, 0].join('.');
 
   List<int> result = new List<int>();
   for (int i = longCount.length; i < 9; i++) result.add(0);
@@ -225,9 +248,126 @@ String longCount(List<int> longCount) {
   return result.join('.');
 }
 
-int longCountToDayCount(List<int> longCount) {
+int longCountToMayaDayCount(List<int> longCount) {
   int dayCount = 0;
   longCount = longCount.reversed.toList();
   for (int i = 0; i < longCount.length; i++) dayCount = dayCount + longCount[i] * mayaCalendarSystem[i];
   return dayCount;
+}
+
+DateOutput MayaDayCountToJulianCalendar(int mayaDayCount){
+  return JulianDateToJulianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0, true);
+}
+
+DateOutput MayaDayCountToGregorianCalendar(int mayaDayCount){
+  return JulianDateToGregorianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0, true);
+}
+
+int MayaDayCountToJulianDate(int mayaDayCount){
+  return (mayaDayCount + THOMPSON_KORRELATION);
+}
+
+DateOutput JulianDateToGregorianCalendar(double jd, bool round){
+  int z = (jd + 0.5).floor();
+  double f = jd + 0.5 - z;
+  int alpha = ((z - 1867216.25) / 36524.25).floor();
+  int a = z + 1 + alpha - (alpha / 4).floor();
+  int b = a + 1524;
+  int c = ((b - 122.1) / 365.25).floor();
+  int d = (365.25 * c).floor();
+  int e = ((b - d) / 30.6001).floor();
+  double day = b - d - (30.6001 * e).floor() + f;
+  int month = 0;
+  int year = 0;
+  if (e <= 13) {
+    month = e - 1;
+    year = c - 4716;
+  } else {
+    month = e - 13;
+    year = c - 4715;
+  }
+  if (round)
+    return DateOutput(day.toString().split('.')[0], MONTH[month], year.toString());
+  else  
+    return DateOutput(day.toString(), MONTH[month], year.toString());
+}
+
+DateOutput JulianDateToJulianCalendar(double jd, bool round){
+  int z = (jd + 0.5).floor();
+  double f = jd + 0.5 - z;
+  int a = z;
+  int b = a + 1524;
+  int c = ((b - 122.1) / 365.25).floor();
+  int d = (365.25 * c).floor();
+  int e = ((b - d) / 30.6001).floor();
+  double day = b - d - (30.6001 * e).floor() + f;
+  int month = 0;
+  int year = 0;
+  if (e <= 13) {
+    month = e - 1;
+    year = c - 4716;
+  } else {
+    month = e - 13;
+    year = c - 4715;
+  }
+  if (round)
+    return DateOutput(day.toString().split('.')[0], MONTH[month], year.toString());
+  else
+    return DateOutput(day.toString(), MONTH[month], year.toString());
+}
+
+double JulianCalendarToJulianDate(String date){
+  List dateList = date.split('.');
+  double day = 0.0;
+  int month = 0;
+  int year = 0;
+  if (dateList.length != 3) return -1;
+  if (double.tryParse(dateList[0]) == null)
+    return -1;
+  else
+    day = double.parse(dateList[0]);
+  if (int.tryParse(dateList[1]) == null)
+    return -1;
+  else
+    month = int.parse(dateList[1]);
+  if (int.tryParse(dateList[2]) == null)
+    return -1;
+  else
+    year = int.parse(dateList[2]);
+
+  if (month <= 2) {
+    year = year - 1;
+    month = month + 12;
+  }
+  int b = 0;
+
+  return (365.25 * (year + 4716)).floor() + (30.6001 * (month + 1)).floor() + day + b - 1524.5;
+}
+
+double GregorianCalendarToJulianDate(String date){
+  List dateList = date.split('.');
+  double day = 0.0;
+  int month = 0;
+  int year = 0;
+  if (dateList.length != 3) return -1;
+  if (double.tryParse(dateList[0]) == null)
+    return -1;
+  else
+    day = double.parse(dateList[0]);
+  if (int.tryParse(dateList[1]) == null)
+    return -1;
+  else
+    month = int.parse(dateList[1]);
+  if (int.tryParse(dateList[2]) == null)
+    return -1;
+  else
+    year = int.parse(dateList[2]);
+
+  if (month <= 2) {
+    year = year - 1;
+    month = month + 12;
+  }
+  int b = 2 - (year / 100).floor() + (year / 400).floor();
+
+  return (365.25 * (year + 4716)).floor() + (30.6001 * (month + 1)).floor() + day + b - 1524.5;
 }
