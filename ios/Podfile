@@ -66,8 +66,11 @@ post_install do |installer|
         ## dart: PermissionGroup.speech
         'PERMISSION_SPEECH_RECOGNIZER=0',
 
-        ## dart: PermissionGroup.photos
+        ## dart: PermissionGroup.photosAddOnly
         'PERMISSION_PHOTOS=0',
+
+        ## dart: PermissionGroup.photos
+        'PERMISSION_PHOTOS_ADD_ONLY=0',
 
         ## dart: [PermissionGroup.location, PermissionGroup.locationAlways, PermissionGroup.locationWhenInUse]
         # 'PERMISSION_LOCATION=0',
@@ -79,7 +82,10 @@ post_install do |installer|
         'PERMISSION_MEDIA_LIBRARY=0',
 
         ## dart: PermissionGroup.sensors
-        'PERMISSION_SENSORS=0'
+        'PERMISSION_SENSORS=0',
+
+        ## dart: PermissionGroup.bluetooth
+        'PERMISSION_BLUETOOTH=0'
       ]
     end
   end

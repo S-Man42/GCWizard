@@ -84,6 +84,7 @@ class AboutState extends State<About> {
         GCWDivider(),
         _buildUrl('license'),
         _buildUrl('github'),
+        _buildUrl('crowdin'),
         GCWDivider(),
         _buildUrl('privacypolicy'),
         GCWDivider(),
