@@ -438,7 +438,7 @@ const SEARCHSTRING_FR_SYMBOL_TENGWAR_BELERIAND = '';
 const SEARCHSTRING_FR_SYMBOL_TENGWAR_CLASSIC = '';
 const SEARCHSTRING_FR_SYMBOL_TENGWAR_GENERAL = '';
 const SEARCHSTRING_FR_SYMBOL_TERZI = 'braille rectangle carre';
-const SEARCHSTRING_FR_SYMBOL_THEBAN = 'sorcieres anges';
+const SEARCHSTRING_FR_SYMBOL_THEBAN = 'sorcieres anges magicien';
 const SEARCHSTRING_FR_SYMBOL_THREE_SQUARES = 'trois rectangle quadrilatere carre';
 const SEARCHSTRING_FR_SYMBOL_TINES =
     'dents canaille gallois rouge langues gens voyage dents crochets personnes voyageant clochard';
