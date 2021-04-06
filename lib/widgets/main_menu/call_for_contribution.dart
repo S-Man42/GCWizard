@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/gcw_mainmenuentry_stub.dart';
 import 'package:gc_wizard/widgets/registry.dart';
@@ -83,6 +84,21 @@ class CallForContributionState extends State<CallForContribution> {
       ], style: gcwTextStyle()),
     );
 
-    return GCWMainMenuEntryStub(content: content);
+    return GCWMainMenuEntryStub(
+        content: Column(
+      children: [
+        InkWell(
+          child: Text(
+            i18n(context, 'callforcontribution_coffee'),
+            style: gcwHyperlinkTextStyle().copyWith(fontSize: defaultFontSize() + 2),
+          ),
+          onTap: () {
+            launch(i18n(context, 'common_support_link'));
+          },
+        ),
+        GCWDivider(),
+        content
+      ],
+    ));
   }
 }
