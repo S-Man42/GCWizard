@@ -721,7 +721,7 @@ final Map<String, String> LATWordToNum = {
   'sex': '6',
   'septem': '7',
   'octo': '8',
-  'npvem': '9',
+  'novem': '9',
   'decem': '10',
   'undecim': '11',
   'duodecim': '12',

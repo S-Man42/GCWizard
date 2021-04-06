@@ -280,135 +280,146 @@ class Registry {
   static initialize(BuildContext context) {
     toolList = [
       //MainSelection
-      GCWTool(tool: Abaddon(), i18nPrefix: 'abaddon', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ABADDON,
-        SEARCHSTRING_DE_ABADDON,
-        SEARCHSTRING_EN_ABADDON,
-        SEARCHSTRING_FR_ABADDON
-      ]),
-      GCWTool(tool: ADFGVX(), i18nPrefix: 'adfgvx', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ADFGVX,
-        SEARCHSTRING_DE_ADFGVX,
-        SEARCHSTRING_EN_ADFGVX,
-        SEARCHSTRING_FR_ADFGVX
-      ]),
-      GCWTool(tool: Affine(), i18nPrefix: 'affine', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_AFFINE,
-        SEARCHSTRING_DE_AFFINE,
-        SEARCHSTRING_EN_AFFINE,
-        SEARCHSTRING_FR_AFFINE
-      ]),
+      GCWTool(
+          tool: Abaddon(),
+          i18nPrefix: 'abaddon',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_ABADDON,
+            SEARCHSTRING_DE_ABADDON,
+            SEARCHSTRING_EN_ABADDON,
+            SEARCHSTRING_FR_ABADDON
+          ]),
+      GCWTool(
+          tool: ADFGVX(),
+          i18nPrefix: 'adfgvx',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_ADFGVX,
+            SEARCHSTRING_DE_ADFGVX,
+            SEARCHSTRING_EN_ADFGVX,
+            SEARCHSTRING_FR_ADFGVX
+          ]),
+      GCWTool(
+          tool: Affine(),
+          i18nPrefix: 'affine',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_AFFINE,
+            SEARCHSTRING_DE_AFFINE,
+            SEARCHSTRING_EN_AFFINE,
+            SEARCHSTRING_FR_AFFINE
+          ]),
       GCWTool(
           tool: AlphabetValues(),
           i18nPrefix: 'alphabetvalues',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_ALPHABETVALUES,
             SEARCHSTRING_DE_ALPHABETVALUES,
             SEARCHSTRING_EN_ALPHABETVALUES,
             SEARCHSTRING_FR_ALPHABETVALUES
           ]),
-      GCWTool(tool: Amsco(), i18nPrefix: 'amsco', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_AMSCO,
-        SEARCHSTRING_DE_AMSCO,
-        SEARCHSTRING_EN_AMSCO,
-        SEARCHSTRING_FR_AMSCO
-      ]),
+      GCWTool(
+          tool: Amsco(),
+          i18nPrefix: 'amsco',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_AMSCO,
+            SEARCHSTRING_DE_AMSCO,
+            SEARCHSTRING_EN_AMSCO,
+            SEARCHSTRING_FR_AMSCO
+          ]),
       GCWTool(
           tool: ApparentTemperatureSelection(),
           i18nPrefix: 'apparenttemperature_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_APPARENTTEMPERATURE,
             SEARCHSTRING_DE_APPARENTTEMPERATURE,
             SEARCHSTRING_EN_APPARENTTEMPERATURE,
             SEARCHSTRING_FR_APPARENTTEMPERATURE
           ]),
-      GCWTool(tool: ASCIIValues(), i18nPrefix: 'asciivalues', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ASCIIVALUES,
-        SEARCHSTRING_DE_ASCIIVALUES,
-        SEARCHSTRING_EN_ASCIIVALUES,
-        SEARCHSTRING_FR_ASCIIVALUES,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY
-      ]),
+      GCWTool(
+          tool: ASCIIValues(),
+          i18nPrefix: 'asciivalues',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_ASCIIVALUES,
+            SEARCHSTRING_DE_ASCIIVALUES,
+            SEARCHSTRING_EN_ASCIIVALUES,
+            SEARCHSTRING_FR_ASCIIVALUES,
+            SEARCHSTRING_COMMON_BINARY,
+            SEARCHSTRING_DE_BINARY,
+            SEARCHSTRING_EN_BINARY,
+            SEARCHSTRING_FR_BINARY
+          ]),
       GCWTool(
           tool: AstronomySelection(),
           i18nPrefix: 'astronomy_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_ASTRONOMY,
             SEARCHSTRING_DE_ASTRONOMY,
             SEARCHSTRING_EN_ASTRONOMY,
             SEARCHSTRING_FR_ASTRONOMY
           ]),
-      GCWTool(tool: Atbash(), i18nPrefix: 'atbash', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ATBASH,
-        SEARCHSTRING_DE_ATBASH,
-        SEARCHSTRING_EN_ATBASH,
-        SEARCHSTRING_FR_ATBASH
-      ]),
+      GCWTool(
+          tool: Atbash(),
+          i18nPrefix: 'atbash',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_ATBASH,
+            SEARCHSTRING_DE_ATBASH,
+            SEARCHSTRING_EN_ATBASH,
+            SEARCHSTRING_FR_ATBASH
+          ]),
       GCWTool(
           tool: BabylonNumbersSelection(),
           i18nPrefix: 'babylonnumbers_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_BABYLONIAN_NUMERALS,
             SEARCHSTRING_DE_BABYLONIAN_NUMERALS,
             SEARCHSTRING_EN_BABYLONIAN_NUMERALS,
             SEARCHSTRING_FR_BABYLONIAN_NUMERALS
           ]),
-      GCWTool(tool: Bacon(), i18nPrefix: 'bacon', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BACON,
-        SEARCHSTRING_DE_BACON,
-        SEARCHSTRING_EN_BACON,
-        SEARCHSTRING_FR_BACON,
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY
-      ]),
+      GCWTool(
+          tool: Bacon(),
+          i18nPrefix: 'bacon',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_BACON,
+            SEARCHSTRING_DE_BACON,
+            SEARCHSTRING_EN_BACON,
+            SEARCHSTRING_FR_BACON,
+            SEARCHSTRING_COMMON_BINARY,
+            SEARCHSTRING_DE_BINARY,
+            SEARCHSTRING_EN_BINARY,
+            SEARCHSTRING_FR_BINARY
+          ]),
       GCWTool(
           tool: BaseSelection(),
           i18nPrefix: 'base_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: ['fr'],
+          missingHelpLocales: [],
           searchStrings: [SEARCHSTRING_COMMON_BASE, SEARCHSTRING_DE_BASE, SEARCHSTRING_EN_BASE, SEARCHSTRING_FR_BASE]),
       GCWTool(
           tool: BCDSelection(),
           i18nPrefix: 'bcd_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_BCD,
             SEARCHSTRING_DE_BCD,
@@ -423,64 +434,72 @@ class Registry {
           tool: BeaufortSelection(),
           i18nPrefix: 'beaufort_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_BEAUFORT,
             SEARCHSTRING_DE_BEAUFORT,
             SEARCHSTRING_EN_BEAUFORT,
             SEARCHSTRING_FR_BEAUFORT
           ]),
-      GCWTool(tool: Binary(), i18nPrefix: 'binary', category: ToolCategory.SCIENCE_AND_TECHNOLOGY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY
-      ]),
-      GCWTool(tool: Bifid(), i18nPrefix: 'bifid', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BIFID,
-        SEARCHSTRING_COMMON_BIFID,
-        SEARCHSTRING_COMMON_BIFID,
-        SEARCHSTRING_COMMON_BIFID
-      ]),
-      GCWTool(tool: BookCipher(), i18nPrefix: 'book_cipher', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BOOKCIPHER,
-        SEARCHSTRING_DE_BOOKCIPHER,
-        SEARCHSTRING_EN_BOOKCIPHER,
-        SEARCHSTRING_FR_BOOKCIPHER
-      ]),
+      GCWTool(
+          tool: Binary(),
+          i18nPrefix: 'binary',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_BINARY,
+            SEARCHSTRING_DE_BINARY,
+            SEARCHSTRING_EN_BINARY,
+            SEARCHSTRING_FR_BINARY
+          ]),
+      GCWTool(
+          tool: Bifid(),
+          i18nPrefix: 'bifid',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID
+          ]),
+      GCWTool(
+          tool: BookCipher(),
+          i18nPrefix: 'book_cipher',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_BOOKCIPHER,
+            SEARCHSTRING_DE_BOOKCIPHER,
+            SEARCHSTRING_EN_BOOKCIPHER,
+            SEARCHSTRING_FR_BOOKCIPHER
+          ]),
       GCWTool(
           tool: BurrowsWheeler(),
           i18nPrefix: 'burrowswheeler',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_BURROESWHEELER,
             SEARCHSTRING_DE_BURROESWHEELER,
             SEARCHSTRING_EN_BURROESWHEELER,
             SEARCHSTRING_FR_BURROESWHEELER
           ]),
-      GCWTool(tool: Caesar(), i18nPrefix: 'caesar', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ROTATION,
-        SEARCHSTRING_DE_ROTATION,
-        SEARCHSTRING_EN_ROTATION,
-        SEARCHSTRING_FR_ROTATION,
-        SEARCHSTRING_COMMON_CAESAR,
-        SEARCHSTRING_DE_CAESAR,
-        SEARCHSTRING_EN_CAESAR,
-        SEARCHSTRING_FR_CAESAR
-      ]),
+      GCWTool(
+          tool: Caesar(),
+          i18nPrefix: 'caesar',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_ROTATION,
+            SEARCHSTRING_DE_ROTATION,
+            SEARCHSTRING_EN_ROTATION,
+            SEARCHSTRING_FR_ROTATION,
+            SEARCHSTRING_COMMON_CAESAR,
+            SEARCHSTRING_DE_CAESAR,
+            SEARCHSTRING_EN_CAESAR,
+            SEARCHSTRING_FR_CAESAR
+          ]),
       GCWTool(
           tool: CCITT1Selection(),
           i18nPrefix: 'ccitt1_selection',
@@ -515,23 +534,24 @@ class Registry {
           tool: Chao(),
           i18nPrefix: 'chao',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: ['fr'],
+          missingHelpLocales: [],
           searchStrings: [SEARCHSTRING_COMMON_CHAO, SEARCHSTRING_DE_CHAO, SEARCHSTRING_EN_CHAO, SEARCHSTRING_FR_CHAO]),
-      GCWTool(tool: CipherWheel(), i18nPrefix: 'cipherwheel', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CIPHERWHEEL,
-        SEARCHSTRING_DE_CIPHERWHEEL,
-        SEARCHSTRING_EN_CIPHERWHEEL,
-        SEARCHSTRING_FR_CIPHERWHEEL
-      ]),
+      GCWTool(
+          tool: CipherWheel(),
+          i18nPrefix: 'cipherwheel',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CIPHERWHEEL,
+            SEARCHSTRING_DE_CIPHERWHEEL,
+            SEARCHSTRING_EN_CIPHERWHEEL,
+            SEARCHSTRING_FR_CIPHERWHEEL
+          ]),
       GCWTool(
           tool: CistercianNumbersSelection(),
           i18nPrefix: 'cistercian_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CISTERCIAN,
             SEARCHSTRING_DE_CISTERCIAN,
@@ -542,9 +562,7 @@ class Registry {
           tool: ColorPicker(),
           i18nPrefix: 'colors',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COLORPICKER,
             SEARCHSTRING_DE_COLORPICKER,
@@ -555,18 +573,14 @@ class Registry {
           tool: CombinatoricsSelection(),
           i18nPrefix: 'combinatorics_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COMBINATORICS,
             SEARCHSTRING_DE_COMBINATORICS,
             SEARCHSTRING_EN_COMBINATORICS,
             SEARCHSTRING_FR_COMBINATORICS
           ]),
-      GCWTool(tool: CoordsSelection(), i18nPrefix: 'coords_selection', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: CoordsSelection(), i18nPrefix: 'coords_selection', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_COORDINATES,
         SEARCHSTRING_DE_COORDINATES,
         SEARCHSTRING_EN_COORDINATES,
@@ -576,30 +590,28 @@ class Registry {
           tool: CrossSumSelection(),
           i18nPrefix: 'crosssum_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CROSSSUMS,
             SEARCHSTRING_DE_CROSSSUMS,
             SEARCHSTRING_EN_CROSSSUMS,
             SEARCHSTRING_FR_CROSSSUMS
           ]),
-      GCWTool(tool: CryptographySelection(), i18nPrefix: 'cryptography_selection', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CRYPTOGRAPHYSELECTION,
-        SEARCHSTRING_DE_CRYPTOGRAPHYSELECTION,
-        SEARCHSTRING_EN_CRYPTOGRAPHYSELECTION,
-        SEARCHSTRING_FR_CRYPTOGRAPHYSELECTION
-      ]),
+      GCWTool(
+          tool: CryptographySelection(),
+          i18nPrefix: 'cryptography_selection',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CRYPTOGRAPHYSELECTION,
+            SEARCHSTRING_DE_CRYPTOGRAPHYSELECTION,
+            SEARCHSTRING_EN_CRYPTOGRAPHYSELECTION,
+            SEARCHSTRING_FR_CRYPTOGRAPHYSELECTION
+          ]),
       GCWTool(
           tool: DatesSelection(),
           i18nPrefix: 'dates_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_DATES,
             SEARCHSTRING_DE_DATES,
@@ -610,9 +622,7 @@ class Registry {
           tool: Decabit(),
           i18nPrefix: 'decabit',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_DECABIT,
             SEARCHSTRING_DE_DECABIT,
@@ -623,7 +633,7 @@ class Registry {
           tool: DNASelection(),
           i18nPrefix: 'dna_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['fr'],
+          missingHelpLocales: [],
           searchStrings: [SEARCHSTRING_COMMON_DNA, SEARCHSTRING_DE_DNA, SEARCHSTRING_EN_DNA, SEARCHSTRING_FR_DNA]),
       GCWTool(
           tool: DSSelection(),
@@ -644,15 +654,13 @@ class Registry {
           tool: DTMF(),
           i18nPrefix: 'dtmf',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: ['fr'],
+          missingHelpLocales: [],
           searchStrings: [SEARCHSTRING_COMMON_DTMF, SEARCHSTRING_DE_DTMF, SEARCHSTRING_EN_DTMF, SEARCHSTRING_FR_DTMF]),
       GCWTool(
           tool: EnclosedAreas(),
           i18nPrefix: 'enclosedareas',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_ENCLOSEDAREAS,
             SEARCHSTRING_DE_ENCLOSEDAREAS,
@@ -674,38 +682,35 @@ class Registry {
             SEARCHSTRING_EN_IRRATIONALNUMBERS,
             SEARCHSTRING_FR_IRRATIONALNUMBERS
           ]),
-      GCWTool(tool: Enigma(), i18nPrefix: 'enigma', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ENIGMA,
-        SEARCHSTRING_DE_ENIGMA,
-        SEARCHSTRING_EN_ENIGMA,
-        SEARCHSTRING_FR_ENIGMA
-      ]),
+      GCWTool(
+          tool: Enigma(),
+          i18nPrefix: 'enigma',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_ENIGMA,
+            SEARCHSTRING_DE_ENIGMA,
+            SEARCHSTRING_EN_ENIGMA,
+            SEARCHSTRING_FR_ENIGMA
+          ]),
       GCWTool(
           tool: EsotericProgrammingLanguageSelection(),
           i18nPrefix: 'esotericprogramminglanguages_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
             SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
             SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
             SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE
           ]),
-      GCWTool(tool: FormulaSolverFormulaGroups(), i18nPrefix: 'formulasolver', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: FormulaSolverFormulaGroups(), i18nPrefix: 'formulasolver', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_FORMULASOLVER,
         SEARCHSTRING_DE_FORMULASOLVER,
         SEARCHSTRING_EN_FORMULASOLVER,
         SEARCHSTRING_FR_FORMULASOLVER
       ]),
-      GCWTool(tool: GamesSelection(), i18nPrefix: 'games_selection', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: GamesSelection(), i18nPrefix: 'games_selection', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_GAMES,
         SEARCHSTRING_DE_GAMES,
         SEARCHSTRING_EN_GAMES,
@@ -715,7 +720,7 @@ class Registry {
           tool: Gade(),
           i18nPrefix: 'gade',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: ['fr'],
+          missingHelpLocales: [],
           searchStrings: [SEARCHSTRING_COMMON_GADE, SEARCHSTRING_DE_GADE, SEARCHSTRING_EN_GADE, SEARCHSTRING_FR_GADE]),
       GCWTool(
           tool: GCCode(),
@@ -728,33 +733,36 @@ class Registry {
             SEARCHSTRING_EN_GCCODE,
             SEARCHSTRING_FR_GCCODE
           ]),
-      GCWTool(tool: GeneralCodebreakersSelection(), i18nPrefix: 'generalcodebreakers_selection', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CODEBREAKER,
-        SEARCHSTRING_DE_CODEBREAKER,
-        SEARCHSTRING_EN_CODEBREAKER,
-        SEARCHSTRING_FR_CODEBREAKER
-      ]),
-      GCWTool(tool: Gray(), i18nPrefix: 'gray', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_BINARY,
-        SEARCHSTRING_DE_BINARY,
-        SEARCHSTRING_EN_BINARY,
-        SEARCHSTRING_FR_BINARY,
-        SEARCHSTRING_COMMON_GRAY,
-        SEARCHSTRING_DE_GRAY,
-        SEARCHSTRING_EN_GRAY,
-        SEARCHSTRING_FR_GRAY
-      ]),
+      GCWTool(
+          tool: GeneralCodebreakersSelection(),
+          i18nPrefix: 'generalcodebreakers_selection',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CODEBREAKER,
+            SEARCHSTRING_DE_CODEBREAKER,
+            SEARCHSTRING_EN_CODEBREAKER,
+            SEARCHSTRING_FR_CODEBREAKER
+          ]),
+      GCWTool(
+          tool: Gray(),
+          i18nPrefix: 'gray',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_BINARY,
+            SEARCHSTRING_DE_BINARY,
+            SEARCHSTRING_EN_BINARY,
+            SEARCHSTRING_FR_BINARY,
+            SEARCHSTRING_COMMON_GRAY,
+            SEARCHSTRING_DE_GRAY,
+            SEARCHSTRING_EN_GRAY,
+            SEARCHSTRING_FR_GRAY
+          ]),
       GCWTool(
           tool: HashSelection(),
           i18nPrefix: 'hashes_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_HASHES,
             SEARCHSTRING_DE_HASHES,
@@ -765,28 +773,29 @@ class Registry {
           tool: Hexadecimal(),
           i18nPrefix: 'hexadecimal',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_HEXADECIMAL,
             SEARCHSTRING_DE_HEXADECIMAL,
             SEARCHSTRING_EN_HEXADECIMAL,
             SEARCHSTRING_FR_HEXADECIMAL
           ]),
-      GCWTool(tool: Homophone(), i18nPrefix: 'homophone', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_HOMOPHONE,
-        SEARCHSTRING_DE_HOMOPHONE,
-        SEARCHSTRING_EN_HOMOPHONE,
-        SEARCHSTRING_FR_HOMOPHONE
-      ]),
+      GCWTool(
+          tool: Homophone(),
+          i18nPrefix: 'homophone',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_HOMOPHONE,
+            SEARCHSTRING_DE_HOMOPHONE,
+            SEARCHSTRING_EN_HOMOPHONE,
+            SEARCHSTRING_FR_HOMOPHONE
+          ]),
       GCWTool(
         tool: IceCodesSelection(),
         i18nPrefix: 'icecodes_selection',
         category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-        missingHelpLocales: ['fr'],
+        missingHelpLocales: [],
         searchStrings: [
           SEARCHSTRING_COMMON_ICECODES,
           SEARCHSTRING_DE_ICECODES,
@@ -794,33 +803,37 @@ class Registry {
           SEARCHSTRING_FR_ICECODES
         ],
       ),
-      GCWTool(tool: Kamasutra(), i18nPrefix: 'kamasutra', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ROTATION,
-        SEARCHSTRING_DE_ROTATION,
-        SEARCHSTRING_EN_ROTATION,
-        SEARCHSTRING_FR_ROTATION,
-        SEARCHSTRING_COMMON_KAMASUTRA,
-        SEARCHSTRING_DE_KAMASUTRA,
-        SEARCHSTRING_EN_KAMASUTRA,
-        SEARCHSTRING_FR_KAMASUTRA
-      ]),
-      GCWTool(tool: Kenny(), i18nPrefix: 'kenny', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_KENNY,
-        SEARCHSTRING_DE_KENNY,
-        SEARCHSTRING_EN_KENNY,
-        SEARCHSTRING_FR_KENNY
-      ]),
+      GCWTool(
+          tool: Kamasutra(),
+          i18nPrefix: 'kamasutra',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_ROTATION,
+            SEARCHSTRING_DE_ROTATION,
+            SEARCHSTRING_EN_ROTATION,
+            SEARCHSTRING_FR_ROTATION,
+            SEARCHSTRING_COMMON_KAMASUTRA,
+            SEARCHSTRING_DE_KAMASUTRA,
+            SEARCHSTRING_EN_KAMASUTRA,
+            SEARCHSTRING_FR_KAMASUTRA
+          ]),
+      GCWTool(
+          tool: Kenny(),
+          i18nPrefix: 'kenny',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_KENNY,
+            SEARCHSTRING_DE_KENNY,
+            SEARCHSTRING_EN_KENNY,
+            SEARCHSTRING_FR_KENNY
+          ]),
       GCWTool(
           tool: Keyboard(),
           i18nPrefix: 'keyboard',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_KEYBOARD,
             SEARCHSTRING_DE_KEYBOARD,
@@ -831,9 +844,7 @@ class Registry {
           tool: LanguageGamesSelection(),
           i18nPrefix: 'languagegames_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_LANGUAGEGAMES,
             SEARCHSTRING_DE_LANGUAGEGAMES,
@@ -844,9 +855,7 @@ class Registry {
           tool: MayaNumbersSelection(),
           i18nPrefix: 'mayanumbers_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_MAYANUMBERS,
             SEARCHSTRING_DE_MAYANUMBERS,
@@ -868,21 +877,22 @@ class Registry {
             SEARCHSTRING_EN_MEXICANARMYCIPHERWHEEL,
             SEARCHSTRING_FR_MEXICANARMYCIPHERWHEEL
           ]),
-      GCWTool(tool: Morse(), i18nPrefix: 'morse', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_MORSE,
-        SEARCHSTRING_DE_MORSE,
-        SEARCHSTRING_EN_MORSE,
-        SEARCHSTRING_FR_MORSE
-      ]),
+      GCWTool(
+          tool: Morse(),
+          i18nPrefix: 'morse',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_MORSE,
+            SEARCHSTRING_DE_MORSE,
+            SEARCHSTRING_EN_MORSE,
+            SEARCHSTRING_FR_MORSE
+          ]),
       GCWTool(
           tool: MultiDecoder(),
           i18nPrefix: 'multidecoder',
           category: ToolCategory.GENERAL_CODEBREAKERS,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_MULTIDECODER,
             SEARCHSTRING_DE_MULTIDECODER,
@@ -893,9 +903,7 @@ class Registry {
           tool: NumberSequenceSelection(),
           i18nPrefix: 'numbersequence',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -921,30 +929,29 @@ class Registry {
           tool: NumeralWordsSelection(),
           i18nPrefix: 'numeralwords_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMERALWORDS,
             SEARCHSTRING_DE_NUMERALWORDS,
             SEARCHSTRING_EN_NUMERALWORDS,
             SEARCHSTRING_FR_NUMERALWORDS
           ]),
-      GCWTool(tool: OneTimePad(), i18nPrefix: 'onetimepad', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_ONETIMEPAD,
-        SEARCHSTRING_DE_ONETIMEPAD,
-        SEARCHSTRING_EN_ONETIMEPAD,
-        SEARCHSTRING_FR_ONETIMEPAD
-      ]),
+      GCWTool(
+          tool: OneTimePad(),
+          i18nPrefix: 'onetimepad',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_ONETIMEPAD,
+            SEARCHSTRING_DE_ONETIMEPAD,
+            SEARCHSTRING_EN_ONETIMEPAD,
+            SEARCHSTRING_FR_ONETIMEPAD
+          ]),
       GCWTool(
           tool: PeriodicTableSelection(),
           i18nPrefix: 'periodictable_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_PERIODICTABLE,
             SEARCHSTRING_DE_PERIODICTABLE,
@@ -981,29 +988,33 @@ class Registry {
             SEARCHSTRING_EN_IRRATIONALNUMBERS,
             SEARCHSTRING_FR_IRRATIONALNUMBERS
           ]),
-      GCWTool(tool: Playfair(), i18nPrefix: 'playfair', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PLAYFAIR,
-        SEARCHSTRING_DE_PLAYFAIR,
-        SEARCHSTRING_EN_PLAYFAIR,
-        SEARCHSTRING_FR_PLAYFAIR
-      ]),
-      GCWTool(tool: Polybios(), i18nPrefix: 'polybios', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_POLYBIOS,
-        SEARCHSTRING_DE_POLYBIOS,
-        SEARCHSTRING_EN_POLYBIOS,
-        SEARCHSTRING_FR_POLYBIOS
-      ]),
+      GCWTool(
+          tool: Playfair(),
+          i18nPrefix: 'playfair',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_PLAYFAIR,
+            SEARCHSTRING_DE_PLAYFAIR,
+            SEARCHSTRING_EN_PLAYFAIR,
+            SEARCHSTRING_FR_PLAYFAIR
+          ]),
+      GCWTool(
+          tool: Polybios(),
+          i18nPrefix: 'polybios',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_POLYBIOS,
+            SEARCHSTRING_DE_POLYBIOS,
+            SEARCHSTRING_EN_POLYBIOS,
+            SEARCHSTRING_FR_POLYBIOS
+          ]),
       GCWTool(
           tool: PrimesSelection(),
           i18nPrefix: 'primes_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_PRIMES,
             SEARCHSTRING_DE_PRIMES,
@@ -1014,57 +1025,57 @@ class Registry {
           tool: Projectiles(),
           i18nPrefix: 'projectiles',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_PROJECTILES,
             SEARCHSTRING_DE_PROJECTILES,
             SEARCHSTRING_EN_PROJECTILES,
             SEARCHSTRING_FR_PROJECTILES
           ]),
-      GCWTool(tool: RailFence(), i18nPrefix: 'railfence', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_RAILFENCE,
-        SEARCHSTRING_DE_RAILFENCE,
-        SEARCHSTRING_EN_RAILFENCE,
-        SEARCHSTRING_FR_RAILFENCE
-      ]),
+      GCWTool(
+          tool: RailFence(),
+          i18nPrefix: 'railfence',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_RAILFENCE,
+            SEARCHSTRING_DE_RAILFENCE,
+            SEARCHSTRING_EN_RAILFENCE,
+            SEARCHSTRING_FR_RAILFENCE
+          ]),
       GCWTool(
           tool: RC4(),
           i18nPrefix: 'rc4',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: ['fr'],
+          missingHelpLocales: [],
           searchStrings: [SEARCHSTRING_COMMON_RC4, SEARCHSTRING_DE_RC4, SEARCHSTRING_EN_RC4, SEARCHSTRING_FR_RC4]),
       GCWTool(
           tool: ResistorSelection(),
           i18nPrefix: 'resistor_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_RESISTOR,
             SEARCHSTRING_DE_RESISTOR,
             SEARCHSTRING_EN_RESISTOR,
             SEARCHSTRING_FR_RESISTOR
           ]),
-      GCWTool(tool: Reverse(), i18nPrefix: 'reverse', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_REVERSE,
-        SEARCHSTRING_DE_REVERSE,
-        SEARCHSTRING_EN_REVERSE,
-        SEARCHSTRING_FR_REVERSE
-      ]),
+      GCWTool(
+          tool: Reverse(),
+          i18nPrefix: 'reverse',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_REVERSE,
+            SEARCHSTRING_DE_REVERSE,
+            SEARCHSTRING_EN_REVERSE,
+            SEARCHSTRING_FR_REVERSE
+          ]),
       GCWTool(
           tool: RomanNumbersSelection(),
           i18nPrefix: 'romannumbers',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_ROMAN_NUMBERS,
             SEARCHSTRING_DE_ROMAN_NUMBERS,
@@ -1086,9 +1097,7 @@ class Registry {
           tool: RSASelection(),
           i18nPrefix: 'rsa_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_RSA,
             SEARCHSTRING_DE_RSA,
@@ -1099,62 +1108,69 @@ class Registry {
             SEARCHSTRING_EN_PRIMES,
             SEARCHSTRING_FR_PRIMES
           ]),
-      GCWTool(tool: ScienceAndTechnologySelection(), i18nPrefix: 'scienceandtechnology_selection', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SCIENCEANDTECHNOLOGYSELECTION,
-        SEARCHSTRING_DE_SCIENCEANDTECHNOLOGYSELECTION,
-        SEARCHSTRING_EN_SCIENCEANDTECHNOLOGYSELECTION,
-        SEARCHSTRING_FR_SCIENCEANDTECHNOLOGYSELECTION
-      ]),
-      GCWTool(tool: Scrabble(), i18nPrefix: 'scrabble', category: ToolCategory.GAMES, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_GAMES,
-        SEARCHSTRING_DE_GAMES,
-        SEARCHSTRING_EN_GAMES,
-        SEARCHSTRING_FR_GAMES,
-        SEARCHSTRING_COMMON_GAMES_SCRABBLE,
-        SEARCHSTRING_DE_GAMES_SCRABBLE,
-        SEARCHSTRING_EN_GAMES_SCRABBLE,
-        SEARCHSTRING_FR_GAMES_SCRABBLE
-      ]),
+      GCWTool(
+          tool: ScienceAndTechnologySelection(),
+          i18nPrefix: 'scienceandtechnology_selection',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SCIENCEANDTECHNOLOGYSELECTION,
+            SEARCHSTRING_DE_SCIENCEANDTECHNOLOGYSELECTION,
+            SEARCHSTRING_EN_SCIENCEANDTECHNOLOGYSELECTION,
+            SEARCHSTRING_FR_SCIENCEANDTECHNOLOGYSELECTION
+          ]),
+      GCWTool(
+          tool: Scrabble(),
+          i18nPrefix: 'scrabble',
+          category: ToolCategory.GAMES,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_GAMES,
+            SEARCHSTRING_DE_GAMES,
+            SEARCHSTRING_EN_GAMES,
+            SEARCHSTRING_FR_GAMES,
+            SEARCHSTRING_COMMON_GAMES_SCRABBLE,
+            SEARCHSTRING_DE_GAMES_SCRABBLE,
+            SEARCHSTRING_EN_GAMES_SCRABBLE,
+            SEARCHSTRING_FR_GAMES_SCRABBLE
+          ]),
       GCWTool(
           tool: SegmentDisplaySelection(),
           i18nPrefix: 'segmentdisplay_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_SEGMENTS,
             SEARCHSTRING_DE_SEGMENTS,
             SEARCHSTRING_EN_SEGMENTS,
             SEARCHSTRING_FR_SEGMENTS
           ]),
-      GCWTool(tool: Skytale(), i18nPrefix: 'skytale', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SKYTALE,
-        SEARCHSTRING_DE_SKYTALE,
-        SEARCHSTRING_EN_SKYTALE,
-        SEARCHSTRING_FR_SKYTALE
-      ]),
-      GCWTool(tool: Solitaire(), i18nPrefix: 'solitaire', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SOLITAIRE,
-        SEARCHSTRING_DE_SOLITAIRE,
-        SEARCHSTRING_EN_SOLITAIRE,
-        SEARCHSTRING_FR_SOLITAIRE
-      ]),
+      GCWTool(
+          tool: Skytale(),
+          i18nPrefix: 'skytale',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SKYTALE,
+            SEARCHSTRING_DE_SKYTALE,
+            SEARCHSTRING_EN_SKYTALE,
+            SEARCHSTRING_FR_SKYTALE
+          ]),
+      GCWTool(
+          tool: Solitaire(),
+          i18nPrefix: 'solitaire',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SOLITAIRE,
+            SEARCHSTRING_DE_SOLITAIRE,
+            SEARCHSTRING_EN_SOLITAIRE,
+            SEARCHSTRING_FR_SOLITAIRE
+          ]),
       GCWTool(
           tool: StraddlingCheckerboard(),
           i18nPrefix: 'straddlingcheckerboard',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_STRADDLINGCHECKERBOARD,
             SEARCHSTRING_DE_STRADDLINGCHECKERBOARD,
@@ -1165,9 +1181,7 @@ class Registry {
           tool: Substitution(),
           i18nPrefix: 'substitution',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_SUBSTITUTION,
             SEARCHSTRING_DE_SUBSTITUTION,
@@ -1178,9 +1192,7 @@ class Registry {
           tool: SubstitutionBreaker(),
           i18nPrefix: 'substitutionbreaker',
           category: ToolCategory.GENERAL_CODEBREAKERS,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CODEBREAKER,
             SEARCHSTRING_DE_CODEBREAKER,
@@ -1191,18 +1203,21 @@ class Registry {
             SEARCHSTRING_EN_SUBSTITUTIONBREAKER,
             SEARCHSTRING_FR_SUBSTITUTIONBREAKER
           ]),
-      GCWTool(tool: SudokuSolver(), i18nPrefix: 'sudokusolver', category: ToolCategory.GAMES, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_GAMES,
-        SEARCHSTRING_DE_GAMES,
-        SEARCHSTRING_EN_GAMES,
-        SEARCHSTRING_FR_GAMES,
-        SEARCHSTRING_COMMON_GAMES_SUDOKUSOLVER,
-        SEARCHSTRING_DE_GAMES_SUDOKUSOLVER,
-        SEARCHSTRING_EN_GAMES_SUDOKUSOLVER,
-        SEARCHSTRING_FR_GAMES_SUDOKUSOLVER
-      ]),
+      GCWTool(
+          tool: SudokuSolver(),
+          i18nPrefix: 'sudokusolver',
+          category: ToolCategory.GAMES,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_GAMES,
+            SEARCHSTRING_DE_GAMES,
+            SEARCHSTRING_EN_GAMES,
+            SEARCHSTRING_FR_GAMES,
+            SEARCHSTRING_COMMON_GAMES_SUDOKUSOLVER,
+            SEARCHSTRING_DE_GAMES_SUDOKUSOLVER,
+            SEARCHSTRING_EN_GAMES_SUDOKUSOLVER,
+            SEARCHSTRING_FR_GAMES_SUDOKUSOLVER
+          ]),
       GCWTool(
         tool: SymbolTableSelection(),
         buttonList: [
@@ -1217,26 +1232,32 @@ class Registry {
         missingHelpLocales: [],
         searchStrings: [],
       ),
-      GCWTool(tool: TapCode(), i18nPrefix: 'tapcode', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_TAPCODE,
-        SEARCHSTRING_DE_TAPCODE,
-        SEARCHSTRING_EN_TAPCODE,
-        SEARCHSTRING_FR_TAPCODE
-      ]),
-      GCWTool(tool: Tapir(), i18nPrefix: 'tapir', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_TAPIR,
-        SEARCHSTRING_DE_TAPIR,
-        SEARCHSTRING_EN_TAPIR,
-        SEARCHSTRING_FR_TAPIR
-      ]),
+      GCWTool(
+          tool: TapCode(),
+          i18nPrefix: 'tapcode',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_TAPCODE,
+            SEARCHSTRING_DE_TAPCODE,
+            SEARCHSTRING_EN_TAPCODE,
+            SEARCHSTRING_FR_TAPCODE
+          ]),
+      GCWTool(
+          tool: Tapir(),
+          i18nPrefix: 'tapir',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_TAPIR,
+            SEARCHSTRING_DE_TAPIR,
+            SEARCHSTRING_EN_TAPIR,
+            SEARCHSTRING_FR_TAPIR
+          ]),
       GCWTool(
           tool: Trifid(),
           i18nPrefix: 'trifid',
-          missingHelpLocales: ['fr'],
+          missingHelpLocales: [],
           category: ToolCategory.CRYPTOGRAPHY,
           searchStrings: [
             SEARCHSTRING_COMMON_TRIFID,
@@ -1248,9 +1269,7 @@ class Registry {
           tool: TomTomSelection(),
           i18nPrefix: 'tomtom_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_TOMTOM,
             SEARCHSTRING_DE_TOMTOM,
@@ -1261,9 +1280,7 @@ class Registry {
           tool: UnitConverter(),
           i18nPrefix: 'unitconverter',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_UNITCONVERTER,
             SEARCHSTRING_DE_UNITCONVERTER,
@@ -1274,9 +1291,7 @@ class Registry {
           tool: VanitySelection(),
           i18nPrefix: 'vanity_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_VANITY,
             SEARCHSTRING_DE_VANITY,
@@ -1287,32 +1302,31 @@ class Registry {
           tool: VigenereSelection(),
           i18nPrefix: 'vigenere_selection',
           category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_VIGENERE,
             SEARCHSTRING_DE_VIGENERE,
             SEARCHSTRING_EN_VIGENERE,
             SEARCHSTRING_FR_VIGENERE
           ]),
-      GCWTool(tool: Z22(), i18nPrefix: 'z22', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CCITT2,
-        SEARCHSTRING_DE_CCITT2,
-        SEARCHSTRING_EN_CCITT2,
-        SEARCHSTRING_FR_CCITT2,
-        SEARCHSTRING_COMMON_Z22,
-        SEARCHSTRING_DE_Z22,
-        SEARCHSTRING_EN_Z22,
-        SEARCHSTRING_FR_Z22
-      ]),
+      GCWTool(
+          tool: Z22(),
+          i18nPrefix: 'z22',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CCITT2,
+            SEARCHSTRING_DE_CCITT2,
+            SEARCHSTRING_EN_CCITT2,
+            SEARCHSTRING_FR_CCITT2,
+            SEARCHSTRING_COMMON_Z22,
+            SEARCHSTRING_DE_Z22,
+            SEARCHSTRING_EN_Z22,
+            SEARCHSTRING_FR_Z22
+          ]),
 
       //ApparentTemperatureSelection  ********************************************************************************************
-      GCWTool(tool: HeatIndex(), i18nPrefix: 'heatindex', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: HeatIndex(), i18nPrefix: 'heatindex', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_APPARENTTEMPERATURE,
         SEARCHSTRING_DE_APPARENTTEMPERATURE,
         SEARCHSTRING_EN_APPARENTTEMPERATURE,
@@ -1322,9 +1336,7 @@ class Registry {
         SEARCHSTRING_EN_APPARENTTEMPERATURE_HEATINDEX,
         SEARCHSTRING_FR_APPARENTTEMPERATURE_HEATINDEX
       ]),
-      GCWTool(tool: Humidex(), i18nPrefix: 'humidex', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Humidex(), i18nPrefix: 'humidex', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_APPARENTTEMPERATURE,
         SEARCHSTRING_DE_APPARENTTEMPERATURE,
         SEARCHSTRING_EN_APPARENTTEMPERATURE,
@@ -1334,9 +1346,7 @@ class Registry {
         SEARCHSTRING_EN_APPARENTTEMPERATURE_HUMIDEX,
         SEARCHSTRING_FR_APPARENTTEMPERATURE_HUMIDEX
       ]),
-      GCWTool(tool: SummerSimmerIndex(), i18nPrefix: 'summersimmerindex', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: SummerSimmerIndex(), i18nPrefix: 'summersimmerindex', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_APPARENTTEMPERATURE,
         SEARCHSTRING_DE_APPARENTTEMPERATURE,
         SEARCHSTRING_EN_APPARENTTEMPERATURE,
@@ -1346,9 +1356,7 @@ class Registry {
         SEARCHSTRING_EN_APPARENTTEMPERATURE_SUMMERSIMMERINDEX,
         SEARCHSTRING_FR_APPARENTTEMPERATURE_SUMMERSIMMERINDEX
       ]),
-      GCWTool(tool: Windchill(), i18nPrefix: 'windchill', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Windchill(), i18nPrefix: 'windchill', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_APPARENTTEMPERATURE,
         SEARCHSTRING_DE_APPARENTTEMPERATURE,
         SEARCHSTRING_EN_APPARENTTEMPERATURE,
@@ -1360,9 +1368,7 @@ class Registry {
       ]),
 
       //AstronomySelection  ********************************************************************************************
-      GCWTool(tool: SunRiseSet(), i18nPrefix: 'astronomy_sunriseset', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: SunRiseSet(), i18nPrefix: 'astronomy_sunriseset', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_ASTRONOMY,
         SEARCHSTRING_DE_ASTRONOMY,
         SEARCHSTRING_EN_ASTRONOMY,
@@ -1380,9 +1386,7 @@ class Registry {
         SEARCHSTRING_EN_ASTRONOMY_SUNRISESET,
         SEARCHSTRING_FR_ASTRONOMY_SUNRISESET
       ]),
-      GCWTool(tool: SunPosition(), i18nPrefix: 'astronomy_sunposition', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: SunPosition(), i18nPrefix: 'astronomy_sunposition', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_ASTRONOMY,
         SEARCHSTRING_DE_ASTRONOMY,
         SEARCHSTRING_EN_ASTRONOMY,
@@ -1396,9 +1400,7 @@ class Registry {
         SEARCHSTRING_EN_ASTRONOMY_SUN,
         SEARCHSTRING_FR_ASTRONOMY_SUN
       ]),
-      GCWTool(tool: MoonRiseSet(), i18nPrefix: 'astronomy_moonriseset', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: MoonRiseSet(), i18nPrefix: 'astronomy_moonriseset', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_ASTRONOMY,
         SEARCHSTRING_DE_ASTRONOMY,
         SEARCHSTRING_EN_ASTRONOMY,
@@ -1412,9 +1414,7 @@ class Registry {
         SEARCHSTRING_EN_ASTRONOMY_MOON,
         SEARCHSTRING_FR_ASTRONOMY_MOON
       ]),
-      GCWTool(tool: MoonPosition(), i18nPrefix: 'astronomy_moonposition', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: MoonPosition(), i18nPrefix: 'astronomy_moonposition', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_ASTRONOMY,
         SEARCHSTRING_DE_ASTRONOMY,
         SEARCHSTRING_EN_ASTRONOMY,
@@ -1432,17 +1432,17 @@ class Registry {
         SEARCHSTRING_EN_ASTRONOMY_MOONPOSITION,
         SEARCHSTRING_FR_ASTRONOMY_MOONPOSITION
       ]),
-      GCWTool(tool: EasterSelection(), i18nPrefix: 'astronomy_easter_selection', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_EASTER_DATE,
-        SEARCHSTRING_DE_EASTER_DATE,
-        SEARCHSTRING_EN_EASTER_DATE,
-        SEARCHSTRING_FR_EASTER_DATE
-      ]),
-      GCWTool(tool: Seasons(), i18nPrefix: 'astronomy_seasons', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(
+          tool: EasterSelection(),
+          i18nPrefix: 'astronomy_easter_selection',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_EASTER_DATE,
+            SEARCHSTRING_DE_EASTER_DATE,
+            SEARCHSTRING_EN_EASTER_DATE,
+            SEARCHSTRING_FR_EASTER_DATE
+          ]),
+      GCWTool(tool: Seasons(), i18nPrefix: 'astronomy_seasons', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_ASTRONOMY,
         SEARCHSTRING_DE_ASTRONOMY,
         SEARCHSTRING_EN_ASTRONOMY,
@@ -1454,9 +1454,7 @@ class Registry {
       ]),
 
       //BaseSelection **************************************************************************************************
-      GCWTool(tool: Base16(), i18nPrefix: 'base_base16', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Base16(), i18nPrefix: 'base_base16', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BASE,
         SEARCHSTRING_DE_BASE,
         SEARCHSTRING_EN_BASE,
@@ -1466,9 +1464,7 @@ class Registry {
         SEARCHSTRING_EN_BASE16,
         SEARCHSTRING_FR_BASE16
       ]),
-      GCWTool(tool: Base32(), i18nPrefix: 'base_base32', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Base32(), i18nPrefix: 'base_base32', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BASE,
         SEARCHSTRING_DE_BASE,
         SEARCHSTRING_EN_BASE,
@@ -1478,9 +1474,7 @@ class Registry {
         SEARCHSTRING_EN_BASE32,
         SEARCHSTRING_FR_BASE32
       ]),
-      GCWTool(tool: Base64(), i18nPrefix: 'base_base64', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Base64(), i18nPrefix: 'base_base64', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BASE,
         SEARCHSTRING_DE_BASE,
         SEARCHSTRING_EN_BASE,
@@ -1490,9 +1484,7 @@ class Registry {
         SEARCHSTRING_EN_BASE64,
         SEARCHSTRING_FR_BASE64
       ]),
-      GCWTool(tool: Base85(), i18nPrefix: 'base_base85', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Base85(), i18nPrefix: 'base_base85', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BASE,
         SEARCHSTRING_DE_BASE,
         SEARCHSTRING_EN_BASE,
@@ -1504,9 +1496,7 @@ class Registry {
       ]),
 
       //BCD selection **************************************************************************************************
-      GCWTool(tool: BCDOriginal(), i18nPrefix: 'bcd_original', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCDOriginal(), i18nPrefix: 'bcd_original', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1520,9 +1510,7 @@ class Registry {
         SEARCHSTRING_EN_BCDORIGINAL,
         SEARCHSTRING_FR_BCDORIGINAL
       ]),
-      GCWTool(tool: BCDAiken(), i18nPrefix: 'bcd_aiken', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCDAiken(), i18nPrefix: 'bcd_aiken', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1536,9 +1524,7 @@ class Registry {
         SEARCHSTRING_EN_BCDAIKEN,
         SEARCHSTRING_FR_BCDAIKEN
       ]),
-      GCWTool(tool: BCDGlixon(), i18nPrefix: 'bcd_glixon', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCDGlixon(), i18nPrefix: 'bcd_glixon', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1552,9 +1538,7 @@ class Registry {
         SEARCHSTRING_EN_BCDGLIXON,
         SEARCHSTRING_FR_BCDGLIXON
       ]),
-      GCWTool(tool: BCDGray(), i18nPrefix: 'bcd_gray', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCDGray(), i18nPrefix: 'bcd_gray', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1568,9 +1552,7 @@ class Registry {
         SEARCHSTRING_EN_BCDGRAY,
         SEARCHSTRING_FR_BCDGRAY
       ]),
-      GCWTool(tool: BCDLibawCraig(), i18nPrefix: 'bcd_libawcraig', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCDLibawCraig(), i18nPrefix: 'bcd_libawcraig', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1584,9 +1566,7 @@ class Registry {
         SEARCHSTRING_EN_BCDLIBAWCRAIG,
         SEARCHSTRING_FR_BCDLIBAWCRAIG
       ]),
-      GCWTool(tool: BCDOBrien(), i18nPrefix: 'bcd_obrien', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCDOBrien(), i18nPrefix: 'bcd_obrien', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1600,9 +1580,7 @@ class Registry {
         SEARCHSTRING_EN_BCDOBRIEN,
         SEARCHSTRING_FR_BCDOBRIEN
       ]),
-      GCWTool(tool: BCDPetherick(), i18nPrefix: 'bcd_petherick', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCDPetherick(), i18nPrefix: 'bcd_petherick', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1616,9 +1594,7 @@ class Registry {
         SEARCHSTRING_EN_BCDPETHERICK,
         SEARCHSTRING_FR_BCDPETHERICK
       ]),
-      GCWTool(tool: BCDStibitz(), i18nPrefix: 'bcd_stibitz', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCDStibitz(), i18nPrefix: 'bcd_stibitz', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1632,9 +1608,7 @@ class Registry {
         SEARCHSTRING_EN_BCDSTIBITZ,
         SEARCHSTRING_FR_BCDSTIBITZ
       ]),
-      GCWTool(tool: BCDTompkins(), i18nPrefix: 'bcd_tompkins', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCDTompkins(), i18nPrefix: 'bcd_tompkins', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1648,9 +1622,7 @@ class Registry {
         SEARCHSTRING_EN_BCDTOMPKINS,
         SEARCHSTRING_FR_BCDTOMPKINS
       ]),
-      GCWTool(tool: BCDHamming(), i18nPrefix: 'bcd_hamming', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCDHamming(), i18nPrefix: 'bcd_hamming', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1664,9 +1636,7 @@ class Registry {
         SEARCHSTRING_EN_BCDHAMMING,
         SEARCHSTRING_FR_BCDHAMMING
       ]),
-      GCWTool(tool: BCDBiquinary(), i18nPrefix: 'bcd_biquinary', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCDBiquinary(), i18nPrefix: 'bcd_biquinary', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1684,9 +1654,7 @@ class Registry {
         SEARCHSTRING_EN_BCDBIQUINARY,
         SEARCHSTRING_FR_BCDBIQUINARY
       ]),
-      GCWTool(tool: BCD2of5Planet(), i18nPrefix: 'bcd_2of5planet', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCD2of5Planet(), i18nPrefix: 'bcd_2of5planet', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1704,9 +1672,7 @@ class Registry {
         SEARCHSTRING_EN_BCD2OF5PLANET,
         SEARCHSTRING_FR_BCD2OF5PLANET
       ]),
-      GCWTool(tool: BCD2of5Postnet(), i18nPrefix: 'bcd_2of5postnet', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCD2of5Postnet(), i18nPrefix: 'bcd_2of5postnet', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1724,9 +1690,7 @@ class Registry {
         SEARCHSTRING_EN_BCD2OF5POSTNET,
         SEARCHSTRING_FR_BCD2OF5POSTNET
       ]),
-      GCWTool(tool: BCD2of5(), i18nPrefix: 'bcd_2of5', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCD2of5(), i18nPrefix: 'bcd_2of5', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1740,9 +1704,7 @@ class Registry {
         SEARCHSTRING_EN_BCD2OF5,
         SEARCHSTRING_FR_BCD2OF5
       ]),
-      GCWTool(tool: BCD1of10(), i18nPrefix: 'bcd_1of10', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCD1of10(), i18nPrefix: 'bcd_1of10', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1756,9 +1718,7 @@ class Registry {
         SEARCHSTRING_EN_BCD1OF10,
         SEARCHSTRING_FR_BCD1OF10
       ]),
-      GCWTool(tool: BCDGrayExcess(), i18nPrefix: 'bcd_grayexcess', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: BCDGrayExcess(), i18nPrefix: 'bcd_grayexcess', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_BCD,
         SEARCHSTRING_DE_BCD,
         SEARCHSTRING_EN_BCD,
@@ -1777,7 +1737,7 @@ class Registry {
       GCWTool(
           tool: Beaufort(),
           i18nPrefix: 'beaufort',
-          missingHelpLocales: ['fr'],
+          missingHelpLocales: [],
           searchStrings: [SEARCHSTRING_COMMON_BEAUFORT]),
 
       //CCITT*Selection **********************************************************************************************
@@ -1790,13 +1750,11 @@ class Registry {
       GCWTool(
           tool: CistercianNumbers(),
           i18nPrefix: 'cistercian',
-          missingHelpLocales: ['fr'],
+          missingHelpLocales: [],
           searchStrings: [SEARCHSTRING_COMMON_CISTERCIAN]),
 
       //CombinatoricsSelection ***************************************************************************************
-      GCWTool(tool: Combination(), i18nPrefix: 'combinatorics_combination', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Combination(), i18nPrefix: 'combinatorics_combination', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_COMBINATORICS,
         SEARCHSTRING_DE_COMBINATORICS,
         SEARCHSTRING_EN_COMBINATORICS,
@@ -1806,9 +1764,7 @@ class Registry {
         SEARCHSTRING_EN_COMBINATORICS_COMBINATION,
         SEARCHSTRING_FR_COMBINATORICS_COMBINATION
       ]),
-      GCWTool(tool: Permutation(), i18nPrefix: 'combinatorics_permutation', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Permutation(), i18nPrefix: 'combinatorics_permutation', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_COMBINATORICS,
         SEARCHSTRING_DE_COMBINATORICS,
         SEARCHSTRING_EN_COMBINATORICS,
@@ -1818,22 +1774,24 @@ class Registry {
         SEARCHSTRING_EN_COMBINATORICS_PERMUTATION,
         SEARCHSTRING_FR_COMBINATORICS_PERMUTATION
       ]),
-      GCWTool(tool: CombinationPermutation(), i18nPrefix: 'combinatorics_combinationpermutation', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_COMBINATORICS,
-        SEARCHSTRING_DE_COMBINATORICS,
-        SEARCHSTRING_EN_COMBINATORICS,
-        SEARCHSTRING_FR_COMBINATORICS,
-        SEARCHSTRING_COMMON_COMBINATORICS_COMBINATION,
-        SEARCHSTRING_DE_COMBINATORICS_COMBINATION,
-        SEARCHSTRING_EN_COMBINATORICS_COMBINATION,
-        SEARCHSTRING_FR_COMBINATORICS_COMBINATION,
-        SEARCHSTRING_COMMON_COMBINATORICS_PERMUTATION,
-        SEARCHSTRING_DE_COMBINATORICS_PERMUTATION,
-        SEARCHSTRING_EN_COMBINATORICS_PERMUTATION,
-        SEARCHSTRING_FR_COMBINATORICS_PERMUTATION
-      ]),
+      GCWTool(
+          tool: CombinationPermutation(),
+          i18nPrefix: 'combinatorics_combinationpermutation',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_COMBINATORICS,
+            SEARCHSTRING_DE_COMBINATORICS,
+            SEARCHSTRING_EN_COMBINATORICS,
+            SEARCHSTRING_FR_COMBINATORICS,
+            SEARCHSTRING_COMMON_COMBINATORICS_COMBINATION,
+            SEARCHSTRING_DE_COMBINATORICS_COMBINATION,
+            SEARCHSTRING_EN_COMBINATORICS_COMBINATION,
+            SEARCHSTRING_FR_COMBINATORICS_COMBINATION,
+            SEARCHSTRING_COMMON_COMBINATORICS_PERMUTATION,
+            SEARCHSTRING_DE_COMBINATORICS_PERMUTATION,
+            SEARCHSTRING_EN_COMBINATORICS_PERMUTATION,
+            SEARCHSTRING_FR_COMBINATORICS_PERMUTATION
+          ]),
 
       //CoordsSelection **********************************************************************************************
       GCWTool(
@@ -1841,9 +1799,7 @@ class Registry {
           i18nPrefix: 'coords_waypointprojection',
           iconPath: 'assets/icons/coords/icon_waypoint_projection.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -1863,9 +1819,7 @@ class Registry {
           i18nPrefix: 'coords_distancebearing',
           iconPath: 'assets/icons/coords/icon_distance_and_bearing.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -1881,9 +1835,7 @@ class Registry {
           i18nPrefix: 'coords_formatconverter',
           iconPath: 'assets/icons/coords/icon_format_converter.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -1900,9 +1852,7 @@ class Registry {
           i18nPrefix: 'coords_openmap',
           iconPath: 'assets/icons/coords/icon_free_map.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -1918,9 +1868,7 @@ class Registry {
           i18nPrefix: 'coords_variablecoordinate',
           iconPath: 'assets/icons/coords/icon_variable_coordinate.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -1951,9 +1899,7 @@ class Registry {
           i18nPrefix: 'coords_averaging',
           iconPath: 'assets/icons/coords/icon_coordinate_measurement.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -1969,9 +1915,7 @@ class Registry {
           i18nPrefix: 'coords_centertwopoints',
           iconPath: 'assets/icons/coords/icon_center_two_points.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -1987,9 +1931,7 @@ class Registry {
           i18nPrefix: 'coords_centerthreepoints',
           iconPath: 'assets/icons/coords/icon_center_three_points.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -2005,9 +1947,7 @@ class Registry {
           i18nPrefix: 'coords_segmentline',
           iconPath: 'assets/icons/coords/icon_segment_line.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -2023,9 +1963,7 @@ class Registry {
           i18nPrefix: 'coords_segmentbearings',
           iconPath: 'assets/icons/coords/icon_segment_bearings.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -2041,9 +1979,7 @@ class Registry {
           i18nPrefix: 'coords_crossbearing',
           iconPath: 'assets/icons/coords/icon_cross_bearing.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -2059,9 +1995,7 @@ class Registry {
           i18nPrefix: 'coords_intersectbearings',
           iconPath: 'assets/icons/coords/icon_intersect_bearings.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -2081,9 +2015,7 @@ class Registry {
           i18nPrefix: 'coords_intersectfourpoints',
           iconPath: 'assets/icons/coords/icon_intersect_four_points.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -2099,9 +2031,7 @@ class Registry {
           i18nPrefix: 'coords_intersectbearingcircle',
           iconPath: 'assets/icons/coords/icon_intersect_bearing_and_circle.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -2121,9 +2051,7 @@ class Registry {
           i18nPrefix: 'coords_intersecttwocircles',
           iconPath: 'assets/icons/coords/icon_intersect_two_circles.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -2139,9 +2067,7 @@ class Registry {
           i18nPrefix: 'coords_intersectthreecircles',
           iconPath: 'assets/icons/coords/icon_intersect_three_circles.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -2157,9 +2083,7 @@ class Registry {
           i18nPrefix: 'coords_antipodes',
           iconPath: 'assets/icons/coords/icon_antipodes.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -2175,9 +2099,7 @@ class Registry {
           i18nPrefix: 'coords_intersection',
           iconPath: 'assets/icons/coords/icon_intersection.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -2193,9 +2115,7 @@ class Registry {
           i18nPrefix: 'coords_resection',
           iconPath: 'assets/icons/coords/icon_resection.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -2211,9 +2131,7 @@ class Registry {
           i18nPrefix: 'coords_equilateraltriangle',
           iconPath: 'assets/icons/coords/icon_equilateral_triangle.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -2229,9 +2147,7 @@ class Registry {
           i18nPrefix: 'coords_ellipsoidtransform',
           iconPath: 'assets/icons/coords/icon_ellipsoid_transform.png',
           category: ToolCategory.COORDINATES,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_COORDINATES,
             SEARCHSTRING_DE_COORDINATES,
@@ -2244,17 +2160,13 @@ class Registry {
           ]),
 
       //CrossSumSelection *******************************************************************************************
-      GCWTool(tool: CrossSum(), i18nPrefix: 'crosssum_crosssum', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: CrossSum(), i18nPrefix: 'crosssum_crosssum', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_CROSSSUMS,
         SEARCHSTRING_DE_CROSSSUMS,
         SEARCHSTRING_EN_CROSSSUMS,
         SEARCHSTRING_FR_CROSSSUMS
       ]),
-      GCWTool(tool: CrossSumRange(), i18nPrefix: 'crosssum_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: CrossSumRange(), i18nPrefix: 'crosssum_range', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_CROSSSUMS,
         SEARCHSTRING_DE_CROSSSUMS,
         SEARCHSTRING_EN_CROSSSUMS,
@@ -2264,40 +2176,42 @@ class Registry {
         SEARCHSTRING_EN_CROSSUMRANGE,
         SEARCHSTRING_FR_CROSSUMRANGE
       ]),
-      GCWTool(tool: IteratedCrossSumRange(), i18nPrefix: 'crosssum_range_iterated', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CROSSSUMS,
-        SEARCHSTRING_DE_CROSSSUMS,
-        SEARCHSTRING_EN_CROSSSUMS,
-        SEARCHSTRING_FR_CROSSSUMS,
-        SEARCHSTRING_COMMON_ITERATEDCROSSSUMRANGE,
-        SEARCHSTRING_DE_ITERATEDCROSSSUMRANGE,
-        SEARCHSTRING_EN_ITERATEDCROSSSUMRANGE,
-        SEARCHSTRING_FR_ITERATEDCROSSSUMRANGE
-      ]),
-      GCWTool(tool: CrossSumRangeFrequency(), i18nPrefix: 'crosssum_range_frequency', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CROSSSUMS,
-        SEARCHSTRING_DE_CROSSSUMS,
-        SEARCHSTRING_EN_CROSSSUMS,
-        SEARCHSTRING_FR_CROSSSUMS,
-        SEARCHSTRING_COMMON_CROSSUMRANGE,
-        SEARCHSTRING_DE_CROSSUMRANGE,
-        SEARCHSTRING_EN_CROSSUMRANGE,
-        SEARCHSTRING_FR_CROSSUMRANGE,
-        SEARCHSTRING_COMMON_ITERATEDCROSSUMRANGEFREQUENCY,
-        SEARCHSTRING_DE_ITERATEDCROSSUMRANGEFREQUENCY,
-        SEARCHSTRING_EN_ITERATEDCROSSUMRANGEFREQUENCY,
-        SEARCHSTRING_FR_ITERATEDCROSSUMRANGEFREQUENCY
-      ]),
+      GCWTool(
+          tool: IteratedCrossSumRange(),
+          i18nPrefix: 'crosssum_range_iterated',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CROSSSUMS,
+            SEARCHSTRING_DE_CROSSSUMS,
+            SEARCHSTRING_EN_CROSSSUMS,
+            SEARCHSTRING_FR_CROSSSUMS,
+            SEARCHSTRING_COMMON_ITERATEDCROSSSUMRANGE,
+            SEARCHSTRING_DE_ITERATEDCROSSSUMRANGE,
+            SEARCHSTRING_EN_ITERATEDCROSSSUMRANGE,
+            SEARCHSTRING_FR_ITERATEDCROSSSUMRANGE
+          ]),
+      GCWTool(
+          tool: CrossSumRangeFrequency(),
+          i18nPrefix: 'crosssum_range_frequency',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CROSSSUMS,
+            SEARCHSTRING_DE_CROSSSUMS,
+            SEARCHSTRING_EN_CROSSSUMS,
+            SEARCHSTRING_FR_CROSSSUMS,
+            SEARCHSTRING_COMMON_CROSSUMRANGE,
+            SEARCHSTRING_DE_CROSSUMRANGE,
+            SEARCHSTRING_EN_CROSSUMRANGE,
+            SEARCHSTRING_FR_CROSSUMRANGE,
+            SEARCHSTRING_COMMON_ITERATEDCROSSUMRANGEFREQUENCY,
+            SEARCHSTRING_DE_ITERATEDCROSSUMRANGEFREQUENCY,
+            SEARCHSTRING_EN_ITERATEDCROSSUMRANGEFREQUENCY,
+            SEARCHSTRING_FR_ITERATEDCROSSUMRANGEFREQUENCY
+          ]),
       GCWTool(
           tool: IteratedCrossSumRangeFrequency(),
           i18nPrefix: 'crosssum_range_iterated_frequency',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CROSSSUMS,
             SEARCHSTRING_DE_CROSSSUMS,
@@ -2314,9 +2228,7 @@ class Registry {
           ]),
 
       //DatesSelection **********************************************************************************************
-      GCWTool(tool: DayCalculator(), i18nPrefix: 'dates_daycalculator', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: DayCalculator(), i18nPrefix: 'dates_daycalculator', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_DATES,
         SEARCHSTRING_DE_DATES,
         SEARCHSTRING_EN_DATES,
@@ -2326,9 +2238,7 @@ class Registry {
         SEARCHSTRING_EN_DATES_DAYCALCULATOR,
         SEARCHSTRING_FR_DATES_DAYCALCULATOR
       ]),
-      GCWTool(tool: TimeCalculator(), i18nPrefix: 'dates_timecalculator', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: TimeCalculator(), i18nPrefix: 'dates_timecalculator', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_DATES,
         SEARCHSTRING_DE_DATES,
         SEARCHSTRING_EN_DATES,
@@ -2338,9 +2248,7 @@ class Registry {
         SEARCHSTRING_EN_DATES_TIMECALCULATOR,
         SEARCHSTRING_FR_DATES_TIMECALCULATOR
       ]),
-      GCWTool(tool: Weekday(), i18nPrefix: 'dates_weekday', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Weekday(), i18nPrefix: 'dates_weekday', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_DATES,
         SEARCHSTRING_DE_DATES,
         SEARCHSTRING_EN_DATES,
@@ -2352,21 +2260,21 @@ class Registry {
       ]),
 
       //DNASelection ************************************************************************************************
-      GCWTool(tool: DNANucleicAcidSequence(), i18nPrefix: 'dna_nucleicacidsequence', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_DNA,
-        SEARCHSTRING_DE_DNA,
-        SEARCHSTRING_EN_DNA,
-        SEARCHSTRING_FR_DNA,
-        SEARCHSTRING_COMMON_DNANUCLEICACIDSEQUENCE,
-        SEARCHSTRING_DE_DNANUCLEICACIDSEQUENCE,
-        SEARCHSTRING_EN_DNANUCLEICACIDSEQUENCE,
-        SEARCHSTRING_FR_DNANUCLEICACIDSEQUENCE
-      ]),
-      GCWTool(tool: DNAAminoAcids(), i18nPrefix: 'dna_aminoacids', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(
+          tool: DNANucleicAcidSequence(),
+          i18nPrefix: 'dna_nucleicacidsequence',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_DNA,
+            SEARCHSTRING_DE_DNA,
+            SEARCHSTRING_EN_DNA,
+            SEARCHSTRING_FR_DNA,
+            SEARCHSTRING_COMMON_DNANUCLEICACIDSEQUENCE,
+            SEARCHSTRING_DE_DNANUCLEICACIDSEQUENCE,
+            SEARCHSTRING_EN_DNANUCLEICACIDSEQUENCE,
+            SEARCHSTRING_FR_DNANUCLEICACIDSEQUENCE
+          ]),
+      GCWTool(tool: DNAAminoAcids(), i18nPrefix: 'dna_aminoacids', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_DNA,
         SEARCHSTRING_DE_DNA,
         SEARCHSTRING_EN_DNA,
@@ -2376,9 +2284,7 @@ class Registry {
         SEARCHSTRING_EN_DNAAMINOACIDS,
         SEARCHSTRING_FR_DNAAMINOACIDS
       ]),
-      GCWTool(tool: DNAAminoAcidsTable(), i18nPrefix: 'dna_aminoacids_table', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: DNAAminoAcidsTable(), i18nPrefix: 'dna_aminoacids_table', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_DNA,
         SEARCHSTRING_DE_DNA,
         SEARCHSTRING_EN_DNA,
@@ -2437,9 +2343,7 @@ class Registry {
       ]),
 
       //E Selection *************************************************************************************************
-      GCWTool(tool: ENthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: ENthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_E,
         SEARCHSTRING_DE_E,
         SEARCHSTRING_EN_E,
@@ -2449,21 +2353,21 @@ class Registry {
         SEARCHSTRING_EN_ENTHDECIMAL,
         SEARCHSTRING_FR_ENTHDECIMAL
       ]),
-      GCWTool(tool: EDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_E,
-        SEARCHSTRING_DE_E,
-        SEARCHSTRING_EN_E,
-        SEARCHSTRING_FR_E,
-        SEARCHSTRING_COMMON_EDECIMALRANGE,
-        SEARCHSTRING_DE_EDECIMALRANGE,
-        SEARCHSTRING_EN_EDECIMALRANGE,
-        SEARCHSTRING_FR_EDECIMALRANGE
-      ]),
-      GCWTool(tool: ESearch(), i18nPrefix: 'irrationalnumbers_search', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(
+          tool: EDecimalRange(),
+          i18nPrefix: 'irrationalnumbers_decimalrange',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_E,
+            SEARCHSTRING_DE_E,
+            SEARCHSTRING_EN_E,
+            SEARCHSTRING_FR_E,
+            SEARCHSTRING_COMMON_EDECIMALRANGE,
+            SEARCHSTRING_DE_EDECIMALRANGE,
+            SEARCHSTRING_EN_EDECIMALRANGE,
+            SEARCHSTRING_FR_EDECIMALRANGE
+          ]),
+      GCWTool(tool: ESearch(), i18nPrefix: 'irrationalnumbers_search', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_E,
         SEARCHSTRING_DE_E,
         SEARCHSTRING_EN_E,
@@ -2475,17 +2379,13 @@ class Registry {
       ]),
 
       //Easter Selection ***************************************************************************************
-      GCWTool(tool: EasterDate(), i18nPrefix: 'astronomy_easter_easterdate', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: EasterDate(), i18nPrefix: 'astronomy_easter_easterdate', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_EASTER_DATE,
         SEARCHSTRING_DE_EASTER_DATE,
         SEARCHSTRING_EN_EASTER_DATE,
         SEARCHSTRING_FR_EASTER_DATE
       ]),
-      GCWTool(tool: EasterYears(), i18nPrefix: 'astronomy_easter_easteryears', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: EasterYears(), i18nPrefix: 'astronomy_easter_easteryears', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_EASTER_DATE,
         SEARCHSTRING_DE_EASTER_DATE,
         SEARCHSTRING_EN_EASTER_DATE,
@@ -2497,45 +2397,17 @@ class Registry {
       ]),
 
       //Esoteric Programming Language Selection ****************************************************************
-      GCWTool(
-          tool: Chef(),
-          buttonList: [
-            GCWToolActionButtonsEntry(true, 'chef_download_documentation_url', 'chef_download_documentation_title',
-                'chef_download_documentation_text', Icons.file_download),
-          ],
-          i18nPrefix: 'chef',
-          missingHelpLocales: ['fr'],
-          searchStrings: [
-            SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_COMMON_ESOTERIC_CHEF,
-            SEARCHSTRING_DE_ESOTERIC_CHEF,
-            SEARCHSTRING_EN_ESOTERIC_CHEF,
-            SEARCHSTRING_FR_ESOTERIC_CHEF
-          ]),
-      GCWTool(
-          tool: Beatnik(),
-          buttonList: [
-            GCWToolActionButtonsEntry(true, 'beatnik_download_documentation_url',
-                'beatnik_download_documentation_title', 'beatnik_download_documentation_text', Icons.file_download),
-          ],
-          i18nPrefix: 'beatnik',
-          missingHelpLocales: ['fr'],
-          searchStrings: [
-            SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_COMMON_ESOTERIC_BEATNIK,
-            SEARCHSTRING_DE_ESOTERIC_BEATNIK,
-            SEARCHSTRING_EN_ESOTERIC_BEATNIK,
-            SEARCHSTRING_FR_ESOTERIC_BEATNIK
-          ]),
-      GCWTool(tool: Brainfk(), i18nPrefix: 'brainfk', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Beatnik(), i18nPrefix: 'beatnik', missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_COMMON_ESOTERIC_BEATNIK,
+        SEARCHSTRING_DE_ESOTERIC_BEATNIK,
+        SEARCHSTRING_EN_ESOTERIC_BEATNIK,
+        SEARCHSTRING_FR_ESOTERIC_BEATNIK
+      ]),
+      GCWTool(tool: Brainfk(), i18nPrefix: 'brainfk', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
         SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
         SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
@@ -2545,9 +2417,17 @@ class Registry {
         SEARCHSTRING_EN_ESOTERIC_BRAINFK,
         SEARCHSTRING_FR_ESOTERIC_BRAINFK
       ]),
-      GCWTool(tool: Deadfish(), i18nPrefix: 'deadfish', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Chef(), i18nPrefix: 'chef', missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
+        SEARCHSTRING_COMMON_ESOTERIC_CHEF,
+        SEARCHSTRING_DE_ESOTERIC_CHEF,
+        SEARCHSTRING_EN_ESOTERIC_CHEF,
+        SEARCHSTRING_FR_ESOTERIC_CHEF
+      ]),
+      GCWTool(tool: Deadfish(), i18nPrefix: 'deadfish', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
         SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
         SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
@@ -2557,9 +2437,7 @@ class Registry {
         SEARCHSTRING_EN_ESOTERIC_DEADFISH,
         SEARCHSTRING_FR_ESOTERIC_DEADFISH
       ]),
-      GCWTool(tool: Malbolge(), i18nPrefix: 'malbolge', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Malbolge(), i18nPrefix: 'malbolge', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
         SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
         SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
@@ -2569,9 +2447,7 @@ class Registry {
         SEARCHSTRING_EN_ESOTERIC_MALBOLGE,
         SEARCHSTRING_FR_ESOTERIC_MALBOLGE
       ]),
-      GCWTool(tool: Ook(), i18nPrefix: 'ook', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Ook(), i18nPrefix: 'ook', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
         SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
         SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
@@ -2585,9 +2461,7 @@ class Registry {
         SEARCHSTRING_EN_ESOTERIC_OOK,
         SEARCHSTRING_FR_ESOTERIC_OOK
       ]),
-      GCWTool(tool: WhitespaceLanguage(), i18nPrefix: 'whitespace_language', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: WhitespaceLanguage(), i18nPrefix: 'whitespace_language', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
         SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
         SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
@@ -2603,9 +2477,7 @@ class Registry {
           tool: HashBreaker(),
           i18nPrefix: 'hashes_hashbreaker',
           category: ToolCategory.GENERAL_CODEBREAKERS,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CODEBREAKER,
             SEARCHSTRING_DE_CODEBREAKER,
@@ -3128,7 +3000,7 @@ class Registry {
       // IceCodeSelection *********************************************************************************************
       GCWTool(
           tool: IceCodes(),
-          missingHelpLocales: ['fr'],
+          missingHelpLocales: [],
           i18nPrefix: 'icecodes',
           searchStrings: [
             SEARCHSTRING_COMMON_ICECODES,
@@ -3138,9 +3010,7 @@ class Registry {
           ]),
 
       //Language Games Selection *******************************************************************************
-      GCWTool(tool: ChickenLanguage(), i18nPrefix: 'chickenlanguage', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: ChickenLanguage(), i18nPrefix: 'chickenlanguage', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_LANGUAGEGAMES,
         SEARCHSTRING_DE_LANGUAGEGAMES,
         SEARCHSTRING_EN_LANGUAGEGAMES,
@@ -3150,9 +3020,7 @@ class Registry {
         SEARCHSTRING_EN_LANGUAGEGAMES_CHICKENLANGUAGE,
         SEARCHSTRING_FR_LANGUAGEGAMES_CHICKENLANGUAGE
       ]),
-      GCWTool(tool: DuckSpeak(), i18nPrefix: 'duckspeak', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: DuckSpeak(), i18nPrefix: 'duckspeak', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_LANGUAGEGAMES,
         SEARCHSTRING_DE_LANGUAGEGAMES,
         SEARCHSTRING_EN_LANGUAGEGAMES,
@@ -3162,9 +3030,7 @@ class Registry {
         SEARCHSTRING_EN_DUCKSPEAK,
         SEARCHSTRING_FR_DUCKSPEAK
       ]),
-      GCWTool(tool: PigLatin(), i18nPrefix: 'piglatin', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: PigLatin(), i18nPrefix: 'piglatin', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_LANGUAGEGAMES,
         SEARCHSTRING_DE_LANGUAGEGAMES,
         SEARCHSTRING_EN_LANGUAGEGAMES,
@@ -3174,9 +3040,7 @@ class Registry {
         SEARCHSTRING_EN_LANGUAGEGAMES_PIGLATIN,
         SEARCHSTRING_FR_LANGUAGEGAMES_PIGLATIN
       ]),
-      GCWTool(tool: RobberLanguage(), i18nPrefix: 'robberlanguage', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: RobberLanguage(), i18nPrefix: 'robberlanguage', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_LANGUAGEGAMES,
         SEARCHSTRING_DE_LANGUAGEGAMES,
         SEARCHSTRING_EN_LANGUAGEGAMES,
@@ -3186,9 +3050,7 @@ class Registry {
         SEARCHSTRING_EN_LANGUAGEGAMES_ROBBERLANGUAGE,
         SEARCHSTRING_FR_LANGUAGEGAMES_ROBBERLANGUAGE
       ]),
-      GCWTool(tool: SpoonLanguage(), i18nPrefix: 'spoonlanguage', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: SpoonLanguage(), i18nPrefix: 'spoonlanguage', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_LANGUAGEGAMES,
         SEARCHSTRING_DE_LANGUAGEGAMES,
         SEARCHSTRING_EN_LANGUAGEGAMES,
@@ -3200,39 +3062,32 @@ class Registry {
       ]),
 
       //Main Menu **********************************************************************************************
-      GCWTool(tool: GeneralSettings(), i18nPrefix: 'settings_general', missingHelpLocales: ['fr'], searchStrings: []),
+      GCWTool(tool: GeneralSettings(), i18nPrefix: 'settings_general', missingHelpLocales: [], searchStrings: []),
       GCWTool(
-          tool: CoordinatesSettings(),
-          i18nPrefix: 'settings_coordinates',
-          missingHelpLocales: ['fr'],
-          searchStrings: []),
-      GCWTool(tool: Changelog(), i18nPrefix: 'mainmenu_changelog', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+          tool: CoordinatesSettings(), i18nPrefix: 'settings_coordinates', missingHelpLocales: [], searchStrings: []),
+      GCWTool(tool: Changelog(), i18nPrefix: 'mainmenu_changelog', suppressHelpButton: true, searchStrings: [
         SEARCHSTRING_COMMON_CHANGELOG,
         SEARCHSTRING_DE_CHANGELOG,
         SEARCHSTRING_EN_CHANGELOG,
         SEARCHSTRING_FR_CHANGELOG
       ]),
-      GCWTool(tool: About(), i18nPrefix: 'mainmenu_about', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: About(), i18nPrefix: 'mainmenu_about', suppressHelpButton: true, searchStrings: [
         SEARCHSTRING_COMMON_ABOUT,
         SEARCHSTRING_DE_ABOUT,
         SEARCHSTRING_EN_ABOUT,
         SEARCHSTRING_FR_ABOUT
       ]),
-      GCWTool(tool: CallForContribution(), i18nPrefix: 'mainmenu_callforcontribution', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_CALLFORCONTRIBUTION,
-        SEARCHSTRING_DE_CALLFORCONTRIBUTION,
-        SEARCHSTRING_EN_CALLFORCONTRIBUTION,
-        SEARCHSTRING_FR_CALLFORCONTRIBUTION
-      ]),
-      GCWTool(tool: Licenses(), i18nPrefix: 'licenses', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(
+          tool: CallForContribution(),
+          i18nPrefix: 'mainmenu_callforcontribution',
+          suppressHelpButton: true,
+          searchStrings: [
+            SEARCHSTRING_COMMON_CALLFORCONTRIBUTION,
+            SEARCHSTRING_DE_CALLFORCONTRIBUTION,
+            SEARCHSTRING_EN_CALLFORCONTRIBUTION,
+            SEARCHSTRING_FR_CALLFORCONTRIBUTION
+          ]),
+      GCWTool(tool: Licenses(), i18nPrefix: 'licenses', suppressHelpButton: true, searchStrings: [
         SEARCHSTRING_COMMON_LICENSES,
         SEARCHSTRING_DE_LICENSES,
         SEARCHSTRING_EN_LICENSES,
@@ -3240,9 +3095,7 @@ class Registry {
       ]),
 
       //MayaNumbers Selection **************************************************************************************
-      GCWTool(tool: MayaNumbers(), i18nPrefix: 'mayanumbers', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: MayaNumbers(), i18nPrefix: 'mayanumbers', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_MAYANUMBERS,
         SEARCHSTRING_DE_MAYANUMBERS,
         SEARCHSTRING_EN_MAYANUMBERS,
@@ -3250,41 +3103,43 @@ class Registry {
       ]),
 
       //Phi Selection **********************************************************************************************
-      GCWTool(tool: PhiNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS,
-        SEARCHSTRING_COMMON_PHI,
-        SEARCHSTRING_DE_PHI,
-        SEARCHSTRING_EN_PHI,
-        SEARCHSTRING_FR_PHI,
-        SEARCHSTRING_COMMON_PHIDECIMALRANGE,
-        SEARCHSTRING_DE_PHIDECIMALRANGE,
-        SEARCHSTRING_EN_PHIDECIMALRANGE,
-        SEARCHSTRING_FR_PHIDECIMALRANGE
-      ]),
-      GCWTool(tool: PhiDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS,
-        SEARCHSTRING_COMMON_PHI,
-        SEARCHSTRING_DE_PHI,
-        SEARCHSTRING_EN_PHI,
-        SEARCHSTRING_FR_PHI,
-        SEARCHSTRING_COMMON_PHIDECIMALRANGE,
-        SEARCHSTRING_DE_PHIDECIMALRANGE,
-        SEARCHSTRING_EN_PHIDECIMALRANGE,
-        SEARCHSTRING_FR_PHIDECIMALRANGE
-      ]),
-      GCWTool(tool: PhiSearch(), i18nPrefix: 'irrationalnumbers_search', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(
+          tool: PhiNthDecimal(),
+          i18nPrefix: 'irrationalnumbers_nthdecimal',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
+            SEARCHSTRING_DE_IRRATIONALNUMBERS,
+            SEARCHSTRING_EN_IRRATIONALNUMBERS,
+            SEARCHSTRING_FR_IRRATIONALNUMBERS,
+            SEARCHSTRING_COMMON_PHI,
+            SEARCHSTRING_DE_PHI,
+            SEARCHSTRING_EN_PHI,
+            SEARCHSTRING_FR_PHI,
+            SEARCHSTRING_COMMON_PHIDECIMALRANGE,
+            SEARCHSTRING_DE_PHIDECIMALRANGE,
+            SEARCHSTRING_EN_PHIDECIMALRANGE,
+            SEARCHSTRING_FR_PHIDECIMALRANGE
+          ]),
+      GCWTool(
+          tool: PhiDecimalRange(),
+          i18nPrefix: 'irrationalnumbers_decimalrange',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
+            SEARCHSTRING_DE_IRRATIONALNUMBERS,
+            SEARCHSTRING_EN_IRRATIONALNUMBERS,
+            SEARCHSTRING_FR_IRRATIONALNUMBERS,
+            SEARCHSTRING_COMMON_PHI,
+            SEARCHSTRING_DE_PHI,
+            SEARCHSTRING_EN_PHI,
+            SEARCHSTRING_FR_PHI,
+            SEARCHSTRING_COMMON_PHIDECIMALRANGE,
+            SEARCHSTRING_DE_PHIDECIMALRANGE,
+            SEARCHSTRING_EN_PHIDECIMALRANGE,
+            SEARCHSTRING_FR_PHIDECIMALRANGE
+          ]),
+      GCWTool(tool: PhiSearch(), i18nPrefix: 'irrationalnumbers_search', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
         SEARCHSTRING_DE_IRRATIONALNUMBERS,
         SEARCHSTRING_EN_IRRATIONALNUMBERS,
@@ -3300,9 +3155,7 @@ class Registry {
       ]),
 
       //Pi Selection **********************************************************************************************
-      GCWTool(tool: PiNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: PiNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
         SEARCHSTRING_DE_IRRATIONALNUMBERS,
         SEARCHSTRING_EN_IRRATIONALNUMBERS,
@@ -3316,25 +3169,25 @@ class Registry {
         SEARCHSTRING_EN_PINTHDECIMAL,
         SEARCHSTRING_FR_PINTHDECIMAL
       ]),
-      GCWTool(tool: PiDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
-        SEARCHSTRING_DE_IRRATIONALNUMBERS,
-        SEARCHSTRING_EN_IRRATIONALNUMBERS,
-        SEARCHSTRING_FR_IRRATIONALNUMBERS,
-        SEARCHSTRING_COMMON_PI,
-        SEARCHSTRING_DE_PI,
-        SEARCHSTRING_EN_PI,
-        SEARCHSTRING_FR_PI,
-        SEARCHSTRING_COMMON_PIDECIMALRANGE,
-        SEARCHSTRING_DE_PIDECIMALRANGE,
-        SEARCHSTRING_EN_PIDECIMALRANGE,
-        SEARCHSTRING_FR_PIDECIMALRANGE
-      ]),
-      GCWTool(tool: PiSearch(), i18nPrefix: 'irrationalnumbers_search', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(
+          tool: PiDecimalRange(),
+          i18nPrefix: 'irrationalnumbers_decimalrange',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
+            SEARCHSTRING_DE_IRRATIONALNUMBERS,
+            SEARCHSTRING_EN_IRRATIONALNUMBERS,
+            SEARCHSTRING_FR_IRRATIONALNUMBERS,
+            SEARCHSTRING_COMMON_PI,
+            SEARCHSTRING_DE_PI,
+            SEARCHSTRING_EN_PI,
+            SEARCHSTRING_FR_PI,
+            SEARCHSTRING_COMMON_PIDECIMALRANGE,
+            SEARCHSTRING_DE_PIDECIMALRANGE,
+            SEARCHSTRING_EN_PIDECIMALRANGE,
+            SEARCHSTRING_FR_PIDECIMALRANGE
+          ]),
+      GCWTool(tool: PiSearch(), i18nPrefix: 'irrationalnumbers_search', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
         SEARCHSTRING_DE_IRRATIONALNUMBERS,
         SEARCHSTRING_EN_IRRATIONALNUMBERS,
@@ -3350,48 +3203,52 @@ class Registry {
       ]),
 
       //NumberSequenceSelection ****************************************************************************************
-      GCWTool(tool: NumberSequenceFactorialSelection(), i18nPrefix: 'numbersequence_factorial', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION
-      ]),
-      GCWTool(tool: NumberSequenceFibonacciSelection(), i18nPrefix: 'numbersequence_fibonacci', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION
-      ]),
-      GCWTool(tool: NumberSequenceMersenneSelection(), i18nPrefix: 'numbersequence_mersenne', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION
-      ]),
+      GCWTool(
+          tool: NumberSequenceFactorialSelection(),
+          i18nPrefix: 'numbersequence_factorial',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION
+          ]),
+      GCWTool(
+          tool: NumberSequenceFibonacciSelection(),
+          i18nPrefix: 'numbersequence_fibonacci',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION
+          ]),
+      GCWTool(
+          tool: NumberSequenceMersenneSelection(),
+          i18nPrefix: 'numbersequence_mersenne',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION
+          ]),
       GCWTool(
           tool: NumberSequenceMersennePrimesSelection(),
           i18nPrefix: 'numbersequence_mersenneprimes',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -3405,9 +3262,7 @@ class Registry {
       GCWTool(
           tool: NumberSequenceMersenneExponentsSelection(),
           i18nPrefix: 'numbersequence_mersenneexponents',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -3421,9 +3276,7 @@ class Registry {
       GCWTool(
           tool: NumberSequenceMersenneFermatSelection(),
           i18nPrefix: 'numbersequence_mersennefermat',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -3434,24 +3287,24 @@ class Registry {
             SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
             SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
           ]),
-      GCWTool(tool: NumberSequenceFermatSelection(), i18nPrefix: 'numbersequence_fermat', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
-      ]),
+      GCWTool(
+          tool: NumberSequenceFermatSelection(),
+          i18nPrefix: 'numbersequence_fermat',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
+          ]),
       GCWTool(
           tool: NumberSequencePerfectNumbersSelection(),
           i18nPrefix: 'numbersequence_perfectnumbers',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -3465,9 +3318,7 @@ class Registry {
       GCWTool(
           tool: NumberSequenceSuperPerfectNumbersSelection(),
           i18nPrefix: 'numbersequence_superperfectnumbers',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -3481,9 +3332,7 @@ class Registry {
       GCWTool(
           tool: NumberSequencePrimaryPseudoPerfectNumbersSelection(),
           i18nPrefix: 'numbersequence_primarypseudoperfectnumbers',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -3497,9 +3346,7 @@ class Registry {
       GCWTool(
           tool: NumberSequenceWeirdNumbersSelection(),
           i18nPrefix: 'numbersequence_weirdnumbers',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -3513,9 +3360,7 @@ class Registry {
       GCWTool(
           tool: NumberSequenceSublimeNumbersSelection(),
           i18nPrefix: 'numbersequence_sublimenumbers',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -3526,72 +3371,80 @@ class Registry {
             SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
             SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
           ]),
-      GCWTool(tool: NumberSequenceBellSelection(), i18nPrefix: 'numbersequence_bell', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePellSelection(), i18nPrefix: 'numbersequence_pell', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceLucasSelection(), i18nPrefix: 'numbersequence_lucas', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequencePellLucasSelection(), i18nPrefix: 'numbersequence_pelllucas', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalSelection(), i18nPrefix: 'numbersequence_jacobsthal', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-      ]),
+      GCWTool(
+          tool: NumberSequenceBellSelection(),
+          i18nPrefix: 'numbersequence_bell',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
+          ]),
+      GCWTool(
+          tool: NumberSequencePellSelection(),
+          i18nPrefix: 'numbersequence_pell',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
+          ]),
+      GCWTool(
+          tool: NumberSequenceLucasSelection(),
+          i18nPrefix: 'numbersequence_lucas',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
+          ]),
+      GCWTool(
+          tool: NumberSequencePellLucasSelection(),
+          i18nPrefix: 'numbersequence_pelllucas',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
+          ]),
+      GCWTool(
+          tool: NumberSequenceJacobsthalSelection(),
+          i18nPrefix: 'numbersequence_jacobsthal',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+          ]),
       GCWTool(
           tool: NumberSequenceJacobsthalLucasSelection(),
           i18nPrefix: 'numbersequence_jacobsthallucas',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -3605,9 +3458,7 @@ class Registry {
       GCWTool(
           tool: NumberSequenceJacobsthalOblongSelection(),
           i18nPrefix: 'numbersequence_jacobsthaloblong',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -3618,102 +3469,112 @@ class Registry {
             SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
             SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
           ]),
-      GCWTool(tool: NumberSequenceCatalanSelection(), i18nPrefix: 'numbersequence_catalan', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
-      ]),
-      GCWTool(tool: NumberSequenceRecamanSelection(), i18nPrefix: 'numbersequence_recaman', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
-      ]),
+      GCWTool(
+          tool: NumberSequenceCatalanSelection(),
+          i18nPrefix: 'numbersequence_catalan',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
+          ]),
+      GCWTool(
+          tool: NumberSequenceRecamanSelection(),
+          i18nPrefix: 'numbersequence_recaman',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
+          ]),
 
       //NumberSequenceSelection Factorial ****************************************************************************************
-      GCWTool(tool: NumberSequenceFactorialNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceFactorialRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequenceFactorialCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceFactorialDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceFactorialNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceFactorialRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequenceFactorialCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceFactorialDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FACTORIALSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceFactorialContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -3730,76 +3591,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Mersenne-Fermat ****************************************************************************************
-      GCWTool(tool: NumberSequenceMersenneFermatNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceMersenneFermatRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequenceMersenneFermatCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceMersenneFermatDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceMersenneFermatNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceMersenneFermatRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequenceMersenneFermatCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceMersenneFermatDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEFERMATSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceMersenneFermatContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -3816,76 +3683,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Fermat ****************************************************************************************
-      GCWTool(tool: NumberSequenceFermatNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceFermatRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequenceFermatCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceFermatDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceFermatNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceFermatRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequenceFermatCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceFermatDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FERMATSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceFermatContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -3902,76 +3775,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Lucas ****************************************************************************************
-      GCWTool(tool: NumberSequenceLucasNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceLucasRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequenceLucasCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceLucasDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceLucasNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceLucasRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequenceLucasCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceLucasDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_LUCASSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceLucasContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -3988,76 +3867,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Fibonacci ****************************************************************************************
-      GCWTool(tool: NumberSequenceFibonacciNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceFibonacciRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequenceFibonacciCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceFibonacciDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceFibonacciNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceFibonacciRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequenceFibonacciCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceFibonacciDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_FIBONACCISELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceFibonacciContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -4074,76 +3959,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Mersenne ****************************************************************************************
-      GCWTool(tool: NumberSequenceMersenneNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceMersenneRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequenceMersenneCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceMersenneDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceMersenneNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceMersenneRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequenceMersenneCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceMersenneDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNESELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceMersenneContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -4160,76 +4051,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Bell ****************************************************************************************
-      GCWTool(tool: NumberSequenceBellNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceBellRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequenceBellCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceBellDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceBellNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceBellRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequenceBellCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceBellDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_BELLSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceBellContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -4246,76 +4143,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Pell ****************************************************************************************
-      GCWTool(tool: NumberSequencePellNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequencePellRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequencePellCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequencePellDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequencePellNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequencePellRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequencePellCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequencePellDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_PELLSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequencePellContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -4332,76 +4235,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Pell-Lucas ****************************************************************************************
-      GCWTool(tool: NumberSequencePellLucasNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequencePellLucasRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequencePellLucasCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequencePellLucasDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequencePellLucasNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequencePellLucasRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequencePellLucasCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequencePellLucasDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_PELLLUCASSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequencePellLucasContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -4418,76 +4327,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Jacobsthal ****************************************************************************************
-      GCWTool(tool: NumberSequenceJacobsthalNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceJacobsthalNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceJacobsthalRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequenceJacobsthalCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceJacobsthalDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceJacobsthalContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -4504,44 +4419,46 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Jacobsthal-Lucas ****************************************************************************************
-      GCWTool(tool: NumberSequenceJacobsthalLucasNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalLucasRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
+      GCWTool(
+          tool: NumberSequenceJacobsthalLucasNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceJacobsthalLucasRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
       GCWTool(
           tool: NumberSequenceJacobsthalLucasCheckNumber(),
           i18nPrefix: 'numbersequence_check',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -4556,28 +4473,28 @@ class Registry {
             SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
             SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
           ]),
-      GCWTool(tool: NumberSequenceJacobsthalLucasDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceJacobsthalLucasDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALLUCASSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceJacobsthalLucasContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -4598,44 +4515,46 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Jacobsthal Oblong ****************************************************************************************
-      GCWTool(tool: NumberSequenceJacobsthalOblongNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceJacobsthalOblongRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
+      GCWTool(
+          tool: NumberSequenceJacobsthalOblongNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceJacobsthalOblongRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
       GCWTool(
           tool: NumberSequenceJacobsthalOblongCheckNumber(),
           i18nPrefix: 'numbersequence_check',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -4650,28 +4569,28 @@ class Registry {
             SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
             SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
           ]),
-      GCWTool(tool: NumberSequenceJacobsthalOblongDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceJacobsthalOblongDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_JACOBSTHALOBLONGSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceJacobsthalOblongContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -4688,76 +4607,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Catalan ****************************************************************************************
-      GCWTool(tool: NumberSequenceCatalanNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceCatalanRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequenceCatalanCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceCatalanDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceCatalanNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceCatalanRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequenceCatalanCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceCatalanDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CATALANSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceCatalanContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -4774,76 +4699,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Recaman ****************************************************************************************
-      GCWTool(tool: NumberSequenceRecamanNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceRecamanRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequenceRecamanCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceRecamanDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceRecamanNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceRecamanRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequenceRecamanCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceRecamanDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RECAMANSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceRecamanContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -4860,76 +4791,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Mersenne Primes ****************************************************************************************
-      GCWTool(tool: NumberSequenceMersennePrimesNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceMersennePrimesRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequenceMersennePrimesCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceMersennePrimesDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceMersennePrimesNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceMersennePrimesRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequenceMersennePrimesCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceMersennePrimesDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEPRIMESSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceMersennePrimesContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -4946,44 +4883,46 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Mersenne Exponents ****************************************************************************************
-      GCWTool(tool: NumberSequenceMersenneExponentsNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceMersenneExponentsRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
+      GCWTool(
+          tool: NumberSequenceMersenneExponentsNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceMersenneExponentsRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
       GCWTool(
           tool: NumberSequenceMersenneExponentsCheckNumber(),
           i18nPrefix: 'numbersequence_check',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -4998,28 +4937,28 @@ class Registry {
             SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
             SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
           ]),
-      GCWTool(tool: NumberSequenceMersenneExponentsDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceMersenneExponentsDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_MERSENNEEXPONENTSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceMersenneExponentsContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -5036,76 +4975,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Perfect numbers ****************************************************************************************
-      GCWTool(tool: NumberSequencePerfectNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequencePerfectNumbersRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequencePerfectNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequencePerfectNumbersDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequencePerfectNumbersNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequencePerfectNumbersRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequencePerfectNumbersCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequencePerfectNumbersDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_PERFECTNUMBERSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequencePerfectNumbersContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -5125,9 +5070,7 @@ class Registry {
       GCWTool(
           tool: NumberSequenceSuperPerfectNumbersNthNumber(),
           i18nPrefix: 'numbersequence_nth',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -5142,28 +5085,28 @@ class Registry {
             SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
             SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
           ]),
-      GCWTool(tool: NumberSequenceSuperPerfectNumbersRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
+      GCWTool(
+          tool: NumberSequenceSuperPerfectNumbersRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
       GCWTool(
           tool: NumberSequenceSuperPerfectNumbersCheckNumber(),
           i18nPrefix: 'numbersequence_check',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -5181,9 +5124,7 @@ class Registry {
       GCWTool(
           tool: NumberSequenceSuperPerfectNumbersDigits(),
           i18nPrefix: 'numbersequence_digits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -5201,9 +5142,7 @@ class Registry {
       GCWTool(
           tool: NumberSequenceSuperPerfectNumbersContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -5220,76 +5159,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Weird numbers ****************************************************************************************
-      GCWTool(tool: NumberSequenceWeirdNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceWeirdNumbersRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequenceWeirdNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceWeirdNumbersDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceWeirdNumbersNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceWeirdNumbersRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequenceWeirdNumbersCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceWeirdNumbersDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceWeirdNumbersContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -5306,76 +5251,82 @@ class Registry {
           ]),
 
       //NumberSequenceSelection Sublime numbers ****************************************************************************************
-      GCWTool(tool: NumberSequenceSublimeNumbersNthNumber(), i18nPrefix: 'numbersequence_nth', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceSublimeNumbersRange(), i18nPrefix: 'numbersequence_range', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
-      ]),
-      GCWTool(tool: NumberSequenceSublimeNumbersCheckNumber(), i18nPrefix: 'numbersequence_check', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
-      ]),
-      GCWTool(tool: NumberSequenceSublimeNumbersDigits(), i18nPrefix: 'numbersequence_digits', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE,
-        SEARCHSTRING_DE_NUMBERSEQUENCE,
-        SEARCHSTRING_EN_NUMBERSEQUENCE,
-        SEARCHSTRING_FR_NUMBERSEQUENCE,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
-        SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
-        SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
-      ]),
+      GCWTool(
+          tool: NumberSequenceSublimeNumbersNthNumber(),
+          i18nPrefix: 'numbersequence_nth',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_NTHNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_NTHNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceSublimeNumbersRange(),
+          i18nPrefix: 'numbersequence_range',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_RANGE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_RANGE
+          ]),
+      GCWTool(
+          tool: NumberSequenceSublimeNumbersCheckNumber(),
+          i18nPrefix: 'numbersequence_check',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_CHECKNUMBER,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_CHECKNUMBER
+          ]),
+      GCWTool(
+          tool: NumberSequenceSublimeNumbersDigits(),
+          i18nPrefix: 'numbersequence_digits',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE,
+            SEARCHSTRING_DE_NUMBERSEQUENCE,
+            SEARCHSTRING_EN_NUMBERSEQUENCE,
+            SEARCHSTRING_FR_NUMBERSEQUENCE,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION,
+            SEARCHSTRING_COMMON_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_DE_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_EN_NUMBERSEQUENCE_DIGITS,
+            SEARCHSTRING_FR_NUMBERSEQUENCE_DIGITS
+          ]),
       GCWTool(
           tool: NumberSequenceSublimeNumbersContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -5395,9 +5346,7 @@ class Registry {
       GCWTool(
           tool: NumberSequencePrimaryPseudoPerfectNumbersNthNumber(),
           i18nPrefix: 'numbersequence_nth',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -5415,9 +5364,7 @@ class Registry {
       GCWTool(
           tool: NumberSequencePrimaryPseudoPerfectNumbersRange(),
           i18nPrefix: 'numbersequence_range',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -5435,9 +5382,7 @@ class Registry {
       GCWTool(
           tool: NumberSequencePrimaryPseudoPerfectNumbersCheckNumber(),
           i18nPrefix: 'numbersequence_check',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -5455,9 +5400,7 @@ class Registry {
       GCWTool(
           tool: NumberSequencePrimaryPseudoPerfectNumbersDigits(),
           i18nPrefix: 'numbersequence_digits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -5475,9 +5418,7 @@ class Registry {
       GCWTool(
           tool: NumberSequencePrimaryPseudoPerfectNumbersContainsDigits(),
           i18nPrefix: 'numbersequence_containsdigits',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_NUMBERSEQUENCE,
             SEARCHSTRING_DE_NUMBERSEQUENCE,
@@ -5494,21 +5435,21 @@ class Registry {
           ]),
 
       //NumeralWordsSelection ****************************************************************************************
-      GCWTool(tool: NumeralWordsTextSearch(), i18nPrefix: 'numeralwords_textsearch', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_NUMERALWORDS,
-        SEARCHSTRING_DE_NUMERALWORDS,
-        SEARCHSTRING_EN_NUMERALWORDS,
-        SEARCHSTRING_FR_NUMERALWORDS,
-        SEARCHSTRING_COMMON_NUMERALWORDSTEXTSEARCH,
-        SEARCHSTRING_DE_NUMERALWORDSTEXTSEARCH,
-        SEARCHSTRING_EN_NUMERALWORDSTEXTSEARCH,
-        SEARCHSTRING_FR_NUMERALWORDSTEXTSEARCH
-      ]),
-      GCWTool(tool: NumeralWordsLists(), i18nPrefix: 'numeralwords_lists', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(
+          tool: NumeralWordsTextSearch(),
+          i18nPrefix: 'numeralwords_textsearch',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NUMERALWORDS,
+            SEARCHSTRING_DE_NUMERALWORDS,
+            SEARCHSTRING_EN_NUMERALWORDS,
+            SEARCHSTRING_FR_NUMERALWORDS,
+            SEARCHSTRING_COMMON_NUMERALWORDSTEXTSEARCH,
+            SEARCHSTRING_DE_NUMERALWORDSTEXTSEARCH,
+            SEARCHSTRING_EN_NUMERALWORDSTEXTSEARCH,
+            SEARCHSTRING_FR_NUMERALWORDSTEXTSEARCH
+          ]),
+      GCWTool(tool: NumeralWordsLists(), i18nPrefix: 'numeralwords_lists', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_NUMERALWORDS,
         SEARCHSTRING_DE_NUMERALWORDS,
         SEARCHSTRING_EN_NUMERALWORDS,
@@ -5520,29 +5461,27 @@ class Registry {
       ]),
 
       //PeriodicTableSelection ***************************************************************************************
-      GCWTool(tool: PeriodicTable(), i18nPrefix: 'periodictable', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: PeriodicTable(), i18nPrefix: 'periodictable', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_PERIODICTABLE,
         SEARCHSTRING_DE_PERIODICTABLE,
         SEARCHSTRING_EN_PERIODICTABLE,
         SEARCHSTRING_FR_PERIODICTABLE,
       ]),
-      GCWTool(tool: PeriodicTableDataView(), i18nPrefix: 'periodictable_dataview', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PERIODICTABLE,
-        SEARCHSTRING_DE_PERIODICTABLE,
-        SEARCHSTRING_EN_PERIODICTABLE,
-        SEARCHSTRING_FR_PERIODICTABLE,
-        SEARCHSTRING_COMMON_PERIODICTABLEDATAVIEW,
-        SEARCHSTRING_DE_PERIODICTABLEDATAVIEW,
-        SEARCHSTRING_EN_PERIODICTABLEDATAVIEW,
-        SEARCHSTRING_FR_PERIODICTABLEDATAVIEW
-      ]),
-      GCWTool(tool: AtomicNumbersToText(), i18nPrefix: 'atomicnumberstotext', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(
+          tool: PeriodicTableDataView(),
+          i18nPrefix: 'periodictable_dataview',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_PERIODICTABLE,
+            SEARCHSTRING_DE_PERIODICTABLE,
+            SEARCHSTRING_EN_PERIODICTABLE,
+            SEARCHSTRING_FR_PERIODICTABLE,
+            SEARCHSTRING_COMMON_PERIODICTABLEDATAVIEW,
+            SEARCHSTRING_DE_PERIODICTABLEDATAVIEW,
+            SEARCHSTRING_EN_PERIODICTABLEDATAVIEW,
+            SEARCHSTRING_FR_PERIODICTABLEDATAVIEW
+          ]),
+      GCWTool(tool: AtomicNumbersToText(), i18nPrefix: 'atomicnumberstotext', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_PERIODICTABLE,
         SEARCHSTRING_DE_PERIODICTABLE,
         SEARCHSTRING_EN_PERIODICTABLE,
@@ -5554,9 +5493,7 @@ class Registry {
       ]),
 
       //PrimesSelection **********************************************************************************************
-      GCWTool(tool: NthPrime(), i18nPrefix: 'primes_nthprime', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: NthPrime(), i18nPrefix: 'primes_nthprime', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_PRIMES,
         SEARCHSTRING_DE_PRIMES,
         SEARCHSTRING_EN_PRIMES,
@@ -5566,9 +5503,7 @@ class Registry {
         SEARCHSTRING_EN_PRIMES_NTHPRIME,
         SEARCHSTRING_FR_PRIMES_NTHPRIME
       ]),
-      GCWTool(tool: IsPrime(), i18nPrefix: 'primes_isprime', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: IsPrime(), i18nPrefix: 'primes_isprime', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_PRIMES,
         SEARCHSTRING_DE_PRIMES,
         SEARCHSTRING_EN_PRIMES,
@@ -5578,9 +5513,7 @@ class Registry {
         SEARCHSTRING_EN_PRIMES_ISPRIME,
         SEARCHSTRING_FR_PRIMES_ISPRIME
       ]),
-      GCWTool(tool: NearestPrime(), i18nPrefix: 'primes_nearestprime', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: NearestPrime(), i18nPrefix: 'primes_nearestprime', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_PRIMES,
         SEARCHSTRING_DE_PRIMES,
         SEARCHSTRING_EN_PRIMES,
@@ -5590,9 +5523,7 @@ class Registry {
         SEARCHSTRING_EN_PRIMES_NEARESTPRIME,
         SEARCHSTRING_FR_PRIMES_NEARESTPRIME
       ]),
-      GCWTool(tool: PrimeIndex(), i18nPrefix: 'primes_primeindex', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: PrimeIndex(), i18nPrefix: 'primes_primeindex', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_PRIMES,
         SEARCHSTRING_DE_PRIMES,
         SEARCHSTRING_EN_PRIMES,
@@ -5602,35 +5533,37 @@ class Registry {
         SEARCHSTRING_EN_PRIMES_PRIMEINDEX,
         SEARCHSTRING_FR_PRIMES_PRIMEINDEX
       ]),
-      GCWTool(tool: IntegerFactorization(), i18nPrefix: 'primes_integerfactorization', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_PRIMES,
-        SEARCHSTRING_DE_PRIMES,
-        SEARCHSTRING_EN_PRIMES,
-        SEARCHSTRING_FR_PRIMES,
-        SEARCHSTRING_COMMON_PRIMES_INTEGERFACTORIZATION,
-        SEARCHSTRING_DE_PRIMES_INTEGERFACTORIZATION,
-        SEARCHSTRING_EN_PRIMES_INTEGERFACTORIZATION,
-        SEARCHSTRING_FR_PRIMES_INTEGERFACTORIZATION
-      ]),
+      GCWTool(
+          tool: IntegerFactorization(),
+          i18nPrefix: 'primes_integerfactorization',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_PRIMES,
+            SEARCHSTRING_DE_PRIMES,
+            SEARCHSTRING_EN_PRIMES,
+            SEARCHSTRING_FR_PRIMES,
+            SEARCHSTRING_COMMON_PRIMES_INTEGERFACTORIZATION,
+            SEARCHSTRING_DE_PRIMES_INTEGERFACTORIZATION,
+            SEARCHSTRING_EN_PRIMES_INTEGERFACTORIZATION,
+            SEARCHSTRING_FR_PRIMES_INTEGERFACTORIZATION
+          ]),
 
       //ResistorSelection **********************************************************************************************
-      GCWTool(tool: ResistorColorCodeCalculator(), i18nPrefix: 'resistor_colorcodecalculator', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_RESISTOR,
-        SEARCHSTRING_DE_RESISTOR,
-        SEARCHSTRING_EN_RESISTOR,
-        SEARCHSTRING_FR_RESISTOR,
-        SEARCHSTRING_COMMON_RESISTOR_COLORCODE,
-        SEARCHSTRING_DE_RESISTOR_COLORCODE,
-        SEARCHSTRING_EN_RESISTOR_COLORCODE,
-        SEARCHSTRING_FR_RESISTOR_COLORCODE
-      ]),
-      GCWTool(tool: ResistorEIA96(), i18nPrefix: 'resistor_eia96', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(
+          tool: ResistorColorCodeCalculator(),
+          i18nPrefix: 'resistor_colorcodecalculator',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_RESISTOR,
+            SEARCHSTRING_DE_RESISTOR,
+            SEARCHSTRING_EN_RESISTOR,
+            SEARCHSTRING_FR_RESISTOR,
+            SEARCHSTRING_COMMON_RESISTOR_COLORCODE,
+            SEARCHSTRING_DE_RESISTOR_COLORCODE,
+            SEARCHSTRING_EN_RESISTOR_COLORCODE,
+            SEARCHSTRING_FR_RESISTOR_COLORCODE
+          ]),
+      GCWTool(tool: ResistorEIA96(), i18nPrefix: 'resistor_eia96', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_RESISTOR,
         SEARCHSTRING_DE_RESISTOR,
         SEARCHSTRING_EN_RESISTOR,
@@ -5642,17 +5575,13 @@ class Registry {
       ]),
 
       //RomanNumbersSelection **********************************************************************************************
-      GCWTool(tool: RomanNumbers(), i18nPrefix: 'romannumbers', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: RomanNumbers(), i18nPrefix: 'romannumbers', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_ROMAN_NUMBERS,
         SEARCHSTRING_DE_ROMAN_NUMBERS,
         SEARCHSTRING_EN_ROMAN_NUMBERS,
         SEARCHSTRING_FR_ROMAN_NUMBERS,
       ]),
-      GCWTool(tool: Chronogram(), i18nPrefix: 'chronogram', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Chronogram(), i18nPrefix: 'chronogram', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_ROMAN_NUMBERS,
         SEARCHSTRING_DE_ROMAN_NUMBERS,
         SEARCHSTRING_EN_ROMAN_NUMBERS,
@@ -5712,9 +5641,7 @@ class Registry {
       ]),
 
       // RSA *******************************************************************************************************
-      GCWTool(tool: RSA(), i18nPrefix: 'rsa_rsa', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: RSA(), i18nPrefix: 'rsa_rsa', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_RSA,
         SEARCHSTRING_DE_RSA,
         SEARCHSTRING_EN_RSA,
@@ -5724,9 +5651,7 @@ class Registry {
         SEARCHSTRING_EN_PRIMES,
         SEARCHSTRING_FR_PRIMES
       ]),
-      GCWTool(tool: RSAEChecker(), i18nPrefix: 'rsa_e.checker', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: RSAEChecker(), i18nPrefix: 'rsa_e.checker', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_RSA,
         SEARCHSTRING_DE_RSA,
         SEARCHSTRING_EN_RSA,
@@ -5740,9 +5665,7 @@ class Registry {
         SEARCHSTRING_EN_RSA_ECHECKER,
         SEARCHSTRING_FR_RSA_ECHECKER
       ]),
-      GCWTool(tool: RSADChecker(), i18nPrefix: 'rsa_d.checker', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: RSADChecker(), i18nPrefix: 'rsa_d.checker', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_RSA,
         SEARCHSTRING_DE_RSA,
         SEARCHSTRING_EN_RSA,
@@ -5756,9 +5679,7 @@ class Registry {
         SEARCHSTRING_EN_RSA_DCHECKER,
         SEARCHSTRING_FR_RSA_DCHECKER
       ]),
-      GCWTool(tool: RSADCalculator(), i18nPrefix: 'rsa_d.calculator', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: RSADCalculator(), i18nPrefix: 'rsa_d.calculator', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_RSA,
         SEARCHSTRING_DE_RSA,
         SEARCHSTRING_EN_RSA,
@@ -5772,9 +5693,7 @@ class Registry {
         SEARCHSTRING_EN_RSA_DCALCULATOR,
         SEARCHSTRING_FR_RSA_DCALCULATOR
       ]),
-      GCWTool(tool: RSANCalculator(), i18nPrefix: 'rsa_n.calculator', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: RSANCalculator(), i18nPrefix: 'rsa_n.calculator', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_RSA,
         SEARCHSTRING_DE_RSA,
         SEARCHSTRING_EN_RSA,
@@ -5788,9 +5707,7 @@ class Registry {
         SEARCHSTRING_EN_RSA_NCALCULATOR,
         SEARCHSTRING_FR_RSA_NCALCULATOR
       ]),
-      GCWTool(tool: RSAPhiCalculator(), i18nPrefix: 'rsa_phi.calculator', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: RSAPhiCalculator(), i18nPrefix: 'rsa_phi.calculator', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_RSA,
         SEARCHSTRING_DE_RSA,
         SEARCHSTRING_EN_RSA,
@@ -5806,9 +5723,7 @@ class Registry {
           tool: SevenSegments(),
           i18nPrefix: 'segmentdisplay_7segments',
           iconPath: 'assets/icons/science_and_technology/icon_7segment_display.png',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_SEGMENTS,
             SEARCHSTRING_DE_SEGMENTS,
@@ -5823,9 +5738,7 @@ class Registry {
           tool: FourteenSegments(),
           i18nPrefix: 'segmentdisplay_14segments',
           iconPath: 'assets/icons/science_and_technology/icon_14segment_display.png',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_SEGMENTS,
             SEARCHSTRING_DE_SEGMENTS,
@@ -5840,9 +5753,7 @@ class Registry {
           tool: SixteenSegments(),
           i18nPrefix: 'segmentdisplay_16segments',
           iconPath: 'assets/icons/science_and_technology/icon_16segment_display.png',
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_SEGMENTS,
             SEARCHSTRING_DE_SEGMENTS,
@@ -7132,9 +7043,7 @@ class Registry {
       ]),
 
       // TomTomSelection *********************************************************************************************
-      GCWTool(tool: TomTom(), i18nPrefix: 'tomtom', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: TomTom(), i18nPrefix: 'tomtom', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_TOMTOM,
         SEARCHSTRING_DE_TOMTOM,
         SEARCHSTRING_EN_TOMTOM,
@@ -7172,9 +7081,7 @@ class Registry {
           tool: VigenereBreaker(),
           i18nPrefix: 'vigenerebreaker',
           category: ToolCategory.GENERAL_CODEBREAKERS,
-          missingHelpLocales: [
-            'fr'
-          ],
+          missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_CODEBREAKER,
             SEARCHSTRING_DE_CODEBREAKER,
@@ -7193,9 +7100,7 @@ class Registry {
             SEARCHSTRING_EN_ROTATION,
             SEARCHSTRING_FR_ROTATION,
           ]),
-      GCWTool(tool: Vigenere(), i18nPrefix: 'vigenere', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Vigenere(), i18nPrefix: 'vigenere', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_VIGENERE,
         SEARCHSTRING_DE_VIGENERE,
         SEARCHSTRING_EN_VIGENERE,
@@ -7205,9 +7110,7 @@ class Registry {
         SEARCHSTRING_EN_ROTATION,
         SEARCHSTRING_FR_ROTATION,
       ]),
-      GCWTool(tool: Gronsfeld(), i18nPrefix: 'gronsfeld', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Gronsfeld(), i18nPrefix: 'gronsfeld', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_VIGENERE,
         SEARCHSTRING_DE_VIGENERE,
         SEARCHSTRING_EN_VIGENERE,
@@ -7221,9 +7124,7 @@ class Registry {
         SEARCHSTRING_EN_GRONSFELD,
         SEARCHSTRING_FR_GRONSFELD
       ]),
-      GCWTool(tool: Trithemius(), i18nPrefix: 'trithemius', missingHelpLocales: [
-        'fr'
-      ], searchStrings: [
+      GCWTool(tool: Trithemius(), i18nPrefix: 'trithemius', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_VIGENERE,
         SEARCHSTRING_DE_VIGENERE,
         SEARCHSTRING_EN_VIGENERE,

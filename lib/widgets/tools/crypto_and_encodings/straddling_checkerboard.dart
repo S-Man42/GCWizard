@@ -241,23 +241,23 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
 
     if (_currentMode == GCWSwitchPosition.left) {
       _currentOutput = encryptStraddlingCheckerboard(
-        _currentPlainText.toUpperCase().replaceAll(' ', '.'),
-        _currentKey.toUpperCase(),
-        _currentAlphabetWord.toUpperCase(),
+        _currentPlainText,
+        _currentKey,
+        _currentAlphabetWord,
         _currentColumnOrder,
         _currentDigitMode == GCWSwitchPosition.left,
         mode: _currentAlphabetMode,
-        alphabet: _currentAlphabet.toUpperCase(),
+        alphabet: _currentAlphabet,
       );
     } else {
       _currentOutput = decryptStraddlingCheckerboard(
-        _currentChiffreText.toUpperCase(),
-        _currentKey.toUpperCase(),
-        _currentAlphabetWord.toUpperCase(),
+        _currentChiffreText,
+        _currentKey,
+        _currentAlphabetWord,
         _currentColumnOrder,
         _currentDigitMode == GCWSwitchPosition.left,
         mode: _currentAlphabetMode,
-        alphabet: _currentAlphabet.toUpperCase(),
+        alphabet: _currentAlphabet,
       );
     }
 
