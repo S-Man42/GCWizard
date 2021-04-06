@@ -36,6 +36,12 @@ void deleteMultiDecoderTool(int toolId) {
   _saveData();
 }
 
+void clearMultiDecoderTools() {
+  multiDecoderTools.clear();
+
+  _saveData();
+}
+
 int moveMultiDecoderToolUp(int toolId) {
   var index = multiDecoderTools.indexWhere((tool) => tool.id == toolId);
   if (index == 0) return index;
