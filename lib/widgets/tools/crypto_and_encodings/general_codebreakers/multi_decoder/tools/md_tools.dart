@@ -121,9 +121,6 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
     case MDT_INTERNALNAMES_ROTATION:
       gcwTool = MultiDecoderToolRotation(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
-    case MDT_INTERNALNAMES_ROTATION:
-      gcwTool = MultiDecoderToolRotation(id: mdtTool.id, name: mdtTool.name, options: options);
-      break;
     case MDT_INTERNALNAMES_SEGMENTDISPLAY:
       gcwTool = MultiDecoderToolSegmentDisplay(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
@@ -143,6 +140,8 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ASCII), MDT_INTERNALNAMES_ASCII),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_NUMERALBASES), MDT_INTERNALNAMES_NUMERALBASES,
         options: [MultiDecoderToolOption(MDT_NUMERALBASES_OPTION_FROM, 2)]),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_NUMERALBASES), MDT_INTERNALNAMES_NUMERALBASES,
+        options: [MultiDecoderToolOption(MDT_NUMERALBASES_OPTION_FROM, 3)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_NUMERALBASES), MDT_INTERNALNAMES_NUMERALBASES,
         options: [MultiDecoderToolOption(MDT_NUMERALBASES_OPTION_FROM, 8)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_NUMERALBASES), MDT_INTERNALNAMES_NUMERALBASES,
@@ -188,6 +187,13 @@ initializeMultiToolDecoder(BuildContext context) {
         options: [MultiDecoderToolOption(MDT_GCCODE_OPTION_MODE, MDT_GCCODE_OPTION_MODE_IDTOGCCODE)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_GCCODE), MDT_INTERNALNAMES_GCCODE,
         options: [MultiDecoderToolOption(MDT_GCCODE_OPTION_MODE, MDT_GCCODE_OPTION_MODE_GCCODETOID)]),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_SEGMENTDISPLAY), MDT_INTERNALNAMES_SEGMENTDISPLAY,
+        options: [MultiDecoderToolOption(MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS, 7)]),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_SEGMENTDISPLAY), MDT_INTERNALNAMES_SEGMENTDISPLAY,
+        options: [MultiDecoderToolOption(MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS, 14)]),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_SEGMENTDISPLAY), MDT_INTERNALNAMES_SEGMENTDISPLAY,
+        options: [MultiDecoderToolOption(MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS, 16)]),
+    MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_KENNY), MDT_INTERNALNAMES_KENNY),
   ];
 
   for (int i = 25; i >= 1; i--) {

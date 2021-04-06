@@ -452,7 +452,7 @@ const SEARCHSTRING_EN_SYMBOL_TENGWAR_CLASSIC =
     'thelordoftherings elves elvish middleearth thirdera classices classic classical';
 const SEARCHSTRING_EN_SYMBOL_TENGWAR_GENERAL = 'thelordoftherings elves elvish middleearth thirdera generale';
 const SEARCHSTRING_EN_SYMBOL_TERZI = 'square dots points eyeless relief tactiles';
-const SEARCHSTRING_EN_SYMBOL_THEBAN = 'witches witchalphabet angels';
+const SEARCHSTRING_EN_SYMBOL_THEBAN = 'witches witchalphabet angels magical magic wizard magician witchers';
 const SEARCHSTRING_EN_SYMBOL_THREE_SQUARES = 'threesquares points dots';
 const SEARCHSTRING_EN_SYMBOL_TINES = 'crook language tines prong traveling people tramp';
 const SEARCHSTRING_EN_SYMBOL_TRAFFICSIGNS_GERMANY = 'trafficsigns germany roadsigns';
