@@ -52,21 +52,12 @@ class DivisorState extends State<Divisor> {
           },
         ),
         _currentCrosstotalMode == true
-        ? GCWDefaultOutput(child: _calculateOutput())
+        ? GCWDefaultOutput(child: buildDivisorList(_currentInputN).join(' '))
         : GCWMultipleOutput(children: buildDivisorList(_currentInputN)),
         _currentCrosstotalMode == true
         ? GCWCrosstotalOutput(text: _currentInputN.toString(), values: buildDivisorList(_currentInputN))
         : Container()
       ],
     );
-  }
-
-
-  _buildCrossTotals() {
-        return GCWCrosstotalOutput(text: _currentInputN.toString(), values: buildDivisorList(_currentInputN));
-  }
-
-  _calculateOutput() {
-        return buildDivisorList(_currentInputN).join(' ');
   }
 }
