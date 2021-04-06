@@ -458,7 +458,8 @@ const SEARCHSTRING_DE_SYMBOL_TENGWAR_CLASSIC =
     'derherrderringe elben elbisches mittelerde dritteszeitalter klassischer';
 const SEARCHSTRING_DE_SYMBOL_TENGWAR_GENERAL = 'derherrderringe elben elbisches mittelerde dritteszeitalter general';
 const SEARCHSTRING_DE_SYMBOL_TERZI = 'alphabet punkte blindenschrift quadrat taktil';
-const SEARCHSTRING_DE_SYMBOL_THEBAN = 'thebanisches hexenalphabet engelsschrift magisches magie hexer zauberer zauberin';
+const SEARCHSTRING_DE_SYMBOL_THEBAN =
+    'thebanisches hexenalphabet engelsschrift magisches magie hexer zauberer zauberin';
 const SEARCHSTRING_DE_SYMBOL_THREE_SQUARES = 'dreivierecke ';
 const SEARCHSTRING_DE_SYMBOL_TINES = 'gaunerzinken rotwelsch gaunersprache fahrendes volk';
 const SEARCHSTRING_DE_SYMBOL_TRAFFICSIGNS_GERMANY = 'deutschland verkehrszeichen verkehrsschilder strassenschilder';
