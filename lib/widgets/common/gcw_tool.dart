@@ -173,6 +173,8 @@ class _GCWToolState extends State<GCWTool> {
         .replaceAll(RegExp(r'\s+'), ' ')
         .replaceAll('**', '')
         .replaceAll('/', ' ')
+        .replaceAll(' - ', ' ')
+        .replaceAll(':', '')
         .replaceAll(RegExp(r"\([a-zA-Z0-9\s.]+\)"), ''); //remove e.g. (128 bits) in hashes-toolname
     text = substitution(text, _SEARCH_WHITELIST);
     text = text.split(' ').where((word) => !_SEARCH_BLACKLIST.contains(word)).join(' ');
