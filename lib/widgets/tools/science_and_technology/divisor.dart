@@ -8,6 +8,7 @@ import 'package:gc_wizard/widgets/common/gcw_crosstotal_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_crosstotal_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
+import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 
 class Divisor extends StatefulWidget {
   @override
@@ -50,16 +51,19 @@ class DivisorState extends State<Divisor> {
             });
           },
         ),
-        GCWDefaultOutput(child: _calculateOutput()),
-        _buildCrossTotals()
+        _currentCrosstotalMode == true
+        ? GCWDefaultOutput(child: _calculateOutput())
+        : GCWMultipleOutput(children: buildDivisorList(_currentInputN)),
+        _currentCrosstotalMode == true
+        ? GCWCrosstotalOutput(text: _currentInputN.toString(), values: buildDivisorList(_currentInputN))
+        : Container()
       ],
     );
   }
 
 
   _buildCrossTotals() {
-    if (!_currentCrosstotalMode) return Container();
-    return GCWCrosstotalOutput(text: _currentInputN.toString(), values: buildDivisorList(_currentInputN));
+        return GCWCrosstotalOutput(text: _currentInputN.toString(), values: buildDivisorList(_currentInputN));
   }
 
   _calculateOutput() {
