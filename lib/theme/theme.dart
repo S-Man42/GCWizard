@@ -20,7 +20,8 @@ TextStyle gcwMonotypeTextStyle() {
 }
 
 TextStyle gcwHyperlinkTextStyle() {
-  return TextStyle(color: themeColors().hyperLinkText(), decoration: TextDecoration.underline);
+  return TextStyle(
+      fontSize: defaultFontSize(), color: themeColors().hyperLinkText(), decoration: TextDecoration.underline);
 }
 
 TextStyle gcwDescriptionTextStyle() {

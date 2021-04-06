@@ -10,7 +10,7 @@ class TrifidOutput {
 }
 
 TrifidOutput encryptTrifid(String input, int blockSize, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
-  if (input == null) return TrifidOutput('', '');
+  if (input == null || input == '') return TrifidOutput('', '');
 
   Map<String, String> EncodeMatrix = new Map<String, String>();
   Map<String, String> DecodeMatrix = new Map<String, String>();
@@ -19,6 +19,9 @@ TrifidOutput encryptTrifid(String input, int blockSize, {PolybiosMode mode: Poly
   List<String> line2 = new List<String>();
   List<String> line3 = new List<String>();
   List<String> result = new List<String>();
+
+  input = input.toUpperCase();
+  alphabet = alphabet.toUpperCase();
 
   switch (mode) {
     case PolybiosMode.AZ09:
@@ -59,7 +62,10 @@ TrifidOutput encryptTrifid(String input, int blockSize, {PolybiosMode mode: Poly
 }
 
 TrifidOutput decryptTrifid(String input, int blockSize, {PolybiosMode mode: PolybiosMode.AZ09, String alphabet}) {
-  if (input == null) return TrifidOutput('', '');
+  if (input == null || input == '') return TrifidOutput('', '');
+
+  input = input.toUpperCase();
+  alphabet = alphabet.toUpperCase();
 
   Map<String, String> EncodeMatrix = new Map<String, String>();
   Map<String, String> DecodeMatrix = new Map<String, String>();
@@ -93,7 +99,8 @@ TrifidOutput decryptTrifid(String input, int blockSize, {PolybiosMode mode: Poly
     line2 = line2 + blockLine.substring(blockLine.length ~/ 3, 2 * blockLine.length ~/ 3);
     line3 = line3 + blockLine.substring(2 * blockLine.length ~/ 3);
   }
-  blockLine = tupel.substring(line1.length ~/ blockSize * blockSize);
+  //blockLine = tupel.substring(line1.length ~/ blockSize * blockSize);
+  blockLine = tupel.substring(line1.length * 3);
   line1 = line1 + blockLine.substring(0, blockLine.length ~/ 3);
   line2 = line2 + blockLine.substring(blockLine.length ~/ 3, 2 * blockLine.length ~/ 3);
   line3 = line3 + blockLine.substring(2 * blockLine.length ~/ 3);
@@ -107,9 +114,9 @@ TrifidOutput decryptTrifid(String input, int blockSize, {PolybiosMode mode: Poly
 
 String _MatrixToString(String alphabet) {
   String result = '';
-  result = result + '  |   1       |   2       |   3  \n';
-  result = result + '  | 1 2 3     | 1 2 3     | 1 2 3\n';
-  result = result + '--+------   --+------   --+------\n';
+  result = result + '  |   1      |   2      |   3  \n';
+  result = result + '  | 1 2 3    | 1 2 3    | 1 2 3\n';
+  result = result + '--+------  --+------  --+------\n';
   result = result +
       '1 | ' +
       alphabet[0] +
@@ -117,13 +124,13 @@ String _MatrixToString(String alphabet) {
       alphabet[1] +
       ' ' +
       alphabet[2] +
-      '   1 | ' +
+      '  1 | ' +
       alphabet[9] +
       ' ' +
       alphabet[10] +
       ' ' +
       alphabet[11] +
-      '   1 | ' +
+      '  1 | ' +
       alphabet[18] +
       ' ' +
       alphabet[19] +
@@ -137,13 +144,13 @@ String _MatrixToString(String alphabet) {
       alphabet[4] +
       ' ' +
       alphabet[5] +
-      '   2 | ' +
+      '  2 | ' +
       alphabet[12] +
       ' ' +
       alphabet[13] +
       ' ' +
       alphabet[14] +
-      '   2 | ' +
+      '  2 | ' +
       alphabet[21] +
       ' ' +
       alphabet[22] +
@@ -157,13 +164,13 @@ String _MatrixToString(String alphabet) {
       alphabet[7] +
       ' ' +
       alphabet[8] +
-      '   3 | ' +
+      '  3 | ' +
       alphabet[15] +
       ' ' +
       alphabet[16] +
       ' ' +
       alphabet[17] +
-      '   3 | ' +
+      '  3 | ' +
       alphabet[24] +
       ' ' +
       alphabet[25] +
