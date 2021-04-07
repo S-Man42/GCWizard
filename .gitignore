@@ -88,3 +88,4 @@ web
 *.gz
 *.toc
 howtocode/
+/crowdin.properties
