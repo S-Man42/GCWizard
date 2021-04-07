@@ -111,6 +111,7 @@ const SEARCHSTRING_DE_DATES = 'datum';
 const SEARCHSTRING_DE_DATES_DAYCALCULATOR = 'tagesrechner tagerechner';
 const SEARCHSTRING_DE_DATES_TIMECALCULATOR = 'uhrzeit uhrzeitrechner stunden minuten sekunden';
 const SEARCHSTRING_DE_DATES_WEEKDAY = 'wochentage';
+const SEARCHSTRING_DE_DATES_CALENDAR = 'julianisches datum gregorianisches datum kalender';
 const SEARCHSTRING_DE_DECABIT = 'impulsraster rundsteuertechnik';
 const SEARCHSTRING_DE_DNA =
     'code-sonne codesonne desoxyribonukleinsaeure sequenz nukleotid genetik genetisches dns rns mrns';
