@@ -157,7 +157,7 @@ Map<String, dynamic> decodeMayaCalendar(List<String> inputs) {
     return {
       'displays': [[]],
       'numbers': [0],
-      'vigesimal': BigInt.zero
+      'vigesimal': 0
     };
 
   var oneCharacters = ['d', 'e', 'f', 'g'];
@@ -221,8 +221,8 @@ String convertDecToMayaCalendar(String input) {
   return result;
 }
 
-String dayCountToTzolkin(List longCount) {
-  int dayCount = longCountToMayaDayCount(longCount);
+String MayaDayCountToTzolkin(List longCount) {
+  int dayCount = MayaLongCountToMayaDayCount(longCount);
   if (dayCount == 0) return '4 Ahau';
 
   dayCount = dayCount + 159;
@@ -231,8 +231,8 @@ String dayCountToTzolkin(List longCount) {
   return (1 + (dayCount - 1) % 13).toString() + ' ' + maya_tzolkin[1 + (dayCount - 1) % 20];
 }
 
-String dayCountToHaab(List longCount) {
-  int dayCount = longCountToMayaDayCount(longCount);
+String MayaDayCountToHaab(List longCount) {
+  int dayCount = MayaLongCountToMayaDayCount(longCount);
   if (dayCount == 0) return '8 Cumhu';
 
   dayCount = dayCount + 347;
@@ -240,8 +240,8 @@ String dayCountToHaab(List longCount) {
   return (1 + (dayCount - 1) % 20).toString() + ' ' + maya_haab[1 + (dayCount - 1) ~/ 20];
 }
 
-String longCount(List<int> longCount) {
-  if (longCountToMayaDayCount(longCount) == 0) return [0, 0, 0, 0, 13, 0, 0, 0, 0].join('.');
+String MayaLongCount(List<int> longCount) {
+  if (MayaLongCountToMayaDayCount(longCount) == 0) return [0, 0, 0, 0, 13, 0, 0, 0, 0].join('.');
 
   List<int> result = new List<int>();
   for (int i = longCount.length; i < 9; i++) result.add(0);
@@ -250,7 +250,7 @@ String longCount(List<int> longCount) {
   return result.join('.');
 }
 
-int longCountToMayaDayCount(List<int> longCount) {
+int MayaLongCountToMayaDayCount(List<int> longCount) {
   int dayCount = 0;
   longCount = longCount.reversed.toList();
   for (int i = 0; i < longCount.length; i++) dayCount = dayCount + longCount[i] * mayaCalendarSystem[i];

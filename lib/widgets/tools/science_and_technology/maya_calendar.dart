@@ -14,6 +14,7 @@ import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 import 'package:prefs/prefs.dart';
 
@@ -201,25 +202,34 @@ class MayaCalendarState extends State<MayaCalendar> {
 
   _buildOutput(countColumns) {
     var segments;
+    Map outputDates = new Map();
+
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
       segments = encodeMayaCalendar(_currentEncodeInput);
-      var gregorian = MayaDayCountToGregorianCalendar(longCountToMayaDayCount(segments['numbers']));
-      var julian = MayaDayCountToJulianCalendar(longCountToMayaDayCount(segments['numbers']));
+      var gregorian = MayaDayCountToGregorianCalendar(MayaLongCountToMayaDayCount(segments['numbers']));
+      var julian = MayaDayCountToJulianCalendar(MayaLongCountToMayaDayCount(segments['numbers']));
+
+      outputDates[i18n(context, 'mayacalendar_system_longcount')] = MayaLongCount(segments['numbers']) +
+          '   ' +
+          MayaDayCountToTzolkin(segments['numbers']) +
+          '   ' +
+          MayaDayCountToHaab(segments['numbers']);
+      outputDates[i18n(context, 'mayacalendar_juliandate')] = MayaDayCountToJulianDate(MayaLongCountToMayaDayCount(segments['numbers']));
+      outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] = gregorian.day + ' ' + i18n(context, gregorian.month) + ' ' + gregorian.year;
+      outputDates[i18n(context, 'mayacalendar_juliancalendar')] = julian.day + ' ' + i18n(context, julian.month) + ' ' + julian.year;
 
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
-          GCWOutput(
-              title: i18n(context, 'mayacalendar_system_longcount'),
-              child: longCount(segments['numbers']) +
-                  '   ' +
-                  dayCountToTzolkin(segments['numbers']) +
-                  '   ' +
-                  dayCountToHaab(segments['numbers'])),
-          GCWOutput(title: i18n(context, 'mayacalendar_juliandate'), child: MayaDayCountToJulianDate(longCountToMayaDayCount(segments['numbers']))),
-          GCWOutput(title: i18n(context, 'mayacalendar_gregoriancalendar'), child: gregorian.day + ' ' + i18n(context, gregorian.month) + ' ' + gregorian.year),
-          GCWOutput(title: i18n(context, 'mayacalendar_juliancalendar'), child: julian.day + ' ' + i18n(context, julian.month) + ' ' + julian.year),
+          Column(
+            children : columnedMultiLineOutput(
+                context,
+                outputDates.entries.map((entry) {
+                  return [entry.key, entry.value];
+                }).toList(),
+                flexValues: [1, 1]),
+          )
         ],
       );
     } else {
@@ -230,20 +240,27 @@ class MayaCalendarState extends State<MayaCalendar> {
       segments = decodeMayaCalendar(output);
       var gregorian = MayaDayCountToGregorianCalendar(segments['vigesimal']);
       var julian = MayaDayCountToJulianCalendar(segments['vigesimal']);
+
+      outputDates[i18n(context, 'mayacalendar_daycount')] = segments['vigesimal'];
+      outputDates[i18n(context, 'mayacalendar_system_longcount')] = MayaLongCount(segments['numbers']) +
+          '   ' +
+          MayaDayCountToTzolkin(segments['numbers']) +
+          '   ' +
+          MayaDayCountToHaab(segments['numbers']);
+      outputDates[i18n(context, 'mayacalendar_juliandate')] = MayaDayCountToJulianDate(segments['vigesimal']);
+      outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] = gregorian.day + ' ' + i18n(context, gregorian.month) + ' ' + gregorian.year;
+      outputDates[i18n(context, 'mayacalendar_juliancalendar')] = julian.day + ' ' + i18n(context, julian.month) + ' ' + julian.year;
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
-          GCWOutput(title: i18n(context, 'mayacalendar_daycount'), child: segments['vigesimal']),
-          GCWOutput(
-              title: i18n(context, 'mayacalendar_system_longcount'),
-              child: longCount(segments['numbers']) +
-                  '   ' +
-                  dayCountToTzolkin(segments['numbers']) +
-                  '   ' +
-                  dayCountToHaab(segments['numbers'])),
-          GCWOutput(title: i18n(context, 'mayacalendar_juliandate'), child: MayaDayCountToJulianDate(segments['vigesimal'])),
-          GCWOutput(title: i18n(context, 'mayacalendar_gregoriancalendar'), child: gregorian.day + ' ' + i18n(context, gregorian.month) + ' ' + gregorian.year),
-          GCWOutput(title: i18n(context, 'mayacalendar_juliancalendar'), child: julian.day + ' ' + i18n(context, julian.month) + ' ' + julian.year),
+          Column(
+            children : columnedMultiLineOutput(
+                context,
+                outputDates.entries.map((entry) {
+                  return [entry.key, entry.value];
+                }).toList(),
+                flexValues: [1, 1]),
+          )
         ],
       );
     }
