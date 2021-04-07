@@ -2099,7 +2099,7 @@
   "piglatin_example": "Pig Latin → Ig-pay Atin-lay",
   "playfair_title": "Playfair",
   "playfair_example": "AM EF KP RC PQ CW CB",
-  "polybios_title": "Polybios",
+  "polybios_title": "Polybe",
   "polybios_description": "Chiffrement basé sur un carré",
   "polybios_example": "ABCXYZ → 11 12 13 53 54 55",
   "polybios_mode_az09": "A-Z 0-9",
