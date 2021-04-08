@@ -65,3 +65,14 @@ flutter clean
 iOS build: GeneratedPluginRegistrant.m Module not found.
 
 -> Open XCode with .xcworkspace file instead of .xcodeproj
+
+========
+Crowdin Script, install jq using Scoop.sh:
+Windows/Powershell
+
+Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+iwr -useb get.scoop.sh | iex
+scoop bucket add extras
+scoop install jq
+
+Run Scripts in external_helpers/crowdin using the GitBash
