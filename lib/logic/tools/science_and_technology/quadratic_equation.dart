@@ -17,7 +17,14 @@ Map<String, String> SolveEquation(String currentA, String currentB, String curre
   if (double.tryParse(currentB) != null) b = double.parse(currentB); else return {'': ''};
   if (double.tryParse(currentC) != null) c = double.parse(currentC); else return {'': ''};
 
-  if (a == 0) result['quadratic_equation_hint_caution'] = 'quadratic_equation_hint_a_null';
+  if (a == 0) {
+    result['quadratic_equation_hint_caution'] = 'quadratic_equation_hint_a_null';
+    if (b == 0)
+      result['quadratic_equation_hint_caution'] = 'quadratic_equation_hint_a_b_null';
+    else
+      result['x'] = NumberFormat('0.0' + '#' * 7).format(-c / b);
+    return result;
+  }
 
   if (b * b - 4 * a * c < 0) {
     result['quadratic_equation_hint_caution'] = 'quadratic_equation_hint_complex';

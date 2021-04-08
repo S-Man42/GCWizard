@@ -2137,6 +2137,7 @@
   "quadratic_equation_hint_caution" : "Attention",
   "quadratic_equation_hint_complex" : "Solutions are complex numbers",
   "quadratic_equation_hint_a_null" : "a = 0",
+  "quadratic_equation_hint_a_b_null" : "a = b = 0",
   "railfence_title": "Railfence/Zig-Zag",
   "railfence_description": "Cipher written diagonally on rails of an imaginary fence (transposition)",
   "railfence_key": "Key",
