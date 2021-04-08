@@ -198,23 +198,23 @@ Map<String, dynamic> decodeMayaCalendar(List<String> inputs) {
   }
   if (invalid) total = "-1";
 
-  return {'displays': displays, 'numbers': numbers, 'vigesimal': BigInt.tryParse(total)};
+  return {'displays': displays, 'numbers': numbers, 'vigesimal': int.tryParse(total)};
 }
 
 String convertDecToMayaCalendar(String input) {
   if (input == null || input == '') return '';
 
-  BigInt numberDec = BigInt.parse(input);
-  if (numberDec == BigInt.from(0)) return '0';
+  int numberDec = int.parse(input);
+  if (numberDec == 0) return '0';
 
   String result = '';
   int start = 0;
-  while (numberDec < BigInt.from(mayaCalendarSystem[mayaCalendarSystem.length - 1 - start])) start++;
+  while (numberDec < (mayaCalendarSystem[mayaCalendarSystem.length - 1 - start])) start++;
   for (int position = mayaCalendarSystem.length - start; position > 0; position--) {
     int value = 0;
-    while (numberDec >= BigInt.from(mayaCalendarSystem[position - 1])) {
+    while (numberDec >= (mayaCalendarSystem[position - 1])) {
       value++;
-      numberDec = numberDec - BigInt.from(mayaCalendarSystem[position - 1]);
+      numberDec = numberDec - (mayaCalendarSystem[position - 1]);
     }
     result = result + _alphabet[value];
   }
@@ -246,7 +246,7 @@ String MayaLongCount(List<int> longCount) {
   List<int> result = new List<int>();
   for (int i = longCount.length; i < 9; i++) result.add(0);
   for (int i = 0; i < longCount.length; i++) result.add(longCount[i]);
-  if (result[4] == 0) result[4] = 13;
+  if (result[4] == 0 && result[3] != 0) result[4] = 13;
   return result.join('.');
 }
 

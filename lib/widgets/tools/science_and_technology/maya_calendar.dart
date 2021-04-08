@@ -28,9 +28,6 @@ class MayaCalendarState extends State<MayaCalendar> {
   var _currentLongCount = '';
   var _longCountController;
 
-  var _encodeMayaLongCountFormatter =
-      WrapperForMaskTextInputFormatter(mask: '##.##.##.##.##', filter: {"#": RegExp(r'[0-9]')});
-
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
 
@@ -72,15 +69,6 @@ class MayaCalendarState extends State<MayaCalendar> {
                 });
               },
             )
-          //GCWTextField(
-          //  controller: _longCountController,
-          //  inputFormatters: [_encodeMayaLongCountFormatter],
-          //  onChanged: (text) {
-          //     setState(() {
-          //       _currentLongCount = text;
-          //     });
-          //  },
-          //)
           : Column(
               // decrpyt: input segment => output number
               children: <Widget>[_buildVisualDecryption()],
