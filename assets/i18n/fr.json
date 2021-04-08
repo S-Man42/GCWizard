@@ -3132,7 +3132,7 @@
   "whitespace_interpreter": "Interpréteur",
   "whitespace_language_start": "Début",
   "whitespace_language_readable_code": "Code lisible",
-  "windchill_title": "Refroidissement par le vent
+  "windchill_title": "Refroidissement par le vent",
   "windchill_description": "Température apparente depuis la température et la vitesse du vent",
   "windchill_example": "5°C (41°F) / 20km/h (12.4mph) → 1°C (34°F)",
   "windchill_temperature": "Température",
