@@ -51,12 +51,10 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
 
       _xController.text = _currentX['value'].toString();
       _yController.text = _currentY['value'].toString();
-    }
-    if (_currentZoom != widget.zoom) {
-      _xController.clear();
-      _yController.clear();
-
+    } else if (_subtypeChanged()) {
       _currentZoom = widget.zoom;
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
     }
 
     return Column(children: <Widget>[
@@ -81,6 +79,10 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
             });
           }),
     ]);
+  }
+
+  bool _subtypeChanged() {
+    return _currentZoom != widget.zoom;
   }
 
   _setCurrentValueAndEmitOnChange() {
