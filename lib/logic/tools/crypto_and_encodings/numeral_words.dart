@@ -15,6 +15,8 @@ import 'package:gc_wizard/utils/common_utils.dart';
 // https://www.languagesandnumbers.com/how-to-count-in-danish/en/dan/
 // https://www.languagesandnumbers.com/how-to-count-in-danish/en/dan/
 // https://www.languagesandnumbers.com/how-to-count-in-danish/en/dan/
+//
+// https://de.wikipedia.org/wiki/Zahlen_in_unterschiedlichen_Sprachen
 
 class NumeralWordsDecodeOutput {
   final String number;
@@ -48,6 +50,26 @@ enum NumeralWordsLanguage {
   SOL,
   SWE,
   VOL,
+  MAP,
+  BAS,
+  DOT,
+  UNG,
+  PER,
+  AMH,
+  VIE,
+  TUR,
+  MEG,
+  BRE,
+  SCO,
+  IND,
+  TAM,
+  FIN,
+  QUE,
+  CEQ,
+  KLI,
+  LOJ,
+  JAP,
+  CHI,
   ALL,
   NUM
 }
@@ -767,7 +789,27 @@ Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.VOL: 'common_language_volapuek',
   NumeralWordsLanguage.EPO: 'common_language_esperanto',
   NumeralWordsLanguage.SOL: 'common_language_solresol',
-  NumeralWordsLanguage.LAT: 'common_language_latin'
+  NumeralWordsLanguage.LAT: 'common_language_latin',
+  NumeralWordsLanguage.MAP: 'numeralwords_language_map',
+  NumeralWordsLanguage.BAS: 'numeralwords_language_bas',
+  NumeralWordsLanguage.DOT: 'numeralwords_language_dot',
+  NumeralWordsLanguage.UNG: 'numeralwords_language_ung',
+  NumeralWordsLanguage.PER: 'numeralwords_language_per',
+  NumeralWordsLanguage.AMH: 'numeralwords_language_amh',
+  NumeralWordsLanguage.VIE: 'numeralwords_language_vie',
+  NumeralWordsLanguage.TUR: 'numeralwords_language_tur',
+  NumeralWordsLanguage.MEG: 'numeralwords_language_meg',
+  NumeralWordsLanguage.BRE: 'numeralwords_language_bre',
+  NumeralWordsLanguage.SCO: 'numeralwords_language_sco',
+  NumeralWordsLanguage.IND: 'numeralwords_language_ind',
+  NumeralWordsLanguage.TAM: 'numeralwords_language_tam',
+  NumeralWordsLanguage.FIN: 'numeralwords_language_fin',
+  NumeralWordsLanguage.QUE: 'numeralwords_language_que',
+  NumeralWordsLanguage.CEQ: 'numeralwords_language_ceq',
+  NumeralWordsLanguage.KLI: 'numeralwords_language_kli',
+  NumeralWordsLanguage.LOJ: 'numeralwords_language_loj',
+  NumeralWordsLanguage.JAP: 'numeralwords_language_jap',
+  NumeralWordsLanguage.CHI: 'numeralwords_language_chi',
 };
 
 Map<NumeralWordsLanguage, String> _languageList;
@@ -789,7 +831,27 @@ Map NumWords = {
   NumeralWordsLanguage.VOL: VOLWordToNum,
   NumeralWordsLanguage.EPO: EPOWordToNum,
   NumeralWordsLanguage.SOL: SOLWordToNum,
-  NumeralWordsLanguage.LAT: LATWordToNum
+  NumeralWordsLanguage.LAT: LATWordToNum,
+  NumeralWordsLanguage.MAP: MAPWordToNum,
+  NumeralWordsLanguage.BAS: BASWordToNum,
+  NumeralWordsLanguage.DOT: DOTWordToNum,
+  NumeralWordsLanguage.UNG: UNGWordToNum,
+  NumeralWordsLanguage.PER: PERWordToNum,
+  NumeralWordsLanguage.AMH: AMHWordToNum,
+  NumeralWordsLanguage.VIE: VIEWordToNum,
+  NumeralWordsLanguage.TUR: TURWordToNum,
+  NumeralWordsLanguage.MEG: MEGWordToNum,
+  NumeralWordsLanguage.BRE: BREWordToNum,
+  NumeralWordsLanguage.SCO: SCOWordToNum,
+  NumeralWordsLanguage.IND: INDWordToNum,
+  NumeralWordsLanguage.TAM: TAMWordToNum,
+  NumeralWordsLanguage.FIN: FINWordToNum,
+  NumeralWordsLanguage.QUE: QUEWordToNum,
+  NumeralWordsLanguage.CEQ: CEQWordToNum,
+  NumeralWordsLanguage.KLI: KLIWordToNum,
+  NumeralWordsLanguage.LOJ: LOJWordToNum,
+  NumeralWordsLanguage.JAP: JAPWordToNum,
+  NumeralWordsLanguage.CHI: CHIWordToNum,
 };
 
 bool _isNumeral(String input) {
