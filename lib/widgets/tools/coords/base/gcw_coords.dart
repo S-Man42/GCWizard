@@ -328,13 +328,15 @@ class GCWCoordsState extends State<GCWCoords> {
       format: _currentCoordsFormat,
       onChanged: (newValue) {
         setState(() {
-          if (_currentCoordsFormat != newValue) {
+          var formatChanged = _currentCoordsFormat['format'] != newValue['format'];
+          var subtypeChanged = _currentCoordsFormat["subtype"] != newValue["subtype"];
+          if (formatChanged || subtypeChanged) {
             if (widget.restoreCoordinates)
               _pastedCoords = _currentValue;
-            else if (subtypeChanged(_currentCoordsFormat, newValue))
-              ;
-            else
-              _currentValue = defaultCoordinate;
+            else {
+              if (!subtypeChanged)
+                _currentValue = defaultCoordinate;
+            }
 
             _currentCoordsFormat = newValue;
             _setCurrentValueAndEmitOnChange();
