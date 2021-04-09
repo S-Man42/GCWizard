@@ -329,18 +329,24 @@ class GCWCoordsState extends State<GCWCoords> {
       onChanged: (newValue) {
         setState(() {
           if (_currentCoordsFormat != newValue) {
-            _currentCoordsFormat = newValue;
             if (widget.restoreCoordinates)
               _pastedCoords = _currentValue;
+            else if (subtypeChanged(_currentCoordsFormat, newValue))
+              ;
             else
               _currentValue = defaultCoordinate;
 
+            _currentCoordsFormat = newValue;
             _setCurrentValueAndEmitOnChange();
           }
           FocusScope.of(context).requestFocus(new FocusNode()); //Release focus from previous edited field
         });
       },
     );
+  }
+
+  bool subtypeChanged(Map<String, String> currentValue, Map<String, String> newValue) {
+    return currentValue["subtype"] != newValue["subtype"];
   }
 
   _buildTrailingButtons(IconButtonSize size) {
