@@ -7,8 +7,28 @@
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
+import 'package:prefs/prefs.dart';
 
-final THOMPSON_KORRELATION = 584283;
+enum CORRELATION  {THOMPSON, SMILEY, WEITZEL}
+
+final THOMPSON_CORRELATION = 584283;
+final SMILEY_CORRELATION = 482699;
+final WEITZEL_CORRELATION = 774078;
+final THOMPSON = 'Thompson';
+final SMILEY = 'Smiley';
+final WEITZEL = 'Weitzel';
+
+final Map CORRELATION_NUMBER = {
+  THOMPSON : THOMPSON_CORRELATION,
+  SMILEY : SMILEY_CORRELATION,
+  WEITZEL : WEITZEL_CORRELATION,
+};
+
+Map<String, String> CORRELATION_SYSTEMS = {
+  THOMPSON: 'Thompson (584283)',
+  SMILEY: 'Smiley (482699)',
+  WEITZEL: 'Weitzel (774078)',
+};
 
 final maya_longcount = {
   1: 'kin',
@@ -266,7 +286,10 @@ DateOutput MayaDayCountToGregorianCalendar(int mayaDayCount){
 }
 
 int MayaDayCountToJulianDate(int mayaDayCount){
-  return (mayaDayCount + THOMPSON_KORRELATION);
+  if (Prefs.getString('mayacalendar_correlation') == null || Prefs.getString('mayacalendar_correlation') == '')
+    return (mayaDayCount + CORRELATION_NUMBER[THOMPSON]);
+  else
+    return (mayaDayCount + CORRELATION_NUMBER[Prefs.getString('mayacalendar_correlation')]);
 }
 
 DateOutput JulianDateToGregorianCalendar(double jd, bool round){

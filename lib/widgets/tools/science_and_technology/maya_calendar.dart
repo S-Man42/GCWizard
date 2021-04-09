@@ -199,7 +199,7 @@ class MayaCalendarState extends State<MayaCalendar> {
       var julian = MayaDayCountToJulianCalendar(MayaLongCountToMayaDayCount(segments['numbers']));
 
       outputDates[i18n(context, 'mayacalendar_system_longcount')] = MayaLongCount(segments['numbers']) +
-          '   ' +
+          '\n' +
           MayaDayCountToTzolkin(segments['numbers']) +
           '   ' +
           MayaDayCountToHaab(segments['numbers']);
@@ -231,7 +231,7 @@ class MayaCalendarState extends State<MayaCalendar> {
 
       outputDates[i18n(context, 'mayacalendar_daycount')] = segments['vigesimal'];
       outputDates[i18n(context, 'mayacalendar_system_longcount')] = MayaLongCount(segments['numbers']) +
-          '   ' +
+          '\n' +
           MayaDayCountToTzolkin(segments['numbers']) +
           '   ' +
           MayaDayCountToHaab(segments['numbers']);

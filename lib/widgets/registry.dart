@@ -7,6 +7,7 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
+import 'package:gc_wizard/widgets/main_menu/settings_mayacalendar.dart';
 import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
 import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
 import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
@@ -3014,6 +3015,8 @@ class Registry {
       GCWTool(tool: GeneralSettings(), i18nPrefix: 'settings_general', missingHelpLocales: [], searchStrings: []),
       GCWTool(
           tool: CoordinatesSettings(), i18nPrefix: 'settings_coordinates', missingHelpLocales: [], searchStrings: []),
+      GCWTool(
+          tool: MayaCalendarSettings(), i18nPrefix: 'settings_mayacalendar_correlation_number', missingHelpLocales: [], searchStrings: []),
       GCWTool(tool: Changelog(), i18nPrefix: 'mainmenu_changelog', suppressHelpButton: true, searchStrings: [
         SEARCHSTRING_COMMON_CHANGELOG,
         SEARCHSTRING_DE_CHANGELOG,
