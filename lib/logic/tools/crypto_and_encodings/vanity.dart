@@ -193,6 +193,5 @@ String decodeVanityMultipleNumbers(String input, PhoneModel model) {
 
         return character;
       })
-      .join()
-      .toUpperCase();
+      .join();
 }

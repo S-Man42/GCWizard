@@ -58,18 +58,18 @@ void main() {
       {'input' : null, 'expectedOutput' : ''},
       {'input' : '', 'expectedOutput' : ''},
 
-      {'expectedOutput' : 'ABCXYZ', 'model': SIEMENS, 'input' : '2 22 222 99 999 9999'},
-      {'expectedOutput' : 'ABCXYZ', 'model': SIEMENS, 'input' : '2 22 222 99 999 9999'},
-      {'expectedOutput' : 'ABC123XYZ', 'model': SIEMENS, 'input' : '2 22 222 11 2222 3333 99 999 9999'},
-      {'expectedOutput' : 'AOUS', 'model': SIEMENS, 'input' : '2 666 88 7777'},
-      {'expectedOutput' : 'B<?>A+', 'model': SIEMENS, 'input' : '22 2222222222 2 000000'},
+      {'expectedOutput' : 'abcxyz', 'model': SIEMENS, 'input' : '2 22 222 99 999 9999'},
+      {'expectedOutput' : 'abcxyz', 'model': SIEMENS, 'input' : '2 22 222 99 999 9999'},
+      {'expectedOutput' : 'abc123xyz', 'model': SIEMENS, 'input' : '2 22 222 11 2222 3333 99 999 9999'},
+      {'expectedOutput' : 'aous', 'model': SIEMENS, 'input' : '2 666 88 7777'},
+      {'expectedOutput' : 'b<?>a+', 'model': SIEMENS, 'input' : '22 2222222222 2 000000'},
       {'expectedOutput' : '. ', 'model': SIEMENS, 'input' : '0 1'},
 
-      {'expectedOutput' : 'BCX', 'model': SIEMENS, 'input' : '22 abc 222   99'},
+      {'expectedOutput' : 'bcx', 'model': SIEMENS, 'input' : '22 abc 222   99'},
 
-      {'expectedOutput' : 'ABC01 .?\$&', 'model': NOKIA, 'input' : '2 22 222 00 1111111 0 1 111 7777777 ****************'},
-      {'expectedOutput' : 'ABC01 .?\$&', 'model': SAMSUNG, 'input' : '2 22 222 00 11111 0 1 111 **************************** ***********'},
-      {'expectedOutput' : 'ABC01 .?\$', 'model': SIEMENS, 'input' : '2 22 222 00000 11 1 0 000 11111'},
+      {'expectedOutput' : 'abc01 .?\$&', 'model': NOKIA, 'input' : '2 22 222 00 1111111 0 1 111 7777777 ****************'},
+      {'expectedOutput' : 'abc01 .?\$&', 'model': SAMSUNG, 'input' : '2 22 222 00 11111 0 1 111 **************************** ***********'},
+      {'expectedOutput' : 'abc01 .?\$', 'model': SIEMENS, 'input' : '2 22 222 00000 11 1 0 000 11111'},
     ];
 
     _inputsToExpected.forEach((elem) {
