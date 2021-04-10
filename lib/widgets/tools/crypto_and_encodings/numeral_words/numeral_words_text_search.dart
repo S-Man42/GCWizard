@@ -92,9 +92,8 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
       detailedOutput = decodeNumeralwords(removeAccents(_currentDecodeInput.toLowerCase()), _currentLanguage,
           (_currentDecodeMode == GCWSwitchPosition.left));
       for (int i = 0; i < detailedOutput.length; i++) {
-        if (detailedOutput[i].number != '')
-          if (detailedOutput[i].number.startsWith('numeralwords_'))
-          output = output +  ' ' + i18n(context, detailedOutput[i].number);
+        if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
+          output = output + ' ' + i18n(context, detailedOutput[i].number);
         else
           output = output + ' ' + detailedOutput[i].number;
       }
