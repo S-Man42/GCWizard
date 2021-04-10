@@ -75,9 +75,6 @@ class GCWCoordsSwissGridState extends State<GCWCoordsSwissGrid> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    var swissGrid = SwissGrid(_currentEasting['value'], _currentNorthing['value']);
-
-    LatLng coords = swissGridToLatLon(swissGrid, defaultEllipsoid());
-    widget.onChanged(coords);
+    widget.onChanged(SwissGrid(_currentEasting['value'], _currentNorthing['value']));
   }
 }

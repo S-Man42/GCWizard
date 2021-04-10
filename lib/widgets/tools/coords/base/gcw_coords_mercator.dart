@@ -75,7 +75,6 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
   _setCurrentValueAndEmitOnChange() {
     var mercator = Mercator(_currentEasting['value'], _currentNorthing['value']);
 
-    LatLng coords = mercatorToLatLon(mercator, defaultEllipsoid());
-    widget.onChanged(coords);
+    widget.onChanged(mercator);
   }
 }

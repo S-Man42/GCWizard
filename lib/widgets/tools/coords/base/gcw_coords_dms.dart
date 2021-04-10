@@ -333,6 +333,6 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
     _secondsD = double.parse('$_seconds.$_currentLonMilliSeconds');
     var _currentLon = DMSLongitude(_currentLonSign, _degrees, _minutes, _secondsD);
 
-    widget.onChanged(dmsToLatLon(DMS(_currentLat, _currentLon)));
+    widget.onChanged(DMS(_currentLat, _currentLon));
   }
 }

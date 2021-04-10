@@ -60,8 +60,7 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
 
   _setCurrentValueAndEmitOnChange() {
     try {
-      LatLng coords = parseOpenLocationCodeToLatLon(_currentCoord);
-      widget.onChanged(coords);
+      widget.onChanged(parseOpenLocationCode(_currentCoord));
     } catch (e) {}
   }
 }

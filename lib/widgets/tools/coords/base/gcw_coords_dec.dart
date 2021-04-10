@@ -208,6 +208,6 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
     _degreesD = double.parse('$_degrees.$_currentLonMilliDegrees');
     double _currentLon = _currentLonSign * _degreesD;
 
-    widget.onChanged(decToLatLon(DEC(_currentLat, _currentLon)));
+    widget.onChanged(DEC(_currentLat, _currentLon));
   }
 }

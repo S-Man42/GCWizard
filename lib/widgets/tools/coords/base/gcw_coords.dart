@@ -367,7 +367,7 @@ class GCWCoordsState extends State<GCWCoords> {
     );
   }
 
-  _setCurrentValueAndEmitOnChange([LatLng newValue]) {
+  _setCurrentValueAndEmitOnChange([BaseCoordinates newValue]) {
     widget.onChanged({'coordsFormat': _currentCoordsFormat, 'value': newValue ?? _currentValue});
   }
 

@@ -138,8 +138,7 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
   _setCurrentValueAndEmitOnChange() {
     var code = _currentSubtype;
     var gaussKrueger = GaussKrueger(code, _currentEasting['value'], _currentNorthing['value']);
-    LatLng coords = gaussKruegerToLatLon(gaussKrueger, defaultEllipsoid());
 
-    widget.onChanged(coords);
+    widget.onChanged(gaussKrueger);
   }
 }

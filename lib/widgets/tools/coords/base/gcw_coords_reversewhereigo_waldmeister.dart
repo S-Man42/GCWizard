@@ -111,7 +111,6 @@ class GCWCoordsReverseWhereIGoWaldmeisterState extends State<GCWCoordsReverseWhe
   }
 
   _setCurrentValueAndEmitOnChange() {
-    LatLng coords = parseWaldmeisterToLatLon(_currentA.toString() +'\n'+ _currentB.toString() +'\n'+ _currentC.toString());
-    widget.onChanged(coords);
+    widget.onChanged(parseWaldmeister(_currentA.toString() +'\n'+ _currentB.toString() +'\n'+ _currentC.toString()));
   }
 }

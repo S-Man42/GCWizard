@@ -60,8 +60,7 @@ class GCWCoordsGeo3x3State extends State<GCWCoordsGeo3x3> {
 
   _setCurrentValueAndEmitOnChange() {
     try {
-      LatLng coords = parseGeo3x3ToLatLon(_currentCoord);
-      widget.onChanged(coords);
+      widget.onChanged(parseGeo3x3(_currentCoord));
     } catch (e) {}
   }
 }

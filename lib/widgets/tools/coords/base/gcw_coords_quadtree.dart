@@ -59,8 +59,7 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
 
   _setCurrentValueAndEmitOnChange() {
     try {
-      LatLng coords = parseQuadtreeToLatLon(_currentCoord);
-      widget.onChanged(coords);
+      widget.onChanged(parseQuadtree(_currentCoord));
     } catch (e) {}
   }
 }

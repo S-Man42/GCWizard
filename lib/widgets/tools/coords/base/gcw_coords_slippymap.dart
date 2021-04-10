@@ -88,9 +88,6 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    var slippyMap = SlippyMap(_currentX['value'], _currentY['value'], double.tryParse(_currentZoom));
-    LatLng coords = slippyMapToLatLon(slippyMap);
-
-    widget.onChanged(coords);
+    widget.onChanged(SlippyMap(_currentX['value'], _currentY['value'], double.tryParse(_currentZoom)));
   }
 }

@@ -76,7 +76,6 @@ class GCWCoordsNaturalAreaCodeState extends State<GCWCoordsNaturalAreaCode> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    LatLng coords = naturalAreaCodeToLatLon(NaturalAreaCode(_currentX, _currentY));
-    widget.onChanged(coords);
+    widget.onChanged(NaturalAreaCode(_currentX, _currentY));
   }
 }

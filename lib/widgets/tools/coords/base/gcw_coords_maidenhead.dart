@@ -61,7 +61,6 @@ class GCWCoordsMaidenheadState extends State<GCWCoordsMaidenhead> {
     var maidenhead = _currentCoord;
     if (maidenhead.length % 2 == 1) maidenhead = maidenhead.substring(0, maidenhead.length - 1);
 
-    LatLng coords = parseMaidenheadToLatLon(maidenhead);
-    widget.onChanged(coords);
+    widget.onChanged(parseMaidenhead(maidenhead));
   }
 }

@@ -128,7 +128,6 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
     var zone = UTMZone(_lonZone, _lonZone, _currentLatZone);
     var utm = UTMREF(zone, _currentEasting['value'], _currentNorthing['value']);
 
-    LatLng coords = UTMREFtoLatLon(utm, defaultEllipsoid());
-    widget.onChanged(coords);
+    widget.onChanged(utm);
   }
 }

@@ -93,9 +93,6 @@ class GCWCoordsXYZState extends State<GCWCoordsXYZ> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    var xyz = XYZ(_currentX, _currentY, _currentZ);
-
-    LatLng coords = xyzToLatLon(xyz, defaultEllipsoid());
-    widget.onChanged(coords);
+    widget.onChanged(XYZ(_currentX, _currentY, _currentZ));
   }
 }

@@ -184,8 +184,6 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
     var zone = UTMZone(_lonZone, _lonZone, _currentLatZone);
     var mgrs = MGRS(zone, _currentDigraphEasting + _currentDigraphNorthing, easting, northing);
 
-    LatLng coords = mgrsToLatLon(mgrs, defaultEllipsoid());
-
-    widget.onChanged(coords);
+    widget.onChanged(mgrs);
   }
 }
