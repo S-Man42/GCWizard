@@ -334,8 +334,7 @@ class GCWCoordsState extends State<GCWCoords> {
             if (widget.restoreCoordinates)
               _pastedCoords = _currentValue;
             else {
-              if (!subtypeChanged)
-                _currentValue = defaultCoordinate;
+              if (!subtypeChanged) _currentValue = defaultCoordinate;
             }
 
             _currentCoordsFormat = newValue;
