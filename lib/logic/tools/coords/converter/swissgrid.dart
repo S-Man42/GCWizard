@@ -148,19 +148,15 @@ LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
   return newCoord;
 }
 
-String latLonToSwissGridPlusString(LatLng coord, Ellipsoid ells) {
-  SwissGrid swissGrid = latLonToSwissGridPlus(coord, ells);
-
-  return 'Y: ${swissGrid.easting}\nX: ${swissGrid.northing}';
+LatLng parseSwissGridToLatLon(String input, Ellipsoid ells, {isSwissGridPlus: false}) {
+  var coords = parseSwissGrid(input);
+  if (isSwissGridPlus)
+    return coords == null ? null : swissGridPlusToLatLon(coords, ells);
+  else
+    return coords == null ? null : swissGridToLatLon(coords, ells);
 }
 
-String decToSwissGridString(LatLng coord, Ellipsoid ells) {
-  SwissGrid swissGrid = latLonToSwissGrid(coord, ells);
-
-  return 'Y: ${swissGrid.easting}\nX: ${swissGrid.northing}';
-}
-
-LatLng parseSwissGrid(String input, Ellipsoid ells, {isSwissGridPlus: false}) {
+SwissGrid parseSwissGrid(String input, {isSwissGridPlus: false}) {
   RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*\,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
   var _eastingString = '';
@@ -189,7 +185,5 @@ LatLng parseSwissGrid(String input, Ellipsoid ells, {isSwissGridPlus: false}) {
   var _northing = double.tryParse(_northingString);
   if (_northing == null) return null;
 
-  if (isSwissGridPlus) return swissGridPlusToLatLon(SwissGrid(_easting, _northing), ells);
-
-  return swissGridToLatLon(SwissGrid(_easting, _northing), ells);
+  return SwissGrid(_easting, _northing, isSwissGridPlus: isSwissGridPlus);
 }

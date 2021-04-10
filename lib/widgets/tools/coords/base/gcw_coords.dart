@@ -55,9 +55,9 @@ class GCWCoords extends StatefulWidget {
 
 class GCWCoordsState extends State<GCWCoords> {
   Map<String, String> _currentCoordsFormat;
-  LatLng _currentValue;
+  BaseCoordinates _currentValue;
 
-  LatLng _pastedCoords;
+  BaseCoordinates _pastedCoords;
 
   var _currentWidget;
 
@@ -70,7 +70,7 @@ class GCWCoordsState extends State<GCWCoords> {
 
     _currentCoordsFormat = widget.coordsFormat ?? defaultCoordFormat();
     _setPastedCoordsFormat();
-    _currentValue = widget.coordinates ?? defaultCoordinate;
+    _currentValue = widget.coordinates ?? DEC(defaultCoordinate.latitude, defaultCoordinate.longitude);
     _pastedCoords = _currentValue;
   }
 
@@ -334,7 +334,7 @@ class GCWCoordsState extends State<GCWCoords> {
             else if (subtypeChanged(_currentCoordsFormat, newValue))
               ;
             else
-              _currentValue = defaultCoordinate;
+              _currentValue = DEC(defaultCoordinate.latitude, defaultCoordinate.longitude);
 
             _currentCoordsFormat = newValue;
             _setCurrentValueAndEmitOnChange();
@@ -371,7 +371,7 @@ class GCWCoordsState extends State<GCWCoords> {
     widget.onChanged({'coordsFormat': _currentCoordsFormat, 'value': newValue ?? _currentValue});
   }
 
-  _setCoords(Map<String, LatLng> pastedCoords) {
+  _setCoords(Map<String, BaseCoordinates> pastedCoords) {
     if (pastedCoords == null || pastedCoords.length == 0) return;
 
     if (pastedCoords.keys.contains(_currentCoordsFormat['format'].toString())) {
@@ -454,7 +454,7 @@ class GCWCoordsState extends State<GCWCoords> {
           showToast(i18n(context, 'coords_common_location_lowaccuracy',
               parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
 
-        _pastedCoords = LatLng(locationData.latitude, locationData.longitude);
+        _pastedCoords = DEC(locationData.latitude, locationData.longitude);
         _currentValue = _pastedCoords;
         _setPastedCoordsFormat();
 

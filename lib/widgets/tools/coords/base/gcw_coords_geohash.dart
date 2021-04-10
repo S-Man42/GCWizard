@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_geohash_textinputformatter.dart';
 import 'package:latlong/latlong.dart';
 
 class GCWCoordsGeohash extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsGeohash({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -34,7 +35,10 @@ class GCWCoordsGeohashState extends State<GCWCoordsGeohash> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      _currentCoord = latLonToGeohash(widget.coordinates, 14);
+      var geohash = widget.coordinates is Geohash ?
+          widget.coordinates as Geohash :
+          latLonToGeohash(widget.coordinates.toLatLng(), 14);
+      _currentCoord = geohash.text;
 
       _controller.text = _currentCoord;
     }
@@ -54,7 +58,7 @@ class GCWCoordsGeohashState extends State<GCWCoordsGeohash> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    LatLng coords = geohashToLatLon(_currentCoord);
+    LatLng coords = parseGeohashToLatLon(_currentCoord);
     widget.onChanged(coords);
   }
 }

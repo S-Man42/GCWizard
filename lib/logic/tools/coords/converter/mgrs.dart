@@ -34,11 +34,6 @@ MGRS latLonToMGRS(LatLng coord, Ellipsoid ells) {
   return MGRS(_utm.zone, _digraph, _easting, _northing);
 }
 
-String latLonToMGRSString(LatLng coord, Ellipsoid ells) {
-  MGRS mgrs = latLonToMGRS(coord, ells);
-  return '${mgrs.utmZone.lonZone}${mgrs.utmZone.latZone} ${mgrs.digraph} ${doubleFormat.format(mgrs.easting)} ${doubleFormat.format(mgrs.northing)}';
-}
-
 List<List<dynamic>> latitudeBandConstants = [
   [2, 1100000.0, -72.0, -80.5, 0.0],
   [3, 2000000.0, -64.0, -72.0, 2000000.0],
@@ -142,7 +137,12 @@ LatLng mgrsToLatLon(MGRS mgrs, Ellipsoid ells) {
   return UTMREFtoLatLon(utm, ells);
 }
 
-LatLng parseMGRS(String input, Ellipsoid ells) {
+LatLng parseMgrsToLatLon(String input, Ellipsoid ells) {
+  var coords = parseMGRS(input);
+  return coords == null ? null : mgrsToLatLon(coords, ells);
+}
+
+MGRS parseMGRS(String input) {
   RegExp regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s?([A-Z]{2})\s?([0-9\.]+)\s+([0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);
   var _lonZoneString = '';
@@ -188,7 +188,7 @@ LatLng parseMGRS(String input, Ellipsoid ells) {
   var zone = UTMZone(_lonZone, _lonZone, _latZone);
   var mgrs = MGRS(zone, _digraph, _easting, _northing);
 
-  return mgrsToLatLon(mgrs, ells);
+  return mgrs;
 }
 
 // East values must be between 1 and 99 999. Missing digits are filled in at the back.

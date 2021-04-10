@@ -43,61 +43,61 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
               try {
                 switch (options[MDT_COORDINATEFORMATS_OPTION_FORMAT]) {
                   case keyCoordsDEC:
-                    coords = parseDEC(input, wholeString: true);
+                    coords = parseDecToLatLon(input, wholeString: true);
                     break;
                   case keyCoordsDMM:
-                    coords = parseDMM(input, wholeString: true);
+                    coords = parseDmmToLatLon(input, wholeString: true);
                     break;
                   case keyCoordsDMS:
-                    coords = parseDMS(input, wholeString: true);
+                    coords = parseDmsToLatLon(input, wholeString: true);
                     break;
                   case keyCoordsUTM:
-                    coords = parseUTM(input, defaultEllipsoid());
+                    coords = parseUtmToLatLon(input, defaultEllipsoid());
                     break;
                   case keyCoordsMGRS:
-                    coords = parseMGRS(input, defaultEllipsoid());
+                    coords = parseMgrsToLatLon(input, defaultEllipsoid());
                     break;
                   case keyCoordsXYZ:
-                    coords = parseXYZ(input, defaultEllipsoid());
+                    coords = parseXyzToLatLon(input, defaultEllipsoid());
                     break;
                   case keyCoordsSwissGrid:
-                    coords = parseSwissGrid(input, defaultEllipsoid());
+                    coords = parseSwissGridToLatLon(input, defaultEllipsoid());
                     break;
                   case keyCoordsSwissGridPlus:
-                    coords = parseSwissGrid(input, defaultEllipsoid(), isSwissGridPlus: true);
+                    coords = parseSwissGridToLatLon(input, defaultEllipsoid(), isSwissGridPlus: true);
                     break;
                   case keyCoordsGaussKrueger:
-                    coords = parseGaussKrueger(input, defaultEllipsoid());
+                    coords = parseGaussKruegerToLatLon(input, defaultEllipsoid());
                     break;
                   case keyCoordsMaidenhead:
-                    coords = maidenheadToLatLon(input);
+                    coords = parseMaidenheadToLatLon(input);
                     break;
                   case keyCoordsMercator:
-                    coords = parseMercator(input, defaultEllipsoid());
+                    coords = parseMercatorToLatLon(input, defaultEllipsoid());
                     break;
                   case keyCoordsNaturalAreaCode:
-                    coords = parseNaturalAreaCode(input);
+                    coords = parseNaturalAreaCodeToLatLon(input);
                     break;
                   case keyCoordsGeohash:
-                    coords = geohashToLatLon(input);
+                    coords = parseGeohashToLatLon(input);
                     break;
                   case keyCoordsGeoHex:
-                    coords = geoHexToLatLon(input);
+                    coords = parseGeoHexToLatLon(input);
                     break;
                   case keyCoordsGeo3x3:
-                    coords = geo3x3ToLatLon(input);
+                    coords = parseGeo3x3ToLatLon(input);
                     break;
                   case keyCoordsOpenLocationCode:
-                    coords = openLocationCodeToLatLon(input);
+                    coords = parseOpenLocationCodeToLatLon(input);
                     break;
                   case keyCoordsQuadtree:
-                    coords = parseQuadtree(input);
+                    coords = parseQuadtreeToLatLon(input);
                     break;
                   case keyCoordsReverseWhereIGoWaldmeister:
-                    coords = parseWaldmeister(input);
+                    coords = parseWaldmeisterToLatLon(input);
                     break;
                   case keyCoordsSlippyMap:
-                    coords = parseSlippyMap(input);
+                    coords = parseSlippyMapToLatLon(input);
                     break;
                 }
               } catch (e) {}

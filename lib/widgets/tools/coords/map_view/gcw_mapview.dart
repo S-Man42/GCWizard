@@ -12,6 +12,7 @@ import 'package:flutter_map_tappable_polyline/flutter_map_tappable_polyline.dart
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
@@ -510,9 +511,9 @@ class GCWMapViewState extends State<GCWMapView> {
               if (pastedCoordinate == null) return;
 
               setState(() {
-                _persistanceAdapter.addMapPoint(pastedCoordinate.values.first,
+                _persistanceAdapter.addMapPoint(pastedCoordinate.values.first.toLatLng(),
                     coordinateFormat: {'format': pastedCoordinate.keys.first});
-                _mapController.move(pastedCoordinate.values.first, _mapController.zoom);
+                _mapController.move(pastedCoordinate.values.first.toLatLng(), _mapController.zoom);
               });
             }
             ;
@@ -769,7 +770,7 @@ class GCWMapViewState extends State<GCWMapView> {
     return _polylines;
   }
 
-  Map<String, LatLng> _parseCoords(text) {
+  Map<String, BaseCoordinates> _parseCoords(text) {
     var parsed = parseLatLon(text);
     if (parsed == null || parsed.length == 0) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));

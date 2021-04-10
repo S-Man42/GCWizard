@@ -32,7 +32,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseUTM(elem['text'], ells);
+        var _actual = parseUtmToLatLon(elem['text'], ells);
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

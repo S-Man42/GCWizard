@@ -15,7 +15,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('coord: ${elem['coord']}', () {
-        var _actual = latLonToMaidenhead(elem['coord']);
+        var _actual = latLonToMaidenhead(elem['coord']).toString();
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -37,7 +37,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('coord: ${elem['coord']}', () {
-        var _actual = maidenheadToLatLon(elem['coord']);
+        var _actual = parseMaidenheadToLatLon(elem['coord']);
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

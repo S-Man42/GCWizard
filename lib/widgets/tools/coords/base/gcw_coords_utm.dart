@@ -12,7 +12,7 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsUTM extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsUTM({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -50,7 +50,9 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var utm = latLonToUTM(widget.coordinates, defaultEllipsoid());
+      var utm = widget.coordinates is UTMREF ?
+          widget.coordinates as UTMREF :
+          latLonToUTM(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentLonZone['value'] = utm.zone.lonZone;
       _currentEasting['value'] = utm.easting;
       _currentNorthing['value'] = utm.northing;

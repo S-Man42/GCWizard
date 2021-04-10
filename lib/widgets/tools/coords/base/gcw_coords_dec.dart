@@ -13,7 +13,7 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsDEC extends StatefulWidget {
   final Function onChanged;
-  LatLng coordinates;
+  BaseCoordinates coordinates;
 
   GCWCoordsDEC({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -65,13 +65,16 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      _currentLatDegrees = widget.coordinates.latitude.abs().floor().toString();
-      _currentLatMilliDegrees = widget.coordinates.latitude.toString().split('.')[1];
-      _currentLatSign = coordinateSign(widget.coordinates.latitude);
+      var dec = widget.coordinates is DEC ?
+          widget.coordinates as DEC :
+          latLonToDEC(widget.coordinates.toLatLng());
+      _currentLatDegrees = dec.latitude.abs().floor().toString();
+      _currentLatMilliDegrees = dec.latitude.toString().split('.')[1];
+      _currentLatSign = coordinateSign(dec.latitude);
 
-      _currentLonDegrees = widget.coordinates.longitude.abs().floor().toString();
-      _currentLonMilliDegrees = widget.coordinates.longitude.toString().split('.')[1];
-      _currentLonSign = coordinateSign(widget.coordinates.longitude);
+      _currentLonDegrees =dec.longitude.abs().floor().toString();
+      _currentLonMilliDegrees = dec.longitude.toString().split('.')[1];
+      _currentLonSign = coordinateSign(dec.longitude);
 
       _LatDegreesController.text = _currentLatDegrees;
       _LatMilliDegreesController.text = _currentLatMilliDegrees;

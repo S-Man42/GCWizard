@@ -1,5 +1,7 @@
 // written by taisukef https://github.com/taisukef/Geo3x3/blob/master/Geo3x3.dart
 // CC0-1.0 License
+import 'package:flutter/material.dart';
+
 class Geo3x3 {
   static String encode(num lat, num lng, num level) {
     if (level < 1) {
@@ -40,11 +42,12 @@ class Geo3x3 {
       begin = 1;
     } else if (c == '+' || c == 'E') {
       begin = 1;
-    }
+    } else
+      return null;
     final clen = code.length;
     for (int i = begin; i < clen; i++) {
       var n = "0123456789".indexOf(code[i]);
-      if (n <= 0) break;
+      if (n <= 0) return null;
       unit /= 3;
       n--;
       lng += n % 3 * unit;

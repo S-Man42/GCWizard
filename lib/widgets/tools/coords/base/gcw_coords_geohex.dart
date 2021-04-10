@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_geohex_textinputformatter.dart';
 import 'package:latlong/latlong.dart';
 
 class GCWCoordsGeoHex extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsGeoHex({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -34,7 +35,10 @@ class GCWCoordsGeoHexState extends State<GCWCoordsGeoHex> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      _currentCoord = latLonToGeoHex(widget.coordinates, 20);
+      var geohHex = widget.coordinates is GeoHex ?
+          widget.coordinates as GeoHex :
+          latLonToGeoHex(widget.coordinates.toLatLng(), 20);
+      _currentCoord = geohHex.text;
 
       _controller.text = _currentCoord;
     }
@@ -55,7 +59,7 @@ class GCWCoordsGeoHexState extends State<GCWCoordsGeoHex> {
 
   _setCurrentValueAndEmitOnChange() {
     try {
-      LatLng coords = geoHexToLatLon(_currentCoord);
+      LatLng coords = parseGeoHexToLatLon(_currentCoord);
       widget.onChanged(coords);
     } catch (e) {}
   }

@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geo3x3.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_geo3x3_textinputformatter.dart';
 import 'package:latlong/latlong.dart';
 
 class GCWCoordsGeo3x3 extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsGeo3x3({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -35,7 +36,10 @@ class GCWCoordsGeo3x3State extends State<GCWCoordsGeo3x3> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      _currentCoord = latLonToGeo3x3(widget.coordinates, 20);
+      var geo3x3 = widget.coordinates is Geo3x3 ?
+          widget.coordinates as Geo3x3 :
+          latLonToGeo3x3(widget.coordinates.toLatLng(), 20);
+      _currentCoord = geo3x3.text;
 
       _controller.text = _currentCoord;
     }
@@ -56,7 +60,7 @@ class GCWCoordsGeo3x3State extends State<GCWCoordsGeo3x3> {
 
   _setCurrentValueAndEmitOnChange() {
     try {
-      LatLng coords = geo3x3ToLatLon(_currentCoord);
+      LatLng coords = parseGeo3x3ToLatLon(_currentCoord);
       widget.onChanged(coords);
     } catch (e) {}
   }

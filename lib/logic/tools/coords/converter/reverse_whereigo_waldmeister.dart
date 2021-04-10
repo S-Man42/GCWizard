@@ -2,7 +2,10 @@ import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:latlong/latlong.dart';
 
-LatLng waldmeisterToLatLon(int a, int b, int c) {
+LatLng waldmeisterToLatLon(Waldmeister waldmeister) {
+  int a = int.tryParse(waldmeister.a);
+  int b = int.tryParse(waldmeister.b);
+  int c = int.tryParse(waldmeister.c);
   int _latSign = 1;
   int _lonSign = 1;
   double _lon, _lat;
@@ -62,7 +65,7 @@ LatLng waldmeisterToLatLon(int a, int b, int c) {
   return decToLatLon(DEC(_lat, _lon));
 }
 
-List<String> latLonToWaldmeister(LatLng coord) {
+Waldmeister latLonToWaldmeister(LatLng coord) {
   var _lat = coord.latitude;
   var _lon = coord.longitude;
 
@@ -201,15 +204,19 @@ List<String> latLonToWaldmeister(LatLng coord) {
         ((_lon % 10000000 - _lon % 1000000) ~/ 1000000).toString();
   }
 
-  return [a, b, c];
+  return Waldmeister(a, b, c);
 }
 
 String latLonToWaldmeisterString(LatLng coord) {
-  var waldmeister = latLonToWaldmeister(coord);
-  return waldmeister.join('\n');
+  return latLonToWaldmeister(coord).toString();
 }
 
-LatLng parseWaldmeister(String input) {
+LatLng parseWaldmeisterToLatLon(String input) {
+  var coords = parseWaldmeister(input);
+  return coords == null ? null : waldmeisterToLatLon(coords);
+}
+
+Waldmeister parseWaldmeister(String input) {
   RegExp regExp = RegExp(r'^\s*([0-9]+)(\s*,\s*|\s+)([0-9]+)(\s*,\s*|\s+)([0-9]+)\s*$');
   var matches = regExp.allMatches(input);
   if (matches.length == 0) return null;
@@ -222,5 +229,5 @@ LatLng parseWaldmeister(String input) {
 
   if (a == null || b == null || c == null) return null;
 
-  return waldmeisterToLatLon(a, b, c);
+  return Waldmeister(match.group(1), match.group(3), match.group(5));
 }

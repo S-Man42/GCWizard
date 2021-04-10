@@ -67,7 +67,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseDMS(elem['text']);
+        var _actual = parseDmsToLatLon(elem['text']);
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

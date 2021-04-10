@@ -1,4 +1,5 @@
 import 'package:latlong/latlong.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 
 List<Map<String, String>> _alphabet = [
   {'character': '0', 'binary': '00000'},
@@ -75,7 +76,7 @@ String _generateBinaryFromCoord(double coord, double lowerBound, double upperBou
   return binaryOut;
 }
 
-String latLonToGeohash(LatLng coords, int geohashLength) {
+Geohash latLonToGeohash(LatLng coords, int geohashLength) {
   int binaryCoordLength = (geohashLength / 2).floor() * _binaryLength;
 
   String latBinaryOut = _generateBinaryFromCoord(coords.latitude, -90.0, 90.0, binaryCoordLength);
@@ -88,10 +89,14 @@ String latLonToGeohash(LatLng coords, int geohashLength) {
     i++;
   }
 
-  return _splitIntoBinaryChunks(binary).map((chunk) => _getCharacterByBinary(chunk)).join();
+  return Geohash(_splitIntoBinaryChunks(binary).map((chunk) => _getCharacterByBinary(chunk)).join());
 }
 
-LatLng geohashToLatLon(String geohash) {
+LatLng geohashToLatLon(Geohash geohash) {
+  return parseGeohashToLatLon(geohash.text);
+}
+
+LatLng parseGeohashToLatLon(String geohash) {
   try {
     geohash = geohash.toLowerCase();
     var binary = geohash.split('').map((character) => _getBinaryByCharacter(character)).join();
@@ -115,6 +120,10 @@ LatLng geohashToLatLon(String geohash) {
   } catch (e) {}
 
   return null;
+}
+
+Geohash parseGeohash(String geohash) {
+  return parseGeohashToLatLon(geohash) == null ? null : Geohash(geohash);
 }
 
 double _getCoordFromBinary(String binary, double lowerBound, double upperBound) {

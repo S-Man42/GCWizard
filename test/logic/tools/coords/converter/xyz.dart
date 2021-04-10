@@ -19,7 +19,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseXYZ(elem['text'], ells);
+        var _actual = parseXyzToLatLon(elem['text'], ells);
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

@@ -14,7 +14,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = openLocationCodeToLatLon(elem['text']);
+        var _actual = parseOpenLocationCodeToLatLon(elem['text']);
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

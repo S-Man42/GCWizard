@@ -8,7 +8,7 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsGaussKrueger extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
   final String subtype;
 
   const GCWCoordsGaussKrueger({Key key, this.onChanged, this.coordinates, this.subtype: keyCoordsGaussKruegerGK1})
@@ -48,10 +48,12 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var gauskrueger = latLonToGaussKrueger(widget.coordinates, _currentSubtype, defaultEllipsoid());
-      _currentEasting['value'] = gauskrueger.easting;
-      _currentNorthing['value'] = gauskrueger.northing;
-      _currentSubtype = gauskrueger.code;
+      var gausskrueger = widget.coordinates is GaussKrueger ?
+          widget.coordinates as GaussKrueger :
+          latLonToGaussKrueger(widget.coordinates.toLatLng(), _currentSubtype, defaultEllipsoid());
+      _currentEasting['value'] = gausskrueger.easting;
+      _currentNorthing['value'] = gausskrueger.northing;
+      _currentSubtype = gausskrueger.code;
 
       _eastingController.text = _currentEasting['value'].toString();
       _northingController.text = _currentNorthing['value'].toString();

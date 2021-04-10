@@ -17,7 +17,6 @@ import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:latlong/latlong.dart';
 
 final PATTERN_NO_NUMBERS = r'\s+?';
@@ -35,11 +34,11 @@ var regexEnd = '';
 
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
-Map<String, LatLng> parseLatLon(String text, {wholeString = false}) {
-  var coords = Map<String, LatLng>();
+Map<String, BaseCoordinates> parseLatLon(String text, {wholeString = false}) {
+  var coords = Map<String, BaseCoordinates>();
 
   try {
-    LatLng coord = parseDMS(text, wholeString: wholeString);
+    BaseCoordinates coord = parseDMS(text, wholeString: wholeString);
     if (coord != null) coords.addAll({keyCoordsDMS: coord});
 
     coord = parseDMM(text, wholeString: wholeString);
@@ -48,46 +47,46 @@ Map<String, LatLng> parseLatLon(String text, {wholeString = false}) {
     coord = parseDEC(text, wholeString: wholeString);
     if (coord != null) coords.addAll({keyCoordsDEC: coord});
 
-    coord = parseUTM(text, defaultEllipsoid());
+    coord = parseUTM(text);
     if (coord != null) coords.addAll({keyCoordsUTM: coord});
 
-    coord = parseMGRS(text, defaultEllipsoid());
+    coord = parseMGRS(text);
     if (coord != null) coords.addAll({keyCoordsMGRS: coord});
 
     coord = parseWaldmeister(text);
     if (coord != null) coords.addAll({keyCoordsReverseWhereIGoWaldmeister: coord});
 
-    coord = parseXYZ(text, defaultEllipsoid());
+    coord = parseXYZ(text);
     if (coord != null) coords.addAll({keyCoordsXYZ: coord});
 
-    coord = parseSwissGrid(text, defaultEllipsoid());
+    coord = parseSwissGrid(text);
     if (coord != null) coords.addAll({keyCoordsSwissGrid: coord});
 
-    coord = parseSwissGrid(text, defaultEllipsoid(), isSwissGridPlus: true);
+    coord = parseSwissGrid(text, isSwissGridPlus: true);
     if (coord != null) coords.addAll({keyCoordsSwissGridPlus: coord});
 
-    coord = parseGaussKrueger(text, defaultEllipsoid());
+    coord = parseGaussKrueger(text);
     if (coord != null) coords.addAll({keyCoordsGaussKrueger: coord});
 
-    coord = maidenheadToLatLon(text);
+    coord = parseMaidenhead(text);
     if (coord != null) coords.addAll({keyCoordsMaidenhead: coord});
 
-    coord = parseMercator(text, defaultEllipsoid());
+    coord = parseMercator(text);
     if (coord != null) coords.addAll({keyCoordsMercator: coord});
 
     coord = parseNaturalAreaCode(text);
     if (coord != null) coords.addAll({keyCoordsNaturalAreaCode: coord});
 
-    coord = geohashToLatLon(text);
+    coord = parseGeohash(text);
     if (coord != null) coords.addAll({keyCoordsGeohash: coord});
 
-    coord = geoHexToLatLon(text);
+    coord = parseGeoHex(text);
     if (coord != null) coords.addAll({keyCoordsGeoHex: coord});
 
-    coord = geo3x3ToLatLon(text);
+    coord = parseGeo3x3(text);
     if (coord != null) coords.addAll({keyCoordsGeo3x3: coord});
 
-    coord = openLocationCodeToLatLon(text);
+    coord = parseOpenLocationCode(text);
     if (coord != null) coords.addAll({keyCoordsOpenLocationCode: coord});
 
     coord = parseQuadtree(text);
@@ -102,13 +101,13 @@ Map<String, LatLng> parseLatLon(String text, {wholeString = false}) {
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
 Map<String, dynamic> parseStandardFormats(String text, {wholeString = false}) {
-  LatLng coord = parseDMS(text, wholeString: wholeString);
+  LatLng coord = parseDmsToLatLon(text, wholeString: wholeString);
   if (coord != null) return {'format': keyCoordsDMS, 'coordinate': coord};
 
-  coord = parseDMM(text, wholeString: wholeString);
+  coord = parseDmmToLatLon(text, wholeString: wholeString);
   if (coord != null) return {'format': keyCoordsDMM, 'coordinate': coord};
 
-  coord = parseDEC(text, wholeString: wholeString);
+  coord = parseDecToLatLon(text, wholeString: wholeString);
   if (coord != null) return {'format': keyCoordsDEC, 'coordinate': coord};
 
   return null;

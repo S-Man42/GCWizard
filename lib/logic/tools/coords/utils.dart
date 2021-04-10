@@ -53,45 +53,45 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
 
   switch (_outputFormat['format']) {
     case keyCoordsDEC:
-      return latLonToDECString(_coords, precision);
+      return latLonToDEC(_coords).toString(precision);
     case keyCoordsDMM:
-      return latLonToDMMString(_coords, precision);
+      return latLonToDMM(_coords).toString(precision);
     case keyCoordsDMS:
-      return latLonToDMSString(_coords, precision);
+      return latLonToDMS(_coords).toString(precision);
     case keyCoordsUTM:
-      return latLonToUTMString(_coords, ells);
+      return latLonToUTM(_coords, ells).toString();
     case keyCoordsMGRS:
-      return latLonToMGRSString(_coords, ells);
+      return latLonToMGRS(_coords, ells).toString();
     case keyCoordsXYZ:
-      return latLonToXYZString(_coords, ells);
+      return latLonToXYZ(_coords, ells).toString();
     case keyCoordsSwissGrid:
-      return decToSwissGridString(_coords, ells);
+      return latLonToSwissGrid(_coords, ells).toString();
     case keyCoordsSwissGridPlus:
-      return latLonToSwissGridPlusString(_coords, ells);
+      return latLonToSwissGridPlus(_coords, ells).toString();
     case keyCoordsGaussKrueger:
-      return latLonToGaussKruegerString(_coords, _getGKCode(), ells);
+      return latLonToGaussKrueger(_coords, _getGKCode(), ells).toString();
     case keyCoordsMaidenhead:
-      return latLonToMaidenhead(_coords);
+      return latLonToMaidenhead(_coords).toString();
     case keyCoordsMercator:
       return latLonToMercator(_coords, ells).toString();
     case keyCoordsNaturalAreaCode:
       return latLonToNaturalAreaCode(_coords).toString();
     case keyCoordsSlippyMap:
-      return latLonToSlippyMapString(_coords, double.tryParse(_outputFormat['subtype']));
+      return latLonToSlippyMap(_coords, double.tryParse(_outputFormat['subtype'])).toString();
     case keyCoordsGeohash:
-      return latLonToGeohash(_coords, 14);
+      return latLonToGeohash(_coords, 14).toString();
     case keyCoordsGeoHex:
-      return latLonToGeoHex(_coords, 20);
+      return latLonToGeoHex(_coords, 20).toString();
     case keyCoordsGeo3x3:
-      return latLonToGeo3x3(_coords, 20);
+      return latLonToGeo3x3(_coords, 20).toString();
     case keyCoordsOpenLocationCode:
-      return latLonToOpenLocationCode(_coords, codeLength: 14);
+      return latLonToOpenLocationCode(_coords, codeLength: 14).toString();
     case keyCoordsQuadtree:
-      return latLonToQuadtree(_coords).join();
+      return latLonToQuadtree(_coords).toString();
     case keyCoordsReverseWhereIGoWaldmeister:
-      return latLonToWaldmeisterString(_coords);
+      return latLonToWaldmeisterString(_coords).toString();
     default:
-      return latLonToDECString(_coords);
+      return latLonToDEC(_coords).toString();
   }
 }
 

@@ -17,6 +17,7 @@
 import 'dart:math';
 
 import 'package:latlong/latlong.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 
 /// A separator used to break the code into two parts to aid memorability.
 const separator = '+'; // 43 Ascii
@@ -102,7 +103,7 @@ const _decode = <int>[
 
 bool _matchesPattern(String string, Pattern pattern) => string.indexOf(pattern) >= 0;
 
-bool isValid(String code) {
+bool _isValid(String code) {
   if (code == null || code.length == 1) {
     return false;
   }
@@ -152,14 +153,14 @@ bool isValid(String code) {
   return code.codeUnits.every(filterCallback);
 }
 
-num clipLatitude(num latitude) => latitude.clamp(-90.0, 90.0);
+num _clipLatitude(num latitude) => latitude.clamp(-90.0, 90.0);
 
 /// Compute the latitude precision value for a given code length.
 ///
 /// Lengths <= 10 have the same precision for latitude and longitude, but
 /// lengths > 10 have different precisions due to the grid method having fewer
 /// columns than rows.
-num computeLatitudePrecision(int codeLength) {
+num _computeLatitudePrecision(int codeLength) {
   if (codeLength <= 10) {
     return pow(encodingBase, (codeLength ~/ -2) + 2);
   }
@@ -167,7 +168,7 @@ num computeLatitudePrecision(int codeLength) {
 }
 
 /// Normalize a [longitude] into the range -180 to 180, not including 180.
-num normalizeLongitude(num longitude) {
+num _normalizeLongitude(num longitude) {
   while (longitude < -180) {
     longitude += 360;
   }
@@ -181,9 +182,9 @@ num normalizeLongitude(num longitude) {
 ///
 /// A short Open Location Code is a sequence created by removing four or more
 /// digits from an Open Location Code. It must include a separator character.
-bool isShort(String code) {
+bool _isShort(String code) {
   // Check it's valid.
-  if (!isValid(code)) {
+  if (!_isValid(code)) {
     return false;
   }
   // If there are less characters than expected before the SEPARATOR.
@@ -200,12 +201,12 @@ bool isShort(String code) {
 /// and also that the latitude and longitude values are legal. If the prefix
 /// character is present, it must be the first character. If the separator
 /// character is present, it must be after four characters.
-bool isFull(String code) {
-  if (!isValid(code)) {
+bool _isFull(String code) {
+  if (!_isValid(code)) {
     return false;
   }
   // If it's short, it's not full.
-  if (isShort(code)) {
+  if (_isShort(code)) {
     return false;
   }
   // Work out what the first latitude character indicates for latitude.
@@ -242,8 +243,8 @@ bool isFull(String code) {
 /// to the range -180 to 180.
 /// * [codeLength]: The number of significant digits in the output code, not
 /// including any separator characters.
-String latLonToOpenLocationCode(LatLng coords, {int codeLength = pairCodeLength}) {
-  if (codeLength == 0) return '';
+OpenLocationCode latLonToOpenLocationCode(LatLng coords, {int codeLength = pairCodeLength}) {
+  if (codeLength == 0) return null;
 
   if (codeLength % 2 == 1) codeLength--;
 
@@ -288,17 +289,25 @@ String latLonToOpenLocationCode(LatLng coords, {int codeLength = pairCodeLength}
 
   // If we don't need to pad the code, return the requested section.
   if (codeLength >= separatorPosition) {
-    return code.substring(0, codeLength + 1);
+    return OpenLocationCode(code.substring(0, codeLength + 1));
   }
 
   // Pad and return the code.
-  return code.substring(0, codeLength) + (padding * (separatorPosition - codeLength)) + separator;
+  return OpenLocationCode(code.substring(0, codeLength) + (padding * (separatorPosition - codeLength)) + separator);
+}
+
+OpenLocationCode parseOpenLocationCode(String code) {
+  return parseOpenLocationCodeToLatLon(code) == null ? null : OpenLocationCode(code);
+}
+
+LatLng openLocationCodeToLatLon(OpenLocationCode openLocationCode) {
+  return parseOpenLocationCodeToLatLon(openLocationCode.text);
 }
 
 /// Decodes an Open Location Code into the location coordinates.
-LatLng openLocationCodeToLatLon(String code) {
+LatLng parseOpenLocationCodeToLatLon(String code) {
   try {
-    if (!isFull(code)) {
+    if (!_isFull(code)) {
       return null;
     }
     // Strip out separator character (we've already established the code is

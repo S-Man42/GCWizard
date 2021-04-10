@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_maidenhead_textinputformatter.dart';
 import 'package:latlong/latlong.dart';
 
 class GCWCoordsMaidenhead extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsMaidenhead({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -34,7 +35,10 @@ class GCWCoordsMaidenheadState extends State<GCWCoordsMaidenhead> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      _currentCoord = latLonToMaidenhead(widget.coordinates);
+      var maidenhead = widget.coordinates is Maidenhead ?
+          widget.coordinates as Maidenhead :
+          latLonToMaidenhead(widget.coordinates.toLatLng());
+      _currentCoord = maidenhead.text;
 
       _controller.text = _currentCoord;
     }
@@ -57,7 +61,7 @@ class GCWCoordsMaidenheadState extends State<GCWCoordsMaidenhead> {
     var maidenhead = _currentCoord;
     if (maidenhead.length % 2 == 1) maidenhead = maidenhead.substring(0, maidenhead.length - 1);
 
-    LatLng coords = maidenheadToLatLon(maidenhead);
+    LatLng coords = parseMaidenheadToLatLon(maidenhead);
     widget.onChanged(coords);
   }
 }

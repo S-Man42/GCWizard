@@ -7,7 +7,7 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsXYZ extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsXYZ({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -43,7 +43,9 @@ class GCWCoordsXYZState extends State<GCWCoordsXYZ> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var xyz = latLonToXYZ(widget.coordinates, defaultEllipsoid());
+      var xyz = widget.coordinates is XYZ ?
+          widget.coordinates as XYZ :
+          latLonToXYZ(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentX = xyz.x;
       _currentY = xyz.y;
       _currentZ = xyz.z;

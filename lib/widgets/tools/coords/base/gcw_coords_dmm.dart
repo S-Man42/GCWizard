@@ -13,7 +13,7 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsDMM extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsDMM({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -82,7 +82,9 @@ class GCWCoordsDMMState extends State<GCWCoordsDMM> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var dmm = latLonToDMM(widget.coordinates);
+      var dmm = widget.coordinates is DMM ?
+          widget.coordinates as DMM :
+          latLonToDMM(widget.coordinates.toLatLng());
       var lat = dmm.latitude.formatParts(10);
       var lon = dmm.longitude.formatParts(10);
 

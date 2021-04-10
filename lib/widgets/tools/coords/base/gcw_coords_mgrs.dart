@@ -12,7 +12,7 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsMGRS extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsMGRS({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -52,8 +52,10 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.coordinates != null) {
-      var mgrs = latLonToMGRS(widget.coordinates, defaultEllipsoid());
+      if (widget.coordinates != null) {
+        var mgrs = widget.coordinates is MGRS ?
+            widget.coordinates as MGRS :
+            latLonToMGRS(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentEasting['value'] = mgrs.easting;
       _currentNorthing['value'] = mgrs.northing;
 

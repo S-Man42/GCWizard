@@ -6,7 +6,7 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsSlippyMap extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
   final String zoom;
 
   const GCWCoordsSlippyMap({Key key, this.onChanged, this.coordinates, this.zoom: '10.0'}) : super(key: key);
@@ -45,7 +45,9 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var slippyMap = latLonToSlippyMap(widget.coordinates, double.tryParse(widget.zoom));
+      var slippyMap = widget.coordinates is SlippyMap ?
+          widget.coordinates as SlippyMap :
+          latLonToSlippyMap(widget.coordinates.toLatLng(), double.tryParse(widget.zoom));
       _currentX['value'] = slippyMap.x;
       _currentY['value'] = slippyMap.y;
 

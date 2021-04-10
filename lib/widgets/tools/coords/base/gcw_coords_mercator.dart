@@ -8,7 +8,7 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsMercator extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsMercator({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -40,7 +40,9 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var mercator = latLonToMercator(widget.coordinates, defaultEllipsoid());
+      var mercator = widget.coordinates is Mercator ?
+          widget.coordinates as Mercator :
+          latLonToMercator(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentEasting['value'] = mercator.easting;
       _currentNorthing['value'] = mercator.northing;
 

@@ -14,17 +14,6 @@ DEC latLonToDEC(LatLng coord) {
   return DEC(coord.latitude, coord.longitude);
 }
 
-String latLonToDECString(LatLng coord, [int precision]) {
-  if (precision == null) precision = 10;
-
-  if (precision < 1) precision = 1;
-
-  String fixedDigits = '0' * min(precision, 3);
-  String variableDigits = precision > 3 ? '#' * (precision - 3) : '';
-
-  return '${NumberFormat('00.' + fixedDigits + variableDigits).format(coord.latitude)}\n${NumberFormat('000.' + fixedDigits + variableDigits).format(coord.longitude)}';
-}
-
 DEC normalize(DEC coord) {
   return normalizeDEC(coord);
 }
@@ -85,7 +74,12 @@ DEC normalizeDEC(DEC coord) {
   return DEC(normalizedLat, normalizedLon);
 }
 
-LatLng parseDEC(String text, {wholeString = false}) {
+LatLng parseDecToLatLon(String text, {wholeString: false}) {
+  var coords = parseDEC(text, wholeString : wholeString);
+  return coords == null ? null : decToLatLon(coords);
+}
+
+DEC parseDEC(String text, {wholeString = false}) {
   text = prepareInput(text, wholeString: wholeString);
   if (text == null) return null;
 
@@ -113,13 +107,13 @@ LatLng parseDEC(String text, {wholeString = false}) {
       lonDegrees = lonSign * double.parse('${matches.group(5)}.0');
     }
 
-    return decToLatLon(DEC(latDegrees, lonDegrees));
+    return DEC(latDegrees, lonDegrees);
   }
 
   return null;
 }
 
-LatLng _parseDECTrailingSigns(String text) {
+DEC _parseDECTrailingSigns(String text) {
   RegExp regex = RegExp(PATTERN_DEC_TRAILINGSIGN + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
@@ -140,7 +134,7 @@ LatLng _parseDECTrailingSigns(String text) {
       lonDegrees = lonSign * double.parse('${matches.group(4)}.0');
     }
 
-    return decToLatLon(DEC(latDegrees, lonDegrees));
+    return DEC(latDegrees, lonDegrees);
   }
 
   return null;

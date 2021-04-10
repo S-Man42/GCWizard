@@ -22,7 +22,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseMGRS(elem['text'], ells);
+        var _actual = parseMgrsToLatLon(elem['text'], ells);
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

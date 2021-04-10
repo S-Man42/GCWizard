@@ -1,7 +1,16 @@
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:latlong/latlong.dart';
 
-LatLng maidenheadToLatLon(String maidenhead) {
+LatLng maidenheadToLatLon(Maidenhead maidenhead) {
+  return parseMaidenheadToLatLon(maidenhead.text);
+}
+
+Maidenhead parseMaidenhead(String maidenhead) {
+  return parseMaidenheadToLatLon(maidenhead) == null ? null : Maidenhead(maidenhead);
+}
+
+LatLng parseMaidenheadToLatLon(String maidenhead) {
   if (maidenhead == null || maidenhead == '') return null;
   maidenhead = maidenhead.toUpperCase();
 
@@ -44,7 +53,7 @@ LatLng maidenheadToLatLon(String maidenhead) {
   return LatLng(lat, lon);
 }
 
-String latLonToMaidenhead(LatLng coord) {
+Maidenhead latLonToMaidenhead(LatLng coord) {
   var lon = coord.longitude + 180.0;
   var lat = coord.latitude + 90.0;
 
@@ -104,5 +113,5 @@ String latLonToMaidenhead(LatLng coord) {
     ++i;
   }
 
-  return out;
+  return Maidenhead(out);
 }

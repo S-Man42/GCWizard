@@ -44,17 +44,16 @@ DMSPart _doubleToDMSPart(double value) {
   return DMSPart(_sign, _degrees, _minutes, _seconds);
 }
 
-String latLonToDMSString(LatLng coord, [int precision]) {
-  var dms = latLonToDMS(coord);
-
-  return '${dms.latitude.format(precision)}\n${dms.longitude.format(precision)}';
-}
-
 DMS normalize(DMS coord) {
   return _DECToDMS(_DMSToDEC(coord));
 }
 
-LatLng parseDMS(String text, {wholeString = false}) {
+LatLng parseDmsToLatLon(String text, {wholeString = false}) {
+  var coords = parseDMS(text, wholeString : wholeString);
+  return coords == null ? null : dmsToLatLon(coords);
+}
+
+DMS parseDMS(String text, {wholeString = false}) {
   text = prepareInput(text, wholeString: wholeString);
   if (text == null) return null;
 
@@ -87,13 +86,15 @@ LatLng parseDMS(String text, {wholeString = false}) {
     }
     var lon = DMSLongitude(lonSign, lonDegrees, lonMinutes, lonSeconds);
 
-    return dmsToLatLon(DMS(lat, lon));
+    return DMS(lat, lon);
   }
 
   return null;
 }
 
-LatLng _parseDMSTrailingSigns(String text) {
+
+
+DMS _parseDMSTrailingSigns(String text) {
   RegExp regex = RegExp(PATTERN_DMS_TRAILINGSIGN + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {
     var matches = regex.firstMatch(text);
@@ -120,7 +121,7 @@ LatLng _parseDMSTrailingSigns(String text) {
     }
     var lon = DMSLongitude(lonSign, lonDegrees, lonMinutes, lonSeconds);
 
-    return dmsToLatLon(DMS(lat, lon));
+    return DMS(lat, lon);
   }
 
   return null;

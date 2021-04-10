@@ -8,7 +8,7 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsSwissGrid extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsSwissGrid({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -40,7 +40,9 @@ class GCWCoordsSwissGridState extends State<GCWCoordsSwissGrid> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var swissGrid = latLonToSwissGrid(widget.coordinates, defaultEllipsoid());
+      var swissGrid = widget.coordinates is SwissGrid ?
+          widget.coordinates as SwissGrid :
+          latLonToSwissGrid(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentEasting['value'] = swissGrid.easting;
       _currentNorthing['value'] = swissGrid.northing;
 

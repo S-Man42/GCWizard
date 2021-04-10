@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 import 'package:latlong/latlong.dart';
 
 class GCWCoordsOpenLocationCode extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsOpenLocationCode({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -36,7 +37,10 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      _currentCoord = latLonToOpenLocationCode(widget.coordinates, codeLength: 14);
+      var openLocationCode = widget.coordinates is OpenLocationCode ?
+          widget.coordinates as OpenLocationCode :
+          latLonToOpenLocationCode(widget.coordinates.toLatLng(), codeLength: 14);
+      _currentCoord = openLocationCode.text;
 
       _controller.text = _currentCoord;
     }
@@ -56,7 +60,7 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
 
   _setCurrentValueAndEmitOnChange() {
     try {
-      LatLng coords = openLocationCodeToLatLon(_currentCoord);
+      LatLng coords = parseOpenLocationCodeToLatLon(_currentCoord);
       widget.onChanged(coords);
     } catch (e) {}
   }
