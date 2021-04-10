@@ -3,7 +3,6 @@ import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 import 'package:latlong/latlong.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 class GCWCoordsQuadtree extends StatefulWidget {
   final Function onChanged;
@@ -20,7 +19,7 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
   var _currentCoord = '';
 
   var _maskInputFormatter =
-      WrapperForMaskTextInputFormatter(mask: '#' * (kIsWeb ? 30 : 50), filter: {"#": RegExp(r'[0123]')});
+      WrapperForMaskTextInputFormatter(mask: '#' * 100, filter: {"#": RegExp(r'[0123]')});
 
   @override
   void initState() {
@@ -56,9 +55,16 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    try {
-      LatLng coords = quadtreeToLatLon(_currentCoord.split('').map((character) => int.tryParse(character)).toList());
-      widget.onChanged(coords);
-    } catch (e) {}
+    var elements = _currentCoord.split('').map((character) => int.tryParse(character)).toList();
+
+    while (elements.length > 0) {
+      try {
+        LatLng coords = quadtreeToLatLon(elements);
+        widget.onChanged(coords);
+        break;
+      } catch (e) {
+        elements = elements.sublist(0, elements.length - 1);
+      }
+    }
   }
 }
