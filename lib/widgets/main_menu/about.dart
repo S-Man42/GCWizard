@@ -147,6 +147,7 @@ class AboutState extends State<About> {
                             'Michael D. (Symbol Tables)',
                             'Nina \'nike1972\' G. (Nina\'s Schmierblo(g)ck) (Manual)',
                             '\'moenk\' (GK Coords)',
+                            '\'radioscout\' (Research)',
                             '\'Schnatt\' (Symbol Tables)',
                             'Udo J. (Code)',
                             '\'wollpirat\' (Food, Tea & more)'
@@ -182,7 +183,6 @@ class AboutState extends State<About> {
                     '\'Pamakaru\'',
                     'Paweł B.',
                     'Peter S.-H.',
-                    '\'radioscout\'',
                     '\'radlerandi\'',
                     '\'Sechsfüssler\'',
                     'Stefan J.',
