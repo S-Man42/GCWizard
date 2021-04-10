@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -12,7 +13,8 @@ class VanitySingleNumbers extends StatefulWidget {
 
 class VanitySingleNumbersState extends State<VanitySingleNumbers> {
   var _currentInput = '';
-  var _currentNumberForSpaceMode = GCWSwitchPosition.right;
+
+  PhoneModel _currentModel = SIEMENS_ME45;
 
   @override
   Widget build(BuildContext context) {
@@ -25,24 +27,40 @@ class VanitySingleNumbersState extends State<VanitySingleNumbers> {
             });
           },
         ),
-        GCWTwoOptionsSwitch(
-          title: i18n(context, 'vanity_numberforspace'),
-          leftValue: '0',
-          rightValue: '1',
-          value: _currentNumberForSpaceMode,
-          onChanged: (value) {
-            setState(() {
-              _currentNumberForSpaceMode = value;
-            });
-          },
-        ),
+        GCWDropDownButton(
+            value: _currentModel,
+            onChanged: (newValue) {
+              setState(() {
+                _currentModel = newValue;
+              });
+            },
+            items: PHONE_MODELS.map((model) {
+              var spaceText;
+              switch (model.keySpace) {
+                case PhoneKeySpace.SPACE_ON_KEY_0:
+                  spaceText = i18n(context, 'vanity_numberforspace_0');
+                  break;
+                case PhoneKeySpace.SPACE_ON_KEY_1:
+                  spaceText = i18n(context, 'vanity_numberforspace_1');
+                  break;
+              }
+
+              return GCWDropDownMenuItem(value: model, child: '$spaceText (${model.name})');
+            }).toList()),
         GCWDefaultOutput(child: _buildOutput())
       ],
     );
   }
 
   _buildOutput() {
-    return encryptVanitySingleNumbers(_currentInput,
-        numberForSpace: _currentNumberForSpaceMode == GCWSwitchPosition.right ? '1' : '0');
+    return encodeVanitySingleNumbers(_currentInput, _currentModel);
   }
+}
+
+GCWDropDownButton buildVanityPhoneDropDownButton() {
+  var modelList = [
+    {
+      'model': SIEMENS_ME45,
+    }
+  ];
 }

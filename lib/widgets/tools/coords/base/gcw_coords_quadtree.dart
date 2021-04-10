@@ -18,8 +18,7 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
   var _controller;
   var _currentCoord = '';
 
-  var _maskInputFormatter =
-      WrapperForMaskTextInputFormatter(mask: '#' * 100, filter: {"#": RegExp(r'[0123]')});
+  var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 100, filter: {"#": RegExp(r'[0123]')});
 
   @override
   void initState() {
