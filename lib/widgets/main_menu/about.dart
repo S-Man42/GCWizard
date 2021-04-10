@@ -162,6 +162,7 @@ class AboutState extends State<About> {
                       text: [
                     '\'4-Everus\'',
                     'Andreas E.',
+                    '\'Cycle73\'',
                     '\'Don Rodolphos\'',
                     '\'Headbanger-Berlin\'',
                     'Felix Z.',
