@@ -1374,7 +1374,7 @@
   "gccode_novalidgcode": "Aucun code GC valide",
   "generalcodebreakers_selection_title": "Solveurs génériques de code",
   "generalcodebreakers_selection_description": "Outils qui essaient d'identifier ou de casser des codes sans plus d'informations (Multi décodeur, Recherche de hachage, ...)",
-  "gray_title": "Code gris",
+  "gray_title": "Code Gray",
   "gray_description": "Encode un nombre binaire/décimal vers un nombre gris décimal/binaire",
   "gray_example": "4 | 100 → 6 | 110",
   "gray_mode": "Mode",
