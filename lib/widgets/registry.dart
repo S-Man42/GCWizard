@@ -7,10 +7,10 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_common.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_de.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_en.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_fr.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_fr.dart';
 import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
@@ -206,6 +206,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_ri
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/basic_interpreter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
@@ -413,6 +414,12 @@ class Registry {
           category: ToolCategory.CRYPTOGRAPHY,
           missingHelpLocales: [],
           searchStrings: [SEARCHSTRING_COMMON_BASE, SEARCHSTRING_DE_BASE, SEARCHSTRING_EN_BASE, SEARCHSTRING_FR_BASE]),
+      GCWTool(
+          tool: BasicInterpreter(),
+          i18nPrefix: 'basic_interpreter',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: [],
+          searchStrings: [SEARCHSTRING_COMMON_BASIC_INTERPRETER, SEARCHSTRING_DE_BASIC_INTERPRETER, SEARCHSTRING_EN_BASIC_INTERPRETER, SEARCHSTRING_FR_BASIC_INTERPRETER]),
       GCWTool(
           tool: BCDSelection(),
           i18nPrefix: 'bcd_selection',

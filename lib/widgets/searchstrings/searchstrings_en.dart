@@ -29,6 +29,7 @@ const SEARCHSTRING_EN_BASE16 = '';
 const SEARCHSTRING_EN_BASE32 = '';
 const SEARCHSTRING_EN_BASE64 = '';
 const SEARCHSTRING_EN_BASE85 = '';
+const SEARCHSTRING_EN_BASIC_INTERPRETER = 'programminglanguage';
 const SEARCHSTRING_EN_BCD = 'binary coded decimal distance';
 const SEARCHSTRING_EN_BCD1OF10 = '1of10 oneoften';
 const SEARCHSTRING_EN_BCD2OF5 = '2of5 twooffive';

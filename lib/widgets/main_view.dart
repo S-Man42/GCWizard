@@ -131,6 +131,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_ri
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/basic_interpreter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
@@ -232,6 +233,7 @@ class _MainViewState extends State<MainView> {
         className(BabylonNumbersSelection()),
         className(Bacon()),
         className(BaseSelection()),
+        className(BasicInterpreter()),
         className(BCDSelection()),
         className(Beatnik()),
         className(BeaufortSelection()),
