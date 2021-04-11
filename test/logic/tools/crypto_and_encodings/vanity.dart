@@ -71,6 +71,7 @@ void main() {
       {'expectedOutput' : 'abc01 .?\$&', 'model': NOKIA, 'input' : '2 22 222 00 1111111 0 1 111 7777777 ****************'},
       {'expectedOutput' : 'abc01 .?\$&', 'model': SAMSUNG, 'input' : '2 22 222 00 11111 0 1 111 **************************** ***********'},
       {'expectedOutput' : 'abc01 .?\$', 'model': SIEMENS, 'input' : '2 22 222 00000 11 1 0 000 11111'},
+      {'expectedOutput' : 'abc,¤. €p', 'model': SIEMENS, 'input' : '2 22 222 00 1111111 0 1 111 7777777 ****************'},
     ];
 
     _inputsToExpected.forEach((elem) {

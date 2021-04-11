@@ -26,6 +26,10 @@ final SIEMENS = PhoneModel(_PHONE_MODEL_KEY_SIEMENS, PhoneKeySpace.SPACE_ON_KEY_
 
 final PHONE_MODELS = [NOKIA, SAMSUNG, SIEMENS];
 
+PhoneModel getPhoneModelByName(String name) {
+  return PHONE_MODELS.firstWhere((model) => model.name == name);
+}
+
 final Map<String, String> _vanityNokiaSmall = {
   '1': '.,?!\'"1-()@/:_',
   '2': 'abc2äàáãâåæç',
@@ -230,6 +234,7 @@ String decodeVanityMultipleNumbers(String input, PhoneModel model) {
     case _PHONE_MODEL_KEY_SIEMENS:
       keyMapSmall = _vanitySiemensSmall;
       keyMapCapital = _vanitySiemensCapital;
+      numberBlocks.removeWhere((element) => element.startsWith('*'));
       break;
   }
 

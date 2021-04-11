@@ -484,7 +484,7 @@ const SEARCHSTRING_EN_TRITHEMIUS = '';
 const SEARCHSTRING_EN_UNITCONVERTER =
     'units converter lengths speeds velocity velocities energies energy force power times areas volumes denisities density masses bathtubs pressures angles temperatures degrees soccerfields';
 const SEARCHSTRING_EN_VANITY = 'telephone keys buttons numbers keypad sms mobile cellphone phoneword';
-const SEARCHSTRING_EN_VANITYMULTIPLENUMBERS = '';
+const SEARCHSTRING_EN_VANITYMULTIPLENUMBERS = 'multitap';
 const SEARCHSTRING_EN_VANITYSINGLENUMBERS = '';
 const SEARCHSTRING_EN_VIGENERE = '';
 const SEARCHSTRING_EN_VIGENEREBREAKER = '';
