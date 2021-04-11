@@ -262,6 +262,7 @@ String applyAlphabetModification(String input, AlphabetModificationMode mode) {
 bool isUpperCase(String letter) {
   if (letter == null || letter.length == 0) return false;
   if (letter == 'ß') return false;
+  if (letter == 'ẞ') return true; // Capital ß
 
   return (letter.toUpperCase() == letter);
 }
