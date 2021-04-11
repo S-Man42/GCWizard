@@ -234,7 +234,7 @@ String decodeVanityMultipleNumbers(String input, PhoneModel model) {
     case _PHONE_MODEL_KEY_SIEMENS:
       keyMapSmall = _vanitySiemensSmall;
       keyMapCapital = _vanitySiemensCapital;
-      numberBlocks.removeWhere((element) => element.startsWith('*'));
+      // numberBlocks.removeWhere((element) => element.startsWith('*'));
       break;
   }
 
@@ -244,19 +244,22 @@ String decodeVanityMultipleNumbers(String input, PhoneModel model) {
   var _currentMode = _InputMode.SMALL;
 
   return numberBlocks.map((numberBlock) {
+    var firstCharacter = numberBlock[0];
     if (!allSameCharacters(numberBlock)) {
       return UNKNOWN_ELEMENT;
     }
 
-    var firstCharacter = numberBlock[0];
-
     var maxLength;
     switch (_currentMode) {
       case _InputMode.SMALL:
+        if (keyMapSmall[firstCharacter] == null) return UNKNOWN_ELEMENT;
+
         maxLength = keyMapSmall[firstCharacter].length;
         break;
       case _InputMode.CAPITAL:
-        maxLength = keyMapSmall[firstCharacter].length;
+        if (keyMapCapital[firstCharacter] == null) return UNKNOWN_ELEMENT;
+
+        maxLength = keyMapCapital[firstCharacter].length;
         break;
       case _InputMode.NUMBERS:
         maxLength = 1;
