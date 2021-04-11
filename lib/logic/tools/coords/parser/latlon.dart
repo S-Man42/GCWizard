@@ -34,7 +34,7 @@ var regexEnd = '';
 
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
-Map<String, BaseCoordinates> parseLatLon(String text, {wholeString = false}) {
+Map<String, BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
   var coords = Map<String, BaseCoordinates>();
 
   try {
@@ -101,13 +101,13 @@ Map<String, BaseCoordinates> parseLatLon(String text, {wholeString = false}) {
 //wholeString == false: The first match at the text begin is taken - for copy
 //wholeString == true: The whole text must be a valid coord - for var coords
 Map<String, dynamic> parseStandardFormats(String text, {wholeString = false}) {
-  LatLng coord = parseDmsToLatLon(text, wholeString: wholeString);
+  LatLng coord = parseDMS(text, wholeString: wholeString).toLatLng();
   if (coord != null) return {'format': keyCoordsDMS, 'coordinate': coord};
 
-  coord = parseDmmToLatLon(text, wholeString: wholeString);
+  coord = parseDMM(text, wholeString: wholeString).toLatLng();
   if (coord != null) return {'format': keyCoordsDMM, 'coordinate': coord};
 
-  coord = parseDecToLatLon(text, wholeString: wholeString);
+  coord = parseDEC(text, wholeString: wholeString).toLatLng();
   if (coord != null) return {'format': keyCoordsDEC, 'coordinate': coord};
 
   return null;

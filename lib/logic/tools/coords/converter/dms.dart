@@ -48,11 +48,6 @@ DMS normalize(DMS coord) {
   return _DECToDMS(_DMSToDEC(coord));
 }
 
-LatLng parseDmsToLatLon(String text, {wholeString = false}) {
-  var coords = parseDMS(text, wholeString : wholeString);
-  return coords == null ? null : dmsToLatLon(coords);
-}
-
 DMS parseDMS(String text, {wholeString = false}) {
   text = prepareInput(text, wholeString: wholeString);
   if (text == null) return null;

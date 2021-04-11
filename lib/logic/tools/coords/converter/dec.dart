@@ -74,11 +74,6 @@ DEC normalizeDEC(DEC coord) {
   return DEC(normalizedLat, normalizedLon);
 }
 
-LatLng parseDecToLatLon(String text, {wholeString: false}) {
-  var coords = parseDEC(text, wholeString : wholeString);
-  return coords == null ? null : decToLatLon(coords);
-}
-
 DEC parseDEC(String text, {wholeString = false}) {
   text = prepareInput(text, wholeString: wholeString);
   if (text == null) return null;

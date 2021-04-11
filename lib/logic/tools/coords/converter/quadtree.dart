@@ -51,11 +51,6 @@ LatLng quadtreeToLatLon(Quadtree quadtree) {
   return LatLng(lat, lon);
 }
 
-LatLng parseQuadtreeToLatLon(String input) {
-  var coords = parseQuadtree(input);
-  return coords == null ? null : quadtreeToLatLon(coords);
-}
-
 Quadtree parseQuadtree(String input) {
   if (input == null || input == '') return null;
 

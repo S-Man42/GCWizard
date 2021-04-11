@@ -137,11 +137,6 @@ LatLng mgrsToLatLon(MGRS mgrs, Ellipsoid ells) {
   return UTMREFtoLatLon(utm, ells);
 }
 
-LatLng parseMgrsToLatLon(String input, Ellipsoid ells) {
-  var coords = parseMGRS(input);
-  return coords == null ? null : mgrsToLatLon(coords, ells);
-}
-
 MGRS parseMGRS(String input) {
   RegExp regExp = RegExp(r'^\s*(\d+)\s?([A-Z])\s?([A-Z]{2})\s?([0-9\.]+)\s+([0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);

@@ -3,7 +3,6 @@ import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsXYZ extends StatefulWidget {
   final Function onChanged;

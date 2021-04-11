@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsSlippyMap extends StatefulWidget {
   final Function onChanged;

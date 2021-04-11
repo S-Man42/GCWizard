@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geo3x3.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_geo3x3_textinputformatter.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsGeo3x3 extends StatefulWidget {
   final Function onChanged;

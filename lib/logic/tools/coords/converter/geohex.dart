@@ -3,12 +3,8 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/chsh/geohex4j/geohex.dart';
 
 LatLng geoHexToLatLon(GeoHex geoHex) {
-  return parseGeoHexToLatLon(geoHex.text);
-}
-
-LatLng parseGeoHexToLatLon(String geoHex) {
   try {
-    Zone zone = getZoneByCode(geoHex);
+    Zone zone = getZoneByCode(geoHex.text);
     return LatLng(zone.lat, zone.lon);
   } catch (e) {}
 
@@ -16,7 +12,8 @@ LatLng parseGeoHexToLatLon(String geoHex) {
 }
 
 GeoHex parseGeoHex(String geoHex) {
-  return parseGeoHexToLatLon(geoHex) == null ? null : GeoHex(geoHex);
+  var _geoHex = GeoHex(geoHex);
+  return geoHexToLatLon(_geoHex) == null ? null : _geoHex;
 }
 
 GeoHex latLonToGeoHex(LatLng coord, int precision) {

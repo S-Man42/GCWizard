@@ -9,7 +9,6 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutt
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lat_textinputformatter.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lon_textinputformatter.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsDEC extends StatefulWidget {
   final Function onChanged;

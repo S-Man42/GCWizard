@@ -147,11 +147,6 @@ UTMZone _getZone(LatLng coord) {
   return UTMZone(lonZoneRegular, lonZone, latZone);
 }
 
-LatLng parseUtmToLatLon(String input, Ellipsoid ells) {
-  var coords = parseUTM(input);
-  return coords == null ? null :  UTMREFtoLatLon(coords, ells);
-}
-
 UTMREF parseUTM(String input) {
   RegExp regExp = RegExp(r'^\s*(\d+)\s?([' + latZones + r'])\s?([0-9\.]+)\s+([0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);

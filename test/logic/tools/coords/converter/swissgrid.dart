@@ -20,7 +20,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseSwissGridToLatLon(elem['text'], ells);
+        var _actual = parseSwissGrid(elem['text'])?.toLatLng(ells: ells);;
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {
@@ -46,7 +46,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseSwissGridToLatLon(elem['text'], ells, isSwissGridPlus: true);
+        var _actual = parseSwissGrid(elem['text'], isSwissGridPlus: true)?.toLatLng(ells: ells);
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

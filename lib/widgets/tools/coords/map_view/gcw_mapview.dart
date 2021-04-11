@@ -771,7 +771,7 @@ class GCWMapViewState extends State<GCWMapView> {
   }
 
   Map<String, BaseCoordinates> _parseCoords(text) {
-    var parsed = parseLatLon(text);
+    var parsed = parseCoordinates(text);
     if (parsed == null || parsed.length == 0) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
       return null;

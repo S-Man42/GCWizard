@@ -43,61 +43,61 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
               try {
                 switch (options[MDT_COORDINATEFORMATS_OPTION_FORMAT]) {
                   case keyCoordsDEC:
-                    coords = parseDecToLatLon(input, wholeString: true);
+                    coords = parseDEC(input, wholeString: true)?.toLatLng();
                     break;
                   case keyCoordsDMM:
-                    coords = parseDmmToLatLon(input, wholeString: true);
+                    coords = parseDMM(input, wholeString: true)?.toLatLng();
                     break;
                   case keyCoordsDMS:
-                    coords = parseDmsToLatLon(input, wholeString: true);
+                    coords = parseDMS(input, wholeString: true)?.toLatLng();
                     break;
                   case keyCoordsUTM:
-                    coords = parseUtmToLatLon(input, defaultEllipsoid());
+                    coords = parseUTM(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsMGRS:
-                    coords = parseMgrsToLatLon(input, defaultEllipsoid());
+                    coords = parseMGRS(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsXYZ:
-                    coords = parseXyzToLatLon(input, defaultEllipsoid());
+                    coords = parseXYZ(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsSwissGrid:
-                    coords = parseSwissGridToLatLon(input, defaultEllipsoid());
+                    coords = parseSwissGrid(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsSwissGridPlus:
-                    coords = parseSwissGridToLatLon(input, defaultEllipsoid(), isSwissGridPlus: true);
+                    coords = parseSwissGrid(input, isSwissGridPlus: true)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsGaussKrueger:
-                    coords = parseGaussKruegerToLatLon(input, defaultEllipsoid());
+                    coords = parseGaussKrueger(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsMaidenhead:
-                    coords = parseMaidenheadToLatLon(input);
+                    coords = parseMaidenhead(input)?.toLatLng();
                     break;
                   case keyCoordsMercator:
-                    coords = parseMercatorToLatLon(input, defaultEllipsoid());
+                    coords = parseMercator(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsNaturalAreaCode:
-                    coords = parseNaturalAreaCodeToLatLon(input);
+                    coords = parseNaturalAreaCode(input)?.toLatLng();
                     break;
                   case keyCoordsGeohash:
-                    coords = parseGeohashToLatLon(input);
+                    coords = parseGeohash(input)?.toLatLng();
                     break;
                   case keyCoordsGeoHex:
-                    coords = parseGeoHexToLatLon(input);
+                    coords = parseGeoHex(input)?.toLatLng();
                     break;
                   case keyCoordsGeo3x3:
-                    coords = parseGeo3x3ToLatLon(input);
+                    coords = parseGeo3x3(input)?.toLatLng();
                     break;
                   case keyCoordsOpenLocationCode:
-                    coords = parseOpenLocationCodeToLatLon(input);
+                    coords = parseOpenLocationCode(input)?.toLatLng();
                     break;
                   case keyCoordsQuadtree:
-                    coords = parseQuadtreeToLatLon(input);
+                    coords = parseQuadtree(input)?.toLatLng();
                     break;
                   case keyCoordsReverseWhereIGoWaldmeister:
-                    coords = parseWaldmeisterToLatLon(input);
+                    coords = parseWaldmeister(input)?.toLatLng();
                     break;
                   case keyCoordsSlippyMap:
-                    coords = parseSlippyMapToLatLon(input);
+                    coords = parseSlippyMap(input)?.toLatLng();
                     break;
                 }
               } catch (e) {}

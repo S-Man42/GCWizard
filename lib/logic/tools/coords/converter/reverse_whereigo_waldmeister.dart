@@ -211,11 +211,6 @@ String latLonToWaldmeisterString(LatLng coord) {
   return latLonToWaldmeister(coord).toString();
 }
 
-LatLng parseWaldmeisterToLatLon(String input) {
-  var coords = parseWaldmeister(input);
-  return coords == null ? null : waldmeisterToLatLon(coords);
-}
-
 Waldmeister parseWaldmeister(String input) {
   RegExp regExp = RegExp(r'^\s*([0-9]+)(\s*,\s*|\s+)([0-9]+)(\s*,\s*|\s+)([0-9]+)\s*$');
   var matches = regExp.allMatches(input);

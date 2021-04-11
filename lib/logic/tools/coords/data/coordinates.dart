@@ -100,7 +100,7 @@ CoordinateFormat getCoordinateFormatByKey(String key) {
 final defaultCoordinate = LatLng(0.0, 0.0);
 
 abstract class BaseCoordinates {
-  BaseCoordinates();
+  String get key;
 
   LatLng toLatLng();
 }
@@ -129,6 +129,7 @@ String _getSignString(int sign, bool isLatitude) {
 }
 
 class DEC extends BaseCoordinates {
+  String get key => keyCoordsDEC;
   double latitude;
   double longitude;
 
@@ -151,6 +152,7 @@ class DEC extends BaseCoordinates {
 }
 
 class DMMPart {
+  String get key => keyCoordsDMM;
   int sign;
   int degrees;
   double minutes;
@@ -228,6 +230,7 @@ class DMMLongitude extends DMMPart {
 }
 
 class DMM extends BaseCoordinates {
+  String get key => keyCoordsDMM;
   DMMLatitude latitude;
   DMMLongitude longitude;
 
@@ -333,6 +336,7 @@ class DMSLongitude extends DMSPart {
 }
 
 class DMS extends BaseCoordinates {
+  String get key => keyCoordsDMS;
   DMSLatitude latitude;
   DMSLongitude longitude;
 
@@ -353,6 +357,7 @@ enum HemisphereLongitude { East, West }
 
 // UTM with latitude Zones; Normal UTM is only separated into Hemispheres N and S
 class UTMREF extends BaseCoordinates {
+  String get key => keyCoordsUTM;
   UTMZone zone;
   double easting;
   double northing;
@@ -383,6 +388,7 @@ class UTMZone {
 }
 
 class MGRS extends BaseCoordinates {
+  String get key => keyCoordsMGRS;
   UTMZone utmZone;
   String digraph;
   double easting;
@@ -402,6 +408,7 @@ class MGRS extends BaseCoordinates {
 }
 
 class SwissGrid extends BaseCoordinates {
+  String get key => isSwissGridPlus ? keyCoordsSwissGridPlus : keyCoordsSwissGrid;
   double easting;
   double northing;
   bool isSwissGridPlus;
@@ -423,6 +430,7 @@ class SwissGrid extends BaseCoordinates {
 }
 
 class GaussKrueger extends BaseCoordinates {
+  String get key => keyCoordsGaussKrueger;
   int code;
   double easting;
   double northing;
@@ -441,6 +449,7 @@ class GaussKrueger extends BaseCoordinates {
 }
 
 class Mercator extends BaseCoordinates {
+  String get key => keyCoordsMercator;
   double easting;
   double northing;
 
@@ -458,6 +467,7 @@ class Mercator extends BaseCoordinates {
 }
 
 class NaturalAreaCode extends BaseCoordinates {
+  String get key => keyCoordsNaturalAreaCode;
   String x; //east
   String y; //north
 
@@ -474,6 +484,7 @@ class NaturalAreaCode extends BaseCoordinates {
 }
 
 class SlippyMap extends BaseCoordinates {
+  String get key => keyCoordsSlippyMap;
   double x;
   double y;
   double zoom;
@@ -491,6 +502,7 @@ class SlippyMap extends BaseCoordinates {
 }
 
 class Waldmeister extends BaseCoordinates {
+  String get key => keyCoordsReverseWhereIGoWaldmeister;
   String a, b, c;
 
   Waldmeister(this.a, this.b, this.c);
@@ -506,6 +518,7 @@ class Waldmeister extends BaseCoordinates {
 }
 
 class XYZ extends BaseCoordinates {
+  String get key => keyCoordsXYZ;
   double x, y, z;
 
   XYZ(this.x, this.y, this.z);
@@ -523,6 +536,7 @@ class XYZ extends BaseCoordinates {
 }
 
 class Maidenhead extends BaseCoordinates {
+  String get key => keyCoordsMaidenhead;
   String text;
 
   Maidenhead(this.text);
@@ -538,6 +552,7 @@ class Maidenhead extends BaseCoordinates {
 }
 
 class Geohash extends BaseCoordinates {
+  String get key => keyCoordsGeohash;
   String text;
 
   Geohash(this.text);
@@ -553,6 +568,7 @@ class Geohash extends BaseCoordinates {
 }
 
 class GeoHex extends BaseCoordinates {
+  String get key => keyCoordsGeoHex;
   String text;
 
   GeoHex(this.text);
@@ -568,6 +584,7 @@ class GeoHex extends BaseCoordinates {
 }
 
 class Geo3x3 extends BaseCoordinates {
+  String get key => keyCoordsGeo3x3;
   String text;
 
   Geo3x3(this.text);
@@ -583,6 +600,7 @@ class Geo3x3 extends BaseCoordinates {
 }
 
 class OpenLocationCode extends BaseCoordinates {
+  String get key => keyCoordsOpenLocationCode;
   String text;
 
   OpenLocationCode(this.text);
@@ -598,6 +616,7 @@ class OpenLocationCode extends BaseCoordinates {
 }
 
 class Quadtree extends BaseCoordinates {
+  String get key => keyCoordsQuadtree;
   List<int> coords;
 
   Quadtree(this.coords);

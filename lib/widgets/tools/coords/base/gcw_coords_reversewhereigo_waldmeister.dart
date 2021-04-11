@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsReverseWhereIGoWaldmeister extends StatefulWidget {
   final Function onChanged;

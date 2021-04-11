@@ -148,14 +148,6 @@ LatLng swissGridToLatLon(SwissGrid coord, Ellipsoid ells) {
   return newCoord;
 }
 
-LatLng parseSwissGridToLatLon(String input, Ellipsoid ells, {isSwissGridPlus: false}) {
-  var coords = parseSwissGrid(input);
-  if (isSwissGridPlus)
-    return coords == null ? null : swissGridPlusToLatLon(coords, ells);
-  else
-    return coords == null ? null : swissGridToLatLon(coords, ells);
-}
-
 SwissGrid parseSwissGrid(String input, {isSwissGridPlus: false}) {
   RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*\,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);

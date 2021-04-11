@@ -43,7 +43,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('nac: ${elem['nac']}', () {
-        var _actual = naturalAreaCodeToLatLon(elem['nac']);
+        var _actual = parseNaturalAreaCode(elem['nac'])?.toLatLng();;
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {
@@ -66,7 +66,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseNaturalAreaCodeToLatLon(elem['text']);
+        var _actual = parseNaturalAreaCode(elem['text'])?.toLatLng();
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

@@ -64,7 +64,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseWaldmeisterToLatLon(elem['text']);
+        var _actual = parseWaldmeister(elem['text'])?.toLatLng();
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

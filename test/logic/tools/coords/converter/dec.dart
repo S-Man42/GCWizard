@@ -64,7 +64,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseDecToLatLon(elem['text']);
+        var _actual = parseDEC(elem['text'])?.toLatLng();
         expect(_actual, elem['expectedOutput']['coordinate']);
       });
     });

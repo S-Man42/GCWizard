@@ -4,7 +4,6 @@ import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_naturalareacode_textinputformatter.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsNaturalAreaCode extends StatefulWidget {
   final Function onChanged;

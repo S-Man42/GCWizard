@@ -45,11 +45,6 @@ DMM normalize(DMM coord) {
   return _DECToDMM(_DMMToDEC(coord));
 }
 
-LatLng parseDmmToLatLon(String text, {leftPadMilliMinutes: false, wholeString: false}) {
-  var coords = parseDMM(text, leftPadMilliMinutes : leftPadMilliMinutes, wholeString : wholeString);
-  return coords == null ? null : dmmToLatLon(coords);
-}
-
 DMM parseDMM(String text, {leftPadMilliMinutes: false, wholeString: false}) {
   text = prepareInput(text, wholeString: wholeString);
   if (text == null) return null;

@@ -14,7 +14,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseQuadtreeToLatLon(elem['text']);
+        var _actual = parseQuadtree(elem['text'])?.toLatLng();;
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

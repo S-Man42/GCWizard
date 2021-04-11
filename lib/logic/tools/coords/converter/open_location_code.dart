@@ -297,16 +297,14 @@ OpenLocationCode latLonToOpenLocationCode(LatLng coords, {int codeLength = pairC
 }
 
 OpenLocationCode parseOpenLocationCode(String code) {
-  return parseOpenLocationCodeToLatLon(code) == null ? null : OpenLocationCode(code);
-}
-
-LatLng openLocationCodeToLatLon(OpenLocationCode openLocationCode) {
-  return parseOpenLocationCodeToLatLon(openLocationCode.text);
+  var openLocationCode = OpenLocationCode(code);
+  return openLocationCodeToLatLon(openLocationCode) == null ? null : openLocationCode;
 }
 
 /// Decodes an Open Location Code into the location coordinates.
-LatLng parseOpenLocationCodeToLatLon(String code) {
+LatLng openLocationCodeToLatLon(OpenLocationCode openLocationCode) {
   try {
+    var code = openLocationCode.text;
     if (!_isFull(code)) {
       return null;
     }

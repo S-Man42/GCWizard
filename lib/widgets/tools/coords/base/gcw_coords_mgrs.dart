@@ -8,7 +8,6 @@ import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_utm_lonzone_textinputformatter.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsMGRS extends StatefulWidget {
   final Function onChanged;

@@ -71,7 +71,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseDmmToLatLon(elem['text']);
+        var _actual = parseDMM(elem['text'])?.toLatLng();
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else
@@ -134,7 +134,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}, leftPadMilliMinutes: ${elem['leftPadMilliMinutes']}', () {
-        var _actual = parseDmmToLatLon(elem['text'], leftPadMilliMinutes: elem['leftPadMilliMinutes']);
+        var _actual = parseDMM(elem['text'], leftPadMilliMinutes: elem['leftPadMilliMinutes'])?.toLatLng();
         expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
         expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
       });
