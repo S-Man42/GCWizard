@@ -17,7 +17,7 @@ class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
   var _currentInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
-  PhoneModel _currentModel = SIEMENS_ME45;
+  PhoneModel _currentModel = NOKIA;
 
   @override
   void initState() {
