@@ -28,7 +28,6 @@ const SEARCHSTRING_FR_BASE16 = '';
 const SEARCHSTRING_FR_BASE32 = '';
 const SEARCHSTRING_FR_BASE64 = '';
 const SEARCHSTRING_FR_BASE85 = '';
-const SEARCHSTRING_FR_BASIC_INTERPRETER = 'langage programmation';
 const SEARCHSTRING_FR_BCD = 'binaire nombres decimaux';
 const SEARCHSTRING_FR_BCD1OF10 = '1sur10 1out10 unsurdix';
 const SEARCHSTRING_FR_BCD2OF5 = '2sur5 2out5 deuxsurcinq';

@@ -32,7 +32,6 @@ const SEARCHSTRING_DE_BASE16 = '';
 const SEARCHSTRING_DE_BASE32 = '';
 const SEARCHSTRING_DE_BASE64 = '';
 const SEARCHSTRING_DE_BASE85 = '';
-const SEARCHSTRING_DE_BASIC_INTERPRETER = 'programmiersprache';
 const SEARCHSTRING_DE_BCD = 'binaer codierte dezimalzahlen  distanz';
 const SEARCHSTRING_DE_BCD1OF10 = '1aus10  einsauszehn';
 const SEARCHSTRING_DE_BCD2OF5 = '2aus5 zweiausfuenf';
