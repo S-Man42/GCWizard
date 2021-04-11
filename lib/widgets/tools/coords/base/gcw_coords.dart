@@ -371,14 +371,14 @@ class GCWCoordsState extends State<GCWCoords> {
     widget.onChanged({'coordsFormat': _currentCoordsFormat, 'value': newValue ?? _currentValue});
   }
 
-  _setCoords(Map<String, BaseCoordinates> pastedCoords) {
+  _setCoords(List<BaseCoordinates> pastedCoords) {
     if (pastedCoords == null || pastedCoords.length == 0) return;
 
-    if (pastedCoords.keys.contains(_currentCoordsFormat['format'].toString())) {
-      _pastedCoords = pastedCoords[_currentCoordsFormat['format']];
+    if (pastedCoords.any((coords) => coords.key == _currentCoordsFormat['format'].toString())) {
+      _pastedCoords = pastedCoords.where((coords) => coords.key == _currentCoordsFormat['format'].toString()).first;
     } else {
-      _pastedCoords = pastedCoords.values.elementAt(0);
-      _currentCoordsFormat = {'format': pastedCoords.keys.elementAt(0)};
+      _pastedCoords = pastedCoords.elementAt(0);
+      _currentCoordsFormat = {'format': pastedCoords.elementAt(0).key};
     }
 
     _setPastedCoordsFormat();

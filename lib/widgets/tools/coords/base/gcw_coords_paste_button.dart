@@ -42,9 +42,9 @@ class _GCWCoordsPasteButtonState extends State<GCWCoordsPasteButton> {
       widget.onPasted(null);
       return;
     } else if (parsed.length > 1) {
-      var recognizedformates = parsed.keys.map((key) {
+      var recognizedformates = parsed.map((coords) {
         var text = '\r\n';
-        var coordFormat = allCoordFormats.firstWhere((format) => format.key == key);
+        var coordFormat = allCoordFormats.firstWhere((format) => format.key == coords.key);
         if (coordFormat.subtypes == null)
           text += coordFormat.name;
         else

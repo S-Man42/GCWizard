@@ -511,9 +511,9 @@ class GCWMapViewState extends State<GCWMapView> {
               if (pastedCoordinate == null) return;
 
               setState(() {
-                _persistanceAdapter.addMapPoint(pastedCoordinate.values.first.toLatLng(),
-                    coordinateFormat: {'format': pastedCoordinate.keys.first});
-                _mapController.move(pastedCoordinate.values.first.toLatLng(), _mapController.zoom);
+                _persistanceAdapter.addMapPoint(pastedCoordinate.first.toLatLng(),
+                    coordinateFormat: {'format': pastedCoordinate.first.key});
+                _mapController.move(pastedCoordinate.first.toLatLng(), _mapController.zoom);
               });
             }
             ;
@@ -770,7 +770,7 @@ class GCWMapViewState extends State<GCWMapView> {
     return _polylines;
   }
 
-  Map<String, BaseCoordinates> _parseCoords(text) {
+  List<BaseCoordinates> _parseCoords(text) {
     var parsed = parseCoordinates(text);
     if (parsed == null || parsed.length == 0) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));

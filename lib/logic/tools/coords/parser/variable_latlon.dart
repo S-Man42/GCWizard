@@ -19,9 +19,9 @@ Map<String, LatLng> _parseCoordText(String text) {
   var parsedCoord = parseCoordinates(text);
   if (parsedCoord == null || parsedCoord.length == 0) return null;
 
-  var out = <String, LatLng>{'coordinate': parsedCoord.values.elementAt(0).toLatLng()};
+  var out = <String, LatLng>{'coordinate': parsedCoord.elementAt(0).toLatLng()};
 
-  if (parsedCoord.keys.elementAt(0) == keyCoordsDMM) {
+  if (parsedCoord.elementAt(0).key == keyCoordsDMM) {
     out.putIfAbsent('leftPadCoordinate', () => parseDMM(text, leftPadMilliMinutes: true).toLatLng());
   }
 

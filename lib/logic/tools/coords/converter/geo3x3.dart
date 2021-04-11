@@ -4,7 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/taisukef/geo3x3/geo3x3.da
 
 LatLng geo3x3ToLatLon(Geo3x3 geo3x3) {
   var latLon = Geo3x3Converter.Geo3x3.decode(geo3x3.text.toUpperCase());
-  return LatLng(latLon[0], latLon[1]);
+  return latLon == null ? null : LatLng(latLon[0], latLon[1]);
 }
 
 Geo3x3 parseGeo3x3(String code) {
