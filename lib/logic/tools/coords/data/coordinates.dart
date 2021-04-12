@@ -425,21 +425,14 @@ class SwissGrid extends BaseCoordinates {
   }
 }
 
-class SwissGridPlus extends BaseCoordinates {
+class SwissGridPlus extends SwissGrid {
   String get key => keyCoordsSwissGridPlus;
-  double easting;
-  double northing;
 
-  SwissGridPlus(this.easting, this.northing);
+  SwissGridPlus(easting, northing) : super(easting, northing) ;
 
   LatLng toLatLng({Ellipsoid ells}) {
     if (ells == null) ells = defaultEllipsoid();
     return swissGridPlusToLatLon(this, ells);
-  }
-
-  @override
-  String toString() {
-    return 'Y: ${easting}\nX: ${northing}';
   }
 }
 
