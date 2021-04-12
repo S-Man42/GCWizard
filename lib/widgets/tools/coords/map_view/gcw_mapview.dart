@@ -493,6 +493,12 @@ class GCWMapViewState extends State<GCWMapView> {
     );
   }
 
+  GestureDetector longP(){
+    return GestureDetector(
+      //onLongPress: ,
+    );
+  }
+
   _buildEditButtons() {
     var buttons = [
       GCWPasteButton(
@@ -511,9 +517,21 @@ class GCWMapViewState extends State<GCWMapView> {
                     coordinateFormat: {'format': pastedCoordinate.keys.first});
                 _mapController.move(pastedCoordinate.values.first, _mapController.zoom);
               });
-            }
-            ;
-          }),
+            };
+          },
+          onLongPress: () {
+            setState(() {
+              openFileExplorer(allowedExtensions: ['gpx','kml','kmz'], useFileFilterOnAndroid : true).then((files) {
+                if (files != null && files.length > 0)
+                  loadCoordinatesFile(files.first.path).whenComplete(() {
+                    setState(() {
+                      _mapController.fitBounds(_getBounds());
+                    });
+                  });
+              });
+            });
+          },
+          ),
       GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.file_present),
