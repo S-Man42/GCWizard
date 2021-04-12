@@ -89,8 +89,9 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
                     polylines: List<GCWMapPolyline>.from(widget.polylines),
                     isEditable: freeMap,
                   ),
-                  toolName: freeMap ? i18n(context, 'coords_openmap_title') : i18n(context, 'coords_map_view_title'),
+                  i18nPrefix: freeMap ? 'coords_openmap' : 'coords_map_view',
                   autoScroll: false,
+                  missingHelpLocales: ['fr'],
                 )));
   }
 

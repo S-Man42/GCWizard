@@ -53,6 +53,7 @@ class LicensesState extends State<Licenses> {
           ['flutter_hsvcolor_picker (minimized)', 'Color Picker', null],
           ['David Vávra', 'Coordinate Measurement', 'Apache 2.0 License'],
           ['moenk', 'Gauss-Krüger Code', null],
+          ['@taisukef', 'Geo3x3 Code', 'CC0-1.0 License'],
           ['@chsii (geohex4j), @sa2da (geohex.org)', 'GeoHex Code', 'MIT License'],
           ['lscheffer.com, Matthias Ernst', 'Malbolge Code', 'CC0, Public Domain'],
           ['Jens Guballa (guballa.de)', 'Substitution Breaker', 'MIT License'],

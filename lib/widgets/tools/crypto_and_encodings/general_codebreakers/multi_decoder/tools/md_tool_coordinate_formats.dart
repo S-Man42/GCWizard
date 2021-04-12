@@ -4,6 +4,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/geo3x3.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
@@ -82,6 +83,9 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
                     break;
                   case keyCoordsGeoHex:
                     coords = geoHexToLatLon(input);
+                    break;
+                  case keyCoordsGeo3x3:
+                    coords = geo3x3ToLatLon(input);
                     break;
                   case keyCoordsOpenLocationCode:
                     coords = openLocationCodeToLatLon(input);

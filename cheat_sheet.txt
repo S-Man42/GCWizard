@@ -11,12 +11,22 @@ Android Release Build command:
 flutter build appbundle --release --target-platform android-arm,android-arm64
 
 ==============================
-Web Build:
+Common Build Error Fixes:
 
-flutter channel beta
 flutter upgrade --force
 flutter pub cache repair
 flutter clean
+
+Caches to clean:
+
+Gradle (Windows: users/.gradle)
+Pub cache (Windows: users/appdata/local/pub)
+Android Studio (Windows: users/.android)
+IntelliJ (Project Path ./.idea)
+Build Path (Project Path ./build)
+
+==============================
+Web Build:
 
 First time:
 flutter config --enable-web
@@ -55,3 +65,14 @@ flutter clean
 iOS build: GeneratedPluginRegistrant.m Module not found.
 
 -> Open XCode with .xcworkspace file instead of .xcodeproj
+
+========
+Crowdin Script, install jq using Scoop.sh:
+Windows/Powershell
+
+Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+iwr -useb get.scoop.sh | iex
+scoop bucket add extras
+scoop install jq
+
+Run Scripts in external_helpers/crowdin using the GitBash

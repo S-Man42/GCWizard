@@ -1,4 +1,5 @@
 import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 enum GroupType { MAIN_GROUP, SUB_GROUP }
 
@@ -556,3 +557,13 @@ final List<PeriodicTableElement> allPeriodicTableElements = [
         'periodictable_comment_mostcommonisotop'
       ]),
 ];
+
+String atomicNumbersToText(List<int> atomicNumbers) {
+  if (atomicNumbers == null || atomicNumbers.isEmpty) return '';
+
+  return atomicNumbers.map((atomicNumber) {
+    var element =
+        allPeriodicTableElements.firstWhere((element) => element.atomicNumber == atomicNumber, orElse: () => null);
+    return element != null ? element.chemicalSymbol : UNKNOWN_ELEMENT;
+  }).join();
+}

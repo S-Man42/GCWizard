@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -148,16 +148,27 @@ Future<Map<String, dynamic>> _exportEncryption(String text, TextExportMode mode,
 
 Future<ByteData> toQrImageData(String text) async {
   try {
-    final image = await QrPainter(
-      data: text,
-      version: QrVersions.auto,
-      errorCorrectionLevel: QrErrorCorrectLevel.L,
-      color: Colors.black,
-      emptyColor: COLOR_QR_BACKGROUND,
-    ).toImage(280);
+    var image = await QrPainter(
+            data: text,
+            version: QrVersions.auto,
+            errorCorrectionLevel: QrErrorCorrectLevel.L,
+            emptyColor: COLOR_QR_BACKGROUND,
+            gapless: true)
+        .toImage(300);
 
-    final a = await image.toByteData(format: ImageByteFormat.png);
-    return a.buffer.asByteData();
+    final canvasRecorder = ui.PictureRecorder();
+    final rect = Rect.fromLTWH(0, 0, image.width + 20.0, image.height + 20.0);
+    final canvas = Canvas(canvasRecorder, rect);
+    final paint = Paint()
+      ..color = COLOR_QR_BACKGROUND
+      ..style = PaintingStyle.fill;
+
+    canvas.drawRect(rect, paint);
+    canvas.drawImage(image, Offset(10, 10), paint);
+    image = await canvasRecorder.endRecording().toImage(rect.width.floor(), rect.height.floor());
+
+    final data = await image.toByteData(format: ui.ImageByteFormat.png);
+    return data.buffer.asByteData();
   } catch (e) {
     throw e;
   }

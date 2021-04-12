@@ -29,9 +29,9 @@ class GCWCoordsReverseWhereIGoWaldmeisterState extends State<GCWCoordsReverseWhe
   @override
   void initState() {
     super.initState();
-    _ControllerA = TextEditingController(text: _currentA.toString());
-    _ControllerB = TextEditingController(text: _currentB.toString());
-    _ControllerC = TextEditingController(text: _currentC.toString());
+    _ControllerA = TextEditingController(text: _currentA.toString().padLeft(6, '0'));
+    _ControllerB = TextEditingController(text: _currentB.toString().padLeft(6, '0'));
+    _ControllerC = TextEditingController(text: _currentC.toString().padLeft(6, '0'));
 
     _FocusNodeA = FocusNode();
     _FocusNodeB = FocusNode();
@@ -70,6 +70,7 @@ class GCWCoordsReverseWhereIGoWaldmeisterState extends State<GCWCoordsReverseWhe
         value: _currentA,
         min: 0,
         max: 999999,
+        leftPadZeros: 6,
         onChanged: (value) {
           _currentA = value;
 
@@ -83,6 +84,7 @@ class GCWCoordsReverseWhereIGoWaldmeisterState extends State<GCWCoordsReverseWhe
         value: _currentB,
         min: 0,
         max: 999999,
+        leftPadZeros: 6,
         onChanged: (value) {
           _currentB = value;
 
@@ -96,6 +98,7 @@ class GCWCoordsReverseWhereIGoWaldmeisterState extends State<GCWCoordsReverseWhe
         value: _currentC,
         min: 0,
         max: 999999,
+        leftPadZeros: 6,
         onChanged: (value) {
           _currentC = value;
           _setCurrentValueAndEmitOnChange();

@@ -21,6 +21,7 @@ const keyCoordsNaturalAreaCode = 'coords_naturalareacode';
 const keyCoordsSlippyMap = 'coords_slippymap';
 const keyCoordsGeohash = 'coords_geohash';
 const keyCoordsGeoHex = 'coords_geohex';
+const keyCoordsGeo3x3 = 'coords_geo3x3';
 const keyCoordsOpenLocationCode = 'coords_openlocationcode';
 const keyCoordsQuadtree = 'coords_quadtree';
 const keyCoordsReverseWhereIGoWaldmeister = 'coords_reversewhereigo_waldmeister';
@@ -41,8 +42,8 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsUTM, 'UTM', '10 N 546003.6 5015445.0'),
   CoordinateFormat(keyCoordsMGRS, 'MGRS', '10T ER 46003.6 15445.0'),
   CoordinateFormat(keyCoordsXYZ, 'XYZ (ECEF)', 'X: -2409244, Y: -3794410, Z: 4510158'),
-  CoordinateFormat(keyCoordsSwissGrid, 'SwissGrid (CH1903)', 'Y: 4295317.7, X: 1202252.3'),
-  CoordinateFormat(keyCoordsSwissGridPlus, 'SwissGrid (CH1903+)', 'Y: 6295317.7, X: 2202252.3'),
+  CoordinateFormat(keyCoordsSwissGrid, 'SwissGrid (CH1903/LV03)', 'Y: 4295317.7, X: 1202252.3'),
+  CoordinateFormat(keyCoordsSwissGridPlus, 'SwissGrid (CH1903+/LV95)', 'Y: 6295317.7, X: 2202252.3'),
   CoordinateFormat(keyCoordsGaussKrueger, 'coords_formatconverter_gausskrueger', 'R: 8837763.4, H: 5978799.1',
       subtypes: [
         CoordinateFormat(
@@ -59,12 +60,13 @@ List<CoordinateFormat> allCoordFormats = [
   CoordinateFormat(keyCoordsMaidenhead, 'Maidenhead Locator (QTH)', 'CN85TG09JU'),
   CoordinateFormat(keyCoordsMercator, 'Mercator', 'Y: 5667450.4, X: -13626989.9'),
   CoordinateFormat(keyCoordsNaturalAreaCode, 'Natural Area Code (NAC)', 'X: 4RZ000, Y: QJFMGZ'),
-  CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles', 'Z: 15, X: 5241, Y: 11749'),
-  CoordinateFormat(keyCoordsGeohash, 'Geohash', 'c20cwkvr4'),
-  CoordinateFormat(keyCoordsGeoHex, 'GeoHex', 'RU568425483853568'),
   CoordinateFormat(keyCoordsOpenLocationCode, 'OpenLocationCode (OLC, PlusCode)', '84QV7HRP+CM3'),
-  CoordinateFormat(keyCoordsQuadtree, 'Quadtree', '021230223311203323'),
+  CoordinateFormat(keyCoordsSlippyMap, 'Slippy Map Tiles', 'Z: 15, X: 5241, Y: 11749'),
   CoordinateFormat(keyCoordsReverseWhereIGoWaldmeister, 'Reverse WhereIGo (Waldmeister)', '042325, 436113, 935102'),
+  CoordinateFormat(keyCoordsGeohash, 'Geohash', 'c20cwkvr4'),
+  CoordinateFormat(keyCoordsQuadtree, 'Quadtree', '021230223311203323'),
+  CoordinateFormat(keyCoordsGeoHex, 'GeoHex', 'RU568425483853568'),
+  CoordinateFormat(keyCoordsGeo3x3, 'Geo3x3', 'W7392967941169'),
 ];
 
 CoordinateFormat getCoordinateFormatByKey(String key) {

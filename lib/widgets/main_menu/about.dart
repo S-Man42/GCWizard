@@ -84,6 +84,7 @@ class AboutState extends State<About> {
         GCWDivider(),
         _buildUrl('license'),
         _buildUrl('github'),
+        _buildUrl('crowdin'),
         GCWDivider(),
         _buildUrl('privacypolicy'),
         GCWDivider(),
@@ -117,6 +118,7 @@ class AboutState extends State<About> {
                       text: [
                             'Andy \'Puma66\' (Special Support)',
                             'Andreas \'TeamBirdy2404\' (Symbol Tables)',
+                            'Ludovic Valente \'LudoO\' (Code & Translation FR)',
                             'Mike B. (Code & Symbol Tables)',
                             'Thomas \'TMZ\' Z. (Code & Symbol Tables)',
                           ].join('\n') +
@@ -143,7 +145,9 @@ class AboutState extends State<About> {
                             '\'Geo-Link\' (Hardware & Symbol Tables)',
                             'Karl B. (Coords Algorithms)',
                             'Michael D. (Symbol Tables)',
+                            'Nina \'nike1972\' G. (Nina\'s Schmierblo(g)ck) (Manual)',
                             '\'moenk\' (GK Coords)',
+                            '\'radioscout\' (Research)',
                             '\'Schnatt\' (Symbol Tables)',
                             'Udo J. (Code)',
                             '\'wollpirat\' (Food, Tea & more)'
@@ -159,6 +163,7 @@ class AboutState extends State<About> {
                       text: [
                     '\'4-Everus\'',
                     'Andreas E.',
+                    '\'Cycle73\'',
                     '\'Don Rodolphos\'',
                     '\'Headbanger-Berlin\'',
                     'Felix Z.',
@@ -177,10 +182,11 @@ class AboutState extends State<About> {
                     'Palk \'geogedoens.de\'',
                     '\'Pamakaru\'',
                     'Paweł B.',
-                    '\'radioscout\'',
+                    'Peter S.-H.',
                     '\'radlerandi\'',
                     '\'Sechsfüssler\'',
                     'Stefan J.',
+                    'Team \'kesteri\'',
                     '\'tebarius\'',
                     '\'tomcat06\'',
                     '\'Vyrembi\''

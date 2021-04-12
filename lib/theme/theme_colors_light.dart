@@ -92,6 +92,42 @@ class ThemeColorsLight extends ThemeColors {
   }
 
   @override
+  Color checkBoxActiveColor() {
+    return _gray;
+  }
+
+  @override
+  Color checkBoxFillColor(Set<MaterialState> states) {
+    if (states.contains(MaterialState.disabled)) {
+      return _lightGray.withOpacity(0.5);
+    }
+    return _lightGray.withOpacity(0.5);
+  }
+
+  @override
+  Color checkBoxCheckColor() {
+    return accent();
+  }
+
+  @override
+  Color checkBoxFocusColor() {
+    return accent().withOpacity(0.5);
+  }
+
+  @override
+  Color checkBoxHoverColor() {
+    return accent();
+  }
+
+  @override
+  Color checkBoxOverlayColor(Set<MaterialState> states) {
+    if (states.contains(MaterialState.disabled)) {
+      return accent().withOpacity(0.5);
+    }
+    return accent().withOpacity(0.5);
+  }
+
+  @override
   Color listSubtitle() {
     return _darkGray;
   }

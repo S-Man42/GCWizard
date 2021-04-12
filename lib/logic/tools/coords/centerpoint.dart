@@ -55,7 +55,6 @@ List<Map<String, dynamic>> centerPointThreePoints(LatLng coord1, LatLng coord2, 
   //find a possible second point
   // var _maxRuns = 100;
   // while (_maxRuns > 0) {
-  //   print(_maxRuns);
   //   var _temp = _calculateCenterPointThreePoints(coord1, coord2, coord3, ells);
   //   double _dist1 = _temp['distance'];
   //   double _dist2 = _result[0]['distance'];

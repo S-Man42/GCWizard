@@ -418,8 +418,15 @@ class VariableCoordinateState extends State<VariableCoordinate> {
           showToast(i18n(context, 'coords_common_location_lowaccuracy',
               parameters: [NumberFormat('0.0').format(locationData.accuracy)]));
 
-        var insertedCoord = formatCoordOutput(
-            LatLng(locationData.latitude, locationData.longitude), defaultCoordFormat(), defaultEllipsoid());
+        var coords = LatLng(locationData.latitude, locationData.longitude);
+        var insertedCoord;
+        if (defaultCoordFormat()['format'] == keyCoordsDMM) {
+          //Insert Geocaching Format with exact 3 digits
+          insertedCoord = formatCoordOutput(coords, defaultCoordFormat(), defaultEllipsoid(), 3);
+        } else {
+          insertedCoord = formatCoordOutput(coords, defaultCoordFormat(), defaultEllipsoid());
+        }
+
         _currentInput = insertedCoord.replaceAll('\n', ' ');
         _inputController.text = _currentInput;
 

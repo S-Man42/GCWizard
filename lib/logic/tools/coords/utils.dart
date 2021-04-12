@@ -2,6 +2,7 @@ import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/geo3x3.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
@@ -32,7 +33,7 @@ double modLon(double x) {
   return x;
 }
 
-String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Ellipsoid ells) {
+String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Ellipsoid ells, [int precision]) {
   int _getGKCode() {
     switch (_outputFormat['subtype']) {
       case keyCoordsGaussKruegerGK1:
@@ -50,15 +51,13 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
     }
   }
 
-  var _formatted;
-
   switch (_outputFormat['format']) {
     case keyCoordsDEC:
-      return latLonToDECString(_coords);
+      return latLonToDECString(_coords, precision);
     case keyCoordsDMM:
-      return latLonToDMMString(_coords);
+      return latLonToDMMString(_coords, precision);
     case keyCoordsDMS:
-      return latLonToDMSString(_coords);
+      return latLonToDMSString(_coords, precision);
     case keyCoordsUTM:
       return latLonToUTMString(_coords, ells);
     case keyCoordsMGRS:
@@ -83,6 +82,8 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
       return latLonToGeohash(_coords, 14);
     case keyCoordsGeoHex:
       return latLonToGeoHex(_coords, 20);
+    case keyCoordsGeo3x3:
+      return latLonToGeo3x3(_coords, 20);
     case keyCoordsOpenLocationCode:
       return latLonToOpenLocationCode(_coords, codeLength: 14);
     case keyCoordsQuadtree:

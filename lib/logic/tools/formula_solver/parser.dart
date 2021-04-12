@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
+import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:math_expressions/math_expressions.dart';
 
@@ -70,7 +71,25 @@ class FormulaParser {
     return {'formula': formula, 'map': switchMapKeyValue(substitutions)};
   }
 
+  String _normalizeMathematicalSymbols(formula) {
+    formula = formula.replaceAll(RegExp(r'[—–˗−‒]'), '-'); // different minus/hyphens/dashes
+    formula = formula.replaceAll(':', '/');
+    formula = formula.replaceAll('÷', '/');
+    formula = formula.replaceAll('×', '*');
+    /**** exponents *****/
+    formula = formula.replaceAllMapped(RegExp('[\u2070\u00B9\u00B2\u00B3\u2074\u2075\u2076\u2077\u2078\u2079]+'),
+        (Match match) {
+      var group = match.group(0);
+      group = substitution(group, switchMapKeyValue(superscriptCharacters));
+      return '^$group';
+    });
+
+    return formula;
+  }
+
   dynamic _evaluateFormula(String formula, Map<String, String> values) {
+    formula = _normalizeMathematicalSymbols(formula);
+
     Map<String, String> preparedValues = _prepareValues(values);
 
     //replace constants and formula names

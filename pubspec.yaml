@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 1.5.0+88
+version: 1.5.0+96
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -39,7 +39,6 @@ dependencies:
   uuid: ^3.0.2
   url_launcher: ^6.0.2
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -50,11 +49,13 @@ flutter:
   assets:
     - assets/i18n/
     - assets/logo/
-    - assets/coordinates/
+    - assets/icons/coords/
+    - assets/icons/science_and_technology/
     - assets/quadgrams/
     - assets/tokens/
     - assets/symbol_tables/
     - assets/symbol_tables/adlam/
+    - assets/symbol_tables/albhed/
     - assets/symbol_tables/alchemy/
     - assets/symbol_tables/alchemy_alphabet/
     - assets/symbol_tables/alphabetum_arabum/
@@ -101,6 +102,7 @@ flutter:
     - assets/symbol_tables/dni_colors/
     - assets/symbol_tables/dni_numbers/
     - assets/symbol_tables/doop_speak/
+    - assets/symbol_tables/dorabella/
     - assets/symbol_tables/doremi/
     - assets/symbol_tables/dragon_language/
     - assets/symbol_tables/dragon_runes/
@@ -132,6 +134,7 @@ flutter:
     - assets/symbol_tables/hebrew_v2/
     - assets/symbol_tables/hexahue/
     - assets/symbol_tables/hieratic_numerals/
+    - assets/symbol_tables/hieroglyphs/
     - assets/symbol_tables/hobbit_runes/
     - assets/symbol_tables/hvd/
     - assets/symbol_tables/hylian_skyward_sword/
@@ -139,7 +142,7 @@ flutter:
     - assets/symbol_tables/hylian_twilight_princess_wii/
     - assets/symbol_tables/hylian_wind_waker/
     - assets/symbol_tables/hymmnos/
-    - assets/symbol_tables/hieroglyphs/
+    - assets/symbol_tables/icecodes/
     - assets/symbol_tables/iching/
     - assets/symbol_tables/illuminati_v1/
     - assets/symbol_tables/illuminati_v2/
@@ -184,6 +187,7 @@ flutter:
     - assets/symbol_tables/pipeline/
     - assets/symbol_tables/pixel/
     - assets/symbol_tables/planet/
+    - assets/symbol_tables/planets/
     - assets/symbol_tables/pokemon_unown/
     - assets/symbol_tables/postnet/
     - assets/symbol_tables/puzzle/
@@ -207,6 +211,7 @@ flutter:
     - assets/symbol_tables/stippelcode/
     - assets/symbol_tables/suetterlin/
     - assets/symbol_tables/sunuz/
+    - assets/symbol_tables/surf/
     - assets/symbol_tables/tamil_numerals/
     - assets/symbol_tables/templers/
     - assets/symbol_tables/tenctonese/
@@ -220,6 +225,7 @@ flutter:
     - assets/symbol_tables/tomtom/
     - assets/symbol_tables/trafficsigns_germany/
     - assets/symbol_tables/ulog/
+    - assets/symbol_tables/unitology/
     - assets/symbol_tables/utopian/
     - assets/symbol_tables/visitor_1984/
     - assets/symbol_tables/visitor_2009/
@@ -234,7 +240,10 @@ flutter:
     - assets/symbol_tables/wingdings3/
     - assets/symbol_tables/yan_koryani/
     - assets/symbol_tables/yinyang/
+    - assets/symbol_tables/zamonian/
     - assets/symbol_tables/zentradi/
+    - assets/symbol_tables/zodiac_signs/
+    - assets/symbol_tables/zodiac_signs_latin/
     - assets/symbol_tables/zodiac_z340/
     - assets/symbol_tables/zodiac_z408/
 

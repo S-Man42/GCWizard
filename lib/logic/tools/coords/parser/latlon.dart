@@ -1,10 +1,8 @@
-import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:latlong/latlong.dart';
-import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/geo3x3.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
@@ -18,6 +16,9 @@ import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
+import 'package:latlong/latlong.dart';
 
 final PATTERN_NO_NUMBERS = r'\s+?';
 final PATTERN_NOTHING_OR_NO_NUMBERS = r'\s*?';
@@ -83,6 +84,9 @@ Map<String, LatLng> parseLatLon(String text, {wholeString = false}) {
     coord = geoHexToLatLon(text);
     if (coord != null) coords.addAll({keyCoordsGeoHex: coord});
 
+    coord = parseGeo3x3(text);
+    if (coord != null) coords.addAll({keyCoordsGeo3x3: coord});
+
     coord = openLocationCodeToLatLon(text);
     if (coord != null) coords.addAll({keyCoordsOpenLocationCode: coord});
 
@@ -93,4 +97,19 @@ Map<String, LatLng> parseLatLon(String text, {wholeString = false}) {
     if (coord != null) coords.addAll({keyCoordsSlippyMap: coord});
   } catch (e) {}
   return coords;
+}
+
+//wholeString == false: The first match at the text begin is taken - for copy
+//wholeString == true: The whole text must be a valid coord - for var coords
+Map<String, dynamic> parseStandardFormats(String text, {wholeString = false}) {
+  LatLng coord = parseDMS(text, wholeString: wholeString);
+  if (coord != null) return {'format': keyCoordsDMS, 'coordinate': coord};
+
+  coord = parseDMM(text, wholeString: wholeString);
+  if (coord != null) return {'format': keyCoordsDMM, 'coordinate': coord};
+
+  coord = parseDEC(text, wholeString: wholeString);
+  if (coord != null) return {'format': keyCoordsDEC, 'coordinate': coord};
+
+  return null;
 }

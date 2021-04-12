@@ -197,6 +197,7 @@ class GCWMapViewState extends State<GCWMapView> {
                   boundsOptions: FitBoundsOptions(padding: EdgeInsets.all(30.0)),
                   minZoom: 1.0,
                   maxZoom: 18.0,
+                  interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate, // suppress rotation
                   plugins: [PopupMarkerPlugin(), TappablePolylineMapPlugin()],
                   onTap: (_) => _popupLayerController.hidePopup(),
                   onLongPress: widget.isEditable
@@ -300,11 +301,12 @@ class GCWMapViewState extends State<GCWMapView> {
       text = i18n(context, 'common_radius') + ': ${_formatLengthOutput(child.radius)}';
     }
 
-    var dialogButtons = <GCWDialogButton>[];
+    var dialogButtons = <Widget>[];
     if (widget.isEditable) {
       dialogButtons.addAll([
-        GCWDialogButton(
-            text: 'Edit',
+        GCWIconButton(
+            iconData: Icons.edit,
+            iconColor: themeColors().dialogText(),
             onPressed: () {
               if (child is GCWMapPolyline) {
                 Navigator.push(
@@ -312,7 +314,8 @@ class GCWMapViewState extends State<GCWMapView> {
                     NoAnimationMaterialPageRoute(
                         builder: (context) => GCWTool(
                             tool: MapPolylineEditor(polyline: child),
-                            toolName: i18n(context, 'coords_openmap_lineeditor')))).whenComplete(() {
+                            i18nPrefix: 'coords_openmap_lineeditor',
+                            missingHelpLocales: ['fr']))).whenComplete(() {
                   setState(() {
                     if (child is GCWMapPolyline) {
                       _persistanceAdapter.updateMapPolyline(child);
@@ -326,7 +329,8 @@ class GCWMapViewState extends State<GCWMapView> {
                     NoAnimationMaterialPageRoute(
                         builder: (context) => GCWTool(
                             tool: MapPointEditor(mapPoint: mapPoint, lengthUnit: defaultLengthUnit),
-                            toolName: i18n(context, 'coords_openmap_lineeditor')))).whenComplete(() {
+                            i18nPrefix: 'coords_openmap_lineeditor',
+                            missingHelpLocales: ['fr']))).whenComplete(() {
                   setState(() {
                     _persistanceAdapter.updateMapPoint(mapPoint);
                     _mapController.move(mapPoint.point, _mapController.zoom);
@@ -334,8 +338,9 @@ class GCWMapViewState extends State<GCWMapView> {
                 });
               }
             }),
-        GCWDialogButton(
-            text: i18n(context, 'coords_openmap_lineremove_button'),
+        GCWIconButton(
+            iconData: Icons.delete,
+            iconColor: themeColors().dialogText(),
             onPressed: () {
               if (child is GCWMapPolyline) {
                 showGCWDialog(
@@ -753,7 +758,8 @@ class GCWMapViewState extends State<GCWMapView> {
                               NoAnimationMaterialPageRoute(
                                   builder: (context) => GCWTool(
                                       tool: MapPointEditor(mapPoint: gcwMarker.mapPoint, lengthUnit: defaultLengthUnit),
-                                      toolName: i18n(context, 'coords_openmap_pointeditor')))).whenComplete(() {
+                                      i18nPrefix: 'coords_openmap_pointeditor',
+                                      missingHelpLocales: ['fr']))).whenComplete(() {
                             setState(() {
                               _persistanceAdapter.updateMapPoint(gcwMarker.mapPoint);
                               _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);

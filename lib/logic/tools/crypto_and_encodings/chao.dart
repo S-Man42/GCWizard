@@ -67,6 +67,7 @@ String _permutePlainAlphabet(String plainChar, String alphabet) {
 }
 
 String encryptChao(String plaintext, String alphabetPlain, String alphabetChiffre) {
+  if (alphabetPlain.length < 26 || alphabetChiffre.length < 26) return '';
   String chiffretext = '';
   var chiffreChar;
   var plainChar;
@@ -83,6 +84,7 @@ String encryptChao(String plaintext, String alphabetPlain, String alphabetChiffr
 }
 
 String decryptChao(String chiffretext, String alphabetPlain, String alphabetChiffre) {
+  if (alphabetPlain.length < 26 || alphabetChiffre.length < 26) return '';
   String plaintext = '';
   var chiffreChar;
   var plainChar;
