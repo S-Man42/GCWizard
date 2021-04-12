@@ -185,7 +185,11 @@ class _MainViewState extends State<MainView> {
 
     _searchController.addListener(() {
       setState(() {
-        _searchText = _searchController.text.isEmpty ? '' : _searchController.text;
+        if (_searchController.text.isEmpty){
+          _searchText = '';
+        }else if (_searchText!= _searchController.text) {
+          _searchText =  _searchController.text;
+        }
       });
     });
 
@@ -389,6 +393,8 @@ class _MainViewState extends State<MainView> {
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });
 
+    var toolList = (_isSearching && _searchText.length > 0) ? _getSearchedList() : null;
+
     return DefaultTabController(
       length: 3,
       initialIndex:
@@ -412,9 +418,9 @@ class _MainViewState extends State<MainView> {
         drawer: buildMainMenu(context),
         body: TabBarView(
           children: [
-            GCWToolList(toolList: _isSearching && _searchText.length > 0 ? _getSearchedList() : _categoryList),
-            GCWToolList(toolList: _isSearching && _searchText.length > 0 ? _getSearchedList() : _toolList),
-            GCWToolList(toolList: _isSearching && _searchText.length > 0 ? _getSearchedList() : Favorites.toolList),
+            GCWToolList(toolList: toolList != null ? toolList : _categoryList),
+            GCWToolList(toolList: toolList != null ? toolList : _toolList),
+            GCWToolList(toolList: toolList != null ? toolList : Favorites.toolList),
           ],
         ),
       ),
