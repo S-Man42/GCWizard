@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
@@ -277,8 +278,6 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart
 
 class Registry {
   static List<GCWTool> toolList;
-
-  static bool indexed = false;
 
   static initialize(BuildContext context) {
     toolList = [
@@ -6269,5 +6268,17 @@ class Registry {
     //Sort once for search
     toolList.sort((a, b) => a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase()));
 
+    buildIndexedStrings();
+
+  }
+
+  static void buildIndexedStrings() {
+    toolList.where((tool) {
+      // TODO : can be moved inside GCWTool itself
+      var _indexedStrings = removeAccents(tool.searchStrings.join(' ').toLowerCase());
+      if (_indexedStrings == null || _indexedStrings.length == 0) return false;
+      tool.indexedStrings = splitWords(_indexedStrings);
+      return true;
+    }).toList();
   }
 }

@@ -88,6 +88,12 @@ String normalizeUmlauts(String input) {
   }).join();
 }
 
+List<String> splitWords(String text){
+  // TODO Move regex static/const
+  RegExp reSplit = RegExp(r'[\s,]');
+  return text.split(reSplit);
+}
+
 String removeAccents(String text) {
   String out = normalizeUmlauts(text);
   return removeDiacritics(out);

@@ -222,6 +222,7 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     Registry.initialize(context);
+    buildIndexedStrings();
     Favorites.initialize();
 
     final List<GCWTool> _toolList = Registry.toolList.where((element) {
@@ -377,9 +378,10 @@ class _MainViewState extends State<MainView> {
       ].contains(className(element.tool));
     }).toList();
 
-    _toolList.sort((a, b) {
-      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
-    });
+    // already sorted in registry
+    // _toolList.sort((a, b) {
+    //   return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+    // });
 
     final List<GCWTool> _categoryList = Registry.toolList.where((element) {
       return [
@@ -471,7 +473,6 @@ class _MainViewState extends State<MainView> {
   List<GCWTool> _getSearchedList() {
     Stopwatch stopwatch = Stopwatch()..start();
     List<String> _queryTexts = splitWords(removeAccents(_searchText.toLowerCase()));
-    buildIndexedStrings();
 
     var list = Registry.toolList.where((tool) {
       if (tool.indexedStrings==null) {
@@ -499,29 +500,4 @@ class _MainViewState extends State<MainView> {
     return list;
   }
 
-  static RegExp reSplit = RegExp(r'[\s,]');
-
-  List<String> splitWords(String text){
-    return text.split(reSplit);
-  }
-
-  void buildIndexedStrings() {
-    //cache index
-    Registry.indexed = false;
-    if (Registry.indexed) return;
-
-    var list = Registry.toolList;
-    list.where((tool) {
-
-      // TODO : can be moved inside GCWTool itself
-      var _indexedStrings = removeAccents(tool.searchStrings.join(' ').toLowerCase());
-      if (_indexedStrings == null || _indexedStrings.length == 0) return false;
-
-      tool.indexedStrings = splitWords(_indexedStrings);
-      return true;
-    }).toList();
-    Registry.indexed = true;
-
-
-  }
 }
