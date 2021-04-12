@@ -222,7 +222,6 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     Registry.initialize(context);
-    buildIndexedStrings();
     Favorites.initialize();
 
     final List<GCWTool> _toolList = Registry.toolList.where((element) {
@@ -474,23 +473,19 @@ class _MainViewState extends State<MainView> {
     Stopwatch stopwatch = Stopwatch()..start();
     List<String> _queryTexts = splitWords(removeAccents(_searchText.toLowerCase()));
 
-    var list = Registry.toolList.where((tool) {
-      if (tool.indexedStrings==null) {
-        return false;
-      }
-      var found = false;
+    var list = Registry.indexedTools.where((tool) {
+   // var list = Registry.toolList.where((tool) {
+   //    if (tool.indexedStrings==null) {
+   //      print("no indexedStrings");
+   //      return false;
+   //    }
       //Search result as AND result of separated words
       for (final q in _queryTexts) {
-        for (final word in tool.indexedStrings) {
-          if (word.contains(q)) {
-            found = true;
-            break;
-          }
+        if (!tool.indexedStrings.contains(q)) {
+          return false;
         }
-        // exit now, cannot be successful
-        if (!found) return false;
       }
-      return found;
+      return true;
     }).toList();
 
     print('found ${list.length} tools in ${stopwatch.elapsed}');

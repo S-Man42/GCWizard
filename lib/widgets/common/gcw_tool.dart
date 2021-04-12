@@ -87,7 +87,7 @@ class GCWTool extends StatefulWidget {
   final autoScroll;
   final iconPath;
   final List<String> searchStrings;
-  List<String> _indexedStrings;
+  String _indexedStrings;
   final List<GCWToolActionButtonsEntry> buttonList;
   final List<String> missingHelpLocales;
   final bool suppressHelpButton;
@@ -125,9 +125,9 @@ class GCWTool extends StatefulWidget {
     }
   }
 
-  List<String>  get indexedStrings => _indexedStrings;
+  String get indexedStrings => _indexedStrings;
 
-  set indexedStrings(List<String> value) {
+  set indexedStrings(String value) {
     _indexedStrings = value;
   }
 
