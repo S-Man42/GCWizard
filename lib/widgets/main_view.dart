@@ -445,6 +445,7 @@ class _MainViewState extends State<MainView> {
     return _isSearching
         ? GCWTextField(
             autofocus: true,
+            clearIcon: false,
             controller: _searchController,
             icon: Icon(Icons.search, color: themeColors().mainFont()),
             hintText: i18n(context, 'common_search_hint'))
@@ -462,28 +463,59 @@ class _MainViewState extends State<MainView> {
   }
 
   List<GCWTool> _getSearchedList() {
-    var list = Registry.toolList;
-    String searchstring = '';
+    Stopwatch stopwatch = Stopwatch()..start();
+    List<String> _queryTexts = splitWords(removeAccents(_searchText.toLowerCase()));
+    buildIndexedStrings();
 
-    list = list.where((tool) {
-      searchstring = tool.searchStrings.join(' ').toLowerCase();
-      if (searchstring == null || searchstring.length == 0) return false;
-
-      var found = true;
-
+    var list = Registry.toolList.where((tool) {
+      if (tool.indexedStrings==null) {
+        return false;
+      }
+      var found = false;
       //Search result as AND result of separated words
-      _searchText.toLowerCase().split(RegExp(r'[\s,]')).forEach((word) {
-        var searchStrings = searchstring;
-        if (!searchStrings.contains(word) &&
-            !searchStrings.contains(removeAccents(word))) //search with and without accents
-          found = false;
-      });
-
+      for (final q in _queryTexts) {
+        for (final word in tool.indexedStrings) {
+          if (word.contains(q)) {
+            found = true;
+            break;
+          }
+        }
+        // exit now, cannot be successful
+        if (!found) return false;
+      }
       return found;
     }).toList();
 
-    list.sort((a, b) => a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase()));
+    print('found ${list.length} tools in ${stopwatch.elapsed}');
+
+    stopwatch.stop();
 
     return list;
+  }
+
+  static RegExp reSplit = RegExp(r'[\s,]');
+
+  List<String> splitWords(String text){
+    return text.split(reSplit);
+  }
+
+  void buildIndexedStrings() {
+    //cache index
+    Registry.indexed = false;
+    if (Registry.indexed) return;
+
+    var list = Registry.toolList;
+    list.where((tool) {
+
+      // TODO : can be moved inside GCWTool itself
+      var _indexedStrings = removeAccents(tool.searchStrings.join(' ').toLowerCase());
+      if (_indexedStrings == null || _indexedStrings.length == 0) return false;
+
+      tool.indexedStrings = splitWords(_indexedStrings);
+      return true;
+    }).toList();
+    Registry.indexed = true;
+
+
   }
 }

@@ -278,6 +278,8 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart
 class Registry {
   static List<GCWTool> toolList;
 
+  static bool indexed = false;
+
   static initialize(BuildContext context) {
     toolList = [
       //MainSelection
@@ -6263,5 +6265,9 @@ class Registry {
 
       return toolWidget;
     }).toList();
+
+    //Sort once for search
+    toolList.sort((a, b) => a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase()));
+
   }
 }
