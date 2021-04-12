@@ -187,10 +187,10 @@ class _MainViewState extends State<MainView> {
 
     _searchController.addListener(() {
       setState(() {
-        if (_searchController.text.isEmpty) {
+        if (_searchController.text.isEmpty){
           _searchText = '';
-        } else if (_searchText != _searchController.text) {
-          _searchText = _searchController.text;
+        }else if (_searchText!= _searchController.text) {
+          _searchText =  _searchController.text;
         }
       });
     });
@@ -377,6 +377,10 @@ class _MainViewState extends State<MainView> {
       ].contains(className(element.tool));
     }).toList();
 
+    _toolList.sort((a, b) {
+      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
+    });
+
     final List<GCWTool> _categoryList = Registry.toolList.where((element) {
       return [
         className(CoordsSelection()),
@@ -447,6 +451,7 @@ class _MainViewState extends State<MainView> {
     return _isSearching
         ? GCWTextField(
             autofocus: true,
+            clearIcon: false,
             controller: _searchController,
             icon: Icon(Icons.search, color: themeColors().mainFont()),
             hintText: i18n(context, 'common_search_hint'))
@@ -466,20 +471,57 @@ class _MainViewState extends State<MainView> {
   List<GCWTool> _getSearchedList() {
     Stopwatch stopwatch = Stopwatch()..start();
     List<String> _queryTexts = splitWords(removeAccents(_searchText.toLowerCase()));
+    buildIndexedStrings();
 
-    var list = Registry.indexedTools.where((tool) {
+    var list = Registry.toolList.where((tool) {
+      if (tool.indexedStrings==null) {
+        return false;
+      }
+      var found = false;
       //Search result as AND result of separated words
       for (final q in _queryTexts) {
-        if (!tool.indexedStrings.contains(q)) {
-          return false;
+        for (final word in tool.indexedStrings) {
+          if (word.contains(q)) {
+            found = true;
+            break;
+          }
         }
+        // exit now, cannot be successful
+        if (!found) return false;
       }
-      return true;
+      return found;
     }).toList();
 
     print('found ${list.length} tools in ${stopwatch.elapsed}');
+
     stopwatch.stop();
 
     return list;
+  }
+
+  static RegExp reSplit = RegExp(r'[\s,]');
+
+  List<String> splitWords(String text){
+    return text.split(reSplit);
+  }
+
+  void buildIndexedStrings() {
+    //cache index
+    Registry.indexed = false;
+    if (Registry.indexed) return;
+
+    var list = Registry.toolList;
+    list.where((tool) {
+
+      // TODO : can be moved inside GCWTool itself
+      var _indexedStrings = removeAccents(tool.searchStrings.join(' ').toLowerCase());
+      if (_indexedStrings == null || _indexedStrings.length == 0) return false;
+
+      tool.indexedStrings = splitWords(_indexedStrings);
+      return true;
+    }).toList();
+    Registry.indexed = true;
+
+
   }
 }
