@@ -7,10 +7,19 @@ LatLng geo3x3ToLatLon(Geo3x3 geo3x3) {
   return latLon == null ? null : LatLng(latLon[0], latLon[1]);
 }
 
-Geo3x3 parseGeo3x3(String code) {
-  var geo3x3 = Geo3x3(code);
-  var latLon = geo3x3ToLatLon(geo3x3);
-  return latLon == null ? null : geo3x3;
+Geo3x3 parseGeo3x3(String input) {
+  if (input == null) return null;
+  input = input.trim();
+  if (input == '') return null;
+
+  input = input.toUpperCase();
+  if (RegExp(r'[EeWw][1-9]+').hasMatch(input)) {
+    var geo3x3 = Geo3x3(input);
+    var latLon = geo3x3ToLatLon(geo3x3);
+    return latLon == null ? null : geo3x3;
+  }
+
+  return null;
 }
 
 Geo3x3 latLonToGeo3x3(LatLng coord, int level) {

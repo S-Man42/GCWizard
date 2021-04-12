@@ -47,6 +47,10 @@ LatLng maidenheadToLatLon(Maidenhead maidenhead) {
 }
 
 Maidenhead parseMaidenhead(String maidenhead) {
+  if (maidenhead == null) return null;
+  maidenhead = maidenhead.trim();
+  if (maidenhead == '') return null;
+
   var _maidenhead = Maidenhead(maidenhead);
   return maidenheadToLatLon(_maidenhead) == null ? null : _maidenhead;
 }
