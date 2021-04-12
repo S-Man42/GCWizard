@@ -277,7 +277,9 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singlenumb
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 
 class Registry {
+  // List of all available tools
   static List<GCWTool> toolList;
+  // Tools with search strings
   static List<GCWTool> indexedTools;
 
   static initialize(BuildContext context) {
@@ -6273,9 +6275,9 @@ class Registry {
 
   }
 
+  // Build indexed strings : concatenated lower case no accent
   static void buildIndexedStrings() {
     indexedTools = toolList.where((tool) {
-      // TODO : can be moved inside GCWTool itself
       var _indexedStrings = removeAccents(tool.searchStrings.join(' ').toLowerCase());
       if (_indexedStrings == null || _indexedStrings.length == 0) return false;
       tool.indexedStrings = _indexedStrings;
