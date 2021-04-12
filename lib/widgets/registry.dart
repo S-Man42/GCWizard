@@ -275,6 +275,7 @@ import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart
 
 class Registry {
   static List<GCWTool> toolList;
+  static List<GCWTool> indexedTools;
 
   static initialize(BuildContext context) {
     toolList = [
@@ -6254,11 +6255,11 @@ class Registry {
   }
 
   static void buildIndexedStrings() {
-    toolList.where((tool) {
+    indexedTools = toolList.where((tool) {
       // TODO : can be moved inside GCWTool itself
       var _indexedStrings = removeAccents(tool.searchStrings.join(' ').toLowerCase());
       if (_indexedStrings == null || _indexedStrings.length == 0) return false;
-      tool.indexedStrings = splitWords(_indexedStrings);
+      tool.indexedStrings = _indexedStrings;
       return true;
     }).toList();
   }
