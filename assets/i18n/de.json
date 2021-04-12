@@ -3113,6 +3113,7 @@
   "vanity_singlenumbers_example": "A → 2, B → 2, Z → 9",
   "vanity_multiplenumbers_title": "Vanity: Zifferngruppen",
   "vanity_multiplenumbers_example": "A → 2, B → 22, Z → 9999",
+  "vanity_multiplenumbers_case_sensitive": "Beachte Groß-/Kleinschreibung",
   "vigenere_selection_title": "Vigenère Chiffre",
   "vigenere_selection_description": "Verschiebt Buchstaben um den Buchstabenwert des Schlüssels, inkl. Gronsfeld und Trithemius",
   "vigenere_selection_example": "ABC mit Schlüssel DEF → DFH",

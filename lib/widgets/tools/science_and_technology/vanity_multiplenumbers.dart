@@ -4,6 +4,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class VanityMultipleNumbers extends StatefulWidget {
@@ -12,22 +13,26 @@ class VanityMultipleNumbers extends StatefulWidget {
 }
 
 class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
-  var _controller;
+  var _encodeController;
+  var _decodeController;
 
-  var _currentInput = '';
+  var _currentDecodeInput = '';
+  var _currentEncodeInput = '';
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
 
   PhoneModel _currentModel = NOKIA;
 
+  bool _currentEncodeCaseSensitive = false;
+
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: _currentInput);
+    _encodeController = TextEditingController(text: _currentEncodeInput);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _encodeController.dispose();
     super.dispose();
   }
 
@@ -35,14 +40,23 @@ class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(
-          controller: _controller,
-          onChanged: (text) {
-            setState(() {
-              _currentInput = text;
-            });
-          },
-        ),
+        _currentMode == GCWSwitchPosition.left
+            ? GCWTextField(
+                controller: _encodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentEncodeInput = text;
+                  });
+                },
+              )
+            : GCWTextField(
+                controller: _decodeController,
+                onChanged: (text) {
+                  setState(() {
+                    _currentDecodeInput = text;
+                  });
+                },
+              ),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -51,6 +65,16 @@ class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
             });
           },
         ),
+        if (_currentMode == GCWSwitchPosition.left)
+          GCWOnOffSwitch(
+            title: i18n(context, 'vanity_multiplenumbers_case_sensitive'),
+            value: _currentEncodeCaseSensitive,
+            onChanged: (value) {
+              setState(() {
+                _currentEncodeCaseSensitive = value;
+              });
+            },
+          ),
         GCWDropDownButton(
             value: _currentModel,
             onChanged: (newValue) {
@@ -78,9 +102,10 @@ class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
 
   _buildOutput() {
     if (_currentMode == GCWSwitchPosition.left) {
-      return encodeVanityMultipleNumbers(_currentInput, _currentModel);
+      return encodeVanityMultipleNumbers(_currentEncodeInput, _currentModel,
+          caseSensitive: _currentEncodeCaseSensitive);
     } else {
-      return decodeVanityMultipleNumbers(_currentInput, _currentModel);
+      return decodeVanityMultipleNumbers(_currentDecodeInput, _currentModel);
     }
   }
 }

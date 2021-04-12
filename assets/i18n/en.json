@@ -3113,6 +3113,7 @@
   "vanity_singlenumbers_example": "A → 2, B → 2, Z → 9",
   "vanity_multiplenumbers_title": "Vanity Multitap",
   "vanity_multiplenumbers_example": "A → 2, B → 22, Z → 9999",
+  "vanity_multiplenumbers_case_sensitive": "Case sensitive",
   "vigenere_selection_title": "Vigenère Cipher",
   "vigenere_selection_description": "Shifts letters by the letter value of the key. Incl. Gronsfeld and Trithemius",
   "vigenere_selection_example": "ABC with key DEF → DFH",

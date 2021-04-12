@@ -3113,6 +3113,7 @@
   "vanity_singlenumbers_example": "A → 2, B → 2, Z → 9",
   "vanity_multiplenumbers_title": "Vanité Nombres multiples",
   "vanity_multiplenumbers_example": "A → 2, B → 22, Z → 9999",
+  "vanity_multiplenumbers_case_sensitive": "Sensible à la casse",
   "vigenere_selection_title": "Vigenère (outils)",
   "vigenere_selection_description": "Déplace les lettres par la valeur de la lettre de la clé. Inclus: Gronsfeld et Trithemius",
   "vigenere_selection_example": "ABC avec la clé DEF → DFH",
