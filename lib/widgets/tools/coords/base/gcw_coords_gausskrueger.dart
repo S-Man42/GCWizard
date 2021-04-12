@@ -18,8 +18,8 @@ class GCWCoordsGaussKrueger extends StatefulWidget {
 }
 
 class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
-  var _eastingController;
-  var _northingController;
+  TextEditingController _eastingController;
+  TextEditingController _northingController;
 
   var _currentEasting = {'text': '', 'value': 0.0};
   var _currentNorthing = {'text': '', 'value': 0.0};

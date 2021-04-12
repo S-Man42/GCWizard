@@ -20,9 +20,9 @@ class GCWCoordsUTM extends StatefulWidget {
 }
 
 class GCWCoordsUTMState extends State<GCWCoordsUTM> {
-  var _LonZoneController;
-  var _EastingController;
-  var _NorthingController;
+  TextEditingController _LonZoneController;
+  TextEditingController _EastingController;
+  TextEditingController _NorthingController;
 
   var _currentLatZone = 'U';
   var _currentLonZone = {'text': '', 'value': 0};

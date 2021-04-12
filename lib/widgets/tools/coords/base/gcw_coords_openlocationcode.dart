@@ -15,7 +15,7 @@ class GCWCoordsOpenLocationCode extends StatefulWidget {
 }
 
 class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
-  var _controller;
+  TextEditingController _controller;
   var _currentCoord = '';
 
   var _maskInputFormatter = WrapperForMaskTextInputFormatter(

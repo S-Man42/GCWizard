@@ -15,9 +15,9 @@ class GCWCoordsXYZ extends StatefulWidget {
 }
 
 class GCWCoordsXYZState extends State<GCWCoordsXYZ> {
-  var _ControllerX;
-  var _ControllerY;
-  var _ControllerZ;
+  TextEditingController _ControllerX;
+  TextEditingController _ControllerY;
+  TextEditingController _ControllerZ;
 
   var _currentX = 0.0;
   var _currentY = 0.0;
@@ -92,6 +92,6 @@ class GCWCoordsXYZState extends State<GCWCoordsXYZ> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(XYZ(_currentX, _currentY, _currentZ));
+   // widget.onChanged(XYZ(_currentX, _currentY, _currentZ));
   }
 }

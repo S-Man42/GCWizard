@@ -408,19 +408,33 @@ class MGRS extends BaseCoordinates {
 }
 
 class SwissGrid extends BaseCoordinates {
-  String get key => isSwissGridPlus ? keyCoordsSwissGridPlus : keyCoordsSwissGrid;
+  String get key => keyCoordsSwissGrid;
   double easting;
   double northing;
-  bool isSwissGridPlus;
 
-  SwissGrid(this.easting, this.northing, {this.isSwissGridPlus: false});
+  SwissGrid(this.easting, this.northing);
 
   LatLng toLatLng({Ellipsoid ells}) {
     if (ells == null) ells = defaultEllipsoid();
-    if (isSwissGridPlus)
-      return swissGridPlusToLatLon(this, ells);
-    else
-      return swissGridToLatLon(this, ells);
+    return swissGridToLatLon(this, ells);
+  }
+
+  @override
+  String toString() {
+    return 'Y: ${easting}\nX: ${northing}';
+  }
+}
+
+class SwissGridPlus extends BaseCoordinates {
+  String get key => keyCoordsSwissGridPlus;
+  double easting;
+  double northing;
+
+  SwissGridPlus(this.easting, this.northing);
+
+  LatLng toLatLng({Ellipsoid ells}) {
+    if (ells == null) ells = defaultEllipsoid();
+    return swissGridPlusToLatLon(this, ells);
   }
 
   @override

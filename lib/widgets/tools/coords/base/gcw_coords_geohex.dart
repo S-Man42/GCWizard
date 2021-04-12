@@ -16,7 +16,7 @@ class GCWCoordsGeoHex extends StatefulWidget {
 }
 
 class GCWCoordsGeoHexState extends State<GCWCoordsGeoHex> {
-  var _controller;
+  TextEditingController _controller;
   var _currentCoord = '';
 
   @override

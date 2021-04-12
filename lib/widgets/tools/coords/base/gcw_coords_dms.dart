@@ -21,14 +21,14 @@ class GCWCoordsDMS extends StatefulWidget {
 }
 
 class GCWCoordsDMSState extends State<GCWCoordsDMS> {
-  var _LatDegreesController;
-  var _LatMinutesController;
-  var _LatSecondsController;
-  var _LatMilliSecondsController;
-  var _LonDegreesController;
-  var _LonMinutesController;
-  var _LonSecondsController;
-  var _LonMilliSecondsController;
+  TextEditingController _LatDegreesController;
+  TextEditingController _LatMinutesController;
+  TextEditingController _LatSecondsController;
+  TextEditingController _LatMilliSecondsController;
+  TextEditingController _LonDegreesController;
+  TextEditingController _LonMinutesController;
+  TextEditingController _LonSecondsController;
+  TextEditingController _LonMilliSecondsController;
 
   FocusNode _latMinutesFocusNode;
   FocusNode _latSecondsFocusNode;

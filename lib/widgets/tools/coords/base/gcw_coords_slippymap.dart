@@ -15,8 +15,8 @@ class GCWCoordsSlippyMap extends StatefulWidget {
 }
 
 class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
-  var _xController;
-  var _yController;
+  TextEditingController _xController;
+  TextEditingController _yController;
 
   var _currentX = {'text': '', 'value': 0.0};
   var _currentY = {'text': '', 'value': 0.0};

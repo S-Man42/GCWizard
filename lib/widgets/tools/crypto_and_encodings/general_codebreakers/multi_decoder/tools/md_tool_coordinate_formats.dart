@@ -64,7 +64,7 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
                     coords = parseSwissGrid(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsSwissGridPlus:
-                    coords = parseSwissGrid(input, isSwissGridPlus: true)?.toLatLng(ells: defaultEllipsoid());
+                    coords = parseSwissGridPlus(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsGaussKrueger:
                     coords = parseGaussKrueger(input)?.toLatLng(ells: defaultEllipsoid());

@@ -20,9 +20,9 @@ class GCWCoordsMGRS extends StatefulWidget {
 }
 
 class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
-  var _LonZoneController;
-  var _EastingController;
-  var _NorthingController;
+  TextEditingController _LonZoneController;
+  TextEditingController _EastingController;
+  TextEditingController _NorthingController;
 
   var _currentLatZone = 'A';
   var _currentDigraphEasting = 'A';

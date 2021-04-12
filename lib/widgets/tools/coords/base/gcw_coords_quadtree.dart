@@ -15,7 +15,7 @@ class GCWCoordsQuadtree extends StatefulWidget {
 }
 
 class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
-  var _controller;
+  TextEditingController _controller;
   var _currentCoord = '';
 
   var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 100, filter: {"#": RegExp(r'[0123]')});

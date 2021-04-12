@@ -16,8 +16,8 @@ class GCWCoordsNaturalAreaCode extends StatefulWidget {
 }
 
 class GCWCoordsNaturalAreaCodeState extends State<GCWCoordsNaturalAreaCode> {
-  var _controllerX;
-  var _controllerY;
+  TextEditingController _controllerX;
+  TextEditingController _controllerY;
   var _currentX = '';
   var _currentY = '';
 

@@ -16,8 +16,8 @@ class GCWCoordsMercator extends StatefulWidget {
 }
 
 class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
-  var _EastingController;
-  var _NorthingController;
+  TextEditingController _EastingController;
+  TextEditingController _NorthingController;
 
   var _currentEasting = {'text': '', 'value': 0.0};
   var _currentNorthing = {'text': '', 'value': 0.0};

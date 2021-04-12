@@ -60,10 +60,16 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
     if (coord != null) coords.add(coord);
 
     coord = parseSwissGrid(text);
-    if (coord != null) coords.add(coord);
-
-    coord = parseSwissGrid(text, isSwissGridPlus: true);
-    if (coord != null) coords.add(coord);
+    var swissGripPlus = parseSwissGridPlus(text);
+    if (swissGripPlus != null &&
+        (swissGripPlus.easting.toInt().toString().length == 7 ||
+         swissGripPlus.northing.toInt().toString().length == 7)) {
+      if (coord != null) coords.add(swissGripPlus);
+      if (coord != null) coords.add(coord);
+    } else {
+      if (coord != null) coords.add(coord);
+      if (coord != null) coords.add(swissGripPlus);
+    }
 
     coord = parseGaussKrueger(text);
     if (coord != null) coords.add(coord);

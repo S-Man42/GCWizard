@@ -16,7 +16,7 @@ class GCWCoordsMaidenhead extends StatefulWidget {
 }
 
 class GCWCoordsMaidenheadState extends State<GCWCoordsMaidenhead> {
-  var _controller;
+  TextEditingController _controller;
   var _currentCoord = '';
 
   @override

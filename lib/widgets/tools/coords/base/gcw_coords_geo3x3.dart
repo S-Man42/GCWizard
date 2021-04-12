@@ -16,7 +16,7 @@ class GCWCoordsGeo3x3 extends StatefulWidget {
 }
 
 class GCWCoordsGeo3x3State extends State<GCWCoordsGeo3x3> {
-  var _controller;
+  TextEditingController _controller;
   var _currentCoord = '';
 
   @override

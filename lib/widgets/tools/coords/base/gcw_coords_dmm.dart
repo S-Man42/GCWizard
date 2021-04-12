@@ -21,13 +21,13 @@ class GCWCoordsDMM extends StatefulWidget {
 }
 
 class GCWCoordsDMMState extends State<GCWCoordsDMM> {
-  var _LatDegreesController;
-  var _LatMinutesController;
-  var _LatMilliMinutesController;
+  TextEditingController _LatDegreesController;
+  TextEditingController _LatMinutesController;
+  TextEditingController _LatMilliMinutesController;
 
-  var _LonDegreesController;
-  var _LonMinutesController;
-  var _LonMilliMinutesController;
+  TextEditingController _LonDegreesController;
+  TextEditingController _LonMinutesController;
+  TextEditingController _LonMilliMinutesController;
 
   int _currentLatSign = defaultHemiphereLatitude();
   int _currentLonSign = defaultHemiphereLongitude();

@@ -21,10 +21,10 @@ class GCWCoordsDEC extends StatefulWidget {
 }
 
 class GCWCoordsDECState extends State<GCWCoordsDEC> {
-  var _LatDegreesController;
-  var _LatMilliDegreesController;
-  var _LonDegreesController;
-  var _LonMilliDegreesController;
+  TextEditingController _LatDegreesController;
+  TextEditingController _LatMilliDegreesController;
+  TextEditingController _LonDegreesController;
+  TextEditingController _LonMilliDegreesController;
 
   FocusNode _latMilliDegreesFocusNode;
   FocusNode _lonMilliDegreesFocusNode;

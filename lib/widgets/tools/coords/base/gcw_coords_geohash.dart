@@ -16,7 +16,7 @@ class GCWCoordsGeohash extends StatefulWidget {
 }
 
 class GCWCoordsGeohashState extends State<GCWCoordsGeohash> {
-  var _controller;
+  TextEditingController _controller;
   var _currentCoord = '';
 
   @override
