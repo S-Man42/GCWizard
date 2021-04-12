@@ -54,8 +54,7 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
       _yController.text = _currentY['value'].toString();
     } else if (_subtypeChanged()) {
       _currentZoom = widget.zoom;
-      WidgetsBinding.instance
-          .addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
+      WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
     }
 
     return Column(children: <Widget>[

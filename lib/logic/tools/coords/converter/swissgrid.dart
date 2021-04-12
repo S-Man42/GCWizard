@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/ellipsoid_transform.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/bigrams.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong/latlong.dart';
 
@@ -36,11 +37,11 @@ SwissGrid latLonToSwissGrid(LatLng coord, Ellipsoid ells) {
       break;
   }
 
-  LatLng newCoord;
+  LatLng newCoord = coord;
   if (x >= 0) {
     newCoord = ellipsoidTransformLatLng(coord, x, false, false);
   }
-  newCoord = ellipsoidTransformLatLng(coord, 5, true, false);
+  newCoord = ellipsoidTransformLatLng(newCoord, 5, true, false);
 
   double lat0 = degToRadian(46.952405555555556); //Bern
   double lon0 = degToRadian(7.439583333333333);
