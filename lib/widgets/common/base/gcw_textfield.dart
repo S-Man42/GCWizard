@@ -39,8 +39,7 @@ class GCWTextField extends StatefulWidget {
       this.maxLength,
       this.maxLines,
       this.fontSize,
-      this.clearIcon = true
-      })
+      this.clearIcon = true})
       : super(key: key);
 }
 
@@ -81,31 +80,33 @@ class _GCWTextFieldState extends State<GCWTextField> {
                   minWidth: 2,
                   minHeight: 2,
                 ),
-                suffixIcon: widget.clearIcon ? constraints.maxWidth > 100
-                    ? InkWell(
-                        child: Container(
-                          child: Icon(
-                            Icons.clear,
-                            color: colors.mainFont(),
-                          ),
-                          padding: EdgeInsets.only(right: 5, top: 5, bottom: 5),
-                        ),
-                        onTap: () {
-                          if (widget.controller != null) widget.controller.clear();
+                suffixIcon: widget.clearIcon
+                    ? (constraints.maxWidth > 100
+                        ? InkWell(
+                            child: Container(
+                              child: Icon(
+                                Icons.clear,
+                                color: colors.mainFont(),
+                              ),
+                              padding: EdgeInsets.only(right: 5, top: 5, bottom: 5),
+                            ),
+                            onTap: () {
+                              if (widget.controller != null) widget.controller.clear();
 
-                          _controller.clear();
+                              _controller.clear();
 
-                          if (widget.onChanged != null) widget.onChanged('');
+                              if (widget.onChanged != null) widget.onChanged('');
 
-                          if (widget.inputFormatters != null) {
-                            widget.inputFormatters.forEach((formatter) {
-                              if (formatter is WrapperForMaskTextInputFormatter) {
-                                formatter.clear();
+                              if (widget.inputFormatters != null) {
+                                widget.inputFormatters.forEach((formatter) {
+                                  if (formatter is WrapperForMaskTextInputFormatter) {
+                                    formatter.clear();
+                                  }
+                                });
                               }
-                            });
-                          }
-                        },
-                      )
+                            },
+                          )
+                        : null)
                     : null),
             onChanged: widget.onChanged,
             controller: widget.controller ?? _controller,
