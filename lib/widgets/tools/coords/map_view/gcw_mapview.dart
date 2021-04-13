@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
@@ -36,7 +37,6 @@ import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
-import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
@@ -498,57 +498,38 @@ class GCWMapViewState extends State<GCWMapView> {
     );
   }
 
-  GestureDetector longP(){
-    return GestureDetector(
-      //onLongPress: ,
-    );
-  }
-
   _buildEditButtons() {
     var buttons = [
       GCWPasteButton(
-          backgroundColor: COLOR_MAP_ICONBUTTONS,
-          customIcon: _createIconButtonIcons(Icons.content_paste),
-          onSelected: (text) {
-            if (_importGpxKml(text) || _persistanceAdapter.setJsonMapViewData(text)) {
-              setState(() {
-                _mapController.fitBounds(_getBounds());
-              });
-            } else {
-              var pastedCoordinate = _parseCoords(text);
-              if (pastedCoordinate == null) return;
-              setState(() {
-                _persistanceAdapter.addMapPoint(pastedCoordinate.values.first,
-                    coordinateFormat: {'format': pastedCoordinate.keys.first});
-                _mapController.move(pastedCoordinate.values.first, _mapController.zoom);
-              });
-            };
-          },
-          onLongPress: () {
+        backgroundColor: COLOR_MAP_ICONBUTTONS,
+        customIcon: _createIconButtonIcons(Icons.content_paste),
+        onSelected: (text) {
+          if (_importGpxKml(text) || _persistanceAdapter.setJsonMapViewData(text)) {
             setState(() {
-              openFileExplorer(allowedExtensions: ['gpx','kml','kmz'], useFileFilterOnAndroid : true).then((files) {
-                if (files != null && files.length > 0)
-                  loadCoordinatesFile(files.first.path).whenComplete(() {
+              _mapController.fitBounds(_getBounds());
+            });
+          } else {
+            var pastedCoordinate = _parseCoords(text);
+            if (pastedCoordinate == null) return;
+            setState(() {
+              _persistanceAdapter.addMapPoint(pastedCoordinate.values.first,
+                  coordinateFormat: {'format': pastedCoordinate.keys.first});
+              _mapController.move(pastedCoordinate.values.first, _mapController.zoom);
+            });
+          };
+        },
+        onLongPress: () {
+          setState(() {
+             openFileExplorer(allowedExtensions: ['gpx','kml','kmz'], useFileFilterOnAndroid : true).then((files) {
+              if (files != null && files.length > 0) {
+                getFileData(files.first).then((bytes) {
+                  loadCoordinatesFile(files.first.name, bytes).whenComplete(() {
                     setState(() {
                       _mapController.fitBounds(_getBounds());
                     });
                   });
-              });
-            });
-          },
-          ),
-      GCWIconButton(
-        backgroundColor: COLOR_MAP_ICONBUTTONS,
-        customIcon: _createIconButtonIcons(Icons.file_present),
-        onPressed: () {
-          setState(() {
-            openFileExplorer(allowedExtensions: ['gpx','kml','kmz'], useFileFilterOnAndroid : true).then((files) {
-              if (files != null && files.length > 0)
-                loadCoordinatesFile(files.first.path).whenComplete(() {
-                  setState(() {
-                    _mapController.fitBounds(_getBounds());
-                  });
                 });
+              }
             });
           });
         },
@@ -825,9 +806,10 @@ class GCWMapViewState extends State<GCWMapView> {
 
     return (viewData != null);
   }
-  Future<bool> loadCoordinatesFile(String filelName) async {
+
+  Future<bool> loadCoordinatesFile(String fileName, Uint8List bytes) async {
     try {
-      await importCoordinatesFile(filelName).then((viewData) {
+      await importCoordinatesFile(fileName, bytes).then((viewData) {
         if (viewData != null)
           _persistanceAdapter.addViewData(viewData);
 

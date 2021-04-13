@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'dart:ui';
 import 'package:xml/xml.dart';
 import 'package:latlong/latlong.dart';
@@ -9,52 +10,46 @@ import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/distance_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/intersect_lines.dart';
-import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adapter.dart';
 import 'package:gc_wizard/persistence/map_view/model.dart';
 
 
-Future<MapViewDAO> importCoordinatesFile(String fileName) async {
-
+Future<MapViewDAO> importCoordinatesFile(String fileName, Uint8List bytes) async {
   switch (path.extension(fileName).toLowerCase()) {
     case '.gpx':
-      return readStringFromFile(fileName).then((xml) {
-        return parseCoordinatesFile(xml);
-      });
+      var xml = String.fromCharCodes(bytes);
+      return parseCoordinatesFile(xml);
       break;
     case '.kml':
-      return readStringFromFile(fileName).then((xml) {
-        return parseCoordinatesFile(xml, kmlFormat: true);
-      });
+      var xml = String.fromCharCodes(bytes);
+      return parseCoordinatesFile(xml, kmlFormat: true);
       break;
     case '.kmz':
-      return readByteDataFromFile(fileName).then((bytes) {
-        InputStream input = new InputStream(bytes.buffer.asByteData());
-        // Decode the Zip file
-        final archive = ZipDecoder().decodeBuffer(input);
-        archive.forEach((file) {
-          file.decompress();
-          var xml = String.fromCharCodes(file.content); //file.content.toString();//.readAsStringSync();File.fromRawPath(
-          return parseCoordinatesFile(xml, kmlFormat: true);
-        });
-      });
+      InputStream input = new InputStream(bytes.buffer.asByteData());
+      // Decode the Zip file
+      final archive = ZipDecoder().decodeBuffer(input);
+      if (archive.files.isNotEmpty) {
+        var file = archive.first;
+        file.decompress();
+        var xml = String.fromCharCodes(file.content);
+        return parseCoordinatesFile(xml, kmlFormat: true);
+      }
       break;
-
   };
   return null;
 }
 
 MapViewDAO parseCoordinatesFile(String xml, {bool kmlFormat = false}) {
-  try{
+  try {
     var xmlDoc = XmlDocument.parse(xml);
-
     if (kmlFormat)
       return _KmlReader()._parse(xmlDoc);
     else
       return _GpxReader()._parse(xmlDoc);
-  } on Exception {
+  }
+  catch (e) {
     return null;
   }
 }
@@ -117,6 +112,7 @@ class _GpxReader {
 class _KmlReader {
   MapViewDAO _parse(XmlDocument xmlDocument) {
     var parent = xmlDocument.getElement('kml');
+
     if (parent != null) {
       var document = parent.getElement('Document');
       if (document != null) {
@@ -131,6 +127,7 @@ class _KmlReader {
 
         _restorePoints(points, lines);
         _restoreCircles(points, lines);
+
         return _convertToMapViewDAO(points, lines);
       }
     };
