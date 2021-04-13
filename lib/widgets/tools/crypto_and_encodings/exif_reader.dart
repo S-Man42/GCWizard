@@ -8,6 +8,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/exif_reader.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 
@@ -19,7 +20,7 @@ class ExifReader extends StatefulWidget {
 }
 
 class _ExifReaderState extends State<ExifReader> {
-  List<List<dynamic>> tags;
+  Map<String, List<List<dynamic>>> tableTags;
   PlatformFile file;
 
   @override
@@ -34,13 +35,7 @@ class _ExifReaderState extends State<ExifReader> {
       GCWText(
         text: file == null ? "" : file.path,
       ),
-      GCWDefaultOutput(
-        child: Column(
-            children: columnedMultiLineOutput(
-          null,
-          tags == null ? [] : tags,
-        )),
-      )
+      ...decorateTags(tableTags)
     ]);
   }
 
@@ -57,13 +52,35 @@ class _ExifReaderState extends State<ExifReader> {
       print(_file.extension);
       print(_file.path);
 
-      List<List<dynamic>>  _tags = await parseExif(_file.path);
+      Map<String, List<List<dynamic>>> _tableTags = await parseExif(_file.path);
       setState(() {
         file = _file;
-        tags = _tags;
+        tableTags = _tableTags;
       });
     } else {
       // User canceled the picker
     }
+  }
+  static void _sortTags(List tags) {
+    tags.sort((a, b) {
+      return a[0].toLowerCase().compareTo(b[0].toLowerCase());
+    });
+  }
+
+  List decorateTags(Map tableTags) {
+    List<Widget> widgets = [];
+    if (tableTags!=null) {
+      tableTags.forEach((key, tags) {
+        _sortTags(tags);
+        widgets.add(GCWOutput(
+            title: key ?? '',
+            child: Column(
+                children: columnedMultiLineOutput(
+                  null,
+                  tags == null ? [] : tags,
+                ))));
+      });
+    }
+    return widgets;
   }
 }
