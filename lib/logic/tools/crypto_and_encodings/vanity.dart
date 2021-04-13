@@ -1,14 +1,32 @@
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/utils/constants.dart';
-import 'package:universal_html/html.dart';
 
 enum PhoneKeySpace { SPACE_ON_KEY_0, SPACE_ON_KEY_1 }
+
+class _ModeSwitch {
+  String switchKey;
+  List<PhoneInputMode> switchOrder;
+  Map<PhoneInputMode, String> switchCharacters;
+
+  _ModeSwitch(this.switchKey, this.switchOrder, this.switchCharacters);
+
+  String codeSwitch(PhoneInputMode from, PhoneInputMode to) {
+    var indexFrom = switchOrder.indexOf(from);
+    var indexTo = switchOrder.indexOf(to);
+
+    if (indexFrom < indexTo)
+      return switchKey * (indexTo - indexFrom) + ' ';
+
+    return switchKey * (indexTo + switchOrder.length - indexFrom) + ' ';
+  }
+}
 
 class PhoneModel {
   String name;
   PhoneKeySpace keySpace;
+  _ModeSwitch modeSwitch;
 
-  PhoneModel(this.name, this.keySpace);
+  PhoneModel(this.name, this.keySpace, this.modeSwitch);
 
   @override
   String toString() {
@@ -20,9 +38,15 @@ const _PHONE_MODEL_KEY_NOKIA = 'Nokia'; //tested 105,1661,6030,6303i,
 const _PHONE_MODEL_KEY_SAMSUNG = 'Samsung'; //tested  GT-E1200I
 const _PHONE_MODEL_KEY_SIEMENS = 'Siemens'; //tested ME45
 
-final NOKIA = PhoneModel(_PHONE_MODEL_KEY_NOKIA, PhoneKeySpace.SPACE_ON_KEY_0);
-final SAMSUNG = PhoneModel(_PHONE_MODEL_KEY_SAMSUNG, PhoneKeySpace.SPACE_ON_KEY_0);
-final SIEMENS = PhoneModel(_PHONE_MODEL_KEY_SIEMENS, PhoneKeySpace.SPACE_ON_KEY_1);
+final NOKIA = PhoneModel(_PHONE_MODEL_KEY_NOKIA, PhoneKeySpace.SPACE_ON_KEY_0,
+    _ModeSwitch('#', [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.CAPITAL, PhoneInputMode.NUMBERS], {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'})
+);
+final SAMSUNG = PhoneModel(_PHONE_MODEL_KEY_SAMSUNG, PhoneKeySpace.SPACE_ON_KEY_0,
+    _ModeSwitch('#', [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.CAPITAL, PhoneInputMode.NUMBERS], {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'})
+);
+final SIEMENS = PhoneModel(_PHONE_MODEL_KEY_SIEMENS, PhoneKeySpace.SPACE_ON_KEY_1,
+    _ModeSwitch('*', [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.NUMBERS], {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'})
+);
 
 final PHONE_MODELS = [NOKIA, SAMSUNG, SIEMENS];
 
@@ -58,6 +82,19 @@ final Map<String, String> _vanityNokiaCapital = {
   '*': '.,\'?!"-()@/:_;+&%*=<>£€\$¥¤[]{}\~^`¡¿§#| \n',
 };
 
+final Map<String, String> _vanityNokiaNumbers = {
+  '1': '1',
+  '2': '2',
+  '3': '3',
+  '4': '4',
+  '5': '5',
+  '6': '6',
+  '7': '7',
+  '8': '8',
+  '9': '9',
+  '0': '0'
+};
+
 final Map<String, String> _vanitySamsungSmall = {
   '1': '.,?!1@\'"-()/:_;',
   '2': 'abcäàåæΓ2',
@@ -86,6 +123,19 @@ final Map<String, String> _vanitySamsungCapital = {
   '*': '.,-!?@~_\n\/&"\';^|:()<{}>[]=€\$£§%¥*+#¿¡¤',
 };
 
+final Map<String, String> _vanitySamsungNumbers = {
+  '1': '1',
+  '2': '2',
+  '3': '3',
+  '4': '4',
+  '5': '5',
+  '6': '6',
+  '7': '7',
+  '8': '8',
+  '9': '9',
+  '0': '0'
+};
+
 final Map<String, String> _vanitySiemensSmall = {
   '0': '.,?!0+-:¿¡"\'_',
   '1': ' 1€£\$¥¤',
@@ -112,7 +162,21 @@ final Map<String, String> _vanitySiemensCapital = {
   '9': 'WXYZ9'
 };
 
-enum _InputMode { SMALL, CAPITAL, FIRST_CAPITAL, NUMBERS }
+final Map<String, String> _vanitySiemensNumbers = {
+  '1': '1',
+  '2': '2',
+  '3': '3',
+  '4': '4',
+  '5': '5',
+  '6': '6',
+  '7': '7',
+  '8': '8',
+  '9': '9',
+  '0': '0',
+  '#': '#'
+};
+
+enum PhoneInputMode { SMALL, CAPITAL, FIRST_CAPITAL, NUMBERS }
 
 String encodeVanitySingleNumbers(String input, PhoneModel model) {
   return _encodeVanity(input, model, false).map((code) => code[0]).join();
@@ -129,16 +193,16 @@ Map<String, String> _prepareAZToNumberblocks(Map<String, String> keyMap) {
   return AZToNumberblocks;
 }
 
-_getNextMode(_InputMode currentMode) {
+_getNextMode(PhoneInputMode currentMode) {
   switch (currentMode) {
-    case _InputMode.FIRST_CAPITAL:
-      return _InputMode.SMALL;
-    case _InputMode.SMALL:
-      return _InputMode.CAPITAL;
-    case _InputMode.CAPITAL:
-      return _InputMode.NUMBERS;
-    case _InputMode.NUMBERS:
-      return _InputMode.SMALL;
+    case PhoneInputMode.FIRST_CAPITAL:
+      return PhoneInputMode.SMALL;
+    case PhoneInputMode.SMALL:
+      return PhoneInputMode.CAPITAL;
+    case PhoneInputMode.CAPITAL:
+      return PhoneInputMode.NUMBERS;
+    case PhoneInputMode.NUMBERS:
+      return PhoneInputMode.SMALL;
   }
 }
 
@@ -147,18 +211,22 @@ _encodeVanity(String input, PhoneModel model, bool caseSensitive) {
 
   Map<String, String> keyMapSmall;
   Map<String, String> keyMapCapital;
+  Map<String, String> keyMapNumbers;
   switch (model.name) {
     case _PHONE_MODEL_KEY_NOKIA:
       keyMapSmall = _vanityNokiaSmall;
       keyMapCapital = _vanityNokiaCapital;
+      keyMapNumbers = _vanityNokiaNumbers;
       break;
     case _PHONE_MODEL_KEY_SAMSUNG:
       keyMapSmall = _vanitySamsungSmall;
       keyMapCapital = _vanitySamsungCapital;
+      keyMapNumbers = _vanitySamsungNumbers;
       break;
     case _PHONE_MODEL_KEY_SIEMENS:
       keyMapSmall = _vanitySiemensSmall;
       keyMapCapital = _vanitySiemensCapital;
+      keyMapNumbers = _vanitySiemensNumbers;
       break;
   }
 
@@ -178,38 +246,60 @@ _encodeVanity(String input, PhoneModel model, bool caseSensitive) {
   Map<String, String> AZToNumberblocksSmall = _prepareAZToNumberblocks(keyMapSmall);
   Map<String, String> AZToNumberblocksCapital = _prepareAZToNumberblocks(keyMapCapital);
 
-  var _currentMode = caseSensitive ? _InputMode.FIRST_CAPITAL : _InputMode.SMALL;
+  var _currentMode = caseSensitive ? model.modeSwitch.switchOrder[0] : PhoneInputMode.SMALL;
+  var firstCapitalFirst = true;
 
   return input.split('').map((character) {
     var switchMode = '';
     if (caseSensitive && isOnlyLetters(character)) {
-      if (_currentMode == _InputMode.SMALL && isUpperCase(character)) {
-        switchMode = '# ';
-        _currentMode = _InputMode.CAPITAL;
-      } else if (_currentMode == _InputMode.CAPITAL && !isUpperCase(character)) {
-        switchMode = '## ';
-        _currentMode = _InputMode.SMALL;
-      } else if (_currentMode == _InputMode.FIRST_CAPITAL && !isUpperCase(character)) {
-        switchMode = '# ';
-        _currentMode = _InputMode.SMALL;
+      if (_currentMode == PhoneInputMode.SMALL && isUpperCase(character)) {
+        switchMode = model.modeSwitch.codeSwitch(PhoneInputMode.SMALL, PhoneInputMode.CAPITAL);
+        _currentMode = PhoneInputMode.CAPITAL;
+      } else if (_currentMode == PhoneInputMode.CAPITAL && !isUpperCase(character)) {
+        switchMode = model.modeSwitch.codeSwitch(PhoneInputMode.CAPITAL, PhoneInputMode.SMALL);
+        _currentMode = PhoneInputMode.SMALL;
+      } else if (_currentMode == PhoneInputMode.FIRST_CAPITAL) {
+        if (firstCapitalFirst && !isUpperCase(character) ) {
+          switchMode = model.modeSwitch.codeSwitch(PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL);
+          _currentMode = PhoneInputMode.SMALL;
+        } else if (!firstCapitalFirst && isUpperCase(character)) {
+          switchMode = model.modeSwitch.codeSwitch(PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.CAPITAL);
+          _currentMode = PhoneInputMode.CAPITAL;
+        }
       }
     }
 
     var out;
     switch (_currentMode) {
-      case _InputMode.SMALL:
+      case PhoneInputMode.SMALL:
         out = AZToNumberblocksSmall[character];
         break;
-      case _InputMode.CAPITAL:
+      case PhoneInputMode.CAPITAL:
         out = AZToNumberblocksCapital[character];
         break;
-      case _InputMode.FIRST_CAPITAL:
-        out = AZToNumberblocksCapital[character];
-        _currentMode = _InputMode.SMALL;
+      case PhoneInputMode.FIRST_CAPITAL:
+        if (firstCapitalFirst)
+          out = AZToNumberblocksCapital[character];
+        else
+          out = AZToNumberblocksSmall[character];
+        firstCapitalFirst = false;
         break;
     }
 
-    if (caseSensitive && [' ', '.', '?', '!'].contains(character)) _currentMode = _InputMode.FIRST_CAPITAL;
+    if (caseSensitive && _currentMode != PhoneInputMode.CAPITAL) {
+      var characterSwitchModes = model.modeSwitch.switchCharacters.keys.toList();
+      var newMode;
+      for (int i = 0; i < characterSwitchModes.length; i++) {
+        if (model.modeSwitch.switchCharacters[characterSwitchModes[i]].contains(character)) {
+          newMode = characterSwitchModes[i];
+          break;
+        }
+      }
+      if (newMode != null && _currentMode != newMode) {
+        _currentMode = newMode;
+        if (newMode == PhoneInputMode.FIRST_CAPITAL) firstCapitalFirst = true;
+      }
+    }
 
     return switchMode + out;
   }).toList();
@@ -230,8 +320,15 @@ Map<String, String> _prepareNumberblocksToAZ(Map<String, String> keyMap) {
   return numberblocksToAZ;
 }
 
-String decodeVanityMultipleNumbers(String input, PhoneModel model) {
-  if (input == null || input.isEmpty || model == null) return '';
+class VanityMultipleNumbersOutput {
+  final PhoneInputMode inputMode;
+  final String output;
+
+  VanityMultipleNumbersOutput({this.inputMode: PhoneInputMode.FIRST_CAPITAL, this.output: ''});
+}
+
+VanityMultipleNumbersOutput decodeVanityMultipleNumbers(String input, PhoneModel model) {
+  if (input == null || input.isEmpty || model == null) return VanityMultipleNumbersOutput();
 
   var sanitizedInput = '';
   var prevCharacter = input[0];
@@ -254,7 +351,7 @@ String decodeVanityMultipleNumbers(String input, PhoneModel model) {
 
   var numberBlocks = sanitizedInput.split(' ').where((element) => element != null && element.length > 0).toList();
 
-  if (numberBlocks.isEmpty) return '';
+  if (numberBlocks.isEmpty) return VanityMultipleNumbersOutput();
 
   Map<String, String> keyMapSmall;
   Map<String, String> keyMapCapital;
@@ -276,9 +373,9 @@ String decodeVanityMultipleNumbers(String input, PhoneModel model) {
   Map<String, String> numberblocksToAZSmall = _prepareNumberblocksToAZ(keyMapSmall);
   Map<String, String> numberblocksToAZCapital = _prepareNumberblocksToAZ(keyMapCapital);
 
-  var _currentMode = _InputMode.FIRST_CAPITAL;
+  var _currentMode = PhoneInputMode.FIRST_CAPITAL;
 
-  return numberBlocks.map((rawNumberBlock) {
+  var output = numberBlocks.map((rawNumberBlock) {
     var numberBlock = rawNumberBlock;
     while (numberBlock.startsWith('#')) {
       _currentMode = _getNextMode(_currentMode);
@@ -293,15 +390,15 @@ String decodeVanityMultipleNumbers(String input, PhoneModel model) {
 
     var maxLength;
     var _numberBlock = numberBlock;
-    if (_currentMode != _InputMode.NUMBERS) {
+    if (_currentMode != PhoneInputMode.NUMBERS) {
       switch (_currentMode) {
-        case _InputMode.SMALL:
+        case PhoneInputMode.SMALL:
           if (keyMapSmall[firstCharacter] == null) return UNKNOWN_ELEMENT;
 
           maxLength = keyMapSmall[firstCharacter].length;
           break;
-        case _InputMode.CAPITAL:
-        case _InputMode.FIRST_CAPITAL:
+        case PhoneInputMode.CAPITAL:
+        case PhoneInputMode.FIRST_CAPITAL:
           if (keyMapCapital[firstCharacter] == null) return UNKNOWN_ELEMENT;
 
           maxLength = keyMapCapital[firstCharacter].length;
@@ -317,25 +414,27 @@ String decodeVanityMultipleNumbers(String input, PhoneModel model) {
 
     var character;
     switch (_currentMode) {
-      case _InputMode.SMALL:
+      case PhoneInputMode.SMALL:
         character = numberblocksToAZSmall[_numberBlock];
         break;
-      case _InputMode.CAPITAL:
+      case PhoneInputMode.CAPITAL:
         character = numberblocksToAZCapital[_numberBlock];
         break;
-      case _InputMode.FIRST_CAPITAL:
+      case PhoneInputMode.FIRST_CAPITAL:
         character = numberblocksToAZCapital[_numberBlock];
-        _currentMode = _InputMode.SMALL;
+        _currentMode = PhoneInputMode.SMALL;
         break;
-      case _InputMode.NUMBERS:
+      case PhoneInputMode.NUMBERS:
         character = _numberBlock;
         break;
     }
 
     if (character == null) return UNKNOWN_ELEMENT;
 
-    if ([' ', '.', '?', '!'].contains(character)) _currentMode = _InputMode.FIRST_CAPITAL;
+    if ([' ', '.', '?', '!'].contains(character)) _currentMode = PhoneInputMode.FIRST_CAPITAL;
 
     return character;
   }).join();
+
+  return VanityMultipleNumbersOutput(inputMode: _currentMode, output: output);
 }
