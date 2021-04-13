@@ -14,8 +14,7 @@ class _ModeSwitch {
     var indexFrom = switchOrder.indexOf(from);
     var indexTo = switchOrder.indexOf(to);
 
-    if (indexFrom < indexTo)
-      return switchKey * (indexTo - indexFrom) + ' ';
+    if (indexFrom < indexTo) return switchKey * (indexTo - indexFrom) + ' ';
 
     return switchKey * (indexTo + switchOrder.length - indexFrom) + ' ';
   }
@@ -38,15 +37,25 @@ const _PHONE_MODEL_KEY_NOKIA = 'Nokia'; //tested 105,1661,6030,6303i,
 const _PHONE_MODEL_KEY_SAMSUNG = 'Samsung'; //tested  GT-E1200I
 const _PHONE_MODEL_KEY_SIEMENS = 'Siemens'; //tested ME45
 
-final NOKIA = PhoneModel(_PHONE_MODEL_KEY_NOKIA, PhoneKeySpace.SPACE_ON_KEY_0,
-    _ModeSwitch('#', [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.CAPITAL, PhoneInputMode.NUMBERS], {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'})
-);
-final SAMSUNG = PhoneModel(_PHONE_MODEL_KEY_SAMSUNG, PhoneKeySpace.SPACE_ON_KEY_0,
-    _ModeSwitch('#', [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.CAPITAL, PhoneInputMode.NUMBERS], {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'})
-);
-final SIEMENS = PhoneModel(_PHONE_MODEL_KEY_SIEMENS, PhoneKeySpace.SPACE_ON_KEY_1,
-    _ModeSwitch('*', [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.NUMBERS], {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'})
-);
+final NOKIA = PhoneModel(
+    _PHONE_MODEL_KEY_NOKIA,
+    PhoneKeySpace.SPACE_ON_KEY_0,
+    _ModeSwitch(
+        '#',
+        [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.CAPITAL, PhoneInputMode.NUMBERS],
+        {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'}));
+final SAMSUNG = PhoneModel(
+    _PHONE_MODEL_KEY_SAMSUNG,
+    PhoneKeySpace.SPACE_ON_KEY_0,
+    _ModeSwitch(
+        '#',
+        [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.CAPITAL, PhoneInputMode.NUMBERS],
+        {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'}));
+final SIEMENS = PhoneModel(
+    _PHONE_MODEL_KEY_SIEMENS,
+    PhoneKeySpace.SPACE_ON_KEY_1,
+    _ModeSwitch('*', [PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL, PhoneInputMode.NUMBERS],
+        {PhoneInputMode.SMALL: ' ', PhoneInputMode.FIRST_CAPITAL: '.?!'}));
 
 final PHONE_MODELS = [NOKIA, SAMSUNG, SIEMENS];
 
@@ -259,7 +268,7 @@ _encodeVanity(String input, PhoneModel model, bool caseSensitive) {
         switchMode = model.modeSwitch.codeSwitch(PhoneInputMode.CAPITAL, PhoneInputMode.SMALL);
         _currentMode = PhoneInputMode.SMALL;
       } else if (_currentMode == PhoneInputMode.FIRST_CAPITAL) {
-        if (firstCapitalFirst && !isUpperCase(character) ) {
+        if (firstCapitalFirst && !isUpperCase(character)) {
           switchMode = model.modeSwitch.codeSwitch(PhoneInputMode.FIRST_CAPITAL, PhoneInputMode.SMALL);
           _currentMode = PhoneInputMode.SMALL;
         } else if (!firstCapitalFirst && isUpperCase(character)) {
