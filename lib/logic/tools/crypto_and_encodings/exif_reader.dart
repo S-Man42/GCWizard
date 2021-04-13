@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:exif/exif.dart';
 
-Future<List<List>> parseExif(String path) async {
+Future<Map<String, List<List<dynamic>>>> parseExif(String path) async {
   Map<String, IfdTag> data = await readExifFromBytes(await new File(path).readAsBytes());
 
   if (data == null || data.isEmpty) {
@@ -10,23 +10,59 @@ Future<List<List>> parseExif(String path) async {
     return null;
   }
 
-  if (data.containsKey('JPEGThumbnail')) {
-    print('File has JPEG thumbnail');
-    data.remove('JPEGThumbnail');
-  }
-  if (data.containsKey('TIFFThumbnail')) {
-    print('File has TIFF thumbnail');
-    data.remove('TIFFThumbnail');
-  }
+  // if (data.containsKey('JPEGThumbnail')) {
+  //   print('File has JPEG thumbnail');
+  //   data.remove('JPEGThumbnail');
+  // }
+  // if (data.containsKey('TIFFThumbnail')) {
+  //   print('File has TIFF thumbnail');
+  //   data.remove('TIFFThumbnail');
+  // }
 
-  return buildTableExif(data);
+  if (data.containsKey('GPS GPSLatitude')) {
+      print('File has TIFF thumbnail');
+      var lat = data['GPS GPSLatitude'];
+      var latv = lat.values;
+      var latp = lat.printable;
+      print("Latitude ${lat.printable}");
+    }
+  return buildTablesExif(data);
 }
 
-List<List<dynamic>> buildTableExif(Map<String, IfdTag> data) {
-  return data.entries.map((entry) {
-    IfdTag tag = entry.value;
-    return [entry.key, tag.printable];
-  }).toList();
+Map<String,List<List<dynamic>>> buildTablesExif(Map<String, IfdTag> data) {
+  var map = <String, List<List>>{};
+
+  data.forEach((key, tag) {
+    List<String> groupedKey = parseKey(key);
+    String section=groupedKey[0];
+    String code=groupedKey[1];
+
+    // groupBy section
+    (map[section] ??= []).add([code, tag.printable]);
+  });
+  return map;
+}
+
+Map<T, List<S>> groupBy<S, T>(Iterable<S> values, T Function(S) key) {
+  var map = <T, List<S>>{};
+  for (var element in values) {
+    (map[key(element)] ??= []).add(element);
+  }
+  return map;
+}
+
+List<String> parseKey(String key){
+  String group;
+  String code;
+  List<String> words = key.split(" ");
+  if (words.length>=2){
+     group = words[0];
+     code = words.sublist(1).join(" ");
+  }else{
+    group = "general";
+    code = key;
+  }
+  return [group, code];
 }
 
 String formatExifValue(IfdTag tag){
