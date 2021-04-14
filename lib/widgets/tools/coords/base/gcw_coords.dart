@@ -23,6 +23,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_quadtree.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewhereigo_waldmeister.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgridplus.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_xyz.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
@@ -156,7 +157,7 @@ class GCWCoordsState extends State<GCWCoords> {
       },
       {
         'coordFormat': getCoordinateFormatByKey(keyCoordsSwissGridPlus),
-        'widget': GCWCoordsSwissGrid(
+        'widget': GCWCoordsSwissGridPlus(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
