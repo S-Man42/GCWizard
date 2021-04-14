@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:io' show Platform;
 
 /// useFileFilterOnAndroid -> for unknown mime types (for example gpx)
@@ -34,7 +37,14 @@ Future<List<PlatformFile>> openFileExplorer({
 }
 
 bool _isAndroid() {
-  return (Platform.isAndroid);
+  try {
+    return (!kIsWeb && Platform.isAndroid);
+  } catch (ex) {}
+  return false;
+}
+
+Future<Uint8List> getFileData(PlatformFile file) async {
+  return kIsWeb ? Future.value(file.bytes) : readByteDataFromFile(file.path);
 }
 
 List<PlatformFile> _filterFiles(List<PlatformFile> files,List<String> allowedExtensions) {
@@ -51,4 +61,3 @@ Future<bool> clearCachedFiles() async {
 Future<String> selectFolder() async {
   return FilePicker.platform.getDirectoryPath();
 }
-
