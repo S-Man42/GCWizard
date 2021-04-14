@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:exif/exif.dart';
 
 Future<Map<String, List<List<dynamic>>>> parseExif(String path) async {
-  Map<String, IfdTag> data = await readExifFromBytes(await new File(path).readAsBytes());
+  Map<String, IfdTag> data = await readExifFromBytes(
+      await new File(path).readAsBytes(),
+      details: true,
+  );
 
   if (data == null || data.isEmpty) {
     print("No EXIF information found\n");
