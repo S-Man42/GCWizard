@@ -90,6 +90,7 @@ shareFile(String path, String type) {
   ShareExtend.share(path, "file");
 }
 
+<<<<<<< HEAD
 openFile(String path, String type) {
   Map<String, String> knowExtensions = {
     ".gpx": "application/gpx+xml",
@@ -112,6 +113,32 @@ openFile(String path, String type) {
     OpenFile.open(path);
 }
 
+=======
+// Commented out because needs some problems to be fixed:
+// 1. Problems with compiling on some environments
+// 2. App c:geo is not in list for consuming GPX files as it should (seems to be a cgeo problem: )
+// openFile(String path, String type) {
+//   Map<String, String> knowExtensions = {
+//     ".gpx": "application/gpx+xml",
+//     ".kml": "application/vnd.google-earth.kml+xml",
+//     ".kmz": "application/vnd.google-earth.kmz",
+//   };
+//   Map<String, String> knowUtiExtensions = {
+//     ".gpx": "com.topografix.gpx",
+//     ".kml": "com.google.earth.kml",
+//   };
+//
+//   if (type != null) {
+//     type = type.toLowerCase();
+//     OpenFile.open(path,
+//         type: knowExtensions.containsKey(type) ? knowExtensions[type] : null,
+//         uti: knowUtiExtensions.containsKey(type) ? knowUtiExtensions[type] : null
+//     );
+//   }
+//   else
+//     OpenFile.open(path);
+// }
+>>>>>>> cef229c6... align file_picker from mike
 Future<Uint8List> readByteDataFromFile(String fileName) async {
   var fileIn = File(fileName);
   return fileIn.readAsBytes();
@@ -120,4 +147,8 @@ Future<Uint8List> readByteDataFromFile(String fileName) async {
 Future<String> readStringFromFile(String fileName) async {
   var fileIn = File(fileName);
   return fileIn.readAsString();
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> cef229c6... align file_picker from mike

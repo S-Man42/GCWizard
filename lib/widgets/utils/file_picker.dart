@@ -61,4 +61,3 @@ Future<bool> clearCachedFiles() async {
 Future<String> selectFolder() async {
   return FilePicker.platform.getDirectoryPath();
 }
-
