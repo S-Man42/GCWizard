@@ -18,6 +18,7 @@ const SEARCHSTRING_EN_ASTRONOMY_POSITION =
     'astrology  astrologicalsign distance observer altitude declination eclipticlongitude siderealtime juliandate rightascension diameter';
 const SEARCHSTRING_EN_ASTRONOMY_RISESET = 'rise set transit noon dawn dusk culmination';
 const SEARCHSTRING_EN_ASTRONOMY_SEASONS = 'seasons spring summer winter autumn fall nearest closest farthest furthest';
+const SEARCHSTRING_EN_ASTRONOMY_SHADOW_LENGTH = 'shadow length';
 const SEARCHSTRING_EN_ASTRONOMY_SUN = 'sun';
 const SEARCHSTRING_EN_ASTRONOMY_SUNRISESET = 'twilight morning evening nautical astronomical civil';
 const SEARCHSTRING_EN_ATBASH = 'hebrew reverse';

@@ -7,10 +7,10 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_common.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_de.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_en.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_fr.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_fr.dart';
 import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
@@ -206,6 +206,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_ri
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/shadow_length.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
@@ -1434,6 +1435,16 @@ class Registry {
         SEARCHSTRING_DE_ASTRONOMY_SEASONS,
         SEARCHSTRING_EN_ASTRONOMY_SEASONS,
         SEARCHSTRING_FR_ASTRONOMY_SEASONS
+      ]),
+      GCWTool(tool: ShadowLength(), i18nPrefix: 'shadowlength', missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_ASTRONOMY,
+        SEARCHSTRING_DE_ASTRONOMY,
+        SEARCHSTRING_EN_ASTRONOMY,
+        SEARCHSTRING_FR_ASTRONOMY,
+        SEARCHSTRING_COMMON_ASTRONOMY_SHADOW_LENGTH,
+        SEARCHSTRING_DE_ASTRONOMY_SHADOW_LENGTH,
+        SEARCHSTRING_EN_ASTRONOMY_SHADOW_LENGTH,
+        SEARCHSTRING_FR_ASTRONOMY_SHADOW_LENGTH
       ]),
 
       //BaseSelection **************************************************************************************************
