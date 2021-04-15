@@ -98,7 +98,7 @@ class MorseState extends State<Morse> {
             ),
             Expanded(
               child: GCWIconButton(
-                customIcon: Icon(Icons.remove, size: 40, color: themeColors().mainFont()),
+                customIcon: Icon(Icons.remove, size: 35, color: themeColors().mainFont()),
                 onPressed: () {
                   setState(() {
                     _addCharacter('-');
