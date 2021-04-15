@@ -2272,6 +2272,8 @@
   "shadowlength_description": "Calculating the shadow length",
   "shadowlength_height": "Height in m",
   "shadowlength_length": "Length",
+  "shadowlength_shadow": "Shadow",
+  "shadowlength_no_shadow" : "No shadow visible",
   "skytale_title": "Skytale",
   "skytale_description": "Write words on a leather band wrapped around a stick (transposition)",
   "skytale_example": "ABCDEF → ADBECF",

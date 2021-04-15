@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/julian_date.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/astronomy/sun_position.dart' as logic;
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -77,17 +79,31 @@ class ShadowLengthState extends State<ShadowLength> {
     var sunPosition =
     logic.SunPosition(_currentCoords, julianDate, getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name')));
 
+    var _currentLength = _currentHeight * cos(degreesToRadian(sunPosition.altitude)) / sin(degreesToRadian(sunPosition.altitude));
+
+    var lengthOutput = '';
+    if(_currentLength < 0)
+      lengthOutput = i18n(context, 'shadowlength_no_shadow');
+    else
+      lengthOutput =  format.format(_currentLength) + ' m';
+
+    var outputsLength = [[i18n(context, 'shadowlength_length'), lengthOutput]];
+
+    var rowsLengthData = columnedMultiLineOutput(context, outputsLength);
+
+    rowsLengthData.insert(0, GCWTextDivider(text: i18n(context, 'shadowlength_shadow')));
+
     var outputsSun = [
-      [i18n(context, 'shadowlength_length'), format.format(_currentHeight * cos(sunPosition.altitude) / sin(sunPosition.altitude)) + 'm'],
       [i18n(context, 'astronomy_position_azimuth'), format.format(sunPosition.azimuth) + '°'],
       [i18n(context, 'astronomy_position_altitude'), format.format(sunPosition.altitude) + '°'],
     ];
 
     var rowsSunData = columnedMultiLineOutput(context, outputsSun);
 
-    rowsSunData.insert(0, GCWTextDivider(text: i18n(context, 'common_output')));
+    rowsSunData.insert(0, GCWTextDivider(text: i18n(context, 'astronomy_sunposition_title')));
 
-    var output = rowsSunData;
+    var output = rowsLengthData;
+    output.addAll(rowsSunData);
     return Column(children: output);
   }
 }
