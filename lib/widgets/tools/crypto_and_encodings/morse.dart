@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/theme/theme.dart';
+import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -87,7 +88,7 @@ class MorseState extends State<Morse> {
           children: [
             Expanded(
               child: GCWIconButton(
-                iconData: Icons.circle,
+                customIcon: Icon(Icons.circle, size: 15, color: themeColors().mainFont()),
                 onPressed: () {
                   setState(() {
                     _addCharacter('.');
@@ -97,7 +98,7 @@ class MorseState extends State<Morse> {
             ),
             Expanded(
               child: GCWIconButton(
-                iconData: Icons.remove,
+                customIcon: Icon(Icons.remove, size: 40, color: themeColors().mainFont()),
                 onPressed: () {
                   setState(() {
                     _addCharacter('-');
