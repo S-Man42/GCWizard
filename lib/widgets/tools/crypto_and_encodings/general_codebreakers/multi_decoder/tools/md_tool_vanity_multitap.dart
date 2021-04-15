@@ -17,7 +17,8 @@ class MultiDecoderToolVanityMultitap extends GCWMultiDecoderTool {
             internalToolName: MDT_INTERNALNAMES_VANITYMULTITAP,
             onDecode: (input) {
               return decodeVanityMultipleNumbers(
-                  input, getPhoneModelByName(options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL])).output;
+                      input, getPhoneModelByName(options[MDT_VANITYMULTITAP_OPTION_PHONEMODEL]))
+                  .output;
             },
             options: options,
             configurationWidget: GCWMultiDecoderToolConfiguration(widgets: {

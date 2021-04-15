@@ -82,46 +82,71 @@ class MorseState extends State<Morse> {
     if (_currentMode == GCWSwitchPosition.left) return Container();
 
     return GCWToolBar(children: [
-      GCWButton(
-        text: i18n(context, 'morse_short'),
-        onPressed: () {
-          setState(() {
-            _addCharacter('.');
-          });
-        },
+      Container(
+        child: Row(
+          children: [
+            Expanded(
+              child: GCWIconButton(
+                iconData: Icons.circle,
+                onPressed: () {
+                  setState(() {
+                    _addCharacter('.');
+                  });
+                },
+              ),
+            ),
+            Expanded(
+              child: GCWIconButton(
+                iconData: Icons.remove,
+                onPressed: () {
+                  setState(() {
+                    _addCharacter('-');
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+        padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN),
       ),
-      GCWButton(
-        text: i18n(context, 'morse_long'),
-        onPressed: () {
-          setState(() {
-            _addCharacter('-');
-          });
-        },
+      Container(
+        child: Row(
+          children: [
+            Expanded(
+              child: GCWIconButton(
+                iconData: Icons.double_arrow,
+                onPressed: () {
+                  setState(() {
+                    _addCharacter(' ');
+                  });
+                },
+              ),
+            ),
+            Expanded(
+              child: GCWIconButton(
+                iconData: Icons.space_bar,
+                onPressed: () {
+                  setState(() {
+                    _addCharacter(' | ');
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+        padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN, left: DOUBLE_DEFAULT_MARGIN),
       ),
-      GCWButton(
-        text: i18n(context, 'morse_next_letter'),
-        onPressed: () {
-          setState(() {
-            _addCharacter(' ');
-          });
-        },
-      ),
-      GCWButton(
-        text: i18n(context, 'morse_next_word'),
-        onPressed: () {
-          setState(() {
-            _addCharacter(' | ');
-          });
-        },
-      ),
-      GCWIconButton(
-        iconData: Icons.backspace,
-        onPressed: () {
-          setState(() {
-            _currentDecodeInput = textControllerDoBackSpace(_currentDecodeInput, _decodeController);
-          });
-        },
-      ),
+      Container(
+        child: GCWIconButton(
+          iconData: Icons.backspace,
+          onPressed: () {
+            setState(() {
+              _currentDecodeInput = textControllerDoBackSpace(_currentDecodeInput, _decodeController);
+            });
+          },
+        ),
+        padding: EdgeInsets.only(left: DOUBLE_DEFAULT_MARGIN),
+      )
     ]);
   }
 
