@@ -37,8 +37,9 @@ class CatanState extends State<Catan> {
           },
         ),
         GCWDefaultOutput(
-            child: encodeCatan(_currentInput, _currentMode == GCWSwitchPosition.left ? CatanMode.BASE : CatanMode.EXPANSION).join(' ')
-        )
+            child: encodeCatan(
+                    _currentInput, _currentMode == GCWSwitchPosition.left ? CatanMode.BASE : CatanMode.EXPANSION)
+                .join(' '))
       ],
     );
   }

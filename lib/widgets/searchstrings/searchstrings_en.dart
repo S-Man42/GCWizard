@@ -426,7 +426,8 @@ const SEARCHSTRING_EN_SYMBOL_PUZZLE = 'jigsaw';
 const SEARCHSTRING_EN_SYMBOL_QUADOO = 'tactiles dots points';
 const SEARCHSTRING_EN_SYMBOL_REALITY = 'reality';
 const SEARCHSTRING_EN_SYMBOL_RED_HERRING = 'red herring fish';
-const SEARCHSTRING_EN_SYMBOL_RHESUS = 'inkblots bloodsplatter bloodgroup bloodtype inkstains bloodstains colorblots colorstains inkstains colorblots painture';
+const SEARCHSTRING_EN_SYMBOL_RHESUS =
+    'inkblots bloodsplatter bloodgroup bloodtype inkstains bloodstains colorblots colorstains inkstains colorblots painture';
 const SEARCHSTRING_EN_SYMBOL_RM4SCC =
     'cleanmail postcodes delivery point royalmail4statecustomercode singapore netherlands switzerland austria denmark australia';
 const SEARCHSTRING_EN_SYMBOL_ROMULAN = 'romulans';

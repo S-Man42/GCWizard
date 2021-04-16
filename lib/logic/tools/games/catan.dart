@@ -1,4 +1,4 @@
-enum CatanMode {BASE, EXPANSION}
+enum CatanMode { BASE, EXPANSION }
 
 final Map<String, int> _catanBaseAZToNumbers = {
   "A": 5,
@@ -59,12 +59,10 @@ List<int> encodeCatan(String input, CatanMode mode) {
 
   var values = <int>[];
   while (input.length > 0) {
-
     var value;
 
     if (mode == CatanMode.EXPANSION && input.startsWith('Z')) {
-      if (input.length == 1)
-        break;
+      if (input.length == 1) break;
 
       value = _catanExpansionAZToNumbers['Z' + input[1].toLowerCase()];
       if (value != null) {
@@ -89,8 +87,7 @@ List<int> encodeCatan(String input, CatanMode mode) {
       value = _catanExpansionAZToNumbers[letter];
     }
 
-    if (value != null)
-      values.add(value);
+    if (value != null) values.add(value);
 
     if (input.length > 1)
       input = input.substring(1);

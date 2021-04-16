@@ -499,17 +499,12 @@ class Registry {
             SEARCHSTRING_EN_CAESAR,
             SEARCHSTRING_FR_CAESAR
           ]),
-      GCWTool(
-          tool: Catan(),
-          i18nPrefix: 'catan',
-          category: ToolCategory.GAMES,
-          missingHelpLocales: [],
-          searchStrings: [
-            SEARCHSTRING_COMMON_CATAN,
-            SEARCHSTRING_DE_CATAN,
-            SEARCHSTRING_EN_CATAN,
-            SEARCHSTRING_FR_CATAN
-          ]),
+      GCWTool(tool: Catan(), i18nPrefix: 'catan', category: ToolCategory.GAMES, missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_CATAN,
+        SEARCHSTRING_DE_CATAN,
+        SEARCHSTRING_EN_CATAN,
+        SEARCHSTRING_FR_CATAN
+      ]),
       GCWTool(
           tool: CCITT1Selection(),
           i18nPrefix: 'ccitt1_selection',
