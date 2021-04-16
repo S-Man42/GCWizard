@@ -53,6 +53,7 @@ const SEARCHSTRING_EN_BOOKCIPHER = 'bookcipher word row line section letter';
 const SEARCHSTRING_EN_BRAILLE = 'tactiles dots points';
 const SEARCHSTRING_EN_BURROESWHEELER = '';
 const SEARCHSTRING_EN_CAESAR = '';
+const SEARCHSTRING_EN_CATAN = 'thesettlerofcatan tabletopgame boardgame';
 const SEARCHSTRING_EN_CALLFORCONTRIBUTION = 'contributions contribute';
 const SEARCHSTRING_EN_CCITT = 'telegraph';
 const SEARCHSTRING_EN_CCITT1 = '';

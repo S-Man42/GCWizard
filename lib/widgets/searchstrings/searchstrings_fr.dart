@@ -52,6 +52,7 @@ const SEARCHSTRING_FR_BOOKCIPHER = 'lettre ligne paragraphe livre';
 const SEARCHSTRING_FR_BRAILLE = '';
 const SEARCHSTRING_FR_BURROESWHEELER = '';
 const SEARCHSTRING_FR_CAESAR = '';
+const SEARCHSTRING_FR_CATAN = 'lescolonsdecatane';
 const SEARCHSTRING_FR_CALLFORCONTRIBUTION = 'cooperer contribuer';
 const SEARCHSTRING_FR_CCITT = 'telegraphe';
 const SEARCHSTRING_FR_CCITT1 = '';

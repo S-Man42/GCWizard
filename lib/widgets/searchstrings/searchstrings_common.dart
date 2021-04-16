@@ -51,6 +51,7 @@ const SEARCHSTRING_COMMON_BOOKCIPHER = '';
 const SEARCHSTRING_COMMON_BRAILLE = 'braille';
 const SEARCHSTRING_COMMON_BURROESWHEELER = 'burrows wheeler transformation bwt bzip2';
 const SEARCHSTRING_COMMON_CAESAR = 'caesar';
+const SEARCHSTRING_COMMON_CATAN = '';
 const SEARCHSTRING_COMMON_CALLFORCONTRIBUTION = '';
 const SEARCHSTRING_COMMON_CCITT = 'ccitt jean-maurice-emile baudot telex';
 const SEARCHSTRING_COMMON_CCITT1 = 'ccitt1 ccitt-1 baudot-code baudotcode';

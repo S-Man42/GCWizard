@@ -56,6 +56,7 @@ const SEARCHSTRING_DE_BOOKCIPHER = 'buchstabe buechercode buchchiffre buecherchi
 const SEARCHSTRING_DE_BRAILLE = 'blindenschrift punkte';
 const SEARCHSTRING_DE_BURROESWHEELER = '';
 const SEARCHSTRING_DE_CAESAR = '';
+const SEARCHSTRING_DE_CATAN = 'diesiedlervoncatan brettspiel';
 const SEARCHSTRING_DE_CALLFORCONTRIBUTION = 'mitarbeiten beitragen';
 const SEARCHSTRING_DE_CCITT = 'telegraf';
 const SEARCHSTRING_DE_CCITT1 = '';

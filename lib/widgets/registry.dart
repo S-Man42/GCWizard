@@ -193,6 +193,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
+import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
@@ -497,6 +498,17 @@ class Registry {
             SEARCHSTRING_DE_CAESAR,
             SEARCHSTRING_EN_CAESAR,
             SEARCHSTRING_FR_CAESAR
+          ]),
+      GCWTool(
+          tool: Catan(),
+          i18nPrefix: 'catan',
+          category: ToolCategory.GAMES,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_CATAN,
+            SEARCHSTRING_DE_CATAN,
+            SEARCHSTRING_EN_CATAN,
+            SEARCHSTRING_FR_CATAN
           ]),
       GCWTool(
           tool: CCITT1Selection(),
