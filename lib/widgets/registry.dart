@@ -5817,10 +5817,28 @@ class Registry {
         SEARCHSTRING_FR_RESISTOR_COLORCODE
       ]),
       GCWSymbolTableTool(symbolKey: 'rhesus_a', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_RHESUS_A,
-        SEARCHSTRING_DE_SYMBOL_RHESUS_A,
-        SEARCHSTRING_EN_SYMBOL_RHESUS_A,
-        SEARCHSTRING_FR_SYMBOL_RHESUS_A
+        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
+        SEARCHSTRING_DE_SYMBOL_RHESUS,
+        SEARCHSTRING_EN_SYMBOL_RHESUS,
+        SEARCHSTRING_FR_SYMBOL_RHESUS
+      ]),
+      GCWSymbolTableTool(symbolKey: 'rhesus_b', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
+        SEARCHSTRING_DE_SYMBOL_RHESUS,
+        SEARCHSTRING_EN_SYMBOL_RHESUS,
+        SEARCHSTRING_FR_SYMBOL_RHESUS
+      ]),
+      GCWSymbolTableTool(symbolKey: 'rhesus_c1', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
+        SEARCHSTRING_DE_SYMBOL_RHESUS,
+        SEARCHSTRING_EN_SYMBOL_RHESUS,
+        SEARCHSTRING_FR_SYMBOL_RHESUS
+      ]),
+      GCWSymbolTableTool(symbolKey: 'rhesus_c2', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
+        SEARCHSTRING_DE_SYMBOL_RHESUS,
+        SEARCHSTRING_EN_SYMBOL_RHESUS,
+        SEARCHSTRING_FR_SYMBOL_RHESUS
       ]),
       GCWSymbolTableTool(symbolKey: 'rm4scc', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BARCODES,

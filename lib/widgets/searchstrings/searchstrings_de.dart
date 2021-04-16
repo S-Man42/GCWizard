@@ -432,8 +432,8 @@ const SEARCHSTRING_DE_SYMBOL_PUZZLE = 'puzzles puzzleteile';
 const SEARCHSTRING_DE_SYMBOL_QUADOO = 'blindenschrift punkte taktile reliefschrift';
 const SEARCHSTRING_DE_SYMBOL_REALITY = 'realitaet';
 const SEARCHSTRING_DE_SYMBOL_RED_HERRING = 'roter hering  fische';
-const SEARCHSTRING_DE_SYMBOL_RHESUS_A =
-    'tintenkleckse farbkleckse farbspritzer blutspritzer blutgruppen  bluttropfen blutstropfen farbtropfen';
+const SEARCHSTRING_DE_SYMBOL_RHESUS =
+    'tintenkleckse farbkleckse farbspritzer blutspritzer blutgruppen  bluttropfen blutstropfen farbtropfen farbflecken blutflecken tintenflecken';
 const SEARCHSTRING_DE_SYMBOL_RM4SCC = 'australien daenemark oesterreich schweiz holland niederlande singapur england';
 const SEARCHSTRING_DE_SYMBOL_ROMULAN = 'romulaner romulanisch';
 const SEARCHSTRING_DE_SYMBOL_RUNES = 'runen';
