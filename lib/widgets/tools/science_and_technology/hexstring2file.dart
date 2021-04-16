@@ -1,14 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/hexstring2file.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:archive/archive.dart';
 import 'package:archive/archive_io.dart';
-import 'package:gc_wizard/widgets/common/gcw_text_export.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:path/path.dart';
+import 'package:intl/intl.dart';
 
 class HexString2File extends StatefulWidget {
   @override
@@ -17,6 +19,7 @@ class HexString2File extends StatefulWidget {
 
 class HexString2FileState extends State<HexString2File> {
   var _currentInput = '';
+  Uint8List _outData;
 
   @override
   Widget build(BuildContext context) {
@@ -29,83 +32,90 @@ class HexString2FileState extends State<HexString2File> {
             });
           },
         ),
-        GCWDefaultOutput(child: _buildOutput())
+        GCWDefaultOutput(child: _buildOutput(),
+            trailing: GCWIconButton(
+                iconData: Icons.save,
+                size: IconButtonSize.SMALL,
+                iconColor: _outData == null ? Colors.grey : null,
+                onPressed: () {
+                  _outData == null ? null : _exportFile(context, _outData);
+                },
+              )
+        )
       ],
     );
   }
 
   _buildOutput() {
-    var bytes = hexstring2file(_currentInput);
 
-    if (bytes == null)
-      return Container();
+    _outData = hexstring2file(_currentInput);
 
-    var mimitye = getMimeType(getFileType(bytes));
-    if (mimitye == MIMETYPE.IMAGE) {
-      try {
-        return GCWSymbolContainer(
-            symbol: Image.memory(bytes)
-        );
-      } catch (e) {
-        return Container();
-      }
-    }
-    else if (mimitye == MIMETYPE.TEXT) {
-      return GCWDefaultOutput(
-          child: intListToString(bytes)
-      );
-    }
-    else if (mimitye == MIMETYPE.ARCHIV) {
+    if (_outData == null)
+      return null;
 
-      if (getFileType(bytes).endsWith('.zip')) {
-        var fileNames = 'zip-file\n';
+    var mimeType = getMimeType(getFileType(_outData));
+
+    switch (mimeType)
+    {
+      case MIMETYPE.IMAGE:
         try {
-          InputStream input = new InputStream(bytes.buffer.asByteData());
-          // Decode the Zip file
-          final archive = ZipDecoder().decodeBuffer(input);
-          fileNames = archive
-              .map((zipfile) {
-                return ('-> ' + zipfile.name);
-              })
-            .join('\n');
-
+          return GCWSymbolContainer(
+              symbol: Image.memory(_outData)
+          );
         } catch (e) {}
 
+        return null;
 
-        return GCWDefaultOutput(
-            child: fileNames
-        );
-      }
-      else if (getFileType(bytes).endsWith('.zip')) {
-        var fileNames = 'zip-file\n';
-        try {
-          InputStream input = new InputStream(bytes.buffer.asByteData());
-          // Decode the Zip file
-          final archive = ZipDecoder().decodeBuffer(input);
-          fileNames = archive
-              .map((zipfile) {
-            return ('-> ' + zipfile.name);
-          })
-              .join('\n');
+      case MIMETYPE.TEXT:
+        return String.fromCharCodes(_outData);
 
-        } catch (e) {}
+      case MIMETYPE.ARCHIV:
+        String fileNames;
+        String extension = getFileType(_outData);
+        if (extension.endsWith('.zip')) {
+          try {
+            InputStream input = new InputStream(_outData.buffer.asByteData());
+            // Decode the Zip file
+            final archive = ZipDecoder().decodeBuffer(input);
+            fileNames = archive
+                .map((file) {
+                  return ('-> ' + file.name);
+                })
+                .join('\n');
+          } catch (e) {}
 
+          return  'zip-file -> content\n' + fileNames;
+        }
+        else if (extension.endsWith('.tar')) {
+          try {
+            InputStream input = new InputStream(_outData.buffer.asByteData());
+            // Decode the Zip file
+            final archive = TarDecoder().decodeBuffer(input);
+            fileNames = archive
+                .map((file) {
+                  return ('-> ' + file.name);
+                })
+                .join('\n');
+          } catch (e) {}
 
-        return GCWDefaultOutput(
-            child: fileNames
-        );
-      }
-      else
-        return GCWDefaultOutput(
-            child: getFileType(bytes)
-        );
-    };
+          return  'tar-file -> content\n' + fileNames;
+        }
+        else {
+          fileNames = extension.replaceFirst('.', '') + "-file";
+        }
+
+        return  fileNames;
+      default:
+        return getFileType(_outData).replaceFirst('.', '') + "-file";
+    }
   }
 
 
-//exportFile(text, exportLabel, mode, context);
-    // return await saveByteDataToFile(
-    //     data, widget.symbolKey + '_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+  _exportFile(BuildContext context, Uint8List data) async {
+    var fileType = getFileType(_outData);
+    var value = await saveByteDataToFile(
+        data.buffer.asByteData(), DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType, subDirectory: "hexstring_export");
 
-
+    if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
+  }
 }

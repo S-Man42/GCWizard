@@ -1443,7 +1443,6 @@
   "hexstring2file_title" : "Nombres hexadécimaux dans le fichier ",
   "hexstring2file_description" : "Convertit les nombres hexadécimaux en fichier",
   "hexstring2file_example" : "50 4B 03 04 → file",
-  "hexstring2file_online_help_url" : "https://blog.gcwizard.net/manual/en/hexstring2file/",
   "homophone_title": "Homophone",
   "homophone_description": "Méthode de cryptage mono-alphabétique basée sur les fréquences de lettres",
   "homophone_example": "ABC → 07 09 12",

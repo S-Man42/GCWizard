@@ -9,6 +9,7 @@ Map<List<int>, String> _fileTypes = {
   [0x50, 0x4B, 0x03, 0x04] : ".zip",
   [0x52, 0x61, 0x72, 0x21] : ".rar",
   [0x1F, 0x8B, 0x08, 0x00] : ".tar",
+  [0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C] : ".7z",
   [0xFF, 0xD8, 0xFF, 0xE0] : ".jpg",
   [0xFF, 0xD8, 0xFF, 0xE1] : ".jpg",
   [0xFF, 0xD8, 0xFF, 0xFE] : ".jpg",
@@ -49,6 +50,7 @@ MIMETYPE getMimeType(String fileName) {
     return MIMETYPE.IMAGE;
   else if (fileName.endsWith('.zip') ||
       fileName.endsWith('.rar') ||
+      fileName.endsWith('.7z') ||
       fileName.endsWith('.tar'))
     return MIMETYPE.ARCHIV;
   else if (fileName.endsWith('.txt'))

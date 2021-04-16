@@ -47,7 +47,7 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, 
     var path = await MainPath();
     if (path == null) return null;
     filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
-    file = File(filePath);
+    file = await File(filePath).create(recursive: true);
 
     if (!await file.exists()) file.create();
 

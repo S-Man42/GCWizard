@@ -181,6 +181,7 @@ const SEARCHSTRING_EN_HASHES_SHA512_256 = '';
 const SEARCHSTRING_EN_HASHES_TIGER_192 = '';
 const SEARCHSTRING_EN_HASHES_WHIRLPOOL_512 = '';
 const SEARCHSTRING_EN_HEXADECIMAL = 'hexadecimal decimal';
+final SEARCHSTRING_EN_HEXSTRING2FILE = 'hexadecimal file';
 const SEARCHSTRING_EN_HOMOPHONE = 'monoalphabetical letterfrequency';
 const SEARCHSTRING_EN_ICECODES = 'balticsea ice floe melting snow iceberg icecodes';
 const SEARCHSTRING_EN_IRRATIONALNUMBERS = 'irrational number  fraction decimal digit';
