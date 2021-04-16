@@ -24,6 +24,8 @@ import 'package:gc_wizard/widgets/tools/coords/variable_coordinate/variable_coor
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_values.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 
+import 'gcw_formula_replace_dialog.dart';
+
 class FormulaSolverFormulas extends StatefulWidget {
   final FormulaGroup group;
 
@@ -69,10 +71,11 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
     _foundCoordinates = {};
 
     var formulaTool = GCWTool(
-      tool: FormulaSolverFormulaValues(group: widget.group),
-      toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
-      i18nPrefix: 'formulasolver', // for calling the help of the formulasolver
-    );
+        tool: FormulaSolverFormulaValues(group: widget.group),
+        toolName: '${widget.group.name} - ${i18n(context, 'formulasolver_values')}',
+        defaultLanguageToolName:
+            '${widget.group.name} - ${i18n(context, 'formulasolver_values', useDefaultLanguage: true)}',
+        missingHelpLocales: ['fr']);
 
     Future _navigateToSubPage(context) async {
       Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {
@@ -171,7 +174,10 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
         NoAnimationMaterialPageRoute(
             builder: (context) => GCWTool(
                 tool: VariableCoordinate(formula: formula),
-                toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}')));
+                toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
+                i18nPrefix:
+                    '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
+                missingHelpLocales: ['fr'])));
   }
 
   _buildGroupList(BuildContext context) {
@@ -199,7 +205,7 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
           Widget output;
 
-          var _foundCoordinate = parseLatLon(calculated['result'], wholeString: true);
+          var _foundCoordinate = parseStandardFormats(calculated['result'], wholeString: true);
           if (_foundCoordinate != null && _foundCoordinate.length > 0)
             _foundCoordinates.putIfAbsent(index + 1, () => _foundCoordinate);
 
@@ -278,6 +284,15 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
                                   })),
                           GCWPopupMenuItem(
                               child:
+                                  iconedGCWPopupMenuItem(context, Icons.edit, 'formulasolver_formulas_modifyformula'),
+                              action: (index) => setState(() {
+                                    showFormulaReplaceDialog(context, formula, onOkPressed: (value) {
+                                      formula.formula = value;
+                                      setState(() {});
+                                    });
+                                  })),
+                          GCWPopupMenuItem(
+                              child:
                                   iconedGCWPopupMenuItem(context, Icons.delete, 'formulasolver_formulas_removeformula'),
                               action: (index) => showDeleteAlertDialog(
                                     context,
@@ -317,9 +332,9 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
 
                                   _showFormulaResultOnMap([
                                     GCWMapPoint(
-                                        point: _foundCoordinate[0],
+                                        point: _foundCoordinate['coordinate'],
                                         markerText: i18n(context, 'formulasolver_formulas_showonmap_coordinatetext'),
-                                        coordinateFormat: {'format': _foundCoordinate.keys.elementAt(0)})
+                                        coordinateFormat: {'format': _foundCoordinate['format']})
                                   ]);
                                 })
                         ])
@@ -369,11 +384,11 @@ class FormulaSolverFormulasState extends State<FormulaSolverFormulas> {
         context,
         MaterialPageRoute(
             builder: (context) => GCWTool(
-                  tool: GCWMapView(
-                    points: coordinates,
-                  ),
-                  toolName: i18n(context, 'coords_map_view_title'),
-                  autoScroll: false,
-                )));
+                tool: GCWMapView(
+                  points: coordinates,
+                ),
+                i18nPrefix: 'coords_map_view',
+                autoScroll: false,
+                missingHelpLocales: ['fr'])));
   }
 }

@@ -5,11 +5,13 @@ import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
 import 'package:gc_wizard/persistence/multi_decoder/model.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_delete_alertdialog.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/tools/md_tool_coordinate_formats.dart';
@@ -102,10 +104,16 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
     mdtTools.removeWhere((tool) => tool.id == id);
   }
 
+  _clearTools() {
+    clearMultiDecoderTools();
+    mdtTools.clear();
+  }
+
   _refreshMDTTools() {
     mdtTools = multiDecoderTools.map((mdtTool) {
       return multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
+    mdtTools.remove(null);
   }
 
   _moveUp(int id) {
@@ -139,6 +147,17 @@ class MultiDecoderConfigurationState extends State<MultiDecoderConfiguration> {
 
     return Column(
       children: <Widget>[
+        GCWButton(
+          text: i18n(context, 'multidecoder_configuration_reset'),
+          onPressed: () {
+            showGCWAlertDialog(context, i18n(context, 'multidecoder_configuration_reset_title'),
+                i18n(context, 'multidecoder_configuration_reset_text'), () {
+              _clearTools();
+              initializeMultiToolDecoder(context);
+              setState(() {});
+            });
+          },
+        ),
         GCWTextDivider(
           text: i18n(context, 'multidecoder_configuration_addtool'),
         ),

@@ -63,6 +63,10 @@ void initDefaultSettings() {
     Prefs.setString('coord_default_hemisphere_longitude', HemisphereLongitude.East.toString());
   }
 
+  if (Prefs.get('coord_variablecoordinate_formulas') == null) {
+    Prefs.setStringList('coord_variablecoordinate_formulas', []);
+  }
+
   if (Prefs.get('formulasolver_formulas') == null) {
     Prefs.setStringList('formulasolver_formulas', []);
   }
@@ -113,9 +117,5 @@ void initDefaultSettings() {
 
   if (Prefs.get('toollist_show_examples') == null) {
     Prefs.setBool('toollist_show_examples', true);
-  }
-
-  if (Prefs.get('coord_variablecoordinate_formulas') == null) {
-    Prefs.setStringList('coord_variablecoordinate_formulas', []);
   }
 }

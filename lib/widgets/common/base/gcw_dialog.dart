@@ -6,7 +6,7 @@ import 'package:gc_wizard/theme/theme_colors.dart';
 final TextStyle _textStyle = gcwTextStyle().copyWith(color: themeColors().dialogText());
 final TextStyle _boldTextStyle = _textStyle.copyWith(fontWeight: FontWeight.bold);
 
-showGCWDialog(BuildContext context, String title, Widget child, List<GCWDialogButton> buttons,
+showGCWDialog(BuildContext context, String title, Widget child, List<Widget> buttons,
     {cancelButton: true, closeOnOutsideTouch: false}) {
   if (cancelButton) buttons.add(_cancelButton);
 

@@ -48,6 +48,7 @@ class MultiDecoderState extends State<MultiDecoder> {
     mdtTools = multiDecoderTools.map((mdtTool) {
       return multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
+    mdtTools.remove(null);
   }
 
   @override
@@ -86,8 +87,10 @@ class MultiDecoderState extends State<MultiDecoder> {
                     context,
                     NoAnimationMaterialPageRoute(
                         builder: (context) => GCWTool(
-                            tool: MultiDecoderConfiguration(),
-                            toolName: i18n(context, 'multidecoder_configuration_title')))).whenComplete(() {
+                              tool: MultiDecoderConfiguration(),
+                              i18nPrefix: 'multidecoder_configuration',
+                              missingHelpLocales: ['fr'],
+                            ))).whenComplete(() {
                   setState(() {
                     _currentOutput = null;
                   });
