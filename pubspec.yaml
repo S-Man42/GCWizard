@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 1.5.0+97
+version: 1.5.0+98
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -29,6 +29,7 @@ dependencies:
   path: ^1.7.0
   path_provider: ^2.0.1
   permission_handler: ^6.1.1
+  photo_view: ^0.11.1
   pointycastle: ^3.0.1
   prefs: ^3.3.0
   provider: ^5.0.0
@@ -196,6 +197,9 @@ flutter:
     - assets/symbol_tables/red_herring/
     - assets/symbol_tables/resistor/
     - assets/symbol_tables/rhesus_a/
+    - assets/symbol_tables/rhesus_b/
+    - assets/symbol_tables/rhesus_c1/
+    - assets/symbol_tables/rhesus_c2/
     - assets/symbol_tables/rm4scc/
     - assets/symbol_tables/romulan/
     - assets/symbol_tables/runes/
