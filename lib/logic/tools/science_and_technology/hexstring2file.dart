@@ -1,8 +1,5 @@
 import 'dart:math';
-import 'dart:io';
 import 'dart:typed_data';
-import 'package:file/memory.dart';
-import 'package:intl/intl.dart';
 import 'package:collection/collection.dart';
 
 Map<List<int>, String> _fileTypes = {
@@ -31,15 +28,6 @@ enum MIMETYPE {IMAGE, ARCHIV, DATA, TEXT}
 
 Uint8List hexstring2file(String input) {
   return _hexstring2bytes(input);
-  // var blobBytes = _hexstring2bytes(input);
-  //
-  // if (blobBytes != null) {
-  //   var extension = _getFileType(blobBytes);
-  //   var fileName = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '_' + 'hex2file' + extension;
-  //
-  //   return MemoryFileSystem().file(fileName)..writeAsBytesSync(blobBytes);
-  // }
-  // return null;
 }
 
 MIMETYPE getMimeType(String fileName) {
@@ -64,12 +52,13 @@ String file2hexstring(Uint8List input) {
     return null;
 
   var output =input.map((byte){
-    return byte.toRadixString(16);
+    return byte.toRadixString(16).padLeft(2,'0');
   })
   .join(' ');
 
-  return output;
+  return output.toUpperCase();
 }
+
 
 String getFileType(Uint8List blobBytes) {
   for (var key in _fileTypes.keys) {
@@ -85,6 +74,7 @@ Uint8List _hexstring2bytes(String input) {
 
   var data = <int>[];
 
+  input = input.replaceAll("0x", "");
   String hex = input.toUpperCase().replaceAll(RegExp("[^0-9A-F]"), "");
   if (hex == "")
     return null;
