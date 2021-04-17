@@ -11,9 +11,7 @@ Map<List<int>, String> _fileTypes = {
   [0xFF, 0xD8, 0xFF, 0xE1] : ".jpg",
   [0xFF, 0xD8, 0xFF, 0xFE] : ".jpg",
   [0x89, 0x50, 0x4E, 0x47] : ".png",
-  [0x42, 0x4D, 0xF8, 0xA9] : ".bmp",
-  [0x42, 0x4D, 0x62, 0x25] : ".bmp",
-  [0x42, 0x4D, 0x76, 0x03] : ".bmp",
+  [0x42, 0x4D] : ".bmp",
   [0x47, 0x49, 0x46, 0x38, 0x39, 0x61] : ".gif",
   [0x47, 0x49, 0x46, 0x38, 0x37, 0x61] : ".gif",
   [0x30, 0x26, 0xB2, 0x75] : ".wmv",
@@ -62,9 +60,10 @@ String file2hexstring(Uint8List input) {
 
 String getFileType(Uint8List blobBytes) {
   for (var key in _fileTypes.keys) {
-    if (ListEquality().equals(blobBytes.sublist(0, key.length), key))
+    if (blobBytes.length >= key.length && ListEquality().equals(blobBytes.sublist(0, key.length), key))
       return _fileTypes[key];
   }
+
   return ".txt";
 }
 
@@ -81,9 +80,11 @@ Uint8List _hexstring2bytes(String input) {
 
   for (var i=0; i<hex.length; i=i+2) {
     var valueString = hex.substring(i, min(i+2, hex.length-1));
-    var value = int.parse(valueString, radix: 16);
-
-    data.add(value);
+    int value;
+    if (valueString.length  > 0 ) {
+      value = int.parse(valueString, radix: 16);
+      data.add(value);
+    }
   }
 
   return Uint8List.fromList(data);

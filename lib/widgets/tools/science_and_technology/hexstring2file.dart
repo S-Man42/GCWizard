@@ -59,6 +59,8 @@ class HexString2FileState extends State<HexString2File> {
           value: _currentMode,
           onChanged: (value) {
             setState(() {
+              _currentInput = null;
+              _outData = null;
               _currentMode = value;
             });
           },
@@ -93,7 +95,9 @@ class HexString2FileState extends State<HexString2File> {
             return GCWSymbolContainer(
                 symbol: Image.memory(_outData)
             );
-          } catch (e) {}
+          } catch (e) {
+            return getFileType(_outData).replaceFirst('.', '') + '-' + i18n(context, 'hexstring2file_file');
+          }
 
           return null;
 
@@ -101,7 +105,7 @@ class HexString2FileState extends State<HexString2File> {
           return String.fromCharCodes(_outData);
 
         case MIMETYPE.ARCHIV:
-          String fileNames;
+          String fileNames = '';
           String extension = getFileType(_outData);
           if (extension.endsWith('.zip')) {
             try {
@@ -110,8 +114,11 @@ class HexString2FileState extends State<HexString2File> {
               final archive = ZipDecoder().decodeBuffer(input);
               fileNames = archive
                   .map((file) {
-                return ('-> ' + file.name);
-              })
+                    if (file.isFile)
+                      return ('-> ' + file.name);
+                    else
+                      return '';
+                  })
                   .join('\n');
             } catch (e) {}
 
@@ -124,8 +131,11 @@ class HexString2FileState extends State<HexString2File> {
               final archive = TarDecoder().decodeBuffer(input);
               fileNames = archive
                   .map((file) {
-                return ('-> ' + file.name);
-              })
+                    if (file.isFile)
+                      return ('-> ' + file.name);
+                    else
+                      return '';
+                  })
                   .join('\n');
             } catch (e) {}
 
