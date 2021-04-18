@@ -1,8 +1,8 @@
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
-import 'package:latlong/latlong.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
+import 'package:latlong/latlong.dart';
 
 LatLng dmsToLatLon(DMS dms) {
   return decToLatLon(_DMSToDEC(dms));
@@ -35,10 +35,10 @@ DMS _DECToDMS(DEC coord) {
 DMSPart _doubleToDMSPart(double value) {
   var _sign = coordinateSign(value);
 
-  int _degrees = value.abs().floor();
+  double _degrees = value;
   double _minutesD = (value.abs() - _degrees) * 60.0;
 
-  int _minutes = _minutesD.floor();
+  double _minutes = _minutesD;
   double _seconds = (_minutesD - _minutes) * 60.0;
 
   return DMSPart(_sign, _degrees, _minutes, _seconds);
