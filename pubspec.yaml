@@ -78,7 +78,9 @@ flutter:
     - assets/symbol_tables/birds_on_a_wire/
     - assets/symbol_tables/blox/
     - assets/symbol_tables/brahmi_numerals/
-    - assets/symbol_tables/braille/
+    - assets/symbol_tables/braille_de/
+    - assets/symbol_tables/braille_en/
+    - assets/symbol_tables/braille_fr/
     - assets/symbol_tables/british_sign_language/
     - assets/symbol_tables/chain_of_death_direction/
     - assets/symbol_tables/chain_of_death_pairs/
