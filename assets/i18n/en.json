@@ -1693,6 +1693,8 @@
   "keyboard_mode_colemak": "COLEMAK (US)",
   "keyboard_mode_ristome": "DEU RISTOME (German)",
   "keyboard_mode_neo": "NEO (German)",
+  "keyboard_mode_neo_3": "NEO Layer 3 (German)",
+  "keyboard_mode_neo_6": "NEO Layer 6 (German)",
   "keyboard_mode_fra_azerty": "NF Z71-300 AZERTY (French)",
   "keyboard_mode_fra_bepo": "NF Z71-300 BÉPO (French)",
   "languagegames_selection_title": "Language Games",

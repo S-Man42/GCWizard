@@ -148,6 +148,34 @@ final Map NeoNumberToSymbol = {
   ' ': ' ',
   '.': '.'
 };
+final Map Neo3NumberToSymbol = {
+  '1': '¹',
+  '2': '²',
+  '3': '³',
+  '4': '›',
+  '5': '‹',
+  '6': '₵',
+  '7': '¥',
+  '8': '‚',
+  '9': '‘',
+  '0': '’',
+  ' ': ' ',
+  '.': '.'
+};
+final Map Neo6NumberToSymbol = {
+  '1': '¬',
+  '2': '∨',
+  '3': '∧',
+  '4': '⊥',
+  '5': '∡',
+  '6': '∥',
+  '7': '→',
+  '8': '∞',
+  '9': '∝',
+  '0': '∅',
+  ' ': ' ',
+  '.': '.'
+};
 final Map QWERTY_USNumberToSymbol = {
   '1': '!',
   '2': '@',
@@ -313,19 +341,35 @@ final Map SymbolToNeoNumber = {
   '“': '9',
   '”': '0',
   ' ': ' ',
-  '.': '.',
+  '.': '.'
+};
+final Map SymbolToNeo3Number = {
   '¹': '1',
   '²': '2',
   '³': '3',
-'»': '4',
-'«': '5',
-'\$': '6',
-'/': '7',
-'„': '8',
-'“': '9',
-'”': '0',
-' ': ' ',
-'.': '.'
+  '›': '4',
+  '‹': '5',
+  '₵': '6',
+  '¥': '7',
+  '‚': '8',
+  '‘': '9',
+  '’': '0',
+  ' ': ' ',
+  '.': '.'
+};
+final Map SymbolToNeo6Number = {
+  '¬': '1',
+  '∨': '2',
+  '∧': '3',
+  '⊥': '4',
+  '∡': '5',
+  '∥': '6',
+  '→': '7',
+  '∞': '8',
+  '∝': '9',
+  '∅': '0',
+  ' ': ' ',
+  '.': '.'
 };
 final Map SymbolToQWERTY_USNumber = switchMapKeyValue(QWERTY_USNumberToSymbol);
 final Map SymbolToDvorakNumber = SymbolToQWERTY_USNumber;
@@ -429,14 +473,14 @@ final Map QWERTZ_T1toNormal = {
   '.': '410u',
   '-': '411u',
   ' ': '501',
-  '²' :'102a',
-  '³' :'103a',
-  '\\' :'111a',
+  '²': '102a',
+  '³': '103a',
+  '\\': '111a',
   '@': '201a',
-  '€' :'203a',
+  '€': '203a',
   '|': '401a',
   'µ': '212a',
-  '' :'',
+  '': '',
 };
 final Map Dvorak_II_DEUtoNormal = {
   '°': '100o',
@@ -536,17 +580,17 @@ final Map Dvorak_II_DEUtoNormal = {
   'v': '410u',
   "'": '411u',
   ' ': '501',
-  '@' : '403a',
-  'µ' : '408a',
-  '€' : '303a',
-  '²' : '102a',
-  '³' : '103a',
-  '|' : '105a',
-  '{' : '107a',
-  '[' : '108a',
-  ']' : '109a',
-  '}' : '110a',
-  '~' :'111a',
+  '@': '403a',
+  'µ': '408a',
+  '€': '303a',
+  '²': '102a',
+  '³': '103a',
+  '|': '105a',
+  '{': '107a',
+  '[': '108a',
+  ']': '109a',
+  '}': '110a',
+  '~': '111a',
   '`': '112a',
   '´': '212a'
 };
@@ -1544,14 +1588,21 @@ class KeyboardData {
 }
 
 List<KeyboardData> allKeyboards = [
-  KeyboardData(enumKeyboardLayout.QWERTY_US_INT, 'keyboard_mode_qwerty_us_int', 'QWERTY'),
-  KeyboardData(enumKeyboardLayout.QWERTZ_T1, 'keyboard_mode_qwertz_t1', 'QWERTZ'),
-  KeyboardData(enumKeyboardLayout.FRA_AZERTY, 'keyboard_mode_fra_azerty', 'AZERTY'),
+  KeyboardData(enumKeyboardLayout.QWERTY_US_INT, 'keyboard_mode_qwerty_us_int',
+      'QWERTY'),
+  KeyboardData(
+      enumKeyboardLayout.QWERTZ_T1, 'keyboard_mode_qwertz_t1', 'QWERTZ'),
+  KeyboardData(
+      enumKeyboardLayout.FRA_AZERTY, 'keyboard_mode_fra_azerty', 'AZERTY'),
   KeyboardData(enumKeyboardLayout.Dvorak, 'keyboard_mode_dvorak', '"<>PYF'),
-  KeyboardData(enumKeyboardLayout.Dvorak_I_DEU1, 'keyboard_mode_dvorak_I1', 'Ä;:PYF'),
-  KeyboardData(enumKeyboardLayout.Dvorak_I_DEU2, 'keyboard_mode_dvorak_I2', 'ÖÜÄPYF'),
-  KeyboardData(enumKeyboardLayout.Dvorak_I_DEU3, 'keyboard_mode_dvorak_I3', 'ÄÖÜPYF'),
-  KeyboardData(enumKeyboardLayout.Dvorak_II_DEU, 'keyboard_mode_dvorak_II', 'Ü;:PYF'),
+  KeyboardData(
+      enumKeyboardLayout.Dvorak_I_DEU1, 'keyboard_mode_dvorak_I1', 'Ä;:PYF'),
+  KeyboardData(
+      enumKeyboardLayout.Dvorak_I_DEU2, 'keyboard_mode_dvorak_I2', 'ÖÜÄPYF'),
+  KeyboardData(
+      enumKeyboardLayout.Dvorak_I_DEU3, 'keyboard_mode_dvorak_I3', 'ÄÖÜPYF'),
+  KeyboardData(
+      enumKeyboardLayout.Dvorak_II_DEU, 'keyboard_mode_dvorak_II', 'Ü;:PYF'),
   KeyboardData(enumKeyboardLayout.RISTOME, 'keyboard_mode_ristome', 'QPROCB'),
   KeyboardData(enumKeyboardLayout.NEO, 'keyboard_mode_neo', 'XVLCWK'),
   KeyboardData(enumKeyboardLayout.COLEMAK, 'keyboard_mode_colemak', 'QWFPGJ'),
@@ -1604,14 +1655,17 @@ Map buildConvertingMap(enumKeyboardLayout type, convertDirection direction) {
     return switchMapKeyValue(keyboardMap);
 }
 
-String encodeKeyboard(String input, enumKeyboardLayout keyboardFrom, keyboardTo) {
+String encodeKeyboard(
+    String input, enumKeyboardLayout keyboardFrom, keyboardTo) {
   Map mapSourceToNormal;
   Map mapNormalToTarget;
 
   if (input == null || input == '') return '';
 
-  mapSourceToNormal = buildConvertingMap(keyboardFrom, convertDirection.toNormal);
-  mapNormalToTarget = buildConvertingMap(keyboardTo, convertDirection.fromNormal);
+  mapSourceToNormal =
+      buildConvertingMap(keyboardFrom, convertDirection.toNormal);
+  mapNormalToTarget =
+      buildConvertingMap(keyboardTo, convertDirection.fromNormal);
 
   return input.split('').map((character) {
     var normal = mapSourceToNormal[character];
@@ -1626,51 +1680,67 @@ String encodeKeyboard(String input, enumKeyboardLayout keyboardFrom, keyboardTo)
   }).join('');
 }
 
-String convert(String input, Map layout){
+String convert(String input, Map layout) {
   return input.split('').map((character) {
     if (character == ' ')
       return ' ';
     else if (character == '.')
       return '.';
+    else if (layout[character] == null)
+      return ' ';
     else
-      if (layout[character] == null)
-        return ' ';
-      else
-        return layout[character];
+      return layout[character];
   }).join('');
 }
 
-
-List<List<String>> encodeKeyboardNumbers(String input){
+List<List<String>> encodeKeyboardNumbers(String input) {
   List<List<String>> output = new List<List<String>>();
-  output.add(['keyboard_mode_qwertz_t1', convert(input, QWERTZ_T1NumberToSymbol)]);
+  output.add(
+      ['keyboard_mode_qwertz_t1', convert(input, QWERTZ_T1NumberToSymbol)]);
   output.add(['keyboard_mode_ristome', convert(input, RistomeNumberToSymbol)]);
   output.add(['keyboard_mode_neo', convert(input, NeoNumberToSymbol)]);
-  output.add(['keyboard_mode_dvorak_II', convert(input, DvorakDeuIINumberToSymbol)]);
-  output.add(['keyboard_mode_dvorak_I1', convert(input, DvorakDeuI1NumberToSymbol)]);
-  output.add(['keyboard_mode_dvorak_I2', convert(input, DvorakDeuI2NumberToSymbol)]);
-  output.add(['keyboard_mode_dvorak_I3', convert(input, DvorakDeuI3NumberToSymbol)]);
-  output.add(['keyboard_mode_fra_azerty', convert(input, AZERTYNumberToSymbol)]);
+  output.add(['keyboard_mode_neo_3', convert(input, Neo3NumberToSymbol)]);
+  output.add(['keyboard_mode_neo_6', convert(input, Neo6NumberToSymbol)]);
+  output.add(
+      ['keyboard_mode_dvorak_II', convert(input, DvorakDeuIINumberToSymbol)]);
+  output.add(
+      ['keyboard_mode_dvorak_I1', convert(input, DvorakDeuI1NumberToSymbol)]);
+  output.add(
+      ['keyboard_mode_dvorak_I2', convert(input, DvorakDeuI2NumberToSymbol)]);
+  output.add(
+      ['keyboard_mode_dvorak_I3', convert(input, DvorakDeuI3NumberToSymbol)]);
+  output
+      .add(['keyboard_mode_fra_azerty', convert(input, AZERTYNumberToSymbol)]);
   output.add(['keyboard_mode_fra_bepo', convert(input, BEPONumberToSymbol)]);
-  output.add(['keyboard_mode_qwerty_us_int', convert(input, QWERTY_USNumberToSymbol)]);
+  output.add(
+      ['keyboard_mode_qwerty_us_int', convert(input, QWERTY_USNumberToSymbol)]);
   output.add(['keyboard_mode_colemak', convert(input, ColemakNumberToSymbol)]);
   output.add(['keyboard_mode_dvorak', convert(input, DvorakNumberToSymbol)]);
 
   return output;
 }
 
-List<List<String>> decodeKeyboardNumbers(String input){
+List<List<String>> decodeKeyboardNumbers(String input) {
   List<List<String>> output = new List<List<String>>();
-  output.add(['keyboard_mode_qwertz_t1', convert(input, SymbolToQWERTZ_T1Number)]);
+  output.add(
+      ['keyboard_mode_qwertz_t1', convert(input, SymbolToQWERTZ_T1Number)]);
   output.add(['keyboard_mode_ristome', convert(input, SymbolToRistomeNumber)]);
   output.add(['keyboard_mode_neo', convert(input, SymbolToNeoNumber)]);
-  output.add(['keyboard_mode_dvorak_II', convert(input, SymbolToDvorakDeuIINumber)]);
-  output.add(['keyboard_mode_dvorak_I1', convert(input, SymbolToDvorakDeuI1Number)]);
-  output.add(['keyboard_mode_dvorak_I2', convert(input, SymbolToDvorakDeuI2Number)]);
-  output.add(['keyboard_mode_dvorak_I3', convert(input, SymbolToDvorakDeuI3Number)]);
-  output.add(['keyboard_mode_fra_azerty', convert(input, SymbolToAZERTYNumber)]);
+  output.add(['keyboard_mode_neo_3', convert(input, SymbolToNeo3Number)]);
+  output.add(['keyboard_mode_neo_6', convert(input, SymbolToNeo6Number)]);
+  output.add(
+      ['keyboard_mode_dvorak_II', convert(input, SymbolToDvorakDeuIINumber)]);
+  output.add(
+      ['keyboard_mode_dvorak_I1', convert(input, SymbolToDvorakDeuI1Number)]);
+  output.add(
+      ['keyboard_mode_dvorak_I2', convert(input, SymbolToDvorakDeuI2Number)]);
+  output.add(
+      ['keyboard_mode_dvorak_I3', convert(input, SymbolToDvorakDeuI3Number)]);
+  output
+      .add(['keyboard_mode_fra_azerty', convert(input, SymbolToAZERTYNumber)]);
   output.add(['keyboard_mode_fra_bepo', convert(input, SymbolToBEPONumber)]);
-  output.add(['keyboard_mode_qwerty_us_int', convert(input, SymbolToQWERTY_USNumber)]);
+  output.add(
+      ['keyboard_mode_qwerty_us_int', convert(input, SymbolToQWERTY_USNumber)]);
   output.add(['keyboard_mode_colemak', convert(input, SymbolToDvorakNumber)]);
   output.add(['keyboard_mode_dvorak', convert(input, SymbolToColemakNumber)]);
 
