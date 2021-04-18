@@ -33,6 +33,7 @@ import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/icecodes_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/keyboard_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/language_games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_bell_selection.dart';
@@ -231,7 +232,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_layout.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/bell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/catalan.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/factorial.dart';
@@ -820,8 +822,28 @@ class Registry {
             SEARCHSTRING_FR_KENNY
           ]),
       GCWTool(
-          tool: Keyboard(),
-          i18nPrefix: 'keyboard',
+          tool: KeyboardLayout(),
+          i18nPrefix: 'keyboard_layout',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_KEYBOARD,
+            SEARCHSTRING_DE_KEYBOARD,
+            SEARCHSTRING_EN_KEYBOARD,
+            SEARCHSTRING_FR_KEYBOARD
+          ]),
+      GCWTool(
+          tool: KeyboardNumbers(),
+          i18nPrefix: 'keyboard_numbers',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_KEYBOARD,
+            SEARCHSTRING_DE_KEYBOARD,
+            SEARCHSTRING_EN_KEYBOARD,
+            SEARCHSTRING_FR_KEYBOARD
+          ]),
+      GCWTool(
+          tool: KeyboardSelection(),
+          i18nPrefix: 'keyboard_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
           missingHelpLocales: [],
           searchStrings: [
