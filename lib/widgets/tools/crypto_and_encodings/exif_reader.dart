@@ -92,7 +92,7 @@ class _ExifReaderState extends State<ExifReader> {
   void decorateThumbnail(List<Widget> widgets) {
     if (thumbnail != null && thumbnail.bytes.length > 0) {
       widgets.add(GCWOutput(
-        title: 'Thumbnail',
+        title: i18n(context, "exif_section_thumbnail"),
         child: Image.memory(thumbnail.bytes),
       ));
     }
@@ -105,7 +105,7 @@ class _ExifReaderState extends State<ExifReader> {
     if (point == null) return;
 
     var _currentCoordsFormat = defaultCoordFormat();
-    Map<String, String> _currentOutputFormat = {'format': keyCoordsDMM};
+    // Map<String, String> _currentOutputFormat = {'format': keyCoordsDMM};
     List<String> _currentOutput = [
       formatCoordOutput(point, {'format': keyCoordsDMM}, defaultEllipsoid()),
     ];
@@ -129,7 +129,7 @@ class _ExifReaderState extends State<ExifReader> {
         _sortTags(tags);
 
         widgets.add(GCWOutput(
-            title: section ?? '',
+            title: i18n(context, "exif_section_" + section) ?? section ?? '',
             child: Column(
                 children: columnedMultiLineOutput(
               null,
@@ -143,10 +143,9 @@ class _ExifReaderState extends State<ExifReader> {
   /// Section file
   ///
   void decorateFile(List<Widget> widgets, PlatformFile file) {
-    const section = "file";
     if (file != null) {
       widgets.add(GCWOutput(
-          title: section ?? '',
+          title: i18n(context, "exif_section_file"),
           child: Column(
               children: columnedMultiLineOutput(
             null,
