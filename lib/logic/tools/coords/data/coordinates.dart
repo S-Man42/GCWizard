@@ -98,6 +98,18 @@ String _getSignString(int sign, bool isLatitude) {
   return _sign;
 }
 
+int getSignFromString(String text, bool isLatitude) {
+  int _sign = 0;
+
+  if (isLatitude) {
+    _sign = (text == 'N') ? 1 : -1;
+  } else {
+    _sign = (text == 'S') ? 1 : -1;
+  }
+
+  return _sign;
+}
+
 class DEC {
   double latitude;
   double longitude;
@@ -201,8 +213,8 @@ class DMM {
 
 class DMSPart {
   int sign;
-  int degrees;
-  int minutes;
+  double degrees;
+  double minutes;
   double seconds;
 
   DMSPart(this.sign, this.degrees, this.minutes, this.seconds);
