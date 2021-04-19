@@ -22,6 +22,7 @@ class RSAECheckerState extends State<RSAEChecker> {
   String _currentQ = '';
 
   var _integerInputFormatter = IntegerTextInputFormatter(min: 0);
+  Widget _output;
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +51,12 @@ class RSAECheckerState extends State<RSAEChecker> {
         ),
         GCWSubmitButton(
           onPressed: () {
-            setState(() {});
+            setState(() {
+              _calculateOutput();
+            });
           },
         ),
-        GCWDefaultOutput(child: _calculateOutput())
+        _output ?? GCWDefaultOutput(),
       ],
     );
   }
@@ -65,7 +68,7 @@ class RSAECheckerState extends State<RSAEChecker> {
         _currentP.length == 0 ||
         _currentQ == null ||
         _currentQ.length == 0) {
-      return '';
+      _output = null;
     }
 
     try {
@@ -74,9 +77,13 @@ class RSAECheckerState extends State<RSAEChecker> {
       var q = BigInt.tryParse(_currentQ);
 
       var validE = validateE(e, p, q);
-      return validE ? i18n(context, 'rsa_e.checker_valid') : i18n(context, 'rsa_e.checker_notvalid');
+      _output = GCWDefaultOutput(
+          child: validE ? i18n(context, 'rsa_e.checker_valid') : i18n(context, 'rsa_e.checker_notvalid')
+      );
     } catch (exception) {
-      return i18n(context, exception.message);
+      _output = GCWDefaultOutput(
+          child: i18n(context, exception.message)
+      );
     }
   }
 }

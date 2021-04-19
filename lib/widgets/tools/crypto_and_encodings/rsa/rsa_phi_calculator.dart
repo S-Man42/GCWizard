@@ -21,6 +21,7 @@ class RSAPhiCalculatorState extends State<RSAPhiCalculator> {
   String _currentQ = '';
 
   var _integerInputFormatter = IntegerTextInputFormatter(min: 0);
+  Widget _output;
 
   @override
   Widget build(BuildContext context) {
@@ -42,27 +43,34 @@ class RSAPhiCalculatorState extends State<RSAPhiCalculator> {
         ),
         GCWSubmitButton(
           onPressed: () {
-            setState(() {});
+            setState(() {
+              _calculateOutput(context);
+            });
           },
         ),
-        GCWDefaultOutput(child: _calculateOutput())
+        _output ?? GCWDefaultOutput(),
       ],
     );
   }
 
-  _calculateOutput() {
-    if (_currentP == null || _currentP.length == 0 || _currentQ == null || _currentQ.length == 0) {
-      return '';
+  _calculateOutput(BuildContext context) {
+    if (_currentP == null ||
+        _currentP.length == 0 ||
+        _currentQ == null ||
+        _currentQ.length == 0) {
+      _output = null;
     }
 
     try {
       var p = BigInt.tryParse(_currentP);
       var q = BigInt.tryParse(_currentQ);
 
-      return phi(p, q).toString();
+      _output = GCWDefaultOutput(
+          child: phi(p, q).toString()
+      );
     } catch (exception) {
       showToast(i18n(context, exception.message));
-      return '';
+      _output = null;
     }
   }
 }
