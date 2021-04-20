@@ -10,11 +10,26 @@ defaultSegmentPaint() {
   return paint;
 }
 
+Paint sketchSegmentPaint() {
+  var paint = Paint();
+  paint.strokeWidth = 5;
+  paint.style = PaintingStyle.stroke;
+  return paint;
+}
+
 const SEGMENTS_RELATIVE_DISPLAY_WIDTH = 76.5;
 const SEGMENTS_RELATIVE_DISPLAY_HEIGHT = 99;
 
 const SEGMENTS_COLOR_ON = Colors.red;
 const SEGMENTS_COLOR_OFF = Color.fromARGB(255, 80, 80, 80);
+
+double _relativeX(Size size, double x) {
+  return size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * x;
+}
+
+double _relativeY(Size size, double y) {
+  return size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * y;
+}
 
 class SegmentDisplayPainter extends CustomPainter {
   final Function(String, bool) setSegmentState;
@@ -32,10 +47,18 @@ class SegmentDisplayPainter extends CustomPainter {
     _touchCanvas = TouchyCanvas(context, canvas);
 
     switch (type) {
-      case SegmentDisplayType.SEVEN: _paintSevenSegmentDisplay(size); break;
-      case SegmentDisplayType.FOURTEEN: _paintFourteenSegmentDisplay(size); break;
-      case SegmentDisplayType.SIXTEEN: _paintSixteenSegmentDisplay(size); break;
-      case SegmentDisplayType.CUSTOM: customPaint(_touchCanvas, size, segments, setSegmentState); break;
+      case SegmentDisplayType.SEVEN:
+        _paintSevenSegmentDisplay(size);
+        break;
+      case SegmentDisplayType.FOURTEEN:
+        _paintFourteenSegmentDisplay(size);
+        break;
+      case SegmentDisplayType.SIXTEEN:
+        _paintSixteenSegmentDisplay(size);
+        break;
+      case SegmentDisplayType.CUSTOM:
+        customPaint(_touchCanvas, size, segments, setSegmentState);
+        break;
     }
   }
 
@@ -44,11 +67,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['a1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathA1 = Path();
-    pathA1.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 1, 0);
-    pathA1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 30, 0);
-    pathA1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 30, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 4);
-    pathA1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 26, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 8);
-    pathA1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 9, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 8);
+    pathA1.moveTo(_relativeX(size, 1), 0);
+    pathA1.lineTo(_relativeX(size, 30), 0);
+    pathA1.lineTo(_relativeX(size, 30), _relativeY(size, 4));
+    pathA1.lineTo(_relativeX(size, 26), _relativeY(size, 8));
+    pathA1.lineTo(_relativeX(size, 9), _relativeY(size, 8));
     pathA1.close();
 
     _touchCanvas.drawPath(pathA1, paint, onTapDown: (tapDetail) {
@@ -57,11 +80,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['a2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathA2 = Path();
-    pathA2.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 32, 0);
-    pathA2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61, 0);
-    pathA2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 53, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 8);
-    pathA2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 36, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 8);
-    pathA2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 32, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 4);
+    pathA2.moveTo(_relativeX(size, 32), 0);
+    pathA2.lineTo(_relativeX(size, 61), 0);
+    pathA2.lineTo(_relativeX(size, 53), _relativeY(size, 8));
+    pathA2.lineTo(_relativeX(size, 36), _relativeY(size, 8));
+    pathA2.lineTo(_relativeX(size, 32), _relativeY(size, 4));
     pathA2.close();
 
     _touchCanvas.drawPath(pathA2, paint, onTapDown: (tapDetail) {
@@ -70,11 +93,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['b'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathB = Path();
-    pathB.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 62, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 2);
-    pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 62, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 58, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 47);
-    pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 54, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 54, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
+    pathB.moveTo(_relativeX(size, 62), _relativeY(size, 2));
+    pathB.lineTo(_relativeX(size, 62), _relativeY(size, 43));
+    pathB.lineTo(_relativeX(size, 58), _relativeY(size, 47));
+    pathB.lineTo(_relativeX(size, 54), _relativeY(size, 43));
+    pathB.lineTo(_relativeX(size, 54), _relativeY(size, 10));
     pathB.close();
 
     _touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
@@ -83,11 +106,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['c'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathC = Path();
-    pathC.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 58, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 51);
-    pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 62, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 62, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 96);
-    pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 54, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 54, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
+    pathC.moveTo(_relativeX(size, 58), _relativeY(size, 51));
+    pathC.lineTo(_relativeX(size, 62), _relativeY(size, 55));
+    pathC.lineTo(_relativeX(size, 62), _relativeY(size, 96));
+    pathC.lineTo(_relativeX(size, 54), _relativeY(size, 88));
+    pathC.lineTo(_relativeX(size, 54), _relativeY(size, 55));
     pathC.close();
 
     _touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
@@ -96,11 +119,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['d1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathD1 = Path();
-    pathD1.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 9, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 90);
-    pathD1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 26, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 90);
-    pathD1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 30, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 94);
-    pathD1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 30, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 98);
-    pathD1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 1, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 98);
+    pathD1.moveTo(_relativeX(size, 9), _relativeY(size, 90));
+    pathD1.lineTo(_relativeX(size, 26), _relativeY(size, 90));
+    pathD1.lineTo(_relativeX(size, 30), _relativeY(size, 94));
+    pathD1.lineTo(_relativeX(size, 30), _relativeY(size, 98));
+    pathD1.lineTo(_relativeX(size, 1), _relativeY(size, 98));
     pathD1.close();
 
     _touchCanvas.drawPath(pathD1, paint, onTapDown: (tapDetail) {
@@ -109,11 +132,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['d2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathD2 = Path();
-    pathD2.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 36, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 90);
-    pathD2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 53, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 90);
-    pathD2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 98);
-    pathD2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 32, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 98);
-    pathD2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 32, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 94);
+    pathD2.moveTo(_relativeX(size, 36), _relativeY(size, 90));
+    pathD2.lineTo(_relativeX(size, 53), _relativeY(size, 90));
+    pathD2.lineTo(_relativeX(size, 61), _relativeY(size, 98));
+    pathD2.lineTo(_relativeX(size, 32), _relativeY(size, 98));
+    pathD2.lineTo(_relativeX(size, 32), _relativeY(size, 94));
     pathD2.close();
 
     _touchCanvas.drawPath(pathD2, paint, onTapDown: (tapDetail) {
@@ -122,11 +145,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['e'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathE = Path();
-    pathE.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 4, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 51);
-    pathE.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 8, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathE.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 8, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathE.lineTo(0, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 96);
-    pathE.lineTo(0, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
+    pathE.moveTo(_relativeX(size, 4), _relativeY(size, 51));
+    pathE.lineTo(_relativeX(size, 8), _relativeY(size, 55));
+    pathE.lineTo(_relativeX(size, 8), _relativeY(size, 88));
+    pathE.lineTo(0, _relativeY(size, 96));
+    pathE.lineTo(0, _relativeY(size, 55));
     pathE.close();
 
     _touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
@@ -135,11 +158,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['f'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathF = Path();
-    pathF.moveTo(0, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 2);
-    pathF.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 8, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
-    pathF.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 8, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathF.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 4, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 47);
-    pathF.lineTo(0, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
+    pathF.moveTo(0, _relativeY(size, 2));
+    pathF.lineTo(_relativeX(size, 8), _relativeY(size, 10));
+    pathF.lineTo(_relativeX(size, 8), _relativeY(size, 43));
+    pathF.lineTo(_relativeX(size, 4), _relativeY(size, 47));
+    pathF.lineTo(0, _relativeY(size, 43));
     pathF.close();
 
     _touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
@@ -148,12 +171,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['g1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathG1 = Path();
-    pathG1.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 9, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 45);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 26, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 45);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 30, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 49);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 26, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 53);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 9, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 53);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 5, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 49);
+    pathG1.moveTo(_relativeX(size, 9), _relativeY(size, 45));
+    pathG1.lineTo(_relativeX(size, 26), _relativeY(size, 45));
+    pathG1.lineTo(_relativeX(size, 30), _relativeY(size, 49));
+    pathG1.lineTo(_relativeX(size, 26), _relativeY(size, 53));
+    pathG1.lineTo(_relativeX(size, 9), _relativeY(size, 53));
+    pathG1.lineTo(_relativeX(size, 5), _relativeY(size, 49));
     pathG1.close();
 
     _touchCanvas.drawPath(pathG1, paint, onTapDown: (tapDetail) {
@@ -162,12 +185,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['g2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathG2 = Path();
-    pathG2.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 36, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 45);
-    pathG2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 53, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 45);
-    pathG2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 57, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 49);
-    pathG2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 53, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 53);
-    pathG2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 36, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 53);
-    pathG2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 32, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 49);
+    pathG2.moveTo(_relativeX(size, 36), _relativeY(size, 45));
+    pathG2.lineTo(_relativeX(size, 53), _relativeY(size, 45));
+    pathG2.lineTo(_relativeX(size, 57), _relativeY(size, 49));
+    pathG2.lineTo(_relativeX(size, 53), _relativeY(size, 53));
+    pathG2.lineTo(_relativeX(size, 36), _relativeY(size, 53));
+    pathG2.lineTo(_relativeX(size, 32), _relativeY(size, 49));
     pathG2.close();
 
     _touchCanvas.drawPath(pathG2, paint, onTapDown: (tapDetail) {
@@ -176,12 +199,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['h'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathH = Path();
-    pathH.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
-    pathH.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 15, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
-    pathH.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 25, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 38);
-    pathH.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 25, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathH.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 20, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathH.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 15);
+    pathH.moveTo(_relativeX(size, 10), _relativeY(size, 10));
+    pathH.lineTo(_relativeX(size, 15), _relativeY(size, 10));
+    pathH.lineTo(_relativeX(size, 25), _relativeY(size, 38));
+    pathH.lineTo(_relativeX(size, 25), _relativeY(size, 43));
+    pathH.lineTo(_relativeX(size, 20), _relativeY(size, 43));
+    pathH.lineTo(_relativeX(size, 10), _relativeY(size, 15));
     pathH.close();
 
     _touchCanvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
@@ -190,12 +213,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['i'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathI = Path();
-    pathI.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 31, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 6);
-    pathI.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 35, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
-    pathI.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 35, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathI.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 31, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 47);
-    pathI.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 27, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathI.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 27, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
+    pathI.moveTo(_relativeX(size, 31), _relativeY(size, 6));
+    pathI.lineTo(_relativeX(size, 35), _relativeY(size, 10));
+    pathI.lineTo(_relativeX(size, 35), _relativeY(size, 43));
+    pathI.lineTo(_relativeX(size, 31), _relativeY(size, 47));
+    pathI.lineTo(_relativeX(size, 27), _relativeY(size, 43));
+    pathI.lineTo(_relativeX(size, 27), _relativeY(size, 10));
     pathI.close();
 
     _touchCanvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
@@ -204,12 +227,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['j'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathJ = Path();
-    pathJ.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 47, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
-    pathJ.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 52, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
-    pathJ.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 52, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 15);
-    pathJ.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 42, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathJ.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 37, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathJ.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 37, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 38);
+    pathJ.moveTo(_relativeX(size, 47), _relativeY(size, 10));
+    pathJ.lineTo(_relativeX(size, 52), _relativeY(size, 10));
+    pathJ.lineTo(_relativeX(size, 52), _relativeY(size, 15));
+    pathJ.lineTo(_relativeX(size, 42), _relativeY(size, 43));
+    pathJ.lineTo(_relativeX(size, 37), _relativeY(size, 43));
+    pathJ.lineTo(_relativeX(size, 37), _relativeY(size, 38));
     pathJ.close();
 
     _touchCanvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
@@ -218,12 +241,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['k'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathK = Path();
-    pathK.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 20, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathK.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 25, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathK.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 25, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 60);
-    pathK.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 15, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathK.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathK.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 83);
+    pathK.moveTo(_relativeX(size, 20), _relativeY(size, 55));
+    pathK.lineTo(_relativeX(size, 25), _relativeY(size, 55));
+    pathK.lineTo(_relativeX(size, 25), _relativeY(size, 60));
+    pathK.lineTo(_relativeX(size, 15), _relativeY(size, 88));
+    pathK.lineTo(_relativeX(size, 10), _relativeY(size, 88));
+    pathK.lineTo(_relativeX(size, 10), _relativeY(size, 83));
     pathK.close();
 
     _touchCanvas.drawPath(pathK, paint, onTapDown: (tapDetail) {
@@ -232,12 +255,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['l'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathL = Path();
-    pathL.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 31, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 51);
-    pathL.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 35, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathL.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 35, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathL.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 31, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 92);
-    pathL.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 27, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathL.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 27, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
+    pathL.moveTo(_relativeX(size, 31), _relativeY(size, 51));
+    pathL.lineTo(_relativeX(size, 35), _relativeY(size, 55));
+    pathL.lineTo(_relativeX(size, 35), _relativeY(size, 88));
+    pathL.lineTo(_relativeX(size, 31), _relativeY(size, 92));
+    pathL.lineTo(_relativeX(size, 27), _relativeY(size, 88));
+    pathL.lineTo(_relativeX(size, 27), _relativeY(size, 55));
     pathL.close();
 
     _touchCanvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
@@ -246,12 +269,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['m'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathM = Path();
-    pathM.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 37, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathM.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 42, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathM.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 52, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 83);
-    pathM.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 52, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathM.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 47, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathM.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 37, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 60);
+    pathM.moveTo(_relativeX(size, 37), _relativeY(size, 55));
+    pathM.lineTo(_relativeX(size, 42), _relativeY(size, 55));
+    pathM.lineTo(_relativeX(size, 52), _relativeY(size, 83));
+    pathM.lineTo(_relativeX(size, 52), _relativeY(size, 88));
+    pathM.lineTo(_relativeX(size, 47), _relativeY(size, 88));
+    pathM.lineTo(_relativeX(size, 37), _relativeY(size, 60));
     pathM.close();
 
     _touchCanvas.drawPath(pathM, paint, onTapDown: (tapDetail) {
@@ -259,17 +282,10 @@ class SegmentDisplayPainter extends CustomPainter {
     });
 
     paint.color = segments['dp'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-    _touchCanvas.drawCircle(
-        Offset(
-            size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 72,
-            size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 94
-        ),
-        size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 4.5,
-        paint,
+    _touchCanvas.drawCircle(Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint,
         onTapDown: (tapDetail) {
-          setSegmentState('dp', !segments['dp']);
-        }
-    );
+      setSegmentState('dp', !segments['dp']);
+    });
   }
 
   void _paintFourteenSegmentDisplay(Size size) {
@@ -277,10 +293,10 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathA1 = Path();
-    pathA1.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 1, 0);
-    pathA1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61, 0);
-    pathA1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 53, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 8);
-    pathA1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 9, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 8);
+    pathA1.moveTo(_relativeX(size, 1), 0);
+    pathA1.lineTo(_relativeX(size, 61), 0);
+    pathA1.lineTo(_relativeX(size, 53), _relativeY(size, 8));
+    pathA1.lineTo(_relativeX(size, 9), _relativeY(size, 8));
     pathA1.close();
 
     _touchCanvas.drawPath(pathA1, paint, onTapDown: (tapDetail) {
@@ -289,11 +305,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['b'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathB = Path();
-    pathB.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 62, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 2);
-    pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 62, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 58, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 47);
-    pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 54, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 54, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
+    pathB.moveTo(_relativeX(size, 62), _relativeY(size, 2));
+    pathB.lineTo(_relativeX(size, 62), _relativeY(size, 43));
+    pathB.lineTo(_relativeX(size, 58), _relativeY(size, 47));
+    pathB.lineTo(_relativeX(size, 54), _relativeY(size, 43));
+    pathB.lineTo(_relativeX(size, 54), _relativeY(size, 10));
     pathB.close();
 
     _touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
@@ -302,11 +318,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['c'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathC = Path();
-    pathC.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 58, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 51);
-    pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 62, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 62, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 96);
-    pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 54, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 54, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
+    pathC.moveTo(_relativeX(size, 58), _relativeY(size, 51));
+    pathC.lineTo(_relativeX(size, 62), _relativeY(size, 55));
+    pathC.lineTo(_relativeX(size, 62), _relativeY(size, 96));
+    pathC.lineTo(_relativeX(size, 54), _relativeY(size, 88));
+    pathC.lineTo(_relativeX(size, 54), _relativeY(size, 55));
     pathC.close();
 
     _touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
@@ -315,10 +331,10 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['d'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathD1 = Path();
-    pathD1.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 9, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 90);
-    pathD1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 53, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 90);
-    pathD1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 98);
-    pathD1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 1, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 98);
+    pathD1.moveTo(_relativeX(size, 9), _relativeY(size, 90));
+    pathD1.lineTo(_relativeX(size, 53), _relativeY(size, 90));
+    pathD1.lineTo(_relativeX(size, 61), _relativeY(size, 98));
+    pathD1.lineTo(_relativeX(size, 1), _relativeY(size, 98));
     pathD1.close();
 
     _touchCanvas.drawPath(pathD1, paint, onTapDown: (tapDetail) {
@@ -327,11 +343,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['e'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathE = Path();
-    pathE.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 4, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 51);
-    pathE.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 8, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathE.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 8, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathE.lineTo(0, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 96);
-    pathE.lineTo(0, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
+    pathE.moveTo(_relativeX(size, 4), _relativeY(size, 51));
+    pathE.lineTo(_relativeX(size, 8), _relativeY(size, 55));
+    pathE.lineTo(_relativeX(size, 8), _relativeY(size, 88));
+    pathE.lineTo(0, _relativeY(size, 96));
+    pathE.lineTo(0, _relativeY(size, 55));
     pathE.close();
 
     _touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
@@ -340,11 +356,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['f'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathF = Path();
-    pathF.moveTo(0, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 2);
-    pathF.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 8, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
-    pathF.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 8, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathF.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 4, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 47);
-    pathF.lineTo(0, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
+    pathF.moveTo(0, _relativeY(size, 2));
+    pathF.lineTo(_relativeX(size, 8), _relativeY(size, 10));
+    pathF.lineTo(_relativeX(size, 8), _relativeY(size, 43));
+    pathF.lineTo(_relativeX(size, 4), _relativeY(size, 47));
+    pathF.lineTo(0, _relativeY(size, 43));
     pathF.close();
 
     _touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
@@ -353,12 +369,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['g1'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathG1 = Path();
-    pathG1.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 9, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 45);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 26, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 45);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 30, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 49);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 26, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 53);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 9, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 53);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 5, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 49);
+    pathG1.moveTo(_relativeX(size, 9), _relativeY(size, 45));
+    pathG1.lineTo(_relativeX(size, 26), _relativeY(size, 45));
+    pathG1.lineTo(_relativeX(size, 30), _relativeY(size, 49));
+    pathG1.lineTo(_relativeX(size, 26), _relativeY(size, 53));
+    pathG1.lineTo(_relativeX(size, 9), _relativeY(size, 53));
+    pathG1.lineTo(_relativeX(size, 5), _relativeY(size, 49));
     pathG1.close();
 
     _touchCanvas.drawPath(pathG1, paint, onTapDown: (tapDetail) {
@@ -367,12 +383,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['g2'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathG2 = Path();
-    pathG2.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 36, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 45);
-    pathG2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 53, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 45);
-    pathG2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 57, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 49);
-    pathG2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 53, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 53);
-    pathG2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 36, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 53);
-    pathG2.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 32, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 49);
+    pathG2.moveTo(_relativeX(size, 36), _relativeY(size, 45));
+    pathG2.lineTo(_relativeX(size, 53), _relativeY(size, 45));
+    pathG2.lineTo(_relativeX(size, 57), _relativeY(size, 49));
+    pathG2.lineTo(_relativeX(size, 53), _relativeY(size, 53));
+    pathG2.lineTo(_relativeX(size, 36), _relativeY(size, 53));
+    pathG2.lineTo(_relativeX(size, 32), _relativeY(size, 49));
     pathG2.close();
 
     _touchCanvas.drawPath(pathG2, paint, onTapDown: (tapDetail) {
@@ -381,12 +397,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['h'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathH = Path();
-    pathH.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
-    pathH.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 15, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
-    pathH.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 25, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 38);
-    pathH.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 25, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathH.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 20, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathH.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 15);
+    pathH.moveTo(_relativeX(size, 10), _relativeY(size, 10));
+    pathH.lineTo(_relativeX(size, 15), _relativeY(size, 10));
+    pathH.lineTo(_relativeX(size, 25), _relativeY(size, 38));
+    pathH.lineTo(_relativeX(size, 25), _relativeY(size, 43));
+    pathH.lineTo(_relativeX(size, 20), _relativeY(size, 43));
+    pathH.lineTo(_relativeX(size, 10), _relativeY(size, 15));
     pathH.close();
 
     _touchCanvas.drawPath(pathH, paint, onTapDown: (tapDetail) {
@@ -395,11 +411,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['i'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathI = Path();
-    pathI.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 35, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
-    pathI.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 35, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathI.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 31, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 47);
-    pathI.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 27, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathI.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 27, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
+    pathI.moveTo(_relativeX(size, 35), _relativeY(size, 10));
+    pathI.lineTo(_relativeX(size, 35), _relativeY(size, 43));
+    pathI.lineTo(_relativeX(size, 31), _relativeY(size, 47));
+    pathI.lineTo(_relativeX(size, 27), _relativeY(size, 43));
+    pathI.lineTo(_relativeX(size, 27), _relativeY(size, 10));
     pathI.close();
 
     _touchCanvas.drawPath(pathI, paint, onTapDown: (tapDetail) {
@@ -408,12 +424,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['j'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathJ = Path();
-    pathJ.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 47, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
-    pathJ.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 52, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
-    pathJ.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 52, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 15);
-    pathJ.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 42, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathJ.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 37, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathJ.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 37, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 38);
+    pathJ.moveTo(_relativeX(size, 47), _relativeY(size, 10));
+    pathJ.lineTo(_relativeX(size, 52), _relativeY(size, 10));
+    pathJ.lineTo(_relativeX(size, 52), _relativeY(size, 15));
+    pathJ.lineTo(_relativeX(size, 42), _relativeY(size, 43));
+    pathJ.lineTo(_relativeX(size, 37), _relativeY(size, 43));
+    pathJ.lineTo(_relativeX(size, 37), _relativeY(size, 38));
     pathJ.close();
 
     _touchCanvas.drawPath(pathJ, paint, onTapDown: (tapDetail) {
@@ -422,12 +438,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['k'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathK = Path();
-    pathK.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 20, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathK.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 25, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathK.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 25, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 60);
-    pathK.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 15, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathK.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathK.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 10, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 83);
+    pathK.moveTo(_relativeX(size, 20), _relativeY(size, 55));
+    pathK.lineTo(_relativeX(size, 25), _relativeY(size, 55));
+    pathK.lineTo(_relativeX(size, 25), _relativeY(size, 60));
+    pathK.lineTo(_relativeX(size, 15), _relativeY(size, 88));
+    pathK.lineTo(_relativeX(size, 10), _relativeY(size, 88));
+    pathK.lineTo(_relativeX(size, 10), _relativeY(size, 83));
     pathK.close();
 
     _touchCanvas.drawPath(pathK, paint, onTapDown: (tapDetail) {
@@ -436,11 +452,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['l'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathL = Path();
-    pathL.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 31, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 51);
-    pathL.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 35, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathL.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 35, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathL.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 27, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathL.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 27, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
+    pathL.moveTo(_relativeX(size, 31), _relativeY(size, 51));
+    pathL.lineTo(_relativeX(size, 35), _relativeY(size, 55));
+    pathL.lineTo(_relativeX(size, 35), _relativeY(size, 88));
+    pathL.lineTo(_relativeX(size, 27), _relativeY(size, 88));
+    pathL.lineTo(_relativeX(size, 27), _relativeY(size, 55));
     pathL.close();
 
     _touchCanvas.drawPath(pathL, paint, onTapDown: (tapDetail) {
@@ -449,12 +465,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['m'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathM = Path();
-    pathM.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 37, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathM.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 42, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathM.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 52, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 83);
-    pathM.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 52, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathM.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 47, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathM.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 37, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 60);
+    pathM.moveTo(_relativeX(size, 37), _relativeY(size, 55));
+    pathM.lineTo(_relativeX(size, 42), _relativeY(size, 55));
+    pathM.lineTo(_relativeX(size, 52), _relativeY(size, 83));
+    pathM.lineTo(_relativeX(size, 52), _relativeY(size, 88));
+    pathM.lineTo(_relativeX(size, 47), _relativeY(size, 88));
+    pathM.lineTo(_relativeX(size, 37), _relativeY(size, 60));
     pathM.close();
 
     _touchCanvas.drawPath(pathM, paint, onTapDown: (tapDetail) {
@@ -462,17 +478,10 @@ class SegmentDisplayPainter extends CustomPainter {
     });
 
     paint.color = segments['dp'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-    _touchCanvas.drawCircle(
-        Offset(
-            size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 72,
-            size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 94
-        ),
-        size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 4.5,
-        paint,
+    _touchCanvas.drawCircle(Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint,
         onTapDown: (tapDetail) {
-          setSegmentState('dp', !segments['dp']);
-        }
-    );
+      setSegmentState('dp', !segments['dp']);
+    });
   }
 
   void _paintSevenSegmentDisplay(Size size) {
@@ -480,10 +489,10 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['a'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathA1 = Path();
-    pathA1.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 1, 0);
-    pathA1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61, 0);
-    pathA1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 53, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 8);
-    pathA1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 9, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 8);
+    pathA1.moveTo(_relativeX(size, 1), 0);
+    pathA1.lineTo(_relativeX(size, 61), 0);
+    pathA1.lineTo(_relativeX(size, 53), _relativeY(size, 8));
+    pathA1.lineTo(_relativeX(size, 9), _relativeY(size, 8));
     pathA1.close();
 
     _touchCanvas.drawPath(pathA1, paint, onTapDown: (tapDetail) {
@@ -492,11 +501,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['b'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathB = Path();
-    pathB.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 62, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 2);
-    pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 62, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 58, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 47);
-    pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 54, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 54, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
+    pathB.moveTo(_relativeX(size, 62), _relativeY(size, 2));
+    pathB.lineTo(_relativeX(size, 62), _relativeY(size, 43));
+    pathB.lineTo(_relativeX(size, 58), _relativeY(size, 47));
+    pathB.lineTo(_relativeX(size, 54), _relativeY(size, 43));
+    pathB.lineTo(_relativeX(size, 54), _relativeY(size, 10));
     pathB.close();
 
     _touchCanvas.drawPath(pathB, paint, onTapDown: (tapDetail) {
@@ -505,11 +514,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['c'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathC = Path();
-    pathC.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 58, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 51);
-    pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 62, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 62, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 96);
-    pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 54, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 54, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
+    pathC.moveTo(_relativeX(size, 58), _relativeY(size, 51));
+    pathC.lineTo(_relativeX(size, 62), _relativeY(size, 55));
+    pathC.lineTo(_relativeX(size, 62), _relativeY(size, 96));
+    pathC.lineTo(_relativeX(size, 54), _relativeY(size, 88));
+    pathC.lineTo(_relativeX(size, 54), _relativeY(size, 55));
     pathC.close();
 
     _touchCanvas.drawPath(pathC, paint, onTapDown: (tapDetail) {
@@ -518,10 +527,10 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['d'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathD1 = Path();
-    pathD1.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 9, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 90);
-    pathD1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 53, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 90);
-    pathD1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 98);
-    pathD1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 1, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 98);
+    pathD1.moveTo(_relativeX(size, 9), _relativeY(size, 90));
+    pathD1.lineTo(_relativeX(size, 53), _relativeY(size, 90));
+    pathD1.lineTo(_relativeX(size, 61), _relativeY(size, 98));
+    pathD1.lineTo(_relativeX(size, 1), _relativeY(size, 98));
     pathD1.close();
 
     _touchCanvas.drawPath(pathD1, paint, onTapDown: (tapDetail) {
@@ -530,11 +539,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['e'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathE = Path();
-    pathE.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 4, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 51);
-    pathE.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 8, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
-    pathE.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 8, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 88);
-    pathE.lineTo(0, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 96);
-    pathE.lineTo(0, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 55);
+    pathE.moveTo(_relativeX(size, 4), _relativeY(size, 51));
+    pathE.lineTo(_relativeX(size, 8), _relativeY(size, 55));
+    pathE.lineTo(_relativeX(size, 8), _relativeY(size, 88));
+    pathE.lineTo(0, _relativeY(size, 96));
+    pathE.lineTo(0, _relativeY(size, 55));
     pathE.close();
 
     _touchCanvas.drawPath(pathE, paint, onTapDown: (tapDetail) {
@@ -543,11 +552,11 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['f'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathF = Path();
-    pathF.moveTo(0, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 2);
-    pathF.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 8, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 10);
-    pathF.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 8, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
-    pathF.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 4, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 47);
-    pathF.lineTo(0, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43);
+    pathF.moveTo(0, _relativeY(size, 2));
+    pathF.lineTo(_relativeX(size, 8), _relativeY(size, 10));
+    pathF.lineTo(_relativeX(size, 8), _relativeY(size, 43));
+    pathF.lineTo(_relativeX(size, 4), _relativeY(size, 47));
+    pathF.lineTo(0, _relativeY(size, 43));
     pathF.close();
 
     _touchCanvas.drawPath(pathF, paint, onTapDown: (tapDetail) {
@@ -556,12 +565,12 @@ class SegmentDisplayPainter extends CustomPainter {
 
     paint.color = segments['g'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
     var pathG1 = Path();
-    pathG1.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 9, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 45);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 53, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 45);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 57, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 49);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 53, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 53);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 9, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 53);
-    pathG1.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 5, size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 49);
+    pathG1.moveTo(_relativeX(size, 9), _relativeY(size, 45));
+    pathG1.lineTo(_relativeX(size, 53), _relativeY(size, 45));
+    pathG1.lineTo(_relativeX(size, 57), _relativeY(size, 49));
+    pathG1.lineTo(_relativeX(size, 53), _relativeY(size, 53));
+    pathG1.lineTo(_relativeX(size, 9), _relativeY(size, 53));
+    pathG1.lineTo(_relativeX(size, 5), _relativeY(size, 49));
     pathG1.close();
 
     _touchCanvas.drawPath(pathG1, paint, onTapDown: (tapDetail) {
@@ -569,17 +578,10 @@ class SegmentDisplayPainter extends CustomPainter {
     });
 
     paint.color = segments['dp'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
-    _touchCanvas.drawCircle(
-      Offset(
-        size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 72,
-        size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 94
-      ),
-      size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 4.5,
-      paint,
-      onTapDown: (tapDetail) {
-        setSegmentState('dp', !segments['dp']);
-      }
-    );
+    _touchCanvas.drawCircle(Offset(_relativeX(size, 72), _relativeY(size, 94)), _relativeY(size, 4.5), paint,
+        onTapDown: (tapDetail) {
+      setSegmentState('dp', !segments['dp']);
+    });
   }
 
   @override

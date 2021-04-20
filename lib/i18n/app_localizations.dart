@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/supported_locales.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
 
-//from: https://medium.com/flutter-community/flutter-internationalization-the-easy-way-using-provider-and-json-c47caa4212b2
 class AppLocalizations {
   final Locale locale;
 
@@ -18,43 +17,55 @@ class AppLocalizations {
   }
 
   // Static member to have a simple access to the delegate from the MaterialApp
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   Map<String, String> _localizedStrings;
+  Map<String, String> _defaultLocalizedStrings;
 
   Future<bool> load() async {
-    // Load the language JSON file from the "lang" folder
-    String jsonString =
-        await rootBundle.loadString('assets/i18n/${locale.languageCode}.json');
-    Map<String, dynamic> jsonMap = json.decode(jsonString);
+    _defaultLocalizedStrings = await loadLang(defaultLanguage);
+    Map<String, String> _localStrings = await loadLang(locale.languageCode);
 
-    _localizedStrings = jsonMap.map((key, value) {
-      return MapEntry(key, value.toString());
-    });
+    // Remove new added keays with empty values (urls for manual)
+    _localStrings..removeWhere((k, v) => v.isEmpty);
+
+    _localizedStrings = {
+      ..._defaultLocalizedStrings,
+      ..._localStrings,
+    };
 
     return true;
+  }
+
+  Future<Map<String, String>> loadLang(langCode) async {
+    // Load the language JSON file from the "lang" folder
+    String jsonString = await rootBundle.loadString('assets/i18n/${langCode}.json');
+    Map<String, dynamic> jsonMap = json.decode(jsonString);
+
+    Map<String, String> _strings = jsonMap.map((key, value) {
+      return MapEntry(key, value.toString());
+    });
+    return _strings;
   }
 
   // This method will be called from every widget which needs a localized text
   String translate(String key) {
     return _localizedStrings[key];
   }
+
+  String translateDefault(String key) {
+    return _defaultLocalizedStrings[key];
+  }
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   // This delegate instance will never change (it doesn't even have fields!)
   // It can provide a constant constructor.
   const _AppLocalizationsDelegate();
 
   @override
   bool isSupported(Locale locale) {
-    // Include all of your supported language codes here
-    return supportedLocales
-        .map((locale) => locale.languageCode)
-        .toList()
-        .contains(locale.languageCode);
+    return isLocaleSupported(locale);
   }
 
   @override
@@ -75,12 +86,14 @@ class _AppLocalizationsDelegate
  * %s2 -> parameter 2 (list index 1),
  * ...
  */
-String i18n(BuildContext context, String key, {List<dynamic> parameters: const []}) {
+String i18n(BuildContext context, String key, {List<dynamic> parameters: const [], bool useDefaultLanguage: false}) {
   Map<String, String> map = {};
   for (int i = parameters.length; i >= 1; i--) {
     map.putIfAbsent('%s' + i.toString(), () => parameters[i - 1].toString());
   }
 
-  var text = AppLocalizations.of(context).translate(key);
+  var appLocalization = AppLocalizations.of(context);
+  var text = useDefaultLanguage ? appLocalization.translateDefault(key) : appLocalization.translate(key);
+
   return map.isEmpty ? text : substitution(text, map);
 }

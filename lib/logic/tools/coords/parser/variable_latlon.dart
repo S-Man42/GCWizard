@@ -1,4 +1,5 @@
 import 'package:gc_wizard/logic/common/parser/variable_string_expander.dart';
+import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
@@ -11,21 +12,16 @@ class ParseVariableLatLonJobData {
   final Map<String, String> substitutions;
   final Map<String, dynamic> projectionData;
 
-  ParseVariableLatLonJobData({
-      this.coordinate = null,
-      this.substitutions = null,
-      this.projectionData = const {}
-  });
+  ParseVariableLatLonJobData({this.coordinate = null, this.substitutions = null, this.projectionData = const {}});
 }
 
 Map<String, LatLng> _parseCoordText(String text) {
   var parsedCoord = parseLatLon(text);
-  if (parsedCoord == null)
-    return null;
+  if (parsedCoord == null || parsedCoord.length == 0) return null;
 
-  var out = <String, LatLng>{'coordinate': parsedCoord['coordinate']};
+  var out = <String, LatLng>{'coordinate': parsedCoord.values.elementAt(0)};
 
-  if (parsedCoord['format'] == keyCoordsDMM) {
+  if (parsedCoord.keys.elementAt(0) == keyCoordsDMM) {
     out.putIfAbsent('leftPadCoordinate', () => parseDMM(text, leftPadMilliMinutes: true));
   }
 
@@ -33,42 +29,42 @@ Map<String, LatLng> _parseCoordText(String text) {
 }
 
 _sanitizeVariableDoubleText(String text) {
-  if (text == null)
-    return null;
+  if (text == null) return null;
 
   return text.replaceAll(',', '.').replaceAll(RegExp(r'[^0-9\.\[\]]'), '');
 }
 
 _sanitizeForFormula(String formula) {
   RegExp regExp = new RegExp(r'\[.+?\]');
-  if (regExp.hasMatch(formula))
-    return formula;
+  if (regExp.hasMatch(formula)) return formula;
 
   return '[$formula]';
 }
 
-void parseVariableLatLonAsync(dynamic jobData) async {
+Future<Map<String, dynamic>> parseVariableLatLonAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
-    return;
+    return null;
   }
 
-  var output = parseVariableLatLon(
-      jobData.parameters.coordinate,
-      jobData.parameters.substitutions,
-      projectionData : jobData.parameters.projectionData
-  );
+  var output = parseVariableLatLon(jobData.parameters.coordinate, jobData.parameters.substitutions,
+      projectionData: jobData.parameters.projectionData);
 
-  jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+
+  return output;
 }
 
-Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> substitutions, {Map<String, dynamic> projectionData = const {}}) {
+Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> substitutions,
+    {Map<String, dynamic> projectionData = const {}}) {
   var textToExpand = _sanitizeForFormula(coordinate);
 
   var withProjection = false;
   if (projectionData != null) {
-    if (projectionData['bearing'] != null && projectionData['bearing'].length > 0
-        && projectionData['distance'] != null && projectionData['distance'].length > 0) {
+    if (projectionData['bearing'] != null &&
+        projectionData['bearing'].length > 0 &&
+        projectionData['distance'] != null &&
+        projectionData['distance'].length > 0) {
       withProjection = true;
       textToExpand += String.fromCharCode(1) + _sanitizeForFormula(projectionData['bearing']);
       textToExpand += String.fromCharCode(1) + _sanitizeForFormula(projectionData['distance']);
@@ -78,10 +74,9 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
   var formulaParser = FormulaParser();
 
   var expandedTexts = VariableStringExpander(textToExpand, substitutions, (e) {
-    return formulaParser
-        .parse(e, {})['result']
-        .replaceAll(RegExp(r'[\[\]]'), '');
-  }, uniqueResults: true).run();
+    return formulaParser.parse(e, {})['result'].replaceAll(RegExp(r'[\[\]]'), '');
+  }, uniqueResults: true)
+      .run();
 
   var coords = <Map<String, dynamic>>[];
   var leftPadCoords = <Map<String, dynamic>>[];
@@ -91,25 +86,21 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
       var evaluatedTexts = expandedText['text'].split(String.fromCharCode(1));
 
       var parsedCoord = _parseCoordText(evaluatedTexts[0]);
-      if (parsedCoord == null)
-        continue;
+      if (parsedCoord == null) continue;
 
       var parsedBearing = double.tryParse(_sanitizeVariableDoubleText(evaluatedTexts[1]));
       var parsedDistance = double.tryParse(_sanitizeVariableDoubleText(evaluatedTexts[2]));
 
-      if (parsedBearing == null || parsedDistance == null)
-        continue;
+      if (parsedBearing == null || parsedDistance == null) continue;
 
       parsedBearing = modulo(parsedBearing, 360);
       parsedDistance = parsedDistance.abs();
 
       parsedCoord.entries.forEach((entry) {
-
         if (projectionData['reverseBearing'] != null && projectionData['reverseBearing']) {
-
-          var revProjected = reverseProjection(entry.value, parsedBearing, projectionData['lengthUnit'].toMeter(parsedDistance), projectionData['ellipsoid']);
-          if (revProjected == null || revProjected.length == 0)
-            return;
+          var revProjected = reverseProjection(entry.value, parsedBearing,
+              projectionData['lengthUnit'].toMeter(parsedDistance), projectionData['ellipsoid']);
+          if (revProjected == null || revProjected.length == 0) return;
 
           var projected = revProjected.map((projection) {
             return {'variables': expandedText['variables'], 'coordinate': projection};
@@ -119,11 +110,11 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
             coords.addAll(projected);
           else
             leftPadCoords.addAll(projected);
-
         } else {
           var projected = {
-            'coordinate' : projection(entry.value, parsedBearing, projectionData['lengthUnit'].toMeter(parsedDistance), projectionData['ellipsoid']),
-            'variables' : expandedText['variables']
+            'coordinate': projection(entry.value, parsedBearing, projectionData['lengthUnit'].toMeter(parsedDistance),
+                projectionData['ellipsoid']),
+            'variables': expandedText['variables']
           };
 
           if (entry.key == 'coordinate')
@@ -132,11 +123,9 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
             leftPadCoords.add(projected);
         }
       });
-
     } else {
       var parsedCoord = _parseCoordText(expandedText['text']);
-      if (parsedCoord == null)
-        continue;
+      if (parsedCoord == null) continue;
 
       coords.add({'variables': expandedText['variables'], 'coordinate': parsedCoord['coordinate']});
       if (parsedCoord['leftPadCoordinate'] != null) {
@@ -145,5 +134,5 @@ Map<String, dynamic> parseVariableLatLon(String coordinate, Map<String, String> 
     }
   }
 
-  return {'coordinates' : coords, 'leftPadCoordinates': leftPadCoords};
+  return {'coordinates': coords, 'leftPadCoordinates': leftPadCoords};
 }

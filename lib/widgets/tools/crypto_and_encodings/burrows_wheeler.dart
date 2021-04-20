@@ -31,10 +31,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
   int currentIndexPosition = 1;
   int currentInputLen = 0;
 
-  var _maskInputFormatter = WrapperForMaskTextInputFormatter(
-      mask: '#',
-      filter: {"#": RegExp(r'.')}
-  );
+  var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#', filter: {"#": RegExp(r'.')});
 
   @override
   void initState() {
@@ -55,10 +52,8 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
 
   @override
   Widget build(BuildContext context) {
-
-    return Column(
-      children: <Widget>[
-        currentMode == GCWSwitchPosition.left // encrypt
+    return Column(children: <Widget>[
+      currentMode == GCWSwitchPosition.left // encrypt
           ? GCWTextField(
               controller: plainController,
               hintText: i18n(context, 'burrowswheeler_inputplain'),
@@ -85,29 +80,31 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
                 });
               },
             ),
-        GCWTwoOptionsSwitch(
-          value: currentMode,
-          onChanged: (value) {
-            setState(() {
-              currentMode = value;
-            });
-          },
-        ),
-        GCWTextDivider(
-          text: i18n(context, 'burrowswheeler_index'),
-        ),
-        GCWTwoOptionsSwitch(
-          title: i18n(context, 'burrowswheeler_index_type'),
-          leftValue: currentMode == GCWSwitchPosition.left ? i18n(context, 'burrowswheeler_index_type_number_automated') : i18n(context, 'burrowswheeler_index_type_number'),
-          rightValue: i18n(context, 'burrowswheeler_index_type_symbol'),
-          value: currentIndexType,
-          onChanged: (value) {
-            setState(() {
-              currentIndexType = value;
-            });
-          },
-        ),
-        currentIndexType == GCWSwitchPosition.right
+      GCWTwoOptionsSwitch(
+        value: currentMode,
+        onChanged: (value) {
+          setState(() {
+            currentMode = value;
+          });
+        },
+      ),
+      GCWTextDivider(
+        text: i18n(context, 'burrowswheeler_index'),
+      ),
+      GCWTwoOptionsSwitch(
+        title: i18n(context, 'burrowswheeler_index_type'),
+        leftValue: currentMode == GCWSwitchPosition.left
+            ? i18n(context, 'burrowswheeler_index_type_number_automated')
+            : i18n(context, 'burrowswheeler_index_type_number'),
+        rightValue: i18n(context, 'burrowswheeler_index_type_symbol'),
+        value: currentIndexType,
+        onChanged: (value) {
+          setState(() {
+            currentIndexType = value;
+          });
+        },
+      ),
+      currentIndexType == GCWSwitchPosition.right
           ? GCWTextField(
               controller: indexCharacterController,
               inputFormatters: [_maskInputFormatter],
@@ -116,8 +113,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
                 setState(() {
                   currentIndexSymbol = text;
                 });
-              }
-            )
+              })
           : currentMode == GCWSwitchPosition.right
               ? GCWIntegerSpinner(
                   controller: indexNumberController,
@@ -131,19 +127,17 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
                   },
                 )
               : Container(),
-
-          _buildOutput()
-      ]
-    );
+      _buildOutput()
+    ]);
   }
 
   _buildOutput() {
-
     BWTOutput currentOutput;
 
-
-    if (currentMode == GCWSwitchPosition.left) { // encrypt
-      if (currentIndexType == GCWSwitchPosition.right) { // encoded index - symbol
+    if (currentMode == GCWSwitchPosition.left) {
+      // encrypt
+      if (currentIndexType == GCWSwitchPosition.right) {
+        // encoded index - symbol
         if (currentIndexSymbol == '' || currentIndexSymbol == null)
           currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '');
         else if (currentInputPlain.contains(currentIndexSymbol))
@@ -153,8 +147,10 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
       } else {
         currentOutput = encryptBurrowsWheeler(currentInputPlain, '0');
       }
-    } else { // decrypt
-      if (currentIndexType == GCWSwitchPosition.right) { // encoded index - symbol
+    } else {
+      // decrypt
+      if (currentIndexType == GCWSwitchPosition.right) {
+        // encoded index - symbol
         if (currentIndexSymbol == '' || currentIndexSymbol == null)
           currentOutput = BWTOutput(i18n(context, 'burrowswheeler_error_no_index'), '');
         else
@@ -164,8 +160,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
       }
     }
 
-    if (currentOutput == null || currentOutput.text == null || currentOutput.text == '')
-      return GCWDefaultOutput();
+    if (currentOutput == null || currentOutput.text == null || currentOutput.text == '') return GCWDefaultOutput();
 
     if (currentMode == GCWSwitchPosition.left && currentIndexType == GCWSwitchPosition.left) {
       return GCWMultipleOutput(
@@ -175,8 +170,7 @@ class BurrowsWheelerState extends State<BurrowsWheeler> {
               title: i18n(context, 'burrowswheeler_index'),
               child: GCWOutputText(
                 text: currentOutput.index,
-              )
-          ),
+              )),
         ],
       );
     }

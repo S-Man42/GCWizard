@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:collection';
 import 'dart:isolate';
 
-enum VariableStringExpanderBreakCondition {RUN_ALL, BREAK_ON_FIRST_FOUND}
+enum VariableStringExpanderBreakCondition { RUN_ALL, BREAK_ON_FIRST_FOUND }
 
 /*
   - Takes a string which contains an arbitrary number of variables, e.g. "A B C"
@@ -48,16 +48,10 @@ class VariableStringExpander {
   VariableStringExpanderBreakCondition breakCondition;
   bool uniqueResults;
 
-  VariableStringExpander(
-    this._input,
-    this._substitutions,
-    this.addAsResult,
-    {
-      this.breakCondition = VariableStringExpanderBreakCondition.RUN_ALL,
+  VariableStringExpander(this._input, this._substitutions, this.addAsResult,
+      {this.breakCondition = VariableStringExpanderBreakCondition.RUN_ALL,
       this.uniqueResults = false,
-      this.sendAsyncPort
-    }
-  );
+      this.sendAsyncPort});
 
   List<List<String>> _expandedVariableGroups = [];
   List<String> _substitutionKeys = [];
@@ -79,19 +73,17 @@ class VariableStringExpander {
   List<String> _expandVariableGroup(String group) {
     var output = SplayTreeSet<String>();
 
-    if (group == null)
-      return [];
+    if (group == null) return [];
 
     group = group.replaceAll(RegExp(r'[^\d,\-#]'), '');
 
-    if (group.length == 0)
-      return [];
+    if (group.length == 0) return [];
 
     var ranges = group.split(',');
     ranges.forEach((range) {
       var rangeParts = range.split('#');
       var rangeBounds = rangeParts[0].split('-');
-      if(rangeBounds.length == 1) {
+      if (rangeBounds.length == 1) {
         output.add(int.tryParse(rangeBounds[0]).toString());
         return;
       }
@@ -105,15 +97,12 @@ class VariableStringExpander {
       }
 
       var increment = 1;
-      if (rangeParts.length > 1)
-        increment = int.tryParse(rangeParts[1]);
+      if (rangeParts.length > 1) increment = int.tryParse(rangeParts[1]);
 
       if (start < end) {
-        for (int i = start; i <= end; i += increment)
-          output.add(i.toString());
+        for (int i = start; i <= end; i += increment) output.add(i.toString());
       } else {
-        for (int i = start; i >= end; i -= increment)
-          output.add(i.toString());
+        for (int i = start; i >= end; i -= increment) output.add(i.toString());
       }
     });
 
@@ -137,8 +126,7 @@ class VariableStringExpander {
   //   [1, 4, 0], [1, 4, 1], [1, 4, 2]
   bool _setIndexes() {
     while (_variableValueIndexes[_currentVariableIndex] == _countVariableValues[_currentVariableIndex] - 1) {
-      if (_currentVariableIndex == 0)
-        return true;
+      if (_currentVariableIndex == 0) return true;
 
       _variableValueIndexes[_currentVariableIndex] = 0;
       _currentVariableIndex--;
@@ -165,30 +153,26 @@ class VariableStringExpander {
 
   void _generateCartesianVariables() {
     var progress = 0;
-    int progressStep = max((_countCombinations / 100).toInt(),1); // 100 steps
+    int progressStep = max((_countCombinations / 100).toInt(), 1); // 100 steps
 
     do {
       _substitude();
 
       _result = addAsResult(_result);
       if (_result != null) {
-        if (uniqueResults && _uniqueResults.contains(_result))
-          continue;
+        if (uniqueResults && _uniqueResults.contains(_result)) continue;
 
         _results.add({'text': _result, 'variables': _getCurrentVariables()});
-        if (uniqueResults)
-          _uniqueResults.add(_result);
+        if (uniqueResults) _uniqueResults.add(_result);
 
-        if (breakCondition == VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND)
-          break;
+        if (breakCondition == VariableStringExpanderBreakCondition.BREAK_ON_FIRST_FOUND) break;
       }
 
       progress++;
       if (sendAsyncPort != null && (progress % progressStep == 0)) {
-        sendAsyncPort.send({'progress': progress/_countCombinations});
+        sendAsyncPort.send({'progress': progress / _countCombinations});
       }
-
-    } while(_setIndexes() == false);
+    } while (_setIndexes() == false);
   }
 
   // do the substitution of the variables set with their specific values given by their counted indexes
@@ -199,9 +183,9 @@ class VariableStringExpander {
 
       for (_variableValueIndex = 0; _variableValueIndex < _variableValueIndexes.length; _variableValueIndex++) {
         _variableGroup = _variableGroup.toUpperCase().replaceAll(
-          _substitutionKeys[_variableValueIndex],
-          _expandedVariableGroups[_variableValueIndex][_variableValueIndexes[_variableValueIndex]],
-        );
+              _substitutionKeys[_variableValueIndex],
+              _expandedVariableGroups[_variableValueIndex][_variableValueIndexes[_variableValueIndex]],
+            );
       }
 
       _result = _result.replaceFirst(_variableGroups[_variableGroupIndex], _variableGroup);
@@ -210,19 +194,18 @@ class VariableStringExpander {
 
   _sanitizeForFormula(String formula) {
     RegExp regExp = new RegExp(r'\[.+?\]');
-    if (regExp.hasMatch(formula))
-      return formula;
+    if (regExp.hasMatch(formula)) return formula;
 
     return '[$formula]';
   }
 
   List<Map<String, dynamic>> run({onlyPrecheck: false}) {
-
-    if (_input == null || _input.length == 0)
-      return [];
+    if (_input == null || _input.length == 0) return [];
 
     if (_substitutions == null || _substitutions.length == 0) {
-      return [{'text': _input, 'variables': {}}];
+      return [
+        {'text': _input, 'variables': {}}
+      ];
     }
 
     _input = _sanitizeForFormula(_input);
@@ -241,7 +224,9 @@ class VariableStringExpander {
     // check number of combinations
     _countCombinations = _countVariableValues.fold(1, (previousValue, element) => previousValue * element);
     if (onlyPrecheck) {
-      return [{'count': _countCombinations}];
+      return [
+        {'count': _countCombinations}
+      ];
     }
 
     // Find matching formula groups

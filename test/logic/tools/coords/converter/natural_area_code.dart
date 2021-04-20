@@ -33,6 +33,13 @@ void main() {
       {'expectedOutput': LatLng(-89.99999, 179.99999), 'nac': NaturalAreaCode('ZZZZZ9QH', '00001BH0')},
       {'expectedOutput': LatLng(89.99999, -179.99999), 'nac': NaturalAreaCode('00000N7H', 'ZZZZXMGZ')},
       {'expectedOutput': LatLng(-89.99999, -179.99999), 'nac': NaturalAreaCode('00000N7H', '00001BH0')},
+
+      {'expectedOutput': null, 'nac': NaturalAreaCode('H0000000', 'H0000000')},
+      {'expectedOutput': LatLng(46.2110174566, 025.598495717), 'nac': NaturalAreaCode('H0000000', 'H0000000')},
+      {'expectedOutput': LatLng(46.2110174566, 025.598495717), 'nac': NaturalAreaCode('ZZZZZ9QH', 'ZZZZXMGZ')},
+      {'expectedOutput': LatLng(46.2110174566, 025.598495717), 'nac': NaturalAreaCode('ZZZZZ9QH', '00001BH0')},
+      {'expectedOutput': LatLng(46.2110174566, 025.598495717), 'nac': NaturalAreaCode('00000N7H', 'ZZZZXMGZ')},
+      {'expectedOutput': LatLng(46.2110174566, 025.598495717), 'nac': NaturalAreaCode('00000N7H', '00001BH0')},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -40,6 +47,29 @@ void main() {
         var _actual = naturalAreaCodeToLatLon(elem['nac']);
         expect((_actual.latitude - elem['expectedOutput'].latitude).abs() < 1e-4, true);
         expect((_actual.longitude - elem['expectedOutput'].longitude).abs() < 1e-4, true);
+      });
+    });
+  });
+
+  group("Converter.natural_area_code.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': 'K3ZVLFSSQP1MKBNZ', 'expectedOutput': null},
+      {'text': 'K3ZVLFSS QP1MKBNZ', 'expectedOutput': {'format': keyCoordsNaturalAreaCode, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'X: K3ZVLFSS Y: QP1MKBNZ', 'expectedOutput': {'format': keyCoordsNaturalAreaCode, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'X:K3ZVLFSS Y:QP1MKBNZ', 'expectedOutput': {'format': keyCoordsNaturalAreaCode, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+      {'text': 'X K3ZVLFSS Y QP1MKBNZ', 'expectedOutput': {'format': keyCoordsNaturalAreaCode, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = parseNaturalAreaCode(elem['text']);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
       });
     });
   });

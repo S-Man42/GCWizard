@@ -3,12 +3,12 @@ import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
 import 'package:latlong/latlong.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class GCWCoordsOpenLocationCode extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsOpenLocationCode({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsOpenLocationCode({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsOpenLocationCodeState createState() => GCWCoordsOpenLocationCodeState();
@@ -19,9 +19,7 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
   var _currentCoord = '';
 
   var _maskInputFormatter = WrapperForMaskTextInputFormatter(
-    mask: '########+##########',
-    filter: {"#": RegExp(r'[23456789CFGHJMPQRVWXcfghjmpqrvwx]')}
-  );
+      mask: '########+##########', filter: {"#": RegExp(r'[23456789CFGHJMPQRVWXcfghjmpqrvwx]')});
 
   @override
   void initState() {
@@ -37,9 +35,14 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
 
   @override
   Widget build(BuildContext context) {
-    return Column (
-      children: <Widget>[
-        GCWTextField(
+    if (widget.coordinates != null) {
+      _currentCoord = latLonToOpenLocationCode(widget.coordinates, codeLength: 14);
+
+      _controller.text = _currentCoord;
+    }
+
+    return Column(children: <Widget>[
+      GCWTextField(
           controller: _controller,
           inputFormatters: [_maskInputFormatter],
           onChanged: (ret) {
@@ -47,16 +50,14 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
               _currentCoord = ret;
               _setCurrentValueAndEmitOnChange();
             });
-          }
-        ),
-      ]
-    );
+          }),
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {
     try {
       LatLng coords = openLocationCodeToLatLon(_currentCoord);
       widget.onChanged(coords);
-    } catch(e) {}
+    } catch (e) {}
   }
 }

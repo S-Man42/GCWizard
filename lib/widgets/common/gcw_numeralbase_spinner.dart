@@ -5,7 +5,6 @@ import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_dropdown_spinner.dart';
 
-
 class GCWNumeralBaseSpinner extends StatefulWidget {
   final Function onChanged;
   final value;
@@ -32,21 +31,36 @@ class GCWNumeralBaseSpinnerState extends State<GCWNumeralBaseSpinner> {
 
     var items = list.map((i) {
       switch (i) {
-        case 2: return '$i (${i18n(context, 'common_numeralbase_binary')})';
-        case 3: return '$i (${i18n(context, 'common_numeralbase_ternary')})';
-        case 4: return '$i (${i18n(context, 'common_numeralbase_quaternary')})';
-        case 5: return '$i (${i18n(context, 'common_numeralbase_quinary')})';
-        case 6: return '$i (${i18n(context, 'common_numeralbase_senary')})';
-        case 7: return '$i (${i18n(context, 'common_numeralbase_septenary')})';
-        case 8: return '$i (${i18n(context, 'common_numeralbase_octenary')})';
-        case 9: return '$i (${i18n(context, 'common_numeralbase_nonary')})';
-        case 10: return '$i (${i18n(context, 'common_numeralbase_denary')})';
-        case 11: return '$i (${i18n(context, 'common_numeralbase_undenary')})';
-        case 12: return '$i (${i18n(context, 'common_numeralbase_duodenary')})';
-        case 16: return '$i (${i18n(context, 'common_numeralbase_hexadecimal')})';
-        case 20: return '$i (${i18n(context, 'common_numeralbase_vigesimal')})';
-        case 60: return '$i (${i18n(context, 'common_numeralbase_sexagesimal')})';
-        default: return '$i';
+        case 2:
+          return '$i (${i18n(context, 'common_numeralbase_binary')})';
+        case 3:
+          return '$i (${i18n(context, 'common_numeralbase_ternary')})';
+        case 4:
+          return '$i (${i18n(context, 'common_numeralbase_quaternary')})';
+        case 5:
+          return '$i (${i18n(context, 'common_numeralbase_quinary')})';
+        case 6:
+          return '$i (${i18n(context, 'common_numeralbase_senary')})';
+        case 7:
+          return '$i (${i18n(context, 'common_numeralbase_septenary')})';
+        case 8:
+          return '$i (${i18n(context, 'common_numeralbase_octenary')})';
+        case 9:
+          return '$i (${i18n(context, 'common_numeralbase_nonary')})';
+        case 10:
+          return '$i (${i18n(context, 'common_numeralbase_denary')})';
+        case 11:
+          return '$i (${i18n(context, 'common_numeralbase_undenary')})';
+        case 12:
+          return '$i (${i18n(context, 'common_numeralbase_duodenary')})';
+        case 16:
+          return '$i (${i18n(context, 'common_numeralbase_hexadecimal')})';
+        case 20:
+          return '$i (${i18n(context, 'common_numeralbase_vigesimal')})';
+        case 60:
+          return '$i (${i18n(context, 'common_numeralbase_sexagesimal')})';
+        default:
+          return '$i';
       }
     }).toList();
 

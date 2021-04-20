@@ -1,5 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:latlong/latlong.dart';
 
 void main() {
@@ -48,6 +49,26 @@ void main() {
         var _actual = waldmeisterToLatLon(a, b, c);
         expect((_actual.latitude - elem['expectedOutput'].latitude).abs() < 1e-8, true);
         expect((_actual.longitude - elem['expectedOutput'].longitude).abs() < 1e-8, true);
+      });
+    });
+  });
+
+  group("Converter.reverse_whereigo_waldmeister.parseLatLon:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'text': '', 'expectedOutput': null},
+      {'text': '104181 924569 248105', 'expectedOutput': {'format': keyCoordsReverseWhereIGoWaldmeister, 'coordinate': LatLng(46.21101, 025.59849)}},
+      {'text': '104181\n924569\n248105', 'expectedOutput': {'format': keyCoordsReverseWhereIGoWaldmeister, 'coordinate': LatLng(46.21101, 025.59849)}},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('text: ${elem['text']}', () {
+        var _actual = parseWaldmeister(elem['text']);
+        if (_actual == null)
+          expect(null, elem['expectedOutput']);
+        else {
+          expect((_actual.latitude - elem['expectedOutput']['coordinate'].latitude).abs() < 1e-8, true);
+          expect((_actual.longitude - elem['expectedOutput']['coordinate'].longitude).abs() < 1e-8, true);
+        }
       });
     });
   });

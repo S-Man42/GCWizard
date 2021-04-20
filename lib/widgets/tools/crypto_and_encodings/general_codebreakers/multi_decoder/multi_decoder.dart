@@ -48,6 +48,7 @@ class MultiDecoderState extends State<MultiDecoder> {
     mdtTools = multiDecoderTools.map((mdtTool) {
       return multiDecoderToolToGCWMultiDecoderTool(context, mdtTool);
     }).toList();
+    mdtTools.remove(null);
   }
 
   @override
@@ -59,8 +60,7 @@ class MultiDecoderState extends State<MultiDecoder> {
 
     _refreshMDTTools();
 
-    if (_currentOutput == null)
-      _initOutput();
+    if (_currentOutput == null) _initOutput();
 
     return Column(
       children: <Widget>[
@@ -79,19 +79,18 @@ class MultiDecoderState extends State<MultiDecoder> {
                         }
                       },
                     ),
-                    padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN)
-                )
-            ),
+                    padding: EdgeInsets.only(right: DOUBLE_DEFAULT_MARGIN))),
             GCWIconButton(
               iconData: Icons.settings,
               onPressed: () {
-                Navigator.push(context, NoAnimationMaterialPageRoute(
-                    builder: (context) => GCWTool(
-                        tool: MultiDecoderConfiguration(),
-                        toolName: i18n(context, 'multidecoder_configuration_title')
-                    )
-                ))
-                    .whenComplete(() {
+                Navigator.push(
+                    context,
+                    NoAnimationMaterialPageRoute(
+                        builder: (context) => GCWTool(
+                              tool: MultiDecoderConfiguration(),
+                              i18nPrefix: 'multidecoder_configuration',
+                              missingHelpLocales: ['fr'],
+                            ))).whenComplete(() {
                   setState(() {
                     _currentOutput = null;
                   });
@@ -124,8 +123,7 @@ class MultiDecoderState extends State<MultiDecoder> {
     }).join(', ');
 
     var result = tool.name;
-    if (optionValues != null && optionValues.length > 0)
-      result += ' ($optionValues)';
+    if (optionValues != null && optionValues.length > 0) result += ' ($optionValues)';
 
     return result;
   }
@@ -133,9 +131,8 @@ class MultiDecoderState extends State<MultiDecoder> {
   _initOutput() {
     _currentOutput = Column(
         children: mdtTools.map((tool) {
-          return GCWTextDivider(text: _toolTitle(tool));
-        }).toList()
-    );
+      return GCWTextDivider(text: _toolTitle(tool));
+    }).toList());
   }
 
   _calculateOutput() {
@@ -144,10 +141,9 @@ class MultiDecoderState extends State<MultiDecoder> {
 
       try {
         result = tool.onDecode(_currentInput);
-      } catch(e){}
+      } catch (e) {}
 
-      if (result == null || result.toString().length == 0)
-        return Container();
+      if (result == null || result.toString().length == 0) return Container();
 
       return GCWOutput(
         title: _toolTitle(tool),
@@ -155,8 +151,6 @@ class MultiDecoderState extends State<MultiDecoder> {
       );
     }).toList();
 
-    _currentOutput = Column(
-        children: results
-    );
+    _currentOutput = Column(children: results);
   }
 }

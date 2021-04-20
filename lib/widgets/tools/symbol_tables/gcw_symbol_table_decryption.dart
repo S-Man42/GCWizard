@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -18,20 +17,14 @@ class GCWSymbolTableDecryption extends StatefulWidget {
   final SymbolTableData data;
   final Function onChanged;
 
-  const GCWSymbolTableDecryption({
-    Key key,
-    this.data,
-    this.countColumns,
-    this.mediaQueryData,
-    this.onChanged
-  }) : super(key: key);
+  const GCWSymbolTableDecryption({Key key, this.data, this.countColumns, this.mediaQueryData, this.onChanged})
+      : super(key: key);
 
   @override
   GCWSymbolTableDecryptionState createState() => GCWSymbolTableDecryptionState();
 }
 
 class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
-
   var _currentShowOverlayedSymbols = true;
   String _decryptionOutput = '';
 
@@ -46,28 +39,22 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
         Row(
           children: <Widget>[
             Expanded(
-              child: GCWOnOffSwitch (
-                value: _currentShowOverlayedSymbols,
-                title: i18n(context, 'symboltables_showoverlay'),
-                onChanged: (value) {
-                  setState(() {
-                    _currentShowOverlayedSymbols = value;
-                  });
-                },
-              ),
-              flex: 4
-            ),
+                child: GCWOnOffSwitch(
+                  value: _currentShowOverlayedSymbols,
+                  title: i18n(context, 'symboltables_showoverlay'),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentShowOverlayedSymbols = value;
+                    });
+                  },
+                ),
+                flex: 4),
             GCWSymbolTableZoomButtons(
-              countColumns: widget.countColumns,
-              mediaQueryData: widget.mediaQueryData,
-              onChanged: widget.onChanged
-            )
+                countColumns: widget.countColumns, mediaQueryData: widget.mediaQueryData, onChanged: widget.onChanged)
           ],
         ),
         _buildDecryptionButtonMatrix(widget.countColumns),
-        GCWDefaultOutput(
-          child: _decryptionOutput
-        )
+        GCWDefaultOutput(child: _decryptionOutput)
       ],
     );
   }
@@ -77,8 +64,7 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
   }
 
   _buildDecryptionButtonMatrix(countColumns) {
-    if (_data == null)
-      return Container();
+    if (_data == null) return Container();
 
     var rows = <Widget>[];
     var countRows = (_data.images.length / countColumns).floor();
@@ -103,30 +89,25 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
               overflow: Overflow.clip,
               children: <Widget>[
                 GCWSymbolContainer(
-                  symbol: Image.asset(image),
+                  symbol: Image.memory(image.bytes),
                 ),
                 _currentShowOverlayedSymbols
-                  ? Opacity(
-                    child:  Container(
-                      //TODO: Using GCWText instead: Currently it would expand the textfield width to max.
-                      child: Text(
-                        _showSpaceSymbolInOverlay(symbolText),
-                        style: gcwTextStyle().copyWith(
-                          color: colors.dialogText(),
-                          fontWeight: FontWeight.bold
+                    ? Opacity(
+                        child: Container(
+                          //TODO: Using GCWText instead: Currently it would expand the textfield width to max.
+                          child: Text(
+                            _showSpaceSymbolInOverlay(symbolText),
+                            style: gcwTextStyle().copyWith(color: colors.dialogText(), fontWeight: FontWeight.bold),
+                          ),
+                          height: defaultFontSize() + 5,
+                          decoration: ShapeDecoration(
+                              color: colors.dialog(),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius)),
+                              )),
                         ),
-                      ),
-                      height: defaultFontSize() + 5,
-                      decoration: ShapeDecoration(
-                        color: colors.dialog(),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(roundedBorderRadius)),
-                        )
-                      ),
-                    ),
-                    opacity: 0.85
-                  )
-                  : Container()
+                        opacity: 0.85)
+                    : Container()
               ],
             ),
             onTap: () {
@@ -140,11 +121,10 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
         }
 
         columns.add(Expanded(
-          child: Container(
-            child: widget,
-            padding: EdgeInsets.all(3),
-          )
-        ));
+            child: Container(
+          child: widget,
+          padding: EdgeInsets.all(3),
+        )));
       }
 
       rows.add(Row(
@@ -152,37 +132,33 @@ class GCWSymbolTableDecryptionState extends State<GCWSymbolTableDecryption> {
       ));
     }
 
-    rows.add(
-      GCWToolBar(
-        children: [
-          GCWIconButton(
-            iconData: Icons.space_bar,
-            onPressed: () {
-              setState(() {
-                _decryptionOutput += ' ';
-              });
-            },
-          ),
-          GCWIconButton(
-            iconData: Icons.backspace,
-            onPressed: () {
-              setState(() {
-                if (_decryptionOutput.length > 0)
-                  _decryptionOutput = _decryptionOutput.substring(0, _decryptionOutput.length - 1) ;
-              });
-            },
-          ),
-          GCWIconButton(
-            iconData: Icons.clear,
-            onPressed: () {
-              setState(() {
-                _decryptionOutput = '';
-              });
-            },
-          )
-        ]
+    rows.add(GCWToolBar(children: [
+      GCWIconButton(
+        iconData: Icons.space_bar,
+        onPressed: () {
+          setState(() {
+            _decryptionOutput += ' ';
+          });
+        },
+      ),
+      GCWIconButton(
+        iconData: Icons.backspace,
+        onPressed: () {
+          setState(() {
+            if (_decryptionOutput.length > 0)
+              _decryptionOutput = _decryptionOutput.substring(0, _decryptionOutput.length - 1);
+          });
+        },
+      ),
+      GCWIconButton(
+        iconData: Icons.clear,
+        onPressed: () {
+          setState(() {
+            _decryptionOutput = '';
+          });
+        },
       )
-    );
+    ]));
 
     return Column(
       children: rows,

@@ -7,7 +7,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/generate_quadgrams.dart';
 
-String  _alphabet = null;
+String _alphabet = null;
 List<int> _quadgrams = null;
 
 /// method to generate quadgrams from a text file
@@ -17,18 +17,19 @@ List<int> _quadgrams = null;
 /// :param className: name of the generated class.
 /// :param assetName: name of the asset file.
 /// :param alphabet: the alphabet to apply with this text file.
-Future<BreakerResult> generateQuadgrams(File corpus_fh, File quadgram_fh, File asset_fh, String className, String assetName, String alphabet) async {
-
+Future<BreakerResult> generateQuadgrams(
+    File corpus_fh, File quadgram_fh, File asset_fh, String className, String assetName, String alphabet) async {
   _alphabet = Key.check_alphabet(alphabet);
-  if (_alphabet.length > Quadgrams.maxAlphabetLength){
+  if (_alphabet.length > Quadgrams.maxAlphabetLength) {
     // Alphabet must have less or equal than 32 characters
-    return BreakerResult(alphabet: _alphabet, errorCode: ErrorCode.ALPHABET_TOO_LONG);;
+    return BreakerResult(alphabet: _alphabet, errorCode: ErrorCode.ALPHABET_TOO_LONG);
+    ;
   }
 
   var iterator = _file_iterator(corpus_fh, _alphabet);
   var quadgram_val = 0;
-  var quadgrams = List<double>(pow(Quadgrams.maxAlphabetLength, 3)*Quadgrams.maxAlphabetLength); //_alphabet.length
-  quadgrams.fillRange(0, quadgrams.length , 0);
+  var quadgrams = List<double>(pow(Quadgrams.maxAlphabetLength, 3) * Quadgrams.maxAlphabetLength); //_alphabet.length
+  quadgrams.fillRange(0, quadgrams.length, 0);
 
   var idx = 0;
   try {
@@ -54,7 +55,7 @@ Future<BreakerResult> generateQuadgrams(File corpus_fh, File quadgram_fh, File a
 
   double quadgram_sum = 0;
   double quadgram_min = 10000000; //??
-  quadgrams.forEach((val){
+  quadgrams.forEach((val) {
     if (val != 0) {
       quadgram_sum += val;
       quadgram_min = min(quadgram_min, val);
@@ -78,8 +79,7 @@ Future<BreakerResult> generateQuadgrams(File corpus_fh, File quadgram_fh, File a
 
   idx = 0;
   quadgrams.forEach((quadgram) {
-    if (quadgram != 0)
-      quadgrams[idx] = (quadgram / norm * 1000);
+    if (quadgram != 0) quadgrams[idx] = (quadgram / norm * 1000);
     idx += 1;
   });
 
@@ -87,14 +87,14 @@ Future<BreakerResult> generateQuadgrams(File corpus_fh, File quadgram_fh, File a
   idx = 0;
   var max_idx = 0;
   var max_val = 0.0;
-  quadgrams
-    .forEach((val) {
-      if (val > max_val){
-        max_val = val;
-        max_idx = idx;
-      };
-      idx += 1;
-    });
+  quadgrams.forEach((val) {
+    if (val > max_val) {
+      max_val = val;
+      max_idx = idx;
+    }
+    ;
+    idx += 1;
+  });
 
   // now construct the ASCII representation from the index
   var max_chars = List<String>();
@@ -105,7 +105,8 @@ Future<BreakerResult> generateQuadgrams(File corpus_fh, File quadgram_fh, File a
     idx >>= 5;
   }
 
-  return generateFiles(quadgram_fh, asset_fh, className, assetName, alphabet, quadgram_sum, max_chars.join(), max_val, quadgrams);
+  return generateFiles(
+      quadgram_fh, asset_fh, className, assetName, alphabet, quadgram_sum, max_chars.join(), max_val, quadgrams);
 }
 
 /// Calculate the fitness from the characters provided by the iterator
@@ -117,11 +118,11 @@ Future<BreakerResult> generateQuadgrams(File corpus_fh, File quadgram_fh, File a
 ///          Lower values indicate more random text, while values significantly
 ///          greater than 100 indicate (nonsense) text with too much frequently used
 ///          quadgrams (e.g., ``tionioningatheling``).
-double _calc_fitness(Iterable<int> iterator){
+double _calc_fitness(Iterable<int> iterator) {
   var quadgrams = _quadgrams;
   var fitness = 0;
   var nbr_quadgrams = 0;
-  var quadgram_val=0;
+  var quadgram_val = 0;
   var idx = 0;
   try {
     iterator.forEach((numerical_char) {
@@ -145,7 +146,7 @@ double _calc_fitness(Iterable<int> iterator){
     return null;
   }
 
-  if (nbr_quadgrams == 0){
+  if (nbr_quadgrams == 0) {
     // More than three characters from the given alphabet are required")
     return null;
   }
@@ -162,16 +163,12 @@ double _calc_fitness(Iterable<int> iterator){
 ///          greater than 100 indicate (nonsense) text with too much frequently used
 ///          quadgrams (e.g., ``tionioningatheling``).
 double calc_fitness(String txt, {String alphabet = DEFAULT_ALPHABET, List<int> quadgrams = null}) {
-  if (txt == null || txt == '')
-    return null;
+  if (txt == null || txt == '') return null;
 
-  if (alphabet != null)
-    _alphabet = alphabet;
-  if (_alphabet == null)
-    _alphabet = DEFAULT_ALPHABET;
+  if (alphabet != null) _alphabet = alphabet;
+  if (_alphabet == null) _alphabet = DEFAULT_ALPHABET;
 
-  if (quadgrams != null)
-    _quadgrams = quadgrams;
+  if (quadgrams != null) _quadgrams = quadgrams;
 
   return _calc_fitness(iterateText(txt, _alphabet));
 }
@@ -189,8 +186,7 @@ Iterable<int> _file_iterator(File file_fh, String alphabet) sync* {
   text = text.toLowerCase();
   for (int i = 0; i < text.length; i++) {
     index = trans.indexOf(text[i]);
-    if (index >= 0)
-      yield index;
+    if (index >= 0) yield index;
   }
 }
 
@@ -203,14 +199,11 @@ Iterable<int> _file_iterator(File file_fh, String alphabet) sync* {
 ///          Lower values indicate more random text, while values significantly
 ///          greater than 100 indicate (nonsense) text with too much frequently used
 ///          quadgrams (e.g., ``tionioningatheling``).
-double calc_fitness_file(File cleartext_fh, {String alphabet = DEFAULT_ALPHABET, List<int> quadgrams = null}){
-  if (alphabet != null)
-    _alphabet = alphabet;
-  if (_alphabet == null)
-    _alphabet = DEFAULT_ALPHABET;
+double calc_fitness_file(File cleartext_fh, {String alphabet = DEFAULT_ALPHABET, List<int> quadgrams = null}) {
+  if (alphabet != null) _alphabet = alphabet;
+  if (_alphabet == null) _alphabet = DEFAULT_ALPHABET;
 
-  if (quadgrams != null)
-    _quadgrams = quadgrams;
+  if (quadgrams != null) _quadgrams = quadgrams;
 
   return _calc_fitness(_file_iterator(cleartext_fh, _alphabet));
 }

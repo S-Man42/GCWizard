@@ -10,14 +10,12 @@ import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
-
 class WhitespaceLanguage extends StatefulWidget {
   @override
   WhitespaceLanguageState createState() => WhitespaceLanguageState();
 }
 
 class WhitespaceLanguageState extends State<WhitespaceLanguage> {
-
   WhitespaceResult _currentOutput = null;
 
   String _currentCode = '';
@@ -29,7 +27,6 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWTextField(
@@ -39,7 +36,6 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
             });
           },
         ),
-
         GCWTwoOptionsSwitch(
           leftValue: i18n(context, 'whitespace_interpreter'),
           rightValue: i18n(context, 'whitespace_generator'),
@@ -50,7 +46,6 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
             });
           },
         ),
-
         GCWButton(
           text: i18n(context, 'whitespace_language_start'),
           onPressed: () {
@@ -65,15 +60,13 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
   }
 
   Widget _buildOutput(BuildContext context) {
-    if ((_currentCode == null || _currentCode.length == 0) && (_currentOutput == null))
-      return GCWDefaultOutput();
+    if ((_currentCode == null || _currentCode.length == 0) && (_currentOutput == null)) return GCWDefaultOutput();
 
-    if (_currentOutput == null)
-      return GCWDefaultOutput();
+    if (_currentOutput == null) return GCWDefaultOutput();
 
     return GCWMultipleOutput(
       children: [
-        _currentOutput.output + (_currentOutput.error ? '\n' + _currentOutput.errorText  : ''),
+        _currentOutput.output + (_currentOutput.error ? '\n' + _currentOutput.errorText : ''),
         GCWOutput(
           title: i18n(context, 'whitespace_language_readable_code'),
           child: GCWOutputText(
@@ -84,13 +77,11 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
     );
   }
 
-
   _calcOutput(BuildContext context) async {
-    if (_currentCode == null || _currentCode.length == 0 || _isStarted)
-      return;
+    if (_currentCode == null || _currentCode.length == 0 || _isStarted) return;
 
     _isStarted = true;
-    _currentOutput= null;
+    _currentOutput = null;
 
     if (_currentMode == GCWSwitchPosition.left) {
       var currentOutputFuture = interpreterWhitespace(_currentCode, '', continueState: _continueState);
@@ -142,13 +133,11 @@ class WhitespaceLanguageState extends State<WhitespaceLanguage> {
             text: i18n(context, 'common_ok'),
             onPressed: () {
               _isStarted = false;
-              if (_continueState != null)
-                _continueState.inp = _currentInput + '\n';
+              if (_continueState != null) _continueState.inp = _currentInput + '\n';
               _calcOutput(context);
             },
           )
         ],
-        cancelButton: false
-    );
+        cancelButton: false);
   }
 }

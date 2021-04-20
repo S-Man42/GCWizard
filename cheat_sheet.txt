@@ -1,9 +1,42 @@
+==============================
+Format code:
+
+Activation of dart format:
+flutter pub global activate dart_style
+dart format lib -l 120
+
+==============================
+
 Android Release Build command:
 flutter build appbundle --release --target-platform android-arm,android-arm64
 
+==============================
+Common Build Error Fixes:
+
+flutter upgrade --force
+flutter pub cache repair
+flutter clean
+
+Caches to clean:
+
+Gradle (Windows: users/.gradle)
+Pub cache (Windows: users/appdata/local/pub)
+Android Studio (Windows: users/.android)
+IntelliJ (Project Path ./.idea)
+Build Path (Project Path ./build)
+
+==============================
 Web Build:
+
+First time:
+flutter config --enable-web
 flutter create .
+
+Else:
 flutter build web
+
+2021/02: Currently problems with HTML objects: Please uncomment lines in lib\widgets\utils\file_utils.dart
+===============================
 
 Icons:
 Android: android/app/src/main/res/mipmap-*/ic_launcher.png
@@ -29,16 +62,17 @@ flutter pub cache repair
 cd <YOUR APP FOLDER>
 flutter clean
 -----------
-"build web" is not currently supported
-
-->
-flutter channel beta
-flutter upgrade --force
-flutter pub cache repair
-flutter clean
-
-flutter config --enable-web
------------
 iOS build: GeneratedPluginRegistrant.m Module not found.
 
 -> Open XCode with .xcworkspace file instead of .xcodeproj
+
+========
+Crowdin Script, install jq using Scoop.sh:
+Windows/Powershell
+
+Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+iwr -useb get.scoop.sh | iex
+scoop bucket add extras
+scoop install jq
+
+Run Scripts in external_helpers/crowdin using the GitBash

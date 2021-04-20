@@ -31,23 +31,14 @@ class MoonPosition {
     greenwichSiderealTime = GMST(julianDate.julianDate);
     localSiderealTime = GMST2LMST(greenwichSiderealTime, coords.longitudeInRad);
 
-    Coor sunPos = sunPosition(
-      julianDate.terrestrialDynamicalTime,
-      ellipsoid.a / 1000.0,
-      coords.latitudeInRad,
-      degreesToRadian(localSiderealTime * 15.0),
-      true
-    );
+    Coor sunPos = sunPosition(julianDate.terrestrialDynamicalTime, ellipsoid.a / 1000.0, coords.latitudeInRad,
+        degreesToRadian(localSiderealTime * 15.0), true);
 
-    var observerCart = observer2EquCart(coords.longitudeInRad, coords.latitudeInRad, 0, greenwichSiderealTime, ellipsoid);
+    var observerCart =
+        observer2EquCart(coords.longitudeInRad, coords.latitudeInRad, 0, greenwichSiderealTime, ellipsoid);
 
     Coor moonPos = moonPosition(
-      sunPos,
-      julianDate.terrestrialDynamicalTime,
-      observerCart,
-      degreesToRadian(localSiderealTime * 15.0),
-      true
-    );
+        sunPos, julianDate.terrestrialDynamicalTime, observerCart, degreesToRadian(localSiderealTime * 15.0), true);
 
     eclipticLongitude = radianToDegrees(moonPos.lon);
     eclipticLatitude = radianToDegrees(moonPos.lat);
@@ -59,7 +50,9 @@ class MoonPosition {
 
     distanceToEarthCenter = moonPos.distance;
     var moonCart = equPolar2Cart(moonPos.raGeocentric, moonPos.decGeocentric, moonPos.distance);
-    distanceToObserver = sqrt(pow(moonCart.x - observerCart.x, 2) + pow(moonCart.y - observerCart.y, 2) + pow(moonCart.z - observerCart.z, 2));
+    distanceToObserver = sqrt(pow(moonCart.x - observerCart.x, 2) +
+        pow(moonCart.y - observerCart.y, 2) +
+        pow(moonCart.z - observerCart.z, 2));
 
     astrologicalSign = moonPos.sign;
     illumination = moonPos.phase * 100;

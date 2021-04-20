@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hash_breaker.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/hashes/hashes.dart';
-import 'package:gc_wizard/theme/theme_colors.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_key_value_editor.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_variablecoordinate_textinputformatter.dart';
 
 class HashBreaker extends StatefulWidget {
@@ -23,8 +21,6 @@ class HashBreaker extends StatefulWidget {
 }
 
 class _HashBreakerState extends State<HashBreaker> {
-  var _fromController;
-  var _toController;
   var _inputController;
   var _maskController;
 
@@ -32,12 +28,6 @@ class _HashBreakerState extends State<HashBreaker> {
   var _currentMask = '';
   var _currentFromInput = '';
   var _currentToInput = '';
-
-  var _currentEditedKey = '';
-  var _currentEditedValue = '';
-  var _currentEditId;
-  var _editKeyController;
-  var _editValueController;
 
   var _currentIdCount = 0;
 
@@ -51,23 +41,32 @@ class _HashBreakerState extends State<HashBreaker> {
 
     _inputController = TextEditingController(text: _currentInput);
     _maskController = TextEditingController(text: _currentMask);
-    _fromController = TextEditingController(text: _currentFromInput);
-    _toController = TextEditingController(text: _currentToInput);
-
-    _editKeyController = TextEditingController(text: _currentEditedKey);
-    _editValueController = TextEditingController(text: _currentEditedValue);
   }
 
   @override
   void dispose() {
     _inputController.dispose();
     _maskController.dispose();
-    _fromController.dispose();
-    _toController.dispose();
-    _editKeyController.dispose();
-    _editValueController.dispose();
 
     super.dispose();
+  }
+
+  _addEntry(String currentFromInput, String currentToInput, BuildContext context) {
+    if (currentFromInput.length > 0)
+      _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {currentFromInput: currentToInput});
+  }
+
+  _updateEntry(dynamic id, String key, String value) {
+    _currentSubstitutions[id] = {key: value};
+  }
+
+  _updateNewEntry(String currentFromInput, String currentToInput, BuildContext context) {
+    _currentFromInput = currentFromInput;
+    _currentToInput = currentToInput;
+  }
+
+  _removeEntry(dynamic id, BuildContext context) {
+    _currentSubstitutions.remove(id);
   }
 
   @override
@@ -105,43 +104,55 @@ class _HashBreakerState extends State<HashBreaker> {
             _currentMask = value;
           },
         ),
-        _buildVariablesInput(),
-        _buildSubstitutionList(context),
+        GCWTextDivider(
+          text: i18n(context, 'coords_variablecoordinate_variables'),
+        ),
+        _buildVariablesEditor(),
         _buildSubmitButton(),
-        GCWDefaultOutput(
-          child: _currentOutput
-        )
+        GCWDefaultOutput(child: _currentOutput)
       ],
     );
   }
 
+  Widget _buildVariablesEditor() {
+    return GCWKeyValueEditor(
+        keyHintText: i18n(context, 'coords_variablecoordinate_variable'),
+        valueHintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
+        valueInputFormatters: [CoordsTextVariableCoordinateTextInputFormatter()],
+        valueFlex: 2,
+        onNewEntryChanged: _updateNewEntry,
+        onAddEntry: _addEntry,
+        middleWidget: SizedBox(height: 10),
+        keyKeyValueMap: _currentSubstitutions,
+        onUpdateEntry: _updateEntry,
+        onRemoveEntry: _removeEntry);
+  }
+
   Widget _buildSubmitButton() {
-    return GCWSubmitButton(
-      onPressed: () async {
-        await showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) {
-            return Center (
-              child: Container(
-                child: GCWAsyncExecuter(
-                  isolatedFunction: breakHashAsync,
-                  parameter: _buildJobData(),
-                  onReady: (data) => _showOutput(data),
-                  isOverlay: true,
-                ),
-                height: 220,
-                width: 150,
+    return GCWSubmitButton(onPressed: () async {
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Center(
+            child: Container(
+              child: GCWAsyncExecuter(
+                isolatedFunction: breakHashAsync,
+                parameter: _buildJobData(),
+                onReady: (data) => _showOutput(data),
+                isOverlay: true,
               ),
-            );
-          },
-        );
-      }
-    );
+              height: 220,
+              width: 150,
+            ),
+          );
+        },
+      );
+    });
   }
 
   Future<GCWAsyncExecuterParameters> _buildJobData() async {
-    _currentOutput ='';
+    _currentOutput = '';
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
     });
@@ -151,20 +162,18 @@ class _HashBreakerState extends State<HashBreaker> {
       _substitutions.putIfAbsent(entry.value.keys.first, () => entry.value.values.first);
     });
 
-    if (_currentFromInput != null && _currentFromInput.length > 0
-      && _currentToInput != null && _currentToInput.length > 0
-    ) {
+    if (_currentFromInput != null &&
+        _currentFromInput.length > 0 &&
+        _currentToInput != null &&
+        _currentToInput.length > 0) {
       _substitutions.putIfAbsent(_currentFromInput, () => _currentToInput);
     }
 
-    return GCWAsyncExecuterParameters(
-      HashBreakerJobData(
+    return GCWAsyncExecuterParameters(HashBreakerJobData(
         input: _currentInput,
         searchMask: _currentMask,
         substitutions: _substitutions,
-        hashFunction: _currentHashFunction
-      )
-    );
+        hashFunction: _currentHashFunction));
   }
 
   _showOutput(Map<String, dynamic> output) {
@@ -176,171 +185,5 @@ class _HashBreakerState extends State<HashBreaker> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
     });
-  }
-
-  _buildVariablesInput() {
-    return Column(
-      children: [
-        GCWTextDivider(
-          text: i18n(context, 'coords_variablecoordinate_variables'),
-        ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              child: GCWTextField(
-                hintText: i18n(context, 'coords_variablecoordinate_variable'),
-                controller: _fromController,
-                onChanged: (text) {
-                  _currentFromInput = text;
-                },
-              ),
-              flex: 1
-            ),
-            Icon(
-              Icons.arrow_forward,
-              color: themeColors().mainFont(),
-            ),
-            Expanded(
-              child: GCWTextField(
-                hintText: i18n(context, 'coords_variablecoordinate_possiblevalues'),
-                controller: _toController,
-                inputFormatters: [CoordsTextVariableCoordinateTextInputFormatter()],
-                onChanged: (text) {
-                  _currentToInput = text;
-                },
-              ),
-              flex: 2,
-            ),
-            GCWIconButton(
-              iconData: Icons.add,
-              onPressed: () {
-                setState(() {
-                  if (_currentFromInput.length > 0) {
-                    _currentSubstitutions.putIfAbsent(++_currentIdCount, () => {_currentFromInput: _currentToInput});
-
-                    _fromController.clear();
-                    _toController.clear();
-                    _currentFromInput = '';
-                    _currentToInput = '';
-                  }
-                });
-              },
-            )
-          ],
-        ),
-      ],
-    );
-  }
-
-  _buildSubstitutionList(BuildContext context) {
-    var odd = true;
-    var rows = _currentSubstitutions.entries.map((substitution) {
-      Widget output;
-
-      var row = Container(
-          child: Row (
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  child: _currentEditId == substitution.key
-                    ? GCWTextField (
-                      controller: _editKeyController,
-                      onChanged: (text) {
-                        setState(() {
-                          _currentEditedKey = text;
-                        });
-                      },
-                    )
-                    : GCWText (
-                      text: substitution.value.keys.first
-                    ),
-                  margin: EdgeInsets.only(left: 10),
-                ),
-                flex: 1,
-              ),
-              Icon(
-                Icons.arrow_forward,
-                color: themeColors().mainFont(),
-              ),
-              Expanded(
-                  child: Container(
-                    child: _currentEditId == substitution.key
-                      ? GCWTextField(
-                        controller: _editValueController,
-                        autofocus: true,
-                        onChanged: (text) {
-                          setState(() {
-                            _currentEditedValue = text;
-                          });
-                        },
-                      )
-                      : GCWText (
-                        text: substitution.value.values.first
-                      ),
-                    margin: EdgeInsets.only(left: 10),
-                  ),
-                  flex: 3
-              ),
-              _currentEditId == substitution.key
-                ? GCWIconButton(
-                    iconData: Icons.check,
-                    onPressed: () {
-
-                      _currentSubstitutions[_currentEditId] = {_currentEditedKey: _currentEditedValue};
-
-                      setState(() {
-                        _currentEditId = null;
-                        _editKeyController.clear();
-                        _editValueController.clear();
-                      });
-                    },
-                  )
-                : GCWIconButton(
-                    iconData: Icons.edit,
-                    onPressed: () {
-                      setState(() {
-                        _currentEditId = substitution.key;
-                        _editKeyController.text = substitution.value.keys.first;
-                        _editValueController.text = substitution.value.values.first;
-                        _currentEditedKey = substitution.value.keys.first;
-                        _currentEditedValue = substitution.value.values.first;
-                      });
-                    },
-                  ),
-              GCWIconButton(
-                iconData: Icons.remove,
-                onPressed: () {
-                  setState(() {
-                    _currentSubstitutions.remove(substitution.key);
-                  });
-                },
-              )
-            ],
-          )
-      );
-
-      if (odd) {
-        output = Container(
-          color: themeColors().outputListOddRows(),
-          child: row
-        );
-      } else {
-        output = Container(
-            child: row
-        );
-      }
-      odd = !odd;
-
-      return output;
-    }).toList();
-
-    return Container(
-      child: Column(
-        children: rows
-      ),
-      padding: EdgeInsets.only(
-        top: 10
-      ),
-    );
   }
 }

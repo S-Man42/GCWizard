@@ -10,8 +10,7 @@ class ThemeColorsDark extends ThemeColors {
 
   @override
   ThemeData base() {
-    if (_base == null)
-      _base = ThemeData.dark();
+    if (_base == null) _base = ThemeData.dark();
 
     return _base;
   }
@@ -88,6 +87,42 @@ class ThemeColorsDark extends ThemeColors {
 
   @override
   Color switchTrack2() {
+    return accent().withOpacity(0.5);
+  }
+
+  @override
+  Color checkBoxActiveColor() {
+    return _lightGray;
+  }
+
+  @override
+  Color checkBoxFillColor(Set<MaterialState> states) {
+    if (states.contains(MaterialState.disabled)) {
+      return _darkGray;
+    }
+    return _darkGray;
+  }
+
+  @override
+  Color checkBoxCheckColor() {
+    return accent();
+  }
+
+  @override
+  Color checkBoxFocusColor() {
+    return accent().withOpacity(0.5);
+  }
+
+  @override
+  Color checkBoxHoverColor() {
+    return accent();
+  }
+
+  @override
+  Color checkBoxOverlayColor(Set<MaterialState> states) {
+    if (states.contains(MaterialState.disabled)) {
+      return accent().withOpacity(0.5);
+    }
     return accent().withOpacity(0.5);
   }
 

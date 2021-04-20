@@ -3,7 +3,7 @@ import 'package:gc_wizard/theme/theme_colors_dark.dart';
 import 'package:gc_wizard/theme/theme_colors_light.dart';
 import 'package:prefs/prefs.dart';
 
-enum ThemeType {DARK, LIGHT}
+enum ThemeType { DARK, LIGHT }
 
 ThemeColors _themeColors;
 
@@ -28,6 +28,13 @@ abstract class ThemeColors {
   Color switchThumb2();
   Color switchTrack2();
 
+  Color checkBoxActiveColor();
+  Color checkBoxFillColor(Set<MaterialState> states);
+  Color checkBoxCheckColor();
+  Color checkBoxFocusColor();
+  Color checkBoxHoverColor();
+  Color checkBoxOverlayColor(Set<MaterialState> states);
+
   Color outputListOddRows();
 
   Color listSubtitle();
@@ -44,15 +51,19 @@ abstract class ThemeColors {
 
 setThemeColors(ThemeType type) {
   switch (type) {
-    case ThemeType.DARK: _themeColors = ThemeColorsDark(); break;
-    case ThemeType.LIGHT: _themeColors = ThemeColorsLight(); break;
-    default: return null;
+    case ThemeType.DARK:
+      _themeColors = ThemeColorsDark();
+      break;
+    case ThemeType.LIGHT:
+      _themeColors = ThemeColorsLight();
+      break;
+    default:
+      return null;
   }
 }
 
 ThemeColors themeColors() {
-  if (_themeColors != null)
-    return _themeColors;
+  if (_themeColors != null) return _themeColors;
 
   var themeSetting = Prefs.getString('theme_color');
   var type = ThemeType.values.firstWhere((e) => e.toString() == themeSetting);

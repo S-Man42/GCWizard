@@ -14,13 +14,10 @@ import 'package:gc_wizard/utils/common_utils.dart';
  * These values can be converted into their alphabet values (adding +1, naturally).
  */
 
-
 encryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
-  if (input == null || input.length == 0)
-    return '';
+  if (input == null || input.length == 0) return '';
 
-  if (replaceCharacters == null || replaceCharacters.length < 3)
-    return '';
+  if (replaceCharacters == null || replaceCharacters.length < 3) return '';
 
   Map<String, String> substitutions = {};
   for (int i = 0; i <= 2; i++) {
@@ -71,11 +68,9 @@ encryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
  * TODO: Find more readable algorithm
  */
 decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
-  if (input == null || input.length == 0)
-    return '';
+  if (input == null || input.length == 0) return '';
 
-  if (replaceCharacters == null || replaceCharacters.length < 3)
-    return '';
+  if (replaceCharacters == null || replaceCharacters.length < 3) return '';
 
   var replaceToCharacters = [String.fromCharCode(0), String.fromCharCode(1), String.fromCharCode(2)];
 
@@ -116,7 +111,8 @@ decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
       } else {
         // if not valid
         // restore the chunk to the original text
-        var outputTmp = _restoreChunks(chunk + input[chunkStart + chunkOffset], input, chunkStart, substitutionsSwitched);
+        var outputTmp =
+            _restoreChunks(chunk + input[chunkStart + chunkOffset], input, chunkStart, substitutionsSwitched);
         output += outputTmp;
         chunk = '';
         chunkOffset = 0;
@@ -144,13 +140,11 @@ decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
     }
 
     var outputTmp = substitution(chunk, substitutionsSwitched);
-    for (int i = 0; i < outputTmp.length; i++)
-      output += input[chunkStart + i];
+    for (int i = 0; i < outputTmp.length; i++) output += input[chunkStart + i];
   }
   // restore unused chunks to the original text
   output = _restoreChunks(output + _input, input, 0, substitutionsSwitched);
-  if (!caseSensitive)
-    output = output.toUpperCase();
+  if (!caseSensitive) output = output.toUpperCase();
 
   return output;
 }
@@ -158,13 +152,13 @@ decryptKenny(String input, List<String> replaceCharacters, bool caseSensitive) {
 // this is used to track the original characters and their lower/upper case state
 // in case the current chunk is not a valid decodeable triple, the original data needs to
 // be restored
-String _restoreChunks(String chunk, String input, int position, Map<String, String> substitutionsSwitched){
+String _restoreChunks(String chunk, String input, int position, Map<String, String> substitutionsSwitched) {
   var output = '';
   for (int i = 0; i < chunk.length; i++) {
     // key character ?
-    if (substitutionsSwitched.containsKey(chunk[i])){
+    if (substitutionsSwitched.containsKey(chunk[i])) {
       // restore original text
-      output +=  input.substring(position, position + substitutionsSwitched[chunk[i]].length);
+      output += input.substring(position, position + substitutionsSwitched[chunk[i]].length);
       // note the position in the original text
       position += substitutionsSwitched[chunk[i]].length;
     } else

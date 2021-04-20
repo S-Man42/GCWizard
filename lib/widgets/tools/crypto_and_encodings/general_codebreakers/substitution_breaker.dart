@@ -25,7 +25,6 @@ class SubstitutionBreaker extends StatefulWidget {
 }
 
 class SubstitutionBreakerState extends State<SubstitutionBreaker> {
-
   String _currentInput = '';
   SubstitutionBreakerAlphabet _currentAlphabet = SubstitutionBreakerAlphabet.GERMAN;
   SubstitutionBreakerResult _currentOutput = null;
@@ -37,19 +36,19 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
   void initState() {
     super.initState();
 
-   _loadQuadgramsAssets();
+    _loadQuadgramsAssets();
   }
 
   @override
   Widget build(BuildContext context) {
     var BreakerAlphabetItems = {
-      SubstitutionBreakerAlphabet.ENGLISH : i18n(context, 'common_language_english'),
-      SubstitutionBreakerAlphabet.GERMAN : i18n(context, 'common_language_german'),
-      SubstitutionBreakerAlphabet.SPANISH : i18n(context, 'common_language_spanish'),
-      SubstitutionBreakerAlphabet.POLISH : i18n(context, 'common_language_polish'),
-      SubstitutionBreakerAlphabet.GREEK : i18n(context, 'common_language_greek'),
-      SubstitutionBreakerAlphabet.FRENCH : i18n(context, 'common_language_french'),
-      SubstitutionBreakerAlphabet.RUSSIAN : i18n(context, 'common_language_russian'),
+      SubstitutionBreakerAlphabet.ENGLISH: i18n(context, 'common_language_english'),
+      SubstitutionBreakerAlphabet.GERMAN: i18n(context, 'common_language_german'),
+      SubstitutionBreakerAlphabet.SPANISH: i18n(context, 'common_language_spanish'),
+      SubstitutionBreakerAlphabet.POLISH: i18n(context, 'common_language_polish'),
+      SubstitutionBreakerAlphabet.GREEK: i18n(context, 'common_language_greek'),
+      SubstitutionBreakerAlphabet.FRENCH: i18n(context, 'common_language_french'),
+      SubstitutionBreakerAlphabet.RUSSIAN: i18n(context, 'common_language_russian'),
     };
 
     return Column(
@@ -61,9 +60,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
             });
           },
         ),
-        GCWTextDivider(
-          text: i18n(context, 'common_alphabet')
-        ),
+        GCWTextDivider(text: i18n(context, 'common_alphabet')),
         GCWDropDownButton(
           value: _currentAlphabet,
           onChanged: (value) {
@@ -79,46 +76,41 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
           }).toList(),
         ),
         _buildSubmitButton(),
-
         _buildOutput(context),
       ],
     );
   }
 
   Widget _buildSubmitButton() {
-    return GCWSubmitButton(
-      onPressed: () async {
-        await showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) {
-            return Center (
-              child: Container(
-                child: GCWAsyncExecuter(
-                  isolatedFunction: break_cipherAsync,
-                  parameter: _buildJobData(),
-                  onReady: (data) => _showOutput(data),
-                  isOverlay: true,
-                ),
-                height: 220,
-                width: 150,
+    return GCWSubmitButton(onPressed: () async {
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Center(
+            child: Container(
+              child: GCWAsyncExecuter(
+                isolatedFunction: break_cipherAsync,
+                parameter: _buildJobData(),
+                onReady: (data) => _showOutput(data),
+                isOverlay: true,
               ),
-            );
-          },
-        );
-      }
-    );
+              height: 220,
+              width: 150,
+            ),
+          );
+        },
+      );
+    });
   }
 
   Widget _buildOutput(BuildContext context) {
-    if (_currentInput == null || _currentInput.length == 0)
-      return GCWDefaultOutput();
+    if (_currentInput == null || _currentInput.length == 0) return GCWDefaultOutput();
 
-    if (_currentOutput == null)
-      return GCWDefaultOutput();
+    if (_currentOutput == null) return GCWDefaultOutput();
 
-    if (_currentOutput.errorCode != SubstitutionBreakerErrorCode.OK){
-      showToast( i18n(context, 'substitutionbreaker_error', parameters: [_currentOutput.errorCode]));
+    if (_currentOutput.errorCode != SubstitutionBreakerErrorCode.OK) {
+      showToast(i18n(context, 'substitutionbreaker_error', parameters: [_currentOutput.errorCode]));
       return GCWDefaultOutput();
     }
 
@@ -130,9 +122,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
             GCWOutput(
               title: i18n(context, 'common_key'),
               child: GCWOutputText(
-                text:
-                _currentOutput.alphabet.toUpperCase() +'\n'
-                  + _currentOutput.key.toUpperCase(),
+                text: _currentOutput.alphabet.toUpperCase() + '\n' + _currentOutput.key.toUpperCase(),
                 isMonotype: true,
               ),
             ),
@@ -141,14 +131,16 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
               onPressed: () {
                 Map<String, String> substitutions = {};
                 for (int i = 0; i < _currentOutput.alphabet.length; i++)
-                  substitutions.putIfAbsent(_currentOutput.key[i].toUpperCase(), () => _currentOutput.alphabet[i].toUpperCase());
+                  substitutions.putIfAbsent(
+                      _currentOutput.key[i].toUpperCase(), () => _currentOutput.alphabet[i].toUpperCase());
 
-                Navigator.push(context, NoAnimationMaterialPageRoute(
-                  builder: (context) => GCWTool(
-                    tool: Substitution(input: _currentOutput.ciphertext, substitutions: substitutions),
-                    toolName: i18n(context, 'substitution_title')
-                  )
-                ));
+                Navigator.push(
+                    context,
+                    NoAnimationMaterialPageRoute(
+                        builder: (context) => GCWTool(
+                            tool: Substitution(input: _currentOutput.ciphertext, substitutions: substitutions),
+                            i18nPrefix: 'substitution',
+                            missingHelpLocales: ['fr'])));
               },
             )
           ],
@@ -160,8 +152,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
   Future<void> _loadQuadgramsAssets() async {
     while (_isLoading) {}
 
-    if (_quadgrams.containsKey(_currentAlphabet))
-      return;
+    if (_quadgrams.containsKey(_currentAlphabet)) return;
 
     _isLoading = true;
 
@@ -171,10 +162,7 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     Map<String, dynamic> jsonData = jsonDecode(data);
     quadgrams.quadgramsCompressed = Map<int, List<int>>();
     jsonData.entries.forEach((entry) {
-      quadgrams.quadgramsCompressed.putIfAbsent(
-        int.tryParse(entry.key),
-        () => List<int>.from(entry.value)
-      );
+      quadgrams.quadgramsCompressed.putIfAbsent(int.tryParse(entry.key), () => List<int>.from(entry.value));
     });
 
     _quadgrams.putIfAbsent(_currentAlphabet, () => quadgrams);
@@ -187,16 +175,12 @@ class SubstitutionBreakerState extends State<SubstitutionBreaker> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
     });
-    if (_currentInput == null || _currentInput.length == 0)
-      return null;
+    if (_currentInput == null || _currentInput.length == 0) return null;
 
     await _loadQuadgramsAssets();
 
-    return GCWAsyncExecuterParameters (
-      SubstitutionBreakerJobData(
-        input: _currentInput,
-        quadgrams: _quadgrams[_currentAlphabet])
-    );
+    return GCWAsyncExecuterParameters(
+        SubstitutionBreakerJobData(input: _currentInput, quadgrams: _quadgrams[_currentAlphabet]));
   }
 
   _showOutput(SubstitutionBreakerResult output) {

@@ -45,9 +45,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextDivider(
-          text: i18n(context, 'coords_variablecoordinate_newformula')
-        ),
+        GCWTextDivider(text: i18n(context, 'coords_variablecoordinate_newformula')),
         Row(
           children: <Widget>[
             Expanded(
@@ -70,8 +68,7 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
               iconData: Icons.add,
               onPressed: () {
                 _addNewFormula();
-                setState(() {
-                });
+                setState(() {});
               },
             )
           ],
@@ -100,19 +97,17 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
   }
 
   _buildFormulaList(BuildContext context) {
-
     var odd = true;
     var rows = formulas.map((formula) {
       var formulaTool = GCWTool(
-        tool: VariableCoordinate(formula: formula),
-        toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
-        i18nPrefix: 'coords_variablecoordinate', // for calling the help of Variable Coordinates
-      );
+          tool: VariableCoordinate(formula: formula),
+          toolName: '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title')}',
+          defaultLanguageToolName:
+              '${formula.name} - ${i18n(context, 'coords_variablecoordinate_title', useDefaultLanguage: true)}',
+          missingHelpLocales: ['fr']);
 
       Future _navigateToSubPage(context) async {
-        Navigator.push(context, NoAnimationMaterialPageRoute(
-          builder: (context) => formulaTool)
-        ).whenComplete(() {
+        Navigator.push(context, NoAnimationMaterialPageRoute(builder: (context) => formulaTool)).whenComplete(() {
           setState(() {});
         });
       }
@@ -120,79 +115,69 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
       Widget output;
 
       var row = InkWell(
-        child: Row (
-          children: <Widget>[
-            Expanded(
-              child: _currentEditId == formula.id
-                ? Padding (
-                    child: GCWTextField(
-                      controller: _editFormulaController,
-                      autofocus: true,
-                      onChanged: (text) {
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: _currentEditId == formula.id
+                    ? Padding(
+                        child: GCWTextField(
+                          controller: _editFormulaController,
+                          autofocus: true,
+                          onChanged: (text) {
+                            setState(() {
+                              _currentEditedName = text;
+                            });
+                          },
+                        ),
+                        padding: EdgeInsets.only(
+                          right: 2,
+                        ),
+                      )
+                    : IgnorePointer(child: GCWText(text: '${formula.name}')),
+                flex: 1,
+              ),
+              _currentEditId == formula.id
+                  ? GCWIconButton(
+                      iconData: Icons.check,
+                      onPressed: () {
+                        formula.name = _currentEditedName;
+                        _updateFormula();
+
                         setState(() {
-                          _currentEditedName = text;
+                          _currentEditId = null;
+                          _editFormulaController.clear();
+                        });
+                      },
+                    )
+                  : GCWIconButton(
+                      iconData: Icons.edit,
+                      onPressed: () {
+                        setState(() {
+                          _currentEditId = formula.id;
+                          _currentEditedName = formula.name;
+                          _editFormulaController.text = formula.name;
                         });
                       },
                     ),
-                    padding: EdgeInsets.only(
-                      right: 2,
-                    ),
-                  )
-                : IgnorePointer(
-                    child: GCWText (
-                      text: '${formula.name}'
-                    )
-                  ),
-              flex: 1,
-            ),
-            _currentEditId == formula.id
-              ? GCWIconButton(
-                iconData: Icons.check,
+              GCWIconButton(
+                iconData: Icons.remove,
                 onPressed: () {
-                  formula.name = _currentEditedName;
-                  _updateFormula();
-
-                  setState(() {
-                    _currentEditId = null;
-                    _editFormulaController.clear();
+                  showDeleteAlertDialog(context, formula.name, () {
+                    _removeFormula(formula);
+                    setState(() {});
                   });
                 },
               )
-              : GCWIconButton(
-                iconData: Icons.edit,
-                onPressed: () {
-                  setState(() {
-                    _currentEditId = formula.id;
-                    _currentEditedName = formula.name;
-                    _editFormulaController.text = formula.name;
-                  });
-                },
-              ),
-            GCWIconButton(
-              iconData: Icons.remove,
-              onPressed: () {
-                showDeleteAlertDialog(context, formula.name, () {
-                  _removeFormula(formula);
-                  setState(() {});
-                });
-              },
-            )
-          ],
-        ),
-        onTap: () {
-          _navigateToSubPage(context);
-        }
-      );
+            ],
+          ),
+          onTap: () {
+            _navigateToSubPage(context);
+          });
 
       if (odd) {
-        output = Container(
-          color: themeColors().outputListOddRows(),
-          child: row
-        );
+        output = Container(color: themeColors().outputListOddRows(), child: row);
       } else {
-        output = Container(
-          child: row
-        );
+        output = Container(child: row);
       }
       odd = !odd;
 
@@ -200,15 +185,9 @@ class VariableCoordinateFormulasState extends State<VariableCoordinateFormulas> 
     }).toList();
 
     if (rows.length > 0) {
-      rows.insert(0,
-        GCWTextDivider(
-          text: i18n(context, 'coords_variablecoordinate_currentformulas')
-        )
-      );
+      rows.insert(0, GCWTextDivider(text: i18n(context, 'coords_variablecoordinate_currentformulas')));
     }
 
-    return Column(
-      children: rows
-    );
+    return Column(children: rows);
   }
 }

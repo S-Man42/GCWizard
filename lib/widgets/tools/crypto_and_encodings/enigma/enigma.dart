@@ -34,10 +34,8 @@ class EnigmaState extends State<Enigma> {
   List<GCWEnigmaRotorDropDownButton> _currentRotors = [];
   List<EnigmaRotorConfiguration> _currentRotorsConfigurations = [];
 
-  var _plugboardMaskFormatter = WrapperForMaskTextInputFormatter(
-    mask: '## ' * 25 + '##',
-    filter: {"#": RegExp(r'[A-Za-z]')}
-  );
+  var _plugboardMaskFormatter =
+      WrapperForMaskTextInputFormatter(mask: '## ' * 25 + '##', filter: {"#": RegExp(r'[A-Za-z]')});
 
   @override
   void initState() {
@@ -59,9 +57,7 @@ class EnigmaState extends State<Enigma> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextDivider(
-          text: i18n(context, 'enigma_input')
-        ),
+        GCWTextDivider(text: i18n(context, 'enigma_input')),
         GCWTextField(
           controller: _inputController,
           onChanged: (text) {
@@ -71,41 +67,35 @@ class EnigmaState extends State<Enigma> {
             });
           },
         ),
-        GCWTextDivider(
-          text: i18n(context, 'enigma_reflector')
-        ),
+        GCWTextDivider(text: i18n(context, 'enigma_reflector')),
         Row(
           children: <Widget>[
             Expanded(
-              child: GCWOnOffSwitch(
-                notitle: true,
-                value: _currentReflectorMode,
-                onChanged: (value) {
-                  setState(() {
-                    _currentReflectorMode = value;
-                  });
-                },
-              ),
-              flex: 1
-            ),
+                child: GCWOnOffSwitch(
+                  notitle: true,
+                  value: _currentReflectorMode,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentReflectorMode = value;
+                    });
+                  },
+                ),
+                flex: 1),
             Expanded(
-              child: _currentReflectorMode
-                ? GCWEnigmaRotorDropDownButton(
-                    type: EnigmaRotorType.REFLECTOR,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentReflector = value['rotorConfiguration'];
-                      });
-                    },
-                  )
-                : Container(),
-              flex: 4
-            )
+                child: _currentReflectorMode
+                    ? GCWEnigmaRotorDropDownButton(
+                        type: EnigmaRotorType.REFLECTOR,
+                        onChanged: (value) {
+                          setState(() {
+                            _currentReflector = value['rotorConfiguration'];
+                          });
+                        },
+                      )
+                    : Container(),
+                flex: 4)
           ],
         ),
-        GCWTextDivider(
-          text: i18n(context, 'enigma_rotors')
-        ),
+        GCWTextDivider(text: i18n(context, 'enigma_rotors')),
         GCWIntegerSpinner(
           title: i18n(context, 'enigma_numberrotors'),
           min: 1,
@@ -118,41 +108,35 @@ class EnigmaState extends State<Enigma> {
           },
         ),
         _buildRotors(),
-        GCWTextDivider(
-          text: i18n(context, 'enigma_entryrotor')
-        ),
+        GCWTextDivider(text: i18n(context, 'enigma_entryrotor')),
         Row(
           children: <Widget>[
             Expanded(
-              child: GCWOnOffSwitch(
-                notitle: true,
-                value: _currentEntryRotorMode,
-                onChanged: (value) {
-                  setState(() {
-                    _currentEntryRotorMode = value;
-                  });
-                },
-              ),
-              flex: 1
-            ),
+                child: GCWOnOffSwitch(
+                  notitle: true,
+                  value: _currentEntryRotorMode,
+                  onChanged: (value) {
+                    setState(() {
+                      _currentEntryRotorMode = value;
+                    });
+                  },
+                ),
+                flex: 1),
             Expanded(
-              child: _currentEntryRotorMode
-                ? GCWEnigmaRotorDropDownButton(
-                    type: EnigmaRotorType.ENTRY_ROTOR,
-                    onChanged: (value) {
-                      setState(() {
-                        _currentEntryRotor = value['rotorConfiguration'];
-                      });
-                    },
-                  )
-                : Container(),
-              flex: 4
-            )
+                child: _currentEntryRotorMode
+                    ? GCWEnigmaRotorDropDownButton(
+                        type: EnigmaRotorType.ENTRY_ROTOR,
+                        onChanged: (value) {
+                          setState(() {
+                            _currentEntryRotor = value['rotorConfiguration'];
+                          });
+                        },
+                      )
+                    : Container(),
+                flex: 4)
           ],
         ),
-        GCWTextDivider(
-          text: i18n(context, 'enigma_plugboard')
-        ),
+        GCWTextDivider(text: i18n(context, 'enigma_plugboard')),
         GCWTextField(
           controller: _plugboardController,
           hintText: 'AB CD EF...',
@@ -179,9 +163,8 @@ class EnigmaState extends State<Enigma> {
           });
         },
       ));
-      _currentRotorsConfigurations.add(EnigmaRotorConfiguration(
-        getEnigmaRotorByName(defaultRotorStandard), offset: 1, setting: 1
-      ));
+      _currentRotorsConfigurations
+          .add(EnigmaRotorConfiguration(getEnigmaRotorByName(defaultRotorStandard), offset: 1, setting: 1));
     }
 
     while (_currentRotors.length > _currentNumberRotors) {
@@ -193,9 +176,7 @@ class EnigmaState extends State<Enigma> {
       child: Column(
         children: _currentRotors,
       ),
-      padding: EdgeInsets.only(
-        top: 10
-      ),
+      padding: EdgeInsets.only(top: 10),
     );
   }
 
@@ -207,23 +188,17 @@ class EnigmaState extends State<Enigma> {
     }
 
     List<EnigmaRotorConfiguration> rotorConfigurations = [];
-    if (_currentEntryRotorMode)
-      rotorConfigurations.add(_currentEntryRotor);
+    if (_currentEntryRotorMode) rotorConfigurations.add(_currentEntryRotor);
 
     rotorConfigurations.addAll((_currentRotorsConfigurations.reversed).map((configuration) {
       return configuration.clone();
     }).toList());
 
-    if (_currentReflectorMode)
-      rotorConfigurations.add(_currentReflector);
+    if (_currentReflectorMode) rotorConfigurations.add(_currentReflector);
 
-    var key = EnigmaKey(
-      rotorConfigurations,
-      plugboard: Map.fromIterable(_currentPlugboard.split(' ').where((digraph) => digraph.length == 2),
-        key: (digraph) => digraph[0],
-        value: (digraph) => digraph[1]
-      )
-    );
+    var key = EnigmaKey(rotorConfigurations,
+        plugboard: Map.fromIterable(_currentPlugboard.split(' ').where((digraph) => digraph.length == 2),
+            key: (digraph) => digraph[0], value: (digraph) => digraph[1]));
 
     var results = calculateEnigmaWithMessageKey(_currentInput, key);
 
@@ -238,24 +213,18 @@ class EnigmaState extends State<Enigma> {
       var stripTail = _currentReflectorMode ? 1 : 0;
 
       var rotorSetting = rotorSettings
-        .sublist(stripHead, rotorSettings.length - stripTail)
-        .reversed
-        .map((setting) => alphabet_AZIndexes[setting + 1]);
+          .sublist(stripHead, rotorSettings.length - stripTail)
+          .reversed
+          .map((setting) => alphabet_AZIndexes[setting + 1]);
 
-      output.add(
-        GCWOutputText(
-          text: i18n(context, 'enigma_output_rotorsettingafter') + ': '
-            + rotorSetting.join(' - '),
-          copyText: rotorSetting.join(),
-        )
-      );
+      output.add(GCWOutputText(
+        text: i18n(context, 'enigma_output_rotorsettingafter') + ': ' + rotorSetting.join(' - '),
+        copyText: rotorSetting.join(),
+      ));
     });
 
-    if (results.length == 2)
-      output.insert(2, GCWTextDivider(text: i18n(context, 'enigma_usedmessagekey')));
+    if (results.length == 2) output.insert(2, GCWTextDivider(text: i18n(context, 'enigma_usedmessagekey')));
 
-    return GCWMultipleOutput(
-      children: output
-    );
+    return GCWMultipleOutput(children: output);
   }
 }

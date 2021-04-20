@@ -12,15 +12,15 @@ class GCWPopupMenu extends StatefulWidget {
   final Color iconColor;
   final Color backgroundColor;
 
-  const GCWPopupMenu({
-    Key key,
-    this.menuItemBuilder,
-    this.iconData,
-    this.customIcon,
-    this.size: IconButtonSize.NORMAL,
-    this.iconColor,
-    this.backgroundColor
-  }) : super(key: key);
+  const GCWPopupMenu(
+      {Key key,
+      this.menuItemBuilder,
+      this.iconData,
+      this.customIcon,
+      this.size: IconButtonSize.NORMAL,
+      this.iconColor,
+      this.backgroundColor})
+      : super(key: key);
 
   @override
   GCWPopupMenuState createState() => GCWPopupMenuState();
@@ -62,9 +62,7 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
       onPressed: () {
         var items = widget.menuItemBuilder(context).asMap().map((index, GCWPopupMenuItem item) {
           return MapEntry<PopupMenuEntry<dynamic>, Function>(
-            item.isDivider ? PopupMenuDivider() : PopupMenuItem(child: item.child, value: index),
-            item.action
-          );
+              item.isDivider ? PopupMenuDivider() : PopupMenuItem(child: item.child, value: index), item.action);
         });
 
         _menuItems = items.keys.toList();
@@ -80,8 +78,7 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
             borderRadius: BorderRadius.circular(roundedBorderRadius),
           ),
         ).then((itemSelected) {
-          if (itemSelected == null || itemSelected < 0 || itemSelected >= _menuAction.length)
-            return;
+          if (itemSelected == null || itemSelected < 0 || itemSelected >= _menuAction.length) return;
 
           _menuAction[itemSelected](itemSelected);
         });
@@ -101,20 +98,13 @@ class GCWPopupMenuItem {
 iconedGCWPopupMenuItem(BuildContext context, IconData icon, String i18nKey) {
   var color = themeColors().dialogText();
 
-  return  Row(
+  return Row(
     children: [
       Container(
         child: Icon(icon, color: color),
-        padding: EdgeInsets.only(
-          right: 10
-        ),
+        padding: EdgeInsets.only(right: 10),
       ),
-      Text(
-        i18n(context, i18nKey),
-        style: TextStyle(
-          color: color
-        )
-      )
+      Text(i18n(context, i18nKey), style: TextStyle(color: color))
     ],
   );
 }

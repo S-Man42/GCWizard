@@ -17,13 +17,11 @@ class PigLatinState extends State<PigLatin> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GCWTextField(
-          onChanged: (text) {
-            setState(() {
-              _currentInput = text;
-            });
-          }
-        ),
+        GCWTextField(onChanged: (text) {
+          setState(() {
+            _currentInput = text;
+          });
+        }),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -32,20 +30,15 @@ class PigLatinState extends State<PigLatin> {
             });
           },
         ),
-        GCWDefaultOutput(
-          child: _buildOutput()
-        )
+        GCWDefaultOutput(child: _buildOutput())
       ],
     );
   }
 
   _buildOutput() {
-    if (_currentInput == null)
-      return '';
+    if (_currentInput == null) return '';
 
-    var out = _currentMode == GCWSwitchPosition.left
-      ? encryptPigLatin(_currentInput)
-      : decryptPigLatin(_currentInput);
+    var out = _currentMode == GCWSwitchPosition.left ? encryptPigLatin(_currentInput) : decryptPigLatin(_currentInput);
 
     return out;
   }

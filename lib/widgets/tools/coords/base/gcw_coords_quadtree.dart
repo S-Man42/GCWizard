@@ -6,8 +6,9 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsQuadtree extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsQuadtree({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsQuadtree({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsQuadtreeState createState() => GCWCoordsQuadtreeState();
@@ -17,10 +18,7 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
   var _controller;
   var _currentCoord = '';
 
-  var _maskInputFormatter = WrapperForMaskTextInputFormatter(
-    mask: '#' * 100,
-    filter: {"#": RegExp(r'[0123]')}
-  );
+  var _maskInputFormatter = WrapperForMaskTextInputFormatter(mask: '#' * 100, filter: {"#": RegExp(r'[0123]')});
 
   @override
   void initState() {
@@ -36,9 +34,14 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
 
   @override
   Widget build(BuildContext context) {
-    return Column (
-      children: <Widget>[
-        GCWTextField(
+    if (widget.coordinates != null) {
+      _currentCoord = latLonToQuadtree(widget.coordinates).join();
+
+      _controller.text = _currentCoord;
+    }
+
+    return Column(children: <Widget>[
+      GCWTextField(
           controller: _controller,
           inputFormatters: [_maskInputFormatter],
           onChanged: (ret) {
@@ -46,16 +49,21 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
               _currentCoord = ret;
               _setCurrentValueAndEmitOnChange();
             });
-          }
-        ),
-      ]
-    );
+          }),
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {
-    try {
-      LatLng coords = quadtreeToLatLon(_currentCoord.split('').map((character) => int.tryParse(character)).toList());
-      widget.onChanged(coords);
-    } catch(e) {}
+    var elements = _currentCoord.split('').map((character) => int.tryParse(character)).toList();
+
+    while (elements.length > 0) {
+      try {
+        LatLng coords = quadtreeToLatLon(elements);
+        widget.onChanged(coords);
+        break;
+      } catch (e) {
+        elements = elements.sublist(0, elements.length - 1);
+      }
+    }
   }
 }

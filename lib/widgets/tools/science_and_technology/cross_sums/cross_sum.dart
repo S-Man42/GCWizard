@@ -27,11 +27,7 @@ class CrossSumState extends State<CrossSum> {
             });
           },
         ),
-        GCWCrosstotalOutput(
-          text: _currentValue.toString(),
-          values: [_currentValue],
-          suppressSums: true
-        )
+        GCWCrosstotalOutput(text: _currentValue.toString(), values: [_currentValue], suppressSums: true)
       ],
     );
   }

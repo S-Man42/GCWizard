@@ -8,8 +8,9 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsNaturalAreaCode extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsNaturalAreaCode({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsNaturalAreaCode({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsNaturalAreaCodeState createState() => GCWCoordsNaturalAreaCodeState();
@@ -39,32 +40,37 @@ class GCWCoordsNaturalAreaCodeState extends State<GCWCoordsNaturalAreaCode> {
 
   @override
   Widget build(BuildContext context) {
-    return Column (
-        children: <Widget>[
-          GCWTextField(
-            hintText: i18n(context, 'coords_formatconverter_naturalareacode_x'),
-            controller: _controllerX,
-            inputFormatters: [CoordsTextNaturalAreaCodeTextInputFormatter()],
-            onChanged: (ret) {
-              setState(() {
-                _currentX = ret;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
-          GCWTextField(
-            hintText: i18n(context, 'coords_formatconverter_naturalareacode_y'),
-            controller: _controllerY,
-            inputFormatters: [CoordsTextNaturalAreaCodeTextInputFormatter()],
-            onChanged: (ret) {
-              setState(() {
-                _currentY = ret;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
-        ]
-    );
+    if (widget.coordinates != null) {
+      var naturalAreaCode = latLonToNaturalAreaCode(widget.coordinates);
+      _currentX = naturalAreaCode.x;
+      _currentY = naturalAreaCode.y;
+
+      _controllerX.text = _currentX;
+      _controllerY.text = _currentY;
+    }
+
+    return Column(children: <Widget>[
+      GCWTextField(
+          hintText: i18n(context, 'coords_formatconverter_naturalareacode_x'),
+          controller: _controllerX,
+          inputFormatters: [CoordsTextNaturalAreaCodeTextInputFormatter()],
+          onChanged: (ret) {
+            setState(() {
+              _currentX = ret;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+      GCWTextField(
+          hintText: i18n(context, 'coords_formatconverter_naturalareacode_y'),
+          controller: _controllerY,
+          inputFormatters: [CoordsTextNaturalAreaCodeTextInputFormatter()],
+          onChanged: (ret) {
+            setState(() {
+              _currentY = ret;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {

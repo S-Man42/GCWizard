@@ -26,9 +26,7 @@ class _DefaultHashState extends State<_DefaultHash> {
             });
           },
         ),
-        GCWDefaultOutput(
-          child: widget.hashFunction(_currentValue)
-        )
+        GCWDefaultOutput(child: widget.hashFunction(_currentValue))
       ],
     );
   }
@@ -124,6 +122,10 @@ class SHA3_384 extends _DefaultHash {
 
 class SHA3_512 extends _DefaultHash {
   SHA3_512() : super(hashFunction: sha3_512Digest);
+}
+
+class Keccak_128 extends _DefaultHash {
+  Keccak_128() : super(hashFunction: keccak_128Digest);
 }
 
 class Keccak_224 extends _DefaultHash {

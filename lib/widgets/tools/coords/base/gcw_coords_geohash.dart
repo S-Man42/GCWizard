@@ -7,8 +7,9 @@ import 'package:latlong/latlong.dart';
 
 class GCWCoordsGeohash extends StatefulWidget {
   final Function onChanged;
+  final LatLng coordinates;
 
-  const GCWCoordsGeohash({Key key, this.onChanged}) : super(key: key);
+  const GCWCoordsGeohash({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
   @override
   GCWCoordsGeohashState createState() => GCWCoordsGeohashState();
@@ -32,21 +33,24 @@ class GCWCoordsGeohashState extends State<GCWCoordsGeohash> {
 
   @override
   Widget build(BuildContext context) {
-    return Column (
-        children: <Widget>[
-          GCWTextField(
-            hintText: i18n(context, 'coords_formatconverter_geohash_locator'),
-            controller: _controller,
-            inputFormatters: [CoordsTextGeohashTextInputFormatter()],
-            onChanged: (ret) {
-              setState(() {
-                _currentCoord = ret;
-                _setCurrentValueAndEmitOnChange();
-              });
-            }
-          ),
-        ]
-    );
+    if (widget.coordinates != null) {
+      _currentCoord = latLonToGeohash(widget.coordinates, 14);
+
+      _controller.text = _currentCoord;
+    }
+
+    return Column(children: <Widget>[
+      GCWTextField(
+          hintText: i18n(context, 'coords_formatconverter_geohash_locator'),
+          controller: _controller,
+          inputFormatters: [CoordsTextGeohashTextInputFormatter()],
+          onChanged: (ret) {
+            setState(() {
+              _currentCoord = ret;
+              _setCurrentValueAndEmitOnChange();
+            });
+          }),
+    ]);
   }
 
   _setCurrentValueAndEmitOnChange() {

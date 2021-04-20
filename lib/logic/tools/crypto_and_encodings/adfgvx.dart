@@ -2,121 +2,72 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/transposition.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
-enum _ADFGVXMode {ADFGX, ADFGVX}
+enum _ADFGVXMode { ADFGX, ADFGVX }
 
-String encryptADFGX(
-  String input,
-  String substitutionKey,
-  String transpositionKey,
-  {
-    PolybiosMode polybiosMode: PolybiosMode.ZA90,
-    String alphabet
-  }) {
+String encryptADFGX(String input, String substitutionKey, String transpositionKey,
+    {PolybiosMode polybiosMode: PolybiosMode.ZA90, String alphabet}) {
   return _encrypt(input, substitutionKey, transpositionKey, _ADFGVXMode.ADFGX, polybiosMode, alphabet);
 }
 
-String encryptADFGVX(
-    String input,
-    String substitutionKey,
-    String transpositionKey,
-    {
-      PolybiosMode polybiosMode: PolybiosMode.ZA90,
-      String alphabet
-    }) {
+String encryptADFGVX(String input, String substitutionKey, String transpositionKey,
+    {PolybiosMode polybiosMode: PolybiosMode.ZA90, String alphabet}) {
   return _encrypt(input, substitutionKey, transpositionKey, _ADFGVXMode.ADFGVX, polybiosMode, alphabet);
 }
 
-String _encrypt (
-    String input,
-    String substitutionKey,
-    String transpositionKey,
-    _ADFGVXMode mode,
-    PolybiosMode polybiosMode,
-    String alphabet) {
+String _encrypt(String input, String substitutionKey, String transpositionKey, _ADFGVXMode mode,
+    PolybiosMode polybiosMode, String alphabet) {
+  if (input == null || input == '') return '';
 
-  if (input == null || input == '')
-    return '';
-
-  if (substitutionKey == null)
-    substitutionKey = '';
+  if (substitutionKey == null) substitutionKey = '';
 
   var adfgvxMode = mode.toString().split('.')[1]; //mode.toString() == _ADFGVX.ADFGX
-  alphabet = createPolybiosAlphabet(adfgvxMode.length, firstLetters: substitutionKey, mode: polybiosMode, fillAlphabet: alphabet);
-  if (alphabet == null)
-    return null; // TODO: Exception
+  alphabet = createPolybiosAlphabet(adfgvxMode.length,
+      firstLetters: substitutionKey, mode: polybiosMode, fillAlphabet: alphabet);
+  if (alphabet == null) return null; // TODO: Exception
 
   PolybiosOutput polybiosOutput = encryptPolybios(input, adfgvxMode, mode: PolybiosMode.CUSTOM, fillAlphabet: alphabet);
 
-  if (polybiosOutput == null)
-    return null;
+  if (polybiosOutput == null) return null;
 
   var polybiosEncoded = polybiosOutput.output.replaceAll(' ', '');
-  if (transpositionKey == null || transpositionKey == '')
-    return insertSpaceEveryNthCharacter(polybiosEncoded, 5);
+  if (transpositionKey == null || transpositionKey == '') return insertSpaceEveryNthCharacter(polybiosEncoded, 5);
 
   transpositionKey = transpositionKey.toUpperCase();
 
-  var matrix = createTranspositionMatrix(
-    polybiosEncoded,
-    TranspositionMatrixFillMode.encryption,
-    countColumns: transpositionKey.length
-  );
+  var matrix = createTranspositionMatrix(polybiosEncoded, TranspositionMatrixFillMode.encryption,
+      countColumns: transpositionKey.length);
 
   var transpositionKeySorted = transpositionKey.split('');
   transpositionKeySorted.sort();
 
   var newIndexes = List<int>.generate(transpositionKey.length, (_) => -1);
-  transpositionKey
-    .split('')
-    .asMap()
-    .forEach((index, character) {
-      var characterPosition = transpositionKeySorted.indexOf(character);
-      transpositionKeySorted[characterPosition] = String.fromCharCode(0);
-      newIndexes[characterPosition] = index;
-    });
+  transpositionKey.split('').asMap().forEach((index, character) {
+    var characterPosition = transpositionKeySorted.indexOf(character);
+    transpositionKeySorted[characterPosition] = String.fromCharCode(0);
+    newIndexes[characterPosition] = index;
+  });
 
   String out = '';
   for (int i = 0; i < newIndexes.length; i++) {
-    matrix[newIndexes[i]]
-      .where((character) => character != null)
-      .forEach((character) => out += character);
+    matrix[newIndexes[i]].where((character) => character != null).forEach((character) => out += character);
   }
 
   return insertSpaceEveryNthCharacter(out, 5);
 }
 
-String decryptADFGX(
-    String input,
-    String substitutionKey,
-    String transpositionKey,
-    {
-      PolybiosMode polybiosMode: PolybiosMode.ZA90,
-      String alphabet
-    }) {
+String decryptADFGX(String input, String substitutionKey, String transpositionKey,
+    {PolybiosMode polybiosMode: PolybiosMode.ZA90, String alphabet}) {
   return _decrypt(input, substitutionKey, transpositionKey, _ADFGVXMode.ADFGX, polybiosMode, alphabet);
 }
 
-String decryptADFGVX(
-    String input,
-    String substitutionKey,
-    String transpositionKey,
-    {
-      PolybiosMode polybiosMode: PolybiosMode.ZA90,
-      String alphabet
-    }) {
+String decryptADFGVX(String input, String substitutionKey, String transpositionKey,
+    {PolybiosMode polybiosMode: PolybiosMode.ZA90, String alphabet}) {
   return _decrypt(input, substitutionKey, transpositionKey, _ADFGVXMode.ADFGVX, polybiosMode, alphabet);
 }
 
-String _decrypt (
-    String input,
-    String substitutionKey,
-    String transpositionKey,
-    _ADFGVXMode mode,
-    PolybiosMode polybiosMode,
-    String alphabet) {
-
-  if (input == null || input == '')
-    return '';
+String _decrypt(String input, String substitutionKey, String transpositionKey, _ADFGVXMode mode,
+    PolybiosMode polybiosMode, String alphabet) {
+  if (input == null || input == '') return '';
 
   input = input.toUpperCase().replaceAll(' ', '');
 
@@ -128,10 +79,7 @@ String _decrypt (
     transpositionKeySorted.sort();
 
     var newIndexes = List<int>.generate(transpositionKey.length, (_) => -1);
-    transpositionKey
-        .split('')
-        .asMap()
-        .forEach((index, character) {
+    transpositionKey.split('').asMap().forEach((index, character) {
       var characterPosition = transpositionKeySorted.indexOf(character);
       transpositionKeySorted[characterPosition] = String.fromCharCode(0);
       newIndexes[characterPosition] = index;
@@ -152,8 +100,7 @@ String _decrypt (
       }
 
       var chunk = input.substring(i, i + maxRow);
-      if (fillColumn)
-        chunk += String.fromCharCode(0);
+      if (fillColumn) chunk += String.fromCharCode(0);
 
       matrix[index] = chunk.split('');
       i += maxRow;
@@ -162,27 +109,24 @@ String _decrypt (
     transposed = '';
     for (int i = 0; i < countRows; i++) {
       for (int j = 0; j < countColumns; j++) {
-        if (matrix[j][i] != String.fromCharCode(0))
-          transposed += matrix[j][i];
+        if (matrix[j][i] != String.fromCharCode(0)) transposed += matrix[j][i];
       }
     }
   }
 
-  if (transposed == null)
-    transposed = input;
+  if (transposed == null) transposed = input;
 
-  if (substitutionKey == null)
-    substitutionKey = '';
+  if (substitutionKey == null) substitutionKey = '';
 
   var adfgvxMode = mode.toString().split('.')[1]; //mode.toString() == _ADFGVX.ADFGX
-  alphabet = createPolybiosAlphabet(adfgvxMode.length, firstLetters: substitutionKey, mode: polybiosMode, fillAlphabet: alphabet);
-  if (alphabet == null)
-    return null; // TODO: Exception
+  alphabet = createPolybiosAlphabet(adfgvxMode.length,
+      firstLetters: substitutionKey, mode: polybiosMode, fillAlphabet: alphabet);
+  if (alphabet == null) return null; // TODO: Exception
 
-  PolybiosOutput polybiosOutput = decryptPolybios(transposed, adfgvxMode, mode: PolybiosMode.CUSTOM, fillAlphabet: alphabet);
+  PolybiosOutput polybiosOutput =
+      decryptPolybios(transposed, adfgvxMode, mode: PolybiosMode.CUSTOM, fillAlphabet: alphabet);
 
-  if (polybiosOutput == null)
-    return null;
+  if (polybiosOutput == null) return null;
 
   return polybiosOutput.output;
 }

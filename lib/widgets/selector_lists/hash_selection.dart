@@ -10,46 +10,41 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/hashes/hash_breaker
 class HashSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
+    final List<GCWTool> _toolList = Registry.toolList.where((element) {
+      return [
+        className(HashBreaker()),
+        className(MD5()),
+        className(SHA1()),
+        className(SHA224()),
+        className(SHA256()),
+        className(SHA384()),
+        className(SHA512()),
+        className(SHA3_224()),
+        className(SHA3_256()),
+        className(SHA3_384()),
+        className(SHA3_512()),
+        className(BLAKE2b_160()),
+        className(BLAKE2b_224()),
+        className(BLAKE2b_256()),
+        className(BLAKE2b_384()),
+        className(BLAKE2b_512()),
+        className(Keccak_128()),
+        className(Keccak_224()),
+        className(Keccak_256()),
+        className(Keccak_288()),
+        className(Keccak_384()),
+        className(Keccak_512()),
+        className(MD2()),
+        className(MD4()),
+        className(RIPEMD_128()),
+        className(RIPEMD_160()),
+        className(RIPEMD_256()),
+        className(RIPEMD_320()),
+        className(Tiger_192()),
+        className(Whirlpool_512()),
+      ].contains(className(element.tool));
+    }).toList();
 
-    final List<GCWTool> _toolList =
-      Registry.toolList.where((element) {
-        return [
-          className(HashBreaker()),
-          className(MD5()),
-          className(SHA1()),
-          className(SHA224()),
-          className(SHA256()),
-          className(SHA384()),
-          className(SHA512()),
-          className(SHA3_224()),
-          className(SHA3_256()),
-          className(SHA3_384()),
-          className(SHA3_512()),
-          className(Keccak_224()),
-          className(Keccak_256()),
-          className(Keccak_288()),
-          className(Keccak_384()),
-          className(Keccak_512()),
-          className(RIPEMD_128()),
-          className(RIPEMD_160()),
-          className(RIPEMD_256()),
-          className(RIPEMD_320()),
-          className(MD2()),
-          className(MD4()),
-          className(Tiger_192()),
-          className(Whirlpool_512()),
-          className(BLAKE2b_160()),
-          className(BLAKE2b_224()),
-          className(BLAKE2b_256()),
-          className(BLAKE2b_384()),
-          className(BLAKE2b_512()),
-        ].contains(className(element.tool));
-      }).toList();
-
-    return Container(
-      child: GCWToolList(
-        toolList: _toolList
-      )
-    );
+    return Container(child: GCWToolList(toolList: _toolList));
   }
 }

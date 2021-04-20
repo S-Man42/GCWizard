@@ -17,7 +17,6 @@ class PeriodicTable extends StatefulWidget {
 }
 
 class PeriodicTableState extends State<PeriodicTable> {
-
   var _cellWidth;
   var _maxCellHeight;
   BorderSide _border = BorderSide(width: 1.0, color: Colors.black87);
@@ -37,65 +36,66 @@ class PeriodicTableState extends State<PeriodicTable> {
     _cellWidth = (MediaQuery.of(context).size.width - 20) / 19;
     _maxCellHeight = (MediaQuery.of(context).size.height - 100) / 11;
 
-    return Column(
-      children: _buildOutput()
-    );
+    return Column(children: _buildOutput());
   }
 
   Color _getColorByStateOfMatter(StateOfMatter stateOfMatter) {
     switch (stateOfMatter) {
-      case StateOfMatter.GAS: return Color(0xFFFFCDD2);
-      case StateOfMatter.LIQUID: return Color(0xFFBCFF9F);
-      case StateOfMatter.SOLID: return Color(0xFF9DCBFF);
-      case StateOfMatter.UNKNOWN: return Color(0xFFD9D9D9);
+      case StateOfMatter.GAS:
+        return Color(0xFFFFCDD2);
+      case StateOfMatter.LIQUID:
+        return Color(0xFFBCFF9F);
+      case StateOfMatter.SOLID:
+        return Color(0xFF9DCBFF);
+      case StateOfMatter.UNKNOWN:
+        return Color(0xFFD9D9D9);
     }
   }
 
   Widget _buildElement(PeriodicTableElement element) {
-    return element == null ? Container(width: _cellWidth)
-      : InkWell(
-          child: Container(
-            height: min(defaultFontSize() * 2.5, _maxCellHeight),
-            decoration: BoxDecoration(
-              color: _getColorByStateOfMatter(element.stateOfMatter),
-              border: Border(
-                top: _border,
-                left: _border,
-                right: element.iupacGroup == 18 || [1, 4, 12, 71, 103].contains(element.atomicNumber) ? _border : BorderSide.none,
-                bottom: element.period == 7 ? _border : BorderSide.none
+    return element == null
+        ? Container(width: _cellWidth)
+        : InkWell(
+            child: Container(
+              height: min(defaultFontSize() * 2.5, _maxCellHeight),
+              decoration: BoxDecoration(
+                color: _getColorByStateOfMatter(element.stateOfMatter),
+                border: Border(
+                    top: _border,
+                    left: _border,
+                    right: element.iupacGroup == 18 || [1, 4, 12, 71, 103].contains(element.atomicNumber)
+                        ? _border
+                        : BorderSide.none,
+                    bottom: element.period == 7 ? _border : BorderSide.none),
               ),
-            ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: AutoSizeText(
+              child: Column(
+                children: [
+                  Expanded(
+                      child: AutoSizeText(
                     element.atomicNumber.toString(),
                     style: gcwTextStyle().copyWith(color: Colors.black),
                     minFontSize: 6,
                     maxLines: 1,
-                  )
-                ),
-                Expanded(
-                  child: AutoSizeText(
+                  )),
+                  Expanded(
+                      child: AutoSizeText(
                     element.chemicalSymbol,
                     style: gcwTextStyle().copyWith(color: Colors.black),
                     minFontSize: 6,
                     maxLines: 1,
-                  )
-                )
-              ],
+                  ))
+                ],
+              ),
+              width: _cellWidth,
             ),
-            width: _cellWidth,
-          ),
-          onTap: () {
-            Navigator.of(context).push(NoAnimationMaterialPageRoute(
-              builder: (context) => GCWTool(
-                tool: PeriodicTableDataView(atomicNumber: element.atomicNumber),
-                toolName: i18n(context, 'periodictabledataview_title'),
-              ))
-            );
-          },
-        );
+            onTap: () {
+              Navigator.of(context).push(NoAnimationMaterialPageRoute(
+                  builder: (context) => GCWTool(
+                      tool: PeriodicTableDataView(atomicNumber: element.atomicNumber),
+                      i18nPrefix: 'periodictable_dataview',
+                      missingHelpLocales: ['fr'])));
+            },
+          );
   }
 
   _buildGroupHeadlineElement(int iupacGroup) {
@@ -106,21 +106,19 @@ class PeriodicTableState extends State<PeriodicTable> {
       child: Column(
         children: [
           Expanded(
-            child: AutoSizeText(
-              iupacGroup.toString(),
-              style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold),
-              minFontSize: 6,
-              maxLines: 1,
-            )
-          ),
+              child: AutoSizeText(
+            iupacGroup.toString(),
+            style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold),
+            minFontSize: 6,
+            maxLines: 1,
+          )),
           Expanded(
-            child: AutoSizeText(
-              encodeRomanNumbers(group['value']),
-              style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold),
-              minFontSize: 6,
-              maxLines: 1,
-            )
-          )
+              child: AutoSizeText(
+            encodeRomanNumbers(group['value']),
+            style: gcwTextStyle().copyWith(fontWeight: FontWeight.bold),
+            minFontSize: 6,
+            maxLines: 1,
+          ))
         ],
       ),
       width: _cellWidth,
@@ -129,7 +127,7 @@ class PeriodicTableState extends State<PeriodicTable> {
 
   _buildHeadlineElement(int period, int iupacGroup) {
     if (iupacGroup == 0 && period > 0) {
-      return  Container(
+      return Container(
         width: _cellWidth,
         child: Text(
           period.toString(),
@@ -169,67 +167,58 @@ class PeriodicTableState extends State<PeriodicTable> {
         PeriodicTableElement element = _getElementAtPSECoordinate(iupacGroup, period);
         periodRow.add(_buildElement(element));
       }
-      periods.add(
-        Row(
-          children: periodRow,
-        )
-      );
+      periods.add(Row(
+        children: periodRow,
+      ));
     }
 
-    periods.add(Container(
-      height: min(defaultFontSize() * 2.5, _maxCellHeight)
-    ));
-    
+    periods.add(Container(height: min(defaultFontSize() * 2.5, _maxCellHeight)));
+
     List<Widget> lanthanides = allPeriodicTableElements
-      .where((element) => element.iupacGroupName == IUPACGroupName.LANTHANIDES)
-      .map((element) => _buildElement(element))
-      .toList(); 
-    
-    lanthanides.insert(0,
-      Container(
-        width: _cellWidth * 4,
-        child: AutoSizeText(
-          i18n(context, 'periodictable_attribute_iupacgroupname_lanthanides'),
-          style: gcwTextStyle(),
-          minFontSize: 6,
-          maxLines: 1,
-        )
-      )
-    );
-    
-    periods.add(
-      Row(
-        children: lanthanides,
-      )
-    );
+        .where((element) => element.iupacGroupName == IUPACGroupName.LANTHANIDES)
+        .map((element) => _buildElement(element))
+        .toList();
+
+    lanthanides.insert(
+        0,
+        Container(
+            width: _cellWidth * 4,
+            child: AutoSizeText(
+              i18n(context, 'periodictable_attribute_iupacgroupname_lanthanides'),
+              style: gcwTextStyle(),
+              minFontSize: 6,
+              maxLines: 1,
+            )));
+
+    periods.add(Row(
+      children: lanthanides,
+    ));
 
     List<Widget> actinides = allPeriodicTableElements
-      .where((element) => element.iupacGroupName == IUPACGroupName.ACTINIDES)
-      .map((element) => _buildElement(element))
-      .toList();
+        .where((element) => element.iupacGroupName == IUPACGroupName.ACTINIDES)
+        .map((element) => _buildElement(element))
+        .toList();
 
-    actinides.insert(0,
-      Container(
-        width: _cellWidth * 4,
-        child: AutoSizeText(
-          i18n(context, 'periodictable_attribute_iupacgroupname_actinides'),
-          style: gcwTextStyle(),
-          minFontSize: 6,
-          maxLines: 1,
-        )
-      )
-    );
+    actinides.insert(
+        0,
+        Container(
+            width: _cellWidth * 4,
+            child: AutoSizeText(
+              i18n(context, 'periodictable_attribute_iupacgroupname_actinides'),
+              style: gcwTextStyle(),
+              minFontSize: 6,
+              maxLines: 1,
+            )));
 
-    periods.add(
-      Row(
-        children: actinides,
-      )
-    );
+    periods.add(Row(
+      children: actinides,
+    ));
 
     return periods;
   }
 
   _getElementAtPSECoordinate(int iupacGroup, int period) {
-    return allPeriodicTableElements.firstWhere((element) => element.iupacGroup == iupacGroup && element.period == period, orElse: () => null);
+    return allPeriodicTableElements
+        .firstWhere((element) => element.iupacGroup == iupacGroup && element.period == period, orElse: () => null);
   }
 }

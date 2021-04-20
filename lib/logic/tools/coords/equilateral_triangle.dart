@@ -8,26 +8,20 @@ class EquilateralTriangleJobData {
   final LatLng coord2;
   final Ellipsoid ells;
 
-  EquilateralTriangleJobData({
-      this.coord1 = null,
-      this.coord2 = null,
-      this.ells = null
-  });
+  EquilateralTriangleJobData({this.coord1 = null, this.coord2 = null, this.ells = null});
 }
 
-void equilateralTriangleAsync(dynamic jobData) async {
+Future<List<LatLng>> equilateralTriangleAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
-    return;
+    return null;
   }
 
-  var output = equilateralTriangle(
-      jobData.parameters.coord1,
-      jobData.parameters.coord2,
-      jobData.parameters.ells
-  );
+  var output = equilateralTriangle(jobData.parameters.coord1, jobData.parameters.coord2, jobData.parameters.ells);
 
-  jobData.sendAsyncPort.send(output);
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+
+  return output;
 }
 
 List<LatLng> equilateralTriangle(LatLng coord1, LatLng coord2, Ellipsoid ells) {

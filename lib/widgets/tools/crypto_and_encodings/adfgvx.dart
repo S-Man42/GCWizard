@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/adfgvx.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/polybios.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_alphabetdropdown.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
@@ -51,9 +50,9 @@ class ADFGVXState extends State<ADFGVX> {
   @override
   Widget build(BuildContext context) {
     var polybiosModeItems = {
-      PolybiosMode.AZ09 : i18n(context, 'polybios_mode_az09'),
-      PolybiosMode.ZA90 : i18n(context, 'polybios_mode_za90'),
-      PolybiosMode.CUSTOM : i18n(context, 'common_custom'),
+      PolybiosMode.AZ09: i18n(context, 'polybios_mode_az09'),
+      PolybiosMode.ZA90: i18n(context, 'polybios_mode_za90'),
+      PolybiosMode.CUSTOM: i18n(context, 'common_custom'),
     };
 
     return Column(
@@ -76,16 +75,14 @@ class ADFGVXState extends State<ADFGVX> {
           },
         ),
         GCWTwoOptionsSwitch(
-          value:  _currentMode,
+          value: _currentMode,
           onChanged: (value) {
             setState(() {
               _currentMode = value;
             });
           },
         ),
-        GCWTextDivider(
-            text: i18n(context, 'common_key')
-        ),
+        GCWTextDivider(text: i18n(context, 'common_key')),
         GCWTextField(
           hintText: i18n(context, 'adfgvx_key_substitution'),
           controller: _substitutionKeyController,
@@ -104,35 +101,25 @@ class ADFGVXState extends State<ADFGVX> {
             });
           },
         ),
-        GCWTextDivider(
-          text: i18n(context, 'common_alphabet')
-        ),
-        GCWDropDownButton(
+        GCWTextDivider(text: i18n(context, 'common_alphabet')),
+        GCWAlphabetDropDown(
           value: _currentPolybiosMode,
+          items: polybiosModeItems,
+          customModeKey: PolybiosMode.CUSTOM,
+          textFieldController: _alphabetController,
           onChanged: (value) {
             setState(() {
               _currentPolybiosMode = value;
             });
           },
-          items: polybiosModeItems.entries.map((mode) {
-            return GCWDropDownMenuItem(
-              value: mode.key,
-              child: mode.value,
-            );
-          }).toList(),
-        ),
-        _currentPolybiosMode == PolybiosMode.CUSTOM ? GCWTextField(
-          hintText: i18n(context, 'common_alphabet'),
-          controller: _alphabetController,
-          onChanged: (text) {
+          onCustomAlphabetChanged: (text) {
             setState(() {
               _currentAlphabet = text;
             });
           },
-        ) : Container(),
-        GCWDefaultOutput(
-          child: _calculateOutput()//_currentOutput == null ? '' : _currentOutput
-        )
+        ),
+        GCWDefaultOutput(child: _calculateOutput() //_currentOutput == null ? '' : _currentOutput
+            )
       ],
     );
   }
@@ -142,39 +129,19 @@ class ADFGVXState extends State<ADFGVX> {
 
     if (_currentMode == GCWSwitchPosition.left) {
       if (_currentADFGVXMode == GCWSwitchPosition.left) {
-        output = encryptADFGX(
-          _currentInput,
-          _currentSubstitutionKey,
-          _currentTranspositionKey,
-          polybiosMode: _currentPolybiosMode,
-          alphabet: _currentAlphabet
-        );
+        output = encryptADFGX(_currentInput, _currentSubstitutionKey, _currentTranspositionKey,
+            polybiosMode: _currentPolybiosMode, alphabet: _currentAlphabet);
       } else {
-        output = encryptADFGVX(
-          _currentInput,
-          _currentSubstitutionKey,
-          _currentTranspositionKey,
-          polybiosMode: _currentPolybiosMode,
-          alphabet: _currentAlphabet
-        );
+        output = encryptADFGVX(_currentInput, _currentSubstitutionKey, _currentTranspositionKey,
+            polybiosMode: _currentPolybiosMode, alphabet: _currentAlphabet);
       }
     } else {
       if (_currentADFGVXMode == GCWSwitchPosition.left) {
-        output = decryptADFGX(
-          _currentInput,
-          _currentSubstitutionKey,
-          _currentTranspositionKey,
-          polybiosMode: _currentPolybiosMode,
-          alphabet: _currentAlphabet
-        );
+        output = decryptADFGX(_currentInput, _currentSubstitutionKey, _currentTranspositionKey,
+            polybiosMode: _currentPolybiosMode, alphabet: _currentAlphabet);
       } else {
-        output = decryptADFGVX(
-          _currentInput,
-          _currentSubstitutionKey,
-          _currentTranspositionKey,
-          polybiosMode: _currentPolybiosMode,
-          alphabet: _currentAlphabet
-        );
+        output = decryptADFGVX(_currentInput, _currentSubstitutionKey, _currentTranspositionKey,
+            polybiosMode: _currentPolybiosMode, alphabet: _currentAlphabet);
       }
     }
 

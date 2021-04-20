@@ -41,7 +41,6 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: <Widget>[
         GCWDropDownButton(
@@ -77,11 +76,10 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
                   _currentDecodeMode = value;
                 });
               },
-            )],
+            )
+          ],
         ),
-        GCWTextDivider(
-          text: i18n(context, 'common_output')
-        ),
+        GCWTextDivider(text: i18n(context, 'common_output')),
         _buildOutput(context)
       ],
     );
@@ -91,10 +89,12 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
     List<NumeralWordsDecodeOutput> detailedOutput;
     String output = '';
     if (_currentLanguage != NumeralWordsLanguage.KYR) {
-       detailedOutput = decodeNumeralwords(removeAccents(_currentDecodeInput.toLowerCase()), _currentLanguage,
+      detailedOutput = decodeNumeralwords(removeAccents(_currentDecodeInput.toLowerCase()), _currentLanguage,
           (_currentDecodeMode == GCWSwitchPosition.left));
       for (int i = 0; i < detailedOutput.length; i++) {
-        if (detailedOutput[i].number != '')
+        if (detailedOutput[i].number != '') if (detailedOutput[i].number.startsWith('numeralwords_'))
+          output = output + ' ' + i18n(context, detailedOutput[i].number);
+        else
           output = output + ' ' + detailedOutput[i].number;
       }
     } else {
@@ -104,15 +104,21 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
 
     List<List<String>> columnData = new List<List<String>>();
     var flexData;
-    String  columnDataRowNumber;
-    String  columnDataRowNumWord;
-    String  columnDataRowLanguage;
+    String columnDataRowNumber;
+    String columnDataRowNumWord;
+    String columnDataRowLanguage;
     if (_currentLanguage == NumeralWordsLanguage.ALL) {
-      for (int i = 0; i< detailedOutput.length; i++) {
-        columnDataRowNumber = detailedOutput[i].number;
-        columnDataRowNumWord = detailedOutput[i].numWord;
+      for (int i = 0; i < detailedOutput.length; i++) {
+        if (detailedOutput[i].number.startsWith('numeralwords_'))
+          columnDataRowNumber = i18n(context, detailedOutput[i].number);
+        else
+          columnDataRowNumber = detailedOutput[i].number;
+        if (detailedOutput[i].numWord.startsWith('numeralwords_'))
+          columnDataRowNumWord = i18n(context, detailedOutput[i].numWord);
+        else
+          columnDataRowNumWord = detailedOutput[i].numWord;
         columnDataRowLanguage = i18n(context, detailedOutput[i].language);
-        int j = i+1;
+        int j = i + 1;
         while (j < detailedOutput.length && detailedOutput[j].number == '') {
           columnDataRowNumber = columnDataRowNumber + '\n' + '';
           columnDataRowNumWord = columnDataRowNumWord + '\n' + detailedOutput[j].numWord;
@@ -124,8 +130,17 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
       }
       flexData = [1, 3, 1];
     } else {
-      columnData = detailedOutput.map((entry) => [entry.number, entry.numWord])
-                                 .toList();
+      for (int i = 0; i < detailedOutput.length; i++) {
+        if (detailedOutput[i].number.startsWith('numeralwords_'))
+          columnDataRowNumber = i18n(context, detailedOutput[i].number);
+        else
+          columnDataRowNumber = detailedOutput[i].number;
+        if (detailedOutput[i].numWord.startsWith('numeralwords_'))
+          columnDataRowNumWord = i18n(context, detailedOutput[i].numWord);
+        else
+          columnDataRowNumWord = detailedOutput[i].numWord;
+        columnData.add([columnDataRowNumber, columnDataRowNumWord]);
+      }
       flexData = [1, 2];
     }
 
@@ -137,11 +152,10 @@ class NumeralWordsTextSearchState extends State<NumeralWordsTextSearch> {
         output.length == 0
             ? Container()
             : GCWOutput(
-          title: i18n(context, 'common_outputdetail'),
-          child: Column(
-            children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)
-          ),
-        ),
+                title: i18n(context, 'common_outputdetail'),
+                child:
+                    Column(children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)),
+              ),
       ],
     );
   }

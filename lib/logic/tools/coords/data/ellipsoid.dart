@@ -10,7 +10,7 @@ const ELLIPSOID_NAME_CLARKE1866 = 'Clarke 1866';
 const ELLIPSOID_NAME_HAYFORD1924 = 'Hayford 1924';
 const ELLIPSOID_NAME_KRASOVSKY1940 = 'Krasovsky 1940';
 
-enum EllipsoidType {STANDARD, USER_DEFINED}
+enum EllipsoidType { STANDARD, USER_DEFINED }
 
 class Ellipsoid {
   String name;
@@ -63,9 +63,9 @@ final List<Ellipsoid> allEllipsoids = [
   Ellipsoid(ELLIPSOID_NAME_AIRYMODIFIED, 6377340.189, 299.32496546352854),
   Ellipsoid('ATS77', 6378135.0, 298.257),
   Ellipsoid('Australien Nat.', 6377340.189, 299.32496546352854),
-  Ellipsoid(ELLIPSOID_NAME_BESSEL1841, 6377397.155, 299.1528128),
-  Ellipsoid('Bessel 1841 NAM', 6377483.865, 299.1528128),
-  Ellipsoid('Bessel Modified', 6377492.018, 299.1528128),
+  Ellipsoid(ELLIPSOID_NAME_BESSEL1841, 6377397.155, 299.15281285),
+  Ellipsoid('Bessel 1841 NAM', 6377483.865, 299.15281285),
+  Ellipsoid('Bessel Modified', 6377492.018, 299.15281285),
   Ellipsoid('Clarke1858', 6378293.645, 294.26068),
   Ellipsoid(ELLIPSOID_NAME_CLARKE1866, 6378206.4, 294.9786982139),
   Ellipsoid('Clarke 1866 Michigan', 6378450.24, 294.97870),

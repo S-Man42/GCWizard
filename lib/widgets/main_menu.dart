@@ -31,15 +31,10 @@ buildMainMenu(BuildContext context) {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(
-              left: 20
-            ),
+            padding: EdgeInsets.only(left: 20),
             child: GCWText(
               text: i18n(context, 'common_app_title'),
-              style: TextStyle(
-                color: themeColors().dialogText(),
-                fontSize: 22.0
-              ),
+              style: TextStyle(color: themeColors().dialogText(), fontSize: 22.0),
             ),
           )
         ],
@@ -54,116 +49,97 @@ buildMainMenu(BuildContext context) {
   menuEntries.add(_buildSettingsItem(context));
 
   final otherMenuItems = [
-    {'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(Changelog())), 'icon': Icons.show_chart},
+    {
+      'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(Changelog())),
+      'icon': Icons.show_chart
+    },
     {'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(About())), 'icon': Icons.info},
   ];
 
-  menuEntries.addAll(
-    otherMenuItems.map((item) {
-      return _buildMenuItem(context, item);
-    }).toList()
-  );
+  menuEntries.addAll(otherMenuItems.map((item) {
+    return _buildMenuItem(context, item);
+  }).toList());
 
   var footer = Column(
     children: <Widget>[
       InkWell(
-        child: Container(
-          color: themeColors().dialog(),
-          width: double.infinity,
-          height: 50,
-          child: Row(
-            children: <Widget>[
-              Container(
-                child: Icon(Icons.group),
-                padding: EdgeInsets.only(
-                  left: 15,
-                  right: 15
-                ),
-              ),
-              Text(
-                i18n(context, 'mainmenu_callforcontribution_title'),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: themeColors().dialogText(),
-                  fontSize: defaultFontSize()
-                ),
-              ),
-            ],
-          )
-        ),
-        onTap: () {
-          Navigator.pop(context); //close Drawer
-          Navigator.of(context).push(NoAnimationMaterialPageRoute(
-            builder: (context) => Registry.toolList.firstWhere((tool) => className(tool.tool) == className(CallForContribution())))
-          );
-        }
-      )
+          child: Container(
+              color: themeColors().dialog(),
+              width: double.infinity,
+              height: 50,
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    child: Icon(Icons.group, color: themeColors().dialogText()),
+                    padding: EdgeInsets.only(left: 15, right: 15),
+                  ),
+                  Text(
+                    i18n(context, 'mainmenu_callforcontribution_title'),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: themeColors().dialogText(), fontSize: defaultFontSize()),
+                  ),
+                ],
+              )),
+          onTap: () {
+            Navigator.pop(context); //close Drawer
+            Navigator.of(context).push(NoAnimationMaterialPageRoute(
+                builder: (context) =>
+                    Registry.toolList.firstWhere((tool) => className(tool.tool) == className(CallForContribution()))));
+          })
     ],
   );
 
   return Drawer(
-    child: Column(
-      children: <Widget>[
-        header,
-        Expanded(
+      child: Column(
+    children: <Widget>[
+      header,
+      Expanded(
           child: ListView(
-            padding: EdgeInsets.zero, // Remove any padding from the ListView.
-            children: menuEntries
-          )
-        ),
-        footer,
-      ],
-    )
-  );
+              padding: EdgeInsets.zero, // Remove any padding from the ListView.
+              children: menuEntries)),
+      footer,
+    ],
+  ));
 }
 
 _buildSettingsItem(BuildContext context) {
   final settingsItems = [
-    {'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(GeneralSettings())), 'icon': Icons.settings},
-    {'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(CoordinatesSettings())), 'icon': Icons.language},
+    {
+      'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(GeneralSettings())),
+      'toolName': i18n(context, 'mainmenu_settings_general_title'),
+      'icon': Icons.settings
+    },
+    {
+      'tool': Registry.toolList.firstWhere((tool) => className(tool.tool) == className(CoordinatesSettings())),
+      'toolName': i18n(context, 'mainmenu_settings_coordinates_title'),
+      'icon': Icons.language
+    },
   ];
 
   return ExpansionTile(
-    title: Text(
-      i18n(context, 'mainmenu_settings_title'),
-      style: _menuItemStyle()
-    ),
-    leading: Icon(
-      Icons.settings,
-      color: themeColors().mainFont(),
-    ),
-    children: settingsItems.map((item) {
-      return Padding(
-        padding: EdgeInsets.only(
-          left: 25
-        ),
-        child: _buildMenuItem(context, item)
-      );
-    }).toList()
-  );
+      title: Text(i18n(context, 'mainmenu_settings_title'), style: _menuItemStyle()),
+      leading: Icon(
+        Icons.settings,
+        color: themeColors().mainFont(),
+      ),
+      children: settingsItems.map((item) {
+        return Padding(padding: EdgeInsets.only(left: 25), child: _buildMenuItem(context, item));
+      }).toList());
 }
 
 ListTile _buildMenuItem(BuildContext context, item) {
   return ListTile(
-    leading: Icon(
-      item['icon'],
-      color: themeColors().mainFont(),
-    ),
-    title: Text(
-      (item['tool'] as GCWTool).toolName,
-      style: _menuItemStyle()
-    ),
-    onTap: () {
-      Navigator.pop(context); //close Drawer
-      Navigator.of(context).push(NoAnimationMaterialPageRoute(builder: (context) => item['tool']));
-    }
-  );
+      leading: Icon(
+        item['icon'],
+        color: themeColors().mainFont(),
+      ),
+      title: Text(item['toolName'] ?? (item['tool'] as GCWTool).toolName, style: _menuItemStyle()),
+      onTap: () {
+        Navigator.pop(context); //close Drawer
+        Navigator.of(context).push(NoAnimationMaterialPageRoute(builder: (context) => item['tool']));
+      });
 }
 
 _menuItemStyle() {
-  return TextStyle(
-    color: themeColors().mainFont(),
-    fontSize: defaultFontSize(),
-    fontWeight: FontWeight.normal
-  );
+  return TextStyle(color: themeColors().mainFont(), fontSize: defaultFontSize(), fontWeight: FontWeight.normal);
 }
