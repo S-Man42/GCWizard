@@ -11,12 +11,12 @@ LatLng geoHexToLatLon(GeoHex geoHex) {
   return null;
 }
 
-GeoHex parseGeoHex(String geoHex) {
-  if (geoHex == null) return null;
-  geoHex = geoHex.trim();
-  if (geoHex == '') return null;
+GeoHex parseGeoHex(String input) {
+  if (input == null) return null;
+  input = input.trim();
+  if (input == '') return null;
 
-  var _geoHex = GeoHex(geoHex);
+  var _geoHex = GeoHex(input);
   return geoHexToLatLon(_geoHex) == null ? null : _geoHex;
 }
 

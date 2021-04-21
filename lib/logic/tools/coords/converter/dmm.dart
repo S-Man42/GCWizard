@@ -45,16 +45,16 @@ DMM normalize(DMM coord) {
   return _DECToDMM(_DMMToDEC(coord));
 }
 
-DMM parseDMM(String text, {leftPadMilliMinutes: false, wholeString: false}) {
-  text = prepareInput(text, wholeString: wholeString);
-  if (text == null) return null;
+DMM parseDMM(String input, {leftPadMilliMinutes: false, wholeString: false}) {
+  input = prepareInput(input, wholeString: wholeString);
+  if (input == null) return null;
 
-  var parsedTrailingSigns = _parseDMMTrailingSigns(text, leftPadMilliMinutes);
+  var parsedTrailingSigns = _parseDMMTrailingSigns(input, leftPadMilliMinutes);
   if (parsedTrailingSigns != null) return parsedTrailingSigns;
 
   RegExp regex = RegExp(PATTERN_DMM + regexEnd, caseSensitive: false);
-  if (regex.hasMatch(text)) {
-    var matches = regex.firstMatch(text);
+  if (regex.hasMatch(input)) {
+    var matches = regex.firstMatch(input);
 
     var latSign = sign(matches.group(1));
     var latDegrees = int.tryParse(matches.group(2));

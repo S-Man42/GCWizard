@@ -296,8 +296,8 @@ OpenLocationCode latLonToOpenLocationCode(LatLng coords, {int codeLength = pairC
   return OpenLocationCode(code.substring(0, codeLength) + (padding * (separatorPosition - codeLength)) + separator);
 }
 
-OpenLocationCode parseOpenLocationCode(String code) {
-  var openLocationCode = OpenLocationCode(code);
+OpenLocationCode parseOpenLocationCode(String input) {
+  var openLocationCode = OpenLocationCode(input);
   return openLocationCodeToLatLon(openLocationCode) == null ? null : openLocationCode;
 }
 

@@ -46,12 +46,12 @@ LatLng maidenheadToLatLon(Maidenhead maidenhead) {
   return LatLng(lat, lon);
 }
 
-Maidenhead parseMaidenhead(String maidenhead) {
-  if (maidenhead == null) return null;
-  maidenhead = maidenhead.trim();
-  if (maidenhead == '') return null;
+Maidenhead parseMaidenhead(String input) {
+  if (input == null) return null;
+  input = input.trim();
+  if (input == '') return null;
 
-  var _maidenhead = Maidenhead(maidenhead);
+  var _maidenhead = Maidenhead(input);
   return maidenheadToLatLon(_maidenhead) == null ? null : _maidenhead;
 }
 

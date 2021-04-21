@@ -58,7 +58,7 @@ class GCWCoordsGeoHexState extends State<GCWCoordsGeoHex> {
 
   _setCurrentValueAndEmitOnChange() {
     try {
-      widget.onChanged(parseGeoHex(_currentCoord));
+      widget.onChanged(GeoHex.parse(_currentCoord));
     } catch (e) {}
   }
 }

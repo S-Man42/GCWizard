@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/ellipsoid_transform.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/bigrams.dart';
 import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong/latlong.dart';
 
@@ -179,6 +178,6 @@ SwissGrid parseSwissGrid(String input) {
 }
 
 SwissGridPlus parseSwissGridPlus(String input) {
-  var swissGrid = parseSwissGrid(input);
+  var swissGrid = SwissGrid.parse(input);
   return swissGrid == null ? null : SwissGridPlus(swissGrid.easting, swissGrid.northing);
 }

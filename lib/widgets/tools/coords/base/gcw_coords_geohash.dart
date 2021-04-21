@@ -57,6 +57,6 @@ class GCWCoordsGeohashState extends State<GCWCoordsGeohash> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    widget.onChanged(parseGeohash(_currentCoord));
+    widget.onChanged(Geohash.parse(_currentCoord));
   }
 }

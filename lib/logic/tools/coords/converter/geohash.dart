@@ -118,12 +118,12 @@ LatLng geohashToLatLon(Geohash geohash) {
   return null;
 }
 
-Geohash parseGeohash(String geohash) {
-  if (geohash == null) return null;
-  geohash = geohash.trim();
-  if (geohash == '') return null;
+Geohash parseGeohash(String input) {
+  if (input == null) return null;
+  input = input.trim();
+  if (input == '') return null;
 
-  var _geohash = Geohash(geohash);
+  var _geohash = Geohash(input);
   return geohashToLatLon(_geohash) == null ? null : _geohash;
 }
 

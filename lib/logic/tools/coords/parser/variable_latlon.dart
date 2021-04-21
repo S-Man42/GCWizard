@@ -22,7 +22,7 @@ Map<String, LatLng> _parseCoordText(String text) {
   var out = <String, LatLng>{'coordinate': parsedCoord.elementAt(0).toLatLng()};
 
   if (parsedCoord.elementAt(0).key == keyCoordsDMM) {
-    out.putIfAbsent('leftPadCoordinate', () => parseDMM(text, leftPadMilliMinutes: true).toLatLng());
+    out.putIfAbsent('leftPadCoordinate', () => DMM.parse(text, leftPadMilliMinutes: true).toLatLng());
   }
 
   return out;

@@ -74,17 +74,17 @@ DEC normalizeDEC(DEC coord) {
   return DEC(normalizedLat, normalizedLon);
 }
 
-DEC parseDEC(String text, {wholeString = false}) {
-  text = prepareInput(text, wholeString: wholeString);
-  if (text == null) return null;
+DEC parseDEC(String input, {wholeString = false}) {
+  input = prepareInput(input, wholeString: wholeString);
+  if (input == null) return null;
 
-  var parsedTrailingSigns = _parseDECTrailingSigns(text);
+  var parsedTrailingSigns = _parseDECTrailingSigns(input);
   if (parsedTrailingSigns != null) return parsedTrailingSigns;
 
   RegExp regex = RegExp(PATTERN_DEC + regexEnd, caseSensitive: false);
 
-  if (regex.hasMatch(text)) {
-    var matches = regex.firstMatch(text);
+  if (regex.hasMatch(input)) {
+    var matches = regex.firstMatch(input);
 
     var latSign = sign(matches.group(1));
     var latDegrees = 0.0;

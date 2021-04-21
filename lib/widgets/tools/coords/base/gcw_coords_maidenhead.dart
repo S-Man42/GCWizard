@@ -60,6 +60,6 @@ class GCWCoordsMaidenheadState extends State<GCWCoordsMaidenhead> {
     var maidenhead = _currentCoord;
     if (maidenhead.length % 2 == 1) maidenhead = maidenhead.substring(0, maidenhead.length - 1);
 
-    widget.onChanged(parseMaidenhead(maidenhead));
+    widget.onChanged(Maidenhead.parse(maidenhead));
   }
 }

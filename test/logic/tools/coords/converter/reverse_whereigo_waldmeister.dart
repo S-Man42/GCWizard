@@ -48,7 +48,7 @@ void main() {
         var b = int.tryParse(elem['input'][1]);
         var c = int.tryParse(elem['input'][2]);
 
-        var _actual = waldmeisterToLatLon(parseWaldmeister(elem['input'][0] + " " + elem['input'][1] + " " + elem['input'][2]));
+        var _actual = Waldmeister.parse(elem['input'][0] + " " + elem['input'][1] + " " + elem['input'][2])?.toLatLng();
         expect((_actual.latitude - elem['expectedOutput'].latitude).abs() < 1e-8, true);
         expect((_actual.longitude - elem['expectedOutput'].longitude).abs() < 1e-8, true);
       });
@@ -64,7 +64,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseWaldmeister(elem['text'])?.toLatLng();
+        var _actual = Waldmeister.parse(elem['text'])?.toLatLng();
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

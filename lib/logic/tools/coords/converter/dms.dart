@@ -48,16 +48,16 @@ DMS normalize(DMS coord) {
   return _DECToDMS(_DMSToDEC(coord));
 }
 
-DMS parseDMS(String text, {wholeString = false}) {
-  text = prepareInput(text, wholeString: wholeString);
-  if (text == null) return null;
+DMS parseDMS(String input, {wholeString = false}) {
+  input = prepareInput(input, wholeString: wholeString);
+  if (input == null) return null;
 
-  var parsedTrailingSigns = _parseDMSTrailingSigns(text);
+  var parsedTrailingSigns = _parseDMSTrailingSigns(input);
   if (parsedTrailingSigns != null) return parsedTrailingSigns;
 
   RegExp regex = RegExp(PATTERN_DMS + regexEnd, caseSensitive: false);
-  if (regex.hasMatch(text)) {
-    var matches = regex.firstMatch(text);
+  if (regex.hasMatch(input)) {
+    var matches = regex.firstMatch(input);
 
     var latSign = sign(matches.group(1));
     var latDegrees = int.tryParse(matches.group(2));

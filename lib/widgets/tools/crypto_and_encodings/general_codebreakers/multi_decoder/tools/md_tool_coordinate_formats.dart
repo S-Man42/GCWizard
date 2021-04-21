@@ -1,23 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/dmm.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/geo3x3.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/mgrs.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/utm.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
@@ -43,61 +25,61 @@ class MultiDecoderToolCoordinateFormats extends GCWMultiDecoderTool {
               try {
                 switch (options[MDT_COORDINATEFORMATS_OPTION_FORMAT]) {
                   case keyCoordsDEC:
-                    coords = parseDEC(input, wholeString: true)?.toLatLng();
+                    coords = DEC.parse(input, wholeString: true)?.toLatLng();
                     break;
                   case keyCoordsDMM:
-                    coords = parseDMM(input, wholeString: true)?.toLatLng();
+                    coords = DMM.parse(input, wholeString: true)?.toLatLng();
                     break;
                   case keyCoordsDMS:
-                    coords = parseDMS(input, wholeString: true)?.toLatLng();
+                    coords = DMS.parse(input, wholeString: true)?.toLatLng();
                     break;
                   case keyCoordsUTM:
-                    coords = parseUTM(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = UTMREF.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsMGRS:
-                    coords = parseMGRS(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = MGRS.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsXYZ:
-                    coords = parseXYZ(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = XYZ.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsSwissGrid:
-                    coords = parseSwissGrid(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = SwissGrid.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsSwissGridPlus:
-                    coords = parseSwissGridPlus(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = SwissGridPlus.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsGaussKrueger:
-                    coords = parseGaussKrueger(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = GaussKrueger.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsMaidenhead:
-                    coords = parseMaidenhead(input)?.toLatLng();
+                    coords = Maidenhead.parse(input)?.toLatLng();
                     break;
                   case keyCoordsMercator:
-                    coords = parseMercator(input)?.toLatLng(ells: defaultEllipsoid());
+                    coords = Mercator.parse(input)?.toLatLng(ells: defaultEllipsoid());
                     break;
                   case keyCoordsNaturalAreaCode:
-                    coords = parseNaturalAreaCode(input)?.toLatLng();
+                    coords = NaturalAreaCode.parse(input)?.toLatLng();
                     break;
                   case keyCoordsGeohash:
-                    coords = parseGeohash(input)?.toLatLng();
+                    coords = Geohash.parse(input)?.toLatLng();
                     break;
                   case keyCoordsGeoHex:
-                    coords = parseGeoHex(input)?.toLatLng();
+                    coords = GeoHex.parse(input)?.toLatLng();
                     break;
                   case keyCoordsGeo3x3:
-                    coords = parseGeo3x3(input)?.toLatLng();
+                    coords = Geo3x3.parse(input)?.toLatLng();
                     break;
                   case keyCoordsOpenLocationCode:
-                    coords = parseOpenLocationCode(input)?.toLatLng();
+                    coords = OpenLocationCode.parse(input)?.toLatLng();
                     break;
                   case keyCoordsQuadtree:
-                    coords = parseQuadtree(input)?.toLatLng();
+                    coords = Quadtree.parse(input)?.toLatLng();
                     break;
                   case keyCoordsReverseWhereIGoWaldmeister:
-                    coords = parseWaldmeister(input)?.toLatLng();
+                    coords = Waldmeister.parse(input)?.toLatLng();
                     break;
                   case keyCoordsSlippyMap:
-                    coords = parseSlippyMap(input)?.toLatLng();
+                    coords = SlippyMap.parse(input)?.toLatLng();
                     break;
                 }
               } catch (e) {}

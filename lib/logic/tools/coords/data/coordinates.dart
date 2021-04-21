@@ -139,6 +139,10 @@ class DEC extends BaseCoordinates {
     return decToLatLon(this);
   }
 
+  static DEC parse(String input, {wholeString = false}) {
+    return parseDEC(input, wholeString: wholeString);
+  }
+
   @override
   String toString([int precision]) {
     if (precision == null) precision = 10;
@@ -238,6 +242,10 @@ class DMM extends BaseCoordinates {
 
   LatLng toLatLng() {
     return dmmToLatLon(this);
+  }
+
+  static DMM parse(String text, {leftPadMilliMinutes: false, wholeString: false}) {
+    return parseDMM(text, leftPadMilliMinutes: leftPadMilliMinutes, wholeString: wholeString);
   }
 
   @override
@@ -346,6 +354,10 @@ class DMS extends BaseCoordinates {
     return dmsToLatLon(this);
   }
 
+  static DMS parse(String input, {wholeString = false}) {
+    return parseDMS(input, wholeString: wholeString);
+  }
+
   @override
   String toString([int precision]) {
     return '${latitude.format(precision)}\n${longitude.format(precision)}';
@@ -371,6 +383,10 @@ class UTMREF extends BaseCoordinates {
   LatLng toLatLng({Ellipsoid ells}) {
     if (ells == null) ells = defaultEllipsoid();
     return UTMREFtoLatLon(this, ells);
+  }
+
+  static UTMREF parse(String input) {
+    return parseUTM(input);
   }
 
   @override
@@ -401,6 +417,10 @@ class MGRS extends BaseCoordinates {
     return mgrsToLatLon(this, ells);
   }
 
+  static MGRS parse(String text) {
+    return parseMGRS(text);
+  }
+
   @override
   String toString() {
     return '${utmZone.lonZone}${utmZone.latZone} ${digraph} ${doubleFormat.format(easting)} ${doubleFormat.format(northing)}';
@@ -419,6 +439,10 @@ class SwissGrid extends BaseCoordinates {
     return swissGridToLatLon(this, ells);
   }
 
+  static SwissGrid parse(String input) {
+    return parseSwissGrid(input);
+  }
+
   @override
   String toString() {
     return 'Y: ${easting}\nX: ${northing}';
@@ -434,6 +458,11 @@ class SwissGridPlus extends SwissGrid {
     if (ells == null) ells = defaultEllipsoid();
     return swissGridPlusToLatLon(this, ells);
   }
+
+  @override
+  static SwissGridPlus parse(String input) {
+    return parseSwissGridPlus(input);
+  }
 }
 
 class GaussKrueger extends BaseCoordinates {
@@ -447,6 +476,10 @@ class GaussKrueger extends BaseCoordinates {
   LatLng toLatLng({Ellipsoid ells}) {
     if (ells == null) ells = defaultEllipsoid();
     return gaussKruegerToLatLon(this, ells);
+  }
+
+  static GaussKrueger parse(String input, {gaussKruegerCode: 1}) {
+    return parseGaussKrueger(input, gaussKruegerCode: gaussKruegerCode);
   }
 
   @override
@@ -467,6 +500,10 @@ class Mercator extends BaseCoordinates {
     return mercatorToLatLon(this, ells);
   }
 
+  static Mercator parse(String input) {
+    return parseMercator(input);
+  }
+
   @override
   String toString() {
     return 'Y: $easting\nX: $northing';
@@ -482,6 +519,10 @@ class NaturalAreaCode extends BaseCoordinates {
 
   LatLng toLatLng() {
     return naturalAreaCodeToLatLon(this);
+  }
+
+  static NaturalAreaCode parse(String input) {
+    return parseNaturalAreaCode(input);
   }
 
   @override
@@ -502,6 +543,10 @@ class SlippyMap extends BaseCoordinates {
     return slippyMapToLatLon(this);
   }
 
+  static SlippyMap parse(String input, {zoom: 10.0}) {
+    return parseSlippyMap(input, zoom: zoom);
+  }
+
   @override
   String toString() {
     return 'X: $x\nY: $y\nZoom: $zoom';
@@ -516,6 +561,10 @@ class Waldmeister extends BaseCoordinates {
 
   LatLng toLatLng() {
     return waldmeisterToLatLon(this);
+  }
+
+  static Waldmeister parse(String input) {
+    return parseWaldmeister(input);
   }
 
   @override
@@ -535,6 +584,10 @@ class XYZ extends BaseCoordinates {
     return xyzToLatLon(this, ells);
   }
 
+  static XYZ parse(String input) {
+    return parseXYZ(input);
+  }
+
   @override
   String toString() {
     var numberFormat = NumberFormat('0.######');
@@ -550,6 +603,10 @@ class Maidenhead extends BaseCoordinates {
 
   LatLng toLatLng() {
     return maidenheadToLatLon(this);
+  }
+
+  static Maidenhead parse(String input) {
+    return parseMaidenhead(input);
   }
 
   @override
@@ -568,6 +625,10 @@ class Geohash extends BaseCoordinates {
     return geohashToLatLon(this);
   }
 
+  static Geohash parse(String input) {
+    return parseGeohash(input);
+  }
+
   @override
   String toString() {
     return text;
@@ -582,6 +643,10 @@ class GeoHex extends BaseCoordinates {
 
   LatLng toLatLng() {
     return geoHexToLatLon(this);
+  }
+
+  static GeoHex parse(String input) {
+    return parseGeoHex(input);
   }
 
   @override
@@ -600,6 +665,10 @@ class Geo3x3 extends BaseCoordinates {
     return geo3x3ToLatLon(this);
   }
 
+  static Geo3x3 parse(String input) {
+    return parseGeo3x3(input);
+  }
+
   @override
   String toString() {
     return text.toUpperCase();
@@ -616,6 +685,10 @@ class OpenLocationCode extends BaseCoordinates {
     return openLocationCodeToLatLon(this);
   }
 
+  static OpenLocationCode parse(String input) {
+    return parseOpenLocationCode(input);
+  }
+
   @override
   String toString() {
     return text;
@@ -630,6 +703,10 @@ class Quadtree extends BaseCoordinates {
 
   LatLng toLatLng() {
     return quadtreeToLatLon(this);
+  }
+
+  static Quadtree parse(String input) {
+    return parseQuadtree(input);
   }
 
   @override

@@ -18,7 +18,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseMercator(elem['text'])?.toLatLng(ells: ells);
+        var _actual = Mercator.parse(elem['text'])?.toLatLng(ells: ells);
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {
