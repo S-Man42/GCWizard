@@ -35,10 +35,10 @@ DMS _DECToDMS(DEC coord) {
 DMSPart _doubleToDMSPart(double value) {
   var _sign = coordinateSign(value);
 
-  double _degrees = value;
+  int _degrees = value.abs().floor();
   double _minutesD = (value.abs() - _degrees) * 60.0;
 
-  double _minutes = _minutesD;
+  int _minutes = _minutesD.floor();
   double _seconds = (_minutesD - _minutes) * 60.0;
 
   return DMSPart(_sign, _degrees, _minutes, _seconds);
