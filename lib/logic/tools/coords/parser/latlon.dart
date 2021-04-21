@@ -84,7 +84,7 @@ Map<String, LatLng> parseLatLon(String text, {wholeString = false}) {
     coord = geoHexToLatLon(text);
     if (coord != null) coords.addAll({keyCoordsGeoHex: coord});
 
-    coord = geo3x3ToLatLon(text);
+    coord = parseGeo3x3(text);
     if (coord != null) coords.addAll({keyCoordsGeo3x3: coord});
 
     coord = openLocationCodeToLatLon(text);
