@@ -63,7 +63,7 @@ String formatCoordOutput(LatLng _coords, Map<String, String> _outputFormat, Elli
     case keyCoordsMGRS:
       return MGRS.fromLatLon(_coords, ells).toString();
     case keyCoordsXYZ:
-      return XYZ(_coords, ells).toString();
+      return XYZ.fromLatLon(_coords, ells).toString();
     case keyCoordsSwissGrid:
       return SwissGrid.fromLatLon(_coords, ells).toString();
     case keyCoordsSwissGridPlus:
