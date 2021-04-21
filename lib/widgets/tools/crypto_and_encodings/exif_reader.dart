@@ -130,11 +130,14 @@ class _ExifReaderState extends State<ExifReader> {
 
         widgets.add(GCWOutput(
             title: i18n(context, "exif_section_" + section) ?? section ?? '',
+            // suppressCopyButton: false,
             child: Column(
-                children: columnedMultiLineOutput(
-              null,
-              tags == null ? [] : tags,
-            ))));
+              children: columnedMultiLineOutput(
+                null,
+                tags == null ? [] : tags,
+                // copyColumn: 1,
+              ),
+            )));
       });
     }
   }
