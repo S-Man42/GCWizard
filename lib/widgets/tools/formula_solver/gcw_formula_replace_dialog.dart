@@ -37,8 +37,8 @@ class GCWFormulaReplace extends StatefulWidget {
 }
 
 class GCWFormulaReplaceState extends State<GCWFormulaReplace> {
-  bool _currentValueBracket = true;
-  bool _currentValueMultiply = true;
+  bool _currentValueBracket = false;
+  bool _currentValueMultiply = false;
 
   var textStyle = gcwTextStyle().copyWith(color: themeColors().dialogText());
 

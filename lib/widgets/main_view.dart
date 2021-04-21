@@ -120,6 +120,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
+import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
@@ -242,6 +243,7 @@ class _MainViewState extends State<MainView> {
         className(Brainfk()),
         className(BurrowsWheeler()),
         className(Caesar()),
+        className(Catan()),
         className(CCITT1Selection()),
         className(CCITT2Selection()),
         className(CenterThreePoints()),
