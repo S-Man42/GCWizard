@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/gauss_krueger.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
@@ -49,7 +48,7 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
     if (widget.coordinates != null) {
       var gausskrueger = widget.coordinates is GaussKrueger ?
           widget.coordinates as GaussKrueger :
-          latLonToGaussKrueger(widget.coordinates.toLatLng(), _currentSubtype, defaultEllipsoid());
+          GaussKrueger.fromLatLon(widget.coordinates.toLatLng(), _currentSubtype, defaultEllipsoid());
       _currentEasting['value'] = gausskrueger.easting;
       _currentNorthing['value'] = gausskrueger.northing;
       _currentSubtype = gausskrueger.code;

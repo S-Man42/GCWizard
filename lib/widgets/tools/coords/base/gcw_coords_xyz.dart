@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/xyz.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_distance.dart';
@@ -44,7 +43,7 @@ class GCWCoordsXYZState extends State<GCWCoordsXYZ> {
     if (widget.coordinates != null) {
       var xyz = widget.coordinates is XYZ ?
           widget.coordinates as XYZ :
-          latLonToXYZ(widget.coordinates.toLatLng(), defaultEllipsoid());
+          XYZ.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentX = xyz.x;
       _currentY = xyz.y;
       _currentZ = xyz.z;

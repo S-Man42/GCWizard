@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/mercator.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
@@ -41,7 +40,7 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
     if (widget.coordinates != null) {
       var mercator = widget.coordinates is Mercator ?
           widget.coordinates as Mercator :
-          latLonToMercator(widget.coordinates.toLatLng(), defaultEllipsoid());
+          Mercator.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentEasting['value'] = mercator.easting;
       _currentNorthing['value'] = mercator.northing;
 

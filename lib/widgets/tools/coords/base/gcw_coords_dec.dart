@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -66,7 +65,7 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
     if (widget.coordinates != null) {
       var dec = widget.coordinates is DEC ?
           widget.coordinates as DEC :
-          latLonToDEC(widget.coordinates.toLatLng());
+          DEC.fromLatLon(widget.coordinates.toLatLng());
       _currentLatDegrees = dec.latitude.abs().floor().toString();
       _currentLatMilliDegrees = dec.latitude.toString().split('.')[1];
       _currentLatSign = coordinateSign(dec.latitude);

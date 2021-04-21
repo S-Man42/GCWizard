@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/open_location_code.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
@@ -38,7 +37,7 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
     if (widget.coordinates != null) {
       var openLocationCode = widget.coordinates is OpenLocationCode ?
           widget.coordinates as OpenLocationCode :
-          latLonToOpenLocationCode(widget.coordinates.toLatLng(), codeLength: 14);
+          OpenLocationCode.fromLatLon(widget.coordinates.toLatLng(), codeLength: 14);
       _currentCoord = openLocationCode.text;
 
       _controller.text = _currentCoord;

@@ -51,7 +51,7 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
     if (widget.coordinates != null) {
       var utm = widget.coordinates is UTMREF ?
           widget.coordinates as UTMREF :
-          latLonToUTM(widget.coordinates.toLatLng(), defaultEllipsoid());
+          UTMREF.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentLonZone['value'] = utm.zone.lonZone;
       _currentEasting['value'] = utm.easting;
       _currentNorthing['value'] = utm.northing;

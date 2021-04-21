@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_naturalareacode_textinputformatter.dart';
@@ -42,7 +41,7 @@ class GCWCoordsNaturalAreaCodeState extends State<GCWCoordsNaturalAreaCode> {
       if (widget.coordinates != null) {
         var naturalAreaCode = widget.coordinates is NaturalAreaCode ?
             widget.coordinates as NaturalAreaCode :
-            latLonToNaturalAreaCode(widget.coordinates.toLatLng());
+            NaturalAreaCode.fromLatLon(widget.coordinates.toLatLng());
       _currentX = naturalAreaCode.x;
       _currentY = naturalAreaCode.y;
 

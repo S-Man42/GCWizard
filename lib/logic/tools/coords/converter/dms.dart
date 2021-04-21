@@ -20,7 +20,7 @@ double _DMSPartToDouble(DMSPart dmsPart) {
 }
 
 DMS latLonToDMS(LatLng coord) {
-  return _DECToDMS(latLonToDEC(coord));
+  return _DECToDMS(DEC.fromLatLon(coord));
 }
 
 DMS _DECToDMS(DEC coord) {

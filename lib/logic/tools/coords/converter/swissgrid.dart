@@ -7,7 +7,7 @@ import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong/latlong.dart';
 
 SwissGridPlus latLonToSwissGridPlus(LatLng coord, Ellipsoid ells) {
-  SwissGrid swissGrid = latLonToSwissGrid(coord, ells);
+  SwissGrid swissGrid = SwissGrid.fromLatLon(coord, ells);
 
   return SwissGridPlus(swissGrid.easting + 2000000, swissGrid.northing + 1000000);
 }

@@ -1,5 +1,4 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:latlong/latlong.dart';
 
@@ -20,7 +19,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('coord: ${elem['coord']}', () {
-        var _actual = latLonToWaldmeister(elem['coord']);
+        var _actual = Waldmeister.fromLatLon(elem['coord']);
         expect(_actual.a, elem['expectedOutput'][0]);
         expect(_actual.b, elem['expectedOutput'][1]);
         expect(_actual.c, elem['expectedOutput'][2]);

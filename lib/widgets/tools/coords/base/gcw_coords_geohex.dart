@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/geohex.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_geohex_textinputformatter.dart';
@@ -36,7 +35,7 @@ class GCWCoordsGeoHexState extends State<GCWCoordsGeoHex> {
     if (widget.coordinates != null) {
       var geohHex = widget.coordinates is GeoHex ?
           widget.coordinates as GeoHex :
-          latLonToGeoHex(widget.coordinates.toLatLng(), 20);
+          GeoHex.fromLatLon(widget.coordinates.toLatLng(), 20);
       _currentCoord = geohHex.text;
 
       _controller.text = _currentCoord;

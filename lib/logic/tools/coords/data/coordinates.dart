@@ -139,6 +139,10 @@ class DEC extends BaseCoordinates {
     return decToLatLon(this);
   }
 
+  static DEC fromLatLon(LatLng coord) {
+    return latLonToDEC(coord);
+  }
+
   static DEC parse(String input, {wholeString = false}) {
     return parseDEC(input, wholeString: wholeString);
   }
@@ -242,6 +246,10 @@ class DMM extends BaseCoordinates {
 
   LatLng toLatLng() {
     return dmmToLatLon(this);
+  }
+
+  static DMM fromLatLon(LatLng coord) {
+    return latLonToDMM(coord);
   }
 
   static DMM parse(String text, {leftPadMilliMinutes: false, wholeString: false}) {
@@ -354,6 +362,10 @@ class DMS extends BaseCoordinates {
     return dmsToLatLon(this);
   }
 
+  static DMS fromLatLon(LatLng coord) {
+    return latLonToDMS(coord);
+  }
+
   static DMS parse(String input, {wholeString = false}) {
     return parseDMS(input, wholeString: wholeString);
   }
@@ -383,6 +395,10 @@ class UTMREF extends BaseCoordinates {
   LatLng toLatLng({Ellipsoid ells}) {
     if (ells == null) ells = defaultEllipsoid();
     return UTMREFtoLatLon(this, ells);
+  }
+
+  static UTMREF fromLatLon(LatLng coord, Ellipsoid ells) {
+    return latLonToUTM(coord, ells);
   }
 
   static UTMREF parse(String input) {
@@ -417,6 +433,10 @@ class MGRS extends BaseCoordinates {
     return mgrsToLatLon(this, ells);
   }
 
+  static MGRS fromLatLon(LatLng coord, Ellipsoid ells) {
+    return latLonToMGRS(coord, ells);
+  }
+
   static MGRS parse(String text) {
     return parseMGRS(text);
   }
@@ -437,6 +457,10 @@ class SwissGrid extends BaseCoordinates {
   LatLng toLatLng({Ellipsoid ells}) {
     if (ells == null) ells = defaultEllipsoid();
     return swissGridToLatLon(this, ells);
+  }
+
+  static SwissGrid fromLatLon(LatLng coord, Ellipsoid ells) {
+    return latLonToSwissGrid(coord, ells);
   }
 
   static SwissGrid parse(String input) {
@@ -460,6 +484,11 @@ class SwissGridPlus extends SwissGrid {
   }
 
   @override
+  static SwissGridPlus fromLatLon(LatLng coord, Ellipsoid ells) {
+    return latLonToSwissGridPlus(coord, ells);
+  }
+
+  @override
   static SwissGridPlus parse(String input) {
     return parseSwissGridPlus(input);
   }
@@ -476,6 +505,10 @@ class GaussKrueger extends BaseCoordinates {
   LatLng toLatLng({Ellipsoid ells}) {
     if (ells == null) ells = defaultEllipsoid();
     return gaussKruegerToLatLon(this, ells);
+  }
+
+  static GaussKrueger fromLatLon(LatLng coord, int gkno, Ellipsoid ells) {
+    return latLonToGaussKrueger(coord, gkno, ells);
   }
 
   static GaussKrueger parse(String input, {gaussKruegerCode: 1}) {
@@ -500,6 +533,10 @@ class Mercator extends BaseCoordinates {
     return mercatorToLatLon(this, ells);
   }
 
+  static Mercator fromLatLon(LatLng coord, Ellipsoid ells) {
+    return latLonToMercator(coord, ells);
+  }
+
   static Mercator parse(String input) {
     return parseMercator(input);
   }
@@ -519,6 +556,10 @@ class NaturalAreaCode extends BaseCoordinates {
 
   LatLng toLatLng() {
     return naturalAreaCodeToLatLon(this);
+  }
+
+  static NaturalAreaCode fromLatLon(LatLng coord, {int precision}) {
+    return latLonToNaturalAreaCode(coord, precision: precision);
   }
 
   static NaturalAreaCode parse(String input) {
@@ -543,6 +584,10 @@ class SlippyMap extends BaseCoordinates {
     return slippyMapToLatLon(this);
   }
 
+  static SlippyMap fromLatLon(LatLng coord, double zoom) {
+    return latLonToSlippyMap(coord, zoom);
+  }
+
   static SlippyMap parse(String input, {zoom: 10.0}) {
     return parseSlippyMap(input, zoom: zoom);
   }
@@ -561,6 +606,10 @@ class Waldmeister extends BaseCoordinates {
 
   LatLng toLatLng() {
     return waldmeisterToLatLon(this);
+  }
+
+  static Waldmeister fromLatLon(LatLng coord) {
+    return latLonToWaldmeister(coord);
   }
 
   static Waldmeister parse(String input) {
@@ -584,6 +633,10 @@ class XYZ extends BaseCoordinates {
     return xyzToLatLon(this, ells);
   }
 
+  static XYZ fromLatLon(LatLng coord, Ellipsoid ells, {double h: 0.0}) {
+    return latLonToXYZ(coord, ells, h: h);
+  }
+
   static XYZ parse(String input) {
     return parseXYZ(input);
   }
@@ -603,6 +656,10 @@ class Maidenhead extends BaseCoordinates {
 
   LatLng toLatLng() {
     return maidenheadToLatLon(this);
+  }
+
+  static Maidenhead fromLatLon(LatLng coord) {
+    return latLonToMaidenhead(coord);
   }
 
   static Maidenhead parse(String input) {
@@ -625,6 +682,10 @@ class Geohash extends BaseCoordinates {
     return geohashToLatLon(this);
   }
 
+  static Geohash fromLatLon(LatLng coord, int geohashLength) {
+    return latLonToGeohash(coord, geohashLength);
+  }
+
   static Geohash parse(String input) {
     return parseGeohash(input);
   }
@@ -643,6 +704,10 @@ class GeoHex extends BaseCoordinates {
 
   LatLng toLatLng() {
     return geoHexToLatLon(this);
+  }
+
+  static GeoHex fromLatLon(LatLng coord, int precision) {
+    return latLonToGeoHex(coord, precision);
   }
 
   static GeoHex parse(String input) {
@@ -665,6 +730,10 @@ class Geo3x3 extends BaseCoordinates {
     return geo3x3ToLatLon(this);
   }
 
+  static Geo3x3 fromLatLon(LatLng coord, int level) {
+    return latLonToGeo3x3(coord, level);
+  }
+
   static Geo3x3 parse(String input) {
     return parseGeo3x3(input);
   }
@@ -683,6 +752,10 @@ class OpenLocationCode extends BaseCoordinates {
 
   LatLng toLatLng() {
     return openLocationCodeToLatLon(this);
+  }
+
+  static OpenLocationCode fromLatLon(LatLng coord, {int codeLength}) {
+    return latLonToOpenLocationCode(coord, codeLength: codeLength);
   }
 
   static OpenLocationCode parse(String input) {
@@ -707,6 +780,10 @@ class Quadtree extends BaseCoordinates {
 
   static Quadtree parse(String input) {
     return parseQuadtree(input);
+  }
+
+  static Quadtree fromLatLon(LatLng coord, {int precision}) {
+    return latLonToQuadtree(coord, precision: precision);
   }
 
   @override

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_maidenhead_textinputformatter.dart';
@@ -36,7 +35,7 @@ class GCWCoordsMaidenheadState extends State<GCWCoordsMaidenhead> {
     if (widget.coordinates != null) {
       var maidenhead = widget.coordinates is Maidenhead ?
           widget.coordinates as Maidenhead :
-          latLonToMaidenhead(widget.coordinates.toLatLng());
+          Maidenhead.fromLatLon(widget.coordinates.toLatLng());
       _currentCoord = maidenhead.text;
 
       _controller.text = _currentCoord;

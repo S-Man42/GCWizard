@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/slippy_map.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 
@@ -46,7 +45,7 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
     if (widget.coordinates != null) {
       var slippyMap = widget.coordinates is SlippyMap ?
           widget.coordinates as SlippyMap :
-          latLonToSlippyMap(widget.coordinates.toLatLng(), double.tryParse(widget.zoom));
+          SlippyMap.fromLatLon(widget.coordinates.toLatLng(), double.tryParse(widget.zoom));
       _currentX['value'] = slippyMap.x;
       _currentY['value'] = slippyMap.y;
 

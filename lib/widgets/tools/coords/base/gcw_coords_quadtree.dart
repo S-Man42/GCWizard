@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/quadtree.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/wrapper_for_masktextinputformatter.dart';
@@ -37,7 +36,7 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
     if (widget.coordinates != null) {
       var quadtree = widget.coordinates is Quadtree ?
           widget.coordinates as Quadtree :
-          latLonToQuadtree(widget.coordinates.toLatLng());
+          Quadtree.fromLatLon(widget.coordinates.toLatLng());
       _currentCoord = quadtree.toString();
 
       _controller.text = _currentCoord;

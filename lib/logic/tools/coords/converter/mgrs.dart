@@ -24,7 +24,7 @@ String _constructDigraph(int zone, double easting, double northing) {
 }
 
 MGRS latLonToMGRS(LatLng coord, Ellipsoid ells) {
-  UTMREF _utm = latLonToUTM(coord, ells);
+  UTMREF _utm = UTMREF.fromLatLon(coord, ells);
 
   var _digraph = _constructDigraph(_utm.zone.lonZone, _utm.easting / 100000.0, _utm.northing / 100000.0);
 

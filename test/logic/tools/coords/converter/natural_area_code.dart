@@ -1,5 +1,4 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:latlong/latlong.dart';
 
@@ -17,7 +16,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('coord: ${elem['coord']}', () {
-        var _actual = latLonToNaturalAreaCode(elem['coord']);
+        var _actual = NaturalAreaCode.fromLatLon(elem['coord']);
         expect(_actual.x, elem['expectedOutput'].x);
         expect(_actual.y, elem['expectedOutput'].y);
       });

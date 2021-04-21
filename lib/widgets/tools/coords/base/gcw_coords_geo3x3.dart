@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/geo3x3.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_geo3x3_textinputformatter.dart';
@@ -36,7 +35,7 @@ class GCWCoordsGeo3x3State extends State<GCWCoordsGeo3x3> {
     if (widget.coordinates != null) {
       var geo3x3 = widget.coordinates is Geo3x3 ?
           widget.coordinates as Geo3x3 :
-          latLonToGeo3x3(widget.coordinates.toLatLng(), 20);
+          Geo3x3.fromLatLon(widget.coordinates.toLatLng(), 20);
       _currentCoord = geo3x3.text;
 
       _controller.text = _currentCoord;

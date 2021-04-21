@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 
@@ -55,7 +54,7 @@ class GCWCoordsReverseWhereIGoWaldmeisterState extends State<GCWCoordsReverseWhe
     if (widget.coordinates != null) {
       var waldmeister = widget.coordinates is Waldmeister ?
           widget.coordinates as Waldmeister :
-          latLonToWaldmeister(widget.coordinates.toLatLng());
+          Waldmeister.fromLatLon(widget.coordinates.toLatLng());
       _currentA = int.tryParse(waldmeister.a);
       _currentB = int.tryParse(waldmeister.b);
       _currentC = int.tryParse(waldmeister.c);

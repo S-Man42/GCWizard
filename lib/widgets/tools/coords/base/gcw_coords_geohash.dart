@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/geohash.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_geohash_textinputformatter.dart';
@@ -36,7 +35,7 @@ class GCWCoordsGeohashState extends State<GCWCoordsGeohash> {
     if (widget.coordinates != null) {
       var geohash = widget.coordinates is Geohash ?
           widget.coordinates as Geohash :
-          latLonToGeohash(widget.coordinates.toLatLng(), 14);
+          Geohash.fromLatLon(widget.coordinates.toLatLng(), 14);
       _currentCoord = geohash.text;
 
       _controller.text = _currentCoord;

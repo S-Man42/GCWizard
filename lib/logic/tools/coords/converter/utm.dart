@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:gc_wizard/utils/constants.dart';
 import 'package:latlong/latlong.dart';
 
 final double _k0 = 0.9996;

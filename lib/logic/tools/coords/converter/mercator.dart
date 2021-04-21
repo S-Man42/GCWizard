@@ -21,12 +21,6 @@ Mercator latLonToMercator(LatLng coord, Ellipsoid ells) {
   return Mercator(y, x);
 }
 
-String latLonToMercatorString(LatLng coord, Ellipsoid ells) {
-  Mercator mercator = latLonToMercator(coord, ells);
-
-  return 'Y: ${mercator.easting}\nX: ${mercator.northing}';
-}
-
 Mercator parseMercator(String input) {
   RegExp regExp = RegExp(r'^\s*([\-0-9\.]+)(\s*,\s*|\s+)([\-0-9\.]+)\s*$');
   var matches = regExp.allMatches(input);

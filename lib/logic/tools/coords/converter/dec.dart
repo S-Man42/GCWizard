@@ -1,9 +1,6 @@
-import 'dart:math';
-
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:latlong/latlong.dart';
-import 'package:intl/intl.dart';
 
 LatLng decToLatLon(DEC dec) {
   var normalized = normalize(dec);
