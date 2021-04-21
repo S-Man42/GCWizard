@@ -193,6 +193,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/trithemius.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/vigenere.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/z22.dart';
 import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagroups.dart';
+import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
@@ -498,6 +499,12 @@ class Registry {
             SEARCHSTRING_EN_CAESAR,
             SEARCHSTRING_FR_CAESAR
           ]),
+      GCWTool(tool: Catan(), i18nPrefix: 'catan', category: ToolCategory.GAMES, missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_CATAN,
+        SEARCHSTRING_DE_CATAN,
+        SEARCHSTRING_EN_CATAN,
+        SEARCHSTRING_FR_CATAN
+      ]),
       GCWTool(
           tool: CCITT1Selection(),
           i18nPrefix: 'ccitt1_selection',
@@ -5817,10 +5824,28 @@ class Registry {
         SEARCHSTRING_FR_RESISTOR_COLORCODE
       ]),
       GCWSymbolTableTool(symbolKey: 'rhesus_a', symbolSearchStrings: [
-        SEARCHSTRING_COMMON_SYMBOL_RHESUS_A,
-        SEARCHSTRING_DE_SYMBOL_RHESUS_A,
-        SEARCHSTRING_EN_SYMBOL_RHESUS_A,
-        SEARCHSTRING_FR_SYMBOL_RHESUS_A
+        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
+        SEARCHSTRING_DE_SYMBOL_RHESUS,
+        SEARCHSTRING_EN_SYMBOL_RHESUS,
+        SEARCHSTRING_FR_SYMBOL_RHESUS
+      ]),
+      GCWSymbolTableTool(symbolKey: 'rhesus_b', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
+        SEARCHSTRING_DE_SYMBOL_RHESUS,
+        SEARCHSTRING_EN_SYMBOL_RHESUS,
+        SEARCHSTRING_FR_SYMBOL_RHESUS
+      ]),
+      GCWSymbolTableTool(symbolKey: 'rhesus_c1', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
+        SEARCHSTRING_DE_SYMBOL_RHESUS,
+        SEARCHSTRING_EN_SYMBOL_RHESUS,
+        SEARCHSTRING_FR_SYMBOL_RHESUS
+      ]),
+      GCWSymbolTableTool(symbolKey: 'rhesus_c2', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_RHESUS,
+        SEARCHSTRING_DE_SYMBOL_RHESUS,
+        SEARCHSTRING_EN_SYMBOL_RHESUS,
+        SEARCHSTRING_FR_SYMBOL_RHESUS
       ]),
       GCWSymbolTableTool(symbolKey: 'rm4scc', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BARCODES,

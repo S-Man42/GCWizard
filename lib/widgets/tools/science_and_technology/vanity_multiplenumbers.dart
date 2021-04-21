@@ -4,7 +4,6 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 
 class VanityMultipleNumbers extends StatefulWidget {
@@ -65,16 +64,16 @@ class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
             });
           },
         ),
-        if (_currentMode == GCWSwitchPosition.left)
-          GCWOnOffSwitch(
-            title: i18n(context, 'vanity_multiplenumbers_case_sensitive'),
-            value: _currentEncodeCaseSensitive,
-            onChanged: (value) {
-              setState(() {
-                _currentEncodeCaseSensitive = value;
-              });
-            },
-          ),
+        // if (_currentMode == GCWSwitchPosition.left)
+        //   GCWOnOffSwitch(
+        //     title: i18n(context, 'vanity_multiplenumbers_case_sensitive'),
+        //     value: _currentEncodeCaseSensitive,
+        //     onChanged: (value) {
+        //       setState(() {
+        //         _currentEncodeCaseSensitive = value;
+        //       });
+        //     },
+        //   ),
         GCWDropDownButton(
             value: _currentModel,
             onChanged: (newValue) {
@@ -105,7 +104,7 @@ class VanityMultipleNumbersState extends State<VanityMultipleNumbers> {
       return encodeVanityMultipleNumbers(_currentEncodeInput, _currentModel,
           caseSensitive: _currentEncodeCaseSensitive);
     } else {
-      return decodeVanityMultipleNumbers(_currentDecodeInput, _currentModel);
+      return decodeVanityMultipleNumbers(_currentDecodeInput, _currentModel).output;
     }
   }
 }
