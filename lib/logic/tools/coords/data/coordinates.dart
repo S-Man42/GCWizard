@@ -213,8 +213,8 @@ class DMM {
 
 class DMSPart {
   int sign;
-  double degrees;
-  double minutes;
+  int degrees;
+  int minutes;
   double seconds;
 
   DMSPart(this.sign, this.degrees, this.minutes, this.seconds);
