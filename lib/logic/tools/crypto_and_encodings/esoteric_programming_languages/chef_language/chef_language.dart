@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/kitchen.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/recipe.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/primes/primes.dart';
@@ -345,6 +346,9 @@ class Chef {
   List<String> meal;
 
   Chef(String readRecipe, language) {
+    if (readRecipe == '' || readRecipe == null)
+      return ;
+
     this.meal = new List<String>();
     valid = true;
     error = new List<String>();
@@ -360,6 +364,75 @@ class Chef {
     bool servesFound = false;
     bool refrigerateFound = false;
     bool titleFound = false;
+
+    // add missing title
+    List<String> recipe = readRecipe.split('\n');
+    if (recipe[0].startsWith('ingredients') || recipe[0].startsWith('zutaten'))
+      recipe[0] = 'pseudo title\n\n' + recipe[0];
+
+    // add blank lines to build the necessary sections
+    String s0 = recipe[0];
+    for (int i = 1; i < recipe.length; i++){
+      if (recipe[i].startsWith("ingredients") || recipe[i].startsWith("zutaten") ||
+          recipe[i].startsWith("cooking time") || recipe[i].startsWith("garzeit") ||
+          recipe[i].startsWith("pre-heat oven") || recipe[i].startsWith("pre heat oven") || recipe[i].startsWith("ofen auf") ||
+          recipe[i].startsWith("method") || recipe[i].startsWith("zubereitung") ||
+          recipe[i].startsWith("serves") || recipe[i].startsWith("portionen"))
+          if (s0 != '')
+            recipe[i] = '\n' + recipe[i];
+      s0 =  recipe[i];
+    }
+    recipe = recipe.join('\n').split('\n');
+    // remove blank lines inside sections ingredients, methods
+    bool ingredientSection = false;
+    bool methodSection = false;
+    for (int i = 0; i < recipe.length - 1; i++) {
+      if (recipe[i].startsWith("ingredients") ||
+          recipe[i].startsWith("zutaten"))
+        ingredientSection = true;
+
+      if (recipe[i].startsWith("cooking time") ||
+          recipe[i].startsWith("garzeit") ||
+          recipe[i].startsWith("pre-heat oven") ||
+          recipe[i].startsWith("pre heat oven") ||
+          recipe[i].startsWith("ofen auf") ||
+          recipe[i].startsWith("method") || recipe[i].startsWith("zubereitung"))
+        ingredientSection = false;
+
+      if (recipe[i].startsWith("method") || recipe[i].startsWith("zubereitung"))
+        methodSection = true;
+
+      if ((recipe[i] == '' || recipe[i] == '\n') && ingredientSection) {
+        if (recipe[i + 1].startsWith('method') ||
+            recipe[i + 1].startsWith('zubereitung') ||
+            recipe[i + 1].startsWith("cooking time") ||
+            recipe[i + 1].startsWith("garzeit") ||
+            recipe[i + 1].startsWith("pre-heat oven") ||
+            recipe[i + 1].startsWith("pre heat oven") ||
+            recipe[i + 1].startsWith("ofen auf") ||
+            recipe[i + 1].startsWith("serves") ||
+            recipe[i + 1].startsWith("portionen")) {
+        } else {
+          recipe.removeAt(i);
+        }
+      }
+
+      if ((recipe[i] == '' || recipe[i] == '\n') && methodSection) {
+        if (recipe[i + 1].startsWith('method') ||
+            recipe[i + 1].startsWith('zubereitung') ||
+            recipe[i + 1].startsWith("cooking time") ||
+            recipe[i + 1].startsWith("garzeit") ||
+            recipe[i + 1].startsWith("pre-heat oven") ||
+            recipe[i + 1].startsWith("pre heat oven") ||
+            recipe[i + 1].startsWith("ofen auf") ||
+            recipe[i + 1].startsWith("serves") ||
+            recipe[i + 1].startsWith("portionen")) {
+        } else {
+          recipe.removeAt(i);
+        }
+      }
+    }
+    readRecipe = recipe.join('\n');
 
     readRecipe.split("\n\n").forEach((element) {
       line = element.trim();

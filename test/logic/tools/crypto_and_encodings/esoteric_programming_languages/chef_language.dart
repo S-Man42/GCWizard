@@ -1941,10 +1941,10 @@ Refrigerate for 1 hour.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',   'recipe' : exp,   'isValid' : true, 'expectedOutput' : ['8']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : fac,   'isValid' : true, 'expectedOutput' : ['chef_error_structure_recipe']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : fib,   'isValid' : true, 'expectedOutput' : ['chef_error_structure_recipe']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : fib2,   'isValid' : true, 'expectedOutput' : ['chef_error_structure_recipe']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : hello,   'isValid' : true, 'expectedOutput' : ['chef_error_structure_recipe']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : fac,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : fib,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : fib2,   'isValid' : true, 'expectedOutput' : ['chef_error_syntax']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : hello,   'isValid' : true, 'expectedOutput' : ['Hello world!']},
       {'language' : 'ENG', 'input' : '',   'recipe' : japh,   'isValid' : true, 'expectedOutput' : ['Just another Chef/Perl Hacker,']},
       {'language' : 'ENG', 'input' : '5',   'recipe' : stdin,   'isValid' : true, 'expectedOutput' : ['5']},
     ];
@@ -2834,4 +2834,105 @@ Serves 1.''';
     });
   });
 
+  group("chef_language.GC7NYHW", () {
+
+    // https://www.geocaching.com/geocache/GC7NYHW_backe-backe-kuchen
+
+    var BackeBackeKuchen = '''Zutaten:
+49 Eier
+52 g Mehl
+53 ml Milch
+46 ml Wasser
+48 g Zucker
+32 Teelöffel Honig
+176 g Traubenzucker
+57 g Puderzucker
+69 g Kirschen
+54 g Zwetschgen
+56 g Kiwis
+Zubereitung:
+Eier in die Schüssel geben. Mehl in die Schüssel geben. Milch in die Schüssel geben. Wasser in die Schüssel geben. Zucker in die Schüssel geben. Zucker in die Schüssel geben. Honig in die Schüssel geben. Traubenzucker in die Schüssel geben. Puderzucker in die Schüssel geben. Zucker in die Schüssel geben. Zucker in die Schüssel geben. Honig in die Schüssel geben. Kirschen in die Schüssel geben. Honig in die Schüssel geben. Mehl in die Schüssel geben. Zwetschgen in die Schüssel geben. Kiwis in die Schüssel geben. Wasser in die Schüssel geben. Kiwis in die Schüssel geben. Mehl in die Schüssel geben. Honig in die Schüssel geben. Traubenzucker in die Schüssel geben. Kiwis in die Schüssel geben. Mehl in die Schüssel geben. Schüssel in eine Servierschale stürzen.
+Portionen: 1.''';
+
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'language' : 'DEU', 'input' : '',  'recipe' : BackeBackeKuchen, 'expectedOutput' : ['5256176325256.565452326932484857176324848.55249']},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i], elem['expectedOutput'][i]);
+        }
+      });
+    });
+  });
+
+  group("chef_language.correctFaultyRecipes", () {
+
+    var IngredientsBlankLines = '''Zutaten:
+49 Eier
+52 g Mehl
+
+53 ml Milch
+Zubereitung:
+Eier in die Schüssel geben. Mehl in die Schüssel geben. Milch in die Schüssel geben. Schüssel in eine Servierschale stürzen.
+Portionen: 1.''';
+
+    var MethodsBlankLines = '''Zutaten:
+49 Eier
+52 g Mehl
+53 ml Milch
+Zubereitung:
+Eier in die Schüssel geben. 
+
+Mehl in die Schüssel geben. Milch in die Schüssel geben. Schüssel in eine Servierschale stürzen.
+Portionen: 1.''';
+
+    var TripleBlankLines = '''Zutaten:
+49 Eier
+52 g Mehl
+53 ml Milch
+
+
+
+Zubereitung:
+Eier in die Schüssel geben. Mehl in die Schüssel geben. Milch in die Schüssel geben. Schüssel in eine Servierschale stürzen.
+
+
+
+Portionen: 1.''';
+
+    var MisplacedTitle = '''MisplacedTitle.
+    Kommentar
+    Zutaten:
+49 Eier
+52 g Mehl
+53 ml Milch
+Zubereitung:
+Eier in die Schüssel geben. 
+
+Mehl in die Schüssel geben. Milch in die Schüssel geben. Schüssel in eine Servierschale stürzen.
+Portionen: 1.''';
+
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'language' : 'DEU', 'input' : '',  'recipe' : IngredientsBlankLines, 'expectedOutput' : ['55249']},
+      {'language' : 'DEU', 'input' : '',  'recipe' : MethodsBlankLines, 'expectedOutput' : ['55249']},
+      {'language' : 'DEU', 'input' : '',  'recipe' : MisplacedTitle, 'expectedOutput' : ['55249']},
+      {'language' : 'DEU', 'input' : '',  'recipe' : TripleBlankLines, 'expectedOutput' : ['55249']},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i], elem['expectedOutput'][i]);
+        }
+      });
+    });
+  });
 }
+
+
