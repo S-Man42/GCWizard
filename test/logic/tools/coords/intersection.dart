@@ -19,7 +19,6 @@ void main() {
       test('coord1: ${elem['coord1']}, alpha: ${elem['alpha']}, coord2: ${elem['coord2']}, beta: ${elem['beta']}', () {
         var actual = intersection(elem['coord1'], elem['alpha'], elem['coord2'], elem['beta'], getEllipsoidByName(ELLIPSOID_NAME_WGS84));
         List<LatLng> expected = elem['expectedOutput'];
-        print(actual);
         expect(actual.length, expected.length);
         for (int i = 0; i < actual.length; i++) {
           expect(equalsLatLng(actual[i], expected[i]), true);
