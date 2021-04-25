@@ -32,6 +32,7 @@ void main() {
       {'input' : inputString, 'from' : enumKeyboardLayout.QWERTZ_T1, 'to' : enumKeyboardLayout.NEO,           'expectedOutput' : 'uzäaleosgnrtmbfqxciwhpvöükydßUZÄALEOSGNRTMBFQXCIWHPVÖÜKYDẞ1234567890'},
       {'input' : inputString, 'from' : enumKeyboardLayout.QWERTZ_T1, 'to' : enumKeyboardLayout.FRA_AZERTY,    'expectedOutput' : 'qbcdefghijkl.noparstuvzxwy/m-QBCDEFGHIJKL?NOPARSTUVZXWY\\M_àéèê()ߵߴ«»'},
       {'input' : inputString, 'from' : enumKeyboardLayout.QWERTZ_T1, 'to' : enumKeyboardLayout.FRA_BEPO,      'expectedOutput' : 'a.yipe,cdtsr\'kljbouèvxéàw^mnzA:YIPE;CDTSR?KLJBOUÈVXÉÀW!MNZ"«»()@+-/*'},
+      {'input' : inputString, 'from' : enumKeyboardLayout.QWERTZ_T1, 'to' : enumKeyboardLayout.BONE,          'expectedOutput' : 'cöüiueoblnrszymwjatxhädvfpqgßCÖÜIUEOBLNRSZYMWJATXHÄDVFPQGẞ1234567890'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -56,6 +57,7 @@ void main() {
       {'input' : inputString, 'from' : enumKeyboardLayout.QWERTY_US_INT, 'to' : enumKeyboardLayout.RISTOME,       'expectedOutput' : 'zkgarniudehsüäwjqolctmpvbxZKGARNIUDEHSÜÄWJQOLCTMPVBX1234567890'},
       {'input' : inputString, 'from' : enumKeyboardLayout.QWERTY_US_INT, 'to' : enumKeyboardLayout.FRA_AZERTY,    'expectedOutput' : 'qbcdefghijkl.noparstuvzxywQBCDEFGHIJKL?NOPARSTUVZXYWàéèê()ߵߴ«»'},
       {'input' : inputString, 'from' : enumKeyboardLayout.QWERTY_US_INT, 'to' : enumKeyboardLayout.FRA_BEPO,      'expectedOutput' : 'a.yipe,cdtsr\'kljbouèvxéà^wA:YIPE;CDTSR?KLJBOUÈVXÉÀ!W"«»()@+-/*'},
+      {'input' : inputString, 'from' : enumKeyboardLayout.QWERTY_US_INT, 'to' : enumKeyboardLayout.BONE,          'expectedOutput' : 'cöüiueoblnrszymwjatxhädvpfCÖÜIUEOBLNRSZYMWJATXHÄDVPF1234567890'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -80,6 +82,7 @@ void main() {
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak, 'to' : enumKeyboardLayout.RISTOME,       'expectedOutput' : 'zäduabteigmjüslovwfhn,ßkc.ZÄDUABTEIGMJÜSLOVWFHN;?KC:234567890-'},
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak, 'to' : enumKeyboardLayout.FRA_AZERTY,    'expectedOutput' : 'qnihdyujgcvp.lsrxomkf:,bt;QNIHDYUJGCVP?LSRXOMKF…!BT=éèê()ߵߴ«»\''},
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak, 'to' : enumKeyboardLayout.FRA_BEPO,      'expectedOutput' : 'akdci^vt,yxj\'ruoàlnsehg.èfAKDCI!VT;YXJ?RUOÀLNSEHG:ÈF«»()@+-/*='},
+      {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak, 'to' : enumKeyboardLayout.BONE,          'expectedOutput' : 'cylbiphnoüäwzstavmgre.,öxkCYLBIPHNOÜÄWZSTAVMGRE·-ÖXK234567890'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -104,6 +107,7 @@ void main() {
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_II_DEU, 'to' : enumKeyboardLayout.RISTOME,       'expectedOutput' : 'zädeabtungmyüslovhfwi,ßkcj<xqZÄDEABTUNGMYÜSLOVHFWI;?KCJ>XQ1234567890'},
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_II_DEU, 'to' : enumKeyboardLayout.FRA_AZERTY,    'expectedOutput' : 'qnijdyuhfcv/.lsrxkmog:,btp<waQNIJDYUHFCV\\?LSRXKMOG…!BTP>WAàéèê()ߵߴ«»'},
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_II_DEU, 'to' : enumKeyboardLayout.FRA_BEPO,      'expectedOutput' : 'akdti^vceyxm\'ruoàsnl,hg.èjêwbAKDTI!VCEYXM?RUOÀSNL;HG:ÈJÊWB"«»()@+-/*'},
+      {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_II_DEU, 'to' : enumKeyboardLayout.BONE,          'expectedOutput' : 'cylniphbeüäqzstavrgmo.,öxwfjCYLNIPHBEÜÄQZSTAVRGMO·-ÖXWFJ1234567890'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -128,6 +132,7 @@ void main() {
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_I_DEU1, 'to' : enumKeyboardLayout.RISTOME,       'expectedOutput' : 'zkduabteivgjäsloöwfhnßümc,q<xZKDUABTEIVGJÄSLOÖWFHN?ÜMC;Q>X1234567890'},
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_I_DEU1, 'to' : enumKeyboardLayout.FRA_AZERTY,    'expectedOutput' : 'qbihdyujgxcpnlsr-omkf,.vt:a<wQBIHDYUJGXCPNLSR_OMKF!?VT…A>Wàéèê()ߵߴ«»'},
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_I_DEU1, 'to' : enumKeyboardLayout.FRA_BEPO,      'expectedOutput' : 'a.dci^vt,àyjkruozlnseg\'xèhbêwA:DCI!VT;ÀYJKRUOZLNSEG?XÈHBÊW"«»()@+-/*'},
+      {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_I_DEU1, 'to' : enumKeyboardLayout.BONE,          'expectedOutput' : 'cölbiphnovüwystaßmgre,zäx.jfCÖLBIPHNOVÜWYSTAẞMGRE-ZÄX·JF1234567890'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -152,6 +157,7 @@ void main() {
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_I_DEU2, 'to' : enumKeyboardLayout.RISTOME,       'expectedOutput' : 'zkduabteivgjäslo#wfhnßümc,rqpZKDUABTEIVGJÄSLOÖWFHN?ÜMC;RQP1234567890'},
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_I_DEU2, 'to' : enumKeyboardLayout.FRA_AZERTY,    'expectedOutput' : 'qbihdyujgxcpnlsr*omkf,.vt:eazQBIHDYUJGXCPNLSR_OMKF!?VT…EAZàéèê()ߵߴ«»'},
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_I_DEU2, 'to' : enumKeyboardLayout.FRA_BEPO,      'expectedOutput' : 'a.dci^vt,àyjkruoçlnseg\'xèhpbéA:DCI!VT;ÀYJKRUOZLNSEG?XÈHPBÉ"«»()@+-/*'},
+      {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_I_DEU2, 'to' : enumKeyboardLayout.BONE,          'expectedOutput' : 'cölbiphnovüwystamgre,zäx.ujdCÖLBIPHNOVÜWYSTAẞMGRE-ZÄX·UJD1234567890'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -176,6 +182,7 @@ void main() {
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_I_DEU3, 'to' : enumKeyboardLayout.RISTOME,       'expectedOutput' : 'zkduabteivgjäslo#wfhnßümc,qprZKDUABTEIVGJÄSLOÖWFHN?ÜMC;QPR1234567890'},
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_I_DEU3, 'to' : enumKeyboardLayout.FRA_AZERTY,    'expectedOutput' : 'qbihdyujgxcpnlsr*omkf,.vt:azeQBIHDYUJGXCPNLSR_OMKF!?VT…AZEàéèê()ߵߴ«»'},
       {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_I_DEU3, 'to' : enumKeyboardLayout.FRA_BEPO,      'expectedOutput' : 'a.dci^vt,àyjkruoçlnseg\'xèhbépA:DCI!VT;ÀYJKRUOZLNSEG?XÈHBÉP"«»()@+-/*'},
+      {'input' : inputString, 'from' : enumKeyboardLayout.Dvorak_I_DEU3, 'to' : enumKeyboardLayout.BONE,          'expectedOutput' : 'cölbiphnovüwystamgre,zäx.jduCÖLBIPHNOVÜWYSTAẞMGRE-ZÄX·JDU1234567890'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -200,6 +207,7 @@ void main() {
       {'input' : inputString, 'from' : enumKeyboardLayout.COLEMAK, 'to' : enumKeyboardLayout.RISTOME,       'expectedOutput' : 'zkgihrcusbätüefoqlandmpvwxZKGIHRCUSBÄTÜEFOQLANDMPVWX1234567890'},
       {'input' : inputString, 'from' : enumKeyboardLayout.COLEMAK, 'to' : enumKeyboardLayout.FRA_AZERTY,    'expectedOutput' : 'qbcgkethlynu.jmrasdfivzxowQBCGKETHLYNU?JMRASDFIVZXOWàéèê()ߵߴ«»'},
       {'input' : inputString, 'from' : enumKeyboardLayout.COLEMAK, 'to' : enumKeyboardLayout.FRA_BEPO,      'expectedOutput' : 'a.y,spècr^kv\'tnobuiedxéàlwA:Y;SPÈCR!KV?TNOBUIEDXÉÀLW"«»()@+-/*'},
+      {'input' : inputString, 'from' : enumKeyboardLayout.COLEMAK, 'to' : enumKeyboardLayout.BONE,          'expectedOutput' : 'cöüoruxbspyhzngajtielädvmfCÖÜORUXBSPYHZNGAJTIELÄDVMF1234567890'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -224,6 +232,7 @@ void main() {
       {'input' : inputString, 'from' : enumKeyboardLayout.NEO, 'to' : enumKeyboardLayout.RISTOME,       'expectedOutput' : 'aäofnwdtl.brüeimjhuszpcqykgvxAÄOFNWDTL:BRÜEIMJHUSZPCQYKGVX1234567890'},
       {'input' : inputString, 'from' : enumKeyboardLayout.NEO, 'to' : enumKeyboardLayout.FRA_AZERTY,    'expectedOutput' : 'dnrmfoius;ye.jgvpkhlqzta/bcxwDNRMFOIUS=YE?JGVPKHLQZTA\\BCXWàéèê()ߵߴ«»'},
       {'input' : inputString, 'from' : enumKeyboardLayout.NEO, 'to' : enumKeyboardLayout.FRA_BEPO,      'expectedOutput' : 'ikoneldvuf^p\'t,xjscraéèbm.yàwIKONELDVUF!P?T;XJSCRAÉÈBM:YÀW"«»()@+-/*'},
+      {'input' : inputString, 'from' : enumKeyboardLayout.NEO, 'to' : enumKeyboardLayout.BONE,          'expectedOutput' : 'iyagemlhtkpuznoäwrbscdxjqöüvfIYAGEMLHTKPUZNOÄWRBSCDXJQÖÜVF1234567890'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -248,6 +257,7 @@ void main() {
       {'input' : inputString, 'from' : enumKeyboardLayout.RISTOME, 'to' : enumKeyboardLayout.RISTOME,       'expectedOutput' : 'abcdefghijklmnopqrstuvwxyzäöüABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ1234567890'},
       {'input' : inputString, 'from' : enumKeyboardLayout.RISTOME, 'to' : enumKeyboardLayout.FRA_AZERTY,    'expectedOutput' : 'dytijmckgpbsvfrzaeluhxow/qn-.DYTIJMCKGPBSVFRZAELUHXOW\\QN_?àéèê()ߵߴ«»'},
       {'input' : inputString, 'from' : enumKeyboardLayout.RISTOME, 'to' : enumKeyboardLayout.FRA_BEPO,      'expectedOutput' : 'i^èdtnys,j.uxeoébprvcàlwmakz\'I!ÈDTNYS;J:UXEOÉBPRVCÀLWMAKZ?"«»()@+-/*'},
+      {'input' : inputString, 'from' : enumKeyboardLayout.RISTOME, 'to' : enumKeyboardLayout.BONE,          'expectedOutput' : 'ipxlngürowötäeadjushbvmfqcyßzIPXLNGÜROWÖTÄEADJUSHBVMFQCYẞZ1234567890'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -272,6 +282,7 @@ void main() {
       {'input' : inputString, 'from' : enumKeyboardLayout.FRA_AZERTY, 'to' : enumKeyboardLayout.RISTOME,       'expectedOutput' : 'qkgarniudehsfäwjzolctmxvbpQKGARNIUDEHSFÄWJZOLCTMXVBP!"§\$%&/()='},
       {'input' : inputString, 'from' : enumKeyboardLayout.FRA_AZERTY, 'to' : enumKeyboardLayout.FRA_AZERTY,    'expectedOutput' : 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'},
       {'input' : inputString, 'from' : enumKeyboardLayout.FRA_AZERTY, 'to' : enumKeyboardLayout.FRA_BEPO,      'expectedOutput' : 'b.yipe,cdtsrnkljaouèvxwà^éB:YIPE;CDTSRNKLJAOUÈVXWÀ!É1234567890'},
+      {'input' : inputString, 'from' : enumKeyboardLayout.FRA_AZERTY, 'to' : enumKeyboardLayout.BONE,          'expectedOutput' : 'jöüiueoblnrsgymwcatxhäfvpdJÖÜIUEOBLNRSGYMWCATXHÄFVPD°§ℓ»«\$€„“”'},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -296,11 +307,64 @@ void main() {
       {'input' : inputString, 'from' : enumKeyboardLayout.FRA_BEPO, 'to' : enumKeyboardLayout.RISTOME,       'expectedOutput' : 'zqudn.ß,ajäwyforsheltxmgöZQUDN:?;AJÄWYFORSHELTXMGÖ!"§\$%&/()='},
       {'input' : inputString, 'from' : enumKeyboardLayout.FRA_BEPO, 'to' : enumKeyboardLayout.FRA_AZERTY,    'expectedOutput' : 'qahif;,:dpno/mrelkjsuwvc-QAHIF=!…DPNO\\MRELKJSUWVC_1234567890'},
       {'input' : inputString, 'from' : enumKeyboardLayout.FRA_BEPO, 'to' : enumKeyboardLayout.FRA_BEPO,      'expectedOutput' : 'abcdefghijklmnoprstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ1234567890'},
+      {'input' : inputString, 'from' : enumKeyboardLayout.FRA_BEPO, 'to' : enumKeyboardLayout.BONE,          'expectedOutput' : 'cjblek,.iwymqgausrnthfäüßCJBLEK-·IWYMQGAUSRNTHFÄÜẞ°§ℓ»«\$€„“”'},
     ];
 
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, from: ${elem['from']}, to: ${elem['to']}', () {
         var _actual = encodeKeyboard(elem['input'], elem['from'], elem['to']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("Keyboard.encodeKeyboardNumbers:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : '1234567890', 'expectedOutput' : [
+        ['keyboard_mode_qwertz_ristome_dvorak', '!"§\$%&/()='],
+        ['keyboard_mode_neo', '°§ℓ»«\$€„“”'],
+        ['keyboard_mode_neo_3', '¹²³›‹₵¥‚‘’'],
+        ['keyboard_mode_neo_5', '¹²³♀♂⚥𝛘〈〉𝛐'],
+        ['keyboard_mode_neo_6', '¬∨∧⊥∡∥→∞∝∅'],
+        ['keyboard_mode_fra_azerty', '&é"\'(-è_çà'],
+        ['keyboard_mode_fra_bepo', '"«»()@+-/*'],
+        ['keyboard_mode_qwerty_us_int_colemak_dvorak', '!@#\$%^&*()']
+      ]},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = encodeKeyboardNumbers(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("Keyboard.decodeKeyboardNumbers:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : '!"§\$%&/()=°§ℓ»«\$€„“”¹²³›‹₵¥‚‘’³♀♂⚥𝛘〈〉𝛐¬∨∧⊥∡∥→∞∝∅"«»()@+-/*', 'expectedOutput' : [
+        ['keyboard_mode_qwertz_ristome_dvorak',
+          '1234567890 3   4     23       3                   2  89   7 '],
+        ['keyboard_mode_neo',
+          '  26  7   123456 890                               54     7 '],
+        ['keyboard_mode_neo_3',
+          '                    12345678903                             '],
+        ['keyboard_mode_neo_5',
+          '                    123       3456  89                      '],
+        ['keyboard_mode_neo_6',
+          '                                        1234567890          '],
+        ['keyboard_mode_fra_azerty',
+          ' 3   1 5                                          3  5 0 6  '],
+        ['keyboard_mode_fra_bepo',
+          ' 1    945    32                                   1234567890'],
+        ['keyboard_mode_qwerty_us_int_colemak_dvorak',
+          '1  457 90      4                                     902   8'],
+      ]},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = decodeKeyboardNumbers(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });

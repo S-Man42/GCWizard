@@ -821,26 +821,18 @@ class Registry {
             SEARCHSTRING_EN_KENNY,
             SEARCHSTRING_FR_KENNY
           ]),
-      GCWTool(
-          tool: KeyboardLayout(),
-          i18nPrefix: 'keyboard_layout',
-          missingHelpLocales: [],
-          searchStrings: [
-            SEARCHSTRING_COMMON_KEYBOARD,
-            SEARCHSTRING_DE_KEYBOARD,
-            SEARCHSTRING_EN_KEYBOARD,
-            SEARCHSTRING_FR_KEYBOARD
-          ]),
-      GCWTool(
-          tool: KeyboardNumbers(),
-          i18nPrefix: 'keyboard_numbers',
-          missingHelpLocales: [],
-          searchStrings: [
-            SEARCHSTRING_COMMON_KEYBOARD,
-            SEARCHSTRING_DE_KEYBOARD,
-            SEARCHSTRING_EN_KEYBOARD,
-            SEARCHSTRING_FR_KEYBOARD
-          ]),
+      GCWTool(tool: KeyboardLayout(), i18nPrefix: 'keyboard_layout', missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_KEYBOARD,
+        SEARCHSTRING_DE_KEYBOARD,
+        SEARCHSTRING_EN_KEYBOARD,
+        SEARCHSTRING_FR_KEYBOARD
+      ]),
+      GCWTool(tool: KeyboardNumbers(), i18nPrefix: 'keyboard_numbers', missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_KEYBOARD,
+        SEARCHSTRING_DE_KEYBOARD,
+        SEARCHSTRING_EN_KEYBOARD,
+        SEARCHSTRING_FR_KEYBOARD
+      ]),
       GCWTool(
           tool: KeyboardSelection(),
           i18nPrefix: 'keyboard_selection',
