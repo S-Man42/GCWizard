@@ -236,7 +236,7 @@ bool _isClosedLine(GCWMapPolyline line) {
 
 bool _completeCircle(GCWMapPolyline line, List<GCWMapPoint> points) {
   const toller = 2/100;
-  if (line.points.length < 4)
+  if (line.points.length < 36)
     return false;
 
   var pt1 = line.points[0].point;
