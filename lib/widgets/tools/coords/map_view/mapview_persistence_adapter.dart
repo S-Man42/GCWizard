@@ -284,13 +284,14 @@ class MapViewPersistenceAdapter {
   }
 
   String _removeEmptyElements(String json) {
-    var regExp = RegExp("(\")([\^\"]+)(\":null,)");
-    var regExp1 = RegExp("(,\")([\^\"]+)(\":null})");
-    var regExp2 = RegExp("(\"name\":\"\",)");
+    var regExpList = {
+      "(\")([\^\"]+)(\":null,)": "",
+      "(,\")([\^\"]+)(\":null})": "}",
+      "(\"name\":\"\",)": "",
+      "(\"isVisible\":true,)": "",
+      "(\"isVisible\":true})": "}"};
 
-    json = json.replaceAll(regExp, "");
-    json = json.replaceAll(regExp1, "}");
-    json = json.replaceAll(regExp2, "");
+    regExpList.forEach((key, value) { json = json.replaceAll(RegExp(key), value);});
     return json;
   }
 
