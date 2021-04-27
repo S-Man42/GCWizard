@@ -10,6 +10,7 @@ void main() {
       {'text': '1203203022132122220122000301310333201333', 'expectedOutput': {'format': keyCoordsQuadtree, 'coordinate': LatLng(46.2110174566, 025.598495717)}},
       {'text': '41203203022132122220122000301310333201333', 'expectedOutput': null},
       {'text': 'A1203203022132122220122000301310333201333', 'expectedOutput': null},
+      {'text': '1202210112112003133223132030211230100013', 'expectedOutput': {'format': keyCoordsQuadtree, 'coordinate': LatLng(48.65653333340585, 8.008499999814376)}},
     ];
 
     _inputsToExpected.forEach((elem) {
