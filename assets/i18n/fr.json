@@ -2337,7 +2337,7 @@
   "symboltables_selection_description": "Symboles représentant des lettres ou des nombres",
   "symboltables_selection_download_dialog_title": "Télécharger la table des symboles",
   "symboltables_selection_download_dialog_text": "Voulez-vous télécharger toutes les tables de symboles sous forme de fichier PDF (environ 25 Mo) ?",
-  "symboltables_selection_download_link": "https://misc.gcwizard.net/symboltables_en.pdf",
+  "symboltables_selection_download_link": "https://misc.gcwizard.net/symboltables_fr.pdf",
   "symboltables_showoverlay": "Calques",
   "symboltables_exportimage": "Sauver résultats",
   "symboltables_ignoreunknown": "Ignorer inconnu",
