@@ -260,6 +260,8 @@ void main() {
       {'letter' : 'AAa', 'expectedOutput' : false},
       {'letter' : 'a', 'expectedOutput' : false},
       {'letter' : 'aA', 'expectedOutput' : false},
+
+      {'letter' : 'ß', 'expectedOutput' : false},
     ];
 
     _inputsToExpected.forEach((elem) {
@@ -334,6 +336,53 @@ void main() {
     _inputsToExpected.forEach((elem) {
       test('input: ${elem['input']}, characters: ${elem['characters']}', () {
         var _actual = countCharacters(elem['input'], elem['characters']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("CommonUtils.allSameCharacters:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : null},
+      {'input' : '', 'expectedOutput' : null},
+
+      {'input' : 'a', 'expectedOutput' : true},
+      {'input' : 'aaa', 'expectedOutput' : true},
+      {'input' : 'aaaaa', 'expectedOutput' : true},
+      {'input' : '999', 'expectedOutput' : true},
+
+      {'input' : 'aA', 'expectedOutput' : false},
+      {'input' : 'a a', 'expectedOutput' : false},
+      {'input' : '9977', 'expectedOutput' : false},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, }', () {
+        var _actual = allSameCharacters(elem['input']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("CommonUtils.isOnlyLetters:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : null, 'expectedOutput' : false},
+      {'input' : '', 'expectedOutput' : false},
+
+      {'input' : 'a', 'expectedOutput' : true},
+      {'input' : 'aaa', 'expectedOutput' : true},
+      {'input' : 'AaaA', 'expectedOutput' : true},
+      {'input' : 'ABCÄÖÜßàé', 'expectedOutput' : true},
+
+      {'input' : 'a a', 'expectedOutput' : false},
+      {'input' : 'a1', 'expectedOutput' : false},
+      {'input' : '11', 'expectedOutput' : false},
+      {'input' : 'a.x', 'expectedOutput' : false}
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, }', () {
+        var _actual = isOnlyLetters(elem['input']);
         expect(_actual, elem['expectedOutput']);
       });
     });
