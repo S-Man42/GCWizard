@@ -67,14 +67,6 @@ class VigenereBreakerState extends State<VigenereBreaker> {
           },
         ),
         GCWOnOffSwitch(
-          title: i18n(context, 'vigenere_ignorenonletters'),
-          onChanged: (value) {
-            setState(() {
-              _currentNonLetters = value;
-            });
-          },
-        ),
-        GCWOnOffSwitch(
           title: i18n(context, 'vigenere_autokey'),
           onChanged: (value) {
             setState(() {
@@ -82,6 +74,16 @@ class VigenereBreakerState extends State<VigenereBreaker> {
             });
           },
         ),
+        _currentAutokey == false ?
+          GCWOnOffSwitch(
+            title: i18n(context, 'vigenere_ignorenonletters'),
+            onChanged: (value) {
+              setState(() {
+                _currentNonLetters = value;
+              });
+            },
+          )
+        : Container(),
         GCWTextDivider(text: i18n(context, 'common_alphabet')),
         GCWDropDownButton(
           value: _currentAlphabet,
@@ -191,7 +193,7 @@ class VigenereBreakerState extends State<VigenereBreaker> {
     return GCWAsyncExecuterParameters(VigenereBreakerJobData(
         input: _currentInput,
         vigenereBreakerType: _currentAutokey ? VigenereBreakerType.AUTOKEYVIGENERE : VigenereBreakerType.VIGENERE,
-        ignoreNonLetters: _currentNonLetters,
+        ignoreNonLetters: _currentAutokey ? true : _currentNonLetters,
         alphabet: _currentAlphabet,
         keyLengthMin: _minKeyLength,
         keyLengthMax: _maxKeyLength));

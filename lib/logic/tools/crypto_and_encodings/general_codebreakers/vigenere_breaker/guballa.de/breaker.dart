@@ -80,7 +80,7 @@ BreakerResult break_vigenereAutoKey(
     for (var key_ch1 = 0; key_ch1 < vigenereSquare.length; key_ch1++) {
       for (var key_ch2 = 0; key_ch2 < vigenereSquare.length; key_ch2++) {
         var fitness = 0;
-        var autoKey = <int>[cipher_bin.length + keyLength];
+        var autoKey = List<int>.filled(cipher_bin.length + keyLength, -1);
         for (var text_idx = key_idx; text_idx < (cipher_bin.length - 1); text_idx += keyLength) {
           if (cipher_bin[text_idx] >= 0 && cipher_bin[text_idx + 1] >= 0) {
             var clear_ch1 = 0;
