@@ -53,6 +53,7 @@ const SEARCHSTRING_EN_BOOKCIPHER = 'bookcipher word row line section letter';
 const SEARCHSTRING_EN_BRAILLE = 'tactiles dots points';
 const SEARCHSTRING_EN_BURROESWHEELER = '';
 const SEARCHSTRING_EN_CAESAR = '';
+const SEARCHSTRING_EN_CATAN = 'thesettlerofcatan tabletopgame boardgame';
 const SEARCHSTRING_EN_CALLFORCONTRIBUTION = 'contributions contribute';
 const SEARCHSTRING_EN_CCITT = 'telegraph';
 const SEARCHSTRING_EN_CCITT1 = '';
@@ -228,7 +229,7 @@ const SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION = 'numbers';
 const SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION = 'superperfect numbers';
 const SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION = 'weird numbers';
 const SEARCHSTRING_EN_NUMERALBASES = 'hexadecimal octal octenary numeral systems';
-const SEARCHSTRING_EN_NUMERALWORDS = 'numeralwords  numberwords  numerals';
+const SEARCHSTRING_EN_NUMERALWORDS = 'numeralwords numberwords numerals  cyrillic german english french italian danish spanish dutch norwegian polish portuguese swedish russian volapuk esperanto solresol latin';
 const SEARCHSTRING_EN_NUMERALWORDSLISTS = '';
 const SEARCHSTRING_EN_NUMERALWORDSTEXTSEARCH = 'textanalysis textsearch';
 const SEARCHSTRING_EN_ONETIMEPAD = '';
@@ -425,7 +426,8 @@ const SEARCHSTRING_EN_SYMBOL_PUZZLE = 'jigsaw';
 const SEARCHSTRING_EN_SYMBOL_QUADOO = 'tactiles dots points';
 const SEARCHSTRING_EN_SYMBOL_REALITY = 'reality';
 const SEARCHSTRING_EN_SYMBOL_RED_HERRING = 'red herring fish';
-const SEARCHSTRING_EN_SYMBOL_RHESUS_A = 'inkblots bloodsplatter bloodgroup bloodtype';
+const SEARCHSTRING_EN_SYMBOL_RHESUS =
+    'inkblots bloodsplatter bloodgroup bloodtype inkstains bloodstains colorblots colorstains inkstains colorblots painture';
 const SEARCHSTRING_EN_SYMBOL_RM4SCC =
     'cleanmail postcodes delivery point royalmail4statecustomercode singapore netherlands switzerland austria denmark australia';
 const SEARCHSTRING_EN_SYMBOL_ROMULAN = 'romulans';
@@ -485,7 +487,7 @@ const SEARCHSTRING_EN_TRITHEMIUS = '';
 const SEARCHSTRING_EN_UNITCONVERTER =
     'units converter lengths speeds velocity velocities energies energy force power times areas volumes denisities density masses bathtubs pressures angles temperatures degrees soccerfields';
 const SEARCHSTRING_EN_VANITY = 'telephone keys buttons numbers keypad sms mobile cellphone phoneword';
-const SEARCHSTRING_EN_VANITYMULTIPLENUMBERS = '';
+const SEARCHSTRING_EN_VANITYMULTIPLENUMBERS = 'multitap';
 const SEARCHSTRING_EN_VANITYSINGLENUMBERS = '';
 const SEARCHSTRING_EN_VIGENERE = '';
 const SEARCHSTRING_EN_VIGENEREBREAKER = '';
