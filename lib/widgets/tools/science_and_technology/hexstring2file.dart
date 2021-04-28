@@ -67,14 +67,14 @@ class HexString2FileState extends State<HexString2File> {
         ),
 
         GCWDefaultOutput(child: _buildOutput(),
-            trailing: GCWIconButton(
-                iconData: Icons.save,
-                size: IconButtonSize.SMALL,
-                iconColor: _outData == null ? Colors.grey : null,
-                onPressed: () {
-                  _outData == null ? null : _exportFile(context, _outData);
-                },
-              )
+          trailing: GCWIconButton(
+            iconData: Icons.save,
+            size: IconButtonSize.SMALL,
+            iconColor: _outData == null ? Colors.grey : null,
+            onPressed: () {
+              _outData == null ? null : _exportFile(context, _outData);
+            },
+          )
         )
       ],
     );
