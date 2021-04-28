@@ -102,3 +102,7 @@ int coordinateSign(double value) {
 bool coordEquals(LatLng coords1, LatLng coords2, {tolerance: 1e-10}) {
   return doubleEquals(coords1.latitude, coords2.latitude) && doubleEquals(coords1.longitude, coords2.longitude);
 }
+
+double normalizeBearing(double bearing) {
+  return modulo(bearing, 360.0);
+}
