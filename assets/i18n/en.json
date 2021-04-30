@@ -112,6 +112,8 @@
   "amsco_key_hint": "Consecutive digits from 1 to 9",
   "amsco_error_key": "Bad key!",
   "amsco_usedgrid": "Used Grid",
+  "animated_gif_title": "Animated Gif's",
+  "animated_gif_description": "Analyse animated Gif's",
   "apparenttemperature_selection_title": "Apparent Temperature",
   "apparenttemperature_selection_description": "Calculates comfort due to temperature, humidity and wind",
   "asciivalues_title": "ASCII and Unicode (UTF-8)",

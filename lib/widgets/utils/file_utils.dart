@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:universal_html/html.dart' as html;
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -45,11 +46,13 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, 
     // filePath = 'Downloads/$fileName';
   } else {
     var path = await MainPath();
-    if (path == null) return null;
+    if (path == null)
+      return null;
     filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
     file = File(filePath);
 
-    if (!await file.exists()) file.create();
+    if (!await file.exists())
+      file.create();
 
     await file.writeAsBytes(data.buffer.asUint8List());
   }
@@ -70,11 +73,13 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
     // filePath = 'Downloads/$fileName';
   } else {
     var path = await MainPath();
-    if (path == null) return null;
+    if (path == null)
+      return null;
     filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
     file = await File(filePath).create(recursive: true);
 
-    if (!await file.exists()) file.create();
+    if (!await file.exists())
+      file.create();
 
     await file.writeAsString(data);
   }
@@ -109,3 +114,13 @@ shareFile(String path, String type) {
 //   else
 //     OpenFile.open(path);
 // }
+
+Future<Uint8List> readByteDataFromFile(String fileName) async {
+  var fileIn = File(fileName);
+  return fileIn.readAsBytes();
+}
+
+Future<String> readStringFromFile(String fileName) async {
+  var fileIn = File(fileName);
+  return fileIn.readAsString();
+}

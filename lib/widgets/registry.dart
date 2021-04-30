@@ -196,6 +196,7 @@ import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagro
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/animated_gif.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -4799,6 +4800,14 @@ class Registry {
             SEARCHSTRING_EN_SEGMENTS_SIXTEEN,
             SEARCHSTRING_FR_SEGMENTS_SIXTEEN
           ]),
+
+      //Images **********************************************************************************************
+      GCWTool(tool: AnimatedGif(), i18nPrefix: 'animated_gif', missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_ANIMATED_GIFS,
+        SEARCHSTRING_DE_ANIMATED_GIFS,
+        SEARCHSTRING_EN_ANIMATED_GIFS,
+        SEARCHSTRING_FR_ANIMATED_GIFS
+      ]),
 
       //Symbol Tables **********************************************************************************************
       GCWSymbolTableTool(symbolKey: 'adlam', symbolSearchStrings: [

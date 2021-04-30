@@ -112,6 +112,8 @@
   "amsco_key_hint": "Fortlaufenden Ziffern von 1 bis 9",
   "amsco_error_key": "Schlüssel fehlerhaft!",
   "amsco_usedgrid": "Verwendete Matrix",
+  "animated_gif_title": "Animated Gif's",
+  "animated_gif_description": "Animierte Gif's analysieren",
   "apparenttemperature_selection_title": "Gefühlte Temperatur",
   "apparenttemperature_selection_description": "Berechnet den Wohlfühlfaktor in Abhängigkeit von Temperatur, Luftfeuchtigkeit und Wind",
   "asciivalues_title": "ASCII und Unicode (UTF-8)",

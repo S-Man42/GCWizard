@@ -123,6 +123,7 @@ import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagro
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/animated_gif.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -226,6 +227,7 @@ class _MainViewState extends State<MainView> {
         className(Affine()),
         className(AlphabetValues()),
         className(Amsco()),
+        className(AnimatedGif()),
         className(Antipodes()),
         className(ASCIIValues()),
         className(Atbash()),
