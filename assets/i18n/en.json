@@ -1878,7 +1878,7 @@
   "numbersequence_output_col_3": "Starts at",
   "numbersequence_notfound": "Not found",
   "numeralbases_title": "Positional Numeral Systems - Radix",
-  "numeralbases_description": "Converts numbers between different radix (e.g. hexadecimal or binary to decimal)",
+  "numeralbases_description": "Converts numbers between different radix (e.g. hexadecimal or binary into decimal)",
   "numeralbases_example": "101010 → 42, 2A → 42",
   "numeralbases_from": "From",
   "numeralbases_to": "To",
