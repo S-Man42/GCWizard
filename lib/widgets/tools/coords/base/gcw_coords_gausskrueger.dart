@@ -57,10 +57,8 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
       _northingController.text = _currentNorthing['value'].toString();
     } else if (_subtypeChanged()) {
       _currentSubtype = _getSubTypeCode(widget.subtype);
-      WidgetsBinding.instance
-          .addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
+      WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
     }
-
 
     return Column(children: <Widget>[
       GCWDoubleTextField(

@@ -32,6 +32,7 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
   String _currentPlainText = '';
   String _currentChiffreText = '';
   String _currentKey = '';
+  String _currentKeyHint = '';
   String _currentAlphabet = '';
   String _currentAlphabetWord = '';
   String _currentColumnOrder = '0123456789';
@@ -67,6 +68,11 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
       PolybiosMode.ZA90: i18n(context, 'bifid_mode_za90'),
       PolybiosMode.CUSTOM: i18n(context, 'bifid_mode_custom'),
     };
+
+    if (_currentDigitMode == GCWSwitchPosition.right)
+      _currentKeyHint = i18n(context, 'straddlingcheckerboard_hint_key');
+    else
+      _currentKeyHint = i18n(context, 'straddlingcheckerboard_hint_key_4x10');
 
     return Column(
       children: <Widget>[
@@ -109,6 +115,10 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
           leftValue: i18n(context, 'straddlingcheckerboard_digitmode_4x10'),
           rightValue: i18n(context, 'straddlingcheckerboard_digitmode_escape'),
           onChanged: (value) {
+            if (value == GCWSwitchPosition.right)
+              _currentKeyHint = i18n(context, 'straddlingcheckerboard_hint_key');
+            else
+              _currentKeyHint = i18n(context, 'straddlingcheckerboard_hint_key_4x10');
             setState(() {
               _currentDigitMode = value;
             });
@@ -119,7 +129,7 @@ class StraddlingCheckerboardState extends State<StraddlingCheckerboard> {
         ),
         GCWTextField(
           controller: _KeyController,
-          hintText: i18n(context, 'straddlingcheckerboard_hint_key'),
+          hintText: _currentKeyHint,
           inputFormatters: [
             LengthLimitingTextInputFormatter(10),
             FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z./ ]')),
