@@ -21,18 +21,13 @@ class _GCWCoordsFormatSelectorState extends State<GCWCoordsFormatSelector> {
   var _currentSubtype = defaultCoordFormat()['subtype'];
 
   @override
-  void initState() {
-    super.initState();
-
+  Widget build(BuildContext context) {
     if (widget.format != null) {
       _currentFormat = widget.format['format'];
 
       if (widget.format['subtype'] != null) _currentSubtype = widget.format['subtype'];
     }
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         GCWDropDownButton(

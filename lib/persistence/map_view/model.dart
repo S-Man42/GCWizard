@@ -33,12 +33,13 @@ class MapPointDAO {
   double latitude;
   double longitude;
   String coordinateFormat;
+  bool isVisible;
   String color;
   double radius;
   bool circleColorSameAsColor;
   String circleColor;
 
-  MapPointDAO(this.uuid, this.name, this.latitude, this.longitude, this.coordinateFormat, this.color, this.radius,
+  MapPointDAO(this.uuid, this.name, this.latitude, this.longitude, this.coordinateFormat, this.isVisible, this.color, this.radius,
       this.circleColorSameAsColor, this.circleColor);
 
   Map<String, dynamic> toMap() => {
@@ -47,10 +48,11 @@ class MapPointDAO {
         'latitude': latitude,
         'longitude': longitude,
         'coordinateFormat': coordinateFormat,
+        'isVisible': isVisible ?? true,
         'color': color,
         'radius': radius,
         'circleColorSameAsColor': circleColorSameAsColor,
-        'circleColor': circleColor
+        'circleColor': circleColor,
       };
 
   MapPointDAO.fromJson(Map<String, dynamic> json)
@@ -59,6 +61,7 @@ class MapPointDAO {
         latitude = json['latitude'],
         longitude = json['longitude'],
         coordinateFormat = json['coordinateFormat'],
+        isVisible = json['isVisible'] ?? true,
         color = json['color'],
         radius = json['radius'],
         circleColorSameAsColor = json['circleColorSameAsColor'],
