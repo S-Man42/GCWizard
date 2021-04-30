@@ -88,13 +88,11 @@ class QuadraticEquationState extends State<QuadraticEquation> {
   Widget _buildOutput(BuildContext context) {
     Map<String, String> result = new Map<String, String>();
     result = SolveEquation(_currentA, _currentB, _currentC);
-    print(result.toString());
     return GCWDefaultOutput(
         child: Column(
       children: columnedMultiLineOutput(
           context,
           result.entries.map((entry) {
-            print(entry.toString());
             if (entry.key.startsWith('quad'))
               return [i18n(context, entry.key), i18n(context, entry.value)];
             else

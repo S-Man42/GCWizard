@@ -38,6 +38,5 @@ Map<String, String> SolveEquation(String currentA, String currentB, String curre
     result['x1'] = NumberFormat('0.0' + '#' * 7).format((-b + sqrt(b * b - 4 * a * c)) / 2 / a);
     result['x2'] = NumberFormat('0.0' + '#' * 7).format((-b - sqrt(b * b - 4 * a * c)) / 2 / a);
   }
-  print(result.toString());
   return result;
 }
