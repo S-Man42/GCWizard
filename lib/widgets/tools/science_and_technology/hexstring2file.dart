@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:archive/archive.dart';
@@ -18,6 +19,11 @@ import 'package:gc_wizard/widgets/utils/file_picker.dart';
 
 
 class HexString2File extends StatefulWidget {
+  final PlatformFile platformFile;
+
+  const HexString2File({Key key, this.platformFile})
+      : super(key: key);
+
   @override
   HexString2FileState createState() => HexString2FileState();
 }
@@ -29,6 +35,11 @@ class HexString2FileState extends State<HexString2File> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.platformFile != null) {
+      _currentMode = GCWSwitchPosition.left;
+      _outData = widget.platformFile.bytes;
+    }
+
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.left ?
