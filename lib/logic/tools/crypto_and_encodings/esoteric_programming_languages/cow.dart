@@ -54,7 +54,7 @@ final mnemonicList = {
 
 final MEMORY_SIZE  = 256;
 final MAX_NUMBER_OF_INSTRUCTIONS = 512;
-final MAX_ITERATIONS = 500000;
+final MAX_ITERATIONS = 9999999;
 
 class CowOutput {
   String output = '';
@@ -83,9 +83,7 @@ CowOutput interpretCow(String code, {String STDIN}) {
   int numberOfInstructions = 0;
 
   for (int i = 0; i < code.length ~/ 3; i++) {
-    if (commandsMooToInteger[code.substring(i * 3, i * 3 + 3)] == null)
-      return CowOutput('', ERROR_COW_INVALIDCODE, []);
-    else {
+    if (commandsMooToInteger[code.substring(i * 3, i * 3 + 3)] != null) {
       opcodesArray.add(commandsMooToInteger[code.substring(i * 3, i * 3 + 3)]);
       numberOfInstructions++;
     }
