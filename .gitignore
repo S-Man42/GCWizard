@@ -90,6 +90,8 @@ web
 howtocode/
 /crowdin.properties
 /external_helpers/crowdin/crowdin_token.sh
+/assets/i18n/de.json
+/assets/i18n/fr.json
 /assets/i18n/da.json
 /assets/i18n/el.json
 /assets/i18n/es.json
