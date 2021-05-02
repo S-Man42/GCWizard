@@ -1,10 +1,13 @@
 // https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/n/navajo-code-talker-dictionary.html
+// https://www.ancestrycdn.com/aa-k12/1112/assets/Navajo-Code-Talkers-dictionary.pdf
 // https://kryptografie.de/kryptografie/chiffre/navajo.htm
 // https://www.dcode.fr/navajo-code
 
 import 'package:gc_wizard/utils/common_utils.dart';
 
 final Map NAVAJO_ENCODE_ALPHABET = {
+  // although the dictionary has several encodings, these are used by kryptografie.de
+  // dcode.fr uses all letters randomly for encoding
   'A': 'WOL-LA-CHEE',
   'B': 'SHUSH',
   'C': 'MOASI',
@@ -19,8 +22,8 @@ final Map NAVAJO_ENCODE_ALPHABET = {
   'L': 'DIBEH-YAZZIE',
   'M': 'NA-AS-TSO-SI',
   'N': 'NESH-CHEE',
-  'O': 'NE-AHS-JSH',
-  'P': 'BI-SODIH',
+  'O': 'NE-AHS-JAH',
+  'P': 'BI-SO-DIH',
   'Q': 'CA-YEILTH',
   'R': 'GAH',
   'S': 'DIBEH',
@@ -30,7 +33,7 @@ final Map NAVAJO_ENCODE_ALPHABET = {
   'W': 'GLOE-IH',
   'X': 'AL-NA-AS-DZOH',
   'Y': 'TSAH-AS-ZIH',
-  'Z': 'BSEH-DO-GLIZ',
+  'Z': 'BESH-DO-TLIZ',
 };
 
 final Map NAVAJO_ENCODE_DICTIONARY = {
@@ -401,7 +404,7 @@ final Map NAVAJO_ENCODE_DICTIONARY = {
   'MECHANIZED': 'CHIDI-DA-AH-HE-GONI',
   'MEDICAL': 'A-ZAY',
   'MEGACYCLE': 'MIL-AH-HEH-AH-DILH',
-  'MERCHANTSHIP  ': 'NA-EL-NEHI-TSIN-NA-AILH',
+  'MERCHANTSHIP': 'NA-EL-NEHI-TSIN-NA-AILH',
   'MESSAGE': 'HANE-AL-NEH',
   'MILITARY': 'SILAGO-KEH-GOH',
   'MILLIMETER': 'NA-AS-TSO-SI-A-YE-DO-TISH',
@@ -656,10 +659,10 @@ Map NAVAJO_DECODE_ALPHABET = switchMapKeyValue(NAVAJO_ENCODE_ALPHABET);
 
 String shrinkText(String input){
   return input
-      .replaceAll('COMMANDING GEN.', 'COMMANDINGGEN.')
-      .replaceAll('MAJOR GEN.', 'MAJORGEN.')
-      .replaceAll('BRIGADIER GEN.', 'BRIGADIERGEN.')
-      .replaceAll('LT. COLONEL', 'LT.COLONEL')
+      .replaceAll('COMMANDING GEN.', 'COMMANDINGGEN')
+      .replaceAll('MAJOR GEN.', 'MAJORGEN')
+      .replaceAll('BRIGADIER GEN.', 'BRIGADIERGEN')
+      .replaceAll('LT. COLONEL', 'LTCOLONEL')
       .replaceAll('COMMANDING OFFICER', 'COMMANDINGOFFICER')
       .replaceAll('EXECUTIVE OFFICER', 'EXECUTIVEOFFICER')
       .replaceAll('SOUTH AMERICA', 'SOUTHAMERICA')
@@ -692,10 +695,10 @@ String shrinkText(String input){
 
 String enfoldText(String input){
   return input
-      .replaceAll('COMMANDINGGEN.', 'COMMANDING GEN.')
-      .replaceAll('MAJORGEN.', 'MAJOR GEN.')
-      .replaceAll('BRIGADIERGEN.', 'BRIGADIER GEN.')
-      .replaceAll('LT.COLONEL', 'LT. COLONEL')
+      .replaceAll('COMMANDINGGEN', 'COMMANDING GEN.')
+      .replaceAll('MAJORGEN', 'MAJOR GEN.')
+      .replaceAll('BRIGADIERGEN', 'BRIGADIER GEN.')
+      .replaceAll('LTCOLONEL', 'LT. COLONEL')
       .replaceAll('COMMANDINGOFFICER', 'COMMANDING OFFICER')
       .replaceAll('EXECUTIVEOFFICER', 'EXECUTIVE OFFICER')
       .replaceAll('SOUTHAMERICA', 'SOUTH AMERICA')
@@ -726,7 +729,7 @@ String enfoldText(String input){
       .replaceAll('TRAFFICDIAGRAM', 'TRAFFIC DIAGRAM');
 }
 
-String decodeNavajo(String cipherText) {
+String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
   NAVAJO_DECODE_ALPHABET['BE-LA-SANA'] = 'A';
   NAVAJO_DECODE_ALPHABET['TSE-NILL'] = 'A';
   NAVAJO_DECODE_ALPHABET['TSE-NIHL'] = 'A';
@@ -761,8 +764,9 @@ String decodeNavajo(String cipherText) {
   NAVAJO_DECODE_ALPHABET['TSAH'] = 'N';
   NAVAJO_DECODE_ALPHABET['TLO-CHIN'] = 'O';
   NAVAJO_DECODE_ALPHABET['A-KHA'] = 'O';
+  NAVAJO_DECODE_ALPHABET['NE-AHS-JSH'] = 'O';
   NAVAJO_DECODE_ALPHABET['CLA-GI-AIH'] = 'P';
-  NAVAJO_DECODE_ALPHABET['BI-SO-DIH'] = 'P';
+  NAVAJO_DECODE_ALPHABET['BI-SODIH'] = 'P';
   NAVAJO_DECODE_ALPHABET['NE-ZHONI'] = 'P';
   NAVAJO_DECODE_ALPHABET['DAH-NES-TSA'] = 'R';
   NAVAJO_DECODE_ALPHABET['AH-LOSZ'] = 'R';
@@ -770,40 +774,50 @@ String decodeNavajo(String cipherText) {
   NAVAJO_DECODE_ALPHABET['A-WOH'] = 'T';
   NAVAJO_DECODE_ALPHABET['D-AH'] = 'T';
   NAVAJO_DECODE_ALPHABET['SHI-DA'] = 'U';
-  NAVAJO_DECODE_ALPHABET['BESH-DO-TLIZ'] = 'Z';
+  NAVAJO_DECODE_ALPHABET['BSEH-DO-GLIZ'] = 'Z';
 
   List<String> result = new List<String>();
   if (cipherText == null || cipherText == '') return '';
 
   cipherText.toUpperCase().split(' ').forEach((element) {
     if (NAVAJO_DECODE_ALPHABET[element] == null)
-      if (NAVAJO_DECODE_DICTIONARY[element] == null)
-        result.add('<?>');
+      if (useOnlyAlphabet)
+        result.add(element);
       else
-        result.add(enfoldText(NAVAJO_DECODE_DICTIONARY[element]));
+        if (NAVAJO_DECODE_DICTIONARY[element] == null)
+          result.add(element);
+        else
+          result.add(enfoldText(NAVAJO_DECODE_DICTIONARY[element]));
     else
       result.add(NAVAJO_DECODE_ALPHABET[element]);
   });
   return result.join(' ');
 }
 
-String encodeNavajo(String plainText) {
+String encodeNavajo(String plainText, bool useOnlyAlphabet) {
   List<String> result = new List<String>();
   if (plainText == null || plainText == '') return '';
 
   shrinkText(plainText.toUpperCase()).split(' ').forEach((element) {
-    if (NAVAJO_ENCODE_DICTIONARY[element] == null)
+    if (useOnlyAlphabet)
       result.add(encodeLetterWise(element));
     else
-      result.add(NAVAJO_ENCODE_DICTIONARY[element]);
+      if (NAVAJO_ENCODE_DICTIONARY[element] == null)
+        result.add(encodeLetterWise(element));
+      else
+        result.add(NAVAJO_ENCODE_DICTIONARY[element]);
+    result.add('');
   });
-  return result.join(' ');
+  return result.join(' ').trim();
 }
 
 String encodeLetterWise(String plainText) {
   List<String> result = new List<String>();
   plainText.split('').forEach((element) {
-    result.add(NAVAJO_ENCODE_ALPHABET[element]);
+    if (NAVAJO_ENCODE_ALPHABET[element] == null)
+      result.add(element);
+    else
+      result.add(NAVAJO_ENCODE_ALPHABET[element]);
   });
   return result.join(' ');
 }

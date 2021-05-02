@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -19,6 +20,7 @@ class NavajoState extends State<Navajo> {
   String _output = '';
 
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
+  GCWSwitchPosition _currentSource = GCWSwitchPosition.right;
 
   @override
   void initState() {
@@ -68,6 +70,18 @@ class NavajoState extends State<Navajo> {
             });
           },
         ),
+        GCWTwoOptionsSwitch(
+          value: _currentSource,
+          title: i18n(context, 'navajo_source'),
+          leftValue: i18n(context, 'navajo_source_dictionary'),
+          rightValue: i18n(context, 'navajo_source_alphabet'),
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+              _calculateOutput();
+            });
+          },
+        ),
         GCWDefaultOutput(child: _output)
       ],
     );
@@ -75,8 +89,8 @@ class NavajoState extends State<Navajo> {
 
   _calculateOutput() {
     if (_currentMode == GCWSwitchPosition.left)
-      _output = encodeNavajo(_currentEncodeInput);
+      _output = encodeNavajo(_currentEncodeInput, (_currentSource == GCWSwitchPosition.right));
     else
-      _output = decodeNavajo(_currentDecodeInput);
+      _output = decodeNavajo(_currentDecodeInput, (_currentSource == GCWSwitchPosition.right));
   }
 }
