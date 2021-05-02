@@ -45,11 +45,11 @@ final Map NAVAJO_ENCODE_DICTIONARY = {
   'PLATOON': 'HAS-CLISH-NIH',
   'SECTION': 'YO-IH',
   'SQUAD': 'DEBEH-LI-ZINI',
-  'COMMANDINGGEN.': 'BIH-KEH-HE',
-  'MAJORGEN.': 'SO-NA-KIH',
-  'BRIGADIERGEN.': 'SO-A-LA-IH',
+  'COMMANDINGGEN': 'BIH-KEH-HE',
+  'MAJORGEN': 'SO-NA-KIH',
+  'BRIGADIERGEN': 'SO-A-LA-IH',
   'COLONEL': 'ATSAH-BESH-LE-GAI',
-  'LT.COLONEL': 'CHE-CHIL-BE-TAH-BESH-LEGAI',
+  'LTCOLONEL': 'CHE-CHIL-BE-TAH-BESH-LEGAI',
   'MAJOR': 'CHE-CHIL-BE-TAH-OLA',
   'CAPTAIN': 'BESH-LEGAI-NAH-KIH',
   'LIEUTENANT': 'BESH-LEGAI-A-LAH-IH',
@@ -74,7 +74,7 @@ final Map NAVAJO_ENCODE_DICTIONARY = {
   'PLANES': 'WO-TAH-DE-NE-IH',
   'DIVEBOMBER': 'GINI',
   'TORPEDOPLANE': 'TAS-CHIZZIE',
-  'OBS.PLAN': 'NE-AS-JAH',
+  'OBSPLAN': 'NE-AS-JAH',
   'FIGHTERPLANE': 'DA-HE-TIH-HI',
   'BOMBERPLANE': 'JAY-SHO',
   'PATROLPLANE': 'GA-GIH',
@@ -668,7 +668,7 @@ String shrinkText(String input){
       .replaceAll('SOUTH AMERICA', 'SOUTHAMERICA')
       .replaceAll('DIVE BOMBER', 'DIVEBOMBER')
       .replaceAll('TORPEDO PLANE', 'TORPEDOPLANE')
-      .replaceAll('OBS. PLAN', 'OBS.PLAN')
+      .replaceAll('OBS. PLAN', 'OBSPLAN')
       .replaceAll('FIGHTER PLANE', 'FIGHTERPLANE')
       .replaceAll('BOMBER PLANE', 'BOMBERPLANE')
       .replaceAll('PATROL PLANE', 'PATROLPLANE')
@@ -704,7 +704,7 @@ String enfoldText(String input){
       .replaceAll('SOUTHAMERICA', 'SOUTH AMERICA')
       .replaceAll('DIVEBOMBER', 'DIVE BOMBER')
       .replaceAll('TORPEDOPLANE', 'TORPEDO PLANE')
-      .replaceAll('OBS.PLAN', 'OBS. PLAN')
+      .replaceAll('OBSPLAN', 'OBS. PLAN')
       .replaceAll('FIGHTERPLANE', 'FIGHTER PLANE')
       .replaceAll('BOMBERPLANE', 'BOMBER PLANE')
       .replaceAll('PATROLPLANE', 'PATROL PLANE')
