@@ -18,7 +18,7 @@ import 'package:gc_wizard/widgets/selector_lists/ccitt2_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cistercian_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/coords_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/ds_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/easter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
@@ -270,7 +270,7 @@ class _MainViewState extends State<MainView> {
         className(DNAAminoAcids()),
         className(DNAAminoAcidsTable()),
         className(DNANucleicAcidSequence()),
-        className(DSSelection()),
+        className(SilverRatioSelection()),
         className(DuckSpeak()),
         className(EasterSelection()),
         className(EllipsoidTransform()),

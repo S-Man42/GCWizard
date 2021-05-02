@@ -3,17 +3,17 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/common/gcw_toollist.dart';
 import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/ds.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/silver_ratio.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
-class DSSelection extends GCWSelection {
+class SilverRatioSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = Registry.toolList.where((element) {
       return [
-        className(DSNthDecimal()),
-        className(DSDecimalRange()),
-        className(DSSearch()),
+        className(SilverRatioNthDecimal()),
+        className(SilverRatioDecimalRange()),
+        className(SilverRatioSearch()),
       ].contains(className(element.tool));
     }).toList();
 

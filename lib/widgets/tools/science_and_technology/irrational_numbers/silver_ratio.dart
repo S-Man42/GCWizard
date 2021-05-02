@@ -3,14 +3,14 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_number
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/irrationalnumbers_nthdecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/irrationalnumbers_search.dart';
 
-class DSNthDecimal extends IrrationalNumbersNthDecimal {
-  DSNthDecimal() : super(irrationalNumber: DS);
+class SilverRatioNthDecimal extends IrrationalNumbersNthDecimal {
+  SilverRatioNthDecimal() : super(irrationalNumber: DS);
 }
 
-class DSDecimalRange extends IrrationalNumbersDecimalRange {
-  DSDecimalRange() : super(irrationalNumber: DS);
+class SilverRatioDecimalRange extends IrrationalNumbersDecimalRange {
+  SilverRatioDecimalRange() : super(irrationalNumber: DS);
 }
 
-class DSSearch extends IrrationalNumbersSearch {
-  DSSearch() : super(irrationalNumber: DS);
+class SilverRatioSearch extends IrrationalNumbersSearch {
+  SilverRatioSearch() : super(irrationalNumber: DS);
 }
