@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/state-diagram
+[*] --> Abc_s
+
+Abc_s --> ABC_s: #
+Abc_s --> abc: x_?
+
+ABC_s --> abc_s: #
+ABC_s --> ABC: x_?
+
+abc_s --> Abc_s: #
+abc_s --> abc: x_?
+
+abc --> abc_e: ?
+abc --> abc: x_
+abc --> ABC: #
+
+ABC --> ABC: x_
+ABC --> ABC_e: ?
+ABC --> abc: #
+
+ABC_e --> ABC: x_
+ABC_e --> ABC_e: ?
+ABC_e --> abc_e: #
+
+abc_e --> abc_e: ?
+abc_e --> abc: x
+abc_e --> Abc_t: _
+
+Abc_t --> abc: x_
+Abc_t --> abc_n: #
+Abc_t --> abc_e: ?
+
+abc_n --> abc: x_
+abc_n --> abc_e: ?
+abc_n --> Abc_n: #
+
+Abc_n --> abc: x_
+Abc_n --> abc_e: ?
+Abc_n --> ABC_n: #
+
+ABC_n --> abc_n: #
+ABC_n --> ABC: x_
+ABC_n --> ABC_e: ?
+@enduml
