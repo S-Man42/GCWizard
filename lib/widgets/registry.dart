@@ -5930,6 +5930,12 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_SURF,
         SEARCHSTRING_FR_SYMBOL_SURF
       ]),
+      GCWSymbolTableTool(symbolKey: 'tae', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_TAE,
+        SEARCHSTRING_DE_SYMBOL_TAE,
+        SEARCHSTRING_EN_SYMBOL_TAE,
+        SEARCHSTRING_FR_SYMBOL_TAE
+      ]),
       GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_TAMIL_NUMERALS,
         SEARCHSTRING_DE_SYMBOL_TAMIL_NUMERALS,

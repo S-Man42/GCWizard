@@ -436,6 +436,7 @@ const SEARCHSTRING_FR_SYMBOL_STIPPELCODE = '';
 const SEARCHSTRING_FR_SYMBOL_SUETTERLIN = '';
 const SEARCHSTRING_FR_SYMBOL_SUNUZ = '';
 const SEARCHSTRING_FR_SYMBOL_SURF = 'planchedesurf';
+const SEARCHSTRING_FR_SYMBOL_TAE = 'unité raccordement télécommunications';
 const SEARCHSTRING_FR_SYMBOL_TAMIL_NUMERALS = 'numeros nombres';
 const SEARCHSTRING_FR_SYMBOL_TEMPLERS = 'chevalier templiers';
 const SEARCHSTRING_FR_SYMBOL_TENCTONESE = '';

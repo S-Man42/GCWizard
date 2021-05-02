@@ -449,6 +449,7 @@ const SEARCHSTRING_EN_SYMBOL_STIPPELCODE = '';
 const SEARCHSTRING_EN_SYMBOL_SUETTERLIN = 'germanhandwritingscript';
 const SEARCHSTRING_EN_SYMBOL_SUNUZ = '';
 const SEARCHSTRING_EN_SYMBOL_SURF = 'windsurfing surfride surfer surfriding surfride surfboard wavesurfing';
+const SEARCHSTRING_EN_SYMBOL_TAE = 'connector telecommunications connection unit';
 const SEARCHSTRING_EN_SYMBOL_TAMIL_NUMERALS = 'numbers numerals indian';
 const SEARCHSTRING_EN_SYMBOL_TEMPLERS = 'templeknights';
 const SEARCHSTRING_EN_SYMBOL_TENCTONESE = '';
