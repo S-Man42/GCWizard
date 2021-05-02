@@ -7,10 +7,10 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_common.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_de.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_en.dart';
-import 'package:gc_wizard/widgets/searchStrings/searchStrings_fr.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
+import 'package:gc_wizard/widgets/searchstrings/searchstrings_fr.dart';
 import 'package:gc_wizard/widgets/selector_lists/apparent_temperature.dart';
 import 'package:gc_wizard/widgets/selector_lists/astronomy_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/babylon_numbers_selection.dart';
@@ -5278,6 +5278,12 @@ class Registry {
         SEARCHSTRING_DE_SYMBOL_GARGISH,
         SEARCHSTRING_EN_SYMBOL_GARGISH,
         SEARCHSTRING_FR_SYMBOL_GARGISH
+      ]),
+      GCWSymbolTableTool(symbolKey: 'gc_attributes', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_GC_ATTRIBUTES,
+        SEARCHSTRING_DE_SYMBOL_GC_ATTRIBUTES,
+        SEARCHSTRING_EN_SYMBOL_GC_ATTRIBUTES,
+        SEARCHSTRING_FR_SYMBOL_GC_ATTRIBUTES
       ]),
       GCWSymbolTableTool(symbolKey: 'genreich', symbolSearchStrings: [
         SEARCHSTRING_COMMON_GLAGOLITIC,
