@@ -500,44 +500,6 @@ class GCWMapViewState extends State<GCWMapView> {
 
   _buildEditButtons() {
     var buttons = [
-      GCWPasteButton(
-        backgroundColor: COLOR_MAP_ICONBUTTONS,
-        customIcon: _createIconButtonIcons(Icons.content_paste),
-        onSelected: (text) {
-          if (_importGpxKml(text) || _persistanceAdapter.setJsonMapViewData(text)) {
-            setState(() {
-              _mapController.fitBounds(_getBounds());
-            });
-          } else {
-            var pastedCoordinate = _parseCoords(text);
-            if (pastedCoordinate == null) return;
-            setState(() {
-              _persistanceAdapter.addMapPoint(pastedCoordinate.values.first,
-                  coordinateFormat: {'format': pastedCoordinate.keys.first});
-              _mapController.move(pastedCoordinate.values.first, _mapController.zoom);
-            });
-          };
-        },
-      ),
-      GCWIconButton(
-        backgroundColor: COLOR_MAP_ICONBUTTONS,
-        customIcon: _createIconButtonIcons(Icons.drive_folder_upload),
-        onPressed: () {
-          setState(() {
-            openFileExplorer(allowedExtensions: ['gpx','kml','kmz'], useFileFilterOnAndroid : true).then((files) {
-              if (files != null && files.length > 0) {
-                getFileData(files.first).then((bytes) {
-                  loadCoordinatesFile(files.first.name, bytes).whenComplete(() {
-                    setState(() {
-                      _mapController.fitBounds(_getBounds());
-                    });
-                  });
-                });
-              }
-            });
-          });
-        },
-      ),
       GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.my_location, stacked: Icons.add),
@@ -563,34 +525,73 @@ class GCWMapViewState extends State<GCWMapView> {
           });
         },
       ),
+      GCWIconButton(
+        backgroundColor: COLOR_MAP_ICONBUTTONS,
+        customIcon: _createIconButtonIcons(Icons.delete),
+        onPressed: () {
+          showGCWDialog(
+              context,
+              i18n(context, 'coords_openmap_removeeverything_title'),
+              Container(
+                width: 250,
+                height: 100,
+                child: GCWText(
+                  text: i18n(context, 'coords_openmap_removeeverything_text'),
+                  style: gcwDialogTextStyle(),
+                ),
+              ),
+              [
+                GCWDialogButton(
+                    text: i18n(context, 'common_ok'),
+                    onPressed: () {
+                      setState(() {
+                        _persistanceAdapter.clearMapView();
+                      });
+                    }),
+              ]);
+        },
+      ),
       Container(
           padding: EdgeInsets.only(top: _BUTTONGROUP_MARGIN),
-          child: GCWIconButton(
+          child: GCWPasteButton(
             backgroundColor: COLOR_MAP_ICONBUTTONS,
-            customIcon: _createIconButtonIcons(Icons.delete),
-            onPressed: () {
-              showGCWDialog(
-                  context,
-                  i18n(context, 'coords_openmap_removeeverything_title'),
-                  Container(
-                    width: 250,
-                    height: 100,
-                    child: GCWText(
-                      text: i18n(context, 'coords_openmap_removeeverything_text'),
-                      style: gcwDialogTextStyle(),
-                    ),
-                  ),
-                  [
-                    GCWDialogButton(
-                        text: i18n(context, 'common_ok'),
-                        onPressed: () {
-                          setState(() {
-                            _persistanceAdapter.clearMapView();
-                          });
-                        }),
-                  ]);
+            customIcon: _createIconButtonIcons(Icons.content_paste),
+            onSelected: (text) {
+              if (_importGpxKml(text) || _persistanceAdapter.setJsonMapViewData(text)) {
+                setState(() {
+                  _mapController.fitBounds(_getBounds());
+                });
+              } else {
+                var pastedCoordinate = _parseCoords(text);
+                if (pastedCoordinate == null) return;
+                setState(() {
+                  _persistanceAdapter.addMapPoint(pastedCoordinate.values.first,
+                      coordinateFormat: {'format': pastedCoordinate.keys.first});
+                  _mapController.move(pastedCoordinate.values.first, _mapController.zoom);
+                });
+              };
             },
-          )),
+          )
+      ),
+      GCWIconButton(
+        backgroundColor: COLOR_MAP_ICONBUTTONS,
+        customIcon: _createIconButtonIcons(Icons.drive_folder_upload),
+        onPressed: () {
+          setState(() {
+            openFileExplorer(allowedExtensions: ['gpx','kml','kmz'], useFileFilterOnAndroid : true).then((files) {
+              if (files != null && files.length > 0) {
+                getFileData(files.first).then((bytes) {
+                  loadCoordinatesFile(files.first.name, bytes).whenComplete(() {
+                    setState(() {
+                      _mapController.fitBounds(_getBounds());
+                    });
+                  });
+                });
+              }
+            });
+          });
+        },
+      ),
       GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.save),
