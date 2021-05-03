@@ -1,24 +1,4 @@
 {
 	"case_sensitive" : false,
-	"special_mappings" : {
-		"A_circumflex" : "Â",
-		"A_grave" : "À",
-		"C_cedille" : "Ç",
-		"E_acute" : "É",
-		"E_circumflex" : "Ê",
-		"E_grave" : "È",
-		"E_trema" : "Ë",
-		"I_circumflex" : "Î",
-		"I_trema" : "Ï",
-		"O_circumflex" : "Ô",
-		"OE_ligature" : "Œ",
-		"U_circumflex" : "Û",
-		"U_grave" : "Ù",
-		"U_trema" : "Ü",
-		"guillemet_open" : "«",
-		"guillemet_close" : "»",
-		"divide" : "÷",
-		"mult" : "×"
-    },
 	"translate" : ["capital_follows", "number_follows", "mathmatics_follows"]
 }
