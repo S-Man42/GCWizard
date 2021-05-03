@@ -67,14 +67,6 @@ class VigenereState extends State<Vigenere> {
           },
         ),
         GCWOnOffSwitch(
-          title: i18n(context, 'vigenere_ignorenonletters'),
-          onChanged: (value) {
-            setState(() {
-              _currentNonLetters = value;
-            });
-          },
-        ),
-        GCWOnOffSwitch(
           title: i18n(context, 'vigenere_autokey'),
           onChanged: (value) {
             setState(() {
@@ -82,6 +74,16 @@ class VigenereState extends State<Vigenere> {
             });
           },
         ),
+        _currentAutokey == false ?
+          GCWOnOffSwitch(
+            title: i18n(context, 'vigenere_ignorenonletters'),
+            onChanged: (value) {
+              setState(() {
+                _currentNonLetters = value;
+              });
+            },
+          )
+          : Container(),
         GCWTwoOptionsSwitch(
           value: _currentMode,
           onChanged: (value) {
@@ -100,10 +102,10 @@ class VigenereState extends State<Vigenere> {
 
     if (_currentMode == GCWSwitchPosition.left) {
       output = encryptVigenere(_currentInput, _currentKey, _currentAutokey,
-          aValue: _currentAValue, ignoreNonLetters: _currentNonLetters);
+          aValue: _currentAValue, ignoreNonLetters: _currentAutokey ? true : _currentNonLetters,);
     } else {
       output = decryptVigenere(_currentInput, _currentKey, _currentAutokey,
-          aValue: _currentAValue, ignoreNonLetters: _currentNonLetters);
+          aValue: _currentAValue, ignoreNonLetters: _currentAutokey ? true : _currentNonLetters,);
     }
 
     return GCWDefaultOutput(child: output);

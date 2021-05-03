@@ -16,7 +16,7 @@ BreakerResult break_vigenere(
     {Function counterFunction}) {
   if (autoKey) return break_vigenereAutoKey(cipher_bin, keyLength, vigenereSquare, bigrams);
 
-  var key = List<int>();
+  var key = <int>[];
   var best_fitness_0 = 0;
   var best_key_ch1_0 = 0;
   var best_key_ch1 = 0;
@@ -33,9 +33,11 @@ BreakerResult break_vigenere(
       for (var key_ch2 = 0; key_ch2 < vigenereSquare.length; key_ch2++) {
         var fitness = 0;
         for (var text_idx = key_idx; text_idx < (cipher_bin.length - 1); text_idx += keyLength) {
-          var clear_ch1 = vigenereSquare[cipher_bin[text_idx]][key_ch1];
-          var clear_ch2 = vigenereSquare[cipher_bin[text_idx + 1]][key_ch2];
-          fitness += bigrams[clear_ch1][clear_ch2];
+          if (cipher_bin[text_idx] >= 0 && cipher_bin[text_idx + 1] >= 0) {
+            var clear_ch1 = vigenereSquare[cipher_bin[text_idx]][key_ch1];
+            var clear_ch2 = vigenereSquare[cipher_bin[text_idx + 1]][key_ch2];
+            fitness += bigrams[clear_ch1][clear_ch2];
+          }
         }
         if (fitness > best_fitness) {
           best_fitness = fitness;
@@ -62,7 +64,7 @@ BreakerResult break_vigenere(
 
 BreakerResult break_vigenereAutoKey(
     List<int> cipher_bin, int keyLength, List<List<int>> vigenereSquare, List<List<int>> bigrams) {
-  var key = List<int>();
+  var key = <int>[];
   var best_fitness_0 = 0;
   var best_key_ch1_0 = 0;
   var best_key_ch1 = 0;
@@ -78,20 +80,22 @@ BreakerResult break_vigenereAutoKey(
     for (var key_ch1 = 0; key_ch1 < vigenereSquare.length; key_ch1++) {
       for (var key_ch2 = 0; key_ch2 < vigenereSquare.length; key_ch2++) {
         var fitness = 0;
-        var autoKey = List(cipher_bin.length + keyLength);
+        var autoKey = List<int>.filled(cipher_bin.length + keyLength, -1);
         for (var text_idx = key_idx; text_idx < (cipher_bin.length - 1); text_idx += keyLength) {
-          var clear_ch1 = 0;
-          var clear_ch2 = 0;
-          if (text_idx < keyLength) {
-            clear_ch1 = vigenereSquare[cipher_bin[text_idx]][key_ch1];
-            clear_ch2 = vigenereSquare[cipher_bin[text_idx + 1]][key_ch2];
-          } else {
-            clear_ch1 = vigenereSquare[cipher_bin[text_idx]][autoKey[text_idx]];
-            clear_ch2 = vigenereSquare[cipher_bin[text_idx + 1]][autoKey[text_idx + 1]];
+          if (cipher_bin[text_idx] >= 0 && cipher_bin[text_idx + 1] >= 0) {
+            var clear_ch1 = 0;
+            var clear_ch2 = 0;
+            if (text_idx < keyLength) {
+              clear_ch1 = vigenereSquare[cipher_bin[text_idx]][key_ch1];
+              clear_ch2 = vigenereSquare[cipher_bin[text_idx + 1]][key_ch2];
+            } else {
+              clear_ch1 = vigenereSquare[cipher_bin[text_idx]][autoKey[text_idx]];
+              clear_ch2 = vigenereSquare[cipher_bin[text_idx + 1]][autoKey[text_idx + 1]];
+            }
+            autoKey[text_idx + keyLength] = clear_ch1;
+            autoKey[text_idx + 1 + keyLength] = clear_ch2;
+            fitness += bigrams[clear_ch1][clear_ch2];
           }
-          autoKey[text_idx + keyLength] = clear_ch1;
-          autoKey[text_idx + 1 + keyLength] = clear_ch2;
-          fitness += bigrams[clear_ch1][clear_ch2];
         }
         if (fitness > best_fitness) {
           best_fitness = fitness;
