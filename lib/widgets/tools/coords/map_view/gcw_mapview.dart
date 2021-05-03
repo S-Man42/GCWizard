@@ -518,9 +518,13 @@ class GCWMapViewState extends State<GCWMapView> {
             });
           };
         },
-        onLongPress: () {
+      ),
+      GCWIconButton(
+        backgroundColor: COLOR_MAP_ICONBUTTONS,
+        customIcon: _createIconButtonIcons(Icons.drive_folder_upload),
+        onPressed: () {
           setState(() {
-             openFileExplorer(allowedExtensions: ['gpx','kml','kmz'], useFileFilterOnAndroid : true).then((files) {
+            openFileExplorer(allowedExtensions: ['gpx','kml','kmz'], useFileFilterOnAndroid : true).then((files) {
               if (files != null && files.length > 0) {
                 getFileData(files.first).then((bytes) {
                   loadCoordinatesFile(files.first.name, bytes).whenComplete(() {
