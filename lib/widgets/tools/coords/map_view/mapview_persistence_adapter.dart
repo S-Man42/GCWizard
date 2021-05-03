@@ -27,6 +27,7 @@ class MapViewPersistenceAdapter {
       gcwMapPoint.point.latitude,
       gcwMapPoint.point.longitude,
       gcwMapPoint.coordinateFormat['format'],
+      gcwMapPoint.isVisible,
       colorToHexString(gcwMapPoint.color),
       gcwMapPoint.hasCircle() ? gcwMapPoint.circle.radius : null,
       gcwMapPoint.circleColorSameAsPointColor,
@@ -40,6 +41,7 @@ class MapViewPersistenceAdapter {
         markerText: mapPointDAO.name,
         point: LatLng(mapPointDAO.latitude, mapPointDAO.longitude),
         coordinateFormat: {'format': mapPointDAO.coordinateFormat},
+        isVisible: mapPointDAO.isVisible,
         color: hexStringToColor(mapPointDAO.color),
         circle: mapPointDAO.radius != null
             ? GCWMapCircle(radius: mapPointDAO.radius, color: hexStringToColor(mapPointDAO.circleColor))
@@ -57,6 +59,7 @@ class MapViewPersistenceAdapter {
     return GCWMapPolyline(
         uuid: mapPolylineDAO.uuid,
         points: mapPolylineDAO.pointUUIDs
+            .where((uuid) => mapWidget.points.firstWhere((point) => point.uuid == uuid, orElse: () => null) != null)
             .map((uuid) => mapWidget.points.firstWhere((point) => point.uuid == uuid))
             .toList(),
         color: hexStringToColor(mapPolylineDAO.color));
@@ -144,6 +147,7 @@ class MapViewPersistenceAdapter {
     mapPointDAO.latitude = mapPoint.point.latitude;
     mapPointDAO.longitude = mapPoint.point.longitude;
     mapPointDAO.coordinateFormat = mapPoint.coordinateFormat['format'];
+    mapPointDAO.isVisible = mapPoint.isVisible;
     mapPointDAO.color = colorToHexString(mapPoint.color);
     mapPointDAO.radius = mapPoint.hasCircle() ? mapPoint.circle.radius : null;
     mapPointDAO.circleColorSameAsColor = mapPoint.circleColorSameAsPointColor;
@@ -275,6 +279,7 @@ class MapViewPersistenceAdapter {
       "\"pointUUIDs\":": "\"pointIDs\":",
       "\"latitude\":": "\"lat\":",
       "\"longitude\":": "\"lon\":",
+      "\"isVisible\":": "\"visible\":",
       "\"coordinateFormat\":": "\"format\":",
       "\"circleColorSameAsColor\":": "\"sameColor\":"
     };
@@ -285,13 +290,14 @@ class MapViewPersistenceAdapter {
   }
 
   String _removeEmptyElements(String json) {
-    var regExp = RegExp("(\")([\^\"]+)(\":null,)");
-    var regExp1 = RegExp("(,\")([\^\"]+)(\":null})");
-    var regExp2 = RegExp("(\"name\":\"\",)");
+    var regExpList = {
+      "(\")([\^\"]+)(\":null,)": "",
+      "(,\")([\^\"]+)(\":null})": "}",
+      "(\"name\":\"\",)": "",
+      "(\"isVisible\":true,)": "",
+      "(\"isVisible\":true})": "}"};
 
-    json = json.replaceAll(regExp, "");
-    json = json.replaceAll(regExp1, "}");
-    json = json.replaceAll(regExp2, "");
+    regExpList.forEach((key, value) { json = json.replaceAll(RegExp(key), value);});
     return json;
   }
 
