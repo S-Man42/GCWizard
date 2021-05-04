@@ -39,8 +39,8 @@ class MapPointDAO {
   bool circleColorSameAsColor;
   String circleColor;
 
-  MapPointDAO(this.uuid, this.name, this.latitude, this.longitude, this.coordinateFormat, this.isVisible, this.color, this.radius,
-      this.circleColorSameAsColor, this.circleColor);
+  MapPointDAO(this.uuid, this.name, this.latitude, this.longitude, this.coordinateFormat, this.isVisible, this.color,
+      this.radius, this.circleColorSameAsColor, this.circleColor);
 
   Map<String, dynamic> toMap() => {
         'uuid': uuid,

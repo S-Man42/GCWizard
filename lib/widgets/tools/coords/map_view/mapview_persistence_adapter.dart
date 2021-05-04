@@ -289,9 +289,12 @@ class MapViewPersistenceAdapter {
       "(,\")([\^\"]+)(\":null})": "}",
       "(\"name\":\"\",)": "",
       "(\"isVisible\":true,)": "",
-      "(\"isVisible\":true})": "}"};
+      "(\"isVisible\":true})": "}"
+    };
 
-    regExpList.forEach((key, value) { json = json.replaceAll(RegExp(key), value);});
+    regExpList.forEach((key, value) {
+      json = json.replaceAll(RegExp(key), value);
+    });
     return json;
   }
 
