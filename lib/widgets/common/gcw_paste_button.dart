@@ -14,11 +14,12 @@ import 'package:prefs/prefs.dart';
 
 class GCWPasteButton extends StatefulWidget {
   final Function onSelected;
+  final Function onLongPress;
   final IconButtonSize size;
   final Widget customIcon;
   final Color backgroundColor;
 
-  const GCWPasteButton({Key key, this.onSelected, this.size, this.customIcon, this.backgroundColor}) : super(key: key);
+  const GCWPasteButton({Key key, this.onSelected, this.onLongPress, this.size, this.customIcon, this.backgroundColor}) : super(key: key);
 
   @override
   GCWPasteButtonState createState() => GCWPasteButtonState();
@@ -27,12 +28,15 @@ class GCWPasteButton extends StatefulWidget {
 class GCWPasteButtonState extends State<GCWPasteButton> {
   @override
   Widget build(BuildContext context) {
-    return GCWPopupMenu(
-      size: widget.size,
-      customIcon: widget.customIcon,
-      iconData: Icons.content_paste,
-      backgroundColor: widget.backgroundColor,
-      menuItemBuilder: (context) => _buildMenuItems(context),
+    return GestureDetector(
+      child: GCWPopupMenu(
+          size: widget.size,
+          customIcon: widget.customIcon,
+          iconData: Icons.content_paste,
+          backgroundColor: widget.backgroundColor,
+          menuItemBuilder: (context) => _buildMenuItems(context),
+        ),
+    onLongPress: widget.onLongPress,
     );
   }
 
@@ -52,7 +56,8 @@ class GCWPasteButtonState extends State<GCWPasteButton> {
                 insertIntoGCWClipboard(data.text);
               });
             });
-          }),
+          },
+        ),
       GCWPopupMenuItem(isDivider: true)
     ];
 
