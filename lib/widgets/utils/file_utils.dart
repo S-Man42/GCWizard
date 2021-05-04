@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
-
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:universal_html/html.dart' as html;
 import 'package:flutter/services.dart';
-import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_extend/share_extend.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+// import 'package:open_file/open_file.dart';
 
 Future<String> MainPath() async {
   var status = await Permission.storage.request();
@@ -110,7 +110,6 @@ shareFile(String path, String type) {
 //   else
 //     OpenFile.open(path);
 // }
-
 Future<Uint8List> readByteDataFromFile(String fileName) async {
   var fileIn = File(fileName);
   return fileIn.readAsBytes();

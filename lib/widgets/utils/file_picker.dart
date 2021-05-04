@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:io' show Platform;
 
-/// useFileFilterOnAndroid -> for unknow mime types (for example gpx)
+/// useFileFilterOnAndroid -> for unknown mime types (for example gpx)
 Future<List<PlatformFile>> openFileExplorer({
   FileType pickingType = FileType.any,
   bool multiPick = false,
