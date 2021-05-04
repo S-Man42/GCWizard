@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity.dart';
+import 'file:///E:/workspace/GCWizard/lib/logic/tools/crypto_and_encodings/vanity/vanity.dart';
 
 void main() {
   group("Vanity.encryptVanitySingleNumbers:", () {

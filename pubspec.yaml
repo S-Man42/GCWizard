@@ -53,6 +53,7 @@ flutter:
     - assets/icons/coords/
     - assets/icons/science_and_technology/
     - assets/quadgrams/
+    - assets/phone_multitap_workflows/
     - assets/tokens/
     - assets/symbol_tables/
     - assets/symbol_tables/adlam/

@@ -22,8 +22,7 @@ Abc --> 123: #
 Abc --> Abc_s1: _
 Abc --> abc_e: ?
 
-'_ not possible
-123 --> 123: x?
+123 --> 123: x?_
 123 --> abc_s: #
 
 abc_p --> ABC: #
@@ -42,8 +41,7 @@ ABC_t --> 123_t: #
 ABC_t --> ABC: x
 ABC_t --> ABC_e: ?_
 
-'_ not possible
-123_t --> 123: x?
+123_t --> 123: x?_
 123_t --> abc_t: #
 
 abc --> abc: x_
