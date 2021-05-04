@@ -341,12 +341,10 @@ List<String> decodeChef(String language, recipe, additionalIngredients) {
 bool isMethod(String testString) {
   bool result = false;
   matchersDEU.forEach((element) {
-    if (element.hasMatch(testString))
-      result = true;
+    if (element.hasMatch(testString)) result = true;
   });
   matchersENG.forEach((element) {
-    if (element.hasMatch(testString))
-      result = true;
+    if (element.hasMatch(testString)) result = true;
   });
   return result;
 }
@@ -359,8 +357,7 @@ class Chef {
   List<String> meal;
 
   Chef(String readRecipe, language) {
-    if (readRecipe == '' || readRecipe == null)
-      return ;
+    if (readRecipe == '' || readRecipe == null) return;
 
     this.meal = new List<String>();
     valid = true;
@@ -394,20 +391,17 @@ class Chef {
     bool ingredientSection = false;
     bool methodSection = false;
     for (int i = 0; i < recipe.length - 1; i++) {
-      if (recipe[i].startsWith("ingredients") ||
-          recipe[i].startsWith("zutaten"))
-        ingredientSection = true;
+      if (recipe[i].startsWith("ingredients") || recipe[i].startsWith("zutaten")) ingredientSection = true;
 
       if (recipe[i].startsWith("cooking time") ||
           recipe[i].startsWith("garzeit") ||
           recipe[i].startsWith("pre-heat oven") ||
           recipe[i].startsWith("pre heat oven") ||
           recipe[i].startsWith("ofen auf") ||
-          recipe[i].startsWith("method") || recipe[i].startsWith("zubereitung"))
-        ingredientSection = false;
+          recipe[i].startsWith("method") ||
+          recipe[i].startsWith("zubereitung")) ingredientSection = false;
 
-      if (recipe[i].startsWith("method") || recipe[i].startsWith("zubereitung"))
-        methodSection = true;
+      if (recipe[i].startsWith("method") || recipe[i].startsWith("zubereitung")) methodSection = true;
 
       if (recipe[i].startsWith("serves") || recipe[i].startsWith("portionen")) {
         methodSection = false;
@@ -448,15 +442,19 @@ class Chef {
 
     // add blank lines to build the necessary sections
     String s0 = recipe[0];
-    for (int i = 1; i < recipe.length; i++){
-      if (recipe[i].startsWith("ingredients") || recipe[i].startsWith("zutaten") ||
-          recipe[i].startsWith("cooking time") || recipe[i].startsWith("garzeit") ||
-          recipe[i].startsWith("pre-heat oven") || recipe[i].startsWith("pre heat oven") || recipe[i].startsWith("ofen auf") ||
-          recipe[i].startsWith("method") || recipe[i].startsWith("zubereitung") ||
-          recipe[i].startsWith("serves") || recipe[i].startsWith("portionen"))
-        if (s0 != '')
-          recipe[i] = '\n' + recipe[i];
-      s0 =  recipe[i];
+    for (int i = 1; i < recipe.length; i++) {
+      if (recipe[i].startsWith("ingredients") ||
+          recipe[i].startsWith("zutaten") ||
+          recipe[i].startsWith("cooking time") ||
+          recipe[i].startsWith("garzeit") ||
+          recipe[i].startsWith("pre-heat oven") ||
+          recipe[i].startsWith("pre heat oven") ||
+          recipe[i].startsWith("ofen auf") ||
+          recipe[i].startsWith("method") ||
+          recipe[i].startsWith("zubereitung") ||
+          recipe[i].startsWith("serves") ||
+          recipe[i].startsWith("portionen")) if (s0 != '') recipe[i] = '\n' + recipe[i];
+      s0 = recipe[i];
     }
     readRecipe = recipe.join('\n');
 
