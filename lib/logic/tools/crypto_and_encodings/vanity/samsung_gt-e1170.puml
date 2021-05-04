@@ -22,10 +22,10 @@ abc_e --> 123_e: #
 
 ABC_e --> ABC_s: _
 ABC_e --> ABC: x
-ABC_e --> abc_e: *
+ABC_e --> abc_e: #
 ABC_e --> ABC_e: ?
 
-ABC_s --> abc_s: *
+ABC_s --> abc_s: #
 ABC_s --> ABC: x_
 ABC_s --> ABC_e: ?
 

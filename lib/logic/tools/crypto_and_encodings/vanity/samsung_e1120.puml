@@ -21,7 +21,15 @@ abc --> 123: *
 abc_e --> Abc: _
 abc_e --> abc: x
 abc_e --> abc_e: ?
-abc_e --> 123: *
+abc_e --> 123_e: *
+
+'? not possible
+123_e --> Abc_e: *
+123_e --> 123: x_
+
+Abc_e --> ABC_e: *
+Abc_e --> abc: x
+Abc_e --> abc_e: ?
 
 ABC_e --> ABC: x_
 ABC_e --> abc_e: *

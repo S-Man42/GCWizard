@@ -24,7 +24,7 @@ ABC --> ABC_e: ?
 abc_e --> abc_e: ?
 abc_e --> Abc: _
 abc_e --> abc: x
-abc_e --> ABC: #
+abc_e --> ABC_e: #
 
 ABC_e --> ABC: x
 ABC_e --> ABC_e_: _
