@@ -385,7 +385,7 @@ class Chef {
 
     // check and add missing title
     if (readRecipe.startsWith('ingredients') || readRecipe.startsWith('zutaten'))
-      readRecipe = 'pseudo title\n\n' + readRecipe;
+      readRecipe = 'nouvelle cuisine\n\n' + readRecipe;
 
     // check and repair recipe regarding blank lines, whitespace
     recipe = readRecipe.split('\n');
