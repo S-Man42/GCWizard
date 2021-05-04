@@ -1,5 +1,4 @@
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:gc_wizard/logic/tools/coords/distance_and_bearing.dart';
 import 'package:gc_wizard/logic/tools/coords/projection.dart';
 import 'package:latlong/latlong.dart';
 
