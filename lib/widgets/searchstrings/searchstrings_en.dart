@@ -229,7 +229,8 @@ const SEARCHSTRING_EN_NUMBERSEQUENCE_SUBLIMENUMBERSSELECTION = 'numbers';
 const SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION = 'superperfect numbers';
 const SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION = 'weird numbers';
 const SEARCHSTRING_EN_NUMERALBASES = 'hexadecimal octal octenary numeral systems';
-const SEARCHSTRING_EN_NUMERALWORDS = 'numeralwords numberwords numerals  cyrillic german english french italian danish spanish dutch norwegian polish portuguese swedish russian volapuk esperanto solresol latin';
+const SEARCHSTRING_EN_NUMERALWORDS =
+    'numeralwords numberwords numerals  cyrillic german english french italian danish spanish dutch norwegian polish portuguese swedish russian volapuk esperanto solresol latin';
 const SEARCHSTRING_EN_NUMERALWORDSLISTS = '';
 const SEARCHSTRING_EN_NUMERALWORDSTEXTSEARCH = 'textanalysis textsearch';
 const SEARCHSTRING_EN_ONETIMEPAD = '';
