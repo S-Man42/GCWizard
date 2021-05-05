@@ -1465,5 +1465,135 @@ final List<PhoneModel> phoneModels = [
         [PhoneInputLanguage.ENGLISH, PhoneInputLanguage.GERMAN, PhoneInputLanguage.FRENCH, PhoneInputLanguage.ITALIAN, PhoneInputLanguage.DUTCH, PhoneInputLanguage.TURKISH],
         [PhoneInputLanguage.GREEK]
       ]
-  )
+  ),
+  PhoneModel('Sony Ericsson K700i', 'assets/vanity_multitap_workflows/sony_ericsson_k700i.puml', null,
+      [
+        //The weird cases are correct, e.g. the Ç in the lower case 2 or the è in upper case 3
+        {
+          PhoneCaseMode.LOWER_CASE : {
+            "0": "+0ΘΞΨΩ",
+            "1": ".,-?!'@:;/()1",
+            "2": "abcåäæàÇ2Γ",
+            "3": "def3èéΔΦ",
+            "4": "ghiì4",
+            "5": "jkl5Λ",
+            "6": "mnoñöøò6",
+            "7": "pqrsß7ΠΣ",
+            "8": "tuvüù8",
+            "9": "wxyz9",
+            "#": " \n¶#*"
+          },
+          PhoneCaseMode.UPPER_CASE : {
+            "0": "+0ΘΞΨΩ",
+            "1": ".,-?!'@:;/()1",
+            "2": "ABCÅÄÆàÇ2Γ",
+            "3": "DEF3èÉΔΦ",
+            "4": "GHIì4",
+            "5": "JKL5Λ",
+            "6": "MNOÑÖØò6",
+            "7": "PQRSß7ΠΣ",
+            "8": "TUVÜù8",
+            "9": "WXYZ9",
+            "#": " \n¶#*"
+          }
+        },
+        {
+          PhoneCaseMode.LOWER_CASE : {
+            "0": "+0",
+            "1": ".,-?!'@:;/()1",
+            "2": "abc2",
+            "3": "def3",
+            "4": "ghi4",
+            "5": "jkl5",
+            "6": "mno6",
+            "7": "pqrs7",
+            "8": "tuv8",
+            "9": "wxyz9",
+            "#": " \n¶"
+          },
+          PhoneCaseMode.UPPER_CASE : {
+            "0": "+0",
+            "1": ".,-?!'@:;/()1",
+            "2": "ABC2",
+            "3": "DEF3",
+            "4": "GHI4",
+            "5": "JKL5",
+            "6": "MNO6",
+            "7": "PQRS7",
+            "8": "TUV8",
+            "9": "WXYZ9",
+            "#": " \n¶"
+          }
+        }
+      ],
+      [
+        [PhoneInputLanguage.GERMAN, PhoneInputLanguage.FRENCH, PhoneInputLanguage.TURKISH],
+        [PhoneInputLanguage.ENGLISH]
+      ]
+  ),
+  PhoneModel('Sony Ericsson T300', 'assets/vanity_multitap_workflows/sony_ericsson_t300.puml', null,
+      [
+        //The weird cases are correct, e.g. the Ç in the lower case 2 or the è in upper case 3
+        {
+          PhoneCaseMode.LOWER_CASE : {
+            "0": "+&@/¤%\$€£¥\\§¿¡0ΘΞΨΩ",
+            "1": "-?!,.:;\"'<=>()_1",
+            "2": "abcåäæàÇ2Γ",
+            "3": "def3èéΔΦ",
+            "4": "ghiì4",
+            "5": "jkl5Λ",
+            "6": "mnoñöøò6",
+            "7": "pqrsß7ΠΣ",
+            "8": "tuvüù8",
+            "9": "wxyz9",
+            "#": " #*\n¶"
+          },
+          PhoneCaseMode.UPPER_CASE : {
+            "0": "+&@/¤%\$€£¥\\§¿¡0ΘΞΨΩ",
+            "1": "-?!,.:;\"'<=>()_1",
+            "2": "ABCÅÄÆàÇ2Γ",
+            "3": "DEF3èÉΔΦ",
+            "4": "GHIì4",
+            "5": "JKL5Λ",
+            "6": "MNOÑÖØò6",
+            "7": "PQRSß7ΠΣ",
+            "8": "TUVÜù8",
+            "9": "WXYZ9",
+            "#": " #*\n¶"
+          }
+        },
+        {
+          PhoneCaseMode.LOWER_CASE : {
+            "0": "+&@/¤%\$€£¥\\§¿¡0",
+            "1": "-?!,.:;\"'<=>()_1",
+            "2": "abc2",
+            "3": "def3",
+            "4": "ghi4",
+            "5": "jkl5",
+            "6": "mno6",
+            "7": "pqrs7",
+            "8": "tuv8",
+            "9": "wxyz9",
+            "#": " #*\n¶"
+          },
+          PhoneCaseMode.UPPER_CASE : {
+            "0": "+&@/¤%\$€£¥\\§¿¡0",
+            "1": "-?!,.:;\"'<=>()_1",
+            "2": "ABC2",
+            "3": "DEF3",
+            "4": "GHI4",
+            "5": "JKL5",
+            "6": "MNO6",
+            "7": "PQRS7",
+            "8": "TUV8",
+            "9": "WXYZ9",
+            "#": " #*\n¶"
+          }
+        }
+      ],
+      [
+        [PhoneInputLanguage.GERMAN, PhoneInputLanguage.FRENCH],
+        [PhoneInputLanguage.ENGLISH]
+      ]
+  ),
 ];
