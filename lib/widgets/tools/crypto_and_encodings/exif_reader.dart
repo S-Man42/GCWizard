@@ -3,12 +3,15 @@ import 'dart:typed_data';
 import 'package:exif/exif.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/exif_reader.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
@@ -18,7 +21,9 @@ import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:latlong/latlong.dart';
 
 class ExifReader extends StatefulWidget {
-  ExifReader({Key key}) : super(key: key);
+  final PlatformFile file;
+
+  ExifReader({Key key, this.file}) : super(key: key);
 
   @override
   _ExifReaderState createState() => _ExifReaderState();
@@ -31,6 +36,12 @@ class _ExifReaderState extends State<ExifReader> {
   Thumbnail thumbnail;
 
   @override
+  initState() {
+    super.initState();
+    file = widget.file;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       GCWButton(
@@ -39,11 +50,29 @@ class _ExifReaderState extends State<ExifReader> {
           await readFile();
         },
       ),
+      GCWButton(
+        text: i18n(context, 'paste_image'),
+        onPressed: pasteFile,
+      ),
       GCWText(
         text: file == null ? "" : file.path,
       ),
       ..._buildOutput(tableTags)
     ]);
+  }
+
+  void pasteFile() {
+    Clipboard.getData('image/jpeg').then((data) {
+      _pasteFile(data);
+    });
+    Clipboard.getData('image/tiff').then((data) {
+      _pasteFile(data);
+    });
+  }
+
+  Future<void> _pasteFile(data) {
+    PlatformFile _file = data.text;
+    return _readFile(_file);
   }
 
   Future<void> readFile() async {
@@ -52,22 +81,23 @@ class _ExifReaderState extends State<ExifReader> {
     );
     if (files != null) {
       PlatformFile _file = files.first;
-
-      Map<String, IfdTag> data = await parseExif(_file);
-
-      Thumbnail _thumbnail = completeThumbnail(data);
-      LatLng _point = completeGPSData(data);
-      var _tableTags = buildTablesExif(data);
-
-      setState(() {
-        file = _file;
-        tableTags = _tableTags;
-        point = _point; // GPS Point
-        thumbnail = _thumbnail; // Thumbnail
-      });
-    } else {
-      // User canceled the picker
+      return _readFile(_file);
     }
+  }
+
+  Future<void> _readFile(PlatformFile _file) async {
+    Map<String, IfdTag> data = await parseExif(_file);
+
+    Thumbnail _thumbnail = completeThumbnail(data);
+    LatLng _point = completeGPSData(data);
+    var _tableTags = buildTablesExif(data);
+
+    setState(() {
+      file = _file;
+      tableTags = _tableTags;
+      point = _point; // GPS Point
+      thumbnail = _thumbnail; // Thumbnail
+    });
   }
 
   static void _sortTags(List tags) {
@@ -91,10 +121,18 @@ class _ExifReaderState extends State<ExifReader> {
   ///
   void decorateThumbnail(List<Widget> widgets) {
     if (thumbnail != null && thumbnail.bytes.length > 0) {
-      widgets.add(GCWOutput(
-        title: i18n(context, "exif_section_thumbnail"),
-        child: Image.memory(thumbnail.bytes),
-      ));
+      widgets.add(GCWMultipleOutput(
+          //title: i18n(context, "exif_section_thumbnail"),
+          children: [Image.memory(thumbnail.bytes)],
+          //suppressCopyButton: false,
+          trailing: GCWIconButton(
+            iconData: Icons.save,
+            size: IconButtonSize.SMALL,
+            //iconColor: _isNoOutput ? Colors.grey : null,
+            onPressed: () {
+              // _isNoOutput ? null : _exportCoordinates(context, widget.points, widget.polylines);
+            },
+          )));
     }
   }
 
@@ -153,10 +191,10 @@ class _ExifReaderState extends State<ExifReader> {
               children: columnedMultiLineOutput(
             null,
             [
-              ["name", file.name],
-              ["path", file.path],
-              ["size", file.size],
-              ["extension", file.extension]
+              ["name", file.name ?? ''],
+              ["path", file.path ?? ''],
+              ["size", file.size ?? 0],
+              ["extension", file.extension ?? '']
             ],
           ))));
     }
