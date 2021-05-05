@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/kitchen.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/esoteric_programming_languages/chef_language/recipe.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/primes/primes.dart';
@@ -375,17 +374,21 @@ class Chef {
     bool refrigerateFound = false;
     bool titleFound = false;
 
+    // remove blank lines at start and trim lines
+    List<String> recipe = readRecipe.split('\n');
+    while(recipe[0] == '') {
+      for (int i = 1; i < recipe.length; i++) {
+        recipe[i - 1] = recipe[i].trim();
+      }
+    }
+    readRecipe = recipe.join('\n');
+
     // check and add missing title
     if (readRecipe.startsWith('ingredients') || readRecipe.startsWith('zutaten'))
-      readRecipe = 'pseudo title\n\n' + readRecipe;
+      readRecipe = 'nouvelle cuisine\n\n' + readRecipe;
 
     // check and repair recipe regarding blank lines, whitespace
-    List<String> recipe = readRecipe.split('\n');
-    // trim lines
-    for (int i = 0; i < recipe.length; i++) {
-      recipe[i] = recipe[i].trim();
-    }
-    recipe = recipe.join('\n').split('\n');
+    recipe = readRecipe.split('\n');
 
     // remove blank lines inside sections ingredients, methods
     bool ingredientSection = false;
