@@ -1340,6 +1340,7 @@
   "exif_section_general": "General",
   "exif_section_thumbnail": "Thumbnail",
   "open_file": "Open file",
+  "paste_image": "Paste image",
   "formulasolver_title": "Formula Solver",
   "formulasolver_description": "Create formulas for stages and finals, add variables, solve them",
   "formulasolver_group": "Group",

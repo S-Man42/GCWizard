@@ -46,9 +46,7 @@ class _ExifReaderState extends State<ExifReader> {
     return Column(children: <Widget>[
       GCWButton(
         text: i18n(context, 'open_file'),
-        onPressed: () async {
-          await readFile();
-        },
+        onPressed: readFile,
       ),
       GCWButton(
         text: i18n(context, 'paste_image'),
