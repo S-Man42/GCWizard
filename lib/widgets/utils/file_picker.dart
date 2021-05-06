@@ -1,33 +1,52 @@
 import 'dart:typed_data';
+import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:filesystem_picker/filesystem_picker.dart';
+import 'package:file_picker/file_picker.dart' as web_picker;
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'dart:io' show Platform;
+import 'package:path_provider/path_provider.dart';
+import 'dart:io' show Directory, Platform;
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
+
+import 'package:permission_handler/permission_handler.dart';
 
 /// useFileFilterOnAndroid -> for unknow mime types (for example gpx)
-Future<List<PlatformFile>> openFileExplorer({
-  FileType pickingType = FileType.any,
-  bool multiPick = false,
-  List<String> allowedExtensions,
-  bool useFileFilterOnAndroid = false}) async {
-
+Future<PlatformFile> openFileExplorer(BuildContext context, {
+  List<String> allowedExtensions}) async {
   try {
-    List<String> allowedExtensionsTmp = allowedExtensions;
-    if (useFileFilterOnAndroid && _isAndroid())
-      allowedExtensions = null;
+    if (!kIsWeb) {
+      Directory  rootDirectoryX = await getApplicationSupportDirectory();// getApplicationDocumentsDirectory();
+      String path = await FilesystemPicker.open(
+        //title: 'Open file',
+        context: context,
+        rootDirectory: await getExternalStorageDirectory(),
+        fsType: FilesystemType.file,
+        //folderIconColor: Colors.teal,
+        allowedExtensions: allowedExtensions,
+        //fileTileSelectMode: FileTileSelectMode.,
+        requestPermission: () async =>
+        await Permission.storage
+            .request()
+            .isGranted,
+      );
+      if (path != null)
+        return new PlatformFile(path: path, name: (path.split('/').last));
+      else
+        return null;
 
-    var files = (await FilePicker.platform.pickFiles(
-      type: allowedExtensions != null ? FileType.custom : pickingType,
-      allowMultiple: multiPick,
-      allowedExtensions: allowedExtensions,
-    ))?.files;
+    } else {
+      /// web version
+      var files = (await web_picker.FilePicker.platform.pickFiles(
+        type: web_picker.FileType.custom,
+        allowMultiple: false,
+        allowedExtensions: allowedExtensions,
+      ))?.files;
 
-    if (useFileFilterOnAndroid && _isAndroid())
-      files = _filterFiles(files, allowedExtensionsTmp);
+      files = _filterFiles(files, allowedExtensions);
 
-    return files;
-
+      return files == null ? null : new PlatformFile(path: files.first.path, name: files.first.name, bytes: files.first.bytes);
+    }
   } on PlatformException catch (e) {
     print("Unsupported operation " + e.toString());
   } catch (ex) {
@@ -43,22 +62,23 @@ bool _isAndroid() {
   return false;
 }
 
-Future<Uint8List> getFileData(PlatformFile file) async {
+Future<Uint8List> _getFileData(PlatformFile file) async {
   return kIsWeb ? Future.value(file.bytes) : readByteDataFromFile(file.path);
 }
 
-List<PlatformFile> _filterFiles(List<PlatformFile> files,List<String> allowedExtensions) {
+List<web_picker.PlatformFile> _filterFiles(List<web_picker.PlatformFile> files, List<String> allowedExtensions) {
   if (files == null || allowedExtensions == null)
     return null;
 
   return files.where((element) => allowedExtensions.contains(element.extension)).toList();
 }
 
-Future<bool> clearCachedFiles() async {
-  return FilePicker.platform.clearTemporaryFiles();
-}
 
 Future<String> selectFolder() async {
-  return FilePicker.platform.getDirectoryPath();
+  if (!kIsWeb) {}
+  else
+    return web_picker.FilePicker.platform.getDirectoryPath();
+
 }
+
 

@@ -11,7 +11,8 @@ dependencies:
   base32: ^1.1.2
   cached_network_image: ^3.0.0
   diacritic: ^0.1.1
-  file_picker: ^3.0.0
+  filesystem_picker: ^1.0.4
+  file_picker: ^3.0.1
   flutter:
     sdk: flutter
   flutter_localizations:
