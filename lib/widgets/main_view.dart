@@ -152,7 +152,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/hexstring2file.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
@@ -240,6 +240,7 @@ class _MainViewState extends State<MainView> {
         className(BeaufortSelection()),
         className(Bifid()),
         className(Binary()),
+        className(Binary2Image()),
         className(BookCipher()),
         className(Brainfk()),
         className(BurrowsWheeler()),
@@ -290,7 +291,6 @@ class _MainViewState extends State<MainView> {
         className(HashBreaker()),
         className(HashSelection()),
         className(Hexadecimal()),
-        className(HexString2File()),
         className(Homophone()),
         className(Humidex()),
         className(IceCodesSelection()),

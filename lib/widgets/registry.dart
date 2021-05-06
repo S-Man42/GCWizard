@@ -210,6 +210,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_pos
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
@@ -228,7 +229,6 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/silver_ratio.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
@@ -444,6 +444,17 @@ class Registry {
             SEARCHSTRING_FR_BEAUFORT
           ]),
       GCWTool(
+          tool: Bifid(),
+          i18nPrefix: 'bifid',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID
+          ]),
+      GCWTool(
           tool: Binary(),
           i18nPrefix: 'binary',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -455,15 +466,13 @@ class Registry {
             SEARCHSTRING_FR_BINARY
           ]),
       GCWTool(
-          tool: Bifid(),
-          i18nPrefix: 'bifid',
-          category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [],
+          tool: Binary2Image(),
+          i18nPrefix: 'binary2image',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
           searchStrings: [
-            SEARCHSTRING_COMMON_BIFID,
-            SEARCHSTRING_COMMON_BIFID,
-            SEARCHSTRING_COMMON_BIFID,
-            SEARCHSTRING_COMMON_BIFID
+            SEARCHSTRING_DE_HEXSTRING2FILE,
+            SEARCHSTRING_EN_HEXSTRING2FILE,
+            SEARCHSTRING_FR_HEXSTRING2FILE
           ]),
       GCWTool(
           tool: BookCipher(),
@@ -787,15 +796,6 @@ class Registry {
             SEARCHSTRING_DE_HEXADECIMAL,
             SEARCHSTRING_EN_HEXADECIMAL,
             SEARCHSTRING_FR_HEXADECIMAL
-          ]),
-      GCWTool(
-          tool: HexString2File(),
-          i18nPrefix: 'hexstring2file',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          searchStrings: [
-            SEARCHSTRING_DE_HEXSTRING2FILE,
-            SEARCHSTRING_EN_HEXSTRING2FILE,
-            SEARCHSTRING_FR_HEXSTRING2FILE
           ]),
       GCWTool(
           tool: Homophone(),
