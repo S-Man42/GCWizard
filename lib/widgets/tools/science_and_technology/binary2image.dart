@@ -1,16 +1,14 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/binary2image.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:gc_wizard/widgets/utils/file_picker.dart';
-
+import 'package:intl/intl.dart';
 
 
 class Binary2Image extends StatefulWidget {
@@ -20,9 +18,8 @@ class Binary2Image extends StatefulWidget {
 
 class Binary2ImageState extends State<Binary2Image> {
   var _currentInput = '';
-  var _currentInputLast = '';
   Uint8List _outData;
-  var _squareFormat = true;
+  var _squareFormat = false;
   var _invers = false;
 
   @override
@@ -31,27 +28,24 @@ class Binary2ImageState extends State<Binary2Image> {
       children: <Widget>[
         GCWTextField(
           onChanged: (value) {
-            setState(() {
-              _currentInput = value;
-            });
+            _currentInput = value;
+            _createOutput();
           },
         ),
         GCWOnOffSwitch(
-          title: 'Square format',
+          title: i18n(context, 'binary2image_squareFormat'),
           value: _squareFormat,
           onChanged: (value) {
-            setState(() {
-              _squareFormat = value;
-            });
+            _squareFormat = value;
+            _createOutput();
           },
         ),
         GCWOnOffSwitch(
-          title: 'Invers',
+          title: i18n(context, 'binary2image_invers'),
           value: _invers,
           onChanged: (value) {
-            setState(() {
-              _invers = value;
-            });
+            _invers = value;
+            _createOutput();
           },
         ),
         GCWDefaultOutput(child: _buildOutput(),
@@ -68,31 +62,22 @@ class Binary2ImageState extends State<Binary2Image> {
     );
   }
 
-  _buildOutput() {
-    if (_currentInputLast != _currentInput) {
-      _currentInputLast == _currentInput;
-      binary2image(_currentInput, _squareFormat, _invers).then((value) {
-//        setState(() {
-          _outData = value;
-//        });
+  _createOutput() {
+    binary2image(_currentInput, _squareFormat, _invers).then((value) {
+      setState(() {
+        _outData = value;
       });
-    }
-
-    if (_outData == null)
-      return null;
-
-    return GCWSymbolContainer(
-        symbol: Image.memory(_outData)
-    );
-
+    });
   }
 
+  _buildOutput() {
+    return (_outData == null) ? null : Image.memory(_outData);
+  }
 
   _exportFile(BuildContext context, Uint8List data) async {
-    // var fileType = getFileType(_outData);
-    // var value = await saveByteDataToFile(
-    //     data.buffer.asByteData(), DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType, subDirectory: "hexstring_export");
-    //
-    // if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
+    var value = await saveByteDataToFile(
+        data.buffer.asByteData(), DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + ".png");
+
+    if (value != null) showExportedFileDialog(context, value['path'], fileType: ".png", contentWidget: Image.memory(_outData));
   }
 }

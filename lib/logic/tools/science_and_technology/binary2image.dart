@@ -1,10 +1,8 @@
-import 'dart:collection';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/substitution.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 
@@ -27,12 +25,12 @@ Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) asy
   else
     input = substitution(input,  {filter[0]: '0', filter[1]: '1'});
 
-  return await binary2Image(input);
+  return await _binary2Image(input);
 }
 
 String _buildFilter(String input) {
   var alphabet = removeDuplicateCharacters(input);
-  alphabet = alphabet.replaceAll(RegExp('[/r/n/t]'), '');
+  alphabet = alphabet.replaceAll(RegExp('[\r\n\t]'), '');
   var alphabetTmp = alphabet.split('').toList();
   alphabetTmp.sort();
   alphabet = alphabetTmp.join();
@@ -52,22 +50,38 @@ String _buildFilter(String input) {
     .forEach((char) {
       map.addAll({char: char.allMatches(input).length});
     });
-  print(map);
-  map = new SplayTreeMap.from(map, (key1, key2) => map[key2].compareTo(map[key1]));
-  print(map);
 
-  filter = map.keys.elementAt(0) + map.keys.elementAt(1) + map.keys.elementAt(2);
+  var countList = map.values.toList();
+  countList.sort();
+
+  for (int i = 0; i< countList.length; i++) {
+    map.forEach((key, value) {
+      if (value == countList[i])
+        filter += key;
+    });
+    map.removeWhere((key, value) => value == countList[i]);
+  }
+  filter =  filter.split('').reversed.join();
+
+  filter = filter.substring(0, 3);
   if (filter.contains(' '))
     return filter.replaceAll(' ', '');
   else
-    return map.keys.elementAt(0) + map.keys.elementAt(1);
+    return filter.substring(0, 2);
 }
 
 String _filterInput(String input, String filter) {
+  var special = ".\$*+-?";
+  special
+    .split('')
+    .forEach((char) {
+    filter = filter.replaceAll(char, '\\' + char );
+  });
+
   return input.replaceAll(RegExp('[^$filter]'), '');
 }
 
-Future<Uint8List> binary2Image(String input) async {
+Future<Uint8List> _binary2Image(String input) async {
   var bounds = 10;
   var pointSize = 5.0;
   var lines = input.split('\n');
@@ -106,54 +120,3 @@ Future<Uint8List> binary2Image(String input) async {
   return data.buffer.asUint8List();
 }
 
-
-
-Uint8List _hexString2bytes(String input) {
-  if (input == null || input == "")
-    return null;
-
-  var data = <int>[];
-
-  input = input.replaceAll("0x", "");
-  String hex = input.toUpperCase().replaceAll(RegExp("[^0-9A-F]"), "");
-  if (hex == "")
-    return null;
-
-  for (var i=0; i<hex.length; i=i+2) {
-    var valueString = hex.substring(i, min(i+2, hex.length-1));
-    if (valueString.length  > 0) {
-      int value = int.tryParse(convertBase(valueString, 16, 10));
-      data.add(value);
-    }
-  }
-
-  return Uint8List.fromList(data);
-}
-
-bool _isBinary(String input) {
-  if (input == null)
-    return false;
-  String binary = input.replaceAll(RegExp("[01\\s]"), "");
-  return binary.length == 0;
-}
-
-Uint8List _binaryString2bytes(String input) {
-  if (input == null || input == "")
-    return null;
-
-  var data = <int>[];
-
-  String binary = input.replaceAll(RegExp("[^01]"), "");
-  if (binary == "")
-    return null;
-
-  for (var i=0; i<binary.length; i=i+8) {
-    var valueString = binary.substring(i, min(i+8, binary.length-1));
-    if (valueString.length  > 0) {
-      int value = int.tryParse(convertBase(valueString, 2, 10));
-      data.add(value);
-    }
-  }
-
-  return Uint8List.fromList(data);
-}
