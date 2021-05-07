@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'file:///E:/workspace/GCWizard/lib/logic/tools/crypto_and_encodings/vanity/vanity.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_stateful_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool.dart';
