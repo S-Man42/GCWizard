@@ -25,6 +25,9 @@ final _SEARCH_BLACKLIST = {
   'chiffre',
   'cipher',
   'chiffrement',
+  'schlüssel',
+  'calculator',
+  'checker',
   'der',
   'die',
   'das',
@@ -62,11 +65,7 @@ final _SEARCH_BLACKLIST = {
   'ou',
 };
 
-final _SEARCH_WHITELIST = {
-  'd ni': "d'ni",
-  'd or': "d'or",
-  'mando a': "mando'a",
-};
+final _SEARCH_WHITELIST = {'d ni': "d'ni", 'd or': "d'or", 'mando a': "mando'a", 'kenny s': "kenny's"};
 
 const HELP_BASE_URL = 'https://blog.gcwizard.net/manual/';
 
@@ -177,7 +176,10 @@ class _GCWToolState extends State<GCWTool> {
         .replaceAll('/', ' ')
         .replaceAll(' - ', ' ')
         .replaceAll(':', '')
-        .replaceAll(RegExp(r"\([a-zA-Z0-9\s.]+\)"), ''); //remove e.g. (128 bits) in hashes-toolname
+        .replaceAll('bit)', '')
+        .replaceAll('(', '')
+        .replaceAll(')', '');
+    //.replaceAll(RegExp(r"\([a-zA-Z0-9\s.]+\)"), ''); //remove e.g. (128 bits) in hashes-toolname
     text = substitution(text, _SEARCH_WHITELIST);
     text = text.split(' ').where((word) => !_SEARCH_BLACKLIST.contains(word)).join(' ');
     return text;

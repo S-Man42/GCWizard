@@ -55,6 +55,9 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
 
       _eastingController.text = _currentEasting['value'].toString();
       _northingController.text = _currentNorthing['value'].toString();
+    } else if (_subtypeChanged()) {
+      _currentSubtype = _getSubTypeCode(widget.subtype);
+      WidgetsBinding.instance.addPostFrameCallback((_) => _setCurrentValueAndEmitOnChange());
     }
 
     return Column(children: <Widget>[
@@ -122,6 +125,10 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
     }
 
     return subtype;
+  }
+
+  bool _subtypeChanged() {
+    return _currentSubtype != _getSubTypeCode(widget.subtype);
   }
 
   _setCurrentValueAndEmitOnChange() {

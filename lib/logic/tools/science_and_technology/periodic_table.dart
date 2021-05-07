@@ -410,7 +410,7 @@ final List<PeriodicTableElement> allPeriodicTableElements = [
       'periodictable_element_plutonium', 'Pu', 94, 244.05, 1.28, 639.4, 3230, true, false, 7, 3, 19.816, 244, 365 * 8e7,
       comments: ['periodictable_comment_massnotexact']),
   PeriodicTableElement(
-      'periodictable_element_americum', 'Am', 95, 243.05, 1.3, 1176, 2607, true, true, 7, 3, 13.67, 243, 2690.05,
+      'periodictable_element_americium', 'Am', 95, 243.05, 1.3, 1176, 2607, true, true, 7, 3, 13.67, 243, 2690.05,
       comments: ['periodictable_comment_massnotexact', 'periodictable_comment_mostcommonisotop']),
   PeriodicTableElement(
       'periodictable_element_curium', 'Cm', 96, 247.05, 1.3, 1340, 3110, true, true, 7, 3, 13.51, 247, 569.4e7,
