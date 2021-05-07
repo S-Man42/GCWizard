@@ -4,12 +4,11 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/rsa.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_toast.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_encrypt_buttonbar.dart';
+import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
+import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/integer_textinputformatter.dart';
-
-enum _RSAEncryptState { NONE, ENCRYPT, DECRYPT }
 
 class RSA extends StatefulWidget {
   @override
@@ -23,8 +22,8 @@ class RSAState extends State<RSA> {
   String _currentQ = '';
 
   var _integerInputFormatter = IntegerTextInputFormatter(min: 0);
-
-  var _state = _RSAEncryptState.NONE;
+  var _currentMode = GCWSwitchPosition.right;
+  Widget _output;
 
   @override
   Widget build(BuildContext context) {
@@ -57,36 +56,28 @@ class RSAState extends State<RSA> {
             _currentQ = text;
           },
         ),
-        GCWEncryptButtonBar(
-          onPressedEncode: () {
+        GCWTwoOptionsSwitch(
+          value: _currentMode,
+          onChanged: (value) {
             setState(() {
-              _state = _RSAEncryptState.ENCRYPT;
-            });
-          },
-          onPressedDecode: () {
-            setState(() {
-              _state = _RSAEncryptState.DECRYPT;
+              _currentMode = value;
+              _output = null;
             });
           },
         ),
-        _calculateOutput()
+        GCWSubmitButton(
+          onPressed: () {
+            setState(() {
+              _calculateOutput();
+            });
+          },
+        ),
+        _output ?? GCWDefaultOutput(),
       ],
     );
   }
 
   _calculateOutput() {
-    if (_state == _RSAEncryptState.NONE ||
-        _currentInput == null ||
-        _currentInput.length == 0 ||
-        _currentED == null ||
-        _currentED.length == 0 ||
-        _currentP == null ||
-        _currentP.length == 0 ||
-        _currentQ == null ||
-        _currentQ.length == 0) {
-      return GCWDefaultOutput(child: '');
-    }
-
     try {
       var outputText;
       var ed = BigInt.tryParse(_currentED);
@@ -95,7 +86,7 @@ class RSAState extends State<RSA> {
 
       var d;
 
-      if (_state == _RSAEncryptState.ENCRYPT) {
+      if (_currentMode == GCWSwitchPosition.left) {
         outputText = encryptRSA(_currentInput, ed, p, q);
         try {
           d = calculateD(ed, p, q).toString();
@@ -105,8 +96,6 @@ class RSAState extends State<RSA> {
       } else {
         outputText = decryptRSA(_currentInput, ed, p, q);
       }
-
-      _state = _RSAEncryptState.NONE;
 
       var outputChildren = <Widget>[
         GCWDefaultOutput(
@@ -124,12 +113,10 @@ class RSAState extends State<RSA> {
         2
       ]));
 
-      return Column(children: outputChildren);
+      _output = Column(children: outputChildren);
     } catch (exception) {
+      _output = null;
       showToast(i18n(context, exception.message));
-
-      _state = _RSAEncryptState.NONE;
-      return GCWDefaultOutput(child: '');
     }
   }
 }

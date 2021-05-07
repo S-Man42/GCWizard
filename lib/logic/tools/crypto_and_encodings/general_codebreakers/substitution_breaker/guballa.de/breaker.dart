@@ -47,9 +47,9 @@ class BreakerResult {
 }
 
 const DEFAULT_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
-String _alphabet = null;
+String _alphabet;
 int _alphabet_len = 0;
-List<int> _quadgrams = null;
+List<int> _quadgrams;
 
 /// Init the instance
 _initBreaker(Quadgrams languageQuadgrams) {
@@ -62,14 +62,17 @@ _initBreaker(Quadgrams languageQuadgrams) {
 /// :param str txt: the text string to process
 /// :param str alphabet: the alphabet to apply with this text string
 /// :return: an iterator which iterates over all characters of the text string which are present in the alphabet.
-Iterable<int> iterateText(String text, String alphabet) sync* {
+Iterable<int> iterateText(String text, String alphabet, {ignoreNonLetters: true}) sync* {
   var trans = alphabet.toLowerCase();
   int index = -1;
 
   text = text.toLowerCase();
   for (int i = 0; i < text.length; i++) {
     index = trans.indexOf(text[i]);
-    if (index >= 0) yield index;
+    if (index >= 0)
+      yield index;
+    else if (!ignoreNonLetters)
+      yield -1;
   }
 }
 
@@ -86,7 +89,7 @@ Iterable<int> iterateText(String text, String alphabet) sync* {
 ///             swapped.
 /// :return: tuple of the max_fitness and the number of keys evaluated
 Tuple2<int, int> _hill_climbing(List<int> key, List<int> cipher_bin, List<List<int>> char_positions) {
-  var plaintext = List<int>();
+  var plaintext = <int>[];
   cipher_bin.forEach((idx) => plaintext.add(key.indexOf(idx)));
   var key_len = _alphabet_len;
   var nbr_keys = 0;
@@ -149,7 +152,7 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
 
   var start_time = DateTime.now();
   var nbr_keys = 0;
-  var cipher_bin = List<int>();
+  var cipher_bin = <int>[];
   iterateText(ciphertext, _alphabet).forEach((char) {
     cipher_bin.add(char);
   });
@@ -158,9 +161,9 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
     // ciphertext is too short
     return BreakerResult(errorCode: ErrorCode.TEXT_TOO_SHORT);
 
-  var char_positions = List<List<int>>();
+  var char_positions = <List<int>>[];
   for (int idx = 0; idx < _alphabet.length; idx++) {
-    var posList = List<int>();
+    var posList = <int>[];
     var i = 0;
     cipher_bin.forEach((x) {
       if (x == idx) posList.add(i);
@@ -168,13 +171,12 @@ BreakerResult break_cipher(Quadgrams quadgrams, String ciphertext, {int maxRound
     });
     char_positions.add(posList);
   }
-  ;
 
   var local_maximum = 0;
   var local_maximum_hit = 1;
   var round_cntr = 0;
-  var key = List<int>();
-  var best_key = List<int>();
+  var key = <int>[];
+  var best_key = <int>[];
 
   for (int idx = 0; idx < _alphabet.length; idx++) {
     key.add(idx);
