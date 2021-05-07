@@ -68,6 +68,7 @@ class LicensesState extends State<Licenses> {
           ['Wikipedia', 'several'],
           ['www.steinerverlag.de', 'Eurythmy'],
           ['www.breitkopf.de', 'Solmisation'],
+          ['game-icons.net\npixabay.com\nwww.clker.com', 'Geocache Attribute'],
         ]),
       ),
     ]);
