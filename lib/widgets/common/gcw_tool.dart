@@ -87,6 +87,7 @@ class GCWTool extends StatefulWidget {
   final autoScroll;
   final iconPath;
   final List<String> searchStrings;
+  List<String> _indexedStrings;
   final List<GCWToolActionButtonsEntry> buttonList;
   final List<String> missingHelpLocales;
   final bool suppressHelpButton;
@@ -124,6 +125,12 @@ class GCWTool extends StatefulWidget {
     }
   }
 
+  List<String>  get indexedStrings => _indexedStrings;
+
+  set indexedStrings(List<String> value) {
+    _indexedStrings = value;
+  }
+
   bool get isFavorite {
     return this._isFavorite;
   }
@@ -139,6 +146,7 @@ class GCWTool extends StatefulWidget {
     }
     Prefs.setStringList('favorites', _favorites);
   }
+
 
   @override
   _GCWToolState createState() => _GCWToolState();

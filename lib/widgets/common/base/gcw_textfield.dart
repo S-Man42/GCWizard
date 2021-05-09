@@ -19,6 +19,10 @@ class GCWTextField extends StatefulWidget {
   final maxLength;
   final maxLines;
   final fontSize;
+  final bool clearIcon;
+
+  @override
+  _GCWTextFieldState createState() => _GCWTextFieldState();
 
   const GCWTextField(
       {Key key,
@@ -34,11 +38,10 @@ class GCWTextField extends StatefulWidget {
       this.filled: false,
       this.maxLength,
       this.maxLines,
-      this.fontSize})
+      this.fontSize,
+      this.clearIcon = true
+      })
       : super(key: key);
-
-  @override
-  _GCWTextFieldState createState() => _GCWTextFieldState();
 }
 
 class _GCWTextFieldState extends State<GCWTextField> {
@@ -78,7 +81,7 @@ class _GCWTextFieldState extends State<GCWTextField> {
                   minWidth: 2,
                   minHeight: 2,
                 ),
-                suffixIcon: constraints.maxWidth > 100
+                suffixIcon: widget.clearIcon ? constraints.maxWidth > 100
                     ? InkWell(
                         child: Container(
                           child: Icon(
