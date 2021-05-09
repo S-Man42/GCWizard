@@ -141,7 +141,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
@@ -709,33 +708,21 @@ class Registry {
           searchStrings: [
             SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
             SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
             SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE
           ]),
-      GCWTool(
-          tool: ExifReader(),
-          i18nPrefix: 'exif',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
-          missingHelpLocales: [],
-          searchStrings: [SEARCHSTRING_COMMON_EXIF,
-            SEARCHSTRING_DE_FORMULASOLVER,
-            SEARCHSTRING_EN_FORMULASOLVER,
-            SEARCHSTRING_FR_FORMULASOLVER,
-          ]),
-
       GCWTool(tool: FormulaSolverFormulaGroups(), i18nPrefix: 'formulasolver', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_FORMULASOLVER,
         SEARCHSTRING_DE_FORMULASOLVER,
         SEARCHSTRING_EN_FORMULASOLVER,
-        SEARCHSTRING_FR_FORMULASOLVER,
-      ],),
+        SEARCHSTRING_FR_FORMULASOLVER
+      ]),
       GCWTool(tool: GamesSelection(), i18nPrefix: 'games_selection', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_GAMES,
         SEARCHSTRING_DE_GAMES,
         SEARCHSTRING_EN_GAMES,
-        SEARCHSTRING_FR_GAMES,
-      ],),
+        SEARCHSTRING_FR_GAMES
+      ]),
       GCWTool(
           tool: Gade(),
           i18nPrefix: 'gade',
@@ -751,7 +738,7 @@ class Registry {
             SEARCHSTRING_COMMON_GCCODE,
             SEARCHSTRING_DE_GCCODE,
             SEARCHSTRING_EN_GCCODE,
-            SEARCHSTRING_FR_GCCODE,
+            SEARCHSTRING_FR_GCCODE
           ]),
       GCWTool(
           tool: GeneralCodebreakersSelection(),
@@ -761,7 +748,7 @@ class Registry {
             SEARCHSTRING_COMMON_CODEBREAKER,
             SEARCHSTRING_DE_CODEBREAKER,
             SEARCHSTRING_EN_CODEBREAKER,
-            SEARCHSTRING_FR_CODEBREAKER,
+            SEARCHSTRING_FR_CODEBREAKER
           ]),
       GCWTool(
           tool: Gray(),
