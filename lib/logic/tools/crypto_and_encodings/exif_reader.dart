@@ -40,14 +40,17 @@ GCWImageViewData completeThumbnail(Map<String, IfdTag> data) {
 //   GPS Longitude        : -122.622500 deg (122.000000 deg, 37.350000 min, 0.000000 sec W)
 ///
 LatLng completeGPSData(Map<String, IfdTag> data) {
-  if (data.containsKey('GPS GPSLatitude') && data.containsKey('GPS GPSLongitude')) {
+  if (data.containsKey('GPS GPSLatitude') &&
+      data.containsKey('GPS GPSLongitude') &&
+      data.containsKey('GPS GPSLatitudeRef') &&
+      data.containsKey('GPS GPSLongitudeRef')) {
     IfdTag latRef = data['GPS GPSLatitudeRef'];
     IfdTag lat = data['GPS GPSLatitude'];
-    double _lat = getCoordDec(lat, latRef.printable, true);
+    double _lat = _getCoordDecFromIfdTag(lat, latRef.printable, true);
 
     IfdTag lngRef = data['GPS GPSLongitudeRef'];
     IfdTag lng = data['GPS GPSLongitude'];
-    double _lng = getCoordDec(lng, lngRef.printable, false);
+    double _lng = _getCoordDecFromIfdTag(lng, lngRef.printable, false);
 
     // DEC should be the pivot format from EXIF
     LatLng _point = decToLatLon(DEC(_lat, _lng));
@@ -59,15 +62,19 @@ LatLng completeGPSData(Map<String, IfdTag> data) {
   return null;
 }
 
-double getCoordDec(IfdTag tag, String latlngRef, bool isLatitude) {
-  double _degrees = getRatioValue(tag.values[0]);
-  double _minutes = getRatioValue(tag.values[1]);
-  double _seconds = getRatioValue(tag.values[2]);
+double _getCoordDecFromIfdTag(IfdTag tag, String latlngRef, bool isLatitude) {
+  return getCoordDecFromText(tag.values, latlngRef, isLatitude);
+}
+
+double getCoordDecFromText(List<dynamic> values, String latlngRef, bool isLatitude) {
+  double _degrees = _getRatioValue(values[0]);
+  double _minutes = _getRatioValue(values[1]);
+  double _seconds = _getRatioValue(values[2]);
   int _sign = getCoordinateSignFromString(latlngRef, isLatitude);
   return _sign * (_degrees + _minutes / 60 + _seconds / 3600);
 }
 
-double getRatioValue(Ratio _ratio) {
+double _getRatioValue(Ratio _ratio) {
   return _ratio.numerator / _ratio.denominator;
 }
 
@@ -80,7 +87,7 @@ Map<String, List<List<dynamic>>> buildTablesExif(Map<String, IfdTag> data) {
     String code = groupedKey[1];
 
     // groupBy section
-    (map[section] ??= []).add([code, formatExifValue(tag)]);
+    (map[section] ??= []).add([code, _formatExifValue(tag)]);
   });
   return map;
 }
@@ -107,7 +114,7 @@ List<String> _parseKey(String key) {
   return [group, code];
 }
 
-String formatExifValue(IfdTag tag) {
+String _formatExifValue(IfdTag tag) {
   switch (tag.tagType) {
     case 'ASCII':
       return tag.printable;
