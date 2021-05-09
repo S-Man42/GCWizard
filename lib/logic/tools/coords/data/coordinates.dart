@@ -86,25 +86,25 @@ String _dmmAndDMSNumberFormat([int precision = 6]) {
   return formatString;
 }
 
-String _getSignString(int sign, bool isLatitude) {
+String _getCoordinateSignString(int sign, bool isLatitude) {
   var _sign = '';
 
-  if (sign < 0) {
-    _sign = isLatitude ? 'S' : 'W';
+  if (isLatitude) {
+    _sign = (sign > 0) ? 'N' : 'S';
   } else {
-    _sign = isLatitude ? 'N' : 'E';
+    _sign = (sign > 0) ? 'W' : 'E';
   }
 
   return _sign;
 }
 
-int getSignFromString(String text, bool isLatitude) {
+int getCoordinateSignFromString(String text, bool isLatitude) {
   int _sign = 0;
 
   if (isLatitude) {
     _sign = (text == 'N') ? 1 : -1;
   } else {
-    _sign = (text == 'S') ? 1 : -1;
+    _sign = (text == 'W') ? 1 : -1;
   }
 
   return _sign;
@@ -132,7 +132,7 @@ class DMMPart {
   Map<String, dynamic> _formatParts(bool isLatitude, [int precision]) {
     var _minutesStr = NumberFormat(_dmmAndDMSNumberFormat(precision)).format(minutes);
     var _degrees = degrees;
-    var _sign = _getSignString(sign, isLatitude);
+    var _sign = _getCoordinateSignString(sign, isLatitude);
 
     //Values like 59.999999999' may be rounded to 60.0. So in that case,
     //the degree has to be increased while minutes should be set to 0.0
@@ -220,7 +220,7 @@ class DMSPart {
   DMSPart(this.sign, this.degrees, this.minutes, this.seconds);
 
   Map<String, dynamic> _formatParts(bool isLatitude, [int precision]) {
-    var _sign = _getSignString(sign, isLatitude);
+    var _sign = _getCoordinateSignString(sign, isLatitude);
     var _secondsStr = NumberFormat(_dmmAndDMSNumberFormat(precision)).format(seconds);
     var _minutes = minutes;
 
