@@ -2,7 +2,7 @@ import 'package:exif/exif.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/exif_reader.dart';
+import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:latlong/latlong.dart';
 
@@ -20,17 +20,17 @@ Future<Map<String, IfdTag>> parseExif(PlatformFile file) async {
   return data;
 }
 
-Thumbnail completeThumbnail(Map<String, IfdTag> data) {
+GCWImageViewData completeThumbnail(Map<String, IfdTag> data) {
   if (data.containsKey('JPEGThumbnail')) {
     print('File has JPEG thumbnail');
     var _jpgBytes = data['JPEGThumbnail'].values;
     data.remove('JPEGThumbnail');
-    return Thumbnail(_jpgBytes);
+    return GCWImageViewData(_jpgBytes);
   } else if (data.containsKey('TIFFThumbnail')) {
     print('File has TIFF thumbnail');
     var _tiffBytes = data['TIFFThumbnail'].values;
     data.remove('TIFFThumbnail');
-    return Thumbnail(_tiffBytes);
+    return GCWImageViewData(_tiffBytes);
   }
   return null;
 }

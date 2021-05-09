@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:exif/exif.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +9,7 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/exif_reader.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
+import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_output.dart';
@@ -33,7 +32,7 @@ class _ExifReaderState extends State<ExifReader> {
   Map<String, List<List<dynamic>>> tableTags;
   PlatformFile file;
   LatLng point;
-  Thumbnail thumbnail;
+  GCWImageViewData thumbnail;
 
   @override
   initState() {
@@ -86,7 +85,7 @@ class _ExifReaderState extends State<ExifReader> {
   Future<void> _readFile(PlatformFile _file) async {
     Map<String, IfdTag> data = await parseExif(_file);
 
-    Thumbnail _thumbnail = completeThumbnail(data);
+    GCWImageViewData _thumbnail = completeThumbnail(data);
     LatLng _point = completeGPSData(data);
     var _tableTags = buildTablesExif(data);
 
@@ -121,7 +120,10 @@ class _ExifReaderState extends State<ExifReader> {
     if (thumbnail != null && thumbnail.bytes.length > 0) {
       widgets.add(GCWMultipleOutput(
           //title: i18n(context, "exif_section_thumbnail"),
-          children: [Image.memory(thumbnail.bytes)],
+          children: [
+            //Image.memory(thumbnail.bytes),
+            GCWImageView(imageData: thumbnail)
+          ],
           //suppressCopyButton: false,
           trailing: GCWIconButton(
             iconData: Icons.save,
@@ -197,9 +199,4 @@ class _ExifReaderState extends State<ExifReader> {
           ))));
     }
   }
-}
-
-class Thumbnail {
-  Uint8List bytes;
-  Thumbnail(this.bytes);
 }
