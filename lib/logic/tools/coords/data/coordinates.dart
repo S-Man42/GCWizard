@@ -92,7 +92,7 @@ String _getCoordinateSignString(int sign, bool isLatitude) {
   if (isLatitude) {
     _sign = (sign > 0) ? 'N' : 'S';
   } else {
-    _sign = (sign > 0) ? 'W' : 'E';
+    _sign = (sign > 0) ? 'E' : 'W';
   }
 
   return _sign;
@@ -104,7 +104,7 @@ int getCoordinateSignFromString(String text, bool isLatitude) {
   if (isLatitude) {
     _sign = (text == 'N') ? 1 : -1;
   } else {
-    _sign = (text == 'W') ? 1 : -1;
+    _sign = (text == 'E') ? 1 : -1;
   }
 
   return _sign;
