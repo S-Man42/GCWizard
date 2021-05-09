@@ -49,7 +49,7 @@ LatLng completeGPSData(Map<String, IfdTag> data) {
     IfdTag lng = data['GPS GPSLongitude'];
     double _lng = getCoordDec(lng, lngRef.printable, false);
 
-    // DEC should be the pivto format from EXIF
+    // DEC should be the pivot format from EXIF
     LatLng _point = decToLatLon(DEC(_lat, _lng));
 
     print("_point = ${_point}");
@@ -63,7 +63,7 @@ double getCoordDec(IfdTag tag, String latlngRef, bool isLatitude) {
   double _degrees = getRatioValue(tag.values[0]);
   double _minutes = getRatioValue(tag.values[1]);
   double _seconds = getRatioValue(tag.values[2]);
-  int _sign = getSignFromString(latlngRef, isLatitude);
+  int _sign = getCoordinateSignFromString(latlngRef, isLatitude);
   return _sign * (_degrees + _minutes / 60 + _seconds / 3600);
 }
 
@@ -75,17 +75,17 @@ Map<String, List<List<dynamic>>> buildTablesExif(Map<String, IfdTag> data) {
   var map = <String, List<List>>{};
 
   data.forEach((key, tag) {
-    List<String> groupedKey = parseKey(key);
+    List<String> groupedKey = _parseKey(key);
     String section = groupedKey[0];
     String code = groupedKey[1];
 
     // groupBy section
-    (map[section] ??= []).add([code, tag.printable]);
+    (map[section] ??= []).add([code, formatExifValue(tag)]);
   });
   return map;
 }
 
-Map<T, List<S>> groupBy<S, T>(Iterable<S> values, T Function(S) key) {
+Map<T, List<S>> _groupBy<S, T>(Iterable<S> values, T Function(S) key) {
   var map = <T, List<S>>{};
   for (var element in values) {
     (map[key(element)] ??= []).add(element);
@@ -93,7 +93,7 @@ Map<T, List<S>> groupBy<S, T>(Iterable<S> values, T Function(S) key) {
   return map;
 }
 
-List<String> parseKey(String key) {
+List<String> _parseKey(String key) {
   String group;
   String code;
   List<String> words = key.split(" ");
@@ -122,29 +122,35 @@ String formatExifValue(IfdTag tag) {
     case 'Signed Ratio':
       return tag.values.toString();
     case 'Undefined':
+      //TODO: makerNote can be display as ascii text
+      //return _ascii2string(tag.values);
       return tag.printable;
     default:
       return tag.printable;
   }
 }
 
-int getExifRotation(Map<String, IfdTag> tags) {
-  IfdTag orientation = tags["Image Orientation"];
-  int orientationValue = orientation.values[0];
-  int rotationCorrection = 0;
-  // in degress
-  print("orientation: ${orientation.printable}/${orientation.values[0]}");
-  switch (orientationValue) {
-    case 6:
-      rotationCorrection = 90;
-      break;
-    case 3:
-      rotationCorrection = 180;
-      break;
-    case 8:
-      rotationCorrection = 270;
-      break;
-    default:
-  }
-  return rotationCorrection;
+_ascii2string(List<dynamic> values) {
+  return values.map((e) => String.fromCharCode(e)).join();
 }
+
+// int getExifRotation(Map<String, IfdTag> tags) {
+//   IfdTag orientation = tags["Image Orientation"];
+//   int orientationValue = orientation.values[0];
+//   int rotationCorrection = 0;
+//   // in degress
+//   print("orientation: ${orientation.printable}/${orientation.values[0]}");
+//   switch (orientationValue) {
+//     case 6:
+//       rotationCorrection = 90;
+//       break;
+//     case 3:
+//       rotationCorrection = 180;
+//       break;
+//     case 8:
+//       rotationCorrection = 270;
+//       break;
+//     default:
+//   }
+//   return rotationCorrection;
+// }

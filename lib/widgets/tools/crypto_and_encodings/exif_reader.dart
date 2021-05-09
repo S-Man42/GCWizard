@@ -8,7 +8,6 @@ import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/exif_reader.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
@@ -42,23 +41,28 @@ class _ExifReaderState extends State<ExifReader> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      GCWButton(
-        text: i18n(context, 'open_file'),
-        onPressed: readFile,
-      ),
-      GCWButton(
-        text: i18n(context, 'paste_image'),
-        onPressed: pasteFile,
-      ),
-      GCWText(
-        text: file == null ? "" : file.path,
-      ),
-      ..._buildOutput(tableTags)
-    ]);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        GCWButton(
+          text: i18n(context, 'open_file'),
+          onPressed: _readFileFromPicker,
+        ),
+        Container(),
+        // GCWButton(
+        //   text: i18n(context, 'paste_image'),
+        //   onPressed: _pasteFileFromclipboard,
+        // ),
+        // GCWText(
+        //   text: file == null ? "" : file.path,
+        // ),
+        ..._buildOutput(tableTags)
+      ],
+    );
   }
 
-  void pasteFile() {
+  void _pasteFileFromclipboard() {
     Clipboard.getData('image/jpeg').then((data) {
       _pasteFile(data);
     });
@@ -72,7 +76,7 @@ class _ExifReaderState extends State<ExifReader> {
     return _readFile(_file);
   }
 
-  Future<void> readFile() async {
+  Future<void> _readFileFromPicker() async {
     List<PlatformFile> files = await openFileExplorer(
       allowedExtensions: ['jpg', 'jpeg', 'tiff'],
     );
@@ -87,7 +91,7 @@ class _ExifReaderState extends State<ExifReader> {
 
     GCWImageViewData _thumbnail = completeThumbnail(data);
     LatLng _point = completeGPSData(data);
-    var _tableTags = buildTablesExif(data);
+    Map _tableTags = buildTablesExif(data);
 
     setState(() {
       file = _file;
@@ -103,20 +107,20 @@ class _ExifReaderState extends State<ExifReader> {
     });
   }
 
-  List _buildOutput(Map tableTags) {
+  List _buildOutput(Map _tableTags) {
     List<Widget> widgets = [];
 
-    decorateFile(widgets, file);
-    decorateThumbnail(widgets);
-    decorateGps(widgets);
-    decorateExifSections(widgets, tableTags);
+    _decorateFile(widgets, file);
+    _decorateThumbnail(widgets);
+    _decorateGps(widgets);
+    _decorateExifSections(widgets, _tableTags);
     return widgets;
   }
 
   ///
   /// Add Thumbnail section
   ///
-  void decorateThumbnail(List<Widget> widgets) {
+  void _decorateThumbnail(List<Widget> widgets) {
     if (thumbnail != null && thumbnail.bytes.length > 0) {
       widgets.add(GCWMultipleOutput(
           //title: i18n(context, "exif_section_thumbnail"),
@@ -139,7 +143,7 @@ class _ExifReaderState extends State<ExifReader> {
   ///
   /// Add GPS section
   ///
-  void decorateGps(List<Widget> widgets) {
+  void _decorateGps(List<Widget> widgets) {
     if (point == null) return;
 
     var _currentCoordsFormat = defaultCoordFormat();
@@ -161,7 +165,7 @@ class _ExifReaderState extends State<ExifReader> {
   ///
   /// EXIF tags grouped by section
   ///
-  void decorateExifSections(List<Widget> widgets, Map<String, List<List<dynamic>>> _tableTags) {
+  void _decorateExifSections(List<Widget> widgets, Map<String, List<List<dynamic>>> _tableTags) {
     if (_tableTags != null) {
       _tableTags.forEach((section, tags) {
         _sortTags(tags);
@@ -183,7 +187,7 @@ class _ExifReaderState extends State<ExifReader> {
   ///
   /// Section file
   ///
-  void decorateFile(List<Widget> widgets, PlatformFile file) {
+  void _decorateFile(List<Widget> widgets, PlatformFile file) {
     if (file != null) {
       widgets.add(GCWOutput(
           title: i18n(context, "exif_section_file"),
