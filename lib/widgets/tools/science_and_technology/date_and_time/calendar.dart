@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/calendar.dart';
+import 'package:gc_wizard/logic/common/date_utils.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
-import 'package:gc_wizard/widgets/common/gcw_datetime_picker.dart';
+import 'package:gc_wizard/widgets/common/gcw_date_picker.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_spinner.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
@@ -58,12 +59,11 @@ class CalendarState extends State<Calendar> {
                 });
               }),
         if (_currentCalendarSystem == CalendarSystem.JULIANCALENDAR || _currentCalendarSystem == CalendarSystem.GREGORIANCALENDAR)
-          GCWDateTimePicker(
-            type: DateTimePickerType.DATE_ONLY,
-            datetime: _currentDate,
+          GCWDatePicker(
+            date: _currentDate,
             onChanged: (value) {
               setState(() {
-                _currentDate = value['datetime'];
+                _currentDate = value;
               });
             },
           ),
