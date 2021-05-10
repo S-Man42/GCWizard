@@ -5,7 +5,6 @@
 // https://www.hermetic.ch/cal_stud/maya/chap2g.htm
 // https://rolfrost.de/maya.html
 
-import 'package:flutter/material.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:prefs/prefs.dart';
 
@@ -18,7 +17,7 @@ final THOMPSON = 'Thompson';
 final SMILEY = 'Smiley';
 final WEITZEL = 'Weitzel';
 
-final Map CORRELATION_NUMBER = {
+final Map _CORRELATION_NUMBER = {
   THOMPSON : THOMPSON_CORRELATION,
   SMILEY : SMILEY_CORRELATION,
   WEITZEL : WEITZEL_CORRELATION,
@@ -30,19 +29,7 @@ Map<String, String> CORRELATION_SYSTEMS = {
   WEITZEL: 'Weitzel (774078)',
 };
 
-final maya_longcount = {
-  1: 'kin',
-  2: 'uinal',
-  3: 'tun',
-  4: 'katun',
-  5: 'baktun',
-  6: 'pictun',
-  7: 'kalabtun',
-  8: 'kinchiltun',
-  9: 'alatun'
-};
-
-final maya_tzolkin = {
+final _maya_tzolkin = {
   1: 'Imix',
   2: 'Ik',
   3: 'Akbal',
@@ -65,7 +52,7 @@ final maya_tzolkin = {
   20: 'Ahau',
 };
 
-final maya_haab = {
+final _maya_haab = {
   1: 'Pop',
   2: 'Uo',
   3: 'Zip',
@@ -149,15 +136,15 @@ Map<String, dynamic> encodeMayaCalendar(int input) {
     'displays': vigesimal.split('').map((digit) {
       return _numbersToSegments[int.tryParse(convertBase(digit, 20, 10))];
     }).toList(),
-    'numbers': longCountToList(input),
+    'numbers': _longCountToList(input),
     'vigesimal': vigesimal
   };
 }
 
-List<int> longCountToList(int numberDec) {
+List<int> _longCountToList(int numberDec) {
   if (numberDec == 0) return [0];
 
-  List<int> result = new List<int>();
+  List<int> result = <int>[];
 
   int start = 0;
   while (numberDec < mayaCalendarSystem[mayaCalendarSystem.length - 1 - start]) start++;
@@ -192,12 +179,10 @@ Map<String, dynamic> decodeMayaCalendar(List<String> inputs) {
       if (oneCharacters.contains(segment)) {
         number += 1;
         display.add(segment);
-        return;
       }
-      if (fiveCharacters.contains(segment)) {
+      else if (fiveCharacters.contains(segment)) {
         number += 5;
         display.add(segment);
-        return;
       }
       return;
     });
@@ -241,29 +226,28 @@ String convertDecToMayaCalendar(String input) {
   return result;
 }
 
-String MayaDayCountToTzolkin(List longCount) {
+String MayaDayCountToTzolkin(List<int> longCount) {
   int dayCount = MayaLongCountToMayaDayCount(longCount);
   if (dayCount == 0) return '4 Ahau';
 
   dayCount = dayCount + 159;
   dayCount = 1 + dayCount % 260;
-  print(dayCount % 20);
-  return (1 + (dayCount - 1) % 13).toString() + ' ' + maya_tzolkin[1 + (dayCount - 1) % 20];
+  return (1 + (dayCount - 1) % 13).toString() + ' ' + _maya_tzolkin[1 + (dayCount - 1) % 20];
 }
 
-String MayaDayCountToHaab(List longCount) {
+String MayaDayCountToHaab(List<int> longCount) {
   int dayCount = MayaLongCountToMayaDayCount(longCount);
   if (dayCount == 0) return '8 Cumhu';
 
   dayCount = dayCount + 347;
   dayCount = 1 + dayCount % 365;
-  return (1 + (dayCount - 1) % 20).toString() + ' ' + maya_haab[1 + (dayCount - 1) ~/ 20];
+  return (1 + (dayCount - 1) % 20).toString() + ' ' + _maya_haab[1 + (dayCount - 1) ~/ 20];
 }
 
 String MayaLongCount(List<int> longCount) {
   if (MayaLongCountToMayaDayCount(longCount) == 0) return [0, 0, 0, 0, 13, 0, 0, 0, 0].join('.');
 
-  List<int> result = new List<int>();
+  List<int> result = <int>[];
   for (int i = longCount.length; i < 9; i++) result.add(0);
   for (int i = 0; i < longCount.length; i++) result.add(longCount[i]);
   if (result[4] == 0 && result[3] != 0) result[4] = 13;
@@ -278,21 +262,21 @@ int MayaLongCountToMayaDayCount(List<int> longCount) {
 }
 
 DateOutput MayaDayCountToJulianCalendar(int mayaDayCount){
-  return JulianDateToJulianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0, true);
+  return _JulianDateToJulianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0, true);
 }
 
 DateOutput MayaDayCountToGregorianCalendar(int mayaDayCount){
-  return JulianDateToGregorianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0, true);
+  return _JulianDateToGregorianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0, true);
 }
 
 int MayaDayCountToJulianDate(int mayaDayCount){
   if (Prefs.getString('mayacalendar_correlation') == null || Prefs.getString('mayacalendar_correlation') == '')
-    return (mayaDayCount + CORRELATION_NUMBER[THOMPSON]);
+    return (mayaDayCount + _CORRELATION_NUMBER[THOMPSON]);
   else
-    return (mayaDayCount + CORRELATION_NUMBER[Prefs.getString('mayacalendar_correlation')]);
+    return (mayaDayCount + _CORRELATION_NUMBER[Prefs.getString('mayacalendar_correlation')]);
 }
 
-DateOutput JulianDateToGregorianCalendar(double jd, bool round){
+DateOutput _JulianDateToGregorianCalendar(double jd, bool round){
   int z = (jd + 0.5).floor();
   double f = jd + 0.5 - z;
   int alpha = ((z - 1867216.25) / 36524.25).floor();
@@ -317,7 +301,7 @@ DateOutput JulianDateToGregorianCalendar(double jd, bool round){
     return DateOutput(day.toString(), MONTH[month], year.toString());
 }
 
-DateOutput JulianDateToJulianCalendar(double jd, bool round){
+DateOutput _JulianDateToJulianCalendar(double jd, bool round){
   int z = (jd + 0.5).floor();
   double f = jd + 0.5 - z;
   int a = z;
@@ -341,58 +325,4 @@ DateOutput JulianDateToJulianCalendar(double jd, bool round){
     return DateOutput(day.toString(), MONTH[month], year.toString());
 }
 
-double JulianCalendarToJulianDate(String date){
-  List dateList = date.split('.');
-  double day = 0.0;
-  int month = 0;
-  int year = 0;
-  if (dateList.length != 3) return -1;
-  if (double.tryParse(dateList[0]) == null)
-    return -1;
-  else
-    day = double.parse(dateList[0]);
-  if (int.tryParse(dateList[1]) == null)
-    return -1;
-  else
-    month = int.parse(dateList[1]);
-  if (int.tryParse(dateList[2]) == null)
-    return -1;
-  else
-    year = int.parse(dateList[2]);
 
-  if (month <= 2) {
-    year = year - 1;
-    month = month + 12;
-  }
-  int b = 0;
-
-  return (365.25 * (year + 4716)).floor() + (30.6001 * (month + 1)).floor() + day + b - 1524.5;
-}
-
-double GregorianCalendarToJulianDate(String date){
-  List dateList = date.split('.');
-  double day = 0.0;
-  int month = 0;
-  int year = 0;
-  if (dateList.length != 3) return -1;
-  if (double.tryParse(dateList[0]) == null)
-    return -1;
-  else
-    day = double.parse(dateList[0]);
-  if (int.tryParse(dateList[1]) == null)
-    return -1;
-  else
-    month = int.parse(dateList[1]);
-  if (int.tryParse(dateList[2]) == null)
-    return -1;
-  else
-    year = int.parse(dateList[2]);
-
-  if (month <= 2) {
-    year = year - 1;
-    month = month + 12;
-  }
-  int b = 2 - (year / 100).floor() + (year / 400).floor();
-
-  return (365.25 * (year + 4716)).floor() + (30.6001 * (month + 1)).floor() + day + b - 1524.5;
-}
