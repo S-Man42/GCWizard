@@ -278,7 +278,6 @@ class _KmlWriter {
         } else {
           _writeElement(builder, 'description', wpt.markerText);
         }
-        _writeElement(builder, 'styleUrl', '#waypoint');
         _writeElement(builder, 'altitudeMode', 'absolute');
         _writeElement(builder, 'styleUrl', styleId);
         builder.element('Point', nest: () {

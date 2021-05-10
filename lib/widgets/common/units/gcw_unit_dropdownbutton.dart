@@ -21,7 +21,6 @@ class GCWUnitDropDownButton extends StatefulWidget {
 
 class GCWUnitDropDownButtonState extends State<GCWUnitDropDownButton> {
   var _currentUnit;
-  var _currentUnitList;
 
   @override
   Widget build(BuildContext context) {

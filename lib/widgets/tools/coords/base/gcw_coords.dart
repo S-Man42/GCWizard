@@ -23,6 +23,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_quadtree.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_reversewhereigo_waldmeister.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_slippymap.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgrid.dart';
+import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_swissgridplus.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_utm.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_xyz.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
@@ -156,7 +157,7 @@ class GCWCoordsState extends State<GCWCoords> {
       },
       {
         'coordFormat': getCoordinateFormatByKey(keyCoordsSwissGridPlus),
-        'widget': GCWCoordsSwissGrid(
+        'widget': GCWCoordsSwissGridPlus(
           coordinates: _pastedCoords,
           onChanged: (newValue) {
             setState(() {
@@ -328,19 +329,26 @@ class GCWCoordsState extends State<GCWCoords> {
       format: _currentCoordsFormat,
       onChanged: (newValue) {
         setState(() {
-          if (_currentCoordsFormat != newValue) {
-            _currentCoordsFormat = newValue;
+          var formatChanged = _currentCoordsFormat['format'] != newValue['format'];
+          var subtypeChanged = _currentCoordsFormat["subtype"] != newValue["subtype"];
+          if (formatChanged || subtypeChanged) {
             if (widget.restoreCoordinates)
               _pastedCoords = _currentValue;
-            else
-              _currentValue = defaultCoordinate;
+            else {
+              if (!subtypeChanged) _currentValue = defaultCoordinate;
+            }
 
+            _currentCoordsFormat = newValue;
             _setCurrentValueAndEmitOnChange();
           }
           FocusScope.of(context).requestFocus(new FocusNode()); //Release focus from previous edited field
         });
       },
     );
+  }
+
+  bool subtypeChanged(Map<String, String> currentValue, Map<String, String> newValue) {
+    return currentValue["subtype"] != newValue["subtype"];
   }
 
   _buildTrailingButtons(IconButtonSize size) {
