@@ -52,7 +52,7 @@ class DivisorState extends State<Divisor> {
         ? GCWDefaultOutput(child: buildDivisorList(_currentInputN).join(' '))
         : GCWMultipleOutput(children: buildDivisorList(_currentInputN)),
         _currentCrosstotalMode == true
-        ? GCWCrosstotalOutput(text: _currentInputN.toString(), values: buildDivisorList(_currentInputN))
+        ? GCWCrosstotalOutput(text: _currentInputN.toString(), values: buildDivisorList(_currentInputN), divisor: true)
         : Container()
       ],
     );
