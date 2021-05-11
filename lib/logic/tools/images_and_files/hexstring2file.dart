@@ -61,16 +61,6 @@ String file2hexstring(Uint8List input) {
   return output.toUpperCase();
 }
 
-
-String getFileType(Uint8List blobBytes) {
-  for (var key in _fileTypes.keys) {
-    if (blobBytes.length >= key.length && ListEquality().equals(blobBytes.sublist(0, key.length), key))
-      return _fileTypes[key];
-  }
-
-  return ".txt";
-}
-
 Uint8List _hexString2bytes(String input) {
   if (input == null || input == "")
     return null;
