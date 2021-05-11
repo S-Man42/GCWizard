@@ -3128,7 +3128,6 @@
   "vanity_words_search_example" : "7378 → SEPT → 7",
   "vanity_words_search_ambigous" : "ambiguë à partir d'ici",
   "vigenere_selection_title": "Chiffrement Vigenère",
-  "vigenere_selection_title": "Vigenère (outils)",
   "vigenere_selection_description": "Déplace les lettres par la valeur de la lettre de la clé. Inclus: Gronsfeld et Trithemius",
   "vigenere_selection_example": "ABC avec la clé DEF → DFH",
   "vigenere_title": "Vigenère",
