@@ -1,12 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/quadratic_equation.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/double_textinputformatter.dart';
 
@@ -43,6 +42,10 @@ class QuadraticEquationState extends State<QuadraticEquation> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        GCWOutputText(
+          text: i18n(context, 'quadratic_equation_explanation')+'\n',
+          suppressCopyButton: true,
+        ),
         Row(
           children: <Widget>[
             Expanded(
