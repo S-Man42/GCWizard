@@ -62,13 +62,6 @@ void main() {
         'aValue': 0,
         'expectedOutput' : 'Xmx qil riii liyx cy htw Xänrim zitöwn. Ey aqxwn nfxsx ymwgispbgp hcd Lshvlorusio eiakr vsmpxr, oyhrf Lszmi, hbwl eovms ey. Ihil dvrägpyx '
       },
-      {
-        'input' : 'Wie ich sehe hast du das Rätsel gelöst. Du wirst jetzt sicherlich die Koordinaten lesen wollen, keine Sorge, dass wirst du. Aber zunächst ',
-        'key': 'beteigeuze',
-        'autoKey': true,
-        'aValue': 0,
-        'expectedOutput' : 'Xmx qil ridm pczl ky dsl Lätkve kprödl. Xq nakbx ixlhv wznpgyoqgr rzh Xohvqtrsxrj wpwrx ebpdse, neafa Jgkjy, hrrm ypjl'
-      },
     ];
 
     _inputsToExpected.forEach((elem) {

@@ -33,6 +33,7 @@ import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/icecodes_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/imagesandfiles_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/language_games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_bell_selection.dart';
@@ -68,6 +69,7 @@ import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
@@ -196,6 +198,8 @@ import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagro
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -231,6 +235,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/silver_ratio.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/bell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/catalan.dart';
@@ -643,6 +648,21 @@ class Registry {
           missingHelpLocales: [],
           searchStrings: [SEARCHSTRING_COMMON_DNA, SEARCHSTRING_DE_DNA, SEARCHSTRING_EN_DNA, SEARCHSTRING_FR_DNA]),
       GCWTool(
+          tool: SilverRatioSelection(),
+          i18nPrefix: 'silverratio_selection',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SILVERRATIO,
+            SEARCHSTRING_DE_SILVERRATIO,
+            SEARCHSTRING_EN_SILVERRATIO,
+            SEARCHSTRING_FR_SILVERRATIO,
+            SEARCHSTRING_COMMON_IRRATIONALNUMBERS,
+            SEARCHSTRING_DE_IRRATIONALNUMBERS,
+            SEARCHSTRING_EN_IRRATIONALNUMBERS,
+            SEARCHSTRING_FR_IRRATIONALNUMBERS
+          ]),
+      GCWTool(
           tool: DTMF(),
           i18nPrefix: 'dtmf',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -773,6 +793,15 @@ class Registry {
             SEARCHSTRING_FR_HEXADECIMAL
           ]),
       GCWTool(
+          tool: HexString2File(),
+          i18nPrefix: 'hexstring2file',
+          category: ToolCategory.IMAGES_AND_FILES,
+          searchStrings: [
+            SEARCHSTRING_DE_HEXSTRING2FILE,
+            SEARCHSTRING_EN_HEXSTRING2FILE,
+            SEARCHSTRING_FR_HEXSTRING2FILE
+          ]),
+      GCWTool(
           tool: Homophone(),
           i18nPrefix: 'homophone',
           category: ToolCategory.CRYPTOGRAPHY,
@@ -795,6 +824,36 @@ class Registry {
           SEARCHSTRING_FR_ICECODES
         ],
       ),
+      GCWTool(
+          tool: ImagesAndFilesSelection(),
+          i18nPrefix: 'imagesandfiles_selection',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_IMAGES,
+            SEARCHSTRING_DE_IMAGES,
+            SEARCHSTRING_EN_IMAGES,
+            SEARCHSTRING_FR_IMAGES,
+            SEARCHSTRING_COMMON_IMAGESANDFILESSELECTION,
+            SEARCHSTRING_DE_IMAGESANDFILESSELECTION,
+            SEARCHSTRING_EN_IMAGESANDFILESSELECTION,
+            SEARCHSTRING_FR_IMAGESANDFILESSELECTION
+          ]),
+      GCWTool(
+        tool: ImageColorCorrections(),
+        autoScroll: false,
+        category: ToolCategory.IMAGES_AND_FILES,
+        i18nPrefix: 'image_colorcorrections',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_IMAGES,
+            SEARCHSTRING_DE_IMAGES,
+            SEARCHSTRING_EN_IMAGES,
+            SEARCHSTRING_FR_IMAGES,
+            SEARCHSTRING_COMMON_IMAGE_COLORCORRECTIONS,
+            SEARCHSTRING_DE_IMAGE_COLORCORRECTIONS,
+            SEARCHSTRING_EN_IMAGE_COLORCORRECTIONS,
+            SEARCHSTRING_FR_IMAGE_COLORCORRECTIONS
+          ]),
       GCWTool(
           tool: Kamasutra(),
           i18nPrefix: 'kamasutra',
@@ -2221,6 +2280,41 @@ class Registry {
         SEARCHSTRING_DE_DNAAMONOACIDSTABLE,
         SEARCHSTRING_EN_DNAAMONOACIDSTABLE,
         SEARCHSTRING_FR_DNAAMONOACIDSTABLE
+      ]),
+
+      //Silver Ratio Selection **********************************************************************************************
+      GCWTool(tool: SilverRatioNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_SILVERRATIO,
+        SEARCHSTRING_DE_SILVERRATIO,
+        SEARCHSTRING_EN_SILVERRATIO,
+        SEARCHSTRING_FR_SILVERRATIO,
+        SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
+        SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
+        SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
+        SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
+      ]),
+      GCWTool(tool: SilverRatioDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', missingHelpLocales: [
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_SILVERRATIO,
+        SEARCHSTRING_DE_SILVERRATIO,
+        SEARCHSTRING_EN_SILVERRATIO,
+        SEARCHSTRING_FR_SILVERRATIO,
+        SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
+        SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
+        SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
+        SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
+      ]),
+      GCWTool(tool: SilverRatioSearch(), i18nPrefix: 'irrationalnumbers_search', missingHelpLocales: [
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_SILVERRATIO,
+        SEARCHSTRING_DE_SILVERRATIO,
+        SEARCHSTRING_EN_SILVERRATIO,
+        SEARCHSTRING_FR_SILVERRATIO,
+        SEARCHSTRING_COMMON_SILVERRATIOSEARCH,
+        SEARCHSTRING_DE_SILVERRATIOSEARCH,
+        SEARCHSTRING_EN_SILVERRATIOSEARCH,
+        SEARCHSTRING_FR_SILVERRATIOSEARCH
       ]),
 
       //E Selection *************************************************************************************************
@@ -5879,6 +5973,12 @@ class Registry {
         SEARCHSTRING_DE_SYMBOL_SURF,
         SEARCHSTRING_EN_SYMBOL_SURF,
         SEARCHSTRING_FR_SYMBOL_SURF
+      ]),
+      GCWSymbolTableTool(symbolKey: 'tae', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_TAE,
+        SEARCHSTRING_DE_SYMBOL_TAE,
+        SEARCHSTRING_EN_SYMBOL_TAE,
+        SEARCHSTRING_FR_SYMBOL_TAE
       ]),
       GCWSymbolTableTool(symbolKey: 'tamil_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_TAMIL_NUMERALS,
