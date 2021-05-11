@@ -38,6 +38,7 @@ class AnimatedGifState extends State<AnimatedGif> {
   Map<String, dynamic> _outData;
   PlatformFile _platformFile;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
+  bool _play = false;
 
   @override
   Widget build(BuildContext context) {
@@ -74,17 +75,21 @@ class AnimatedGifState extends State<AnimatedGif> {
                 GCWIconButton(
                   iconData: Icons.play_arrow,
                   size: IconButtonSize.SMALL,
-                  iconColor: _outData == null ? Colors.grey : null,
+                  iconColor: _outData != null && !_play ? null : Colors.grey,
                   onPressed: () {
-                    //_outData == null ? null : _exportFiles(context, _outData);
+                    setState(() {
+                      _play = (_outData != null);
+                    });
                   },
                 ),
                 GCWIconButton(
                   iconData: Icons.stop,
                   size: IconButtonSize.SMALL,
-                  iconColor: _outData == null ? Colors.grey : null,
+                  iconColor: _play ? null : Colors.grey,
                   onPressed: () {
-                    //_outData == null ? null : _exportFiles(context, _outData);
+                    setState(() {
+                      _play = false;
+                    });
                   },
                 ),
                 GCWIconButton(
@@ -110,7 +115,7 @@ class AnimatedGifState extends State<AnimatedGif> {
     var durations = "";
     if (_outData["durations"] != null && _outData["durations"]?.length> 1)
       durations = _outData["durations"].map((value) => value.toString() + 'ms').join(", ");
-Image i;
+
     double height;
     if (_outData["animation"]?.width <= MediaQuery.of(context).size.width )
       height = _outData["animation"]?.height.toDouble();
@@ -120,16 +125,17 @@ Image i;
       return Column(
       children: <Widget>[
          Container(
-          child : //Image.memory(_platformFile.bytes),
-          Swiper(
-              itemCount:  _outData["animation"]?.numFrames, //_outData["images"]?.length,
-              itemBuilder: (BuildContext context, int index) {
-                i = Image.memory(_outData["images"][index]);// Image.memory(img.encodeGif(_outData["animation"].frames[index]));
-                return i;
-              },
-              control: SwiperControl(),
-              pagination: FractionPaginationBuilder(),
-            ),
+          child : _play ?
+            Image.memory(_platformFile.bytes)
+            :
+            Swiper(
+                itemCount:  _outData["animation"]?.numFrames,
+                itemBuilder: (BuildContext context, int index) {
+                  return Image.memory(_outData["images"][index]);
+                },
+                control: SwiperControl(),
+                pagination: FractionPaginationBuilder(),
+              ),
 
             height: height,
         ),

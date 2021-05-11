@@ -59,26 +59,31 @@ Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) asyn
     String tmpDir = (await getTemporaryDirectory()).path;
     var counter = 0;
     var zipPath = '$tmpDir/gcwizardtmp.zip';
+      var pointIndex = fileName.lastIndexOf('.');
+      var extension = '';
+      if (pointIndex > 0) {
+        extension = fileName.substring(pointIndex);
+        fileName = fileName.substring(0, pointIndex);
+      }
 
     var encoder = ZipFileEncoder();
     encoder.create(zipPath);
 
     for (Uint8List imageBytes in imageList) {
-    //await imageList.forEach( async (imageBytes)  {
       counter++;
-      var fileNameZip = fileName + '_'+ counter.toString();
-      var tmpPath = '$tmpDir/' + fileNameZip;
+      var fileNameZip = '$fileName' + '_$counter$extension';
+      var tmpPath = '$tmpDir/$fileNameZip';
       if (File(tmpPath).existsSync())
         File(tmpPath).delete();
 
-      File temp = new File(tmpPath);
-      temp = await temp.create();
-      temp = await temp.writeAsBytes(imageBytes);
+      File imageFileTmp = new File(tmpPath);
+      imageFileTmp = await imageFileTmp.create();
+      imageFileTmp = await imageFileTmp.writeAsBytes(imageBytes);
 
-      encoder.addFile(temp, fileNameZip);
-      temp.delete();
+      encoder.addFile(imageFileTmp, fileNameZip);
+      imageFileTmp.delete();
     };
-    
+
     encoder.close();
 
     var bytes = File(encoder.zip_path).readAsBytesSync();
