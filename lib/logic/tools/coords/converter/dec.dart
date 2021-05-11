@@ -6,7 +6,7 @@ import 'package:latlong/latlong.dart';
 import 'package:intl/intl.dart';
 
 LatLng decToLatLon(DEC dec) {
-  var normalized = normalize(dec);
+  var normalized = normalizeDEC(dec);
   return LatLng(normalized.latitude, normalized.longitude);
 }
 
@@ -23,10 +23,6 @@ String latLonToDECString(LatLng coord, [int precision]) {
   String variableDigits = precision > 3 ? '#' * (precision - 3) : '';
 
   return '${NumberFormat('00.' + fixedDigits + variableDigits).format(coord.latitude)}\n${NumberFormat('000.' + fixedDigits + variableDigits).format(coord.longitude)}';
-}
-
-DEC normalize(DEC coord) {
-  return normalizeDEC(coord);
 }
 
 int sign(String match) {
