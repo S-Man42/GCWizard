@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:io' show Platform;
+import 'package:permission_handler/permission_handler.dart';
 
 /// useFileFilterOnAndroid -> for unknow mime types (for example gpx)
 Future<List<PlatformFile>> openFileExplorer({
@@ -11,6 +12,11 @@ Future<List<PlatformFile>> openFileExplorer({
   bool multiPick = false,
   List<String> allowedExtensions,
   bool useFileFilterOnAndroid = false}) async {
+
+  var status = await Permission.storage.request();
+  if (status != PermissionStatus.granted) {
+    return null;
+  }
 
   try {
     List<String> allowedExtensionsTmp = allowedExtensions;
