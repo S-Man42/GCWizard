@@ -176,6 +176,7 @@ const SEARCHSTRING_FR_HASHES_SHA512_256 = '';
 const SEARCHSTRING_FR_HASHES_TIGER_192 = '';
 const SEARCHSTRING_FR_HASHES_WHIRLPOOL_512 = '';
 const SEARCHSTRING_FR_HEXADECIMAL = '';
+final SEARCHSTRING_FR_HEXSTRING2FILE = 'hexadécimal fichier';
 const SEARCHSTRING_FR_HOMOPHONE = 'monoalphabetique lettres frequences';
 const SEARCHSTRING_FR_ICECODES = 'mer baltique codes glace eau neige fonte';
 const SEARCHSTRING_FR_IRRATIONALNUMBERS = 'irrationalite';
