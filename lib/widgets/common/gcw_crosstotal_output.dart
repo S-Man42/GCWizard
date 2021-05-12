@@ -29,7 +29,6 @@ class _GCWCrosstotalOutputState extends State<GCWCrosstotalOutput> {
     if (widget.divisor)
       crosstotalValues = [
         widget.suppressSums ? null : [i18n(context, 'crosstotal_count_numbers'), countCharacters(values)],
-        widget.suppressSums ? null : [i18n(context, 'crosstotal_count_length'), countDigits(text)],
       ];
     else
       crosstotalValues = [
