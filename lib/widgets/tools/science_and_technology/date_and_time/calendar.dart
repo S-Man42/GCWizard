@@ -67,6 +67,16 @@ class CalendarState extends State<Calendar> {
               });
             },
           ),
+        if (_currentCalendarSystem == CalendarSystem.ISLAMICCALENDAR)
+          GCWDatePicker(
+            date: _currentDate,
+            type: CalendarSystem.ISLAMICCALENDAR,
+            onChanged: (value) {
+              setState(() {
+                _currentDate = value;
+              });
+            },
+          ),
         _buildOutput()
       ],
     );

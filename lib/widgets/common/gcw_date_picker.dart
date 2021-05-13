@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/calendar.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class GCWDatePicker extends StatefulWidget {
   final Function onChanged;
   final date;
+  final CalendarSystem type;
 
-  const GCWDatePicker({Key key, this.onChanged, this.date}) : super(key: key);
+  const GCWDatePicker({Key key, this.onChanged, this.date, this.type:CalendarSystem.GREGORIANCALENDAR}) : super(key: key);
 
   @override
   GCWDatePickerState createState() => GCWDatePickerState();
