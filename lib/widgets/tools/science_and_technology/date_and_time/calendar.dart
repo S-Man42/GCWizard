@@ -98,11 +98,16 @@ class CalendarState extends State<Calendar> {
       case CalendarSystem.JULIANCALENDAR :
         jd = JulianCalendarToJulianDate(_currentDate);
         break;
+      case CalendarSystem.ISLAMICCALENDAR :
+        jd = IslamicCalendarToJulianDate(_currentDate);
+        break;
     }
     output['dates_calendar_system_juliandate'] = jd;
-    output['dates_calendar_system_juliancalendar'] = _DateToString(context, JulianDateToJulianCalendar(jd, true), true);
+    output['dates_calendar_system_juliancalendar'] = _DateToString(context, JulianDateToJulianCalendar(jd, true), CalendarSystem.JULIANCALENDAR, true);
     output['dates_calendar_system_modifiedjuliandate'] = JulianDateToModifedJulianDate(jd);
-    output['dates_calendar_system_gregoriancalendar'] = _DateToString(context, JulianDateToGregorianCalendar(jd, true), true);
+    output['dates_calendar_system_gregoriancalendar'] = _DateToString(context, JulianDateToGregorianCalendar(jd, true), CalendarSystem.GREGORIANCALENDAR, true);
+    // DateOutput GregorianCalendarToIslamicCalendar(DateTime date)
+    output['dates_calendar_system_islamiccalendar'] = _DateToString(context, GregorianCalendarToIslamicCalendar(DateOutputToDate(JulianDateToGregorianCalendar(jd, true))), CalendarSystem.ISLAMICCALENDAR, true);
     return GCWDefaultOutput(
         child: Column(
           children: columnedMultiLineOutput(
@@ -114,25 +119,35 @@ class CalendarState extends State<Calendar> {
         ));
   }
 
-  String _DateToString(context, DateOutput date, bool verbose){
+  String _DateToString(context, DateOutput date, CalendarSystem calendar, bool verbose){
     final Locale appLocale = Localizations.localeOf(context);
-    switch (appLocale.languageCode) {
-      case 'de' :
+    switch (calendar) {
+      case CalendarSystem.ISLAMICCALENDAR:
         if (verbose)
-          return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.year;
+          return date.day + ' ' + MONTH_ISLAMIC[int.parse(date.month)].toString() + ' ' + date.year;
         else
           return date.day + '.' + date.month + '.' + date.year;
         break;
-      case 'fr' :
-        return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]).toLowerCase() + ' ' + date.year;
-        break;
-      default :
-        if (verbose)
-          return date.year + '/' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
-        else
-          return date.year + '/' + date.month + '/' + date.day;
+      case CalendarSystem.GREGORIANCALENDAR :
+      case CalendarSystem.JULIANCALENDAR :
+      switch (appLocale.languageCode) {
+        case 'de' :
+          if (verbose)
+            return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.year;
+          else
+            return date.day + '.' + date.month + '.' + date.year;
+          break;
+        case 'fr' :
+          return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]).toLowerCase() + ' ' + date.year;
+          break;
+        default :
+          if (verbose)
+            return date.year + '/' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
+          else
+            return date.year + '/' + date.month + '/' + date.day;
 
-    }
+      }
+    };
   }
 
 }

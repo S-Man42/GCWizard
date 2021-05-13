@@ -162,14 +162,15 @@ DateOutput _JDToCal(double jd, bool round, String type){
 }
 
 int JulianDay(DateTime date){
-  return (GregorianCalendarToJulianDate(date) - GregorianCalendarToJulianDate(DateTime(date.year, 1, 1))).toInt();
+  return 1 + (GregorianCalendarToJulianDate(date) - GregorianCalendarToJulianDate(DateTime(date.year, 1, 1))).toInt();
 }
 
 DateOutput GregorianCalendarToIslamicCalendar(DateTime date){
   DateOutput JC = JulianDateToJulianCalendar(GregorianCalendarToJulianDate(date), true);
   int completeJY = int.parse(JC.year) - 1;
-  int days = (completeJY % 4) * 1461 + (completeJY - (completeJY ~/ 4) * 4) * 356;
-  days = days + JulianDay(date);
+  int completeJCycles = completeJY ~/ 4;
+  int days = (completeJY ~/ 4) * 1461 + (completeJY - (completeJY ~/ 4) * 4) * 356;
+  days = days + JulianDay(DateTime(int.parse(JC.year), int.parse(JC.month), int.parse(JC.day)));
   days = days - 227016;
   int islamicCompleteCycles = days ~/ 10631;
   int islamicRestDays = days - islamicCompleteCycles * 10631;
@@ -189,8 +190,7 @@ DateOutput GregorianCalendarToIslamicCalendar(DateTime date){
       day = islamicDays - value;
     }
   });
-
-  return DateOutput(day.toString(), month.toString(), (islamicCompleteCycles * 30 + islamicCompleteYears + islamicCompleteYears + 1).toString());
+  return DateOutput(day.toString(), month.toString(), (islamicCompleteCycles * 30 + islamicCompleteYears + 1).toString());
 }
 
 double IslamicCalendarToJulianDate(DateTime date){
@@ -199,6 +199,10 @@ double IslamicCalendarToJulianDate(DateTime date){
   int d = M % 30;
   int JD0Muharram = 1948085 + 10631 * M ~/ 30 + 354 * d + b;
   return (JD0Muharram + date.day + _DAYDIFF_ISLAMICCAL[date.month]).toDouble();
+}
+
+DateTime DateOutputToDate(DateOutput date){
+  return DateTime(int.parse(date.year), int.parse(date.month), int.parse(date.day));
 }
 
 
