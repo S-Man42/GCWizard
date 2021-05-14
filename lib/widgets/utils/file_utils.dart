@@ -30,6 +30,8 @@ Map<List<int>, String> _fileTypes = {
   [0x4D, 0x5A, 0x90, 0x00] : ".exe",
 };
 
+String web_directory = "Downloads";
+
 Future<String> mainDirectory() async {
   Directory _appDocDir;
   if (Platform.isAndroid)
@@ -65,7 +67,7 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, 
     //   href: html.Url.createObjectUrl(blob),
     //   )..setAttribute("download", fileName)..click();
     //
-    // filePath = 'Downloads/$fileName';
+    // filePath = '/$web_directory/$fileName';
   } else {
     var path = await mainDirectory();
 
@@ -93,7 +95,7 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
     //   href: html.Url.createObjectUrl(blob),
     // )..setAttribute("download", fileName)..click();
     //
-    // filePath = 'Downloads/$fileName';
+    // filePath = '/$web_directory/$fileName';
   } else {
     var path = await mainDirectory();
 

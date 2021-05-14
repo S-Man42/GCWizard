@@ -144,6 +144,6 @@ Future<String> selectFolder(BuildContext context, {
           : null,
     );
   } else
-    return web_picker.FilePicker.platform.getDirectoryPath();
+    return '/' + web_directory;
 }
 
