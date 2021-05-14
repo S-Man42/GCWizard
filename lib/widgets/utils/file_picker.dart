@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -7,8 +6,6 @@ import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:file_picker/file_picker.dart' as web_picker;
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:path_provider/path_provider.dart';
-//import 'dart:io' show Directory, Platform;
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
 
 import 'package:permission_handler/permission_handler.dart';
