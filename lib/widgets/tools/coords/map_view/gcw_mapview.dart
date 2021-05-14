@@ -578,7 +578,7 @@ class GCWMapViewState extends State<GCWMapView> {
         customIcon: _createIconButtonIcons(Icons.drive_folder_upload),
         onPressed: () {
           setState(() {
-            openFileExplorer(context, allowedExtensions: ['gpx','kml','kmz']).then((file) {
+            openFileExplorer(context, allowedExtensions: ['.gpx','.kml','.kmz']).then((file) {
               if (file != null) {
                 loadCoordinatesFile(file.name, file.bytes).whenComplete(() {
                   setState(() {
