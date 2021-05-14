@@ -110,11 +110,16 @@ List<web_picker.PlatformFile> _filterFiles(List<web_picker.PlatformFile> files, 
   return files.where((element) => allowedExtensions.contains(element.extension)).toList();
 }
 
-
+/// Open FileSystemPicker dialog to select a directory
+///
+/// Returns null if nothing was selected.
+///
+/// * [rootDirectory] specifies the root of the filesystem view.
+/// * [rootName] specifies the name of the filesystem view root in breadcrumbs, by default "Storage".
+/// * [title] specifies the text of the dialog title.
 Future<String> selectFolder(BuildContext context, {
     Directory rootDirectory,
     String rootName,
-    List<String> allowedExtensions,
     String title}) async {
 
   if (!kIsWeb) {
@@ -136,7 +141,7 @@ Future<String> selectFolder(BuildContext context, {
       rootName: rootName,
       fsType: FilesystemType.folder,
       pickText: i18n(context, 'common_exportfile_selectfolder'),
-      folderIconColor: Colors.teal,
+      //folderIconColor: Colors.teal,
       requestPermission: !kIsWeb
           ? () async => await Permission.storage.request().isGranted
           : null,
