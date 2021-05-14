@@ -27,6 +27,11 @@ Future<PlatformFile> openFileExplorer(BuildContext context, {
   List<String> allowedExtensions,
   String title,}) async {
 
+  var status = await Permission.storage.request();
+  if (status != PermissionStatus.granted) {
+    return null;
+  }
+
   try {
     if (!kIsWeb)
       return _openMobileFileExplorer(context, rootDirectory, rootName, allowedExtensions, title);
