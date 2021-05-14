@@ -1269,6 +1269,8 @@
   "dates_calendar_system_modifiedjuliandate" : "Modified Julian Date",
   "dates_calendar_system_gregoriancalendar" : "Gregorian Calendar",
   "dates_calendar_system_islamiccalendar" : "Islamic Calendar",
+  "dates_calendar_system_hebrewcalendar" : "Hebrew Calendar",
+  "dates_calendar_system_persiancalendar" : "Persian Calendar",
   "deadfish_title": "Deadfish",
   "deadfish_description": "Esoteric Programming language with 4 characters (IDSO or XKCD)",
   "deadfish_example": "A →  iisiiiisio",

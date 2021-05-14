@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gc_wizard/logic/common/date_utils.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/calendar.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
+
+import 'gcw_dropdown_spinner.dart';
 
 class GCWDatePicker extends StatefulWidget {
   final Function onChanged;
@@ -70,23 +75,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
         ),
         Expanded(
             child: Padding(
-                child: GCWIntegerSpinner(
-                  focusNode: _monthFocusNode,
-                  layout: SpinnerLayout.VERTICAL,
-                  value: _currentMonth,
-                  min: 1,
-                  max: 12,
-                  onChanged: (value) {
-                    setState(() {
-                      _currentMonth = value;
-                      _setCurrentValueAndEmitOnChange();
-
-                      if (_currentMonth.toString().length == 2) {
-                        FocusScope.of(context).requestFocus(_dayFocusNode);
-                      }
-                    });
-                  },
-                ),
+                child: _buildMonthSpinner(widget.type),
                 padding: EdgeInsets.only(left: 2, right: 2))),
         Expanded(
             child: Padding(
@@ -107,6 +96,47 @@ class GCWDatePickerState extends State<GCWDatePicker> {
         ))
       ],
     );
+  }
+
+  Widget _buildMonthSpinner(var type){
+    if (type == CalendarSystem.ISLAMICCALENDAR || type == CalendarSystem.PERSIANCALENDAR || type == CalendarSystem.HEBREWCALENDAR )
+      return   GCWDropDownSpinner(
+         index: _currentMonth ?? (widget.date != null ? widget.date.month - 1 : null) ?? 0,
+         layout: SpinnerLayout.VERTICAL,
+         items: MONTH_NAMES[type].entries.map((entry) {
+           return GCWDropDownMenuItem(
+               value: entry.key,
+               child: entry.value);
+                }).toList(),
+         onChanged: (value) {
+           setState(() {
+             _currentMonth = value;
+             _setCurrentValueAndEmitOnChange();
+
+             if (_currentMonth.toString().length == 2) {
+               FocusScope.of(context).requestFocus(_dayFocusNode);
+             }
+           });
+         },
+       );
+    if (type == CalendarSystem.JULIANCALENDAR || type == CalendarSystem.GREGORIANCALENDAR )
+      return GCWIntegerSpinner(
+        focusNode: _monthFocusNode,
+        layout: SpinnerLayout.VERTICAL,
+        value: _currentMonth,
+        min: 1,
+        max: 12,
+        onChanged: (value) {
+          setState(() {
+            _currentMonth = value;
+            _setCurrentValueAndEmitOnChange();
+
+            if (_currentMonth.toString().length == 2) {
+              FocusScope.of(context).requestFocus(_dayFocusNode);
+            }
+          });
+        },
+      );
   }
 
   _setCurrentValueAndEmitOnChange() {

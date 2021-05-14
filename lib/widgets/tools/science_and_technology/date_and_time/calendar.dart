@@ -23,6 +23,7 @@ class CalendarState extends State<Calendar> {
   void initState() {
     DateTime now = DateTime.now();
     _currentDate = DateTime(now.year, now.month, now.day);
+    _currentJulianDate = GregorianCalendarToJulianDate(_currentDate);
     super.initState();
   }
 
@@ -88,26 +89,36 @@ class CalendarState extends State<Calendar> {
     switch (_currentCalendarSystem) {
       case CalendarSystem.MODIFIEDJULIANDATE :
         jd = ModifedJulianDateToJulianDate(_currentJulianDate);
+        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
       case CalendarSystem.JULIANDATE :
         jd = _currentJulianDate;
+        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
       case CalendarSystem.GREGORIANCALENDAR :
         jd = GregorianCalendarToJulianDate(_currentDate);
+        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
       case CalendarSystem.JULIANCALENDAR :
         jd = JulianCalendarToJulianDate(_currentDate);
+        output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
       case CalendarSystem.ISLAMICCALENDAR :
         jd = IslamicCalendarToJulianDate(_currentDate);
+        output['dates_weekday_title'] = i18n(context, DAY_NAMES[CalendarSystem.ISLAMICCALENDAR][Weekday(jd)]);
+        break;
+      case CalendarSystem.PERSIANCALENDAR :
+        jd = IslamicCalendarToJulianDate(_currentDate);
+        output['dates_weekday_title'] = i18n(context, DAY_NAMES[CalendarSystem.ISLAMICCALENDAR][Weekday(jd)]);
         break;
     }
     output['dates_calendar_system_juliandate'] = jd;
     output['dates_calendar_system_juliancalendar'] = _DateToString(context, JulianDateToJulianCalendar(jd, true), CalendarSystem.JULIANCALENDAR, true);
     output['dates_calendar_system_modifiedjuliandate'] = JulianDateToModifedJulianDate(jd);
     output['dates_calendar_system_gregoriancalendar'] = _DateToString(context, JulianDateToGregorianCalendar(jd, true), CalendarSystem.GREGORIANCALENDAR, true);
-    // DateOutput GregorianCalendarToIslamicCalendar(DateTime date)
     output['dates_calendar_system_islamiccalendar'] = _DateToString(context, GregorianCalendarToIslamicCalendar(DateOutputToDate(JulianDateToGregorianCalendar(jd, true))), CalendarSystem.ISLAMICCALENDAR, true);
+    output['dates_calendar_system_hebrewcalendar'] = _DateToString(context, GregorianCalendarToIslamicCalendar(DateOutputToDate(JulianDateToGregorianCalendar(jd, true))), CalendarSystem.ISLAMICCALENDAR, true);
+    output['dates_calendar_system_persiancalendar'] = _DateToString(context, JulianDateToPersianCalendar(jd), CalendarSystem.PERSIANCALENDAR, true);
     return GCWDefaultOutput(
         child: Column(
           children: columnedMultiLineOutput(
@@ -123,8 +134,9 @@ class CalendarState extends State<Calendar> {
     final Locale appLocale = Localizations.localeOf(context);
     switch (calendar) {
       case CalendarSystem.ISLAMICCALENDAR:
+      case CalendarSystem.PERSIANCALENDAR:
         if (verbose)
-          return date.day + ' ' + MONTH_ISLAMIC[int.parse(date.month)].toString() + ' ' + date.year;
+          return date.day + ' ' + MONTH_NAMES[calendar][int.parse(date.month)].toString() + ' ' + date.year;
         else
           return date.day + '.' + date.month + '.' + date.year;
         break;

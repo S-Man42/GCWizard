@@ -1,6 +1,11 @@
 // https://de.wikipedia.org/wiki/Islamischer_Kalender#Umrechnung_eines_gregorianischen_Datums_in_den_islamischen_Kalender
 // https://de.wikipedia.org/wiki/Julianisches_Datum
 // https://www.bubomax.de/chrono/chrono.htm
+//
+// https://www.arndt-bruenner.de/mathe/scripts/kalenderconv.htm
+// https://www.aoi.uzh.ch/de/islamwissenschaft/hilfsmittel/tools/kalenderumrechnung/yazdigird.html
+
+import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/calendar.dart';
 
 final Map<int, int> _DAYDIFF_ISLAMICCAL = {
   1: 0,
@@ -65,6 +70,89 @@ final Map<int, String> MONTH_ISLAMIC = {
   12: 'Dhu l-Hidjdja'
 };
 
+final Map<int, String> MONTH_PERSIAN = {
+  1: 'Farwardin',
+  2: 'Ordibehescht',
+  3: 'Chordād',
+  4: 'Tir',
+  5: 'Mordād',
+  6: 'Schahriwar',
+  7: 'Mehr',
+  8: 'Ābān',
+  9: 'Āzar',
+  10: 'Déi',
+  11: 'Bahman',
+  12: 'Esfand'
+};
+
+final Map<int, String> MONTH_HEBREW = {
+  1: 'Tishri',
+  2: 'Heshvan',
+  3: 'Kislev',
+  4: 'Tevet',
+  5: 'Shevat',
+  6: 'Adar',
+  7: 'Veadar',
+  8: 'Nisan',
+  9: 'Iyar',
+  10: 'Sivan',
+  11: 'Tammuz',
+  12: 'Av',
+  13: 'Elul'
+};
+
+final Map<CalendarSystem, Map<int, String>> MONTH_NAMES = {
+  CalendarSystem.ISLAMICCALENDAR: MONTH_ISLAMIC,
+  CalendarSystem.PERSIANCALENDAR: MONTH_PERSIAN,
+  CalendarSystem.HEBREWCALENDAR: MONTH_HEBREW
+};
+
+final Map<int, String> WEEKDAY = {
+ 1: 'dates_weekday_monday',
+ 2: 'dates_weekday_tuesday',
+ 3: 'dates_weekday_wednesday',
+ 4: 'dates_weekday_thursday',
+ 5: 'dates_weekday_friday',
+ 6: 'dates_weekday_saturday',
+ 7: 'dates_weekday_sunday'
+};
+
+final Map<int, String> WEEKDAY_ISLAMIC = {
+  1: 'yaum al-ahad',
+  2: 'yaum al-ithnayna',
+  3: 'yaum ath-thalatha',
+  4: 'yaum al-arba`a',
+  5: 'yaum al-chamis',
+  6: 'yaum al-dschum`a',
+  7: 'yaum as-sabt'
+};
+
+final Map<int, String> WEEKDAY_PERSIAN = {
+  1: 'Schambé',
+  2: 'yek – Schambé',
+  3: 'do – Schambé',
+  4: 'ße – Schambé',
+  5: 'tschahár – Schambé',
+  6: 'pansch – Schambé',
+  7: 'Djomé'
+};
+
+final Map<int, String> WEEKDAY_HEBREW = {
+  1: 'Jom Rischon',
+  2: 'Jom Scheni',
+  3: 'Jom Schlischi',
+  4: 'Jom Revi’i',
+  5: 'Jom Chamischi',
+  6: 'Jom Schischi',
+  7: 'Schabbat'
+};
+
+final Map<CalendarSystem, Map<int, String>> DAY_NAMES = {
+  CalendarSystem.ISLAMICCALENDAR: MONTH_ISLAMIC,
+  CalendarSystem.PERSIANCALENDAR: WEEKDAY_PERSIAN,
+  CalendarSystem.HEBREWCALENDAR: WEEKDAY_HEBREW
+};
+
 final Map<int, String>  MONTH = {
   1: 'common_month_january',
   2: 'common_month_february',
@@ -113,6 +201,14 @@ double ModifedJulianDateToJulianDate(double mjd){
 
 int JulianDateToJulianDayNumber(double jd){
   return jd.floor();
+}
+
+DateTime DateOutputToDate(DateOutput date){
+  return DateTime(int.parse(date.year), int.parse(date.month), int.parse(date.day));
+}
+
+int Weekday(double JD){
+  return 1 + (JD + 0.5).floor() % 7;
 }
 
 double _calToJD(DateTime date, String type){
@@ -168,7 +264,6 @@ int JulianDay(DateTime date){
 DateOutput GregorianCalendarToIslamicCalendar(DateTime date){
   DateOutput JC = JulianDateToJulianCalendar(GregorianCalendarToJulianDate(date), true);
   int completeJY = int.parse(JC.year) - 1;
-  int completeJCycles = completeJY ~/ 4;
   int days = (completeJY ~/ 4) * 1461 + (completeJY - (completeJY ~/ 4) * 4) * 356;
   days = days + JulianDay(DateTime(int.parse(JC.year), int.parse(JC.month), int.parse(JC.day)));
   days = days - 227016;
@@ -201,8 +296,32 @@ double IslamicCalendarToJulianDate(DateTime date){
   return (JD0Muharram + date.day + _DAYDIFF_ISLAMICCAL[date.month]).toDouble();
 }
 
-DateTime DateOutputToDate(DateOutput date){
-  return DateTime(int.parse(date.year), int.parse(date.month), int.parse(date.day));
+DateOutput JulianDateToPersianCalendar(double jd){
+  int epagflg = 0; // Epagomenai: Change at 1007 Jul./376 Yaz.
+  int epag_change = 2088938;
+  int d_diff = (jd + 0.5).floor() - 1952063;
+  int y = (d_diff / 365).floor() + 1;
+  int y_diff = d_diff - (y - 1) * 365;
+  int epalim = 240;
+  if ((jd > epag_change && epagflg == 0) || (epagflg == 2)) {
+    epalim = 360;
+  }
+  int m = ((y_diff - (y_diff / epalim).floor() * 5) / 30).floor() + 1;
+  int d = y_diff - (m - 1) * 30 - (y_diff / (epalim + 5)).floor() * 5 + 1;
+  return DateOutput(d.toString(), m.toString(), y.toString());
 }
+
+double PersianCalendarToJulianDate(DateTime date){
+  int epagflg = 0; // Epagomenai: Change at 1007 Jul./376 Yaz.
+  int yaz_ep = 1951668;
+  int m = date.month;
+  int d = date.day;
+  int y = date.year;
+  if (m > 8 && ((y < 376 && epagflg == 0) || (epagflg == 1))) {
+    yaz_ep = yaz_ep + 5; // days increased by Epagomenai
+  }
+  return (yaz_ep + d - 1 + m * 30 + y * 365).toDouble();
+}
+
 
 
