@@ -99,20 +99,19 @@ class GCWDatePickerState extends State<GCWDatePicker> {
   }
 
   Widget _buildMonthSpinner(var type){
-    if (type == CalendarSystem.ISLAMICCALENDAR || type == CalendarSystem.PERSIANCALENDAR || type == CalendarSystem.HEBREWCALENDAR )
+    if (type == CalendarSystem.ISLAMICCALENDAR || type == CalendarSystem.PERSIANCALENDAR || type == CalendarSystem.HEBREWCALENDAR || type == CalendarSystem.COPTICCALENDAR )
       return   GCWDropDownSpinner(
          index: _currentMonth ?? (widget.date != null ? widget.date.month - 1 : null) ?? 0,
          layout: SpinnerLayout.VERTICAL,
          items: MONTH_NAMES[type].entries.map((entry) {
            return GCWDropDownMenuItem(
-               value: entry.key,
-               child: entry.value);
-                }).toList(),
+             value: entry.key - 1,
+             child: entry.value);
+         }).toList(),
          onChanged: (value) {
            setState(() {
              _currentMonth = value;
-             _setCurrentValueAndEmitOnChange();
-
+             _setCurrentNamedCalendarValueAndEmitOnChange();
              if (_currentMonth.toString().length == 2) {
                FocusScope.of(context).requestFocus(_dayFocusNode);
              }
@@ -137,6 +136,10 @@ class GCWDatePickerState extends State<GCWDatePicker> {
           });
         },
       );
+  }
+
+  _setCurrentNamedCalendarValueAndEmitOnChange() {
+    widget.onChanged(DateTime(_currentYear, _currentMonth + 1, _currentDay));
   }
 
   _setCurrentValueAndEmitOnChange() {
