@@ -52,7 +52,7 @@ Future<PlatformFile> _openMobileFileExplorer(BuildContext context,
   String title) async {
 
   if (rootDirectory == null) {
-    var mainPath = await MainPath();
+    var mainPath = await mainDirectory();
     if (mainPath != null)
       rootDirectory = Directory(mainPath);
     else
@@ -115,30 +115,30 @@ Future<String> selectFolder(BuildContext context, {
     Directory rootDirectory,
     String rootName,
     List<String> allowedExtensions,
-    String title,}) async {
+    String title}) async {
 
   if (!kIsWeb) {
     if (rootDirectory == null) {
-      var mainPath = await MainPath();
+      var mainPath = await mainDirectory();
       if (mainPath != null)
         rootDirectory = Directory(mainPath);
       else
         return null;
     }
 
+    if (title == null)
+      title = i18n(context, 'common_exportfile_selectfolder_title');
+
     return FilesystemPicker.open(
-      title: 'Save to folder',
+      title: title,
       context: context,
       rootDirectory: rootDirectory,
       rootName: rootName,
       fsType: FilesystemType.folder,
-      pickText: 'Save file to this folder',
+      pickText: i18n(context, 'common_exportfile_selectfolder'),
       folderIconColor: Colors.teal,
       requestPermission: !kIsWeb
-          ? () async =>
-      await Permission.storage
-          .request()
-          .isGranted
+          ? () async => await Permission.storage.request().isGranted
           : null,
     );
   } else

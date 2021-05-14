@@ -30,7 +30,7 @@ Map<List<int>, String> _fileTypes = {
   [0x4D, 0x5A, 0x90, 0x00] : ".exe",
 };
 
-Future<String> _mainDirectory() async {
+Future<String> mainDirectory() async {
   Directory _appDocDir;
   if (Platform.isAndroid)
     _appDocDir = await getExternalStorageDirectory();
@@ -67,7 +67,7 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, 
     //
     // filePath = 'Downloads/$fileName';
   } else {
-    var path = await _mainDirectory();
+    var path = await mainDirectory();
 
     if (path == null)
       return null;
@@ -95,7 +95,7 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
     //
     // filePath = 'Downloads/$fileName';
   } else {
-    var path = await _mainDirectory();
+    var path = await mainDirectory();
 
     if (path == null)
       return null;
