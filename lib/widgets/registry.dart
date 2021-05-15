@@ -26,7 +26,6 @@ import 'package:gc_wizard/widgets/selector_lists/crosssum_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/cryptography_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dates_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/dna_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/e_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/easter_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/esoteric_programminglanguages_selection.dart';
@@ -34,6 +33,7 @@ import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/icecodes_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/imagesandfiles_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/language_games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_bell_selection.dart';
@@ -69,6 +69,7 @@ import 'package:gc_wizard/widgets/selector_lists/rotation_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/segmentdisplay_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/vanity_selection.dart';
@@ -198,6 +199,8 @@ import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagro
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/summer_simmer.dart';
@@ -230,10 +233,10 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicac
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/silver_ratio.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/silver_ratio.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/bell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/catalan.dart';
@@ -801,6 +804,15 @@ class Registry {
             SEARCHSTRING_FR_HEXADECIMAL
           ]),
       GCWTool(
+          tool: HexString2File(),
+          i18nPrefix: 'hexstring2file',
+          category: ToolCategory.IMAGES_AND_FILES,
+          searchStrings: [
+            SEARCHSTRING_DE_HEXSTRING2FILE,
+            SEARCHSTRING_EN_HEXSTRING2FILE,
+            SEARCHSTRING_FR_HEXSTRING2FILE
+          ]),
+      GCWTool(
           tool: Homophone(),
           i18nPrefix: 'homophone',
           category: ToolCategory.CRYPTOGRAPHY,
@@ -823,6 +835,36 @@ class Registry {
           SEARCHSTRING_FR_ICECODES
         ],
       ),
+      GCWTool(
+          tool: ImagesAndFilesSelection(),
+          i18nPrefix: 'imagesandfiles_selection',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_IMAGES,
+            SEARCHSTRING_DE_IMAGES,
+            SEARCHSTRING_EN_IMAGES,
+            SEARCHSTRING_FR_IMAGES,
+            SEARCHSTRING_COMMON_IMAGESANDFILESSELECTION,
+            SEARCHSTRING_DE_IMAGESANDFILESSELECTION,
+            SEARCHSTRING_EN_IMAGESANDFILESSELECTION,
+            SEARCHSTRING_FR_IMAGESANDFILESSELECTION
+          ]),
+      GCWTool(
+        tool: ImageColorCorrections(),
+        autoScroll: false,
+        category: ToolCategory.IMAGES_AND_FILES,
+        i18nPrefix: 'image_colorcorrections',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_IMAGES,
+            SEARCHSTRING_DE_IMAGES,
+            SEARCHSTRING_EN_IMAGES,
+            SEARCHSTRING_FR_IMAGES,
+            SEARCHSTRING_COMMON_IMAGE_COLORCORRECTIONS,
+            SEARCHSTRING_DE_IMAGE_COLORCORRECTIONS,
+            SEARCHSTRING_EN_IMAGE_COLORCORRECTIONS,
+            SEARCHSTRING_FR_IMAGE_COLORCORRECTIONS
+          ]),
       GCWTool(
           tool: Kamasutra(),
           i18nPrefix: 'kamasutra',
