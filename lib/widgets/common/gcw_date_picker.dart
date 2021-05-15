@@ -99,7 +99,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
   }
 
   Widget _buildMonthSpinner(var type){
-    if (type == CalendarSystem.ISLAMICCALENDAR || type == CalendarSystem.PERSIANCALENDAR || type == CalendarSystem.HEBREWCALENDAR || type == CalendarSystem.COPTICCALENDAR )
+    if (type == CalendarSystem.ISLAMICCALENDAR || type == CalendarSystem.PERSIANYAZDEGARDCALENDAR || type == CalendarSystem.HEBREWCALENDAR || type == CalendarSystem.COPTICCALENDAR )
       return   GCWDropDownSpinner(
          index: _currentMonth ?? (widget.date != null ? widget.date.month - 1 : null) ?? 0,
          layout: SpinnerLayout.VERTICAL,

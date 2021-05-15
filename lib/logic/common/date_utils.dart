@@ -1,4 +1,8 @@
 // https://www.aoi.uzh.ch/de/islamwissenschaft/hilfsmittel/tools/kalenderumrechnung/yazdigird.html
+// http://www.nabkal.de/kalrech.html
+// jüdisch   http://www.nabkal.de/kalrechyud.html
+// koptisch  http://www.nabkal.de/kalrech8.html
+// iranisch  http://www.nabkal.de/kalrechiran.html
 // https://web.archive.org/web/20071012175539/http://ortelius.de/kalender/basic_de.php
 
 import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/calendar.dart';
@@ -78,7 +82,7 @@ final Map<int, String> MONTH_HEBREW = {
 
 final Map<CalendarSystem, Map<int, String>> MONTH_NAMES = {
   CalendarSystem.ISLAMICCALENDAR: MONTH_ISLAMIC,
-  CalendarSystem.PERSIANCALENDAR: MONTH_PERSIAN,
+  CalendarSystem.PERSIANYAZDEGARDCALENDAR: MONTH_PERSIAN,
   CalendarSystem.HEBREWCALENDAR: MONTH_HEBREW,
   CalendarSystem.COPTICCALENDAR: MONTH_COPTIC
 };
@@ -243,7 +247,7 @@ double IslamicCalendarToJulianDate(DateTime date){
   return (intPart((11 * y + 3) / 30) + 354 * y + 30 * m - intPart((m - 1) / 2) + d + 1948440 - 385).toDouble();
 }
 
-DateOutput JulianDateToPersianCalendar(double jd){
+DateOutput JulianDateToPersianYazdegardCalendar(double jd){
   int epagflg = 0; // Epagomenai: Change at 1007 Jul./376 Yaz.
   int epag_change = 2088938;
   int d_diff = intPart(jd + 0.5) - 1952063;
@@ -258,7 +262,7 @@ DateOutput JulianDateToPersianCalendar(double jd){
   return DateOutput(d.toString(), m.toString(), y.toString());
 }
 
-double PersianCalendarToJulianDate(DateTime date){
+double PersianYazdegardCalendarToJulianDate(DateTime date){
   int epagflg = 0; // Epagomenai: Change at 1007 Jul./376 Yaz.
   int yaz_ep = 1951668;
   int m = date.month;

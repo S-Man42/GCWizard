@@ -61,7 +61,7 @@ class CalendarState extends State<Calendar> {
               }),
         if (_currentCalendarSystem == CalendarSystem.JULIANCALENDAR || _currentCalendarSystem == CalendarSystem.GREGORIANCALENDAR ||
             _currentCalendarSystem == CalendarSystem.ISLAMICCALENDAR || _currentCalendarSystem == CalendarSystem.COPTICCALENDAR ||
-            _currentCalendarSystem == CalendarSystem.PERSIANCALENDAR || _currentCalendarSystem == CalendarSystem.HEBREWCALENDAR)
+            _currentCalendarSystem == CalendarSystem.PERSIANYAZDEGARDCALENDAR || _currentCalendarSystem == CalendarSystem.HEBREWCALENDAR)
           GCWDatePicker(
             date: _currentDate,
             type: _currentCalendarSystem,
@@ -100,8 +100,8 @@ class CalendarState extends State<Calendar> {
         jd = IslamicCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = WEEKDAY_ISLAMIC[Weekday(jd)];
         break;
-      case CalendarSystem.PERSIANCALENDAR :
-        jd = PersianCalendarToJulianDate(_currentDate);
+      case CalendarSystem.PERSIANYAZDEGARDCALENDAR :
+        jd = PersianYazdegardCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = WEEKDAY_PERSIAN[Weekday(jd)];
         break;
       case CalendarSystem.HEBREWCALENDAR :
@@ -119,7 +119,7 @@ class CalendarState extends State<Calendar> {
     output['dates_calendar_system_gregoriancalendar'] = _DateToString(context, JulianDateToGregorianCalendar(jd, true), CalendarSystem.GREGORIANCALENDAR, true);
     output['dates_calendar_system_islamiccalendar'] = _DateToString(context, JulianDateToIslamicCalendar(jd), CalendarSystem.ISLAMICCALENDAR, true);
     output['dates_calendar_system_hebrewcalendar'] = _HebrewDateToString(JulianDateToHebrewCalendar(jd), jd, true);
-    output['dates_calendar_system_persiancalendar'] = _DateToString(context, JulianDateToPersianCalendar(jd), CalendarSystem.PERSIANCALENDAR, true);
+    output['dates_calendar_system_persiancalendar'] = _DateToString(context, JulianDateToPersianYazdegardCalendar(jd), CalendarSystem.PERSIANYAZDEGARDCALENDAR, true);
     output['dates_calendar_system_copticcalendar'] = _DateToString(context, JulianDateToCopticCalendar(jd), CalendarSystem.COPTICCALENDAR, true);
     return GCWDefaultOutput(
         child: Column(
@@ -153,7 +153,7 @@ class CalendarState extends State<Calendar> {
     final Locale appLocale = Localizations.localeOf(context);
     switch (calendar) {
       case CalendarSystem.ISLAMICCALENDAR:
-      case CalendarSystem.PERSIANCALENDAR:
+      case CalendarSystem.PERSIANYAZDEGARDCALENDAR:
       case CalendarSystem.COPTICCALENDAR:
         if (verbose)
           return date.day + ' ' + MONTH_NAMES[calendar][int.parse(date.month)].toString() + ' ' + date.year;
