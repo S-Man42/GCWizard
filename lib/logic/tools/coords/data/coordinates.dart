@@ -90,9 +90,9 @@ String _getCoordinateSignString(int sign, bool isLatitude) {
   var _sign = '';
 
   if (isLatitude) {
-    _sign = (sign > 0) ? 'N' : 'S';
+    _sign = (sign >= 0) ? 'N' : 'S';
   } else {
-    _sign = (sign > 0) ? 'E' : 'W';
+    _sign = (sign >= 0) ? 'E' : 'W';
   }
 
   return _sign;
