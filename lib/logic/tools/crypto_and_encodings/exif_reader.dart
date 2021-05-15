@@ -140,24 +140,3 @@ String _formatExifValue(IfdTag tag) {
 _ascii2string(List<dynamic> values) {
   return values.map((e) => String.fromCharCode(e)).join();
 }
-
-// int getExifRotation(Map<String, IfdTag> tags) {
-//   IfdTag orientation = tags["Image Orientation"];
-//   int orientationValue = orientation.values[0];
-//   int rotationCorrection = 0;
-//   // in degress
-//   print("orientation: ${orientation.printable}/${orientation.values[0]}");
-//   switch (orientationValue) {
-//     case 6:
-//       rotationCorrection = 90;
-//       break;
-//     case 3:
-//       rotationCorrection = 180;
-//       break;
-//     case 8:
-//       rotationCorrection = 270;
-//       break;
-//     default:
-//   }
-//   return rotationCorrection;
-// }
