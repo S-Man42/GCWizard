@@ -719,26 +719,37 @@ class Registry {
       GCWTool(
           tool: ExifReader(),
           i18nPrefix: 'exif',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          category: ToolCategory.IMAGES_AND_FILES,
           missingHelpLocales: [],
-          searchStrings: [SEARCHSTRING_COMMON_EXIF,
-            SEARCHSTRING_DE_FORMULASOLVER,
-            SEARCHSTRING_EN_FORMULASOLVER,
-            SEARCHSTRING_FR_FORMULASOLVER,
+          searchStrings: [
+            SEARCHSTRING_COMMON_EXIF,
+            SEARCHSTRING_DE_EXIF,
+            SEARCHSTRING_EN_EXIF,
+            SEARCHSTRING_FR_EXIF,
           ]),
 
-      GCWTool(tool: FormulaSolverFormulaGroups(), i18nPrefix: 'formulasolver', missingHelpLocales: [], searchStrings: [
-        SEARCHSTRING_COMMON_FORMULASOLVER,
-        SEARCHSTRING_DE_FORMULASOLVER,
-        SEARCHSTRING_EN_FORMULASOLVER,
-        SEARCHSTRING_FR_FORMULASOLVER,
-      ],),
-      GCWTool(tool: GamesSelection(), i18nPrefix: 'games_selection', missingHelpLocales: [], searchStrings: [
-        SEARCHSTRING_COMMON_GAMES,
-        SEARCHSTRING_DE_GAMES,
-        SEARCHSTRING_EN_GAMES,
-        SEARCHSTRING_FR_GAMES,
-      ],),
+      GCWTool(
+        tool: FormulaSolverFormulaGroups(),
+        i18nPrefix: 'formulasolver',
+        missingHelpLocales: [],
+        searchStrings: [
+          SEARCHSTRING_COMMON_FORMULASOLVER,
+          SEARCHSTRING_DE_FORMULASOLVER,
+          SEARCHSTRING_EN_FORMULASOLVER,
+          SEARCHSTRING_FR_FORMULASOLVER,
+        ],
+      ),
+      GCWTool(
+        tool: GamesSelection(),
+        i18nPrefix: 'games_selection',
+        missingHelpLocales: [],
+        searchStrings: [
+          SEARCHSTRING_COMMON_GAMES,
+          SEARCHSTRING_DE_GAMES,
+          SEARCHSTRING_EN_GAMES,
+          SEARCHSTRING_FR_GAMES,
+        ],
+      ),
       GCWTool(
           tool: Gade(),
           i18nPrefix: 'gade',
@@ -850,10 +861,10 @@ class Registry {
             SEARCHSTRING_FR_IMAGESANDFILESSELECTION
           ]),
       GCWTool(
-        tool: ImageColorCorrections(),
-        autoScroll: false,
-        category: ToolCategory.IMAGES_AND_FILES,
-        i18nPrefix: 'image_colorcorrections',
+          tool: ImageColorCorrections(),
+          autoScroll: false,
+          category: ToolCategory.IMAGES_AND_FILES,
+          i18nPrefix: 'image_colorcorrections',
           missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_IMAGES,
@@ -2294,39 +2305,48 @@ class Registry {
       ]),
 
       //Silver Ratio Selection **********************************************************************************************
-      GCWTool(tool: SilverRatioNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SILVERRATIO,
-        SEARCHSTRING_DE_SILVERRATIO,
-        SEARCHSTRING_EN_SILVERRATIO,
-        SEARCHSTRING_FR_SILVERRATIO,
-        SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
-      ]),
-      GCWTool(tool: SilverRatioDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', missingHelpLocales: [
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SILVERRATIO,
-        SEARCHSTRING_DE_SILVERRATIO,
-        SEARCHSTRING_EN_SILVERRATIO,
-        SEARCHSTRING_FR_SILVERRATIO,
-        SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
-      ]),
-      GCWTool(tool: SilverRatioSearch(), i18nPrefix: 'irrationalnumbers_search', missingHelpLocales: [
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SILVERRATIO,
-        SEARCHSTRING_DE_SILVERRATIO,
-        SEARCHSTRING_EN_SILVERRATIO,
-        SEARCHSTRING_FR_SILVERRATIO,
-        SEARCHSTRING_COMMON_SILVERRATIOSEARCH,
-        SEARCHSTRING_DE_SILVERRATIOSEARCH,
-        SEARCHSTRING_EN_SILVERRATIOSEARCH,
-        SEARCHSTRING_FR_SILVERRATIOSEARCH
-      ]),
+      GCWTool(
+          tool: SilverRatioNthDecimal(),
+          i18nPrefix: 'irrationalnumbers_nthdecimal',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SILVERRATIO,
+            SEARCHSTRING_DE_SILVERRATIO,
+            SEARCHSTRING_EN_SILVERRATIO,
+            SEARCHSTRING_FR_SILVERRATIO,
+            SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
+          ]),
+      GCWTool(
+          tool: SilverRatioDecimalRange(),
+          i18nPrefix: 'irrationalnumbers_decimalrange',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SILVERRATIO,
+            SEARCHSTRING_DE_SILVERRATIO,
+            SEARCHSTRING_EN_SILVERRATIO,
+            SEARCHSTRING_FR_SILVERRATIO,
+            SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
+          ]),
+      GCWTool(
+          tool: SilverRatioSearch(),
+          i18nPrefix: 'irrationalnumbers_search',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SILVERRATIO,
+            SEARCHSTRING_DE_SILVERRATIO,
+            SEARCHSTRING_EN_SILVERRATIO,
+            SEARCHSTRING_FR_SILVERRATIO,
+            SEARCHSTRING_COMMON_SILVERRATIOSEARCH,
+            SEARCHSTRING_DE_SILVERRATIOSEARCH,
+            SEARCHSTRING_EN_SILVERRATIOSEARCH,
+            SEARCHSTRING_FR_SILVERRATIOSEARCH
+          ]),
 
       //E Selection *************************************************************************************************
       GCWTool(tool: ENthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [], searchStrings: [
