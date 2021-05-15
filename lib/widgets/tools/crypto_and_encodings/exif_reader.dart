@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:exif/exif.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,8 @@ import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:image_size_getter/file_input.dart';
+import 'package:image_size_getter/image_size_getter.dart';
 import 'package:latlong/latlong.dart';
 
 class ExifReader extends StatefulWidget {
@@ -31,6 +35,7 @@ class _ExifReaderState extends State<ExifReader> {
   PlatformFile file;
   LatLng point;
   GCWImageViewData thumbnail;
+  Size imageSize;
 
   @override
   initState() {
@@ -56,7 +61,7 @@ class _ExifReaderState extends State<ExifReader> {
 
   Future<void> _readFileFromPicker() async {
     List<PlatformFile> files = await openFileExplorer(
-      allowedExtensions: ['jpg', 'jpeg', 'tiff', 'png', 'bmp'],
+      allowedExtensions: ['jpg', 'jpeg', 'tiff', 'png', 'bmp', 'gif', 'webp'],
     );
     if (files != null) {
       PlatformFile _file = files.first;
@@ -66,16 +71,25 @@ class _ExifReaderState extends State<ExifReader> {
 
   Future<void> _readFile(PlatformFile _file) async {
     Map<String, IfdTag> data = await parseExif(_file);
+    GCWImageViewData _thumbnail;
+    LatLng _point;
+    Map _tableTags;
+    Size _imageSize;
 
-    GCWImageViewData _thumbnail = completeThumbnail(data);
-    LatLng _point = completeGPSData(data);
-    Map _tableTags = buildTablesExif(data);
+    if (data != null) {
+      _thumbnail = completeThumbnail(data);
+      _point = completeGPSData(data);
+      _tableTags = buildTablesExif(data);
+    }
+
+    _imageSize = completeImageMetadata(_file);
 
     setState(() {
       file = _file;
       tableTags = _tableTags;
       point = _point; // GPS Point
       thumbnail = _thumbnail; // Thumbnail
+      imageSize = _imageSize;
     });
   }
 
@@ -87,8 +101,8 @@ class _ExifReaderState extends State<ExifReader> {
 
   List _buildOutput(Map _tableTags) {
     List<Widget> widgets = [];
-
     _decorateFile(widgets, file);
+    _decorateImage(widgets, imageSize);
     _decorateThumbnail(widgets);
     _decorateGps(widgets);
     _decorateExifSections(widgets, _tableTags);
@@ -101,11 +115,8 @@ class _ExifReaderState extends State<ExifReader> {
   void _decorateThumbnail(List<Widget> widgets) {
     if (thumbnail != null && thumbnail.bytes.length > 0) {
       widgets.add(GCWMultipleOutput(
-          //title: i18n(context, "exif_section_thumbnail"),
-          children: [
-            //Image.memory(thumbnail.bytes),
-            GCWImageView(imageData: thumbnail)
-          ],
+          title: i18n(context, "exif_section_thumbnail"),
+          children: [GCWImageView(imageData: thumbnail)],
           //suppressCopyButton: false,
           trailing: GCWIconButton(
             iconData: Icons.save,
@@ -179,6 +190,34 @@ class _ExifReaderState extends State<ExifReader> {
               ["extension", file.extension ?? '']
             ],
           ))));
+    }
+  }
+
+  void _decorateImage(List<Widget> widgets, Size size) {
+    if (size != null) {
+      widgets.add(GCWOutput(
+          title: i18n(context, "exif_section_image"),
+          child: Column(
+              children: columnedMultiLineOutput(
+            null,
+            [
+              ["width", size.width ?? ''],
+              ["height", size.height ?? ''],
+            ],
+          ))));
+    }
+  }
+
+  Size completeImageMetadata(PlatformFile platformFilefile) {
+    ImageInput imageInput = getImageInput(platformFilefile);
+    return ImageSizeGetter.getSize(imageInput);
+  }
+
+  ImageInput getImageInput(PlatformFile platformFile) {
+    if (platformFile.path != null) {
+      return FileInput(File(platformFile.path));
+    } else {
+      return MemoryInput(platformFile.bytes);
     }
   }
 }

@@ -1338,6 +1338,7 @@
   "exif_title": "Exif and Metadata Viewer",
   "exif_section_file": "File",
   "exif_section_general": "General",
+  "exif_section_image": "Image",
   "exif_section_thumbnail": "Thumbnail",
   "open_file": "Open file",
   "paste_image": "Paste image",
