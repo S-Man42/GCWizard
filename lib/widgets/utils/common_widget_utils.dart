@@ -37,7 +37,7 @@ defaultFontSize() {
 }
 
 List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data,
-    {List<int> flexValues = const [], int copyColumn, hasHeader: false, List<Function> tappables}) {
+    {List<int> flexValues = const [], int copyColumn, bool hasHeader: false, bool copyValueColumn: false, List<Function> tappables}) {
   var odd = true;
   var isFirst = true;
 
@@ -62,6 +62,11 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
 
     if (copyColumn == null) copyColumn = rowData.length - 1;
     var copyText = rowData[copyColumn].toString();
+    if ((isFirst && hasHeader) & copyValueColumn) {
+      copyText = "";
+      for (var i = 1; i < data.length; i++)
+        copyText += data[i][copyColumn].toString() + '\n';
+    };
 
     var row = Container(
       child: Row(
@@ -72,12 +77,13 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
           context == null
               ? Container()
               : Container(
-                  child: (isFirst && hasHeader)
+                  child: ((isFirst && hasHeader) & !copyValueColumn)
                       ? Container()
                       : GCWIconButton(
                           iconData: Icons.content_copy,
                           size: IconButtonSize.TINY,
                           onPressed: () {
+                            print(copyText);
                             Clipboard.setData(ClipboardData(text: copyText));
                             insertIntoGCWClipboard(copyText);
 
