@@ -91,7 +91,7 @@ class _GCWCoordsOutputState extends State<GCWCoordsOutput> {
                   ),
                   i18nPrefix: freeMap ? 'coords_openmap' : 'coords_map_view',
                   autoScroll: false,
-                  missingHelpLocales: ['fr'],
+                  missingHelpLocales: [],
                 )));
   }
 

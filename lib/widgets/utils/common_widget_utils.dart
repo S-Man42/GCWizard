@@ -151,3 +151,7 @@ String textControllerDoBackSpace(String currentText, TextEditingController textC
 
   return currentText;
 }
+
+double maxScreenHeight(BuildContext context) {
+  return MediaQuery.of(context).size.height - 100;
+}

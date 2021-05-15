@@ -1520,7 +1520,6 @@ Serves 1.''';
 
   group("chef_language.progopedia.acme-chef-1.01", () {
 
-    // HelloWorld
     var HelloWorld = '''Lobsters with Fruit and Nuts.
 
 This recipe prints "Hello, World!" in a most delicious way.
@@ -1557,8 +1556,6 @@ Liquify contents of the mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-
-    // Factorial
     var Factorial = '''Factorial as a Piece of Cake.
 
 This recipe calculates and prints factorials of first integers.
@@ -1601,8 +1598,6 @@ Mash second iterator until mashed.
 Pour contents of 2nd mixing bowl into the baking dish.
 
 Serves 1.''';
-
-    // Fibonacci
     var Fibonacci = '''Fibonacci numbers.
 
 This recipe calculates and prints first Fibonacci numbers.
@@ -1629,7 +1624,6 @@ Mash second iterator until mashed.
 Pour contents of 2nd mixing bowl into the baking dish.
 
 Serves 1.''';
-
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorld, 'expectedOutput' : ['Hello, World!\n']},
@@ -1941,10 +1935,10 @@ Refrigerate for 1 hour.''';
 
     List<Map<String, dynamic>> _inputsToExpected = [
       {'language' : 'ENG', 'input' : '',   'recipe' : exp,   'isValid' : true, 'expectedOutput' : ['8']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : fac,   'isValid' : true, 'expectedOutput' : ['chef_error_structure_recipe']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : fib,   'isValid' : true, 'expectedOutput' : ['chef_error_structure_recipe']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : fib2,   'isValid' : true, 'expectedOutput' : ['chef_error_structure_recipe']},
-      {'language' : 'ENG', 'input' : '',   'recipe' : hello,   'isValid' : true, 'expectedOutput' : ['chef_error_structure_recipe']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : fac,   'isValid' : true, 'expectedOutput' : ['12624120720504040320362880362880039916800479001600']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : fib,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : fib2,   'isValid' : true, 'expectedOutput' : ['chef_error_runtime']},
+      {'language' : 'ENG', 'input' : '',   'recipe' : hello,   'isValid' : true, 'expectedOutput' : ['Hello world!']},
       {'language' : 'ENG', 'input' : '',   'recipe' : japh,   'isValid' : true, 'expectedOutput' : ['Just another Chef/Perl Hacker,']},
       {'language' : 'ENG', 'input' : '5',   'recipe' : stdin,   'isValid' : true, 'expectedOutput' : ['5']},
     ];
@@ -2573,7 +2567,7 @@ Put mustard seeds into mixing bowl.
 Pour contents of the mixing bowl into the baking dish.
 
 Serves 1.''';
-    var HelloSouchef = '''Hello World Souffle
+    var HelloWorldSouchef = '''Hello World Sous Chef Souffle
 
 This recipe prints the immortal words "Hello world!", by getting one souschef to make the souffle and another to brew the sauce.
 
@@ -2817,7 +2811,7 @@ Serves 1.''';
       {'language' : 'ENG', 'input' : '',  'recipe' : FibonacciNumberswithCaramelSauce, 'expectedOutput' : ['chef_error_runtime','chef_error_runtime_exception','chef_error_runtime_serving_aux','Stack Overflow']},
       {'language' : 'ENG', 'input' : '',  'recipe' : FruitLoops, 'expectedOutput' : ['880']},
       {'language' : 'ENG', 'input' : '60 24',  'recipe' : GreatestCommonDijonMustard, 'expectedOutput' : ['12']},
-      {'language' : 'ENG', 'input' : '',  'recipe' : HelloSouchef, 'expectedOutput' : ['Hello world!']},
+      {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorldSouchef, 'expectedOutput' : ['Hello world!']},
       {'language' : 'ENG', 'input' : '',  'recipe' : HelloWorldSouffle, 'expectedOutput' : ['Hello world!']},
       {'language' : 'ENG', 'input' : '5 3',  'recipe' : PeasAndPower, 'expectedOutput' : ['125']},
       {'language' : 'ENG', 'input' : '8 1 1 0 1 1 1 1 0 3 1 1 1 1 1 1 0 1 1 2 2 1 1 1 2 2 0 0 0 3 3 1 0 0 0 3 0 0 0 0 0',  'recipe' : TuringsTortillasNotEdible, 'expectedOutput' : ['11111100']},
@@ -2834,4 +2828,134 @@ Serves 1.''';
     });
   });
 
+  group("chef_language.GC7NYHW", () {
+
+    // https://www.geocaching.com/geocache/GC7NYHW_backe-backe-kuchen
+
+    var BackeBackeKuchen = '''Zutaten:
+49 Eier
+52 g Mehl
+53 ml Milch
+46 ml Wasser
+48 g Zucker
+32 Teelöffel Honig
+176 g Traubenzucker
+57 g Puderzucker
+69 g Kirschen
+54 g Zwetschgen
+56 g Kiwis
+Zubereitung:
+Eier in die Schüssel geben. Mehl in die Schüssel geben. Milch in die Schüssel geben. Wasser in die Schüssel geben. Zucker in die Schüssel geben. Zucker in die Schüssel geben. Honig in die Schüssel geben. Traubenzucker in die Schüssel geben. Puderzucker in die Schüssel geben. Zucker in die Schüssel geben. Zucker in die Schüssel geben. Honig in die Schüssel geben. Kirschen in die Schüssel geben. Honig in die Schüssel geben. Mehl in die Schüssel geben. Zwetschgen in die Schüssel geben. Kiwis in die Schüssel geben. Wasser in die Schüssel geben. Kiwis in die Schüssel geben. Mehl in die Schüssel geben. Honig in die Schüssel geben. Traubenzucker in die Schüssel geben. Kiwis in die Schüssel geben. Mehl in die Schüssel geben. Schüssel in eine Servierschale stürzen.
+Portionen: 1.''';
+
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'language' : 'DEU', 'input' : '',  'recipe' : BackeBackeKuchen, 'expectedOutput' : ['5256176325256.565452326932484857176324848.55249']},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i], elem['expectedOutput'][i]);
+        }
+      });
+    });
+  });
+
+  group("chef_language.correctFaultyRecipes", () {
+
+    var NoTitle = '''Zutaten:
+  49 Eier
+  52 g Mehl
+53 ml Milch
+
+Zubereitung:
+Eier in die Schüssel geben. 
+Mehl in die Schüssel geben. Milch in die Schüssel geben. Schüssel in eine Servierschale stürzen.
+
+Portionen: 1.''';
+    var IngredientsBlankLines = '''Blank lines inside Methods Section
+    
+    Zutaten:
+49 Eier
+52 g Mehl
+
+53 ml Milch
+Zubereitung:
+Eier in die Schüssel geben. Mehl in die Schüssel geben. Milch in die Schüssel geben. Schüssel in eine Servierschale stürzen.
+Portionen: 1.''';
+    var MethodsBlankLines = '''Blank lines inside Methods Section
+    
+    Zutaten:
+49 Eier
+52 g Mehl
+53 ml Milch
+Zubereitung:
+Eier in die Schüssel geben. 
+
+Mehl in die Schüssel geben. Milch in die Schüssel geben. Schüssel in eine Servierschale stürzen.
+Portionen: 1.''';
+    var TripleBlankLines = '''Triple Blank lines
+    
+    Zutaten:
+49 Eier
+52 g Mehl
+53 ml Milch
+
+
+
+Zubereitung:
+Eier in die Schüssel geben. Mehl in die Schüssel geben. Milch in die Schüssel geben. Schüssel in eine Servierschale stürzen.
+
+
+
+Portionen: 1.''';
+    var MisplacedTitle = '''MisplacedTitle.
+    Kommentar
+    Zutaten:
+49 Eier
+52 g Mehl
+53 ml Milch
+Zubereitung:
+Eier in die Schüssel geben. 
+
+Mehl in die Schüssel geben. Milch in die Schüssel geben. Schüssel in eine Servierschale stürzen.
+Portionen: 1.''';
+    var FormatWithSpaces = '''FormatWithSpaces.
+    
+    remove indends
+    
+    Zutaten:
+  49 Eier
+  52 g Mehl
+53 ml Milch
+
+Zubereitung:
+Eier in die Schüssel geben. 
+Mehl in die Schüssel geben. Milch in die Schüssel geben. Schüssel in eine Servierschale stürzen.
+
+Portionen: 1.''';
+
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'language' : 'DEU', 'input' : '',  'recipe' : NoTitle, 'expectedOutput' : ['55249']},
+      {'language' : 'DEU', 'input' : '',  'recipe' : IngredientsBlankLines, 'expectedOutput' : ['55249']},
+      {'language' : 'DEU', 'input' : '',  'recipe' : MethodsBlankLines, 'expectedOutput' : ['55249']},
+      {'language' : 'DEU', 'input' : '',  'recipe' : MisplacedTitle, 'expectedOutput' : ['55249']},
+      {'language' : 'DEU', 'input' : '',  'recipe' : TripleBlankLines, 'expectedOutput' : ['55249']},
+      {'language' : 'DEU', 'input' : '',  'recipe' : FormatWithSpaces, 'expectedOutput' : ['55249']},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}', () {
+        var _actual = interpretChef(elem['language'], elem['recipe'].toLowerCase().replaceAll('-', ' '), elem['input']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i], elem['expectedOutput'][i]);
+        }
+      });
+    });
+  });
 }
+
+
