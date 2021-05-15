@@ -64,9 +64,10 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
     var copyText = rowData[copyColumn].toString();
     if ((isFirst && hasHeader) & copyValueColumn) {
       copyText = "";
-      for (var i = 1; i < data.length; i++)
-        copyText += data[i][copyColumn].toString() + '\n';
-    };
+      data.where((row) => row != null).forEach((dataRow) {
+        copyText += dataRow[copyColumn].toString() + '\n';
+      });
+     };
 
     var row = Container(
       child: Row(
