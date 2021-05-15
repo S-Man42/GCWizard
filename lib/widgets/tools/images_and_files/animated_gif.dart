@@ -4,9 +4,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
-import 'package:gc_wizard/widgets/common/gcw_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_submit_button.dart';
-import 'package:image/image.dart' as imageData;
+import 'package:gc_wizard/widgets/common/gcw_gallery.dart';
+import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/animated_gif.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
@@ -14,13 +13,13 @@ import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
-import 'package:gc_wizard/widgets/common/gcw_symbol_container.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
+import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 
 
@@ -112,41 +111,51 @@ class AnimatedGifState extends State<AnimatedGif> {
     if (_outData == null)
       return null;
 
-    var durations = "";
-    if (_outData["durations"] != null && _outData["durations"]?.length> 1)
-      durations = _outData["durations"].map((value) => value.toString() + 'ms').join(", ");
+    var durations = <List<dynamic>>[];
+    if (_outData["durations"] != null && _outData["durations"]?.length > 1) {
+      var counter = 0;
+      _outData["durations"].forEach((value) {
+        counter++;
+        durations.addAll([[counter, value]]);
+      });
+    };
 
-    double height;
-    if (_outData["animation"]?.width <= MediaQuery.of(context).size.width )
-      height = _outData["animation"]?.height.toDouble();
-    else
-      height = MediaQuery.of(context).size.width * _outData["animation"]?.height / _outData["animation"]?.width;
-
-      return Column(
+    return Column(
       children: <Widget>[
-         Container(
-          child : _play ?
+         // Container(
+         //  child :
+          _play ?
             Image.memory(_platformFile.bytes)
             :
-            Swiper(
-                itemCount:  _outData["animation"]?.numFrames,
-                itemBuilder: (BuildContext context, int index) {
-                  return Image.memory(_outData["images"][index]);
-                },
-                control: SwiperControl(),
-                pagination: FractionPaginationBuilder(),
-              ),
+          GCWGallery(imageData: _convertImageData(_outData["images"], _outData["durations"])),
 
-            height: height,
-        ),
+
+        //     height: height,
+        // ),
         durations != null
           ? GCWOutput(
               title: "durations",
-              copyText: durations,
-              child: GCWOutputText(text: durations)
+              //copyText: durations,
+              child: Column(children: columnedMultiLineOutput(context, durations, flexValues: [1, 2])),
             )
           : Container()
     ]);
+  }
+
+  List<GCWImageViewData> _convertImageData(List<Uint8List> images, List<int> durations) {
+    var list = <GCWImageViewData>[];
+
+    if (images != null) {
+      var imageCount = images.length;
+      for (var i = 0; i < images.length; i++) {
+        String description = (i+1).toString() + '/$imageCount';
+        if ((durations != null) && (i < durations.length)) {
+          description += ': ' + durations[i].toString() + ' ms';
+        }
+        list.add(GCWImageViewData(images[i], description: description));
+      };
+    };
+    return list;
   }
 
   _analystePlatformFile(PlatformFile platformFile) {
