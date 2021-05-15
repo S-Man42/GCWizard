@@ -40,23 +40,29 @@ GCWImageViewData completeThumbnail(Map<String, IfdTag> data) {
 //   GPS Longitude        : -122.622500 deg (122.000000 deg, 37.350000 min, 0.000000 sec W)
 ///
 LatLng completeGPSData(Map<String, IfdTag> data) {
-  if (data.containsKey('GPS GPSLatitude') &&
-      data.containsKey('GPS GPSLongitude') &&
-      data.containsKey('GPS GPSLatitudeRef') &&
-      data.containsKey('GPS GPSLongitudeRef')) {
-    IfdTag latRef = data['GPS GPSLatitudeRef'];
-    IfdTag lat = data['GPS GPSLatitude'];
-    double _lat = _getCoordDecFromIfdTag(lat, latRef.printable, true);
+  try {
+    if (data.containsKey('GPS GPSLatitude') &&
+        data.containsKey('GPS GPSLongitude') &&
+        data.containsKey('GPS GPSLatitudeRef') &&
+        data.containsKey('GPS GPSLongitudeRef')) {
+      IfdTag latRef = data['GPS GPSLatitudeRef'];
+      IfdTag lat = data['GPS GPSLatitude'];
+      double _lat = _getCoordDecFromIfdTag(lat, latRef.printable, true);
+      if (_lat.isNaN) return null;
 
-    IfdTag lngRef = data['GPS GPSLongitudeRef'];
-    IfdTag lng = data['GPS GPSLongitude'];
-    double _lng = _getCoordDecFromIfdTag(lng, lngRef.printable, false);
+      IfdTag lngRef = data['GPS GPSLongitudeRef'];
+      IfdTag lng = data['GPS GPSLongitude'];
+      double _lng = _getCoordDecFromIfdTag(lng, lngRef.printable, false);
+      if (_lng.isNaN) return null;
 
-    // DEC should be the pivot format from EXIF
-    LatLng _point = decToLatLon(DEC(_lat, _lng));
+      // DEC should be the pivot format from EXIF
+      LatLng _point = decToLatLon(DEC(_lat, _lng));
 
-    print("_point = ${_point}");
-    return _point;
+      print("_point = ${_point}");
+      return _point;
+    }
+  } catch (error) {
+    print("silent error: ${error}");
   }
 
   return null;
