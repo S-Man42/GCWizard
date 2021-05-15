@@ -1,7 +1,6 @@
 import 'package:exif/exif.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
@@ -50,35 +49,14 @@ class _ExifReaderState extends State<ExifReader> {
           onPressed: _readFileFromPicker,
         ),
         Container(),
-        // GCWButton(
-        //   text: i18n(context, 'paste_image'),
-        //   onPressed: _pasteFileFromclipboard,
-        // ),
-        // GCWText(
-        //   text: file == null ? "" : file.path,
-        // ),
         ..._buildOutput(tableTags)
       ],
     );
   }
 
-  void _pasteFileFromclipboard() {
-    Clipboard.getData('image/jpeg').then((data) {
-      _pasteFile(data);
-    });
-    Clipboard.getData('image/tiff').then((data) {
-      _pasteFile(data);
-    });
-  }
-
-  Future<void> _pasteFile(data) {
-    PlatformFile _file = data.text;
-    return _readFile(_file);
-  }
-
   Future<void> _readFileFromPicker() async {
     List<PlatformFile> files = await openFileExplorer(
-      allowedExtensions: ['jpg', 'jpeg', 'tiff'],
+      allowedExtensions: ['jpg', 'jpeg', 'tiff', 'png', 'bmp'],
     );
     if (files != null) {
       PlatformFile _file = files.first;
