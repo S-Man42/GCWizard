@@ -83,7 +83,6 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
                           iconData: Icons.content_copy,
                           size: IconButtonSize.TINY,
                           onPressed: () {
-                            print(copyText);
                             Clipboard.setData(ClipboardData(text: copyText));
                             insertIntoGCWClipboard(copyText);
 
