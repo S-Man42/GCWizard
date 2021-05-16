@@ -74,16 +74,16 @@ class _ExifReaderState extends State<ExifReader> {
   Future<void> _readFile(PlatformFile _file) async {
     if (_file == null) return;
 
-    Map<String, IfdTag> data = await parseExif(_file);
+    Map<String, IfdTag> tags = await parseExif(_file);
     GCWImageViewData _thumbnail;
     LatLng _point;
     Map _tableTags;
     Size _imageSize;
 
-    if (data != null) {
-      _thumbnail = completeThumbnail(data);
-      _point = completeGPSData(data);
-      _tableTags = buildTablesExif(data);
+    if (tags != null) {
+      _thumbnail = completeThumbnail(tags);
+      _point = completeGPSData(tags);
+      _tableTags = buildTablesExif(tags);
     }
 
     _imageSize = completeImageMetadata(_file);
