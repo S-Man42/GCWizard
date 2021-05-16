@@ -1,6 +1,6 @@
 import 'package:exif/exif.dart';
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/exif_reader.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/exif_reader.dart';
 
 void main() {
   group("exif.getCoordDecFromText:", () {
