@@ -13,7 +13,11 @@ runSamplesTest(FileSystemEntity file) async {
   expect(tags.length, isNonZero);
 }
 
-runSamplesTestGps(FileSystemEntity file) async {
+runSamplesTestGps(
+  FileSystemEntity file,
+  double expectedLatitude,
+  double expectedLongitude,
+) async {
   Uint8List content = _getFileData(file.path);
 
   var tags = await readExifFromBytes(content);
@@ -24,8 +28,8 @@ runSamplesTestGps(FileSystemEntity file) async {
 
   LatLng _point = completeGPSData(tags);
   expect(_point, isNotNull);
-  expect(_point.latitude, equals(37.885));
-  expect(_point.longitude, equals(-122.6225));
+  expect(_point.latitude, equals(expectedLatitude));
+  expect(_point.longitude, equals(expectedLongitude));
 }
 
 Uint8List _getFileData(String path) {

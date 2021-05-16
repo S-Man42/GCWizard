@@ -4,9 +4,9 @@ import 'samples_run.dart';
 import 'test_util.dart';
 
 main() async {
-  for (var file in readSampleTest1()) {
-    test(file.path, () async {
-      await runSamplesTestGps(file);
+  for (FileSample sample in readSampleTest1()) {
+    test(sample.file.path, () async {
+      await runSamplesTestGps(sample.file, sample.expectedLatitude, sample.expectedLongitude);
     });
   }
 }

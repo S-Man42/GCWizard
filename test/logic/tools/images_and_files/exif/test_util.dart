@@ -12,9 +12,17 @@ List<FileSystemEntity> readSamples() {
   return files;
 }
 
-List<FileSystemEntity> readSampleTest1() {
+List<FileSample> readSampleTest1() {
   String _path = Path.join(testDirPath, 'test1.jpg');
   File _file = File(_path);
   print("File exist: ${_file.existsSync()}");
-  return [_file];
+  return [FileSample(_file, 37.885, -122.6225)];
+}
+
+class FileSample {
+  File file;
+  double expectedLatitude;
+  double expectedLongitude;
+
+  FileSample(this.file, this.expectedLatitude, this.expectedLongitude);
 }
