@@ -88,19 +88,15 @@ String normalizeUmlauts(String input) {
   }).join();
 }
 
-List<String> splitWords(String text){
-  // TODO Move regex static/const
-  RegExp reSplit = RegExp(r'[\s,]');
-  return text.split(reSplit);
-}
-
 String removeAccents(String text) {
   String out = normalizeUmlauts(text);
   return removeDiacritics(out);
 }
 
+final RegExp reNonLetters = RegExp(r'[^A-Za-z]');
+
 String removeNonLetters(String text) {
-  return text.replaceAll(RegExp(r'[^A-Za-z]'), '');
+  return text.replaceAll(reNonLetters, '');
 }
 
 String insertCharacter(String text, int index, String character) {
