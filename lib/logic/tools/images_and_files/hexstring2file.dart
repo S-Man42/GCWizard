@@ -15,7 +15,8 @@ MIMETYPE getMimeType(String fileName) {
   if (fileName.endsWith('.jpg') ||
       fileName.endsWith('.gif') ||
       fileName.endsWith('.png') ||
-      fileName.endsWith('.bmp'))
+      fileName.endsWith('.bmp') ||
+      fileName.endsWith('.webp'))
     return MIMETYPE.IMAGE;
   else if (fileName.endsWith('.zip') ||
       fileName.endsWith('.rar') ||

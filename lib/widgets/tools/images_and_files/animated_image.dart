@@ -1,19 +1,16 @@
 import 'dart:typed_data';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
+import 'package:gc_wizard/widgets/common/base/gcw_divider.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/gcw_gallery.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/animated_gif.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
-import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
-import 'package:gc_wizard/widgets/common/gcw_multiple_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -23,17 +20,17 @@ import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:intl/intl.dart';
 
 
-class AnimatedGif extends StatefulWidget {
+class AnimatedImage extends StatefulWidget {
   final PlatformFile platformFile;
 
-  const AnimatedGif({Key key, this.platformFile})
+  const AnimatedImage({Key key, this.platformFile})
       : super(key: key);
 
   @override
-  AnimatedGifState createState() => AnimatedGifState();
+  AnimatedImageState createState() => AnimatedImageState();
 }
 
-class AnimatedGifState extends State<AnimatedGif> {
+class AnimatedImageState extends State<AnimatedImage> {
   Map<String, dynamic> _outData;
   PlatformFile _platformFile;
   GCWSwitchPosition _currentMode = GCWSwitchPosition.right;
@@ -44,7 +41,6 @@ class AnimatedGifState extends State<AnimatedGif> {
     if (widget.platformFile != null) {
       _platformFile = widget.platformFile;
       _analysePlatformFileAsync();
-      //_analystePlatformFile(_platformFile);
     }
 
     return Column(
@@ -53,11 +49,10 @@ class AnimatedGifState extends State<AnimatedGif> {
           text: i18n(context, 'common_exportfile_openfile'),
           onPressed: () {
             setState(() {
-              openFileExplorer().then((files) { //pickingType : FileType.image
+              openFileExplorer(allowedExtensions: ['gif', 'png', 'webp']).then((files) {
                 if (files != null && files.length > 0) {
                   getFileData(files.first).then((bytes) {
                     _platformFile = new PlatformFile(path: files.first.path, name: files.first.name, bytes: bytes);
-                    //_analystePlatformFile(_platformFile);
                     _analysePlatformFileAsync();
                   });
                 };
@@ -114,6 +109,7 @@ class AnimatedGifState extends State<AnimatedGif> {
     var durations = <List<dynamic>>[];
     if (_outData["durations"] != null && _outData["durations"]?.length > 1) {
       var counter = 0;
+      durations.addAll([[i18n(context, 'animated_image_table_index'), i18n(context, 'animated_image_table_duration')]]);
       _outData["durations"].forEach((value) {
         counter++;
         durations.addAll([[counter, value]]);
@@ -122,23 +118,25 @@ class AnimatedGifState extends State<AnimatedGif> {
 
     return Column(
       children: <Widget>[
-         // Container(
-         //  child :
-          _play ?
+        _play ?
             Image.memory(_platformFile.bytes)
             :
-          GCWGallery(imageData: _convertImageData(_outData["images"], _outData["durations"])),
+            GCWGallery(imageData: _convertImageData(_outData["images"], _outData["durations"])),
 
+        _buildDurationOutput(durations)
+      ]);
+  }
 
-        //     height: height,
-        // ),
-        durations != null
-          ? GCWOutput(
-              title: "durations",
-              //copyText: durations,
-              child: Column(children: columnedMultiLineOutput(context, durations, flexValues: [1, 2])),
-            )
-          : Container()
+  Widget _buildDurationOutput(List<List<dynamic>> durations) {
+    if (durations == null)
+      return Container();
+
+    return Column(
+        children: <Widget>[
+        GCWDivider(),
+        GCWOutput(
+          child: Column(children: columnedMultiLineOutput(context, durations, flexValues: [1, 2], hasHeader: true)),
+        )
     ]);
   }
 
@@ -158,14 +156,6 @@ class AnimatedGifState extends State<AnimatedGif> {
     return list;
   }
 
-  _analystePlatformFile(PlatformFile platformFile) {
-    analyseGif(platformFile.bytes).then((output) {
-      setState(() {
-        _outData = output;
-      });
-    });
-  }
-
   _analysePlatformFileAsync() async {
       await showDialog(
         context: context,
@@ -174,7 +164,7 @@ class AnimatedGifState extends State<AnimatedGif> {
           return Center(
             child: Container(
               child: GCWAsyncExecuter(
-                isolatedFunction: analyseGifAsync,
+                isolatedFunction: analyseImageAsync,
                 parameter: _buildJobData(),
                 onReady: (data) => _showOutput(data),
                 isOverlay: true,
@@ -203,7 +193,7 @@ class AnimatedGifState extends State<AnimatedGif> {
     createZipFile(fileName, data).then((bytes) async {
       var fileType = '.zip';
       var value = await saveByteDataToFile(
-          bytes.buffer.asByteData(), DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType); //, subDirectory: "hexstring_export"
+          bytes.buffer.asByteData(), 'animatedimage_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + fileType);
 
       if (value != null) showExportedFileDialog(context, value['path'], fileType: fileType);
     });

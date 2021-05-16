@@ -5,7 +5,7 @@ const SEARCHSTRING_DE_AFFINE = '';
 const SEARCHSTRING_DE_ALPHABETVALUES =
     'bww buchstabenwerte quersummen alphanumerisch produkt alternierend buchstabenwortwerte kyrillisch russisch griechisch spanisch deutsch polnisch';
 const SEARCHSTRING_DE_AMSCO = '';
-const SEARCHSTRING_DE_ANIMATED_GIFS = 'animiert bewegt bild';
+const SEARCHSTRING_DE_ANIMATED_IMAGES = 'animiert bewegt bild';
 const SEARCHSTRING_DE_APPARENTTEMPERATURE = 'gefuehlte temperatur';
 const SEARCHSTRING_DE_APPARENTTEMPERATURE_HEATINDEX = 'luftfeuchtigkeit hitzeindex';
 const SEARCHSTRING_DE_APPARENTTEMPERATURE_HUMIDEX = 'luftfeuchtigkeit taupunkt';
