@@ -1,6 +1,6 @@
 name: gc_wizard
 description: GC Wizard
-version: 1.5.0+99
+version: 1.5.1+100
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -34,6 +34,7 @@ dependencies:
   prefs: ^3.3.0
   provider: ^5.0.0
   qr_flutter: ^4.0.0
+  scrollable_positioned_list: ^0.1.10
   share_extend: ^1.1.9
   touchable: ^0.2.0
   universal_html: ^2.0.4
