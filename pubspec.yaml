@@ -13,7 +13,6 @@ dependencies:
   diacritic: ^0.1.1
   file_picker: ^3.0.1
   exif: ^2.1.0
-  exifdart: 0.7.0+3
   flutter:
     sdk: flutter
   flutter_localizations:
