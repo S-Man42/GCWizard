@@ -233,6 +233,7 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   String formatDate(DateTime datetime) {
-    return DateFormat.yMMMd().add_jm().format(datetime);
+    return (datetime == null) ? '' : DateFormat().format(datetime);
+    // return DateFormat.yMMMd().add_jm().format(datetime);
   }
 }
