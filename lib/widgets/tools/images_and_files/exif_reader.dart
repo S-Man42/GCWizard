@@ -89,6 +89,7 @@ class _ExifReaderState extends State<ExifReader> {
     }
 
     _image = await completeImageMetadata(_file);
+    // _zipData = await completeZip(_file);
 
     setState(() {
       file = _file;
