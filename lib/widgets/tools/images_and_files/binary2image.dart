@@ -7,7 +7,9 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_exported_file_dialog.dart';
 import 'package:gc_wizard/widgets/common/gcw_onoff_switch.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
 import 'package:intl/intl.dart';
 
 
@@ -19,6 +21,7 @@ class Binary2Image extends StatefulWidget {
 class Binary2ImageState extends State<Binary2Image> {
   var _currentInput = '';
   Uint8List _outData;
+  String _codeData;
   var _squareFormat = false;
   var _invers = false;
 
@@ -63,20 +66,41 @@ class Binary2ImageState extends State<Binary2Image> {
   }
 
   _createOutput() {
+    _outData = null;
+    _codeData = null;
     binary2image(_currentInput, _squareFormat, _invers).then((value) {
       setState(() {
         _outData = value;
+        scanBytes(_outData).then((value){
+          setState(() {
+            _codeData = value;
+          });
+        });
       });
     });
   }
 
-  _buildOutput() {
-    return (_outData == null) ? null : Image.memory(_outData);
+  Widget _buildOutput() {
+    if (_outData == null)
+      return null;
+
+    return Column(
+        children: <Widget>[
+          Image.memory(_outData),
+          _codeData != null
+          ?
+            GCWOutput(
+              title: i18n(context, 'binary2image_code_data'),
+              child: _codeData
+            )
+          :
+            Container(),
+    ]);
   }
 
   _exportFile(BuildContext context, Uint8List data) async {
     var value = await saveByteDataToFile(
-        data.buffer.asByteData(), 'image_export' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
+        data.buffer.asByteData(), 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
     if (value != null) showExportedFileDialog(context, value['path'], fileType: '.png', contentWidget: Image.memory(_outData));
   }

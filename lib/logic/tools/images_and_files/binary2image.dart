@@ -14,16 +14,17 @@ Future<Uint8List> binary2image(String input, bool squareFormat, bool invers) asy
   if (!squareFormat) filter += "\n";
   input = _filterInput(input, filter);
 
+  if (invers)
+    input = substitution(input,  {filter[0]: '1', filter[1]: '0'});
+  else
+    input = substitution(input,  {filter[0]: '0', filter[1]: '1'});
+
   if (squareFormat) {
     var size = sqrt(input.length) .ceil();
     input = insertSpaceEveryNthCharacter(input, size);
     input = input.replaceAll(RegExp('[ ]'), '\n');
   }
 
-  if (invers)
-    input = substitution(input,  {filter[0]: '1', filter[1]: '0'});
-  else
-    input = substitution(input,  {filter[0]: '0', filter[1]: '1'});
 
   return await _binary2Image(input);
 }
