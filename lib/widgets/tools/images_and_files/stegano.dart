@@ -126,9 +126,7 @@ class _SteganoState extends State<Stegano> {
     }
   }
 
-  bool isEncode() {
-    return (_currentMode == GCWSwitchPosition.left);
-  }
+  bool isEncode() => (_currentMode == GCWSwitchPosition.left);
 
   List<Widget> _buildOutput() {
     return isEncode() ? _buildOutputEncode() : _buildOutputDecode();
