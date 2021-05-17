@@ -15,8 +15,13 @@ List<FileSystemEntity> readSamples() {
 List<FileSample> readSampleTest1() {
   String _path = Path.join(testDirPath, 'test1.jpg');
   File _file = File(_path);
-  print("File exist: ${_file.existsSync()}");
   return [FileSample(_file, 37.885, -122.6225)];
+}
+
+List<FileSample> readSampleTest2() {
+  String _path = Path.join(testDirPath, 'test-mark.jpg');
+  File _file = File(_path);
+  return [FileSample(_file, 0, 0)];
 }
 
 class FileSample {
