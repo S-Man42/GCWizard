@@ -190,9 +190,11 @@ const SEARCHSTRING_DE_HEXADECIMAL = 'hexadezimalzahlen dezimalzahlen';
 final SEARCHSTRING_DE_HEXSTRING2FILE = 'hexadezimal datei';
 const SEARCHSTRING_DE_HOMOPHONE = 'monoalphabetische buchstabenhaeufigkeiten';
 const SEARCHSTRING_DE_ICECODES = 'ostsee eiscodes gewaesser schnee schnelzen eisberg';
-const SEARCHSTRING_DE_IMAGE_COLORCORRECTIONS = 'farben farbkorrekturen anpassen invertieren gammawert saettigung rgb rot gruen blau helligkeit';
+const SEARCHSTRING_DE_IMAGE_COLORCORRECTIONS =
+    'farben farbkorrekturen anpassen invertieren gammawert saettigung rgb rot gruen blau helligkeit';
 const SEARCHSTRING_DE_IMAGES = 'bilder dateien bildbearbeitungen ';
 const SEARCHSTRING_DE_IMAGESANDFILESSELECTION = 'analysieren analysen';
+const SEARCHSTRING_DE_STEGANO = 'steganography';
 const SEARCHSTRING_DE_IRRATIONALNUMBERS = 'irrationale zahlen nachkommastelle';
 const SEARCHSTRING_DE_ITERATEDCROSSSUMRANGE = 'bereich';
 const SEARCHSTRING_DE_ITERATEDCROSSUMRANGEFREQUENCY = 'frequenzen haeufigkeiten auftreten';

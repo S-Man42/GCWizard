@@ -182,6 +182,7 @@ const SEARCHSTRING_FR_ICECODES = 'mer baltique codes glace eau neige fonte';
 const SEARCHSTRING_FR_IMAGE_COLORCORRECTIONS = 'couleurscorrections teinte saturation luminosite rgb rouge bleu vert';
 const SEARCHSTRING_FR_IMAGES = 'images peintures fichiers ';
 const SEARCHSTRING_FR_IMAGESANDFILESSELECTION = 'analyser';
+const SEARCHSTRING_FR_STEGANO = 'steganographie';
 const SEARCHSTRING_FR_IRRATIONALNUMBERS = 'irrationalite';
 const SEARCHSTRING_FR_ITERATEDCROSSSUMRANGE = 'section';
 const SEARCHSTRING_FR_ITERATEDCROSSUMRANGEFREQUENCY = 'frequences presence apparition';
