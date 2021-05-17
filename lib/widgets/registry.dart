@@ -213,7 +213,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_pos
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/binary2image.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
@@ -471,7 +471,7 @@ class Registry {
       GCWTool(
           tool: Binary2Image(),
           i18nPrefix: 'binary2image',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          category: ToolCategory.IMAGES_AND_FILES,
           searchStrings: [
             SEARCHSTRING_DE_HEXSTRING2FILE,
             SEARCHSTRING_EN_HEXSTRING2FILE,
