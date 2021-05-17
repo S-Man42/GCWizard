@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
 import 'package:file_picker/file_picker.dart';
@@ -17,8 +18,9 @@ import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
-import 'package:image_size_getter/file_input.dart';
-import 'package:image_size_getter/image_size_getter.dart';
+import 'package:image/image.dart' as Image;
+// import 'package:image_size_getter/file_input.dart';
+// import 'package:image_size_getter/image_size_getter.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 
@@ -36,7 +38,7 @@ class _ExifReaderState extends State<ExifReader> {
   PlatformFile file;
   LatLng point;
   GCWImageViewData thumbnail;
-  Size imageSize;
+  Image.Image image;
 
   @override
   initState() {
@@ -78,7 +80,7 @@ class _ExifReaderState extends State<ExifReader> {
     GCWImageViewData _thumbnail;
     LatLng _point;
     Map _tableTags;
-    Size _imageSize;
+    Image.Image _image;
 
     if (tags != null) {
       _thumbnail = completeThumbnail(tags);
@@ -86,14 +88,14 @@ class _ExifReaderState extends State<ExifReader> {
       _tableTags = buildTablesExif(tags);
     }
 
-    _imageSize = completeImageMetadata(_file);
+    _image = await completeImageMetadata(_file);
 
     setState(() {
       file = _file;
       tableTags = _tableTags;
       point = _point; // GPS Point
       thumbnail = _thumbnail; // Thumbnail
-      imageSize = _imageSize;
+      image = _image;
     });
   }
 
@@ -106,7 +108,7 @@ class _ExifReaderState extends State<ExifReader> {
   List _buildOutput(Map _tableTags) {
     List<Widget> widgets = [];
     _decorateFile(widgets, file);
-    _decorateImage(widgets, imageSize);
+    _decorateImage(widgets, image);
     _decorateThumbnail(widgets);
     _decorateGps(widgets);
     _decorateExifSections(widgets, _tableTags);
@@ -204,33 +206,43 @@ class _ExifReaderState extends State<ExifReader> {
     }
   }
 
-  void _decorateImage(List<Widget> widgets, Size size) {
-    if (size != null) {
+  void _decorateImage(List<Widget> widgets, Image.Image image) {
+    if (image != null) {
       widgets.add(GCWOutput(
           title: i18n(context, "exif_section_image"),
           child: Column(
               children: columnedMultiLineOutput(
             null,
             [
-              ["width", size.width ?? ''],
-              ["height", size.height ?? ''],
+              ["width", image.width ?? ''],
+              ["height", image.height ?? ''],
+              ["blendMethod", image.blendMethod ?? ''],
+              ["channels", image.channels ?? ''],
+              ["duration", image.duration ?? ''],
+              ["iccProfile", image.iccProfile ?? ''],
+              ["xOffset", image.xOffset ?? ''],
+              ["yOffset", image.yOffset ?? ''],
+              // image.exif
             ],
           ))));
     }
   }
 
-  Size completeImageMetadata(PlatformFile platformFilefile) {
-    ImageInput imageInput = getImageInput(platformFilefile);
-    return ImageSizeGetter.getSize(imageInput);
+  Future<Image.Image> completeImageMetadata(PlatformFile platformFile) async {
+    Uint8List data = await getFileData(platformFile);
+    return Image.decodeImage(data);
+
+    // ImageInput imageInput = getImageInput(platformFile);
+    // return ImageSizeGetter.getSize(imageInput);
   }
 
-  ImageInput getImageInput(PlatformFile platformFile) {
-    if (platformFile.path != null) {
-      return FileInput(File(platformFile.path));
-    } else {
-      return MemoryInput(platformFile.bytes);
-    }
-  }
+  // ImageInput getImageInput(PlatformFile platformFile) {
+  //   if (platformFile.path != null) {
+  //     return FileInput(File(platformFile.path));
+  //   } else {
+  //     return MemoryInput(platformFile.bytes);
+  //   }
+  // }
 
   String formatDate(DateTime datetime) {
     return (datetime == null) ? '' : DateFormat().format(datetime);
