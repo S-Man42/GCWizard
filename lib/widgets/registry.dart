@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
@@ -279,9 +280,16 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singlenumb
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 
 class Registry {
+  // List of all available tools
   static List<GCWTool> toolList;
+  // Tools with search strings
+  static List<GCWTool> indexedTools;
 
   static initialize(BuildContext context) {
+    if (toolList != null) {
+      return;
+    }
+
     toolList = [
       //MainSelection
       GCWTool(
@@ -2281,39 +2289,48 @@ class Registry {
       ]),
 
       //Silver Ratio Selection **********************************************************************************************
-      GCWTool(tool: SilverRatioNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SILVERRATIO,
-        SEARCHSTRING_DE_SILVERRATIO,
-        SEARCHSTRING_EN_SILVERRATIO,
-        SEARCHSTRING_FR_SILVERRATIO,
-        SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
-      ]),
-      GCWTool(tool: SilverRatioDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', missingHelpLocales: [
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SILVERRATIO,
-        SEARCHSTRING_DE_SILVERRATIO,
-        SEARCHSTRING_EN_SILVERRATIO,
-        SEARCHSTRING_FR_SILVERRATIO,
-        SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
-      ]),
-      GCWTool(tool: SilverRatioSearch(), i18nPrefix: 'irrationalnumbers_search', missingHelpLocales: [
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SILVERRATIO,
-        SEARCHSTRING_DE_SILVERRATIO,
-        SEARCHSTRING_EN_SILVERRATIO,
-        SEARCHSTRING_FR_SILVERRATIO,
-        SEARCHSTRING_COMMON_SILVERRATIOSEARCH,
-        SEARCHSTRING_DE_SILVERRATIOSEARCH,
-        SEARCHSTRING_EN_SILVERRATIOSEARCH,
-        SEARCHSTRING_FR_SILVERRATIOSEARCH
-      ]),
+      GCWTool(
+          tool: SilverRatioNthDecimal(),
+          i18nPrefix: 'irrationalnumbers_nthdecimal',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SILVERRATIO,
+            SEARCHSTRING_DE_SILVERRATIO,
+            SEARCHSTRING_EN_SILVERRATIO,
+            SEARCHSTRING_FR_SILVERRATIO,
+            SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
+          ]),
+      GCWTool(
+          tool: SilverRatioDecimalRange(),
+          i18nPrefix: 'irrationalnumbers_decimalrange',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SILVERRATIO,
+            SEARCHSTRING_DE_SILVERRATIO,
+            SEARCHSTRING_EN_SILVERRATIO,
+            SEARCHSTRING_FR_SILVERRATIO,
+            SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
+          ]),
+      GCWTool(
+          tool: SilverRatioSearch(),
+          i18nPrefix: 'irrationalnumbers_search',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SILVERRATIO,
+            SEARCHSTRING_DE_SILVERRATIO,
+            SEARCHSTRING_EN_SILVERRATIO,
+            SEARCHSTRING_FR_SILVERRATIO,
+            SEARCHSTRING_COMMON_SILVERRATIOSEARCH,
+            SEARCHSTRING_DE_SILVERRATIOSEARCH,
+            SEARCHSTRING_EN_SILVERRATIOSEARCH,
+            SEARCHSTRING_FR_SILVERRATIOSEARCH
+          ]),
 
       //E Selection *************************************************************************************************
       GCWTool(tool: ENthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [], searchStrings: [
@@ -6305,5 +6322,31 @@ class Registry {
 
       return toolWidget;
     }).toList();
+
+    //Sort once for search
+    toolList.sort((a, b) => a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase()));
+
+    buildIndexedStrings();
   }
+
+  // Build indexed strings for each tool : concatenated lower case no accent
+  static void buildIndexedStrings() {
+    indexedTools = toolList.where((tool) {
+      var _indexedStrings = removeAccents(tool.searchStrings.join(' ').toLowerCase());
+      if (_indexedStrings == null || _indexedStrings.length == 0) return false;
+      tool.indexedStrings = _removeDuplicates(_indexedStrings);
+      return true;
+    }).toList();
+  }
+}
+
+String _removeDuplicates(String strings) {
+  return splitWordsOnSpace(strings).join(' ');
+}
+
+// final regex, compiled once
+final RegExp reSplit = RegExp(r'[\s,]');
+
+Set<String> splitWordsOnSpace(String text) {
+  return text.split(reSplit).toSet();
 }

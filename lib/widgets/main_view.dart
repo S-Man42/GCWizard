@@ -177,10 +177,10 @@ class _MainViewState extends State<MainView> {
   var _isSearching = false;
   final _searchController = TextEditingController();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   var _searchText = '';
-
   final _showSupportHintEveryN = 50;
+  List<GCWTool> _categoryList;
+  List<GCWTool> _toolList;
 
   @override
   void initState() {
@@ -189,7 +189,11 @@ class _MainViewState extends State<MainView> {
 
     _searchController.addListener(() {
       setState(() {
-        _searchText = _searchController.text.isEmpty ? '' : _searchController.text;
+        if (_searchController.text.isEmpty) {
+          _searchText = '';
+        } else if (_searchText != _searchController.text) {
+          _searchText = _searchController.text;
+        }
       });
     });
 
@@ -221,8 +225,98 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     Registry.initialize(context);
     Favorites.initialize();
+    _initStaticToolList();
 
-    final List<GCWTool> _toolList = Registry.toolList.where((element) {
+    var toolList = (_isSearching && _searchText.length > 0) ? _getSearchedList() : null;
+
+    return DefaultTabController(
+      length: 3,
+      initialIndex:
+          Prefs.getBool('tabs_use_default_tab') ? Prefs.get('tabs_default_tab') : Prefs.get('tabs_last_viewed_tab'),
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+            bottom: TabBar(
+              onTap: (value) {
+                Prefs.setInt('tabs_last_viewed_tab', value);
+              },
+              tabs: [
+                Tab(icon: Icon(Icons.category)),
+                Tab(icon: Icon(Icons.list)),
+                Tab(icon: Icon(Icons.star)),
+              ],
+            ),
+            leading: _buildIcon(),
+            title: _buildTitleAndSearchTextField(),
+            actions: <Widget>[_buildSearchActionButton()]),
+        drawer: buildMainMenu(context),
+        body: TabBarView(
+          children: [
+            GCWToolList(toolList: toolList ?? _categoryList),
+            GCWToolList(toolList: toolList ?? _toolList),
+            GCWToolList(toolList: toolList ?? Favorites.toolList),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _buildSearchActionButton() {
+    return IconButton(
+      icon: Icon(_isSearching ? Icons.close : Icons.search),
+      onPressed: () {
+        setState(() {
+          if (_isSearching) {
+            _searchController.clear();
+            _searchText = '';
+          }
+
+          _isSearching = !_isSearching;
+        });
+      },
+    );
+  }
+
+  _buildTitleAndSearchTextField() {
+    return _isSearching
+        ? GCWTextField(
+            autofocus: true,
+            controller: _searchController,
+            icon: Icon(Icons.search, color: themeColors().mainFont()),
+            hintText: i18n(context, 'common_search_hint'))
+        : Text(i18n(context, 'common_app_title'));
+  }
+
+  _buildIcon() {
+    return IconButton(
+        icon: Image.asset(
+          'assets/logo/circle_border_128.png',
+          width: 35.0,
+          height: 35.0,
+        ),
+        onPressed: () => _scaffoldKey.currentState.openDrawer());
+  }
+
+  List<GCWTool> _getSearchedList() {
+    Set<String> _queryTexts = splitWordsOnSpace(removeAccents(_searchText.toLowerCase()));
+
+    return Registry.indexedTools.where((tool) {
+      //Search result as AND result of separated words
+      for (final q in _queryTexts) {
+        if (!tool.indexedStrings.contains(q)) {
+          return false;
+        }
+      }
+      return true;
+    }).toList();
+  }
+
+  void _initStaticToolList() {
+    if (_toolList != null) {
+      return;
+    }
+
+    _toolList = Registry.toolList.where((element) {
       return [
         className(Abaddon()),
         className(ADFGVX()),
@@ -376,11 +470,7 @@ class _MainViewState extends State<MainView> {
       ].contains(className(element.tool));
     }).toList();
 
-    _toolList.sort((a, b) {
-      return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
-    });
-
-    final List<GCWTool> _categoryList = Registry.toolList.where((element) {
+    _categoryList = Registry.toolList.where((element) {
       return [
         className(CoordsSelection()),
         className(CryptographySelection()),
@@ -396,98 +486,5 @@ class _MainViewState extends State<MainView> {
     _categoryList.sort((a, b) {
       return a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase());
     });
-
-    return DefaultTabController(
-      length: 3,
-      initialIndex:
-          Prefs.getBool('tabs_use_default_tab') ? Prefs.get('tabs_default_tab') : Prefs.get('tabs_last_viewed_tab'),
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-            bottom: TabBar(
-              onTap: (value) {
-                Prefs.setInt('tabs_last_viewed_tab', value);
-              },
-              tabs: [
-                Tab(icon: Icon(Icons.category)),
-                Tab(icon: Icon(Icons.list)),
-                Tab(icon: Icon(Icons.star)),
-              ],
-            ),
-            leading: _buildIcon(),
-            title: _buildTitleAndSearchTextField(),
-            actions: <Widget>[_buildSearchActionButton()]),
-        drawer: buildMainMenu(context),
-        body: TabBarView(
-          children: [
-            GCWToolList(toolList: _isSearching && _searchText.length > 0 ? _getSearchedList() : _categoryList),
-            GCWToolList(toolList: _isSearching && _searchText.length > 0 ? _getSearchedList() : _toolList),
-            GCWToolList(toolList: _isSearching && _searchText.length > 0 ? _getSearchedList() : Favorites.toolList),
-          ],
-        ),
-      ),
-    );
-  }
-
-  _buildSearchActionButton() {
-    return IconButton(
-      icon: Icon(_isSearching ? Icons.close : Icons.search),
-      onPressed: () {
-        setState(() {
-          if (_isSearching) {
-            _searchController.clear();
-            _searchText = '';
-          }
-
-          _isSearching = !_isSearching;
-        });
-      },
-    );
-  }
-
-  _buildTitleAndSearchTextField() {
-    return _isSearching
-        ? GCWTextField(
-            autofocus: true,
-            controller: _searchController,
-            icon: Icon(Icons.search, color: themeColors().mainFont()),
-            hintText: i18n(context, 'common_search_hint'))
-        : Text(i18n(context, 'common_app_title'));
-  }
-
-  _buildIcon() {
-    return IconButton(
-        icon: Image.asset(
-          'assets/logo/circle_border_128.png',
-          width: 35.0,
-          height: 35.0,
-        ),
-        onPressed: () => _scaffoldKey.currentState.openDrawer());
-  }
-
-  List<GCWTool> _getSearchedList() {
-    var list = Registry.toolList;
-    String searchstring = '';
-
-    list = list.where((tool) {
-      searchstring = tool.searchStrings.join(' ').toLowerCase();
-      if (searchstring == null || searchstring.length == 0) return false;
-
-      var found = true;
-
-      //Search result as AND result of separated words
-      _searchText.toLowerCase().split(RegExp(r'[\s,]')).forEach((word) {
-        var searchStrings = searchstring;
-        if (!searchStrings.contains(word) &&
-            !searchStrings.contains(removeAccents(word))) //search with and without accents
-          found = false;
-      });
-
-      return found;
-    }).toList();
-
-    list.sort((a, b) => a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase()));
-
-    return list;
   }
 }
