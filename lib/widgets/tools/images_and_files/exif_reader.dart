@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
@@ -18,6 +17,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:image/image.dart' as Image;
 // import 'package:image_size_getter/file_input.dart';
 // import 'package:image_size_getter/image_size_getter.dart';
@@ -64,11 +64,11 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   Future<void> _readFileFromPicker() async {
-    List<PlatformFile> files = await openFileExplorer(
-      allowedExtensions: ['jpg', 'jpeg', 'tiff', 'png', 'bmp', 'gif', 'webp'],
+    var file = await openFileExplorer(context,
+      allowedExtensions: ['.jpg', '.jpeg', '.tiff', '.png', '.bmp', '.gif', '.webp']
     );
-    if (files != null) {
-      PlatformFile _file = files.first;
+    if (file != null) {
+      PlatformFile _file = file;
       return _readFile(_file);
     }
   }
@@ -197,7 +197,7 @@ class _ExifReaderState extends State<ExifReader> {
             [
               ["name", platformFile.name ?? ''],
               ["path", platformFile.path ?? ''],
-              ["size", platformFile.size ?? 0],
+              ["size", platformFile.bytes?.length ?? 0],
               ["lastModified", formatDate(_file?.lastModifiedSync())],
               ["lastAccessed", formatDate(_file?.lastAccessedSync())],
               ["extension", platformFile.extension ?? '']
@@ -229,7 +229,7 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   Future<Image.Image> completeImageMetadata(PlatformFile platformFile) async {
-    Uint8List data = await getFileData(platformFile);
+    Uint8List data = platformFile.bytes;
     return Image.decodeImage(data);
 
     // ImageInput imageInput = getImageInput(platformFile);

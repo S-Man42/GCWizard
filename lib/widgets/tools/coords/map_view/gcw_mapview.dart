@@ -599,13 +599,11 @@ class GCWMapViewState extends State<GCWMapView> {
         customIcon: _createIconButtonIcons(Icons.drive_folder_upload),
         onPressed: () {
           setState(() {
-            openFileExplorer(allowedExtensions: ['gpx','kml','kmz'], useFileFilterOnAndroid : true).then((files) {
-              if (files != null && files.length > 0) {
-                getFileData(files.first).then((bytes) {
-                  loadCoordinatesFile(files.first.name, bytes).whenComplete(() {
-                    setState(() {
-                      _mapController.fitBounds(_getBounds());
-                    });
+            openFileExplorer(context, allowedExtensions: ['.gpx','.kml','.kmz']).then((file) {
+              if (file != null) {
+                loadCoordinatesFile(file.name, file.bytes).whenComplete(() {
+                  setState(() {
+                    _mapController.fitBounds(_getBounds());
                   });
                 });
               }
