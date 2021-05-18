@@ -5437,6 +5437,12 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_GARGISH,
         SEARCHSTRING_FR_SYMBOL_GARGISH
       ]),
+      GCWSymbolTableTool(symbolKey: 'gc_attributes', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_GC_ATTRIBUTES,
+        SEARCHSTRING_DE_SYMBOL_GC_ATTRIBUTES,
+        SEARCHSTRING_EN_SYMBOL_GC_ATTRIBUTES,
+        SEARCHSTRING_FR_SYMBOL_GC_ATTRIBUTES
+      ]),
       GCWSymbolTableTool(symbolKey: 'genreich', symbolSearchStrings: [
         SEARCHSTRING_COMMON_GLAGOLITIC,
         SEARCHSTRING_DE_GLAGOLITIC,
