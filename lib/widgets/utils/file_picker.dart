@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -7,7 +8,6 @@ import 'package:file_picker/file_picker.dart' as web_picker;
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:gc_wizard/widgets/utils/platform_file.dart';
-
 import 'package:permission_handler/permission_handler.dart';
 
 /// Open FileSystemPicker dialog
@@ -146,4 +146,3 @@ Future<String> selectFolder(BuildContext context, {
   } else
     return '/' + web_directory;
 }
-

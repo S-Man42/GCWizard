@@ -5,6 +5,7 @@ const SEARCHSTRING_FR_AFFINE = '';
 const SEARCHSTRING_FR_ALPHABETVALUES =
     'valeur des lettres somme croisee produit alphanumerique alternance des lettres valeur des mots cyrillique russe grec espagnol allemand polonais';
 const SEARCHSTRING_FR_AMSCO = '';
+const SEARCHSTRING_FR_ANIMATED_IMAGES = 'image animée animée';
 const SEARCHSTRING_FR_APPARENTTEMPERATURE = 'ressentie';
 const SEARCHSTRING_FR_APPARENTTEMPERATURE_HEATINDEX = 'chaleur humidite';
 const SEARCHSTRING_FR_APPARENTTEMPERATURE_HUMIDEX = 'rosee point humidite';
@@ -126,6 +127,7 @@ const SEARCHSTRING_FR_ESOTERIC_DEADFISH = 'poisson mort';
 const SEARCHSTRING_FR_ESOTERIC_MALBOLGE = 'enfer';
 const SEARCHSTRING_FR_ESOTERIC_OOK = 'exclamation interrogation singe orang-outans';
 const SEARCHSTRING_FR_ESOTERIC_WHITESPACELANGUAGE = 'onglet vide saut';
+const SEARCHSTRING_FR_EXIF = 'exif';
 const SEARCHSTRING_FR_FORMULASOLVER = 'calculatuer formule';
 const SEARCHSTRING_FR_GADE = 'rue';
 const SEARCHSTRING_FR_GAMES = 'jeux';

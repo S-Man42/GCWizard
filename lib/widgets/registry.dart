@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/main_menu/about.dart';
 import 'package:gc_wizard/widgets/main_menu/call_for_contribution.dart';
@@ -142,6 +143,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
@@ -198,6 +200,7 @@ import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagro
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
@@ -213,6 +216,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_pos
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
@@ -279,9 +283,16 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singlenumb
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 
 class Registry {
+  // List of all available tools
   static List<GCWTool> toolList;
+  // Tools with search strings
+  static List<GCWTool> indexedTools;
 
   static initialize(BuildContext context) {
+    if (toolList != null) {
+      return;
+    }
+
     toolList = [
       //MainSelection
       GCWTool(
@@ -338,6 +349,17 @@ class Registry {
             SEARCHSTRING_DE_AMSCO,
             SEARCHSTRING_EN_AMSCO,
             SEARCHSTRING_FR_AMSCO
+          ]),
+       GCWTool(
+          tool: AnimatedImage(),
+          i18nPrefix: 'animated_image',
+          category: ToolCategory.IMAGES_AND_FILES,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_ANIMATED_IMAGES,
+            SEARCHSTRING_DE_ANIMATED_IMAGES,
+            SEARCHSTRING_EN_ANIMATED_IMAGES,
+            SEARCHSTRING_FR_ANIMATED_IMAGES
           ]),
       GCWTool(
           tool: ApparentTemperatureSelection(),
@@ -446,6 +468,17 @@ class Registry {
             SEARCHSTRING_FR_BEAUFORT
           ]),
       GCWTool(
+          tool: Bifid(),
+          i18nPrefix: 'bifid',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID
+          ]),
+      GCWTool(
           tool: Binary(),
           i18nPrefix: 'binary',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -457,15 +490,13 @@ class Registry {
             SEARCHSTRING_FR_BINARY
           ]),
       GCWTool(
-          tool: Bifid(),
-          i18nPrefix: 'bifid',
-          category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [],
+          tool: Binary2Image(),
+          i18nPrefix: 'binary2image',
+          category: ToolCategory.IMAGES_AND_FILES,
           searchStrings: [
-            SEARCHSTRING_COMMON_BIFID,
-            SEARCHSTRING_COMMON_BIFID,
-            SEARCHSTRING_COMMON_BIFID,
-            SEARCHSTRING_COMMON_BIFID
+            SEARCHSTRING_DE_HEXSTRING2FILE,
+            SEARCHSTRING_EN_HEXSTRING2FILE,
+            SEARCHSTRING_FR_HEXSTRING2FILE
           ]),
       GCWTool(
           tool: BookCipher(),
@@ -711,21 +742,44 @@ class Registry {
           searchStrings: [
             SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
             SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
             SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE
+            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
           ]),
-      GCWTool(tool: FormulaSolverFormulaGroups(), i18nPrefix: 'formulasolver', missingHelpLocales: [], searchStrings: [
-        SEARCHSTRING_COMMON_FORMULASOLVER,
-        SEARCHSTRING_DE_FORMULASOLVER,
-        SEARCHSTRING_EN_FORMULASOLVER,
-        SEARCHSTRING_FR_FORMULASOLVER
-      ]),
-      GCWTool(tool: GamesSelection(), i18nPrefix: 'games_selection', missingHelpLocales: [], searchStrings: [
-        SEARCHSTRING_COMMON_GAMES,
-        SEARCHSTRING_DE_GAMES,
-        SEARCHSTRING_EN_GAMES,
-        SEARCHSTRING_FR_GAMES
-      ]),
+      GCWTool(
+          tool: ExifReader(),
+          i18nPrefix: 'exif',
+          category: ToolCategory.IMAGES_AND_FILES,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_EXIF,
+            SEARCHSTRING_DE_EXIF,
+            SEARCHSTRING_EN_EXIF,
+            SEARCHSTRING_FR_EXIF,
+          ]),
+
+      GCWTool(
+        tool: FormulaSolverFormulaGroups(),
+        i18nPrefix: 'formulasolver',
+        missingHelpLocales: [],
+        searchStrings: [
+          SEARCHSTRING_COMMON_FORMULASOLVER,
+          SEARCHSTRING_DE_FORMULASOLVER,
+          SEARCHSTRING_EN_FORMULASOLVER,
+          SEARCHSTRING_FR_FORMULASOLVER,
+        ],
+      ),
+      GCWTool(
+        tool: GamesSelection(),
+        i18nPrefix: 'games_selection',
+        missingHelpLocales: [],
+        searchStrings: [
+          SEARCHSTRING_COMMON_GAMES,
+          SEARCHSTRING_DE_GAMES,
+          SEARCHSTRING_EN_GAMES,
+          SEARCHSTRING_FR_GAMES,
+        ],
+      ),
       GCWTool(
           tool: Gade(),
           i18nPrefix: 'gade',
@@ -741,7 +795,7 @@ class Registry {
             SEARCHSTRING_COMMON_GCCODE,
             SEARCHSTRING_DE_GCCODE,
             SEARCHSTRING_EN_GCCODE,
-            SEARCHSTRING_FR_GCCODE
+            SEARCHSTRING_FR_GCCODE,
           ]),
       GCWTool(
           tool: GeneralCodebreakersSelection(),
@@ -751,7 +805,7 @@ class Registry {
             SEARCHSTRING_COMMON_CODEBREAKER,
             SEARCHSTRING_DE_CODEBREAKER,
             SEARCHSTRING_EN_CODEBREAKER,
-            SEARCHSTRING_FR_CODEBREAKER
+            SEARCHSTRING_FR_CODEBREAKER,
           ]),
       GCWTool(
           tool: Gray(),
@@ -800,6 +854,7 @@ class Registry {
             SEARCHSTRING_FR_HEXSTRING2FILE
           ]),
       GCWTool(
+
           tool: Homophone(),
           i18nPrefix: 'homophone',
           category: ToolCategory.CRYPTOGRAPHY,
@@ -837,10 +892,10 @@ class Registry {
             SEARCHSTRING_FR_IMAGESANDFILESSELECTION
           ]),
       GCWTool(
-        tool: ImageColorCorrections(),
-        autoScroll: false,
-        category: ToolCategory.IMAGES_AND_FILES,
-        i18nPrefix: 'image_colorcorrections',
+          tool: ImageColorCorrections(),
+          autoScroll: false,
+          category: ToolCategory.IMAGES_AND_FILES,
+          i18nPrefix: 'image_colorcorrections',
           missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_IMAGES,
@@ -2281,39 +2336,48 @@ class Registry {
       ]),
 
       //Silver Ratio Selection **********************************************************************************************
-      GCWTool(tool: SilverRatioNthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SILVERRATIO,
-        SEARCHSTRING_DE_SILVERRATIO,
-        SEARCHSTRING_EN_SILVERRATIO,
-        SEARCHSTRING_FR_SILVERRATIO,
-        SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
-      ]),
-      GCWTool(tool: SilverRatioDecimalRange(), i18nPrefix: 'irrationalnumbers_decimalrange', missingHelpLocales: [
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SILVERRATIO,
-        SEARCHSTRING_DE_SILVERRATIO,
-        SEARCHSTRING_EN_SILVERRATIO,
-        SEARCHSTRING_FR_SILVERRATIO,
-        SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
-        SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
-      ]),
-      GCWTool(tool: SilverRatioSearch(), i18nPrefix: 'irrationalnumbers_search', missingHelpLocales: [
-      ], searchStrings: [
-        SEARCHSTRING_COMMON_SILVERRATIO,
-        SEARCHSTRING_DE_SILVERRATIO,
-        SEARCHSTRING_EN_SILVERRATIO,
-        SEARCHSTRING_FR_SILVERRATIO,
-        SEARCHSTRING_COMMON_SILVERRATIOSEARCH,
-        SEARCHSTRING_DE_SILVERRATIOSEARCH,
-        SEARCHSTRING_EN_SILVERRATIOSEARCH,
-        SEARCHSTRING_FR_SILVERRATIOSEARCH
-      ]),
+      GCWTool(
+          tool: SilverRatioNthDecimal(),
+          i18nPrefix: 'irrationalnumbers_nthdecimal',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SILVERRATIO,
+            SEARCHSTRING_DE_SILVERRATIO,
+            SEARCHSTRING_EN_SILVERRATIO,
+            SEARCHSTRING_FR_SILVERRATIO,
+            SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
+          ]),
+      GCWTool(
+          tool: SilverRatioDecimalRange(),
+          i18nPrefix: 'irrationalnumbers_decimalrange',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SILVERRATIO,
+            SEARCHSTRING_DE_SILVERRATIO,
+            SEARCHSTRING_EN_SILVERRATIO,
+            SEARCHSTRING_FR_SILVERRATIO,
+            SEARCHSTRING_COMMON_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_DE_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_EN_SILVERRATIODECIMALRANGE,
+            SEARCHSTRING_FR_SILVERRATIODECIMALRANGE
+          ]),
+      GCWTool(
+          tool: SilverRatioSearch(),
+          i18nPrefix: 'irrationalnumbers_search',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SILVERRATIO,
+            SEARCHSTRING_DE_SILVERRATIO,
+            SEARCHSTRING_EN_SILVERRATIO,
+            SEARCHSTRING_FR_SILVERRATIO,
+            SEARCHSTRING_COMMON_SILVERRATIOSEARCH,
+            SEARCHSTRING_DE_SILVERRATIOSEARCH,
+            SEARCHSTRING_EN_SILVERRATIOSEARCH,
+            SEARCHSTRING_FR_SILVERRATIOSEARCH
+          ]),
 
       //E Selection *************************************************************************************************
       GCWTool(tool: ENthDecimal(), i18nPrefix: 'irrationalnumbers_nthdecimal', missingHelpLocales: [], searchStrings: [
@@ -6305,5 +6369,31 @@ class Registry {
 
       return toolWidget;
     }).toList();
+
+    //Sort once for search
+    toolList.sort((a, b) => a.toolName.toLowerCase().compareTo(b.toolName.toLowerCase()));
+
+    buildIndexedStrings();
   }
+
+  // Build indexed strings for each tool : concatenated lower case no accent
+  static void buildIndexedStrings() {
+    indexedTools = toolList.where((tool) {
+      var _indexedStrings = removeAccents(tool.searchStrings.join(' ').toLowerCase());
+      if (_indexedStrings == null || _indexedStrings.length == 0) return false;
+      tool.indexedStrings = _removeDuplicates(_indexedStrings);
+      return true;
+    }).toList();
+  }
+}
+
+String _removeDuplicates(String strings) {
+  return splitWordsOnSpace(strings).join(' ');
+}
+
+// final regex, compiled once
+final RegExp reSplit = RegExp(r'[\s,]');
+
+Set<String> splitWordsOnSpace(String text) {
+  return text.split(reSplit).toSet();
 }

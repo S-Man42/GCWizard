@@ -5,6 +5,7 @@ const SEARCHSTRING_EN_AFFINE = '';
 const SEARCHSTRING_EN_ALPHABETVALUES =
     'alphanumeric lettervalues checksums crosssums digits alternate alphabetvalues cyrillic greek german spanish polish russian';
 const SEARCHSTRING_EN_AMSCO = '';
+const SEARCHSTRING_EN_ANIMATED_IMAGES = 'animated moved image';
 const SEARCHSTRING_EN_APPARENTTEMPERATURE = 'apparent perceived temperature';
 const SEARCHSTRING_EN_APPARENTTEMPERATURE_HEATINDEX = 'humidity heatindex';
 const SEARCHSTRING_EN_APPARENTTEMPERATURE_HUMIDEX = 'humidity  canadian canada  dewpoint';
@@ -132,6 +133,7 @@ const SEARCHSTRING_EN_ESOTERIC_DEADFISH = '';
 const SEARCHSTRING_EN_ESOTERIC_MALBOLGE = 'hell';
 const SEARCHSTRING_EN_ESOTERIC_OOK = 'monkeys apes dots questionsmarks exclamationmarks';
 const SEARCHSTRING_EN_ESOTERIC_WHITESPACELANGUAGE = 'space linefeed';
+const SEARCHSTRING_EN_EXIF = 'exif';
 const SEARCHSTRING_EN_FORMULASOLVER = 'formulasolver formelsolver';
 const SEARCHSTRING_EN_GADE = 'street';
 const SEARCHSTRING_EN_GAMES = 'games';
@@ -185,7 +187,8 @@ const SEARCHSTRING_EN_HEXADECIMAL = 'hexadecimal decimal';
 final SEARCHSTRING_EN_HEXSTRING2FILE = 'hexadecimal file';
 const SEARCHSTRING_EN_HOMOPHONE = 'monoalphabetical letterfrequency';
 const SEARCHSTRING_EN_ICECODES = 'balticsea ice floe melting snow iceberg icecodes';
-const SEARCHSTRING_EN_IMAGE_COLORCORRECTIONS = 'colors colours colorcorrections colourcorrections adjustments hue saturation brightness rgb red blue green';
+const SEARCHSTRING_EN_IMAGE_COLORCORRECTIONS =
+    'colors colours colorcorrections colourcorrections adjustments hue saturation brightness rgb red blue green';
 const SEARCHSTRING_EN_IMAGES = 'pictures images paintings files ';
 const SEARCHSTRING_EN_IMAGESANDFILESSELECTION = 'analyze analyse analysis';
 const SEARCHSTRING_EN_IRRATIONALNUMBERS = 'irrational number fraction decimal digit';
