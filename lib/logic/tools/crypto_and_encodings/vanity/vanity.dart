@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/phone_models.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
@@ -73,10 +72,17 @@ bool _isTransitionCharacter(Map<String, Map<String, String>> stateModel, String 
 }
 
 Map<String, String> _getCharMap(Map<PhoneCaseMode, Map<String, String>> languageCharMap, PhoneCaseMode mode) {
-  // print(languageCharMap);
-  // print(mode);
-
   return languageCharMap[mode == PhoneCaseMode.CAMEL_CASE ? PhoneCaseMode.UPPER_CASE : mode];
+}
+
+String _getNewState(Map<String, Map<String, String>> stateModel, String state, String character) {
+  if ([' ', '\n', '¶'].contains(character))
+    return stateModel[state]['_'];
+
+  if (['.', '!', '?'].contains(character))
+    return stateModel[state]['?'];
+
+  return stateModel[state]['x'];
 }
 
 Map<String, dynamic> decodeVanityMultitap(String input, PhoneModel model, PhoneInputLanguage inputLanguage) {
@@ -98,12 +104,6 @@ Map<String, dynamic> decodeVanityMultitap(String input, PhoneModel model, PhoneI
   var languageCharmap = model.characterMap[languageIndex];
   var currentCharmap = _getCharMap(languageCharmap, currentMode);
 
-  // print(currentState);
-  print(currentMode);
-  print(languageIndex);
-  print(languageCharmap);
-  print(currentCharmap);
-
   List<String> inputBlocks = _sanitizeDecodeInput(input);
   if (inputBlocks.isEmpty)
     return {'mode': currentMode, 'output': ''};
@@ -120,7 +120,7 @@ Map<String, dynamic> decodeVanityMultitap(String input, PhoneModel model, PhoneI
     if (characters != null) {
       if (characters.length == 1 && block.length > 1) {
         output += characters;
-        currentState = stateModel[currentState]['x'];
+        currentState = _getNewState(stateModel, currentState, firstLetter);
         currentMode = _getModeFromState(currentState);
         currentCharmap = _getCharMap(languageCharmap, currentMode);
 
@@ -129,12 +129,14 @@ Map<String, dynamic> decodeVanityMultitap(String input, PhoneModel model, PhoneI
         continue;
       }
 
-      output += characters[(block.length - 1) % characters.length];
+      var outputCharacter = characters[(block.length - 1) % characters.length];
 
-      currentState = stateModel[currentState]['x'];
+      currentState = _getNewState(stateModel, currentState, outputCharacter);
       currentMode = _getModeFromState(currentState);
-      currentCharmap = languageCharmap[currentMode];
-    } else {
+      currentCharmap = _getCharMap(languageCharmap, currentMode);
+
+      output += outputCharacter;
+    } else { // Transition
       currentState = stateModel[currentState][firstLetter];
       currentMode = _getModeFromState(currentState);
       currentCharmap = _getCharMap(languageCharmap, currentMode);
