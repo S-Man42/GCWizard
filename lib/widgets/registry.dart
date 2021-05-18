@@ -216,6 +216,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_pos
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
@@ -467,6 +468,17 @@ class Registry {
             SEARCHSTRING_FR_BEAUFORT
           ]),
       GCWTool(
+          tool: Bifid(),
+          i18nPrefix: 'bifid',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID
+          ]),
+      GCWTool(
           tool: Binary(),
           i18nPrefix: 'binary',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -478,15 +490,13 @@ class Registry {
             SEARCHSTRING_FR_BINARY
           ]),
       GCWTool(
-          tool: Bifid(),
-          i18nPrefix: 'bifid',
-          category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [],
+          tool: Binary2Image(),
+          i18nPrefix: 'binary2image',
+          category: ToolCategory.IMAGES_AND_FILES,
           searchStrings: [
-            SEARCHSTRING_COMMON_BIFID,
-            SEARCHSTRING_COMMON_BIFID,
-            SEARCHSTRING_COMMON_BIFID,
-            SEARCHSTRING_COMMON_BIFID
+            SEARCHSTRING_DE_HEXSTRING2FILE,
+            SEARCHSTRING_EN_HEXSTRING2FILE,
+            SEARCHSTRING_FR_HEXSTRING2FILE
           ]),
       GCWTool(
           tool: BookCipher(),
@@ -844,6 +854,7 @@ class Registry {
             SEARCHSTRING_FR_HEXSTRING2FILE
           ]),
       GCWTool(
+
           tool: Homophone(),
           i18nPrefix: 'homophone',
           category: ToolCategory.CRYPTOGRAPHY,
