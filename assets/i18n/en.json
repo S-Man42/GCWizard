@@ -115,7 +115,7 @@
   "animated_image_title": "Animated Images",
   "animated_image_description": "Analyse animated images (gif, png, webp)",
   "animated_image_table_index": "Index",
-  "animated_image_table_duration": "duration in ms",
+  "animated_image_table_duration": "Duration in ms",
   "apparenttemperature_selection_title": "Apparent Temperature",
   "apparenttemperature_selection_description": "Calculates comfort due to temperature, humidity and wind",
   "asciivalues_title": "ASCII and Unicode (UTF-8)",
