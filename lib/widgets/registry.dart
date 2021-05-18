@@ -8,6 +8,7 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
+import 'package:gc_wizard/widgets/main_menu/settings_mayacalendar.dart';
 import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
 import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
 import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
@@ -36,6 +37,7 @@ import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/icecodes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/imagesandfiles_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/language_games_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/maya_calendar_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_bell_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_catalan_selection.dart';
@@ -241,6 +243,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_number
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/silver_ratio.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/bell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/catalan.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/factorial.dart';
@@ -954,6 +957,16 @@ class Registry {
             SEARCHSTRING_DE_LANGUAGEGAMES,
             SEARCHSTRING_EN_LANGUAGEGAMES,
             SEARCHSTRING_FR_LANGUAGEGAMES
+          ]),
+      GCWTool(
+          tool: MayaCalendarSelection(),
+          i18nPrefix: 'mayacalendar_selection',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_MAYA_CALENDAR,
+            SEARCHSTRING_DE_MAYA_CALENDAR,
+            SEARCHSTRING_EN_MAYA_CALENDAR,
+            SEARCHSTRING_FR_MAYA_CALENDAR
           ]),
       GCWTool(
           tool: MayaNumbersSelection(),
@@ -3102,6 +3115,8 @@ class Registry {
       GCWTool(tool: GeneralSettings(), i18nPrefix: 'settings_general', missingHelpLocales: [], searchStrings: []),
       GCWTool(
           tool: CoordinatesSettings(), i18nPrefix: 'settings_coordinates', missingHelpLocales: [], searchStrings: []),
+      GCWTool(
+          tool: MayaCalendarSettings(), i18nPrefix: 'settings_mayacalendar_correlation_number', missingHelpLocales: [], searchStrings: []),
       GCWTool(tool: Changelog(), i18nPrefix: 'mainmenu_changelog', suppressHelpButton: true, searchStrings: [
         SEARCHSTRING_COMMON_CHANGELOG,
         SEARCHSTRING_DE_CHANGELOG,
@@ -3129,6 +3144,14 @@ class Registry {
         SEARCHSTRING_DE_LICENSES,
         SEARCHSTRING_EN_LICENSES,
         SEARCHSTRING_FR_LICENSES
+      ]),
+
+      //MayaCalendar Selection **************************************************************************************
+      GCWTool(tool: MayaCalendar(), i18nPrefix: 'mayacalendar', missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_MAYA_CALENDAR,
+        SEARCHSTRING_DE_MAYA_CALENDAR,
+        SEARCHSTRING_EN_MAYA_CALENDAR,
+        SEARCHSTRING_FR_MAYA_CALENDAR
       ]),
 
       //MayaNumbers Selection **************************************************************************************
@@ -5698,6 +5721,36 @@ class Registry {
         SEARCHSTRING_DE_SYMBOL_MATORAN,
         SEARCHSTRING_EN_SYMBOL_MATORAN,
         SEARCHSTRING_FR_SYMBOL_MATORAN
+      ]),
+      GCWSymbolTableTool(symbolKey: 'maya_calendar_longcount', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_LONGCOUNT,
+        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_LONGCOUNT,
+        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_LONGCOUNT,
+        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_LONGCOUNT
+      ]),
+      GCWSymbolTableTool(symbolKey: 'maya_calendar_haab_codices', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_HAAB,
+        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_HAAB,
+        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_HAAB,
+        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_HAAB
+      ]),
+      GCWSymbolTableTool(symbolKey: 'maya_calendar_haab_inscripts', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_HAAB,
+        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_HAAB,
+        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_HAAB,
+        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_HAAB
+      ]),
+      GCWSymbolTableTool(symbolKey: 'maya_calendar_tzolkin_codices', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_TZOLKIN,
+        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_TZOLKIN,
+        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_TZOLKIN,
+        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_TZOLKIN
+      ]),
+      GCWSymbolTableTool(symbolKey: 'maya_calendar_tzolkin_inscripts', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_TZOLKIN,
+        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_TZOLKIN,
+        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_TZOLKIN,
+        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_TZOLKIN
       ]),
       GCWSymbolTableTool(symbolKey: 'maya_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_MAYANUMBERS,

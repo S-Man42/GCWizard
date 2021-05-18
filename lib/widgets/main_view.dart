@@ -25,6 +25,7 @@ import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/icecodes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/imagesandfiles_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/maya_calendar_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
@@ -408,6 +409,7 @@ class _MainViewState extends State<MainView> {
         className(Keyboard()),
         className(Malbolge()),
         className(MapView()),
+        className(MayaCalendarSelection()),
         className(MayaNumbersSelection()),
         className(MexicanArmyCipherWheel()),
         className(MoonPosition()),
