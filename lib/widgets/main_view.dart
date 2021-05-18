@@ -143,6 +143,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
@@ -359,6 +360,7 @@ class _MainViewState extends State<MainView> {
         className(ColorPicker()),
         className(Combination()),
         className(CombinationPermutation()),
+        className(ComplexNumbers()),
         className(CoordinateAveraging()),
         className(CrossBearing()),
         className(CrossSum()),

@@ -69,6 +69,7 @@ const SEARCHSTRING_FR_COLORPICKER =
 const SEARCHSTRING_FR_COMBINATORICS = 'mathematiques';
 const SEARCHSTRING_FR_COMBINATORICS_COMBINATION = 'combinaisons sous-groupes';
 const SEARCHSTRING_FR_COMBINATORICS_PERMUTATION = 'tableau sequences';
+const SEARCHSTRING_FR_COMPLEXNUMBERS = 'complexes nombres polaire algebrique realteil imaginaire coordonnee';
 const SEARCHSTRING_FR_COORDINATES = 'coordonnees';
 const SEARCHSTRING_FR_COORDINATES_ANTIPODES = 'antipodes';
 const SEARCHSTRING_FR_COORDINATES_CENTERTHREEPOINTS = 'trois cercles centre perimetre';
