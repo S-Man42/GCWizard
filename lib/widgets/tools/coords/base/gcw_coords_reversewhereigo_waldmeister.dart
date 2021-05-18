@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/reverse_whereigo_waldmeister.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsReverseWhereIGoWaldmeister extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsReverseWhereIGoWaldmeister({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -53,10 +52,12 @@ class GCWCoordsReverseWhereIGoWaldmeisterState extends State<GCWCoordsReverseWhe
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var waldmeister = latLonToWaldmeister(widget.coordinates);
-      _currentA = int.tryParse(waldmeister[0]);
-      _currentB = int.tryParse(waldmeister[1]);
-      _currentC = int.tryParse(waldmeister[2]);
+      var waldmeister = widget.coordinates is Waldmeister ?
+          widget.coordinates as Waldmeister :
+          Waldmeister.fromLatLon(widget.coordinates.toLatLng());
+      _currentA = int.tryParse(waldmeister.a);
+      _currentB = int.tryParse(waldmeister.b);
+      _currentC = int.tryParse(waldmeister.c);
 
       _ControllerA.text = _currentA.toString();
       _ControllerB.text = _currentB.toString();
@@ -108,7 +109,6 @@ class GCWCoordsReverseWhereIGoWaldmeisterState extends State<GCWCoordsReverseWhe
   }
 
   _setCurrentValueAndEmitOnChange() {
-    LatLng coords = waldmeisterToLatLon(_currentA, _currentB, _currentC);
-    widget.onChanged(coords);
+    widget.onChanged(Waldmeister.parse(_currentA.toString() +'\n'+ _currentB.toString() +'\n'+ _currentC.toString()));
   }
 }
