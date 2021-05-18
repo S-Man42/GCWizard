@@ -137,6 +137,7 @@ const SEARCHSTRING_DE_ESOTERIC_DEADFISH = 'toterfisch';
 const SEARCHSTRING_DE_ESOTERIC_MALBOLGE = 'hoelle';
 const SEARCHSTRING_DE_ESOTERIC_OOK = 'punkte fragezeichen ausrufezeichen affen orang-utans orangutans';
 const SEARCHSTRING_DE_ESOTERIC_WHITESPACELANGUAGE = 'leerzeichen tabulator zeilenumbruch';
+const SEARCHSTRING_DE_EXIF = 'exif';
 const SEARCHSTRING_DE_FORMULASOLVER = 'formelrechner';
 const SEARCHSTRING_DE_GADE = 'straße';
 const SEARCHSTRING_DE_GAMES = 'spiele';
@@ -190,7 +191,8 @@ const SEARCHSTRING_DE_HEXADECIMAL = 'hexadezimalzahlen dezimalzahlen';
 final SEARCHSTRING_DE_HEXSTRING2FILE = 'hexadezimal datei';
 const SEARCHSTRING_DE_HOMOPHONE = 'monoalphabetische buchstabenhaeufigkeiten';
 const SEARCHSTRING_DE_ICECODES = 'ostsee eiscodes gewaesser schnee schnelzen eisberg';
-const SEARCHSTRING_DE_IMAGE_COLORCORRECTIONS = 'farben farbkorrekturen anpassen invertieren gammawert saettigung rgb rot gruen blau helligkeit';
+const SEARCHSTRING_DE_IMAGE_COLORCORRECTIONS =
+    'farben farbkorrekturen anpassen invertieren gammawert saettigung rgb rot gruen blau helligkeit';
 const SEARCHSTRING_DE_IMAGES = 'bilder dateien bildbearbeitungen ';
 const SEARCHSTRING_DE_IMAGESANDFILESSELECTION = 'analysieren analysen';
 const SEARCHSTRING_DE_IRRATIONALNUMBERS = 'irrationale zahlen nachkommastelle';
