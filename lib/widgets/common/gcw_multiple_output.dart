@@ -8,9 +8,15 @@ class GCWMultipleOutput extends StatefulWidget {
   final bool suppressDefaultTitle;
   final Widget trailing;
   final Function onExportCoordinates;
+  final String title;
 
   const GCWMultipleOutput(
-      {Key key, @required this.children, this.suppressDefaultTitle: false, this.trailing, this.onExportCoordinates})
+      {Key key,
+      @required this.children,
+      this.suppressDefaultTitle: false,
+      this.trailing,
+      this.onExportCoordinates,
+      this.title})
       : super(key: key);
 
   @override
@@ -29,7 +35,8 @@ class _GCWMultipleOutputState extends State<GCWMultipleOutput> {
     }).toList();
 
     if (!widget.suppressDefaultTitle)
-      children.insert(0, GCWTextDivider(text: i18n(context, 'common_output'), trailing: widget.trailing));
+      children.insert(
+          0, GCWTextDivider(text: this.widget.title ?? i18n(context, 'common_output'), trailing: widget.trailing));
 
     return Column(children: children);
   }

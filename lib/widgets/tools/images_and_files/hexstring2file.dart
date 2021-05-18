@@ -46,12 +46,10 @@ class HexString2FileState extends State<HexString2File> {
             text: i18n(context, 'common_exportfile_openfile'),
             onPressed: () {
               setState(() {
-                  openFileExplorer().then((files) {
-                    if (files != null && files.length > 0) {
-                      getFileData(files.first).then((bytes) {
-                        _outData = bytes;
-                        setState(() {});
-                      });
+                  openFileExplorer(context).then((file) {
+                    if (file != null) {
+                      _outData = file.bytes;
+                      setState(() {});
                     }
                 });
               },
@@ -102,9 +100,7 @@ class HexString2FileState extends State<HexString2File> {
       switch (mimeType) {
         case MIMETYPE.IMAGE:
           try {
-            return GCWSymbolContainer(
-                symbol: Image.memory(_outData)
-            );
+            return Image.memory(_outData);
           } catch (e) {
             return getFileType(_outData).replaceFirst('.', '') + '-' + i18n(context, 'hexstring2file_file');
           }
