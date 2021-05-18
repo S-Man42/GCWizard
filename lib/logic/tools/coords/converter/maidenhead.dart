@@ -1,9 +1,11 @@
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/utils/alphabets.dart';
 import 'package:latlong/latlong.dart';
 
-LatLng maidenheadToLatLon(String maidenhead) {
-  if (maidenhead == null || maidenhead == '') return null;
-  maidenhead = maidenhead.toUpperCase();
+LatLng maidenheadToLatLon(Maidenhead maidenhead) {
+  var _maidenhead = maidenhead.text;
+  if (_maidenhead == null || _maidenhead == '') return null;
+  _maidenhead = _maidenhead.toUpperCase();
 
   int res = 1;
   double reslon = 20;
@@ -12,25 +14,25 @@ LatLng maidenheadToLatLon(String maidenhead) {
   double lat = 0.0;
   double lon = 0.0;
   try {
-    for (int i = 0; i < maidenhead.length; i += 2) {
+    for (int i = 0; i < _maidenhead.length; i += 2) {
       if (res == 1) {
-        if (!RegExp(r'[A-Z]{2}').hasMatch(maidenhead.substring(0, 2))) return null;
-        lon = ((alphabet_AZ[maidenhead[0]] - 1) * 20).toDouble();
-        lat = ((alphabet_AZ[maidenhead[1]] - 1) * 10).toDouble();
+        if (!RegExp(r'[A-Z]{2}').hasMatch(_maidenhead.substring(0, 2))) return null;
+        lon = ((alphabet_AZ[_maidenhead[0]] - 1) * 20).toDouble();
+        lat = ((alphabet_AZ[_maidenhead[1]] - 1) * 10).toDouble();
         res = 2;
       } else if (res % 2 == 1) {
         reslon /= 24;
         reslat /= 24;
-        if (!RegExp(r'[A-Z]{2}').hasMatch(maidenhead.substring(i, i + 2))) return null;
-        lon += (alphabet_AZ[maidenhead[i]] - 1).toDouble() * reslon;
-        lat += (alphabet_AZ[maidenhead[i + 1]] - 1).toDouble() * reslat;
+        if (!RegExp(r'[A-Z]{2}').hasMatch(_maidenhead.substring(i, i + 2))) return null;
+        lon += (alphabet_AZ[_maidenhead[i]] - 1).toDouble() * reslon;
+        lat += (alphabet_AZ[_maidenhead[i + 1]] - 1).toDouble() * reslat;
         ++res;
       } else {
         reslon /= 10;
         reslat /= 10;
-        if (!RegExp(r'[0-9]{2}').hasMatch(maidenhead.substring(i, i + 2))) return null;
-        lon += int.tryParse(maidenhead[i]) * reslon;
-        lat += int.tryParse(maidenhead[i + 1]) * reslat;
+        if (!RegExp(r'[0-9]{2}').hasMatch(_maidenhead.substring(i, i + 2))) return null;
+        lon += int.tryParse(_maidenhead[i]) * reslon;
+        lat += int.tryParse(_maidenhead[i + 1]) * reslat;
         ++res;
       }
     }
@@ -44,7 +46,16 @@ LatLng maidenheadToLatLon(String maidenhead) {
   return LatLng(lat, lon);
 }
 
-String latLonToMaidenhead(LatLng coord) {
+Maidenhead parseMaidenhead(String input) {
+  if (input == null) return null;
+  input = input.trim();
+  if (input == '') return null;
+
+  var _maidenhead = Maidenhead(input);
+  return maidenheadToLatLon(_maidenhead) == null ? null : _maidenhead;
+}
+
+Maidenhead latLonToMaidenhead(LatLng coord) {
   var lon = coord.longitude + 180.0;
   var lat = coord.latitude + 90.0;
 
@@ -104,5 +115,5 @@ String latLonToMaidenhead(LatLng coord) {
     ++i;
   }
 
-  return out;
+  return Maidenhead(out);
 }
