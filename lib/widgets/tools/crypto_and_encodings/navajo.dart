@@ -77,7 +77,7 @@ class NavajoState extends State<Navajo> {
           rightValue: i18n(context, 'navajo_source_alphabet'),
           onChanged: (value) {
             setState(() {
-              _currentMode = value;
+              _currentSource = value;
               _calculateOutput();
             });
           },

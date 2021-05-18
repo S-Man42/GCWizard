@@ -1,5 +1,4 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:latlong/latlong.dart';
 
@@ -64,7 +63,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('text: ${elem['text']}', () {
-        var _actual = parseDEC(elem['text']);
+        var _actual = DEC.parse(elem['text'])?.toLatLng();
         expect(_actual, elem['expectedOutput']['coordinate']);
       });
     });
