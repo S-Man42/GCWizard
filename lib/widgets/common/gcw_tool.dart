@@ -16,6 +16,7 @@ enum ToolCategory {
   FORMULA_SOLVER,
   GAMES,
   GENERAL_CODEBREAKERS,
+  IMAGES_AND_FILES,
   SCIENCE_AND_TECHNOLOGY,
   SYMBOL_TABLES
 }
@@ -87,6 +88,7 @@ class GCWTool extends StatefulWidget {
   final autoScroll;
   final iconPath;
   final List<String> searchStrings;
+  String indexedStrings;
   final List<GCWToolActionButtonsEntry> buttonList;
   final List<String> missingHelpLocales;
   final bool suppressHelpButton;
@@ -263,6 +265,13 @@ class _GCWToolState extends State<GCWTool> {
 
     if (widget.autoScroll == false) return widget.tool;
 
-    return SingleChildScrollView(child: Padding(child: widget.tool, padding: EdgeInsets.all(10)));
+    return Scrollbar(
+      child: SingleChildScrollView(
+        child: Padding(
+          child: widget.tool,
+          padding: EdgeInsets.all(10),
+        ),
+      ),
+    );
   }
 }

@@ -26,10 +26,10 @@ class GCWCoordsEllipsoidState extends State<GCWCoordsEllipsoid> {
   static const keyFlattening = 'flattening';
   static const keyMinorAxis = 'minor_axis';
 
-  var _firstUserValueController;
-  var _secondUserValueController;
-  var _firstUserValue;
-  var _secondUserValue;
+  TextEditingController _firstUserValueController;
+  TextEditingController _secondUserValueController;
+  Map<String, dynamic> _firstUserValue;
+  Map<String, dynamic> _secondUserValue;
 
   var _currentMode;
   var _currentEllipsoidUser2ndValue = keyMinorAxis;

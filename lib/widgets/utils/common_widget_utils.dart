@@ -37,7 +37,7 @@ defaultFontSize() {
 }
 
 List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data,
-    {List<int> flexValues = const [], int copyColumn, hasHeader: false, List<Function> tappables}) {
+    {List<int> flexValues = const [], int copyColumn, bool hasHeader: false, bool copyAll: false, List<Function> tappables}) {
   var odd = true;
   var isFirst = true;
 
@@ -62,6 +62,12 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
 
     if (copyColumn == null) copyColumn = rowData.length - 1;
     var copyText = rowData[copyColumn].toString();
+    if (isFirst && hasHeader && copyAll) {
+      copyText = "";
+      data.where((row) => row != null).forEach((dataRow) {
+        copyText += dataRow[copyColumn].toString() + '\n';
+      });
+     };
 
     var row = Container(
       child: Row(
@@ -72,7 +78,7 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
           context == null
               ? Container()
               : Container(
-                  child: (isFirst && hasHeader)
+                  child: ((isFirst && hasHeader) & !copyAll)
                       ? Container()
                       : GCWIconButton(
                           iconData: Icons.content_copy,
@@ -150,4 +156,8 @@ String textControllerDoBackSpace(String currentText, TextEditingController textC
   textController.selection = TextSelection.collapsed(offset: cursorPosition - 1);
 
   return currentText;
+}
+
+double maxScreenHeight(BuildContext context) {
+  return MediaQuery.of(context).size.height - 100;
 }
