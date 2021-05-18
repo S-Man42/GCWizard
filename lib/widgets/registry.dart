@@ -200,6 +200,7 @@ import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagro
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
@@ -347,6 +348,17 @@ class Registry {
             SEARCHSTRING_DE_AMSCO,
             SEARCHSTRING_EN_AMSCO,
             SEARCHSTRING_FR_AMSCO
+          ]),
+       GCWTool(
+          tool: AnimatedImage(),
+          i18nPrefix: 'animated_image',
+          category: ToolCategory.IMAGES_AND_FILES,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_ANIMATED_IMAGES,
+            SEARCHSTRING_DE_ANIMATED_IMAGES,
+            SEARCHSTRING_EN_ANIMATED_IMAGES,
+            SEARCHSTRING_FR_ANIMATED_IMAGES
           ]),
       GCWTool(
           tool: ApparentTemperatureSelection(),
