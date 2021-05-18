@@ -12,6 +12,7 @@ class Changelog extends StatefulWidget {
 
 class ChangelogState extends State<Changelog> {
   final _changelogs = {
+    '1.5.1': DateTime(2021, 05, 10),
     '1.5.0': DateTime(2021, 04, 14),
     '1.4.1': DateTime(2021, 02, 10),
     '1.4.0': DateTime(2021, 02, 3),
