@@ -586,9 +586,9 @@ class GCWMapViewState extends State<GCWMapView> {
                 var pastedCoordinate = _parseCoords(text);
                 if (pastedCoordinate == null) return;
                 setState(() {
-                  _persistanceAdapter.addMapPoint(pastedCoordinate.values.first,
-                      coordinateFormat: {'format': pastedCoordinate.keys.first});
-                  _mapController.move(pastedCoordinate.values.first, _mapController.zoom);
+                  _persistanceAdapter.addMapPoint(pastedCoordinate.first.toLatLng(),
+                      coordinateFormat: {'format': pastedCoordinate.first.key});
+                  _mapController.move(pastedCoordinate.first.toLatLng(), _mapController.zoom);
                 });
               };
             },
