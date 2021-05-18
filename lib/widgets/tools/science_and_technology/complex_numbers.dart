@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/complex_numbers.dart';
+import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
@@ -48,56 +49,60 @@ class ComplexNumbersState extends State<ComplexNumbers> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.right
-            ? Row(
-          children: <Widget>[
-            Expanded(child: GCWTextField(
-            controller: _aController,
-            inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
-            hintText: i18n(context, 'complex_numbers_hint_a'),
-            onChanged: (value) {
-              setState(() {
-                _currentA = value;
-              });
-            },
-          )),
-            Expanded(
-              child: GCWTextField(
-                controller: _bController,
-                inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
-                hintText: i18n(context, 'complex_numbers_hint_b'),
-                onChanged: (value) {
-                  setState(() {
-                    _currentB = value;
-                  });
-                },
-              )
+          ? Row(
+              children: <Widget>[
+                Expanded(
+                  child: GCWTextField(
+                    controller: _aController,
+                    inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+                    hintText: i18n(context, 'complex_numbers_hint_a'),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentA = value;
+                      });
+                    },
+                  )),
+                Container(width: DOUBLE_DEFAULT_MARGIN),
+                Expanded(
+                  child: GCWTextField(
+                    controller: _bController,
+                    inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+                    hintText: i18n(context, 'complex_numbers_hint_b'),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentB = value;
+                      });
+                    },
+                  ))
+              ],
             )
-          ],
-        )
-            : Row(
-          children: <Widget>[
-            Expanded(child: GCWTextField(
-              controller: _radiusController,
-              inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
-              hintText: i18n(context, 'complex_numbers_hint_radius'),
-              onChanged: (value) {
-                setState(() {
-                  _currentRadius = value;
-                });
-              },
-            )),
-            Expanded(child: GCWTextField(
-              controller: _angleController,
-              inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
-              hintText: i18n(context, 'complex_numbers_hint_angle'),
-              onChanged: (value) {
-                setState(() {
-                  _currentAngle = value;
-                });
-              },
-            )),
-          ],
-        ),
+          : Row(
+            children: <Widget>[
+              Expanded(
+                child: GCWTextField(
+                  controller: _radiusController,
+                  inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+                  hintText: i18n(context, 'complex_numbers_hint_radius'),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentRadius = value;
+                    });
+                  },
+                )),
+              Container(width: DOUBLE_DEFAULT_MARGIN),
+              Expanded(
+                child: GCWTextField(
+                  controller: _angleController,
+                  inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+                  hintText: i18n(context, 'complex_numbers_hint_angle'),
+                  onChanged: (value) {
+                    setState(() {
+                      _currentAngle = value;
+                    });
+                  },
+                )),
+            ],
+          ),
         GCWTwoOptionsSwitch(
           title: i18n(context, 'complex_numbers_convert'),
           leftValue: i18n(context, 'complex_numbers_cartesian'),
