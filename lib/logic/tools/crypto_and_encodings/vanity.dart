@@ -203,6 +203,7 @@ final VanityToDEU = {
   '7334' : 'DREI',
   '8437' : 'VIER',
   '38363' : 'FUENF',
+  '3863' : 'FÜNF',
   '73247' : 'SECHS',
   '743236' : 'SIEBEN',
   '2248' : 'ACHT',
