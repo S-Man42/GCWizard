@@ -7,8 +7,8 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/quadgrams.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/substitution_breaker/quadgrams/generate_quadgrams.dart';
 
-String _alphabet = null;
-List<int> _quadgrams = null;
+String _alphabet;
+List<int> _quadgrams;
 
 /// method to generate quadgrams from a text file
 /// :param corpus_fh: the file handle of the text corpus file to process
@@ -23,12 +23,11 @@ Future<BreakerResult> generateQuadgrams(
   if (_alphabet.length > Quadgrams.maxAlphabetLength) {
     // Alphabet must have less or equal than 32 characters
     return BreakerResult(alphabet: _alphabet, errorCode: ErrorCode.ALPHABET_TOO_LONG);
-    ;
   }
 
   var iterator = _file_iterator(corpus_fh, _alphabet);
   var quadgram_val = 0;
-  var quadgrams = List<double>(pow(Quadgrams.maxAlphabetLength, 3) * Quadgrams.maxAlphabetLength); //_alphabet.length
+  var quadgrams = <double>[pow(Quadgrams.maxAlphabetLength, 3) * Quadgrams.maxAlphabetLength]; //_alphabet.length
   quadgrams.fillRange(0, quadgrams.length, 0);
 
   var idx = 0;
@@ -92,12 +91,12 @@ Future<BreakerResult> generateQuadgrams(
       max_val = val;
       max_idx = idx;
     }
-    ;
+
     idx += 1;
   });
 
   // now construct the ASCII representation from the index
-  var max_chars = List<String>();
+  var max_chars = <String>[];
   idx = max_idx;
 
   for (int i = 0; i < 4; i++) {

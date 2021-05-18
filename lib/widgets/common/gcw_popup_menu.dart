@@ -90,19 +90,23 @@ class GCWPopupMenuState extends State<GCWPopupMenu> {
 class GCWPopupMenuItem {
   final Widget child;
   final Function action;
+  final Function onLongPress;
   final bool isDivider;
 
-  GCWPopupMenuItem({this.child, this.action, this.isDivider: false});
+  GCWPopupMenuItem({this.child, this.action, this.onLongPress, this.isDivider: false});
 }
 
-iconedGCWPopupMenuItem(BuildContext context, IconData icon, String i18nKey) {
+iconedGCWPopupMenuItem(BuildContext context, IconData icon, String i18nKey, {Function onLongPress}) {
   var color = themeColors().dialogText();
 
   return Row(
     children: [
-      Container(
-        child: Icon(icon, color: color),
-        padding: EdgeInsets.only(right: 10),
+      GestureDetector(
+        child: Container(
+          child: Icon(icon, color: color),
+          padding: EdgeInsets.only(right: 10),
+        ),
+        onLongPress: onLongPress,
       ),
       Text(i18n(context, i18nKey), style: TextStyle(color: color))
     ],
