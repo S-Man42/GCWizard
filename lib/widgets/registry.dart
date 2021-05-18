@@ -5160,7 +5160,19 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_BRAHMI_NUMERALS,
         SEARCHSTRING_FR_SYMBOL_BRAHMI_NUMERALS
       ]),
-      GCWSymbolTableTool(symbolKey: 'braille', symbolSearchStrings: [
+      GCWSymbolTableTool(symbolKey: 'braille_de', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_BRAILLE,
+        SEARCHSTRING_DE_BRAILLE,
+        SEARCHSTRING_EN_BRAILLE,
+        SEARCHSTRING_FR_BRAILLE
+      ]),
+      GCWSymbolTableTool(symbolKey: 'braille_en', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_BRAILLE,
+        SEARCHSTRING_DE_BRAILLE,
+        SEARCHSTRING_EN_BRAILLE,
+        SEARCHSTRING_FR_BRAILLE
+      ]),
+      GCWSymbolTableTool(symbolKey: 'braille_fr', symbolSearchStrings: [
         SEARCHSTRING_COMMON_BRAILLE,
         SEARCHSTRING_DE_BRAILLE,
         SEARCHSTRING_EN_BRAILLE,
