@@ -3,16 +3,12 @@ import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:latlong/latlong.dart';
 
 LatLng decToLatLon(DEC dec) {
-  var normalized = normalize(dec);
+  var normalized = normalizeDEC(dec);
   return LatLng(normalized.latitude, normalized.longitude);
 }
 
 DEC latLonToDEC(LatLng coord) {
   return DEC(coord.latitude, coord.longitude);
-}
-
-DEC normalize(DEC coord) {
-  return normalizeDEC(coord);
 }
 
 int sign(String match) {

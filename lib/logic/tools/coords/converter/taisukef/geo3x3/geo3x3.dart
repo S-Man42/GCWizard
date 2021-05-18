@@ -1,6 +1,5 @@
 // written by taisukef https://github.com/taisukef/Geo3x3/blob/master/Geo3x3.dart
 // CC0-1.0 License
-import 'package:flutter/material.dart';
 
 class Geo3x3 {
   static String encode(num lat, num lng, num level) {
