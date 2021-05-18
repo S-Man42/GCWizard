@@ -13,6 +13,7 @@ import 'package:flutter_map_tappable_polyline/flutter_map_tappable_polyline.dart
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
@@ -315,7 +316,7 @@ class GCWMapViewState extends State<GCWMapView> {
                         builder: (context) => GCWTool(
                             tool: MapPolylineEditor(polyline: child),
                             i18nPrefix: 'coords_openmap_lineeditor',
-                            missingHelpLocales: ['fr']))).whenComplete(() {
+                            missingHelpLocales: []))).whenComplete(() {
                   setState(() {
                     if (child is GCWMapPolyline) {
                       _persistanceAdapter.updateMapPolyline(child);
@@ -330,7 +331,7 @@ class GCWMapViewState extends State<GCWMapView> {
                         builder: (context) => GCWTool(
                             tool: MapPointEditor(mapPoint: mapPoint, lengthUnit: defaultLengthUnit),
                             i18nPrefix: 'coords_openmap_lineeditor',
-                            missingHelpLocales: ['fr']))).whenComplete(() {
+                            missingHelpLocales: []))).whenComplete(() {
                   setState(() {
                     _persistanceAdapter.updateMapPoint(mapPoint);
                     _mapController.move(mapPoint.point, _mapController.zoom);
@@ -500,6 +501,26 @@ class GCWMapViewState extends State<GCWMapView> {
 
   _buildEditButtons() {
     var buttons = [
+      GCWPasteButton(
+        backgroundColor: COLOR_MAP_ICONBUTTONS,
+        customIcon: _createIconButtonIcons(Icons.content_paste),
+        onSelected: (text) {
+          if (_persistanceAdapter.setJsonMapViewData(text)) {
+            setState(() {
+              _mapController.fitBounds(_getBounds());
+            });
+          } else {
+            var pastedCoordinate = _parseCoords(text);
+            if (pastedCoordinate == null) return;
+
+            setState(() {
+              _persistanceAdapter.addMapPoint(pastedCoordinate.first.toLatLng(),
+                  coordinateFormat: {'format': pastedCoordinate.first.key});
+              _mapController.move(pastedCoordinate.first.toLatLng(), _mapController.zoom);
+            });
+          }
+          ;
+        }),
       GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.my_location, stacked: Icons.add),
@@ -565,9 +586,9 @@ class GCWMapViewState extends State<GCWMapView> {
                 var pastedCoordinate = _parseCoords(text);
                 if (pastedCoordinate == null) return;
                 setState(() {
-                  _persistanceAdapter.addMapPoint(pastedCoordinate.values.first,
-                      coordinateFormat: {'format': pastedCoordinate.keys.first});
-                  _mapController.move(pastedCoordinate.values.first, _mapController.zoom);
+                  _persistanceAdapter.addMapPoint(pastedCoordinate.first.toLatLng(),
+                      coordinateFormat: {'format': pastedCoordinate.first.key});
+                  _mapController.move(pastedCoordinate.first.toLatLng(), _mapController.zoom);
                 });
               };
             },
@@ -578,13 +599,11 @@ class GCWMapViewState extends State<GCWMapView> {
         customIcon: _createIconButtonIcons(Icons.drive_folder_upload),
         onPressed: () {
           setState(() {
-            openFileExplorer(allowedExtensions: ['gpx','kml','kmz'], useFileFilterOnAndroid : true).then((files) {
-              if (files != null && files.length > 0) {
-                getFileData(files.first).then((bytes) {
-                  loadCoordinatesFile(files.first.name, bytes).whenComplete(() {
-                    setState(() {
-                      _mapController.fitBounds(_getBounds());
-                    });
+            openFileExplorer(context, allowedExtensions: ['.gpx','.kml','.kmz']).then((file) {
+              if (file != null) {
+                loadCoordinatesFile(file.name, file.bytes).whenComplete(() {
+                  setState(() {
+                    _mapController.fitBounds(_getBounds());
                   });
                 });
               }
@@ -745,7 +764,7 @@ class GCWMapViewState extends State<GCWMapView> {
                                   builder: (context) => GCWTool(
                                       tool: MapPointEditor(mapPoint: gcwMarker.mapPoint, lengthUnit: defaultLengthUnit),
                                       i18nPrefix: 'coords_openmap_pointeditor',
-                                      missingHelpLocales: ['fr']))).whenComplete(() {
+                                      missingHelpLocales: []))).whenComplete(() {
                             setState(() {
                               _persistanceAdapter.updateMapPoint(gcwMarker.mapPoint);
                               _mapController.move(gcwMarker.mapPoint.point, _mapController.zoom);
@@ -791,8 +810,8 @@ class GCWMapViewState extends State<GCWMapView> {
     return _polylines;
   }
 
-  Map<String, LatLng> _parseCoords(text) {
-    var parsed = parseLatLon(text);
+  List<BaseCoordinates> _parseCoords(text) {
+    var parsed = parseCoordinates(text);
     if (parsed == null || parsed.length == 0) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
       return null;
