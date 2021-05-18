@@ -1,5 +1,5 @@
 import "package:flutter_test/flutter_test.dart";
-import 'package:gc_wizard/logic/tools/coords/converter/maidenhead.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:latlong/latlong.dart';
 
 void main() {
@@ -15,7 +15,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('coord: ${elem['coord']}', () {
-        var _actual = latLonToMaidenhead(elem['coord']);
+        var _actual = Maidenhead.fromLatLon(elem['coord']).toString();
         expect(_actual, elem['expectedOutput']);
       });
     });
@@ -37,7 +37,7 @@ void main() {
 
     _inputsToExpected.forEach((elem) {
       test('coord: ${elem['coord']}', () {
-        var _actual = maidenheadToLatLon(elem['coord']);
+        var _actual = Maidenhead.parse(elem['coord'])?.toLatLng();
         if (_actual == null)
           expect(null, elem['expectedOutput']);
         else {

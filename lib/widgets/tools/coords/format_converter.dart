@@ -15,7 +15,7 @@ class FormatConverter extends StatefulWidget {
 }
 
 class FormatConverterState extends State<FormatConverter> {
-  var _currentCoords = defaultCoordinate;
+  BaseCoordinates _currentCoords = DEC(defaultCoordinate.latitude, defaultCoordinate.longitude);
 
   var _currentCoordsFormat = defaultCoordFormat();
 
@@ -59,7 +59,7 @@ class FormatConverterState extends State<FormatConverter> {
         GCWCoordsOutput(
           outputs: _currentOutput,
           points: [
-            GCWMapPoint(point: _currentCoords, coordinateFormat: _currentOutputFormat),
+            GCWMapPoint(point: _currentCoords.toLatLng(), coordinateFormat: _currentOutputFormat),
           ],
         ),
       ],
@@ -67,6 +67,6 @@ class FormatConverterState extends State<FormatConverter> {
   }
 
   _calculateOutput(BuildContext context) {
-    _currentOutput = [formatCoordOutput(_currentCoords, _currentOutputFormat, defaultEllipsoid())];
+    _currentOutput = [formatCoordOutput(_currentCoords.toLatLng(), _currentOutputFormat, defaultEllipsoid())];
   }
 }

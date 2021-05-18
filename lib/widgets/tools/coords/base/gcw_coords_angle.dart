@@ -15,7 +15,7 @@ class GCWAngle extends StatefulWidget {
 }
 
 class _GCWAngleState extends State<GCWAngle> {
-  var _angleController;
+  TextEditingController _angleController;
   var _currentAngle = {'text': '', 'value': 0.0};
 
   @override

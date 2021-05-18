@@ -13,6 +13,7 @@ import 'package:flutter_map_tappable_polyline/flutter_map_tappable_polyline.dart
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
 import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
@@ -500,6 +501,26 @@ class GCWMapViewState extends State<GCWMapView> {
 
   _buildEditButtons() {
     var buttons = [
+      GCWPasteButton(
+        backgroundColor: COLOR_MAP_ICONBUTTONS,
+        customIcon: _createIconButtonIcons(Icons.content_paste),
+        onSelected: (text) {
+          if (_persistanceAdapter.setJsonMapViewData(text)) {
+            setState(() {
+              _mapController.fitBounds(_getBounds());
+            });
+          } else {
+            var pastedCoordinate = _parseCoords(text);
+            if (pastedCoordinate == null) return;
+
+            setState(() {
+              _persistanceAdapter.addMapPoint(pastedCoordinate.first.toLatLng(),
+                  coordinateFormat: {'format': pastedCoordinate.first.key});
+              _mapController.move(pastedCoordinate.first.toLatLng(), _mapController.zoom);
+            });
+          }
+          ;
+        }),
       GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.my_location, stacked: Icons.add),
@@ -791,8 +812,8 @@ class GCWMapViewState extends State<GCWMapView> {
     return _polylines;
   }
 
-  Map<String, LatLng> _parseCoords(text) {
-    var parsed = parseLatLon(text);
+  List<BaseCoordinates> _parseCoords(text) {
+    var parsed = parseCoordinates(text);
     if (parsed == null || parsed.length == 0) {
       showToast(i18n(context, 'coords_common_clipboard_nocoordsfound'));
       return null;
