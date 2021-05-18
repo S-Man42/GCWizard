@@ -906,7 +906,6 @@ class Registry {
       GCWTool(
           tool: MayaCalendarSelection(),
           i18nPrefix: 'mayacalendar_selection',
-          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
           missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_MAYA_CALENDAR,
