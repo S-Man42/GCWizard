@@ -276,6 +276,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nea
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nthprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
@@ -1165,16 +1166,24 @@ class Registry {
             SEARCHSTRING_FR_PROJECTILES
           ]),
       GCWTool(
-          tool: RailFence(),
-          i18nPrefix: 'railfence',
-          category: ToolCategory.CRYPTOGRAPHY,
+          tool: QuadraticEquation(),
+          i18nPrefix: 'quadratic_equation',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
           missingHelpLocales: [],
           searchStrings: [
-            SEARCHSTRING_COMMON_RAILFENCE,
-            SEARCHSTRING_DE_RAILFENCE,
-            SEARCHSTRING_EN_RAILFENCE,
-            SEARCHSTRING_FR_RAILFENCE
+            SEARCHSTRING_COMMON_QUADRATICEQUATION,
+            SEARCHSTRING_DE_QUADRATICEQUATION,
+            SEARCHSTRING_EN_QUADRATICEQUATION,
+            SEARCHSTRING_FR_QUADRATICEQUATION
           ]),
+      GCWTool(tool: RailFence(), i18nPrefix: 'railfence', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_RAILFENCE,
+        SEARCHSTRING_DE_RAILFENCE,
+        SEARCHSTRING_EN_RAILFENCE,
+        SEARCHSTRING_FR_RAILFENCE
+      ]),
       GCWTool(
           tool: RC4(),
           i18nPrefix: 'rc4',

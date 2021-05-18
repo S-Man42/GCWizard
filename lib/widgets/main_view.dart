@@ -165,6 +165,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/at
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
@@ -433,6 +434,7 @@ class _MainViewState extends State<MainView> {
         className(Polybios()),
         className(PrimesSelection()),
         className(Projectiles()),
+        className(QuadraticEquation()),
         className(RailFence()),
         className(RC4()),
         className(Resection()),
