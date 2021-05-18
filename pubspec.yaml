@@ -10,9 +10,10 @@ dependencies:
   auto_size_text: ^2.1.0
   base32: ^1.1.2
   cached_network_image: ^3.0.0
+  ext_storage: ^1.0.3
   diacritic: ^0.1.1
   encrypt: ^5.0.0
-  file_picker: ^3.0.0
+  file_picker: ^3.0.1
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -25,11 +26,11 @@ dependencies:
   location: ^4.1.1
   mask_text_input_formatter: ^1.2.1
   math_expressions: ^2.1.0
-  open_file: ^3.2.0
+  open_file: ^3.2.1
   package_info: ^2.0.0
-  path: ^1.7.0
+  path: ^1.8.0
   path_provider: ^2.0.1
-  permission_handler: ^7.0.0
+  permission_handler: ^7.1.0
   photo_view: ^0.11.1
   pointycastle: ^3.0.1
   prefs: ^3.3.0

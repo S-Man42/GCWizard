@@ -61,6 +61,7 @@ Uint8List encodeMessageIntoImage(EncodeRequest req) {
   }
   Image editableImage = Image.fromBytes(origin.width, origin.height, encodedImg.toList());
   Uint8List data = Uint8List.fromList(encodePng(editableImage));
+  // Uint8List data = Uint8List.fromList(encodeNamedImage(editableImage, filename));
   return data;
 }
 

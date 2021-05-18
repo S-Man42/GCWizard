@@ -23,11 +23,14 @@ class Stegano extends StatefulWidget {
 
 class _SteganoState extends State<Stegano> {
   PlatformFile _file;
+  Uint8List _bytesSource;
   String _currentInput = '';
   String _currentKey = '';
+  String _filename = 'output.png'; //TODO choose output format (jpg, png..)
 
-  String _decodedText = '';
-  GCWImageViewData _pictureData;
+  String _decodedText;
+  GCWImageViewData _encodedPictureData;
+  bool _encoding = false;
 
   TextEditingController _inputController;
   TextEditingController _keyController;
@@ -40,7 +43,7 @@ class _SteganoState extends State<Stegano> {
     _inputController = TextEditingController(text: _currentInput);
     _keyController = TextEditingController(text: _currentKey);
     _file = widget.file;
-    _readFile(_file);
+    //_readFile(_file);
   }
 
   @override
@@ -91,6 +94,15 @@ class _SteganoState extends State<Stegano> {
           text: i18n(context, 'open_image'),
           onPressed: _readFileFromPicker,
         ),
+        ..._buildImageSource(),
+        GCWButton(
+          text: i18n(context, isEncode() ? 'stegano_encode' : 'stegano_decode'),
+          onPressed: () {
+            setState(() {
+              _calculateOutput();
+            });
+          },
+        ),
         Container(),
         ..._buildOutput()
       ],
@@ -98,29 +110,40 @@ class _SteganoState extends State<Stegano> {
   }
 
   Future<void> _readFileFromPicker() async {
-    setState(() {
-      _decodedText = '';
-    });
     List<PlatformFile> files = await openFileExplorer(
       allowedExtensions: ['jpg', 'jpeg', 'tiff', 'png', 'bmp', 'gif', 'webp'],
     );
     if (files != null) {
-      PlatformFile _file = files.first;
-      return _readFile(_file);
+      PlatformFile file = files.first;
+      if (file == null) return;
+      var bytesSrc = await getFileData(file);
+      setState(() {
+        _file = file;
+        _bytesSource = bytesSrc;
+        // clear previous decoded text
+        _decodedText = null;
+      });
     }
   }
 
-  Future<void> _readFile(PlatformFile _platformFile) async {
-    if (_platformFile == null) return;
-
+  _calculateOutput() async {
+    setState(() {
+      // clear previous encoded picture
+      _encodedPictureData = null;
+      // clear previous decoded text
+      _decodedText = null;
+      _encoding = true;
+    });
     if (isEncode()) {
-      Uint8List bytes = await encodeStegano(_platformFile, _currentInput, _currentKey);
+      Uint8List bytes = await encodeStegano(_file, _currentInput, _currentKey, _filename);
       setState(() {
-        _pictureData = GCWImageViewData(bytes);
+        _encoding = false;
+        _encodedPictureData = GCWImageViewData(bytes);
       });
     } else {
-      String _text = await decodeStegano(_platformFile, _currentKey);
+      String _text = await decodeStegano(_file, _currentKey);
       setState(() {
+        _encoding = false;
         _decodedText = _text;
       });
     }
@@ -133,18 +156,43 @@ class _SteganoState extends State<Stegano> {
   }
 
   List<Widget> _buildOutputEncode() {
+    if (_encodedPictureData == null) {
+      return [];
+    }
     return [
       GCWTextDivider(text: i18n(context, 'stegano_encoded_image')),
-      GCWImageView(imageData: _pictureData),
+      GCWImageView(imageData: _encodedPictureData),
     ];
   }
 
   List<Widget> _buildOutputDecode() {
+    if (_encoding) {
+      return [
+        Center(
+          child: CircularProgressIndicator(),
+        )
+      ];
+    }
+    ;
+
+    if (_decodedText == null) {
+      return [];
+    }
     return [
       GCWTextDivider(text: i18n(context, 'stegano_decoded_message')),
       GCWOutputText(
         text: _decodedText ?? '',
       )
+    ];
+  }
+
+  List<Widget> _buildImageSource() {
+    if (_bytesSource == null) {
+      return [];
+    }
+    return [
+      GCWTextDivider(text: i18n(context, 'stegano_source_image')),
+      GCWImageView(imageData: GCWImageViewData(_bytesSource))
     ];
   }
 }

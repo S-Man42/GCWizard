@@ -7,10 +7,10 @@ import 'package:gc_wizard/plugins/flutter_steganography/requests/decode_request.
 import 'package:gc_wizard/plugins/flutter_steganography/requests/encode_request.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 
-Future<Uint8List> encodeStegano(PlatformFile file, String message, String key) async {
+Future<Uint8List> encodeStegano(PlatformFile file, String message, String key, String filename) async {
   Uint8List data = await getFileData(file);
   // the key is use to encrypt your message with AES256 algorithm
-  EncodeRequest request = EncodeRequest(data, message, key: key);
+  EncodeRequest request = EncodeRequest(data, message, key: key, filename: filename);
   Uint8List response = await encodeMessageIntoImageAsync(request);
   return response;
 }
