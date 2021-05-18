@@ -255,11 +255,11 @@ class MayaCalendarState extends State<MayaCalendar> {
     final Locale appLocale = Localizations.localeOf(context);
     switch (appLocale.languageCode) {
       case 'de' :
-        return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.year;
+        return date.day + '. ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.year;
       case 'fr' :
         return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]).toLowerCase() + ' ' + date.year;
       default :
-        return date.year + '/' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
+        return date.year + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
     }
   }
 }

@@ -135,7 +135,7 @@ class CalendarState extends State<Calendar> {
 
   String _HebrewDateToString(DateOutput HebrewDate, double jd){
     if (typeOfJewYear(JewishYearLength(jd)).contains('embolistic'))
-      return HebrewDate.day + ' ' + MONTH_NAMES[CalendarSystem.HEBREWCALENDAR][int.parse(HebrewDate.month)].toString() + ' ' + HebrewDate.year;
+      return HebrewDate.day + '. ' + MONTH_NAMES[CalendarSystem.HEBREWCALENDAR][int.parse(HebrewDate.month)].toString() + ' ' + HebrewDate.year;
     else {
       int month = int.parse(HebrewDate.month);
       if (month > 6)
@@ -150,16 +150,16 @@ class CalendarState extends State<Calendar> {
       case CalendarSystem.ISLAMICCALENDAR:
       case CalendarSystem.PERSIANYAZDEGARDCALENDAR:
       case CalendarSystem.COPTICCALENDAR:
-          return date.day + ' ' + MONTH_NAMES[calendar][int.parse(date.month)].toString() + ' ' + date.year;
+          return date.day + '. ' + MONTH_NAMES[calendar][int.parse(date.month)].toString() + ' ' + date.year;
       case CalendarSystem.GREGORIANCALENDAR :
       case CalendarSystem.JULIANCALENDAR :
           switch (appLocale.languageCode) {
             case 'de' :
-                return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.year;
+                return date.day + '. ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.year;
             case 'fr' :
               return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]).toLowerCase() + ' ' + date.year;
             default :
-              return date.year + '/' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
+              return date.year + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
           }
     };
   }
