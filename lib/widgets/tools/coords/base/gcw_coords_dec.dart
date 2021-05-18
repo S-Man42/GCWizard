@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -9,11 +8,10 @@ import 'package:gc_wizard/widgets/tools/coords/base/gcw_coords_sign_dropdownbutt
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lat_textinputformatter.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lon_textinputformatter.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsDEC extends StatefulWidget {
   final Function onChanged;
-  LatLng coordinates;
+  BaseCoordinates coordinates;
 
   GCWCoordsDEC({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -22,10 +20,10 @@ class GCWCoordsDEC extends StatefulWidget {
 }
 
 class GCWCoordsDECState extends State<GCWCoordsDEC> {
-  var _LatDegreesController;
-  var _LatMilliDegreesController;
-  var _LonDegreesController;
-  var _LonMilliDegreesController;
+  TextEditingController _LatDegreesController;
+  TextEditingController _LatMilliDegreesController;
+  TextEditingController _LonDegreesController;
+  TextEditingController _LonMilliDegreesController;
 
   FocusNode _latMilliDegreesFocusNode;
   FocusNode _lonMilliDegreesFocusNode;
@@ -65,13 +63,16 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      _currentLatDegrees = widget.coordinates.latitude.abs().floor().toString();
-      _currentLatMilliDegrees = widget.coordinates.latitude.toString().split('.')[1];
-      _currentLatSign = coordinateSign(widget.coordinates.latitude);
+      var dec = widget.coordinates is DEC ?
+          widget.coordinates as DEC :
+          DEC.fromLatLon(widget.coordinates.toLatLng());
+      _currentLatDegrees = dec.latitude.abs().floor().toString();
+      _currentLatMilliDegrees = dec.latitude.toString().split('.')[1];
+      _currentLatSign = coordinateSign(dec.latitude);
 
-      _currentLonDegrees = widget.coordinates.longitude.abs().floor().toString();
-      _currentLonMilliDegrees = widget.coordinates.longitude.toString().split('.')[1];
-      _currentLonSign = coordinateSign(widget.coordinates.longitude);
+      _currentLonDegrees =dec.longitude.abs().floor().toString();
+      _currentLonMilliDegrees = dec.longitude.toString().split('.')[1];
+      _currentLonSign = coordinateSign(dec.longitude);
 
       _LatDegreesController.text = _currentLatDegrees;
       _LatMilliDegreesController.text = _currentLatMilliDegrees;
@@ -205,6 +206,6 @@ class GCWCoordsDECState extends State<GCWCoordsDEC> {
     _degreesD = double.parse('$_degrees.$_currentLonMilliDegrees');
     double _currentLon = _currentLonSign * _degreesD;
 
-    widget.onChanged(decToLatLon(DEC(_currentLat, _currentLon)));
+    widget.onChanged(DEC(_currentLat, _currentLon));
   }
 }

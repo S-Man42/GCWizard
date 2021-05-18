@@ -57,7 +57,7 @@ class GCWBearing extends StatefulWidget {
 }
 
 class _GCWBearingState extends State<GCWBearing> {
-  var _bearingController;
+  TextEditingController _bearingController;
   var _currentBearing = {'text': '', 'value': 0.0};
 
   var _currentCompassValue;
