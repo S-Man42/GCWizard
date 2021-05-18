@@ -285,6 +285,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/s
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multiplenumbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singlenumbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_list.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_search.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 
 class Registry {
@@ -6386,6 +6388,34 @@ class Registry {
             SEARCHSTRING_DE_VANITYMULTIPLENUMBERS,
             SEARCHSTRING_EN_VANITYMULTIPLENUMBERS,
             SEARCHSTRING_FR_VANITYMULTIPLENUMBERS
+          ]),
+      GCWTool(
+          tool: VanityWordsList(),
+          i18nPrefix: 'vanity_words_list',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_VANITY,
+            SEARCHSTRING_DE_VANITY,
+            SEARCHSTRING_EN_VANITY,
+            SEARCHSTRING_FR_VANITY,
+            SEARCHSTRING_COMMON_VANITYWORDSLIST,
+            SEARCHSTRING_DE_VANITYWORDSLIST,
+            SEARCHSTRING_EN_VANITYWORDSLIST,
+            SEARCHSTRING_FR_VANITYWORDSLIST
+          ]),
+      GCWTool(
+          tool: VanityWordsTextSearch(),
+          i18nPrefix: 'vanity_words_search',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_VANITY,
+            SEARCHSTRING_DE_VANITY,
+            SEARCHSTRING_EN_VANITY,
+            SEARCHSTRING_FR_VANITY,
+            SEARCHSTRING_COMMON_VANITYTEXTSEARCH,
+            SEARCHSTRING_DE_VANITYTEXTSEARCH,
+            SEARCHSTRING_EN_VANITYTEXTSEARCH,
+            SEARCHSTRING_FR_VANITYTEXTSEARCH
           ]),
 
       //VigenereSelection *******************************************************************************************
