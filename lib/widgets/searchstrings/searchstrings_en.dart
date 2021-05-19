@@ -440,6 +440,8 @@ const SEARCHSTRING_EN_SYMBOL_PLANET = '';
 const SEARCHSTRING_EN_SYMBOL_PLANETS =
     'celestialbodies celestianbody heavenlybodies heavenlybody planets astronomy astrology stars meteroids asteroids sun moon earth saturn neptune jupiter pluto uranus mars venus mercury';
 const SEARCHSTRING_EN_SYMBOL_POKEMON_UNOWN = '';
+const SEARCHSTRING_EN_SYMBOL_POSTCODE01247 = 'german';
+const SEARCHSTRING_EN_SYMBOL_POSTCODE8421 = 'german';
 const SEARCHSTRING_EN_SYMBOL_POSTNET = '';
 const SEARCHSTRING_EN_SYMBOL_PUZZLE = 'jigsaw';
 const SEARCHSTRING_EN_SYMBOL_QUADOO = 'tactiles dots points';
