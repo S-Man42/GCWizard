@@ -3,81 +3,10 @@ import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/vanity.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/phone_models.dart';
 
 void main() {
-  // group("Vanity.encryptVanitySingleNumbers:", () {
-  //   List<Map<String, dynamic>> _inputsToExpected = [
-  //     {'input' : null, 'expectedOutput' : ''},
-  //     {'input' : '', 'expectedOutput' : ''},
-  //
-  //     {'input' : 'ABCXYZ', 'model': SIEMENS, 'expectedOutput' : '222999'},
-  //     {'input' : 'AbcxyZ', 'model': SIEMENS, 'expectedOutput' : '222999'},
-  //     {'input' : 'ABC123XYZ', 'model': SIEMENS, 'expectedOutput' : '222123999'},
-  //     {'input' : 'ÄÖÜß', 'model': SIEMENS, 'expectedOutput' : '2687'},
-  //     {'input' : '*%&/', 'model': SIEMENS, 'expectedOutput' : ''},
-  //     {'input' : 'ABC*%&/', 'model': SIEMENS, 'expectedOutput' : '222'},
-  //
-  //     {'input' : 'ABC01 .?\$&°', 'model': NOKIA, 'expectedOutput' : '222010117*'},
-  //     {'input' : 'ABC01 .?\$&°', 'model': SAMSUNG, 'expectedOutput' : '22201011**'},
-  //     {'input' : 'ABC01 .?\$&°', 'model': SIEMENS, 'expectedOutput' : '222011001'},
-  //   ];
-  //
-  //   _inputsToExpected.forEach((elem) {
-  //     test('input: ${elem['input']}, model: ${elem['model']}', () {
-  //       var _actual = encodeVanitySingleNumbers(elem['input'], elem['model']);
-  //       expect(_actual, elem['expectedOutput']);
-  //     });
-  //   });
-  // });
-
-  // group("Vanity.encodeVanityMultipleNumbers:", () {
-  //   List<Map<String, dynamic>> _inputsToExpected = [
-  //     // {'input' : null, 'expectedOutput' : '', 'caseSensitive': false},
-  //     // {'input' : '', 'expectedOutput' : '', 'caseSensitive': false},
-  //     //
-  //     // {'input' : 'ABCXYZ', 'model': SIEMENS, 'caseSensitive': false, 'expectedOutput' : '2 22 222 99 999 9999'},
-  //     // {'input' : 'Abc xyZ', 'model': SIEMENS, 'caseSensitive': false, 'expectedOutput' : '2 22 222 1 99 999 9999'},
-  //     // {'input' : 'ABC123XYZ', 'model': SIEMENS, 'caseSensitive': false, 'expectedOutput' : '2 22 222 11 2222 3333 99 999 9999'},
-  //     // {'input' : 'ÄÖÜß', 'model': SIEMENS, 'caseSensitive': false, 'expectedOutput' : '22222 66666 88888 777777'},
-  //     // {'input' : '*%&/', 'model': SIEMENS, 'caseSensitive': false, 'expectedOutput' : ''},
-  //     // {'input' : 'ABC*%&/+', 'model': SIEMENS, 'caseSensitive': false, 'expectedOutput' : '2 22 222 000000'},
-  //     // {'input' : '. ', 'model': SIEMENS, 'caseSensitive': false, 'expectedOutput' : '0 1'},
-  //     //
-  //     // {'input' : 'ABC01 .?\$&°', 'model': NOKIA, 'caseSensitive': false, 'expectedOutput' : '2 22 222 00 1111111 0 1 111 7777777 ****************'},
-  //     // {'input' : 'ABC01 .?\$&°', 'model': SAMSUNG, 'caseSensitive': false, 'expectedOutput' : '2 22 222 00 11111 0 1 111 **************************** ***********'},
-  //     // {'input' : 'ABC01 .?\$&°', 'model': SIEMENS, 'caseSensitive': false, 'expectedOutput' : '2 22 222 00000 11 1 0 000 11111'},
-  //
-  //     {'input' : 'Hello World', 'model': NOKIA, 'caseSensitive': true, 'expectedOutput' : '44 33 555 555 666 0 # 9 ### 666 777 555 3'},
-  //     {'input' : 'hello world', 'model': NOKIA, 'caseSensitive': true, 'expectedOutput' : '# 44 33 555 555 666 0 9 666 777 555 3'},
-  //     {'input' : 'HELLO WORLD', 'model': NOKIA, 'caseSensitive': true, 'expectedOutput' : '44 ## 33 555 555 666 0 9 666 777 555 3'},
-  //     {'input' : 'HeLlO WoRlD', 'model': NOKIA, 'caseSensitive': true, 'expectedOutput' : '44 33 ## 555 ### 555 # 666 0 9 ### 666 # 777 ### 555 # 3'},
-  //     {'input' : 'hElLo wOrLd', 'model': NOKIA, 'caseSensitive': true, 'expectedOutput' : '# 44 # 33 ### 555 # 555 ### 666 0 9 # 666 ### 777 # 555 ### 3'},
-  //     {'input' : '1a%B,c a.1.A.a.', 'model': NOKIA, 'caseSensitive': true, 'expectedOutput' : '1111111 2 ***************** ## 22 11 ### 222 0 2 1 1111111 1 ## 2 1 ### 2 1'},
-  //     {'input' : '0 0 0', 'model': NOKIA, 'caseSensitive': true, 'expectedOutput' : '00 0 00 0 00'},
-  //     {'input' : 'A0 a0 0', 'model': NOKIA, 'caseSensitive': true, 'expectedOutput' : '2 00 0 2 00 0 00'},
-  //     {'input' : 'A0 a0 A0', 'model': NOKIA, 'caseSensitive': true, 'expectedOutput' : '2 00 0 2 00 0 # 2 00'},
-  //
-  //     {'input' : 'Hello World', 'model': SIEMENS, 'caseSensitive': true, 'expectedOutput' : '44 33 555 555 666 0 # 9 ### 666 777 555 3'},
-  //     {'input' : 'hello world', 'model': SIEMENS, 'caseSensitive': true, 'expectedOutput' : '# 44 33 555 555 666 0 9 666 777 555 3'},
-  //     {'input' : 'HELLO WORLD', 'model': SIEMENS, 'caseSensitive': true, 'expectedOutput' : '44 ## 33 555 555 666 0 9 666 777 555 3'},
-  //     {'input' : 'HeLlO WoRlD', 'model': SIEMENS, 'caseSensitive': true, 'expectedOutput' : '44 33 ## 555 ### 555 # 666 0 9 ### 666 # 777 ### 555 # 3'},
-  //     {'input' : 'hElLo wOrLd', 'model': SIEMENS, 'caseSensitive': true, 'expectedOutput' : '# 44 # 33 ### 555 # 555 ### 666 0 9 # 666 ### 777 # 555 ### 3'},
-  //     {'input' : '1a%B,c a.1.A.a.', 'model': SIEMENS, 'caseSensitive': true, 'expectedOutput' : '1111111 2 ***************** ## 22 11 ### 222 0 2 1 1111111 1 ## 2 1 ### 2 1'},
-  //     {'input' : '0 0 0', 'model': SIEMENS, 'caseSensitive': true, 'expectedOutput' : '00 0 00 0 00'},
-  //     {'input' : 'A0 a0 0', 'model': SIEMENS, 'caseSensitive': true, 'expectedOutput' : '2 00 0 2 00 0 00'},
-  //     {'input' : 'A0 a0 A0', 'model': SIEMENS, 'caseSensitive': true, 'expectedOutput' : '2 00 0 2 00 0 # 2 00'},
-  //   ];
-  //
-  //   _inputsToExpected.forEach((elem) {
-  //     test('input: ${elem['input']}, model: ${elem['model']}, caseSensitive: ${elem['caseSensitive']}', () {
-  //       var _actual = encodeVanityMultipleNumbers(elem['input'], elem['model'], caseSensitive: elem['caseSensitive']);
-  //       expect(_actual, elem['expectedOutput']);
-  //     });
-  //   });
-  // });
-
   group("Vanity.decodeVanityMultitap:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      // {'input' : null, 'expectedOutput' : ''},
-      // {'input' : '', 'expectedOutput' : ''},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : null, 'expectedOutput' : {'mode': PhoneCaseMode.CAMEL_CASE, 'output': ''}},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : '', 'expectedOutput' : {'mode': PhoneCaseMode.CAMEL_CASE, 'output': ''}},
 
       {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : '2', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': 'A'}},
       {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : '2 22 222 99 999 9999', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': 'Abcxyz'}},
@@ -194,6 +123,8 @@ void main() {
       {'model': phoneModelByName(PHONEMODEL_SAMSUNG_E1120), 'language': PhoneInputLanguage.GERMAN, 'input' : '222 ## 333', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': 'C  f'}},
       {'model': phoneModelByName(PHONEMODEL_SAMSUNG_E1120), 'language': PhoneInputLanguage.GERMAN, 'input' : '222 1 # 333 44', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': 'C. Fh'}},
 
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : '00 ## 9999 0 111 # * 0 22 5', 'expectedOutput' : {'mode': PhoneCaseMode.UPPER_CASE, 'output': '#+! BJ'}},
+
       {'model': phoneModelByName(PHONEMODEL_NOKIA_1650), 'language': PhoneInputLanguage.GERMAN, 'input' : '222 AAA ## 333 a 1 0', 'expectedOutput' : {'mode': PhoneCaseMode.CAMEL_CASE, 'output': 'Cf. '}},
       {'model': phoneModelByName(PHONEMODEL_SIEMENS_A65), 'language': PhoneInputLanguage.GERMAN, 'input' : '222 ### # &%/()33mmmm3 ## 44 # 5 0 # 1 Abc 7777', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': 'c333HJ. S'}},
     ];
@@ -202,6 +133,79 @@ void main() {
       test('input: ${elem['input']}, model: ${elem['model']}, language: ${elem['language']}', () {
         var _actual = decodeVanityMultitap(elem['input'], elem['model'], elem['language']);
         expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("Vanity.encodeVanityMultitap:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : null, 'expectedOutput' : {'mode': PhoneCaseMode.CAMEL_CASE, 'output': ''}},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : '', 'expectedOutput' : {'mode': PhoneCaseMode.CAMEL_CASE, 'output': ''}},
+
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'Abc', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '2 22 222'}},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'AB', 'expectedOutput' : {'mode': PhoneCaseMode.UPPER_CASE, 'output': '2 # 22'}},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'Abc. Abc', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '2 22 222 1 0 2 22 222'}},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'AB? AB', 'expectedOutput' : {'mode': PhoneCaseMode.UPPER_CASE, 'output': '2 # 22 111 0 2 # 22'}},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'abc', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '# 2 22 222'}},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'Abc. ab2', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '2 22 222 1 0 # 2 22 2222'}},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'Ab.c ab', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '2 22 1 222 0 2 22'}},
+
+      {'model': phoneModelByName(PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'Abc', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '2 22 222'}},
+      {'model': phoneModelByName(PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'ABC', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '2 * 22 * 222'}},
+      {'model': phoneModelByName(PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'Abc. Abc', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '2 22 222 0000 1 * 2 22 222'}},
+      {'model': phoneModelByName(PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'A1B2', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '2 11 * 22 2222'}},
+      {'model': phoneModelByName(PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'input' : 'a1B2', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '* 2 11 * 22 2222'}},
+
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_CD930), 'language': PhoneInputLanguage.UNSPECIFIED, 'input' : 'A1B2', 'expectedOutput' : {'mode': PhoneCaseMode.UPPER_CASE, 'output': '2 111 22 2222'}},
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_CD930), 'language': PhoneInputLanguage.UNSPECIFIED, 'input' : 'a1B2c', 'expectedOutput' : {'mode': PhoneCaseMode.UPPER_CASE, 'output': '111 22 2222'}},
+
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : 'Abc', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '2 22 222'}},
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : 'AB', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '2 0 22'}},
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : 'Abc. Abc', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '2 22 222 1 * 2 22 222'}},
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : 'Ab.c aB', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '2 22 1 222 * 2 0 22'}},
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'input' : '%>?A14Bz&%! c', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '11111111111111111111 1111111111111111111111111111111111 11 0 2 1111111111111111 4444 0 22 9999 1111111111111 11111111111111111111 111 * 00 222'}},
+
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'input' : 'AẄb', 'expectedOutput' : {'mode': PhoneCaseMode.LOWER_CASE, 'output': '2 22'}},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, model: ${elem['model']}, language: ${elem['language']}', () {
+        var _actual = encodeVanityMultitap(elem['input'], elem['model'], elem['language']);
+        expect(_actual, elem['expectedOutput']);
+      });
+    });
+  });
+
+  group("Vanity.reverseEncodeVanityMultitap:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'expectedOutput' : 'Abc', 'input' : '2 22 222'},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'expectedOutput' : 'AB', 'input' : '2 # 22'},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'expectedOutput' : 'Abc. Abc', 'input' : '2 22 222 1 0 2 22 222'},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'expectedOutput' : 'AB? AB', 'input' : '2 # 22 111 0 2 # 22'},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'expectedOutput' : 'abc', 'input' : '# 2 22 222'},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'expectedOutput' : 'Abc. ab2', 'input' : '2 22 222 1 0 # 2 22 2222'},
+      {'model': phoneModelByName(PHONEMODEL_NOKIA_6230), 'language': PhoneInputLanguage.GERMAN, 'expectedOutput' : 'Ab.c ab', 'input' : '2 22 1 222 0 2 22'},
+
+      {'model': phoneModelByName(PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'expectedOutput' : 'Abc', 'input' : '2 22 222'},
+      {'model': phoneModelByName(PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'expectedOutput' : 'ABC', 'input' : '2 * 22 * 222'},
+      {'model': phoneModelByName(PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'expectedOutput' : 'Abc. Abc', 'input' : '2 22 222 0000 1 * 2 22 222'},
+      {'model': phoneModelByName(PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'expectedOutput' : 'A1B2', 'input' : '2 11 * 22 2222'},
+      {'model': phoneModelByName(PHONEMODEL_SIEMENS_S35), 'language': PhoneInputLanguage.DUTCH, 'expectedOutput' : 'a1B2', 'input' : '* 2 11 * 22 2222'},
+
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_CD930), 'language': PhoneInputLanguage.UNSPECIFIED, 'expectedOutput' : 'A1B2', 'input' : '2 111 22 2222'},
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_CD930), 'language': PhoneInputLanguage.UNSPECIFIED, 'expectedOutput' : '1B2', 'input' : '111 22 2222'},
+
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'expectedOutput' : 'Abc', 'input' : '2 22 222'},
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'expectedOutput' : 'AB', 'input' : '2 0 22'},
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'expectedOutput' : 'Abc. Abc', 'input' : '2 22 222 1 * 2 22 222'},
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'expectedOutput' : 'Ab.c aB', 'input' : '2 22 1 222 * 2 0 22'},
+      {'model': phoneModelByName(PHONEMODEL_MOTOROLA_V600), 'language': PhoneInputLanguage.EXTENDED, 'expectedOutput' : '%>?A14Bz&%! c', 'input' : '11111111111111111111 1111111111111111111111111111111111 11 0 2 1111111111111111 4444 0 22 9999 1111111111111 11111111111111111111 111 * 00 222'},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, model: ${elem['model']}, language: ${elem['language']}', () {
+        var _actual = decodeVanityMultitap(elem['input'], elem['model'], elem['language']);
+        expect(_actual['output'], elem['expectedOutput']);
       });
     });
   });

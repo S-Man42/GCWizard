@@ -1,5 +1,5 @@
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/phone_models.dart';
-import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 PhoneCaseMode _getModeFromState(String state) {
   switch (state.split('_')[0]) {
@@ -10,41 +10,6 @@ PhoneCaseMode _getModeFromState(String state) {
     case 'char': return PhoneCaseMode.SPECIAL_CHARACTERS;
   }
 }
-
-// Map<String, String> _initializeCharacterGroups(Map<String, Map<String, String>> stateModel, Map<PhoneCaseMode, Map<String, String>> characterMap, PhoneInputLanguage inputLanguage) {
-//   Map<String, Map<String, String>> characterGroups = {};
-//
-//   var x = stateModel.forEach((key, value) {
-//     var state = key;
-//     var mode = _getModeFromState(state);
-//
-//     Map<String, String> stateCharacterGroups = {};
-//
-//     var availableStateCharacters = characterMap[mode].keys.join();
-//
-//     var transitionSymbols = value.values.join();
-//
-//     if (transitionSymbols.contains('_')) {
-//       var spaceSymbols = availableStateCharacters.replaceAll(RegExp(r'[^\s]'), '');
-//       stateCharacterGroups.putIfAbsent('_', () => spaceSymbols);
-//       availableStateCharacters = availableStateCharacters.replaceAll(RegExp(r'[^\s]'), '');
-//     }
-//
-//     ['0', '#', '*'].forEach((character) {
-//       if (transitionSymbols.contains(character)) {
-//         stateCharacterGroups.putIfAbsent(character, () => character);
-//         availableStateCharacters = availableStateCharacters.replaceAll(character, '');
-//       }
-//     });
-//
-//     if (transitionSymbols.contains('?')) {
-//       stateCharacterGroups.putIfAbsent('?', () => '?!.');
-//       availableStateCharacters = availableStateCharacters.replaceAll(RegExp(r'[^\?!\.]'), '');
-//     }
-//
-//     stateCharacterGroups.putIfAbsent('x', () => availableStateCharacters);
-//   });
-// }
 
 List<String> _sanitizeDecodeInput(String input) {
   var sanitizedInput = '';
@@ -149,4 +114,86 @@ Map<String, dynamic> decodeVanityMultitap(String input, PhoneModel model, PhoneI
   }
 
   return {'mode': currentMode, 'output': output};
+}
+
+_sanitizeEncodeInput(String input, Map<PhoneCaseMode, Map<String, String>> languageCharMap) {
+  var availableCharacters = languageCharMap.values.map((keyMap) => keyMap.values).join();
+  return input.split('').where((character) => availableCharacters.contains(character)).join();
+}
+
+Map<String, String> _findStateForCharacter(Map<String, Map<String, String>> stateModel, String currentState, Map<PhoneCaseMode, Map<String, String>> languageCharMap, String character, int numberHops, String transitions) {
+  if (numberHops > 3)
+    return null;
+
+  var mode = _getModeFromState(currentState);
+  var availableCharactersForMode = _getCharMap(languageCharMap, mode).values.join();
+
+  if (availableCharactersForMode.contains(character))
+    return {'transitions': transitions, 'state': currentState};
+
+  String newState;
+  Map<String, String> result;
+
+  for (String transitionCharacter in ['0', '*', '#']) {
+    newState = stateModel[currentState][transitionCharacter];
+    if (newState != null) {
+      result = _findStateForCharacter(stateModel, newState, languageCharMap, character, numberHops + 1, transitions + transitionCharacter);
+      if (result != null)
+        return result;
+    }
+  }
+
+  return null;
+}
+
+String _getInputForCharacter(Map<String, String> charMap, String character) {
+  var entry = charMap.entries.firstWhere((entry) => entry.value.contains(character));
+  return entry.key * (entry.value.indexOf(character) + 1);
+}
+
+Map<String, dynamic> encodeVanityMultitap(String input, PhoneModel model, PhoneInputLanguage inputLanguage) {
+  if (model == null || inputLanguage == null)
+    return null;
+
+  var stateModel = model.defaultCaseStateModel;
+
+  if (model.specificCaseStateModels != null && model.specificCaseStateModels[inputLanguage] != null)
+    stateModel = model.specificCaseStateModels[inputLanguage];
+
+  var currentState = stateModel[PHONE_STATEMODEL_START].values.first;
+  var currentMode = _getModeFromState(currentState);
+
+  if (input == null || input.isEmpty)
+    return {'mode': currentMode, 'output': ''};
+
+  var languageIndex = model.languages.indexWhere((langList) => langList.contains(inputLanguage));
+  var languageCharmap = model.characterMap[languageIndex];
+
+  input = _sanitizeEncodeInput(input, languageCharmap);
+  if (input.isEmpty)
+    return {'mode': currentMode, 'output': ''};
+
+  List<String> output = [];
+  var currentCharmap;
+
+  input.split('').forEach((character) {
+    var newState = _findStateForCharacter(stateModel, currentState, languageCharmap, character, 0, '');
+    if (newState == null) {
+      output.add(UNKNOWN_ELEMENT);
+      return;
+    }
+
+    if (newState['transitions'].length > 0)
+      output.add(newState['transitions']);
+
+    currentState = newState['state'];
+    currentMode = _getModeFromState(currentState);
+
+    currentCharmap = _getCharMap(languageCharmap, currentMode);
+
+    output.add(_getInputForCharacter(currentCharmap, character));
+    currentState = _getNewState(stateModel, currentState, character);
+  });
+
+  return {'mode': _getModeFromState(currentState), 'output': output.join(' ')};
 }

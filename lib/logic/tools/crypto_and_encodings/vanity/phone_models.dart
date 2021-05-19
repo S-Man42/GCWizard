@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/general_codebreakers/vigenere_breaker/bigrams/bigrams.dart';
-
 enum PhoneInputLanguage {EXTENDED, UNSPECIFIED, ENGLISH, GERMAN, PORTUGUESE, FRENCH, ITALIAN, TURKISH, BULGARIAN, SERBIAN, GREEK, CROATIAN, ROMANIAN, DUTCH, DANISH, NORWEGIAN, SWEDISH, FINNISH, SPANISH, CATALAN, SLOVENIAN}
 
 enum PhoneCaseMode {LOWER_CASE, UPPER_CASE, CAMEL_CASE, NUMBERS, SPECIAL_CHARACTERS}
@@ -152,6 +150,31 @@ final List<PhoneModel> phoneModels = [
             "8": "TUV8Ü",
             "9": "WXYZ9",
             "*": " "
+          },
+          PhoneCaseMode.NUMBERS : {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "*": " "
+          },
+          PhoneCaseMode.SPECIAL_CHARACTERS : {
+            "1": ".?!,@'-_:;()&\"~10¿¡%£\$¥¤€+×*/\\[]=><#§",
+            "2": "@_\\",
+            "3": "/:;",
+            "4": "\"&'",
+            "5": "()[]{}",
+            "6": "¿¡~",
+            "7": "<>=",
+            "8": "\$£¥¤€",
+            "9": "#%*",
+            "0": "+-×*/\\[]=><#§",
+            "*": " "
           }
         },
         {
@@ -177,6 +200,31 @@ final List<PhoneModel> phoneModels = [
             "7": "ФХЦЧ7",
             "8": "ШЩЪЬ8",
             "9": "ЮЯ9",
+            "*": " "
+          },
+          PhoneCaseMode.NUMBERS : {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "*": " "
+          },
+          PhoneCaseMode.SPECIAL_CHARACTERS : {
+            "1": ".?!,@'-_:;()&\"~10¿¡%£\$¥¤€+×*/\\[]=><#§",
+            "2": "@_\\",
+            "3": "/:;",
+            "4": "\"&'",
+            "5": "()[]{}",
+            "6": "¿¡~",
+            "7": "<>=",
+            "8": "\$£¥¤€",
+            "9": "#%*",
+            "0": "+-×*/\\[]=><#§",
             "*": " "
           }
         },
@@ -204,6 +252,31 @@ final List<PhoneModel> phoneModels = [
             "8": "TUV8Ш",
             "9": "WXYZ9",
             "*": " "
+          },
+          PhoneCaseMode.NUMBERS : {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "*": " "
+          },
+          PhoneCaseMode.SPECIAL_CHARACTERS : {
+            "1": ".?!,@'-_:;()&\"~10¿¡%£\$¥¤€+×*/\\[]=><#§",
+            "2": "@_\\",
+            "3": "/:;",
+            "4": "\"&'",
+            "5": "()[]{}",
+            "6": "¿¡~",
+            "7": "<>=",
+            "8": "\$£¥¤€",
+            "9": "#%*",
+            "0": "+-×*/\\[]=><#§",
+            "*": " "
           }
         },
         {
@@ -229,6 +302,31 @@ final List<PhoneModel> phoneModels = [
             "7": "PQRS7",
             "8": "TUV8",
             "9": "WXYZ9",
+            "*": " "
+          },
+          PhoneCaseMode.NUMBERS : {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "*": " "
+          },
+          PhoneCaseMode.SPECIAL_CHARACTERS : {
+            "1": ".?!,@'-_:;()&\"~10¿¡%£\$¥¤€+×*/\\[]=><#§",
+            "2": "@_\\",
+            "3": "/:;",
+            "4": "\"&'",
+            "5": "()[]{}",
+            "6": "¿¡~",
+            "7": "<>=",
+            "8": "\$£¥¤€",
+            "9": "#%*",
+            "0": "+-×*/\\[]=><#§",
             "*": " "
           }
         },
@@ -256,6 +354,31 @@ final List<PhoneModel> phoneModels = [
             "8": "TUV8",
             "9": "WXYZ9Ž",
             "*": " "
+          },
+          PhoneCaseMode.NUMBERS : {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "*": " "
+          },
+          PhoneCaseMode.SPECIAL_CHARACTERS : {
+            "1": ".?!,@'-_:;()&\"~10¿¡%£\$¥¤€+×*/\\[]=><#§",
+            "2": "@_\\",
+            "3": "/:;",
+            "4": "\"&'",
+            "5": "()[]{}",
+            "6": "¿¡~",
+            "7": "<>=",
+            "8": "\$£¥¤€",
+            "9": "#%*",
+            "0": "+-×*/\\[]=><#§",
+            "*": " "
           }
         },
         {
@@ -281,6 +404,31 @@ final List<PhoneModel> phoneModels = [
             "7": "PQRS7Ș",
             "8": "TUV8Ț",
             "9": "WXYZ9",
+            "*": " "
+          },
+          PhoneCaseMode.NUMBERS : {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "*": " "
+          },
+          PhoneCaseMode.SPECIAL_CHARACTERS : {
+            "1": ".?!,@'-_:;()&\"~10¿¡%£\$¥¤€+×*/\\[]=><#§",
+            "2": "@_\\",
+            "3": "/:;",
+            "4": "\"&'",
+            "5": "()[]{}",
+            "6": "¿¡~",
+            "7": "<>=",
+            "8": "\$£¥¤€",
+            "9": "#%*",
+            "0": "+-×*/\\[]=><#§",
             "*": " "
           }
         },
@@ -308,6 +456,31 @@ final List<PhoneModel> phoneModels = [
             "8": "TUV8",
             "9": "WXYZ9Ž",
             "*": " "
+          },
+          PhoneCaseMode.NUMBERS : {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "*": " "
+          },
+          PhoneCaseMode.SPECIAL_CHARACTERS : {
+            "1": ".?!,@'-_:;()&\"~10¿¡%£\$¥¤€+×*/\\[]=><#§",
+            "2": "@_\\",
+            "3": "/:;",
+            "4": "\"&'",
+            "5": "()[]{}",
+            "6": "¿¡~",
+            "7": "<>=",
+            "8": "\$£¥¤€",
+            "9": "#%*",
+            "0": "+-×*/\\[]=><#§",
+            "*": " "
           }
         }
       ],
@@ -321,7 +494,7 @@ final List<PhoneModel> phoneModels = [
       [PhoneInputLanguage.SLOVENIAN],
     ]
   ),
-  PhoneModel(PHONEMODEL_MOTOROLA_V600, 'assets/vanity_multitap_workflows/motorola_razr_v3.puml', null,
+  PhoneModel(PHONEMODEL_MOTOROLA_V600, 'assets/vanity_multitap_workflows/motorola_v600.puml', null,
       [
         {
           PhoneCaseMode.LOWER_CASE : {
@@ -346,6 +519,31 @@ final List<PhoneModel> phoneModels = [
             "7": "PQRS7ß",
             "8": "TUV8Ü",
             "9": "WXYZ9",
+            "*": " "
+          },
+          PhoneCaseMode.NUMBERS : {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "*": " "
+          },
+          PhoneCaseMode.SPECIAL_CHARACTERS : {
+            "1": ".?!,@'-_:;()&\"~10¿¡%£\$¥¤€+×*/\\[]=><#§",
+            "2": "@_\\",
+            "3": "/:;",
+            "4": "\"&'",
+            "5": "()[]{}",
+            "6": "¿¡~",
+            "7": "<>=",
+            "8": "\$£¥¤€",
+            "9": "#%*",
+            "0": "+-×*/\\[]=><#§",
             "*": " "
           }
         },
@@ -372,6 +570,31 @@ final List<PhoneModel> phoneModels = [
             "7": "PQRS7Şß",
             "8": "TUV8ÚÙÛÜ",
             "9": "WXYZ9",
+            "*": " "
+          },
+          PhoneCaseMode.NUMBERS : {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "*": " "
+          },
+          PhoneCaseMode.SPECIAL_CHARACTERS : {
+            "1": ".?!,@'-_:;()&\"~10¿¡%£\$¥¤€+×*/\\[]=><#§",
+            "2": "@_\\",
+            "3": "/:;",
+            "4": "\"&'",
+            "5": "()[]{}",
+            "6": "¿¡~",
+            "7": "<>=",
+            "8": "\$£¥¤€",
+            "9": "#%*",
+            "0": "+-×*/\\[]=><#§",
             "*": " "
           }
         }
