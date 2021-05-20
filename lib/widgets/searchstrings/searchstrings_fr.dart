@@ -5,6 +5,7 @@ const SEARCHSTRING_FR_AFFINE = '';
 const SEARCHSTRING_FR_ALPHABETVALUES =
     'valeur des lettres somme croisee produit alphanumerique alternance des lettres valeur des mots cyrillique russe grec espagnol allemand polonais';
 const SEARCHSTRING_FR_AMSCO = '';
+const SEARCHSTRING_FR_ANIMATED_IMAGES_MORSE_DECODER = 'image animée animée décodeur';
 const SEARCHSTRING_FR_APPARENTTEMPERATURE = 'ressentie';
 const SEARCHSTRING_FR_APPARENTTEMPERATURE_HEATINDEX = 'chaleur humidite';
 const SEARCHSTRING_FR_APPARENTTEMPERATURE_HUMIDEX = 'rosee point humidite';
