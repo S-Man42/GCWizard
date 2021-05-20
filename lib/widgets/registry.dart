@@ -188,6 +188,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_d_checker.d
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_e_checker.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_n_calculator.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rsa/rsa_phi_calculator.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/shadoks_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerboard.dart';
@@ -1300,6 +1301,17 @@ class Registry {
             SEARCHSTRING_DE_SEGMENTS,
             SEARCHSTRING_EN_SEGMENTS,
             SEARCHSTRING_FR_SEGMENTS
+          ]),
+      GCWTool(
+          tool: ShadoksNumbers(),
+          i18nPrefix: 'shadoksnumbers',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_SHADOKSNUMBERS,
+            SEARCHSTRING_DE_SHADOKSNUMBERS,
+            SEARCHSTRING_EN_SHADOKSNUMBERS,
+            SEARCHSTRING_FR_SHADOKSNUMBERS
           ]),
       GCWTool(
           tool: Skytale(),

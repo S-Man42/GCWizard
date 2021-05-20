@@ -115,6 +115,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_general.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/shadoks_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerboard.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/substitution.dart';
@@ -449,6 +450,7 @@ class _MainViewState extends State<MainView> {
         className(RotationGeneral()),
         className(RSASelection()),
         className(Scrabble()),
+        className(ShadoksNumbers()),
         className(Seasons()),
         className(SevenSegments()),
         className(SixteenSegments()),
