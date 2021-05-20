@@ -1969,7 +1969,7 @@
   "numeralwords_language_empty": "",
   "numeralwords_language_all_not_feasible": "Showing all languages is not feasible",
   "numeralwords_language_all_not_implemented": "Using all languages is not implemented yet",
-  "numeralwords_language_not_implemented": "Textsearch for this for this language is not implemented yet",
+  "numeralwords_language_not_implemented": "Textsearch for this language is not implemented yet",
   "numeralwords_mode_left": "Numeral Words",
   "numeralwords_mode_right": "Decode",
   "numeralwords_decodemode_left": "Entire words",
