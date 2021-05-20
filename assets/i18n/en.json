@@ -1964,6 +1964,8 @@
   "numeralwords_language_loj":  "Lojban",
   "numeralwords_language_jap":  "Japanese",
   "numeralwords_language_chi":  "Chinese",
+  "numeralwords_language_min":  "Minions",
+  "numeralwords_language_sha":  "Shadoks",
   "numeralwords_language_all": "All Languages",
   "numeralwords_language_num": "Number",
   "numeralwords_language_empty": "",

@@ -1,3 +1,4 @@
+import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 // https://www.languagesandnumbers.com/how-to-count-in-volapuk/en/vol/
@@ -70,6 +71,8 @@ enum NumeralWordsLanguage {
   LOJ,
   JAP,
   CHI,
+  MIN,
+  SHA,
   ALL,
   NUM
 }
@@ -147,6 +150,7 @@ final Map<String, String> ENGWordToNum = {
   'hundred': '100',
   'thousand': '1000',
   'degree': '°',
+  'degrees': '°',
   'point': '.',
   'komma': ',',
   'north': 'numeralwords_n',
@@ -1031,7 +1035,32 @@ final Map<String, String> JAPWordToNum = {
   'nana': '7',
   'hachi': '8',
   'kyū': '9',
-  'jū ': '10',
+  'jū': '10',
+};
+final Map<String, String> MINWordToNum = {
+  'hana': '1',
+  'dul': '2',
+  'sae': '3',
+  'duldul': '4',
+  'duldulhana': '5',
+  'saesae': '6',
+  'saesaehana': '7',
+  'saesaedul': '8',
+  'saesaesae': '9',
+  'saesaesaehana': '10',
+};
+final Map<String, String> SHAWordToNum = {
+  'ga': '0',
+  'bu': '1',
+  'zo': '2',
+  'meu': '3',
+  'buga': '4',
+  'bubu': '5',
+  'buzo': '6',
+  'bumeu': '7',
+  'zoga': '8',
+  'zobu': '9',
+  'zozo': '10',
 };
 
 Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
@@ -1072,6 +1101,8 @@ Map<NumeralWordsLanguage, String> NUMERALWORDS_LANGUAGES = {
   NumeralWordsLanguage.BAS: 'numeralwords_language_bas',
   NumeralWordsLanguage.KLI: 'numeralwords_language_kli',
   NumeralWordsLanguage.DOT: 'numeralwords_language_dot',
+  NumeralWordsLanguage.MIN: 'numeralwords_language_min',
+  NumeralWordsLanguage.SHA: 'numeralwords_language_sha',
 };
 
 Map<NumeralWordsLanguage, String> _languageList;
@@ -1114,6 +1145,8 @@ Map NumWords = {
   NumeralWordsLanguage.TAM: TAMWordToNum,
   NumeralWordsLanguage.FIN: FINWordToNum,
   NumeralWordsLanguage.QUE: QUEWordToNum,
+  NumeralWordsLanguage.MIN: MINWordToNum,
+  NumeralWordsLanguage.SHA: SHAWordToNum,
 };
 
 bool _isNumeral(String input) {
@@ -1549,7 +1582,11 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     // start decoding
     decodeText.forEach((element) {
       _alreadyFound = false;
-      if (_isNumeral(element)) {
+      if (_isShadoks(element))
+        output.add(NumeralWordsDecodeOutput(_decodeShadoks(element), element, _languageList[NumeralWordsLanguage.SHA]));
+      else if (_isMinion(element))
+        output.add(NumeralWordsDecodeOutput(_decodeMinion(element), element, _languageList[NumeralWordsLanguage.MIN]));
+      else if (_isNumeral(element)) {
         // checks - if is a number/digit
         output.add(NumeralWordsDecodeOutput(element, element, _languageList[NumeralWordsLanguage.NUM]));
       } else {
@@ -1623,4 +1660,28 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     }); // forEach element
     return output;
   }
+}
+
+bool _isShadoks(String element){
+  return (element.replaceAll('ga', '').replaceAll('bu', '').replaceAll('zo', '').replaceAll('meu', '') == '');
+}
+
+bool _isMinion(String element){
+  return (element.replaceAll('hana', '').replaceAll('dul', '').replaceAll('sae', '') == '');
+}
+
+String _decodeShadoks(String element){
+  return convertBase(element.replaceAll('ga', '0')
+      .replaceAll('bu', '1')
+      .replaceAll('zo', '2')
+      .replaceAll('meu', '3'), 4, 10);
+
+}
+
+String _decodeMinion(String element){
+  int number = 0;
+  element.replaceAll('hana', '1').replaceAll('dul', '2').replaceAll('sae', '3').split('').forEach((element) {
+    number = number + int.parse(element);
+  });
+  return number.toString();
 }
