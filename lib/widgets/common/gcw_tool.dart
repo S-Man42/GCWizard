@@ -265,6 +265,13 @@ class _GCWToolState extends State<GCWTool> {
 
     if (widget.autoScroll == false) return widget.tool;
 
-    return SingleChildScrollView(child: Padding(child: widget.tool, padding: EdgeInsets.all(10)));
+    return Scrollbar(
+      child: SingleChildScrollView(
+        child: Padding(
+          child: widget.tool,
+          padding: EdgeInsets.all(10),
+        ),
+      ),
+    );
   }
 }

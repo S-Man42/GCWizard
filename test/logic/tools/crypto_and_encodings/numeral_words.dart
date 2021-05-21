@@ -685,4 +685,33 @@ void main(){
       });
     });
   });
+
+  group("NumeralWords.decodeNumeralwordsEntireWordsGC97P76:", () {
+    List<Map<String, dynamic>> _inputsToExpected = [
+      {'input' : 'hat nocht arat hai bir dau mann satu hamar', 'language' : NumeralWordsLanguage.ALL, 'decodeMode' : true,
+        'expectedOutput' : [
+          NumeralWordsDecodeOutput('6', 'hat', 'numeralwords_language_ung'),
+          NumeralWordsDecodeOutput('0', 'nocht', 'numeralwords_language_sco'),
+          NumeralWordsDecodeOutput('4', 'arat', 'numeralwords_language_amh'),
+          NumeralWordsDecodeOutput('2', 'hai', 'numeralwords_language_vie'),
+          NumeralWordsDecodeOutput('1', 'bir', 'numeralwords_language_tur'),
+          NumeralWordsDecodeOutput('2', 'dau', 'numeralwords_language_meg'),
+          NumeralWordsDecodeOutput('0', 'mann', 'numeralwords_language_bre'),
+          NumeralWordsDecodeOutput('1', 'satu', 'numeralwords_language_ind'),
+          NumeralWordsDecodeOutput('10', 'hamar', 'numeralwords_language_bas'),
+        ]},
+    ];
+
+    _inputsToExpected.forEach((elem) {
+      test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
+        var _actual = decodeNumeralwords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'], elem['decodeMode']);
+        var length = elem['expectedOutput'].length;
+        for (int i = 0; i < length; i++) {
+          expect(_actual[i].number, elem['expectedOutput'][i].number);
+          expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
+          expect(_actual[i].language, elem['expectedOutput'][i].language);
+        }
+      });
+    });
+  });
 }

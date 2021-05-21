@@ -24,7 +24,9 @@ import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/icecodes_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/keyboard_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/imagesandfiles_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/maya_calendar_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
@@ -80,6 +82,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
@@ -125,6 +128,7 @@ import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagro
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
@@ -141,6 +145,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
@@ -155,12 +160,13 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacid
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
@@ -324,6 +330,7 @@ class _MainViewState extends State<MainView> {
         className(Affine()),
         className(AlphabetValues()),
         className(Amsco()),
+        className(AnimatedImage()),
         className(AnimatedImageMorseCode()),
         className(Antipodes()),
         className(ASCIIValues()),
@@ -337,6 +344,7 @@ class _MainViewState extends State<MainView> {
         className(BeaufortSelection()),
         className(Bifid()),
         className(Binary()),
+        className(Binary2Image()),
         className(BookCipher()),
         className(Brainfk()),
         className(BurrowsWheeler()),
@@ -355,6 +363,7 @@ class _MainViewState extends State<MainView> {
         className(ColorPicker()),
         className(Combination()),
         className(CombinationPermutation()),
+        className(ComplexNumbers()),
         className(CoordinateAveraging()),
         className(CrossBearing()),
         className(CrossSum()),
@@ -374,6 +383,7 @@ class _MainViewState extends State<MainView> {
         className(EllipsoidTransform()),
         className(EnclosedAreas()),
         className(Enigma()),
+        className(ExifReader()),
         className(EquilateralTriangle()),
         className(ESelection()),
         className(FormatConverter()),
@@ -401,9 +411,10 @@ class _MainViewState extends State<MainView> {
         className(IteratedCrossSumRangeFrequency()),
         className(Kamasutra()),
         className(Kenny()),
-        className(Keyboard()),
+        className(KeyboardSelection()),
         className(Malbolge()),
         className(MapView()),
+        className(MayaCalendarSelection()),
         className(MayaNumbersSelection()),
         className(MexicanArmyCipherWheel()),
         className(MoonPosition()),
@@ -425,6 +436,7 @@ class _MainViewState extends State<MainView> {
         className(Polybios()),
         className(PrimesSelection()),
         className(Projectiles()),
+        className(QuadraticEquation()),
         className(RailFence()),
         className(RC4()),
         className(Resection()),

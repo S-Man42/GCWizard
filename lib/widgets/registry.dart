@@ -8,6 +8,7 @@ import 'package:gc_wizard/widgets/main_menu/changelog.dart';
 import 'package:gc_wizard/widgets/main_menu/general_settings.dart';
 import 'package:gc_wizard/widgets/main_menu/licenses.dart';
 import 'package:gc_wizard/widgets/main_menu/settings_coordinates.dart';
+import 'package:gc_wizard/widgets/main_menu/settings_mayacalendar.dart';
 import 'package:gc_wizard/widgets/searchstrings/searchstrings_common.dart';
 import 'package:gc_wizard/widgets/searchstrings/searchstrings_de.dart';
 import 'package:gc_wizard/widgets/searchstrings/searchstrings_en.dart';
@@ -34,8 +35,10 @@ import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/icecodes_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/keyboard_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/imagesandfiles_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/language_games_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/maya_calendar_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_bell_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_catalan_selection.dart';
@@ -143,6 +146,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
@@ -199,6 +203,7 @@ import 'package:gc_wizard/widgets/tools/formula_solver/formula_solver_formulagro
 import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/image_colorcorrections.dart';
@@ -215,10 +220,12 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_pos
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/beaufort.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
@@ -237,8 +244,10 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/icecodes.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/e.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/phi.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/pi.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_layout.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/irrational_numbers/silver_ratio.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/bell.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/catalan.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/number_sequences/factorial.dart';
@@ -270,6 +279,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nea
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_nthprime.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/primes/primes_primeindex.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_colorcodecalculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/resistor/resistor_eia96.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
@@ -278,6 +288,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/s
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multiplenumbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singlenumbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_list.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_search.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 
 class Registry {
@@ -347,6 +359,17 @@ class Registry {
             SEARCHSTRING_DE_AMSCO,
             SEARCHSTRING_EN_AMSCO,
             SEARCHSTRING_FR_AMSCO
+          ]),
+       GCWTool(
+          tool: AnimatedImage(),
+          i18nPrefix: 'animated_image',
+          category: ToolCategory.IMAGES_AND_FILES,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_ANIMATED_IMAGES,
+            SEARCHSTRING_DE_ANIMATED_IMAGES,
+            SEARCHSTRING_EN_ANIMATED_IMAGES,
+            SEARCHSTRING_FR_ANIMATED_IMAGES
           ]),
       GCWTool(
           tool: AnimatedImageMorseCode(),
@@ -466,6 +489,17 @@ class Registry {
             SEARCHSTRING_FR_BEAUFORT
           ]),
       GCWTool(
+          tool: Bifid(),
+          i18nPrefix: 'bifid',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID,
+            SEARCHSTRING_COMMON_BIFID
+          ]),
+      GCWTool(
           tool: Binary(),
           i18nPrefix: 'binary',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
@@ -477,15 +511,13 @@ class Registry {
             SEARCHSTRING_FR_BINARY
           ]),
       GCWTool(
-          tool: Bifid(),
-          i18nPrefix: 'bifid',
-          category: ToolCategory.CRYPTOGRAPHY,
-          missingHelpLocales: [],
+          tool: Binary2Image(),
+          i18nPrefix: 'binary2image',
+          category: ToolCategory.IMAGES_AND_FILES,
           searchStrings: [
-            SEARCHSTRING_COMMON_BIFID,
-            SEARCHSTRING_COMMON_BIFID,
-            SEARCHSTRING_COMMON_BIFID,
-            SEARCHSTRING_COMMON_BIFID
+            SEARCHSTRING_DE_HEXSTRING2FILE,
+            SEARCHSTRING_EN_HEXSTRING2FILE,
+            SEARCHSTRING_FR_HEXSTRING2FILE
           ]),
       GCWTool(
           tool: BookCipher(),
@@ -610,7 +642,21 @@ class Registry {
             SEARCHSTRING_EN_COMBINATORICS,
             SEARCHSTRING_FR_COMBINATORICS
           ]),
-      GCWTool(tool: CoordsSelection(), i18nPrefix: 'coords_selection', missingHelpLocales: [], searchStrings: [
+      GCWTool(
+          tool: ComplexNumbers(),
+          i18nPrefix: 'complex_numbers',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: [
+          ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_COMPLEXNUMBERS,
+            SEARCHSTRING_DE_COMPLEXNUMBERS,
+            SEARCHSTRING_EN_COMPLEXNUMBERS,
+            SEARCHSTRING_FR_COMPLEXNUMBERS
+          ]),
+      GCWTool(tool: CoordsSelection(), i18nPrefix: 'coords_selection', missingHelpLocales: [
+        'fr'
+      ], searchStrings: [
         SEARCHSTRING_COMMON_COORDINATES,
         SEARCHSTRING_DE_COORDINATES,
         SEARCHSTRING_EN_COORDINATES,
@@ -731,21 +777,44 @@ class Registry {
           searchStrings: [
             SEARCHSTRING_COMMON_ESOTERICPROGRAMMINGLANGUAGE,
             SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
+            SEARCHSTRING_DE_ESOTERICPROGRAMMINGLANGUAGE,
             SEARCHSTRING_EN_ESOTERICPROGRAMMINGLANGUAGE,
-            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE
+            SEARCHSTRING_FR_ESOTERICPROGRAMMINGLANGUAGE,
           ]),
-      GCWTool(tool: FormulaSolverFormulaGroups(), i18nPrefix: 'formulasolver', missingHelpLocales: [], searchStrings: [
-        SEARCHSTRING_COMMON_FORMULASOLVER,
-        SEARCHSTRING_DE_FORMULASOLVER,
-        SEARCHSTRING_EN_FORMULASOLVER,
-        SEARCHSTRING_FR_FORMULASOLVER
-      ]),
-      GCWTool(tool: GamesSelection(), i18nPrefix: 'games_selection', missingHelpLocales: [], searchStrings: [
-        SEARCHSTRING_COMMON_GAMES,
-        SEARCHSTRING_DE_GAMES,
-        SEARCHSTRING_EN_GAMES,
-        SEARCHSTRING_FR_GAMES
-      ]),
+      GCWTool(
+          tool: ExifReader(),
+          i18nPrefix: 'exif',
+          category: ToolCategory.IMAGES_AND_FILES,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_EXIF,
+            SEARCHSTRING_DE_EXIF,
+            SEARCHSTRING_EN_EXIF,
+            SEARCHSTRING_FR_EXIF,
+          ]),
+
+      GCWTool(
+        tool: FormulaSolverFormulaGroups(),
+        i18nPrefix: 'formulasolver',
+        missingHelpLocales: [],
+        searchStrings: [
+          SEARCHSTRING_COMMON_FORMULASOLVER,
+          SEARCHSTRING_DE_FORMULASOLVER,
+          SEARCHSTRING_EN_FORMULASOLVER,
+          SEARCHSTRING_FR_FORMULASOLVER,
+        ],
+      ),
+      GCWTool(
+        tool: GamesSelection(),
+        i18nPrefix: 'games_selection',
+        missingHelpLocales: [],
+        searchStrings: [
+          SEARCHSTRING_COMMON_GAMES,
+          SEARCHSTRING_DE_GAMES,
+          SEARCHSTRING_EN_GAMES,
+          SEARCHSTRING_FR_GAMES,
+        ],
+      ),
       GCWTool(
           tool: Gade(),
           i18nPrefix: 'gade',
@@ -761,7 +830,7 @@ class Registry {
             SEARCHSTRING_COMMON_GCCODE,
             SEARCHSTRING_DE_GCCODE,
             SEARCHSTRING_EN_GCCODE,
-            SEARCHSTRING_FR_GCCODE
+            SEARCHSTRING_FR_GCCODE,
           ]),
       GCWTool(
           tool: GeneralCodebreakersSelection(),
@@ -771,7 +840,7 @@ class Registry {
             SEARCHSTRING_COMMON_CODEBREAKER,
             SEARCHSTRING_DE_CODEBREAKER,
             SEARCHSTRING_EN_CODEBREAKER,
-            SEARCHSTRING_FR_CODEBREAKER
+            SEARCHSTRING_FR_CODEBREAKER,
           ]),
       GCWTool(
           tool: Gray(),
@@ -820,6 +889,7 @@ class Registry {
             SEARCHSTRING_FR_HEXSTRING2FILE
           ]),
       GCWTool(
+
           tool: Homophone(),
           i18nPrefix: 'homophone',
           category: ToolCategory.CRYPTOGRAPHY,
@@ -857,10 +927,10 @@ class Registry {
             SEARCHSTRING_FR_IMAGESANDFILESSELECTION
           ]),
       GCWTool(
-        tool: ImageColorCorrections(),
-        autoScroll: false,
-        category: ToolCategory.IMAGES_AND_FILES,
-        i18nPrefix: 'image_colorcorrections',
+          tool: ImageColorCorrections(),
+          autoScroll: false,
+          category: ToolCategory.IMAGES_AND_FILES,
+          i18nPrefix: 'image_colorcorrections',
           missingHelpLocales: [],
           searchStrings: [
             SEARCHSTRING_COMMON_IMAGES,
@@ -898,9 +968,21 @@ class Registry {
             SEARCHSTRING_EN_KENNY,
             SEARCHSTRING_FR_KENNY
           ]),
+      GCWTool(tool: KeyboardLayout(), i18nPrefix: 'keyboard_layout', missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_KEYBOARD,
+        SEARCHSTRING_DE_KEYBOARD,
+        SEARCHSTRING_EN_KEYBOARD,
+        SEARCHSTRING_FR_KEYBOARD
+      ]),
+      GCWTool(tool: KeyboardNumbers(), i18nPrefix: 'keyboard_numbers', missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_KEYBOARD,
+        SEARCHSTRING_DE_KEYBOARD,
+        SEARCHSTRING_EN_KEYBOARD,
+        SEARCHSTRING_FR_KEYBOARD
+      ]),
       GCWTool(
-          tool: Keyboard(),
-          i18nPrefix: 'keyboard',
+          tool: KeyboardSelection(),
+          i18nPrefix: 'keyboard_selection',
           category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
           missingHelpLocales: [],
           searchStrings: [
@@ -919,6 +1001,16 @@ class Registry {
             SEARCHSTRING_DE_LANGUAGEGAMES,
             SEARCHSTRING_EN_LANGUAGEGAMES,
             SEARCHSTRING_FR_LANGUAGEGAMES
+          ]),
+      GCWTool(
+          tool: MayaCalendarSelection(),
+          i18nPrefix: 'mayacalendar_selection',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_MAYA_CALENDAR,
+            SEARCHSTRING_DE_MAYA_CALENDAR,
+            SEARCHSTRING_EN_MAYA_CALENDAR,
+            SEARCHSTRING_FR_MAYA_CALENDAR
           ]),
       GCWTool(
           tool: MayaNumbersSelection(),
@@ -1102,16 +1194,24 @@ class Registry {
             SEARCHSTRING_FR_PROJECTILES
           ]),
       GCWTool(
-          tool: RailFence(),
-          i18nPrefix: 'railfence',
-          category: ToolCategory.CRYPTOGRAPHY,
+          tool: QuadraticEquation(),
+          i18nPrefix: 'quadratic_equation',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
           missingHelpLocales: [],
           searchStrings: [
-            SEARCHSTRING_COMMON_RAILFENCE,
-            SEARCHSTRING_DE_RAILFENCE,
-            SEARCHSTRING_EN_RAILFENCE,
-            SEARCHSTRING_FR_RAILFENCE
+            SEARCHSTRING_COMMON_QUADRATICEQUATION,
+            SEARCHSTRING_DE_QUADRATICEQUATION,
+            SEARCHSTRING_EN_QUADRATICEQUATION,
+            SEARCHSTRING_FR_QUADRATICEQUATION
           ]),
+      GCWTool(tool: RailFence(), i18nPrefix: 'railfence', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
+        'fr'
+      ], searchStrings: [
+        SEARCHSTRING_COMMON_RAILFENCE,
+        SEARCHSTRING_DE_RAILFENCE,
+        SEARCHSTRING_EN_RAILFENCE,
+        SEARCHSTRING_FR_RAILFENCE
+      ]),
       GCWTool(
           tool: RC4(),
           i18nPrefix: 'rc4',
@@ -3067,6 +3167,8 @@ class Registry {
       GCWTool(tool: GeneralSettings(), i18nPrefix: 'settings_general', missingHelpLocales: [], searchStrings: []),
       GCWTool(
           tool: CoordinatesSettings(), i18nPrefix: 'settings_coordinates', missingHelpLocales: [], searchStrings: []),
+      GCWTool(
+          tool: MayaCalendarSettings(), i18nPrefix: 'settings_mayacalendar_correlation_number', missingHelpLocales: [], searchStrings: []),
       GCWTool(tool: Changelog(), i18nPrefix: 'mainmenu_changelog', suppressHelpButton: true, searchStrings: [
         SEARCHSTRING_COMMON_CHANGELOG,
         SEARCHSTRING_DE_CHANGELOG,
@@ -3094,6 +3196,14 @@ class Registry {
         SEARCHSTRING_DE_LICENSES,
         SEARCHSTRING_EN_LICENSES,
         SEARCHSTRING_FR_LICENSES
+      ]),
+
+      //MayaCalendar Selection **************************************************************************************
+      GCWTool(tool: MayaCalendar(), i18nPrefix: 'mayacalendar', missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_MAYA_CALENDAR,
+        SEARCHSTRING_DE_MAYA_CALENDAR,
+        SEARCHSTRING_EN_MAYA_CALENDAR,
+        SEARCHSTRING_FR_MAYA_CALENDAR
       ]),
 
       //MayaNumbers Selection **************************************************************************************
@@ -5078,7 +5188,19 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_BRAHMI_NUMERALS,
         SEARCHSTRING_FR_SYMBOL_BRAHMI_NUMERALS
       ]),
-      GCWSymbolTableTool(symbolKey: 'braille', symbolSearchStrings: [
+      GCWSymbolTableTool(symbolKey: 'braille_de', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_BRAILLE,
+        SEARCHSTRING_DE_BRAILLE,
+        SEARCHSTRING_EN_BRAILLE,
+        SEARCHSTRING_FR_BRAILLE
+      ]),
+      GCWSymbolTableTool(symbolKey: 'braille_en', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_BRAILLE,
+        SEARCHSTRING_DE_BRAILLE,
+        SEARCHSTRING_EN_BRAILLE,
+        SEARCHSTRING_FR_BRAILLE
+      ]),
+      GCWSymbolTableTool(symbolKey: 'braille_fr', symbolSearchStrings: [
         SEARCHSTRING_COMMON_BRAILLE,
         SEARCHSTRING_DE_BRAILLE,
         SEARCHSTRING_EN_BRAILLE,
@@ -5402,6 +5524,12 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_GARGISH,
         SEARCHSTRING_FR_SYMBOL_GARGISH
       ]),
+      GCWSymbolTableTool(symbolKey: 'gc_attributes', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_GC_ATTRIBUTES,
+        SEARCHSTRING_DE_SYMBOL_GC_ATTRIBUTES,
+        SEARCHSTRING_EN_SYMBOL_GC_ATTRIBUTES,
+        SEARCHSTRING_FR_SYMBOL_GC_ATTRIBUTES
+      ]),
       GCWSymbolTableTool(symbolKey: 'genreich', symbolSearchStrings: [
         SEARCHSTRING_COMMON_GLAGOLITIC,
         SEARCHSTRING_DE_GLAGOLITIC,
@@ -5657,6 +5785,36 @@ class Registry {
         SEARCHSTRING_DE_SYMBOL_MATORAN,
         SEARCHSTRING_EN_SYMBOL_MATORAN,
         SEARCHSTRING_FR_SYMBOL_MATORAN
+      ]),
+      GCWSymbolTableTool(symbolKey: 'maya_calendar_longcount', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_LONGCOUNT,
+        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_LONGCOUNT,
+        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_LONGCOUNT,
+        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_LONGCOUNT
+      ]),
+      GCWSymbolTableTool(symbolKey: 'maya_calendar_haab_codices', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_HAAB,
+        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_HAAB,
+        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_HAAB,
+        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_HAAB
+      ]),
+      GCWSymbolTableTool(symbolKey: 'maya_calendar_haab_inscripts', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_HAAB,
+        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_HAAB,
+        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_HAAB,
+        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_HAAB
+      ]),
+      GCWSymbolTableTool(symbolKey: 'maya_calendar_tzolkin_codices', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_TZOLKIN,
+        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_TZOLKIN,
+        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_TZOLKIN,
+        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_TZOLKIN
+      ]),
+      GCWSymbolTableTool(symbolKey: 'maya_calendar_tzolkin_inscripts', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_MAYA_CALENDAR_TZOLKIN,
+        SEARCHSTRING_DE_SYMBOL_MAYA_CALENDAR_TZOLKIN,
+        SEARCHSTRING_EN_SYMBOL_MAYA_CALENDAR_TZOLKIN,
+        SEARCHSTRING_FR_SYMBOL_MAYA_CALENDAR_TZOLKIN
       ]),
       GCWSymbolTableTool(symbolKey: 'maya_numerals', symbolSearchStrings: [
         SEARCHSTRING_COMMON_MAYANUMBERS,
@@ -6256,6 +6414,34 @@ class Registry {
             SEARCHSTRING_DE_VANITYMULTIPLENUMBERS,
             SEARCHSTRING_EN_VANITYMULTIPLENUMBERS,
             SEARCHSTRING_FR_VANITYMULTIPLENUMBERS
+          ]),
+      GCWTool(
+          tool: VanityWordsList(),
+          i18nPrefix: 'vanity_words_list',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_VANITY,
+            SEARCHSTRING_DE_VANITY,
+            SEARCHSTRING_EN_VANITY,
+            SEARCHSTRING_FR_VANITY,
+            SEARCHSTRING_COMMON_VANITYWORDSLIST,
+            SEARCHSTRING_DE_VANITYWORDSLIST,
+            SEARCHSTRING_EN_VANITYWORDSLIST,
+            SEARCHSTRING_FR_VANITYWORDSLIST
+          ]),
+      GCWTool(
+          tool: VanityWordsTextSearch(),
+          i18nPrefix: 'vanity_words_search',
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_VANITY,
+            SEARCHSTRING_DE_VANITY,
+            SEARCHSTRING_EN_VANITY,
+            SEARCHSTRING_FR_VANITY,
+            SEARCHSTRING_COMMON_VANITYTEXTSEARCH,
+            SEARCHSTRING_DE_VANITYTEXTSEARCH,
+            SEARCHSTRING_EN_VANITYTEXTSEARCH,
+            SEARCHSTRING_FR_VANITYTEXTSEARCH
           ]),
 
       //VigenereSelection *******************************************************************************************

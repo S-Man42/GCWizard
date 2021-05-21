@@ -42,6 +42,8 @@ PODS:
   - FMDB/standard (2.7.5)
   - location (0.0.1):
     - Flutter
+  - open_file (0.0.1):
+    - Flutter
   - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
@@ -68,6 +70,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - location (from `.symlinks/plugins/location/ios`)
+  - open_file (from `.symlinks/plugins/open_file/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
@@ -94,6 +97,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/fluttertoast/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
+  open_file:
+    :path: ".symlinks/plugins/open_file/ios"
   package_info:
     :path: ".symlinks/plugins/package_info/ios"
   path_provider:
@@ -117,6 +122,7 @@ SPEC CHECKSUMS:
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
+  open_file: 02eb5cb6b21264bd3a696876f5afbfb7ca4f4b7d
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
