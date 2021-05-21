@@ -9,7 +9,7 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_gallery_checkbox.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/animated_image_morse_decoder.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/animated_image_morse_code.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_button.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_async_executer.dart';
@@ -26,17 +26,17 @@ import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:intl/intl.dart';
 
 
-class AnimatedImageMorseDecoder extends StatefulWidget {
+class AnimatedImageMorseCode extends StatefulWidget {
   final PlatformFile platformFile;
 
-  const AnimatedImageMorseDecoder({Key key, this.platformFile})
+  const AnimatedImageMorseCode({Key key, this.platformFile})
       : super(key: key);
 
   @override
-  AnimatedImageMorseDecoderState createState() => AnimatedImageMorseDecoderState();
+  AnimatedImageMorseCodeState createState() => AnimatedImageMorseCodeState();
 }
 
-class AnimatedImageMorseDecoderState extends State<AnimatedImageMorseDecoder> {
+class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
   Map<String, dynamic> _outData;
   var _marked = <bool>[];
   Map<String, dynamic> _outText;
@@ -75,22 +75,22 @@ class AnimatedImageMorseDecoderState extends State<AnimatedImageMorseDecoder> {
     }
 
     return Column(
-        children: <Widget>[
-          GCWTwoOptionsSwitch(
-            value: _currentMode,
-            onChanged: (value) {
-              setState(() {
-                _currentMode = value;
-              });
-            },
-          ),
-          _currentMode == GCWSwitchPosition.right ?
-            _decodeWidgets()
-          :
-            _encodeWidgets()
-        ]);
+      children: <Widget>[
+        GCWTwoOptionsSwitch(
+          value: _currentMode,
+          onChanged: (value) {
+            setState(() {
+              _currentMode = value;
+            });
+          },
+        ),
+        _currentMode == GCWSwitchPosition.right ?
+          _decodeWidgets()
+        :
+          _encodeWidgets()
+      ]
+    );
   }
-
 
   Widget _decodeWidgets() {
     return Column(
@@ -159,6 +159,72 @@ class AnimatedImageMorseDecoderState extends State<AnimatedImageMorseDecoder> {
         )
       ]
     );
+  }
+
+  Widget _buildOutputDecode() {
+    if (_outData == null)
+      return null;
+
+    var durations = <List<dynamic>>[];
+    if (_outData["durations"] != null && _outData["durations"]?.length > 1) {
+      var counter = 0;
+      durations.addAll([[i18n(context, 'animated_image_morse_code_table_index'), i18n(context, 'animated_image_morse_code_table_duration')]]);
+      _outData["durations"].forEach((value) {
+        counter++;
+        durations.addAll([[counter, value]]);
+      });
+    };
+
+    return Column(
+        children: <Widget>[
+          _play
+              ?
+          Image.memory(_platformFile.bytes)
+              :
+          _filtered
+              ?
+          GCWGalleryCheckbox(
+            imageData: _convertImageDataFiltered(_outData["images"], _outData["durations"], _outData["imagesFiltered"]),
+            onDoubleTap: (index) {
+              setState(() {
+                List<List<int>> imagesFiltered = _outData["imagesFiltered"];
+
+                _marked[imagesFiltered[index].first] = !_marked[imagesFiltered[index].first];
+                imagesFiltered[index].forEach((idx) {
+                  _marked[idx] = _marked[imagesFiltered[index].first];
+                });
+                _outText = decodeMorseCode(_outData["durations"], _marked);
+              });
+            },
+          )
+              :
+          GCWGalleryCheckbox(
+            imageData: _convertImageData(_outData["images"], _outData["durations"]),
+            onDoubleTap: (index) {
+              setState(() {
+                if (_marked != null && index < _marked.length)
+                  _marked[index] = !_marked[index];
+                _outText = decodeMorseCode(_outData["durations"], _marked);
+              });
+            },
+          ),
+
+          _buildDurationOutput(durations)
+        ]);
+  }
+
+  Widget _buildDurationOutput(List<List<dynamic>> durations) {
+    if (durations == null)
+      return Container();
+
+    return Column(
+        children: <Widget>[
+          //GCWDivider(),
+          GCWDefaultOutput( child: GCWOutputText(text: _outText == null ? "" : _outText["text"])),
+          GCWOutput(title: "Morse-Code", child: GCWOutputText(text: _outText == null ? "" : _outText["morse"])),
+          //   child: Column(children: columnedMultiLineOutput(context, durations, flexValues: [1, 2], hasHeader: true)),
+          // )
+        ]);
   }
 
   Widget _encodeWidgets() {
@@ -232,7 +298,7 @@ class AnimatedImageMorseDecoderState extends State<AnimatedImageMorseDecoder> {
         },
       ),
       _buildEncodeSubmitButton(),
-      GCWDefaultOutput(child: _showOutputEncode(_encodeOutputImage),
+      GCWDefaultOutput(child: _buildOutputEncode(),
           trailing: Row (
             children: <Widget>[
               GCWIconButton(
@@ -240,7 +306,7 @@ class AnimatedImageMorseDecoderState extends State<AnimatedImageMorseDecoder> {
                 size: IconButtonSize.SMALL,
                 iconColor: _encodeOutputImage == null ? Colors.grey : null,
                 onPressed: () {
-                  _outData == null ? null : _exportFile(context, _encodeOutputImage);
+                  _encodeOutputImage == null ? null : _exportFile(context, _encodeOutputImage);
                 },
               )
             ]
@@ -249,82 +315,38 @@ class AnimatedImageMorseDecoderState extends State<AnimatedImageMorseDecoder> {
     ]);
   }
 
-
-  Widget _buildOutputDecode() {
-    if (_outData == null)
-      return null;
-
-    var durations = <List<dynamic>>[];
-    if (_outData["durations"] != null && _outData["durations"]?.length > 1) {
-      var counter = 0;
-      durations.addAll([[i18n(context, 'animated_image_morse_decoder_table_index'), i18n(context, 'animated_image_morse_decoder_table_duration')]]);
-      _outData["durations"].forEach((value) {
-        counter++;
-        durations.addAll([[counter, value]]);
-      });
-    };
-
-    return Column(
-      children: <Widget>[
-        _play
-          ?
-            Image.memory(_platformFile.bytes)
-          :
-            _filtered
-              ?
-                GCWGalleryCheckbox(
-                    imageData: _convertImageDataFiltered(_outData["images"], _outData["durations"], _outData["imagesFiltered"]),
-                    onDoubleTap: (index) {
-                      setState(() {
-                        List<List<int>> imagesFiltered = _outData["imagesFiltered"];
-
-                        _marked[imagesFiltered[index].first] = !_marked[imagesFiltered[index].first];
-                        imagesFiltered[index].forEach((idx) {
-                          _marked[idx] = _marked[imagesFiltered[index].first];
-                         });
-                        _outText = decodeMorseCode(_outData["durations"], _marked);
-                      });
-                    },
-                )
-              :
-                GCWGalleryCheckbox(
-                    imageData: _convertImageData(_outData["images"], _outData["durations"]),
-                    onDoubleTap: (index) {
-                      setState(() {
-                        if (_marked != null && index < _marked.length)
-                          _marked[index] = !_marked[index];
-                        _outText = decodeMorseCode(_outData["durations"], _marked);
-                      });
-                    },
-                ),
-
-        _buildDurationOutput(durations)
-      ]);
+  Widget _buildEncodeSubmitButton() {
+    return GCWSubmitButton(onPressed: () async {
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return Center(
+            child: Container(
+              child: GCWAsyncExecuter(
+                isolatedFunction: createImageAsync,
+                parameter: _buildJobDataEncode(),
+                onReady: (data) => _saveOutputEncode(data),
+                isOverlay: true,
+              ),
+              height: 220,
+              width: 150,
+            ),
+          );
+        },
+      );
+    });
   }
 
-  Widget _buildDurationOutput(List<List<dynamic>> durations) {
-    if (durations == null)
-      return Container();
-
-    return Column(
-        children: <Widget>[
-        //GCWDivider(),
-        GCWDefaultOutput( child: GCWOutputText(text: _outText == null ? "" : _outText["text"])),
-        GCWOutput(title: "Morse-Code", child: GCWOutputText(text: _outText == null ? "" : _outText["morse"])),
-        //   child: Column(children: columnedMultiLineOutput(context, durations, flexValues: [1, 2], hasHeader: true)),
-        // )
-    ]);
-  }
-
-  Widget _showOutputEncode(Uint8List output) {
-    _encodeOutputImage = output;
+  Widget _buildOutputEncode() {
     if (_encodeOutputImage == null)
       return null;
 
     return Column(
         children: <Widget>[
           Image.memory(_encodeOutputImage)
-        ]);
+        ]
+    );
   }
 
   _initMarkedList(List<Uint8List> images) {
@@ -368,7 +390,6 @@ class AnimatedImageMorseDecoderState extends State<AnimatedImageMorseDecoder> {
     return list;
   }
 
-
   _analysePlatformFileAsync() async {
       await showDialog(
         context: context,
@@ -379,7 +400,7 @@ class AnimatedImageMorseDecoderState extends State<AnimatedImageMorseDecoder> {
               child: GCWAsyncExecuter(
                 isolatedFunction: analyseImageAsync,
                 parameter: _buildJobDataDecode(),
-                onReady: (data) => _showOutputDecode(data),
+                onReady: (data) => _saveOutputDecode(data),
                 isOverlay: true,
               ),
               height: 220,
@@ -389,30 +410,6 @@ class AnimatedImageMorseDecoderState extends State<AnimatedImageMorseDecoder> {
         },
       );
   }
-
-  Widget _buildEncodeSubmitButton() {
-    return GCWSubmitButton(onPressed: () async {
-      await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return Center(
-            child: Container(
-              child: GCWAsyncExecuter(
-                isolatedFunction: createImageAsync,
-                parameter: _buildJobDataEncode(),
-                onReady: (data) => _showOutputEncode(data),
-                isOverlay: true,
-              ),
-              height: 220,
-              width: 150,
-            ),
-          );
-        },
-      );
-    });
-  }
-
 
   Future<GCWAsyncExecuterParameters> _buildJobDataDecode() async {
     return GCWAsyncExecuterParameters(_platformFile.bytes);
@@ -422,7 +419,7 @@ class AnimatedImageMorseDecoderState extends State<AnimatedImageMorseDecoder> {
     return GCWAsyncExecuterParameters(Tuple4<Uint8List, Uint8List, String, int>(_highImage, _lowImage, _currentInput, _currentDitDuration));
   }
 
-  _showOutputDecode(Map<String, dynamic> output) {
+  _saveOutputDecode(Map<String, dynamic> output) {
     _outData = output;
     _marked = null;
 
@@ -434,6 +431,14 @@ class AnimatedImageMorseDecoderState extends State<AnimatedImageMorseDecoder> {
         images[i] = images[linkList[i]];
       }
     }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+  }
+
+  _saveOutputEncode(Uint8List output) {
+    _encodeOutputImage = output;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});

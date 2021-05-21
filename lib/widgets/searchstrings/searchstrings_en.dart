@@ -5,7 +5,7 @@ const SEARCHSTRING_EN_AFFINE = '';
 const SEARCHSTRING_EN_ALPHABETVALUES =
     'alphanumeric lettervalues checksums crosssums digits alternate alphabetvalues cyrillic greek german spanish polish russian';
 const SEARCHSTRING_EN_AMSCO = '';
-const SEARCHSTRING_EN_ANIMATED_IMAGES_MORSE_DECODER = 'animated moved image decoder';
+const SEARCHSTRING_EN_ANIMATED_IMAGES_MORSE_CODE = 'animated moved image decoder';
 const SEARCHSTRING_EN_APPARENTTEMPERATURE = 'apparent perceived temperature';
 const SEARCHSTRING_EN_APPARENTTEMPERATURE_HEATINDEX = 'humidity heatindex';
 const SEARCHSTRING_EN_APPARENTTEMPERATURE_HUMIDEX = 'humidity  canadian canada  dewpoint';

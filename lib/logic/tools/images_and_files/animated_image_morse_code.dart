@@ -102,51 +102,51 @@ Future<Uint8List> createImageAsync(dynamic jobData) async {
   return output;
 }
 
-Future<Uint8List> createImage(Uint8List highImage, Uint8List lowImage, String input, int currentDitDuration, {SendPort sendAsyncPort}) async {
+Future<Uint8List> createImage(Uint8List highImage, Uint8List lowImage, String input, int ditDuration, {SendPort sendAsyncPort}) async {
   input = encodeMorse(input);
   if (input == null || input == '') return null;
   try {
-    var images = <img.Image>[];
     var _highImage = img.decodeImage(highImage);
-    var _lowImage = img.decodeImage(highImage);
+    var _lowImage = img.decodeImage(lowImage);
+    var animation = img.Animation();
 
     for (var i=0; i < input.length; i++ ) {
       switch (input[i]) {
         case '.':
           var image = img.Image.from(_highImage);
-          image.duration = currentDitDuration;
-          images.add(image);
-          image = img.Image.from(_lowImage);
-          image.duration = currentDitDuration;
-          images.add(image);
+          image.duration = ditDuration;
+          animation.addFrame(image);
+          animation.addFrame(img.Image.from(_lowImage));
+          image.duration = ditDuration;
+          animation.addFrame(image);
           break;
         case '-':
           var image = img.Image.from(_highImage);
-          image.duration = 3 * currentDitDuration;
-          images.add(image);
+          image.duration = 3 * ditDuration;
+          animation.addFrame(image);
           image = img.Image.from(_lowImage);
-          image.duration = currentDitDuration;
-          images.add(image);
+          image.duration = ditDuration;
+          animation.addFrame(image);
           break;
         case ' ':
           if (i > 1 && input.substring(i-2, i) == ' | ') {
-            images.removeLast();
-            images.last.duration = 3 * currentDitDuration;
+            animation.frames.removeLast();
+            animation.frames.last.duration = 3 * ditDuration;
           } else {
             var image = img.Image.from(_lowImage);
-            image.duration = 3 * currentDitDuration;
-            images.add(image);
+            image.duration = 3 * ditDuration;
+            animation.addFrame(image);
           }
           break;
         case ' | ':
           var image = img.Image.from(_lowImage);
-          image.duration = currentDitDuration;
-          images.add(image);
+          image.duration = ditDuration;
+          animation.addFrame(image);
           break;
       }
     };
-    var animation = img.Animation();
-    animation.frames = images;
+
+    print(" images " +animation.frames.length.toString() + " durtion " +ditDuration.toString());
     return img.encodeGifAnimation(animation);
 
   } on Exception {
