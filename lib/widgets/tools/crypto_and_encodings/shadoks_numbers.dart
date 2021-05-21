@@ -20,6 +20,14 @@ class ShadoksNumbers extends StatefulWidget {
 }
 
 class ShadoksNumbersState extends State<ShadoksNumbers> {
+
+  final Map<String, String> _segmentToWord = {
+    'a': 'GA',
+    'b': 'BU',
+    'bc': 'ZO',
+    'bcd': 'MEU',
+  };
+
   var _currentEncodeInput = 0;
 
   List<List<String>> _currentDisplays = [];
@@ -41,20 +49,21 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
           });
         },
       ),
-      _currentMode == GCWSwitchPosition.left // encrypt: input number => output segment
+      _currentMode ==
+          GCWSwitchPosition.left // encrypt: input number => output segment
           ? GCWIntegerSpinner(
-        min: 0,
-        value: _currentEncodeInput,
-        onChanged: (value) {
-          setState(() {
-            _currentEncodeInput = value;
-          });
-        },
-      )
+              min: 0,
+              value: _currentEncodeInput,
+              onChanged: (value) {
+                setState(() {
+                  _currentEncodeInput = value;
+                });
+              },
+            )
           : Column(
-        // decrpyt: input segment => output number
-        children: <Widget>[_buildVisualDecryption()],
-      ),
+              // decrpyt: input segment => output number
+              children: <Widget>[_buildVisualDecryption()],
+            ),
       GCWTextDivider(
         text: i18n(context, 'segmentdisplay_displayoutput'),
         trailing: Row(
@@ -66,8 +75,10 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
                 setState(() {
                   int newCountColumn = max(countColumns - 1, 1);
                   mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                      ? Prefs.setInt(
+                          'symboltables_countcolumns_portrait', newCountColumn)
+                      : Prefs.setInt('symboltables_countcolumns_landscape',
+                          newCountColumn);
                 });
               },
             ),
@@ -79,8 +90,10 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
                   int newCountColumn = countColumns + 1;
 
                   mediaQueryData.orientation == Orientation.portrait
-                      ? Prefs.setInt('symboltables_countcolumns_portrait', newCountColumn)
-                      : Prefs.setInt('symboltables_countcolumns_landscape', newCountColumn);
+                      ? Prefs.setInt(
+                          'symboltables_countcolumns_portrait', newCountColumn)
+                      : Prefs.setInt('symboltables_countcolumns_landscape',
+                          newCountColumn);
                 });
               },
             )
@@ -96,7 +109,8 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
 
     var displays = _currentDisplays;
     if (displays != null && displays.length > 0)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
+      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [],
+          key: (e) => e, value: (e) => true);
     else
       currentDisplay = {};
 
@@ -120,7 +134,8 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
       children: <Widget>[
         Container(
           width: 180,
-          padding: EdgeInsets.only(top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
+          padding: EdgeInsets.only(
+              top: DEFAULT_MARGIN * 2, bottom: DEFAULT_MARGIN * 4),
           child: Row(
             children: <Widget>[
               Expanded(
@@ -162,10 +177,22 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
     );
   }
 
+  String _segmentsToShadoks(List<List<String>> segments){
+    String result = '';
+    segments.forEach((element) {
+      result = result + _segmentToWord[element.join('')];
+    });
+    return result;
+  }
+
   _buildDigitalOutput(countColumns, segments) {
-    var displays = segments.where((character) => character != null).map((character) {
+    var displays =
+        segments.where((character) => character != null).map((character) {
+          if (character.join('') != '')
+            character = character[0].split('');
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
-      return ShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: true);
+      return ShadoksNumbersSegmentDisplay(
+          segments: displayedSegments, readOnly: true);
     }).toList();
     return buildSegmentDisplayOutput(countColumns, displays);
   }
@@ -178,6 +205,12 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments),
+          GCWOutput(
+              title: i18n(context, 'shadoksnumbers_single_numbers'),
+              child: _segmentsToShadoks(segments).replaceAll('GA','0').replaceAll('BU','1').replaceAll('ZO','2').replaceAll('MEU','3')),
+          GCWOutput(
+              title: i18n(context, 'shadoksnumbers_shadoks'),
+              child: _segmentsToShadoks(segments))
         ],
       );
     } else {
@@ -189,9 +222,15 @@ class ShadoksNumbersState extends State<ShadoksNumbers> {
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
-          GCWOutput(title: i18n(context, 'shadoksnumbers_single_numbers'), child: segments['numbers'].join(' ')),
-          GCWOutput(title: i18n(context, 'shadoksnumbers_quaternary'), child: segments['quaternary']),
-          GCWOutput(title: i18n(context, 'shadoksnumbers_shadoks'), child: segments['shadoks'])
+          GCWOutput(
+              title: i18n(context, 'shadoksnumbers_single_numbers'),
+              child: segments['numbers'].join(' ')),
+          GCWOutput(
+              title: i18n(context, 'shadoksnumbers_quaternary'),
+              child: segments['quaternary']),
+          GCWOutput(
+              title: i18n(context, 'shadoksnumbers_shadoks'),
+              child: segments['shadoks'])
         ],
       );
     }

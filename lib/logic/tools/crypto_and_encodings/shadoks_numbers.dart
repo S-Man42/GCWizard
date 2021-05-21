@@ -38,7 +38,6 @@ Map<String, dynamic> decodeShadoksNumbers(List<String> inputs) {
   var displays = <List<String>>[];
 
   List<int> numbers = inputs.where((input) => input != null).map((input) {
-    print('input '+input);
     var number = 0;
     var display = <String>[];
     switch (input){
@@ -48,7 +47,6 @@ Map<String, dynamic> decodeShadoksNumbers(List<String> inputs) {
       case 'bcd' : number = 3;  display.add(input);  break;
     }
     displays.add(display);
-
     return number;
   }).toList();
 
