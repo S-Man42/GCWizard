@@ -10,7 +10,7 @@ import 'package:archive/archive_io.dart';
 import 'package:image/image.dart' as img;
 
 
-Future <Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
+Future<Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
     return null;
@@ -18,17 +18,12 @@ Future <Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
 
   var output = await analyseImage(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
 
-  List<Uint8List> images = output["images"];
-  for (var i = 0; i < images.length; i++) {
-    print("inHash " + i.toString() + " " + images[i].hashCode.toString());
-  };
-
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
 
   return output;
 }
 
-Future <Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPort}) async {
+Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPort}) async {
   try {
     var progress = 0;
     final decoder = img.findDecoderForData(bytes);
@@ -42,6 +37,7 @@ Future <Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncP
 
     var imageList = <Uint8List>[];
     var durations = <int>[];
+    var linkList = <int>[];
     var extension = getFileType(bytes);
     var filteredList = <List<int>>[];
 
@@ -50,13 +46,12 @@ Future <Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncP
     });
 
     // overrides also durations
-    animation.frames = linkSameImages(animation.frames);
+    animation.frames = _linkSameImages(animation.frames);
 
     if (animation != null) {
       for (int i = 0; i < animation.frames.length; i++) {
         var index = _checkSameHash(animation.frames, i);
         if (index < 0) {
-          print ("add frame "  + i.toString());
           switch (extension) {
             case '.png':
               imageList.add(img.encodePng(animation.frames[i]));
@@ -65,9 +60,10 @@ Future <Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncP
               imageList.add(img.encodeGif(animation.frames[i]));
               break;
           }
+          linkList.add(i);
         } else {
-          print ("reuse frame " + i.toString() +" " + index.toString());
           imageList.add(imageList[index]);
+          linkList.add(index);
         }
 
         progress++;
@@ -82,12 +78,77 @@ Future <Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncP
       //print("inHash " + i.toString() + " " + imageList[i].hashCode.toString());
     };
 
-    //out.addAll({"animation": animation});
     out.addAll({"images": imageList});
     out.addAll({"durations": durations});
     out.addAll({"imagesFiltered": filteredList});
+    out.addAll({"linkList": linkList});
 
     return out;
+  } on Exception {
+    return null;
+  }
+}
+
+Future<Uint8List> createImageAsync(dynamic jobData) async {
+  if (jobData == null) {
+    jobData.sendAsyncPort.send(null);
+    return null;
+  }
+
+  var output = await createImage(jobData.parameters.item1, jobData.parameters.item2, jobData.parameters.item3, jobData.parameters.item4, sendAsyncPort: jobData.sendAsyncPort);
+
+  if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
+
+  return output;
+}
+
+Future<Uint8List> createImage(Uint8List highImage, Uint8List lowImage, String input, int currentDitDuration, {SendPort sendAsyncPort}) async {
+  input = encodeMorse(input);
+  if (input == null || input == '') return null;
+  try {
+    var images = <img.Image>[];
+    var _highImage = img.decodeImage(highImage);
+    var _lowImage = img.decodeImage(highImage);
+
+    for (var i=0; i < input.length; i++ ) {
+      switch (input[i]) {
+        case '.':
+          var image = img.Image.from(_highImage);
+          image.duration = currentDitDuration;
+          images.add(image);
+          image = img.Image.from(_lowImage);
+          image.duration = currentDitDuration;
+          images.add(image);
+          break;
+        case '-':
+          var image = img.Image.from(_highImage);
+          image.duration = 3 * currentDitDuration;
+          images.add(image);
+          image = img.Image.from(_lowImage);
+          image.duration = currentDitDuration;
+          images.add(image);
+          break;
+        case ' ':
+          if (i > 1 && input.substring(i-2, i) == ' | ') {
+            images.removeLast();
+            images.last.duration = 3 * currentDitDuration;
+          } else {
+            var image = img.Image.from(_lowImage);
+            image.duration = 3 * currentDitDuration;
+            images.add(image);
+          }
+          break;
+        case ' | ':
+          var image = img.Image.from(_lowImage);
+          image.duration = currentDitDuration;
+          images.add(image);
+          break;
+      }
+    };
+    var animation = img.Animation();
+    animation.frames = images;
+    return img.encodeGifAnimation(animation);
+
   } on Exception {
     return null;
   }
@@ -119,27 +180,29 @@ List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List
   return filteredList;
 }
 
-String decodeMorseCode(List<int> durations, List<bool> onSignal) {
+Map<String, dynamic> decodeMorseCode(List<int> durations, List<bool> onSignal) {
   var timeList = _buildTimeList(durations, onSignal);
   print(timeList.length);
-  var timeBase = _foundTimeBase(timeList);
+  var signalTimes = _foundSignalTimes(timeList);
 
-  if (timeBase == null)
+  if (signalTimes == null)
     return null;
-print("timeBase: " + timeBase.toString());
+print("timeBase: " + signalTimes.toString());
   var out = '';
   timeList.forEach((element) {
     if (element.item1)
-      out += ((element.item2/ timeBase) > 1.5) ? '-' : '.'; //2
+      out += (element.item2 >= signalTimes.item1) ? '-' : '.'; //2
     else
-      if((element.item2/ timeBase) >= 4) //5
-        out  += "   ";
-      else if((element.item2/ timeBase) >= 2) //3
+      if(element.item2 >= signalTimes.item3) //5
+        out  += " | ";
+      else if(element.item2 >= signalTimes.item2)  //3
         out += " ";
   });
 
-  print(out);
-  return decodeMorse(out);
+  var output = Map<String, dynamic>();
+  output.addAll({"morse": out, "text": decodeMorse(out)});
+
+  return output;
 }
 
 List<Tuple2<bool, int>> _buildTimeList(List<int> durations, List<bool> onSignal) {
@@ -163,12 +226,13 @@ List<Tuple2<bool, int>> _buildTimeList(List<int> durations, List<bool> onSignal)
   return timeList;
 }
 
-int _foundTimeBase(List<Tuple2<bool, int>> timeList) {
+Tuple3<int, int, int> _foundSignalTimes(List<Tuple2<bool, int>> timeList) {
   if (timeList == null || timeList.length == 0)
     return null;
 
   var minTime = 999999999;
   timeList.forEach((element) {
+    // on signal
     if (element.item1 && element.item2 < minTime && element.item2 > 0)
       minTime = element.item2;
 
@@ -177,10 +241,11 @@ int _foundTimeBase(List<Tuple2<bool, int>> timeList) {
   if (minTime == 999999999)
     return null;
 
-  return minTime;
+  // item1 ./-; item2 ''; item3 ' '
+  return Tuple3<int, int, int>((minTime *1.5).toInt(), (minTime *2).toInt(), (minTime *4).toInt());
 }
 
-List<img.Image> linkSameImages(List<img.Image> images) {
+List<img.Image> _linkSameImages(List<img.Image> images) {
   for (int i = 1; i < images.length; i++) {
     for (int x = 0; x < i; x++) {
       if (_checkSameHash(images, x) >= 0)
@@ -196,21 +261,20 @@ List<img.Image> linkSameImages(List<img.Image> images) {
   return images;
 }
 
-bool compareImages(Uint8List image1, Uint8List image2) {
+bool compareImages(Uint8List image1, Uint8List image2, {toler = 0}) {
   if (image1.length != image2.length)
     return false;
 
   for (int i = 0; i < image1.length; i++)
-    if (image1[i] != image2[i])
+    if ((image1[i] - image2[i]).abs() > toler)
       return false;
 
   return true;
 }
 
-int _checkSameHash(List<img.Image> list, int maxSeearchIndex)
-{
-  var compareHash = list[maxSeearchIndex].hashCode;
-  for (int i = 0; i < maxSeearchIndex; i++)
+int _checkSameHash(List<img.Image> list, int maxSearchIndex) {
+  var compareHash = list[maxSearchIndex].hashCode;
+  for (int i = 0; i < maxSearchIndex; i++)
     if (list[i].hashCode == compareHash)
       return i;
 
