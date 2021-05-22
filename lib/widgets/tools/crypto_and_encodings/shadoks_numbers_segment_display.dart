@@ -44,13 +44,13 @@ class ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
               paint.color =
               currentSegments['b'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathB = Path();
-              pathB.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61,
+              pathB.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 64,
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 9);
-              pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 71,
-                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 13);
-              pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 71,
-                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 83);
-              pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61,
+              pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 74,
+                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 15);
+              pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 74,
+                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 81);
+              pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 64,
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 85);
               pathB.close();
 
@@ -63,11 +63,11 @@ class ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
               var pathC = Path();
               pathC.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 16,
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 75);
-              pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61,
+              pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 64,
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 75);
-              pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61,
+              pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 64,
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 85);
-              pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 26,
+              pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 28,
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 85);
               pathC.close();
 
@@ -78,13 +78,17 @@ class ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
               paint.color =
                   currentSegments['d'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathD = Path();
-              pathD.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 16,
-                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 75);
-              pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61,
+              pathD.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 14,
+                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 74);
+              pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 63,
+                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 8);
+              pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 64,
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 9);
-              pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61,
+              pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 64,
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 23);
               pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 26,
+                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 75);
+              pathD.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 15,
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 75);
               pathD.close();
 
