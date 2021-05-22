@@ -1,12 +1,10 @@
-import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/morse.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/animated_image_morse_code.dart' as animated_gif;
 import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:archive/archive_io.dart';
 import 'package:image/image.dart' as img;
 
 
@@ -105,48 +103,63 @@ Future<Uint8List> createImageAsync(dynamic jobData) async {
 Future<Uint8List> createImage(Uint8List highImage, Uint8List lowImage, String input, int ditDuration, {SendPort sendAsyncPort}) async {
   input = encodeMorse(input);
   if (input == null || input == '') return null;
+  if (highImage == null || lowImage == null) return null;
+  if (ditDuration <= 0) return null;
+
   try {
     var _highImage = img.decodeImage(highImage);
     var _lowImage = img.decodeImage(lowImage);
     var animation = img.Animation();
 
+    input = input.replaceAll(String.fromCharCode(8195), ' ');
+    input = input.replaceAll('| ', '|');
+    input = input.replaceAll(' |', '|');
+    input = input.replaceAll('.', '.*');
+    input = input.replaceAll('-', '-*');
+    input = input.replaceAll('* ', ' ');
+    if (input[input.length -1] == '*' && input.length > 1)
+      input = input.substring(0, input.length - 1);
+
+    print("#" + input +"#");
+    var duration = ditDuration;
+    var on = false;
+    var outList = <bool>[];
+
     for (var i=0; i < input.length; i++ ) {
+      duration = ditDuration;
+      on = false;
       switch (input[i]) {
         case '.':
-          var image = img.Image.from(_highImage);
-          image.duration = ditDuration;
-          animation.addFrame(image);
-          animation.addFrame(img.Image.from(_lowImage));
-          image.duration = ditDuration;
-          animation.addFrame(image);
+          on = true;
           break;
         case '-':
-          var image = img.Image.from(_highImage);
-          image.duration = 3 * ditDuration;
-          animation.addFrame(image);
-          image = img.Image.from(_lowImage);
-          image.duration = ditDuration;
-          animation.addFrame(image);
+          on = true;
+          duration *= 3;
+          break;
+        case '*':
           break;
         case ' ':
-          if (i > 1 && input.substring(i-2, i) == ' | ') {
-            animation.frames.removeLast();
-            animation.frames.last.duration = 3 * ditDuration;
-          } else {
-            var image = img.Image.from(_lowImage);
-            image.duration = 3 * ditDuration;
-            animation.addFrame(image);
-          }
+          duration *= 3;
           break;
-        case ' | ':
-          var image = img.Image.from(_lowImage);
-          image.duration = ditDuration;
-          animation.addFrame(image);
+        case '|':
+          duration *= 7;
           break;
       }
+
+      var image = img.Image.from(on ? _highImage : _lowImage);
+      image.duration = duration;
+      animation.addFrame(image);
+      outList.add(on);
     };
 
-    print(" images " +animation.frames.length.toString() + " durtion " +ditDuration.toString());
+    // image count optimation
+    for (var i=animation.frames.length-1; i > 0 ; i-- ) {
+      if (outList[i] == outList[i-1]) {
+        animation.frames[i-1].duration += animation.frames[i].duration;
+        animation.frames.removeAt(i);
+      }
+    }
+
     return img.encodeGifAnimation(animation);
 
   } on Exception {
@@ -194,7 +207,7 @@ print("timeBase: " + signalTimes.toString());
       out += (element.item2 >= signalTimes.item1) ? '-' : '.'; //2
     else
       if(element.item2 >= signalTimes.item3) //5
-        out  += " | ";
+        out  += String.fromCharCode(8195) + "|" + String.fromCharCode(8195);
       else if(element.item2 >= signalTimes.item2)  //3
         out += " ";
   });
@@ -281,46 +294,10 @@ int _checkSameHash(List<img.Image> list, int maxSearchIndex) {
   return -1;
 }
 
-
-
 Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
-  try {
-    String tmpDir = (await getTemporaryDirectory()).path;
-    var counter = 0;
-    var zipPath = '$tmpDir/gcwizardtmp.zip';
-    var pointIndex = fileName.lastIndexOf('.');
-    var extension = getFileType(imageList[0]);
-    if (pointIndex > 0)
-      fileName = fileName.substring(0, pointIndex);
-
-    var encoder = ZipFileEncoder();
-    encoder.create(zipPath);
-
-    for (Uint8List imageBytes in imageList) {
-      counter++;
-      var fileNameZip = '$fileName' + '_$counter$extension';
-      var tmpPath = '$tmpDir/$fileNameZip';
-      if (File(tmpPath).existsSync())
-        File(tmpPath).delete();
-
-      File imageFileTmp = new File(tmpPath);
-      imageFileTmp = await imageFileTmp.create();
-      imageFileTmp = await imageFileTmp.writeAsBytes(imageBytes);
-
-      encoder.addFile(imageFileTmp, fileNameZip);
-      imageFileTmp.delete();
-    };
-
-    encoder.close();
-
-    var bytes = File(encoder.zip_path).readAsBytesSync();
-    await File(encoder.zip_path).delete();
-
-    return bytes;
-  } on Exception {
-    return null;
-  }
+  animated_gif.createZipFile(fileName, imageList);
 }
+
 
 
 
