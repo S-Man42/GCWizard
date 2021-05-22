@@ -1,25 +1,25 @@
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/_simple.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/motorola_cd930.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/motorola_razr_v3.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/motorola_v600.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/nokia_1650.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/nokia_3210.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/nokia_3330.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/nokia_6230.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/sagem_my_x-3.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/samsung_e1120.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/samsung_gt-e1170.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/siemens_a65.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/siemens_a65_greek.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/siemens_c75.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/siemens_c75_greek.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/siemens_me45.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/siemens_me45_greek.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/siemens_s35.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/siemens_s55.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/siemens_s55_greek.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/sony_ericsson_k700i.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/workflows/sony_ericsson_t300.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/_simple.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/motorola_cd930.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/motorola_razr_v3.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/motorola_v600.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/nokia_1650.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/nokia_3210.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/nokia_3330.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/nokia_6230.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/sagem_my_x-3.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/samsung_e1120.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/samsung_gt-e1170.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/siemens_a65.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/siemens_a65_greek.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/siemens_c75.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/siemens_c75_greek.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/siemens_me45.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/siemens_me45_greek.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/siemens_s35.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/siemens_s55.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/siemens_s55_greek.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/sony_ericsson_k700i.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/workflows/sony_ericsson_t300.dart';
 
 enum PhoneInputLanguage {
   EXTENDED,

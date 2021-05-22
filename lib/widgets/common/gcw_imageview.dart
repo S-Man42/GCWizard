@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/theme/theme.dart';
@@ -13,6 +12,7 @@ import 'package:gc_wizard/widgets/common/gcw_tool.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 

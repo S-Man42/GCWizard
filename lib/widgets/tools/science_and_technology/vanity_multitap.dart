@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/phone_models.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/vanity.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/phone_models.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/vanity.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -255,7 +255,6 @@ class VanityMultitapState extends State<VanityMultitap> {
       return GCWDefaultOutput(child: output['output']);
     } else {
       if (_currentMode == GCWSwitchPosition.left) {
-        print(_currentEncodeInput);
         output =
             encodeVanityMultitap(_currentEncodeInput, _currentModel, _currentModel.languages[_currentLanguageId][0]);
       } else {

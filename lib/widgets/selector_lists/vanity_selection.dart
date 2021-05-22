@@ -5,6 +5,8 @@ import 'package:gc_wizard/widgets/registry.dart';
 import 'package:gc_wizard/widgets/selector_lists/gcw_selection.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multitap.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singletap.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_list.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_search.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 
 class VanitySelection extends GCWSelection {
@@ -14,6 +16,8 @@ class VanitySelection extends GCWSelection {
       return [
         className(VanitySingletap()),
         className(VanityMultitap()),
+        className(VanityWordsList()),
+        className(VanityWordsTextSearch()),
       ].contains(className(element.tool));
     }).toList();
 

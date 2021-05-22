@@ -502,25 +502,25 @@ class GCWMapViewState extends State<GCWMapView> {
   _buildEditButtons() {
     var buttons = [
       GCWPasteButton(
-          backgroundColor: COLOR_MAP_ICONBUTTONS,
-          customIcon: _createIconButtonIcons(Icons.content_paste),
-          onSelected: (text) {
-            if (_persistanceAdapter.setJsonMapViewData(text)) {
-              setState(() {
-                _mapController.fitBounds(_getBounds());
-              });
-            } else {
-              var pastedCoordinate = _parseCoords(text);
-              if (pastedCoordinate == null) return;
+        backgroundColor: COLOR_MAP_ICONBUTTONS,
+        customIcon: _createIconButtonIcons(Icons.content_paste),
+        onSelected: (text) {
+          if (_persistanceAdapter.setJsonMapViewData(text)) {
+            setState(() {
+              _mapController.fitBounds(_getBounds());
+            });
+          } else {
+            var pastedCoordinate = _parseCoords(text);
+            if (pastedCoordinate == null) return;
 
-              setState(() {
-                _persistanceAdapter.addMapPoint(pastedCoordinate.first.toLatLng(),
-                    coordinateFormat: {'format': pastedCoordinate.first.key});
-                _mapController.move(pastedCoordinate.first.toLatLng(), _mapController.zoom);
-              });
-            }
-            ;
-          }),
+            setState(() {
+              _persistanceAdapter.addMapPoint(pastedCoordinate.first.toLatLng(),
+                  coordinateFormat: {'format': pastedCoordinate.first.key});
+              _mapController.move(pastedCoordinate.first.toLatLng(), _mapController.zoom);
+            });
+          }
+          ;
+        }),
       GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.my_location, stacked: Icons.add),
@@ -590,22 +590,20 @@ class GCWMapViewState extends State<GCWMapView> {
                       coordinateFormat: {'format': pastedCoordinate.first.key});
                   _mapController.move(pastedCoordinate.first.toLatLng(), _mapController.zoom);
                 });
-              }
-              ;
+              };
             },
-          )),
+          )
+      ),
       GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.drive_folder_upload),
         onPressed: () {
           setState(() {
-            openFileExplorer(allowedExtensions: ['gpx', 'kml', 'kmz'], useFileFilterOnAndroid: true).then((files) {
-              if (files != null && files.length > 0) {
-                getFileData(files.first).then((bytes) {
-                  loadCoordinatesFile(files.first.name, bytes).whenComplete(() {
-                    setState(() {
-                      _mapController.fitBounds(_getBounds());
-                    });
+            openFileExplorer(context, allowedExtensions: ['.gpx','.kml','.kmz']).then((file) {
+              if (file != null) {
+                loadCoordinatesFile(file.name, file.bytes).whenComplete(() {
+                  setState(() {
+                    _mapController.fitBounds(_getBounds());
                   });
                 });
               }
@@ -823,10 +821,12 @@ class GCWMapViewState extends State<GCWMapView> {
   }
 
   bool _importGpxKml(String xml) {
-    var viewData = parseCoordinatesFile(xml);
-    if (viewData == null) viewData = parseCoordinatesFile(xml, kmlFormat: true);
+    var viewData =  parseCoordinatesFile(xml);
+    if (viewData == null)
+      viewData =  parseCoordinatesFile(xml, kmlFormat: true);
 
-    if (viewData != null) _persistanceAdapter.addViewData(viewData);
+    if (viewData != null)
+      _persistanceAdapter.addViewData(viewData);
 
     return (viewData != null);
   }
@@ -834,12 +834,13 @@ class GCWMapViewState extends State<GCWMapView> {
   Future<bool> loadCoordinatesFile(String fileName, Uint8List bytes) async {
     try {
       await importCoordinatesFile(fileName, bytes).then((viewData) {
-        if (viewData != null) _persistanceAdapter.addViewData(viewData);
+        if (viewData != null)
+          _persistanceAdapter.addViewData(viewData);
 
         return (viewData != null);
       });
-    } catch (exception) {}
-    return false;
+  } catch (exception) {}
+  return false;
   }
 }
 

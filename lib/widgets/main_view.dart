@@ -24,7 +24,9 @@ import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/icecodes_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/keyboard_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/imagesandfiles_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/maya_calendar_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/numeral_words_selection.dart';
@@ -142,6 +144,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/colors/colors.dar
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/combination_permutation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/combinatorics/permutation.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/complex_numbers.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
@@ -157,12 +160,12 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicac
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/keyboard.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table_data_view.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/projectiles.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/quadratic_equation.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/fourteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
@@ -358,6 +361,7 @@ class _MainViewState extends State<MainView> {
         className(ColorPicker()),
         className(Combination()),
         className(CombinationPermutation()),
+        className(ComplexNumbers()),
         className(CoordinateAveraging()),
         className(CrossBearing()),
         className(CrossSum()),
@@ -405,9 +409,10 @@ class _MainViewState extends State<MainView> {
         className(IteratedCrossSumRangeFrequency()),
         className(Kamasutra()),
         className(Kenny()),
-        className(Keyboard()),
+        className(KeyboardSelection()),
         className(Malbolge()),
         className(MapView()),
+        className(MayaCalendarSelection()),
         className(MayaNumbersSelection()),
         className(MexicanArmyCipherWheel()),
         className(MoonPosition()),
@@ -429,6 +434,7 @@ class _MainViewState extends State<MainView> {
         className(Polybios()),
         className(PrimesSelection()),
         className(Projectiles()),
+        className(QuadraticEquation()),
         className(RailFence()),
         className(RC4()),
         className(Resection()),

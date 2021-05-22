@@ -11,6 +11,7 @@ dependencies:
   base32: ^2.0.0-nullsafety.1
   cached_network_image: ^3.0.0
   diacritic: ^0.1.1
+  filesystem_picker: ^1.0.4
   file_picker: ^3.0.1
   exif: ^2.1.0
   flutter:
@@ -82,7 +83,9 @@ flutter:
     - assets/symbol_tables/birds_on_a_wire/
     - assets/symbol_tables/blox/
     - assets/symbol_tables/brahmi_numerals/
-    - assets/symbol_tables/braille/
+    - assets/symbol_tables/braille_de/
+    - assets/symbol_tables/braille_en/
+    - assets/symbol_tables/braille_fr/
     - assets/symbol_tables/british_sign_language/
     - assets/symbol_tables/chain_of_death_direction/
     - assets/symbol_tables/chain_of_death_pairs/
@@ -130,6 +133,7 @@ flutter:
     - assets/symbol_tables/futurama_2/
     - assets/symbol_tables/gallifreyan/
     - assets/symbol_tables/gargish/
+    - assets/symbol_tables/gc_attributes/
     - assets/symbol_tables/genreich/
     - assets/symbol_tables/glagolitic/
     - assets/symbol_tables/gnommish/
@@ -168,6 +172,11 @@ flutter:
     - assets/symbol_tables/marain/
     - assets/symbol_tables/marain_v2/
     - assets/symbol_tables/matoran/
+    - assets/symbol_tables/maya_calendar_haab_codices/
+    - assets/symbol_tables/maya_calendar_haab_inscripts/
+    - assets/symbol_tables/maya_calendar_longcount/
+    - assets/symbol_tables/maya_calendar_tzolkin_codices/
+    - assets/symbol_tables/maya_calendar_tzolkin_inscripts/
     - assets/symbol_tables/maya_numerals/
     - assets/symbol_tables/maze/
     - assets/symbol_tables/minimoys/
