@@ -335,7 +335,8 @@ class MapViewPersistenceAdapter {
 
     if (viewData.polylines.length > 0) {
       _mapViewDAO.polylines.addAll(viewData.polylines
-          .where((polyline) => !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
+          .where((polyline) =>
+              !_mapViewDAO.polylines.map((polylineDAO) => polylineDAO.uuid).toList().contains(polyline.uuid))
           .toList());
     }
   }

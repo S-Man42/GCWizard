@@ -1,3 +1,7 @@
+var PHONEMODEL_NOKIA_3210_STATES = '''
+
+'PlantUML
+
 @startuml
 'https://plantuml.com/state-diagram
 [*] --> abc
@@ -8,3 +12,5 @@ abc --> ABC: #
 ABC --> ABC: x_?
 ABC --> abc: #
 @enduml
+
+''';

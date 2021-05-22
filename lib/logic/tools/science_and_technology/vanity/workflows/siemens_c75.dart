@@ -1,11 +1,20 @@
+var PHONEMODEL_SIEMENS_C75_STATES = '''
+
+'PlantUML
+
 @startuml
 'https://plantuml.com/state-diagram
-[*] --> abc_s
+[*] --> Abc_s1
 
 Abc_s1 --> Abc_s1: _
-Abc_s1 --> abc_s: #
+Abc_s1 --> Abc_s2: #
 Abc_s1 --> abc_p: x
 Abc_s1 --> abc_e: ?
+
+Abc_s2 --> Abc_s1: _
+Abc_s2 --> abc_s: #
+Abc_s2 --> abc_p: x
+Abc_s2 --> abc_e: ?
 
 abc_s --> abc: x
 abc_s --> Abc: #
@@ -40,7 +49,7 @@ ABC_t --> ABC_e: ?_
 123_t --> abc_t: #
 
 abc --> abc: x_
-abc --> Abc_s1: #
+abc --> Abc_s2: #
 abc --> abc_e: ?
 
 ABC_e --> ABC: x
@@ -48,7 +57,10 @@ ABC_e --> ABC_e: _
 ABC_e --> abc_s: #
 ABC_e --> abc: ?
 
-abc_e --> Abc_s1: _#
+abc_e --> Abc_s1: _
+abc_e --> Abc_s2: #
 abc_e --> abc_e: ?
 abc_e --> abc: x
 @enduml
+
+''';

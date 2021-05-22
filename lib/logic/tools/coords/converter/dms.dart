@@ -87,8 +87,6 @@ DMS parseDMS(String input, {wholeString = false}) {
   return null;
 }
 
-
-
 DMS _parseDMSTrailingSigns(String text) {
   RegExp regex = RegExp(PATTERN_DMS_TRAILINGSIGN + regexEnd, caseSensitive: false);
   if (regex.hasMatch(text)) {

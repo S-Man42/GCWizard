@@ -1,3 +1,7 @@
+var PHONEMODEL_SIEMENS_S35_STATES = '''
+
+'PlantUML
+
 @startuml
 'https://plantuml.com/state-diagram
 [*] --> Abc
@@ -19,3 +23,5 @@ abc --> 123_abc: #
 123_abc --> 123_abc: x
 123_abc --> Abc: *
 @enduml
+
+''';

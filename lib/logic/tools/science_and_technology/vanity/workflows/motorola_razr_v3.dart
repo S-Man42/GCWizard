@@ -1,3 +1,7 @@
+var PHONEMODEL_MOTOROLA_RAZRV3_STATES = '''
+
+'PlantUML
+
 @startuml
 'https://plantuml.com/state-diagram
 [*] --> Abc
@@ -60,3 +64,5 @@ char_e --> char_pe: ?
 char_e --> Abc: #
 
 @enduml
+
+''';

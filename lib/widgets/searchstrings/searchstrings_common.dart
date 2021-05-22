@@ -491,8 +491,8 @@ const SEARCHSTRING_COMMON_TRITHEMIUS = 'trithemius tabularecta';
 const SEARCHSTRING_COMMON_UNITCONVERTER =
     'watt newton meters inches zoll pounds pfund pferdestaerken horsepowers gallonen gallons barrels yoda atm psi bar radiant celsius kelvin fahrenheit rankine reaumur kilogramm feinunze troyounce pints';
 const SEARCHSTRING_COMMON_VANITY = 'vanity';
-const SEARCHSTRING_COMMON_VANITYMULTIPLENUMBERS = SEARCHSTRING_COMMON_VANITY;
-const SEARCHSTRING_COMMON_VANITYSINGLENUMBERS = SEARCHSTRING_COMMON_VANITY;
+const SEARCHSTRING_COMMON_VANITYMULTITAP = SEARCHSTRING_COMMON_VANITY;
+const SEARCHSTRING_COMMON_VANITYSINGLETAP = SEARCHSTRING_COMMON_VANITY;
 const SEARCHSTRING_COMMON_VIGENERE = 'vigenere';
 const SEARCHSTRING_COMMON_VIGENEREBREAKER = '';
 const SEARCHSTRING_COMMON_WINDOW = 'johannes balthasar friderici cryptographia';

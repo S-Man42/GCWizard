@@ -506,8 +506,8 @@ const SEARCHSTRING_DE_TRITHEMIUS = '';
 const SEARCHSTRING_DE_UNITCONVERTER =
     'einheiten groessen konvertieren umwandeln umrechnen konvertierer laengen geschwindigkeiten kraft leistung uhrzeiten flaechen volumen dichten gewichte massen badewannen druecke druck winkel temperaturen grad fussballfelder';
 const SEARCHSTRING_DE_VANITY = 'telefontasten ziffern telefonnummern handy tasten tastatur';
-const SEARCHSTRING_DE_VANITYMULTIPLENUMBERS = '';
-const SEARCHSTRING_DE_VANITYSINGLENUMBERS = '';
+const SEARCHSTRING_DE_VANITYMULTITAP = '';
+const SEARCHSTRING_DE_VANITYSINGLETAP = '';
 const SEARCHSTRING_DE_VIGENERE = '';
 const SEARCHSTRING_DE_VIGENEREBREAKER = '';
 const SEARCHSTRING_DE_WINDOW = 'fenster';

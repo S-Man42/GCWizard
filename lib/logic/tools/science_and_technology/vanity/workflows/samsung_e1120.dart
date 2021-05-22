@@ -1,3 +1,7 @@
+var PHONEMODEL_SAMSUNG_E1120_STATES = '''
+
+'PlantUML
+
 @startuml
 'https://plantuml.com/state-diagram
 [*] --> Abc
@@ -35,3 +39,5 @@ ABC_e --> ABC: x_
 ABC_e --> abc_e: *
 ABC_e --> ABC_e: ?
 @enduml
+
+''';

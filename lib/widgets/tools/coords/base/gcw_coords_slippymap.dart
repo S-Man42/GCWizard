@@ -43,9 +43,9 @@ class GCWCoordsSlippyMapState extends State<GCWCoordsSlippyMap> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var slippyMap = widget.coordinates is SlippyMap ?
-          widget.coordinates as SlippyMap :
-          SlippyMap.fromLatLon(widget.coordinates.toLatLng(), double.tryParse(widget.zoom));
+      var slippyMap = widget.coordinates is SlippyMap
+          ? widget.coordinates as SlippyMap
+          : SlippyMap.fromLatLon(widget.coordinates.toLatLng(), double.tryParse(widget.zoom));
       _currentX['value'] = slippyMap.x;
       _currentY['value'] = slippyMap.y;
 

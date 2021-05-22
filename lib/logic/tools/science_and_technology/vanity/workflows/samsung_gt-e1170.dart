@@ -1,3 +1,7 @@
+var PHONEMODEL_SAMSUNG_GTE1170_STATES = '''
+
+'PlantUML
+
 @startuml
 'https://plantuml.com/state-diagram
 [*] --> Abc
@@ -47,3 +51,5 @@ abc_s --> abc_e: ?
 123 --> ABC: #
 123 --> 123_e: ?
 @enduml
+
+''';

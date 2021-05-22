@@ -1,3 +1,7 @@
+var PHONEMODEL_SONYERICSSON_K700I_STATES = '''
+
+'PlantUML
+
 @startuml
 'https://plantuml.com/state-diagram
 [*] --> Abc_s
@@ -44,3 +48,5 @@ Abc_e --> abc: x
 Abc_e --> abc_e: ?
 
 @enduml
+
+''';

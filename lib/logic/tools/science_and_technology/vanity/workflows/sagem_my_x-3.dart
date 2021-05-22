@@ -1,3 +1,7 @@
+var PHONEMODEL_SAGEM_MYX3_STATES = '''
+
+'PlantUML
+
 @startuml
 'https://plantuml.com/state-diagram
 [*] --> abc
@@ -8,3 +12,5 @@ abc --> ABC: *
 ABC --> ABC: ?x_
 ABC --> abc: *
 @enduml
+
+''';

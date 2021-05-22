@@ -1,3 +1,7 @@
+var PHONEMODEL_SIEMENS_ME45_STATES = '''
+
+'PlantUML
+
 @startuml
 'https://plantuml.com/state-diagram
 [*] --> Abc
@@ -29,3 +33,5 @@ Abc_e --> abc_e: ?
 123_e --> 123: x
 123_e --> abc_e: *
 @enduml
+
+''';

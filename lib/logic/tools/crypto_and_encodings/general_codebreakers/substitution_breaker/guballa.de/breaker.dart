@@ -71,8 +71,7 @@ Iterable<int> iterateText(String text, String alphabet, {ignoreNonLetters: true}
     index = trans.indexOf(text[i]);
     if (index >= 0)
       yield index;
-    else if (!ignoreNonLetters)
-      yield -1;
+    else if (!ignoreNonLetters) yield -1;
   }
 }
 

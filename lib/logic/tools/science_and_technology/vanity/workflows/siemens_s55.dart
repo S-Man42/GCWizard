@@ -1,3 +1,7 @@
+var PHONEMODEL_SIEMENS_S55_STATES = '''
+
+'PlantUML
+
 @startuml
 'https://plantuml.com/state-diagram
 [*] --> Abc_s1
@@ -58,3 +62,5 @@ abc_e --> Abc_s2: #
 abc_e --> abc_e: ?
 abc_e --> abc: x
 @enduml
+
+''';

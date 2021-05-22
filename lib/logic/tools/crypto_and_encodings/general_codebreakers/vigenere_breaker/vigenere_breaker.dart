@@ -64,9 +64,14 @@ Future<VigenereBreakerResult> break_cipherAsync(dynamic jobData) async {
   }
   _sendAsyncPort = jobData.sendAsyncPort;
 
-  var output = break_cipher(jobData.parameters.input, jobData.parameters.vigenereBreakerType,
-      jobData.parameters.alphabet, jobData.parameters.keyLengthMin, jobData.parameters.keyLengthMax,
-      jobData.parameters.ignoreNonLetters, counterFunction: progressCounter);
+  var output = break_cipher(
+      jobData.parameters.input,
+      jobData.parameters.vigenereBreakerType,
+      jobData.parameters.alphabet,
+      jobData.parameters.keyLengthMin,
+      jobData.parameters.keyLengthMax,
+      jobData.parameters.ignoreNonLetters,
+      counterFunction: progressCounter);
 
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
 

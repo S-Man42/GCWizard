@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity/phone_models.dart';
 import 'package:gc_wizard/persistence/multi_decoder/json_provider.dart';
 import 'package:gc_wizard/persistence/multi_decoder/model.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/gcw_multi_decoder_tool.dart';
@@ -54,7 +55,7 @@ final _initialOptions = <String, Map<String, dynamic>>{
   MDT_INTERNALNAMES_NUMERALBASES: {MDT_NUMERALBASES_OPTION_FROM: 16},
   MDT_INTERNALNAMES_ROTATION: {MDT_ROTATION_OPTION_KEY: 13},
   MDT_INTERNALNAMES_SEGMENTDISPLAY: {MDT_SEGMENTDISPLAY_OPTION_NUMBERSEGMENTS: 7},
-  MDT_INTERNALNAMES_VANITYMULTITAP: {MDT_VANITYMULTITAP_OPTION_PHONEMODEL: NOKIA.name},
+  MDT_INTERNALNAMES_VANITYMULTITAP: {MDT_VANITYMULTITAP_OPTION_PHONEMODEL: NAME_PHONEMODEL_SIMPLE_SPACE_0},
 };
 
 _multiDecoderToolOptionToGCWMultiDecoderToolOptions(List<MultiDecoderToolOption> mdtOptions) {
@@ -128,7 +129,7 @@ GCWMultiDecoderTool multiDecoderToolToGCWMultiDecoderTool(BuildContext context, 
       gcwTool = MultiDecoderToolSegmentDisplay(id: mdtTool.id, name: mdtTool.name, options: options);
       break;
     case MDT_INTERNALNAMES_VANITYMULTITAP:
-      gcwTool = MultiDecoderToolVanityMultitap(id: mdtTool.id, name: mdtTool.name, options: options);
+      gcwTool = MultiDecoderToolVanityMultitap(id: mdtTool.id, name: mdtTool.name, options: options, context: context);
       break;
   }
 
@@ -145,7 +146,7 @@ initializeMultiToolDecoder(BuildContext context) {
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ALPHABETVALUES), MDT_INTERNALNAMES_ALPHABETVALUES),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_ASCII), MDT_INTERNALNAMES_ASCII),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_VANITYMULTITAP), MDT_INTERNALNAMES_VANITYMULTITAP,
-        options: [MultiDecoderToolOption(MDT_VANITYMULTITAP_OPTION_PHONEMODEL, NOKIA.name)]),
+        options: [MultiDecoderToolOption(MDT_VANITYMULTITAP_OPTION_PHONEMODEL, NAME_PHONEMODEL_SIMPLE_SPACE_0)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_NUMERALBASES), MDT_INTERNALNAMES_NUMERALBASES,
         options: [MultiDecoderToolOption(MDT_NUMERALBASES_OPTION_FROM, 2)]),
     MultiDecoderTool(i18n(context, MDT_INTERNALNAMES_NUMERALBASES), MDT_INTERNALNAMES_NUMERALBASES,

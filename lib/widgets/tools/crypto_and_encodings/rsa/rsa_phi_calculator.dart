@@ -50,10 +50,7 @@ class RSAPhiCalculatorState extends State<RSAPhiCalculator> {
   }
 
   _calculateOutput(BuildContext context) {
-    if (_currentP == null ||
-        _currentP.length == 0 ||
-        _currentQ == null ||
-        _currentQ.length == 0) {
+    if (_currentP == null || _currentP.length == 0 || _currentQ == null || _currentQ.length == 0) {
       _output = null;
     }
 
@@ -61,9 +58,7 @@ class RSAPhiCalculatorState extends State<RSAPhiCalculator> {
       var p = BigInt.tryParse(_currentP);
       var q = BigInt.tryParse(_currentQ);
 
-      _output = GCWDefaultOutput(
-          child: phi(p, q).toString()
-      );
+      _output = GCWDefaultOutput(child: phi(p, q).toString());
     } catch (exception) {
       showToast(i18n(context, exception.message));
       _output = null;

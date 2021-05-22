@@ -93,9 +93,7 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var dms = widget.coordinates is DMS ?
-          widget.coordinates as DMS :
-          DMS.fromLatLon(widget.coordinates.toLatLng());
+      var dms = widget.coordinates is DMS ? widget.coordinates as DMS : DMS.fromLatLon(widget.coordinates.toLatLng());
       var lat = dms.latitude.formatParts(10);
       var lon = dms.longitude.formatParts(10);
 

@@ -33,9 +33,9 @@ class GCWCoordsGeo3x3State extends State<GCWCoordsGeo3x3> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var geo3x3 = widget.coordinates is Geo3x3 ?
-          widget.coordinates as Geo3x3 :
-          Geo3x3.fromLatLon(widget.coordinates.toLatLng(), 20);
+      var geo3x3 = widget.coordinates is Geo3x3
+          ? widget.coordinates as Geo3x3
+          : Geo3x3.fromLatLon(widget.coordinates.toLatLng(), 20);
       _currentCoord = geo3x3.text;
 
       _controller.text = _currentCoord;

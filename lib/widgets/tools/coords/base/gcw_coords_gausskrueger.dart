@@ -46,9 +46,9 @@ class GCWCoordsGaussKruegerState extends State<GCWCoordsGaussKrueger> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var gausskrueger = widget.coordinates is GaussKrueger ?
-          widget.coordinates as GaussKrueger :
-          GaussKrueger.fromLatLon(widget.coordinates.toLatLng(), _currentSubtype, defaultEllipsoid());
+      var gausskrueger = widget.coordinates is GaussKrueger
+          ? widget.coordinates as GaussKrueger
+          : GaussKrueger.fromLatLon(widget.coordinates.toLatLng(), _currentSubtype, defaultEllipsoid());
       _currentEasting['value'] = gausskrueger.easting;
       _currentNorthing['value'] = gausskrueger.northing;
       _currentSubtype = gausskrueger.code;

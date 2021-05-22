@@ -20,20 +20,18 @@ Future<List<PlatformFile>> openFileExplorer(
 
   try {
     List<String> allowedExtensionsTmp = allowedExtensions;
-    if (useFileFilterOnAndroid && _isAndroid())
-      allowedExtensions = null;
+    if (useFileFilterOnAndroid && _isAndroid()) allowedExtensions = null;
 
     var files = (await FilePicker.platform.pickFiles(
       type: allowedExtensions != null ? FileType.custom : pickingType,
       allowMultiple: multiPick,
       allowedExtensions: allowedExtensions,
-    ))?.files;
+    ))
+        ?.files;
 
-    if (useFileFilterOnAndroid && _isAndroid())
-      files = _filterFiles(files, allowedExtensionsTmp);
+    if (useFileFilterOnAndroid && _isAndroid()) files = _filterFiles(files, allowedExtensionsTmp);
 
     return files;
-
   } on PlatformException catch (e) {
     print("Unsupported operation " + e.toString());
   } catch (ex) {

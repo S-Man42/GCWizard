@@ -7,8 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:archive/archive_io.dart';
 import 'package:image/image.dart' as img;
 
-
-Future <Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
+Future<Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
     return null;
@@ -21,13 +20,12 @@ Future <Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
   return output;
 }
 
-Future <Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPort}) async {
+Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPort}) async {
   try {
     var progress = 0;
     final decoder = img.findDecoderForData(bytes);
 
-    if (decoder == null)
-      return null;
+    if (decoder == null) return null;
 
     var out = Map<String, dynamic>();
     var animation = decoder.decodeAnimation(bytes);
@@ -69,8 +67,7 @@ Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) asyn
     var zipPath = '$tmpDir/gcwizardtmp.zip';
     var pointIndex = fileName.lastIndexOf('.');
     var extension = getFileType(imageList[0]);
-    if (pointIndex > 0)
-      fileName = fileName.substring(0, pointIndex);
+    if (pointIndex > 0) fileName = fileName.substring(0, pointIndex);
 
     var encoder = ZipFileEncoder();
     encoder.create(zipPath);
@@ -79,8 +76,7 @@ Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) asyn
       counter++;
       var fileNameZip = '$fileName' + '_$counter$extension';
       var tmpPath = '$tmpDir/$fileNameZip';
-      if (File(tmpPath).existsSync())
-        File(tmpPath).delete();
+      if (File(tmpPath).existsSync()) File(tmpPath).delete();
 
       File imageFileTmp = new File(tmpPath);
       imageFileTmp = await imageFileTmp.create();
@@ -88,7 +84,8 @@ Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) asyn
 
       encoder.addFile(imageFileTmp, fileNameZip);
       imageFileTmp.delete();
-    };
+    }
+    ;
 
     encoder.close();
 
@@ -100,6 +97,3 @@ Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) asyn
     return null;
   }
 }
-
-
-

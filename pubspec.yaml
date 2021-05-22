@@ -58,7 +58,6 @@ flutter:
     - assets/icons/science_and_technology/
     - assets/quadgrams/
     - assets/tokens/
-    - assets/vanity_multitap_workflows/
     - assets/symbol_tables/
     - assets/symbol_tables/adlam/
     - assets/symbol_tables/albhed/

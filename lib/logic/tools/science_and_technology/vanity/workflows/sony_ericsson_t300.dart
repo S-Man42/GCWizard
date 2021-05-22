@@ -1,3 +1,7 @@
+var PHONEMODEL_SONYERICSSON_T300_STATES = '''
+
+'PlantUML
+
 @startuml
 'https://plantuml.com/state-diagram
 [*] --> Abc
@@ -39,3 +43,5 @@ abc_E --> ABC_e: ?
 abc_E --> ABC_e_: *
 
 @enduml
+
+''';

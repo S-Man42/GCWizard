@@ -278,8 +278,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/f
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multiplenumbers.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singlenumbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multitap.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singletap.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
 
 class Registry {
@@ -350,7 +350,7 @@ class Registry {
             SEARCHSTRING_EN_AMSCO,
             SEARCHSTRING_FR_AMSCO
           ]),
-       GCWTool(
+      GCWTool(
           tool: AnimatedImage(),
           i18nPrefix: 'animated_image',
           category: ToolCategory.IMAGES_AND_FILES,
@@ -854,7 +854,6 @@ class Registry {
             SEARCHSTRING_FR_HEXSTRING2FILE
           ]),
       GCWTool(
-
           tool: Homophone(),
           i18nPrefix: 'homophone',
           category: ToolCategory.CRYPTOGRAPHY,
@@ -6268,30 +6267,26 @@ class Registry {
       ]),
 
       //VanitySelection **********************************************************************************************
-      GCWTool(tool: VanitySingleNumbers(), i18nPrefix: 'vanity_singlenumbers', missingHelpLocales: [], searchStrings: [
+      GCWTool(tool: VanitySingletap(), i18nPrefix: 'vanity_singletap', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_VANITY,
         SEARCHSTRING_DE_VANITY,
         SEARCHSTRING_EN_VANITY,
         SEARCHSTRING_FR_VANITY,
-        SEARCHSTRING_COMMON_VANITYSINGLENUMBERS,
-        SEARCHSTRING_DE_VANITYSINGLENUMBERS,
-        SEARCHSTRING_EN_VANITYSINGLENUMBERS,
-        SEARCHSTRING_FR_VANITYSINGLENUMBERS
+        SEARCHSTRING_COMMON_VANITYSINGLETAP,
+        SEARCHSTRING_DE_VANITYSINGLETAP,
+        SEARCHSTRING_EN_VANITYSINGLETAP,
+        SEARCHSTRING_FR_VANITYSINGLETAP
       ]),
-      GCWTool(
-          tool: VanityMultipleNumbers(),
-          i18nPrefix: 'vanity_multiplenumbers',
-          missingHelpLocales: [],
-          searchStrings: [
-            SEARCHSTRING_COMMON_VANITY,
-            SEARCHSTRING_DE_VANITY,
-            SEARCHSTRING_EN_VANITY,
-            SEARCHSTRING_FR_VANITY,
-            SEARCHSTRING_COMMON_VANITYMULTIPLENUMBERS,
-            SEARCHSTRING_DE_VANITYMULTIPLENUMBERS,
-            SEARCHSTRING_EN_VANITYMULTIPLENUMBERS,
-            SEARCHSTRING_FR_VANITYMULTIPLENUMBERS
-          ]),
+      GCWTool(tool: VanityMultitap(), i18nPrefix: 'vanity_multitap', missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_VANITY,
+        SEARCHSTRING_DE_VANITY,
+        SEARCHSTRING_EN_VANITY,
+        SEARCHSTRING_FR_VANITY,
+        SEARCHSTRING_COMMON_VANITYMULTITAP,
+        SEARCHSTRING_DE_VANITYMULTITAP,
+        SEARCHSTRING_EN_VANITYMULTITAP,
+        SEARCHSTRING_FR_VANITYMULTITAP
+      ]),
 
       //VigenereSelection *******************************************************************************************
       GCWTool(

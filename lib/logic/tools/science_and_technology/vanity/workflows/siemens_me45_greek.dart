@@ -1,3 +1,7 @@
+var PHONEMODEL_SIEMENS_ME45_GREEK_STATES = '''
+
+'PlantUML
+
 @startuml
 'https://plantuml.com/state-diagram
 [*] --> ABC
@@ -9,3 +13,5 @@ ABC --> 123: #
 123 --> 123: ?x
 123 --> ABC: #
 @enduml
+
+''';
