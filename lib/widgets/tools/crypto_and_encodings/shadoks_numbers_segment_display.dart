@@ -32,9 +32,9 @@ class ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
               paint.style = PaintingStyle.stroke;
               paint.strokeWidth = 5.0;
               canvas.drawCircle(
-                  Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 50,
-                      size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 50),
-                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 47,
+                  Offset(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 48,
+                      size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 48),
+                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 43,
                   paint, onTapDown: (tapDetail) {
                 setSegmentState('a', !currentSegments['a']);
               });
@@ -44,13 +44,13 @@ class ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
               paint.color =
               currentSegments['b'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathB = Path();
-              pathB.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 71,
-                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 11);
-              pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 81,
-                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 11);
-              pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 81,
-                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 85);
+              pathB.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61,
+                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 9);
               pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 71,
+                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 13);
+              pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 71,
+                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 83);
+              pathB.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61,
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 85);
               pathB.close();
 
@@ -61,13 +61,13 @@ class ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
               paint.color =
                   currentSegments['c'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathC = Path();
-              pathC.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 21,
+              pathC.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 16,
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 75);
-              pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 71,
+              pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61,
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 75);
-              pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 71,
+              pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61,
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 85);
-              pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 21,
+              pathC.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 26,
                   size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 85);
               pathC.close();
 
@@ -78,16 +78,14 @@ class ShadoksNumbersSegmentDisplay extends NSegmentDisplay {
               paint.color =
                   currentSegments['d'] ? SEGMENTS_COLOR_ON : SEGMENTS_COLOR_OFF;
               var pathD = Path();
-              pathD.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 11,
-                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 74);
-              pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 71,
-                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 11);
-              pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 71,
-                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 25);
-              pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 21,
-                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 74);
-              pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 21,
-                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 85);
+              pathD.moveTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 16,
+                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 75);
+              pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61,
+                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 9);
+              pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 61,
+                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 23);
+              pathD.lineTo(size.width / SEGMENTS_RELATIVE_DISPLAY_WIDTH * 26,
+                  size.height / SEGMENTS_RELATIVE_DISPLAY_HEIGHT * 75);
               pathD.close();
 
               canvas.drawPath(pathD, paint, onTapDown: (tapDetail) {
