@@ -239,7 +239,7 @@ const SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION = 'superperfec
 const SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION = 'weird numbers';
 const SEARCHSTRING_EN_NUMERALBASES = 'hexadecimal octal octenary numeral systems';
 const SEARCHSTRING_EN_NUMERALWORDS =
-    'numeralwords numberwords numerals  cyrillic german english french italian danish spanish dutch norwegian polish portuguese swedish russian volapuk esperanto solresol latin ';
+    'numeralwords numberwords numerals  cyrillic german english french italian danish spanish dutch norwegian polish portuguese swedish russian volapuk esperanto solresol latin';
 const SEARCHSTRING_EN_NUMERALWORDSLISTS = '';
 const SEARCHSTRING_EN_NUMERALWORDSTEXTSEARCH = 'textanalysis textsearch';
 const SEARCHSTRING_EN_ONETIMEPAD = '';
@@ -506,8 +506,8 @@ const SEARCHSTRING_EN_TRITHEMIUS = '';
 const SEARCHSTRING_EN_UNITCONVERTER =
     'units converter lengths speeds velocity velocities energies energy force power times areas volumes denisities density masses bathtubs pressures angles temperatures degrees soccerfields';
 const SEARCHSTRING_EN_VANITY = 'telephone keys buttons numbers keypad sms mobile cellphone phoneword';
-const SEARCHSTRING_EN_VANITYMULTIPLENUMBERS = 'multitap';
-const SEARCHSTRING_EN_VANITYSINGLENUMBERS = '';
+const SEARCHSTRING_EN_VANITYMULTITAP = 'multitap';
+const SEARCHSTRING_EN_VANITYSINGLETAP = '';
 const SEARCHSTRING_EN_VANITYTEXTSEARCH = 'textanalysis textsearch';
 const SEARCHSTRING_EN_VANITYWORDSLIST = '';
 const SEARCHSTRING_EN_VIGENERE = '';

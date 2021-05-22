@@ -488,7 +488,7 @@ class SwissGrid extends BaseCoordinates {
 class SwissGridPlus extends SwissGrid {
   String get key => keyCoordsSwissGridPlus;
 
-  SwissGridPlus(easting, northing) : super(easting, northing) ;
+  SwissGridPlus(easting, northing) : super(easting, northing);
 
   LatLng toLatLng({Ellipsoid ells}) {
     if (ells == null) ells = defaultEllipsoid();

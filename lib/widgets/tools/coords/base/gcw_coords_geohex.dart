@@ -33,9 +33,9 @@ class GCWCoordsGeoHexState extends State<GCWCoordsGeoHex> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var geohHex = widget.coordinates is GeoHex ?
-          widget.coordinates as GeoHex :
-          GeoHex.fromLatLon(widget.coordinates.toLatLng(), 20);
+      var geohHex = widget.coordinates is GeoHex
+          ? widget.coordinates as GeoHex
+          : GeoHex.fromLatLon(widget.coordinates.toLatLng(), 20);
       _currentCoord = geohHex.text;
 
       _controller.text = _currentCoord;

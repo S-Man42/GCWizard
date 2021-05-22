@@ -492,8 +492,8 @@ const SEARCHSTRING_FR_TRITHEMIUS = '';
 const SEARCHSTRING_FR_UNITCONVERTER =
     'unites convertir tailles convertir convertisseurs longueurs vitesses puissance performances temps surfaces densites poids baignoires pressions  degres terrains football';
 const SEARCHSTRING_FR_VANITY = 'touches chiffres numeros portable clavier';
-const SEARCHSTRING_FR_VANITYMULTIPLENUMBERS = '';
-const SEARCHSTRING_FR_VANITYSINGLENUMBERS = '';
+const SEARCHSTRING_FR_VANITYMULTITAP = '';
+const SEARCHSTRING_FR_VANITYSINGLETAP = '';
 const SEARCHSTRING_FR_VANITYTEXTSEARCH = 'analyse recherche texte';
 const SEARCHSTRING_FR_VANITYWORDSLIST = '';
 const SEARCHSTRING_FR_VIGENERE = '';
