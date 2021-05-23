@@ -33,31 +33,85 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPo
 
     var imageList = <Uint8List>[];
     var durations = <int>[];
+    var linkList = <int>[];
     var extension = getFileType(bytes);
 
-    animation?.frames.forEach((image) {
-      switch (extension) {
-        case '.png':
-          imageList.add(img.encodePng(image));
-          break;
-        default:
-          imageList.add(img.encodeGif(image));
-          break;
+    if (animation != null) {
+      animation?.frames.forEach((image) {
+        durations.add(image.duration);
+      });
+
+      // overrides also durations
+      animation.frames = _linkSameImages(animation.frames);
+
+      for (int i = 0; i < animation.frames.length; i++) {
+        var index = _checkSameHash(animation.frames, i);
+        if (index < 0) {
+          switch (extension) {
+            case '.png':
+              imageList.add(img.encodePng(animation.frames[i]));
+              break;
+            default:
+              imageList.add(img.encodeGif(animation.frames[i]));
+              break;
+          }
+          linkList.add(i);
+        } else {
+          imageList.add(imageList[index]);
+          linkList.add(index);
+        }
+
+        progress++;
+        if (sendAsyncPort != null && (progress % progressStep == 0)) {
+          sendAsyncPort.send({'progress': progress / animation.length});
+        }
       }
-      durations.add(image.duration);
-      progress++;
-      if (sendAsyncPort != null && (progress % progressStep == 0)) {
-        sendAsyncPort.send({'progress': progress / animation.length});
-      }
-    });
-    out.addAll({"animation": animation});
+    }
+
     out.addAll({"images": imageList});
     out.addAll({"durations": durations});
+    out.addAll({"linkList": linkList});
 
     return out;
   } on Exception {
     return null;
   }
+}
+
+List<img.Image> _linkSameImages(List<img.Image> images) {
+  for (int i = 1; i < images.length; i++) {
+    for (int x = 0; x < i; x++) {
+      if (_checkSameHash(images, x) >= 0)
+        continue;
+
+      if (compareImages(images[i].getBytes(), images[x].getBytes())) {
+        images[i] = images[x];
+        break;
+      }
+    }
+  }
+
+  return images;
+}
+
+bool compareImages(Uint8List image1, Uint8List image2, {toler = 0}) {
+  if (image1.length != image2.length)
+    return false;
+
+  for (int i = 0; i < image1.length; i++)
+    if ((image1[i] - image2[i]).abs() > toler)
+      return false;
+
+  return true;
+}
+
+int _checkSameHash(List<img.Image> list, int maxSearchIndex) {
+  var compareHash = list[maxSearchIndex].hashCode;
+  for (int i = 0; i < maxSearchIndex; i++)
+    if (list[i].hashCode == compareHash)
+      return i;
+
+  return -1;
 }
 
 Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
