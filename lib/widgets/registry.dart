@@ -6122,6 +6122,12 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_SEMAPHORE,
         SEARCHSTRING_FR_SYMBOL_SEMAPHORE
       ]),
+      GCWSymbolTableTool(symbolKey: 'shadoks', symbolSearchStrings: [
+//        SEARCHSTRING_COMMON_SHADOKS,
+//        SEARCHSTRING_DE_SHADOKS,
+//        SEARCHSTRING_EN_SHADOKS,
+//        SEARCHSTRING_FR_SHADOKS
+      ]),
       GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: []),
       GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_SKULLZ,
