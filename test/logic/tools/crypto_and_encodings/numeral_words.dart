@@ -688,8 +688,11 @@ void main(){
 
   group("NumeralWords.decodeNumeralwordsEntireWordsGC97P76:", () {
     List<Map<String, dynamic>> _inputsToExpected = [
-      {'input' : 'hat nocht arat hai bir dau mann satu hamar', 'language' : NumeralWordsLanguage.ALL, 'decodeMode' : true,
-        'expectedOutput' : [
+      {
+        'input': 'hat nocht arat hai bir dau mann satu hamar',
+        'language': NumeralWordsLanguage.ALL,
+        'decodeMode': true,
+        'expectedOutput': [
           NumeralWordsDecodeOutput('6', 'hat', 'numeralwords_language_ung'),
           NumeralWordsDecodeOutput('0', 'nocht', 'numeralwords_language_sco'),
           NumeralWordsDecodeOutput('4', 'arat', 'numeralwords_language_amh'),
@@ -699,12 +702,16 @@ void main(){
           NumeralWordsDecodeOutput('0', 'mann', 'numeralwords_language_bre'),
           NumeralWordsDecodeOutput('1', 'satu', 'numeralwords_language_ind'),
           NumeralWordsDecodeOutput('10', 'hamar', 'numeralwords_language_bas'),
-        ]},
+        ]
+      },
     ];
 
     _inputsToExpected.forEach((elem) {
-      test('input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
-        var _actual = decodeNumeralwords(removeAccents(elem['input'].toString().toLowerCase()), elem['language'], elem['decodeMode']);
+      test(
+          'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
+        var _actual = decodeNumeralwords(
+            removeAccents(elem['input'].toString().toLowerCase()),
+            elem['language'], elem['decodeMode']);
         var length = elem['expectedOutput'].length;
         for (int i = 0; i < length; i++) {
           expect(_actual[i].number, elem['expectedOutput'][i].number);
@@ -714,4 +721,76 @@ void main(){
       });
     });
   });
+
+    group("NumeralWords.Minions:", () {
+      List<Map<String, dynamic>> _inputsToExpected = [
+        {
+          'input': 'hana dul sae saesae saedul dulsae hanadulsae hanahana duldul',
+          'language': NumeralWordsLanguage.MIN,
+          'decodeMode': true,
+          'expectedOutput': [
+            NumeralWordsDecodeOutput('1', 'hana', 'numeralwords_language_min'),
+            NumeralWordsDecodeOutput('2', 'dul', 'numeralwords_language_min'),
+            NumeralWordsDecodeOutput('3', 'sae', 'numeralwords_language_min'),
+            NumeralWordsDecodeOutput('6', 'saesae', 'numeralwords_language_min'),
+            NumeralWordsDecodeOutput('5', 'saedul', 'numeralwords_language_min'),
+            NumeralWordsDecodeOutput('5', 'dulsae', 'numeralwords_language_min'),
+            NumeralWordsDecodeOutput('6', 'hanadulsae', 'numeralwords_language_min'),
+            NumeralWordsDecodeOutput('2', 'hanahana', 'numeralwords_language_min'),
+            NumeralWordsDecodeOutput('4', 'duldul', 'numeralwords_language_min'),
+          ]
+        },
+      ];
+
+      _inputsToExpected.forEach((elem) {
+        test(
+            'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
+          var _actual = decodeNumeralwords(
+              removeAccents(elem['input'].toString().toLowerCase()),
+              elem['language'], elem['decodeMode']);
+          var length = elem['expectedOutput'].length;
+          for (int i = 0; i < length; i++) {
+            expect(_actual[i].number, elem['expectedOutput'][i].number);
+            expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
+            expect(_actual[i].language, elem['expectedOutput'][i].language);
+          }
+        });
+      });
+    });
+
+    group("NumeralWords.Shadoks:", () {
+        List<Map<String, dynamic>> _inputsToExpected = [
+          {
+            'input': 'ga bu zo meu meumeu zobugameu zozo gazo gaga',
+            'language': NumeralWordsLanguage.SHA,
+            'decodeMode': true,
+            'expectedOutput': [
+              NumeralWordsDecodeOutput('0', 'ga', 'numeralwords_language_sha'),
+              NumeralWordsDecodeOutput('1', 'bu', 'numeralwords_language_sha'),
+              NumeralWordsDecodeOutput('2', 'zo', 'numeralwords_language_sha'),
+              NumeralWordsDecodeOutput('3', 'meu', 'numeralwords_language_sha'),
+              NumeralWordsDecodeOutput('15', 'meumeu', 'numeralwords_language_sha'),
+              NumeralWordsDecodeOutput('147', 'zobugameu', 'numeralwords_language_sha'),
+              NumeralWordsDecodeOutput('10', 'zozo', 'numeralwords_language_sha'),
+              NumeralWordsDecodeOutput('2', 'gazo', 'numeralwords_language_sha'),
+              NumeralWordsDecodeOutput('0', 'gaga', 'numeralwords_language_sha'),
+            ]
+          },
+        ];
+
+        _inputsToExpected.forEach((elem) {
+          test(
+              'input: ${elem['input']}, language: ${elem['language']}, decodeMode: ${elem['decodeMode']}', () {
+            var _actual = decodeNumeralwords(
+                removeAccents(elem['input'].toString().toLowerCase()),
+                elem['language'], elem['decodeMode']);
+            var length = elem['expectedOutput'].length;
+            for (int i = 0; i < length; i++) {
+              expect(_actual[i].number, elem['expectedOutput'][i].number);
+              expect(_actual[i].numWord, elem['expectedOutput'][i].numWord);
+              expect(_actual[i].language, elem['expectedOutput'][i].language);
+            }
+          });
+        });
+      });
 }
