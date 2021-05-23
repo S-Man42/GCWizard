@@ -29,24 +29,27 @@ List<List<String>> encodeShadoksNumbers(int input) {
 Map<String, dynamic> decodeShadoksNumbers(List<String> inputs) {
   if (inputs == null || inputs.length == 0)
     return {
-      'displays': [[]],
-      'numbers': [],
+      'displays': [
+        ['a']
+      ],
+      'numbers': [0],
       'quaternary': BigInt.zero,
-      'shadoks' : ''
+      'shadoks': _numberToWord['0']
     };
 
   var displays = <List<String>>[];
 
   List<int> numbers = inputs.where((input) => input != null).map((input) {
     var number = 0;
-    var display = <String>[];
-    switch (input){
-      case 'a':    number = 0;  display.add(input);  break;
-      case 'b':    number = 1;  display.add(input);  break;
-      case 'bc' :  number = 2;  display.add(input);  break;
-      case 'bcd' : number = 3;  display.add(input);  break;
+
+    if (input == 'a') {
+      displays.add(['a']);
+      number = 0;
+    } else {
+      displays.add(input.split('').toList());
+      number = input.length;
     }
-    displays.add(display);
+
     return number;
   }).toList();
 
@@ -55,6 +58,6 @@ Map<String, dynamic> decodeShadoksNumbers(List<String> inputs) {
   return {'displays': displays, 'numbers': numbers, 'quaternary': BigInt.tryParse(total), 'shadoks': _shadoks(numbers)};
 }
 
-String _shadoks(List<int> numbers){
-  return numbers.join('').replaceAll('0','GA').replaceAll('1','BU').replaceAll('2','ZO').replaceAll('3','MEU');
+String _shadoks(List<int> numbers) {
+  return numbers.join('').replaceAll('0', 'GA').replaceAll('1', 'BU').replaceAll('2', 'ZO').replaceAll('3', 'MEU');
 }

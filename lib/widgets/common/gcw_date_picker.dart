@@ -13,7 +13,8 @@ class GCWDatePicker extends StatefulWidget {
   final date;
   final CalendarSystem type;
 
-  const GCWDatePicker({Key key, this.onChanged, this.date, this.type:CalendarSystem.GREGORIANCALENDAR}) : super(key: key);
+  const GCWDatePicker({Key key, this.onChanged, this.date, this.type: CalendarSystem.GREGORIANCALENDAR})
+      : super(key: key);
 
   @override
   GCWDatePickerState createState() => GCWDatePickerState();
@@ -73,10 +74,7 @@ class GCWDatePickerState extends State<GCWDatePicker> {
               ),
               padding: EdgeInsets.only(right: 2)),
         ),
-        Expanded(
-            child: Padding(
-                child: _buildMonthSpinner(widget.type),
-                padding: EdgeInsets.only(left: 2, right: 2))),
+        Expanded(child: Padding(child: _buildMonthSpinner(widget.type), padding: EdgeInsets.only(left: 2, right: 2))),
         Expanded(
             child: Padding(
           child: GCWIntegerSpinner(
@@ -98,27 +96,28 @@ class GCWDatePickerState extends State<GCWDatePicker> {
     );
   }
 
-  Widget _buildMonthSpinner(var type){
-    if (type == CalendarSystem.ISLAMICCALENDAR || type == CalendarSystem.PERSIANYAZDEGARDCALENDAR || type == CalendarSystem.HEBREWCALENDAR || type == CalendarSystem.COPTICCALENDAR )
-      return   GCWDropDownSpinner(
-         index: _currentMonth ?? (widget.date != null ? widget.date.month - 1 : null) ?? 0,
-         layout: SpinnerLayout.VERTICAL,
-         items: MONTH_NAMES[type].entries.map((entry) {
-           return GCWDropDownMenuItem(
-             value: entry.key - 1,
-             child: entry.value);
-         }).toList(),
-         onChanged: (value) {
-           setState(() {
-             _currentMonth = value;
-             _setCurrentNamedCalendarValueAndEmitOnChange();
-             if (_currentMonth.toString().length == 2) {
-               FocusScope.of(context).requestFocus(_dayFocusNode);
-             }
-           });
-         },
-       );
-    if (type == CalendarSystem.JULIANCALENDAR || type == CalendarSystem.GREGORIANCALENDAR )
+  Widget _buildMonthSpinner(var type) {
+    if (type == CalendarSystem.ISLAMICCALENDAR ||
+        type == CalendarSystem.PERSIANYAZDEGARDCALENDAR ||
+        type == CalendarSystem.HEBREWCALENDAR ||
+        type == CalendarSystem.COPTICCALENDAR)
+      return GCWDropDownSpinner(
+        index: _currentMonth ?? (widget.date != null ? widget.date.month - 1 : null) ?? 0,
+        layout: SpinnerLayout.VERTICAL,
+        items: MONTH_NAMES[type].entries.map((entry) {
+          return GCWDropDownMenuItem(value: entry.key - 1, child: entry.value);
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            _currentMonth = value;
+            _setCurrentNamedCalendarValueAndEmitOnChange();
+            if (_currentMonth.toString().length == 2) {
+              FocusScope.of(context).requestFocus(_dayFocusNode);
+            }
+          });
+        },
+      );
+    if (type == CalendarSystem.JULIANCALENDAR || type == CalendarSystem.GREGORIANCALENDAR)
       return GCWIntegerSpinner(
         focusNode: _monthFocusNode,
         layout: SpinnerLayout.VERTICAL,

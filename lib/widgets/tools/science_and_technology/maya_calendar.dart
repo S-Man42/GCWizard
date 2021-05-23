@@ -200,15 +200,18 @@ class MayaCalendarState extends State<MayaCalendar> {
           MayaDayCountToTzolkin(segments['numbers']) +
           '   ' +
           MayaDayCountToHaab(segments['numbers']);
-      outputDates[i18n(context, 'mayacalendar_juliandate')] = MayaDayCountToJulianDate(MayaLongCountToMayaDayCount(segments['numbers']));
-      outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] = gregorian.day + ' ' + i18n(context, gregorian.month) + ' ' + gregorian.year;
-      outputDates[i18n(context, 'mayacalendar_juliancalendar')] = julian.day + ' ' + i18n(context, julian.month) + ' ' + julian.year;
+      outputDates[i18n(context, 'mayacalendar_juliandate')] =
+          MayaDayCountToJulianDate(MayaLongCountToMayaDayCount(segments['numbers']));
+      outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] =
+          gregorian.day + ' ' + i18n(context, gregorian.month) + ' ' + gregorian.year;
+      outputDates[i18n(context, 'mayacalendar_juliancalendar')] =
+          julian.day + ' ' + i18n(context, julian.month) + ' ' + julian.year;
 
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
           Column(
-            children : columnedMultiLineOutput(
+            children: columnedMultiLineOutput(
                 context,
                 outputDates.entries.map((entry) {
                   return [entry.key, entry.value];
@@ -239,7 +242,7 @@ class MayaCalendarState extends State<MayaCalendar> {
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
           Column(
-            children : columnedMultiLineOutput(
+            children: columnedMultiLineOutput(
                 context,
                 outputDates.entries.map((entry) {
                   return [entry.key, entry.value];
@@ -251,14 +254,14 @@ class MayaCalendarState extends State<MayaCalendar> {
     }
   }
 
-  String _DateOutputToString(context, DateOutput date){
+  String _DateOutputToString(context, DateOutput date) {
     final Locale appLocale = Localizations.localeOf(context);
     switch (appLocale.languageCode) {
-      case 'de' :
+      case 'de':
         return date.day + '. ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.year;
-      case 'fr' :
+      case 'fr':
         return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]).toLowerCase() + ' ' + date.year;
-      default :
+      default:
         return date.year + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
     }
   }

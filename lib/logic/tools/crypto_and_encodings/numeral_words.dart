@@ -81,7 +81,7 @@ final Map<String, String> DEUWordToNum = {
   'null': '0',
   'eins': '1',
   'zwei': '2',
-  'zwo' : '2',
+  'zwo': '2',
   'drei': '3',
   'vier': '4',
   'fuenf': '5',
@@ -788,7 +788,6 @@ final Map<String, String> MAPWordToNum = {
   'pura': '8',
   'ailha': '9',
   'mari ': '10',
-
 };
 final Map<String, String> BASWordToNum = {
   'huts / zero': '0',
@@ -1662,23 +1661,20 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
   }
 }
 
-bool _isShadoks(String element){
+bool _isShadoks(String element) {
   return (element.replaceAll('ga', '').replaceAll('bu', '').replaceAll('zo', '').replaceAll('meu', '') == '');
 }
 
-bool _isMinion(String element){
+bool _isMinion(String element) {
   return (element.replaceAll('hana', '').replaceAll('dul', '').replaceAll('sae', '') == '');
 }
 
-String _decodeShadoks(String element){
-  return convertBase(element.replaceAll('ga', '0')
-      .replaceAll('bu', '1')
-      .replaceAll('zo', '2')
-      .replaceAll('meu', '3'), 4, 10);
-
+String _decodeShadoks(String element) {
+  return convertBase(
+      element.replaceAll('ga', '0').replaceAll('bu', '1').replaceAll('zo', '2').replaceAll('meu', '3'), 4, 10);
 }
 
-String _decodeMinion(String element){
+String _decodeMinion(String element) {
   int number = 0;
   element.replaceAll('hana', '1').replaceAll('dul', '2').replaceAll('sae', '3').split('').forEach((element) {
     number = number + int.parse(element);

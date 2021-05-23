@@ -44,46 +44,46 @@ class QuadraticEquationState extends State<QuadraticEquation> {
     return Column(
       children: <Widget>[
         GCWOutputText(
-          text: i18n(context, 'quadratic_equation_explanation')+'\n',
+          text: i18n(context, 'quadratic_equation_explanation') + '\n',
           suppressCopyButton: true,
         ),
         Row(
           children: <Widget>[
             Expanded(
-              child: GCWTextField(
-                controller: _aController,
-                inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
-                hintText: i18n(context, 'quadratic_equation_hint_a'),
-                onChanged: (value) {
-                  setState(() {
-                    _currentA = value;
-                  });
-                },
-              )),
+                child: GCWTextField(
+              controller: _aController,
+              inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+              hintText: i18n(context, 'quadratic_equation_hint_a'),
+              onChanged: (value) {
+                setState(() {
+                  _currentA = value;
+                });
+              },
+            )),
             Container(width: DOUBLE_DEFAULT_MARGIN),
             Expanded(
-              child: GCWTextField(
-                controller: _bController,
-                inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
-                hintText: i18n(context, 'quadratic_equation_hint_b'),
-                onChanged: (value) {
-                  setState(() {
-                    _currentB = value;
-                  });
-                },
-              )),
+                child: GCWTextField(
+              controller: _bController,
+              inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+              hintText: i18n(context, 'quadratic_equation_hint_b'),
+              onChanged: (value) {
+                setState(() {
+                  _currentB = value;
+                });
+              },
+            )),
             Container(width: DOUBLE_DEFAULT_MARGIN),
             Expanded(
-              child: GCWTextField(
-                controller: _cController,
-                inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
-                hintText: i18n(context, 'quadratic_equation_hint_c'),
-                onChanged: (value) {
-                  setState(() {
-                    _currentC = value;
-                  });
-                },
-              ))
+                child: GCWTextField(
+              controller: _cController,
+              inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+              hintText: i18n(context, 'quadratic_equation_hint_c'),
+              onChanged: (value) {
+                setState(() {
+                  _currentC = value;
+                });
+              },
+            ))
           ],
         ),
         _buildOutput(context)

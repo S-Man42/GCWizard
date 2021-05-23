@@ -55,17 +55,16 @@ class VanityWordsListState extends State<VanityWordsList> {
   Widget _buildOutput(BuildContext context) {
     Map<String, String> vanityWordsOverview = new Map<String, String>();
     vanityWordsOverview = VanWords[_currentLanguage];
-    if (_currentLanguage == NumeralWordsLanguage.DEU)
-      NumWords[_currentLanguage]['fünf'] = '5';
+    if (_currentLanguage == NumeralWordsLanguage.DEU) NumWords[_currentLanguage]['fünf'] = '5';
 
     return GCWDefaultOutput(
         child: Column(
-          children: columnedMultiLineOutput(
-              context,
-              vanityWordsOverview.entries.map((entry) {
-                return [entry.key, entry.value, NumWords[_currentLanguage][entry.value.toLowerCase()]];
-              }).toList(),
-              flexValues: [2, 2, 1]),
-        ));
+      children: columnedMultiLineOutput(
+          context,
+          vanityWordsOverview.entries.map((entry) {
+            return [entry.key, entry.value, NumWords[_currentLanguage][entry.value.toLowerCase()]];
+          }).toList(),
+          flexValues: [2, 2, 1]),
+    ));
   }
 }

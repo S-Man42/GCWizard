@@ -1,6 +1,13 @@
-
-
-enum CalendarSystem  {JULIANDATE, JULIANCALENDAR, MODIFIEDJULIANDATE, GREGORIANCALENDAR, ISLAMICCALENDAR, PERSIANYAZDEGARDCALENDAR, HEBREWCALENDAR, COPTICCALENDAR}
+enum CalendarSystem {
+  JULIANDATE,
+  JULIANCALENDAR,
+  MODIFIEDJULIANDATE,
+  GREGORIANCALENDAR,
+  ISLAMICCALENDAR,
+  PERSIANYAZDEGARDCALENDAR,
+  HEBREWCALENDAR,
+  COPTICCALENDAR
+}
 
 Map<CalendarSystem, String> CALENDAR_SYSTEM = {
   CalendarSystem.JULIANDATE: 'dates_calendar_system_juliandate',
@@ -12,4 +19,3 @@ Map<CalendarSystem, String> CALENDAR_SYSTEM = {
   CalendarSystem.HEBREWCALENDAR: 'dates_calendar_system_hebrewcalendar',
   CalendarSystem.COPTICCALENDAR: 'dates_calendar_system_copticcalendar',
 };
-
