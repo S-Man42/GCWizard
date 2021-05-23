@@ -72,35 +72,24 @@ class ShadowLengthState extends State<ShadowLength> {
 
   _buildOutput() {
     var format = NumberFormat('0.000');
-
     var julianDate = JulianDate(_currentDateTime['datetime'], _currentDateTime['timezone']);
-
     var sunPosition =
     logic.SunPosition(_currentCoords, julianDate, getEllipsoidByName(Prefs.get('coord_default_ellipsoid_name')));
-
     var _currentLength = _currentHeight * cos(degreesToRadian(sunPosition.altitude)) / sin(degreesToRadian(sunPosition.altitude));
-
     var lengthOutput = '';
     if(_currentLength < 0)
       lengthOutput = i18n(context, 'shadowlength_no_shadow');
     else
       lengthOutput =  format.format(_currentLength) + ' m';
-
     var outputsLength = [[i18n(context, 'shadowlength_length'), lengthOutput]];
-
     var rowsLengthData = columnedMultiLineOutput(context, outputsLength);
-
     rowsLengthData.insert(0, GCWTextDivider(text: i18n(context, 'shadowlength_shadow')));
-
     var outputsSun = [
       [i18n(context, 'astronomy_position_azimuth'), format.format(sunPosition.azimuth) + '°'],
       [i18n(context, 'astronomy_position_altitude'), format.format(sunPosition.altitude) + '°'],
     ];
-
     var rowsSunData = columnedMultiLineOutput(context, outputsSun);
-
     rowsSunData.insert(0, GCWTextDivider(text: i18n(context, 'astronomy_sunposition_title')));
-
     var output = rowsLengthData;
     output.addAll(rowsSunData);
     return Column(children: output);
