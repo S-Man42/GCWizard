@@ -1,7 +1,5 @@
 // https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/n/navajo-code-talker-dictionary.html
 // https://www.ancestrycdn.com/aa-k12/1112/assets/Navajo-Code-Talkers-dictionary.pdf
-// https://kryptografie.de/kryptografie/chiffre/navajo.htm
-// https://www.dcode.fr/navajo-code
 
 import 'package:gc_wizard/utils/common_utils.dart';
 
