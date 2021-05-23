@@ -2,6 +2,7 @@
 // https://www.ancestrycdn.com/aa-k12/1112/assets/Navajo-Code-Talkers-dictionary.pdf
 
 import 'package:gc_wizard/utils/common_utils.dart';
+import 'package:gc_wizard/utils/constants.dart';
 
 final Map NAVAJO_ENCODE_ALPHABET = {
   // although the dictionary has several encodings, these are used by kryptografie.de
@@ -774,26 +775,29 @@ String decodeNavajo(String cipherText, bool useOnlyAlphabet) {
   NAVAJO_DECODE_ALPHABET['SHI-DA'] = 'U';
   NAVAJO_DECODE_ALPHABET['BSEH-DO-GLIZ'] = 'Z';
 
-  List<String> result = new List<String>();
+  List<String> result = <String>[];
   if (cipherText == null || cipherText == '') return '';
-
-  cipherText.toUpperCase().split(' ').forEach((element) {
-    if (NAVAJO_DECODE_ALPHABET[element] == null)
-      if (useOnlyAlphabet)
-        result.add('?');
-      else
-        if (NAVAJO_DECODE_DICTIONARY[element] == null)
-          result.add('?');
+  cipherText = cipherText.toUpperCase().replaceAll(RegExp(r'\s{3,}'), '  ');
+  cipherText.split('  ').forEach((element) {
+    element.split(' ').forEach((element) {
+      if (NAVAJO_DECODE_ALPHABET[element] == null)
+        if (useOnlyAlphabet)
+          result.add(UNKNOWN_ELEMENT);
         else
-          result.add(enfoldText(NAVAJO_DECODE_DICTIONARY[element]));
-    else
-      result.add(NAVAJO_DECODE_ALPHABET[element]);
+          if (NAVAJO_DECODE_DICTIONARY[element] == null)
+            result.add(UNKNOWN_ELEMENT);
+          else
+            result.add(enfoldText(NAVAJO_DECODE_DICTIONARY[element]));
+      else
+        result.add(NAVAJO_DECODE_ALPHABET[element]);
+    });
+    result.add(' ');
   });
-  return result.join(' ');
+  return result.join('');
 }
 
 String encodeNavajo(String plainText, bool useOnlyAlphabet) {
-  List<String> result = new List<String>();
+  List<String> result = <String>[];
   if (plainText == null || plainText == '') return '';
 
   shrinkText(plainText.toUpperCase()).split(' ').forEach((element) {
@@ -810,7 +814,7 @@ String encodeNavajo(String plainText, bool useOnlyAlphabet) {
 }
 
 String encodeLetterWise(String plainText) {
-  List<String> result = new List<String>();
+  List<String> result = <String>[];
   plainText.split('').forEach((element) {
     if (NAVAJO_ENCODE_ALPHABET[element] == null)
       result.add(element);
