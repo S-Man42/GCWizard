@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/calendar.dart';
@@ -51,7 +50,8 @@ class CalendarState extends State<Calendar> {
             );
           }).toList(),
         ),
-        if (_currentCalendarSystem == CalendarSystem.JULIANDATE || _currentCalendarSystem == CalendarSystem.MODIFIEDJULIANDATE)
+        if (_currentCalendarSystem == CalendarSystem.JULIANDATE ||
+            _currentCalendarSystem == CalendarSystem.MODIFIEDJULIANDATE)
           GCWDoubleSpinner(
               value: _currentJulianDate,
               numberDecimalDigits: 2,
@@ -60,9 +60,12 @@ class CalendarState extends State<Calendar> {
                   _currentJulianDate = value;
                 });
               }),
-        if (_currentCalendarSystem == CalendarSystem.JULIANCALENDAR || _currentCalendarSystem == CalendarSystem.GREGORIANCALENDAR ||
-            _currentCalendarSystem == CalendarSystem.ISLAMICCALENDAR || _currentCalendarSystem == CalendarSystem.COPTICCALENDAR ||
-            _currentCalendarSystem == CalendarSystem.PERSIANYAZDEGARDCALENDAR || _currentCalendarSystem == CalendarSystem.HEBREWCALENDAR)
+        if (_currentCalendarSystem == CalendarSystem.JULIANCALENDAR ||
+            _currentCalendarSystem == CalendarSystem.GREGORIANCALENDAR ||
+            _currentCalendarSystem == CalendarSystem.ISLAMICCALENDAR ||
+            _currentCalendarSystem == CalendarSystem.COPTICCALENDAR ||
+            _currentCalendarSystem == CalendarSystem.PERSIANYAZDEGARDCALENDAR ||
+            _currentCalendarSystem == CalendarSystem.HEBREWCALENDAR)
           GCWDatePicker(
             date: _currentDate,
             type: _currentCalendarSystem,
@@ -81,89 +84,95 @@ class CalendarState extends State<Calendar> {
     double jd = 0.0;
     Map output = new Map();
     switch (_currentCalendarSystem) {
-      case CalendarSystem.MODIFIEDJULIANDATE :
+      case CalendarSystem.MODIFIEDJULIANDATE:
         jd = ModifedJulianDateToJulianDate(_currentJulianDate);
         output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
-      case CalendarSystem.JULIANDATE :
+      case CalendarSystem.JULIANDATE:
         jd = _currentJulianDate;
         output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
-      case CalendarSystem.GREGORIANCALENDAR :
+      case CalendarSystem.GREGORIANCALENDAR:
         jd = GregorianCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
-      case CalendarSystem.JULIANCALENDAR :
+      case CalendarSystem.JULIANCALENDAR:
         jd = JulianCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
-      case CalendarSystem.ISLAMICCALENDAR :
+      case CalendarSystem.ISLAMICCALENDAR:
         jd = IslamicCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = WEEKDAY_ISLAMIC[Weekday(jd)];
         break;
-      case CalendarSystem.PERSIANYAZDEGARDCALENDAR :
+      case CalendarSystem.PERSIANYAZDEGARDCALENDAR:
         jd = PersianYazdegardCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = WEEKDAY_PERSIAN[Weekday(jd)];
         break;
-      case CalendarSystem.HEBREWCALENDAR :
+      case CalendarSystem.HEBREWCALENDAR:
         jd = HebrewCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = WEEKDAY_HEBREW[Weekday(jd)];
         break;
-      case CalendarSystem.COPTICCALENDAR :
+      case CalendarSystem.COPTICCALENDAR:
         jd = CopticCalendarToJulianDate(_currentDate);
         output['dates_weekday_title'] = i18n(context, WEEKDAY[Weekday(jd)]);
         break;
     }
     output['dates_calendar_system_juliandate'] = (jd + 0.5).floor();
-    output['dates_calendar_system_juliancalendar'] = _DateOutputToString(context, JulianDateToJulianCalendar(jd, true), CalendarSystem.JULIANCALENDAR);
+    output['dates_calendar_system_juliancalendar'] =
+        _DateOutputToString(context, JulianDateToJulianCalendar(jd, true), CalendarSystem.JULIANCALENDAR);
     output['dates_calendar_system_modifiedjuliandate'] = JulianDateToModifedJulianDate(jd);
-    output['dates_calendar_system_gregoriancalendar'] = _DateOutputToString(context, JulianDateToGregorianCalendar(jd, true), CalendarSystem.GREGORIANCALENDAR);
-    output['dates_calendar_system_islamiccalendar'] = _DateOutputToString(context, JulianDateToIslamicCalendar(jd), CalendarSystem.ISLAMICCALENDAR);
+    output['dates_calendar_system_gregoriancalendar'] =
+        _DateOutputToString(context, JulianDateToGregorianCalendar(jd, true), CalendarSystem.GREGORIANCALENDAR);
+    output['dates_calendar_system_islamiccalendar'] =
+        _DateOutputToString(context, JulianDateToIslamicCalendar(jd), CalendarSystem.ISLAMICCALENDAR);
     output['dates_calendar_system_hebrewcalendar'] = _HebrewDateToString(JulianDateToHebrewCalendar(jd), jd);
-    output['dates_calendar_system_persiancalendar'] = _DateOutputToString(context, JulianDateToPersianYazdegardCalendar(jd), CalendarSystem.PERSIANYAZDEGARDCALENDAR);
-    output['dates_calendar_system_copticcalendar'] = _DateOutputToString(context, JulianDateToCopticCalendar(jd), CalendarSystem.COPTICCALENDAR);
+    output['dates_calendar_system_persiancalendar'] =
+        _DateOutputToString(context, JulianDateToPersianYazdegardCalendar(jd), CalendarSystem.PERSIANYAZDEGARDCALENDAR);
+    output['dates_calendar_system_copticcalendar'] =
+        _DateOutputToString(context, JulianDateToCopticCalendar(jd), CalendarSystem.COPTICCALENDAR);
     return GCWDefaultOutput(
         child: Column(
-          children: columnedMultiLineOutput(
-              context,
-              output.entries.map((entry) {
-                return [i18n(context, entry.key), entry.value];
-              }).toList(),
-              flexValues: [1, 1]),
-        ));
+      children: columnedMultiLineOutput(
+          context,
+          output.entries.map((entry) {
+            return [i18n(context, entry.key), entry.value];
+          }).toList(),
+          flexValues: [1, 1]),
+    ));
   }
 
-  String _HebrewDateToString(DateOutput HebrewDate, double jd){
+  String _HebrewDateToString(DateOutput HebrewDate, double jd) {
     if (typeOfJewYear(JewishYearLength(jd)).contains('embolistic'))
-      return HebrewDate.day + '. ' + MONTH_NAMES[CalendarSystem.HEBREWCALENDAR][int.parse(HebrewDate.month)].toString() + ' ' + HebrewDate.year;
+      return HebrewDate.day +
+          '. ' +
+          MONTH_NAMES[CalendarSystem.HEBREWCALENDAR][int.parse(HebrewDate.month)].toString() +
+          ' ' +
+          HebrewDate.year;
     else {
       int month = int.parse(HebrewDate.month);
-      if (month > 6)
-        month = 1 + int.parse(HebrewDate.month);
+      if (month > 6) month = 1 + int.parse(HebrewDate.month);
       return HebrewDate.day + ' ' + MONTH_NAMES[CalendarSystem.HEBREWCALENDAR][month] + ' ' + HebrewDate.year;
     }
   }
 
-  String _DateOutputToString(context, DateOutput date, CalendarSystem calendar){
+  String _DateOutputToString(context, DateOutput date, CalendarSystem calendar) {
     final Locale appLocale = Localizations.localeOf(context);
     switch (calendar) {
       case CalendarSystem.ISLAMICCALENDAR:
       case CalendarSystem.PERSIANYAZDEGARDCALENDAR:
       case CalendarSystem.COPTICCALENDAR:
-          return date.day + '. ' + MONTH_NAMES[calendar][int.parse(date.month)].toString() + ' ' + date.year;
-      case CalendarSystem.GREGORIANCALENDAR :
-      case CalendarSystem.JULIANCALENDAR :
-          switch (appLocale.languageCode) {
-            case 'de' :
-                return date.day + '. ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.year;
-            case 'fr' :
-              return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]).toLowerCase() + ' ' + date.year;
-            default :
-              return date.year + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
-          }
-    };
+        return date.day + '. ' + MONTH_NAMES[calendar][int.parse(date.month)].toString() + ' ' + date.year;
+      case CalendarSystem.GREGORIANCALENDAR:
+      case CalendarSystem.JULIANCALENDAR:
+        switch (appLocale.languageCode) {
+          case 'de':
+            return date.day + '. ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.year;
+          case 'fr':
+            return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]).toLowerCase() + ' ' + date.year;
+          default:
+            return date.year + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
+        }
+    }
+    ;
   }
-
 }
-
-

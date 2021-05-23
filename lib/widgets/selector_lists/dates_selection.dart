@@ -14,8 +14,13 @@ class DatesSelection extends GCWSelection {
   @override
   Widget build(BuildContext context) {
     final List<GCWTool> _toolList = Registry.toolList.where((element) {
-      return [className(DayCalculator()), className(TimeCalculator()), className(Weekday()), className(Calendar()), className(MayaCalendarSelection())]
-          .contains(className(element.tool));
+      return [
+        className(DayCalculator()),
+        className(TimeCalculator()),
+        className(Weekday()),
+        className(Calendar()),
+        className(MayaCalendarSelection())
+      ].contains(className(element.tool));
     }).toList();
 
     return Container(child: GCWToolList(toolList: _toolList));

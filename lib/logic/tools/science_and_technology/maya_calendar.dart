@@ -9,7 +9,7 @@ import 'package:gc_wizard/logic/common/date_utils.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:prefs/prefs.dart';
 
-enum CORRELATION  {THOMPSON, SMILEY, WEITZEL}
+enum CORRELATION { THOMPSON, SMILEY, WEITZEL }
 
 final THOMPSON_CORRELATION = 584283;
 final SMILEY_CORRELATION = 482699;
@@ -19,9 +19,9 @@ final SMILEY = 'Smiley';
 final WEITZEL = 'Weitzel';
 
 final Map _CORRELATION_NUMBER = {
-  THOMPSON : THOMPSON_CORRELATION,
-  SMILEY : SMILEY_CORRELATION,
-  WEITZEL : WEITZEL_CORRELATION,
+  THOMPSON: THOMPSON_CORRELATION,
+  SMILEY: SMILEY_CORRELATION,
+  WEITZEL: WEITZEL_CORRELATION,
 };
 
 Map<String, String> CORRELATION_SYSTEMS = {
@@ -98,7 +98,6 @@ final Map<int, List<String>> _numbersToSegments = {
   19: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
 };
 
-
 const _alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 List<int> mayaCalendarSystem = [1, 20, 360, 7200, 144000, 2880000, 57600000, 1152000000, 23040000000];
@@ -160,8 +159,7 @@ Map<String, dynamic> decodeMayaCalendar(List<String> inputs) {
       if (oneCharacters.contains(segment)) {
         number += 1;
         display.add(segment);
-      }
-      else if (fiveCharacters.contains(segment)) {
+      } else if (fiveCharacters.contains(segment)) {
         number += 5;
         display.add(segment);
       }
@@ -242,19 +240,17 @@ int MayaLongCountToMayaDayCount(List<int> longCount) {
   return dayCount;
 }
 
-DateOutput MayaDayCountToJulianCalendar(int mayaDayCount){
+DateOutput MayaDayCountToJulianCalendar(int mayaDayCount) {
   return JulianDateToJulianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0, true);
 }
 
-DateOutput MayaDayCountToGregorianCalendar(int mayaDayCount){
+DateOutput MayaDayCountToGregorianCalendar(int mayaDayCount) {
   return JulianDateToGregorianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0, true);
 }
 
-int MayaDayCountToJulianDate(int mayaDayCount){
+int MayaDayCountToJulianDate(int mayaDayCount) {
   if (Prefs.getString('mayacalendar_correlation') == null || Prefs.getString('mayacalendar_correlation') == '')
     return (mayaDayCount + _CORRELATION_NUMBER[THOMPSON]);
   else
     return (mayaDayCount + _CORRELATION_NUMBER[Prefs.getString('mayacalendar_correlation')]);
 }
-
-

@@ -49,10 +49,10 @@ class ComplexNumbersState extends State<ComplexNumbers> {
     return Column(
       children: <Widget>[
         _currentMode == GCWSwitchPosition.right
-          ? Row(
-              children: <Widget>[
-                Expanded(
-                  child: GCWTextField(
+            ? Row(
+                children: <Widget>[
+                  Expanded(
+                      child: GCWTextField(
                     controller: _aController,
                     inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
                     hintText: i18n(context, 'complex_numbers_hint_a'),
@@ -62,9 +62,9 @@ class ComplexNumbersState extends State<ComplexNumbers> {
                       });
                     },
                   )),
-                Container(width: DOUBLE_DEFAULT_MARGIN),
-                Expanded(
-                  child: GCWTextField(
+                  Container(width: DOUBLE_DEFAULT_MARGIN),
+                  Expanded(
+                      child: GCWTextField(
                     controller: _bController,
                     inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
                     hintText: i18n(context, 'complex_numbers_hint_b'),
@@ -74,35 +74,35 @@ class ComplexNumbersState extends State<ComplexNumbers> {
                       });
                     },
                   ))
-              ],
-            )
-          : Row(
-            children: <Widget>[
-              Expanded(
-                child: GCWTextField(
-                  controller: _radiusController,
-                  inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
-                  hintText: i18n(context, 'complex_numbers_hint_radius'),
-                  onChanged: (value) {
-                    setState(() {
-                      _currentRadius = value;
-                    });
-                  },
-                )),
-              Container(width: DOUBLE_DEFAULT_MARGIN),
-              Expanded(
-                child: GCWTextField(
-                  controller: _angleController,
-                  inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
-                  hintText: i18n(context, 'complex_numbers_hint_angle'),
-                  onChanged: (value) {
-                    setState(() {
-                      _currentAngle = value;
-                    });
-                  },
-                )),
-            ],
-          ),
+                ],
+              )
+            : Row(
+                children: <Widget>[
+                  Expanded(
+                      child: GCWTextField(
+                    controller: _radiusController,
+                    inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+                    hintText: i18n(context, 'complex_numbers_hint_radius'),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentRadius = value;
+                      });
+                    },
+                  )),
+                  Container(width: DOUBLE_DEFAULT_MARGIN),
+                  Expanded(
+                      child: GCWTextField(
+                    controller: _angleController,
+                    inputFormatters: [DoubleTextInputFormatter(min: -1.0 * pow(2, 63), max: 1.0 * pow(2, 63))],
+                    hintText: i18n(context, 'complex_numbers_hint_angle'),
+                    onChanged: (value) {
+                      setState(() {
+                        _currentAngle = value;
+                      });
+                    },
+                  )),
+                ],
+              ),
         GCWTwoOptionsSwitch(
           title: i18n(context, 'complex_numbers_convert'),
           leftValue: i18n(context, 'complex_numbers_cartesian'),
@@ -122,21 +122,19 @@ class ComplexNumbersState extends State<ComplexNumbers> {
   Widget _buildOutput(BuildContext context) {
     Map<String, String> coordinates = new Map<String, String>();
     if (_currentMode == GCWSwitchPosition.right) {
-      coordinates= CartesianToPolar(_currentA, _currentB);
+      coordinates = CartesianToPolar(_currentA, _currentB);
     } else {
-      coordinates= PolarToCartesian(_currentRadius, _currentAngle);
+      coordinates = PolarToCartesian(_currentRadius, _currentAngle);
     }
 
     return GCWDefaultOutput(
         child: Column(
-          children: columnedMultiLineOutput(
-              context,
-              coordinates.entries.map((entry) {
-                if (entry.key != '') return [i18n(context, entry.key), entry.value];
-              }).toList(),
-              flexValues: [1, 1]),
-        ));
+      children: columnedMultiLineOutput(
+          context,
+          coordinates.entries.map((entry) {
+            if (entry.key != '') return [i18n(context, entry.key), entry.value];
+          }).toList(),
+          flexValues: [1, 1]),
+    ));
   }
-
 }
-

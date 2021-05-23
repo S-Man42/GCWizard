@@ -64,9 +64,8 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   Future<void> _readFileFromPicker() async {
-    var file = await openFileExplorer(context,
-      allowedExtensions: ['.jpg', '.jpeg', '.tiff', '.png', '.bmp', '.gif', '.webp']
-    );
+    var file =
+        await openFileExplorer(context, allowedExtensions: ['.jpg', '.jpeg', '.tiff', '.png', '.bmp', '.gif', '.webp']);
     if (file != null) {
       PlatformFile _file = file;
       return _readFile(_file);

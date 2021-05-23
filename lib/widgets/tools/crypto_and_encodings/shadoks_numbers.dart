@@ -2,43 +2,37 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/common/date_utils.dart';
-import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
+import 'package:gc_wizard/logic/tools/crypto_and_encodings/shadoks_numbers.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
+import 'package:gc_wizard/widgets/common/gcw_output.dart';
+import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_toolbar.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
-import 'package:gc_wizard/widgets/common/gcw_integer_spinner.dart';
-import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers_segment_display.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/shadoks_numbers_segment_display.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/utils.dart';
-import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 
-class MayaCalendar extends StatefulWidget {
+class ShadoksNumbers extends StatefulWidget {
   @override
-  MayaCalendarState createState() => MayaCalendarState();
+  ShadoksNumbersState createState() => ShadoksNumbersState();
 }
 
-class MayaCalendarState extends State<MayaCalendar> {
+class ShadoksNumbersState extends State<ShadoksNumbers> {
+  final Map<String, String> _segmentToWord = {
+    'a': 'GA',
+    'b': 'BU',
+    'bc': 'ZO',
+    'bcd': 'MEU',
+  };
+
   var _currentEncodeInput = 0;
-  var _currentLongCount = '';
-  var _longCountController;
 
   List<List<String>> _currentDisplays = [];
   var _currentMode = GCWSwitchPosition.right;
 
-  @override
-  void initState() {
-    super.initState();
-    _longCountController = TextEditingController(text: _currentLongCount);
-  }
-
-  @override
-  void dispose() {
-    _longCountController.dispose();
-    super.dispose();
-  }
+  Map<String, bool> _currentDisplay = {};
 
   @override
   Widget build(BuildContext context) {
@@ -107,16 +101,10 @@ class MayaCalendarState extends State<MayaCalendar> {
   }
 
   _buildVisualDecryption() {
-    Map<String, bool> currentDisplay;
-
-    var displays = _currentDisplays;
-    if (displays != null && displays.length > 0)
-      currentDisplay = Map<String, bool>.fromIterable(displays.last ?? [], key: (e) => e, value: (e) => true);
-    else
-      currentDisplay = {};
-
     var onChanged = (Map<String, bool> d) {
       setState(() {
+        _currentDisplay = d;
+
         var newSegments = <String>[];
         d.forEach((key, value) {
           if (!value) return;
@@ -124,6 +112,7 @@ class MayaCalendarState extends State<MayaCalendar> {
         });
 
         newSegments.sort();
+        if (newSegments.length > 1) newSegments.remove('a');
 
         if (_currentDisplays.length == 0) _currentDisplays.add([]);
 
@@ -139,8 +128,8 @@ class MayaCalendarState extends State<MayaCalendar> {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: MayaNumbersSegmentDisplay(
-                  segments: currentDisplay,
+                child: ShadoksNumbersSegmentDisplay(
+                  segments: _currentDisplay,
                   onChanged: onChanged,
                 ),
               )
@@ -152,7 +141,8 @@ class MayaCalendarState extends State<MayaCalendar> {
             iconData: Icons.space_bar,
             onPressed: () {
               setState(() {
-                _currentDisplays.add([]);
+                _currentDisplays.add(['a']);
+                _currentDisplay = {'a': true};
               });
             },
           ),
@@ -160,7 +150,20 @@ class MayaCalendarState extends State<MayaCalendar> {
             iconData: Icons.backspace,
             onPressed: () {
               setState(() {
-                if (_currentDisplays.length > 0) _currentDisplays.removeLast();
+                if (_currentDisplays.length > 0) {
+                  _currentDisplays.removeLast();
+                }
+
+                if (_currentDisplays.length > 0) {
+                  _currentDisplay = {};
+                  _currentDisplays.last.forEach((element) => _currentDisplay.putIfAbsent(element, () => true));
+                  _currentDisplay.putIfAbsent('a', () => false);
+                } else {
+                  _currentDisplays = [
+                    ['a']
+                  ];
+                  _currentDisplay = {'a': true};
+                }
               });
             },
           ),
@@ -168,7 +171,10 @@ class MayaCalendarState extends State<MayaCalendar> {
             iconData: Icons.clear,
             onPressed: () {
               setState(() {
-                _currentDisplays = [];
+                _currentDisplays = [
+                  ['a']
+                ];
+                _currentDisplay = {'a': true};
               });
             },
           )
@@ -177,47 +183,41 @@ class MayaCalendarState extends State<MayaCalendar> {
     );
   }
 
+  String _segmentsToShadoks(List<List<String>> segments) {
+    String result = '';
+    segments.forEach((element) {
+      result = result + _segmentToWord[element.join('')];
+    });
+    return result;
+  }
+
   _buildDigitalOutput(countColumns, segments) {
     var displays = segments.where((character) => character != null).map((character) {
       var displayedSegments = Map<String, bool>.fromIterable(character, key: (e) => e, value: (e) => true);
-      return MayaNumbersSegmentDisplay(segments: displayedSegments, readOnly: true);
+      displayedSegments.putIfAbsent('a', () => false);
+      return ShadoksNumbersSegmentDisplay(segments: displayedSegments, readOnly: true);
     }).toList();
+
     return buildSegmentDisplayOutput(countColumns, displays);
   }
 
   _buildOutput(countColumns) {
     var segments;
-    Map outputDates = new Map();
-
     if (_currentMode == GCWSwitchPosition.left) {
       //encode
-      segments = encodeMayaCalendar(_currentEncodeInput);
-      var gregorian = MayaDayCountToGregorianCalendar(MayaLongCountToMayaDayCount(segments['numbers']));
-      var julian = MayaDayCountToJulianCalendar(MayaLongCountToMayaDayCount(segments['numbers']));
-
-      outputDates[i18n(context, 'mayacalendar_system_longcount')] = MayaLongCount(segments['numbers']) +
-          '\n' +
-          MayaDayCountToTzolkin(segments['numbers']) +
-          '   ' +
-          MayaDayCountToHaab(segments['numbers']);
-      outputDates[i18n(context, 'mayacalendar_juliandate')] =
-          MayaDayCountToJulianDate(MayaLongCountToMayaDayCount(segments['numbers']));
-      outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] =
-          gregorian.day + ' ' + i18n(context, gregorian.month) + ' ' + gregorian.year;
-      outputDates[i18n(context, 'mayacalendar_juliancalendar')] =
-          julian.day + ' ' + i18n(context, julian.month) + ' ' + julian.year;
+      segments = encodeShadoksNumbers(_currentEncodeInput);
 
       return Column(
         children: <Widget>[
-          _buildDigitalOutput(countColumns, segments['displays']),
-          Column(
-            children: columnedMultiLineOutput(
-                context,
-                outputDates.entries.map((entry) {
-                  return [entry.key, entry.value];
-                }).toList(),
-                flexValues: [1, 1]),
-          )
+          _buildDigitalOutput(countColumns, segments),
+          GCWOutput(
+              title: i18n(context, 'shadoksnumbers_single_numbers'),
+              child: _segmentsToShadoks(segments)
+                  .replaceAll('GA', '0')
+                  .replaceAll('BU', '1')
+                  .replaceAll('ZO', '2')
+                  .replaceAll('MEU', '3')),
+          GCWOutput(title: i18n(context, 'shadoksnumbers_shadoks'), child: _segmentsToShadoks(segments))
         ],
       );
     } else {
@@ -225,44 +225,17 @@ class MayaCalendarState extends State<MayaCalendar> {
       var output = _currentDisplays.map((character) {
         if (character != null) return character.join();
       }).toList();
-      segments = decodeMayaCalendar(output);
-      var gregorian = MayaDayCountToGregorianCalendar(segments['vigesimal']);
-      var julian = MayaDayCountToJulianCalendar(segments['vigesimal']);
 
-      outputDates[i18n(context, 'mayacalendar_daycount')] = segments['vigesimal'];
-      outputDates[i18n(context, 'mayacalendar_system_longcount')] = MayaLongCount(segments['numbers']) +
-          '\n' +
-          MayaDayCountToTzolkin(segments['numbers']) +
-          '   ' +
-          MayaDayCountToHaab(segments['numbers']);
-      outputDates[i18n(context, 'mayacalendar_juliandate')] = MayaDayCountToJulianDate(segments['vigesimal']);
-      outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] = _DateOutputToString(context, gregorian);
-      outputDates[i18n(context, 'mayacalendar_juliancalendar')] = _DateOutputToString(context, julian);
+      segments = decodeShadoksNumbers(output);
+
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
-          Column(
-            children: columnedMultiLineOutput(
-                context,
-                outputDates.entries.map((entry) {
-                  return [entry.key, entry.value];
-                }).toList(),
-                flexValues: [1, 1]),
-          )
+          GCWOutput(title: i18n(context, 'shadoksnumbers_single_numbers'), child: segments['numbers'].join(' ')),
+          GCWOutput(title: i18n(context, 'shadoksnumbers_quaternary'), child: segments['quaternary']),
+          GCWOutput(title: i18n(context, 'shadoksnumbers_shadoks'), child: segments['shadoks'])
         ],
       );
-    }
-  }
-
-  String _DateOutputToString(context, DateOutput date) {
-    final Locale appLocale = Localizations.localeOf(context);
-    switch (appLocale.languageCode) {
-      case 'de':
-        return date.day + '. ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.year;
-      case 'fr':
-        return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]).toLowerCase() + ' ' + date.year;
-      default:
-        return date.year + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
     }
   }
 }
