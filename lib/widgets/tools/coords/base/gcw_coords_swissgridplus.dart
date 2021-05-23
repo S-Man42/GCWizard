@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/swissgrid.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_double_textfield.dart';
 import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsSwissGridPlus extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsSwissGridPlus({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -17,8 +15,8 @@ class GCWCoordsSwissGridPlus extends StatefulWidget {
 }
 
 class GCWCoordsSwissGridPlusState extends State<GCWCoordsSwissGridPlus> {
-  var _EastingController;
-  var _NorthingController;
+  TextEditingController _EastingController;
+  TextEditingController _NorthingController;
 
   var _currentEasting = {'text': '', 'value': 0.0};
   var _currentNorthing = {'text': '', 'value': 0.0};
@@ -40,9 +38,11 @@ class GCWCoordsSwissGridPlusState extends State<GCWCoordsSwissGridPlus> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var swissGrid = latLonToSwissGridPlus(widget.coordinates, defaultEllipsoid());
-      _currentEasting['value'] = swissGrid.easting;
-      _currentNorthing['value'] = swissGrid.northing;
+      var swissGridPlus = widget.coordinates is SwissGridPlus
+          ? widget.coordinates as SwissGridPlus
+          : SwissGridPlus.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
+      _currentEasting['value'] = swissGridPlus.easting;
+      _currentNorthing['value'] = swissGridPlus.northing;
 
       _EastingController.text = _currentEasting['value'].toString();
       _NorthingController.text = _currentNorthing['value'].toString();
@@ -51,7 +51,6 @@ class GCWCoordsSwissGridPlusState extends State<GCWCoordsSwissGridPlus> {
     return Column(children: <Widget>[
       GCWDoubleTextField(
           hintText: i18n(context, 'coords_formatconverter_swissgrid_easting'),
-          min: 0.0,
           controller: _EastingController,
           onChanged: (ret) {
             setState(() {
@@ -61,7 +60,6 @@ class GCWCoordsSwissGridPlusState extends State<GCWCoordsSwissGridPlus> {
           }),
       GCWDoubleTextField(
           hintText: i18n(context, 'coords_formatconverter_swissgrid_northing'),
-          min: 0.0,
           controller: _NorthingController,
           onChanged: (ret) {
             setState(() {
@@ -73,9 +71,6 @@ class GCWCoordsSwissGridPlusState extends State<GCWCoordsSwissGridPlus> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    var swissGrid = SwissGrid(_currentEasting['value'], _currentNorthing['value']);
-
-    LatLng coords = swissGridPlusToLatLon(swissGrid, defaultEllipsoid());
-    widget.onChanged(coords);
+    widget.onChanged(SwissGridPlus(_currentEasting['value'], _currentNorthing['value']));
   }
 }
