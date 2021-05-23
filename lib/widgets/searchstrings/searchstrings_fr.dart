@@ -429,6 +429,8 @@ const SEARCHSTRING_FR_SYMBOL_PLANET = '';
 const SEARCHSTRING_FR_SYMBOL_PLANETS =
     'corpscelestes astre planetes mercure venus terre mars jupiter saturne uranus neptune pluto soleil lune asteroide meteorite astrologie astronomie etoile ';
 const SEARCHSTRING_FR_SYMBOL_POKEMON_UNOWN = '';
+const SEARCHSTRING_FR_SYMBOL_POSTCODE01247 = 'allemande code ame postal adresse tribu';
+const SEARCHSTRING_FR_SYMBOL_POSTCODE8421 = 'allemande code ame postal adresse tribu';
 const SEARCHSTRING_FR_SYMBOL_POSTNET = '';
 const SEARCHSTRING_FR_SYMBOL_PUZZLE = '';
 const SEARCHSTRING_FR_SYMBOL_QUADOO = 'braille';
