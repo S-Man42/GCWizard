@@ -7,9 +7,9 @@ class GCWCrosstotalOutput extends StatefulWidget {
   final values;
   final String text;
   final suppressSums;
-  final divisor;
+  final suppressCharacterCounts ;
 
-  const GCWCrosstotalOutput({this.text, this.values, Key key, this.suppressSums: false, this.divisor: false}) : super(key: key);
+  const GCWCrosstotalOutput({this.text, this.values, Key key, this.suppressSums: false, this.suppressCharacterCounts : false}) : super(key: key);
 
   @override
   _GCWCrosstotalOutputState createState() => _GCWCrosstotalOutputState();
@@ -26,7 +26,7 @@ class _GCWCrosstotalOutputState extends State<GCWCrosstotalOutput> {
     List<int> values = List.from(widget.values);
 
     var crosstotalValues;
-    if (widget.divisor)
+    if (widget.suppressCharacterCounts)
       crosstotalValues = [
         widget.suppressSums ? null : [i18n(context, 'crosstotal_count_numbers'), countCharacters(values)],
       ];
