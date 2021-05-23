@@ -110,6 +110,7 @@ const SEARCHSTRING_EN_DATES = 'dates';
 const SEARCHSTRING_EN_DATES_DAYCALCULATOR = 'daycalculator countdays';
 const SEARCHSTRING_EN_DATES_TIMECALCULATOR = 'times timecalculator clockcalculator minutes hours seconds';
 const SEARCHSTRING_EN_DATES_WEEKDAY = 'weekdays';
+const SEARCHSTRING_EN_DATES_CALENDAR = 'julian date gregorian date calendar';
 const SEARCHSTRING_EN_DECABIT = 'ripple control';
 const SEARCHSTRING_EN_DNA = 'desoxyribonucleicacid genetics genes genomes sequence nucleotide codesun dna rna mrna';
 const SEARCHSTRING_EN_DNAAMINOACIDS = 'aminoacids';

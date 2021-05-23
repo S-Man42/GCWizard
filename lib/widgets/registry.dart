@@ -233,6 +233,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterat
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/calendar.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
@@ -2349,6 +2350,16 @@ class Registry {
         SEARCHSTRING_DE_DATES_WEEKDAY,
         SEARCHSTRING_EN_DATES_WEEKDAY,
         SEARCHSTRING_FR_DATES_WEEKDAY
+      ]),
+      GCWTool(tool: Calendar(), i18nPrefix: 'dates_calendar', missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_DATES,
+        SEARCHSTRING_DE_DATES,
+        SEARCHSTRING_EN_DATES,
+        SEARCHSTRING_FR_DATES,
+        SEARCHSTRING_COMMON_DATES_CALENDAR,
+        SEARCHSTRING_DE_DATES_CALENDAR,
+        SEARCHSTRING_EN_DATES_CALENDAR,
+        SEARCHSTRING_FR_DATES_CALENDAR
       ]),
 
       //DNASelection ************************************************************************************************
