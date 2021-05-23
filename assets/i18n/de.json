@@ -1207,7 +1207,6 @@
   "cow_title" : "Cow",
   "cow_description" : "Esoterische Programmiersprache ähnlich Brainf**k, jedoch mit 12 Befehlen",
   "cow_example" : "MoO moO MoO mOo MOO OOM MMM",
-  "cow_online_help_url" : "https://blog.gcwizard.net/manual/de/cow/02-wie-interpretiert-der-gc-wizard-ein-cow-programm/",
   "cow_interpret" : "Interpreter",
   "cow_generate" : "Generator",
   "cow_code" : "Code",
