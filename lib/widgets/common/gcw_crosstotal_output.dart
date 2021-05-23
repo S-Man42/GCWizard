@@ -7,8 +7,9 @@ class GCWCrosstotalOutput extends StatefulWidget {
   final values;
   final String text;
   final suppressSums;
+  final suppressCharacterCounts ;
 
-  const GCWCrosstotalOutput({this.text, this.values, Key key, this.suppressSums: false}) : super(key: key);
+  const GCWCrosstotalOutput({this.text, this.values, Key key, this.suppressSums: false, this.suppressCharacterCounts : false}) : super(key: key);
 
   @override
   _GCWCrosstotalOutputState createState() => _GCWCrosstotalOutputState();
@@ -24,10 +25,18 @@ class _GCWCrosstotalOutputState extends State<GCWCrosstotalOutput> {
     var text = widget.text;
     List<int> values = List.from(widget.values);
 
-    var crosstotalValues = [
+    var crosstotalValues;
+    if (widget.suppressCharacterCounts)
+      crosstotalValues = [
+        widget.suppressSums ? null : [i18n(context, 'crosstotal_count_numbers'), countCharacters(values)],
+      ];
+    else
+      crosstotalValues = [
       widget.suppressSums ? null : [i18n(context, 'crosstotal_count_characters'), countCharacters(values)],
       widget.suppressSums ? null : [i18n(context, 'crosstotal_count_letters'), countLetters(text)],
-      widget.suppressSums ? null : [i18n(context, 'crosstotal_count_digits'), countDigits(text)],
+      widget.suppressSums ? null : [i18n(context, 'crosstotal_count_digits'), countDigits(text)]
+    ];
+    var crosstotalValuesBody = [
       widget.suppressSums ? null : [i18n(context, 'crosstotal_sum'), sum(values)],
       widget.suppressSums ? null : [i18n(context, 'crosstotal_sum_alternated_back'), sumAlternatedBackward(values)],
       widget.suppressSums ? null : [i18n(context, 'crosstotal_sum_alternated_forward'), sumAlternatedForward(values)],
@@ -70,7 +79,7 @@ class _GCWCrosstotalOutputState extends State<GCWCrosstotalOutput> {
         crossProductAlternated(values) ?? i18n(context, 'common_notdefined')
       ],
     ];
-
+    crosstotalValues.addAll(crosstotalValuesBody);
     return Column(children: columnedMultiLineOutput(context, crosstotalValues, flexValues: [2, 1]));
   }
 }

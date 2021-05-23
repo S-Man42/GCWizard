@@ -154,6 +154,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/divisor.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
@@ -371,6 +372,7 @@ class _MainViewState extends State<MainView> {
         className(Deadfish()),
         className(Decabit()),
         className(DistanceBearing()),
+        className(Divisor()),
         className(DTMF()),
         className(DNAAminoAcids()),
         className(DNAAminoAcidsTable()),

@@ -106,6 +106,7 @@ const SEARCHSTRING_FR_DATES_TIMECALCULATOR = 'horloge calculatrice heures second
 const SEARCHSTRING_FR_DATES_WEEKDAY = 'jours semaine';
 const SEARCHSTRING_FR_DATES_CALENDAR = 'date julienne grégorienne calendrier';
 const SEARCHSTRING_FR_DECABIT = 'grille impulsion';
+const SEARCHSTRING_FR_DIVISOR = 'diviseur';
 const SEARCHSTRING_FR_DNA = 'desoxyribonucleique adn arn';
 const SEARCHSTRING_FR_DNAAMINOACIDS = 'acide amine';
 const SEARCHSTRING_FR_DNAAMONOACIDSTABLE = 'acide amine tableau';
