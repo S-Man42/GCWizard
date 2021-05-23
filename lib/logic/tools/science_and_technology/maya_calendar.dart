@@ -5,6 +5,7 @@
 // https://www.hermetic.ch/cal_stud/maya/chap2g.htm
 // https://rolfrost.de/maya.html
 
+import 'package:gc_wizard/logic/common/date_utils.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/numeral_bases.dart';
 import 'package:prefs/prefs.dart';
 
@@ -74,21 +75,6 @@ final _maya_haab = {
   19: 'Uayeb'
 };
 
-final Map<int, String>  MONTH = {
-  1 : 'common_month_january',
-  2 : 'common_month_february',
-  3 : 'common_month_march',
-  4 : 'common_month_april',
-  5 : 'common_month_may',
-  6 : 'common_month_june',
-  7 : 'common_month_july',
-  8 : 'common_month_august',
-  9 : 'common_month_september',
- 10 : 'common_month_october',
- 11: 'common_month_november',
- 12: 'common_month_december',
-};
-
 final Map<int, List<String>> _numbersToSegments = {
   0: [],
   1: ['d'],
@@ -112,12 +98,7 @@ final Map<int, List<String>> _numbersToSegments = {
   19: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
 };
 
-class DateOutput {
-  final String day;
-  final String month;
-  final String year;
-  DateOutput(this.day, this.month, this.year);
-}
+
 const _alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 List<int> mayaCalendarSystem = [1, 20, 360, 7200, 144000, 2880000, 57600000, 1152000000, 23040000000];
@@ -262,11 +243,11 @@ int MayaLongCountToMayaDayCount(List<int> longCount) {
 }
 
 DateOutput MayaDayCountToJulianCalendar(int mayaDayCount){
-  return _JulianDateToJulianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0, true);
+  return JulianDateToJulianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0, true);
 }
 
 DateOutput MayaDayCountToGregorianCalendar(int mayaDayCount){
-  return _JulianDateToGregorianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0, true);
+  return JulianDateToGregorianCalendar(MayaDayCountToJulianDate(mayaDayCount) * 1.0, true);
 }
 
 int MayaDayCountToJulianDate(int mayaDayCount){
@@ -274,55 +255,6 @@ int MayaDayCountToJulianDate(int mayaDayCount){
     return (mayaDayCount + _CORRELATION_NUMBER[THOMPSON]);
   else
     return (mayaDayCount + _CORRELATION_NUMBER[Prefs.getString('mayacalendar_correlation')]);
-}
-
-DateOutput _JulianDateToGregorianCalendar(double jd, bool round){
-  int z = (jd + 0.5).floor();
-  double f = jd + 0.5 - z;
-  int alpha = ((z - 1867216.25) / 36524.25).floor();
-  int a = z + 1 + alpha - (alpha / 4).floor();
-  int b = a + 1524;
-  int c = ((b - 122.1) / 365.25).floor();
-  int d = (365.25 * c).floor();
-  int e = ((b - d) / 30.6001).floor();
-  double day = b - d - (30.6001 * e).floor() + f;
-  int month = 0;
-  int year = 0;
-  if (e <= 13) {
-    month = e - 1;
-    year = c - 4716;
-  } else {
-    month = e - 13;
-    year = c - 4715;
-  }
-  if (round)
-    return DateOutput(day.toString().split('.')[0], MONTH[month], year.toString());
-  else  
-    return DateOutput(day.toString(), MONTH[month], year.toString());
-}
-
-DateOutput _JulianDateToJulianCalendar(double jd, bool round){
-  int z = (jd + 0.5).floor();
-  double f = jd + 0.5 - z;
-  int a = z;
-  int b = a + 1524;
-  int c = ((b - 122.1) / 365.25).floor();
-  int d = (365.25 * c).floor();
-  int e = ((b - d) / 30.6001).floor();
-  double day = b - d - (30.6001 * e).floor() + f;
-  int month = 0;
-  int year = 0;
-  if (e <= 13) {
-    month = e - 1;
-    year = c - 4716;
-  } else {
-    month = e - 13;
-    year = c - 4715;
-  }
-  if (round)
-    return DateOutput(day.toString().split('.')[0], MONTH[month], year.toString());
-  else
-    return DateOutput(day.toString(), MONTH[month], year.toString());
 }
 
 

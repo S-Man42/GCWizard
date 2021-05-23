@@ -84,7 +84,7 @@ AstrologicalSign sign(double lon) {
  * @param year
  * @return Julian date: valid only from 1.3.1901 to 28.2.2100
  */
-double calcJD(int day, int month, int year) {
+/*double calcJD(int day, int month, int year) {
   double jd = 2415020.5 - 64.0; // 1.1.1900 - correction of algorithm
   if (month <= 2) {
     year--;
@@ -95,7 +95,7 @@ double calcJD(int day, int month, int year) {
   jd += _Int(30.6001 * (1 + month));
 
   return jd + day;
-}
+}*/
 
 /**
  * @param JD Julian Date

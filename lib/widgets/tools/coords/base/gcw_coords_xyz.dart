@@ -41,9 +41,9 @@ class GCWCoordsXYZState extends State<GCWCoordsXYZ> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var xyz = widget.coordinates is XYZ ?
-          widget.coordinates as XYZ :
-          XYZ.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
+      var xyz = widget.coordinates is XYZ
+          ? widget.coordinates as XYZ
+          : XYZ.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentX = xyz.x;
       _currentY = xyz.y;
       _currentZ = xyz.z;
@@ -91,6 +91,6 @@ class GCWCoordsXYZState extends State<GCWCoordsXYZ> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-   // widget.onChanged(XYZ(_currentX, _currentY, _currentZ));
+    // widget.onChanged(XYZ(_currentX, _currentY, _currentZ));
   }
 }

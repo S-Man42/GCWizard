@@ -182,6 +182,15 @@ class AnimatedImageState extends State<AnimatedImage> {
   _showOutput(Map<String, dynamic> output) {
     _outData = output;
 
+    // restore image references (problem with sendPort, lose references)
+    if (_outData != null) {
+      List<Uint8List> images = _outData["images"];
+      List<int> linkList = _outData["linkList"];
+      for (int i = 0; i < images.length; i++) {
+        images[i] = images[linkList[i]];
+      }
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {});
     });

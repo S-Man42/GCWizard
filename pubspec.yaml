@@ -203,6 +203,8 @@ flutter:
     - assets/symbol_tables/planet/
     - assets/symbol_tables/planets/
     - assets/symbol_tables/pokemon_unown/
+    - assets/symbol_tables/postcode_01247/
+    - assets/symbol_tables/postcode_8421/
     - assets/symbol_tables/postnet/
     - assets/symbol_tables/puzzle/
     - assets/symbol_tables/quadoo/
@@ -220,6 +222,7 @@ flutter:
     - assets/symbol_tables/sarati/
     - assets/symbol_tables/semaphore/
     - assets/symbol_tables/sign/
+    - assets/symbol_tables/shadoks/
     - assets/symbol_tables/skullz/
     - assets/symbol_tables/slash_and_pipe/
     - assets/symbol_tables/solmisation/

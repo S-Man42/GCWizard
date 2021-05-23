@@ -12,7 +12,6 @@ import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/qr_code.dart';
 import 'package:intl/intl.dart';
 
-
 class Binary2Image extends StatefulWidget {
   @override
   Binary2ImageState createState() => Binary2ImageState();
@@ -51,16 +50,16 @@ class Binary2ImageState extends State<Binary2Image> {
             _createOutput();
           },
         ),
-        GCWDefaultOutput(child: _buildOutput(),
-          trailing: GCWIconButton(
-            iconData: Icons.save,
-            size: IconButtonSize.SMALL,
-            iconColor: _outData == null ? Colors.grey : null,
-            onPressed: () {
-              _outData == null ? null : _exportFile(context, _outData);
-            },
-          )
-        )
+        GCWDefaultOutput(
+            child: _buildOutput(),
+            trailing: GCWIconButton(
+              iconData: Icons.save,
+              size: IconButtonSize.SMALL,
+              iconColor: _outData == null ? Colors.grey : null,
+              onPressed: () {
+                _outData == null ? null : _exportFile(context, _outData);
+              },
+            ))
       ],
     );
   }
@@ -71,7 +70,7 @@ class Binary2ImageState extends State<Binary2Image> {
     binary2image(_currentInput, _squareFormat, _invers).then((value) {
       setState(() {
         _outData = value;
-        scanBytes(_outData).then((value){
+        scanBytes(_outData).then((value) {
           setState(() {
             _codeData = value;
           });
@@ -81,20 +80,11 @@ class Binary2ImageState extends State<Binary2Image> {
   }
 
   Widget _buildOutput() {
-    if (_outData == null)
-      return null;
+    if (_outData == null) return null;
 
-    return Column(
-        children: <Widget>[
-          Image.memory(_outData),
-          _codeData != null
-          ?
-            GCWOutput(
-              title: i18n(context, 'binary2image_code_data'),
-              child: _codeData
-            )
-          :
-            Container(),
+    return Column(children: <Widget>[
+      Image.memory(_outData),
+      _codeData != null ? GCWOutput(title: i18n(context, 'binary2image_code_data'), child: _codeData) : Container(),
     ]);
   }
 
@@ -102,6 +92,7 @@ class Binary2ImageState extends State<Binary2Image> {
     var value = await saveByteDataToFile(
         data.buffer.asByteData(), 'image_export_' + DateFormat('yyyyMMdd_HHmmss').format(DateTime.now()) + '.png');
 
-    if (value != null) showExportedFileDialog(context, value['path'], fileType: '.png', contentWidget: Image.memory(_outData));
+    if (value != null)
+      showExportedFileDialog(context, value['path'], fileType: '.png', contentWidget: Image.memory(_outData));
   }
 }

@@ -234,6 +234,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterat
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/calendar.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
@@ -286,8 +287,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/f
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multiplenumbers.dart';
-import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singlenumbers.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_multitap.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_singletap.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_list.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_search.dart';
 import 'package:gc_wizard/widgets/tools/symbol_tables/gcw_symbol_table_tool.dart';
@@ -360,7 +361,7 @@ class Registry {
             SEARCHSTRING_EN_AMSCO,
             SEARCHSTRING_FR_AMSCO
           ]),
-       GCWTool(
+      GCWTool(
           tool: AnimatedImage(),
           i18nPrefix: 'animated_image',
           category: ToolCategory.IMAGES_AND_FILES,
@@ -878,7 +879,6 @@ class Registry {
             SEARCHSTRING_FR_HEXSTRING2FILE
           ]),
       GCWTool(
-
           tool: Homophone(),
           i18nPrefix: 'homophone',
           category: ToolCategory.CRYPTOGRAPHY,
@@ -1196,11 +1196,11 @@ class Registry {
       GCWTool(tool: RailFence(), i18nPrefix: 'railfence', category: ToolCategory.CRYPTOGRAPHY, missingHelpLocales: [
         'fr'
       ], searchStrings: [
-        SEARCHSTRING_COMMON_RAILFENCE,
-        SEARCHSTRING_DE_RAILFENCE,
-        SEARCHSTRING_EN_RAILFENCE,
-        SEARCHSTRING_FR_RAILFENCE
-      ]),
+            SEARCHSTRING_COMMON_RAILFENCE,
+            SEARCHSTRING_DE_RAILFENCE,
+            SEARCHSTRING_EN_RAILFENCE,
+            SEARCHSTRING_FR_RAILFENCE
+          ]),
       GCWTool(
           tool: RC4(),
           i18nPrefix: 'rc4',
@@ -2362,6 +2362,16 @@ class Registry {
         SEARCHSTRING_DE_DATES_WEEKDAY,
         SEARCHSTRING_EN_DATES_WEEKDAY,
         SEARCHSTRING_FR_DATES_WEEKDAY
+      ]),
+      GCWTool(tool: Calendar(), i18nPrefix: 'dates_calendar', missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_DATES,
+        SEARCHSTRING_DE_DATES,
+        SEARCHSTRING_EN_DATES,
+        SEARCHSTRING_FR_DATES,
+        SEARCHSTRING_COMMON_DATES_CALENDAR,
+        SEARCHSTRING_DE_DATES_CALENDAR,
+        SEARCHSTRING_EN_DATES_CALENDAR,
+        SEARCHSTRING_FR_DATES_CALENDAR
       ]),
 
       //DNASelection ************************************************************************************************
@@ -6000,6 +6010,26 @@ class Registry {
         SEARCHSTRING_EN_SYMBOL_POKEMON_UNOWN,
         SEARCHSTRING_FR_SYMBOL_POKEMON_UNOWN
       ]),
+      GCWSymbolTableTool(symbolKey: 'postcode_01247', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_BARCODES,
+        SEARCHSTRING_DE_SYMBOL_BARCODES,
+        SEARCHSTRING_EN_SYMBOL_BARCODES,
+        SEARCHSTRING_FR_SYMBOL_BARCODES,
+        SEARCHSTRING_COMMON_SYMBOL_POSTCODE01247,
+        SEARCHSTRING_DE_SYMBOL_POSTCODE01247,
+        SEARCHSTRING_EN_SYMBOL_POSTCODE01247,
+        SEARCHSTRING_FR_SYMBOL_POSTCODE01247
+      ]),
+      GCWSymbolTableTool(symbolKey: 'postcode_8421', symbolSearchStrings: [
+        SEARCHSTRING_COMMON_SYMBOL_BARCODES,
+        SEARCHSTRING_DE_SYMBOL_BARCODES,
+        SEARCHSTRING_EN_SYMBOL_BARCODES,
+        SEARCHSTRING_FR_SYMBOL_BARCODES,
+        SEARCHSTRING_COMMON_SYMBOL_POSTCODE8421,
+        SEARCHSTRING_DE_SYMBOL_POSTCODE8421,
+        SEARCHSTRING_EN_SYMBOL_POSTCODE8421,
+        SEARCHSTRING_FR_SYMBOL_POSTCODE8421
+      ]),
       GCWSymbolTableTool(symbolKey: 'postnet', symbolSearchStrings: [
         SEARCHSTRING_COMMON_SYMBOL_BARCODES,
         SEARCHSTRING_DE_SYMBOL_BARCODES,
@@ -6103,6 +6133,12 @@ class Registry {
         SEARCHSTRING_DE_SYMBOL_SEMAPHORE,
         SEARCHSTRING_EN_SYMBOL_SEMAPHORE,
         SEARCHSTRING_FR_SYMBOL_SEMAPHORE
+      ]),
+      GCWSymbolTableTool(symbolKey: 'shadoks', symbolSearchStrings: [
+//        SEARCHSTRING_COMMON_SHADOKS,
+//        SEARCHSTRING_DE_SHADOKS,
+//        SEARCHSTRING_EN_SHADOKS,
+//        SEARCHSTRING_FR_SHADOKS
       ]),
       GCWSymbolTableTool(symbolKey: 'sign', symbolSearchStrings: []),
       GCWSymbolTableTool(symbolKey: 'skullz', symbolSearchStrings: [
@@ -6391,30 +6427,26 @@ class Registry {
       ]),
 
       //VanitySelection **********************************************************************************************
-      GCWTool(tool: VanitySingleNumbers(), i18nPrefix: 'vanity_singlenumbers', missingHelpLocales: [], searchStrings: [
+      GCWTool(tool: VanitySingletap(), i18nPrefix: 'vanity_singletap', missingHelpLocales: [], searchStrings: [
         SEARCHSTRING_COMMON_VANITY,
         SEARCHSTRING_DE_VANITY,
         SEARCHSTRING_EN_VANITY,
         SEARCHSTRING_FR_VANITY,
-        SEARCHSTRING_COMMON_VANITYSINGLENUMBERS,
-        SEARCHSTRING_DE_VANITYSINGLENUMBERS,
-        SEARCHSTRING_EN_VANITYSINGLENUMBERS,
-        SEARCHSTRING_FR_VANITYSINGLENUMBERS
+        SEARCHSTRING_COMMON_VANITYSINGLETAP,
+        SEARCHSTRING_DE_VANITYSINGLETAP,
+        SEARCHSTRING_EN_VANITYSINGLETAP,
+        SEARCHSTRING_FR_VANITYSINGLETAP
       ]),
-      GCWTool(
-          tool: VanityMultipleNumbers(),
-          i18nPrefix: 'vanity_multiplenumbers',
-          missingHelpLocales: [],
-          searchStrings: [
-            SEARCHSTRING_COMMON_VANITY,
-            SEARCHSTRING_DE_VANITY,
-            SEARCHSTRING_EN_VANITY,
-            SEARCHSTRING_FR_VANITY,
-            SEARCHSTRING_COMMON_VANITYMULTIPLENUMBERS,
-            SEARCHSTRING_DE_VANITYMULTIPLENUMBERS,
-            SEARCHSTRING_EN_VANITYMULTIPLENUMBERS,
-            SEARCHSTRING_FR_VANITYMULTIPLENUMBERS
-          ]),
+      GCWTool(tool: VanityMultitap(), i18nPrefix: 'vanity_multitap', missingHelpLocales: [], searchStrings: [
+        SEARCHSTRING_COMMON_VANITY,
+        SEARCHSTRING_DE_VANITY,
+        SEARCHSTRING_EN_VANITY,
+        SEARCHSTRING_FR_VANITY,
+        SEARCHSTRING_COMMON_VANITYMULTITAP,
+        SEARCHSTRING_DE_VANITYMULTITAP,
+        SEARCHSTRING_EN_VANITYMULTITAP,
+        SEARCHSTRING_FR_VANITYMULTITAP
+      ]),
       GCWTool(
           tool: VanityWordsList(),
           i18nPrefix: 'vanity_words_list',

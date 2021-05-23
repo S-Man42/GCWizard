@@ -49,9 +49,9 @@ class GCWCoordsUTMState extends State<GCWCoordsUTM> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var utm = widget.coordinates is UTMREF ?
-          widget.coordinates as UTMREF :
-          UTMREF.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
+      var utm = widget.coordinates is UTMREF
+          ? widget.coordinates as UTMREF
+          : UTMREF.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentLonZone['value'] = utm.zone.lonZone;
       _currentEasting['value'] = utm.easting;
       _currentNorthing['value'] = utm.northing;

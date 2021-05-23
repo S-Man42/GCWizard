@@ -33,9 +33,9 @@ class GCWCoordsGeohashState extends State<GCWCoordsGeohash> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var geohash = widget.coordinates is Geohash ?
-          widget.coordinates as Geohash :
-          Geohash.fromLatLon(widget.coordinates.toLatLng(), 14);
+      var geohash = widget.coordinates is Geohash
+          ? widget.coordinates as Geohash
+          : Geohash.fromLatLon(widget.coordinates.toLatLng(), 14);
       _currentCoord = geohash.text;
 
       _controller.text = _currentCoord;

@@ -9,7 +9,8 @@ class GCWOutput extends StatefulWidget {
   final String copyText;
   final Widget trailing;
 
-  const GCWOutput({Key key, @required this.child, this.title, this.suppressCopyButton: false, this.copyText, this.trailing})
+  const GCWOutput(
+      {Key key, @required this.child, this.title, this.suppressCopyButton: false, this.copyText, this.trailing})
       : super(key: key);
 
   @override
@@ -20,7 +21,9 @@ class _GCWOutputState extends State<GCWOutput> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      widget.title != null && widget.title.length > 0 ? GCWTextDivider(text: widget.title, trailing: widget.trailing) : Container(),
+      widget.title != null && widget.title.length > 0
+          ? GCWTextDivider(text: widget.title, trailing: widget.trailing)
+          : Container(),
       widget.child is Widget
           ? widget.child
           : GCWOutputText(

@@ -2,9 +2,9 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/exif_reader.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:latlong/latlong.dart';
 
 runSamplesTest(FileSystemEntity file) async {

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
+import 'package:gc_wizard/logic/common/date_utils.dart';
 import 'package:gc_wizard/logic/tools/science_and_technology/maya_calendar.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_iconbutton.dart';
@@ -232,8 +233,8 @@ class MayaCalendarState extends State<MayaCalendar> {
           '   ' +
           MayaDayCountToHaab(segments['numbers']);
       outputDates[i18n(context, 'mayacalendar_juliandate')] = MayaDayCountToJulianDate(segments['vigesimal']);
-      outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] = gregorian.day + ' ' + i18n(context, gregorian.month) + ' ' + gregorian.year;
-      outputDates[i18n(context, 'mayacalendar_juliancalendar')] = julian.day + ' ' + i18n(context, julian.month) + ' ' + julian.year;
+      outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] = _DateOutputToString(context, gregorian);
+      outputDates[i18n(context, 'mayacalendar_juliancalendar')] = _DateOutputToString(context, julian);
       return Column(
         children: <Widget>[
           _buildDigitalOutput(countColumns, segments['displays']),
@@ -247,6 +248,18 @@ class MayaCalendarState extends State<MayaCalendar> {
           )
         ],
       );
+    }
+  }
+
+  String _DateOutputToString(context, DateOutput date){
+    final Locale appLocale = Localizations.localeOf(context);
+    switch (appLocale.languageCode) {
+      case 'de' :
+        return date.day + '. ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.year;
+      case 'fr' :
+        return date.day + ' ' + i18n(context, MONTH[int.parse(date.month)]).toLowerCase() + ' ' + date.year;
+      default :
+        return date.year + ' ' + i18n(context, MONTH[int.parse(date.month)]) + ' ' + date.day;
     }
   }
 }

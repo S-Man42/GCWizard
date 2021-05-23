@@ -110,6 +110,7 @@ const SEARCHSTRING_EN_DATES = 'dates';
 const SEARCHSTRING_EN_DATES_DAYCALCULATOR = 'daycalculator countdays';
 const SEARCHSTRING_EN_DATES_TIMECALCULATOR = 'times timecalculator clockcalculator minutes hours seconds';
 const SEARCHSTRING_EN_DATES_WEEKDAY = 'weekdays';
+const SEARCHSTRING_EN_DATES_CALENDAR = 'julian date gregorian date calendar';
 const SEARCHSTRING_EN_DECABIT = 'ripple control';
 const SEARCHSTRING_EN_DNA = 'desoxyribonucleicacid genetics genes genomes sequence nucleotide codesun dna rna mrna';
 const SEARCHSTRING_EN_DNAAMINOACIDS = 'aminoacids';
@@ -239,7 +240,7 @@ const SEARCHSTRING_EN_NUMBERSEQUENCE_SUPERPERFECTNUMBERSSELECTION = 'superperfec
 const SEARCHSTRING_EN_NUMBERSEQUENCE_WEIRDNUMBERSSELECTION = 'weird numbers';
 const SEARCHSTRING_EN_NUMERALBASES = 'hexadecimal octal octenary numeral systems';
 const SEARCHSTRING_EN_NUMERALWORDS =
-    'numeralwords numberwords numerals  cyrillic german english french italian danish spanish dutch norwegian polish portuguese swedish russian volapuk esperanto solresol latin ';
+    'numeralwords numberwords numerals  cyrillic german english french italian danish spanish dutch norwegian polish portuguese swedish russian volapuk esperanto solresol latin';
 const SEARCHSTRING_EN_NUMERALWORDSLISTS = '';
 const SEARCHSTRING_EN_NUMERALWORDSTEXTSEARCH = 'textanalysis textsearch';
 const SEARCHSTRING_EN_ONETIMEPAD = '';
@@ -441,6 +442,8 @@ const SEARCHSTRING_EN_SYMBOL_PLANET = '';
 const SEARCHSTRING_EN_SYMBOL_PLANETS =
     'celestialbodies celestianbody heavenlybodies heavenlybody planets astronomy astrology stars meteroids asteroids sun moon earth saturn neptune jupiter pluto uranus mars venus mercury';
 const SEARCHSTRING_EN_SYMBOL_POKEMON_UNOWN = '';
+const SEARCHSTRING_EN_SYMBOL_POSTCODE01247 = 'german zip address';
+const SEARCHSTRING_EN_SYMBOL_POSTCODE8421 = 'german zip address';
 const SEARCHSTRING_EN_SYMBOL_POSTNET = '';
 const SEARCHSTRING_EN_SYMBOL_PUZZLE = 'jigsaw';
 const SEARCHSTRING_EN_SYMBOL_QUADOO = 'tactiles dots points';
@@ -507,8 +510,8 @@ const SEARCHSTRING_EN_TRITHEMIUS = '';
 const SEARCHSTRING_EN_UNITCONVERTER =
     'units converter lengths speeds velocity velocities energies energy force power times areas volumes denisities density masses bathtubs pressures angles temperatures degrees soccerfields';
 const SEARCHSTRING_EN_VANITY = 'telephone keys buttons numbers keypad sms mobile cellphone phoneword';
-const SEARCHSTRING_EN_VANITYMULTIPLENUMBERS = 'multitap';
-const SEARCHSTRING_EN_VANITYSINGLENUMBERS = '';
+const SEARCHSTRING_EN_VANITYMULTITAP = 'multitap';
+const SEARCHSTRING_EN_VANITYSINGLETAP = '';
 const SEARCHSTRING_EN_VANITYTEXTSEARCH = 'textanalysis textsearch';
 const SEARCHSTRING_EN_VANITYWORDSLIST = '';
 const SEARCHSTRING_EN_VIGENERE = '';

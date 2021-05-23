@@ -114,6 +114,7 @@ const SEARCHSTRING_DE_DATES = 'datum';
 const SEARCHSTRING_DE_DATES_DAYCALCULATOR = 'tagesrechner tagerechner';
 const SEARCHSTRING_DE_DATES_TIMECALCULATOR = 'uhrzeit uhrzeitrechner stunden minuten sekunden';
 const SEARCHSTRING_DE_DATES_WEEKDAY = 'wochentage';
+const SEARCHSTRING_DE_DATES_CALENDAR = 'julianisches datum gregorianisches datum kalender';
 const SEARCHSTRING_DE_DECABIT = 'impulsraster rundsteuertechnik';
 const SEARCHSTRING_DE_DNA =
     'code-sonne codesonne desoxyribonukleinsaeure sequenz nukleotid genetik genetisches dns rns mrns';
@@ -448,6 +449,8 @@ const SEARCHSTRING_DE_SYMBOL_PLANET = '';
 const SEARCHSTRING_DE_SYMBOL_PLANETS =
     'himmelskoerper sonne mond sterne astologie astronomie merkur venus erde mars jupiter uranus neptun pluto asteroiden meteoriden gestirne';
 const SEARCHSTRING_DE_SYMBOL_POKEMON_UNOWN = '';
+const SEARCHSTRING_DE_SYMBOL_POSTCODE01247 = 'deutsche zielcode anschriftencode postcode, adresscode strichcode';
+const SEARCHSTRING_DE_SYMBOL_POSTCODE8421 = 'deutsche zielcode anschriftencode postcode, adresscode strichcode';
 const SEARCHSTRING_DE_SYMBOL_POSTNET = '';
 const SEARCHSTRING_DE_SYMBOL_PUZZLE = 'puzzles puzzleteile';
 const SEARCHSTRING_DE_SYMBOL_QUADOO = 'blindenschrift punkte taktile reliefschrift';
@@ -514,8 +517,8 @@ const SEARCHSTRING_DE_TRITHEMIUS = '';
 const SEARCHSTRING_DE_UNITCONVERTER =
     'einheiten groessen konvertieren umwandeln umrechnen konvertierer laengen geschwindigkeiten kraft leistung uhrzeiten flaechen volumen dichten gewichte massen badewannen druecke druck winkel temperaturen grad fussballfelder';
 const SEARCHSTRING_DE_VANITY = 'telefontasten ziffern telefonnummern handy tasten tastatur';
-const SEARCHSTRING_DE_VANITYMULTIPLENUMBERS = '';
-const SEARCHSTRING_DE_VANITYSINGLENUMBERS = '';
+const SEARCHSTRING_DE_VANITYMULTITAP = '';
+const SEARCHSTRING_DE_VANITYSINGLETAP = '';
 const SEARCHSTRING_DE_VANITYTEXTSEARCH = 'textanalyse textsuche';
 const SEARCHSTRING_DE_VANITYWORDSLIST = '';
 const SEARCHSTRING_DE_VIGENERE = '';

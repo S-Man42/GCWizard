@@ -104,6 +104,7 @@ const SEARCHSTRING_FR_DATES = '';
 const SEARCHSTRING_FR_DATES_DAYCALCULATOR = 'jours calculatrice';
 const SEARCHSTRING_FR_DATES_TIMECALCULATOR = 'horloge calculatrice heures secondes';
 const SEARCHSTRING_FR_DATES_WEEKDAY = 'jours semaine';
+const SEARCHSTRING_FR_DATES_CALENDAR = 'date julienne grégorienne calendrier';
 const SEARCHSTRING_FR_DECABIT = 'grille impulsion';
 const SEARCHSTRING_FR_DNA = 'desoxyribonucleique adn arn';
 const SEARCHSTRING_FR_DNAAMINOACIDS = 'acide amine';
@@ -429,6 +430,8 @@ const SEARCHSTRING_FR_SYMBOL_PLANET = '';
 const SEARCHSTRING_FR_SYMBOL_PLANETS =
     'corpscelestes astre planetes mercure venus terre mars jupiter saturne uranus neptune pluto soleil lune asteroide meteorite astrologie astronomie etoile ';
 const SEARCHSTRING_FR_SYMBOL_POKEMON_UNOWN = '';
+const SEARCHSTRING_FR_SYMBOL_POSTCODE01247 = 'allemande code ame postal adresse tribu';
+const SEARCHSTRING_FR_SYMBOL_POSTCODE8421 = 'allemande code ame postal adresse tribu';
 const SEARCHSTRING_FR_SYMBOL_POSTNET = '';
 const SEARCHSTRING_FR_SYMBOL_PUZZLE = '';
 const SEARCHSTRING_FR_SYMBOL_QUADOO = 'braille';
@@ -493,8 +496,8 @@ const SEARCHSTRING_FR_TRITHEMIUS = '';
 const SEARCHSTRING_FR_UNITCONVERTER =
     'unites convertir tailles convertir convertisseurs longueurs vitesses puissance performances temps surfaces densites poids baignoires pressions  degres terrains football';
 const SEARCHSTRING_FR_VANITY = 'touches chiffres numeros portable clavier';
-const SEARCHSTRING_FR_VANITYMULTIPLENUMBERS = '';
-const SEARCHSTRING_FR_VANITYSINGLENUMBERS = '';
+const SEARCHSTRING_FR_VANITYMULTITAP = '';
+const SEARCHSTRING_FR_VANITYSINGLETAP = '';
 const SEARCHSTRING_FR_VANITYTEXTSEARCH = 'analyse recherche texte';
 const SEARCHSTRING_FR_VANITYWORDSLIST = '';
 const SEARCHSTRING_FR_VIGENERE = '';

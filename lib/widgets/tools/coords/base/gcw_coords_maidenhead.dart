@@ -33,9 +33,9 @@ class GCWCoordsMaidenheadState extends State<GCWCoordsMaidenhead> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var maidenhead = widget.coordinates is Maidenhead ?
-          widget.coordinates as Maidenhead :
-          Maidenhead.fromLatLon(widget.coordinates.toLatLng());
+      var maidenhead = widget.coordinates is Maidenhead
+          ? widget.coordinates as Maidenhead
+          : Maidenhead.fromLatLon(widget.coordinates.toLatLng());
       _currentCoord = maidenhead.text;
 
       _controller.text = _currentCoord;

@@ -38,10 +38,10 @@ class GCWCoordsNaturalAreaCodeState extends State<GCWCoordsNaturalAreaCode> {
 
   @override
   Widget build(BuildContext context) {
-      if (widget.coordinates != null) {
-        var naturalAreaCode = widget.coordinates is NaturalAreaCode ?
-            widget.coordinates as NaturalAreaCode :
-            NaturalAreaCode.fromLatLon(widget.coordinates.toLatLng());
+    if (widget.coordinates != null) {
+      var naturalAreaCode = widget.coordinates is NaturalAreaCode
+          ? widget.coordinates as NaturalAreaCode
+          : NaturalAreaCode.fromLatLon(widget.coordinates.toLatLng());
       _currentX = naturalAreaCode.x;
       _currentY = naturalAreaCode.y;
 

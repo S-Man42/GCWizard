@@ -38,9 +38,9 @@ class GCWCoordsMercatorState extends State<GCWCoordsMercator> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var mercator = widget.coordinates is Mercator ?
-          widget.coordinates as Mercator :
-          Mercator.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
+      var mercator = widget.coordinates is Mercator
+          ? widget.coordinates as Mercator
+          : Mercator.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentEasting['value'] = mercator.easting;
       _currentNorthing['value'] = mercator.northing;
 
