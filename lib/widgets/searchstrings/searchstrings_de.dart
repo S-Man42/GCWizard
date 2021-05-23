@@ -447,8 +447,8 @@ const SEARCHSTRING_DE_SYMBOL_PLANET = '';
 const SEARCHSTRING_DE_SYMBOL_PLANETS =
     'himmelskoerper sonne mond sterne astologie astronomie merkur venus erde mars jupiter uranus neptun pluto asteroiden meteoriden gestirne';
 const SEARCHSTRING_DE_SYMBOL_POKEMON_UNOWN = '';
-const SEARCHSTRING_DE_SYMBOL_POSTCODE01247 = 'deutsche';
-const SEARCHSTRING_DE_SYMBOL_POSTCODE8421 = 'deutsche';
+const SEARCHSTRING_DE_SYMBOL_POSTCODE01247 = 'deutsche zielcode anschriftencode postcode, adresscode strichcode';
+const SEARCHSTRING_DE_SYMBOL_POSTCODE8421 = 'deutsche zielcode anschriftencode postcode, adresscode strichcode';
 const SEARCHSTRING_DE_SYMBOL_POSTNET = '';
 const SEARCHSTRING_DE_SYMBOL_PUZZLE = 'puzzles puzzleteile';
 const SEARCHSTRING_DE_SYMBOL_QUADOO = 'blindenschrift punkte taktile reliefschrift';
