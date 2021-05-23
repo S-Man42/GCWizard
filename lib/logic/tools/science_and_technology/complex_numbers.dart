@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:intl/intl.dart';
 
 Map<String, String> CartesianToPolar(String currentA, String currentB) {
-  if (currentA == null || currentA == '' || currentB == null || currentB == '') return {'' : ''};
+  if (currentA == null || currentA == '' || currentB == null || currentB == '') return {'': ''};
   currentA = currentA.replaceAll(',', '.');
   currentB = currentB.replaceAll(',', '.');
 
@@ -12,10 +12,16 @@ Map<String, String> CartesianToPolar(String currentA, String currentB) {
   double a = 0.0;
   double b = 0.0;
 
-  if (double.tryParse(currentA) != null) a = double.parse(currentA); else return {'': ''};
-  if (double.tryParse(currentB) != null) b = double.parse(currentB); else return {'': ''};
+  if (double.tryParse(currentA) != null)
+    a = double.parse(currentA);
+  else
+    return {'': ''};
+  if (double.tryParse(currentB) != null)
+    b = double.parse(currentB);
+  else
+    return {'': ''};
 
-  double r = sqrt( a * a + b * b);
+  double r = sqrt(a * a + b * b);
   double phi = 0.0;
   if (a == 0 && b == 0)
     phi = 0.0;
@@ -38,7 +44,7 @@ Map<String, String> CartesianToPolar(String currentA, String currentB) {
 }
 
 Map<String, String> PolarToCartesian(String currentRadius, currentAngle) {
-  if (currentRadius == null || currentRadius == '' || currentAngle == null || currentAngle == '') return {'' : ''};
+  if (currentRadius == null || currentRadius == '' || currentAngle == null || currentAngle == '') return {'': ''};
   currentRadius = currentRadius.replaceAll(',', '.');
   currentAngle = currentAngle.replaceAll(',', '.');
 
@@ -46,11 +52,16 @@ Map<String, String> PolarToCartesian(String currentRadius, currentAngle) {
   double a = 0.0;
   double r = 0.0;
 
-  if (double.tryParse(currentAngle) != null) a = double.parse(currentAngle); else return {'': ''};
-  if (double.tryParse(currentRadius) != null) r = double.parse(currentRadius); else return {'': ''};
+  if (double.tryParse(currentAngle) != null)
+    a = double.parse(currentAngle);
+  else
+    return {'': ''};
+  if (double.tryParse(currentRadius) != null)
+    r = double.parse(currentRadius);
+  else
+    return {'': ''};
 
   result['complex_numbers_hint_a'] = NumberFormat('0.0' + '#' * 6).format(r * cos(a * pi / 180));
   result['complex_numbers_hint_b'] = NumberFormat('0.0' + '#' * 6).format(r * sin(a * pi / 180));
   return result;
 }
-

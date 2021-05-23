@@ -1,11 +1,7 @@
 import 'dart:typed_data';
 
 class PlatformFile {
-  const PlatformFile({
-    this.path,
-    this.name,
-    this.bytes
-  });
+  const PlatformFile({this.path, this.name, this.bytes});
 
   /// The absolute path for a cached copy of this file. It can be used to create a
   /// file instance with a descriptor for the given path.

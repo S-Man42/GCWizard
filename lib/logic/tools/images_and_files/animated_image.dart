@@ -81,8 +81,7 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPo
 List<img.Image> _linkSameImages(List<img.Image> images) {
   for (int i = 1; i < images.length; i++) {
     for (int x = 0; x < i; x++) {
-      if (_checkSameHash(images, x) >= 0)
-        continue;
+      if (_checkSameHash(images, x) >= 0) continue;
 
       if (compareImages(images[i].getBytes(), images[x].getBytes())) {
         images[i] = images[x];
@@ -95,21 +94,16 @@ List<img.Image> _linkSameImages(List<img.Image> images) {
 }
 
 bool compareImages(Uint8List image1, Uint8List image2, {toler = 0}) {
-  if (image1.length != image2.length)
-    return false;
+  if (image1.length != image2.length) return false;
 
-  for (int i = 0; i < image1.length; i++)
-    if ((image1[i] - image2[i]).abs() > toler)
-      return false;
+  for (int i = 0; i < image1.length; i++) if ((image1[i] - image2[i]).abs() > toler) return false;
 
   return true;
 }
 
 int _checkSameHash(List<img.Image> list, int maxSearchIndex) {
   var compareHash = list[maxSearchIndex].hashCode;
-  for (int i = 0; i < maxSearchIndex; i++)
-    if (list[i].hashCode == compareHash)
-      return i;
+  for (int i = 0; i < maxSearchIndex; i++) if (list[i].hashCode == compareHash) return i;
 
   return -1;
 }

@@ -81,21 +81,19 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
     String output = '';
     int ambigous = 0;
     for (int i = 0; i < detailedOutput.length; i++) {
-        if (detailedOutput[i].number != '')
-          if (ambigous > 0 || detailedOutput[i].ambigous) {
-            if (ambigous == 0) {
-              output = output + ' (' + detailedOutput[i].digit;
-              ambigous++;
-            }
-            if (ambigous == 1){
-              output = output + '  | ' + detailedOutput[i].digit + ') - '+ i18n(context, 'vanity_words_search_ambigous');
-              ambigous++;
-            }
-          }
-          else if (detailedOutput[i].number == '?')
-            output = output + ' .';
-        else
-          output = output + ' ' + detailedOutput[i].digit;
+      if (detailedOutput[i].number != '') if (ambigous > 0 || detailedOutput[i].ambigous) {
+        if (ambigous == 0) {
+          output = output + ' (' + detailedOutput[i].digit;
+          ambigous++;
+        }
+        if (ambigous == 1) {
+          output = output + '  | ' + detailedOutput[i].digit + ') - ' + i18n(context, 'vanity_words_search_ambigous');
+          ambigous++;
+        }
+      } else if (detailedOutput[i].number == '?')
+        output = output + ' .';
+      else
+        output = output + ' ' + detailedOutput[i].digit;
     }
 
     List<List<String>> columnData = new List<List<String>>();
@@ -105,7 +103,7 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
     for (int i = 0; i < detailedOutput.length; i++) {
       if (ambigous < 2) {
         if (detailedOutput[i].ambigous) ambigous++;
-        if (ambigous ==1) columnData.add([i18n(context, 'vanity_words_search_ambigous'), '', '']);
+        if (ambigous == 1) columnData.add([i18n(context, 'vanity_words_search_ambigous'), '', '']);
         columnData.add([detailedOutput[i].number, detailedOutput[i].numWord, detailedOutput[i].digit]);
       }
     }
@@ -119,10 +117,10 @@ class VanityWordsTextSearchState extends State<VanityWordsTextSearch> {
         output.length == 0
             ? Container()
             : GCWOutput(
-          title: i18n(context, 'common_outputdetail'),
-          child:
-          Column(children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)),
-        ),
+                title: i18n(context, 'common_outputdetail'),
+                child:
+                    Column(children: columnedMultiLineOutput(context, columnData, flexValues: flexData, copyColumn: 1)),
+              ),
       ],
     );
   }

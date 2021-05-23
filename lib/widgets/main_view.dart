@@ -24,8 +24,8 @@ import 'package:gc_wizard/widgets/selector_lists/games_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/general_codebreakers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/hash_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/icecodes_selection.dart';
-import 'package:gc_wizard/widgets/selector_lists/keyboard_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/imagesandfiles_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/keyboard_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_calendar_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/maya_numbers_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/number_sequences/numbersequence_selection.dart';
@@ -36,6 +36,7 @@ import 'package:gc_wizard/widgets/selector_lists/primes_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/resistor_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/rsa_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/scienceandtechnology_selection.dart';
+import 'package:gc_wizard/widgets/selector_lists/shadoks_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/silverratio_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/symbol_table_selection.dart';
 import 'package:gc_wizard/widgets/selector_lists/tomtom_selection.dart';
@@ -82,7 +83,6 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programmin
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/malbolge.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/ook.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/esoteric_programming_languages/whitespace_language.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gade.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/gc_code.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/general_codebreakers/multi_decoder/multi_decoder.dart';
@@ -129,6 +129,8 @@ import 'package:gc_wizard/widgets/tools/games/catan.dart';
 import 'package:gc_wizard/widgets/tools/games/scrabble.dart';
 import 'package:gc_wizard/widgets/tools/games/sudoku/sudoku_solver.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/animated_image.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
+import 'package:gc_wizard/widgets/tools/images_and_files/exif_reader.dart';
 import 'package:gc_wizard/widgets/tools/images_and_files/hexstring2file.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/heat_index.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperature/humidex.dart';
@@ -137,6 +139,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/apparent_temperat
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/moon_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/seasons.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/shadow_length.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_position.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/astronomy/sun_rise_set.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/binary.dart';
@@ -154,12 +157,12 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/divisor.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dtmf.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/hexadecimal.dart';
-import 'package:gc_wizard/widgets/tools/images_and_files/binary2image.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/numeralbases.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/atomic_numbers_to_text.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/periodic_table/periodic_table.dart';
@@ -371,6 +374,7 @@ class _MainViewState extends State<MainView> {
         className(Deadfish()),
         className(Decabit()),
         className(DistanceBearing()),
+        className(Divisor()),
         className(DTMF()),
         className(DNAAminoAcids()),
         className(DNAAminoAcidsTable()),
@@ -449,6 +453,8 @@ class _MainViewState extends State<MainView> {
         className(RotationGeneral()),
         className(RSASelection()),
         className(Scrabble()),
+        className(ShadowLength()),
+        className(ShadoksSelection()),
         className(Seasons()),
         className(SevenSegments()),
         className(SixteenSegments()),

@@ -117,6 +117,7 @@ const SEARCHSTRING_DE_DATES_TIMECALCULATOR = 'uhrzeit uhrzeitrechner stunden min
 const SEARCHSTRING_DE_DATES_WEEKDAY = 'wochentage';
 const SEARCHSTRING_DE_DATES_CALENDAR = 'julianisches datum gregorianisches datum kalender';
 const SEARCHSTRING_DE_DECABIT = 'impulsraster rundsteuertechnik';
+const SEARCHSTRING_DE_DIVISOR = 'teiler';
 const SEARCHSTRING_DE_DNA =
     'code-sonne codesonne desoxyribonukleinsaeure sequenz nukleotid genetik genetisches dns rns mrns';
 const SEARCHSTRING_DE_DNAAMINOACIDS = 'aminosaeuren';
@@ -297,6 +298,7 @@ const SEARCHSTRING_DE_SEGMENTS_FOURTEEN = 'vierzehn';
 const SEARCHSTRING_DE_SEGMENTS_SEVEN = 'sieben';
 const SEARCHSTRING_DE_SEGMENTS_SIXTEEN = 'sechzehn';
 const SEARCHSTRING_DE_SETTINGS = 'einstellungen optionen';
+const SEARCHSTRING_DE_SHADOKSNUMBERS = '';
 const SEARCHSTRING_DE_SILVERRATIO = 'silberner schnitt';
 const SEARCHSTRING_DE_SILVERRATIODECIMALRANGE = '';
 const SEARCHSTRING_DE_SILVERRATIONTHDECIMAL = '';

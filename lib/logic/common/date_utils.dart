@@ -7,7 +7,7 @@
 
 import 'package:gc_wizard/logic/tools/science_and_technology/date_and_time/calendar.dart';
 
-final Map<int, String>  MONTH = {
+final Map<int, String> MONTH = {
   1: 'common_month_january',
   2: 'common_month_february',
   3: 'common_month_march',
@@ -88,13 +88,13 @@ final Map<CalendarSystem, Map<int, String>> MONTH_NAMES = {
 };
 
 final Map<int, String> WEEKDAY = {
- 1: 'dates_weekday_monday',
- 2: 'dates_weekday_tuesday',
- 3: 'dates_weekday_wednesday',
- 4: 'dates_weekday_thursday',
- 5: 'dates_weekday_friday',
- 6: 'dates_weekday_saturday',
- 7: 'dates_weekday_sunday'
+  1: 'dates_weekday_monday',
+  2: 'dates_weekday_tuesday',
+  3: 'dates_weekday_wednesday',
+  4: 'dates_weekday_thursday',
+  5: 'dates_weekday_friday',
+  6: 'dates_weekday_saturday',
+  7: 'dates_weekday_sunday'
 };
 
 final Map<int, String> WEEKDAY_ISLAMIC = {
@@ -141,43 +141,43 @@ int intPart(double floatNum) {
     return (floatNum + 0.0000001).floor();
 }
 
-DateOutput JulianDateToGregorianCalendar(double jd, bool round){
+DateOutput JulianDateToGregorianCalendar(double jd, bool round) {
   return _JDToCal(jd, round, 'G');
 }
 
-DateOutput JulianDateToJulianCalendar(double jd, bool round){
+DateOutput JulianDateToJulianCalendar(double jd, bool round) {
   return _JDToCal(jd, round, 'J');
 }
 
-double GregorianCalendarToJulianDate(DateTime date){
+double GregorianCalendarToJulianDate(DateTime date) {
   return _calToJD(date, 'G');
 }
 
-double JulianCalendarToJulianDate(DateTime date){
+double JulianCalendarToJulianDate(DateTime date) {
   return _calToJD(date, 'J');
 }
 
-double JulianDateToModifedJulianDate(double jd){
+double JulianDateToModifedJulianDate(double jd) {
   return jd - 2400000.5;
 }
 
-double ModifedJulianDateToJulianDate(double mjd){
+double ModifedJulianDateToJulianDate(double mjd) {
   return mjd + 2400000.5;
 }
 
-int JulianDateToJulianDayNumber(double jd){
+int JulianDateToJulianDayNumber(double jd) {
   return jd.floor();
 }
 
-DateTime DateOutputToDate(DateOutput date){
+DateTime DateOutputToDate(DateOutput date) {
   return DateTime(int.parse(date.year), int.parse(date.month), int.parse(date.day));
 }
 
-int Weekday(double JD){
+int Weekday(double JD) {
   return 1 + (JD + 0.5).floor() % 7;
 }
 
-double _calToJD(DateTime date, String type){
+double _calToJD(DateTime date, String type) {
   int day = date.day;
   int month = date.month;
   int year = date.year;
@@ -188,13 +188,12 @@ double _calToJD(DateTime date, String type){
   }
 
   int b = 0;
-  if (type == 'G')
-    b = 2 - (year / 100).floor() + (year / 400).floor();
+  if (type == 'G') b = 2 - (year / 100).floor() + (year / 400).floor();
 
   return (365.25 * (year + 4716)).floor() + (30.6001 * (month + 1)).floor() + day + b - 1524.5;
 }
 
-DateOutput _JDToCal(double jd, bool round, String type){
+DateOutput _JDToCal(double jd, bool round, String type) {
   int z = (jd + 0.5).floor();
   double f = jd + 0.5 - z;
   int a = z;
@@ -223,15 +222,16 @@ DateOutput _JDToCal(double jd, bool round, String type){
     return DateOutput(day.toString(), month.toString(), year.toString());
 }
 
-int JulianDay(DateTime date){
+int JulianDay(DateTime date) {
   return 1 + (GregorianCalendarToJulianDate(date) - GregorianCalendarToJulianDate(DateTime(date.year, 1, 1))).toInt();
 }
 
-DateOutput JulianDateToIslamicCalendar(double jd){
+DateOutput JulianDateToIslamicCalendar(double jd) {
   int l = (jd + 0.5).floor() - 1948440 + 10632;
   int n = intPart((l - 1) / 10631);
   l = l - 10631 * n + 354;
-  int j = (intPart((10985 - l) / 5316)) * (intPart((50 * l) / 17719)) + (intPart(l / 5670)) * (intPart((43 * l) / 15238));
+  int j =
+      (intPart((10985 - l) / 5316)) * (intPart((50 * l) / 17719)) + (intPart(l / 5670)) * (intPart((43 * l) / 15238));
   l = l - (intPart((30 - j) / 15)) * (intPart((17719 * j) / 50)) - (intPart(j / 16)) * (intPart((15238 * j) / 43)) + 29;
   int m = intPart((24 * l) / 709);
   int d = l - intPart((709 * m) / 24);
@@ -240,14 +240,14 @@ DateOutput JulianDateToIslamicCalendar(double jd){
   return DateOutput(d.toString(), m.toString(), y.toString());
 }
 
-double IslamicCalendarToJulianDate(DateTime date){
+double IslamicCalendarToJulianDate(DateTime date) {
   int d = date.day;
   int m = date.month;
   int y = date.year;
   return (intPart((11 * y + 3) / 30) + 354 * y + 30 * m - intPart((m - 1) / 2) + d + 1948440 - 385).toDouble();
 }
 
-DateOutput JulianDateToPersianYazdegardCalendar(double jd){
+DateOutput JulianDateToPersianYazdegardCalendar(double jd) {
   int epagflg = 0; // Epagomenai: Change at 1007 Jul./376 Yaz.
   int epag_change = 2088938;
   int d_diff = intPart(jd + 0.5) - 1952063;
@@ -262,7 +262,7 @@ DateOutput JulianDateToPersianYazdegardCalendar(double jd){
   return DateOutput(d.toString(), m.toString(), y.toString());
 }
 
-double PersianYazdegardCalendarToJulianDate(DateTime date){
+double PersianYazdegardCalendarToJulianDate(DateTime date) {
   int epagflg = 0; // Epagomenai: Change at 1007 Jul./376 Yaz.
   int yaz_ep = 1951668;
   int m = date.month;
@@ -298,8 +298,8 @@ String typeOfJewYear(int yearlength) {
   }
 }
 
-List<int>  jewDayAndMonthInYear(int days, yearlength) {
-  List<int>  mschema = _jregyeardef;
+List<int> jewDayAndMonthInYear(int days, yearlength) {
+  List<int> mschema = _jregyeardef;
   if (yearlength == 353) {
     mschema = _jregyeardef;
   } else if (yearlength == 354) {
@@ -322,10 +322,9 @@ List<int>  jewDayAndMonthInYear(int days, yearlength) {
     newSum = oldSum - mschema[i];
     i = i + 1;
   }
-  List<int>  resArr = [1, 1];
+  List<int> resArr = [1, 1];
   resArr[0] = oldSum + 1;
-  if (i == 0)
-    i = 1;
+  if (i == 0) i = 1;
 
   resArr[1] = i;
   return resArr;
@@ -370,14 +369,13 @@ int cyear2pesach(int xx) {
   int dd = (qq).floor() + 22;
   if (j == 2 || j == 4 || j == 6)
     dd = (qq).floor() + 23;
-   else if (j == 1 && a > 6 && r >= 0.632870370)
+  else if (j == 1 && a > 6 && r >= 0.632870370)
     dd = (qq).floor() + 24;
-   else if (j == 0 && a > 11 && r >= 0.897723765)
-     dd = (qq).floor() + 23;
+  else if (j == 0 && a > 11 && r >= 0.897723765) dd = (qq).floor() + 23;
   return dd;
 }
 
-int JewishYearLength(double jd){
+int JewishYearLength(double jd) {
   DateOutput GregorianDate = JulianDateToGregorianCalendar(jd, true);
   int jyearlength = 0;
   int cy = int.parse(GregorianDate.year);
@@ -414,10 +412,9 @@ int JewishYearLength(double jd){
   }
 
   return jyearlength;
-
 }
 
-DateOutput JulianDateToHebrewCalendar(double jd){
+DateOutput JulianDateToHebrewCalendar(double jd) {
   int jday = 1;
   int jmonth = 1;
   DateOutput GregorianDate = JulianDateToGregorianCalendar(jd, true);
@@ -467,7 +464,7 @@ DateOutput JulianDateToHebrewCalendar(double jd){
   return DateOutput(jday.toString(), jmonth.toString(), jy.toString());
 }
 
-double HebrewCalendarToJulianDate(DateTime date){
+double HebrewCalendarToJulianDate(DateTime date) {
   int jy = date.year;
   int m = date.month;
   int d = date.day;
@@ -494,7 +491,7 @@ double HebrewCalendarToJulianDate(DateTime date){
   return (cjd).toDouble();
 }
 
-DateOutput JulianDateToCopticCalendar(double jd){
+DateOutput JulianDateToCopticCalendar(double jd) {
   int cop_j_bar = (jd + 0.5).floor() + 124;
 
   int cop_y_bar = intPart((4 * cop_j_bar + 3) / 1461);
@@ -507,7 +504,7 @@ DateOutput JulianDateToCopticCalendar(double jd){
   return DateOutput(cop_d.toString(), cop_m.toString(), cop_y.toString());
 }
 
-double CopticCalendarToJulianDate(DateTime date){
+double CopticCalendarToJulianDate(DateTime date) {
   int cop_d = date.day;
   int cop_m = date.month;
   int cop_y = date.year;
@@ -520,6 +517,3 @@ double CopticCalendarToJulianDate(DateTime date){
   int d = intPart((30 * cop_m_bar + 0) / 1);
   return (c + d + cop_d_bar - 124).toDouble();
 }
-
-
-

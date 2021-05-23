@@ -37,7 +37,11 @@ defaultFontSize() {
 }
 
 List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> data,
-    {List<int> flexValues = const [], int copyColumn, bool hasHeader: false, bool copyAll: false, List<Function> tappables}) {
+    {List<int> flexValues = const [],
+    int copyColumn,
+    bool hasHeader: false,
+    bool copyAll: false,
+    List<Function> tappables}) {
   var odd = true;
   var isFirst = true;
 
@@ -67,7 +71,8 @@ List<Widget> columnedMultiLineOutput(BuildContext context, List<List<dynamic>> d
       data.where((row) => row != null).forEach((dataRow) {
         copyText += dataRow[copyColumn].toString() + '\n';
       });
-     };
+    }
+    ;
 
     var row = Container(
       child: Row(
