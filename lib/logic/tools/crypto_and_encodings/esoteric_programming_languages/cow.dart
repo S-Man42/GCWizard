@@ -32,6 +32,8 @@
 //
 // Generator   Frank Buss
 // https://frank-buss.de/cow.html
+// permission to use the javascript-code received per E-mail on 23 May 2021 17:32
+// and forwarded to geocache.wizard@gmail.com
 //---------------------------------------------------------
 
 import 'package:gc_wizard/utils/common_utils.dart';
