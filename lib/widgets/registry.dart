@@ -237,6 +237,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/decabit.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/divisor.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_aminoacids_table.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/dna/dna_nucleicacidsequence.dart';
@@ -642,6 +643,18 @@ class Registry {
             SEARCHSTRING_DE_DECABIT,
             SEARCHSTRING_EN_DECABIT,
             SEARCHSTRING_FR_DECABIT
+          ]),
+      GCWTool(
+          tool: Divisor(),
+          i18nPrefix: 'divisor',
+          category: ToolCategory.SCIENCE_AND_TECHNOLOGY,
+          missingHelpLocales: [
+          ],
+          searchStrings: [
+            SEARCHSTRING_COMMON_DIVISOR,
+            SEARCHSTRING_DE_DIVISOR,
+            SEARCHSTRING_EN_DIVISOR,
+            SEARCHSTRING_FR_DIVISOR
           ]),
       GCWTool(
           tool: DNASelection(),
