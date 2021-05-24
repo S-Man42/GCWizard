@@ -93,8 +93,10 @@ String removeAccents(String text) {
   return removeDiacritics(out);
 }
 
+final RegExp reNonLetters = RegExp(r'[^A-Za-z]');
+
 String removeNonLetters(String text) {
-  return text.replaceAll(RegExp(r'[^A-Za-z]'), '');
+  return text.replaceAll(reNonLetters, '');
 }
 
 String insertCharacter(String text, int index, String character) {

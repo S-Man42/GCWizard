@@ -36,9 +36,8 @@ class NSegmentDisplayState extends State<NSegmentDisplay> {
   Widget build(BuildContext context) {
     if (widget.segments != null) {
       _segments = Map.from(widget.segments);
-      widget.initialSegments.keys.forEach((segmentID) {
-        if (_segments.containsKey(segmentID)) return;
 
+      widget.initialSegments.keys.forEach((segmentID) {
         _segments.putIfAbsent(segmentID, () => widget.initialSegments[segmentID]);
       });
     } else {

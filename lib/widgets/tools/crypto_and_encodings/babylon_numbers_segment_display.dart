@@ -20,15 +20,15 @@ const _INITIAL_SEGMENTS = <String, bool>{
   'n': false,
 };
 
-const BABYLON_RELATIVE_DISPLAY_WIDTH = 200;
-const BABYLON_RELATIVE_DISPLAY_HEIGHT = 100;
+const _BABYLON_RELATIVE_DISPLAY_WIDTH = 200;
+const _BABYLON_RELATIVE_DISPLAY_HEIGHT = 100;
 
 double _relativeX(Size size, double x) {
-  return size.width / BABYLON_RELATIVE_DISPLAY_WIDTH * x;
+  return size.width / _BABYLON_RELATIVE_DISPLAY_WIDTH * x;
 }
 
 double _relativeY(Size size, double y) {
-  return size.height / BABYLON_RELATIVE_DISPLAY_HEIGHT * y;
+  return size.height / _BABYLON_RELATIVE_DISPLAY_HEIGHT * y;
 }
 
 final _TRANSPARENT_COLOR = Color.fromARGB(0, 0, 0, 0);
@@ -42,7 +42,7 @@ class BabylonNumbersSegmentDisplay extends NSegmentDisplay {
       : super(
             key: key,
             initialSegments: _INITIAL_SEGMENTS,
-            aspectRatio: BABYLON_RELATIVE_DISPLAY_WIDTH / BABYLON_RELATIVE_DISPLAY_HEIGHT,
+            aspectRatio: _BABYLON_RELATIVE_DISPLAY_WIDTH / _BABYLON_RELATIVE_DISPLAY_HEIGHT,
             segments: segments,
             readOnly: readOnly,
             onChanged: onChanged,

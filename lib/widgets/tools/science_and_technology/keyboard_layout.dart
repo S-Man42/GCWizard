@@ -8,18 +8,18 @@ import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 
-class Keyboard extends StatefulWidget {
+class KeyboardLayout extends StatefulWidget {
   @override
-  KeyboardState createState() => KeyboardState();
+  KeyboardLayoutState createState() => KeyboardLayoutState();
 }
 
-class KeyboardState extends State<Keyboard> {
+class KeyboardLayoutState extends State<KeyboardLayout> {
   var _inputController;
 
   String _currentInput = '';
 
-  KeyboardLayout _currentKeyboardFrom = KeyboardLayout.QWERTZ_T1;
-  KeyboardLayout _currentKeyboardTo = KeyboardLayout.QWERTY_US_INT;
+  enumKeyboardLayout _currentKeyboardFrom = enumKeyboardLayout.QWERTZ_T1;
+  enumKeyboardLayout _currentKeyboardTo = enumKeyboardLayout.QWERTY_US_INT;
 
   @override
   void initState() {

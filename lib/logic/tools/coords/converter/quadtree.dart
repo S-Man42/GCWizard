@@ -2,11 +2,12 @@ import 'dart:math';
 
 import 'package:gc_wizard/utils/common_utils.dart';
 import 'package:latlong/latlong.dart';
+import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 
 var _TILESIZE = 256;
 const int _DEFAULT_PRECISION = 40;
 
-List<int> latLonToQuadtree(LatLng coord, {int precision: _DEFAULT_PRECISION}) {
+Quadtree latLonToQuadtree(LatLng coord, {int precision: _DEFAULT_PRECISION}) {
   var x = (_TILESIZE / 2.0) + coord.longitude * (_TILESIZE / 360.0);
 
   var siny = sin(degreesToRadian(coord.latitude));
@@ -26,19 +27,19 @@ List<int> latLonToQuadtree(LatLng coord, {int precision: _DEFAULT_PRECISION}) {
     tileY = (tileY / 2).floor();
   }
 
-  return out.reversed.toList();
+  return Quadtree(out.reversed.toList());
 }
 
-LatLng quadtreeToLatLon(List<int> quadtree) {
+LatLng quadtreeToLatLon(Quadtree quadtree) {
   var tileX = 0;
   var tileY = 0;
 
-  for (var i = 0; i < quadtree.length; i++) {
-    tileX = 2 * tileX + quadtree[i] % 2;
-    tileY = 2 * tileY + (quadtree[i] / 2.0).floor();
+  for (var i = 0; i < quadtree.coords.length; i++) {
+    tileX = 2 * tileX + quadtree.coords[i] % 2;
+    tileY = 2 * tileY + (quadtree.coords[i] / 2.0).floor();
   }
 
-  var countTiles = 1 << quadtree.length;
+  var countTiles = 1 << quadtree.coords.length;
 
   var x = (tileX) * _TILESIZE / countTiles;
   var y = (tileY) * _TILESIZE / countTiles;
@@ -50,13 +51,10 @@ LatLng quadtreeToLatLon(List<int> quadtree) {
   return LatLng(lat, lon);
 }
 
-LatLng parseQuadtree(String input) {
-  if (input == null) return null;
-  input = input.trim();
-
-  if (input == '') return null;
+Quadtree parseQuadtree(String input) {
+  if (input == null || input == '') return null;
 
   if (input.length != input.replaceAll(RegExp(r'[^0123]'), '').length) return null;
 
-  return quadtreeToLatLon(input.split('').map((character) => int.tryParse(character)).toList());
+  return Quadtree(input.split('').map((character) => int.tryParse(character)).toList());
 }

@@ -1,13 +1,12 @@
 import 'package:exif/exif.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:gc_wizard/logic/tools/coords/converter/dec.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
-import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:latlong/latlong.dart';
 
 Future<Map<String, IfdTag>> parseExif(PlatformFile file) async {
-  Map<String, IfdTag> data = await readExifFromBytes(await getFileData(file),
+  Map<String, IfdTag> data = await readExifFromBytes(file.bytes,
       details: true,
       // debug: true, //XMP (experimental)
       //strict: false,

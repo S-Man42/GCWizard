@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:exif/exif.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
@@ -66,11 +65,10 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   Future<void> _readFileFromPicker() async {
-    List<PlatformFile> files = await openFileExplorer(
-      allowedExtensions: ['jpg', 'jpeg', 'tiff', 'png', 'bmp', 'gif', 'webp'],
-    );
-    if (files != null) {
-      PlatformFile _file = files.first;
+    var file =
+        await openFileExplorer(context, allowedExtensions: ['.jpg', '.jpeg', '.tiff', '.png', '.bmp', '.gif', '.webp']);
+    if (file != null) {
+      PlatformFile _file = file;
       return _readFile(_file);
     }
   }

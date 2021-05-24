@@ -74,16 +74,16 @@ class VigenereBreakerState extends State<VigenereBreaker> {
             });
           },
         ),
-        _currentAutokey == false ?
-          GCWOnOffSwitch(
-            title: i18n(context, 'vigenere_ignorenonletters'),
-            onChanged: (value) {
-              setState(() {
-                _currentNonLetters = value;
-              });
-            },
-          )
-        : Container(),
+        _currentAutokey == false
+            ? GCWOnOffSwitch(
+                title: i18n(context, 'vigenere_ignorenonletters'),
+                onChanged: (value) {
+                  setState(() {
+                    _currentNonLetters = value;
+                  });
+                },
+              )
+            : Container(),
         GCWTextDivider(text: i18n(context, 'common_alphabet')),
         GCWDropDownButton(
           value: _currentAlphabet,

@@ -88,6 +88,7 @@ class GCWTool extends StatefulWidget {
   final autoScroll;
   final iconPath;
   final List<String> searchStrings;
+  String indexedStrings;
   final List<GCWToolActionButtonsEntry> buttonList;
   final List<String> missingHelpLocales;
   final bool suppressHelpButton;

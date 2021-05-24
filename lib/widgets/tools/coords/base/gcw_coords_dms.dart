@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/dms.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
@@ -9,11 +8,10 @@ import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lat_textinputformatter.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_integer_degrees_lon_textinputformatter.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/integer_minutesseconds_textinputformatter.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsDMS extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsDMS({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -22,14 +20,14 @@ class GCWCoordsDMS extends StatefulWidget {
 }
 
 class GCWCoordsDMSState extends State<GCWCoordsDMS> {
-  var _LatDegreesController;
-  var _LatMinutesController;
-  var _LatSecondsController;
-  var _LatMilliSecondsController;
-  var _LonDegreesController;
-  var _LonMinutesController;
-  var _LonSecondsController;
-  var _LonMilliSecondsController;
+  TextEditingController _LatDegreesController;
+  TextEditingController _LatMinutesController;
+  TextEditingController _LatSecondsController;
+  TextEditingController _LatMilliSecondsController;
+  TextEditingController _LonDegreesController;
+  TextEditingController _LonMinutesController;
+  TextEditingController _LonSecondsController;
+  TextEditingController _LonMilliSecondsController;
 
   FocusNode _latMinutesFocusNode;
   FocusNode _latSecondsFocusNode;
@@ -95,7 +93,7 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var dms = latLonToDMS(widget.coordinates);
+      var dms = widget.coordinates is DMS ? widget.coordinates as DMS : DMS.fromLatLon(widget.coordinates.toLatLng());
       var lat = dms.latitude.formatParts(10);
       var lon = dms.longitude.formatParts(10);
 
@@ -331,6 +329,6 @@ class GCWCoordsDMSState extends State<GCWCoordsDMS> {
     _secondsD = double.parse('$_seconds.$_currentLonMilliSeconds');
     var _currentLon = DMSLongitude(_currentLonSign, _degrees, _minutes, _secondsD);
 
-    widget.onChanged(dmsToLatLon(DMS(_currentLat, _currentLon)));
+    widget.onChanged(DMS(_currentLat, _currentLon));
   }
 }
