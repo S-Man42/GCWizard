@@ -3,12 +3,16 @@ import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
 import 'package:ext_storage/ext_storage.dart';
+import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
+import 'package:path/path.dart' as Path;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_extend/share_extend.dart';
+
+// final _logger = Logger('main');
 
 Map<List<int>, String> _fileTypes = {
   [0x50, 0x4B, 0x03, 0x04]: ".zip",
@@ -71,17 +75,30 @@ Future<Map<String, dynamic>> saveByteDataToFile(ByteData data, String fileName, 
     //
     // filePath = 'Downloads/$fileName';
   } else {
-    var path = await _mainDirectory();
-
-    if (path == null)
+    final fileInfo = await FilePickerWritable().openFileForCreate(
+      fileName: fileName,
+      writer: (file) async {
+        await file.writeAsBytes(data.buffer.asUint8List());
+      },
+    );
+    if (fileInfo == null) {
+      // _logger.info('User canceled.');
       return null;
-    filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
-    file = File(filePath);
+    }
+    filePath = fileInfo.identifier;
+    file = null;
+//    var path = await _mainDirectory();
 
-    if (!await file.exists())
-      file.create();
-
-    await file.writeAsBytes(data.buffer.asUint8List());
+    //
+    // if (path == null)
+    //   return null;
+    // filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
+    // file = File(filePath);
+    //
+    // if (!await file.exists())
+    //   file.create();
+    //
+    // await file.writeAsBytes(data.buffer.asUint8List());
   }
   return {'path': filePath, 'file': file};
 }
@@ -101,13 +118,11 @@ Future<Map<String, dynamic>> saveStringToFile(String data, String fileName, {Str
   } else {
     var path = await _mainDirectory();
 
-    if (path == null)
-      return null;
+    if (path == null) return null;
     filePath = subDirectory == null ? '$path/$fileName' : '$path/$subDirectory/$fileName';
     file = await File(filePath).create(recursive: true);
 
-    if (!await file.exists())
-      file.create();
+    if (!await file.exists()) file.create();
 
     await file.writeAsString(data);
   }
@@ -133,10 +148,8 @@ openFile(String path, String type) {
     type = type.toLowerCase();
     OpenFile.open(path,
         type: knowExtensions.containsKey(type) ? knowExtensions[type] : null,
-        uti: knowUtiExtensions.containsKey(type) ? knowUtiExtensions[type] : null
-    );
-  }
-  else
+        uti: knowUtiExtensions.containsKey(type) ? knowUtiExtensions[type] : null);
+  } else
     OpenFile.open(path);
 }
 
@@ -157,4 +170,17 @@ String getFileType(Uint8List blobBytes) {
   }
 
   return ".txt";
+}
+
+String getFileExtension(String fileName) {
+  return Path.extension(fileName);
+}
+
+String getFileBaseNameWithoutExtension(String fileName) {
+  return Path.basenameWithoutExtension(fileName);
+}
+
+String changeExtension(String fileName, String extension) {
+  //return Path.basenameWithoutExtension(fileName)+extension;
+  return Path.setExtension(fileName, extension);
 }

@@ -11,6 +11,7 @@ import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/widgets/common/gcw_text_divider.dart';
 import 'package:gc_wizard/widgets/common/gcw_twooptions_switch.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 
 class Stegano extends StatefulWidget {
   final PlatformFile file;
@@ -26,7 +27,8 @@ class _SteganoState extends State<Stegano> {
   Uint8List _bytesSource;
   String _currentInput = '';
   String _currentKey = '';
-  String _filename = 'output.png'; //TODO choose output format (jpg, png..)
+  String _filenameTarget = 'output.png'; //TODO choose output filename (sample.jpg, output.png, ..)
+  String _extensionTarget = '.png'; //TODO  output extension (jpg, png..)
 
   String _decodedText;
   String _decodingErrorText;
@@ -138,7 +140,7 @@ class _SteganoState extends State<Stegano> {
       Uint8List bytes;
       String _error;
       try {
-        bytes = await encodeStegano(_file, _currentInput, _currentKey, _filename);
+        bytes = await encodeStegano(_file, _currentInput, _currentKey, _file.name);
       } catch (e) {
         _error = e.toString();
       }
@@ -147,6 +149,7 @@ class _SteganoState extends State<Stegano> {
         _encoding = false;
         _encodedPictureData = (bytes != null) ? GCWImageViewData(bytes) : null;
         _encodingErrorText = _error;
+        _filenameTarget = changeExtension(_file.name, _extensionTarget);
       });
     } else {
       String _text;
@@ -187,7 +190,7 @@ class _SteganoState extends State<Stegano> {
     }
     return [
       GCWTextDivider(text: i18n(context, 'stegano_encoded_image')),
-      GCWImageView(imageData: _encodedPictureData),
+      GCWImageView(imageData: _encodedPictureData, /*extension: _extensionTarget,*/ fileName: _filenameTarget),
     ];
   }
 

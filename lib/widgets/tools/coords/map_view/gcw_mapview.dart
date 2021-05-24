@@ -13,10 +13,10 @@ import 'package:flutter_map_tappable_polyline/flutter_map_tappable_polyline.dart
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/common/units/length.dart';
 import 'package:gc_wizard/logic/common/units/unit.dart';
-import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/logic/tools/coords/data/ellipsoid.dart';
-import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
 import 'package:gc_wizard/logic/tools/coords/import/gpx_kml_import.dart';
+import 'package:gc_wizard/logic/tools/coords/parser/latlon.dart';
+import 'package:gc_wizard/logic/tools/coords/utils.dart';
 import 'package:gc_wizard/theme/fixed_colors.dart';
 import 'package:gc_wizard/theme/theme.dart';
 import 'package:gc_wizard/theme/theme_colors.dart';
@@ -35,8 +35,8 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/mappolyline_editor.dart'
 import 'package:gc_wizard/widgets/tools/coords/map_view/mapview_persistence_adapter.dart';
 import 'package:gc_wizard/widgets/tools/coords/utils/user_location.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
-import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
+import 'package:gc_wizard/widgets/utils/no_animation_material_page_route.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 import 'package:location/location.dart';
@@ -569,16 +569,16 @@ class GCWMapViewState extends State<GCWMapView> {
                       coordinateFormat: {'format': pastedCoordinate.keys.first});
                   _mapController.move(pastedCoordinate.values.first, _mapController.zoom);
                 });
-              };
+              }
+              ;
             },
-          )
-      ),
+          )),
       GCWIconButton(
         backgroundColor: COLOR_MAP_ICONBUTTONS,
         customIcon: _createIconButtonIcons(Icons.drive_folder_upload),
         onPressed: () {
           setState(() {
-            openFileExplorer(allowedExtensions: ['gpx','kml','kmz'], useFileFilterOnAndroid : true).then((files) {
+            openFileExplorer(allowedExtensions: ['gpx', 'kml', 'kmz'], useFileFilterOnAndroid: true).then((files) {
               if (files != null && files.length > 0) {
                 getFileData(files.first).then((bytes) {
                   loadCoordinatesFile(files.first.name, bytes).whenComplete(() {
@@ -802,12 +802,10 @@ class GCWMapViewState extends State<GCWMapView> {
   }
 
   bool _importGpxKml(String xml) {
-    var viewData =  parseCoordinatesFile(xml);
-    if (viewData == null)
-      viewData =  parseCoordinatesFile(xml, kmlFormat: true);
+    var viewData = parseCoordinatesFile(xml);
+    if (viewData == null) viewData = parseCoordinatesFile(xml, kmlFormat: true);
 
-    if (viewData != null)
-      _persistanceAdapter.addViewData(viewData);
+    if (viewData != null) _persistanceAdapter.addViewData(viewData);
 
     return (viewData != null);
   }
@@ -815,13 +813,12 @@ class GCWMapViewState extends State<GCWMapView> {
   Future<bool> loadCoordinatesFile(String fileName, Uint8List bytes) async {
     try {
       await importCoordinatesFile(fileName, bytes).then((viewData) {
-        if (viewData != null)
-          _persistanceAdapter.addViewData(viewData);
+        if (viewData != null) _persistanceAdapter.addViewData(viewData);
 
         return (viewData != null);
       });
-  } catch (exception) {}
-  return false;
+    } catch (exception) {}
+    return false;
   }
 }
 
