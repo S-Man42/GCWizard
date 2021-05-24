@@ -218,6 +218,7 @@ const SEARCHSTRING_DE_MAYANUMBERS = 'zahlen ziffern';
 const SEARCHSTRING_DE_MEXICANARMYCIPHERWHEEL = 'mexiko mexanischearmee';
 const SEARCHSTRING_DE_MORSE = 'punkte striche';
 const SEARCHSTRING_DE_MULTIDECODER = 'universal universeller multiloeser';
+const SEARCHSTRING_DE_NAVAJO = '';
 const SEARCHSTRING_DE_NUMBERSEQUENCE = 'zahlenfolgen zahlenreihen';
 const SEARCHSTRING_DE_NUMBERSEQUENCE_BELLSELECTION = '';
 const SEARCHSTRING_DE_NUMBERSEQUENCE_CATALANSELECTION = '';

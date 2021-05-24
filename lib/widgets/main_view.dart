@@ -102,6 +102,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robb
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/playfair.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/polybios.dart';
@@ -423,6 +424,7 @@ class _MainViewState extends State<MainView> {
         className(MoonPosition()),
         className(MoonRiseSet()),
         className(Morse()),
+        className(Navajo()),
         className(NumberSequenceSelection()),
         className(MultiDecoder()),
         className(NumeralBases()),
