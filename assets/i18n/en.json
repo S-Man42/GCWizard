@@ -2306,6 +2306,8 @@
   "stegano_encode": "Encode",
   "stegano_decode": "Decode",
   "stegano_decoded_message": "Decoded message",
+  "stegano_decoding_error": "Decoding error ; probably no text encrypted",
+  "stegano_encoding_error": "Encoding error",
   "stegano_source_image": "Source image",
   "straddlingcheckerboard_title": "Straddling Checkerboard",
   "straddlingcheckerboard_description": "Encryption based on a 3x10 square with additional transposition",
