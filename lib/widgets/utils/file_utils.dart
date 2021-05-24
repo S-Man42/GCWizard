@@ -145,11 +145,11 @@ Future<String> readStringFromFile(String fileName) async {
   return fileIn.readAsString();
 }
 
-String getFileType(Uint8List blobBytes, {String defaultType = ".txt"}) {
+String getFileType(Uint8List blobBytes) {
   for (var key in _fileTypes.keys) {
     if (blobBytes.length >= key.length && ListEquality().equals(blobBytes.sublist(0, key.length), key))
       return _fileTypes[key];
   }
 
-  return defaultType;
+  return ".txt";
 }
