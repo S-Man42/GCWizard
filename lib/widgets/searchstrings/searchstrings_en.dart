@@ -213,6 +213,7 @@ const SEARCHSTRING_EN_MAYANUMBERS = 'numbers numerals';
 const SEARCHSTRING_EN_MEXICANARMYCIPHERWHEEL = 'mexicanarmy mexico';
 const SEARCHSTRING_EN_MORSE = 'dots dashes';
 const SEARCHSTRING_EN_MULTIDECODER = 'multisolver multidecoder';
+const SEARCHSTRING_EN_NAVAJO = 'windtalkers';
 const SEARCHSTRING_EN_NUMBERSEQUENCE = 'numbersequence integersequences';
 const SEARCHSTRING_EN_NUMBERSEQUENCE_BELLSELECTION = '';
 const SEARCHSTRING_EN_NUMBERSEQUENCE_CATALANSELECTION = '';

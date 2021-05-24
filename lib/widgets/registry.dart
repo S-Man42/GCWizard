@@ -168,6 +168,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoo
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_lists.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/numeral_words/numeral_words_text_search.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/one_time_pad.dart';
@@ -972,6 +973,17 @@ class Registry {
             SEARCHSTRING_DE_MULTIDECODER,
             SEARCHSTRING_EN_MULTIDECODER,
             SEARCHSTRING_FR_MULTIDECODER
+          ]),
+      GCWTool(
+          tool: Navajo(),
+          i18nPrefix: 'navajo',
+          category: ToolCategory.CRYPTOGRAPHY,
+          missingHelpLocales: [],
+          searchStrings: [
+            SEARCHSTRING_COMMON_NAVAJO,
+            SEARCHSTRING_DE_NAVAJO,
+            SEARCHSTRING_EN_NAVAJO,
+            SEARCHSTRING_FR_NAVAJO
           ]),
       GCWTool(
           tool: NumberSequenceSelection(),
