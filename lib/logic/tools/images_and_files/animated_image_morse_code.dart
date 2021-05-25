@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/animated_image_morse_code.dart' as animated_gif;
+import 'package:gc_wizard/logic/tools/images_and_files/dbscan.dart';
 import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:image/image.dart' as img;
@@ -71,10 +72,10 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPo
       }
     }
 
-    for (var i=0; i< imageList.length; i++) {
+    for (var i=0; i< imageList.length; i++)
       filteredList = _filterImages(filteredList, i, imageList);
-      //print("inHash " + i.toString() + " " + imageList[i].hashCode.toString());
-    };
+
+    filteredList = _searchHighSignalImage(animation, filteredList);
 
     out.addAll({"images": imageList});
     out.addAll({"durations": durations});
@@ -172,34 +173,28 @@ List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List
   for (var i=0; i < filteredList.length; i++ ) {
     var compareImage = imageList[filteredList[i].first];
     var image = imageList[imageIndex];
-    if (compareImage.length != image.length)
-      continue;
 
-    // byte compare
-    for (var b=0; b < compareImage.length; b++ ) {
-      if ((compareImage[b] - image[b]).abs() > toler)
-        continue;
+    if (compareImages(compareImage, image, toler:toler)) {
+      filteredList[i].add(imageIndex);
+      return filteredList;
     }
-
-    filteredList[i].add(imageIndex);
-    return filteredList;
   }
 
   // not found -> new List
   var newList = <int>[];
   newList.add(imageIndex);
-  filteredList.add( newList);
+  filteredList.add(newList);
 
   return filteredList;
 }
 
 Map<String, dynamic> decodeMorseCode(List<int> durations, List<bool> onSignal) {
   var timeList = _buildTimeList(durations, onSignal);
-  print(timeList.length);
-  var signalTimes = _foundSignalTimes(timeList);
+  var signalTimes = foundSignalTimes(timeList);
 
   if (signalTimes == null)
     return null;
+print(timeList.length);
 print("timeBase: " + signalTimes.toString());
   var out = '';
   timeList.forEach((element) {
@@ -239,7 +234,7 @@ List<Tuple2<bool, int>> _buildTimeList(List<int> durations, List<bool> onSignal)
   return timeList;
 }
 
-Tuple3<int, int, int> _foundSignalTimes(List<Tuple2<bool, int>> timeList) {
+Tuple3<int, int, int> foundSignalTimes(List<Tuple2<bool, int>> timeList) {
   if (timeList == null || timeList.length == 0)
     return null;
 
@@ -253,6 +248,31 @@ Tuple3<int, int, int> _foundSignalTimes(List<Tuple2<bool, int>> timeList) {
   });
   if (minTime == 999999999)
     return null;
+
+
+  var onl= <int>[];
+  var offl= <int>[];
+  timeList.forEach((element) {
+    if (element.item1)
+      onl.add(element.item2);
+    else
+      offl.add(element.item2);
+  });
+
+  var pointClusterer =DBSCAN(onl, 10, 2, (int pointA, int pointB) {
+    return (pow(pointA - pointB,2)) ;
+  });
+
+  print("on: " + pointClusterer.toString());
+  print('Clusters: ${pointClusterer.clusters}');
+  print('Noise: ${pointClusterer.noise}');
+
+  pointClusterer =DBSCAN(offl, 10, 2, (int pointA, int pointB) {
+    return (pow(pointA - pointB,2)) ;
+  });
+  print("off: " + pointClusterer.toString());
+  print('Clusters: ${pointClusterer.clusters}');
+  print('Noise: ${pointClusterer.noise}');
 
   // item1 ./-; item2 ''; item3 ' '
   return Tuple3<int, int, int>((minTime *1.5).toInt(), (minTime *2).toInt(), (minTime *4).toInt());
@@ -296,6 +316,72 @@ int _checkSameHash(List<img.Image> list, int maxSearchIndex) {
 
 Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
   animated_gif.createZipFile(fileName, imageList);
+}
+
+List<List<int>> _searchHighSignalImage(img.Animation animation, List<List<int>> filteredList) {
+  if (filteredList.length == 2) {
+   var brightestImage = _searchBrightestImage(animation.frames[filteredList[0][0]], animation.frames[filteredList[1][0]]);
+
+    if (brightestImage == animation.frames[filteredList[1][0]]) {
+     var listTmp = filteredList[0];
+     filteredList[0] = filteredList[1];
+     filteredList[1] = listTmp;
+    }
+  }
+  return filteredList;
+}
+
+img.Image _searchBrightestImage(img.Image image1, img.Image image2) {
+  var diff1 = _differenceImage(image2, image1);
+  var diff2 = _differenceImage(image1, image2);
+
+  return _imageLuminance(diff1) > _imageLuminance(diff2) ? image1 : image2;
+}
+
+img.Image _differenceImage(img.Image image1, img.Image image2) {
+
+  for (var x=0; x< min(image1.width, image2.width); x++) {
+    for (var y=0; y< min(image1.height, image2.height); y++) {
+      if (_diffBetweenPixels(image1.getPixel(x, y), true, image2.getPixel(x, y)) < 0.3)
+        image2.setPixel(x, y, 0);
+    }
+  }
+  return image2;
+}
+
+/// Returns a single number representing the difference between two RGB pixels
+num _diffBetweenPixels(int firstPixel, bool ignoreAlpha,int secondPixel) {
+  var fRed = img.getRed(firstPixel);
+  var fGreen = img.getGreen(firstPixel);
+  var fBlue = img.getBlue(firstPixel);
+  var fAlpha = img.getAlpha(firstPixel);
+  var sRed = img.getRed(secondPixel);
+  var sGreen = img.getGreen(secondPixel);
+  var sBlue = img.getBlue(secondPixel);
+  var sAlpha = img.getAlpha(secondPixel);
+
+  num diff = (fRed - sRed).abs() + (fGreen - sGreen).abs() + (fBlue - sBlue).abs();
+
+  if (ignoreAlpha) {
+    diff = (diff / 255) / 3;
+  } else {
+    diff += (fAlpha - sAlpha).abs();
+    diff = (diff / 255) / 4;
+  }
+
+  return diff;
+}
+
+double _imageLuminance(img.Image image) {
+
+  var sum = 0;
+  for (var x=0; x < image.width; x++) {
+    for (var y=0; y < image.height; y++) {
+      sum += img.getLuminance(image.getPixel(x, y));
+    }
+  }
+
+  return sum / (image.width * image.height);
 }
 
 
