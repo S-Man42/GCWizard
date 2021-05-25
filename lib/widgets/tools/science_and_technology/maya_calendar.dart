@@ -203,9 +203,9 @@ class MayaCalendarState extends State<MayaCalendar> {
       outputDates[i18n(context, 'mayacalendar_juliandate')] =
           MayaDayCountToJulianDate(MayaLongCountToMayaDayCount(segments['numbers']));
       outputDates[i18n(context, 'mayacalendar_gregoriancalendar')] =
-          gregorian.day + ' ' + i18n(context, gregorian.month) + ' ' + gregorian.year;
+          gregorian.day + ' ' + i18n(context, MONTH[int.parse(gregorian.month)]) + ' ' + gregorian.year;
       outputDates[i18n(context, 'mayacalendar_juliancalendar')] =
-          julian.day + ' ' + i18n(context, julian.month) + ' ' + julian.year;
+          julian.day + ' ' + i18n(context, MONTH[int.parse(julian.month)]) + ' ' + julian.year;
 
       return Column(
         children: <Widget>[
