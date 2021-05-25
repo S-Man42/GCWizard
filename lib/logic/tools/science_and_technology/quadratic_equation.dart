@@ -13,9 +13,18 @@ Map<String, String> SolveEquation(String currentA, String currentB, String curre
   double b = 0.0;
   double c = 0.0;
 
-  if (double.tryParse(currentA) != null) a = double.parse(currentA); else return {'': ''};
-  if (double.tryParse(currentB) != null) b = double.parse(currentB); else return {'': ''};
-  if (double.tryParse(currentC) != null) c = double.parse(currentC); else return {'': ''};
+  if (double.tryParse(currentA) != null)
+    a = double.parse(currentA);
+  else
+    return {'': ''};
+  if (double.tryParse(currentB) != null)
+    b = double.parse(currentB);
+  else
+    return {'': ''};
+  if (double.tryParse(currentC) != null)
+    c = double.parse(currentC);
+  else
+    return {'': ''};
 
   if (a == 0) {
     result['quadratic_equation_hint_caution'] = 'quadratic_equation_hint_a_null';

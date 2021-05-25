@@ -24,13 +24,12 @@ class ImageColorCorrectionsState extends State<ImageColorCorrections> {
   Widget build(BuildContext context) {
     var items = <Widget>[
       Slider(
-        value: _currentSaturation,
-        onChanged: (value) {
-          setState(() {
-            _currentSaturation = value;
-          });
-        }
-      )
+          value: _currentSaturation,
+          onChanged: (value) {
+            setState(() {
+              _currentSaturation = value;
+            });
+          })
     ];
 
     return Column(

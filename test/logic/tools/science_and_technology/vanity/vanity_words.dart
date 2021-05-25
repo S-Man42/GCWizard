@@ -1,6 +1,6 @@
 import "package:flutter_test/flutter_test.dart";
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/vanity_words.dart';
 import 'package:gc_wizard/utils/common_utils.dart';
 
 void main(){

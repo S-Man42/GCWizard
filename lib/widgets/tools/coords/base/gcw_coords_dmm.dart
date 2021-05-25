@@ -80,9 +80,7 @@ class GCWCoordsDMMState extends State<GCWCoordsDMM> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var dmm = widget.coordinates is DMM ?
-          widget.coordinates as DMM :
-          DMM.fromLatLon(widget.coordinates.toLatLng());
+      var dmm = widget.coordinates is DMM ? widget.coordinates as DMM : DMM.fromLatLon(widget.coordinates.toLatLng());
       var lat = dmm.latitude.formatParts(10);
       var lon = dmm.longitude.formatParts(10);
 

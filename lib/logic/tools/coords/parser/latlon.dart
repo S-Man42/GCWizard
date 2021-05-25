@@ -45,7 +45,7 @@ List<BaseCoordinates> parseCoordinates(String text, {wholeString = false}) {
     var swissGripPlus = SwissGridPlus.parse(text);
     if (swissGripPlus != null &&
         (swissGripPlus.easting.toInt().toString().length == 7 ||
-         swissGripPlus.northing.toInt().toString().length == 7)) {
+            swissGripPlus.northing.toInt().toString().length == 7)) {
       if (coord != null) coords.add(swissGripPlus);
       if (coord != null) coords.add(coord);
     } else {

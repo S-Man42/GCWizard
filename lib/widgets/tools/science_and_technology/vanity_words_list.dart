@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/numeral_words.dart';
-import 'package:gc_wizard/logic/tools/crypto_and_encodings/vanity.dart';
+import 'package:gc_wizard/logic/tools/science_and_technology/vanity/vanity_words.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_dropdownbutton.dart';
 import 'package:gc_wizard/widgets/common/gcw_default_output.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
@@ -55,15 +55,16 @@ class VanityWordsListState extends State<VanityWordsList> {
   Widget _buildOutput(BuildContext context) {
     Map<String, String> vanityWordsOverview = new Map<String, String>();
     vanityWordsOverview = VanWords[_currentLanguage];
+    if (_currentLanguage == NumeralWordsLanguage.DEU) NumWords[_currentLanguage]['fünf'] = '5';
 
     return GCWDefaultOutput(
         child: Column(
-          children: columnedMultiLineOutput(
-              context,
-              vanityWordsOverview.entries.map((entry) {
-                return [entry.key, entry.value, NumWords[_currentLanguage][entry.value.toLowerCase()]];
-              }).toList(),
-              flexValues: [2, 2, 1]),
-        ));
+      children: columnedMultiLineOutput(
+          context,
+          vanityWordsOverview.entries.map((entry) {
+            return [entry.key, entry.value, NumWords[_currentLanguage][entry.value.toLowerCase()]];
+          }).toList(),
+          flexValues: [2, 2, 1]),
+    ));
   }
 }

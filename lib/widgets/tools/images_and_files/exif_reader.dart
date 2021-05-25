@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:archive/archive.dart';
 import 'package:exif/exif.dart';
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
@@ -17,7 +18,7 @@ import 'package:gc_wizard/widgets/tools/coords/base/utils.dart';
 import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
-import 'package:gc_wizard/widgets/utils/platform_file.dart';
+import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:image/image.dart' as Image;
 // import 'package:image_size_getter/file_input.dart';
 // import 'package:image_size_getter/image_size_getter.dart';
@@ -38,7 +39,7 @@ class _ExifReaderState extends State<ExifReader> {
   PlatformFile file;
   LatLng point;
   GCWImageViewData thumbnail;
-  Image.Image image;
+  ImageWrapper imageWrapper;
 
   @override
   initState() {
@@ -64,9 +65,8 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   Future<void> _readFileFromPicker() async {
-    var file = await openFileExplorer(context,
-      allowedExtensions: ['.jpg', '.jpeg', '.tiff', '.png', '.bmp', '.gif', '.webp']
-    );
+    var file =
+        await openFileExplorer(context, allowedExtensions: ['.jpg', '.jpeg', '.tiff', '.png', '.bmp', '.gif', '.webp']);
     if (file != null) {
       PlatformFile _file = file;
       return _readFile(_file);
@@ -80,7 +80,7 @@ class _ExifReaderState extends State<ExifReader> {
     GCWImageViewData _thumbnail;
     LatLng _point;
     Map _tableTags;
-    Image.Image _image;
+    ImageWrapper _imageWrapper;
 
     if (tags != null) {
       _thumbnail = completeThumbnail(tags);
@@ -88,14 +88,14 @@ class _ExifReaderState extends State<ExifReader> {
       _tableTags = buildTablesExif(tags);
     }
 
-    _image = await completeImageMetadata(_file);
+    _imageWrapper = await completeImageMetadata(_file);
 
     setState(() {
       file = _file;
       tableTags = _tableTags;
       point = _point; // GPS Point
       thumbnail = _thumbnail; // Thumbnail
-      image = _image;
+      imageWrapper = _imageWrapper;
     });
   }
 
@@ -107,8 +107,8 @@ class _ExifReaderState extends State<ExifReader> {
 
   List _buildOutput(Map _tableTags) {
     List<Widget> widgets = [];
-    _decorateFile(widgets, file);
-    _decorateImage(widgets, image);
+    _decorateFile(widgets, imageWrapper);
+    _decorateImage(widgets, imageWrapper);
     _decorateThumbnail(widgets);
     _decorateGps(widgets);
     _decorateExifSections(widgets, _tableTags);
@@ -182,31 +182,41 @@ class _ExifReaderState extends State<ExifReader> {
   ///
   /// Section file
   ///
-  void _decorateFile(List<Widget> widgets, PlatformFile platformFile) {
+  void _decorateFile(List<Widget> widgets, ImageWrapper imageWrapper) {
+    PlatformFile platformFile = imageWrapper?.file;
     if (platformFile != null) {
       File _file;
       if (platformFile.path != null) {
         _file = File(platformFile.path);
       }
 
+      var rows = [
+        ["name", platformFile.name ?? ''],
+        ["path", platformFile.path ?? ''],
+        ["size", platformFile.size ?? 0],
+        ["lastModified", formatDate(_file?.lastModifiedSync())],
+        ["lastAccessed", formatDate(_file?.lastAccessedSync())],
+        ["extension", platformFile.extension ?? ''],
+      ];
+      if (imageWrapper.filetype != null) {
+        // Detected BOM
+        rows.add(["filetype / BOM", imageWrapper.filetype ?? '']);
+      }
+      if (imageWrapper.archiveFiles != null && imageWrapper.archiveFiles.isNotEmpty) {
+        // Archive files
+        String archiveNames = imageWrapper.archiveFiles.join('\r');
+        rows.add(["Archive files", archiveNames]);
+      }
       widgets.add(GCWOutput(
           title: i18n(context, "exif_section_file"),
           child: Column(
-              children: columnedMultiLineOutput(
-            null,
-            [
-              ["name", platformFile.name ?? ''],
-              ["path", platformFile.path ?? ''],
-              ["size", platformFile.bytes?.length ?? 0],
-              ["lastModified", formatDate(_file?.lastModifiedSync())],
-              ["lastAccessed", formatDate(_file?.lastAccessedSync())],
-              ["extension", platformFile.extension ?? '']
-            ],
-          ))));
+            children: columnedMultiLineOutput(null, rows),
+          )));
     }
   }
 
-  void _decorateImage(List<Widget> widgets, Image.Image image) {
+  void _decorateImage(List<Widget> widgets, ImageWrapper imageWrapper) {
+    Image.Image image = imageWrapper?.image;
     if (image != null) {
       widgets.add(GCWOutput(
           title: i18n(context, "exif_section_image"),
@@ -228,24 +238,33 @@ class _ExifReaderState extends State<ExifReader> {
     }
   }
 
-  Future<Image.Image> completeImageMetadata(PlatformFile platformFile) async {
-    Uint8List data = platformFile.bytes;
-    return Image.decodeImage(data);
+  Future<ImageWrapper> completeImageMetadata(PlatformFile file) async {
+    Uint8List data = await getFileData(file);
+    Image.Image image = Image.decodeImage(data);
+    String filetype = getFileType(data, defaultType: null);
 
-    // ImageInput imageInput = getImageInput(platformFile);
-    // return ImageSizeGetter.getSize(imageInput);
+    List<ArchiveFile> archiveFiles;
+    try {
+      Archive archive = ZipDecoder().decodeBytes(data);
+      archiveFiles = archive.files.where((element) => element.isFile).toList();
+    } catch (e) {
+      print(e);
+    }
+
+    return ImageWrapper(image, file: file, filetype: filetype, archiveFiles: archiveFiles);
   }
-
-  // ImageInput getImageInput(PlatformFile platformFile) {
-  //   if (platformFile.path != null) {
-  //     return FileInput(File(platformFile.path));
-  //   } else {
-  //     return MemoryInput(platformFile.bytes);
-  //   }
-  // }
 
   String formatDate(DateTime datetime) {
     return (datetime == null) ? '' : DateFormat().format(datetime);
     // return DateFormat.yMMMd().add_jm().format(datetime);
   }
+}
+
+class ImageWrapper {
+  Image.Image image;
+  PlatformFile file;
+  String filetype;
+  List<ArchiveFile> archiveFiles;
+
+  ImageWrapper(this.image, {this.file, this.filetype, this.archiveFiles});
 }

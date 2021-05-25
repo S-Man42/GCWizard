@@ -51,10 +51,10 @@ class GCWCoordsMGRSState extends State<GCWCoordsMGRS> {
 
   @override
   Widget build(BuildContext context) {
-      if (widget.coordinates != null) {
-        var mgrs = widget.coordinates is MGRS ?
-            widget.coordinates as MGRS :
-            MGRS.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
+    if (widget.coordinates != null) {
+      var mgrs = widget.coordinates is MGRS
+          ? widget.coordinates as MGRS
+          : MGRS.fromLatLon(widget.coordinates.toLatLng(), defaultEllipsoid());
       _currentEasting['value'] = mgrs.easting;
       _currentNorthing['value'] = mgrs.northing;
 

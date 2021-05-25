@@ -34,9 +34,9 @@ class GCWCoordsQuadtreeState extends State<GCWCoordsQuadtree> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var quadtree = widget.coordinates is Quadtree ?
-          widget.coordinates as Quadtree :
-          Quadtree.fromLatLon(widget.coordinates.toLatLng());
+      var quadtree = widget.coordinates is Quadtree
+          ? widget.coordinates as Quadtree
+          : Quadtree.fromLatLon(widget.coordinates.toLatLng());
       _currentCoord = quadtree.toString();
 
       _controller.text = _currentCoord;

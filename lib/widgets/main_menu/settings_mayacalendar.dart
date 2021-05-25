@@ -14,8 +14,7 @@ class MayaCalendarSettingsState extends State<MayaCalendarSettings> {
   var _currentCorrelation = Prefs.getString('mayacalendar_correlation');
   @override
   Widget build(BuildContext context) {
-   if (_currentCorrelation == null || _currentCorrelation == '')
-     _currentCorrelation = THOMPSON;
+    if (_currentCorrelation == null || _currentCorrelation == '') _currentCorrelation = THOMPSON;
     return Column(
       children: <Widget>[
         GCWTextDivider(

@@ -35,9 +35,9 @@ class GCWCoordsOpenLocationCodeState extends State<GCWCoordsOpenLocationCode> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var openLocationCode = widget.coordinates is OpenLocationCode ?
-          widget.coordinates as OpenLocationCode :
-          OpenLocationCode.fromLatLon(widget.coordinates.toLatLng(), codeLength: 14);
+      var openLocationCode = widget.coordinates is OpenLocationCode
+          ? widget.coordinates as OpenLocationCode
+          : OpenLocationCode.fromLatLon(widget.coordinates.toLatLng(), codeLength: 14);
       _currentCoord = openLocationCode.text;
 
       _controller.text = _currentCoord;

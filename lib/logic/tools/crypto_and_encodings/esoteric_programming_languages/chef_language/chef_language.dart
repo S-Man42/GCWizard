@@ -376,7 +376,7 @@ class Chef {
 
     // remove blank lines at start and trim lines
     List<String> recipe = readRecipe.split('\n');
-    while(recipe[0] == '') {
+    while (recipe[0] == '') {
       for (int i = 1; i < recipe.length; i++) {
         recipe[i - 1] = recipe[i].trim();
       }
