@@ -194,7 +194,7 @@ class MayaCalendarState extends State<MayaCalendar> {
       segments = encodeMayaCalendar(_currentEncodeInput);
       var gregorian = MayaDayCountToGregorianCalendar(MayaLongCountToMayaDayCount(segments['numbers']));
       var julian = MayaDayCountToJulianCalendar(MayaLongCountToMayaDayCount(segments['numbers']));
-print(gregorian.month+' '+MONTH[int.parse(gregorian.month)]);
+
       outputDates[i18n(context, 'mayacalendar_system_longcount')] = MayaLongCount(segments['numbers']) +
           '\n' +
           MayaDayCountToTzolkin(segments['numbers']) +
