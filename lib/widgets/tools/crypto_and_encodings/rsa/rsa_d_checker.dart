@@ -73,12 +73,9 @@ class RSADCheckerState extends State<RSADChecker> {
 
       var validD = validateD(e, p, q);
       _output = GCWDefaultOutput(
-          child: validD ? i18n(context, 'rsa_d.checker_valid') : i18n(context, 'rsa_d.checker_notvalid')
-      );
+          child: validD ? i18n(context, 'rsa_d.checker_valid') : i18n(context, 'rsa_d.checker_notvalid'));
     } catch (exception) {
-      _output = GCWDefaultOutput(
-          child: i18n(context, exception.message)
-      );
+      _output = GCWDefaultOutput(child: i18n(context, exception.message));
     }
   }
 }

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
-import 'package:gc_wizard/logic/tools/coords/converter/natural_area_code.dart';
 import 'package:gc_wizard/logic/tools/coords/data/coordinates.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
 import 'package:gc_wizard/widgets/utils/textinputformatter/coords_text_naturalareacode_textinputformatter.dart';
-import 'package:latlong/latlong.dart';
 
 class GCWCoordsNaturalAreaCode extends StatefulWidget {
   final Function onChanged;
-  final LatLng coordinates;
+  final BaseCoordinates coordinates;
 
   const GCWCoordsNaturalAreaCode({Key key, this.onChanged, this.coordinates}) : super(key: key);
 
@@ -17,8 +15,8 @@ class GCWCoordsNaturalAreaCode extends StatefulWidget {
 }
 
 class GCWCoordsNaturalAreaCodeState extends State<GCWCoordsNaturalAreaCode> {
-  var _controllerX;
-  var _controllerY;
+  TextEditingController _controllerX;
+  TextEditingController _controllerY;
   var _currentX = '';
   var _currentY = '';
 
@@ -41,7 +39,9 @@ class GCWCoordsNaturalAreaCodeState extends State<GCWCoordsNaturalAreaCode> {
   @override
   Widget build(BuildContext context) {
     if (widget.coordinates != null) {
-      var naturalAreaCode = latLonToNaturalAreaCode(widget.coordinates);
+      var naturalAreaCode = widget.coordinates is NaturalAreaCode
+          ? widget.coordinates as NaturalAreaCode
+          : NaturalAreaCode.fromLatLon(widget.coordinates.toLatLng());
       _currentX = naturalAreaCode.x;
       _currentY = naturalAreaCode.y;
 
@@ -74,7 +74,6 @@ class GCWCoordsNaturalAreaCodeState extends State<GCWCoordsNaturalAreaCode> {
   }
 
   _setCurrentValueAndEmitOnChange() {
-    LatLng coords = naturalAreaCodeToLatLon(NaturalAreaCode(_currentX, _currentY));
-    widget.onChanged(coords);
+    widget.onChanged(NaturalAreaCode(_currentX, _currentY));
   }
 }
