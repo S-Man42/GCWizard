@@ -100,6 +100,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/duck
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/pig_latin.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/robber_language.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/language_games/spoon_language.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/maya_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/mexican_army_cipher_wheel.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/navajo.dart';
@@ -116,6 +117,7 @@ import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot18.dart
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot47.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rot5.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/rotation/rotation_general.dart';
+import 'package:gc_wizard/widgets/tools/crypto_and_encodings/shadoks_numbers.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/skytale.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/solitaire.dart';
 import 'package:gc_wizard/widgets/tools/crypto_and_encodings/straddling_checkerboard.dart';
@@ -154,6 +156,7 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/cross_sum_range_frequency.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/cross_sums/iterated_cross_sum_range_frequency.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/calendar.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/day_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/time_calculator.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/date_and_time/weekday.dart';
@@ -174,6 +177,8 @@ import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/f
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/seven_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/segment_display/sixteen_segments.dart';
 import 'package:gc_wizard/widgets/tools/science_and_technology/unit_converter.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_list.dart';
+import 'package:gc_wizard/widgets/tools/science_and_technology/vanity_words_search.dart';
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:prefs/prefs.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -351,6 +356,7 @@ class _MainViewState extends State<MainView> {
         className(Brainfk()),
         className(BurrowsWheeler()),
         className(Caesar()),
+        className(Calendar()),
         className(Catan()),
         className(CCITT1Selection()),
         className(CCITT2Selection()),
