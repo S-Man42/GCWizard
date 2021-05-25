@@ -55,7 +55,7 @@ class LicensesState extends State<Licenses> {
           ['Cow Generator', 'Frank Buss', null],
           ['Beatnik Interpreter', 'Hendrik Van Belleghem', 'Gnu Public License, Artistic License'],
           ['Whitespace Interpreter', 'Adam Papenhausen', 'MIT License'],
-          ['Calendar conversions', 'University of Zurich Asien-Orient-Institute, Nikolaus A. Bär, Arndt Brünner', null],
+          ['Calendar conversions', 'Johannes Thomann, University of Zurich Asien-Orient-Institute', null],
           ['Color Picker', 'flutter_hsvcolor_picker (minimized)', 'Color Picker', null],
           ['Coordinate Measurement', 'David Vávra', 'Apache 2.0 License'],
           ['Gauss-Krüger Code', 'moenk', null],
