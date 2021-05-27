@@ -19,6 +19,7 @@ import 'package:gc_wizard/widgets/tools/coords/map_view/gcw_map_geometries.dart'
 import 'package:gc_wizard/widgets/utils/common_widget_utils.dart';
 import 'package:gc_wizard/widgets/utils/file_picker.dart';
 import 'package:gc_wizard/widgets/utils/file_utils.dart';
+import 'package:gc_wizard/widgets/utils/platform_file.dart';
 import 'package:image/image.dart' as Image;
 // import 'package:image_size_getter/file_input.dart';
 // import 'package:image_size_getter/image_size_getter.dart';
@@ -193,7 +194,7 @@ class _ExifReaderState extends State<ExifReader> {
       var rows = [
         ["name", platformFile.name ?? ''],
         ["path", platformFile.path ?? ''],
-        ["size", platformFile.size ?? 0],
+        ["size", platformFile?.bytes.length ?? 0],
         ["lastModified", formatDate(_file?.lastModifiedSync())],
         ["lastAccessed", formatDate(_file?.lastAccessedSync())],
         ["extension", platformFile.extension ?? ''],
@@ -239,13 +240,12 @@ class _ExifReaderState extends State<ExifReader> {
   }
 
   Future<ImageWrapper> completeImageMetadata(PlatformFile file) async {
-    Uint8List data = await getFileData(file);
-    Image.Image image = Image.decodeImage(data);
-    String filetype = getFileType(data, defaultType: null);
+    Image.Image image = Image.decodeImage(file.bytes);
+    String filetype = getFileType(file.bytes, defaultType: null);
 
     List<ArchiveFile> archiveFiles;
     try {
-      Archive archive = ZipDecoder().decodeBytes(data);
+      Archive archive = ZipDecoder().decodeBytes(file.bytes);
       archiveFiles = archive.files.where((element) => element.isFile).toList();
     } catch (e) {
       print(e);

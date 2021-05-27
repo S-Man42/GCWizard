@@ -20,7 +20,7 @@ Future<Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
   return output;
 }
 
-Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPort}) async {
+Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {Function filterImages, SendPort sendAsyncPort}) async {
   try {
     var progress = 0;
     final decoder = img.findDecoderForData(bytes);
@@ -68,9 +68,12 @@ Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPo
       }
     }
 
+
     out.addAll({"images": imageList});
     out.addAll({"durations": durations});
     out.addAll({"linkList": linkList});
+
+    if (filterImages != null) filterImages(out, animation.frames);
 
     return out;
   } on Exception {
@@ -106,6 +109,26 @@ int _checkSameHash(List<img.Image> list, int maxSearchIndex) {
   for (int i = 0; i < maxSearchIndex; i++) if (list[i].hashCode == compareHash) return i;
 
   return -1;
+}
+
+List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List<Uint8List> imageList) {
+  const toler = 2;
+  for (var i=0; i < filteredList.length; i++ ) {
+    var compareImage = imageList[filteredList[i].first];
+    var image = imageList[imageIndex];
+
+    if (compareImages(compareImage, image, toler:toler)) {
+      filteredList[i].add(imageIndex);
+      return filteredList;
+    }
+  }
+
+  // not found -> new List
+  var newList = <int>[];
+  newList.add(imageIndex);
+  filteredList.add(newList);
+
+  return filteredList;
 }
 
 Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {

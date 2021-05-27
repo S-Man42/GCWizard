@@ -2,87 +2,42 @@ import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/morse.dart';
-import 'package:gc_wizard/logic/tools/images_and_files/animated_image_morse_code.dart' as animated_gif;
-import 'package:gc_wizard/logic/tools/images_and_files/dbscan.dart';
+import 'package:gc_wizard/logic/tools/images_and_files/animated_image.dart' as animated_gif;
 import 'package:tuple/tuple.dart';
-import 'package:gc_wizard/widgets/utils/file_utils.dart';
 import 'package:image/image.dart' as img;
 
 
-Future<Map<String, dynamic>> analyseImageAsync(dynamic jobData) async {
+Future<Map<String, dynamic>> analyseImageMorsCodeAsync(dynamic jobData) async {
   if (jobData == null) {
     jobData.sendAsyncPort.send(null);
     return null;
   }
 
-  var output = await analyseImage(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
+  var output = await analyseImageMorseCode(jobData.parameters, sendAsyncPort: jobData.sendAsyncPort);
 
   if (jobData.sendAsyncPort != null) jobData.sendAsyncPort.send(output);
 
   return output;
 }
 
-Future<Map<String, dynamic>> analyseImage(Uint8List bytes, {SendPort sendAsyncPort}) async {
+Future<Map<String, dynamic>> analyseImageMorseCode(Uint8List bytes, {SendPort sendAsyncPort}) async {
   try {
-    var progress = 0;
-    final decoder = img.findDecoderForData(bytes);
 
-    if (decoder == null)
-      return null;
+    var out = animated_gif.analyseImage(bytes,
+            sendAsyncPort: sendAsyncPort,
+            filterImages: (outMap, frames) {
+              List<Uint8List> imageList = outMap["images"];
+              var filteredList = <List<int>>[];
 
-    var out = Map<String, dynamic>();
-    var animation = decoder.decodeAnimation(bytes);
-    int progressStep = max(animation.length ~/ 100, 1); // 100 steps
+              for (var i=0; i< imageList.length; i++)
+                filteredList = _filterImages(filteredList, i, imageList);
 
-    var imageList = <Uint8List>[];
-    var durations = <int>[];
-    var linkList = <int>[];
-    var extension = getFileType(bytes);
-    var filteredList = <List<int>>[];
+              filteredList = _searchHighSignalImage(frames, filteredList);
+              outMap.addAll({"imagesFiltered": filteredList});
+            }
+        );
 
-    animation?.frames.forEach((image) {
-      durations.add(image.duration);
-    });
-
-    // overrides also durations
-    animation.frames = _linkSameImages(animation.frames);
-
-    if (animation != null) {
-      for (int i = 0; i < animation.frames.length; i++) {
-        var index = _checkSameHash(animation.frames, i);
-        if (index < 0) {
-          switch (extension) {
-            case '.png':
-              imageList.add(img.encodePng(animation.frames[i]));
-              break;
-            default:
-              imageList.add(img.encodeGif(animation.frames[i]));
-              break;
-          }
-          linkList.add(i);
-        } else {
-          imageList.add(imageList[index]);
-          linkList.add(index);
-        }
-
-        progress++;
-        if (sendAsyncPort != null && (progress % progressStep == 0)) {
-          sendAsyncPort.send({'progress': progress / animation.length});
-        }
-      }
-    }
-
-    for (var i=0; i< imageList.length; i++)
-      filteredList = _filterImages(filteredList, i, imageList);
-
-    filteredList = _searchHighSignalImage(animation, filteredList);
-
-    out.addAll({"images": imageList});
-    out.addAll({"durations": durations});
-    out.addAll({"imagesFiltered": filteredList});
-    out.addAll({"linkList": linkList});
-
-    return out;
+    return out; // Future.value(out);
   } on Exception {
     return null;
   }
@@ -174,7 +129,7 @@ List<List<int>> _filterImages(List<List<int>> filteredList, int imageIndex, List
     var compareImage = imageList[filteredList[i].first];
     var image = imageList[imageIndex];
 
-    if (compareImages(compareImage, image, toler:toler)) {
+    if (animated_gif.compareImages(compareImage, image, toler: toler)) {
       filteredList[i].add(imageIndex);
       return filteredList;
     }
@@ -238,18 +193,7 @@ Tuple3<int, int, int> foundSignalTimes(List<Tuple2<bool, int>> timeList) {
   if (timeList == null || timeList.length == 0)
     return null;
 
-  var minTime = 999999999;
-  timeList.forEach((element) {
-    // on signal
-    if (element.item1 && element.item2 < minTime && element.item2 > 0)
-      minTime = element.item2;
-
-    print(minTime);
-  });
-  if (minTime == 999999999)
-    return null;
-
-
+  const toller = 1.2;
   var onl= <int>[];
   var offl= <int>[];
   timeList.forEach((element) {
@@ -258,71 +202,46 @@ Tuple3<int, int, int> foundSignalTimes(List<Tuple2<bool, int>> timeList) {
     else
       offl.add(element.item2);
   });
+  onl.sort();
+  offl.sort();
 
-  var pointClusterer =DBSCAN(onl, 10, 2, (int pointA, int pointB) {
-    return (pow(pointA - pointB,2)) ;
-  });
+  var t1 = onl.length>0 ? onl[0] : 99999999;
+  var t2 = offl.length>0 ? offl[0] : 99999999;
+  var t3 = offl.length>0 ? offl[0] : 99999999;
+  var calct2 = true;
 
-  print("on: " + pointClusterer.toString());
-  print('Clusters: ${pointClusterer.clusters}');
-  print('Noise: ${pointClusterer.noise}');
+  for (int i = 1; i < onl.length; i++) {
+    if (onl[i] > (onl[i - 1] * toller)) {
+      t1 = (onl[i-1] + ((onl[i] - onl[i - 1]) / 2.0)).toInt();
+      break;
+    }
+  }
 
-  pointClusterer =DBSCAN(offl, 10, 2, (int pointA, int pointB) {
-    return (pow(pointA - pointB,2)) ;
-  });
-  print("off: " + pointClusterer.toString());
-  print('Clusters: ${pointClusterer.clusters}');
-  print('Noise: ${pointClusterer.noise}');
-
-  // item1 ./-; item2 ''; item3 ' '
-  return Tuple3<int, int, int>((minTime *1.5).toInt(), (minTime *2).toInt(), (minTime *4).toInt());
-}
-
-List<img.Image> _linkSameImages(List<img.Image> images) {
-  for (int i = 1; i < images.length; i++) {
-    for (int x = 0; x < i; x++) {
-      if (_checkSameHash(images, x) >= 0)
-        continue;
-
-      if (compareImages(images[i].getBytes(), images[x].getBytes())) {
-        images[i] = images[x];
+  for (int i = 1; i < offl.length; i++) {
+    if (offl[i] > (offl[i - 1] * toller)) {
+      if (calct2) {
+        t2 = (offl[i-1] + ((offl[i] - offl[i - 1]) / 2.0)).toInt();
+        calct2 = false;
+      } else {
+        t3 = (offl[i-1] + ((offl[i] - offl[i - 1]) / 2.0)).toInt();
         break;
       }
     }
   }
 
-  return images;
-}
-
-bool compareImages(Uint8List image1, Uint8List image2, {toler = 0}) {
-  if (image1.length != image2.length)
-    return false;
-
-  for (int i = 0; i < image1.length; i++)
-    if ((image1[i] - image2[i]).abs() > toler)
-      return false;
-
-  return true;
-}
-
-int _checkSameHash(List<img.Image> list, int maxSearchIndex) {
-  var compareHash = list[maxSearchIndex].hashCode;
-  for (int i = 0; i < maxSearchIndex; i++)
-    if (list[i].hashCode == compareHash)
-      return i;
-
-  return -1;
+  // item1 ./-; item2 ''; item3 ' '
+  return Tuple3<int, int, int>(t1, t2, t3);
 }
 
 Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) async {
   animated_gif.createZipFile(fileName, imageList);
 }
 
-List<List<int>> _searchHighSignalImage(img.Animation animation, List<List<int>> filteredList) {
+List<List<int>> _searchHighSignalImage(List<img.Image> frames, List<List<int>> filteredList) {
   if (filteredList.length == 2) {
-   var brightestImage = _searchBrightestImage(animation.frames[filteredList[0][0]], animation.frames[filteredList[1][0]]);
+   var brightestImage = _searchBrightestImage(frames[filteredList[0][0]], frames[filteredList[1][0]]);
 
-    if (brightestImage == animation.frames[filteredList[1][0]]) {
+    if (brightestImage == frames[filteredList[1][0]]) {
      var listTmp = filteredList[0];
      filteredList[0] = filteredList[1];
      filteredList[1] = listTmp;

@@ -191,7 +191,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
                 List<List<int>> imagesFiltered = _outData["imagesFiltered"];
 
                 _marked[imagesFiltered[index].first] = !_marked[imagesFiltered[index].first];
-                _markedListSetColumn (index, _marked[imagesFiltered[index].first], imagesFiltered);
+                _markedListSetColumn (imagesFiltered[index], _marked[imagesFiltered[index].first]);
                 _outText = decodeMorseCode(_outData["durations"], _marked);
               });
             },
@@ -348,13 +348,13 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
 
       // first image default as high signal
       if (imagesFiltered.length == 2) {
-        _markedListSetColumn(0, true, imagesFiltered);
+        _markedListSetColumn(imagesFiltered[0], true);
       }
     }
   }
 
-  _markedListSetColumn(int index, bool value, List<List<int>> imagesFiltered) {
-    imagesFiltered[index].forEach((idx) {
+  _markedListSetColumn(List<int> imagesFiltered, bool value) {
+    imagesFiltered.forEach((idx) {
       _marked[idx] = value;
     });
   }
@@ -404,7 +404,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
           return Center(
             child: Container(
               child: GCWAsyncExecuter(
-                isolatedFunction: analyseImageAsync,
+                isolatedFunction: analyseImageMorsCodeAsync,
                 parameter: _buildJobDataDecode(),
                 onReady: (data) => _saveOutputDecode(data),
                 isOverlay: true,
