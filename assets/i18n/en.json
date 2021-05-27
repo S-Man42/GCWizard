@@ -2440,7 +2440,7 @@
   "straddlingcheckerboard_hint_matrix": "Straddling Checkerboard",
   "straddlingcheckerboard_hint_key": "Key: 8 letters and 2 spaces",
   "straddlingcheckerboard_hint_key_4x10": "Key: 7 letters and 3 spaces",
-  "straddlingcheckerboard_hint_alphabetword": "Schlüssel",
+  "straddlingcheckerboard_hint_alphabetword": "Key",
   "straddlingcheckerboard_hint_column": "Order of columns",
   "straddlingcheckerboard_wrong_key_error": "ERROR: Invalid key",
   "straddlingcheckerboard_wrong_order_error": "ERROR: Invalid order of columns",
