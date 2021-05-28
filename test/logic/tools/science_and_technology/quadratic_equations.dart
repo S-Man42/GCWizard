@@ -22,6 +22,10 @@ void main() {
       {'a' : '1.0', 'b' : '2', 'c' : '-35', 'expectedOutput' : ['5.0', '-7.0']},
       {'a' : '1.0', 'b' : '-4.0', 'c' : '4', 'expectedOutput' : ['2.0', '2.0']},
       {'a' : '1', 'b' : '12.0', 'c' : '37', 'expectedOutput' : ['quadratic_equation_hint_complex', '-6.0 + i * 1.0', '-6.0 - i * 1.0']},
+
+      {'a' : '1.0/1', 'b' : '-8.0/2', 'c' : '4*1', 'expectedOutput' : ['2.0', '2.0']},
+      {'a' : '1/1', 'b' : '-2.0 - 2', 'c' : '2*2', 'expectedOutput' : ['2.0', '2.0']},
+      {'a' : '1/1', 'b' : '-*4.0', 'c' : '2*2', 'expectedOutput' : ['']},
     ];
 
     _inputsToExpected.forEach((elem) {
