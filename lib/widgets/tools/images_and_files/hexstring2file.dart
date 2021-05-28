@@ -46,7 +46,7 @@ class HexString2FileState extends State<HexString2File> {
             text: i18n(context, 'common_exportfile_openfile'),
             onPressed: () {
               setState(() {
-                  openFileExplorer(context).then((file) {
+                  openFileExplorer().then((file) {
                     if (file != null) {
                       _outData = file.bytes;
                       setState(() {});

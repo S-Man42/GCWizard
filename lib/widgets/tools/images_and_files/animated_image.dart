@@ -49,7 +49,7 @@ class AnimatedImageState extends State<AnimatedImage> {
           text: i18n(context, 'common_exportfile_openfile'),
           onPressed: () {
             setState(() {
-              openFileExplorer(context, allowedExtensions: ['.gif', '.png', '.webp']).then((file) {
+              openFileExplorer(allowedExtensions: ['gif', 'png', 'webp']).then((file) {
                 if (file != null) {
                   _platformFile = file;
                   _analysePlatformFileAsync();

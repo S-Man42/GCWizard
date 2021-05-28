@@ -11,7 +11,6 @@ dependencies:
   base32: ^2.0.0-nullsafety.1
   cached_network_image: ^3.0.0
   diacritic: ^0.1.1
-  filesystem_picker: ^1.0.4
   file_picker: ^3.0.1
   exif: ^2.1.0
   flutter:
