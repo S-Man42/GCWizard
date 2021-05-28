@@ -971,6 +971,7 @@ final Map<String, String> CHIWordToNum = {
   'shí ': '10',
 };
 final Map<String, String> KLIWordToNum = {
+  'pagh': '0',
   'wa\'': '1',
   'cha\'': '2',
   'wej': '3',
@@ -981,6 +982,39 @@ final Map<String, String> KLIWordToNum = {
   'chorgh': '8',
   'Hut': '9',
   'wa\'maH': '10',
+  'wa\'maH wa\'': '11',
+  'wa\'maH cha\'': '12',
+  'wa\'maH wej': '13',
+  'wa\'maH IoS': '14',
+  'wa\'maH vagh': '15',
+  'wa\'maH jav': '16',
+  'wa\'maH Soch': '17',
+  'wa\'maH chorgh': '18',
+  'wa\'maH Hut': '19',
+  'cha\'mah': '20',
+  'wejmaH': '30',
+  'IoSmaH': '40',
+  'vaghmaH': '50',
+  'javmaH': '60',
+  'SochmaH': '70',
+  'horghmaH': '80',
+  'HutmaH': '90',
+  'wa\'vatlh': '100',
+  'cha\'vatlh': '200',
+  'wejvatlh': '300',
+  'IoSvatlh': '400',
+  'vaghvatlh': '500',
+  'javvatlh': '600',
+  'Sochvatlh': '700',
+  'chorghvatlh': '800',
+  'Hutvatlh': '900',
+  'wa\'SaD': '1000',
+  'wa\'SanID': '1000',
+  'wa\'netlh': '10000',
+  'wa\'blp': '100000',
+  'chan': 'numeralwords_e',
+  'tIng \'ev': 'numeralwords_w',
+  '\'ev tIng': 'numeralwords_w',
 };
 final Map<String, String> VIEWordToNum = {
   'cê-rô': '0',
@@ -1556,7 +1590,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         .replaceAll('tausendund', 'tausend')
         .replaceAll('mil ', 'mil');
 
-    decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-]'));
+    decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-' + "'" + ']'));
     // build map to identify numeral words
     Map searchLanguages = new Map();
     if (language == NumeralWordsLanguage.ALL) // search element in all languages
@@ -1565,7 +1599,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         var sKey = key;
         Map sValue = new Map();
         value.forEach((key, value) {
-          sValue[removeAccents(key)] = value;
+          sValue[removeAccents(key.toLowerCase())] = value;
         });
         searchLanguages[sKey] = sValue;
       });
@@ -1573,7 +1607,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
       // search only in one language
       Map sValue = new Map();
       NumWords[language].forEach((key, value) {
-        sValue[removeAccents(key)] = value;
+        sValue[removeAccents(key.toLowerCase())] = value;
       });
       searchLanguages[language] = sValue;
     }
@@ -1581,14 +1615,20 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     // start decoding
     decodeText.forEach((element) {
       _alreadyFound = false;
-      if (_isShadoks(element))
-        output.add(NumeralWordsDecodeOutput(_decodeShadoks(element), element, _languageList[NumeralWordsLanguage.SHA]));
-      else if (_isMinion(element))
-        output.add(NumeralWordsDecodeOutput(_decodeMinion(element), element, _languageList[NumeralWordsLanguage.MIN]));
-      else if (_isNumeral(element)) {
+      if (_isShadoks(element)) {
+        output.add(NumeralWordsDecodeOutput(_decodeShadoks(element), element,
+            _languageList[NumeralWordsLanguage.SHA]));
+      }else if (_isMinion(element)) {
+        output.add(NumeralWordsDecodeOutput(_decodeMinion(element), element,
+            _languageList[NumeralWordsLanguage.MIN]));
+      } else if (_isKlingon(element)) {
+        output.add(NumeralWordsDecodeOutput(_decodeKlingon(element), element,
+            _languageList[NumeralWordsLanguage.KLI]));
+      } else if (_isNumeral(element)) {
         // checks - if is a number/digit
         output.add(NumeralWordsDecodeOutput(element, element, _languageList[NumeralWordsLanguage.NUM]));
-      } else {
+      } else
+      {
         _alreadyFound = false;
         searchLanguages.forEach((key, value) {
           var result = _isNumeralWordTable(element, key, value); // checks - if element is part of a map
@@ -1607,7 +1647,7 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
           }
         }); //forEach searchLanguage
       }
-    });
+    }); //for each element to decode
     return output;
   } else {
     // search parts of words: weight => eight => 8
@@ -1626,7 +1666,8 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         }
         if (language == NumeralWordsLanguage.ALL) {
           _alreadyFound = false;
-          int oldNumber = 0;
+          int oldValueInt = 0;
+          String oldValueStr = '';
           NumWords.forEach((key, value) {
             // forEach language
             var _language = key;
@@ -1635,13 +1676,22 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
               if (checkWord.startsWith(removeAccents(key))) {
                 if (!_alreadyFound) {
                   _alreadyFound = true;
-                  oldNumber = int.parse(value);
+                  if (int.tryParse(value) == null)
+                    oldValueStr = value;
+                  else
+                    oldValueInt = int.parse(value);
                   output.add(NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
                 } else {
-                  if (oldNumber == int.parse(value))
-                    output.add(NumeralWordsDecodeOutput('', removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
+                  if (int.tryParse(value) == null)
+                    if (oldValueStr == value)
+                      output.add(NumeralWordsDecodeOutput('', removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
+                    else
+                      output.add(NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
                   else
-                    output.add(NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
+                    if (oldValueInt == int.parse(value))
+                      output.add(NumeralWordsDecodeOutput('', removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
+                    else
+                      output.add(NumeralWordsDecodeOutput(value, removeAccents(key), NUMERALWORDS_LANGUAGES[_language]));
                 }
               }
             });
@@ -1662,11 +1712,35 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
 }
 
 bool _isShadoks(String element) {
-  return (element.replaceAll('ga', '').replaceAll('bu', '').replaceAll('zo', '').replaceAll('meu', '') == '');
+  if (element != '')
+    if (element.replaceAll('ga', '').replaceAll('bu', '').replaceAll('zo', '').replaceAll('meu', '') == '')
+      return true;
+    else
+      return false;
+  else
+    return false;
 }
 
 bool _isMinion(String element) {
-  return (element.replaceAll('hana', '').replaceAll('dul', '').replaceAll('sae', '') == '');
+  if (element != '')
+    return (element.replaceAll('hana', '').replaceAll('dul', '').replaceAll('sae', '') == '');
+  else
+    return false;
+}
+
+bool _isKlingon(String element) {
+  if (element != '')
+    return (element.replaceAll('pagh', '').replaceAll('wa', '').replaceAll('cha', '').replaceAll('wej', '').replaceAll('ios', '')
+        .replaceAll('vagh', '').replaceAll('jav', '').replaceAll('soch', '').replaceAll('chorgh', '').replaceAll('hut', '')
+        .replaceAll('mah', '').replaceAll('vatlh', '').replaceAll('sad', '').replaceAll('sanid', '').replaceAll('netlh', '').replaceAll('bip', '') == '');
+  else
+    return false;
+}
+
+String _decodeKlingon(String element){
+  return element.replaceAll('pagh', '0').replaceAll('wa', '1').replaceAll('cha', '2').replaceAll('wej', '3').replaceAll('ios', '4')
+      .replaceAll('vagh', '5').replaceAll('jav', '6').replaceAll('soch', '7').replaceAll('chorgh', '8').replaceAll('hut', '9')
+      .replaceAll('mah', '0').replaceAll('vatlh', '00').replaceAll('sad', '000').replaceAll('sanid', '000').replaceAll('netlh', '0000').replaceAll('bip', '00000');
 }
 
 String _decodeShadoks(String element) {
