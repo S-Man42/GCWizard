@@ -985,7 +985,7 @@ final Map<String, String> KLIWordToNum = {
   'wa\'maH wa\'': '11',
   'wa\'maH cha\'': '12',
   'wa\'maH wej': '13',
-  'wa\'maH IoS': '14',
+  'wa\'maH loS': '14',
   'wa\'maH vagh': '15',
   'wa\'maH jav': '16',
   'wa\'maH Soch': '17',
@@ -993,7 +993,7 @@ final Map<String, String> KLIWordToNum = {
   'wa\'maH Hut': '19',
   'cha\'mah': '20',
   'wejmaH': '30',
-  'IoSmaH': '40',
+  'loSmaH': '40',
   'vaghmaH': '50',
   'javmaH': '60',
   'SochmaH': '70',
@@ -1462,6 +1462,18 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     String inputToDecode;
 
     // simplify input
+
+    // trim Klingon
+     print(input);
+     expr = RegExp(r"(wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)bip (wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)netlh (wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)(sad|sanid) (wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)vatlh (wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)mah (wa'|cha'|wej|los|vagh|jav|soch|chorgh|hut)");
+     if (expr.hasMatch(input)) {
+       print('hasmatch');
+       helpText = input.replaceAllMapped(expr, (Match m) {
+         return _decodeMultipleKlingon(m.group(0));
+       });
+       input = helpText;
+     }
+
     // trim english: identify correct numeral words and remove spaces
     expr = RegExp(
         '(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen)[ ](hundred|thousand)');
@@ -1590,7 +1602,6 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
         .replaceAll('tausendund', 'tausend')
         .replaceAll('mil ', 'mil');
 
-    decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-' + "'" + ']'));
     // build map to identify numeral words
     Map searchLanguages = new Map();
     if (language == NumeralWordsLanguage.ALL) // search element in all languages
@@ -1613,7 +1624,9 @@ List<NumeralWordsDecodeOutput> decodeNumeralwords(
     }
 
     // start decoding
+    decodeText = inputToDecode.split(RegExp(r'[^a-z0-9\-' + "'" + ']'));
     decodeText.forEach((element) {
+      print('decode '+element);
       _alreadyFound = false;
       if (_isShadoks(element)) {
         output.add(NumeralWordsDecodeOutput(_decodeShadoks(element), element,
@@ -1730,7 +1743,7 @@ bool _isMinion(String element) {
 
 bool _isKlingon(String element) {
   if (element != '')
-    return (element.replaceAll('pagh', '').replaceAll('wa', '').replaceAll('cha', '').replaceAll('wej', '').replaceAll('ios', '')
+    return (element.replaceAll('pagh', '').replaceAll("wa'", '').replaceAll("cha'", '').replaceAll('wej', '').replaceAll('los', '')
         .replaceAll('vagh', '').replaceAll('jav', '').replaceAll('soch', '').replaceAll('chorgh', '').replaceAll('hut', '')
         .replaceAll('mah', '').replaceAll('vatlh', '').replaceAll('sad', '').replaceAll('sanid', '').replaceAll('netlh', '').replaceAll('bip', '') == '');
   else
@@ -1738,7 +1751,7 @@ bool _isKlingon(String element) {
 }
 
 String _decodeKlingon(String element){
-  return element.replaceAll('pagh', '0').replaceAll('wa', '1').replaceAll('cha', '2').replaceAll('wej', '3').replaceAll('ios', '4')
+  return element.replaceAll('pagh', '0').replaceAll("wa'", '1').replaceAll("cha'", '2').replaceAll('wej', '3').replaceAll('los', '4')
       .replaceAll('vagh', '5').replaceAll('jav', '6').replaceAll('soch', '7').replaceAll('chorgh', '8').replaceAll('hut', '9')
       .replaceAll('mah', '0').replaceAll('vatlh', '00').replaceAll('sad', '000').replaceAll('sanid', '000').replaceAll('netlh', '0000').replaceAll('bip', '00000');
 }
@@ -1752,6 +1765,14 @@ String _decodeMinion(String element) {
   int number = 0;
   element.replaceAll('hana', '1').replaceAll('dul', '2').replaceAll('sae', '3').split('').forEach((element) {
     number = number + int.parse(element);
+  });
+  return number.toString();
+}
+
+String _decodeMultipleKlingon(String kliNumber){
+  int number = 0;
+  kliNumber.split(' ').forEach((element) {
+    number = number + int.parse(_decodeKlingon(element));
   });
   return number.toString();
 }
