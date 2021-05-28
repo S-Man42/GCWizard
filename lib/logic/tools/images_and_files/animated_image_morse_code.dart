@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:gc_wizard/logic/tools/crypto_and_encodings/morse.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/animated_image.dart' as animated_gif;
 import 'package:tuple/tuple.dart';
-import 'package:image/image.dart' as img;
+import 'package:image/image.dart' as Image;
 
 
 Future<Map<String, dynamic>> analyseImageMorsCodeAsync(dynamic jobData) async {
@@ -63,9 +63,9 @@ Future<Uint8List> createImage(Uint8List highImage, Uint8List lowImage, String in
   if (ditDuration <= 0) return null;
 
   try {
-    var _highImage = img.decodeImage(highImage);
-    var _lowImage = img.decodeImage(lowImage);
-    var animation = img.Animation();
+    var _highImage = Image.decodeImage(highImage);
+    var _lowImage = Image.decodeImage(lowImage);
+    var animation = Image.Animation();
 
     input = input.replaceAll(String.fromCharCode(8195), ' ');
     input = input.replaceAll('| ', '|');
@@ -102,7 +102,7 @@ Future<Uint8List> createImage(Uint8List highImage, Uint8List lowImage, String in
           break;
       }
 
-      var image = img.Image.from(on ? _highImage : _lowImage);
+      var image = Image.Image.from(on ? _highImage : _lowImage);
       image.duration = duration;
       animation.addFrame(image);
       outList.add(on);
@@ -116,7 +116,7 @@ Future<Uint8List> createImage(Uint8List highImage, Uint8List lowImage, String in
       }
     }
 
-    return img.encodeGifAnimation(animation);
+    return Image.encodeGifAnimation(animation);
 
   } on Exception {
     return null;
@@ -149,16 +149,15 @@ Map<String, dynamic> decodeMorseCode(List<int> durations, List<bool> onSignal) {
 
   if (signalTimes == null)
     return null;
-print(timeList.length);
-print("timeBase: " + signalTimes.toString());
+
   var out = '';
   timeList.forEach((element) {
     if (element.item1)
-      out += (element.item2 >= signalTimes.item1) ? '-' : '.'; //2
+      out += (element.item2 > signalTimes.item1) ? '-' : '.'; //2
     else
-      if(element.item2 >= signalTimes.item3) //5
+      if(element.item2 > signalTimes.item3) //5
         out  += String.fromCharCode(8195) + "|" + String.fromCharCode(8195);
-      else if(element.item2 >= signalTimes.item2)  //3
+      else if(element.item2 > signalTimes.item2)  //3
         out += " ";
   });
 
@@ -193,9 +192,10 @@ Tuple3<int, int, int> foundSignalTimes(List<Tuple2<bool, int>> timeList) {
   if (timeList == null || timeList.length == 0)
     return null;
 
-  const toller = 1.2;
+  const toler = 1.2;
   var onl= <int>[];
   var offl= <int>[];
+  
   timeList.forEach((element) {
     if (element.item1)
       onl.add(element.item2);
@@ -211,16 +211,17 @@ Tuple3<int, int, int> foundSignalTimes(List<Tuple2<bool, int>> timeList) {
   var calct2 = true;
 
   for (int i = 1; i < onl.length; i++) {
-    if (onl[i] > (onl[i - 1] * toller)) {
+    if (onl[i] > (onl[i - 1] * toler)) {
       t1 = (onl[i-1] + ((onl[i] - onl[i - 1]) / 2.0)).toInt();
       break;
     }
   }
 
   for (int i = 1; i < offl.length; i++) {
-    if (offl[i] > (offl[i - 1] * toller)) {
+    if (offl[i] > (offl[i - 1] * toler)) {
       if (calct2) {
         t2 = (offl[i-1] + ((offl[i] - offl[i - 1]) / 2.0)).toInt();
+        t3 = t2;
         calct2 = false;
       } else {
         t3 = (offl[i-1] + ((offl[i] - offl[i - 1]) / 2.0)).toInt();
@@ -237,7 +238,7 @@ Future<Uint8List> createZipFile(String fileName, List<Uint8List> imageList) asyn
   animated_gif.createZipFile(fileName, imageList);
 }
 
-List<List<int>> _searchHighSignalImage(List<img.Image> frames, List<List<int>> filteredList) {
+List<List<int>> _searchHighSignalImage(List<Image.Image> frames, List<List<int>> filteredList) {
   if (filteredList.length == 2) {
    var brightestImage = _searchBrightestImage(frames[filteredList[0][0]], frames[filteredList[1][0]]);
 
@@ -250,14 +251,14 @@ List<List<int>> _searchHighSignalImage(List<img.Image> frames, List<List<int>> f
   return filteredList;
 }
 
-img.Image _searchBrightestImage(img.Image image1, img.Image image2) {
+Image.Image _searchBrightestImage(Image.Image image1, Image.Image image2) {
   var diff1 = _differenceImage(image2, image1);
   var diff2 = _differenceImage(image1, image2);
 
   return _imageLuminance(diff1) > _imageLuminance(diff2) ? image1 : image2;
 }
 
-img.Image _differenceImage(img.Image image1, img.Image image2) {
+Image.Image _differenceImage(Image.Image image1, Image.Image image2) {
 
   for (var x=0; x< min(image1.width, image2.width); x++) {
     for (var y=0; y< min(image1.height, image2.height); y++) {
@@ -269,15 +270,15 @@ img.Image _differenceImage(img.Image image1, img.Image image2) {
 }
 
 /// Returns a single number representing the difference between two RGB pixels
-num _diffBetweenPixels(int firstPixel, bool ignoreAlpha,int secondPixel) {
-  var fRed = img.getRed(firstPixel);
-  var fGreen = img.getGreen(firstPixel);
-  var fBlue = img.getBlue(firstPixel);
-  var fAlpha = img.getAlpha(firstPixel);
-  var sRed = img.getRed(secondPixel);
-  var sGreen = img.getGreen(secondPixel);
-  var sBlue = img.getBlue(secondPixel);
-  var sAlpha = img.getAlpha(secondPixel);
+num _diffBetweenPixels(int firstPixel, bool ignoreAlpha, int secondPixel) {
+  var fRed = Image.getRed(firstPixel);
+  var fGreen = Image.getGreen(firstPixel);
+  var fBlue = Image.getBlue(firstPixel);
+  var fAlpha = Image.getAlpha(firstPixel);
+  var sRed = Image.getRed(secondPixel);
+  var sGreen = Image.getGreen(secondPixel);
+  var sBlue = Image.getBlue(secondPixel);
+  var sAlpha = Image.getAlpha(secondPixel);
 
   num diff = (fRed - sRed).abs() + (fGreen - sGreen).abs() + (fBlue - sBlue).abs();
 
@@ -291,12 +292,12 @@ num _diffBetweenPixels(int firstPixel, bool ignoreAlpha,int secondPixel) {
   return diff;
 }
 
-double _imageLuminance(img.Image image) {
+double _imageLuminance(Image.Image image) {
 
   var sum = 0;
   for (var x=0; x < image.width; x++) {
     for (var y=0; y < image.height; y++) {
-      sum += img.getLuminance(image.getPixel(x, y));
+      sum += Image.getLuminance(image.getPixel(x, y));
     }
   }
 

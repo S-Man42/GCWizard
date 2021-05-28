@@ -125,7 +125,7 @@ class AnimatedImageState extends State<AnimatedImage> {
     return Column(children: <Widget>[
       GCWDivider(),
       GCWOutput(
-        child: Column(children: columnedMultiLineOutput(context, durations, flexValues: [1, 2], hasHeader: true)),
+        child: Column(children: columnedMultiLineOutput(context, durations, flexValues: [1, 2], hasHeader: true, copyAll: true)),
       )
     ]);
   }

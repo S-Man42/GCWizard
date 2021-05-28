@@ -5,7 +5,7 @@ import 'package:tuple/tuple.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_output_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_text.dart';
 import 'package:gc_wizard/widgets/common/base/gcw_textfield.dart';
-import 'package:gc_wizard/widgets/common/gcw_gallery_checkbox.dart';
+import 'package:gc_wizard/widgets/common/gcw_gallery.dart';
 import 'package:gc_wizard/widgets/common/gcw_imageview.dart';
 import 'package:gc_wizard/i18n/app_localizations.dart';
 import 'package:gc_wizard/logic/tools/images_and_files/animated_image_morse_code.dart';
@@ -184,7 +184,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
               :
           _filtered
               ?
-          GCWGalleryCheckbox(
+          GCWGallery(
             imageData: _convertImageDataFiltered(_outData["images"], _outData["durations"], _outData["imagesFiltered"]),
             onDoubleTap: (index) {
               setState(() {
@@ -197,7 +197,7 @@ class AnimatedImageMorseCodeState extends State<AnimatedImageMorseCode> {
             },
           )
               :
-          GCWGalleryCheckbox(
+          GCWGallery(
             imageData: _convertImageData(_outData["images"], _outData["durations"], _outData["imagesFiltered"]),
             onDoubleTap: (index) {
               setState(() {

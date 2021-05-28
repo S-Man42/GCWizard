@@ -31,7 +31,7 @@ Future<PlatformFile> openFileExplorer(
   }
 
   try {
-    if (!kIsWeb)
+    if (kIsWeb)
       return _openMobileFileExplorer(context, rootDirectory, rootName, allowedExtensions, title);
     else
 
@@ -88,9 +88,12 @@ Future<PlatformFile> _openWebFileExplorer(List<String> allowedExtensions) async 
 
     files = _filterFiles(files, allowedExtensions);
 
-    return files == null
-        ? null
-        : new PlatformFile(path: files.first.path, name: files.first.name, bytes: files.first.bytes);
+    // return files == null
+    //     ? null
+    //     : new PlatformFile(path: files.first.path, name: files.first.name, bytes: files.first.bytes);
+
+    return files == null ? null : new PlatformFile(path: files.first.path, name: files.first.name, bytes: kIsWeb ? files.first.bytes: await readByteDataFromFile(files.first.path));
+
   } on PlatformException catch (e) {
     print("Unsupported operation " + e.toString());
   }
