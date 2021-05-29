@@ -42,8 +42,6 @@ class DMMAddIntegersState extends State<DMMAddIntegers> {
               _currentCoordsFormat = ret['coordsFormat'];
               _currentCoords = ret['value'];
 
-              print(_currentCoords);
-
               _calculateOutput();
             });
           },
