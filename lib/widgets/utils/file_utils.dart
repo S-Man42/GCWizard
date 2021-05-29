@@ -2,8 +2,9 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:universal_html/html.dart' as html;
 import 'package:collection/collection.dart';
+import 'package:ext_storage/ext_storage.dart';
+import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-
 import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -37,9 +38,11 @@ String web_directory = "Downloads";
 
 Future<String> mainDirectory() async {
   Directory _appDocDir;
-  if (Platform.isAndroid)
+  if (Platform.isAndroid) {
     _appDocDir = await getExternalStorageDirectory();
-  else
+    String dloadDir = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
+    _appDocDir = await Directory(dloadDir);
+  } else
     _appDocDir = await getApplicationDocumentsDirectory();
 
   final Directory _appDocDirFolder = Directory('${_appDocDir.path}');

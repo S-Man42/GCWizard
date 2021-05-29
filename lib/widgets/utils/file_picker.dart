@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
-import 'package:file_picker_writable/file_picker_writable.dart';
+//import 'package:file_picker_writable/file_picker_writable.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:gc_wizard/widgets/utils/platform_file.dart' as local;
@@ -18,7 +18,8 @@ var unsupportedAndroidTypes = ['gpx'];
 Future<local.PlatformFile> openFileExplorer({List<String> allowedExtensions}) async {
   try {
     if (!kIsWeb)
-      return _openMobileFileExplorer(allowedExtensions);
+      //return _openMobileFileExplorer(allowedExtensions);
+      return _openWebFileExplorer(allowedExtensions);
     else
       /// web version
       return _openWebFileExplorer(allowedExtensions);
@@ -28,13 +29,13 @@ Future<local.PlatformFile> openFileExplorer({List<String> allowedExtensions}) as
   return null;
 }
 
-Future<local.PlatformFile> _openMobileFileExplorer(List<String> allowedExtensions) async {
-  final fileInfo = await FilePickerWritable().openFile((fileInfo, file) async {
-    if (file != null && _filterFile(fileInfo?.fileName, allowedExtensions) != null)
-      return (file == null) ? null : new local.PlatformFile(path: fileInfo.uri, name: fileInfo?.fileName, bytes: file.readAsBytesSync());
-  });
-  return fileInfo;
-}
+// Future<local.PlatformFile> _openMobileFileExplorer(List<String> allowedExtensions) async {
+//   final fileInfo = await FilePickerWritable().openFile((fileInfo, file) async {
+//     if (file != null && _filterFile(fileInfo?.fileName, allowedExtensions) != null)
+//       return (file == null) ? null : new local.PlatformFile(path: fileInfo.uri, name: fileInfo?.fileName, bytes: file.readAsBytesSync());
+//   });
+//   return fileInfo;
+// }
 
 
 Future<local.PlatformFile> _openWebFileExplorer(List<String> allowedExtensions) async {
@@ -66,9 +67,9 @@ Future<local.PlatformFile> _openWebFileExplorer(List<String> allowedExtensions) 
   return null;
 }
 
-String _filterFile(String fileName, List<String> allowedExtensions) {
-  return allowedExtensions.contains(fileName?.split('.').last) ? fileName : null;
-}
+// String _filterFile(String fileName, List<String> allowedExtensions) {
+//   return allowedExtensions.contains(fileName?.split('.').last) ? fileName : null;
+// }
 
 List<PlatformFile> _filterFiles(List<PlatformFile> files, List<String> allowedExtensions) {
   if (files == null || allowedExtensions == null)
